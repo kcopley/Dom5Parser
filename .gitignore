@@ -1,0 +1,7 @@
+
+*.ide
+*.ide-shm
+*.ide-wal
+*.lock
+.vs/Dom5Edit/v16/.suo
+*.cache
