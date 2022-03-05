@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dom5Edit.Data
+namespace Dom5Edit.Entities
 {
     public class Monster : IDEntity
     {
@@ -25,26 +25,21 @@ namespace Dom5Edit.Data
             }
         }
 
-        public override void Parse(string[] line)
+        public override void Parse(string command, string value, string comment)
         {
-            if (References.ContainsKey(line[0]))
+            if (command.EqualsIgnoreCase(Import))
             {
-                Property prop = References[line[0]]?.Invoke();
+                SetID(value);
+            }
+            if (References.ContainsKey(command))
+            {
+                Property prop = References[command]?.Invoke();
                 if (prop != null)
                 {
                     properties.Add(prop);
-                    if (line.Length > 1)
+                    if (value != "")
                     {
-                        int commentIndex = line[1].IndexOf("--");
-                        if (commentIndex == -1) {
-                            prop.Parse(line[1], ""); //no comment included
-                        }
-                        else
-                        {
-                            string initial = line[1].Substring(0, commentIndex);
-                            string comment = line[1].Substring(commentIndex + 2);
-                            prop.Parse(initial, comment);
-                        }
+                        prop.Parse(value, comment);
                     }
                 }
             }
@@ -53,6 +48,11 @@ namespace Dom5Edit.Data
         public static IDEntity Create()
         {
             return new Monster();
+        }
+
+        public static string GetImport()
+        {
+            return Import;
         }
     }
 }
