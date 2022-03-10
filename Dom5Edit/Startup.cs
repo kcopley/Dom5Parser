@@ -20,7 +20,12 @@ namespace Dom5Edit
         private void button1_Click(object sender, EventArgs e)
         {
             Importer i = new Importer();
-            i.Run();
+            i.Run(_folderPath.Text);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

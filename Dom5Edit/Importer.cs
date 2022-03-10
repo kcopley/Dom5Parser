@@ -46,10 +46,10 @@ namespace Dom5Edit
             */
         }
 
-        public void Run()
+        public void Run(string folder)
         {
             //Startup script
-            string localPath = Path.GetDirectoryName(Application.ExecutablePath);
+            string localPath = Path.GetDirectoryName(folder);
             string[] dmFiles = Directory.GetFiles(localPath, "*.dm");
 
 
@@ -57,6 +57,7 @@ namespace Dom5Edit
             {
                 Mod m = new Mod();
                 m.Parse(dmFile);
+                Mods.Add(m);
                 int i = 0;
                 i++;
             }
