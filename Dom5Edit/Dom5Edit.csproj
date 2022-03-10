@@ -57,6 +57,8 @@
     <Compile Include="Props\IDReference.cs" />
     <Compile Include="Props\Name.cs" />
     <Compile Include="Props\Property.cs" />
+    <Compile Include="Props\IntProperty.cs" />
+    <Compile Include="Props\StringProperty.cs" />
     <Compile Include="Startup.cs">
       <SubType>UserControl</SubType>
     </Compile>

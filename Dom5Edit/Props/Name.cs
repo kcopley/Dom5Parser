@@ -17,7 +17,7 @@ namespace Dom5Edit.Props
 
         public string name { get; set; }
 
-        public override void Parse(string s, string comment)
+        public override void Parse(Command c, string s, string comment)
         {
             this.name = s;
             this.Comment = comment;

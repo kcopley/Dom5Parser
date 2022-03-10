@@ -15,7 +15,30 @@ namespace Dom5Edit.Entities
 
         static Monster()
         {
-            _propertyMap.Add(Name.Import, Name.Create);
+            _propertyMap.Add(Command.NAME, StringProperty.Create);
+            _propertyMap.Add(Command.SPR1, StringProperty.Create);
+            _propertyMap.Add(Command.SPR2, StringProperty.Create);
+
+            _propertyMap.Add(Command.HP, IntProperty.Create);
+            _propertyMap.Add(Command.DARKVISION, IntProperty.Create);
+            _propertyMap.Add(Command.FIRERES, IntProperty.Create);
+            _propertyMap.Add(Command.MR, IntProperty.Create);
+            _propertyMap.Add(Command.MOR, IntProperty.Create);
+            _propertyMap.Add(Command.STR, IntProperty.Create);
+            _propertyMap.Add(Command.ATT, IntProperty.Create);
+            _propertyMap.Add(Command.DEF, IntProperty.Create);
+            _propertyMap.Add(Command.PREC, IntProperty.Create);
+            _propertyMap.Add(Command.AP, IntProperty.Create);
+            _propertyMap.Add(Command.MAPMOVE, IntProperty.Create);
+            _propertyMap.Add(Command.ENC, IntProperty.Create);
+            _propertyMap.Add(Command.SIZE, IntProperty.Create);
+            _propertyMap.Add(Command.MAXAGE, IntProperty.Create);
+            _propertyMap.Add(Command.HUMANOID, IntProperty.Create);
+            _propertyMap.Add(Command.ITEMSLOTS, IntProperty.Create);
+            _propertyMap.Add(Command.GCOST, IntProperty.Create);
+            _propertyMap.Add(Command.RCOST, IntProperty.Create);
+            _propertyMap.Add(Command.RPCOST, IntProperty.Create);
+            _propertyMap.Add(Command.NAMETYPE, IntProperty.Create);
         }
 
         public List<Property> Properties = new List<Property>();
@@ -30,7 +53,7 @@ namespace Dom5Edit.Entities
             if (_propertyMap.TryGetValue(command, out Func<Property> create))
             {
                 Property prop = create.Invoke();
-                prop.Parse(value, comment);
+                prop.Parse(command, value, comment);
                 Properties.Add(prop);
             }
             //else not recognized command, skip

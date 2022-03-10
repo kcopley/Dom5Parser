@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dom5Edit.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace Dom5Edit.Props
     public abstract class Property
     {
         public string Comment { get; set; }
-        public abstract void Parse(string v, string comment);
+        public abstract void Parse(Command c, string v, string comment);
     }
 }
