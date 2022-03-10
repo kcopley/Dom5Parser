@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dom5Edit.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Dom5Edit.Props
 {
     public class Name : Property
     {
-        public static string Import { get { return "#name"; } }
+        public static Command Import = Command.NAME;
         public static Property Create()
         {
             return new Name();
@@ -25,7 +26,14 @@ namespace Dom5Edit.Props
         //Preliminary Example only for now, not optimal
         public string Export()
         {
-            return Name.Import + " " + name + " --" + Comment;
+            if (!String.IsNullOrEmpty(Comment))
+            {
+                return Name.Import + " " + name + " --" + Comment;
+            }
+            else
+            {
+                return Name.Import + " " + name;
+            }
         }
     }
 }

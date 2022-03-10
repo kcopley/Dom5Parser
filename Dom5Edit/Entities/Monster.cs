@@ -1,4 +1,5 @@
-﻿using Dom5Edit.Props;
+﻿using Dom5Edit.Commands;
+using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,49 +11,30 @@ namespace Dom5Edit.Entities
 {
     public class Monster : IDEntity
     {
-        public static string Import { get { return "#newmonster"; } }
-        public static Dictionary<string, Func<Property>> References = null;
+        public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
-        public List<Property> properties = new List<Property>();
-
-        public Monster()
+        static Monster()
         {
-            if (References == null)
-            {
-                References = new Dictionary<string, Func<Property>>();
-
-                References.Add(Name.Import, Name.Create);
-            }
+            _propertyMap.Add(Name.Import, Name.Create);
         }
 
-        public override void Parse(string command, string value, string comment)
+        public List<Property> Properties = new List<Property>();
+
+        public Monster(string value, string comment)
         {
-            if (command.EqualsIgnoreCase(Import))
-            {
-                SetID(value);
-            }
-            if (References.ContainsKey(command))
-            {
-                Property prop = References[command]?.Invoke();
-                if (prop != null)
-                {
-                    properties.Add(prop);
-                    if (value != "")
-                    {
-                        prop.Parse(value, comment);
-                    }
-                }
-            }
+            this.SetID(value, comment);
         }
 
-        public static IDEntity Create()
+        public override void Parse(Command command, string value, string comment)
         {
-            return new Monster();
-        }
-
-        public static string GetImport()
-        {
-            return Import;
+            if (_propertyMap.TryGetValue(command, out Func<Property> create))
+            {
+                Property prop = create.Invoke();
+                prop.Parse(value, comment);
+                Properties.Add(prop);
+            }
+            //else not recognized command, skip
+            //build comment storage for in-between properties
         }
     }
 }

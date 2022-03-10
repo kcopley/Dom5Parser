@@ -10,11 +10,13 @@ namespace Dom5Edit.Entities
     public abstract class IDEntity : Entity
     {
         public int ID { get; private set; }
+        public string IDComment { get; private set; }
         
-        public virtual void SetID(string s)
+        public virtual void SetID(string s, string comment)
         {
             if (int.TryParse(s, out int id)) ID = id;
             else ID = -1;
+            IDComment = comment;
         }
     }
 }

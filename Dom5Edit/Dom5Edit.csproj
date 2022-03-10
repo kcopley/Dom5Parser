@@ -42,14 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\IDEntity.cs" />
     <Compile Include="Entities\Monster.cs" />
+    <Compile Include="Entities\Spell.cs" />
     <Compile Include="Exporter.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\TypeManager.cs" />
     <Compile Include="Importer.cs" />
+    <Compile Include="Mod\Mod.cs" />
     <Compile Include="Props\IDReference.cs" />
     <Compile Include="Props\Name.cs" />
     <Compile Include="Props\Property.cs" />

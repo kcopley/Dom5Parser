@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dom5Edit.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,6 @@ namespace Dom5Edit.Entities
             _endComment = s;
         }
 
-        public abstract void Parse(string command, string value, string comment);
+        public abstract void Parse(Command command, string value, string comment);
     }
 }
