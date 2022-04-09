@@ -7,21 +7,23 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class StringProperty : Property
+    public class BitmaskProperty : Property
     {
         public static Property Create()
         {
-            return new StringProperty();
+            return new BitmaskProperty();
         }
 
         private Command _command { get; set; }
-        public string Value { get; set; }
+        public ulong Value { get; set; }
+        public bool HasValue { get; set; }
 
         public override void Parse(Command c, string s, string comment)
         {
             this._command = c;
-            this.Value = s;
             this.Comment = comment;
+            HasValue = ulong.TryParse(s, out ulong val);
+            if (HasValue) Value = val;
         }
 
         //Preliminary Example only for now, not optimal
@@ -31,7 +33,14 @@ namespace Dom5Edit.Props
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
-                    return s + " " + Value + " -- " + Comment;
+                    if (HasValue)
+                    {
+                        return s + " " + Value + " -- " + Comment;
+                    }
+                    else
+                    {
+                        return s + " -- " + Comment;
+                    }
                 }
                 else
                 {

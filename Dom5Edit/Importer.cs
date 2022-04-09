@@ -19,38 +19,13 @@ namespace Dom5Edit
 
         public Importer()
         {
-            //todo: find all classes implementing IDEntity that have a Create method
-            //Initializer.Add(Monster.Import, Monster.Create); what the below does, but generically
-            /* simple code now
-            var types = TypeManager.Instance.GetSubclasses<Entity>();
-            foreach (var type in types)
-            {
-
-                var create = type.GetMethod("Create");
-                if (create == null || create.ReturnType == null || !create.ReturnType.IsSubclassOf(typeof(Entity)) || !create.IsStatic)
-                {
-                    //does not have a create method returning an entity
-                    continue;
-                }
-                var import = type.GetMethod("GetImport");
-                if (import == null || import.ReturnType == null || import.ReturnType != typeof(string) || !import.IsStatic)
-                {
-                    //does not have a statement to get the import string
-                    continue;
-                }
-                Initializer.Add((string)import.Invoke(null, null), create);
-            }
-
-            //null check is end marker
-            Initializer.Add("#end", null);
-            */
         }
 
         public void Run(string folder)
         {
             //Startup script
-            string localPath = Path.GetDirectoryName(folder);
-            string[] dmFiles = Directory.GetFiles(localPath, "*.dm");
+            //string localPath = Path.GetDirectoryName(folder);
+            string[] dmFiles = Directory.GetFiles(folder, "*.dm");
 
 
             foreach (string dmFile in dmFiles)
@@ -58,9 +33,74 @@ namespace Dom5Edit
                 Mod m = new Mod();
                 m.Parse(dmFile);
                 Mods.Add(m);
-                int i = 0;
-                i++;
             }
+        }
+
+        public void Export(string folder)
+        {
+            //foreach (Mod m in Mods)
+            //{
+            using (StreamWriter writer = new StreamWriter(folder + "\\testing.dm"))
+            {
+                finalizedmod.Export(writer);
+            }
+            // }
+        }
+
+        private Mod finalizedmod;
+        public void Merge()
+        {
+            Mod finalMod = new Mod();
+
+            finalMod.ModName = "Merged Mod";
+            finalMod.Description = "A merger of all valid mods that were parsed";
+            finalMod.Version = "1.0";
+            finalMod.DomVersion = "5.00";
+
+            foreach (Mod m in Mods)
+            {
+                //add monsters
+                var finalMonsters = finalMod.Monsters;
+
+                foreach (var kvp in m.Monsters)
+                {
+                    if (kvp.Key < 3500 && kvp.Value.Selected)
+                    {
+                        //select monster command on a vanilla
+                        if (!finalMonsters.ContainsKey(kvp.Key))
+                        {
+                            finalMonsters.Add(kvp.Key, kvp.Value);
+                        }
+                    }
+                    else if (kvp.Key < 3500)
+                    {
+                        //new monster on a vanilla ID?
+                    }
+                    else if (!kvp.Value.Selected)
+                    {
+                        //assign a new ID upwards
+                        int newID = finalMod.GetNextMonsterID();
+                        int oldID = kvp.Key;
+
+                        kvp.Value.ID = newID;
+                        if (m.MonsterIDMap.ContainsKey(oldID))
+                        {
+                            foreach (var idref in m.MonsterIDMap[oldID])
+                            {
+                                idref.ID = newID; //adjust every reference to this ID to the new one
+                            }
+                        }
+                        finalMonsters.Add(newID, kvp.Value);
+                    }
+                    else //a select monster on a mod ID?
+                    {
+                        finalMonsters.Add(kvp.Key, kvp.Value); //no conflict, so just add it as is
+                    }
+                }
+            }
+            finalizedmod = finalMod;
+            var i = 9;
+            i++;
         }
     }
 }

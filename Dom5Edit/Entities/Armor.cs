@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Entities
 {
-    public class Spell : IDEntity
+    public class Armor : IDEntity
     {
         public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
-        static Spell()
+        static Armor()
         {
             //String properties
             //_propertyMap.Add(Command.NAME, StringProperty.Create);
@@ -20,7 +20,7 @@ namespace Dom5Edit.Entities
 
         public List<Property> Properties = new List<Property>();
 
-        public Spell(string value, string comment)
+        public Armor(string value, string comment)
         {
             this.SetID(value, comment);
         }

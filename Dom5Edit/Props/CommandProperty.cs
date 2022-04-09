@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class StringProperty : Property
+    public class CommandProperty : Property
     {
         public static Property Create()
         {
-            return new StringProperty();
+            return new CommandProperty();
         }
 
         private Command _command { get; set; }
-        public string Value { get; set; }
 
         public override void Parse(Command c, string s, string comment)
         {
             this._command = c;
-            this.Value = s;
             this.Comment = comment;
         }
 
@@ -31,11 +29,11 @@ namespace Dom5Edit.Props
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
-                    return s + " " + Value + " -- " + Comment;
+                    return s + " -- " + Comment;
                 }
                 else
                 {
-                    return s + " " + Value;
+                    return s;
                 }
             }
             else return "";

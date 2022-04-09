@@ -7,23 +7,36 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class IntProperty : Property
+    public class BitmaskChanceProperty : Property
     {
         public static Property Create()
         {
-            return new IntProperty();
+            return new BitmaskChanceProperty();
         }
 
         private Command _command { get; set; }
-        public int Value { get; set; }
+        public ulong Bitmask { get; set; }
+
+        public int Chance { get; set; }
         public bool HasValue { get; set; }
 
         public override void Parse(Command c, string s, string comment)
         {
             this._command = c;
             this.Comment = comment;
-            HasValue = int.TryParse(s, out int val);
-            if (HasValue) Value = val;
+            s = s.Trim();
+            var split = s.Split(' ');
+            if (split.Length == 2)
+            {
+                HasValue = ulong.TryParse(split[0], out ulong val);
+                if (HasValue) Bitmask = val;
+                HasValue = int.TryParse(split[1], out int val2);
+                if (HasValue) Chance = val2;
+            }
+            else
+            {
+                HasValue = false;
+            }
         }
 
         //Preliminary Example only for now, not optimal
@@ -35,7 +48,7 @@ namespace Dom5Edit.Props
                 {
                     if (HasValue)
                     {
-                        return s + " " + Value + " -- " + Comment;
+                        return s + " " + Bitmask + " " + Chance + " -- " + Comment;
                     }
                     else
                     {
@@ -44,7 +57,7 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    return s + " " + Value;
+                    return s + " " + Bitmask + " " + Chance;
                 }
             }
             else return "";

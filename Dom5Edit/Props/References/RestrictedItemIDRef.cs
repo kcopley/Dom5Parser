@@ -7,21 +7,27 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class StringProperty : Property
+    public class RestrictedItemIDRef : Reference
     {
         public static Property Create()
         {
-            return new StringProperty();
+            return new RestrictedItemIDRef();
         }
 
         private Command _command { get; set; }
-        public string Value { get; set; }
+        public int ID { get; set; }
+        public bool HasValue { get; set; }
 
         public override void Parse(Command c, string s, string comment)
         {
             this._command = c;
-            this.Value = s;
             this.Comment = comment;
+            HasValue = int.TryParse(s, out int val);
+            if (HasValue)
+            {
+                ID = val;
+                this.Parent.Parent.AddRestrictedItemIDReference(ID, this);
+            }
         }
 
         //Preliminary Example only for now, not optimal
@@ -31,11 +37,18 @@ namespace Dom5Edit.Props
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
-                    return s + " " + Value + " -- " + Comment;
+                    if (HasValue)
+                    {
+                        return s + " " + ID + " -- " + Comment;
+                    }
+                    else
+                    {
+                        return s + " -- " + Comment;
+                    }
                 }
                 else
                 {
-                    return s + " " + Value;
+                    return s + " " + ID;
                 }
             }
             else return "";

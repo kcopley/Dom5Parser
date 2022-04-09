@@ -7,21 +7,27 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class StringProperty : Property
+    public class MonsterNameRef : Reference
     {
         public static Property Create()
         {
-            return new StringProperty();
+            return new MonsterNameRef();
         }
 
         private Command _command { get; set; }
-        public string Value { get; set; }
+        public string Name { get; set; }
+        public bool HasValue { get; set; }
 
         public override void Parse(Command c, string s, string comment)
         {
             this._command = c;
-            this.Value = s;
             this.Comment = comment;
+            HasValue = s.Length > 0;
+            if (HasValue)
+            {
+                Name = s;
+                this.Parent.Parent.AddMonsterNameReference(Name, this);
+            }
         }
 
         //Preliminary Example only for now, not optimal
@@ -31,11 +37,18 @@ namespace Dom5Edit.Props
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
-                    return s + " " + Value + " -- " + Comment;
+                    if (HasValue)
+                    {
+                        return s + " " + Name + " -- " + Comment;
+                    }
+                    else
+                    {
+                        return s + " -- " + Comment;
+                    }
                 }
                 else
                 {
-                    return s + " " + Value;
+                    return s + " " + Name;
                 }
             }
             else return "";

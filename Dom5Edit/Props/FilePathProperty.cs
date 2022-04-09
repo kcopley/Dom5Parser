@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class StringProperty : Property
+    public class FilePathProperty : Property
     {
         public static Property Create()
         {
-            return new StringProperty();
+            return new FilePathProperty();
         }
 
         private Command _command { get; set; }

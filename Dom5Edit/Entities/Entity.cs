@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Mods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Dom5Edit.Entities
     {
         private string _startComment;
         private string _endComment;
+        public Mod Parent { get; set; }
 
         public virtual void SetEndComment(string s)
         {
