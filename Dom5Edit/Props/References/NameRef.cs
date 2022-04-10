@@ -8,36 +8,27 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class MonIDRef : Reference
+    public class NameRef : Reference
     {
-        public static Property Create()
-        {
-            return new MonIDRef();
-        }
-
-        private Command _command { get; set; }
-        public int ID { get; set; }
+        public string Name { get; set; }
         public bool HasValue { get; set; }
-        public Monster Monster { get; set; }
+
+        public IDEntity entity { get; set; }
         public bool Resolved { get; set; }
+
+        public override void Resolve()
+        {
+            throw new NotImplementedException();
+        }
 
         public override void Parse(Command c, string s, string comment)
         {
             this._command = c;
             this.Comment = comment;
-            HasValue = int.TryParse(s, out int val);
+            HasValue = s.Length > 0;
             if (HasValue)
             {
-                ID = val;
-            }
-        }
-
-        public override void Resolve()
-        {
-            if (Parent.Parent.Monsters.TryGetValue(ID, out var mon))
-            {
-                Resolved = true;
-                Monster = mon;
+                Name = s;
             }
         }
 
@@ -46,14 +37,14 @@ namespace Dom5Edit.Props
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
-                int _exportID = ID;
-                if (Resolved) _exportID = Monster.ID;
+                string _exportName = Name;
+                if (Resolved && entity.TryGetName(out var _name)) _exportName = _name;
 
                 if (!String.IsNullOrEmpty(Comment))
                 {
                     if (HasValue)
                     {
-                        return s + " " + _exportID + " -- " + Comment;
+                        return s + " \"" + _exportName + "\" -- " + Comment;
                     }
                     else
                     {
@@ -62,7 +53,7 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    return s + " " + _exportID;
+                    return s + " \"" + _exportName + "\"";
                 }
             }
             else return "";

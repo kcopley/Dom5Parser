@@ -16,5 +16,7 @@ namespace Dom5Edit.Props
         public abstract void Parse(Command c, string v, string comment);
 
         public override abstract string ToString();
+
+        internal Command _command { get; set; }
     }
 }

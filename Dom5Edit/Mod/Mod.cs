@@ -21,36 +21,42 @@ namespace Dom5Edit.Mods
         public string Version { get; set; }
         public string DomVersion { get; set; }
 
-        public Dictionary<int, Monster> Monsters;
-        public Dictionary<int, Spell> Spells;
-        public Dictionary<int, Item> Items;
-        public Dictionary<int, Weapon> Weapons;
-        public Dictionary<int, Armor> Armors;
-        public Dictionary<int, Event> Events;
-        public Dictionary<int, Site> Sites;
+        public Dictionary<int, IDEntity> Monsters = new Dictionary<int, IDEntity>();
+        public Dictionary<string, IDEntity> NamedMonsters = new Dictionary<string, IDEntity>();
+        public Dictionary<int, IDEntity> Spells = new Dictionary<int, IDEntity>();
+        public Dictionary<string, IDEntity> NamedSpells = new Dictionary<string, IDEntity>();
+        public Dictionary<int, IDEntity> Items = new Dictionary<int, IDEntity>();
+        public Dictionary<string, IDEntity> NamedItems = new Dictionary<string, IDEntity>();
+        public Dictionary<int, IDEntity> Weapons = new Dictionary<int, IDEntity>();
+        public Dictionary<string, IDEntity> NamedWeapons = new Dictionary<string, IDEntity>();
+        public Dictionary<int, IDEntity> Armors = new Dictionary<int, IDEntity>();
+        public Dictionary<string, IDEntity> NamedArmors = new Dictionary<string, IDEntity>();
+        public Dictionary<int, IDEntity> Events = new Dictionary<int, IDEntity>();
+        public Dictionary<int, IDEntity> Sites = new Dictionary<int, IDEntity>();
+        public Dictionary<string, IDEntity> NamedSites = new Dictionary<string, IDEntity>();
+        public List<IDEntity> SitesThatNeedIDs = new List<IDEntity>();
+        public Dictionary<int, IDEntity> Nametypes = new Dictionary<int, IDEntity>();
+        public Dictionary<int, MontagIDRef> Montags = new Dictionary<int, MontagIDRef>();
+        public Dictionary<int, RestrictedItemIDRef> RestrictedItems = new Dictionary<int, RestrictedItemIDRef>();
+        public Dictionary<int, Ench> Enchantments = new Dictionary<int, Ench>();
+        public Dictionary<int, IDEntity> Nations = new Dictionary<int, IDEntity>();
+        public List<IDEntity> NationsWithNoID = new List<IDEntity>();
+        public Dictionary<int, IDEntity> Poptypes = new Dictionary<int, IDEntity>();
 
-        public Dictionary<int, List<MonIDRef>> MonsterIDMap = new Dictionary<int, List<MonIDRef>>();
-        public Dictionary<int, List<SpellIDRef>> SpellIDMap = new Dictionary<int, List<SpellIDRef>>();
-        public Dictionary<int, List<WeaponIDRef>> WeaponIDMap = new Dictionary<int, List<WeaponIDRef>>();
-        public Dictionary<int, List<ArmorIDRef>> ArmorIDMap = new Dictionary<int, List<ArmorIDRef>>();
-        public Dictionary<int, List<ItemIDRef>> ItemIDMap = new Dictionary<int, List<ItemIDRef>>();
-        public Dictionary<int, List<RestrictedItemIDRef>> RestrictedItemIDMap = new Dictionary<int, List<RestrictedItemIDRef>>();
-        public Dictionary<int, List<EnchIDRef>> EnchIDMap = new Dictionary<int, List<EnchIDRef>>();
-        public Dictionary<int, List<MontagIDRef>> MontagIDMap = new Dictionary<int, List<MontagIDRef>>();
-        public Dictionary<int, List<NametypeIDRef>> NametypeIDMap = new Dictionary<int, List<NametypeIDRef>>();
-        public Dictionary<int, List<SpellIDRef>> NationIDMap = new Dictionary<int, List<SpellIDRef>>();
-        public Dictionary<int, List<SiteIDRef>> SiteIDMap = new Dictionary<int, List<SiteIDRef>>();
-        
-        public Dictionary<string, List<MonsterNameRef>> MonsterNameMap = new Dictionary<string, List<MonsterNameRef>>();
-        public Dictionary<string, List<SpellIDRef>> SiteNameMap = new Dictionary<string, List<SpellIDRef>>();
-        public Dictionary<string, List<SpellIDRef>> SpellNameMap = new Dictionary<string, List<SpellIDRef>>();
-        public Dictionary<string, List<SpellIDRef>> ItemNameMap = new Dictionary<string, List<SpellIDRef>>();
+        private int _MonStartID = Importer.MONSTER_START_ID;
+        private int _SiteStartID = Importer.SITE_START_ID;
+        private int _EventStartID = Importer.EVENT_START_ID;
+        private int _ArmorStartID = Importer.ARMOR_START_ID;
+        private int _WepStartID = Importer.WEAPON_START_ID;
+        private int _ItemStartID = Importer.ITEM_START_ID;
+        private int _SpellStartID = Importer.SPELL_START_ID;
+        private int _NametypeStartID = Importer.NAMETYPE_START_ID;
+        private int _NationStartID = Importer.NATION_START_ID;
 
         private Entity _currentEntity = null;
 
         public Mod()
         {
-            Monsters = new Dictionary<int, Monster>();
         }
 
         public void Parse(string dmFile)
@@ -124,6 +130,33 @@ namespace Dom5Edit.Mods
                 case Command.SELECTMONSTER:
                     _currentEntity = SelectMonster(val, comment);
                     break;
+                case Command.NEWARMOR:
+                    _currentEntity = NewArmor(val, comment);
+                    break;
+                case Command.SELECTARMOR:
+                    _currentEntity = SelectArmor(val, comment);
+                    break;
+                case Command.NEWWEAPON:
+                    _currentEntity = NewWeapon(val, comment);
+                    break;
+                case Command.SELECTWEAPON:
+                    _currentEntity = SelectWeapon(val, comment);
+                    break;
+                case Command.SELECTNAMETYPE:
+                    _currentEntity = SelectNametype(val, comment);
+                    break;
+                case Command.NEWSITE:
+                    _currentEntity = NewSite(val, comment);
+                    break;
+                case Command.SELECTSITE:
+                    _currentEntity = SelectSite(val, comment);
+                    break;
+                case Command.NEWNATION:
+                    _currentEntity = NewNation(val, comment);
+                    break;
+                case Command.SELECTNATION:
+                    _currentEntity = SelectNation(val, comment);
+                    break;
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);
                     _currentEntity = null;
@@ -132,6 +165,58 @@ namespace Dom5Edit.Mods
                     if (_currentEntity != null) _currentEntity.Parse(c, val, comment); //assume the command is relevant for the current entity
                     //else build list of pre-entity comments, to restore before the next entity on export?
                     break; //nothing
+            }
+        }
+
+        public void Resolve()
+        {
+            foreach (var kvp in Monsters)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in NamedMonsters)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in Armors)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in NamedArmors)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in Weapons)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in NamedWeapons)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in Nametypes)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in Sites)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in NamedSites)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in SitesThatNeedIDs)
+            {
+                kvp.Resolve();
+            }
+            foreach (var kvp in Nations)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in NationsWithNoID)
+            {
+                kvp.Resolve();
             }
         }
 
@@ -145,27 +230,64 @@ namespace Dom5Edit.Mods
 
             writer.WriteLine();
 
-            foreach (Monster m in Monsters.Values)
+            Export(writer, Weapons.Values.ToList());
+            Export(writer, NamedWeapons.Values.ToList());
+            Export(writer, Armors.Values.ToList());
+            Export(writer, NamedArmors.Values.ToList());
+            Export(writer, Monsters.Values.ToList());
+            Export(writer, NamedMonsters.Values.ToList());
+            Export(writer, Nametypes.Values.ToList());
+            Export(writer, Sites.Values.ToList());
+            Export(writer, NamedSites.Values.ToList());
+            Export(writer, SitesThatNeedIDs);
+            Export(writer, Nations.Values.ToList());
+
+            //spells
+
+            //magic items
+
+            //general
+
+            //poptypes
+
+            //mercenaries
+
+            //events
+        }
+
+        public void Export(StreamWriter writer, List<Entity> entities)
+        {
+            foreach (Entity m in entities)
             {
                 m.Export(writer);
                 writer.WriteLine();
             }
         }
 
-        public Monster NewMonster(string val, string comment, bool selected = false)
+        public void Export(StreamWriter writer, List<IDEntity> entities)
         {
-            Monster m = new Monster(val, comment);
-            m.Parent = this;
-            Monsters.Add(m.ID, m);
-            m.Selected = selected;
+            foreach (Entity m in entities)
+            {
+                m.Export(writer);
+                writer.WriteLine();
+            }
+        }
+
+        public IDEntity NewMonster(string val, string comment, bool selected = false)
+        {
+            Monster m = new Monster(val, comment, this, selected);
             return m;
         }
 
-        public Monster SelectMonster(string val, string comment)
+        public IDEntity SelectMonster(string val, string comment)
         {
-            if (int.TryParse(val, out int id) && Monsters.TryGetValue(id, out Monster m))
+            if (int.TryParse(val, out int id) && Monsters.TryGetValue(id, out IDEntity m))
             {
                 return m;
+            }
+            else if (NamedMonsters.TryGetValue(val, out IDEntity m2))
+            {
+                return m2;
             }
             else
             {
@@ -173,108 +295,102 @@ namespace Dom5Edit.Mods
             }
         }
 
-        /*
-        public void AddMonsterIDReference(int ID, MonIDRef reference)
+        public IDEntity SelectNametype(string val, string comment)
         {
-            if (!MonsterIDMap.TryGetValue(ID, out _))
+            if (int.TryParse(val, out int id) && Nametypes.TryGetValue(id, out IDEntity m))
             {
-                MonsterIDMap.Add(ID, new List<MonIDRef>());
+                return m;
             }
-            MonsterIDMap[ID].Add(reference);
+            else
+            {
+                return new Nametype(val, comment, this, true);
+            }
         }
 
-        public void AddSpellIDReference(int ID, SpellIDRef reference)
+        public IDEntity NewArmor(string val, string comment, bool selected = false)
         {
-            if (!SpellIDMap.TryGetValue(ID, out _))
-            {
-                SpellIDMap.Add(ID, new List<SpellIDRef>());
-            }
-            SpellIDMap[ID].Add(reference);
+            Armor m = new Armor(val, comment, this, selected);
+            return m;
         }
 
-        public void AddItemIDReference(int ID, ItemIDRef reference)
+        public IDEntity SelectArmor(string val, string comment)
         {
-            if (!ItemIDMap.TryGetValue(ID, out _))
+            if (int.TryParse(val, out int id) && Armors.TryGetValue(id, out IDEntity m))
             {
-                ItemIDMap.Add(ID, new List<ItemIDRef>());
+                return m;
             }
-            ItemIDMap[ID].Add(reference);
+            else if (NamedArmors.TryGetValue(val, out IDEntity m2))
+            {
+                return m2;
+            }
+            else
+            {
+                return NewArmor(val, comment, true);
+            }
         }
 
-        public void AddWeaponIDReference(int ID, WeaponIDRef reference)
+        public Weapon NewWeapon(string val, string comment, bool selected = false)
         {
-            if (!WeaponIDMap.TryGetValue(ID, out _))
-            {
-                WeaponIDMap.Add(ID, new List<WeaponIDRef>());
-            }
-            WeaponIDMap[ID].Add(reference);
+            Weapon m = new Weapon(val, comment, this, selected);
+            return m;
         }
 
-        public void AddArmorIDReference(int ID, ArmorIDRef reference)
+        public IDEntity SelectWeapon(string val, string comment)
         {
-            if (!ArmorIDMap.TryGetValue(ID, out _))
+            if (int.TryParse(val, out int id) && Weapons.TryGetValue(id, out IDEntity m))
             {
-                ArmorIDMap.Add(ID, new List<ArmorIDRef>());
+                return m;
             }
-            ArmorIDMap[ID].Add(reference);
+            else if (NamedWeapons.TryGetValue(val, out IDEntity m2))
+            {
+                return m2;
+            }
+            else
+            {
+                return NewWeapon(val, comment, true);
+            }
         }
 
-        public void AddSiteIDReference(int ID, SiteIDRef reference)
+        public Site NewSite(string val, string comment, bool selected = false)
         {
-            if (!SiteIDMap.TryGetValue(ID, out _))
-            {
-                SiteIDMap.Add(ID, new List<SiteIDRef>());
-            }
-            SiteIDMap[ID].Add(reference);
+            Site m = new Site(val, comment, this, selected);
+            return m;
         }
 
-        public void AddEnchIDReference(int ID, EnchIDRef reference)
+        public IDEntity SelectSite(string val, string comment)
         {
-            if (!EnchIDMap.TryGetValue(ID, out _))
+            if (int.TryParse(val, out int id) && Sites.TryGetValue(id, out IDEntity m))
             {
-                EnchIDMap.Add(ID, new List<EnchIDRef>());
+                return m;
             }
-            EnchIDMap[ID].Add(reference);
+            else if (NamedSites.TryGetValue(val, out IDEntity m2))
+            {
+                return m2;
+            }
+            else
+            {
+                return NewSite(val, comment, true);
+            }
         }
 
-        public void AddMonsterNameReference(string name, MonsterNameRef reference)
+        public Nation NewNation(string val, string comment, bool selected = false)
         {
-            if (!MonsterNameMap.TryGetValue(name, out _))
-            {
-                MonsterNameMap.Add(name, new List<MonsterNameRef>());
-            }
-            MonsterNameMap[name].Add(reference);
+            Nation m = new Nation(val, comment, this, selected);
+            return m;
         }
 
-        public void AddMontagIDReference(int ID, MontagIDRef reference)
+        public IDEntity SelectNation(string val, string comment)
         {
-            if (!MontagIDMap.TryGetValue(ID, out _))
+            if (int.TryParse(val, out int id) && Nations.TryGetValue(id, out IDEntity m))
             {
-                MontagIDMap.Add(ID, new List<MontagIDRef>());
+                return m;
             }
-            MontagIDMap[ID].Add(reference);
+            else
+            {
+                return NewNation(val, comment, true);
+            }
         }
 
-        public void AddNametypeIDReference(int ID, NametypeIDRef reference)
-        {
-            if (!NametypeIDMap.TryGetValue(ID, out _))
-            {
-                NametypeIDMap.Add(ID, new List<NametypeIDRef>());
-            }
-            NametypeIDMap[ID].Add(reference);
-        }
-
-        public void AddRestrictedItemIDReference(int ID, RestrictedItemIDRef reference)
-        {
-            if (!RestrictedItemIDMap.TryGetValue(ID, out _))
-            {
-                RestrictedItemIDMap.Add(ID, new List<RestrictedItemIDRef>());
-            }
-            RestrictedItemIDMap[ID].Add(reference);
-        }
-        */
-
-        private int _MonStartID = 3500;
         public int GetNextMonsterID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -285,7 +401,6 @@ namespace Dom5Edit.Mods
             return _MonStartID;
         }
 
-        private int _SpellStartID = 1300;
         public int GetNextSpellID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -296,7 +411,6 @@ namespace Dom5Edit.Mods
             return _SpellStartID;
         }
 
-        private int _ItemStartID = 500;
         public int GetNextItemID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -307,7 +421,6 @@ namespace Dom5Edit.Mods
             return _ItemStartID;
         }
 
-        private int _WepStartID = 800;
         public int GetNextWeaponID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -318,7 +431,6 @@ namespace Dom5Edit.Mods
             return _WepStartID;
         }
 
-        private int _ArmorStartID = 300;
         public int GetNextArmorID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -329,7 +441,6 @@ namespace Dom5Edit.Mods
             return _ArmorStartID;
         }
 
-        private int _EventStartID = 6000;
         public int GetNextEventID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -340,7 +451,6 @@ namespace Dom5Edit.Mods
             return _EventStartID;
         }
 
-        private int _SiteStartID = 6000;
         public int GetNextSiteID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -349,6 +459,26 @@ namespace Dom5Edit.Mods
                 _SiteStartID++;
             }
             return _SiteStartID;
+        }
+
+        public int GetNextNationID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (Nations.ContainsKey(_NationStartID))
+            {
+                _NationStartID++;
+            }
+            return _NationStartID;
+        }
+
+        public int GetNextNametypeID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (Nametypes.ContainsKey(_NametypeStartID))
+            {
+                _NametypeStartID++;
+            }
+            return _NametypeStartID;
         }
     }
 }

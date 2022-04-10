@@ -14,7 +14,6 @@ namespace Dom5Edit.Props
             return new BitmaskChanceProperty();
         }
 
-        private Command _command { get; set; }
         public ulong Bitmask { get; set; }
 
         public int Chance { get; set; }

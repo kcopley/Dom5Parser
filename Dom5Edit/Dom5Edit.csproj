@@ -43,13 +43,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Entities\Nation.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\IDEntity.cs" />
     <Compile Include="Entities\Monster.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Armor.cs" />
+    <Compile Include="Entities\Ench.cs" />
     <Compile Include="Entities\Site.cs" />
+    <Compile Include="Entities\Nametype.cs" />
     <Compile Include="Entities\Weapon.cs" />
     <Compile Include="Entities\Spell.cs" />
     <Compile Include="Exporter.cs" />
@@ -63,18 +66,22 @@
     <Compile Include="Props\BitmaskProperty.cs" />
     <Compile Include="Props\IntIntIntProperty.cs" />
     <Compile Include="Props\IntIntProperty.cs" />
+    <Compile Include="Props\NameProperty.cs" />
+    <Compile Include="Props\References\PoptypeIDRef.cs" />
+    <Compile Include="Props\References\StringOrIDRef.cs" />
+    <Compile Include="Props\References\MonsterRef.cs" />
+    <Compile Include="Props\References\NameRef.cs" />
+    <Compile Include="Props\References\IDRef.cs" />
     <Compile Include="Props\References\RestrictedItemIDRef.cs" />
     <Compile Include="Props\References\NametypeIDRef.cs" />
     <Compile Include="Props\References\MontagIDRef.cs" />
-    <Compile Include="Props\References\MonsterNameRef.cs" />
     <Compile Include="Props\References\EnchIDRef.cs" />
-    <Compile Include="Props\References\ArmorIDRef.cs" />
+    <Compile Include="Props\References\ArmorRef.cs" />
     <Compile Include="Props\References\Reference.cs" />
-    <Compile Include="Props\References\SiteIDRef.cs" />
-    <Compile Include="Props\References\WeaponIDRef.cs" />
+    <Compile Include="Props\References\SiteRef.cs" />
+    <Compile Include="Props\References\WeaponRef.cs" />
     <Compile Include="Props\References\ItemIDRef.cs" />
     <Compile Include="Props\References\SpellIDRef.cs" />
-    <Compile Include="Props\References\MonIDRef.cs" />
     <Compile Include="Props\Property.cs" />
     <Compile Include="Props\IntProperty.cs" />
     <Compile Include="Props\FilePathProperty.cs" />

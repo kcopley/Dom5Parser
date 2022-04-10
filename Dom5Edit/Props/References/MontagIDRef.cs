@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,51 +8,22 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class MontagIDRef : Reference
+    public class MontagIDRef : IDRef
     {
         public static Property Create()
         {
             return new MontagIDRef();
         }
 
-        private Command _command { get; set; }
-        public int ID { get; set; }
-        public bool HasValue { get; set; }
-
-        public override void Parse(Command c, string s, string comment)
+        public override void Resolve()
         {
-            this._command = c;
-            this.Comment = comment;
-            HasValue = int.TryParse(s, out int val);
-            if (HasValue)
+            /*
+            if (Parent.Parent.Montags.TryGetValue(ID, out Montag m))
             {
-                ID = val;
-                this.Parent.Parent.AddMontagIDReference(ID, this);
+                entity = m;
+                Resolved = true;
             }
-        }
-
-        //Preliminary Example only for now, not optimal
-        public override string ToString()
-        {
-            if (CommandsMap.TryGetString(_command, out string s))
-            {
-                if (!String.IsNullOrEmpty(Comment))
-                {
-                    if (HasValue)
-                    {
-                        return s + " " + ID + " -- " + Comment;
-                    }
-                    else
-                    {
-                        return s + " -- " + Comment;
-                    }
-                }
-                else
-                {
-                    return s + " " + ID;
-                }
-            }
-            else return "";
+            */
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Dom5Edit.Props
             return new BitmaskProperty();
         }
 
-        private Command _command { get; set; }
         public ulong Value { get; set; }
         public bool HasValue { get; set; }
 

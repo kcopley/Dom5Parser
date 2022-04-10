@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -18,24 +19,33 @@ namespace Dom5Edit.Entities
             //_propertyMap.Add(Command.NAME, StringProperty.Create);
         }
 
-        public List<Property> Properties = new List<Property>();
-
-        public Event(string value, string comment)
+        public Event(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
         {
-            this.SetID(value, comment);
         }
 
-        public override void Parse(Command command, string value, string comment)
+        internal override Command GetNewCommand()
         {
-            if (_propertyMap.TryGetValue(command, out Func<Property> create))
-            {
-                Property prop = create.Invoke();
-                prop.ParentMod = this.Parent; //carry the mod assignation down
-                prop.Parse(command, value, comment);
-                Properties.Add(prop);
-            }
-            //else not recognized command, skip
-            //build comment storage for in-between properties
+            return Command.NEWEVENT;
+        }
+
+        internal override Command GetSelectCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override Dictionary<Command, Func<Property>> GetPropertyMap()
+        {
+            return _propertyMap;
+        }
+
+        internal override Dictionary<string, IDEntity> GetNamedList()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override Dictionary<int, IDEntity> GetIDList()
+        {
+            return Parent.Events;
         }
     }
 }

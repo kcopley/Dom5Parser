@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class NametypeIDRef : IDRef
+    public class PoptypeIDRef : IDRef
     {
         public static Property Create()
         {
-            return new NametypeIDRef();
+            return new PoptypeIDRef();
         }
 
         public override void Resolve()
         {
-            if (Parent.Parent.Nametypes.TryGetValue(ID, out IDEntity m))
+            if (Parent.Parent.Poptypes.TryGetValue(ID, out IDEntity m))
             {
                 entity = m;
                 Resolved = true;

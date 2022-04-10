@@ -17,6 +17,18 @@ namespace Dom5Edit
 
         public List<Mod> Mods = new List<Mod>();
 
+        private string _ModName = "singularity-testing.dm";
+
+        internal static int MONSTER_START_ID = 3500;
+        internal static int SITE_START_ID = 6000;
+        internal static int EVENT_START_ID = 6000;
+        internal static int ARMOR_START_ID = 300;
+        internal static int WEAPON_START_ID = 800;
+        internal static int ITEM_START_ID = 500;
+        internal static int SPELL_START_ID = 1300;
+        internal static int NAMETYPE_START_ID = 170;
+        internal static int NATION_START_ID = 120;
+
         public Importer()
         {
         }
@@ -30,8 +42,10 @@ namespace Dom5Edit
 
             foreach (string dmFile in dmFiles)
             {
+                if (dmFile.Contains(_ModName)) continue;
                 Mod m = new Mod();
                 m.Parse(dmFile);
+                m.Resolve();
                 Mods.Add(m);
             }
         }
@@ -40,7 +54,7 @@ namespace Dom5Edit
         {
             //foreach (Mod m in Mods)
             //{
-            using (StreamWriter writer = new StreamWriter(folder + "\\testing.dm"))
+            using (StreamWriter writer = new StreamWriter(folder + "\\" + _ModName))
             {
                 finalizedmod.Export(writer);
             }
@@ -60,47 +74,103 @@ namespace Dom5Edit
             foreach (Mod m in Mods)
             {
                 //add monsters
-                var finalMonsters = finalMod.Monsters;
+                Merge(m.Monsters, m.NamedMonsters, finalMod.Monsters, finalMod.NamedMonsters, MONSTER_START_ID, finalMod.GetNextMonsterID);
+                Merge(m.Armors, m.NamedArmors, finalMod.Armors, finalMod.NamedArmors, ARMOR_START_ID, finalMod.GetNextArmorID);
+                Merge(m.Weapons, m.NamedWeapons, finalMod.Weapons, finalMod.NamedWeapons, WEAPON_START_ID, finalMod.GetNextWeaponID);
+                Merge(m.Nametypes, null, finalMod.Nametypes, null, NAMETYPE_START_ID, finalMod.GetNextNametypeID, true);
+                Merge(m.Sites, m.NamedSites, finalMod.Sites, finalMod.NamedSites, SITE_START_ID, finalMod.GetNextSiteID);
+                MergeNations(m.Nations, finalMod.Nations, m.NationsWithNoID, NATION_START_ID, finalMod.GetNextNationID);
+            }
+            finalizedmod = finalMod;
+        }
 
-                foreach (var kvp in m.Monsters)
+        public void Merge(Dictionary<int, IDEntity> current, Dictionary<string, IDEntity> named, Dictionary<int, IDEntity> final, Dictionary<string, IDEntity> finalNamed, int START_ID, Func<int> nextID, bool force = false)
+        {
+            if (force)
+            {
+                foreach (var kvp in current)
                 {
-                    if (kvp.Key < 3500 && kvp.Value.Selected)
+                    if (kvp.Key < START_ID)
                     {
-                        //select monster command on a vanilla
-                        if (!finalMonsters.ContainsKey(kvp.Key))
-                        {
-                            finalMonsters.Add(kvp.Key, kvp.Value);
-                        }
+                        final.Add(kvp.Key, kvp.Value);
                     }
-                    else if (kvp.Key < 3500)
+                    else
                     {
-                        //new monster on a vanilla ID?
-                    }
-                    else if (!kvp.Value.Selected)
-                    {
-                        //assign a new ID upwards
-                        int newID = finalMod.GetNextMonsterID();
-                        int oldID = kvp.Key;
-
+                        int newID = nextID.Invoke();
                         kvp.Value.ID = newID;
-                        if (m.MonsterIDMap.ContainsKey(oldID))
-                        {
-                            foreach (var idref in m.MonsterIDMap[oldID])
-                            {
-                                idref.ID = newID; //adjust every reference to this ID to the new one
-                            }
-                        }
-                        finalMonsters.Add(newID, kvp.Value);
+                        final.Add(newID, kvp.Value);
                     }
-                    else //a select monster on a mod ID?
+                }
+                return;
+            }
+            foreach (var kvp in current)
+            {
+                if (kvp.Key < START_ID && kvp.Value.Selected)
+                {
+                    //select monster command on a vanilla
+                    if (!final.ContainsKey(kvp.Key))
                     {
-                        finalMonsters.Add(kvp.Key, kvp.Value); //no conflict, so just add it as is
+                        final.Add(kvp.Key, kvp.Value);
+                    }
+                }
+                else if (kvp.Key < START_ID)
+                {
+                    //new monster on a vanilla ID?
+                }
+                else if (!kvp.Value.Selected)
+                {
+                    //assign a new ID upwards
+                    int newID = nextID.Invoke();
+                    kvp.Value.ID = newID;
+                    final.Add(newID, kvp.Value);
+                }
+                else //a select monster on a mod ID?
+                {
+                    final.Add(kvp.Key, kvp.Value); //no conflict, so just add it as is
+                }
+            }
+
+            if (named != null)
+            {
+                foreach (var kvp in named)
+                {
+                    if (kvp.Value.Selected && kvp.Value.Named) //else it was already exported
+                    {
+                        if (kvp.Value.ID != -1 && !current.ContainsKey(kvp.Value.ID)) //make sure it wasn't already exported through some mixed references
+                        {
+                            finalNamed.Add(kvp.Key, kvp.Value);
+                        }
                     }
                 }
             }
-            finalizedmod = finalMod;
-            var i = 9;
-            i++;
+        }
+        
+        public void MergeNations(Dictionary<int, IDEntity> current, Dictionary<int, IDEntity> final, List<IDEntity> needsIDs, int START_ID, Func<int> nextID)
+        {
+            foreach (var kvp in current)
+            {
+                if (kvp.Key < START_ID)
+                {
+                    if (!final.ContainsKey(kvp.Key))
+                    {
+                        final.Add(kvp.Key, kvp.Value);
+                    }
+                }
+                else
+                {
+                    //assign a new ID upwards
+                    int newID = nextID.Invoke();
+                    kvp.Value.ID = newID;
+                    final.Add(newID, kvp.Value);
+                }
+            }
+
+            foreach (var entity in needsIDs)
+            {
+                int newID = nextID.Invoke();
+                entity.ID = newID;
+                final.Add(newID, entity);
+            }
         }
     }
 }

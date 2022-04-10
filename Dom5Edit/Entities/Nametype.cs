@@ -9,33 +9,34 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Entities
 {
-    public class Spell : IDEntity
+    public class Nametype : IDEntity
     {
         public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
-        static Spell()
+        static Nametype()
         {
             //String properties
-            //_propertyMap.Add(Command.NAME, StringProperty.Create);
+            _propertyMap.Add(Command.ADDNAME, StringProperty.Create);
+            _propertyMap.Add(Command.CLEAR, CommandProperty.Create);
         }
 
-        public Spell(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
+        public Nametype(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
         {
         }
 
         internal override Dictionary<int, IDEntity> GetIDList()
         {
-            return Parent.Spells;
+            return Parent.Nametypes;
         }
 
         internal override Dictionary<string, IDEntity> GetNamedList()
         {
-            return Parent.NamedSpells;
+            throw new NotImplementedException();
         }
 
         internal override Command GetNewCommand()
         {
-            return Command.NEWSPELL;
+            throw new NotImplementedException();
         }
 
         internal override Dictionary<Command, Func<Property>> GetPropertyMap()
@@ -45,7 +46,7 @@ namespace Dom5Edit.Entities
 
         internal override Command GetSelectCommand()
         {
-            return Command.SELECTSPELL;
+            return Command.SELECTNAMETYPE;
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,32 +12,50 @@ namespace Dom5Edit.Entities
 {
     public class Armor : IDEntity
     {
-        public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
+        private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
         static Armor()
         {
-            //String properties
-            //_propertyMap.Add(Command.NAME, StringProperty.Create);
+            _propertyMap.Add(Command.NAME, NameProperty.Create);
+            _propertyMap.Add(Command.CLEAR, CommandProperty.Create);
+            _propertyMap.Add(Command.COPYARMOR, ArmorRef.Create);
+            _propertyMap.Add(Command.TYPE, IntProperty.Create);
+            _propertyMap.Add(Command.PROT, IntProperty.Create);
+            _propertyMap.Add(Command.DEF, IntProperty.Create);
+            _propertyMap.Add(Command.ENC, IntProperty.Create);
+            _propertyMap.Add(Command.RCOST, IntProperty.Create);
+            _propertyMap.Add(Command.MAGICARMOR, CommandProperty.Create);
+            _propertyMap.Add(Command.IRONARMOR, CommandProperty.Create);
+            _propertyMap.Add(Command.WOODENARMOR, CommandProperty.Create);
         }
 
-        public List<Property> Properties = new List<Property>();
-
-        public Armor(string value, string comment)
+        public Armor(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
         {
-            this.SetID(value, comment);
         }
 
-        public override void Parse(Command command, string value, string comment)
+        internal override Command GetNewCommand()
         {
-            if (_propertyMap.TryGetValue(command, out Func<Property> create))
-            {
-                Property prop = create.Invoke();
-                prop.ParentMod = this.Parent; //carry the mod assignation down
-                prop.Parse(command, value, comment);
-                Properties.Add(prop);
-            }
-            //else not recognized command, skip
-            //build comment storage for in-between properties
+            return Command.NEWARMOR;
+        }
+
+        internal override Command GetSelectCommand()
+        {
+            return Command.SELECTARMOR;
+        }
+
+        internal override Dictionary<Command, Func<Property>> GetPropertyMap()
+        {
+            return _propertyMap;
+        }
+
+        internal override Dictionary<string, IDEntity> GetNamedList()
+        {
+            return Parent.NamedArmors;
+        }
+
+        internal override Dictionary<int, IDEntity> GetIDList()
+        {
+            return Parent.Armors;
         }
     }
 }

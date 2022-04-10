@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,13 @@ namespace Dom5Edit.Entities
 {
     public class Monster : IDEntity
     {
-        public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
+        private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
         static Monster()
         {
-            _propertyMap.Add(Command.SELECTMONSTER, MonIDRef.Create);
-            _propertyMap.Add(Command.NEWMONSTER, MonIDRef.Create);
-            _propertyMap.Add(Command.NAME, StringProperty.Create); //use for name map reference if need be
+            _propertyMap.Add(Command.SELECTMONSTER, MonsterRef.Create);
+            _propertyMap.Add(Command.NEWMONSTER, MonsterRef.Create);
+            _propertyMap.Add(Command.NAME, NameProperty.Create); //use for name map reference if need be
             _propertyMap.Add(Command.FIXEDNAME, StringProperty.Create);
             _propertyMap.Add(Command.DESCR, StringProperty.Create);
             _propertyMap.Add(Command.SPR1, FilePathProperty.Create);
@@ -29,8 +30,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.CLEARARMOR, CommandProperty.Create);
             _propertyMap.Add(Command.CLEARMAGIC, CommandProperty.Create);
             _propertyMap.Add(Command.CLEARSPEC, CommandProperty.Create);
-            _propertyMap.Add(Command.COPYSTATS, MonIDRef.Create);
-            _propertyMap.Add(Command.COPYSPR, MonIDRef.Create);
+            _propertyMap.Add(Command.COPYSTATS, MonsterRef.Create);
+            _propertyMap.Add(Command.COPYSPR, MonsterRef.Create);
             _propertyMap.Add(Command.PATHCOST, IntProperty.Create);
             _propertyMap.Add(Command.STARTDOM, IntProperty.Create);
             _propertyMap.Add(Command.HOMEREALM, IntProperty.Create);
@@ -57,8 +58,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.DEATHREC, IntProperty.Create);
             _propertyMap.Add(Command.AISINGLEREC, CommandProperty.Create);
             _propertyMap.Add(Command.AINOREC, CommandProperty.Create);
-            _propertyMap.Add(Command.MONPRESENTREC, MonIDRef.Create);
-            _propertyMap.Add(Command.OWNSMONREC, MonIDRef.Create);
+            _propertyMap.Add(Command.MONPRESENTREC, MonsterRef.Create);
+            _propertyMap.Add(Command.OWNSMONREC, MonsterRef.Create);
             _propertyMap.Add(Command.DOMREC, IntProperty.Create);
             _propertyMap.Add(Command.SINGLEBATTLE, CommandProperty.Create);
             _propertyMap.Add(Command.DESERTER, IntProperty.Create);
@@ -82,8 +83,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.AP, IntProperty.Create);
             _propertyMap.Add(Command.EYES, IntProperty.Create);
             _propertyMap.Add(Command.VOIDSANITY, IntProperty.Create);
-            _propertyMap.Add(Command.WEAPON, WeaponIDRef.Create);
-            _propertyMap.Add(Command.ARMOR, ArmorIDRef.Create);
+            _propertyMap.Add(Command.WEAPON, WeaponRef.Create);
+            _propertyMap.Add(Command.ARMOR, ArmorRef.Create);
             _propertyMap.Add(Command.HUMANOID, CommandProperty.Create);
             _propertyMap.Add(Command.MOUNTEDHUMANOID, CommandProperty.Create);
             _propertyMap.Add(Command.QUADRUPED, CommandProperty.Create);
@@ -261,7 +262,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.DIGEST, IntProperty.Create);
             _propertyMap.Add(Command.ACIDDIGEST, IntProperty.Create);
             _propertyMap.Add(Command.INCORPORATE, IntProperty.Create);
-            _propertyMap.Add(Command.RAISESHAPE, MonIDRef.Create);
+            _propertyMap.Add(Command.RAISESHAPE, MonsterRef.Create);
             _propertyMap.Add(Command.BEARTATTOO, IntProperty.Create);
             _propertyMap.Add(Command.HORSETATTOO, IntProperty.Create);
             _propertyMap.Add(Command.WOLFTATTOO, IntProperty.Create);
@@ -299,21 +300,21 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.FARTHRONEKILL, IntProperty.Create);
             _propertyMap.Add(Command.LOCALSUN, CommandProperty.Create);
             _propertyMap.Add(Command.ADEPTSACR, IntProperty.Create);
-            _propertyMap.Add(Command.SHAPECHANGE, MonIDRef.Create);
-            _propertyMap.Add(Command.PROPHETSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.FIRSTSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.SECONDSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.SECONDTMPSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.FORESTSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.PLAINSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.FOREIGNSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.HOMESHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.DOMSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.NOTDOMSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.SPRINGSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.SUMMERSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.AUTUMNSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.WINTERSHAPE, MonIDRef.Create);
+            _propertyMap.Add(Command.SHAPECHANGE, MonsterRef.Create);
+            _propertyMap.Add(Command.PROPHETSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.FIRSTSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.SECONDSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.SECONDTMPSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.FORESTSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.PLAINSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.FOREIGNSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.HOMESHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.DOMSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.NOTDOMSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.SPRINGSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.SUMMERSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.AUTUMNSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.WINTERSHAPE, MonsterRef.Create);
             _propertyMap.Add(Command.GROWHP, IntProperty.Create);
             _propertyMap.Add(Command.SHRINKHP, IntProperty.Create);
             _propertyMap.Add(Command.XPSHAPE, IntProperty.Create);
@@ -328,46 +329,46 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.NATUREATTUNED, IntProperty.Create);
             _propertyMap.Add(Command.BLOODATTUNED, IntProperty.Create);
             _propertyMap.Add(Command.CLEANSHAPE, CommandProperty.Create);
-            _propertyMap.Add(Command.LANDSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.WATERSHAPE, MonIDRef.Create);
-            _propertyMap.Add(Command.TWICEBORN, MonIDRef.Create);
+            _propertyMap.Add(Command.LANDSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.WATERSHAPE, MonsterRef.Create);
+            _propertyMap.Add(Command.TWICEBORN, MonsterRef.Create);
             _propertyMap.Add(Command.REANIMATOR, IntProperty.Create);
             _propertyMap.Add(Command.REANIMPRIEST, IntProperty.Create);
-            _propertyMap.Add(Command.DOMSUMMON, MonIDRef.Create);
-            _propertyMap.Add(Command.DOMSUMMON2, MonIDRef.Create);
-            _propertyMap.Add(Command.DOMSUMMON20, MonIDRef.Create);
-            _propertyMap.Add(Command.RAREDOMSUMMON, MonIDRef.Create);
-            _propertyMap.Add(Command.TEMPLETRAINER, MonIDRef.Create);
-            _propertyMap.Add(Command.MAKEMONSTERS1, MonIDRef.Create);
-            _propertyMap.Add(Command.MAKEMONSTERS2, MonIDRef.Create);
-            _propertyMap.Add(Command.MAKEMONSTERS3, MonIDRef.Create);
-            _propertyMap.Add(Command.MAKEMONSTERS4, MonIDRef.Create);
-            _propertyMap.Add(Command.MAKEMONSTERS5, MonIDRef.Create);
-            _propertyMap.Add(Command.SUMMON1, MonIDRef.Create);
-            _propertyMap.Add(Command.SUMMON2, MonIDRef.Create);
-            _propertyMap.Add(Command.SUMMON3, MonIDRef.Create);
-            _propertyMap.Add(Command.SUMMON4, MonIDRef.Create);
-            _propertyMap.Add(Command.SUMMON5, MonIDRef.Create);
-            _propertyMap.Add(Command.BATTLESUM1, MonIDRef.Create);
-            _propertyMap.Add(Command.BATTLESUM2, MonIDRef.Create);
-            _propertyMap.Add(Command.BATTLESUM3, MonIDRef.Create);
-            _propertyMap.Add(Command.BATTLESUM4, MonIDRef.Create);
-            _propertyMap.Add(Command.BATTLESUM5, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM1, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM2, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM3, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM4, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM5, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM1D3, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM1D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM2D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM3D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM4D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM5D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM6D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM7D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM8D6, MonIDRef.Create);
-            _propertyMap.Add(Command.BATSTARTSUM9D6, MonIDRef.Create);
+            _propertyMap.Add(Command.DOMSUMMON, MonsterRef.Create);
+            _propertyMap.Add(Command.DOMSUMMON2, MonsterRef.Create);
+            _propertyMap.Add(Command.DOMSUMMON20, MonsterRef.Create);
+            _propertyMap.Add(Command.RAREDOMSUMMON, MonsterRef.Create);
+            _propertyMap.Add(Command.TEMPLETRAINER, MonsterRef.Create);
+            _propertyMap.Add(Command.MAKEMONSTERS1, MonsterRef.Create);
+            _propertyMap.Add(Command.MAKEMONSTERS2, MonsterRef.Create);
+            _propertyMap.Add(Command.MAKEMONSTERS3, MonsterRef.Create);
+            _propertyMap.Add(Command.MAKEMONSTERS4, MonsterRef.Create);
+            _propertyMap.Add(Command.MAKEMONSTERS5, MonsterRef.Create);
+            _propertyMap.Add(Command.SUMMON1, MonsterRef.Create);
+            _propertyMap.Add(Command.SUMMON2, MonsterRef.Create);
+            _propertyMap.Add(Command.SUMMON3, MonsterRef.Create);
+            _propertyMap.Add(Command.SUMMON4, MonsterRef.Create);
+            _propertyMap.Add(Command.SUMMON5, MonsterRef.Create);
+            _propertyMap.Add(Command.BATTLESUM1, MonsterRef.Create);
+            _propertyMap.Add(Command.BATTLESUM2, MonsterRef.Create);
+            _propertyMap.Add(Command.BATTLESUM3, MonsterRef.Create);
+            _propertyMap.Add(Command.BATTLESUM4, MonsterRef.Create);
+            _propertyMap.Add(Command.BATTLESUM5, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM1, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM2, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM3, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM4, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM5, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM1D3, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM1D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM2D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM3D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM4D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM5D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM6D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM7D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM8D6, MonsterRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM9D6, MonsterRef.Create);
             _propertyMap.Add(Command.MONTAG, MontagIDRef.Create);
             _propertyMap.Add(Command.MONTAGWEIGHT, IntProperty.Create);
             _propertyMap.Add(Command.IVYLORD, IntProperty.Create);
@@ -375,7 +376,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.LAMIALORD, IntProperty.Create);
             _propertyMap.Add(Command.CORPSELORD, IntProperty.Create);
             _propertyMap.Add(Command.ONISUMMON, IntProperty.Create);
-            _propertyMap.Add(Command.SLAVER, MonIDRef.Create);
+            _propertyMap.Add(Command.SLAVER, MonsterRef.Create);
             _propertyMap.Add(Command.SLAVERBONUS, IntProperty.Create);
             _propertyMap.Add(Command.NAMETYPE, NametypeIDRef.Create);
             _propertyMap.Add(Command.NOLEADER, CommandProperty.Create);
@@ -478,78 +479,35 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SHAPECHANCE, IntProperty.Create);
             _propertyMap.Add(Command.NOTSACRED, CommandProperty.Create);
             _propertyMap.Add(Command.APPETITE, IntProperty.Create);
-
-
         }
 
-        public List<Property> Properties = new List<Property>();
-        public bool Selected { get; set; }
-        public bool Named { get; set; }
-
-        private string _name;
-
-        public Monster(string value, string comment)
+        public Monster(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
         {
-            this.SetID(value, comment);
-            if (ID == -1)
-            {
-                _name = value;
-                Named = true;
-            }
         }
 
-        public override void Parse(Command command, string value, string comment)
+        internal override Command GetNewCommand()
         {
-            if (_propertyMap.TryGetValue(command, out Func<Property> create))
-            {
-                Property prop = create.Invoke();
-                prop.ParentMod = this.Parent; //carry the mod assignation down
-                prop.Parse(command, value, comment);
-                Properties.Add(prop);
-            }
-            //else not recognized command, skip
-            //build comment storage for in-between properties
+            return Command.NEWMONSTER;
         }
 
-        public void Export(StreamWriter writer)
+        internal override Command GetSelectCommand()
         {
-            if (Selected)
-            {
-                if (CommandsMap.TryGetString(Command.SELECTMONSTER, out var s1))
-                {
-                    if (Named)
-                    {
-                        writer.WriteLine(s1 + " \"" + this._name + "\"");
-                    }
-                    else
-                    {
-                        writer.WriteLine(s1 + " " + this.ID);
-                    }
-                }
-            }
-            else
-            {
-                if (CommandsMap.TryGetString(Command.NEWMONSTER, out var s2))
-                {
-                    if (Named)
-                    {
-                        writer.WriteLine(s2 + " \"" + this._name + "\"");
-                    }
-                    else
-                    {
-                        writer.WriteLine(s2 + " " + this.ID);
-                    }
-                }
-            }
-            foreach (Property p in Properties)
-            {
-                var write = p.ToString();
-                writer.WriteLine(write);
-            }
-            if (CommandsMap.TryGetString(Command.END, out var s))
-            {
-                writer.WriteLine(s);
-            }
+            return Command.SELECTMONSTER;
+        }
+
+        internal override Dictionary<Command, Func<Property>> GetPropertyMap()
+        {
+            return _propertyMap;
+        }
+
+        internal override Dictionary<string, IDEntity> GetNamedList()
+        {
+            return Parent.NamedMonsters;
+        }
+
+        internal override Dictionary<int, IDEntity> GetIDList()
+        {
+            return Parent.Monsters;
         }
     }
 }

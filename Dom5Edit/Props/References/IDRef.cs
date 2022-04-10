@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,13 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class SiteIDRef : Reference
+    public class IDRef : Reference
     {
-        public static Property Create()
-        {
-            return new SiteIDRef();
-        }
-
-        private Command _command { get; set; }
         public int ID { get; set; }
         public bool HasValue { get; set; }
+
+        public IDEntity entity { get; set; }
+        public bool Resolved { get; set; }
 
         public override void Parse(Command c, string s, string comment)
         {
@@ -26,20 +24,25 @@ namespace Dom5Edit.Props
             if (HasValue)
             {
                 ID = val;
-                this.Parent.Parent.AddSiteIDReference(ID, this);
             }
         }
 
-        //Preliminary Example only for now, not optimal
+        public override void Resolve()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
+                int _exportID = Resolved ? entity.ID : ID; //true is left, false is right
+
                 if (!String.IsNullOrEmpty(Comment))
                 {
                     if (HasValue)
                     {
-                        return s + " " + ID + " -- " + Comment;
+                        return s + " " + _exportID + " -- " + Comment;
                     }
                     else
                     {
@@ -48,7 +51,7 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    return s + " " + ID;
+                    return s + " " + _exportID;
                 }
             }
             else return "";

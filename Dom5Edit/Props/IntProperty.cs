@@ -14,7 +14,6 @@ namespace Dom5Edit.Props
             return new IntProperty();
         }
 
-        private Command _command { get; set; }
         public int Value { get; set; }
         public bool HasValue { get; set; }
 

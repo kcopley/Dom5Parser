@@ -9,43 +9,43 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Entities
 {
-    public class Spell : IDEntity
+    public class Ench : IDEntity
     {
         public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
-        static Spell()
+        static Ench()
         {
             //String properties
             //_propertyMap.Add(Command.NAME, StringProperty.Create);
         }
 
-        public Spell(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
+        public Ench(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
         {
         }
 
         internal override Dictionary<int, IDEntity> GetIDList()
         {
-            return Parent.Spells;
+            throw new NotImplementedException();
         }
 
         internal override Dictionary<string, IDEntity> GetNamedList()
         {
-            return Parent.NamedSpells;
+            throw new NotImplementedException();
         }
 
         internal override Command GetNewCommand()
         {
-            return Command.NEWSPELL;
+            throw new NotImplementedException();
         }
 
         internal override Dictionary<Command, Func<Property>> GetPropertyMap()
         {
-            return _propertyMap;
+            throw new NotImplementedException();
         }
 
         internal override Command GetSelectCommand()
         {
-            return Command.SELECTSPELL;
+            throw new NotImplementedException();
         }
     }
 }

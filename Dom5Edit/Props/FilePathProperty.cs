@@ -14,7 +14,6 @@ namespace Dom5Edit.Props
             return new FilePathProperty();
         }
 
-        private Command _command { get; set; }
         public string Value { get; set; }
 
         public override void Parse(Command c, string s, string comment)
