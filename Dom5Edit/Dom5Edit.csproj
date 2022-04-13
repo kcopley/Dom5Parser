@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Entities\Montag.cs" />
     <Compile Include="Entities\Nation.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Event.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Props\CommandProperty.cs" />
     <Compile Include="Props\BitmaskProperty.cs" />
     <Compile Include="Props\IntIntIntProperty.cs" />
+    <Compile Include="Props\FlySprProperty.cs" />
     <Compile Include="Props\IntIntProperty.cs" />
     <Compile Include="Props\NameProperty.cs" />
     <Compile Include="Props\References\PoptypeIDRef.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Props\References\ArmorRef.cs" />
     <Compile Include="Props\References\Reference.cs" />
     <Compile Include="Props\References\SiteRef.cs" />
+    <Compile Include="Props\References\NationRef.cs" />
     <Compile Include="Props\References\WeaponRef.cs" />
     <Compile Include="Props\References\ItemIDRef.cs" />
     <Compile Include="Props\References\SpellIDRef.cs" />

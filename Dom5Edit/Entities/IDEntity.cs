@@ -31,7 +31,7 @@ namespace Dom5Edit.Entities
             }
             else
             {
-                GetIDList().Add(ID, this);
+                if (!GetIDList().ContainsKey(ID)) GetIDList().Add(ID, this);
             }
         }
 
@@ -86,8 +86,10 @@ namespace Dom5Edit.Entities
             IDComment = comment;
         }
 
+        private bool _resolved = false;
         public void Resolve()
         {
+            if (_resolved) return;
             foreach (Property prop in Properties)
             {
                 if (prop is Reference p)
@@ -95,6 +97,7 @@ namespace Dom5Edit.Entities
                     p.Resolve();
                 }
             }
+            _resolved = true;
         }
 
         internal bool TryGetName(out string name)

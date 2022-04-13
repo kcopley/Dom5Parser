@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class IntIntIntProperty : Property
+    public class FlySprProperty : IntIntProperty
     {
-        public static Property Create()
+        public new static Property Create()
         {
-            return new IntIntIntProperty();
+            return new FlySprProperty();
         }
 
-        public int Value1 { get; set; }
-        public int Value2 { get; set; }
-        public int Value3 { get; set; }
-        public bool HasValue { get; set; }
+        public bool HasTwoValues { get; set; }
 
         public override void Parse(Command c, string s, string comment)
         {
@@ -25,14 +22,19 @@ namespace Dom5Edit.Props
             this.Comment = comment;
             s = s.Trim();
             var split = s.Split(' ');
-            if (split.Length == 2)
+            if (split.Length == 1)
+            {
+                HasValue = int.TryParse(split[0], out int val1);
+                if (HasValue) Value1 = val1;
+                HasTwoValues = false;
+            }
+            else if (split.Length == 2)
             {
                 HasValue = int.TryParse(split[0], out int val1);
                 if (HasValue) Value1 = val1;
                 HasValue = int.TryParse(split[1], out int val2);
                 if (HasValue) Value2 = val2;
-                HasValue = int.TryParse(split[2], out int val3);
-                if (HasValue) Value3 = val3;
+                HasTwoValues = true;
             }
             else
             {
@@ -49,7 +51,16 @@ namespace Dom5Edit.Props
                 {
                     if (HasValue)
                     {
-                        return s + " " + Value1 + " " + Value2 + " " + Value3 + " -- " + Comment;
+                        if (HasTwoValues)
+                        {
+                            var ret = s + " " + Value1 + " " + Value2 + " -- " + Comment;
+                            return ret;
+                        }
+                        else
+                        {
+                            var ret = s + " " + Value1 + " -- " + Comment;
+                            return ret;
+                        }
                     }
                     else
                     {
@@ -60,7 +71,16 @@ namespace Dom5Edit.Props
                 {
                     if (HasValue)
                     {
-                        return s + " " + Value1 + " " + Value2 + " " + Value3;
+                        if (HasTwoValues)
+                        {
+                            var ret = s + " " + Value1 + " " + Value2;
+                            return ret;
+                        }
+                        else
+                        {
+                            var ret = s + " " + Value1;
+                            return ret;
+                        }
                     }
                     else
                     {

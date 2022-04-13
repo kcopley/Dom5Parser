@@ -43,7 +43,14 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    return s + " " + Value;
+                    if (HasValue)
+                    {
+                        return s + " " + Value;
+                    }
+                    else
+                    {
+                        return s;
+                    }
                 }
             }
             else return "";

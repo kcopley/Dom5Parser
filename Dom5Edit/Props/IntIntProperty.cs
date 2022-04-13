@@ -18,7 +18,6 @@ namespace Dom5Edit.Props
 
         public int Value2 { get; set; }
 
-        public int Value3 { get; set; }
         public bool HasValue { get; set; }
 
         public override void Parse(Command c, string s, string comment)
@@ -59,7 +58,14 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    return s + " " + Value1 + " " + Value2;
+                    if (HasValue)
+                    {
+                        return s + " " + Value1 + " " + Value2;
+                    }
+                    else
+                    {
+                        return s;
+                    }
                 }
             }
             else return "";

@@ -268,14 +268,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        public override void AddNamed(string s)
-        {
-            //base.AddNamed(s); //do nothing here atm
-        }
-
         internal override Dictionary<string, IDEntity> GetNamedList()
         {
-            throw new NotImplementedException();
+            return Parent.NamedNations;
         }
 
         internal override Dictionary<int, IDEntity> GetIDList()

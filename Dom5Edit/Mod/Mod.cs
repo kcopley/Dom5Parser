@@ -27,6 +27,7 @@ namespace Dom5Edit.Mods
         public Dictionary<string, IDEntity> NamedSpells = new Dictionary<string, IDEntity>();
         public Dictionary<int, IDEntity> Items = new Dictionary<int, IDEntity>();
         public Dictionary<string, IDEntity> NamedItems = new Dictionary<string, IDEntity>();
+        public List<IDEntity> ItemsWithNoNameYet = new List<IDEntity>();
         public Dictionary<int, IDEntity> Weapons = new Dictionary<int, IDEntity>();
         public Dictionary<string, IDEntity> NamedWeapons = new Dictionary<string, IDEntity>();
         public Dictionary<int, IDEntity> Armors = new Dictionary<int, IDEntity>();
@@ -36,12 +37,15 @@ namespace Dom5Edit.Mods
         public Dictionary<string, IDEntity> NamedSites = new Dictionary<string, IDEntity>();
         public List<IDEntity> SitesThatNeedIDs = new List<IDEntity>();
         public Dictionary<int, IDEntity> Nametypes = new Dictionary<int, IDEntity>();
-        public Dictionary<int, MontagIDRef> Montags = new Dictionary<int, MontagIDRef>();
+        //public Dictionary<int, MontagIDRef> Montags = new Dictionary<int, MontagIDRef>();
         public Dictionary<int, RestrictedItemIDRef> RestrictedItems = new Dictionary<int, RestrictedItemIDRef>();
         public Dictionary<int, Ench> Enchantments = new Dictionary<int, Ench>();
         public Dictionary<int, IDEntity> Nations = new Dictionary<int, IDEntity>();
+        public Dictionary<string, IDEntity> NamedNations = new Dictionary<string, IDEntity>();
         public List<IDEntity> NationsWithNoID = new List<IDEntity>();
         public Dictionary<int, IDEntity> Poptypes = new Dictionary<int, IDEntity>();
+
+        public Dictionary<int, Montag> Montags = new Dictionary<int, Montag>();
 
         private int _MonStartID = Importer.MONSTER_START_ID;
         private int _SiteStartID = Importer.SITE_START_ID;
@@ -52,6 +56,7 @@ namespace Dom5Edit.Mods
         private int _SpellStartID = Importer.SPELL_START_ID;
         private int _NametypeStartID = Importer.NAMETYPE_START_ID;
         private int _NationStartID = Importer.NATION_START_ID;
+        private int _MontagStartID = Importer.MONTAG_START_ID;
 
         private Entity _currentEntity = null;
 
@@ -157,6 +162,12 @@ namespace Dom5Edit.Mods
                 case Command.SELECTNATION:
                     _currentEntity = SelectNation(val, comment);
                     break;
+                case Command.NEWITEM:
+                    _currentEntity = NewItem(val, comment);
+                    break;
+                case Command.SELECTITEM:
+                    _currentEntity = SelectItem(val, comment);
+                    break;
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);
                     _currentEntity = null;
@@ -214,7 +225,23 @@ namespace Dom5Edit.Mods
             {
                 kvp.Value.Resolve();
             }
+            foreach (var kvp in NamedNations)
+            {
+                kvp.Value.Resolve();
+            }
             foreach (var kvp in NationsWithNoID)
+            {
+                kvp.Resolve();
+            }
+            foreach (var kvp in Items)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in NamedItems)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in ItemsWithNoNameYet)
             {
                 kvp.Resolve();
             }
@@ -222,37 +249,39 @@ namespace Dom5Edit.Mods
 
         public void Export(StreamWriter writer)
         {
-            writer.WriteLine(CommandsMap.Format(Command.MODNAME, ModName));
+            writer.WriteLine(CommandsMap.Format(Command.MODNAME, ModName, true));
             if (Version?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.VERSION, Version));
             if (DomVersion?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DOMVERSION, DomVersion));
-            if (Icon?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.ICON, Icon));
-            if (Description?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DESCRIPTION, Description));
+            if (Icon?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.ICON, Icon, true));
+            if (Description?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DESCRIPTION, Description, true));
 
             writer.WriteLine();
 
+            //Weapons
             Export(writer, Weapons.Values.ToList());
             Export(writer, NamedWeapons.Values.ToList());
+            //Armors
             Export(writer, Armors.Values.ToList());
             Export(writer, NamedArmors.Values.ToList());
+            //Monsters
             Export(writer, Monsters.Values.ToList());
             Export(writer, NamedMonsters.Values.ToList());
+            //Nametypes
             Export(writer, Nametypes.Values.ToList());
+            //Sites
             Export(writer, Sites.Values.ToList());
             Export(writer, NamedSites.Values.ToList());
             Export(writer, SitesThatNeedIDs);
+            //Nations
             Export(writer, Nations.Values.ToList());
+            //Export(writer, NamedNations.Values.ToList()); //not needed
 
             //spells
 
             //magic items
-
-            //general
-
-            //poptypes
-
-            //mercenaries
-
-            //events
+            Export(writer, Items.Values.ToList());
+            Export(writer, NamedItems.Values.ToList());
+            Export(writer, ItemsWithNoNameYet.ToList());
         }
 
         public void Export(StreamWriter writer, List<Entity> entities)
@@ -270,6 +299,21 @@ namespace Dom5Edit.Mods
             {
                 m.Export(writer);
                 writer.WriteLine();
+            }
+        }
+
+        public Montag AddMontag(int ID)
+        {
+            if (ID == -1) return null;
+            if (Montags.TryGetValue(ID, out var m))
+            {
+                return m;
+            }
+            else
+            {
+                var ret = new Montag(ID);
+                Montags.Add(ID, ret);
+                return ret;
             }
         }
 
@@ -385,9 +429,35 @@ namespace Dom5Edit.Mods
             {
                 return m;
             }
+            else if (NamedNations.TryGetValue(val, out IDEntity m2))
+            {
+                return m2;
+            }
             else
             {
                 return NewNation(val, comment, true);
+            }
+        }
+
+        public Item NewItem(string val, string comment, bool selected = false)
+        {
+            Item m = new Item(val, comment, this, selected);
+            return m;
+        }
+
+        public IDEntity SelectItem(string val, string comment)
+        {
+            if (int.TryParse(val, out int id) && Items.TryGetValue(id, out IDEntity m))
+            {
+                return m;
+            }
+            else if (NamedItems.TryGetValue(val, out IDEntity m2))
+            {
+                return m2;
+            }
+            else
+            {
+                return NewItem(val, comment, true);
             }
         }
 
@@ -419,6 +489,16 @@ namespace Dom5Edit.Mods
                 _ItemStartID++;
             }
             return _ItemStartID;
+        }
+
+        public int GetNextMontagID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (Montags.ContainsKey(_MontagStartID))
+            {
+                _MontagStartID++;
+            }
+            return _MontagStartID;
         }
 
         public int GetNextWeaponID()

@@ -99,7 +99,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SKIP, CommandProperty.Create);
             _propertyMap.Add(Command.SKIP2, CommandProperty.Create);
             _propertyMap.Add(Command.EXPLSPR, IntProperty.Create);
-            _propertyMap.Add(Command.FLYSPR, IntIntProperty.Create);
+            _propertyMap.Add(Command.FLYSPR, FlySprProperty.Create);
             _propertyMap.Add(Command.UWOK, CommandProperty.Create);
             _propertyMap.Add(Command.NOUW, CommandProperty.Create);
             _propertyMap.Add(Command.SOULSLAYING, CommandProperty.Create);

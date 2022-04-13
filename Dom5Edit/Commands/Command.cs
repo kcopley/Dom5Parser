@@ -12,7 +12,7 @@ namespace Dom5Edit.Commands
         DESCRIPTION,
         ICON,
         VERSION,
-        DOMVERSION, 
+        DOMVERSION,
         SELECTWEAPON,
         END,
         NAME,
@@ -2507,11 +2507,18 @@ namespace Dom5Edit.Commands
             return _stringMap.TryGetValue(c, out s);
         }
 
-        public static string Format(Command c, string val)
+        public static string Format(Command c, string val, bool needsQuotes = false)
         {
             if (TryGetString(c, out string v))
             {
-                return v + " " + val;
+                if (needsQuotes)
+                {
+                    return v + " \"" + val + "\"";
+                }
+                else
+                {
+                    return v + " " + val;
+                }
             }
             else
             {

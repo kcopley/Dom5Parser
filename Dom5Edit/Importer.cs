@@ -20,7 +20,7 @@ namespace Dom5Edit
         private string _ModName = "singularity-testing.dm";
 
         internal static int MONSTER_START_ID = 3500;
-        internal static int SITE_START_ID = 6000;
+        internal static int SITE_START_ID = 1500;
         internal static int EVENT_START_ID = 6000;
         internal static int ARMOR_START_ID = 300;
         internal static int WEAPON_START_ID = 800;
@@ -28,6 +28,7 @@ namespace Dom5Edit
         internal static int SPELL_START_ID = 1300;
         internal static int NAMETYPE_START_ID = 170;
         internal static int NATION_START_ID = 120;
+        internal static int MONTAG_START_ID = 1000;
 
         public Importer()
         {
@@ -79,7 +80,17 @@ namespace Dom5Edit
                 Merge(m.Weapons, m.NamedWeapons, finalMod.Weapons, finalMod.NamedWeapons, WEAPON_START_ID, finalMod.GetNextWeaponID);
                 Merge(m.Nametypes, null, finalMod.Nametypes, null, NAMETYPE_START_ID, finalMod.GetNextNametypeID, true);
                 Merge(m.Sites, m.NamedSites, finalMod.Sites, finalMod.NamedSites, SITE_START_ID, finalMod.GetNextSiteID);
+                Merge(m.Items, m.NamedItems, finalMod.Items, finalMod.NamedItems, ITEM_START_ID, finalMod.GetNextItemID);
+                MergeExtraItems(m.ItemsWithNoNameYet, finalMod);
                 MergeNations(m.Nations, finalMod.Nations, m.NationsWithNoID, NATION_START_ID, finalMod.GetNextNationID);
+                MergeMontags(m.Montags.Values.ToList(), finalMod);
+
+                //general settings (is this even necessary? lol)
+                //poptypes
+                //mercenaries
+                //events
+                //event codes
+                //restricted item codes
             }
             finalizedmod = finalMod;
         }
@@ -117,17 +128,17 @@ namespace Dom5Edit
                 {
                     //new monster on a vanilla ID?
                 }
-                else if (!kvp.Value.Selected)
+                else// if (!kvp.Value.Selected)
                 {
                     //assign a new ID upwards
                     int newID = nextID.Invoke();
                     kvp.Value.ID = newID;
                     final.Add(newID, kvp.Value);
-                }
+                }/*
                 else //a select monster on a mod ID?
                 {
                     final.Add(kvp.Key, kvp.Value); //no conflict, so just add it as is
-                }
+                }*/
             }
 
             if (named != null)
@@ -144,7 +155,7 @@ namespace Dom5Edit
                 }
             }
         }
-        
+
         public void MergeNations(Dictionary<int, IDEntity> current, Dictionary<int, IDEntity> final, List<IDEntity> needsIDs, int START_ID, Func<int> nextID)
         {
             foreach (var kvp in current)
@@ -170,6 +181,24 @@ namespace Dom5Edit
                 int newID = nextID.Invoke();
                 entity.ID = newID;
                 final.Add(newID, entity);
+            }
+        }
+
+        public void MergeExtraItems(List<IDEntity> items, Mod finalMod)
+        {
+            foreach (IDEntity item in items)
+            {
+                item.ID = finalMod.GetNextItemID();
+                finalMod.Items.Add(item.ID, item);
+            }
+        }
+
+        public void MergeMontags(List<Montag> items, Mod finalMod)
+        {
+            foreach (Montag item in items)
+            {
+                item.MontagID = finalMod.GetNextMontagID();
+                finalMod.Montags.Add(item.MontagID, item); //since the montags are all properties on an object, there's no exporting required; this is just keeping ID's consistent
             }
         }
     }
