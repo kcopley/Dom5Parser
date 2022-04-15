@@ -8,20 +8,25 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class ItemIDRef : IDRef
+    public class SpellDamageRef : Reference
     {
         public static Property Create()
         {
-            return new ItemIDRef();
+            return new SpellDamageRef();
         }
 
         public override void Resolve()
         {
-            if (Parent.Parent.Items.TryGetValue(ID, out IDEntity m))
-            {
-                entity = m;
-                Resolved = true;
-            }
+        }
+
+        public override void Parse(Command c, string v, string comment)
+        {
+            base.Parse(c, v, comment);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
         }
     }
 }

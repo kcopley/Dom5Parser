@@ -14,6 +14,7 @@ namespace Dom5Edit.Mods
     {
         private readonly char spaceDelimiter = ' ';
         private readonly string commentDelimiter = "--";
+        private readonly string altCommentDelimiter = "-";
 
         public string ModName { get; set; }
         public string Description { get; set; }
@@ -25,6 +26,7 @@ namespace Dom5Edit.Mods
         public Dictionary<string, IDEntity> NamedMonsters = new Dictionary<string, IDEntity>();
         public Dictionary<int, IDEntity> Spells = new Dictionary<int, IDEntity>();
         public Dictionary<string, IDEntity> NamedSpells = new Dictionary<string, IDEntity>();
+        public List<IDEntity> SpellsWithNoNameYet = new List<IDEntity>();
         public Dictionary<int, IDEntity> Items = new Dictionary<int, IDEntity>();
         public Dictionary<string, IDEntity> NamedItems = new Dictionary<string, IDEntity>();
         public List<IDEntity> ItemsWithNoNameYet = new List<IDEntity>();
@@ -46,6 +48,8 @@ namespace Dom5Edit.Mods
         public Dictionary<int, IDEntity> Poptypes = new Dictionary<int, IDEntity>();
 
         public Dictionary<int, Montag> Montags = new Dictionary<int, Montag>();
+
+        public Dictionary<string, IDEntity> NamedMercenaries = new Dictionary<string, IDEntity>();
 
         private int _MonStartID = Importer.MONSTER_START_ID;
         private int _SiteStartID = Importer.SITE_START_ID;
@@ -74,6 +78,7 @@ namespace Dom5Edit.Mods
                     if (s.Length < 1) continue; //empty line
                                                 //pull comments first
                     int commentIndex = s.IndexOf(commentDelimiter);
+
                     string line = s;
                     string comment = ""; //set to empty string, not null
                     if (commentIndex != -1) //has a comment
@@ -91,6 +96,7 @@ namespace Dom5Edit.Mods
                     {
                         command = line.Substring(0, spaceIndex).Trim();
                         value = line.Substring(spaceIndex + 1).Trim();
+                        value = value.Trim('\"');
                     }
 
                     if (CommandsMap.TryGetCommand(command, out Command c))
@@ -167,6 +173,15 @@ namespace Dom5Edit.Mods
                     break;
                 case Command.SELECTITEM:
                     _currentEntity = SelectItem(val, comment);
+                    break;
+                case Command.NEWSPELL:
+                    _currentEntity = NewSpell(val, comment);
+                    break;
+                case Command.SELECTSPELL:
+                    _currentEntity = SelectSpell(val, comment);
+                    break;
+                case Command.NEWMERC:
+                    _currentEntity = NewMercenary(val, comment);
                     break;
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);
@@ -245,6 +260,22 @@ namespace Dom5Edit.Mods
             {
                 kvp.Resolve();
             }
+            foreach (var kvp in Spells)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in NamedSpells)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in SpellsWithNoNameYet)
+            {
+                kvp.Resolve();
+            }
+            foreach (var kvp in NamedMercenaries)
+            {
+                kvp.Value.Resolve();
+            }
         }
 
         public void Export(StreamWriter writer)
@@ -277,6 +308,9 @@ namespace Dom5Edit.Mods
             //Export(writer, NamedNations.Values.ToList()); //not needed
 
             //spells
+            Export(writer, Spells.Values.ToList());
+            Export(writer, NamedSpells.Values.ToList());
+            Export(writer, SpellsWithNoNameYet.ToList());
 
             //magic items
             Export(writer, Items.Values.ToList());
@@ -317,6 +351,21 @@ namespace Dom5Edit.Mods
             }
         }
 
+        public Montag AddNonAdjustedMontag(int ID)
+        {
+            if (ID == -1) return null;
+            if (Montags.TryGetValue(ID, out var m))
+            {
+                return m;
+            }
+            else
+            {
+                var ret = new Montag(ID);
+                Montags.Add(ID, ret);
+                return ret;
+            }
+        }
+
         public IDEntity NewMonster(string val, string comment, bool selected = false)
         {
             Monster m = new Monster(val, comment, this, selected);
@@ -336,6 +385,28 @@ namespace Dom5Edit.Mods
             else
             {
                 return NewMonster(val, comment, true);
+            }
+        }
+
+        public IDEntity NewSpell(string val, string comment, bool selected = false)
+        {
+            Spell m = new Spell(val, comment, this, selected);
+            return m;
+        }
+
+        public IDEntity SelectSpell(string val, string comment)
+        {
+            if (int.TryParse(val, out int id) && Spells.TryGetValue(id, out IDEntity m))
+            {
+                return m;
+            }
+            else if (NamedSpells.TryGetValue(val, out IDEntity m2))
+            {
+                return m2;
+            }
+            else
+            {
+                return NewSpell(val, comment, true);
             }
         }
 
@@ -371,6 +442,12 @@ namespace Dom5Edit.Mods
             {
                 return NewArmor(val, comment, true);
             }
+        }
+
+        public IDEntity NewMercenary(string val, string comment, bool selected = false)
+        {
+            Mercenary m = new Mercenary(val, comment, this, selected);
+            return m;
         }
 
         public Weapon NewWeapon(string val, string comment, bool selected = false)

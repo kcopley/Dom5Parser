@@ -30,6 +30,22 @@ namespace Dom5Edit.Props
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
+                    return s + " \"" + Value + "\" -- " + Comment;
+                }
+                else
+                {
+                    return s + " \"" + Value + "\"";
+                }
+            }
+            else return "";
+        }
+
+        public string ToStringNoQuotes()
+        {
+            if (CommandsMap.TryGetString(_command, out string s))
+            {
+                if (!String.IsNullOrEmpty(Comment))
+                {
                     return s + " " + Value + " -- " + Comment;
                 }
                 else

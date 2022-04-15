@@ -80,14 +80,23 @@ namespace Dom5Edit
                 Merge(m.Weapons, m.NamedWeapons, finalMod.Weapons, finalMod.NamedWeapons, WEAPON_START_ID, finalMod.GetNextWeaponID);
                 Merge(m.Nametypes, null, finalMod.Nametypes, null, NAMETYPE_START_ID, finalMod.GetNextNametypeID, true);
                 Merge(m.Sites, m.NamedSites, finalMod.Sites, finalMod.NamedSites, SITE_START_ID, finalMod.GetNextSiteID);
+                MergeExtraSites(m.SitesThatNeedIDs, finalMod);
                 Merge(m.Items, m.NamedItems, finalMod.Items, finalMod.NamedItems, ITEM_START_ID, finalMod.GetNextItemID);
                 MergeExtraItems(m.ItemsWithNoNameYet, finalMod);
                 MergeNations(m.Nations, finalMod.Nations, m.NationsWithNoID, NATION_START_ID, finalMod.GetNextNationID);
                 MergeMontags(m.Montags.Values.ToList(), finalMod);
 
+                Merge(m.Spells, m.NamedSpells, finalMod.Spells, finalMod.NamedSpells, SPELL_START_ID, finalMod.GetNextSpellID);
+                MergeExtraSpells(m.SpellsWithNoNameYet, finalMod);
+
+                //Migrate mercs, no conflicts as long as ID's adjusted internally
+                foreach (var kvp in m.NamedMercenaries)
+                {
+                    finalMod.NamedMercenaries.Add(kvp.Key, kvp.Value);
+                }
                 //general settings (is this even necessary? lol)
+
                 //poptypes
-                //mercenaries
                 //events
                 //event codes
                 //restricted item codes
@@ -147,10 +156,15 @@ namespace Dom5Edit
                 {
                     if (kvp.Value.Selected && kvp.Value.Named) //else it was already exported
                     {
-                        if (kvp.Value.ID != -1 && !current.ContainsKey(kvp.Value.ID)) //make sure it wasn't already exported through some mixed references
+                        if (kvp.Value.ID != -1 && !current.ContainsKey(kvp.Value.ID) && !finalNamed.ContainsKey(kvp.Key)) //make sure it wasn't already exported through some mixed references
                         {
                             finalNamed.Add(kvp.Key, kvp.Value);
                         }
+                    }
+
+                    if (kvp.Value.ID == -1 && !finalNamed.ContainsKey(kvp.Key))
+                    {
+                        finalNamed.Add(kvp.Key, kvp.Value);
                     }
                 }
             }
@@ -184,12 +198,30 @@ namespace Dom5Edit
             }
         }
 
+        public void MergeExtraSites(List<IDEntity> items, Mod finalMod)
+        {
+            foreach (IDEntity item in items)
+            {
+                item.ID = finalMod.GetNextSiteID();
+                finalMod.Sites.Add(item.ID, item);
+            }
+        }
+
         public void MergeExtraItems(List<IDEntity> items, Mod finalMod)
         {
             foreach (IDEntity item in items)
             {
                 item.ID = finalMod.GetNextItemID();
                 finalMod.Items.Add(item.ID, item);
+            }
+        }
+
+        public void MergeExtraSpells(List<IDEntity> spells, Mod finalMod)
+        {
+            foreach (IDEntity spell in spells)
+            {
+                spell.ID = finalMod.GetNextSpellID();
+                finalMod.Spells.Add(spell.ID, spell);
             }
         }
 

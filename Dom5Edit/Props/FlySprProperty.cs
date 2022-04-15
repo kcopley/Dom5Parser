@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,22 +19,39 @@ namespace Dom5Edit.Props
 
         public override void Parse(Command c, string s, string comment)
         {
+            if (Parent is IDEntity)
+            {
+                if (((IDEntity)Parent).ID == 1011)
+                {
+                    int a = 0;
+                    a++;
+                }
+            }
             this._command = c;
             this.Comment = comment;
             s = s.Trim();
             var split = s.Split(' ');
             if (split.Length == 1)
             {
-                HasValue = int.TryParse(split[0], out int val1);
+                HasValue = split[0].TryRetrieveNumericFromString(out int val1, out string remainder);
                 if (HasValue) Value1 = val1;
                 HasTwoValues = false;
+                if (remainder.Length > 0) Comment += remainder;
             }
-            else if (split.Length == 2)
+            else if (split.Length >= 2)
             {
-                HasValue = int.TryParse(split[0], out int val1);
+                HasValue = split[0].TryRetrieveNumericFromString(out int val1, out string remainder);
                 if (HasValue) Value1 = val1;
-                HasValue = int.TryParse(split[1], out int val2);
-                if (HasValue) Value2 = val2;
+                if (remainder.Length == 0)
+                {
+                    HasValue = split[1].TryRetrieveNumericFromString(out int val2, out string remainder2);
+                    if (HasValue) Value2 = val2;
+                    if (remainder2.Length > 0) Comment += remainder2;
+                }
+                else
+                {
+                    Value2 = 1;
+                }
                 HasTwoValues = true;
             }
             else

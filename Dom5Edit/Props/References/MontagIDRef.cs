@@ -25,6 +25,7 @@ namespace Dom5Edit.Props
         public override void Parse(Command c, string s, string comment)
         {
             base.Parse(c, s, comment);
+            if (c != Command.MONTAG) ID = -ID;
             _montag = this.Parent.Parent.AddMontag(ID);
             HasMontagID = _montag != null;
         }
@@ -34,6 +35,11 @@ namespace Dom5Edit.Props
             if (CommandsMap.TryGetString(_command, out string s))
             {
                 int _exportID = _montag != null ? _montag.MontagID : ID; //true is left, false is right
+
+                if (_command != Command.MONTAG)
+                {
+                    _exportID = -_exportID;
+                }
 
                 if (!String.IsNullOrEmpty(Comment))
                 {

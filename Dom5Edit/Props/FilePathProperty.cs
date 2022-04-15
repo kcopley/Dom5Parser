@@ -30,11 +30,11 @@ namespace Dom5Edit.Props
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
-                    return s + " " + Value + " -- " + Comment;
+                    return s + " \"" + Value + "\" -- " + Comment;
                 }
                 else
                 {
-                    return s + " " + Value;
+                    return s + " \"" + Value + "\"";
                 }
             }
             else return "";

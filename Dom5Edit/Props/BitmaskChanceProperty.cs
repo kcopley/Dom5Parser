@@ -27,10 +27,14 @@ namespace Dom5Edit.Props
             var split = s.Split(' ');
             if (split.Length == 2)
             {
-                HasValue = ulong.TryParse(split[0], out ulong val);
+                HasValue = split[0].TryRetrieveUlongFromString(out ulong val, out string remainder);
                 if (HasValue) Bitmask = val;
-                HasValue = int.TryParse(split[1], out int val2);
-                if (HasValue) Chance = val2;
+                if (remainder.Length == 0)
+                {
+                    HasValue = split[1].TryRetrieveNumericFromString(out int val2, out string remainder2);
+                    if (HasValue) Chance = val2;
+                    if (remainder2.Length > 0) comment += remainder2;
+                }
             }
             else
             {

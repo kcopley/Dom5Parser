@@ -19,6 +19,82 @@ public static class StringExtension
         }
     }
 
+    public static bool TryRetrieveNumericFromString(this string s, out int ret, out string remainder)
+    {
+        var hasvalue = int.TryParse(s, out int i);
+        if (hasvalue)
+        {
+            ret = i;
+            remainder = "";
+            return true;
+        }
+
+        int numberOfIntegerChars = 0;
+        foreach (char ch in s)
+        {
+            if (int.TryParse(ch.ToString(), out _) || ch.Equals('-'))
+            {
+                numberOfIntegerChars++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (numberOfIntegerChars > 0)
+        {
+            var sub = s.Substring(0, numberOfIntegerChars);
+            bool hasValue = int.TryParse(sub, out int val);
+            if (hasValue)
+            {
+                ret = val;
+                remainder = s.Substring(numberOfIntegerChars);
+                return true;
+            }
+        }
+        ret = -1;
+        remainder = "";
+        return false;
+    }
+
+    public static bool TryRetrieveUlongFromString(this string s, out ulong ret, out string remainder)
+    {
+        var hasvalue = ulong.TryParse(s, out ulong i);
+        if (hasvalue)
+        {
+            ret = i;
+            remainder = "";
+            return true;
+        }
+
+        int numberOfIntegerChars = 0;
+        foreach (char ch in s)
+        {
+            if (ulong.TryParse(ch.ToString(), out _))
+            {
+                numberOfIntegerChars++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (numberOfIntegerChars > 0)
+        {
+            var sub = s.Substring(0, numberOfIntegerChars);
+            bool hasValue = ulong.TryParse(sub, out ulong val);
+            if (hasValue)
+            {
+                ret = val;
+                remainder = s.Substring(numberOfIntegerChars);
+                return true;
+            }
+        }
+        ret = 0;
+        remainder = "";
+        return false;
+    }
+
     public static bool EqualsIgnoreCase(this string s, string rhs)
     {
         if (s == null)

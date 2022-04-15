@@ -10,8 +10,8 @@ namespace Dom5Edit.Props
 {
     public class MonsterOrMontagRef : Reference
     {
-        private MontagIDRef _montagRef;
-        private MonsterRef _monsterRef;
+        internal MontagIDRef _montagRef;
+        internal MonsterRef _monsterRef;
 
         public static Property Create()
         {
@@ -24,7 +24,7 @@ namespace Dom5Edit.Props
             {
                 _montagRef.Resolve();
             }
-            else
+            else if (_monsterRef != null)
             {
                 _monsterRef.Resolve();
             }
@@ -32,20 +32,19 @@ namespace Dom5Edit.Props
 
         public override void Parse(Command c, string v, string comment)
         {
-            if (int.TryParse(v, out int i))
+            bool hasvalue = v.TryRetrieveNumericFromString(out int i, out _);
+
+            if (hasvalue && i < 0)
             {
-                if (i < 0) //montag
-                {
-                    _montagRef = new MontagIDRef();
-                    _montagRef.Parent = this.Parent;
-                    _montagRef.Parse(c, v, comment);
-                }
-                else //monster
-                {
-                    _monsterRef = new MonsterRef();
-                    _monsterRef.Parent = this.Parent;
-                    _monsterRef.Parse(c, v, comment);
-                }
+                _montagRef = new MontagIDRef();
+                _montagRef.Parent = this.Parent;
+                _montagRef.Parse(c, v, comment);
+            }
+            else //monster, possibly by name
+            {
+                _monsterRef = new MonsterRef();
+                _monsterRef.Parent = this.Parent;
+                _monsterRef.Parse(c, v, comment);
             }
         }
 
@@ -55,10 +54,11 @@ namespace Dom5Edit.Props
             {
                 return _montagRef.ToString();
             }
-            else
+            else if (_monsterRef != null)
             {
                 return _monsterRef.ToString();
             }
+            return "";
         }
     }
 }

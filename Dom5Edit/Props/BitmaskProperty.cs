@@ -21,8 +21,9 @@ namespace Dom5Edit.Props
         {
             this._command = c;
             this.Comment = comment;
-            HasValue = ulong.TryParse(s, out ulong val);
+            HasValue = s.TryRetrieveUlongFromString(out ulong val, out string remainder);
             if (HasValue) Value = val;
+            if (remainder.Length > 0) Comment += remainder;
         }
 
         //Preliminary Example only for now, not optimal

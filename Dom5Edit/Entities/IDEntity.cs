@@ -75,9 +75,10 @@ namespace Dom5Edit.Entities
 
         public virtual void SetID(string s, string comment)
         {
-            if (int.TryParse(s, out int id))
+            if (s.TryRetrieveNumericFromString(out int id, out string remainder))
             {
                 ID = id;
+                if (remainder.Length > 0) comment += remainder;
             }
             else
             {
@@ -151,9 +152,13 @@ namespace Dom5Edit.Entities
                     {
                         writer.WriteLine(s2 + " \"" + this._name + "\"" + endStr);
                     }
-                    else
+                    else if (ID != -1)
                     {
                         writer.WriteLine(s2 + " " + this.ID + endStr);
+                    }
+                    else
+                    {
+                        writer.WriteLine(s2 + " " + endStr);
                     }
                 }
             }

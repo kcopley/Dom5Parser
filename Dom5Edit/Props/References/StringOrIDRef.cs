@@ -22,18 +22,19 @@ namespace Dom5Edit.Props
         {
             this._command = c;
             this.Comment = comment;
-            HasValue = int.TryParse(s, out int val);
+            HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
             if (HasValue)
             {
                 ID = val;
                 IsStringRef = false;
+                Comment += remainder;
             }
             else
             {
                 HasValue = s.Length > 0;
                 if (HasValue)
                 {
-                    Name = s.Trim('\"');
+                    Name = s;
                     IsStringRef = true;
                 }
             }

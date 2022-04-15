@@ -25,24 +25,24 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.RARITY, IntProperty.Create);
             _propertyMap.Add(Command.DECUNREST, IntProperty.Create);
             _propertyMap.Add(Command.SUPPLY, IntProperty.Create);
-            _propertyMap.Add(Command.HOMEMON, MonsterRef.Create);
-            _propertyMap.Add(Command.HOMECOM, MonsterRef.Create);
-            _propertyMap.Add(Command.MON, MonsterRef.Create);
-            _propertyMap.Add(Command.COM, MonsterRef.Create);
-            _propertyMap.Add(Command.NAT, MonsterRef.Create);
-            _propertyMap.Add(Command.NATMON, MonsterRef.Create);
-            _propertyMap.Add(Command.NATCOM, MonsterRef.Create);
-            _propertyMap.Add(Command.SUMMON, MonsterRef.Create);
-            _propertyMap.Add(Command.SUMMONLVL2, MonsterRef.Create);
-            _propertyMap.Add(Command.SUMMONLVL3, MonsterRef.Create);
-            _propertyMap.Add(Command.SUMMONLVL4, MonsterRef.Create);
+            _propertyMap.Add(Command.HOMEMON, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.HOMECOM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.MON, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.COM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.NAT, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.NATMON, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.NATCOM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.SUMMON, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.SUMMONLVL2, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.SUMMONLVL3, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.SUMMONLVL4, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.VOIDGATE, IntProperty.Create);
-            _propertyMap.Add(Command.WALLCOM, MonsterRef.Create);
-            _propertyMap.Add(Command.WALLUNIT, MonsterRef.Create);
+            _propertyMap.Add(Command.WALLCOM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.WALLUNIT, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.WALLMULT, IntProperty.Create);
-            _propertyMap.Add(Command.UWWALLUNIT, MonsterRef.Create);
+            _propertyMap.Add(Command.UWWALLUNIT, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.UWWALLMULT, IntProperty.Create);
-            _propertyMap.Add(Command.UWWALLCOM, MonsterRef.Create);
+            _propertyMap.Add(Command.UWWALLCOM, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.INCSCALE, IntProperty.Create);
             _propertyMap.Add(Command.DECSCALE, IntProperty.Create);
             _propertyMap.Add(Command.CONJCOST, IntProperty.Create);
@@ -117,7 +117,6 @@ namespace Dom5Edit.Entities
             Selected = selected;
             if (ID == -1 && selected)
             {
-                _name = value;
                 Named = true;
                 GetNamedList().Add(_name, this);
             }

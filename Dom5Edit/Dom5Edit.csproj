@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Entities\Mercenary.cs" />
     <Compile Include="Entities\Montag.cs" />
     <Compile Include="Entities\Nation.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -68,11 +69,14 @@
     <Compile Include="Props\IntIntIntProperty.cs" />
     <Compile Include="Props\FlySprProperty.cs" />
     <Compile Include="Props\IntIntProperty.cs" />
+    <Compile Include="Props\CopySpellRef.cs" />
     <Compile Include="Props\NameProperty.cs" />
+    <Compile Include="Props\References\SpellDamageRef.cs" />
+    <Compile Include="Props\References\MonsterOrMontagRef.cs" />
     <Compile Include="Props\References\PoptypeIDRef.cs" />
+    <Compile Include="Props\References\WeaponDamage.cs" />
     <Compile Include="Props\References\StringOrIDRef.cs" />
     <Compile Include="Props\References\MonsterRef.cs" />
-    <Compile Include="Props\References\NameRef.cs" />
     <Compile Include="Props\References\IDRef.cs" />
     <Compile Include="Props\References\RestrictedItemIDRef.cs" />
     <Compile Include="Props\References\NametypeIDRef.cs" />
@@ -82,9 +86,10 @@
     <Compile Include="Props\References\Reference.cs" />
     <Compile Include="Props\References\SiteRef.cs" />
     <Compile Include="Props\References\NationRef.cs" />
+    <Compile Include="Props\References\ShapechangeRef.cs" />
     <Compile Include="Props\References\WeaponRef.cs" />
-    <Compile Include="Props\References\ItemIDRef.cs" />
-    <Compile Include="Props\References\SpellIDRef.cs" />
+    <Compile Include="Props\References\ItemRef.cs" />
+    <Compile Include="Props\References\SpellRef.cs" />
     <Compile Include="Props\Property.cs" />
     <Compile Include="Props\IntProperty.cs" />
     <Compile Include="Props\FilePathProperty.cs" />

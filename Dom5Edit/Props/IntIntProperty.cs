@@ -28,10 +28,17 @@ namespace Dom5Edit.Props
             var split = s.Split(' ');
             if (split.Length == 2)
             {
-                HasValue = int.TryParse(split[0], out int val1);
+                HasValue = split[0].TryRetrieveNumericFromString(out int val1, out string remainder1);
                 if (HasValue) Value1 = val1;
-                HasValue = int.TryParse(split[1], out int val2);
-                if (HasValue) Value2 = val2;
+                if (remainder1.Length > 0)
+                {
+                    HasValue = split[1].TryRetrieveNumericFromString(out int val2, out string remainder2);
+                    if (HasValue) Value2 = val2;
+                    if (remainder2.Length > 0)
+                    {
+                        Comment += remainder2;
+                    }
+                }
             }
             else
             {

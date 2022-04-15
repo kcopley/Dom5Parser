@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,12 @@ namespace Dom5Edit.Props
         {
             this._command = c;
             this.Comment = comment;
-            HasValue = int.TryParse(s, out int val);
+            HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
             if (HasValue) Value = val;
+            if (remainder.Length > 0)
+            {
+                Comment += remainder;
+            }
         }
 
         //Preliminary Example only for now, not optimal
