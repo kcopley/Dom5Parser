@@ -14,7 +14,6 @@ namespace Dom5Edit.Mods
     {
         private readonly char spaceDelimiter = ' ';
         private readonly string commentDelimiter = "--";
-        private readonly string altCommentDelimiter = "-";
 
         public string ModName { get; set; }
         public string Description { get; set; }
@@ -34,14 +33,16 @@ namespace Dom5Edit.Mods
         public Dictionary<string, IDEntity> NamedWeapons = new Dictionary<string, IDEntity>();
         public Dictionary<int, IDEntity> Armors = new Dictionary<int, IDEntity>();
         public Dictionary<string, IDEntity> NamedArmors = new Dictionary<string, IDEntity>();
-        public Dictionary<int, IDEntity> Events = new Dictionary<int, IDEntity>();
+        
         public Dictionary<int, IDEntity> Sites = new Dictionary<int, IDEntity>();
         public Dictionary<string, IDEntity> NamedSites = new Dictionary<string, IDEntity>();
         public List<IDEntity> SitesThatNeedIDs = new List<IDEntity>();
         public Dictionary<int, IDEntity> Nametypes = new Dictionary<int, IDEntity>();
         //public Dictionary<int, MontagIDRef> Montags = new Dictionary<int, MontagIDRef>();
-        public Dictionary<int, RestrictedItemIDRef> RestrictedItems = new Dictionary<int, RestrictedItemIDRef>();
-        public Dictionary<int, Ench> Enchantments = new Dictionary<int, Ench>();
+        public Dictionary<int, RestrictedItem> RestrictedItems = new Dictionary<int, RestrictedItem>();
+        public Dictionary<int, Enchantment> Enchantments = new Dictionary<int, Enchantment>();
+        public Dictionary<int, EventCode> EventCodes = new Dictionary<int, EventCode>();
+        public Dictionary<int, EventEffectCode> EventEffectCodes = new Dictionary<int, EventEffectCode>();
         public Dictionary<int, IDEntity> Nations = new Dictionary<int, IDEntity>();
         public Dictionary<string, IDEntity> NamedNations = new Dictionary<string, IDEntity>();
         public List<IDEntity> NationsWithNoID = new List<IDEntity>();
@@ -50,6 +51,10 @@ namespace Dom5Edit.Mods
         public Dictionary<int, Montag> Montags = new Dictionary<int, Montag>();
 
         public Dictionary<string, IDEntity> NamedMercenaries = new Dictionary<string, IDEntity>();
+
+        public List<SpellDamage> SpellDamages = new List<SpellDamage>();
+
+        public List<IDEntity> Events = new List<IDEntity>();
 
         private int _MonStartID = Importer.MONSTER_START_ID;
         private int _SiteStartID = Importer.SITE_START_ID;
@@ -61,6 +66,10 @@ namespace Dom5Edit.Mods
         private int _NametypeStartID = Importer.NAMETYPE_START_ID;
         private int _NationStartID = Importer.NATION_START_ID;
         private int _MontagStartID = Importer.MONTAG_START_ID;
+        private int _RestrictedItemStartID = Importer.RESTRICTED_ITEM_START_ID;
+        private int _EnchantmentStartID = Importer.ENCHANTMENT_START_ID;
+        private int _EventCodeStartID = Importer.EVENT_CODE_START_ID;
+        private int _EventCodeEffectStartID = Importer.EVENT_CODE_EFFECT_START_ID;
 
         private Entity _currentEntity = null;
 
@@ -183,6 +192,12 @@ namespace Dom5Edit.Mods
                 case Command.NEWMERC:
                     _currentEntity = NewMercenary(val, comment);
                     break;
+                case Command.SELECTPOPTYPE:
+                    _currentEntity = SelectPoptype(val, comment);
+                    break;
+                case Command.NEWEVENT:
+                    _currentEntity = NewEvent(val, comment);
+                    break;
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);
                     _currentEntity = null;
@@ -276,6 +291,18 @@ namespace Dom5Edit.Mods
             {
                 kvp.Value.Resolve();
             }
+            foreach (var kvp in Poptypes)
+            {
+                kvp.Value.Resolve();
+            }
+            foreach (var kvp in Events)
+            {
+                kvp.Resolve();
+            }
+            foreach (var kvp in SpellDamages)
+            {
+                kvp.Resolve();
+            }
         }
 
         public void Export(StreamWriter writer)
@@ -316,6 +343,9 @@ namespace Dom5Edit.Mods
             Export(writer, Items.Values.ToList());
             Export(writer, NamedItems.Values.ToList());
             Export(writer, ItemsWithNoNameYet.ToList());
+
+            Export(writer, Poptypes.Values.ToList());
+            Export(writer, Events);
         }
 
         public void Export(StreamWriter writer, List<Entity> entities)
@@ -351,17 +381,62 @@ namespace Dom5Edit.Mods
             }
         }
 
-        public Montag AddNonAdjustedMontag(int ID)
+        public RestrictedItem AddRestrictedItem(int ID)
         {
             if (ID == -1) return null;
-            if (Montags.TryGetValue(ID, out var m))
+            if (RestrictedItems.TryGetValue(ID, out var m))
             {
                 return m;
             }
             else
             {
-                var ret = new Montag(ID);
-                Montags.Add(ID, ret);
+                var ret = new RestrictedItem(ID);
+                RestrictedItems.Add(ID, ret);
+                return ret;
+            }
+        }
+
+        public Enchantment AddEnchantment(int ID)
+        {
+            if (ID == -1) return null;
+            if (Enchantments.TryGetValue(ID, out var m))
+            {
+                return m;
+            }
+            else
+            {
+                var ret = new Enchantment(ID);
+                Enchantments.Add(ID, ret);
+                return ret;
+            }
+        }
+
+        public EventCode AddEventCode(int ID)
+        {
+            if (ID == -1) return null;
+            if (EventCodes.TryGetValue(ID, out var m))
+            {
+                return m;
+            }
+            else
+            {
+                var ret = new EventCode(ID);
+                EventCodes.Add(ID, ret);
+                return ret;
+            }
+        }
+
+        public EventEffectCode AddEventEffectCode(int ID)
+        {
+            if (ID == -1) return null;
+            if (EventEffectCodes.TryGetValue(ID, out var m))
+            {
+                return m;
+            }
+            else
+            {
+                var ret = new EventEffectCode(ID);
+                EventEffectCodes.Add(ID, ret);
                 return ret;
             }
         }
@@ -386,6 +461,12 @@ namespace Dom5Edit.Mods
             {
                 return NewMonster(val, comment, true);
             }
+        }
+
+        public IDEntity NewEvent(string val, string comment, bool selected = false)
+        {
+            Event m = new Event(val, comment, this, selected);
+            return m;
         }
 
         public IDEntity NewSpell(string val, string comment, bool selected = false)
@@ -419,6 +500,18 @@ namespace Dom5Edit.Mods
             else
             {
                 return new Nametype(val, comment, this, true);
+            }
+        }
+
+        public IDEntity SelectPoptype(string val, string comment)
+        {
+            if (int.TryParse(val, out int id) && Poptypes.TryGetValue(id, out IDEntity m))
+            {
+                return m;
+            }
+            else
+            {
+                return new Poptype(val, comment, this, true);
             }
         }
 
@@ -578,6 +671,46 @@ namespace Dom5Edit.Mods
             return _MontagStartID;
         }
 
+        public int GetNextRestrictedItemID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (RestrictedItems.ContainsKey(_RestrictedItemStartID))
+            {
+                _RestrictedItemStartID++;
+            }
+            return _RestrictedItemStartID;
+        }
+
+        public int GetNextEnchantmentID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (Enchantments.ContainsKey(_EnchantmentStartID))
+            {
+                _EnchantmentStartID++;
+            }
+            return _EnchantmentStartID;
+        }
+
+        public int GetNextEventCodeID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (EventCodes.ContainsKey(_EventCodeStartID))
+            {
+                _EventCodeStartID--;
+            }
+            return _EventCodeStartID;
+        }
+
+        public int GetNextEventEffectCodeStartID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (EventEffectCodes.ContainsKey(_EventCodeEffectStartID))
+            {
+                _EventCodeEffectStartID++;
+            }
+            return _EventCodeEffectStartID;
+        }
+
         public int GetNextWeaponID()
         {
             //very crude search unfortunately, but should be fine for our purposes
@@ -596,16 +729,6 @@ namespace Dom5Edit.Mods
                 _ArmorStartID++;
             }
             return _ArmorStartID;
-        }
-
-        public int GetNextEventID()
-        {
-            //very crude search unfortunately, but should be fine for our purposes
-            while (Events.ContainsKey(_EventStartID))
-            {
-                _EventStartID++;
-            }
-            return _EventStartID;
         }
 
         public int GetNextSiteID()

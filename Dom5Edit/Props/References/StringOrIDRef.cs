@@ -67,8 +67,10 @@ namespace Dom5Edit.Props
             }
             else
             {
-
-                int _exportID = Resolved ? entity.ID : ID; //true is left, false is right
+                int _exportID;
+                if (entity != null)
+                    _exportID = Resolved ? entity.ID : ID; //true is left, false is right
+                else _exportID = ID;
 
                 if (!String.IsNullOrEmpty(Comment))
                 {

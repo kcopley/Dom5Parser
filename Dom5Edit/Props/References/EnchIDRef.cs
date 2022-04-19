@@ -10,6 +10,9 @@ namespace Dom5Edit.Props
 {
     public class EnchIDRef : IDRef
     {
+        Enchantment _item = null;
+        bool HasEnchID { get; set; }
+
         public static Property Create()
         {
             return new EnchIDRef();
@@ -17,11 +20,38 @@ namespace Dom5Edit.Props
 
         public override void Resolve()
         {
-            if (Parent.Parent.Enchantments.TryGetValue(ID, out Ench m))
+        }
+
+        public override void Parse(Command c, string s, string comment)
+        {
+            base.Parse(c, s, comment);
+            _item = Parent.Parent.AddEnchantment(ID);
+            HasEnchID = _item != null;
+        }
+
+        public override string ToString()
+        {
+            if (CommandsMap.TryGetString(_command, out string s))
             {
-                entity = m;
-                Resolved = true;
+                int _exportID = _item != null ? _item.EnchID : ID; //true is left, false is right
+
+                if (!String.IsNullOrEmpty(Comment))
+                {
+                    if (HasValue)
+                    {
+                        return s + " " + _exportID + " -- " + Comment;
+                    }
+                    else
+                    {
+                        return s + " -- " + Comment;
+                    }
+                }
+                else
+                {
+                    return s + " " + _exportID;
+                }
             }
+            else return "";
         }
     }
 }

@@ -34,5 +34,12 @@ namespace Dom5Edit.Props
                 }
             }
         }
+
+        public override string ToString()
+        {
+            if (_command == Command.NEXTSPELL && entity != null && entity.ID != -1)
+                IsStringRef = false;
+            return base.ToString();
+        }
     }
 }

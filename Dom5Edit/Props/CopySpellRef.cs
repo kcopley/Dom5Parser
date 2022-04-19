@@ -15,14 +15,43 @@ namespace Dom5Edit.Props
             return new CopySpellRef();
         }
 
-        public override void Parse(Command c, string s, string comment)
+        public bool IsVanillaID()
         {
-            base.Parse(c, s, comment);
-            if (Parent is Spell)
+            if (HasValue && VanillaSpellMap.ContainsSpell(this.ID)) return true;
+            else if (HasValue && IsStringRef && VanillaSpellMap.ContainsSpell(Name)) return true;
+            return false;
+        }
+
+        public bool IsSummon()
+        {
+            if (HasValue && VanillaSpellMap.IsSummonSpell(this.ID)) return true;
+            else if (HasValue && IsStringRef && VanillaSpellMap.IsSummonSpell(Name)) return true;
+            return false;
+        }
+
+        public bool IsEnchant()
+        {
+            if (HasValue && VanillaSpellMap.IsEnchantSpell(this.ID)) return true;
+            else if (HasValue && IsStringRef && VanillaSpellMap.IsEnchantSpell(Name)) return true;
+            return false;
+        }
+
+        public bool IsEventEffect()
+        {
+            if (HasValue && VanillaSpellMap.IsEventEffectSpell(this.ID)) return true;
+            else if (HasValue && IsStringRef && VanillaSpellMap.IsEventEffectSpell(Name)) return true;
+            return false;
+        }
+
+        public bool TryGetSpell(out Spell spell)
+        {
+            if (this.entity != null && this.entity is Spell)
             {
-                var _spell = (Spell)Parent;
-                _spell.CopySpellID = this.ID;
+                spell = (Spell)entity;
+                return true;
             }
+            spell = null;
+            return false;
         }
     }
 }

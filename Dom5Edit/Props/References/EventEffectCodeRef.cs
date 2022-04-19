@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
-    public class RestrictedItemIDRef : IDRef
+    public class EventEffectCodeRef : IDRef
     {
-        RestrictedItem _item = null;
-        bool HasRestrictedItemID { get; set; }
+        EventEffectCode _item = null;
+        bool HasEventEffectCodeRef { get; set; }
 
         public static Property Create()
         {
-            return new RestrictedItemIDRef();
+            return new EventEffectCodeRef();
         }
 
         public override void Resolve()
@@ -25,15 +25,15 @@ namespace Dom5Edit.Props
         public override void Parse(Command c, string s, string comment)
         {
             base.Parse(c, s, comment);
-            _item = this.Parent.Parent.AddRestrictedItem(ID);
-            HasRestrictedItemID = _item != null;
+            _item = this.Parent.Parent.AddEventEffectCode(ID);
+            HasEventEffectCodeRef = _item != null;
         }
 
         public override string ToString()
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
-                int _exportID = _item != null ? _item.RestrictedItemID : ID; //true is left, false is right
+                int _exportID = _item != null ? _item.EventEffectCodeID : ID; //true is left, false is right
 
                 if (!String.IsNullOrEmpty(Comment))
                 {

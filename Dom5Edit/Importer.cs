@@ -29,6 +29,10 @@ namespace Dom5Edit
         internal static int NAMETYPE_START_ID = 170;
         internal static int NATION_START_ID = 120;
         internal static int MONTAG_START_ID = 1000;
+        internal static int RESTRICTED_ITEM_START_ID = 1;
+        internal static int ENCHANTMENT_START_ID = 105;
+        internal static int EVENT_CODE_START_ID = -300;
+        internal static int EVENT_CODE_EFFECT_START_ID = 14;
 
         public Importer()
         {
@@ -97,9 +101,24 @@ namespace Dom5Edit
                 //general settings (is this even necessary? lol)
 
                 //poptypes
-                //events
-                //event codes
+                foreach (var kvp in m.Poptypes)
+                {
+                    if (!finalMod.Poptypes.ContainsKey(kvp.Key)) finalMod.Poptypes.Add(kvp.Key, kvp.Value);
+                }
                 //restricted item codes
+                MergeRestrictedItems(m.RestrictedItems.Values.ToList(), finalMod);
+
+                //events, just migrate over since they've been adjusted
+                foreach (var kvp in m.Events)
+                {
+                    finalMod.Events.Add(kvp);
+                }
+
+                //event codes
+                MergeEventCodes(m.EventCodes.Values.ToList(), finalMod);
+                MergeEnchantments(m.Enchantments.Values.ToList(), finalMod);
+                MergeEventEffectCodes(m.EventEffectCodes.Values.ToList(), finalMod);
+
             }
             finalizedmod = finalMod;
         }
@@ -164,7 +183,9 @@ namespace Dom5Edit
 
                     if (kvp.Value.ID == -1 && !finalNamed.ContainsKey(kvp.Key))
                     {
-                        finalNamed.Add(kvp.Key, kvp.Value);
+                        int newID = nextID.Invoke();
+                        kvp.Value.ID = newID;
+                        final.Add(newID, kvp.Value);
                     }
                 }
             }
@@ -231,6 +252,42 @@ namespace Dom5Edit
             {
                 item.MontagID = finalMod.GetNextMontagID();
                 finalMod.Montags.Add(item.MontagID, item); //since the montags are all properties on an object, there's no exporting required; this is just keeping ID's consistent
+            }
+        }
+
+        public void MergeRestrictedItems(List<RestrictedItem> items, Mod finalMod)
+        {
+            foreach (RestrictedItem item in items)
+            {
+                item.RestrictedItemID = finalMod.GetNextRestrictedItemID();
+                finalMod.RestrictedItems.Add(item.RestrictedItemID, item);
+            }
+        }
+
+        public void MergeEnchantments(List<Enchantment> items, Mod finalMod)
+        {
+            foreach (Enchantment item in items)
+            {
+                item.EnchID = finalMod.GetNextEnchantmentID();
+                finalMod.Enchantments.Add(item.EnchID, item);
+            }
+        }
+
+        public void MergeEventCodes(List<EventCode> items, Mod finalMod)
+        {
+            foreach (EventCode item in items)
+            {
+                item.EventCodeID = finalMod.GetNextEventCodeID();
+                finalMod.EventCodes.Add(item.EventCodeID, item);
+            }
+        }
+
+        public void MergeEventEffectCodes(List<EventEffectCode> items, Mod finalMod)
+        {
+            foreach (EventEffectCode item in items)
+            {
+                item.EventEffectCodeID = finalMod.GetNextEventEffectCodeStartID();
+                finalMod.EventEffectCodes.Add(item.EventEffectCodeID, item);
             }
         }
     }

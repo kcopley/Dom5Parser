@@ -29,11 +29,11 @@ namespace Dom5Edit.Props
             {
                 HasValue = split[0].TryRetrieveNumericFromString(out int val1, out string remainder1);
                 if (HasValue) Value1 = val1;
-                if (remainder1.Length > 0)
+                if (string.IsNullOrEmpty(remainder1))
                 {
                     HasValue = split[1].TryRetrieveNumericFromString(out int val2, out string remainder2);
                     if (HasValue) Value2 = val2;
-                    if (remainder2.Length > 0)
+                    if (string.IsNullOrEmpty(remainder2))
                     {
                         HasValue = split[2].TryRetrieveNumericFromString(out int val3, out string remainder3);
                         if (HasValue) Value3 = val3;

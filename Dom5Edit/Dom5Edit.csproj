@@ -43,7 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Entities\Enchantment.cs" />
+    <Compile Include="Entities\EventEffectCode.cs" />
+    <Compile Include="Entities\EventCode.cs" />
+    <Compile Include="Entities\Poptype.cs" />
     <Compile Include="Entities\Mercenary.cs" />
+    <Compile Include="Entities\RestrictedItem.cs" />
     <Compile Include="Entities\Montag.cs" />
     <Compile Include="Entities\Nation.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -52,7 +57,6 @@
     <Compile Include="Entities\Monster.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Armor.cs" />
-    <Compile Include="Entities\Ench.cs" />
     <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\Nametype.cs" />
     <Compile Include="Entities\Weapon.cs" />
@@ -71,17 +75,21 @@
     <Compile Include="Props\IntIntProperty.cs" />
     <Compile Include="Props\CopySpellRef.cs" />
     <Compile Include="Props\NameProperty.cs" />
-    <Compile Include="Props\References\SpellDamageRef.cs" />
+    <Compile Include="Props\References\EventEffectCodeRef.cs" />
+    <Compile Include="Props\References\EventCodeRef.cs" />
+    <Compile Include="Props\References\EnchIDRef.cs" />
+    <Compile Include="Props\References\NationOwnerRef.cs" />
+    <Compile Include="Props\References\RestrictedItemIDRef.cs" />
+    <Compile Include="Props\References\SpellEffect.cs" />
+    <Compile Include="Props\References\SpellDamage.cs" />
     <Compile Include="Props\References\MonsterOrMontagRef.cs" />
     <Compile Include="Props\References\PoptypeIDRef.cs" />
     <Compile Include="Props\References\WeaponDamage.cs" />
     <Compile Include="Props\References\StringOrIDRef.cs" />
     <Compile Include="Props\References\MonsterRef.cs" />
     <Compile Include="Props\References\IDRef.cs" />
-    <Compile Include="Props\References\RestrictedItemIDRef.cs" />
     <Compile Include="Props\References\NametypeIDRef.cs" />
     <Compile Include="Props\References\MontagIDRef.cs" />
-    <Compile Include="Props\References\EnchIDRef.cs" />
     <Compile Include="Props\References\ArmorRef.cs" />
     <Compile Include="Props\References\Reference.cs" />
     <Compile Include="Props\References\SiteRef.cs" />
