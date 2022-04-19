@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Dom5Edit
 {
-    public partial class Startup: UserControl
+    public partial class Startup: Form
     {
         public Startup()
         {
@@ -40,6 +40,11 @@ namespace Dom5Edit
         private void exportButton_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         private void label3_Click(object sender, EventArgs e)

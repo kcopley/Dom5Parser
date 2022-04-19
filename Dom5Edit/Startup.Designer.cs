@@ -34,12 +34,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // startButton
             // 
             this.startButton.Location = new System.Drawing.Point(423, 249);
-            this.startButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.startButton.Margin = new System.Windows.Forms.Padding(4);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(312, 79);
             this.startButton.TabIndex = 0;
@@ -50,7 +51,7 @@
             // _folderPath
             // 
             this._folderPath.Location = new System.Drawing.Point(303, 196);
-            this._folderPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._folderPath.Margin = new System.Windows.Forms.Padding(4);
             this._folderPath.Name = "_folderPath";
             this._folderPath.Size = new System.Drawing.Size(551, 22);
             this._folderPath.TabIndex = 1;
@@ -86,18 +87,29 @@
             this.label4.TabIndex = 6;
             this.label4.Text = resources.GetString("label4.Text");
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(1032, 570);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 8;
+            this.button5.Text = "Exit";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Startup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1170, 635);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this._folderPath);
             this.Controls.Add(this.startButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Startup";
-            this.Size = new System.Drawing.Size(1188, 682);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,5 +121,6 @@
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button5;
     }
 }
