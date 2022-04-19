@@ -17,7 +17,7 @@ namespace Dom5Edit
 
         public List<Mod> Mods = new List<Mod>();
 
-        private string _ModName = "singularity-testing.dm";
+        private string _ModName = "merged-mod.dm";
 
         internal static int MONSTER_START_ID = 3500;
         internal static int SITE_START_ID = 1500;

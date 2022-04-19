@@ -117,4 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label4.Text" xml:space="preserve">
+    <value>-- Uses a standard file name to prevent it from importing itself.
+-- Copy and paste the folder the mods you wanted merged are in.
+-- Do not include a final backslash - just navigate to the folder in explorer and copy.
+
+Future versions will include a browse and mod selection.
+Please report any bugs you find. This is a test version.
+
+-- This does not merge general settings (however, I do not know of mods that change them).
+-- This will not merge simultaneous edits to the same vanilla item; it will take the first edits (for example, 
+if two mods edit the same mage from a vanilla nation). If that's requested, it can be done, but it has 
+many potential issues in interaction and balance.
+-- This will not fix bugs that are from the original mods.
+
+Credit to Bluefeuer and Loggy for assistance on data formatting.
+</value>
+  </data>
 </root>

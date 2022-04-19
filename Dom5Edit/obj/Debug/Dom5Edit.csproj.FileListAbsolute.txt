@@ -5,3 +5,11 @@ C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.Startup.resources
 C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.csproj.GenerateResource.cache
 C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.dll
 C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.pdb
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\bin\Debug\Dom5Edit.dll
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\bin\Debug\Dom5Edit.pdb
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.csproj.AssemblyReference.cache
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.Startup.resources
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.csproj.GenerateResource.cache
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.csproj.CoreCompileInputs.cache
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.dll
+C:\Users\Homeworks\Documents\GitHub\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.pdb

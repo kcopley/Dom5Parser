@@ -28,16 +28,23 @@ namespace Dom5Edit
         {
             i = new Importer();
             i.Run(_folderPath.Text);
+            if (i != null) i.Merge();
+            if (i != null) i.Export(_folderPath.Text);
         }
 
         private void mergeButton_Click(object sender, EventArgs e)
         {
-            if (i != null) i.Merge();
+            
         }
 
         private void exportButton_Click(object sender, EventArgs e)
         {
-            if (i != null) i.Export(_folderPath.Text);
+            
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

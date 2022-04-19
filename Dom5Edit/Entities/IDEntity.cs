@@ -23,13 +23,13 @@ namespace Dom5Edit.Entities
             this.SetID(value, comment);
             Parent = _parent;
             Selected = selected;
-            if (ID == -1)
+            if (ID == -1 && !string.IsNullOrEmpty(_name))
             {
                 _name = value;
                 Named = true;
                 GetNamedList().Add(_name, this);
             }
-            else
+            else if (ID != -1)
             {
                 if (!GetIDList().ContainsKey(ID)) GetIDList().Add(ID, this);
             }
