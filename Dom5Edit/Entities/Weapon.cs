@@ -112,6 +112,7 @@ namespace Dom5Edit.Entities
         public override void AddNamed(string s)
         {
             //do nothing, weapons are never by name
+            if (!Parent.NamedWeapons.ContainsKey(s)) Parent.NamedWeapons.Add(s, this);
         }
 
         public override bool TryGetIDValue(int id, out IDEntity e)
@@ -127,6 +128,11 @@ namespace Dom5Edit.Entities
 
         public override bool TryGetNamedValue(string s, out IDEntity e)
         {
+            if (Parent.NamedWeapons.TryGetValue(s, out IDEntity a))
+            {
+                e = a;
+                return true;
+            }
             e = null;
             return false; //never can be by name
         }
