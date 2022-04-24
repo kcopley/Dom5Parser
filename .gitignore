@@ -5,3 +5,5 @@
 *.lock
 .vs/Dom5Edit/v16/.suo
 *.cache
+*.exe
+*.pdb
