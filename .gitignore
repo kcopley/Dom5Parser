@@ -7,3 +7,10 @@
 *.cache
 *.exe
 *.pdb
+*.zip
+Dom5Edit/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+Dom5Edit/obj/Debug/Dom5Edit.csproj.FileListAbsolute.txt
+Dom5Edit/obj/Debug/Dom5Edit.Startup.resources
+Dom5Edit/obj/Release/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+Dom5Edit/obj/Release/Dom5Edit.csproj.FileListAbsolute.txt
+Dom5Edit/obj/Release/Dom5Edit.Startup.resources
