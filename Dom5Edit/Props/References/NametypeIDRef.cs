@@ -17,7 +17,7 @@ namespace Dom5Edit.Props
 
         public override void Resolve()
         {
-            if (Parent.Parent.Nametypes.TryGetValue(ID, out IDEntity m))
+            if (Parent.Parent.TryGetValueNametypes(ID, out IDEntity m))
             {
                 entity = m;
                 Resolved = true;

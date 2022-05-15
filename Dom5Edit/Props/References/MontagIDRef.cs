@@ -34,7 +34,7 @@ namespace Dom5Edit.Props
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
-                int _exportID = _montag != null ? _montag.MontagID : ID; //true is left, false is right
+                int _exportID = _montag != null ? _montag.GetID() : ID; //true is left, false is right
 
                 if (_command != Command.MONTAG)
                 {

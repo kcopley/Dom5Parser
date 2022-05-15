@@ -23,7 +23,7 @@ namespace Dom5Edit.Entities
             this.SetID(value, comment);
             Parent = _parent;
             Selected = selected;
-            if (ID == -1 && !string.IsNullOrEmpty(_name))
+            if (ID == -1 && !string.IsNullOrEmpty(value))
             {
                 _name = value;
                 Named = true;

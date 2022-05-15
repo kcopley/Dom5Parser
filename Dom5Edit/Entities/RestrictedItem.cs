@@ -12,10 +12,17 @@ namespace Dom5Edit.Entities
     public class RestrictedItem
     {
         public int RestrictedItemID { get; set; }
+        public RestrictedItem DependentRestrictedItem;
 
         public RestrictedItem(int ID)
         {
             this.RestrictedItemID = ID;
+        }
+
+        public int GetID()
+        {
+            if (DependentRestrictedItem != null) return DependentRestrictedItem.RestrictedItemID;
+            return RestrictedItemID;
         }
     }
 }

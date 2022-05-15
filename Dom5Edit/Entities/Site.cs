@@ -112,13 +112,22 @@ namespace Dom5Edit.Entities
         public Site(string value, string comment, Mod _parent, bool selected = false) : base()
         {
             //Because a newsite doesn't accept a name there, and it's added below.....
+            if (value.Equals("The Smouldercone"))
+            {
+                int a = 0;
+                a++;
+            }
             this.SetID(value, comment);
             Parent = _parent;
             Selected = selected;
             if (ID == -1 && selected)
             {
-                Named = true;
-                GetNamedList().Add(_name, this);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _name = value;
+                    Named = true;
+                    GetNamedList().Add(_name, this);
+                }
             }
             else if (ID == -1)
             {

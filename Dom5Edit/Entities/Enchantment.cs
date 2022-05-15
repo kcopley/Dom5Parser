@@ -12,10 +12,17 @@ namespace Dom5Edit.Entities
     public class Enchantment
     {
         public int EnchID { get; set; }
+        public Enchantment DependentEnchantment;
 
         public Enchantment(int ID)
         {
             this.EnchID = ID;
+        }
+
+        public int GetID()
+        {
+            if (DependentEnchantment != null) return DependentEnchantment.EnchID;
+            return EnchID;
         }
     }
 }

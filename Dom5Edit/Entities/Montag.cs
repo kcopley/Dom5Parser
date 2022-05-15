@@ -12,10 +12,17 @@ namespace Dom5Edit.Entities
     public class Montag
     {
         public int MontagID { get; set; }
+        public Montag DependentMontag;
 
         public Montag(int ID)
         {
             this.MontagID = ID;
+        }
+
+        public int GetID()
+        {
+            if (DependentMontag != null) return DependentMontag.MontagID;
+            return MontagID;
         }
     }
 }

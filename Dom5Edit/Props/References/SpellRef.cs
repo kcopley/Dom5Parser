@@ -19,7 +19,7 @@ namespace Dom5Edit.Props
         {
             if (IsStringRef)
             {
-                if (Parent.Parent.NamedSpells.TryGetValue(Name, out IDEntity m))
+                if (Parent.Parent.TryGetValueNamedSpells(Name, out IDEntity m))
                 {
                     entity = m;
                     Resolved = true;
@@ -27,7 +27,7 @@ namespace Dom5Edit.Props
             }
             else
             {
-                if (Parent.Parent.Spells.TryGetValue(ID, out IDEntity m))
+                if (Parent.Parent.TryGetValueSpells(ID, out IDEntity m))
                 {
                     entity = m;
                     Resolved = true;

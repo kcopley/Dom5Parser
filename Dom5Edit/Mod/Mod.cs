@@ -16,38 +16,187 @@ namespace Dom5Edit.Mods
         private readonly string commentDelimiter = "--";
 
         public string ModName { get; set; }
+        public string ModFileName { get; set; }
         public string Description { get; set; }
         public string Icon { get; set; }
         public string Version { get; set; }
         public string DomVersion { get; set; }
 
+        private List<string> _dependencies = new List<string>();
+        public List<Mod> Dependencies = new List<Mod>();
+
         public Dictionary<int, IDEntity> Monsters = new Dictionary<int, IDEntity>();
+        public bool TryGetValueMonsters(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Monsters.TryGetValue(i, out entity)) return true;
+            }
+            if (Monsters.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<string, IDEntity> NamedMonsters = new Dictionary<string, IDEntity>();
+        public bool TryGetValueNamedMonsters(string i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.NamedMonsters.TryGetValue(i, out entity)) return true;
+            }
+            if (NamedMonsters.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<int, IDEntity> Spells = new Dictionary<int, IDEntity>();
+        public bool TryGetValueSpells(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Spells.TryGetValue(i, out entity)) return true;
+            }
+            if (Spells.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<string, IDEntity> NamedSpells = new Dictionary<string, IDEntity>();
+        public bool TryGetValueNamedSpells(string i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.NamedSpells.TryGetValue(i, out entity)) return true;
+            }
+            if (NamedSpells.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public List<IDEntity> SpellsWithNoNameYet = new List<IDEntity>();
         public Dictionary<int, IDEntity> Items = new Dictionary<int, IDEntity>();
+        public bool TryGetValueItems(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Items.TryGetValue(i, out entity)) return true;
+            }
+            if (Items.TryGetValue(i, out entity)) return true;
+            return false;
+        }
+
         public Dictionary<string, IDEntity> NamedItems = new Dictionary<string, IDEntity>();
+        public bool TryGetValueNamedItems(string i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.NamedItems.TryGetValue(i, out entity)) return true;
+            }
+            if (NamedItems.TryGetValue(i, out entity)) return true;
+            return false;
+        }
+
         public List<IDEntity> ItemsWithNoNameYet = new List<IDEntity>();
         public Dictionary<int, IDEntity> Weapons = new Dictionary<int, IDEntity>();
+        public bool TryGetValueWeapons(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Weapons.TryGetValue(i, out entity)) return true;
+            }
+            if (Weapons.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<string, IDEntity> NamedWeapons = new Dictionary<string, IDEntity>();
+        public bool TryGetValueNamedWeapons(string i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.NamedWeapons.TryGetValue(i, out entity)) return true;
+            }
+            if (NamedWeapons.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<int, IDEntity> Armors = new Dictionary<int, IDEntity>();
+        public bool TryGetValueArmors(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Armors.TryGetValue(i, out entity)) return true;
+            }
+            if (Armors.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<string, IDEntity> NamedArmors = new Dictionary<string, IDEntity>();
-        
+        public bool TryGetValueNamedArmors(string i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.NamedArmors.TryGetValue(i, out entity)) return true;
+            }
+            if (NamedArmors.TryGetValue(i, out entity)) return true;
+            return false;
+        }
+
         public Dictionary<int, IDEntity> Sites = new Dictionary<int, IDEntity>();
+        public bool TryGetValueSites(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Sites.TryGetValue(i, out entity)) return true;
+            }
+            if (Sites.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<string, IDEntity> NamedSites = new Dictionary<string, IDEntity>();
+        public bool TryGetValueNamedSites(string i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.NamedSites.TryGetValue(i, out entity)) return true;
+            }
+            if (NamedSites.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public List<IDEntity> SitesThatNeedIDs = new List<IDEntity>();
         public Dictionary<int, IDEntity> Nametypes = new Dictionary<int, IDEntity>();
+        public bool TryGetValueNametypes(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Nametypes.TryGetValue(i, out entity)) return true;
+            }
+            if (Nametypes.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         //public Dictionary<int, MontagIDRef> Montags = new Dictionary<int, MontagIDRef>();
         public Dictionary<int, RestrictedItem> RestrictedItems = new Dictionary<int, RestrictedItem>();
         public Dictionary<int, Enchantment> Enchantments = new Dictionary<int, Enchantment>();
         public Dictionary<int, EventCode> EventCodes = new Dictionary<int, EventCode>();
         public Dictionary<int, EventEffectCode> EventEffectCodes = new Dictionary<int, EventEffectCode>();
         public Dictionary<int, IDEntity> Nations = new Dictionary<int, IDEntity>();
+        public bool TryGetValueNations(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Nations.TryGetValue(i, out entity)) return true;
+            }
+            if (Nations.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<string, IDEntity> NamedNations = new Dictionary<string, IDEntity>();
+        public bool TryGetValueNamedNations(string i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.NamedNations.TryGetValue(i, out entity)) return true;
+            }
+            if (NamedNations.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public List<IDEntity> NationsWithNoID = new List<IDEntity>();
         public Dictionary<int, IDEntity> Poptypes = new Dictionary<int, IDEntity>();
-
+        public bool TryGetValuePoptypes(int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+            {
+                if (m.Poptypes.TryGetValue(i, out entity)) return true;
+            }
+            if (Poptypes.TryGetValue(i, out entity)) return true;
+            return false;
+        }
         public Dictionary<int, Montag> Montags = new Dictionary<int, Montag>();
 
         public Dictionary<string, IDEntity> NamedMercenaries = new Dictionary<string, IDEntity>();
@@ -86,6 +235,23 @@ namespace Dom5Edit.Mods
                 {
                     if (s.Length < 1) continue; //empty line
                                                 //pull comments first
+
+                    //mod information data
+                    int ind = s.IndexOf("#dependency", StringComparison.OrdinalIgnoreCase);
+
+                    if (ind != -1)
+                    {
+                        ind += 12;
+                        string file = s.Substring(ind);
+                        if (file.Length > 0)
+                        {
+                            file = file.Trim();
+                            _dependencies.Add(file);
+                        }
+                        continue;
+                    }
+
+                    // continue on
                     int commentIndex = s.IndexOf(commentDelimiter);
 
                     string line = s;
@@ -209,6 +375,21 @@ namespace Dom5Edit.Mods
             }
         }
 
+        public void ResolveDependencies(List<Mod> mods)
+        {
+            foreach (var file in _dependencies)
+            {
+                foreach (var m in mods)
+                {
+                    if (m.ModFileName.EqualsIgnoreCase(file) || m.ModName.EqualsIgnoreCase(file))
+                    {
+                        Dependencies.Add(m);
+                        break;
+                    }
+                }
+            }
+        }
+
         public void Resolve()
         {
             foreach (var kvp in Monsters)
@@ -302,6 +483,62 @@ namespace Dom5Edit.Mods
             foreach (var kvp in SpellDamages)
             {
                 kvp.Resolve();
+            }
+
+            foreach (var kvp in this.Montags)
+            {
+                foreach (var m in Dependencies)
+                {
+                    if (m.Montags.ContainsKey(kvp.Key))
+                    {
+                        kvp.Value.DependentMontag = m.Montags[kvp.Key];
+                        break;
+                    }
+                }
+            }
+            foreach (var kvp in this.Enchantments)
+            {
+                foreach (var m in Dependencies)
+                {
+                    if (m.Enchantments.ContainsKey(kvp.Key))
+                    {
+                        kvp.Value.DependentEnchantment = m.Enchantments[kvp.Key];
+                        break;
+                    }
+                }
+            }
+            foreach (var kvp in this.RestrictedItems)
+            {
+                foreach (var m in Dependencies)
+                {
+                    if (m.RestrictedItems.ContainsKey(kvp.Key))
+                    {
+                        kvp.Value.DependentRestrictedItem = m.RestrictedItems[kvp.Key];
+                        break;
+                    }
+                }
+            }
+            foreach (var kvp in this.EventCodes)
+            {
+                foreach (var m in Dependencies)
+                {
+                    if (m.EventCodes.ContainsKey(kvp.Key))
+                    {
+                        kvp.Value.DependentEventCode = m.EventCodes[kvp.Key];
+                        break;
+                    }
+                }
+            }
+            foreach (var kvp in this.EventEffectCodes)
+            {
+                foreach (var m in Dependencies)
+                {
+                    if (m.EventEffectCodes.ContainsKey(kvp.Key))
+                    {
+                        kvp.Value.DependentEventEffectCode = m.EventEffectCodes[kvp.Key];
+                        break;
+                    }
+                }
             }
         }
 

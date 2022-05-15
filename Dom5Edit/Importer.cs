@@ -44,14 +44,20 @@ namespace Dom5Edit
             //string localPath = Path.GetDirectoryName(folder);
             string[] dmFiles = Directory.GetFiles(folder, "*.dm");
 
-
             foreach (string dmFile in dmFiles)
             {
-                if (dmFile.Contains(_ModName)) continue;
+                string fileName = System.IO.Path.GetFileName(dmFile);
+                if (fileName.Contains(_ModName)) continue;
                 Mod m = new Mod();
+                m.ModFileName = fileName;
                 m.Parse(dmFile);
-                m.Resolve();
                 Mods.Add(m);
+            }
+
+            foreach (Mod m in Mods)
+            {
+                m.ResolveDependencies(Mods);
+                m.Resolve();
             }
         }
 
@@ -250,8 +256,11 @@ namespace Dom5Edit
         {
             foreach (Montag item in items)
             {
-                item.MontagID = finalMod.GetNextMontagID();
-                finalMod.Montags.Add(item.MontagID, item); //since the montags are all properties on an object, there's no exporting required; this is just keeping ID's consistent
+                if (item.DependentMontag == null)
+                {
+                    item.MontagID = finalMod.GetNextMontagID();
+                    finalMod.Montags.Add(item.GetID(), item); //since the montags are all properties on an object, there's no exporting required; this is just keeping ID's consistent
+                }
             }
         }
 
@@ -259,8 +268,11 @@ namespace Dom5Edit
         {
             foreach (RestrictedItem item in items)
             {
-                item.RestrictedItemID = finalMod.GetNextRestrictedItemID();
-                finalMod.RestrictedItems.Add(item.RestrictedItemID, item);
+                if (item.DependentRestrictedItem == null)
+                {
+                    item.RestrictedItemID = finalMod.GetNextRestrictedItemID();
+                    finalMod.RestrictedItems.Add(item.GetID(), item);
+                }
             }
         }
 
@@ -268,8 +280,11 @@ namespace Dom5Edit
         {
             foreach (Enchantment item in items)
             {
-                item.EnchID = finalMod.GetNextEnchantmentID();
-                finalMod.Enchantments.Add(item.EnchID, item);
+                if (item.DependentEnchantment == null)
+                {
+                    item.EnchID = finalMod.GetNextEnchantmentID();
+                    finalMod.Enchantments.Add(item.GetID(), item);
+                }
             }
         }
 
@@ -277,8 +292,11 @@ namespace Dom5Edit
         {
             foreach (EventCode item in items)
             {
-                item.EventCodeID = finalMod.GetNextEventCodeID();
-                finalMod.EventCodes.Add(item.EventCodeID, item);
+                if (item.DependentEventCode == null)
+                {
+                    item.EventCodeID = finalMod.GetNextEventCodeID();
+                    finalMod.EventCodes.Add(item.GetID(), item);
+                }
             }
         }
 
@@ -286,8 +304,11 @@ namespace Dom5Edit
         {
             foreach (EventEffectCode item in items)
             {
-                item.EventEffectCodeID = finalMod.GetNextEventEffectCodeStartID();
-                finalMod.EventEffectCodes.Add(item.EventEffectCodeID, item);
+                if (item.DependentEventEffectCode == null)
+                {
+                    item.EventEffectCodeID = finalMod.GetNextEventEffectCodeStartID();
+                    finalMod.EventEffectCodes.Add(item.GetID(), item);
+                }
             }
         }
     }

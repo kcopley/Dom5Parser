@@ -26,7 +26,7 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    if (Parent.Parent.Nations.TryGetValue(ID, out IDEntity m))
+                    if (Parent.Parent.TryGetValueNations(ID, out IDEntity m))
                     {
                         entity = m;
                         Resolved = true;

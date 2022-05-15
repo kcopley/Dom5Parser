@@ -33,7 +33,7 @@ namespace Dom5Edit.Props
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
-                int _exportID = _item != null ? _item.RestrictedItemID : ID; //true is left, false is right
+                int _exportID = _item != null ? _item.GetID() : ID; //true is left, false is right
 
                 if (!String.IsNullOrEmpty(Comment))
                 {

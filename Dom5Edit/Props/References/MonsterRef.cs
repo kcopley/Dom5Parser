@@ -19,7 +19,7 @@ namespace Dom5Edit.Props
         {
             if (IsStringRef)
             {
-                if (Parent.Parent.NamedMonsters.TryGetValue(Name, out IDEntity m))
+                if (Parent.Parent.TryGetValueNamedMonsters(Name, out IDEntity m))
                 {
                     entity = m;
                     Resolved = true;
@@ -27,7 +27,7 @@ namespace Dom5Edit.Props
             }
             else
             {
-                if (Parent.Parent.Monsters.TryGetValue(ID, out IDEntity m))
+                if (Parent.Parent.TryGetValueMonsters(ID, out IDEntity m))
                 {
                     entity = m;
                     Resolved = true;

@@ -19,7 +19,7 @@ namespace Dom5Edit.Props
         {
             if (IsStringRef)
             {
-                if (Parent.Parent.NamedWeapons.TryGetValue(Name, out IDEntity m))
+                if (Parent.Parent.TryGetValueNamedWeapons(Name, out IDEntity m))
                 {
                     entity = m;
                     Resolved = true;
@@ -27,7 +27,7 @@ namespace Dom5Edit.Props
             }
             else
             {
-                if (Parent.Parent.Weapons.TryGetValue(ID, out IDEntity m))
+                if (Parent.Parent.TryGetValueWeapons(ID, out IDEntity m))
                 {
                     entity = m;
                     Resolved = true;

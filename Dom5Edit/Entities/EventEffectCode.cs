@@ -12,10 +12,17 @@ namespace Dom5Edit.Entities
     public class EventEffectCode
     {
         public int EventEffectCodeID { get; set; }
+        public EventEffectCode DependentEventEffectCode;
 
         public EventEffectCode(int ID)
         {
             this.EventEffectCodeID = ID;
+        }
+
+        public int GetID()
+        {
+            if (DependentEventEffectCode != null) return DependentEventEffectCode.EventEffectCodeID;
+            return EventEffectCodeID;
         }
     }
 }
