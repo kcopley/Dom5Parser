@@ -112,11 +112,6 @@ namespace Dom5Edit.Entities
         public Site(string value, string comment, Mod _parent, bool selected = false) : base()
         {
             //Because a newsite doesn't accept a name there, and it's added below.....
-            if (value.Equals("The Smouldercone"))
-            {
-                int a = 0;
-                a++;
-            }
             this.SetID(value, comment);
             Parent = _parent;
             Selected = selected;
@@ -137,6 +132,12 @@ namespace Dom5Edit.Entities
             {
                 GetIDList().Add(ID, this);
             }
+        }
+
+        public override void AddNamed(string s)
+        {
+            base.AddNamed(s);
+            Parent.SitesThatNeedIDs.Remove(this);
         }
 
         internal override Command GetNewCommand()

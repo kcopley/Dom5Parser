@@ -101,11 +101,6 @@ namespace Dom5Edit.Entities
         public override void AddNamed(string s)
         {
             base.AddNamed(s);
-            if (s.Equals("Malediction"))
-            {
-                int a = 0;
-                a++;
-            }
             Parent.SpellsWithNoNameYet.Remove(this);
         }
 

@@ -34,5 +34,10 @@ namespace Dom5Edit.Props
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

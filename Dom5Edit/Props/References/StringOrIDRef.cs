@@ -22,8 +22,10 @@ namespace Dom5Edit.Props
         {
             this._command = c;
             this.Comment = comment;
+
             HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
-            if (HasValue)
+
+            if (HasValue && !Parent.Parent.LineWasTrimmed)
             {
                 ID = val;
                 IsStringRef = false;

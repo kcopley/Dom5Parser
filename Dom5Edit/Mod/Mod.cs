@@ -14,6 +14,7 @@ namespace Dom5Edit.Mods
     {
         private readonly char spaceDelimiter = ' ';
         private readonly string commentDelimiter = "--";
+        private readonly char[] commandDelimiter = new char[] { '#' };
 
         public string ModName { get; set; }
         public string ModFileName { get; set; }
@@ -222,6 +223,8 @@ namespace Dom5Edit.Mods
 
         private Entity _currentEntity = null;
 
+        public bool LineWasTrimmed { get; set; }
+
         public Mod()
         {
         }
@@ -254,51 +257,98 @@ namespace Dom5Edit.Mods
                     // continue on
                     int commentIndex = s.IndexOf(commentDelimiter);
 
-                    string line = s;
-                    string comment = ""; //set to empty string, not null
-                    if (commentIndex != -1) //has a comment
+                    //is there another command on the same line?
+                    List<int> commandIndexes = new List<int>();
+                    int index = s.IndexOf('#');
+                    if (index != -1)
                     {
-                        line = s.Substring(0, commentIndex).Trim();
-                        comment = s.Substring(commentIndex + 2).Trim();
-                    }
-
-                    //grab the command & value
-
-                    int spaceIndex = line.IndexOf(spaceDelimiter);
-                    string command = line;
-                    string value = ""; //set to empty string, not null
-                    if (spaceIndex != -1) //has a value (but could be spaces before a comment? should be handled by trim above)
-                    {
-                        command = line.Substring(0, spaceIndex).Trim();
-                        value = line.Substring(spaceIndex + 1).Trim();
-                        value = value.Trim('\"');
-                    }
-
-                    if (CommandsMap.TryGetCommand(command, out Command c))
-                    {
-                        switch (c)
+                        commandIndexes.Add(index);
+                        int nextIndex = s.IndexOf('#', index + 1);
+                        while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
                         {
-                            case Command.MODNAME:
-                                ModName = value;
-                                break;
-                            case Command.DESCRIPTION:
-                                Description = value;
-                                break;
-                            case Command.VERSION:
-                                Version = value;
-                                break;
-                            case Command.DOMVERSION:
-                                DomVersion = value;
-                                break;
-                            case Command.ICON:
-                                Icon = value;
-                                break;
-                            default:
-                                Parse(c, value, comment);
-                                break;
+                            if (s.IndexOf("##landname##", nextIndex) != nextIndex)
+                            {
+                                commandIndexes.Add(nextIndex);
+                            }
+                            else
+                            {
+                                nextIndex += 12; //bypass the landname command
+                            }
+                            nextIndex = s.IndexOf('#', nextIndex + 1);
+                        }
+
+                        for (int i = 0; i < commandIndexes.Count; i++)
+                        {
+                            int nextCommand = i + 1;
+                            string line;
+                            if (nextCommand < commandIndexes.Count)
+                            {
+                                line = s.Substring(commandIndexes[i], commandIndexes[nextCommand] - commandIndexes[i]);
+                            }
+                            else
+                            {
+                                line = s.Substring(commandIndexes[i]);
+                            }
+                            ProcessLine(line);
                         }
                     }
-                    //else unrecognizable command
+                }
+            }
+        }
+
+        public void ProcessLine(string s)
+        {
+            string line = s;
+            int commentIndex = s.IndexOf(commentDelimiter);
+            string comment = ""; //set to empty string, not null
+            if (commentIndex != -1) //has a comment
+            {
+                line = s.Substring(0, commentIndex).Trim();
+                comment = s.Substring(commentIndex + 2).Trim();
+            }
+
+            //grab the command & value
+
+            int spaceIndex = line.IndexOf(spaceDelimiter);
+            string command = line;
+            string value = ""; //set to empty string, not null
+            if (spaceIndex != -1) //has a value (but could be spaces before a comment? should be handled by trim above)
+            {
+                command = line.Substring(0, spaceIndex).Trim();
+                value = line.Substring(spaceIndex + 1).Trim();
+                if (value.StartsWith("\"") || value.EndsWith("\""))
+                {
+                    value = value.Trim('\"');
+                    this.LineWasTrimmed = true;
+                }
+                else
+                {
+                    LineWasTrimmed = false;
+                }
+            }
+
+            if (CommandsMap.TryGetCommand(command, out Command c))
+            {
+                switch (c)
+                {
+                    case Command.MODNAME:
+                        ModName = value;
+                        break;
+                    case Command.DESCRIPTION:
+                        Description = value;
+                        break;
+                    case Command.VERSION:
+                        Version = value;
+                        break;
+                    case Command.DOMVERSION:
+                        DomVersion = value;
+                        break;
+                    case Command.ICON:
+                        Icon = value;
+                        break;
+                    default:
+                        Parse(c, value, comment);
+                        break;
                 }
             }
         }
@@ -970,6 +1020,11 @@ namespace Dom5Edit.Mods
 
         public int GetNextSiteID()
         {
+            if (_SiteStartID > 1683)
+            {
+                int a = 0;
+                a++;
+            }
             //very crude search unfortunately, but should be fine for our purposes
             while (Sites.ContainsKey(_SiteStartID))
             {
