@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Props\IntIntIntProperty - Copy.cs" />
+    <Compile Include="Props\FloatFloatFloatProperty.cs" />
     <Compile Include="Start.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Entities\Enchantment.cs" />
