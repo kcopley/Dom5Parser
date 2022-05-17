@@ -87,8 +87,8 @@ namespace Dom5Edit.Entities
             IDComment = comment;
         }
 
-        private bool _resolved = false;
-        public void Resolve()
+        internal bool _resolved = false;
+        public virtual void Resolve()
         {
             if (_resolved) return;
             foreach (Property prop in Properties)

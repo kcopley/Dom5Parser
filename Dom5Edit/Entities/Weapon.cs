@@ -109,6 +109,23 @@ namespace Dom5Edit.Entities
         {
         }
 
+        public override void Resolve()
+        {
+            if (base._resolved) return;
+            foreach (var m in Parent.Dependencies)
+            {
+                if (ID != -1 && m.Weapons.TryGetValue(this.ID, out var entity))
+                {
+                    entity.Properties.AddRange(this.Properties);
+                }
+                else if (this.TryGetName(out _name) && m.NamedWeapons.TryGetValue(_name, out var namedentity))
+                {
+                    namedentity.Properties.AddRange(this.Properties);
+                }
+            }
+            base.Resolve();
+        }
+
         public override void AddNamed(string s)
         {
             //do nothing, weapons are never by name

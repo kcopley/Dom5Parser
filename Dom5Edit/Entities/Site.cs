@@ -134,6 +134,27 @@ namespace Dom5Edit.Entities
             }
         }
 
+        public override void Resolve()
+        {
+            if (base._resolved) return;
+            foreach (var m in Parent.Dependencies)
+            {
+                if (ID != -1 && m.Sites.TryGetValue(this.ID, out var entity))
+                {
+                    entity.Properties.AddRange(this.Properties);
+                }
+                else if (this.TryGetName(out string _n) && m.NamedSites.TryGetValue(_n, out var namedentity))
+                {
+                    namedentity.Properties.AddRange(this.Properties);
+                }
+                else if (!string.IsNullOrEmpty(_name) && m.NamedSites.TryGetValue(_name, out var nentity))
+                {
+                    nentity.Properties.AddRange(this.Properties);
+                }
+            }
+            base.Resolve();
+        }
+
         public override void AddNamed(string s)
         {
             base.AddNamed(s);

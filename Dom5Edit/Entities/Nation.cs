@@ -24,8 +24,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.DESCR, StringProperty.Create);
             _propertyMap.Add(Command.SUMMARY, StringProperty.Create);
             _propertyMap.Add(Command.BRIEF, StringProperty.Create);
-            _propertyMap.Add(Command.COLOR, IntIntIntProperty.Create);
-            _propertyMap.Add(Command.SECONDARYCOLOR, IntIntIntProperty.Create);
+            _propertyMap.Add(Command.COLOR, FloatFloatFloatProperty.Create);
+            _propertyMap.Add(Command.SECONDARYCOLOR, FloatFloatFloatProperty.Create);
             _propertyMap.Add(Command.FLAG, FilePathProperty.Create);
             _propertyMap.Add(Command.DISABLEOLDNATIONS, CommandProperty.Create);
             _propertyMap.Add(Command.CLEARSITES, CommandProperty.Create);
@@ -224,6 +224,19 @@ namespace Dom5Edit.Entities
             {
                 GetIDList().Add(ID, this);
             }
+        }
+
+        public override void Resolve()
+        {
+            if (base._resolved) return;
+            foreach (var m in Parent.Dependencies)
+            {
+                if (ID != -1 && m.Nations.TryGetValue(this.ID, out var entity))
+                {
+                    entity.Properties.AddRange(this.Properties);
+                }
+            }
+            base.Resolve();
         }
 
         public override void Parse(Command command, string value, string comment)

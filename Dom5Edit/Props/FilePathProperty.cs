@@ -28,19 +28,13 @@ namespace Dom5Edit.Props
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
-                string tempOutput = Value;
-                if (_command == Command.SPR2 || _command == Command.SPR)
-                {
-                    return "";
-                }
-                
                 if (!String.IsNullOrEmpty(Comment))
                 {
-                    return s + " \"" + tempOutput + "\" -- " + Comment;
+                    return s + " \"" + Value + "\" -- " + Comment;
                 }
                 else
                 {
-                    return s + " \"" + tempOutput + "\"";
+                    return s + " \"" + Value + "\"";
                 }
             }
             else return "";

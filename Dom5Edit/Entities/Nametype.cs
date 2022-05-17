@@ -24,6 +24,19 @@ namespace Dom5Edit.Entities
         {
         }
 
+        public override void Resolve()
+        {
+            if (base._resolved) return;
+            foreach (var m in Parent.Dependencies)
+            {
+                if (ID != -1 && m.Nametypes.TryGetValue(this.ID, out var entity))
+                {
+                    entity.Properties.AddRange(this.Properties);
+                }
+            }
+            base.Resolve();
+        }
+
         internal override Dictionary<int, IDEntity> GetIDList()
         {
             return Parent.Nametypes;

@@ -260,7 +260,7 @@ namespace Dom5Edit.Mods
                     //is there another command on the same line?
                     List<int> commandIndexes = new List<int>();
                     int index = s.IndexOf('#');
-                    if (index != -1)
+                    if (index != -1 && (index < commentIndex || commentIndex == -1))
                     {
                         commandIndexes.Add(index);
                         int nextIndex = s.IndexOf('#', index + 1);

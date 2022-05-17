@@ -3,6 +3,7 @@ using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,6 +97,29 @@ namespace Dom5Edit.Entities
             {
                 Parent.SpellsWithNoNameYet.Add(this);
             }
+        }
+
+        public override void Export(StreamWriter writer)
+        {
+            Selected = true;
+            base.Export(writer);
+        }
+
+        public override void Resolve()
+        {
+            if (base._resolved) return;
+            foreach (var m in Parent.Dependencies)
+            {
+                if (ID != -1 && m.Spells.TryGetValue(this.ID, out var entity))
+                {
+                    entity.Properties.AddRange(this.Properties);
+                }
+                else if (this.TryGetName(out _name) && m.NamedSpells.TryGetValue(_name, out var namedentity))
+                {
+                    namedentity.Properties.AddRange(this.Properties);
+                }
+            }
+            base.Resolve();
         }
 
         public override void AddNamed(string s)

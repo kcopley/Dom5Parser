@@ -57,6 +57,44 @@ public static class StringExtension
         return false;
     }
 
+    public static bool TryRetrieveFloatFromString(this string s, out float ret, out string remainder)
+    {
+        var hasvalue = float.TryParse(s, out float i);
+        if (hasvalue)
+        {
+            ret = i;
+            remainder = "";
+            return true;
+        }
+
+        int numberOfIntegerChars = 0;
+        foreach (char ch in s)
+        {
+            if (int.TryParse(ch.ToString(), out _) || ch.Equals('-') || ch.Equals('.'))
+            {
+                numberOfIntegerChars++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (numberOfIntegerChars > 0)
+        {
+            var sub = s.Substring(0, numberOfIntegerChars);
+            bool hasValue = float.TryParse(sub, out float val);
+            if (hasValue)
+            {
+                ret = val;
+                remainder = s.Substring(numberOfIntegerChars);
+                return true;
+            }
+        }
+        ret = -1;
+        remainder = "";
+        return false;
+    }
+
     public static bool TryRetrieveUlongFromString(this string s, out ulong ret, out string remainder)
     {
         var hasvalue = ulong.TryParse(s, out ulong i);

@@ -171,7 +171,6 @@ namespace Dom5Edit
                 }/*
                 else //a select monster on a mod ID?
                 {
-                    final.Add(kvp.Key, kvp.Value); //no conflict, so just add it as is
                 }*/
             }
 
