@@ -20,6 +20,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.CLEAR, CommandProperty.Create);
             _propertyMap.Add(Command.COPYWEAPON, WeaponRef.Create);
             _propertyMap.Add(Command.DMG, WeaponDamage.Create);
+            _propertyMap.Add(Command.DAMAGE, WeaponDamage.Create);
             _propertyMap.Add(Command.NRATT, IntProperty.Create);
             _propertyMap.Add(Command.ATT, IntProperty.Create);
             _propertyMap.Add(Command.DEF, IntProperty.Create);

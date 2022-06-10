@@ -30,7 +30,7 @@ namespace Dom5Edit
         internal static int NATION_START_ID = 120;
         internal static int MONTAG_START_ID = 1000;
         internal static int RESTRICTED_ITEM_START_ID = 1;
-        internal static int ENCHANTMENT_START_ID = 105;
+        internal static int ENCHANTMENT_START_ID = 106;
         internal static int EVENT_CODE_START_ID = -300;
         internal static int EVENT_CODE_EFFECT_START_ID = 14;
 
@@ -279,7 +279,7 @@ namespace Dom5Edit
         {
             foreach (Enchantment item in items)
             {
-                if (item.DependentEnchantment == null)
+                if (item.DependentEnchantment == null && item.EnchID >= 106)
                 {
                     item.EnchID = finalMod.GetNextEnchantmentID();
                     finalMod.Enchantments.Add(item.GetID(), item);

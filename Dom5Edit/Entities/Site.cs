@@ -29,7 +29,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.HOMECOM, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.MON, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.COM, MonsterOrMontagRef.Create);
-            _propertyMap.Add(Command.NAT, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.NAT, NationRef.Create);
             _propertyMap.Add(Command.NATMON, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.NATCOM, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.SUMMON, MonsterOrMontagRef.Create);
