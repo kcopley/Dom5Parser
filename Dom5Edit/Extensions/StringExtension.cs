@@ -32,9 +32,15 @@ public static class StringExtension
         int numberOfIntegerChars = 0;
         foreach (char ch in s)
         {
-            if (int.TryParse(ch.ToString(), out _) || ch.Equals('-'))
+            if (int.TryParse(ch.ToString(), out _))
             {
                 numberOfIntegerChars++;
+                continue;
+            }
+            else if (ch.Equals('-') && numberOfIntegerChars == 0)
+            {
+                numberOfIntegerChars++;
+                continue;
             }
             else
             {
@@ -68,11 +74,24 @@ public static class StringExtension
         }
 
         int numberOfIntegerChars = 0;
+        bool hasPeriod = false;
         foreach (char ch in s)
         {
-            if (int.TryParse(ch.ToString(), out _) || ch.Equals('-') || ch.Equals('.'))
+            if (int.TryParse(ch.ToString(), out _))
             {
                 numberOfIntegerChars++;
+                continue;
+            }
+            else if (ch.Equals('.') && !hasPeriod)
+            {
+                numberOfIntegerChars++;
+                hasPeriod = true;
+                continue;
+            }
+            else if (ch.Equals('-') && numberOfIntegerChars == 0)
+            {
+                numberOfIntegerChars++;
+                continue;
             }
             else
             {

@@ -19,6 +19,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.CLEAR, CommandProperty.Create);
             _propertyMap.Add(Command.PATH, IntProperty.Create);
             _propertyMap.Add(Command.GEMS, IntIntProperty.Create);
+            _propertyMap.Add(Command.LOC, BitmaskProperty.Create);
             _propertyMap.Add(Command.GOLD, IntProperty.Create);
             _propertyMap.Add(Command.RES, IntProperty.Create);
             _propertyMap.Add(Command.LEVEL, IntProperty.Create);

@@ -729,6 +729,20 @@ namespace Dom5Edit.Commands
         WALLCOM,
         WALLUNIT,
         WALLMULT,
+        UWDEFCOM1,
+        UWDEFCOM2,
+        UWDEFUNIT1,
+        UWDEFMULT1,
+        UWDEFUNIT1B,
+        UWDEFMULT1B,
+        UWDEFUNIT2,
+        UWDEFMULT2,
+        UWDEFUNIT2B,
+        UWDEFMULT2B,
+        UWDEFUNIT1C,
+        UWDEFMULT1C,
+        UWDEFUNIT1D,
+        UWDEFMULT1D,
         UWWALLUNIT,
         UWWALLMULT,
         UWWALLCOM,
@@ -997,6 +1011,7 @@ namespace Dom5Edit.Commands
         REQ_NATION,
         REQ_NONATION,
         REQ_FORNATION,
+        REQ_NOTNATION,
         REQ_NOTFORNATION,
         REQ_NOTFORALLY,
         REQ_GEM,
@@ -1244,6 +1259,8 @@ namespace Dom5Edit.Commands
         ARENA,
         RESOLVEARENA1,
         RESOLVEARENA2,
+        LOC,
+        EXTRAMSG,
     }
 
     public class CommandsMap
@@ -1955,6 +1972,7 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#eramask", Command.ERAMASK);
             _commandMap.Add("#selectsite", Command.SELECTSITE);
             _commandMap.Add("#newsite", Command.NEWSITE);
+            _commandMap.Add("#loc", Command.LOC);
             _commandMap.Add("#gems", Command.GEMS);
             _commandMap.Add("#res", Command.RES);
             _commandMap.Add("#rarity", Command.RARITY);
@@ -1974,6 +1992,20 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#wallcom", Command.WALLCOM);
             _commandMap.Add("#wallunit", Command.WALLUNIT);
             _commandMap.Add("#wallmult", Command.WALLMULT);
+            _commandMap.Add("#uwdefcom1", Command.UWDEFCOM1);
+            _commandMap.Add("#uwdefcom2", Command.UWDEFCOM2);
+            _commandMap.Add("#uwdefunit1", Command.UWDEFUNIT1);
+            _commandMap.Add("#uwdefmult1", Command.UWDEFMULT1);
+            _commandMap.Add("#uwdefunit1b", Command.UWDEFUNIT1B);
+            _commandMap.Add("#uwdefmult1b", Command.UWDEFMULT1B);
+            _commandMap.Add("#uwdefunit2", Command.UWDEFUNIT2);
+            _commandMap.Add("#uwdefmult2", Command.UWDEFMULT2);
+            _commandMap.Add("#uwdefunit2b", Command.UWDEFUNIT2B);
+            _commandMap.Add("#uwdefmult2b", Command.UWDEFMULT2B);
+            _commandMap.Add("#uwdefunit1c", Command.UWDEFUNIT1C);
+            _commandMap.Add("#uwdefmult1c", Command.UWDEFMULT1C);
+            _commandMap.Add("#uwdefunit1d", Command.UWDEFUNIT1D);
+            _commandMap.Add("#uwdefmult1d", Command.UWDEFMULT1D);
             _commandMap.Add("#uwwallunit", Command.UWWALLUNIT);
             _commandMap.Add("#uwwallmult", Command.UWWALLMULT);
             _commandMap.Add("#uwwallcom", Command.UWWALLCOM);
@@ -2242,6 +2274,7 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#req_nation", Command.REQ_NATION);
             _commandMap.Add("#req_nonation", Command.REQ_NONATION);
             _commandMap.Add("#req_fornation", Command.REQ_FORNATION);
+            _commandMap.Add("#req_notnation", Command.REQ_NOTNATION);
             _commandMap.Add("#req_notfornation", Command.REQ_NOTFORNATION);
             _commandMap.Add("#req_notforally", Command.REQ_NOTFORALLY);
             _commandMap.Add("#req_gem", Command.REQ_GEM);
@@ -2489,6 +2522,7 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#arena", Command.ARENA);
             _commandMap.Add("#resolvearena1", Command.RESOLVEARENA1);
             _commandMap.Add("#resolvearena2", Command.RESOLVEARENA2);
+            _commandMap.Add("#extramsg", Command.EXTRAMSG);
 
             //Build an inverted map
             foreach (KeyValuePair<string, Command> kvp in _commandMap)

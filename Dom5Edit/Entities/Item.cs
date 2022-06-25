@@ -27,6 +27,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SPR, FilePathProperty.Create);
             _propertyMap.Add(Command.TYPE, IntProperty.Create);
             _propertyMap.Add(Command.NAME, NameProperty.Create);
+            _propertyMap.Add(Command.SAILING, IntIntProperty.Create);
             _propertyMap.Add(Command.DESCR, StringProperty.Create);
             _propertyMap.Add(Command.WEAPON, WeaponRef.Create);
             _propertyMap.Add(Command.ARMOR, ArmorRef.Create);
@@ -79,6 +80,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.MINSIZE, IntProperty.Create);
             _propertyMap.Add(Command.MAXSIZE, IntProperty.Create);
             _propertyMap.Add(Command.UNIQUE, CommandProperty.Create);
+            _propertyMap.Add(Command.AOE, IntProperty.Create);
             _propertyMap.Add(Command.TAINTED, IntProperty.Create);
             _propertyMap.Add(Command.CURSED, CommandProperty.Create);
             _propertyMap.Add(Command.NOMOUNTED, CommandProperty.Create);
@@ -320,6 +322,10 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.BATSTARTSUM3D6, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.BATSTARTSUM4D6, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.BATSTARTSUM5D6, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM6D6, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM7D6, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM8D6, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATSTARTSUM9D6, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.IVYLORD, IntProperty.Create);
             _propertyMap.Add(Command.DRAGONLORD, IntProperty.Create);
             _propertyMap.Add(Command.LAMIALORD, IntProperty.Create);

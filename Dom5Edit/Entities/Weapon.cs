@@ -28,6 +28,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.TWOHANDED, CommandProperty.Create);
             _propertyMap.Add(Command.SOUND, IntProperty.Create);
             _propertyMap.Add(Command.RANGE, IntProperty.Create);
+            _propertyMap.Add(Command.PREC, IntProperty.Create);
             _propertyMap.Add(Command.AMMO, IntProperty.Create);
             _propertyMap.Add(Command.RCOST, IntProperty.Create);
             _propertyMap.Add(Command.SAMPLE, FilePathProperty.Create);

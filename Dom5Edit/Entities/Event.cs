@@ -30,8 +30,10 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.REQ_NATION, NationRef.Create);
             _propertyMap.Add(Command.REQ_NONATION, NationRef.Create);
             _propertyMap.Add(Command.REQ_FORNATION, NationRef.Create);
+            _propertyMap.Add(Command.REQ_NOTNATION, NationRef.Create);
             _propertyMap.Add(Command.REQ_NOTFORNATION, NationRef.Create);
             _propertyMap.Add(Command.REQ_NOTFORALLY, NationRef.Create);
+            _propertyMap.Add(Command.EXTRAMSG, NationRef.Create);
             _propertyMap.Add(Command.REQ_GEM, IntProperty.Create);
             _propertyMap.Add(Command.REQ_GOLD, IntProperty.Create);
             _propertyMap.Add(Command.REQ_CAPITAL, IntProperty.Create);

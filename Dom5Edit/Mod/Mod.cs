@@ -229,13 +229,39 @@ namespace Dom5Edit.Mods
         {
         }
 
+        public int LineNumber { get; private set; } = 0;
+        private string logFile;
+        public void Log(string s)
+        {
+            if (string.IsNullOrEmpty(logFile))
+            {
+                return;
+            }
+            using (StreamWriter writer = File.AppendText(logFile))
+            {
+                writer.WriteLine("Line: " + LineNumber + " - " + s);
+            }
+        }
+
         public void Parse(string dmFile)
         {
+            int indexOfDotDM = dmFile.IndexOf(".dm");
+            if (indexOfDotDM != -1)
+            {
+                logFile = dmFile.Substring(0, indexOfDotDM) + "-log.txt";
+            }
+
             using (StreamReader sr = File.OpenText(dmFile))
             {
                 string s = "";
+
+                bool isMultiLine = false;
+                string prevLine = "";
+
                 while ((s = sr.ReadLine()) != null)
                 {
+                    LineNumber++;
+                    s = s.Trim(); //remove whitespaces
                     if (s.Length < 1) continue; //empty line
                                                 //pull comments first
 
@@ -254,44 +280,170 @@ namespace Dom5Edit.Mods
                         continue;
                     }
 
-                    // continue on
-                    int commentIndex = s.IndexOf(commentDelimiter);
-
-                    //is there another command on the same line?
-                    List<int> commandIndexes = new List<int>();
-                    int index = s.IndexOf('#');
-                    if (index != -1 && (index < commentIndex || commentIndex == -1))
+                    if ((s.IndexOf("#descr") != -1 && s.Length > 6) || (s.IndexOf("#summary") != -1 && s.Length > 8) || (s.IndexOf("#msg") != -1 && s.Length > 4))
                     {
-                        commandIndexes.Add(index);
-                        int nextIndex = s.IndexOf('#', index + 1);
-                        while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
+                        //could be multi line description
+                        //check if has both quotes
+                        int firstQuote = s.IndexOf('"');
+                        int secondQuote = s.IndexOf('"', firstQuote + 1);
+                        //first quote mark exists, second does not
+                        //either is multi-line, or quote mark forgotten on the end
+                        if (firstQuote != -1 && secondQuote == -1)
                         {
-                            if (s.IndexOf("##landname##", nextIndex) != nextIndex)
+                            bool hasAnotherCommand = HasCommandOnLine(s.Substring(firstQuote)); //only check after the first quote
+                            if (!hasAnotherCommand)
                             {
-                                commandIndexes.Add(nextIndex);
-                            }
-                            else
-                            {
-                                nextIndex += 12; //bypass the landname command
-                            }
-                            nextIndex = s.IndexOf('#', nextIndex + 1);
+                                isMultiLine = true;
+                                prevLine = s;
+                                continue;
+                            } //if it has another command on that line, the quote was just forgotten
                         }
+                        ProcessStringToLine(s);
+                    }
+                    else if (isMultiLine && !string.IsNullOrEmpty(prevLine))
+                    {
+                        //already on a multi-line, does it continue?
+                        int endQuote = s.IndexOf('"');
+                        bool anotherCommand = HasCommandOnLine(s);
 
-                        for (int i = 0; i < commandIndexes.Count; i++)
+                        if (endQuote != -1 && !anotherCommand) //ends on this line
                         {
-                            int nextCommand = i + 1;
-                            string line;
-                            if (nextCommand < commandIndexes.Count)
-                            {
-                                line = s.Substring(commandIndexes[i], commandIndexes[nextCommand] - commandIndexes[i]);
-                            }
-                            else
-                            {
-                                line = s.Substring(commandIndexes[i]);
-                            }
-                            ProcessLine(line);
+                            string endLine = prevLine + Environment.NewLine + s;
+                            ProcessStringToLine(endLine);
+                            prevLine = "";
+                            isMultiLine = false;
+                        }
+                        else if (anotherCommand) // of course a mod author would end a multi-line and start another command on the same line
+                        {
+                            //split and add up to the # to the previous string, process it
+                            //and then process the second string
+                            int anotherCommandIndex = GetNextCommandIndex(s);
+                            string leftsplit = s.Substring(0, anotherCommandIndex);
+                            string rightsplit = s.Substring(anotherCommandIndex);
+                            string multiline = prevLine + Environment.NewLine + leftsplit;
+                            ProcessStringToLine(multiline);
+                            ProcessStringToLine(rightsplit);
+                            prevLine = "";
+                            isMultiLine = false;
+                        }
+                        else
+                        {
+                            //no command, no end quote... it must continue as part of the string
+                            prevLine = prevLine + Environment.NewLine + s;
                         }
                     }
+                    else
+                    {
+                        ProcessStringToLine(s);
+                    }
+                }
+            }
+        }
+
+        public bool HasCommandOnLine(string s)
+        {
+            //did they add another command alongside on this line?
+            int anotherCommand = GetNextCommandIndex(s);
+            if (anotherCommand < 0) return false;
+            int spaceAfter = s.IndexOf(' ', anotherCommand);
+            bool hasValidCommand = false;
+
+            if (anotherCommand != -1)
+            {
+                string comm;
+                if (spaceAfter != -1)
+                {
+                    comm = s.Substring(anotherCommand, spaceAfter - anotherCommand);
+                }
+                else
+                {
+                    comm = s.Substring(anotherCommand);
+                }
+                hasValidCommand = CommandsMap.TryGetCommand(comm, out _); //this is a valid command on this line
+            }
+            return hasValidCommand;
+        }
+
+        public int GetNextCommandIndex(string s)
+        {
+            int nextIndex = s.IndexOf('#');
+            while (nextIndex != -1)
+            {
+                if (s.IndexOf("##landname##", nextIndex) == nextIndex)
+                {
+                    nextIndex += 12;
+                }
+                else if (s.IndexOf("##godname##", nextIndex) == nextIndex)
+                {
+                    nextIndex += 11;
+                }
+                else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
+                {
+                    nextIndex += 12;
+                }
+                else if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex)
+                {
+                    nextIndex += 15;
+                }
+                else
+                {
+                    return nextIndex;
+                }
+                nextIndex = s.IndexOf('#', nextIndex + 1);
+            }
+            return -1;
+        }
+
+        public void ProcessStringToLine(string s)
+        {
+            // continue on
+            int commentIndex = s.IndexOf(commentDelimiter);
+
+            //is there another command on the same line?
+            List<int> commandIndexes = new List<int>();
+            int index = s.IndexOf('#');
+            if (index != -1 && (index < commentIndex || commentIndex == -1))
+            {
+                commandIndexes.Add(index);
+                int nextIndex = s.IndexOf('#', index + 1);
+                while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
+                {
+                    if (s.IndexOf("##landname##", nextIndex) == nextIndex)
+                    {
+                        nextIndex += 12;
+                    }
+                    else if (s.IndexOf("##godname##", nextIndex) == nextIndex)
+                    {
+                        nextIndex += 11;
+                    }
+                    else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
+                    {
+                        nextIndex += 12;
+                    }
+                    else if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex)
+                    {
+                        nextIndex += 15;
+                    }
+                    else
+                    {
+                        commandIndexes.Add(nextIndex);
+                    }
+                    nextIndex = s.IndexOf('#', nextIndex + 1);
+                }
+
+                for (int i = 0; i < commandIndexes.Count; i++)
+                {
+                    int nextCommand = i + 1;
+                    string line;
+                    if (nextCommand < commandIndexes.Count)
+                    {
+                        line = s.Substring(commandIndexes[i], commandIndexes[nextCommand] - commandIndexes[i]);
+                    }
+                    else
+                    {
+                        line = s.Substring(commandIndexes[i]);
+                    }
+                    ProcessLine(line);
                 }
             }
         }
@@ -350,6 +502,13 @@ namespace Dom5Edit.Mods
                         Parse(c, value, comment);
                         break;
                 }
+            }
+            else
+            {
+                if (_currentEntity != null)
+                    Log("Command does not exist for: "+ _currentEntity.GetType() + " for command: " + command);
+                else
+                    Log("Command does not exist for: " + command);
             }
         }
 

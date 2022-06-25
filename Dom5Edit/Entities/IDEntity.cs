@@ -182,7 +182,9 @@ namespace Dom5Edit.Entities
                 prop.Parse(command, value, comment);
                 Properties.Add(prop);
             }
-            //else not recognized command, skip
+            else {
+                this.Parent.Log("Command not found on " + this.GetType() + " for command: " + command);
+            } // not recognized command, skip
             //build comment storage for in-between properties
         }
     }

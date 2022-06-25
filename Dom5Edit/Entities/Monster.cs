@@ -85,6 +85,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.VOIDSANITY, IntProperty.Create);
             _propertyMap.Add(Command.WEAPON, WeaponRef.Create);
             _propertyMap.Add(Command.ARMOR, ArmorRef.Create);
+            _propertyMap.Add(Command.POLYIMMUNE, CommandProperty.Create);
             _propertyMap.Add(Command.HUMANOID, CommandProperty.Create);
             _propertyMap.Add(Command.MOUNTEDHUMANOID, CommandProperty.Create);
             _propertyMap.Add(Command.QUADRUPED, CommandProperty.Create);
