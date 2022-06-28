@@ -249,6 +249,7 @@ namespace Dom5Edit.Mods
             if (indexOfDotDM != -1)
             {
                 logFile = dmFile.Substring(0, indexOfDotDM) + "-log.txt";
+                File.Delete(logFile); //clear out an old log
             }
 
             using (StreamReader sr = File.OpenText(dmFile))
