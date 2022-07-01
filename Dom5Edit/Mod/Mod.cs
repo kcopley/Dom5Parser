@@ -13,6 +13,7 @@ namespace Dom5Edit.Mods
     public class Mod
     {
         private readonly char spaceDelimiter = ' ';
+        private readonly string tabDelimiter = "\t";
         private readonly string commentDelimiter = "--";
         private readonly char[] commandDelimiter = new char[] { '#' };
 
@@ -239,7 +240,8 @@ namespace Dom5Edit.Mods
             }
             using (StreamWriter writer = File.AppendText(logFile))
             {
-                writer.WriteLine("Line: " + LineNumber + " - " + s);
+                if (LineNumber != -1) writer.WriteLine("Line: " + LineNumber + " - " + s);
+                else writer.WriteLine("Error: " + s);
             }
         }
 
@@ -338,6 +340,8 @@ namespace Dom5Edit.Mods
                         ProcessStringToLine(s);
                     }
                 }
+
+                LineNumber = -1;
             }
         }
 
@@ -463,12 +467,27 @@ namespace Dom5Edit.Mods
             //grab the command & value
 
             int spaceIndex = line.IndexOf(spaceDelimiter);
+            int tabIndex = line.IndexOf(tabDelimiter);
             string command = line;
             string value = ""; //set to empty string, not null
             if (spaceIndex != -1) //has a value (but could be spaces before a comment? should be handled by trim above)
             {
                 command = line.Substring(0, spaceIndex).Trim();
                 value = line.Substring(spaceIndex + 1).Trim();
+                if (value.StartsWith("\"") || value.EndsWith("\""))
+                {
+                    value = value.Trim('\"');
+                    this.LineWasTrimmed = true;
+                }
+                else
+                {
+                    LineWasTrimmed = false;
+                }
+            }
+            else if (tabIndex != -1)
+            {
+                command = line.Substring(0, tabIndex).Trim();
+                value = line.Substring(tabIndex + 1).Trim();
                 if (value.StartsWith("\"") || value.EndsWith("\""))
                 {
                     value = value.Trim('\"');
@@ -507,7 +526,7 @@ namespace Dom5Edit.Mods
             else
             {
                 if (_currentEntity != null)
-                    Log("Invalid, incorrectly spelled, or nonexistent command for: "+ _currentEntity.GetType() + " for command: " + command);
+                    Log("Invalid, incorrectly spelled, or nonexistent command for: " + _currentEntity.GetType() + " for command: " + command);
                 else
                     Log("Invalid, incorrectly spelled, or nonexistent command for: " + command);
             }
