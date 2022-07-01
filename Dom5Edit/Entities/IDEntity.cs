@@ -183,7 +183,7 @@ namespace Dom5Edit.Entities
                 Properties.Add(prop);
             }
             else {
-                this.Parent.Log("Command not found on " + this.GetType() + " for command: " + command);
+                this.Parent.Log("Invalid, incorrectly spelled, or nonexistent command for " + this.GetType() + " for command: " + command);
             } // not recognized command, skip
             //build comment storage for in-between properties
         }

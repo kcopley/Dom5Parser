@@ -291,6 +291,21 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.ARENA, CommandProperty.Create);
             _propertyMap.Add(Command.RESOLVEARENA1, CommandProperty.Create);
             _propertyMap.Add(Command.RESOLVEARENA2, CommandProperty.Create);
+            _propertyMap.Add(Command.REQ_TARGNOAFF, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_MINCORPSES, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_MAXCORPSES, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_THRONESITE, IntProperty.Create);
+            _propertyMap.Add(Command.SETPOPTYPE, PoptypeIDRef.Create);
+            _propertyMap.Add(Command.REQ_TARGNOORDER, BitmaskProperty.Create);
+            _propertyMap.Add(Command.REQ_TARGMINMORALE, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_TARGMAXMORALE, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_TARGNOTOWNER, NationRef.Create);
+            _propertyMap.Add(Command.REQ_TARGNOTALLY, NationRef.Create);
+            _propertyMap.Add(Command.REQ_TARGALLY, NationRef.Create);
+            _propertyMap.Add(Command.REQ_GODISNOTMNR, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.REQ_WORLDITEM, ItemRef.Create);
+            _propertyMap.Add(Command.REQ_NOWORLDITEM, ItemRef.Create);
+            _propertyMap.Add(Command.SETXP, IntProperty.Create);
         }
 
         public Event(string value, string comment, Mod _parent, bool selected = false) : base()

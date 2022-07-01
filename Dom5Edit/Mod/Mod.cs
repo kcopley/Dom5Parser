@@ -507,9 +507,9 @@ namespace Dom5Edit.Mods
             else
             {
                 if (_currentEntity != null)
-                    Log("Command does not exist for: "+ _currentEntity.GetType() + " for command: " + command);
+                    Log("Invalid, incorrectly spelled, or nonexistent command for: "+ _currentEntity.GetType() + " for command: " + command);
                 else
-                    Log("Command does not exist for: " + command);
+                    Log("Invalid, incorrectly spelled, or nonexistent command for: " + command);
             }
         }
 

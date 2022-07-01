@@ -1112,6 +1112,7 @@ namespace Dom5Edit.Commands
         REQ_TARGNOPATH3,
         REQ_TARGNOPATH4,
         REQ_TARGAFF,
+        REQ_TARGNOAFF,
         REQ_TARGORDER,
         REQ_TARGITEM,
         REQ_TARGNOITEM,
@@ -1139,6 +1140,7 @@ namespace Dom5Edit.Commands
         REQ_HOSTILEENCH,
         REQ_ENCHDOM,
         REQ_ARENADONE,
+        REQ_THRONESITE,
         NATION,
         NATIONENCH,
         MSG,
@@ -1261,6 +1263,20 @@ namespace Dom5Edit.Commands
         RESOLVEARENA2,
         LOC,
         EXTRAMSG,
+        REQ_MAXCORPSES,
+        REQ_MINCORPSES,
+        SETPOPTYPE,
+        REQ_NATIVESOIL,
+        REQ_TARGNOORDER,
+        REQ_TARGMINMORALE,
+        REQ_TARGMAXMORALE,
+        REQ_TARGNOTOWNER,
+        REQ_TARGNOTALLY,
+        REQ_TARGALLY,
+        REQ_GODISNOTMNR,
+        REQ_WORLDITEM,
+        REQ_NOWORLDITEM,
+        SETXP,
     }
 
     public class CommandsMap
@@ -2523,6 +2539,21 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#resolvearena1", Command.RESOLVEARENA1);
             _commandMap.Add("#resolvearena2", Command.RESOLVEARENA2);
             _commandMap.Add("#extramsg", Command.EXTRAMSG);
+            _commandMap.Add("#req_targnoaff", Command.REQ_TARGNOAFF);
+            _commandMap.Add("#req_mincorpses", Command.REQ_MINCORPSES);
+            _commandMap.Add("#req_maxcorpses", Command.REQ_MAXCORPSES);
+            _commandMap.Add("#req_thronesite", Command.REQ_THRONESITE);
+            _commandMap.Add("#setpoptype", Command.SETPOPTYPE);
+            _commandMap.Add("#req_targnoorder", Command.REQ_TARGNOORDER);
+            _commandMap.Add("#req_targminmorale", Command.REQ_TARGMINMORALE);
+            _commandMap.Add("#req_targmaxmorale", Command.REQ_TARGMAXMORALE);
+            _commandMap.Add("#req_targnotowner", Command.REQ_TARGNOTOWNER);
+            _commandMap.Add("#req_targnotally", Command.REQ_TARGNOTALLY);
+            _commandMap.Add("#req_targally", Command.REQ_TARGALLY);
+            _commandMap.Add("#req_godisnotmnr", Command.REQ_GODISNOTMNR);
+            _commandMap.Add("#req_worlditem", Command.REQ_WORLDITEM);
+            _commandMap.Add("#req_noworlditem", Command.REQ_NOWORLDITEM);
+            _commandMap.Add("#setxp", Command.SETXP);
 
             //Build an inverted map
             foreach (KeyValuePair<string, Command> kvp in _commandMap)
