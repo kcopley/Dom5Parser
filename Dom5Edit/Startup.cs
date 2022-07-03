@@ -117,7 +117,10 @@ namespace Dom5Edit
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            if (i != null)
+            {
+                i.ExportMagicPaths(_folderPath.Text);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -142,7 +145,7 @@ namespace Dom5Edit
                 if (modFile.Equals("ALL")) continue;
                 files.Add(modFile.ToString());
             }
-            i.Import(_folderPath.Text, files);
+            i.Import(_folderPath.Text, files, log);
             Mods.Items.Clear();
             foreach (var modFile in modFiles.CheckedItems)
             {
@@ -192,6 +195,12 @@ namespace Dom5Edit
         private void Mods_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private bool log = false;
+        private void logging_CheckedChanged(object sender, EventArgs e)
+        {
+            log = logging.Checked;
         }
     }
 }

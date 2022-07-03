@@ -231,8 +231,10 @@ namespace Dom5Edit.Mods
 
         public int LineNumber { get; private set; } = 0;
         private string logFile;
+        public bool Logging { get; set; }
         public void Log(string s)
         {
+            if (!this.Logging) return;
             if (string.IsNullOrEmpty(logFile))
             {
                 return;

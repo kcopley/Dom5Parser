@@ -48,6 +48,7 @@
             this.Scan = new System.Windows.Forms.Button();
             this.Mods = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.logging = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // startButton
@@ -342,11 +343,23 @@
             this.label7.Size = new System.Drawing.Size(0, 13);
             this.label7.TabIndex = 22;
             // 
+            // logging
+            // 
+            this.logging.AutoSize = true;
+            this.logging.Location = new System.Drawing.Point(159, 573);
+            this.logging.Name = "logging";
+            this.logging.Size = new System.Drawing.Size(98, 17);
+            this.logging.TabIndex = 23;
+            this.logging.Text = "Log Mod Errors";
+            this.logging.UseVisualStyleBackColor = true;
+            this.logging.CheckedChanged += new System.EventHandler(this.logging_CheckedChanged);
+            // 
             // Startup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 635);
+            this.Controls.Add(this.logging);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.Mods);
             this.Controls.Add(this.Scan);
@@ -392,5 +405,6 @@
         private System.Windows.Forms.Button Scan;
         private System.Windows.Forms.ListBox Mods;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox logging;
     }
 }

@@ -39,7 +39,7 @@ namespace Dom5Edit
         {
         }
 
-        public void Import(string folder, List<string> files)
+        public void Import(string folder, List<string> files, bool log)
         {
             //Startup script
             //string localPath = Path.GetDirectoryName(folder);
@@ -50,6 +50,7 @@ namespace Dom5Edit
                 string fileName = System.IO.Path.Combine(folder, dmFile);
                 if (fileName.StartsWith(_ModName)) continue;
                 Mod m = new Mod();
+                m.Logging = log;
                 m.ModFileName = dmFile;
                 m.Parse(fileName);
                 Mods.Add(m);
@@ -75,7 +76,7 @@ namespace Dom5Edit
         {
             foreach (var mod in Mods)
             {
-                using (StreamWriter writer = new StreamWriter(folder + "\\magicpaths_" + mod.ModName + ".txt"))
+                using (StreamWriter writer = new StreamWriter(folder + "\\" + mod.ModName + "_magicpaths.txt"))
                 {
                     foreach (IDEntity e in mod.Nations.Values)
                     {
