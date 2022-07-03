@@ -74,9 +74,9 @@ namespace Dom5Edit
 
         public void ExportMagicPaths(string folder)
         {
-            foreach (var mod in Mods)
+            using (StreamWriter writer = new StreamWriter(folder + "\\mod_magicpaths.txt"))
             {
-                using (StreamWriter writer = new StreamWriter(folder + "\\" + mod.ModName + "_magicpaths.txt"))
+                foreach (var mod in Mods)
                 {
                     foreach (IDEntity e in mod.Nations.Values)
                     {
@@ -86,6 +86,26 @@ namespace Dom5Edit
 
                         writer.WriteLine();
                         double[] totalArr = new double[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+                        //get recruitables
+                        foreach (var m in n.Commanders)
+                        {
+                            writer.Write("OFF," + m.ID);
+                            var arr = GetMagicPaths(m);
+
+                            for (int i = 0; i < arr.Length; i++)
+                            {
+                                double d = arr[i];
+                                totalArr[i] = Math.Max(arr[i], totalArr[i]);
+                                writer.Write("," + d);
+                            }
+                            writer.WriteLine();
+                        }
+                        double[] offCap = new double[9];
+                        for (int i = 0; i < offCap.Length; i++)
+                        {
+                            offCap[i] = totalArr[i];
+                        }
                         //get cap sites
                         foreach (var s in n.Sites)
                         {
@@ -95,7 +115,7 @@ namespace Dom5Edit
 
                                 var arr = GetMagicPaths(m);
 
-                                for (int i = 0; i < arr.Length - 1; i++)
+                                for (int i = 0; i < arr.Length; i++)
                                 {
                                     double d = arr[i];
                                     totalArr[i] = Math.Max(arr[i], totalArr[i]);
@@ -104,29 +124,28 @@ namespace Dom5Edit
                                 writer.WriteLine();
                             }
                         }
-                        //get recruitables
-                        foreach (var m in n.Commanders)
-                        {
-                            writer.Write(m.ID);
-                            var arr = GetMagicPaths(m);
-
-                            for (int i = 0; i < arr.Length - 1; i++)
-                            {
-                                double d = arr[i];
-                                totalArr[i] = Math.Max(arr[i], totalArr[i]);
-                                writer.Write("," + d);
-                            }
-                            writer.WriteLine();
-                        }
 
                         writer.Write(hasName ? name : n.ID.ToString());
-                        for (int i = 0; i < totalArr.Length - 1; i++)
+                        writer.WriteLine(" -- only off-cap included.");
+                        writer.Write(hasName ? name : n.ID.ToString());
+                        for (int i = 0; i < offCap.Length; i++)
+                        {
+                            double d = offCap[i];
+                            writer.Write("," + d);
+                        }
+                        writer.WriteLine();
+
+                        writer.Write(hasName ? name : n.ID.ToString());
+                        writer.WriteLine(" -- cap mages included.");
+                        writer.Write(hasName ? name : n.ID.ToString());
+                        for (int i = 0; i < totalArr.Length; i++)
                         {
                             double d = totalArr[i];
                             writer.Write("," + d);
                         }
                         writer.WriteLine();
                     }
+                    writer.WriteLine();
                 }
             }
         }
