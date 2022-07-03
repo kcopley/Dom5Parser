@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\VanillaMageIDs.cs" />
     <Compile Include="Props\FloatFloatFloatProperty.cs" />
+    <Compile Include="Props\References\CopyStatsRef.cs" />
     <Compile Include="Start.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Entities\Enchantment.cs" />
@@ -70,7 +72,7 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\TypeManager.cs" />
-    <Compile Include="Importer.cs" />
+    <Compile Include="ModManager.cs" />
     <Compile Include="Mod\Mod.cs" />
     <Compile Include="Props\BitmaskChanceProperty.cs" />
     <Compile Include="Props\CommandProperty.cs" />

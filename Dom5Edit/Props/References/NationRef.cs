@@ -37,7 +37,7 @@ namespace Dom5Edit.Props
 
         public override string ToString()
         {
-            if (entity == null && !IsStringRef && ID > Importer.NATION_START_ID) //was definitely a modnation reference
+            if (entity == null && !IsStringRef && ID > ModManager.NATION_START_ID) //was definitely a modnation reference
             {
                 Parent.Parent.Log("Nation for ID: " + ID + " under command: " + this._command + " was never resolved. This could cause conflicts as the nation referenced in the mod does not exist.  If it was intentional, please use the dependency feature to denote mods that are intended to modify one another. Skipping export.");
                 return "";

@@ -26,6 +26,7 @@ namespace Dom5Edit.Mods
 
         private List<string> _dependencies = new List<string>();
         public List<Mod> Dependencies = new List<Mod>();
+        public List<string> DisabledNations = new List<string>();
 
         public Dictionary<int, IDEntity> Monsters = new Dictionary<int, IDEntity>();
         public bool TryGetValueMonsters(int i, out IDEntity entity)
@@ -200,27 +201,25 @@ namespace Dom5Edit.Mods
             return false;
         }
         public Dictionary<int, Montag> Montags = new Dictionary<int, Montag>();
-
         public Dictionary<string, IDEntity> NamedMercenaries = new Dictionary<string, IDEntity>();
-
         public List<SpellDamage> SpellDamages = new List<SpellDamage>();
-
         public List<IDEntity> Events = new List<IDEntity>();
+        public List<int> VanillaMageReferences = new List<int>();
 
-        private int _MonStartID = Importer.MONSTER_START_ID;
-        private int _SiteStartID = Importer.SITE_START_ID;
-        private int _EventStartID = Importer.EVENT_START_ID;
-        private int _ArmorStartID = Importer.ARMOR_START_ID;
-        private int _WepStartID = Importer.WEAPON_START_ID;
-        private int _ItemStartID = Importer.ITEM_START_ID;
-        private int _SpellStartID = Importer.SPELL_START_ID;
-        private int _NametypeStartID = Importer.NAMETYPE_START_ID;
-        private int _NationStartID = Importer.NATION_START_ID;
-        private int _MontagStartID = Importer.MONTAG_START_ID;
-        private int _RestrictedItemStartID = Importer.RESTRICTED_ITEM_START_ID;
-        private int _EnchantmentStartID = Importer.ENCHANTMENT_START_ID;
-        private int _EventCodeStartID = Importer.EVENT_CODE_START_ID;
-        private int _EventCodeEffectStartID = Importer.EVENT_CODE_EFFECT_START_ID;
+        private int _MonStartID = ModManager.MONSTER_START_ID;
+        private int _SiteStartID = ModManager.SITE_START_ID;
+        private int _EventStartID = ModManager.EVENT_START_ID;
+        private int _ArmorStartID = ModManager.ARMOR_START_ID;
+        private int _WepStartID = ModManager.WEAPON_START_ID;
+        private int _ItemStartID = ModManager.ITEM_START_ID;
+        private int _SpellStartID = ModManager.SPELL_START_ID;
+        private int _NametypeStartID = ModManager.NAMETYPE_START_ID;
+        private int _NationStartID = ModManager.NATION_START_ID;
+        private int _MontagStartID = ModManager.MONTAG_START_ID;
+        private int _RestrictedItemStartID = ModManager.RESTRICTED_ITEM_START_ID;
+        private int _EnchantmentStartID = ModManager.ENCHANTMENT_START_ID;
+        private int _EventCodeStartID = ModManager.EVENT_CODE_START_ID;
+        private int _EventCodeEffectStartID = ModManager.EVENT_CODE_EFFECT_START_ID;
 
         private Entity _currentEntity = null;
 
@@ -458,7 +457,38 @@ namespace Dom5Edit.Mods
             string line = s;
             int commentIndex = s.IndexOf(commentDelimiter);
             string comment = ""; //set to empty string, not null
-            if (commentIndex != -1) //has a comment
+            if (s.Contains("Bray-Shaman"))
+            {
+                int a = 0;
+                a++;
+            }
+            if (commentIndex == -1) //check for single dash
+            {
+                int singleDash = s.IndexOf('-');
+                //if single dash exists, if the next character exists, and next char is not an integer
+                if (singleDash != -1 && s.Length > singleDash + 1 && !int.TryParse(s[singleDash + 1].ToString(), out _))
+                {
+                    //if it has quotes, it could be a dash in a description
+                    int quoteIndex = s.IndexOf('"');
+                    if (quoteIndex != -1)
+                    {
+                        // assume if there's a first quote, check for a second quote mark
+                        int secondQuoteIndex = s.IndexOf('"', quoteIndex + 1);
+                        // only allow a single dash as a comment if it comes after a second quote mark
+                        if (singleDash > secondQuoteIndex)
+                        {
+                            line = s.Substring(0, singleDash).Trim();
+                            comment = s.Substring(singleDash + 1).Trim();
+                        }
+                    }
+                    else //no quote marks either
+                    {
+                        line = s.Substring(0, singleDash).Trim();
+                        comment = s.Substring(singleDash + 1).Trim();
+                    }
+                }
+            }
+            else if (commentIndex != -1) //has a comment
             {
                 line = s.Substring(0, commentIndex).Trim();
                 comment = s.Substring(commentIndex + 2).Trim();
@@ -782,39 +812,58 @@ namespace Dom5Edit.Mods
             writer.WriteLine();
 
             //Weapons
-            Export(writer, Weapons.Values.ToList());
+            Export(writer, Weapons.OrderBy(x => x.Key));
             Export(writer, NamedWeapons.Values.ToList());
             //Armors
-            Export(writer, Armors.Values.ToList());
+            Export(writer, Armors.OrderBy(x => x.Key));
             Export(writer, NamedArmors.Values.ToList());
+
             //Monsters
-            Export(writer, Monsters.Values.ToList());
+            Export(writer, Monsters.OrderBy(x => x.Key));
             Export(writer, NamedMonsters.Values.ToList());
             //Nametypes
-            Export(writer, Nametypes.Values.ToList());
+            Export(writer, Nametypes.OrderBy(x => x.Key));
             //Sites
-            Export(writer, Sites.Values.ToList());
+            Export(writer, Sites.OrderBy(x => x.Key));
             Export(writer, NamedSites.Values.ToList());
             Export(writer, SitesThatNeedIDs);
             //Nations
-            Export(writer, Nations.Values.ToList());
+            Export(writer, Nations.OrderBy(x => x.Key));
             //Export(writer, NamedNations.Values.ToList()); //not needed
 
             //spells
-            Export(writer, Spells.Values.ToList());
+            Export(writer, Spells.OrderBy(x => x.Key));
             Export(writer, NamedSpells.Values.ToList());
             Export(writer, SpellsWithNoNameYet.ToList());
 
             //magic items
-            Export(writer, Items.Values.ToList());
+            Export(writer, Items.OrderBy(x => x.Key));
             Export(writer, NamedItems.Values.ToList());
             Export(writer, ItemsWithNoNameYet.ToList());
 
-            Export(writer, Poptypes.Values.ToList());
+            Export(writer, Poptypes.OrderBy(x => x.Key));
             Export(writer, Events);
         }
 
-        public void Export(StreamWriter writer, List<Entity> entities)
+        public void Export(StreamWriter writer, IEnumerable<KeyValuePair<int, Entity>> entities)
+        {
+            foreach (KeyValuePair<int, Entity> m in entities)
+            {
+                m.Value.Export(writer);
+                writer.WriteLine();
+            }
+        }
+
+        public void Export(StreamWriter writer, IEnumerable<KeyValuePair<int, IDEntity>> entities)
+        {
+            foreach (KeyValuePair<int, IDEntity> m in entities)
+            {
+                m.Value.Export(writer);
+                writer.WriteLine();
+            }
+        }
+
+        public void Export(StreamWriter writer, IEnumerable<Entity> entities)
         {
             foreach (Entity m in entities)
             {
@@ -823,7 +872,7 @@ namespace Dom5Edit.Mods
             }
         }
 
-        public void Export(StreamWriter writer, List<IDEntity> entities)
+        public void Export(StreamWriter writer, IEnumerable<IDEntity> entities)
         {
             foreach (Entity m in entities)
             {
@@ -904,6 +953,32 @@ namespace Dom5Edit.Mods
                 var ret = new EventEffectCode(ID);
                 EventEffectCodes.Add(ID, ret);
                 return ret;
+            }
+        }
+
+        public void GenerateDisabledMages(List<string> disabledNations)
+        {
+            List<int> disabledIDs = new List<int>();
+            List<int> referencedIDs = this.VanillaMageReferences;
+
+            foreach (var nation in disabledNations)
+            {
+                if (VanillaMageIDs.TryGetIDList(nation, out var ids))
+                {
+                    foreach (var id in ids)
+                    {
+                        if (!referencedIDs.Contains(id)) disabledIDs.Add(id);
+                    }
+                }
+            }
+
+            foreach (var id in disabledIDs)
+            {
+                if (!Monsters.ContainsKey(id))
+                {
+                    IDEntity e = Monster.SelectVanillaMonster(id, this);
+                    e.Properties.Add(CommandProperty.Create(Command.CLEARMAGIC, e));
+                }
             }
         }
 

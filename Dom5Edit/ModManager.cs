@@ -11,13 +11,14 @@ using System.Windows.Forms;
 
 namespace Dom5Edit
 {
-    public class Importer
+    public class ModManager
     {
         public Dictionary<string, MethodInfo> Initializer = new Dictionary<string, MethodInfo>();
+        public List<string> DisabledNations = new List<string>();
 
         public List<Mod> Mods = new List<Mod>();
 
-        private string _ModName = "merged-mod.dm";
+        public string _ModName = "merged-mod";
 
         internal static int MONSTER_START_ID = 3500;
         internal static int SITE_START_ID = 1500;
@@ -34,23 +35,23 @@ namespace Dom5Edit
         internal static int EVENT_CODE_START_ID = -300;
         internal static int EVENT_CODE_EFFECT_START_ID = 14;
 
-        public Importer()
+        public ModManager()
         {
         }
 
-        public void Run(string folder)
+        public void Import(string folder, List<string> files)
         {
             //Startup script
             //string localPath = Path.GetDirectoryName(folder);
-            string[] dmFiles = Directory.GetFiles(folder, "*.dm");
+            //string[] dmFiles = Directory.GetFiles(folder, "*.dm");
 
-            foreach (string dmFile in dmFiles)
+            foreach (string dmFile in files)
             {
-                string fileName = System.IO.Path.GetFileName(dmFile);
-                if (fileName.Contains(_ModName)) continue;
+                string fileName = System.IO.Path.Combine(folder, dmFile);
+                if (fileName.StartsWith(_ModName)) continue;
                 Mod m = new Mod();
-                m.ModFileName = fileName;
-                m.Parse(dmFile);
+                m.ModFileName = dmFile;
+                m.Parse(fileName);
                 Mods.Add(m);
             }
 
@@ -63,13 +64,167 @@ namespace Dom5Edit
 
         public void Export(string folder)
         {
-            //foreach (Mod m in Mods)
-            //{
-            using (StreamWriter writer = new StreamWriter(folder + "\\" + _ModName))
+            using (StreamWriter writer = new StreamWriter(folder + "\\" + _ModName + ".dm"))
             {
+                finalizedmod.GenerateDisabledMages(DisabledNations);
                 finalizedmod.Export(writer);
             }
-            // }
+        }
+
+        public void ExportMagicPaths(string folder)
+        {
+            foreach (var mod in Mods)
+            {
+                using (StreamWriter writer = new StreamWriter(folder + "\\magicpaths_" + mod.ModName + ".txt"))
+                {
+                    foreach (IDEntity e in mod.Nations.Values)
+                    {
+                        Nation n = e as Nation;
+                        bool hasName = n.TryGetName(out string name);
+                        writer.Write("Nation: " + (hasName ? name : n.ID.ToString()));
+
+                        writer.WriteLine();
+                        double[] totalArr = new double[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                        //get cap sites
+                        foreach (var s in n.Sites)
+                        {
+                            foreach (var m in s.HomeCommanders)
+                            {
+                                writer.Write("CAP," + m.ID);
+
+                                var arr = GetMagicPaths(m);
+
+                                for (int i = 0; i < arr.Length - 1; i++)
+                                {
+                                    double d = arr[i];
+                                    totalArr[i] = Math.Max(arr[i], totalArr[i]);
+                                    writer.Write("," + d);
+                                }
+                                writer.WriteLine();
+                            }
+                        }
+                        //get recruitables
+                        foreach (var m in n.Commanders)
+                        {
+                            writer.Write(m.ID);
+                            var arr = GetMagicPaths(m);
+
+                            for (int i = 0; i < arr.Length - 1; i++)
+                            {
+                                double d = arr[i];
+                                totalArr[i] = Math.Max(arr[i], totalArr[i]);
+                                writer.Write("," + d);
+                            }
+                            writer.WriteLine();
+                        }
+
+                        writer.Write(hasName ? name : n.ID.ToString());
+                        for (int i = 0; i < totalArr.Length - 1; i++)
+                        {
+                            double d = totalArr[i];
+                            writer.Write("," + d);
+                        }
+                        writer.WriteLine();
+                    }
+                }
+            }
+        }
+
+        private double[] GetMagicPaths(Monster m)
+        {
+            double[] arr = new double[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            foreach (var magic in m.MagicSkills)
+            {
+                switch (magic.Path)
+                {
+                    case Commands.MagicPaths.FIRE:
+                        arr[0] = Math.Max(magic.Level, arr[0]);
+                        break;
+                    case Commands.MagicPaths.AIR:
+                        arr[1] = Math.Max(magic.Level, arr[1]);
+                        break;
+                    case Commands.MagicPaths.WATER:
+                        arr[2] = Math.Max(magic.Level, arr[2]);
+                        break;
+                    case Commands.MagicPaths.EARTH:
+                        arr[3] = Math.Max(magic.Level, arr[3]);
+                        break;
+                    case Commands.MagicPaths.ASTRAL:
+                        arr[4] = Math.Max(magic.Level, arr[4]);
+                        break;
+                    case Commands.MagicPaths.DEATH:
+                        arr[5] = Math.Max(magic.Level, arr[5]);
+                        break;
+                    case Commands.MagicPaths.NATURE:
+                        arr[6] = Math.Max(magic.Level, arr[6]);
+                        break;
+                    case Commands.MagicPaths.BLOOD:
+                        arr[7] = Math.Max(magic.Level, arr[7]);
+                        break;
+                    case Commands.MagicPaths.PRIEST:
+                        arr[8] = Math.Max(magic.Level, arr[8]);
+                        break;
+                    case Commands.MagicPaths.ELEMENTAL:
+                        arr[0] = Math.Max(magic.Level, arr[0]);
+                        arr[1] = Math.Max(magic.Level, arr[1]);
+                        arr[2] = Math.Max(magic.Level, arr[2]);
+                        arr[3] = Math.Max(magic.Level, arr[3]);
+                        break;
+                    case Commands.MagicPaths.SORCERY:
+                        arr[4] = Math.Max(magic.Level, arr[4]);
+                        arr[5] = Math.Max(magic.Level, arr[5]);
+                        arr[6] = Math.Max(magic.Level, arr[6]);
+                        arr[7] = Math.Max(magic.Level, arr[7]);
+                        break;
+                    case Commands.MagicPaths.ALL:
+                        arr[0] = Math.Max(magic.Level, arr[0]);
+                        arr[1] = Math.Max(magic.Level, arr[1]);
+                        arr[2] = Math.Max(magic.Level, arr[2]);
+                        arr[3] = Math.Max(magic.Level, arr[3]);
+                        arr[4] = Math.Max(magic.Level, arr[4]);
+                        arr[5] = Math.Max(magic.Level, arr[5]);
+                        arr[6] = Math.Max(magic.Level, arr[6]);
+                        arr[7] = Math.Max(magic.Level, arr[7]);
+                        break;
+                }
+            }
+            foreach (var magic in m.CustomMagic)
+            {
+                foreach (var mpath in magic.Path)
+                {
+                    switch (mpath)
+                    {
+                        case Commands.MagicPaths.FIRE:
+                            arr[0] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.AIR:
+                            arr[1] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.WATER:
+                            arr[2] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.EARTH:
+                            arr[3] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.ASTRAL:
+                            arr[4] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.DEATH:
+                            arr[5] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.NATURE:
+                            arr[6] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.BLOOD:
+                            arr[7] += magic.Chance;
+                            break;
+                        case Commands.MagicPaths.PRIEST:
+                            arr[8] += magic.Chance;
+                            break;
+                    }
+                }
+            }
+            return arr;
         }
 
         private Mod finalizedmod;
@@ -84,6 +239,11 @@ namespace Dom5Edit
 
             foreach (Mod m in Mods)
             {
+                foreach (int referenced in m.VanillaMageReferences)
+                {
+                    //slow but meh
+                    if (!finalMod.VanillaMageReferences.Contains(referenced)) finalMod.VanillaMageReferences.Add(referenced);
+                }
                 //add monsters
                 Merge(m.Monsters, m.NamedMonsters, finalMod.Monsters, finalMod.NamedMonsters, MONSTER_START_ID, finalMod.GetNextMonsterID);
                 Merge(m.Armors, m.NamedArmors, finalMod.Armors, finalMod.NamedArmors, ARMOR_START_ID, finalMod.GetNextArmorID);
@@ -156,6 +316,10 @@ namespace Dom5Edit
                     if (!final.ContainsKey(kvp.Key))
                     {
                         final.Add(kvp.Key, kvp.Value);
+                    }
+                    else
+                    {
+                        final[kvp.Key].Properties.AddRange(kvp.Value.Properties);
                     }
                 }
                 else if (kvp.Key < START_ID)

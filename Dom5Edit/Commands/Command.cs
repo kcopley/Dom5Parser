@@ -2591,4 +2591,33 @@ namespace Dom5Edit.Commands
             }
         }
     }
+
+    public enum MagicPaths
+    {
+        FIRE = 0,
+        AIR = 1,
+        WATER = 2,
+        EARTH = 3,
+        ASTRAL = 4,
+        DEATH = 5,
+        NATURE = 6,
+        BLOOD = 7,
+        PRIEST = 8,
+        RANDOM = 50,
+        ELEMENTAL = 51,
+        SORCERY = 52,
+        ALL = 53
+    }
+
+    public struct MagicSkill
+    {
+        public MagicPaths Path;
+        public int Level;
+    }
+
+    public struct CustomMagic
+    {
+        public List<MagicPaths> Path;
+        public double Chance;
+    }
 }

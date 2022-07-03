@@ -1,4 +1,6 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Entities;
+using Dom5Edit.Mods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,10 @@ namespace Dom5Edit.Props
             return new CommandProperty();
         }
 
+        public static CommandProperty Create(Command c, IDEntity parent)
+        {
+            return new CommandProperty() { _command = c, Comment = "", Parent = parent };
+        }
 
         public override void Parse(Command c, string s, string comment)
         {

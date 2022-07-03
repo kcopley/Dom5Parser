@@ -282,5 +282,49 @@ namespace Dom5Edit.Entities
         {
             return Parent.Nations;
         }
+
+        public IEnumerable<Site> Sites
+        {
+            get
+            {
+                var list = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return p._command == Command.STARTSITE;
+                    }).Cast<SiteRef>();
+                foreach (var property in list)
+                {
+                    yield return property?.entity as Site;
+                }
+            }
+        }
+
+        public IEnumerable<Monster> Commanders
+        {
+            get
+            {
+                var list = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return (p._command == Command.COASTCOM ||
+                            p._command == Command.COASTCOM1 ||
+                            p._command == Command.COASTCOM2 ||
+                            p._command == Command.LANDCOM ||
+                            p._command == Command.ADDFOREIGNCOM ||
+                            p._command == Command.FORESTCOM ||
+                            p._command == Command.WASTECOM ||
+                            p._command == Command.MOUNTAINCOM ||
+                            p._command == Command.CAVECOM ||
+                            p._command == Command.ADDRECCOM ||
+                            p._command == Command.UWCOM ||
+                            p._command == Command.SWAMPCOM);
+                    }).Cast<MonsterOrMontagRef>();
+                foreach (var property in list)
+                {
+                    var ret = property?._monsterRef?.entity as Monster;
+                    if (ret != null) yield return ret;
+                }
+            }
+        }
     }
 }

@@ -186,5 +186,21 @@ namespace Dom5Edit.Entities
         {
             return Parent.Sites;
         }
+
+        public IEnumerable<Monster> HomeCommanders
+        {
+            get
+            {
+                var list = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return p._command == Command.HOMECOM;
+                    }).Cast<MonsterOrMontagRef>();
+                foreach (var property in list)
+                {
+                    yield return property?._monsterRef?.entity as Monster;
+                }
+            }
+        }
     }
 }

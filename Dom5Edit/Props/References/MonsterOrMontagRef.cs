@@ -34,6 +34,7 @@ namespace Dom5Edit.Props
         {
             bool hasvalue = v.TryRetrieveNumericFromString(out int i, out _);
 
+            this._command = c;
             if (hasvalue && i < 0)
             {
                 _montagRef = new MontagIDRef();

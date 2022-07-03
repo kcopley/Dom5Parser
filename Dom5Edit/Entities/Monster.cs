@@ -2,7 +2,9 @@
 using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,7 +32,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.CLEARARMOR, CommandProperty.Create);
             _propertyMap.Add(Command.CLEARMAGIC, CommandProperty.Create);
             _propertyMap.Add(Command.CLEARSPEC, CommandProperty.Create);
-            _propertyMap.Add(Command.COPYSTATS, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.COPYSTATS, CopyStatsRef.Create);
             _propertyMap.Add(Command.COPYSPR, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.PATHCOST, IntProperty.Create);
             _propertyMap.Add(Command.STARTDOM, IntProperty.Create);
@@ -486,6 +488,16 @@ namespace Dom5Edit.Entities
         {
         }
 
+        public static Monster SelectVanillaMonster(int id, Mod m)
+        {
+            return new Monster(id.ToString(), "", m, true);
+        }
+
+        public static Monster GetNewMonster(int id, Mod m)
+        {
+            return new Monster(id.ToString(), "", m, false);
+        }
+
         public override void Resolve()
         {
             if (base._resolved) return;
@@ -526,6 +538,58 @@ namespace Dom5Edit.Entities
         internal override Dictionary<int, IDEntity> GetIDList()
         {
             return Parent.Monsters;
+        }
+
+        public IEnumerable<MagicSkill> MagicSkills
+        {
+            get
+            {
+                var list = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return p._command == Command.MAGICSKILL;
+                    }).Cast<IntIntProperty>();
+                foreach (var property in list)
+                {
+                    yield return new MagicSkill() { Path = (MagicPaths)property.Value1, Level = property.Value2 };
+                }
+            }
+        }
+
+        public IEnumerable<CustomMagic> CustomMagic
+        {
+            get
+            {
+                var list = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return p._command == Command.CUSTOMMAGIC;
+                    }).Cast<BitmaskChanceProperty>();
+                foreach (var property in list)
+                {
+                    ulong fire = 128;
+                    ulong air = 256;
+                    ulong water = 512;
+                    ulong earth = 1024;
+                    ulong astral = 2048;
+                    ulong death = 4096;
+                    ulong nature = 8192;
+                    ulong blood = 16384;
+                    ulong priest = 32768;
+
+                    List<MagicPaths> paths = new List<MagicPaths>();
+                    if ((property.Bitmask & fire) == fire) paths.Add(MagicPaths.FIRE);
+                    if ((property.Bitmask & air) == air) paths.Add(MagicPaths.AIR);
+                    if ((property.Bitmask & water) == water) paths.Add(MagicPaths.WATER);
+                    if ((property.Bitmask & earth) == earth) paths.Add(MagicPaths.EARTH);
+                    if ((property.Bitmask & astral) == astral) paths.Add(MagicPaths.ASTRAL);
+                    if ((property.Bitmask & death) == death) paths.Add(MagicPaths.DEATH);
+                    if ((property.Bitmask & nature) == nature) paths.Add(MagicPaths.NATURE);
+                    if ((property.Bitmask & blood) == blood) paths.Add(MagicPaths.BLOOD);
+                    if ((property.Bitmask & priest) == priest) paths.Add(MagicPaths.PRIEST);
+                    yield return new CustomMagic() { Path = paths, Chance = ((double)property.Chance) / 100 };
+                }
+            }
         }
     }
 }
