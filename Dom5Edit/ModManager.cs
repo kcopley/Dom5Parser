@@ -20,13 +20,13 @@ namespace Dom5Edit
 
         public string _ModName = "merged-mod";
 
-        internal static int MONSTER_START_ID = 3500;
-        internal static int SITE_START_ID = 1500;
+        internal static int MONSTER_START_ID = 3486;
+        internal static int SITE_START_ID = 1164;
         internal static int EVENT_START_ID = 6000;
-        internal static int ARMOR_START_ID = 300;
-        internal static int WEAPON_START_ID = 800;
-        internal static int ITEM_START_ID = 500;
-        internal static int SPELL_START_ID = 1300;
+        internal static int ARMOR_START_ID = 251;
+        internal static int WEAPON_START_ID = 763;
+        internal static int ITEM_START_ID = 446;
+        internal static int SPELL_START_ID = 1177;
         internal static int NAMETYPE_START_ID = 170;
         internal static int NATION_START_ID = 109;
         internal static int MONTAG_START_ID = 1000;
