@@ -191,14 +191,18 @@ namespace Dom5Edit.Entities
         {
             get
             {
-                var list = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return p._command == Command.HOMECOM;
-                    }).Cast<MonsterOrMontagRef>();
-                foreach (var property in list)
+                if (this._resolved)
                 {
-                    yield return property?._monsterRef?.entity as Monster;
+                    var list = this.Properties.FindAll(
+                        delegate (Property p)
+                        {
+                            return p._command == Command.HOMECOM;
+                        }).Cast<MonsterOrMontagRef>();
+                    foreach (var property in list)
+                    {
+                        var ret = property?._monsterRef?.entity as Monster;
+                        if (ret != null) yield return ret;
+                    }
                 }
             }
         }

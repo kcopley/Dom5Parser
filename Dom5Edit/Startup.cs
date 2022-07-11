@@ -16,6 +16,7 @@ namespace Dom5Edit
         public Startup()
         {
             InitializeComponent();
+            _folderPath.Text = Path.GetFullPath(Path.Combine(Application.UserAppDataPath, @"..\..\..\Dominions5\mods"));
         }
 
         private void label1_Click(object sender, EventArgs e)

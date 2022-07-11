@@ -294,7 +294,8 @@ namespace Dom5Edit.Entities
                     }).Cast<SiteRef>();
                 foreach (var property in list)
                 {
-                    yield return property?.entity as Site;
+                    var ret = property?.entity as Site;
+                    if (ret != null) yield return ret;
                 }
             }
         }
@@ -324,6 +325,19 @@ namespace Dom5Edit.Entities
                     var ret = property?._monsterRef?.entity as Monster;
                     if (ret != null) yield return ret;
                 }
+            }
+        }
+
+        public IntProperty Era
+        {
+            get
+            {
+                var ret = this.Properties.Find(
+                    delegate (Property p)
+                    {
+                        return p._command == Command.ERA;
+                    });
+                return ret as IntProperty;
             }
         }
     }

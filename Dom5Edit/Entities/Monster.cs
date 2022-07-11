@@ -587,7 +587,9 @@ namespace Dom5Edit.Entities
                     if ((property.Bitmask & nature) == nature) paths.Add(MagicPaths.NATURE);
                     if ((property.Bitmask & blood) == blood) paths.Add(MagicPaths.BLOOD);
                     if ((property.Bitmask & priest) == priest) paths.Add(MagicPaths.PRIEST);
-                    yield return new CustomMagic() { Path = paths, Chance = ((double)property.Chance) / 100 };
+                    double chance = ((double)property.Chance) / 100;
+                    if (chance < 1) chance = chance / paths.Count;
+                    yield return new CustomMagic() { Path = paths, Chance = chance };
                 }
             }
         }

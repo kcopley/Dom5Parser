@@ -28,7 +28,7 @@ namespace Dom5Edit
         internal static int ITEM_START_ID = 500;
         internal static int SPELL_START_ID = 1300;
         internal static int NAMETYPE_START_ID = 170;
-        internal static int NATION_START_ID = 120;
+        internal static int NATION_START_ID = 109;
         internal static int MONTAG_START_ID = 1000;
         internal static int RESTRICTED_ITEM_START_ID = 1;
         internal static int ENCHANTMENT_START_ID = 106;
@@ -74,14 +74,35 @@ namespace Dom5Edit
 
         public void ExportMagicPaths(string folder)
         {
+            string separator = "\t";
             using (StreamWriter writer = new StreamWriter(folder + "\\mod_magicpaths.txt"))
             {
+                Dictionary<string, double[]> nationStuff = new Dictionary<string, double[]>();
+                Dictionary<string, double[]> offCapStuff = new Dictionary<string, double[]>();
                 foreach (var mod in Mods)
                 {
                     foreach (IDEntity e in mod.Nations.Values)
                     {
                         Nation n = e as Nation;
+                        if (n.ID < ModManager.NATION_START_ID) continue;
                         bool hasName = n.TryGetName(out string name);
+                        var era = n.Era;
+                        if (era != null && era.HasValue)
+                        {
+                            int nationEra = era.Value;
+                            switch (nationEra)
+                            {
+                                case 1:
+                                    name = "EA " + name;
+                                    break;
+                                case 2:
+                                    name = "MA " + name;
+                                    break;
+                                case 3:
+                                    name = "LA " + name;
+                                    break;
+                            }
+                        }
                         writer.Write("Nation: " + (hasName ? name : n.ID.ToString()));
 
                         writer.WriteLine();
@@ -90,14 +111,14 @@ namespace Dom5Edit
                         //get recruitables
                         foreach (var m in n.Commanders)
                         {
-                            writer.Write("OFF," + m.ID);
+                            writer.Write("OFF" + separator + m.ID);
                             var arr = GetMagicPaths(m);
 
                             for (int i = 0; i < arr.Length; i++)
                             {
                                 double d = arr[i];
                                 totalArr[i] = Math.Max(arr[i], totalArr[i]);
-                                writer.Write("," + d);
+                                writer.Write(separator + d);
                             }
                             writer.WriteLine();
                         }
@@ -111,7 +132,7 @@ namespace Dom5Edit
                         {
                             foreach (var m in s.HomeCommanders)
                             {
-                                writer.Write("CAP," + m.ID);
+                                writer.Write("CAP" + separator + m.ID);
 
                                 var arr = GetMagicPaths(m);
 
@@ -119,11 +140,13 @@ namespace Dom5Edit
                                 {
                                     double d = arr[i];
                                     totalArr[i] = Math.Max(arr[i], totalArr[i]);
-                                    writer.Write("," + d);
+                                    writer.Write(separator + d);
                                 }
                                 writer.WriteLine();
                             }
                         }
+
+
 
                         writer.Write(hasName ? name : n.ID.ToString());
                         writer.WriteLine(" -- only off-cap included.");
@@ -131,9 +154,10 @@ namespace Dom5Edit
                         for (int i = 0; i < offCap.Length; i++)
                         {
                             double d = offCap[i];
-                            writer.Write("," + d);
+                            writer.Write(separator + d);
                         }
                         writer.WriteLine();
+                        offCapStuff.Add(hasName ? name : n.ID.ToString(), offCap);
 
                         writer.Write(hasName ? name : n.ID.ToString());
                         writer.WriteLine(" -- cap mages included.");
@@ -141,12 +165,38 @@ namespace Dom5Edit
                         for (int i = 0; i < totalArr.Length; i++)
                         {
                             double d = totalArr[i];
-                            writer.Write("," + d);
+                            writer.Write(separator + d);
                         }
                         writer.WriteLine();
+                        writer.WriteLine();
+                        nationStuff.Add(hasName ? name : n.ID.ToString(), totalArr);
+                    }
+                }
+                writer.WriteLine();
+                writer.WriteLine("OFF CAP");
+                foreach (var kvp in offCapStuff)
+                {
+                    writer.Write(kvp.Key);
+                    for (int i = 0; i < kvp.Value.Length; i++)
+                    {
+                        double d = kvp.Value[i];
+                        writer.Write(separator + d);
                     }
                     writer.WriteLine();
                 }
+                writer.WriteLine();
+                writer.WriteLine("ON CAP");
+                foreach (var kvp in nationStuff)
+                {
+                    writer.Write(kvp.Key);
+                    for (int i = 0; i < kvp.Value.Length; i++)
+                    {
+                        double d = kvp.Value[i];
+                        writer.Write(separator + d);
+                    }
+                    writer.WriteLine();
+                }
+                writer.WriteLine();
             }
         }
 
@@ -215,31 +265,31 @@ namespace Dom5Edit
                     switch (mpath)
                     {
                         case Commands.MagicPaths.FIRE:
-                            arr[0] += magic.Chance;
+                            arr[0] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.AIR:
-                            arr[1] += magic.Chance;
+                            arr[1] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.WATER:
-                            arr[2] += magic.Chance;
+                            arr[2] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.EARTH:
-                            arr[3] += magic.Chance;
+                            arr[3] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.ASTRAL:
-                            arr[4] += magic.Chance;
+                            arr[4] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.DEATH:
-                            arr[5] += magic.Chance;
+                            arr[5] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.NATURE:
-                            arr[6] += magic.Chance;
+                            arr[6] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.BLOOD:
-                            arr[7] += magic.Chance;
+                            arr[7] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                         case Commands.MagicPaths.PRIEST:
-                            arr[8] += magic.Chance;
+                            arr[8] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
                             break;
                     }
                 }
