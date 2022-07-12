@@ -341,7 +341,7 @@ namespace Dom5Edit.Mods
                         ProcessStringToLine(s);
                     }
                 }
-
+                LineWasTrimmed = false;
                 LineNumber = -1;
             }
         }
@@ -459,11 +459,7 @@ namespace Dom5Edit.Mods
             string line = s;
             int commentIndex = s.IndexOf(commentDelimiter);
             string comment = ""; //set to empty string, not null
-            if (s.Contains("Bray-Shaman"))
-            {
-                int a = 0;
-                a++;
-            }
+
             if (commentIndex == -1) //check for single dash
             {
                 int singleDash = s.IndexOf('-');
