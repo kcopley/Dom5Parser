@@ -489,6 +489,7 @@ namespace Dom5Edit
         {
             foreach (Montag item in items)
             {
+                if (Montag.MontagConstants.Contains(item.MontagID)) continue;
                 if (item.DependentMontag == null)
                 {
                     item.MontagID = finalMod.GetNextMontagID();

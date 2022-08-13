@@ -322,6 +322,7 @@ namespace Dom5Edit.Entities
 
         static VanillaSpellMap()
         {
+            //maps vanilla spell ID -> spell enchant type
             SpellIDEffectMap.Add(0, 0);
             SpellIDEffectMap.Add(1, 109);
             SpellIDEffectMap.Add(2, 2);
