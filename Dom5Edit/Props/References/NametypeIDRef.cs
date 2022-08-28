@@ -22,6 +22,10 @@ namespace Dom5Edit.Props
                 entity = m;
                 Resolved = true;
             }
+            if (!Resolved && ID > ModManager.NAMETYPE_START_ID)
+            {
+                Parent.Parent.Log("Nametype not resolved for: " + this.ID);
+            }
         }
     }
 }

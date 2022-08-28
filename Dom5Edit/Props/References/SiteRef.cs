@@ -33,6 +33,10 @@ namespace Dom5Edit.Props
                     Resolved = true;
                 }
             }
+            if (!Resolved && !IsStringRef && ID > ModManager.SITE_START_ID)
+            {
+                Parent.Parent.Log("Site not resolved for: " + this.ID);
+            }
         }
     }
 }

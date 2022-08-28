@@ -33,6 +33,10 @@ namespace Dom5Edit.Props
                     Resolved = true;
                 }
             }
+            if (!Resolved && !IsStringRef && ID > ModManager.WEAPON_START_ID)
+            {
+                Parent.Parent.Log("Weapon not resolved for: " + this.ID);
+            }
         }
 
         public override string ToString()

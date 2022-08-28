@@ -1177,6 +1177,10 @@ namespace Dom5Edit.Mods
             {
                 _MonStartID++;
             }
+            if (_MonStartID > ModManager.MONSTER_END_ID)
+            {
+                Log("Warning: Mod surpasses limitations on monster ID's!");
+            }
             return _MonStartID;
         }
 
@@ -1186,6 +1190,10 @@ namespace Dom5Edit.Mods
             while (Spells.ContainsKey(_SpellStartID))
             {
                 _SpellStartID++;
+            }
+            if (_SpellStartID > ModManager.SPELL_END_ID)
+            {
+                Log("Warning: Mod surpasses limitations on spell ID's!");
             }
             return _SpellStartID;
         }
@@ -1257,6 +1265,10 @@ namespace Dom5Edit.Mods
             {
                 _WepStartID++;
             }
+            if (_WepStartID > ModManager.WEAPON_END_ID)
+            {
+                Log("Warning: Mod surpasses limitations on weapon ID's!");
+            }
             return _WepStartID;
         }
 
@@ -1267,20 +1279,23 @@ namespace Dom5Edit.Mods
             {
                 _ArmorStartID++;
             }
+            if (_ArmorStartID > ModManager.ARMOR_END_ID)
+            {
+                Log("Warning: Mod surpasses limitations on armor ID's!");
+            }
             return _ArmorStartID;
         }
 
         public int GetNextSiteID()
         {
-            if (_SiteStartID > 1683)
-            {
-                int a = 0;
-                a++;
-            }
             //very crude search unfortunately, but should be fine for our purposes
             while (Sites.ContainsKey(_SiteStartID))
             {
                 _SiteStartID++;
+            }
+            if (_SiteStartID > ModManager.SITE_END_ID)
+            {
+                Log("Warning: Mod surpasses limitations on site ID's!");
             }
             return _SiteStartID;
         }
@@ -1292,6 +1307,10 @@ namespace Dom5Edit.Mods
             {
                 _NationStartID++;
             }
+            if (_NationStartID > ModManager.NATION_END_ID)
+            {
+                Log("Warning: Mod surpasses limitations on nation ID's!");
+            }
             return _NationStartID;
         }
 
@@ -1301,6 +1320,10 @@ namespace Dom5Edit.Mods
             while (Nametypes.ContainsKey(_NametypeStartID))
             {
                 _NametypeStartID++;
+            }
+            if (_NametypeStartID > ModManager.NAMETYPE_END_ID)
+            {
+                Log("Warning: Mod surpasses limitations on nametype ID's!");
             }
             return _NametypeStartID;
         }

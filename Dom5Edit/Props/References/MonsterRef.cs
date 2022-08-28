@@ -33,6 +33,10 @@ namespace Dom5Edit.Props
                     Resolved = true;
                 }
             }
+            if (!Resolved && !IsStringRef && ID > ModManager.MONSTER_START_ID)
+            {
+                Parent.Parent.Log("Monster not resolved for: " + this.ID);
+            }
         }
 
         public override string ToString()

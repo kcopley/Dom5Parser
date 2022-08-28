@@ -35,6 +35,15 @@ namespace Dom5Edit
         internal static int EVENT_CODE_START_ID = -300;
         internal static int EVENT_CODE_EFFECT_START_ID = 14;
 
+        internal static int MONSTER_END_ID = 8999;
+        internal static int SITE_END_ID = 1999;
+        internal static int ARMOR_END_ID = 999;
+        internal static int WEAPON_END_ID = 1999;
+        internal static int ITEM_END_ID = 999;
+        internal static int SPELL_END_ID = 3999;
+        internal static int NAMETYPE_END_ID = 299;
+        internal static int NATION_END_ID = 249;
+
         public ModManager()
         {
         }

@@ -33,6 +33,10 @@ namespace Dom5Edit.Props
                     Resolved = true;
                 }
             }
+            if (!Resolved && !IsStringRef && ID > ModManager.ARMOR_START_ID)
+            {
+                Parent.Parent.Log("Armor not resolved for: " + this.ID);
+            }
         }
     }
 }

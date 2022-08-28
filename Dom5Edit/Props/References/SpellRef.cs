@@ -33,6 +33,10 @@ namespace Dom5Edit.Props
                     Resolved = true;
                 }
             }
+            if (!Resolved && !IsStringRef && ID > ModManager.SPELL_START_ID)
+            {
+                Parent.Parent.Log("Spell not resolved for: " + this.ID);
+            }
         }
 
         public override string ToString()

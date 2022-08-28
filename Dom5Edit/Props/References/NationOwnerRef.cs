@@ -33,6 +33,10 @@ namespace Dom5Edit.Props
                     }
                 }
             }
+            if (!Resolved  && !IsStringRef && ID > ModManager.NATION_START_ID)
+            {
+                Parent.Parent.Log("Nation not resolved for: " + this.ID);
+            }
         }
     }
 }
