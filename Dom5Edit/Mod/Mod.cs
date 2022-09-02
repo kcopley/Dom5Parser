@@ -268,6 +268,7 @@ namespace Dom5Edit.Mods
                 {
                     LineNumber++;
                     s = s.Trim(); //remove whitespaces
+                    s = s.Replace('\t', ' ');
                     if (s.Length < 1) continue; //empty line
                                                 //pull comments first
 

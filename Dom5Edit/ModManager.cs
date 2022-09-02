@@ -94,7 +94,7 @@ namespace Dom5Edit
             if (indexOfDotDM != -1)
             {
                 string logFile = file.Substring(0, indexOfDotDM) + "-log.txt";
-                System.Diagnostics.Process.Start(logFile);
+                if (File.Exists(logFile)) System.Diagnostics.Process.Start(logFile);
             }
         }
 
