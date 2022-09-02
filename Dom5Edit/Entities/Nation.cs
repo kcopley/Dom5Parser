@@ -236,7 +236,14 @@ namespace Dom5Edit.Entities
             }
             else
             {
-                GetIDList().Add(ID, this);
+                try
+                {
+                    GetIDList().Add(ID, this);
+                }
+                catch
+                {
+                    Parent.Log("Nation ID: " + ID + " was already used inside mod");
+                }
             }
         }
 

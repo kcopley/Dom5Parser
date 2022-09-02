@@ -232,12 +232,14 @@ namespace Dom5Edit.Mods
         public int LineNumber { get; private set; } = 0;
         private string logFile;
         public bool Logging { get; set; }
+        public string FolderPath { get; set; }
         public void Log(string s)
         {
             if (!this.Logging) return;
             if (string.IsNullOrEmpty(logFile))
             {
-                return;
+                logFile = System.IO.Path.Combine(FolderPath, this.ModName + "-log.txt");
+                File.Delete(logFile); //clear out an old log
             }
             using (StreamWriter writer = File.AppendText(logFile))
             {
@@ -526,7 +528,6 @@ namespace Dom5Edit.Mods
                     LineWasTrimmed = false;
                 }
             }
-
             if (CommandsMap.TryGetCommand(command, out Command c))
             {
                 switch (c)
@@ -810,32 +811,32 @@ namespace Dom5Edit.Mods
             writer.WriteLine();
 
             //Weapons
-            Export(writer, Weapons.OrderBy(x => x.Key));
+            Export(writer, Weapons.OrderBy(x => x.Key), ModManager.WEAPON_START_ID);
             Export(writer, NamedWeapons.Values.ToList());
             //Armors
-            Export(writer, Armors.OrderBy(x => x.Key));
+            Export(writer, Armors.OrderBy(x => x.Key), ModManager.ARMOR_START_ID);
             Export(writer, NamedArmors.Values.ToList());
 
             //Monsters
-            Export(writer, Monsters.OrderBy(x => x.Key));
+            Export(writer, Monsters.OrderBy(x => x.Key), ModManager.MONSTER_START_ID);
             Export(writer, NamedMonsters.Values.ToList());
             //Nametypes
-            Export(writer, Nametypes.OrderBy(x => x.Key));
+            Export(writer, Nametypes.OrderBy(x => x.Key), ModManager.NAMETYPE_START_ID);
             //Sites
-            Export(writer, Sites.OrderBy(x => x.Key));
+            Export(writer, Sites.OrderBy(x => x.Key), ModManager.SITE_START_ID);
             Export(writer, NamedSites.Values.ToList());
             Export(writer, SitesThatNeedIDs);
             //Nations
-            Export(writer, Nations.OrderBy(x => x.Key));
+            Export(writer, Nations.OrderBy(x => x.Key), ModManager.NATION_START_ID);
             //Export(writer, NamedNations.Values.ToList()); //not needed
 
             //spells
-            Export(writer, Spells.OrderBy(x => x.Key));
+            Export(writer, Spells.OrderBy(x => x.Key), ModManager.SPELL_START_ID);
             Export(writer, NamedSpells.Values.ToList());
             Export(writer, SpellsWithNoNameYet.ToList());
 
             //magic items
-            Export(writer, Items.OrderBy(x => x.Key));
+            Export(writer, Items.OrderBy(x => x.Key), ModManager.ITEM_START_ID);
             Export(writer, NamedItems.Values.ToList());
             Export(writer, ItemsWithNoNameYet.ToList());
 
@@ -855,6 +856,20 @@ namespace Dom5Edit.Mods
         public void Export(StreamWriter writer, IEnumerable<KeyValuePair<int, IDEntity>> entities)
         {
             foreach (KeyValuePair<int, IDEntity> m in entities)
+            {
+                m.Value.Export(writer);
+                writer.WriteLine();
+            }
+        }
+
+        public void Export(StreamWriter writer, IEnumerable<KeyValuePair<int, IDEntity>> entities, int startID)
+        {
+            foreach (KeyValuePair<int, IDEntity> m in entities.Where(x => x.Key >= startID))
+            {
+                m.Value.Export(writer);
+                writer.WriteLine();
+            }
+            foreach (KeyValuePair<int, IDEntity> m in entities.Where(x => x.Key < startID))
             {
                 m.Value.Export(writer);
                 writer.WriteLine();

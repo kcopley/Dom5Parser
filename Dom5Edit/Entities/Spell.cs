@@ -80,22 +80,33 @@ namespace Dom5Edit.Entities
 
         public Spell(string value, string comment, Mod _parent, bool selected = false) : base()
         {
-            this.SetID(value, comment);
             Parent = _parent;
             Selected = selected;
-            if (ID == -1 && value.Length > 0)
+            if (selected)
             {
-                _name = value;
-                Named = true;
-                GetNamedList().Add(_name, this);
+                this.SetID(value, comment);
+                if (ID == -1 && value.Length > 0)
+                {
+                    _name = value;
+                    Named = true;
+                    GetNamedList().Add(_name, this);
+                }
+                else if (ID != -1)
+                {
+                    try
+                    {
+                        GetIDList().Add(ID, this);
+                    }
+                    catch
+                    {
+                        Parent.Log("Spell ID: " + ID + " was already used inside mod");
+                    }
+                }
             }
-            else if (ID != -1)
-            {
-                GetIDList().Add(ID, this);
-            }
-            else
+            if (!selected)
             {
                 Parent.SpellsWithNoNameYet.Add(this);
+                ID = -1;
             }
         }
 
@@ -114,9 +125,13 @@ namespace Dom5Edit.Entities
                 {
                     entity.Properties.AddRange(this.Properties);
                 }
-                else if (this.TryGetName(out _name) && m.NamedSpells.TryGetValue(_name, out var namedentity))
+                else if (!string.IsNullOrEmpty(this._name) && m.NamedSpells.TryGetValue(_name, out var namedentity1))
                 {
-                    namedentity.Properties.AddRange(this.Properties);
+                    namedentity1.Properties.AddRange(this.Properties);
+                }
+                else if (string.IsNullOrEmpty(this._name) && this.TryGetName(out _name) && m.NamedSpells.TryGetValue(_name, out var namedentity2))
+                {
+                    namedentity2.Properties.AddRange(this.Properties);
                 }
             }
             base.Resolve();
@@ -161,7 +176,11 @@ namespace Dom5Edit.Entities
             //if no effect, back to copyspell check
             //if copyspell is not in the mod, check the vanilla list
             //return the effect
-            if (TryGetSpellEffect(out int effect) && VanillaSpellMap.IsSummonEffect(effect)) return true;
+            bool hasSpellEffect = TryGetSpellEffect(out int effect);
+            if (hasSpellEffect)
+            {
+                return VanillaSpellMap.IsSummonEffect(effect);
+            }
             else if (TryGetCopySpellRef(out var copy))
             {
                 if (copy.IsVanillaID())
