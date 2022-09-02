@@ -31,7 +31,14 @@ namespace Dom5Edit.Entities
             }
             else if (ID != -1)
             {
-                if (!GetIDList().ContainsKey(ID)) GetIDList().Add(ID, this);
+                try
+                {
+                    GetIDList().Add(ID, this);
+                }
+                catch
+                {
+                    Parent.Log("Entity ID: " + ID + " was already used inside mod - Type: " + this.GetType());
+                }
             }
         }
 
@@ -44,7 +51,7 @@ namespace Dom5Edit.Entities
             get; set;
         }
 
-        public string IDComment { get; private set; }
+        public string IDComment { get; private set; } = "";
 
         public override void AddNamed(string s)
         {
@@ -182,7 +189,8 @@ namespace Dom5Edit.Entities
                 prop.Parse(command, value, comment);
                 Properties.Add(prop);
             }
-            else {
+            else
+            {
                 this.Parent.Log("Invalid, incorrectly spelled, or nonexistent command for " + this.GetType() + " for command: " + command);
             } // not recognized command, skip
             //build comment storage for in-between properties

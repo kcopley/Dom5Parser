@@ -17,6 +17,8 @@ namespace Dom5Edit
         {
             InitializeComponent();
             _folderPath.Text = Path.GetFullPath(Path.Combine(Application.UserAppDataPath, @"..\..\..\Dominions5\mods"));
+            Scan_Click(null, null);
+            this.Name = "Dom5Merger";
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -124,9 +126,12 @@ namespace Dom5Edit
             }
         }
 
+        private ModManager temp;
         private void button1_Click(object sender, EventArgs e)
         {
             i = new ModManager();
+            temp = i;
+            temp.Logging = logging.Checked;
             foreach (var c in eaNations.CheckedItems)
             {
                 i.DisabledNations.Add(c.ToString());
@@ -182,6 +187,7 @@ namespace Dom5Edit
 
         private void Scan_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(_folderPath?.Text)) return;
             string[] dmFiles = Directory.GetFiles(_folderPath.Text, "*.dm");
             modFiles.Items.Clear();
             modFiles.Items.Add("ALL", true);
@@ -193,15 +199,76 @@ namespace Dom5Edit
             }
         }
 
-        private void Mods_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private bool log = false;
         private void logging_CheckedChanged(object sender, EventArgs e)
         {
             log = logging.Checked;
+            if (temp != null)
+            {
+                temp.Logging = log;
+            }
+        }
+
+        private void Startup_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        private void label3_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(_folderPath?.Text) && Directory.Exists(_folderPath?.Text))
+            {
+                folderBrowserDialog1.RootFolder = Environment.SpecialFolder.Desktop;
+                folderBrowserDialog1.SelectedPath = _folderPath.Text;
+            }
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                _folderPath.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void _folderPath_TextChanged(object sender, EventArgs e)
+        {
+            Scan_Click(sender, e);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(_folderPath?.Text) && Directory.Exists(_folderPath?.Text))
+                openFileDialog1.InitialDirectory = _folderPath.Text;
+            DialogResult result = openFileDialog1.ShowDialog();
+            string file = "";
+            if (result == DialogResult.OK)
+            {
+                file = openFileDialog1.FileName;
+            }
+            else { return; }
+            i = new ModManager();
+            i._ModName = !string.IsNullOrEmpty(modFileName.Text) ? modFileName.Text : "temp-mod";
+            i.Import(file, openFileDialog1.SafeFileName);
+            Mods.Items.Clear();
+            Mods.Items.Add("Mod verified successfully");
         }
     }
 }

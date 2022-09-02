@@ -351,20 +351,29 @@ namespace Dom5Edit.Entities
             this.SetID(value, comment);
             Parent = _parent;
             Selected = selected;
-            if (ID == -1 && value.Length > 0)
+            if (selected)
             {
-                _name = value;
-                Named = true;
-                GetNamedList().Add(_name, this);
+                if (ID == -1 && value.Length > 0)
+                {
+                    _name = value;
+                    Named = true;
+                    GetNamedList().Add(_name, this);
+
+                }
+                else if (ID != -1)
+                {
+                    try
+                    {
+                        GetIDList().Add(ID, this);
+                    }
+                    catch
+                    {
+                        Parent.Log("Item ID: " + ID + " was already used inside mod");
+                    }
+                }
             }
-            else if (ID != -1)
-            {
-                GetIDList().Add(ID, this);
-            }
-            else
-            {
-                Parent.ItemsWithNoNameYet.Add(this);
-            }
+
+            if (!selected) Parent.ItemsWithNoNameYet.Add(this);
         }
 
         public override void Resolve()

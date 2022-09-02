@@ -39,6 +39,10 @@ namespace Dom5Edit.Props
                 {
                     if (HasValue)
                     {
+                        if (_command == Command.ERA)
+                        {
+                            return s + " " + 2 + " -- " + Comment;
+                        }
                         return s + " " + Value + " -- " + Comment;
                     }
                     else

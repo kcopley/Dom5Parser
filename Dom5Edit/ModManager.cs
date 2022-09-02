@@ -20,6 +20,9 @@ namespace Dom5Edit
 
         public string _ModName = "merged-mod";
 
+        public bool Logging { get; set; } = false;
+        private string _folderPath = "";
+
         internal static int MONSTER_START_ID = 3486;
         internal static int SITE_START_ID = 1164;
         internal static int EVENT_START_ID = 6000;
@@ -54,6 +57,10 @@ namespace Dom5Edit
             //string localPath = Path.GetDirectoryName(folder);
             //string[] dmFiles = Directory.GetFiles(folder, "*.dm");
 
+            folder.Trim('\\');
+            folder.Trim('/');
+            this._folderPath = folder;
+
             foreach (string dmFile in files)
             {
                 string fileName = System.IO.Path.Combine(folder, dmFile);
@@ -69,6 +76,25 @@ namespace Dom5Edit
             {
                 m.ResolveDependencies(Mods);
                 m.Resolve();
+            }
+        }
+
+        public void Import(string file, string modName)
+        {
+            //Startup script
+            //string localPath = Path.GetDirectoryName(folder);
+            //string[] dmFiles = Directory.GetFiles(folder, "*.dm");
+
+            Mod m = new Mod();
+            m.Logging = true;
+            m.ModFileName = modName;
+            m.Parse(file);
+            m.Resolve();
+            int indexOfDotDM = file.IndexOf(".dm");
+            if (indexOfDotDM != -1)
+            {
+                string logFile = file.Substring(0, indexOfDotDM) + "-log.txt";
+                System.Diagnostics.Process.Start(logFile);
             }
         }
 
@@ -307,9 +333,13 @@ namespace Dom5Edit
         }
 
         private Mod finalizedmod;
+        private Mod tempMod;
         public void Merge()
         {
             Mod finalMod = new Mod();
+            finalizedmod = finalMod;
+            finalMod.Logging = this.Logging;
+            finalMod.FolderPath = _folderPath;
 
             finalMod.ModName = "Merged Mod";
             finalMod.Description = "A merger of all valid mods that were parsed";
@@ -318,6 +348,7 @@ namespace Dom5Edit
 
             foreach (Mod m in Mods)
             {
+                tempMod = m;
                 foreach (int referenced in m.VanillaMageReferences)
                 {
                     //slow but meh
@@ -341,7 +372,14 @@ namespace Dom5Edit
                 //Migrate mercs, no conflicts as long as ID's adjusted internally
                 foreach (var kvp in m.NamedMercenaries)
                 {
-                    finalMod.NamedMercenaries.Add(kvp.Key, kvp.Value);
+                    try
+                    {
+                        finalMod.NamedMercenaries.Add(kvp.Key, kvp.Value);
+                    }
+                    catch
+                    {
+                        finalMod.Log("Warning: Mercenary for name " + kvp.Key + " was discarded due to conflicts from mod: " + m.ModFileName);
+                    }
                 }
                 //general settings (is this even necessary? lol)
 
@@ -376,7 +414,14 @@ namespace Dom5Edit
                 {
                     if (kvp.Key < START_ID)
                     {
-                        final.Add(kvp.Key, kvp.Value);
+                        if (!final.ContainsKey(kvp.Key))
+                        {
+                            final.Add(kvp.Key, kvp.Value);
+                        }
+                        else
+                        {
+                            finalizedmod.Log("Vanilla ID for Entity: " + kvp.Value.GetType() + " with ID: " + kvp.Key + " from mod: " + tempMod.ModFileName + " was discarded for final mod.");
+                        }
                     }
                     else
                     {
@@ -448,6 +493,10 @@ namespace Dom5Edit
                     if (!final.ContainsKey(kvp.Key))
                     {
                         final.Add(kvp.Key, kvp.Value);
+                    }
+                    else
+                    {
+                        finalizedmod.Log("Vanilla ID for Entity: " + kvp.Value.GetType() + " with ID: " + kvp.Key + " from mod: " + tempMod.ModFileName + " was discarded for final mod.");
                     }
                 }
                 else
