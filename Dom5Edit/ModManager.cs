@@ -1,5 +1,6 @@
 ﻿using Dom5Edit.Entities;
 using Dom5Edit.Mods;
+using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -341,7 +342,7 @@ namespace Dom5Edit
             finalMod.Logging = this.Logging;
             finalMod.FolderPath = _folderPath;
 
-            finalMod.ModName = "Merged Mod";
+            finalMod.ModName = this._ModName;
             finalMod.Description = "A merger of all valid mods that were parsed";
             finalMod.Version = "1.0";
             finalMod.DomVersion = "5.00";
@@ -403,7 +404,42 @@ namespace Dom5Edit
                 MergeEventEffectCodes(m.EventEffectCodes.Values.ToList(), finalMod);
 
             }
-            finalizedmod = finalMod;
+
+            string description = "Nation mods merged together. Contains:\n";
+            int flip = 0;
+            foreach (var n in finalizedmod.Nations)
+            {
+                try
+                {
+                    Nation nation = n.Value as Nation;
+                    IntProperty iProp = nation.Era;
+                    if (iProp != null) iProp.Value = 2;
+                }
+                catch { }
+                if (n.Key > NATION_START_ID)
+                {
+                    string name = "";
+                    if (string.IsNullOrEmpty(n.Value._name))
+                    {
+                        n.Value.TryGetName(out name);
+                    }
+                    else
+                    {
+                        name = n.Value._name;
+                    }
+                    if (flip < 4)
+                    {
+                        description = description + " - " + name;
+                        flip++;
+                    }
+                    else if (flip == 4)
+                    {
+                        description = description + " - " + name + "\n";
+                        flip = 0;
+                    }
+                }
+            }
+            finalMod.Description = description;
         }
 
         public void Merge(Dictionary<int, IDEntity> current, Dictionary<string, IDEntity> named, Dictionary<int, IDEntity> final, Dictionary<string, IDEntity> finalNamed, int START_ID, Func<int> nextID, bool force = false)
