@@ -13,6 +13,7 @@ namespace Dom5Edit.Props
         internal MontagIDRef _montagRef;
         internal MonsterRef _monsterRef;
 
+
         public static Property Create()
         {
             return new MonsterOrMontagRef();
@@ -27,6 +28,15 @@ namespace Dom5Edit.Props
             else if (_monsterRef != null)
             {
                 _monsterRef.Resolve();
+            }
+
+            if (this._command == Command.DAMAGEMON)
+            {
+                if (_monsterRef.entity != null && _monsterRef.entity.ID != -1)
+                {
+                    this._command = Command.DAMAGE;
+                    _monsterRef._command = Command.DAMAGE;
+                }
             }
         }
 
