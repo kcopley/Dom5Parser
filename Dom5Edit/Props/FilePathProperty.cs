@@ -26,6 +26,7 @@ namespace Dom5Edit.Props
         //Preliminary Example only for now, not optimal
         public override string ToString()
         {
+
             if (CommandsMap.TryGetString(_command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))

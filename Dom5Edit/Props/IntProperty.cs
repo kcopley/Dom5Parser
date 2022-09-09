@@ -15,6 +15,11 @@ namespace Dom5Edit.Props
             return new IntProperty();
         }
 
+        public static IntProperty Create(Command c, IDEntity parent, int val)
+        {
+            return new IntProperty() { _command = c, Comment = "", Parent = parent, Value = val, HasValue = true };
+        }
+
         public int Value { get; set; }
         public bool HasValue { get; set; }
 

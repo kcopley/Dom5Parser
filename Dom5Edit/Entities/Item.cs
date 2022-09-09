@@ -3,6 +3,7 @@ using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -357,8 +358,14 @@ namespace Dom5Edit.Entities
                 {
                     _name = value;
                     Named = true;
-                    GetNamedList().Add(_name, this);
-
+                    try
+                    {
+                        GetNamedList().Add(_name, this);
+                    }
+                    catch
+                    {
+                        Parent.Log("Item name: " + _name + " was already used inside mod");
+                    }
                 }
                 else if (ID != -1)
                 {
@@ -391,6 +398,12 @@ namespace Dom5Edit.Entities
                 }
             }
             base.Resolve();
+        }
+
+        public override void Export(StreamWriter writer)
+        {
+            Selected = true;
+            base.Export(writer);
         }
 
         public override void AddNamed(string s)
