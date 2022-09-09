@@ -89,7 +89,14 @@ namespace Dom5Edit.Entities
                 {
                     _name = value;
                     Named = true;
-                    GetNamedList().Add(_name, this);
+                    try
+                    {
+                        GetNamedList().Add(_name, this);
+                    }
+                    catch
+                    {
+                        Parent.Log("Spell name: " + _name + " was already used inside mod");
+                    }
                 }
                 else if (ID != -1)
                 {

@@ -556,6 +556,19 @@ namespace Dom5Edit.Entities
             }
         }
 
+        public IEnumerable<FilePathProperty> Sprites
+        {
+            get
+            {
+                var list = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return p._command == Command.SPR1 || p._command == Command.SPR2;
+                    }).Cast<FilePathProperty>();
+                return list;
+            }
+        }
+
         public IEnumerable<CustomMagic> CustomMagic
         {
             get

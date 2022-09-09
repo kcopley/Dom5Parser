@@ -29,6 +29,7 @@ namespace Dom5Edit.Mods
         public List<string> DisabledNations = new List<string>();
 
         public Dictionary<int, IDEntity> Monsters = new Dictionary<int, IDEntity>();
+        public Dictionary<int, IDEntity> DisabledMonsters = new Dictionary<int, IDEntity>();
         public bool TryGetValueMonsters(int i, out IDEntity entity)
         {
             foreach (var m in Dependencies)
@@ -819,6 +820,7 @@ namespace Dom5Edit.Mods
             Export(writer, NamedArmors.Values.ToList());
 
             //Monsters
+            Export(writer, DisabledMonsters.OrderBy(x => x.Key), ModManager.MONSTER_START_ID);
             Export(writer, Monsters.OrderBy(x => x.Key), ModManager.MONSTER_START_ID);
             Export(writer, NamedMonsters.Values.ToList());
             //Nametypes
@@ -988,11 +990,21 @@ namespace Dom5Edit.Mods
 
             foreach (var id in disabledIDs)
             {
+                if (DisabledMonsters.ContainsKey(id)) continue;
+                Monster m;
                 if (!Monsters.ContainsKey(id))
                 {
-                    IDEntity e = Monster.SelectVanillaMonster(id, this);
-                    e.Properties.Add(CommandProperty.Create(Command.CLEARMAGIC, e));
+                    m = Monster.SelectVanillaMonster(id, this);
+                    m.Properties.Add(CommandProperty.Create(Command.CLEARMAGIC, m));
                 }
+                else
+                {
+                    m = (Monster)Monsters[id];
+                    m.Properties.Clear();
+                    m.Properties.Add(CommandProperty.Create(Command.CLEARMAGIC, m));
+                }
+                Monsters.Remove(id);
+                DisabledMonsters.Add(id, m);
             }
         }
 

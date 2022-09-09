@@ -402,7 +402,6 @@ namespace Dom5Edit
                 MergeEventCodes(m.EventCodes.Values.ToList(), finalMod);
                 MergeEnchantments(m.Enchantments.Values.ToList(), finalMod);
                 MergeEventEffectCodes(m.EventEffectCodes.Values.ToList(), finalMod);
-
             }
 
             string description = "Nation mods merged together. Contains:\n";
