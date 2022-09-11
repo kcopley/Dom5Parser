@@ -7,3 +7,6 @@ It has many tacked on features for private usage, but as I go I will build a mor
 # Usage
 * Download the latest release and run the exe included.
 * Follow the instructions inside - primarily give it the mod folder, import mods, customize nations you want to cut, merge and export.
+
+# License
+* MIT license / public domain but just give me some credit somewhere for politeness!
