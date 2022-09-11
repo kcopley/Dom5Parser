@@ -360,7 +360,7 @@ namespace Dom5Edit.Entities
                     Named = true;
                     try
                     {
-                        GetNamedList().Add(_name, this);
+                        GetNamedList().Add(_name.ToLower(), this);
                     }
                     catch
                     {

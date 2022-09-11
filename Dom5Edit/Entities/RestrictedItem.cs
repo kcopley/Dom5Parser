@@ -13,6 +13,7 @@ namespace Dom5Edit.Entities
     {
         public int RestrictedItemID { get; set; }
         public RestrictedItem DependentRestrictedItem;
+        public List<IDEntity> ReferencedEntities = new List<IDEntity>();
 
         public RestrictedItem(int ID)
         {

@@ -20,8 +20,17 @@ namespace Dom5Edit.Props
             throw new NotImplementedException();
         }
 
+        public virtual void Connect(IDEntity original)
+        {
+            if (TryGetEntity(out IDEntity newEntity))
+            {
+                newEntity.UsedByEntities.Add(original);
+                original.RequiredEntities.Add(newEntity);
+            }
+        }
+
         public abstract void Resolve();
 
-        public abstract bool TryGetEntity(out Entity e);
+        public abstract bool TryGetEntity(out IDEntity e);
     }
 }

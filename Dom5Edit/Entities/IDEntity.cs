@@ -14,6 +14,7 @@ namespace Dom5Edit.Entities
     public abstract class IDEntity : Entity
     {
         public List<Property> Properties = new List<Property>();
+        public HashSet<Nation> AssociatedNations = new HashSet<Nation>();
         public bool Selected { get; set; }
         public bool Named { get; set; }
         internal string _name;
@@ -27,7 +28,8 @@ namespace Dom5Edit.Entities
             {
                 _name = value;
                 Named = true;
-                GetNamedList().Add(_name, this);
+                if (!GetNamedList().ContainsKey(_name.ToLower()))
+                    GetNamedList().Add(_name.ToLower(), this);
             }
             else if (ID != -1)
             {
@@ -55,7 +57,8 @@ namespace Dom5Edit.Entities
 
         public override void AddNamed(string s)
         {
-            if (!GetNamedList().ContainsKey(s)) GetNamedList().Add(s, this);
+            if (!GetNamedList().ContainsKey(s.ToLower())) 
+                GetNamedList().Add(s.ToLower(), this);
         }
 
         public override bool TryGetIDValue(int id, out IDEntity e)
@@ -71,7 +74,7 @@ namespace Dom5Edit.Entities
 
         public override bool TryGetNamedValue(string s, out IDEntity e)
         {
-            if (GetNamedList().TryGetValue(s, out IDEntity m))
+            if (GetNamedList().TryGetValue(s.ToLower(), out IDEntity m))
             {
                 e = m;
                 return true;
@@ -115,10 +118,15 @@ namespace Dom5Edit.Entities
                 if (prop is Reference)
                 {
                     Reference r = prop as Reference;
-                    if (r.TryGetEntity(out Entity newEntity))
+                    r.Connect(this);
+                    if (r.TryGetEntity(out IDEntity newEntity))
                     {
-                        newEntity.ConnectedEntities.Add(this);
-                        this.ConnectedEntities.Add(newEntity);
+                        newEntity.UsedByEntities.Add(this);
+                        this.RequiredEntities.Add(newEntity);
+                    }
+                    else if (r is MontagIDRef)
+                    {
+                        ((MontagIDRef)r).Connect(this);
                     }
                 }
             }

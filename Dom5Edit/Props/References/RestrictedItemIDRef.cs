@@ -22,10 +22,26 @@ namespace Dom5Edit.Props
         {
         }
 
+        public List<IDEntity> GetConnectedEntities()
+        {
+            return _item.ReferencedEntities;
+        }
+
+        public override void Connect(IDEntity original)
+        {
+            var list = GetConnectedEntities();
+            foreach (var entity in list)
+            {
+                entity.UsedByEntities.Add(original);
+                original.RequiredEntities.Add(entity);
+            }
+        }
+
         public override void Parse(Command c, string s, string comment)
         {
             base.Parse(c, s, comment);
             _item = this.Parent.Parent.AddRestrictedItem(ID);
+            _item.ReferencedEntities.Add(this.Parent as IDEntity);
             HasRestrictedItemID = _item != null;
         }
 

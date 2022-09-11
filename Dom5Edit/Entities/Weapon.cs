@@ -120,7 +120,7 @@ namespace Dom5Edit.Entities
                 {
                     entity.Properties.AddRange(this.Properties);
                 }
-                else if (this.TryGetName(out _name) && m.NamedWeapons.TryGetValue(_name, out var namedentity))
+                else if (this.TryGetName(out _name) && m.NamedWeapons.TryGetValue(_name.ToLower(), out var namedentity))
                 {
                     namedentity.Properties.AddRange(this.Properties);
                 }
@@ -131,7 +131,7 @@ namespace Dom5Edit.Entities
         public override void AddNamed(string s)
         {
             //do nothing, weapons are never by name
-            if (!Parent.NamedWeapons.ContainsKey(s)) Parent.NamedWeapons.Add(s, this);
+            if (!Parent.NamedWeapons.ContainsKey(s.ToLower())) Parent.NamedWeapons.Add(s.ToLower(), this);
         }
 
         public override bool TryGetIDValue(int id, out IDEntity e)
@@ -147,7 +147,7 @@ namespace Dom5Edit.Entities
 
         public override bool TryGetNamedValue(string s, out IDEntity e)
         {
-            if (Parent.NamedWeapons.TryGetValue(s, out IDEntity a))
+            if (Parent.NamedWeapons.TryGetValue(s.ToLower(), out IDEntity a))
             {
                 e = a;
                 return true;

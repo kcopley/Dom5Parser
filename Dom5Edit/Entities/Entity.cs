@@ -15,7 +15,8 @@ namespace Dom5Edit.Entities
         //private string _startComment;
         private string _endComment;
         public Mod Parent { get; set; }
-        public List<Entity> ConnectedEntities = new List<Entity>();
+        public HashSet<IDEntity> RequiredEntities = new HashSet<IDEntity>();
+        public HashSet<IDEntity> UsedByEntities = new HashSet<IDEntity>();
 
         public virtual void SetEndComment(string s)
         {

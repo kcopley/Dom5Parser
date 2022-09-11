@@ -13,6 +13,7 @@ namespace Dom5Edit.Entities
     {
         public int EventCodeID { get; set; }
         public EventCode DependentEventCode;
+        public List<IDEntity> ReferencedEntities = new List<IDEntity>();
 
         public EventCode(int ID)
         {

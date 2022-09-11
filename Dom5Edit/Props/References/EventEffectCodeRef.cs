@@ -18,6 +18,21 @@ namespace Dom5Edit.Props
             return new EventEffectCodeRef();
         }
 
+        public List<IDEntity> GetConnectedEntities()
+        {
+            return _item.ReferencedEntities;
+        }
+
+        public override void Connect(IDEntity original)
+        {
+            var list = GetConnectedEntities();
+            foreach (var entity in list)
+            {
+                entity.UsedByEntities.Add(original);
+                original.RequiredEntities.Add(entity);
+            }
+        }
+
         public override void Resolve()
         {
         }
@@ -26,6 +41,7 @@ namespace Dom5Edit.Props
         {
             base.Parse(c, s, comment);
             _item = this.Parent.Parent.AddEventEffectCode(ID);
+            _item.ReferencedEntities.Add(this.Parent as IDEntity);
             HasEventEffectCodeRef = _item != null;
         }
 

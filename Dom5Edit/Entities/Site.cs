@@ -122,7 +122,7 @@ namespace Dom5Edit.Entities
                 {
                     _name = value;
                     Named = true;
-                    GetNamedList().Add(_name, this);
+                    GetNamedList().Add(_name.ToLower(), this);
                 }
             }
             else if (ID == -1)
@@ -151,11 +151,11 @@ namespace Dom5Edit.Entities
                 {
                     entity.Properties.AddRange(this.Properties);
                 }
-                else if (this.TryGetName(out string _n) && m.NamedSites.TryGetValue(_n, out var namedentity))
+                else if (this.TryGetName(out string _n) && m.NamedSites.TryGetValue(_n.ToLower(), out var namedentity))
                 {
                     namedentity.Properties.AddRange(this.Properties);
                 }
-                else if (!string.IsNullOrEmpty(_name) && m.NamedSites.TryGetValue(_name, out var nentity))
+                else if (!string.IsNullOrEmpty(_name) && m.NamedSites.TryGetValue(_name.ToLower(), out var nentity))
                 {
                     nentity.Properties.AddRange(this.Properties);
                 }

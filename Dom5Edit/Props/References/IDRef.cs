@@ -16,7 +16,7 @@ namespace Dom5Edit.Props
         public IDEntity entity { get; set; }
         public bool Resolved { get; set; }
 
-        public override bool TryGetEntity(out Entity e)
+        public override bool TryGetEntity(out IDEntity e)
         {
             e = null;
             if (!Resolved) return false;
