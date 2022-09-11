@@ -272,9 +272,9 @@ namespace Dom5Edit.Entities
         {
             if (TryGetCopySpellRef(out var copyRef))
             {
-                if (copyRef.entity != null && copyRef.entity is Spell)
+                if (copyRef.Entity != null && copyRef.Entity is Spell)
                 {
-                    copy = (Spell)copyRef.entity;
+                    copy = (Spell)copyRef.Entity;
                     return true;
                 }
             }

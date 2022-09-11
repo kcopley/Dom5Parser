@@ -21,7 +21,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueNamedItems(Name, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }
@@ -29,7 +29,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueItems(ID, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }

@@ -32,12 +32,26 @@ namespace Dom5Edit.Props
 
             if (this._command == Command.DAMAGEMON)
             {
-                if (_monsterRef.entity != null && _monsterRef.entity.ID != -1)
+                if (_monsterRef.Entity != null && _monsterRef.Entity.ID != -1)
                 {
                     this._command = Command.DAMAGE;
                     _monsterRef._command = Command.DAMAGE;
                 }
             }
+        }
+
+        public override bool TryGetEntity(out Entity e)
+        {
+            e = null;
+            if (_montagRef != null)
+            {
+                return _montagRef.TryGetEntity(out e);
+            }
+            else if (_monsterRef != null)
+            {
+                return _monsterRef.TryGetEntity(out e);
+            }
+            return false;
         }
 
         public override void Parse(Command c, string v, string comment)

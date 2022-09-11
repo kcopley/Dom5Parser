@@ -21,7 +21,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueNamedArmors(Name, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }
@@ -29,7 +29,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueArmors(ID, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }

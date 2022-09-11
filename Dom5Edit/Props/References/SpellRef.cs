@@ -21,7 +21,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueNamedSpells(Name, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }
@@ -29,7 +29,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueSpells(ID, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }
@@ -41,7 +41,7 @@ namespace Dom5Edit.Props
 
         public override string ToString()
         {
-            if ((_command == Command.NEXTSPELL) && entity != null && entity.ID != -1)
+            if ((_command == Command.NEXTSPELL) && Entity != null && Entity.ID != -1)
                 IsStringRef = false;
             return base.ToString();
         }

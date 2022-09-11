@@ -802,6 +802,98 @@ namespace Dom5Edit.Mods
             }
         }
 
+        public void Map()
+        {
+            foreach (var kvp in Monsters)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NamedMonsters)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in Armors)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NamedArmors)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in Weapons)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NamedWeapons)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in Nametypes)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in Sites)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NamedSites)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in SitesThatNeedIDs)
+            {
+                kvp.Map();
+            }
+            foreach (var kvp in Nations)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NamedNations)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NationsWithNoID)
+            {
+                kvp.Map();
+            }
+            foreach (var kvp in Items)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NamedItems)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in ItemsWithNoNameYet)
+            {
+                kvp.Map();
+            }
+            foreach (var kvp in Spells)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in NamedSpells)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in SpellsWithNoNameYet)
+            {
+                kvp.Map();
+            }
+            foreach (var kvp in NamedMercenaries)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in Poptypes)
+            {
+                kvp.Value.Map();
+            }
+            foreach (var kvp in Events)
+            {
+                kvp.Map();
+            }
+        }
+
         public void Export(StreamWriter writer)
         {
             writer.WriteLine(CommandsMap.Format(Command.MODNAME, ModName, true));

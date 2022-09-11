@@ -15,8 +15,20 @@ namespace Dom5Edit.Props
         public string Name { get; set; }
         public bool HasValue { get; set; }
 
-        public IDEntity entity { get; set; }
+        public IDEntity Entity { get; set; }
         public bool Resolved { get; set; }
+
+        public override bool TryGetEntity(out Entity e)
+        {
+            e = null;
+            if (!Resolved) return false;
+            if (Entity != null)
+            {
+                e = Entity;
+                return true;
+            }
+            return false;
+        }
 
         public override void Parse(Command c, string s, string comment)
         {
@@ -49,7 +61,7 @@ namespace Dom5Edit.Props
             if (IsStringRef)
             {
                 string _exportName = Name;
-                if (Resolved && entity.TryGetName(out var _name)) _exportName = _name;
+                if (Resolved && Entity.TryGetName(out var _name)) _exportName = _name;
 
                 if (!String.IsNullOrEmpty(Comment))
                 {
@@ -70,8 +82,8 @@ namespace Dom5Edit.Props
             else
             {
                 int _exportID;
-                if (entity != null)
-                    _exportID = Resolved ? entity.ID : ID; //true is left, false is right
+                if (Entity != null)
+                    _exportID = Resolved ? Entity.ID : ID; //true is left, false is right
                 else _exportID = ID;
 
                 if (!String.IsNullOrEmpty(Comment))

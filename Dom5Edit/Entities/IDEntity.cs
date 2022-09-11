@@ -108,6 +108,22 @@ namespace Dom5Edit.Entities
             _resolved = true;
         }
 
+        public virtual void Map()
+        {
+            foreach (Property prop in this.Properties)
+            {
+                if (prop is Reference)
+                {
+                    Reference r = prop as Reference;
+                    if (r.TryGetEntity(out Entity newEntity))
+                    {
+                        newEntity.ConnectedEntities.Add(this);
+                        this.ConnectedEntities.Add(newEntity);
+                    }
+                }
+            }
+        }
+
         internal bool TryGetName(out string name)
         {
             foreach (var prop in Properties)
