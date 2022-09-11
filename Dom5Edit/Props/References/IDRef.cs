@@ -16,6 +16,18 @@ namespace Dom5Edit.Props
         public IDEntity entity { get; set; }
         public bool Resolved { get; set; }
 
+        public override bool TryGetEntity(out Entity e)
+        {
+            e = null;
+            if (!Resolved) return false;
+            if (entity != null)
+            {
+                e = entity;
+                return true;
+            }
+            return false;
+        }
+
         public override void Parse(Command c, string s, string comment)
         {
             this._command = c;

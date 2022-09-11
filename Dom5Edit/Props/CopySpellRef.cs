@@ -45,9 +45,9 @@ namespace Dom5Edit.Props
 
         public bool TryGetSpell(out Spell spell)
         {
-            if (this.entity != null && this.entity is Spell)
+            if (this.Entity != null && this.Entity is Spell)
             {
-                spell = (Spell)entity;
+                spell = (Spell)Entity;
                 return true;
             }
             spell = null;

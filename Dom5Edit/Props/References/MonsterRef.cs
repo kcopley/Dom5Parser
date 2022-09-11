@@ -21,7 +21,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueNamedMonsters(Name, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }
@@ -29,7 +29,7 @@ namespace Dom5Edit.Props
             {
                 if (Parent.Parent.TryGetValueMonsters(ID, out IDEntity m))
                 {
-                    entity = m;
+                    Entity = m;
                     Resolved = true;
                 }
             }
@@ -41,7 +41,7 @@ namespace Dom5Edit.Props
 
         public override string ToString()
         {
-            if (entity != null && entity.ID != -1)
+            if (Entity != null && Entity.ID != -1)
                 IsStringRef = false;
             return base.ToString();
         }

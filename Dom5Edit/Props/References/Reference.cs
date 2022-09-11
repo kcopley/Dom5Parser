@@ -1,4 +1,5 @@
 ﻿using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,7 @@ namespace Dom5Edit.Props
         }
 
         public abstract void Resolve();
+
+        public abstract bool TryGetEntity(out Entity e);
     }
 }

@@ -28,7 +28,7 @@ namespace Dom5Edit.Props
                 {
                     if (Parent.Parent.TryGetValueNations(ID, out IDEntity m))
                     {
-                        entity = m;
+                        Entity = m;
                         Resolved = true;
                     }
                 }

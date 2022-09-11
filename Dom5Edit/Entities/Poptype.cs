@@ -16,8 +16,6 @@ namespace Dom5Edit.Entities
 
         static Poptype()
         {
-            //_propertyMap.Add(Command.SELECTPOPTYPE, PoptypeIDRef.Create);
-            //_propertyMap.Add(Command.END, CommandProperty.Create);
             _propertyMap.Add(Command.CLEARREC, CommandProperty.Create);
             _propertyMap.Add(Command.CLEARDEF, CommandProperty.Create);
             _propertyMap.Add(Command.ADDRECUNIT, MonsterOrMontagRef.Create);

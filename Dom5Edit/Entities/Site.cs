@@ -207,7 +207,7 @@ namespace Dom5Edit.Entities
                         }).Cast<MonsterOrMontagRef>();
                     foreach (var property in list)
                     {
-                        var ret = property?._monsterRef?.entity as Monster;
+                        var ret = property?._monsterRef?.Entity as Monster;
                         if (ret != null) yield return ret;
                     }
                 }
