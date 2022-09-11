@@ -44,7 +44,7 @@ namespace Dom5Edit.Props
             //if the bitmask, leave it as a string export w/ no quotes
         }
 
-        public override bool TryGetEntity(out Entity e)
+        public override bool TryGetEntity(out IDEntity e)
         {
             e = null;
             if (_monRef != null)

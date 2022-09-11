@@ -13,6 +13,7 @@ namespace Dom5Edit.Entities
     {
         public int EnchID { get; set; }
         public Enchantment DependentEnchantment;
+        public List<IDEntity> ReferencedEntities = new List<IDEntity>();
 
         public Enchantment(int ID)
         {

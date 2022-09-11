@@ -91,7 +91,7 @@ namespace Dom5Edit.Entities
                     Named = true;
                     try
                     {
-                        GetNamedList().Add(_name, this);
+                        GetNamedList().Add(_name.ToLower(), this);
                     }
                     catch
                     {
@@ -188,6 +188,10 @@ namespace Dom5Edit.Entities
             {
                 return VanillaSpellMap.IsSummonEffect(effect);
             }
+            else if (this.IsVanillaID())
+            {
+                return this.IsVanillaSummon();
+            }
             else if (TryGetCopySpellRef(out var copy))
             {
                 if (copy.IsVanillaID())
@@ -204,6 +208,34 @@ namespace Dom5Edit.Entities
             return false;
         }
 
+        public bool IsVanillaID()
+        {
+            if (this.ID != -1 && VanillaSpellMap.ContainsSpell(this.ID)) return true;
+            else if (this.ID != -1 && this.Named && VanillaSpellMap.ContainsSpell(this?._name)) return true;
+            return false;
+        }
+
+        public bool IsVanillaSummon()
+        {
+            if (this.ID != -1 && VanillaSpellMap.IsSummonSpell(this.ID)) return true;
+            else if (this.ID != -1 && this.Named && VanillaSpellMap.IsSummonSpell(this?._name)) return true;
+            return false;
+        }
+
+        public bool IsVanillaEnchant()
+        {
+            if (this.ID != -1 && VanillaSpellMap.IsEnchantSpell(this.ID)) return true;
+            else if (this.ID != -1 && this.Named && VanillaSpellMap.IsEnchantSpell(this?._name)) return true;
+            return false;
+        }
+
+        public bool IsVanillaEventEffect()
+        {
+            if (this.ID != -1 && VanillaSpellMap.IsEventEffectSpell(this.ID)) return true;
+            else if (this.ID != -1 && this.Named && VanillaSpellMap.IsEventEffectSpell(this?._name)) return true;
+            return false;
+        }
+
         internal bool IsEnchant()
         {
             //check for the spell effect
@@ -213,6 +245,10 @@ namespace Dom5Edit.Entities
             //if copyspell is not in the mod, check the vanilla list
             //return the effect
             if (TryGetSpellEffect(out int effect) && VanillaSpellMap.IsEnchantEffect(effect)) return true;
+            else if (this.IsVanillaID())
+            {
+                return this.IsVanillaEnchant();
+            }
             else if (TryGetCopySpellRef(out var copy))
             {
                 if (copy.IsVanillaID())
@@ -238,6 +274,10 @@ namespace Dom5Edit.Entities
             //if copyspell is not in the mod, check the vanilla list
             //return the effect
             if (TryGetSpellEffect(out int effect) && VanillaSpellMap.IsEventEffect(effect)) return true;
+            else if (this.IsVanillaID())
+            {
+                return this.IsVanillaEventEffect();
+            }
             else if (TryGetCopySpellRef(out var copy))
             {
                 if (copy.IsVanillaID())

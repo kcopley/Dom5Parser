@@ -13,6 +13,7 @@ namespace Dom5Edit.Entities
     {
         public int MontagID { get; set; }
         public Montag DependentMontag;
+        public List<IDEntity> ReferencedEntities = new List<IDEntity>();
 
         public static List<int> MontagConstants = new List<int>()
         {

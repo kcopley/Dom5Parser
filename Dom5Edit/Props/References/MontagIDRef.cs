@@ -27,7 +27,23 @@ namespace Dom5Edit.Props
             base.Parse(c, s, comment);
             if (c != Command.MONTAG) ID = -ID;
             _montag = this.Parent.Parent.AddMontag(ID);
+            _montag.ReferencedEntities.Add(this.Parent as IDEntity);
             HasMontagID = _montag != null;
+        }
+
+        public List<IDEntity> GetConnectedEntities()
+        {
+            return _montag.ReferencedEntities;
+        }
+
+        public override void Connect(IDEntity original)
+        {
+            var list = GetConnectedEntities();
+            foreach (var entity in list)
+            {
+                entity.UsedByEntities.Add(original);
+                original.RequiredEntities.Add(entity);
+            }
         }
 
         public override string ToString()

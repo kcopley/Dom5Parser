@@ -91,6 +91,10 @@ namespace Dom5Edit
             m.ModFileName = modName;
             m.Parse(file);
             m.Resolve();
+            var newMod = Merge(m);
+            newMod.Map();
+            Nation bhod = (Nation)m.Nations[130];
+            Export(Path.GetDirectoryName(file), newMod, bhod);
             int indexOfDotDM = file.IndexOf(".dm");
             if (indexOfDotDM != -1)
             {
@@ -105,6 +109,15 @@ namespace Dom5Edit
             {
                 finalizedmod.GenerateDisabledMages(DisabledNations);
                 finalizedmod.Export(writer);
+            }
+        }
+
+        public void Export(string folder, Mod mod, Nation n)
+        {
+            using (StreamWriter writer = new StreamWriter(folder + "\\" + mod.ModName + ".dm"))
+            {
+                mod.GenerateDisabledMages(DisabledNations);
+                mod.Export(writer, n);
             }
         }
 
@@ -439,6 +452,109 @@ namespace Dom5Edit
                 }
             }
             finalMod.Description = description;
+        }
+
+        public Mod Merge(Mod m)
+        {
+            Mod finalMod = new Mod();
+            finalMod.Logging = this.Logging;
+            finalMod.FolderPath = _folderPath;
+
+            finalMod.ModName = this._ModName;
+            finalMod.Description = "A merger of all valid mods that were parsed";
+            finalMod.Version = "1.0";
+            finalMod.DomVersion = "5.00";
+
+            tempMod = m;
+            foreach (int referenced in m.VanillaMageReferences)
+            {
+                //slow but meh
+                if (!finalMod.VanillaMageReferences.Contains(referenced)) finalMod.VanillaMageReferences.Add(referenced);
+            }
+            //add monsters
+            Merge(m.Monsters, m.NamedMonsters, finalMod.Monsters, finalMod.NamedMonsters, MONSTER_START_ID, finalMod.GetNextMonsterID);
+            Merge(m.Armors, m.NamedArmors, finalMod.Armors, finalMod.NamedArmors, ARMOR_START_ID, finalMod.GetNextArmorID);
+            Merge(m.Weapons, m.NamedWeapons, finalMod.Weapons, finalMod.NamedWeapons, WEAPON_START_ID, finalMod.GetNextWeaponID);
+            Merge(m.Nametypes, null, finalMod.Nametypes, null, NAMETYPE_START_ID, finalMod.GetNextNametypeID, true);
+            Merge(m.Sites, m.NamedSites, finalMod.Sites, finalMod.NamedSites, SITE_START_ID, finalMod.GetNextSiteID);
+            MergeExtraSites(m.SitesThatNeedIDs, finalMod);
+            Merge(m.Items, m.NamedItems, finalMod.Items, finalMod.NamedItems, ITEM_START_ID, finalMod.GetNextItemID);
+            MergeExtraItems(m.ItemsWithNoNameYet, finalMod);
+            MergeNations(m.Nations, finalMod.Nations, m.NationsWithNoID, NATION_START_ID, finalMod.GetNextNationID);
+            MergeMontags(m.Montags.Values.ToList(), finalMod);
+
+            Merge(m.Spells, m.NamedSpells, finalMod.Spells, finalMod.NamedSpells, SPELL_START_ID, finalMod.GetNextSpellID);
+            MergeExtraSpells(m.SpellsWithNoNameYet, finalMod);
+
+            //Migrate mercs, no conflicts as long as ID's adjusted internally
+            foreach (var kvp in m.NamedMercenaries)
+            {
+                try
+                {
+                    finalMod.NamedMercenaries.Add(kvp.Key, kvp.Value);
+                }
+                catch
+                {
+                    finalMod.Log("Warning: Mercenary for name " + kvp.Key + " was discarded due to conflicts from mod: " + m.ModFileName);
+                }
+            }
+            //general settings (is this even necessary? lol)
+
+            //poptypes
+            foreach (var kvp in m.Poptypes)
+            {
+                if (!finalMod.Poptypes.ContainsKey(kvp.Key)) finalMod.Poptypes.Add(kvp.Key, kvp.Value);
+            }
+            //restricted item codes
+            MergeRestrictedItems(m.RestrictedItems.Values.ToList(), finalMod);
+
+            //events, just migrate over since they've been adjusted
+            foreach (var kvp in m.Events)
+            {
+                finalMod.Events.Add(kvp);
+            }
+
+            //event codes
+            MergeEventCodes(m.EventCodes.Values.ToList(), finalMod);
+            MergeEnchantments(m.Enchantments.Values.ToList(), finalMod);
+            MergeEventEffectCodes(m.EventEffectCodes.Values.ToList(), finalMod);
+
+            string description = "Nation mods merged together. Contains:\n";
+            int flip = 0;
+            foreach (var n in finalMod.Nations)
+            {
+                try
+                {
+                    Nation nation = n.Value as Nation;
+                    IntProperty iProp = nation.Era;
+                    if (iProp != null) iProp.Value = 2;
+                }
+                catch { }
+                if (n.Key > NATION_START_ID)
+                {
+                    string name = "";
+                    if (string.IsNullOrEmpty(n.Value._name))
+                    {
+                        n.Value.TryGetName(out name);
+                    }
+                    else
+                    {
+                        name = n.Value._name;
+                    }
+                    if (flip < 4)
+                    {
+                        description = description + " - " + name;
+                        flip++;
+                    }
+                    else if (flip == 4)
+                    {
+                        description = description + " - " + name + "\n";
+                        flip = 0;
+                    }
+                }
+            }
+            finalMod.Description = description;
+            return finalMod;
         }
 
         public void Merge(Dictionary<int, IDEntity> current, Dictionary<string, IDEntity> named, Dictionary<int, IDEntity> final, Dictionary<string, IDEntity> finalNamed, int START_ID, Func<int> nextID, bool force = false)

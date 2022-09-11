@@ -40,7 +40,7 @@ namespace Dom5Edit.Props
             }
         }
 
-        public override bool TryGetEntity(out Entity e)
+        public override bool TryGetEntity(out IDEntity e)
         {
             e = null;
             if (_montagRef != null)

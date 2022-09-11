@@ -44,9 +44,9 @@ namespace Dom5Edit.Mods
         {
             foreach (var m in Dependencies)
             {
-                if (m.NamedMonsters.TryGetValue(i, out entity)) return true;
+                if (m.NamedMonsters.TryGetValue(i.ToLower(), out entity)) return true;
             }
-            if (NamedMonsters.TryGetValue(i, out entity)) return true;
+            if (NamedMonsters.TryGetValue(i.ToLower(), out entity)) return true;
             return false;
         }
         public Dictionary<int, IDEntity> Spells = new Dictionary<int, IDEntity>();
@@ -64,9 +64,9 @@ namespace Dom5Edit.Mods
         {
             foreach (var m in Dependencies)
             {
-                if (m.NamedSpells.TryGetValue(i, out entity)) return true;
+                if (m.NamedSpells.TryGetValue(i.ToLower(), out entity)) return true;
             }
-            if (NamedSpells.TryGetValue(i, out entity)) return true;
+            if (NamedSpells.TryGetValue(i.ToLower(), out entity)) return true;
             return false;
         }
         public List<IDEntity> SpellsWithNoNameYet = new List<IDEntity>();
@@ -86,9 +86,9 @@ namespace Dom5Edit.Mods
         {
             foreach (var m in Dependencies)
             {
-                if (m.NamedItems.TryGetValue(i, out entity)) return true;
+                if (m.NamedItems.TryGetValue(i.ToLower(), out entity)) return true;
             }
-            if (NamedItems.TryGetValue(i, out entity)) return true;
+            if (NamedItems.TryGetValue(i.ToLower(), out entity)) return true;
             return false;
         }
 
@@ -108,9 +108,9 @@ namespace Dom5Edit.Mods
         {
             foreach (var m in Dependencies)
             {
-                if (m.NamedWeapons.TryGetValue(i, out entity)) return true;
+                if (m.NamedWeapons.TryGetValue(i.ToLower(), out entity)) return true;
             }
-            if (NamedWeapons.TryGetValue(i, out entity)) return true;
+            if (NamedWeapons.TryGetValue(i.ToLower(), out entity)) return true;
             return false;
         }
         public Dictionary<int, IDEntity> Armors = new Dictionary<int, IDEntity>();
@@ -128,9 +128,9 @@ namespace Dom5Edit.Mods
         {
             foreach (var m in Dependencies)
             {
-                if (m.NamedArmors.TryGetValue(i, out entity)) return true;
+                if (m.NamedArmors.TryGetValue(i.ToLower(), out entity)) return true;
             }
-            if (NamedArmors.TryGetValue(i, out entity)) return true;
+            if (NamedArmors.TryGetValue(i.ToLower(), out entity)) return true;
             return false;
         }
 
@@ -149,9 +149,9 @@ namespace Dom5Edit.Mods
         {
             foreach (var m in Dependencies)
             {
-                if (m.NamedSites.TryGetValue(i, out entity)) return true;
+                if (m.NamedSites.TryGetValue(i.ToLower(), out entity)) return true;
             }
-            if (NamedSites.TryGetValue(i, out entity)) return true;
+            if (NamedSites.TryGetValue(i.ToLower(), out entity)) return true;
             return false;
         }
         public List<IDEntity> SitesThatNeedIDs = new List<IDEntity>();
@@ -185,9 +185,9 @@ namespace Dom5Edit.Mods
         {
             foreach (var m in Dependencies)
             {
-                if (m.NamedNations.TryGetValue(i, out entity)) return true;
+                if (m.NamedNations.TryGetValue(i.ToLower(), out entity)) return true;
             }
-            if (NamedNations.TryGetValue(i, out entity)) return true;
+            if (NamedNations.TryGetValue(i.ToLower(), out entity)) return true;
             return false;
         }
         public List<IDEntity> NationsWithNoID = new List<IDEntity>();
@@ -892,6 +892,32 @@ namespace Dom5Edit.Mods
             {
                 kvp.Map();
             }
+
+            var nations = Nations.Values;
+            foreach (var nation in nations)
+            {
+                Nation n = nation as Nation;
+                n.AssociatedNations.Add(n);
+                foreach (var e in n.RequiredEntities)
+                {
+                    AddNationAssociation(n, e);
+                }
+                foreach (var e in n.UsedByEntities)
+                {
+                    AddNationAssociation(n, e);
+                }
+            }
+        }
+
+        public void AddNationAssociation(Nation nation, IDEntity entity)
+        {
+            if (entity.AssociatedNations.Contains(nation)) return;
+            if (entity is Nation) return;
+            entity.AssociatedNations.Add(nation);
+            foreach (var e in entity.RequiredEntities)
+            {
+                AddNationAssociation(nation, e);
+            }
         }
 
         public void Export(StreamWriter writer)
@@ -937,6 +963,51 @@ namespace Dom5Edit.Mods
 
             Export(writer, Poptypes.OrderBy(x => x.Key));
             Export(writer, Events);
+        }
+
+        public void Export(StreamWriter writer, Nation nation)
+        {
+            writer.WriteLine(CommandsMap.Format(Command.MODNAME, ModName, true));
+            if (Version?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.VERSION, Version));
+            if (DomVersion?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DOMVERSION, DomVersion));
+            if (Icon?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.ICON, Icon, true));
+            if (Description?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DESCRIPTION, Description, true));
+
+            writer.WriteLine();
+
+            //Weapons
+            Export(writer, Weapons.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.WEAPON_START_ID);
+            Export(writer, NamedWeapons.Values.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+            //Armors
+            Export(writer, Armors.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.ARMOR_START_ID);
+            Export(writer, NamedArmors.Values.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+
+            //Monsters
+            Export(writer, DisabledMonsters.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.MONSTER_START_ID);
+            Export(writer, Monsters.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.MONSTER_START_ID);
+            Export(writer, NamedMonsters.Values.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+            //Nametypes
+            Export(writer, Nametypes.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.NAMETYPE_START_ID);
+            //Sites
+            Export(writer, Sites.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.SITE_START_ID);
+            Export(writer, NamedSites.Values.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+            Export(writer, SitesThatNeedIDs.Where(x => x.AssociatedNations.Contains(nation)));
+            //Nations
+            Export(writer, Nations.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.NATION_START_ID);
+            //Export(writer, NamedNations.Values.ToList()); //not needed
+
+            //spells
+            Export(writer, Spells.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.SPELL_START_ID);
+            Export(writer, NamedSpells.Values.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+            Export(writer, SpellsWithNoNameYet.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+
+            //magic items
+            Export(writer, Items.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)), ModManager.ITEM_START_ID);
+            Export(writer, NamedItems.Values.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+            Export(writer, ItemsWithNoNameYet.ToList().Where(x => x.AssociatedNations.Contains(nation)));
+
+            Export(writer, Poptypes.OrderBy(x => x.Key).Where(x => x.Value.AssociatedNations.Contains(nation)));
+            Export(writer, Events.Where(x => x.AssociatedNations.Contains(nation)));
         }
 
         public void Export(StreamWriter writer, IEnumerable<KeyValuePair<int, Entity>> entities)
@@ -1186,7 +1257,7 @@ namespace Dom5Edit.Mods
             {
                 return m;
             }
-            else if (NamedArmors.TryGetValue(val, out IDEntity m2))
+            else if (NamedArmors.TryGetValue(val.ToLower(), out IDEntity m2))
             {
                 return m2;
             }
@@ -1214,7 +1285,7 @@ namespace Dom5Edit.Mods
             {
                 return m;
             }
-            else if (NamedWeapons.TryGetValue(val, out IDEntity m2))
+            else if (NamedWeapons.TryGetValue(val.ToLower(), out IDEntity m2))
             {
                 return m2;
             }
