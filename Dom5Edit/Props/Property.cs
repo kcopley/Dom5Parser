@@ -1,11 +1,12 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
-using Dom5Edit.Mods;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Dom5Edit.Props
 {
@@ -15,8 +16,10 @@ namespace Dom5Edit.Props
         public string Comment { get; set; }
         public abstract void Parse(Command c, string v, string comment);
 
-        public override abstract string ToString();
+        public abstract string ToExportString();
 
         internal Command _command { get; set; }
+
+        internal abstract Property GetDefault();
     }
 }

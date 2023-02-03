@@ -2,13 +2,15 @@
 using Dom5Edit.Entities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Dom5Edit.Props
 {
-    public abstract class StringOrIDRef : Reference
+    public class StringOrIDRef : Reference
     {
         public bool IsStringRef { get; set; } = false;
         public int ID { get; set; }
@@ -17,6 +19,26 @@ namespace Dom5Edit.Props
 
         public IDEntity Entity { get; set; }
         public bool Resolved { get; set; }
+
+        internal override EntityType GetEntityType()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Resolve()
+        {
+            if (Parent.ParentMod.TryGet(GetEntityType(), ID, Name, out IDEntity e))
+            {
+                Entity = e;
+                Resolved = true;
+            }
+            //move start ID to be in an entitytype set
+            //handle non-resolved separately... these are ones in a dependency?
+            if (!Resolved && !IsStringRef && ID > Parent.ParentMod.GetStartID(GetEntityType()))
+            {
+                Parent.ParentMod.Log(GetEntityType() + " not resolved for: " + this.ID);
+            }
+        }
 
         public override bool TryGetEntity(out IDEntity e)
         {
@@ -37,7 +59,7 @@ namespace Dom5Edit.Props
 
             HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
 
-            if (HasValue && !Parent.Parent.LineWasTrimmed)
+            if (HasValue && !Parent.ParentMod.LineWasTrimmed)
             {
                 ID = val;
                 IsStringRef = false;
@@ -54,9 +76,13 @@ namespace Dom5Edit.Props
             }
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if (!CommandsMap.TryGetString(_command, out string s)) return "";
+
+            //add certain types to be string refs?
+            if (Entity != null && Entity.ID != -1)
+                IsStringRef = false;
 
             if (IsStringRef)
             {

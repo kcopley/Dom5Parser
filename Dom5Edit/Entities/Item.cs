@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -347,69 +346,10 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SHAPECHANCE, IntProperty.Create);
         }
 
-        public Item(string value, string comment, Mod _parent, bool selected = false) : base()
-        {
-            this.SetID(value, comment);
-            Parent = _parent;
-            Selected = selected;
-            if (selected)
-            {
-                if (ID == -1 && value.Length > 0)
-                {
-                    _name = value;
-                    Named = true;
-                    try
-                    {
-                        GetNamedList().Add(_name.ToLower(), this);
-                    }
-                    catch
-                    {
-                        Parent.Log("Item name: " + _name + " was already used inside mod");
-                    }
-                }
-                else if (ID != -1)
-                {
-                    try
-                    {
-                        GetIDList().Add(ID, this);
-                    }
-                    catch
-                    {
-                        Parent.Log("Item ID: " + ID + " was already used inside mod");
-                    }
-                }
-            }
-
-            if (!selected) Parent.ItemsWithNoNameYet.Add(this);
-        }
-
-        public override void Resolve()
-        {
-            if (base._resolved) return;
-            foreach (var m in Parent.Dependencies)
-            {
-                if (ID != -1 && m.Items.TryGetValue(this.ID, out var entity))
-                {
-                    entity.Properties.AddRange(this.Properties);
-                }
-                else if (this.TryGetName(out _name) && m.NamedItems.TryGetValue(_name, out var namedentity))
-                {
-                    namedentity.Properties.AddRange(this.Properties);
-                }
-            }
-            base.Resolve();
-        }
-
         public override void Export(StreamWriter writer)
         {
             Selected = true;
             base.Export(writer);
-        }
-
-        public override void AddNamed(string s)
-        {
-            base.AddNamed(s);
-            Parent.ItemsWithNoNameYet.Remove(this);
         }
 
         internal override Command GetNewCommand()
@@ -427,14 +367,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        internal override Dictionary<string, IDEntity> GetNamedList()
+        internal override EntityType GetEntityType()
         {
-            return Parent.NamedItems;
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return Parent.Items;
+            return EntityType.ITEM;
         }
     }
 }

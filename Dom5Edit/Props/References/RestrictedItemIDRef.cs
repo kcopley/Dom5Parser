@@ -10,7 +10,7 @@ namespace Dom5Edit.Props
 {
     public class RestrictedItemIDRef : IDRef
     {
-        RestrictedItem _item = null;
+        DependentEntity _item = null;
         bool HasRestrictedItemID { get; set; }
 
         public static Property Create()
@@ -40,12 +40,12 @@ namespace Dom5Edit.Props
         public override void Parse(Command c, string s, string comment)
         {
             base.Parse(c, s, comment);
-            _item = this.Parent.Parent.AddRestrictedItem(ID);
+            _item = this.Parent.ParentMod.AddDependent(EntityType.RESTRICTED_ITEM, ID);
             _item.ReferencedEntities.Add(this.Parent as IDEntity);
             HasRestrictedItemID = _item != null;
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
@@ -68,6 +68,11 @@ namespace Dom5Edit.Props
                 }
             }
             else return "";
+        }
+
+        internal override EntityType GetEntityType()
+        {
+            return EntityType.RESTRICTED_ITEM;
         }
     }
 }

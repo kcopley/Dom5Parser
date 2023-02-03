@@ -15,33 +15,9 @@ namespace Dom5Edit.Props
             return new ItemRef();
         }
 
-        public override void Resolve()
+        internal override EntityType GetEntityType()
         {
-            if (IsStringRef)
-            {
-                if (Parent.Parent.TryGetValueNamedItems(Name, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            else
-            {
-                if (Parent.Parent.TryGetValueItems(ID, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            if (!Resolved && !IsStringRef && ID > ModManager.ITEM_START_ID)
-            {
-                Parent.Parent.Log("Item not resolved for: " + this.ID);
-            }
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
+            return EntityType.ITEM;
         }
     }
 }

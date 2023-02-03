@@ -1,10 +1,5 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dom5Edit.Props
 {
@@ -73,17 +68,30 @@ namespace Dom5Edit.Props
             }
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if (_montagRef != null)
             {
-                return _montagRef.ToString();
+                return _montagRef.ToExportString();
             }
             else if (_monsterRef != null)
             {
-                return _monsterRef.ToString();
+                return _monsterRef.ToExportString();
             }
             return "";
+        }
+
+        internal override EntityType GetEntityType()
+        {
+            if (_montagRef != null)
+            {
+                return _montagRef.GetEntityType();
+            }
+            else if (_monsterRef != null)
+            {
+                return _monsterRef.GetEntityType();
+            }
+            return EntityType.MONSTER;
         }
     }
 }

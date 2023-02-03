@@ -10,7 +10,7 @@ namespace Dom5Edit.Props
 {
     public class MontagIDRef : IDRef
     {
-        Montag _montag = null;
+        DependentEntity _montag = null;
         bool HasMontagID { get; set; }
 
         public static Property Create()
@@ -26,7 +26,7 @@ namespace Dom5Edit.Props
         {
             base.Parse(c, s, comment);
             if (c != Command.MONTAG) ID = -ID;
-            _montag = this.Parent.Parent.AddMontag(ID);
+            _montag = this.Parent.ParentMod.AddDependent(EntityType.MONTAG, ID);
             _montag.ReferencedEntities.Add(this.Parent as IDEntity);
             HasMontagID = _montag != null;
         }
@@ -46,7 +46,7 @@ namespace Dom5Edit.Props
             }
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
@@ -74,6 +74,11 @@ namespace Dom5Edit.Props
                 }
             }
             else return "";
+        }
+
+        internal override EntityType GetEntityType()
+        {
+            return EntityType.MONTAG;
         }
     }
 }

@@ -15,17 +15,9 @@ namespace Dom5Edit.Props
             return new NametypeIDRef();
         }
 
-        public override void Resolve()
+        internal override EntityType GetEntityType()
         {
-            if (Parent.Parent.TryGetValueNametypes(ID, out IDEntity m))
-            {
-                entity = m;
-                Resolved = true;
-            }
-            if (!Resolved && ID > ModManager.NAMETYPE_START_ID)
-            {
-                Parent.Parent.Log("Nametype not resolved for: " + this.ID);
-            }
+            return EntityType.NAMETYPE;
         }
     }
 }

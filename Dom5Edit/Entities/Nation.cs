@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -225,41 +224,6 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.FUTURESITE, SiteRef.Create);
         }
 
-        public Nation(string value, string comment, Mod _parent, bool selected = false) : base()
-        {
-            this.SetID(value, comment);
-            Parent = _parent;
-            Selected = selected;
-            if (ID == -1)
-            {
-                Parent.NationsWithNoID.Add(this);
-            }
-            else
-            {
-                try
-                {
-                    GetIDList().Add(ID, this);
-                }
-                catch
-                {
-                    Parent.Log("Nation ID: " + ID + " was already used inside mod");
-                }
-            }
-        }
-
-        public override void Resolve()
-        {
-            if (base._resolved) return;
-            foreach (var m in Parent.Dependencies)
-            {
-                if (ID != -1 && m.Nations.TryGetValue(this.ID, out var entity))
-                {
-                    entity.Properties.AddRange(this.Properties);
-                }
-            }
-            base.Resolve();
-        }
-
         public override void Parse(Command command, string value, string comment)
         {
             base.Parse(command, value, comment);
@@ -280,14 +244,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        internal override Dictionary<string, IDEntity> GetNamedList()
+        internal override EntityType GetEntityType()
         {
-            return Parent.NamedNations;
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return Parent.Nations;
+            return EntityType.NATION;
         }
 
         public IEnumerable<Site> Sites

@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Dom5Editor"
+                    xmlns:Dom5Editor="clr-namespace:Dom5Editor"
+                    xmlns:Menus="clr-namespace:Dom5Editor.Menus"
+                    xmlns:VM="clr-namespace:Dom5Editor.VMs">
+    <DataTemplate DataType="{x:Type Dom5Editor:MonsterViewModel}">
+        <Dom5Editor:MonsterView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:IntPropertyViewModel}">
+        <Menus:IntPropertyView />
+    </DataTemplate>
+
+</ResourceDictionary>

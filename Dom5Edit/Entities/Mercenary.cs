@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -31,18 +30,14 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.ERAMASK, IntProperty.Create);
         }
 
-        public Mercenary(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
-        {
-        }
-
         internal override Command GetNewCommand()
         {
-            return Command.NEWARMOR;
+            return Command.NEWMERC;
         }
 
         internal override Command GetSelectCommand()
         {
-            return Command.SELECTARMOR;
+            throw new NotImplementedException();
         }
 
         internal override Dictionary<Command, Func<Property>> GetPropertyMap()
@@ -50,14 +45,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        internal override Dictionary<string, IDEntity> GetNamedList()
+        internal override EntityType GetEntityType()
         {
-            return Parent.NamedMercenaries;
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return null;
+            return EntityType.MERCENARY;
         }
     }
 }

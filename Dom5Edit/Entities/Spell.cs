@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -78,86 +77,10 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.REQNOPLANT, CommandProperty.Create);
         }
 
-        public Spell(string value, string comment, Mod _parent, bool selected = false) : base()
-        {
-            Parent = _parent;
-            Selected = selected;
-            if (selected)
-            {
-                this.SetID(value, comment);
-                if (ID == -1 && value.Length > 0)
-                {
-                    _name = value;
-                    Named = true;
-                    try
-                    {
-                        GetNamedList().Add(_name.ToLower(), this);
-                    }
-                    catch
-                    {
-                        Parent.Log("Spell name: " + _name + " was already used inside mod");
-                    }
-                }
-                else if (ID != -1)
-                {
-                    try
-                    {
-                        GetIDList().Add(ID, this);
-                    }
-                    catch
-                    {
-                        Parent.Log("Spell ID: " + ID + " was already used inside mod");
-                    }
-                }
-            }
-            if (!selected)
-            {
-                Parent.SpellsWithNoNameYet.Add(this);
-                ID = -1;
-            }
-        }
-
         public override void Export(StreamWriter writer)
         {
             Selected = true;
             base.Export(writer);
-        }
-
-        public override void Resolve()
-        {
-            if (base._resolved) return;
-            foreach (var m in Parent.Dependencies)
-            {
-                if (ID != -1 && m.Spells.TryGetValue(this.ID, out var entity))
-                {
-                    entity.Properties.AddRange(this.Properties);
-                }
-                else if (!string.IsNullOrEmpty(this._name) && m.NamedSpells.TryGetValue(_name, out var namedentity1))
-                {
-                    namedentity1.Properties.AddRange(this.Properties);
-                }
-                else if (string.IsNullOrEmpty(this._name) && this.TryGetName(out _name) && m.NamedSpells.TryGetValue(_name, out var namedentity2))
-                {
-                    namedentity2.Properties.AddRange(this.Properties);
-                }
-            }
-            base.Resolve();
-        }
-
-        public override void AddNamed(string s)
-        {
-            base.AddNamed(s);
-            Parent.SpellsWithNoNameYet.Remove(this);
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return Parent.Spells;
-        }
-
-        internal override Dictionary<string, IDEntity> GetNamedList()
-        {
-            return Parent.NamedSpells;
         }
 
         internal override Command GetNewCommand()
@@ -173,6 +96,11 @@ namespace Dom5Edit.Entities
         internal override Command GetSelectCommand()
         {
             return Command.SELECTSPELL;
+        }
+
+        internal override EntityType GetEntityType()
+        {
+            return EntityType.SPELL;
         }
 
         internal bool IsSummon()

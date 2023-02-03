@@ -1,16 +1,22 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
-using Dom5Edit.Mods;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Dom5Edit.Props
 {
     public class CommandProperty : Property
     {
+        public string DisplayName
+        {
+            get { return "#" + this._command.ToString().ToLower(); }
+        }
+
         public static Property Create()
         {
             return new CommandProperty();
@@ -28,7 +34,7 @@ namespace Dom5Edit.Props
         }
 
         //Preliminary Example only for now, not optimal
-        public override string ToString()
+        public override string ToExportString()
         {
             if (CommandsMap.TryGetString(_command, out string s))
             {
@@ -42,6 +48,11 @@ namespace Dom5Edit.Props
                 }
             }
             else return "";
+        }
+
+        internal override Property GetDefault()
+        {
+            throw new NotImplementedException();
         }
     }
 }

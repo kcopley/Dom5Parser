@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Dom5Edit.Entities;
+using Dom5Edit.Props;
 
 namespace Dom5Edit
 {
@@ -16,7 +18,7 @@ namespace Dom5Edit
         public Startup()
         {
             InitializeComponent();
-            _folderPath.Text = Path.GetFullPath(Path.Combine(Application.UserAppDataPath, @"..\..\..\Dominions5\mods"));
+            _folderPath.Text = Path.GetFullPath(Path.Combine(Application.UserAppDataPath, @"..\..\..\Dominions5\testing"));
             Scan_Click(null, null);
             this.Name = "Dom5Merger";
         }
@@ -48,7 +50,6 @@ namespace Dom5Edit
                 }
 
                 i.Merge();
-                i.Export(_folderPath.Text);
                 label7.Text = i._ModName + " successfully exported";
             }
         }
@@ -253,7 +254,7 @@ namespace Dom5Edit
             Scan_Click(sender, e);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void verify_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(_folderPath?.Text) && Directory.Exists(_folderPath?.Text))
                 openFileDialog1.InitialDirectory = _folderPath.Text;
@@ -266,9 +267,89 @@ namespace Dom5Edit
             else { return; }
             i = new ModManager();
             i._ModName = !string.IsNullOrEmpty(modFileName.Text) ? modFileName.Text : "temp-mod";
-            i.Import(file, openFileDialog1.SafeFileName);
+            i.ImportToVerify(file, openFileDialog1.SafeFileName);
             Mods.Items.Clear();
             Mods.Items.Add("Mod verified successfully");
+        }
+
+        ModManager editor;
+        Mod editedMod;
+
+        private void loadToEdit_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(_folderPath?.Text) && Directory.Exists(_folderPath?.Text))
+                openFileDialog1.InitialDirectory = _folderPath.Text;
+            DialogResult result = openFileDialog1.ShowDialog();
+            string file = "";
+            if (result == DialogResult.OK)
+            {
+                file = openFileDialog1.FileName;
+            }
+            else { return; }
+            editor = new ModManager();
+            editor._ModName = !string.IsNullOrEmpty(modFileName.Text) ? modFileName.Text : "temp-mod";
+
+        }
+
+        private void idSelectorDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            IDEntity entity = idSelectorDropDown.SelectedItem as IDEntity;
+            int row = 0;
+            Point baseSize = new Point(160, 20);
+            foreach (var prop in entity.Properties)
+            {
+                var commandControl = new Label();
+                commandControl.AutoSize = false;
+                commandControl.Text = prop._command.ToString();
+                commandControl.Size = new Size(baseSize);
+                commandControl.Location = new Point(0, row);
+                panel1.Controls.Add(commandControl);
+
+                var newControl = prop.GetControl(baseSize);
+                if (newControl != null)
+                {
+                    var size = newControl.Size;
+                    if (size.Height < baseSize.Y) //resized text
+                    {
+                        int difference = (baseSize.Y - size.Height) / 2;
+                        var location = new Point(commandControl.Size.Width, row - difference);
+                        newControl.Location = location;
+                    }
+                    else
+                    {
+                        var location = new Point(commandControl.Size.Width, row);
+                        newControl.Location = location;
+                    }
+                    
+
+                    panel1.Controls.Add(newControl);
+                    row += Math.Max(size.Height, baseSize.Y) + 2;
+                }
+                else
+                {
+                    row += commandControl.Size.Height;
+                }
+                
+            }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            editor.Save(editedMod);
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }

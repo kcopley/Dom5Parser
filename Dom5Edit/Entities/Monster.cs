@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections;
@@ -15,6 +14,9 @@ namespace Dom5Edit.Entities
     public class Monster : IDEntity
     {
         private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
+
+        private Monster _copyStatsEntity;
+        private Monster _copySprEntity;
 
         static Monster()
         {
@@ -484,37 +486,6 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.APPETITE, IntProperty.Create);
         }
 
-        public Monster(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
-        {
-        }
-
-        public static Monster SelectVanillaMonster(int id, Mod m)
-        {
-            return new Monster(id.ToString(), "", m, true);
-        }
-
-        public static Monster GetNewMonster(int id, Mod m)
-        {
-            return new Monster(id.ToString(), "", m, false);
-        }
-
-        public override void Resolve()
-        {
-            if (base._resolved) return;
-            foreach (var m in Parent.Dependencies)
-            {
-                if (ID != -1 && m.Monsters.TryGetValue(this.ID, out var entity))
-                {
-                    entity.Properties.AddRange(this.Properties);
-                }
-                else if (this.TryGetName(out _name) && m.NamedMonsters.TryGetValue(_name, out var namedentity))
-                {
-                    namedentity.Properties.AddRange(this.Properties);
-                }
-            }
-            base.Resolve();
-        }
-
         internal override Command GetNewCommand()
         {
             return Command.NEWMONSTER;
@@ -530,14 +501,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        internal override Dictionary<string, IDEntity> GetNamedList()
+        internal override EntityType GetEntityType()
         {
-            return Parent.NamedMonsters;
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return Parent.Monsters;
+            return EntityType.MONSTER;
         }
 
         public IEnumerable<MagicSkill> MagicSkills
@@ -605,6 +571,82 @@ namespace Dom5Edit.Entities
                     yield return new CustomMagic() { Path = paths, Chance = chance };
                 }
             }
+        }
+
+        public string Name
+        {
+            get
+            {
+                var prop = Get(Command.NAME);
+                return prop != null ? (prop as StringProperty).Value : "";
+            }
+            set
+            {
+                Property prop = Get(Command.NAME);
+                if (prop == null)
+                {
+                    prop = new StringProperty() { _command = Command.NAME, Value = value };
+                    Add(prop);
+                }
+                var str = prop as StringProperty;
+                str.Value = value;
+            }
+        }
+
+        public string Sprite
+        {
+            get
+            {
+                var prop = Get(Command.SPR1);
+                return prop != null ? (prop as FilePathProperty).Value : "";
+            }
+            set
+            {
+                Property prop = Get(Command.NAME);
+                if (prop == null)
+                {
+                    prop = new FilePathProperty() { _command = Command.NAME, Value = value };
+                    Add(prop);
+                }
+                var str = prop as FilePathProperty;
+                str.Value = value;
+            }
+        }
+
+        public string Sprite2
+        {
+            get
+            {
+                var prop = Get(Command.SPR2);
+                return prop != null ? (prop as FilePathProperty).Value : "";
+            }
+            set
+            {
+                Property prop = Get(Command.NAME);
+                if (prop == null)
+                {
+                    prop = new FilePathProperty() { _command = Command.NAME, Value = value };
+                    Add(prop);
+                }
+                var str = prop as FilePathProperty;
+                str.Value = value;
+            }
+        }
+
+        public IDEntity GetCopyFrom()
+        {
+            if (_copyStatsEntity != null) return _copyStatsEntity;
+            var ret = (Get(Command.COPYSTATS) as MonsterRef).Entity as Monster;
+            _copyStatsEntity = ret;
+            return ret;
+        }
+
+        public IDEntity GetCopySpr()
+        {
+            if (_copySprEntity != null) return _copySprEntity;
+            var ret = (Get(Command.COPYSPR) as MonsterRef).Entity as Monster;
+            _copySprEntity = ret;
+            return ret;
         }
     }
 }

@@ -15,9 +15,20 @@ namespace Dom5Edit.Props
             return new WeaponDamage();
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
-            return base.ToStringNoQuotes();
+            if (CommandsMap.TryGetString(_command, out string s))
+            {
+                if (!String.IsNullOrEmpty(Comment))
+                {
+                    return s + " " + Value + " -- " + Comment;
+                }
+                else
+                {
+                    return s + " " + Value + "";
+                }
+            }
+            else return "";
         }
     }
 }

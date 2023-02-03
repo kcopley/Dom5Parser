@@ -15,35 +15,16 @@ namespace Dom5Edit.Props
             return new WeaponRef();
         }
 
-        public override void Resolve()
+        internal override EntityType GetEntityType()
         {
-            if (IsStringRef)
-            {
-                if (Parent.Parent.TryGetValueNamedWeapons(Name, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            else
-            {
-                if (Parent.Parent.TryGetValueWeapons(ID, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            if (!Resolved && !IsStringRef && ID > ModManager.WEAPON_START_ID)
-            {
-                Parent.Parent.Log("Weapon not resolved for: " + this.ID);
-            }
+            return EntityType.WEAPON;
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if (Entity != null && Entity.ID != -1)
                 IsStringRef = false;
-            return base.ToString();
+            return base.ToExportString();
         }
     }
 }

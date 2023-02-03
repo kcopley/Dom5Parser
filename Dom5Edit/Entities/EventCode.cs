@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -9,21 +8,8 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Entities
 {
-    public class EventCode
+    public class EventCode : DependentEntity
     {
-        public int EventCodeID { get; set; }
-        public EventCode DependentEventCode;
-        public List<IDEntity> ReferencedEntities = new List<IDEntity>();
-
-        public EventCode(int ID)
-        {
-            this.EventCodeID = ID;
-        }
-
-        public int GetID()
-        {
-            if (DependentEventCode != null) return DependentEventCode.EventCodeID;
-            return EventCodeID;
-        }
+        public EventCode(int id) : base(id) { }
     }
 }

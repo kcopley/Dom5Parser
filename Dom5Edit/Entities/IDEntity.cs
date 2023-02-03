@@ -1,6 +1,5 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Entities
 {
-    public abstract class IDEntity : Entity
+    public class IDEntity : Entity
     {
         public List<Property> Properties = new List<Property>();
         public HashSet<Nation> AssociatedNations = new HashSet<Nation>();
@@ -19,69 +18,32 @@ namespace Dom5Edit.Entities
         public bool Named { get; set; }
         internal string _name;
 
-        public IDEntity(string value, string comment, Mod _parent, bool selected = false)
+        private IDEntity _dependent = null;
+        internal IDEntity DependentEntity { get { return _dependent; } }
+
+        internal virtual void Assign(string value, string comment, Mod _parent, bool selected = false)
         {
             this.SetID(value, comment);
-            Parent = _parent;
+            ParentMod = _parent;
             Selected = selected;
-            if (ID == -1 && !string.IsNullOrEmpty(value))
-            {
-                _name = value;
-                Named = true;
-                if (!GetNamedList().ContainsKey(_name.ToLower()))
-                    GetNamedList().Add(_name.ToLower(), this);
-            }
-            else if (ID != -1)
-            {
-                try
-                {
-                    GetIDList().Add(ID, this);
-                }
-                catch
-                {
-                    Parent.Log("Entity ID: " + ID + " was already used inside mod - Type: " + this.GetType());
-                }
-            }
+            ParentMod.AddEntity(GetType(), ID, _name, this);
         }
 
-        protected IDEntity()
-        {
-        }
-
+        private int _id;
         public int ID
         {
-            get; set;
+            get
+            {
+                if (DependentEntity != null) return DependentEntity.ID;
+                else return _id;
+            }
+            set
+            {
+                _id = value;
+            }
         }
 
         public string IDComment { get; private set; } = "";
-
-        public override void AddNamed(string s)
-        {
-            if (!GetNamedList().ContainsKey(s.ToLower())) 
-                GetNamedList().Add(s.ToLower(), this);
-        }
-
-        public override bool TryGetIDValue(int id, out IDEntity e)
-        {
-            if (GetIDList().TryGetValue(id, out IDEntity m))
-            {
-                e = m;
-                return true;
-            }
-            e = null;
-            return false;
-        }
-
-        public override bool TryGetNamedValue(string s, out IDEntity e)
-        {
-            if (GetNamedList().TryGetValue(s.ToLower(), out IDEntity m))
-            {
-                e = m;
-                return true;
-            }
-            e = null;
-            return false;
-        }
 
         public virtual void SetID(string s, string comment)
         {
@@ -93,6 +55,11 @@ namespace Dom5Edit.Entities
             else
             {
                 ID = -1;
+                if (!string.IsNullOrEmpty(s))
+                {
+                    _name = s;
+                    Named = true;
+                }
             }
             IDComment = comment;
         }
@@ -101,6 +68,13 @@ namespace Dom5Edit.Entities
         public virtual void Resolve()
         {
             if (_resolved) return;
+            foreach (var m in ParentMod.Dependencies)
+            {
+                if (m.TryGet(this.GetEntityType(), ID, _name, out IDEntity entity))
+                {
+                    _dependent = entity;
+                }
+            }
             foreach (Property prop in Properties)
             {
                 if (prop is Reference p)
@@ -119,15 +93,6 @@ namespace Dom5Edit.Entities
                 {
                     Reference r = prop as Reference;
                     r.Connect(this);
-                    if (r.TryGetEntity(out IDEntity newEntity))
-                    {
-                        newEntity.UsedByEntities.Add(this);
-                        this.RequiredEntities.Add(newEntity);
-                    }
-                    else if (r is MontagIDRef)
-                    {
-                        ((MontagIDRef)r).Connect(this);
-                    }
                 }
             }
         }
@@ -146,13 +111,12 @@ namespace Dom5Edit.Entities
             return false;
         }
 
-        internal abstract Command GetNewCommand();
-        internal abstract Command GetSelectCommand();
+        internal virtual Command GetNewCommand() { throw new NotImplementedException(); }
+        internal virtual Command GetSelectCommand() { throw new NotImplementedException(); }
+        internal virtual EntityType GetEntityType() { throw new NotImplementedException(); }
 
-        internal abstract Dictionary<string, IDEntity> GetNamedList();
-        internal abstract Dictionary<int, IDEntity> GetIDList();
 
-        internal abstract Dictionary<Command, Func<Property>> GetPropertyMap();
+        internal virtual Dictionary<Command, Func<Property>> GetPropertyMap() { throw new NotImplementedException(); }
 
         public override void Export(StreamWriter writer)
         {
@@ -195,13 +159,20 @@ namespace Dom5Edit.Entities
             }
             foreach (Property p in Properties)
             {
-                var write = p.ToString();
+                var write = p.ToExportString();
                 writer.WriteLine(write);
             }
             if (CommandsMap.TryGetString(Command.END, out var s))
             {
                 writer.WriteLine(s);
             }
+        }
+
+        public static IDEntity SelectVanillaEntity<T>(int id, Mod m) where T : IDEntity, new()
+        {
+            var ret = new T();
+            ret.Assign(id.ToString(), "", m, true);
+            return ret;
         }
 
         public override void Parse(Command command, string value, string comment)
@@ -215,9 +186,115 @@ namespace Dom5Edit.Entities
             }
             else
             {
-                this.Parent.Log("Invalid, incorrectly spelled, or nonexistent command for " + this.GetType() + " for command: " + command);
+                this.ParentMod.Log("Invalid, incorrectly spelled, or nonexistent command for " + this.GetType() + " for command: " + command);
             } // not recognized command, skip
             //build comment storage for in-between properties
+        }
+
+        public IEnumerable<Property> GetMultiple(Command c)
+        {
+            var prop = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return p._command == c;
+                    });
+            return prop;
+        }
+
+        public IEnumerable<Property> GetCommandProperties()
+        {
+            var prop = this.Properties.FindAll(
+                    delegate (Property p)
+                    {
+                        return p.GetType().Equals(typeof(CommandProperty));
+                    });
+            return prop;
+        }
+
+        internal Property Get(Command c)
+        {
+            var prop = this.Properties.Find(
+                    delegate (Property p)
+                    {
+                        return p._command == c;
+                    });
+            return prop;
+        }
+
+        internal ReturnType Get<T>(Command c, out T t) where T : Property, new()
+        {
+            var ret = Get(c);
+            if (ret != null)
+            {
+                t = ret as T;
+                return ReturnType.TRUE;
+            }
+            else
+            {
+                t = new T().GetDefault() as T;
+                return ReturnType.FALSE;
+            }
+        }
+
+        public ReturnType TryGet<T>(Command c, out T ret) where T : Property, new()
+        {
+            var exists = Get<T>(c, out ret);
+            if (exists == ReturnType.TRUE)
+            {
+                return ReturnType.TRUE;
+            }
+            if (exists == ReturnType.FALSE)
+            {
+                var copyExists = CopyFrom.TryGet<T>(c, out ret);
+                if (copyExists == ReturnType.TRUE || copyExists == ReturnType.COPIED)
+                {
+                    return ReturnType.COPIED;
+                }
+            }
+            ret = new T().GetDefault() as T;
+            return ReturnType.FALSE;
+        }
+
+        public ReturnType TryGetCopyValue<T>(Command c, out T ret) where T : Property, new()
+        {
+            var exists = Get<T>(c, out ret);
+            var copyExists = CopyFrom.TryGet<T>(c, out ret);
+            if (copyExists == ReturnType.TRUE || copyExists == ReturnType.COPIED)
+            {
+                return ReturnType.COPIED;
+            }
+            ret = new T().GetDefault() as T;
+            return ReturnType.FALSE;
+        }
+
+        public T Create<T>(Command c) where T : Property, new()
+        {
+            var ret = new T() { Parent = this, _command = c };
+            return ret;
+        }
+
+        public ReturnType TryGetSingular(Command c, out Property prop)
+        {
+            prop = this.Properties.Find(
+                    delegate (Property p)
+                    {
+                        return p._command == c;
+                    });
+            if (prop != null) return ReturnType.TRUE;
+            if (prop == null && CopyFrom != null)
+            {
+                if (CopyFrom.TryGetSingular(c, out prop) != ReturnType.FALSE)
+                {
+                    return ReturnType.COPIED;
+                }
+            }
+            return ReturnType.FALSE;
+        }
+
+        public void Add(Property p)
+        {
+            p.Parent = this;
+            this.Properties.Add(p);
         }
     }
 }
