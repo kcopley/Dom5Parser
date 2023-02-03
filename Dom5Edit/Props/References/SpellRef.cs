@@ -15,35 +15,16 @@ namespace Dom5Edit.Props
             return new SpellRef();
         }
 
-        public override void Resolve()
+        internal override EntityType GetEntityType()
         {
-            if (IsStringRef)
-            {
-                if (Parent.Parent.TryGetValueNamedSpells(Name, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            else
-            {
-                if (Parent.Parent.TryGetValueSpells(ID, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            if (!Resolved && !IsStringRef && ID > ModManager.SPELL_START_ID)
-            {
-                Parent.Parent.Log("Spell not resolved for: " + this.ID);
-            }
+            return EntityType.SPELL;
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if ((_command == Command.NEXTSPELL) && Entity != null && Entity.ID != -1)
                 IsStringRef = false;
-            return base.ToString();
+            return base.ToExportString();
         }
     }
 }

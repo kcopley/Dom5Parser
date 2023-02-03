@@ -2,9 +2,11 @@
 using Dom5Edit.Entities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Dom5Edit.Props
 {
@@ -27,7 +29,7 @@ namespace Dom5Edit.Props
             _val = v;
             Comment = comment;
             _command = c;
-            Parent.Parent.SpellDamages.Add(this);
+            Parent.ParentMod.SpellDamages.Add(this);
         }
 
         public override void Resolve()
@@ -78,21 +80,21 @@ namespace Dom5Edit.Props
             _eventEffectRef.Resolve();
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if (_monRef != null)
             {
-                return _monRef.ToString();
+                return _monRef.ToExportString();
             }
 
             if (_enchRef != null)
             {
-                return _enchRef.ToString();
+                return _enchRef.ToExportString();
             }
 
             if (_eventEffectRef != null)
             {
-                return _eventEffectRef.ToString();
+                return _eventEffectRef.ToExportString();
             }
 
             if (CommandsMap.TryGetString(_command, out string s))
@@ -107,6 +109,11 @@ namespace Dom5Edit.Props
                 }
             }
             else return "";
+        }
+
+        internal override EntityType GetEntityType()
+        {
+            throw new NotImplementedException();
         }
     }
 }

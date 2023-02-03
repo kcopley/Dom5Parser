@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -29,27 +28,6 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.WOODENARMOR, CommandProperty.Create);
         }
 
-        public Armor(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
-        {
-        }
-
-        public override void Resolve()
-        {
-            if (base._resolved) return;
-            foreach (var m in Parent.Dependencies)
-            {
-                if (ID != -1 && m.Armors.TryGetValue(this.ID, out var entity))
-                {
-                    entity.Properties.AddRange(this.Properties);
-                }
-                else if (this.TryGetName(out _name) && m.NamedArmors.TryGetValue(_name, out var namedentity))
-                {
-                    namedentity.Properties.AddRange(this.Properties);
-                }
-            }
-            base.Resolve();
-        }
-
         internal override Command GetNewCommand()
         {
             return Command.NEWARMOR;
@@ -65,14 +43,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        internal override Dictionary<string, IDEntity> GetNamedList()
+        internal override EntityType GetEntityType()
         {
-            return Parent.NamedArmors;
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return Parent.Armors;
+            return EntityType.ARMOR;
         }
     }
 }

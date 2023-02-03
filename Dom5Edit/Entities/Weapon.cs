@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -107,55 +106,6 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SOULSLAYING, CommandProperty.Create);
         }
 
-        public Weapon(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)
-        {
-        }
-
-        public override void Resolve()
-        {
-            if (base._resolved) return;
-            foreach (var m in Parent.Dependencies)
-            {
-                if (ID != -1 && m.Weapons.TryGetValue(this.ID, out var entity))
-                {
-                    entity.Properties.AddRange(this.Properties);
-                }
-                else if (this.TryGetName(out _name) && m.NamedWeapons.TryGetValue(_name.ToLower(), out var namedentity))
-                {
-                    namedentity.Properties.AddRange(this.Properties);
-                }
-            }
-            base.Resolve();
-        }
-
-        public override void AddNamed(string s)
-        {
-            //do nothing, weapons are never by name
-            if (!Parent.NamedWeapons.ContainsKey(s.ToLower())) Parent.NamedWeapons.Add(s.ToLower(), this);
-        }
-
-        public override bool TryGetIDValue(int id, out IDEntity e)
-        {
-            if (Parent.Weapons.TryGetValue(id, out IDEntity a))
-            {
-                e = a;
-                return true;
-            }
-            e = null;
-            return false;
-        }
-
-        public override bool TryGetNamedValue(string s, out IDEntity e)
-        {
-            if (Parent.NamedWeapons.TryGetValue(s.ToLower(), out IDEntity a))
-            {
-                e = a;
-                return true;
-            }
-            e = null;
-            return false; //never can be by name
-        }
-
         internal override Command GetNewCommand()
         {
             return Command.NEWWEAPON;
@@ -171,14 +121,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        internal override Dictionary<string, IDEntity> GetNamedList()
+        internal override EntityType GetEntityType()
         {
-            return Parent.NamedWeapons;
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return Parent.Weapons;
+            return EntityType.WEAPON;
         }
     }
 }

@@ -1277,12 +1277,65 @@ namespace Dom5Edit.Commands
         REQ_WORLDITEM,
         REQ_NOWORLDITEM,
         SETXP,
+
+        //NON EDITABLE ONES
+        CORRUPT, //corruption like grigori
+        REINCARNATION, //recinarnation like yogi
+        PETRIFY, //petrify like gorgon effect
+        REALM2, //only monolith, two home realms
+        REALM3, //not used
+        TURMOILSUMMON,
+        COLDSUMMON,
+        PREANIMATOR,
+        DREANIMATOR,
+        HORROR,
+        SIZEWHENSAILING,
+        MUMMIFICATION,
+        SENDLESSORHORRORMULT,
+        CURSEATTACKER,
+        DISBELIEVE,
+        LANDREINVIGORATION,
+        ASTRALFETTERS,
+        FOREIGNMAGICBOOST,
+        STUNIMMUNITY,
+        ADVENTURERS,
+        HORRORMARKED,
+        CHANGETARGETGENDERFORSEDUCTIONANDSEDUCTIONIMMUNE,
+        CORPSECONSTRUCT,
+        ISASHAH,
+        ISAYAZAD,
+        ISADAEVA,
+        CLOCKWORKLORD,
+        STUPID,
+        HEATHENSUMMON,
+        UNSEEN,
+        ILLUSIONARY,
+        WOLF,
+        ABOLETH,
+        DEFILER,
+        MOUNTEDBERSERK,
+        LANDENC,
+        PLAGUEDOCTOR,
+        PATHBOOSTUW,
+        PATHBOOSTLAND,
+        PERCENTPATHREDUCTION,
+        MINDCOLLAR,
+        LABPROMOTION,
+        UNDYING,
+        MORALEBONUS,
+        UNCURABLEAFFLICTION,
+        AUTOBLESSED,
+        WINTERSUMMON1D3,
+        STYGIANGUIDE,
     }
 
     public class CommandsMap
     {
         private static Dictionary<string, Command> _commandMap = new Dictionary<string, Command>();
         private static Dictionary<Command, string> _stringMap = new Dictionary<Command, string>();
+
+        private static Dictionary<Command, string> _toolTipMap = new Dictionary<Command, string>();
+        private static HashSet<Command> _nonEditable = new HashSet<Command>();
 
         static CommandsMap()
         {
@@ -2555,6 +2608,105 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#req_noworlditem", Command.REQ_NOWORLDITEM);
             _commandMap.Add("#setxp", Command.SETXP);
 
+            //NON EDITABLE
+            _commandMap.Add("#corrupt", Command.CORRUPT);
+            _commandMap.Add("#reincarnation", Command.REINCARNATION);
+            _commandMap.Add("#petrify", Command.PETRIFY);
+            _commandMap.Add("#realm2", Command.REALM2);
+            _commandMap.Add("#realm3", Command.REALM3);
+            _commandMap.Add("#turmoilsummon", Command.TURMOILSUMMON);
+            _commandMap.Add("#coldsummon", Command.COLDSUMMON);
+            _commandMap.Add("#preanimator", Command.PREANIMATOR);
+            _commandMap.Add("#dreanimator", Command.DREANIMATOR);
+            _commandMap.Add("#horror", Command.HORROR);
+            _commandMap.Add("#sizewhensailing", Command.SIZEWHENSAILING);
+            _commandMap.Add("#mummification", Command.MUMMIFICATION);
+            _commandMap.Add("#sendlessorhorrormult", Command.SENDLESSORHORRORMULT);
+            _commandMap.Add("#curseattacker", Command.CURSEATTACKER);
+            _commandMap.Add("#disbelieve", Command.DISBELIEVE);
+            _commandMap.Add("#landreinvigoration", Command.LANDREINVIGORATION);
+            _commandMap.Add("#astralfetters", Command.ASTRALFETTERS);
+            _commandMap.Add("#foreignmagicboost", Command.FOREIGNMAGICBOOST);
+            _commandMap.Add("#stunimmunity", Command.STUNIMMUNITY);
+            _commandMap.Add("#adventurers", Command.ADVENTURERS);
+            _commandMap.Add("#horrormarked", Command.HORRORMARKED);
+            _commandMap.Add("#changetargetgenderforseductionandseductionimmune", Command.CHANGETARGETGENDERFORSEDUCTIONANDSEDUCTIONIMMUNE);
+            _commandMap.Add("#corpseconstruct", Command.CORPSECONSTRUCT);
+            _commandMap.Add("#isashah", Command.ISASHAH);
+            _commandMap.Add("#isayazad", Command.ISAYAZAD);
+            _commandMap.Add("#isadaeva", Command.ISADAEVA);
+            _commandMap.Add("#clockworklord", Command.CLOCKWORKLORD);
+            _commandMap.Add("#stupid", Command.STUPID);
+            _commandMap.Add("#heathensummon", Command.HEATHENSUMMON);
+            _commandMap.Add("#unseen", Command.UNSEEN);
+            _commandMap.Add("#illusionary", Command.ILLUSIONARY);
+            _commandMap.Add("#wolf", Command.WOLF);
+            _commandMap.Add("#aboleth", Command.ABOLETH);
+            _commandMap.Add("#defiler", Command.DEFILER);
+            _commandMap.Add("#mountedberserk", Command.MOUNTEDBERSERK);
+            _commandMap.Add("#landenc", Command.LANDENC);
+            _commandMap.Add("#plaguedoctor", Command.PLAGUEDOCTOR);
+            _commandMap.Add("#pathboostuw", Command.PATHBOOSTUW);
+            _commandMap.Add("#pathboostland", Command.PATHBOOSTLAND);
+            _commandMap.Add("#percentpathreduction", Command.PERCENTPATHREDUCTION);
+            _commandMap.Add("#mindcollar", Command.MINDCOLLAR);
+            _commandMap.Add("#labpromotion", Command.LABPROMOTION);
+            _commandMap.Add("#undying", Command.UNDYING);
+            _commandMap.Add("#moralebonus", Command.MORALEBONUS);
+            _commandMap.Add("#uncurableaffliction", Command.UNCURABLEAFFLICTION);
+            _commandMap.Add("#autoblessed", Command.AUTOBLESSED);
+            _commandMap.Add("#wintersummon1d3", Command.WINTERSUMMON1D3);
+            _commandMap.Add("#stygianguide", Command.STYGIANGUIDE);
+
+            _nonEditable.Add(Command.CORRUPT);
+            _nonEditable.Add(Command.REINCARNATION);
+            _nonEditable.Add(Command.PETRIFY);
+            _nonEditable.Add(Command.REALM2);
+            _nonEditable.Add(Command.REALM3);
+            _nonEditable.Add(Command.TURMOILSUMMON);
+            _nonEditable.Add(Command.COLDSUMMON);
+            _nonEditable.Add(Command.PREANIMATOR);
+            _nonEditable.Add(Command.DREANIMATOR);
+            _nonEditable.Add(Command.HORROR);
+            _nonEditable.Add(Command.SIZEWHENSAILING);
+            _nonEditable.Add(Command.MUMMIFICATION);
+            _nonEditable.Add(Command.SENDLESSORHORRORMULT);
+            _nonEditable.Add(Command.CURSEATTACKER);
+            _nonEditable.Add(Command.DISBELIEVE);
+            _nonEditable.Add(Command.LANDREINVIGORATION);
+            _nonEditable.Add(Command.ASTRALFETTERS);
+            _nonEditable.Add(Command.FOREIGNMAGICBOOST);
+            _nonEditable.Add(Command.STUNIMMUNITY);
+            _nonEditable.Add(Command.ADVENTURERS);
+            _nonEditable.Add(Command.HORRORMARKED);
+            _nonEditable.Add(Command.CHANGETARGETGENDERFORSEDUCTIONANDSEDUCTIONIMMUNE);
+            _nonEditable.Add(Command.CORPSECONSTRUCT);
+            _nonEditable.Add(Command.ISASHAH);
+            _nonEditable.Add(Command.ISAYAZAD);
+            _nonEditable.Add(Command.ISADAEVA);
+            _nonEditable.Add(Command.CLOCKWORKLORD);
+            _nonEditable.Add(Command.STUPID);
+            _nonEditable.Add(Command.HEATHENSUMMON);
+            _nonEditable.Add(Command.UNSEEN);
+            _nonEditable.Add(Command.ILLUSIONARY);
+            _nonEditable.Add(Command.WOLF);
+            _nonEditable.Add(Command.ABOLETH);
+            _nonEditable.Add(Command.DEFILER);
+            _nonEditable.Add(Command.MOUNTEDBERSERK);
+            _nonEditable.Add(Command.LANDENC);
+            _nonEditable.Add(Command.PLAGUEDOCTOR);
+            _nonEditable.Add(Command.PATHBOOSTUW);
+            _nonEditable.Add(Command.PATHBOOSTLAND);
+            _nonEditable.Add(Command.PERCENTPATHREDUCTION);
+            _nonEditable.Add(Command.MINDCOLLAR);
+            _nonEditable.Add(Command.LABPROMOTION);
+            _nonEditable.Add(Command.UNDYING);
+            _nonEditable.Add(Command.MORALEBONUS);
+            _nonEditable.Add(Command.UNCURABLEAFFLICTION);
+            _nonEditable.Add(Command.AUTOBLESSED);
+            _nonEditable.Add(Command.WINTERSUMMON1D3);
+            _nonEditable.Add(Command.STYGIANGUIDE);
+
             //Build an inverted map
             foreach (KeyValuePair<string, Command> kvp in _commandMap)
             {
@@ -2570,6 +2722,16 @@ namespace Dom5Edit.Commands
         public static bool TryGetString(Command c, out string s)
         {
             return _stringMap.TryGetValue(c, out s);
+        }
+
+        public static bool TryGetTooltip(Command c, out string s)
+        {
+            return _toolTipMap.TryGetValue(c, out s);
+        }
+
+        public static bool IsNotEditable(Command c)
+        {
+            return _nonEditable.Contains(c);
         }
 
         public static string Format(Command c, string val, bool needsQuotes = false)

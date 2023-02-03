@@ -15,28 +15,9 @@ namespace Dom5Edit.Props
             return new SiteRef();
         }
 
-        public override void Resolve()
+        internal override EntityType GetEntityType()
         {
-            if (IsStringRef)
-            {
-                if (Parent.Parent.TryGetValueNamedSites(Name, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            else
-            {
-                if (Parent.Parent.TryGetValueSites(ID, out IDEntity m))
-                {
-                    Entity = m;
-                    Resolved = true;
-                }
-            }
-            if (!Resolved && !IsStringRef && ID > ModManager.SITE_START_ID)
-            {
-                Parent.Parent.Log("Site not resolved for: " + this.ID);
-            }
+            return EntityType.SITE;
         }
     }
 }

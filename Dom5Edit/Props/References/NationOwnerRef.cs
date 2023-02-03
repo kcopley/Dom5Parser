@@ -15,28 +15,9 @@ namespace Dom5Edit.Props
             return new NationOwnerRef();
         }
 
-        public override void Resolve()
+        internal override EntityType GetEntityType()
         {
-            if (!IsStringRef)
-            {
-                if (this.HasValue && this.ID <= 0)
-                {
-                    Resolved = true;
-                    return;
-                }
-                else
-                {
-                    if (Parent.Parent.TryGetValueNations(ID, out IDEntity m))
-                    {
-                        Entity = m;
-                        Resolved = true;
-                    }
-                }
-            }
-            if (!Resolved  && !IsStringRef && ID > ModManager.NATION_START_ID)
-            {
-                Parent.Parent.Log("Nation not resolved for: " + this.ID);
-            }
+            return EntityType.NATION;
         }
     }
 }

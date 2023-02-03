@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dom5Edit
+namespace Dom5Editor
 {
-    class Exporter
+    public class Utility
     {
     }
 }

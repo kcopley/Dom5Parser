@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{969B7AF1-A05A-446E-8872-CBC54B0934AD}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Dom5Edit</RootNamespace>
     <AssemblyName>Dom5Edit</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -26,6 +26,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +47,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Dom5Edit.Start</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -56,6 +59,14 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing.Common, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.7.0.0\lib\net462\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Primitives.4.3.0\lib\net45\System.Drawing.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -71,6 +82,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\VanillaMageIDs.cs" />
+    <Compile Include="Entities\EventCodeEffect.cs" />
+    <Compile Include="Entities\EventCode.cs" />
+    <Compile Include="Entities\RestrictedItem.cs" />
+    <Compile Include="Entities\Enchantment.cs" />
+    <Compile Include="Entities\DependentEntity.cs" />
+    <Compile Include="Entities\EntitySet.cs" />
+    <Compile Include="Mod\ModSet.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -78,14 +96,10 @@
     </Compile>
     <Compile Include="Props\FloatFloatFloatProperty.cs" />
     <Compile Include="Props\References\CopyStatsRef.cs" />
-    <Compile Include="Start.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Entities\Enchantment.cs" />
-    <Compile Include="Entities\EventEffectCode.cs" />
-    <Compile Include="Entities\EventCode.cs" />
     <Compile Include="Entities\Poptype.cs" />
     <Compile Include="Entities\Mercenary.cs" />
-    <Compile Include="Entities\RestrictedItem.cs" />
+    <Compile Include="Entities\DependentEntitySet.cs" />
     <Compile Include="Entities\Montag.cs" />
     <Compile Include="Entities\Nation.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -98,11 +112,10 @@
     <Compile Include="Entities\Nametype.cs" />
     <Compile Include="Entities\Weapon.cs" />
     <Compile Include="Entities\Spell.cs" />
-    <Compile Include="Exporter.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\TypeManager.cs" />
-    <Compile Include="ModManager.cs" />
+    <Compile Include="VanillaLoader.cs" />
     <Compile Include="Mod\Mod.cs" />
     <Compile Include="Props\BitmaskChanceProperty.cs" />
     <Compile Include="Props\CommandProperty.cs" />
@@ -139,12 +152,6 @@
     <Compile Include="Props\IntProperty.cs" />
     <Compile Include="Props\FilePathProperty.cs" />
     <Compile Include="Props\StringProperty.cs" />
-    <Compile Include="Startup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Startup.Designer.cs">
-      <DependentUpon>Startup.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
@@ -152,9 +159,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Startup.resx">
-      <DependentUpon>Startup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="modicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

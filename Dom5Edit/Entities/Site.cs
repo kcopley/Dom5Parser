@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -110,65 +109,6 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.MINEGOLD, IntProperty.Create);
         }
 
-        public Site(string value, string comment, Mod _parent, bool selected = false) : base()
-        {
-            //Because a newsite doesn't accept a name there, and it's added below.....
-            this.SetID(value, comment);
-            Parent = _parent;
-            Selected = selected;
-            if (ID == -1 && selected)
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _name = value;
-                    Named = true;
-                    GetNamedList().Add(_name.ToLower(), this);
-                }
-            }
-            else if (ID == -1)
-            {
-                Parent.SitesThatNeedIDs.Add(this);
-            }
-            else
-            {
-                try
-                {
-                    GetIDList().Add(ID, this);
-                }
-                catch
-                {
-                    Parent.Log("Site ID: " + ID + " was already used inside mod");
-                }
-            }
-        }
-
-        public override void Resolve()
-        {
-            if (base._resolved) return;
-            foreach (var m in Parent.Dependencies)
-            {
-                if (ID != -1 && m.Sites.TryGetValue(this.ID, out var entity))
-                {
-                    entity.Properties.AddRange(this.Properties);
-                }
-                else if (this.TryGetName(out string _n) && m.NamedSites.TryGetValue(_n.ToLower(), out var namedentity))
-                {
-                    namedentity.Properties.AddRange(this.Properties);
-                }
-                else if (!string.IsNullOrEmpty(_name) && m.NamedSites.TryGetValue(_name.ToLower(), out var nentity))
-                {
-                    nentity.Properties.AddRange(this.Properties);
-                }
-            }
-            base.Resolve();
-        }
-
-        public override void AddNamed(string s)
-        {
-            base.AddNamed(s);
-            Parent.SitesThatNeedIDs.Remove(this);
-        }
-
         internal override Command GetNewCommand()
         {
             return Command.NEWSITE;
@@ -184,14 +124,9 @@ namespace Dom5Edit.Entities
             return _propertyMap;
         }
 
-        internal override Dictionary<string, IDEntity> GetNamedList()
+        internal override EntityType GetEntityType()
         {
-            return Parent.NamedSites;
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            return Parent.Sites;
+            return EntityType.SITE;
         }
 
         public IEnumerable<Monster> HomeCommanders

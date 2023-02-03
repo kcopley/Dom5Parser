@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Dom5Editor.MergerMenuTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dom5Editor"
+             mc:Ignorable="d" Height="752" Width="1200">
+    <Grid>
+        <Grid Background="#FFE5E5E5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="575*"/>
+                <RowDefinition Height="96*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180*"/>
+                <ColumnDefinition Width="180*"/>
+                <ColumnDefinition Width="180*"/>
+                <ColumnDefinition Width="180*"/>
+                <ColumnDefinition Width="180*"/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="FolderPath" TextWrapping="Wrap" Margin="10,16,10,0" TextChanged="UpdateFolderPath" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Path to Folder" VerticalAlignment="Top" Margin="11,0,0,0" Height="16" Width="169"/>
+            <Button x:Name="RefreshButton" Margin="29,16,0,0" Click="RefreshClick" Grid.Column="2" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24">
+                <Image HorizontalAlignment="Left" Height="14" VerticalAlignment="Top" Width="14" Source="/Dom5Editor;component/icons/reloadicon4.png" Stretch="UniformToFill"/>
+            </Button>
+            <Button x:Name="FolderDialog" Margin="0,16,0,0" Background="{x:Null}" RenderTransformOrigin="0.548,0.65" Grid.Column="2" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" Click="FolderDialog_Click">
+                <Image HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="19" Source="/Dom5Editor;component/icons/foldericon5.png" Stretch="UniformToFill"/>
+            </Button>
+            <ListBox HorizontalAlignment="Left" Height="0" Margin="187,128,0,0" VerticalAlignment="Top" Width="25">
+                <ListBox Height="100" Width="100"/>
+            </ListBox>
+            <ListBox x:Name="ModsInFolderList" Margin="10,85,0,0" ItemsSource="{Binding Mods}" FontSize="10"/>
+            <TextBlock TextWrapping="Wrap" Text="Mods in Folder" Margin="11,67,96,544"/>
+            <Button x:Name="MergeExportButton" Content="Merge and Export" Margin="11,10,0,0" Click="MergeExportButton_Click" HorizontalAlignment="Left" Width="110" Grid.Row="1" Height="20" VerticalAlignment="Top"/>
+            <TextBlock TextWrapping="Wrap" Text="Merged Mod Name" Margin="11,35,0,0" HorizontalAlignment="Left" Width="105" Grid.Row="1" Height="16" VerticalAlignment="Top"/>
+            <ListBox x:Name="DisableEANationList" Margin="10,83,10,0" FontSize="10" Grid.Column="2"/>
+            <CheckBox x:Name="DisableAllEA" Content="Disable All EA Nations" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,63,0,0" Width="178" RenderTransformOrigin="0.267,0.467" Grid.Column="2" Height="15" Checked="DisableAllEA_Checked" Unchecked="DisableAllEA_Checked"/>
+            <CheckBox x:Name="DisableAllMA" Content="Disable All MA Nations" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,64,0,0" Width="176" Grid.Column="3" Height="15" Checked="DisableAllMA_Checked" Unchecked="DisableAllMA_Checked"/>
+            <CheckBox x:Name="DisableAllLA" Content="Disable All LA Nations" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,64,0,0" RenderTransformOrigin="1.053,-0.133" Width="176" Grid.Column="4" Height="15" Checked="DisableAllLA_Checked" Unchecked="DisableAllLA_Checked"/>
+            <ListBox x:Name="DisableMANationList" Margin="10,83,10,0" FontSize="10" Grid.Column="3"/>
+            <ListBox x:Name="DisableLANationList" Margin="0,83,10,0" FontSize="10" Grid.Column="4"/>
+            <TextBox x:Name="ModNameText" TextWrapping="Wrap" Text="merged-mod" Margin="10,51,10,0" TextChanged="ModNameText_TextChanged" Grid.Row="1" Height="23" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <CheckBox x:Name="LogErrors" Content="Log Errors on Import" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="130" Grid.Row="1" Height="20" VerticalAlignment="Top" Grid.Column="1"/>
+            <Button x:Name="ExitButton" Content="Exit" VerticalAlignment="Top" Margin="127,65,10,0" Click="On_ExitButtonClick" Grid.Column="4" Height="20" Grid.Row="1"/>
+            <CheckBox x:Name="ToggleAllMods" Content="Select All" Margin="149,67,10,544" Checked="ToggleAllMods_Checked" Unchecked="ToggleAllMods_Checked"/>
+            <TextBlock x:Name="ModExportedText" Margin="12,79,10,0" TextWrapping="Wrap" Text="export label" FontSize="10" Grid.Row="1" Height="32" VerticalAlignment="Top" Grid.RowSpan="2"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -29,15 +29,15 @@ namespace Dom5Edit.Props
             base.Parse(c, v, comment);
         }
 
-        public override string ToString()
+        public override string ToExportString()
         {
             if (_montagRef != null)
             {
-                return _montagRef.ToString();
+                return _montagRef.ToExportString();
             }
             else if (_monsterRef != null)
             {
-                return _monsterRef.ToString();
+                return _monsterRef.ToExportString();
             }
             return "";
         }

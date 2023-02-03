@@ -1,0 +1,7 @@
+C:\Projects\Dom5Parser\Dom5Edit\bin\Debug\Dom5Edit.exe
+C:\Projects\Dom5Parser\Dom5Edit\bin\Debug\Dom5Edit.pdb
+C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.Properties.Resources.resources
+C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.Startup.resources
+C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Old.csproj.GenerateResource.cache
+C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.exe
+C:\Projects\Dom5Parser\Dom5Edit\obj\Debug\Dom5Edit.pdb

@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32407.343
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dom5Edit", "Dom5Edit\Dom5Edit.csproj", "{969B7AF1-A05A-446E-8872-CBC54B0934AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dom5Editor", "Dom5Editor\Dom5Editor.csproj", "{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp", "..\MvvmDemoApp\DemoApp\DemoApp.csproj", "{26CFD5D4-94BD-40F3-BABA-E5FC7B6DB623}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{969B7AF1-A05A-446E-8872-CBC54B0934AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{969B7AF1-A05A-446E-8872-CBC54B0934AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{969B7AF1-A05A-446E-8872-CBC54B0934AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26CFD5D4-94BD-40F3-BABA-E5FC7B6DB623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26CFD5D4-94BD-40F3-BABA-E5FC7B6DB623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26CFD5D4-94BD-40F3-BABA-E5FC7B6DB623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26CFD5D4-94BD-40F3-BABA-E5FC7B6DB623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

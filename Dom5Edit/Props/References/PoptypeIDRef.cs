@@ -15,13 +15,9 @@ namespace Dom5Edit.Props
             return new PoptypeIDRef();
         }
 
-        public override void Resolve()
+        internal override EntityType GetEntityType()
         {
-            if (Parent.Parent.TryGetValuePoptypes(ID, out IDEntity m))
-            {
-                entity = m;
-                Resolved = true;
-            }
+            return EntityType.POPTYPE;
         }
     }
 }

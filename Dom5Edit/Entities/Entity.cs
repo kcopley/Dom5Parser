@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -10,22 +9,52 @@ using System.Threading.Tasks;
 
 namespace Dom5Edit.Entities
 {
+    public enum EntityType
+    {
+        MONSTER,
+        ARMOR,
+        WEAPON,
+        ITEM,
+        SPELL,
+        SITE,
+        EVENT,
+        MERCENARY,
+        POPTYPE,
+        NATION,
+        NAMETYPE,
+        MONTAG,
+        RESTRICTED_ITEM,
+        ENCHANTMENT,
+        EVENT_CODE,
+        EVENT_CODE_EFFECT
+    }
+
+    public enum ReturnType
+    {
+        TRUE,
+        FALSE,
+        COPIED
+    }
+
     public abstract class Entity
     {
         //private string _startComment;
         private string _endComment;
-        public Mod Parent { get; set; }
+        public Mod ParentMod { get; set; }
         public HashSet<IDEntity> RequiredEntities = new HashSet<IDEntity>();
         public HashSet<IDEntity> UsedByEntities = new HashSet<IDEntity>();
+
+        public string DisplayName { get { return GetName(); } }
+
+        public virtual string GetName()
+        {
+            return "";
+        }
 
         public virtual void SetEndComment(string s)
         {
             _endComment = s;
         }
-
-        public abstract void AddNamed(string s);
-        public abstract bool TryGetNamedValue(string s, out IDEntity e);
-        public abstract bool TryGetIDValue(int id, out IDEntity e);
 
         public virtual void SetStartComment(string s)
         {

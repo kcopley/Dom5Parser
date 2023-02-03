@@ -1,5 +1,4 @@
 ﻿using Dom5Edit.Commands;
-using Dom5Edit.Mods;
 using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
@@ -308,12 +307,14 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SETXP, IntProperty.Create);
         }
 
-        public Event(string value, string comment, Mod _parent, bool selected = false) : base()
+
+        internal override void Assign(string value, string comment, Mod _parent, bool selected = false)
         {
+            base.Assign(value, comment, _parent, selected);
             this.SetID(value, comment);
-            Parent = _parent;
+            ParentMod = _parent;
             Selected = selected;
-            Parent.Events.Add(this);
+            ParentMod.Events.Add(this);
         }
 
         internal override Command GetNewCommand()
@@ -329,16 +330,6 @@ namespace Dom5Edit.Entities
         internal override Dictionary<Command, Func<Property>> GetPropertyMap()
         {
             return _propertyMap;
-        }
-
-        internal override Dictionary<string, IDEntity> GetNamedList()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override Dictionary<int, IDEntity> GetIDList()
-        {
-            throw new NotImplementedException();
         }
     }
 }
