@@ -22,7 +22,7 @@ namespace Dom5Edit.Props
 
         public override string ToExportString()
         {
-            if ((_command == Command.NEXTSPELL) && Entity != null && Entity.ID != -1)
+            if ((Command == Command.NEXTSPELL) && Entity != null && Entity.ID != -1)
                 IsStringRef = false;
             return base.ToExportString();
         }

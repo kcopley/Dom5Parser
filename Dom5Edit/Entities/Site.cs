@@ -138,7 +138,7 @@ namespace Dom5Edit.Entities
                     var list = this.Properties.FindAll(
                         delegate (Property p)
                         {
-                            return p._command == Command.HOMECOM;
+                            return p.Command == Command.HOMECOM;
                         }).Cast<MonsterOrMontagRef>();
                     foreach (var property in list)
                     {

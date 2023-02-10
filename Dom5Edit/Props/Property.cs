@@ -12,14 +12,16 @@ namespace Dom5Edit.Props
 {
     public abstract class Property
     {
-        public Entity Parent { get; set; }
+        public IDEntity Parent { get; set; }
         public string Comment { get; set; }
         public abstract void Parse(Command c, string v, string comment);
 
         public abstract string ToExportString();
 
-        internal Command _command { get; set; }
+        public Command Command { get; set; }
 
         internal abstract Property GetDefault();
+
+        internal abstract bool EqualsProperty<T>(T copyFrom) where T : Property, new();
     }
 }

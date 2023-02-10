@@ -16,15 +16,24 @@ namespace Dom5Editor
     public class MonsterViewModel : ViewModelBase
     {
         private Monster _monster;
+        public ModViewModel Parent { get; }
 
-        public MonsterViewModel(Monster monster)
+        public MonsterViewModel(ModViewModel mod, Monster monster)
         {
             _monster = monster;
+            Parent = mod;
         }
 
         public void SetMonster(Monster m)
         {
             this._monster = m;
+        }
+
+        public Monster Monster { get { return _monster; } }
+
+        public MonsterIDViewModel CopyRef
+        {
+            get { return new MonsterIDViewModel(this, "Copies From:", _monster, Command.COPYSTATS); }
         }
 
         public int ID
@@ -39,15 +48,19 @@ namespace Dom5Editor
             }
         }
 
-        public string Name
+        public NameViewModel Name
         {
             get
             {
-                return _monster?.Name;
+                return new NameViewModel(_monster, Command.NAME);
             }
-            set
+        }
+
+        public DescriptionViewModel Description
+        {
+            get
             {
-                if (_monster != null) _monster.Name = value;
+                return new DescriptionViewModel(_monster, Command.DESCR);
             }
         }
 
@@ -55,153 +68,201 @@ namespace Dom5Editor
         {
             get
             {
-                return "(" + this.ID + ") " + this.Name;
+                if (_monster != null)
+                {
+                    return "(" + _monster.ID + ") " + _monster.Name;
+                }
+                else
+                {
+                    return "<No Name>";
+                }
             }
         }
 
-        private IntPropertyViewModel _hp;
         public IntPropertyViewModel HitPoints
         {
             get
             {
-                if (_monster != null)
+                return new IntPropertyViewModel(this, "Hit Points:", _monster, Command.HP);
+            }
+        }
+        
+        public IntPropertyViewModel Size
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Size:", _monster, Command.SIZE);
+            }
+        }
+
+        public IntPropertyViewModel Prot
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Nat Prot:", _monster, Command.PROT);
+            }
+        }
+
+        public IntPropertyViewModel MR
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Magic Resistance:", _monster, Command.MR);
+            }
+        }
+
+        public IntPropertyViewModel Encumbrance
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Encumbrance:", _monster, Command.ENC);
+            }
+        }
+
+        public IntPropertyViewModel Attack
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Attack:", _monster, Command.ATT);
+            }
+        }
+
+        public IntPropertyViewModel Defense
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Defense:", _monster, Command.DEF);
+            }
+        }
+
+        public IntPropertyViewModel Strength
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Strength:", _monster, Command.STR);
+            }
+        }
+
+        public IntPropertyViewModel Precision
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Precision:", _monster, Command.PREC);
+            }
+        }
+
+        public IntPropertyViewModel CombatSpeed
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Combat Speed:", _monster, Command.AP);
+            }
+        }
+
+        public IntPropertyViewModel MapMove
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Map Move:", _monster, Command.MAPMOVE);
+            }
+        }
+
+        public IntPropertyViewModel Morale
+        {
+            get
+            {
+                return new IntPropertyViewModel(this, "Morale:", _monster, Command.MOR);
+            }
+        }
+
+        public MonsterGearViewModel Weapons
+        {
+            get
+            {
+                return new MonsterGearViewModel("Morale:", _monster, Command.MOR);
+            }
+        }
+
+        List<Command> CoreAttributes = new List<Command>()
+        {
+            Command.HP,
+            Command.SIZE,
+            Command.PROT,
+            Command.NAME,
+            Command.ATT,
+            Command.DEF,
+            Command.MR,
+            Command.SPR1,
+            Command.SPR2,
+            Command.DESCR,
+            Command.MAXAGE,
+            Command.MOR,
+            Command.MAPMOVE,
+            Command.AP,
+            Command.PREC,
+            Command.STR,
+            Command.ENC,
+
+        };
+
+        public List<ViewModelBase> ExtraCommands
+        {
+            get
+            {
+                List<ViewModelBase> list = new List<ViewModelBase>();
+                foreach (var prop in _monster.Properties)
                 {
-                    if (_hp == null || _hp.Source != _monster)
+                    if (!CoreAttributes.Contains(prop.Command))
                     {
-                        if (_monster.TryGet<IntProperty>(Command.HP, out IntProperty prop) == ReturnType.TRUE)
-                            _hp = new IntPropertyViewModel("Hit Points", _monster, Command.HP);
+                        list.Add(GetVM(prop));
                     }
-                    return _hp;
                 }
-                throw new NullReferenceException();
+                return list;
             }
         }
 
-        public int Size
+        private ViewModelBase GetVM(Property p)
         {
-            get
+            var t = p.GetType();
+            if (t.InheritsFrom(typeof(IntProperty)))
             {
-                return _monster != null ? _monster.Get<IntProperty>(Command.SIZE).Value : -1;
+                return new IntPropertyViewModel(p.Command.ToString(), _monster, p.Command);
             }
-            set
+            if (t.InheritsFrom(typeof(StringProperty)))
             {
-                var clamped = Math.Max(Math.Min(6, value), 0);
-                if (_monster != null) _monster.Get<IntProperty>(Command.SIZE, true).Value = clamped;
+                return new StringViewModel(p.Command.ToString(), _monster, p.Command);
             }
-        }
-
-        public int MagicResistance
-        {
-            get
+            if (t.InheritsFrom(typeof(CommandProperty)))
             {
-                return _monster != null ? _monster.Get<IntProperty>(Command.MR).Value : -1;
+                return new CommandViewModel(p.Command.ToString(), _monster, p.Command);
             }
-            set
-            {
-                if (_monster != null) _monster.Get<IntProperty>(Command.MR, true).Value = value;
-            }
-        }
-
-        public int Strength
-        {
-            get
-            {
-                return _monster != null ? _monster.Get<IntProperty>(Command.STR).Value : -1;
-            }
-            set
-            {
-                if (_monster != null) _monster.Get<IntProperty>(Command.STR, true).Value = value;
-            }
-        }
-
-        public int Attack
-        {
-            get
-            {
-                return _monster != null ? _monster.Get<IntProperty>(Command.ATT).Value : -1;
-            }
-            set
-            {
-                if (_monster != null) _monster.Get<IntProperty>(Command.ATT, true).Value = value;
-            }
-        }
-
-        public int Defense
-        {
-            get
-            {
-                return _monster != null ? _monster.Get<IntProperty>(Command.DEF).Value : -1;
-            }
-            set
-            {
-                if (_monster != null) _monster.Get<IntProperty>(Command.DEF, true).Value = value;
-            }
-        }
-
-        public int Precision
-        {
-            get
-            {
-                return _monster != null ? _monster.Get<IntProperty>(Command.PREC).Value : -1;
-            }
-            set
-            {
-                if (_monster != null) _monster.Get<IntProperty>(Command.PREC, true).Value = value;
-            }
-        }
-
-        public List<CommandProperty> ExtraCommands
-        {
-            get
-            {
-                return _monster.GetCommandProperties().Cast<CommandProperty>().ToList();
-            }
-        }
-
-        public string Sprite
-        {
-            get
-            {
-                return _monster != null ? _monster.Get<FilePathProperty>(Command.SPR1).Value : "";
-            }
-            set
-            {
-                if (_monster != null) _monster.Get<FilePathProperty>(Command.SPR1, true).Value = value;
-            }
-        }
-
-        public string Sprite2
-        {
-            get
-            {
-                return _monster != null ? _monster.Get<FilePathProperty>(Command.SPR2).Value : "";
-            }
-            set
-            {
-                if (_monster != null) _monster.Get<FilePathProperty>(Command.SPR2, true).Value = value;
-            }
+            return new CommandViewModel(p.Command.ToString(), _monster, p.Command);
         }
 
         public BitmapSource SpriteImage
         {
             get
             {
-                string test = Path.GetFileName(Sprite);
-                var spriteAdjusted = Sprite.Trim('.').Trim('/').Replace("/", "\\");
-                var dir = Path.GetDirectoryName(_monster.ParentMod.FullFilePath);
-
-                var filePath = dir + '\\' + spriteAdjusted;
-                try
+                var exists = _monster.TryGet<FilePathProperty>(Command.SPR1, out var property);
+                if (exists == ReturnType.TRUE || exists == ReturnType.COPIED)
                 {
-                    var targa = Paloma.TargaImage.LoadTargaImage(filePath);
+                    var spriteAdjusted = property.Value.Trim('.').Trim('/').Replace("/", "\\");
+                    var dir = Path.GetDirectoryName(_monster.ParentMod.FullFilePath);
 
-                    var ret = targa.ConvertToImage();
-                    return ret;
+                    var filePath = dir + '\\' + spriteAdjusted;
+                    try
+                    {
+                        var targa = Paloma.TargaImage.LoadTargaImage(filePath);
+
+                        var ret = targa.ConvertToImage();
+                        return ret;
+                    }
+                    catch (Exception e)
+                    {
+                        return new BitmapImage();
+                    }
                 }
-                catch (Exception e)
-                {
-                    return new BitmapImage();
-                }
+                return new BitmapImage();
             }
         }
 
@@ -209,22 +270,26 @@ namespace Dom5Editor
         {
             get
             {
-                string test = Path.GetFileName(Sprite2);
-                var spriteAdjusted = Sprite2.Trim('.').Trim('/').Replace("/", "\\");
-                var dir = Path.GetDirectoryName(_monster.ParentMod.FullFilePath);
-
-                var filePath = dir + '\\' + spriteAdjusted;
-                try
+                var exists = _monster.TryGet<FilePathProperty>(Command.SPR2, out var property);
+                if (exists == ReturnType.TRUE || exists == ReturnType.COPIED)
                 {
-                    var targa = Paloma.TargaImage.LoadTargaImage(filePath);
+                    var spriteAdjusted = property.Value.Trim('.').Trim('/').Replace("/", "\\");
+                    var dir = Path.GetDirectoryName(_monster.ParentMod.FullFilePath);
 
-                    var ret = targa.ConvertToImage();
-                    return ret;
+                    var filePath = dir + '\\' + spriteAdjusted;
+                    try
+                    {
+                        var targa = Paloma.TargaImage.LoadTargaImage(filePath);
+
+                        var ret = targa.ConvertToImage();
+                        return ret;
+                    }
+                    catch (Exception e)
+                    {
+                        return new BitmapImage();
+                    }
                 }
-                catch (Exception e)
-                {
-                    return new BitmapImage();
-                }
+                return new BitmapImage();
             }
         }
     }

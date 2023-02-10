@@ -15,13 +15,17 @@ namespace Dom5Edit.Entities
     {
         private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
-        private Monster _copyStatsEntity;
-        private Monster _copySprEntity;
-
         static Monster()
         {
             _propertyMap.Add(Command.SELECTMONSTER, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.NEWMONSTER, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.COPYSTATS, CopyStatsRef.Create);
+            _propertyMap.Add(Command.COPYSPR, MonsterRef.Create);
+            _propertyMap.Add(Command.CLEAR, CommandProperty.Create);
+            _propertyMap.Add(Command.CLEARWEAPONS, CommandProperty.Create);
+            _propertyMap.Add(Command.CLEARARMOR, CommandProperty.Create);
+            _propertyMap.Add(Command.CLEARMAGIC, CommandProperty.Create);
+            _propertyMap.Add(Command.CLEARSPEC, CommandProperty.Create);
             _propertyMap.Add(Command.NAME, NameProperty.Create); //use for name map reference if need be
             _propertyMap.Add(Command.FIXEDNAME, StringProperty.Create);
             _propertyMap.Add(Command.DESCR, StringProperty.Create);
@@ -29,13 +33,6 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SPR2, FilePathProperty.Create);
             _propertyMap.Add(Command.SPECIALLOOK, IntProperty.Create);
             _propertyMap.Add(Command.DRAWSIZE, IntProperty.Create);
-            _propertyMap.Add(Command.CLEAR, CommandProperty.Create);
-            _propertyMap.Add(Command.CLEARWEAPONS, CommandProperty.Create);
-            _propertyMap.Add(Command.CLEARARMOR, CommandProperty.Create);
-            _propertyMap.Add(Command.CLEARMAGIC, CommandProperty.Create);
-            _propertyMap.Add(Command.CLEARSPEC, CommandProperty.Create);
-            _propertyMap.Add(Command.COPYSTATS, CopyStatsRef.Create);
-            _propertyMap.Add(Command.COPYSPR, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.PATHCOST, IntProperty.Create);
             _propertyMap.Add(Command.STARTDOM, IntProperty.Create);
             _propertyMap.Add(Command.HOMEREALM, IntProperty.Create);
@@ -513,7 +510,7 @@ namespace Dom5Edit.Entities
                 var list = this.Properties.FindAll(
                     delegate (Property p)
                     {
-                        return p._command == Command.MAGICSKILL;
+                        return p.Command == Command.MAGICSKILL;
                     }).Cast<IntIntProperty>();
                 foreach (var property in list)
                 {
@@ -529,20 +526,20 @@ namespace Dom5Edit.Entities
                 var list = this.Properties.FindAll(
                     delegate (Property p)
                     {
-                        return p._command == Command.SPR1 || p._command == Command.SPR2;
+                        return p.Command == Command.SPR1 || p.Command == Command.SPR2;
                     }).Cast<FilePathProperty>();
                 return list;
             }
         }
 
-        public IEnumerable<CustomMagic> CustomMagic
+        private IEnumerable<CustomMagic> CustomMagic
         {
             get
             {
                 var list = this.Properties.FindAll(
                     delegate (Property p)
                     {
-                        return p._command == Command.CUSTOMMAGIC;
+                        return p.Command == Command.CUSTOMMAGIC;
                     }).Cast<BitmaskChanceProperty>();
                 foreach (var property in list)
                 {
@@ -573,80 +570,26 @@ namespace Dom5Edit.Entities
             }
         }
 
-        public string Name
+        public override bool TryGetCopyFrom(out IDEntity copy)
         {
-            get
+            if (TryGet<CopyStatsRef>(Command.COPYSTATS, out var statsRef, false) == ReturnType.TRUE)
             {
-                var prop = Get(Command.NAME);
-                return prop != null ? (prop as StringProperty).Value : "";
+                copy = statsRef.Entity;
+                return true;
             }
-            set
-            {
-                Property prop = Get(Command.NAME);
-                if (prop == null)
-                {
-                    prop = new StringProperty() { _command = Command.NAME, Value = value };
-                    Add(prop);
-                }
-                var str = prop as StringProperty;
-                str.Value = value;
-            }
+            copy = null;
+            return false;
         }
 
-        public string Sprite
+        public override bool TryGetCopySpr(out IDEntity copy)
         {
-            get
+            if (TryGet<CopyStatsRef>(Command.COPYSPR, out var statsRef, false) == ReturnType.TRUE)
             {
-                var prop = Get(Command.SPR1);
-                return prop != null ? (prop as FilePathProperty).Value : "";
+                copy = statsRef.Entity;
+                return true;
             }
-            set
-            {
-                Property prop = Get(Command.NAME);
-                if (prop == null)
-                {
-                    prop = new FilePathProperty() { _command = Command.NAME, Value = value };
-                    Add(prop);
-                }
-                var str = prop as FilePathProperty;
-                str.Value = value;
-            }
-        }
-
-        public string Sprite2
-        {
-            get
-            {
-                var prop = Get(Command.SPR2);
-                return prop != null ? (prop as FilePathProperty).Value : "";
-            }
-            set
-            {
-                Property prop = Get(Command.NAME);
-                if (prop == null)
-                {
-                    prop = new FilePathProperty() { _command = Command.NAME, Value = value };
-                    Add(prop);
-                }
-                var str = prop as FilePathProperty;
-                str.Value = value;
-            }
-        }
-
-        public IDEntity GetCopyFrom()
-        {
-            if (_copyStatsEntity != null) return _copyStatsEntity;
-            var ret = (Get(Command.COPYSTATS) as MonsterRef).Entity as Monster;
-            _copyStatsEntity = ret;
-            return ret;
-        }
-
-        public IDEntity GetCopySpr()
-        {
-            if (_copySprEntity != null) return _copySprEntity;
-            var ret = (Get(Command.COPYSPR) as MonsterRef).Entity as Monster;
-            _copySprEntity = ret;
-            return ret;
+            copy = null;
+            return false;
         }
     }
 }

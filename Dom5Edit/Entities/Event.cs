@@ -331,5 +331,10 @@ namespace Dom5Edit.Entities
         {
             return _propertyMap;
         }
+
+        internal override EntityType GetEntityType()
+        {
+            return EntityType.EVENT;
+        }
     }
 }

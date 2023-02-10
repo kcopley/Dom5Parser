@@ -13,8 +13,48 @@ namespace Dom5Edit.Props
     public class StringOrIDRef : Reference
     {
         public bool IsStringRef { get; set; } = false;
-        public int ID { get; set; }
-        public string Name { get; set; }
+
+        private int _id;
+        public int ID
+        {
+            get
+            {
+                if (Entity != null)
+                {
+                    return Entity.ID;
+                }
+                else return _id;
+            }
+            set
+            {
+                _id = value;
+                if (Parent.ParentMod.IsLoaded)
+                {
+                    Resolve();
+                }
+            }
+        }
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                if (Entity != null)
+                {
+                    return Entity.Name;
+                }
+                else return _name;
+            }
+            set
+            {
+                _name = value;
+                if (Parent.ParentMod.IsLoaded)
+                {
+                    Resolve();
+                }
+            }
+        }
+
         public bool HasValue { get; set; }
 
         public IDEntity Entity { get; set; }
@@ -40,6 +80,12 @@ namespace Dom5Edit.Props
             }
         }
 
+        public void SetEntity(string value)
+        {
+            Parse(this.Command, value, "");
+            this.Resolve();
+        }
+
         public override bool TryGetEntity(out IDEntity e)
         {
             e = null;
@@ -54,7 +100,7 @@ namespace Dom5Edit.Props
 
         public override void Parse(Command c, string s, string comment)
         {
-            this._command = c;
+            this.Command = c;
             this.Comment = comment;
 
             HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
@@ -78,7 +124,7 @@ namespace Dom5Edit.Props
 
         public override string ToExportString()
         {
-            if (!CommandsMap.TryGetString(_command, out string s)) return "";
+            if (!CommandsMap.TryGetString(Command, out string s)) return "";
 
             //add certain types to be string refs?
             if (Entity != null && Entity.ID != -1)
@@ -128,6 +174,16 @@ namespace Dom5Edit.Props
                     return s + " " + _exportID;
                 }
             }
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            if (copyFrom is StringOrIDRef)
+            {
+                var compare = copyFrom as StringOrIDRef;
+                if (this.Command == compare.Command && this.Entity == compare.Entity) return true;
+            }
+            return false;
         }
     }
 }

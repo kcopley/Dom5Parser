@@ -1,0 +1,14 @@
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\UndeadAnimalPower.exe
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\UndeadAnimalPower.deps.json
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\UndeadAnimalPower.runtimeconfig.json
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\UndeadAnimalPower.runtimeconfig.dev.json
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\UndeadAnimalPower.dll
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\UndeadAnimalPower.pdb
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\Dom5Edit.dll
+C:\Projects\Dom5Parser\UndeadAnimalPower\bin\Debug\netcoreapp3.1\Dom5Edit.pdb
+C:\Projects\Dom5Parser\UndeadAnimalPower\obj\Debug\netcoreapp3.1\UndeadAnimalPower.csprojAssemblyReference.cache
+C:\Projects\Dom5Parser\UndeadAnimalPower\obj\Debug\netcoreapp3.1\UndeadAnimalPower.AssemblyInfoInputs.cache
+C:\Projects\Dom5Parser\UndeadAnimalPower\obj\Debug\netcoreapp3.1\UndeadAnimalPower.AssemblyInfo.cs
+C:\Projects\Dom5Parser\UndeadAnimalPower\obj\Debug\netcoreapp3.1\UndeadAnimalPower.csproj.CopyComplete
+C:\Projects\Dom5Parser\UndeadAnimalPower\obj\Debug\netcoreapp3.1\UndeadAnimalPower.dll
+C:\Projects\Dom5Parser\UndeadAnimalPower\obj\Debug\netcoreapp3.1\UndeadAnimalPower.pdb

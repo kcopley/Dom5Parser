@@ -105,7 +105,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Menus\IntPropertyView.xaml.cs">
+    <Compile Include="Menus\Property Menus\CommandView.xaml.cs">
+      <DependentUpon>CommandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Property Menus\DescriptionView.xaml.cs">
+      <DependentUpon>DescriptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Property Menus\IntPropertyView.xaml.cs">
       <DependentUpon>IntPropertyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Menus\ModView.xaml.cs">
@@ -114,12 +120,35 @@
     <Compile Include="Menus\MergerMenuTab.xaml.cs">
       <DependentUpon>MergerMenuTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\MonsterView.xaml.cs">
+    <Compile Include="Menus\Monster\MonsterMagicView.xaml.cs">
+      <DependentUpon>MonsterMagicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Monster\MonsterStatsView.xaml.cs">
+      <DependentUpon>MonsterStatsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Monster\MonsterView.xaml.cs">
       <DependentUpon>MonsterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Monster\MonsterGearView.xaml.cs">
+      <DependentUpon>MonsterGearView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Property Menus\StringOrIDRefView.xaml.cs">
+      <DependentUpon>StringOrIDRefView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Property Menus\StringView.xaml.cs">
+      <DependentUpon>StringView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\TargaImage.cs" />
     <Compile Include="Utility\Utility.cs" />
-    <Page Include="Menus\IntPropertyView.xaml">
+    <Page Include="Menus\Property Menus\CommandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Property Menus\DescriptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Property Menus\IntPropertyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -139,7 +168,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModelBase\PropertyViewModel.cs" />
     <Compile Include="ViewModelBase\ViewModelBase.cs" />
+    <Compile Include="VMs\MonsterIDViewModel.cs" />
+    <Compile Include="VMs\CommandViewModel.cs" />
+    <Compile Include="VMs\DescriptionViewModel.cs" />
+    <Compile Include="VMs\MonsterGearViewModel.cs" />
+    <Compile Include="VMs\NameViewModel.cs" />
+    <Compile Include="VMs\StringViewModel.cs" />
     <Compile Include="VMs\IntPropertyViewModel.cs" />
     <Compile Include="VMs\MonsterViewModel.cs" />
     <Compile Include="VMs\ModViewModel.cs" />
@@ -152,7 +188,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\MonsterView.xaml">
+    <Page Include="Menus\Monster\MonsterMagicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Monster\MonsterStatsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Monster\MonsterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Monster\MonsterGearView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Property Menus\StringOrIDRefView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Property Menus\StringView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,9 +266,6 @@
       <Project>{969b7af1-a05a-446e-8872-cbc54b0934ad}</Project>
       <Name>Dom5Edit</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Menus\whitebg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

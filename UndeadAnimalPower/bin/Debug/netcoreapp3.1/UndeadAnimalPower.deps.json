@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "UndeadAnimalPower/1.0.0": {
+        "dependencies": {
+          "Dom5Edit": "1.0.0"
+        },
+        "runtime": {
+          "UndeadAnimalPower.dll": {}
+        }
+      },
+      "Dom5Edit/1.0.0": {
+        "runtime": {
+          "Dom5Edit.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UndeadAnimalPower/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Dom5Edit/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

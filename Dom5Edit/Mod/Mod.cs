@@ -140,6 +140,10 @@ namespace Dom5Edit
         public Mod()
         {
             Init();
+            foreach (EntitySet<IDEntity> set in Database.Values)
+            {
+                set.Init();
+            }
         }
 
         public Mod(string filePath)
@@ -161,6 +165,8 @@ namespace Dom5Edit
         public bool Logging { get; set; }
         public string FolderPath { get { return Path.GetDirectoryName(FullFilePath); } }
         public string FullFilePath { get; set; }
+        public bool IsLoaded { get; internal set; }
+
         public void Log(string s)
         {
             if (!this.Logging) return;
@@ -607,6 +613,11 @@ namespace Dom5Edit
             }
         }
 
+        public void ResolveDependencies()
+        {
+            Dependencies.Add(VanillaLoader.Vanilla);
+        }
+
         public void Resolve()
         {
             foreach (var set in Database.Values)
@@ -627,6 +638,7 @@ namespace Dom5Edit
             {
                 kvp.Value.Resolve(kvp.Key, Dependencies);
             }
+            IsLoaded = true;
         }
 
         public void Map()
@@ -685,6 +697,8 @@ namespace Dom5Edit
         {
             Mod m = new Mod(fullfile);
             m.Load(log);
+            m.ResolveDependencies();
+            m.Resolve();
             return m;
         }
 
@@ -759,6 +773,12 @@ namespace Dom5Edit
         public void AddEntity(Type t, int i, string s, IDEntity entity)
         {
             EntityType et = GetEntityType(t);
+            Database[et].Add(i, s, entity);
+        }
+
+        public void AddEntity<T>(int i, string s, IDEntity entity)
+        {
+            EntityType et = GetEntityType(typeof(T));
             Database[et].Add(i, s, entity);
         }
 

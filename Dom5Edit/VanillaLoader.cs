@@ -11,8 +11,9 @@ using System.Windows.Forms;
 
 namespace Dom5Edit
 {
-    public static class VanillaLoader
+    public class VanillaLoader
     {
+        private static VanillaLoader _loader;
         private static Mod _vanilla;
         public static Mod Vanilla
         {
@@ -20,26 +21,79 @@ namespace Dom5Edit
             {
                 if (_vanilla == null)
                 {
-                    _vanilla = VanillaLoader.LoadVanillaData();
+                    _loader = new VanillaLoader();
+                    _vanilla = _loader.LoadVanillaData();
                 }
                 return _vanilla;
             }
         }
 
-        static VanillaLoader()
+        VanillaLoader()
         {
         }
 
-        static Mod LoadVanillaData()
+        private enum CustomMagic
+        {
+            FIRE = 128,
+            AIR = 256,
+            WATER = 512,
+            EARTH = 1024,
+            ASTRAL = 2048,
+            DEATH = 4096,
+            NATURE = 8192,
+            BLOOD = 16384,
+            PRIEST = 32768
+        }
+
+        Mod LoadVanillaData()
         {
             Mod m = new Mod();
-            string file = Path.Combine(Environment.CurrentDirectory, "VanillaMonsterData.tsv");
 
+            LoadMonsterData(m);
+            LoadWeaponData(m);
+            return m;
+        }
+
+        void LoadWeaponData(Mod m)
+        {
             bool first = true;
-
             List<string> header = new List<string>();
-            List<List<string>> splitLines = new List<List<string>>();
-            using (StreamReader s = new StreamReader(file))
+            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.VanillaWeaponData)))
+            {
+                string line;
+                while ((line = s.ReadLine()) != null)
+                {
+                    if (first)
+                    {
+                        first = !first;
+
+                        header = line.Split('\t').ToList();
+                    }
+                    else
+                    {
+                        var split = line.Split('\t').ToList();
+                        m.Parse(Commands.Command.NEWWEAPON, split[0], "");
+                        for (int i = 1; i < split.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(split[i]))
+                                if (header[i].StartsWith("@")) continue;
+                                else switch (header[i])
+                                    {
+                                        default:
+                                            m.ProcessStringToLine(header[i] + " " + split[i]);
+                                            break;
+                                    }
+                        }
+                    }
+                }
+            }
+        }
+
+        void LoadMonsterData(Mod m)
+        {
+            bool first = true;
+            List<string> header = new List<string>();
+            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.VanillaMonsterData)))
             {
                 string line;
                 while ((line = s.ReadLine()) != null)
@@ -60,156 +114,155 @@ namespace Dom5Edit
                             if (!string.IsNullOrEmpty(split[i]))
                                 if (header[i].StartsWith("@")) continue;
                                 else switch (header[i])
-                                {
-                                    case "%leader":
-                                        if (TryConvertLeader(split, i, out returnVal))
-                                        {
-                                            m.ProcessStringToLine(returnVal);
-                                        }
-                                        break;
-                                    case "%magicleader":
-                                        if (TryConvertMagicLeader(split, i, out returnVal))
-                                        {
-                                            m.ProcessStringToLine(returnVal);
-                                        }
-                                        break;
-                                    case "%undeadleader":
-                                        if (TryConvertUndeadLeader(split, i, out returnVal))
-                                        {
-                                            m.ProcessStringToLine(returnVal);
-                                        }
-                                        break;
-                                    case "%itemslots":
-                                        if (TryConvertItemSlots(split, i, out returnVal))
-                                        {
-                                            m.ProcessStringToLine(returnVal);
-                                            i += 5; //skip the next 5 indexes
-                                        }
-                                        break;
-                                    case "%slowrec":
-                                        if (int.TryParse(split[i], out int slowRec))
-                                        {
-                                            if (slowRec == 1) continue;
-                                            if (slowRec == 2) m.ProcessStringToLine("#slowrec");
-                                        }
-                                        break;
-                                    case "%custommagic":
-                                        if (TryConvertCustomMagic(split, i, out returnVal))
-                                        {
-                                            m.ProcessStringToLine(returnVal);
-                                            i += 3; //skip the next 3 indexes
-                                        }
-                                        break;
-                                    case "%sailingshipsize":
-                                        if (int.TryParse(split[i], out int sailUnitCount))
-                                        {
-                                            int sailUnitSize;
-                                            if (!int.TryParse(split[i + 1], out sailUnitSize)) sailUnitSize = 6;
-                                            m.ProcessStringToLine("#sailing " + sailUnitCount + " " + sailUnitSize);
-                                            i += 1; // skip the next
-                                        }
-                                        break;
-                                    case "%gemprod":
-                                        switch(split[i])
-                                        { //1E 1F 1N 1N1W 1S 1W 2F 2W 3B
-                                            case "1E":
-                                                m.ProcessStringToLine("#gemprod 3 1");
-                                                break;
-                                            case "1F":
-                                                m.ProcessStringToLine("#gemprod 0 1");
-                                                break;
-                                            case "1N":
-                                                m.ProcessStringToLine("#gemprod 6 1");
-                                                break;
-                                            case "1N1W":
-                                                m.ProcessStringToLine("#gemprod 6 1 #gemprod 2 1");
-                                                break;
-                                            case "1S":
-                                                m.ProcessStringToLine("#gemprod 4 1");
-                                                break;
-                                            case "1W":
-                                                m.ProcessStringToLine("#gemprod 2 1");
-                                                break;
-                                            case "2F":
-                                                m.ProcessStringToLine("#gemprod 0 2");
-                                                break;
-                                            case "2W":
-                                                m.ProcessStringToLine("#gemprod 2 2");
-                                                break;
-                                            case "3B":
-                                                m.ProcessStringToLine("#gemprod 7 3");
-                                                break;
-                                            default:break;
-                                        }
-                                        break;
-                                    case "%makemonsters":
-                                        if (TryConvertMakeMonsters(split, i, out returnVal))
-                                        {
-                                            m.ProcessStringToLine(returnVal);
-                                            i += 1; //skip the next index
-                                        }
-                                        break;
-                                    case "%summon":
-                                        if (TryConvertSummon(split, i, out returnVal))
-                                        {
-                                            m.ProcessStringToLine(returnVal);
-                                            i += 1; //skip the next index
-                                        }
-                                        break;
-                                    default:
-                                        m.ProcessStringToLine(header[i] + " " + split[i]);
-                                        break;
-                                }
+                                    {
+                                        case "%leader":
+                                            if (TryConvertLeader(split, i, out returnVal))
+                                            {
+                                                m.ProcessStringToLine(returnVal);
+                                            }
+                                            break;
+                                        case "%magicleader":
+                                            if (TryConvertMagicLeader(split, i, out returnVal))
+                                            {
+                                                m.ProcessStringToLine(returnVal);
+                                            }
+                                            break;
+                                        case "%undeadleader":
+                                            if (TryConvertUndeadLeader(split, i, out returnVal))
+                                            {
+                                                m.ProcessStringToLine(returnVal);
+                                            }
+                                            break;
+                                        case "%itemslots":
+                                            if (TryConvertItemSlots(split, i, out returnVal))
+                                            {
+                                                m.ProcessStringToLine(returnVal);
+                                                i += 5; //skip the next 5 indexes
+                                            }
+                                            break;
+                                        case "%slowrec":
+                                            if (int.TryParse(split[i], out int slowRec))
+                                            {
+                                                if (slowRec == 1) continue;
+                                                if (slowRec == 2) m.ProcessStringToLine("#slowrec");
+                                            }
+                                            break;
+                                        case "%custommagic":
+                                            if (TryConvertCustomMagic(split, i, out returnVal))
+                                            {
+                                                m.ProcessStringToLine(returnVal);
+                                                i += 3; //skip the next 3 indexes
+                                            }
+                                            break;
+                                        case "%sailingshipsize":
+                                            if (int.TryParse(split[i], out int sailUnitCount))
+                                            {
+                                                int sailUnitSize;
+                                                if (!int.TryParse(split[i + 1], out sailUnitSize)) sailUnitSize = 6;
+                                                m.ProcessStringToLine("#sailing " + sailUnitCount + " " + sailUnitSize);
+                                                i += 1; // skip the next
+                                            }
+                                            break;
+                                        case "%gemprod":
+                                            switch (split[i])
+                                            { //1E 1F 1N 1N1W 1S 1W 2F 2W 3B
+                                                case "1E":
+                                                    m.ProcessStringToLine("#gemprod 3 1");
+                                                    break;
+                                                case "1F":
+                                                    m.ProcessStringToLine("#gemprod 0 1");
+                                                    break;
+                                                case "1N":
+                                                    m.ProcessStringToLine("#gemprod 6 1");
+                                                    break;
+                                                case "1N1W":
+                                                    m.ProcessStringToLine("#gemprod 6 1 #gemprod 2 1");
+                                                    break;
+                                                case "1S":
+                                                    m.ProcessStringToLine("#gemprod 4 1");
+                                                    break;
+                                                case "1W":
+                                                    m.ProcessStringToLine("#gemprod 2 1");
+                                                    break;
+                                                case "2F":
+                                                    m.ProcessStringToLine("#gemprod 0 2");
+                                                    break;
+                                                case "2W":
+                                                    m.ProcessStringToLine("#gemprod 2 2");
+                                                    break;
+                                                case "3B":
+                                                    m.ProcessStringToLine("#gemprod 7 3");
+                                                    break;
+                                                default: break;
+                                            }
+                                            break;
+                                        case "%makemonsters":
+                                            if (TryConvertMakeMonsters(split, i, out returnVal))
+                                            {
+                                                m.ProcessStringToLine(returnVal);
+                                                i += 1; //skip the next index
+                                            }
+                                            break;
+                                        case "%summon":
+                                            if (TryConvertSummon(split, i, out returnVal))
+                                            {
+                                                m.ProcessStringToLine(returnVal);
+                                                i += 1; //skip the next index
+                                            }
+                                            break;
+                                        default:
+                                            m.ProcessStringToLine(header[i] + " " + split[i]);
+                                            break;
+                                    }
                         }
                     }
                 }
             }
-            return m;
-        }
-        [Flags]
-        enum SlotType
-        {
-            NOSLOT = 1,
-            //4 hands
-            HAND1 = 2,
-            HAND2 = 4,
-            HAND3 = 8,
-            HAND4 = 16,
-            HAND5 = 32,
-            HAND6 = 64,
-            //3 heads
-            HEAD1 = 128,
-            HEAD2 = 256,
-            HEAD3 = 512,
-            //1 body
-            BODY = 1024,
-            //1 feet
-            FEET = 2048,
-            //4 misc
-            MISC1 = 4096,
-            MISC2 = 8192,
-            MISC3 = 16384,
-            MISC4 = 32768,
-            MISC5 = 65536,
-            MISC6 = 131072,
-            //crown only on head
-            CROWN = 262144
         }
 
-        enum CustomMagic
+        private readonly Dictionary<int, string> spell_effect_interpretations = new Dictionary<int, string>()
         {
-            FIRE = 128,
-            AIR = 256,
-            WATER = 512,
-            EARTH = 1024,
-            ASTRAL = 2048,
-            DEATH = 4096,
-            NATURE = 8192,
-            BLOOD = 16384,
-            PRIEST = 32768
-        }
+            { 2, "#dt_normal"},
+            {3, "#dt_stun"},
+            {4, "@dt_feartype1"},
+            {7, "#dt_poison"},
+            {11, "#dt_aff"},
+            {24, "#dt_holy"},
+            {28, "@dt_enslave"},
+            {32, "#dt_large"},
+            {33, "#dt_small"},
+            {46, "@dt_poisonfatigue"},
+            {66, "#dt_paralyze"},
+            {67, "#dt_weakness"},
+            {73, "#dt_magic"},
+            {74, "#dt_raise"},
+            {96, "#dt_constructonly"},
+            {97, "@dt_feartype2"},
+            {99, "@dt_petrify"},
+            {103, "#dt_drain"},
+            {104, "#dt_weapondrain"},
+            {107, "#dt_demon"},
+            {108, "@dt_planeshift"},
+            {109, "#dt_cap"},
+            {116, "@dt_swallow"},
+            {121, "@dt_swallowsize2"},
+            {122, "@dt_swallowsmaller"},
+            {123, "@dt_breakarmor"},
+            {128, "#dt_realstun"},
+            {134, "#dt_bouncekill"},
+            {139, "@dt_cappedpoison"},
+            {142, "@dt_salt"},
+            {504, "@dt_cursedluck"},
+            {600, "@dt_horrormark1"},
+            {601, "@dt_horrormark2"},
+            {1002, "@dt_lingering1"},
+            {2002, "@dt_lingering2"},
+            {2003, "@dt_lingeringstun2"},
+            {2007, "@dt_lingeringpoison2"},
+            {4007, "@dt_lingeringpoison4"},
+        };
 
-        private static bool TryConvertLeader(List<string> list, int index, out string s)
+        private bool TryConvertLeader(List<string> list, int index, out string s)
         {
             //values 10, 20, 30, 35, 40, 60, 80, 90, 100, 120, 160
             if (int.TryParse(list[index], out int i))
@@ -269,7 +322,7 @@ namespace Dom5Edit
             return false;
         }
 
-        private static bool TryConvertMagicLeader(List<string> list, int index, out string s)
+        private bool TryConvertMagicLeader(List<string> list, int index, out string s)
         {
             //values 10, 20, 30, 35, 40, 60, 80, 90, 100, 120, 160
             if (int.TryParse(list[index], out int i))
@@ -339,7 +392,7 @@ namespace Dom5Edit
             return false;
         }
 
-        private static bool TryConvertUndeadLeader(List<string> list, int index, out string s)
+        private bool TryConvertUndeadLeader(List<string> list, int index, out string s)
         {
             //values 10, 20, 30, 35, 40, 60, 80, 90, 100, 120, 160
             if (int.TryParse(list[index], out int i))
@@ -409,7 +462,7 @@ namespace Dom5Edit
             return false;
         }
 
-        private static bool TryConvertItemSlots(List<string> list, int index, out string s)
+        private bool TryConvertItemSlots(List<string> list, int index, out string s)
         {
             SlotType slots = 0;
             int arms, heads, body, feet, misc, crown;
@@ -461,7 +514,7 @@ namespace Dom5Edit
                 return true;
             }
         }
-        private static bool TryConvertCustomMagic(List<string> list, int index, out string s)
+        private bool TryConvertCustomMagic(List<string> list, int index, out string s)
         {
             CustomMagic magic = 0;
             //indexes - 0 = chance, 1 = number of entries, 2 = number of paths, 3 = mask
@@ -479,7 +532,7 @@ namespace Dom5Edit
             return false;
         }
 
-        private static bool TryConvertMakeMonsters(List<string> list, int index, out string s)
+        private bool TryConvertMakeMonsters(List<string> list, int index, out string s)
         {
             int ids, num;
             if (int.TryParse(list[index], out ids) && int.TryParse(list[index + 1], out num))
@@ -491,7 +544,7 @@ namespace Dom5Edit
             return false;
         }
 
-        private static bool TryConvertSummon(List<string> list, int index, out string s)
+        private bool TryConvertSummon(List<string> list, int index, out string s)
         {
             int ids, num;
             if (int.TryParse(list[index], out ids) && int.TryParse(list[index + 1], out num))

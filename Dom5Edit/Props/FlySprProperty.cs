@@ -29,7 +29,7 @@ namespace Dom5Edit.Props
                     a++;
                 }
             }
-            this._command = c;
+            this.Command = c;
             this.Comment = comment;
             s = s.Trim();
             var split = s.Split(' ');
@@ -65,7 +65,7 @@ namespace Dom5Edit.Props
         //Preliminary Example only for now, not optimal
         public override string ToExportString()
         {
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {

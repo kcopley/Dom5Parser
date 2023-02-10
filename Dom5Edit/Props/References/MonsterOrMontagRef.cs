@@ -25,12 +25,12 @@ namespace Dom5Edit.Props
                 _monsterRef.Resolve();
             }
 
-            if (this._command == Command.DAMAGEMON)
+            if (this.Command == Command.DAMAGEMON)
             {
                 if (_monsterRef.Entity != null && _monsterRef.Entity.ID != -1)
                 {
-                    this._command = Command.DAMAGE;
-                    _monsterRef._command = Command.DAMAGE;
+                    this.Command = Command.DAMAGE;
+                    _monsterRef.Command = Command.DAMAGE;
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace Dom5Edit.Props
         {
             bool hasvalue = v.TryRetrieveNumericFromString(out int i, out _);
 
-            this._command = c;
+            this.Command = c;
             if (hasvalue && i < 0)
             {
                 _montagRef = new MontagIDRef();
@@ -92,6 +92,16 @@ namespace Dom5Edit.Props
                 return _monsterRef.GetEntityType();
             }
             return EntityType.MONSTER;
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            if (copyFrom is MonsterOrMontagRef)
+            {
+                var compare = copyFrom as MonsterOrMontagRef;
+                if (this.Command == compare.Command && (this._monsterRef.EqualsProperty<MonsterRef>(compare._monsterRef) || this._montagRef.EqualsProperty<MontagIDRef>(compare._montagRef))) return true;
+            }
+            return false;
         }
     }
 }

@@ -88,6 +88,7 @@
     <Compile Include="Entities\Enchantment.cs" />
     <Compile Include="Entities\DependentEntity.cs" />
     <Compile Include="Entities\EntitySet.cs" />
+    <Compile Include="Entities\SlotType.cs" />
     <Compile Include="Mod\ModSet.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -115,6 +116,11 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\TypeManager.cs" />
+    <Compile Include="FileResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="VanillaLoader.cs" />
     <Compile Include="Mod\Mod.cs" />
     <Compile Include="Props\BitmaskChanceProperty.cs" />
@@ -160,6 +166,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="FileResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -178,6 +188,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="VanillaData\VanillaMonsterData.tsv" />
+    <None Include="VanillaData\VanillaWeaponData.tsv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

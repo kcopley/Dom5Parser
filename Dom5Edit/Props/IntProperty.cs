@@ -19,17 +19,16 @@ namespace Dom5Edit.Props
 
         public static IntProperty Create(Command c, IDEntity parent, int val)
         {
-            return new IntProperty() { _command = c, Comment = "", Parent = parent, Value = val, HasValue = true };
+            return new IntProperty() { Command = c, Comment = "", Parent = parent, Value = val };
         }
 
-        public int Value { get; set; }
-        public bool HasValue { get; set; }
+        public int Value { get; set; } = int.MinValue;
 
         public override void Parse(Command c, string s, string comment)
         {
-            this._command = c;
+            this.Command = c;
             this.Comment = comment;
-            HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
+            var HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
             if (HasValue) Value = val;
             if (remainder.Length > 0)
             {
@@ -40,13 +39,13 @@ namespace Dom5Edit.Props
         //Preliminary Example only for now, not optimal
         public override string ToExportString()
         {
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
-                    if (HasValue)
+                    if (Value != int.MinValue)
                     {
-                        if (_command == Command.ERA)
+                        if (Command == Command.ERA)
                         {
                             return s + " " + 2 + " -- " + Comment;
                         }
@@ -59,7 +58,7 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    if (HasValue)
+                    if (Value != int.MinValue)
                     {
                         return s + " " + Value;
                     }
@@ -75,6 +74,16 @@ namespace Dom5Edit.Props
         internal override Property GetDefault()
         {
             return new IntProperty() { Value = 10 };
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            if (copyFrom is IntProperty)
+            {
+                var compare = copyFrom as IntProperty;
+                if (this.Command == compare.Command && this.Value == compare.Value) return true;
+            }
+            return false;
         }
     }
 }

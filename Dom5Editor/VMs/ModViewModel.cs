@@ -26,7 +26,7 @@ namespace Dom5Editor
 
         public bool Save(string file)
         {
-            VanillaLoader.Vanilla.Export(file);
+            _mod.Export(file);
             return true;
         }
 
@@ -79,7 +79,7 @@ namespace Dom5Editor
                     _monsters = new List<MonsterViewModel>();
                     foreach (var m in list)
                     {
-                        _monsters.Add(new MonsterViewModel(m as Monster));
+                        _monsters.Add(new MonsterViewModel(this, m as Monster));
                     }
                 }
                 return _monsters;
@@ -102,6 +102,7 @@ namespace Dom5Editor
         {
             get
             {
+                if (Icon == null) return new BitmapImage();
                 string test = Path.GetFileName(Icon);
                 var spriteAdjusted = Icon.Trim('.').Trim('/').Replace("/", "\\");
                 var dir = Path.GetDirectoryName(_mod.FullFilePath);
