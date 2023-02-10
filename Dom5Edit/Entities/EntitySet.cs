@@ -15,10 +15,18 @@ namespace Dom5Edit.Entities
         public Mod Parent { get; set; }
         public int START_ID { get; set; }
         public int END_ID { get; set; } = -1;
+
+        private int VANILLA_END_ID { get; set; }
         private int CURRENT_ID { get; set; } = -1;
         private Dictionary<int, T> Entities = new Dictionary<int, T>();
         private List<T> UnIDdEntities = new List<T>();
         private Dictionary<int, T> DisabledEntities = new Dictionary<int, T>();
+
+        public void Init()
+        {
+            VANILLA_END_ID = START_ID;
+        }
+
         public bool TryGetValue(int i, out T entity)
         {
             //dependency code?
@@ -152,26 +160,31 @@ namespace Dom5Edit.Entities
         {
             foreach (var m in DisabledEntities.OrderBy(x => x.Key).Where(x => x.Key >= START_ID))
             {
+                if (m.Key < VANILLA_END_ID && m.Value.ID != -1) m.Value.Selected = true;
                 m.Value.Export(writer);
                 writer.WriteLine();
             }
             foreach (var m in DisabledEntities.OrderBy(x => x.Key).Where(x => x.Key < START_ID))
             {
+                if (m.Key < VANILLA_END_ID && m.Value.ID != -1) m.Value.Selected = true;
                 m.Value.Export(writer);
                 writer.WriteLine();
             }
             foreach (var m in Entities.OrderBy(x => x.Key).Where(x => x.Key >= START_ID))
             {
+                if (m.Key < VANILLA_END_ID && m.Value.ID != -1) m.Value.Selected = true;
                 m.Value.Export(writer);
                 writer.WriteLine();
             }
             foreach (var m in Entities.OrderBy(x => x.Key).Where(x => x.Key < START_ID))
             {
+                if (m.Key < VANILLA_END_ID && m.Value.ID != -1) m.Value.Selected = true;
                 m.Value.Export(writer);
                 writer.WriteLine();
             }
             foreach (var m in UnIDdEntities)
             {
+                if (m.ID < VANILLA_END_ID && m.ID != -1) m.Selected = true;
                 m.Export(writer);
                 writer.WriteLine();
             }

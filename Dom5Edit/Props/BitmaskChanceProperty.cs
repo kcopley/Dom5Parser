@@ -23,7 +23,7 @@ namespace Dom5Edit.Props
 
         public override void Parse(Command c, string s, string comment)
         {
-            this._command = c;
+            this.Command = c;
             this.Comment = comment;
             s = s.Trim();
             var split = s.Split(' ');
@@ -47,7 +47,7 @@ namespace Dom5Edit.Props
         //Preliminary Example only for now, not optimal
         public override string ToExportString()
         {
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
@@ -71,6 +71,16 @@ namespace Dom5Edit.Props
         internal override Property GetDefault()
         {
             return new BitmaskChanceProperty() { Bitmask = 0, Chance = 0 };
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            if (copyFrom is BitmaskChanceProperty)
+            {
+                var compare = copyFrom as BitmaskChanceProperty;
+                if (this.Command == compare.Command && this.Bitmask == compare.Bitmask && this.Chance == compare.Chance) return true;
+            }
+            return false;
         }
     }
 }

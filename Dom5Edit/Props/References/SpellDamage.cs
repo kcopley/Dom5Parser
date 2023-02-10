@@ -28,7 +28,7 @@ namespace Dom5Edit.Props
         {
             _val = v;
             Comment = comment;
-            _command = c;
+            Command = c;
             Parent.ParentMod.SpellDamages.Add(this);
         }
 
@@ -60,7 +60,7 @@ namespace Dom5Edit.Props
         {
             _monRef = new MonsterOrMontagRef();
             _monRef.Parent = this.Parent;
-            _monRef.Parse(this._command, _val, Comment);
+            _monRef.Parse(this.Command, _val, Comment);
             _monRef.Resolve();
         }
 
@@ -68,7 +68,7 @@ namespace Dom5Edit.Props
         {
             _enchRef = new EnchIDRef();
             _enchRef.Parent = this.Parent;
-            _enchRef.Parse(this._command, _val, Comment);
+            _enchRef.Parse(this.Command, _val, Comment);
             _enchRef.Resolve();
         }
 
@@ -76,7 +76,7 @@ namespace Dom5Edit.Props
         {
             _eventEffectRef = new EventEffectCodeRef();
             _eventEffectRef.Parent = this.Parent;
-            _eventEffectRef.Parse(this._command, _val, Comment);
+            _eventEffectRef.Parse(this.Command, _val, Comment);
             _eventEffectRef.Resolve();
         }
 
@@ -97,7 +97,7 @@ namespace Dom5Edit.Props
                 return _eventEffectRef.ToExportString();
             }
 
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
@@ -114,6 +114,12 @@ namespace Dom5Edit.Props
         internal override EntityType GetEntityType()
         {
             throw new NotImplementedException();
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            
+            return false;
         }
     }
 }

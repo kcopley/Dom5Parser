@@ -111,9 +111,39 @@ namespace Dom5Edit.Entities
             return false;
         }
 
+        public string Name
+        {
+            get
+            {
+                var exists = TryGet<NameProperty>(Command.NAME, out var np);
+                if ((ReturnType.TRUE | ReturnType.COPIED).HasFlag(exists))
+                {
+                    return np.Value;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            set
+            {
+                Property prop = Get<NameProperty>(Command.NAME);
+                if (prop == null)
+                {
+                    prop = new StringProperty() { Command = Command.NAME, Value = value };
+                    Add(prop);
+                }
+                var str = prop as StringProperty;
+                str.Value = value;
+            }
+        }
+
         internal virtual Command GetNewCommand() { throw new NotImplementedException(); }
         internal virtual Command GetSelectCommand() { throw new NotImplementedException(); }
-        internal virtual EntityType GetEntityType() { throw new NotImplementedException(); }
+        internal virtual EntityType GetEntityType()
+        {
+            throw new NotImplementedException();
+        }
 
 
         internal virtual Dictionary<Command, Func<Property>> GetPropertyMap() { throw new NotImplementedException(); }
@@ -196,7 +226,7 @@ namespace Dom5Edit.Entities
             var prop = this.Properties.FindAll(
                     delegate (Property p)
                     {
-                        return p._command == c;
+                        return p.Command == c;
                     });
             return prop;
         }
@@ -211,19 +241,81 @@ namespace Dom5Edit.Entities
             return prop;
         }
 
-        internal Property Get(Command c)
+        public void Set<T>(Command c, Action<T> set) where T : Property, new()
+        {
+            switch (this.TryGet(c, out T prop))
+            {
+                case ReturnType.FALSE:
+                    var i = this.Create<T>(c);
+                    set(i);
+                    break;
+                case ReturnType.COPIED:
+                    var newProp = this.Create<T>(c);
+                    set(newProp);
+                    if (newProp.Equals(prop))
+                    {
+                        this.Remove<T>(c);
+                    }
+                    break;
+                case ReturnType.TRUE:
+                    var copy = this.TryGetCopyValue<T>(c, out T copyFrom);
+                    if (copy == ReturnType.COPIED)
+                    {
+                        set(prop);
+                        if (prop.EqualsProperty(copyFrom))
+                        {
+                            this.Remove<T>(c);
+                        }
+                    }
+                    else
+                    {
+                        set(prop);
+                    }
+                    break;
+            }
+        }
+
+        public void SetCommand<T>(Command c) where T : Property, new()
+        {
+            switch (this.TryGet(c, out T prop))
+            {
+                case ReturnType.FALSE:
+                    var i = this.Create<T>(c);
+                    break;
+                case ReturnType.COPIED:
+                    var newProp = this.Create<T>(c);
+                    if (newProp.Equals(prop))
+                    {
+                        this.Remove<T>(c);
+                    }
+                    break;
+                case ReturnType.TRUE:
+                    var copy = this.TryGetCopyValue<T>(c, out T copyFrom);
+                    if (copy == ReturnType.COPIED)
+                    {
+                        if (prop.Equals(copyFrom))
+                        {
+                            this.Remove<T>(c);
+                        }
+                        this.Remove<T>(c);
+                    }
+                    break;
+            }
+        }
+
+        internal T Get<T>(Command c) where T : Property
         {
             var prop = this.Properties.Find(
                     delegate (Property p)
                     {
-                        return p._command == c;
+                        return p.Command == c && p.GetType() == typeof(T);
                     });
-            return prop;
+            return prop as T;
         }
 
         internal ReturnType Get<T>(Command c, out T t) where T : Property, new()
         {
-            var ret = Get(c);
+            var ret = Get<T>(c);
             if (ret != null)
             {
                 t = ret as T;
@@ -231,70 +323,118 @@ namespace Dom5Edit.Entities
             }
             else
             {
-                t = new T().GetDefault() as T;
+                t = null;
                 return ReturnType.FALSE;
             }
         }
 
-        public ReturnType TryGet<T>(Command c, out T ret) where T : Property, new()
+        public ReturnType TryGet<T>(Command c, out T ret, bool checkCopy = true) where T : Property, new()
         {
             var exists = Get<T>(c, out ret);
             if (exists == ReturnType.TRUE)
             {
                 return ReturnType.TRUE;
             }
-            if (exists == ReturnType.FALSE)
+            if (exists == ReturnType.FALSE && checkCopy)
             {
-                var copyExists = CopyFrom.TryGet<T>(c, out ret);
-                if (copyExists == ReturnType.TRUE || copyExists == ReturnType.COPIED)
+                var copyExists = TryGetCopyFrom(out var copy);
+                if (copyExists)
+                {
+                    var commandExists = copy.TryGet(c, out ret);
+                    if (commandExists == ReturnType.TRUE || commandExists == ReturnType.COPIED)
+                    {
+                        return ReturnType.COPIED;
+                    }
+                }
+            }
+            ret = null;
+            return ReturnType.FALSE;
+        }
+
+        public bool HasCommand<T>(Command c) where T : Property, new()
+        {
+            return TryGet<T>(c, out T ret) != ReturnType.FALSE;
+        }
+
+        /// <summary>
+        /// Gets a property value, checking only entities that are copied from.
+        /// </summary>
+        /// <typeparam name="T">The property type being checked for.</typeparam>
+        /// <param name="c">The command value used to mark a property.</param>
+        /// <param name="ret">The returned property, or default (typically null) if not found.</param>
+        /// <returns>True if the property exists on a copied from entity, false otherwise.</returns>
+        public ReturnType TryGetCopyValue<T>(Command c, out T ret) where T : Property, new()
+        {
+            var copyExists = TryGetCopyFrom(out var copy);
+            if (copyExists)
+            {
+                var commandExists = copy.TryGet(c, out ret);
+                if (commandExists == ReturnType.TRUE || commandExists == ReturnType.COPIED)
                 {
                     return ReturnType.COPIED;
                 }
             }
-            ret = new T().GetDefault() as T;
-            return ReturnType.FALSE;
-        }
-
-        public ReturnType TryGetCopyValue<T>(Command c, out T ret) where T : Property, new()
-        {
-            var exists = Get<T>(c, out ret);
-            var copyExists = CopyFrom.TryGet<T>(c, out ret);
-            if (copyExists == ReturnType.TRUE || copyExists == ReturnType.COPIED)
-            {
-                return ReturnType.COPIED;
-            }
-            ret = new T().GetDefault() as T;
+            ret = null;
             return ReturnType.FALSE;
         }
 
         public T Create<T>(Command c) where T : Property, new()
         {
-            var ret = new T() { Parent = this, _command = c };
+            var ret = new T() { Parent = this, Command = c };
+            this.Add(ret);
             return ret;
         }
 
-        public ReturnType TryGetSingular(Command c, out Property prop)
+        public bool Remove<T>(Command c)
         {
-            prop = this.Properties.Find(
-                    delegate (Property p)
-                    {
-                        return p._command == c;
-                    });
-            if (prop != null) return ReturnType.TRUE;
-            if (prop == null && CopyFrom != null)
+            if (this.Get<IntProperty>(c, out IntProperty ip) == ReturnType.TRUE)
             {
-                if (CopyFrom.TryGetSingular(c, out prop) != ReturnType.FALSE)
-                {
-                    return ReturnType.COPIED;
-                }
+                var ret = this.Properties.Remove(ip);
+                this.Properties.OrderBy(p => p.Parent.GetPropertyMap().Keys.ToList().IndexOf(p.Command));
+                return true;
             }
-            return ReturnType.FALSE;
+            return false;
         }
 
-        public void Add(Property p)
+        public virtual bool TryGetCopyFrom(out IDEntity copy)
         {
-            p.Parent = this;
-            this.Properties.Add(p);
+            throw new NotImplementedException();
+        }
+
+        public virtual bool TryGetCopySpr(out IDEntity copySpr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Property prop)
+        {
+            prop.Parent = this;
+            this.Properties.Add(prop);
+            this.Properties = this.Properties.OrderBy(sort_properties).ToList();
+        }
+
+        public int sort_properties(Property p)
+        {
+            switch (p.Command)
+            {
+                case Command.SELECTMONSTER:
+                case Command.NEWMONSTER:
+                    return 1;
+                case Command.COPYSTATS:
+                case Command.COPYSPR:
+                    return 2;
+                case Command.CLEAR:
+                case Command.CLEARWEAPONS:
+                case Command.CLEARARMOR:
+                case Command.CLEARMAGIC:
+                case Command.CLEARSPEC:
+                    return 3;
+                case Command.NAME:
+                case Command.FIXEDNAME:
+                    return 4;
+                default:
+                    return 5;
+            }
         }
     }
 }

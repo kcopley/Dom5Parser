@@ -48,11 +48,11 @@ namespace Dom5Edit.Props
 
         public override string ToExportString()
         {
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 int _exportID = _montag != null ? _montag.GetID() : ID; //true is left, false is right
 
-                if (_command != Command.MONTAG)
+                if (Command != Command.MONTAG)
                 {
                     _exportID = -_exportID;
                 }

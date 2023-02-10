@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Dom5Editor.Menus.DescriptionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dom5Editor.Menus"
+             mc:Ignorable="d" >
+    <Grid>
+        <TextBlock Grid.Row="0" Margin="2" Height="24" TextAlignment="Right" Text="{Binding Path=Label}"/>
+        <TextBox Grid.Row="1" Height="24" Margin="2" Text="{Binding Path=Value}" TextWrapping="Wrap" MinWidth="300" MinHeight="120" FontSize="14"/>
+    </Grid>
+</UserControl>

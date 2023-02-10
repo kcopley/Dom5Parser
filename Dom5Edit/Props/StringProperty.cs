@@ -20,7 +20,7 @@ namespace Dom5Edit.Props
 
         public override void Parse(Command c, string s, string comment)
         {
-            this._command = c;
+            this.Command = c;
             this.Value = s;
             this.Comment = comment;
         }
@@ -28,7 +28,7 @@ namespace Dom5Edit.Props
         //Preliminary Example only for now, not optimal
         public override string ToExportString()
         {
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
@@ -44,7 +44,7 @@ namespace Dom5Edit.Props
 
         public string ToStringNoQuotes()
         {
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
@@ -61,6 +61,16 @@ namespace Dom5Edit.Props
         internal override Property GetDefault()
         {
             return new StringProperty() { Value = "" };
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            if (copyFrom is StringProperty)
+            {
+                var compare = copyFrom as StringProperty;
+                if (this.Command == compare.Command && this.Value.Equals(compare.Value)) return true;
+            }
+            return false;
         }
     }
 }

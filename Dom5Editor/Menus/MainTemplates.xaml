@@ -10,5 +10,21 @@
     <DataTemplate DataType="{x:Type VM:IntPropertyViewModel}">
         <Menus:IntPropertyView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:CommandViewModel}">
+        <Menus:CommandView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:StringViewModel}">
+        <Menus:StringView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type VM:NameViewModel}">
+        <Menus:StringView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:DescriptionViewModel}">
+        <Menus:DescriptionView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:MonsterIDViewModel}">
+        <Menus:StringOrIDRefView />
+    </DataTemplate>
 
 </ResourceDictionary>

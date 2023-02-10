@@ -256,7 +256,7 @@ namespace Dom5Edit.Entities
                 var list = this.Properties.FindAll(
                     delegate (Property p)
                     {
-                        return p._command == Command.STARTSITE;
+                        return p.Command == Command.STARTSITE;
                     }).Cast<SiteRef>();
                 foreach (var property in list)
                 {
@@ -273,18 +273,18 @@ namespace Dom5Edit.Entities
                 var list = this.Properties.FindAll(
                     delegate (Property p)
                     {
-                        return (p._command == Command.COASTCOM ||
-                            p._command == Command.COASTCOM1 ||
-                            p._command == Command.COASTCOM2 ||
-                            p._command == Command.LANDCOM ||
-                            p._command == Command.ADDFOREIGNCOM ||
-                            p._command == Command.FORESTCOM ||
-                            p._command == Command.WASTECOM ||
-                            p._command == Command.MOUNTAINCOM ||
-                            p._command == Command.CAVECOM ||
-                            p._command == Command.ADDRECCOM ||
-                            p._command == Command.UWCOM ||
-                            p._command == Command.SWAMPCOM);
+                        return (p.Command == Command.COASTCOM ||
+                            p.Command == Command.COASTCOM1 ||
+                            p.Command == Command.COASTCOM2 ||
+                            p.Command == Command.LANDCOM ||
+                            p.Command == Command.ADDFOREIGNCOM ||
+                            p.Command == Command.FORESTCOM ||
+                            p.Command == Command.WASTECOM ||
+                            p.Command == Command.MOUNTAINCOM ||
+                            p.Command == Command.CAVECOM ||
+                            p.Command == Command.ADDRECCOM ||
+                            p.Command == Command.UWCOM ||
+                            p.Command == Command.SWAMPCOM);
                     }).Cast<MonsterOrMontagRef>();
                 foreach (var property in list)
                 {
@@ -301,7 +301,7 @@ namespace Dom5Edit.Entities
                 var ret = this.Properties.Find(
                     delegate (Property p)
                     {
-                        return p._command == Command.ERA;
+                        return p.Command == Command.ERA;
                     });
                 return ret as IntProperty;
             }

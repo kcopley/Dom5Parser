@@ -268,7 +268,7 @@ namespace Dom5Edit.Entities
         {
             if (TryGetSpellEffectRef(out var copyRef))
             {
-                if (copyRef.HasValue && copyRef.Value != -1)
+                if (copyRef.Value != -1)
                 {
                     effect = copyRef.Value;
                     return true;

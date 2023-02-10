@@ -37,7 +37,7 @@ namespace Dom5Edit.Props
 
         public override void Parse(Command c, string s, string comment)
         {
-            this._command = c;
+            this.Command = c;
             this.Comment = comment;
             HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
             if (HasValue)
@@ -45,6 +45,11 @@ namespace Dom5Edit.Props
                 ID = val;
                 if (remainder.Length > 0) Comment += remainder;
             }
+        }
+
+        public void SetEntity(string value)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Resolve()
@@ -64,7 +69,7 @@ namespace Dom5Edit.Props
 
         public override string ToExportString()
         {
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 int _exportID = Resolved ? Entity.ID : ID; //true is left, false is right
 
@@ -85,6 +90,16 @@ namespace Dom5Edit.Props
                 }
             }
             else return "";
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            if (copyFrom is IDRef)
+            {
+                var compare = copyFrom as IDRef;
+                if (this.Command == compare.Command && this.Entity == compare.Entity) return true;
+            }
+            return false;
         }
     }
 }

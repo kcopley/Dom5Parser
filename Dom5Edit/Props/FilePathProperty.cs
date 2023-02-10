@@ -20,7 +20,7 @@ namespace Dom5Edit.Props
 
         public override void Parse(Command c, string s, string comment)
         {
-            this._command = c;
+            this.Command = c;
             this.Value = s;
             this.Comment = comment;
         }
@@ -29,7 +29,7 @@ namespace Dom5Edit.Props
         public override string ToExportString()
         {
 
-            if (CommandsMap.TryGetString(_command, out string s))
+            if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
                 {
@@ -46,6 +46,16 @@ namespace Dom5Edit.Props
         internal override Property GetDefault()
         {
             return new FilePathProperty() { Value = "" };
+        }
+
+        internal override bool EqualsProperty<T>(T copyFrom)
+        {
+            if (copyFrom is FilePathProperty)
+            {
+                var compare = copyFrom as FilePathProperty;
+                if (this.Command == compare.Command && this.Value == compare.Value) return true;
+            }
+            return false;
         }
     }
 }
