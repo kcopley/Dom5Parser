@@ -177,7 +177,7 @@ namespace Dom5Editor
 
         public static string GetDefaultFolderPath()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Dominions5\EditorTesting");
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Dominions5\mods");
         }
 
         public void UpdateModList()
@@ -187,6 +187,7 @@ namespace Dom5Editor
             Mods.Clear();
             foreach (string s in dmFiles)
             {
+                string pathName = (Path.GetFileName(s));
                 if (Path.GetFileName(s).StartsWith(_modName)) continue;
                 Mods.Add(new CheckBox() { Content = Path.GetFileName(s) });
             }
@@ -230,7 +231,8 @@ namespace Dom5Editor
             {
                 mod.DisableMages(DisabledNations);
             }
-            Mod final = mods.MergeAll("merged-mod");
+
+            Mod final = mods.MergeAll(_modName);
 
             return final;
         }

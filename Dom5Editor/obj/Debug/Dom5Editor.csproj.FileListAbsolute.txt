@@ -1,57 +1,49 @@
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\ModView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\MainWindow.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\MergerMenuTab.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\App.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor_MarkupCompile.cache
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor_MarkupCompile.lref
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Dom5Editor.exe.config
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Dom5Editor.exe
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Dom5Editor.pdb
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\CommonServiceLocator.dll
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Dom5Edit.dll
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.dll
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.Extras.dll
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\DotNetKit.Wpf.AutoCompleteComboBox.dll
+C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\DotNetProjects.Input.Toolkit.dll
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Ookii.Dialogs.Wpf.dll
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\System.Drawing.Common.dll
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\System.Windows.Interactivity.dll
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Dom5Edit.pdb
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.pdb
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.xml
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.Extras.xml
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
-C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\DotNetKit.Wpf.AutoCompleteComboBox.xml
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Ookii.Dialogs.Wpf.pdb
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\Ookii.Dialogs.Wpf.xml
 C:\Projects\Dom5Parser\Dom5Editor\bin\Debug\System.Drawing.Common.xml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.csprojAssemblyReference.cache
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\CommandView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\DescriptionView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\IntPropertyView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\ModView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\MainWindow.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\MergerMenuTab.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterStatsView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringOrIDRefView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Sites\SiteView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\App.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor_MarkupCompile.cache
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor_MarkupCompile.lref
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\CommandView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\DescriptionView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\IntPropertyView.baml
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\MainTemplates.baml
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\ModView.baml
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\MainWindow.baml
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\MergerMenuTab.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterStatsView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringOrIDRefView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Sites\SiteView.baml
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.g.resources
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.Properties.Resources.resources
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.csproj.GenerateResource.cache
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.csproj.CopyComplete
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.exe
 C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.pdb
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Dom5Editor.csprojAssemblyReference.cache
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\CommandView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\IntPropertyView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterMagicView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterStatsView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterGearView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\CommandView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\IntPropertyView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterMagicView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterStatsView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Monster\MonsterGearView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\DescriptionView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\DescriptionView.baml
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringOrIDRefView.g.cs
-C:\Projects\Dom5Parser\Dom5Editor\obj\Debug\Menus\Property Menus\StringOrIDRefView.baml

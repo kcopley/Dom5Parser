@@ -22,7 +22,7 @@ namespace Dom5Editor.VMs
         {
             get
             {
-                var returned = Source.TryGet(_command, out IntProperty ip);
+                var returned = Source.TryGet(Command, out IntProperty ip);
                 switch (returned)
                 {
                     case ReturnType.FALSE:
@@ -40,7 +40,7 @@ namespace Dom5Editor.VMs
         {
             get
             {
-                var returned = Source.TryGet(_command, out IntProperty ip);
+                var returned = Source.TryGet(Command, out IntProperty ip);
                 switch (returned)
                 {
                     case ReturnType.FALSE:
@@ -57,7 +57,7 @@ namespace Dom5Editor.VMs
             {
                 if (int.TryParse(value, out int ret))
                 {
-                    Source.Set<IntProperty>(_command, i => i.Value = ret);
+                    Source.Set<IntProperty>(Command, i => i.Value = ret);
                     OnPropertyChanged("BackgroundColor");
                     OnPropertyChanged("Value");
                 }

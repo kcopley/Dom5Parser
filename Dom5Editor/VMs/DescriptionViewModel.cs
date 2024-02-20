@@ -18,7 +18,7 @@ namespace Dom5Editor.VMs
         {
             get
             {
-                switch (Source.TryGet(_command, out StringProperty ip))
+                switch (Source.TryGet(Command, out StringProperty ip))
                 {
                     case ReturnType.FALSE:
                         break;
@@ -33,8 +33,8 @@ namespace Dom5Editor.VMs
             set
             {
                 //set entity name here
-                Source.Set<StringProperty>(_command, i => i.Value = value);
-                OnPropertyChanged(_command.ToString());
+                Source.Set<StringProperty>(Command, i => i.Value = value);
+                OnPropertyChanged(Command.ToString());
             }
         }
     }

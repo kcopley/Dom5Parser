@@ -20,7 +20,7 @@
             <TabItem x:Name="ModMerger" Header="Merge Tool">
                 <local:MergerMenuTab HorizontalAlignment="Left" Width="1194"/>
             </TabItem>
-            <TabItem x:Name="ModEditor" Header="Mod Editor">
+            <TabItem x:Name="ModEditor" Header="Mod Editor" IsEnabled="True">
                 <local:ModView />
             </TabItem>
         </TabControl>

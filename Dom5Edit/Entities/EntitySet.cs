@@ -18,9 +18,9 @@ namespace Dom5Edit.Entities
 
         private int VANILLA_END_ID { get; set; }
         private int CURRENT_ID { get; set; } = -1;
-        private Dictionary<int, T> Entities = new Dictionary<int, T>();
+        private SortedDictionary<int, T> Entities = new SortedDictionary<int, T>();
         private List<T> UnIDdEntities = new List<T>();
-        private Dictionary<int, T> DisabledEntities = new Dictionary<int, T>();
+        private SortedDictionary<int, T> DisabledEntities = new SortedDictionary<int, T>();
 
         public void Init()
         {
@@ -76,6 +76,11 @@ namespace Dom5Edit.Entities
 
         public void Add(int id, string name, T t)
         {
+            if (id == 7712 || id == 7713)
+            {
+                int abc = 0;
+                abc++;
+            }
             if (id > 0)
             {
                 if (!Entities.ContainsKey(id))

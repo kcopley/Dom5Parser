@@ -58,14 +58,11 @@
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    <Reference Include="DotNetKit.Wpf.AutoCompleteComboBox, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetKit.Wpf.AutoCompleteComboBox.1.6.0\lib\net462\DotNetKit.Wpf.AutoCompleteComboBox.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    <Reference Include="DotNetProjects.Input.Toolkit, Version=6.1.94.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetProjects.WpfToolkit.Input.6.1.94\lib\net40\DotNetProjects.Input.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Ookii.Dialogs.Wpf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
       <HintPath>..\packages\Ookii.Dialogs.Wpf.5.0.1\lib\net462\Ookii.Dialogs.Wpf.dll</HintPath>
@@ -120,17 +117,11 @@
     <Compile Include="Menus\MergerMenuTab.xaml.cs">
       <DependentUpon>MergerMenuTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Monster\MonsterMagicView.xaml.cs">
-      <DependentUpon>MonsterMagicView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Menus\Monster\MonsterStatsView.xaml.cs">
       <DependentUpon>MonsterStatsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Menus\Monster\MonsterView.xaml.cs">
       <DependentUpon>MonsterView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\Monster\MonsterGearView.xaml.cs">
-      <DependentUpon>MonsterGearView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Menus\Property Menus\StringOrIDRefView.xaml.cs">
       <DependentUpon>StringOrIDRefView.xaml</DependentUpon>
@@ -138,8 +129,18 @@
     <Compile Include="Menus\Property Menus\StringView.xaml.cs">
       <DependentUpon>StringView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Menus\Sites\SiteView.xaml.cs">
+      <DependentUpon>SiteView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\TargaImage.cs" />
     <Compile Include="Utility\Utility.cs" />
+    <Compile Include="VMs\RelayCommand.cs" />
+    <Compile Include="VMs\MonsterVMs\CopyStatsRefViewModel.cs" />
+    <Compile Include="VMs\MonsterVMs\MonsterRefViewModel.cs" />
+    <Compile Include="VMs\WeaponVMs\ArmorRefViewModel.cs" />
+    <Compile Include="VMs\WeaponVMs\WeaponRefViewModel.cs" />
+    <Compile Include="VMs\WeaponVMs\ArmorViewModel.cs" />
+    <Compile Include="VMs\WeaponVMs\WeaponViewModel.cs" />
     <Page Include="Menus\Property Menus\CommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,15 +170,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModelBase\PropertyViewModel.cs" />
+    <Compile Include="ViewModelBase\IDViewModel.cs" />
     <Compile Include="ViewModelBase\ViewModelBase.cs" />
-    <Compile Include="VMs\MonsterIDViewModel.cs" />
     <Compile Include="VMs\CommandViewModel.cs" />
     <Compile Include="VMs\DescriptionViewModel.cs" />
-    <Compile Include="VMs\MonsterGearViewModel.cs" />
+    <Compile Include="VMs\MonsterVMs\MonsterGearViewModel.cs" />
+    <Compile Include="VMs\SiteVMs\SiteViewModel.cs" />
     <Compile Include="VMs\NameViewModel.cs" />
+    <Compile Include="VMs\StringOrIDRefViewModel.cs" />
     <Compile Include="VMs\StringViewModel.cs" />
     <Compile Include="VMs\IntPropertyViewModel.cs" />
-    <Compile Include="VMs\MonsterViewModel.cs" />
+    <Compile Include="VMs\MonsterVMs\MonsterViewModel.cs" />
     <Compile Include="VMs\ModViewModel.cs" />
     <Compile Include="VMs\MergerMenuVM.cs" />
     <Compile Include="Menus\MainWindow.xaml.cs">
@@ -185,10 +188,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Menus\MergerMenuTab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Menus\Monster\MonsterMagicView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,10 +199,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Monster\MonsterGearView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Menus\Property Menus\StringOrIDRefView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -211,6 +206,10 @@
     <Page Include="Menus\Property Menus\StringView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Sites\SiteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

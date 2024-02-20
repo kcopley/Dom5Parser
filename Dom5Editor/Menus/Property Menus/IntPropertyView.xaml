@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:Dom5Editor.Menus"
              mc:Ignorable="d" 
              d:DesignHeight="32">
-    <Grid>
+    <Grid MinWidth="64">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="2" Height="24" TextAlignment="Right" Text="{Binding Path=Label}"/>
-        <TextBox Grid.Column="1" Height="24" Margin="2" Text="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TextAlignment="Center" Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+        <TextBlock  MinWidth="64" Margin="2" Height="24" TextAlignment="Left" Text="{Binding Path=Label}"/>
+        <TextBox Grid.Column="1" MinWidth="32"  Height="24" Margin="2" Text="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TextAlignment="Right" Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Right"/>
     </Grid>
 </UserControl>

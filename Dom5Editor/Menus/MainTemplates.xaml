@@ -3,9 +3,14 @@
                     xmlns:local="clr-namespace:Dom5Editor"
                     xmlns:Dom5Editor="clr-namespace:Dom5Editor"
                     xmlns:Menus="clr-namespace:Dom5Editor.Menus"
-                    xmlns:VM="clr-namespace:Dom5Editor.VMs">
+                    xmlns:VM="clr-namespace:Dom5Editor.VMs"
+                    xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete">
+    
     <DataTemplate DataType="{x:Type Dom5Editor:MonsterViewModel}">
         <Dom5Editor:MonsterView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:SiteViewModel}">
+        <Dom5Editor:SiteView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type VM:IntPropertyViewModel}">
         <Menus:IntPropertyView />
@@ -16,6 +21,9 @@
     <DataTemplate DataType="{x:Type VM:StringViewModel}">
         <Menus:StringView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:StringOrIDRefViewModel}">
+        <Menus:StringOrIDRefView />
+    </DataTemplate>
 
     <DataTemplate DataType="{x:Type VM:NameViewModel}">
         <Menus:StringView />
@@ -23,7 +31,16 @@
     <DataTemplate DataType="{x:Type VM:DescriptionViewModel}">
         <Menus:DescriptionView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type VM:MonsterIDViewModel}">
+    <DataTemplate DataType="{x:Type VM:CopyStatsRefViewModel}">
+        <Menus:StringOrIDRefView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:MonsterRefViewModel}">
+        <Menus:StringOrIDRefView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:WeaponRefViewModel}">
+        <Menus:StringOrIDRefView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type VM:ArmorRefViewModel}">
         <Menus:StringOrIDRefView />
     </DataTemplate>
 

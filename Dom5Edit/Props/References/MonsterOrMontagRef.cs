@@ -49,6 +49,13 @@ namespace Dom5Edit.Props
             return false;
         }
 
+        public bool TrySetEntity(IDEntity e)
+        {
+            _montagRef = null;
+            _monsterRef.Entity = e;
+            return true;
+        }
+
         public override void Parse(Command c, string v, string comment)
         {
             bool hasvalue = v.TryRetrieveNumericFromString(out int i, out _);

@@ -78,6 +78,7 @@ namespace Dom5Editor
             if (MergerMenuVM.Mods.Count > 0)
             {
                 ModsInFolderList.ItemsSource = MergerMenuVM.Mods;
+                ModsInFolderList.Items.Refresh();
             }
             else
             {
@@ -109,16 +110,23 @@ namespace Dom5Editor
 
         private void MergeExportButton_Click(object sender, RoutedEventArgs e)
         {
-            var ret = MergerMenuVM.MergeAndExport();
-            var dialog = new Ookii.Dialogs.Wpf.VistaSaveFileDialog();
-            dialog.DefaultExt = ".dm";
-            dialog.InitialDirectory = ret.FolderPath;
-            if (dialog.ShowDialog().GetValueOrDefault())
+            try
             {
-                ret.FullFilePath = dialog.FileName;
-                ret.Export();
+                var ret = MergerMenuVM.MergeAndExport();
+                var dialog = new Ookii.Dialogs.Wpf.VistaSaveFileDialog();
+                dialog.DefaultExt = ".dm";
+                dialog.InitialDirectory = ret.FolderPath;
+                if (dialog.ShowDialog().GetValueOrDefault())
+                {
+                    ret.FullFilePath = dialog.FileName;
+                    ret.Export();
+                }
+                this.ModExportedText.Text = ret + " exported successfully";
             }
-            this.ModExportedText.Text = ret + " exported successfully";
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ToggleAllMods_Checked(object sender, RoutedEventArgs e)

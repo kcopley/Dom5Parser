@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DotNetKit.Wpf.AutoCompleteComboBox</name>
+    </assembly>
+    <members>
+        <member name="T:DotNetKit.Windows.Controls.AutoCompleteComboBox">
+            <summary>
+            AutoCompleteComboBox.xaml
+            </summary>
+            <summary>
+            AutoCompleteComboBox
+            </summary>
+        </member>
+        <member name="M:DotNetKit.Windows.Controls.AutoCompleteComboBox.TextFromItem(System.Object)">
+            <summary>
+            Gets text to match with the query from an item.
+            Never null.
+            </summary>
+            <param name="item"/>
+        </member>
+        <member name="M:DotNetKit.Windows.Controls.AutoCompleteComboBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:DotNetKit.Windows.Controls.AutoCompleteComboBoxSetting">
+            <summary>
+            Represents an object to configure <see cref="T:DotNetKit.Windows.Controls.AutoCompleteComboBox"/>.
+            </summary>
+        </member>
+        <member name="M:DotNetKit.Windows.Controls.AutoCompleteComboBoxSetting.GetFilter(System.String,System.Func{System.Object,System.String})">
+            <summary>
+            Gets a filter function which determines whether items should be suggested or not
+            for the specified query.
+            Default: Gets the filter which maps an item to <c>true</c>
+            if its text contains the query (case insensitive).
+            </summary>
+            <param name="query">
+            The string input by user.
+            </param>
+            <param name="stringFromItem">
+            The function to get a string which identifies the specified item.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="P:DotNetKit.Windows.Controls.AutoCompleteComboBoxSetting.MaxSuggestionCount">
+            <summary>
+            Gets an integer.
+            The combobox opens the drop down
+            if the number of suggested items is less than the value.
+            Note that the value is larger, it's heavier to open the drop down.
+            Default: 100.
+            </summary>
+        </member>
+        <member name="P:DotNetKit.Windows.Controls.AutoCompleteComboBoxSetting.Delay">
+            <summary>
+            Gets the duration to delay updating the suggestion list.
+            Returns <c>Zero</c> if no delay.
+            Default: 300ms.
+            </summary>
+        </member>
+        <member name="P:DotNetKit.Windows.Controls.AutoCompleteComboBoxSetting.Default">
+            <summary>
+            Gets the default setting.
+            </summary>
+        </member>
+    </members>
+</doc>

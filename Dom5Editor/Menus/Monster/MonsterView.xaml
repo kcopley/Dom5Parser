@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="Dom5Editor.MonsterView"
+             x:Name="monsterView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -34,10 +35,7 @@
                 <Image Grid.Column="1" Margin="4" Source="{Binding Path=Sprite2Image}" OpacityMask="Black" />
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0">
-            <!-- copy ref box -->
-            <ContentControl Margin="2" HorizontalAlignment="Left"  Content="{Binding Path=CopyRef, UpdateSourceTrigger=PropertyChanged}" MinWidth="360"/>
-        </Grid>
+
         <Grid Grid.Row="2">
             <!-- Stats view box -->
             <Grid>
@@ -76,12 +74,11 @@
         </Grid>
         <Grid Grid.Row="3" Grid.ColumnSpan="2">
             <!-- Magic paths box -->
-            <menus:MonsterMagicView></menus:MonsterMagicView>
         </Grid>
         <Grid Grid.Row="4" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
@@ -90,11 +87,18 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <ContentControl Grid.Column="0" Grid.RowSpan="3">
-                    <ListView Background="Transparent" ItemsSource="{Binding Path=ExtraCommands}"/>
-                </ContentControl>
-                <menus:MonsterGearView Grid.Column="1"></menus:MonsterGearView>
-                <menus:MonsterGearView Grid.Column="2"></menus:MonsterGearView>
+                <StackPanel Grid.Column="0" Grid.RowSpan="3">
+                    <ContentControl>
+                        <ItemsControl Background="Transparent" ItemsSource="{Binding Path=WeaponPropertiesView}" IsTextSearchEnabled="False"/>
+                    </ContentControl>
+                    <Button Content="Add Weapon" Command="{Binding AddWeaponCommand}" Margin="0,0,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Grid.RowSpan="3">
+                    <ContentControl>
+                        <ItemsControl Background="Transparent" ItemsSource="{Binding Path=ArmorPropertiesView}" IsTextSearchEnabled="False"/>
+                    </ContentControl>
+                    <Button Content="Add Armor" Command="{Binding AddArmorCommand}" Margin="0,0,0,0"/>
+                </StackPanel>
                 <ContentControl Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Content="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <!-- Magic paths box -->

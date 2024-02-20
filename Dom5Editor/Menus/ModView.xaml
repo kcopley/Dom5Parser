@@ -40,6 +40,14 @@
                     </ContentControl>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="ModEditorSites" Header="Sites" Height="20" VerticalAlignment="Top" Margin="-2,0,-22,0" HorizontalAlignment="Left" Width="85">
+                <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="SiteVMPanel" Margin="185,10,10,10" />
+                    <ListBox x:Name="EditorSiteList" HorizontalAlignment="Left" Height="672" Margin="0,10,0,0" VerticalAlignment="Top" Width="180" ItemsSource="{Binding Path=Sites}" DisplayMemberPath="DisplayName" SelectionChanged="EditorSiteList_SelectionChanged"/>
+                    <ContentControl Background="#FFE5E5E5" x:Name="SiteVMTabPanel" Content="{Binding Path=OpenSite,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="672" Margin="185,10,0,0" VerticalAlignment="Top" Width="999" RenderTransformOrigin="0.38,0.44">
+                    </ContentControl>
+                </Grid>
+            </TabItem>
 
         </TabControl>
     </Grid>

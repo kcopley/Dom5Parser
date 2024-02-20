@@ -29,7 +29,9 @@ namespace Dom5Edit
             {
                 visited.Add(item);
 
-                foreach (var dep in dependencies(item))
+                var list_dep = dependencies(item);
+
+                foreach (var dep in list_dep)
                     Visit(dep, visited, sorted, dependencies, throwOnCycle);
 
                 sorted.Add(item);
@@ -113,8 +115,8 @@ namespace Dom5Edit
                 }
             }
 
-            string description = "Nation mods merged together. Contains:\n";
-            finalMod.Description = description;
+            //string description = "Nation mods merged together. Contains:\n";
+            //finalMod.Description = description;
             return finalMod;
         }
     }
