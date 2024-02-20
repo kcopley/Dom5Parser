@@ -125,5 +125,16 @@ namespace Dom5Edit.Entities
         {
             return EntityType.WEAPON;
         }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            if (TryGet<WeaponRef>(Command.COPYWEAPON, out var statsRef, false) == ReturnType.TRUE)
+            {
+                copy = statsRef.Entity;
+                return true;
+            }
+            copy = null;
+            return false;
+        }
     }
 }

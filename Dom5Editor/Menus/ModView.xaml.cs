@@ -66,6 +66,12 @@ namespace Dom5Editor
             _vm.OpenMonster = monster;
         }
 
+        private void EditorSiteList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var site = (sender as ListBox).SelectedItem as SiteViewModel;
+            _vm.OpenSite = site;
+        }
+
         private void Icon_File_Changed(object sender, TextChangedEventArgs e)
         {
             BindingExpression be = IconImage.GetBindingExpression(Image.SourceProperty);

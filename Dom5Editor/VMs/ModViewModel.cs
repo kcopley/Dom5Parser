@@ -67,7 +67,7 @@ namespace Dom5Editor
                 return _openMonsters;
             }
         }
-        
+
         private List<MonsterViewModel> _monsters;
         public List<MonsterViewModel> Monsters
         {
@@ -83,6 +83,132 @@ namespace Dom5Editor
                     }
                 }
                 return _monsters;
+            }
+        }
+
+        private WeaponViewModel _openWeapon;
+        public WeaponViewModel OpenWeapon
+        {
+            get
+            {
+                if (_openWeapon == null)
+                {
+                    _openWeapon = null;
+                }
+                return _openWeapon;
+            }
+            set
+            {
+                _openWeapon = value;
+                OnPropertyChanged("OpenWeapon");
+            }
+        }
+        private ObservableCollection<WeaponViewModel> _openWeapons;
+        public ObservableCollection<WeaponViewModel> OpenWeapons
+        {
+            get
+            {
+                if (_openWeapons == null)
+                {
+                    _openWeapons = new ObservableCollection<WeaponViewModel>();
+                }
+                return _openWeapons;
+            }
+        }
+
+        private List<WeaponViewModel> _Weapons;
+        public List<WeaponViewModel> Weapons
+        {
+            get
+            {
+                if (_Weapons == null)
+                {
+                    _Weapons = new List<WeaponViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.WEAPON].GetFullList();
+                    foreach (var m in list)
+                    {
+                        _Weapons.Add(new WeaponViewModel(this, m as Weapon));
+                    }
+                    list = _mod.Database[EntityType.WEAPON].GetFullList();
+                    foreach (var m in list)
+                    {
+                        _Weapons.Add(new WeaponViewModel(this, m as Weapon));
+                    }
+
+                }
+                return _Weapons;
+            }
+        }
+
+        private List<ArmorViewModel> _Armors;
+        public List<ArmorViewModel> Armors
+        {
+            get
+            {
+                if (_Armors == null)
+                {
+                    _Armors = new List<ArmorViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.ARMOR].GetFullList();
+                    foreach (var m in list)
+                    {
+                        _Armors.Add(new ArmorViewModel(this, m as Armor));
+                    }
+                    list = _mod.Database[EntityType.WEAPON].GetFullList();
+                    foreach (var m in list)
+                    {
+                        _Armors.Add(new ArmorViewModel(this, m as Armor));
+                    }
+
+                }
+                return _Armors;
+            }
+        }
+
+        private SiteViewModel _openSite;
+        public SiteViewModel OpenSite
+        {
+            get
+            {
+                if (_openSite == null)
+                {
+                    _openSite = null;
+                }
+                return _openSite;
+            }
+            set
+            {
+                _openSite = value;
+                OnPropertyChanged("OpenSite");
+            }
+        }
+        private ObservableCollection<SiteViewModel> _openSites;
+        public ObservableCollection<SiteViewModel> OpenSites
+        {
+            get
+            {
+                if (_openSites == null)
+                {
+                    _openSites = new ObservableCollection<SiteViewModel>();
+                }
+                return _openSites;
+            }
+        }
+
+        private List<SiteViewModel> _sites;
+        public List<SiteViewModel> Sites
+        {
+            get
+            {
+                if (_sites == null)
+                {
+                    var list = _mod.Database[EntityType.SITE].GetFullList();
+                    _sites = new List<SiteViewModel>();
+                    foreach (var s in list)
+                    {
+                        _sites.Add(new SiteViewModel(this, s as Site));
+                    }
+                }
+                return _sites;
             }
         }
 

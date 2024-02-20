@@ -148,5 +148,12 @@ namespace Dom5Edit.Entities
                 }
             }
         }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            //can't copy sites
+            copy = null;
+            return false;
+        }
     }
 }

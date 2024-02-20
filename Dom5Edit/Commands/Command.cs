@@ -9,7 +9,6 @@ namespace Dom5Edit.Commands
 {
     public enum Command
     {
-        [DescriptionAttribute("A shape with 1 continuous edge that has no corners.")]
         MODNAME,
         DESCRIPTION,
         ICON,

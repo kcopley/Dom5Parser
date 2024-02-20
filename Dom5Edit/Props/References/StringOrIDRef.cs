@@ -122,6 +122,13 @@ namespace Dom5Edit.Props
             }
         }
 
+        public List<Command> _StringExported = new List<Command>()
+        {
+            Command.STARTSITE,
+            Command.SPELL,
+            Command.AUTOSPELL,
+        };
+
         public override string ToExportString()
         {
             if (!CommandsMap.TryGetString(Command, out string s)) return "";
@@ -129,6 +136,11 @@ namespace Dom5Edit.Props
             //add certain types to be string refs?
             if (Entity != null && Entity.ID != -1)
                 IsStringRef = false;
+
+            if (_StringExported.Contains(Command))
+            {
+                IsStringRef = true;
+            }
 
             if (IsStringRef)
             {

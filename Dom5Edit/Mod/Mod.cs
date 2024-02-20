@@ -4,9 +4,7 @@ using Dom5Edit.Props;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace Dom5Edit
 {
@@ -83,6 +81,14 @@ namespace Dom5Edit
             { EntityType.MERCENARY, new EntitySet<IDEntity>() { } },
             { EntityType.EVENT, new EntitySet<IDEntity>() { START_ID = EVENT_START_ID } },
         };
+        /// <summary>
+        /// Try to get an Entity from the database.
+        /// </summary>
+        /// <param name="t">The entity type to retrieve.</param>
+        /// <param name="i">The ID of the entity.</param>
+        /// <param name="s">The name of the entity.</param>
+        /// <param name="entity">The returned entity.</param>
+        /// <returns>True if the entity exists, or false otherwise.</returns>
         public bool TryGet(EntityType t, int i, string s, out IDEntity entity)
         {
             var set = Database[t];
@@ -193,87 +199,92 @@ namespace Dom5Edit
 
             using (StreamReader sr = File.OpenText(dmFile))
             {
-                string s = "";
+                read_stream(sr);
+            }
+        }
 
-                bool isMultiLine = false;
-                string prevLine = "";
+        internal void read_stream(StreamReader sr)
+        {
+            string s = "";
 
-                while ((s = sr.ReadLine()) != null)
+            bool isMultiLine = false;
+            string prevLine = "";
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                LineNumber++;
+                s = s.Trim(); //remove whitespaces
+                s = s.Replace('\t', ' ');
+                if (s.Length < 1) continue; //empty line
+                                            //pull comments first
+
+                //mod information data
+                int ind = s.IndexOf("#dependency", StringComparison.OrdinalIgnoreCase);
+
+                if (ind != -1)
                 {
-                    LineNumber++;
-                    s = s.Trim(); //remove whitespaces
-                    s = s.Replace('\t', ' ');
-                    if (s.Length < 1) continue; //empty line
-                                                //pull comments first
+                    continue; //skip these lines, grabbed above
+                }
 
-                    //mod information data
-                    int ind = s.IndexOf("#dependency", StringComparison.OrdinalIgnoreCase);
-
-                    if (ind != -1)
+                if ((s.IndexOf("#descr") != -1 && s.Length > 6) || (s.IndexOf("#summary") != -1 && s.Length > 8) || (s.IndexOf("#msg") != -1 && s.Length > 4))
+                {
+                    //could be multi line description
+                    //check if has both quotes
+                    int firstQuote = s.IndexOf('"');
+                    int secondQuote = s.IndexOf('"', firstQuote + 1);
+                    //first quote mark exists, second does not
+                    //either is multi-line, or quote mark forgotten on the end
+                    if (firstQuote != -1 && secondQuote == -1)
                     {
-                        continue; //skip these lines, grabbed above
+                        bool hasAnotherCommand = HasCommandOnLine(s.Substring(firstQuote)); //only check after the first quote
+                        if (!hasAnotherCommand)
+                        {
+                            isMultiLine = true;
+                            prevLine = s;
+                            continue;
+                        } //if it has another command on that line, the quote was just forgotten
                     }
+                    ProcessStringToLine(s);
+                }
+                else if (isMultiLine && !string.IsNullOrEmpty(prevLine))
+                {
+                    //already on a multi-line, does it continue?
+                    int endQuote = s.IndexOf('"');
+                    bool anotherCommand = HasCommandOnLine(s);
 
-                    if ((s.IndexOf("#descr") != -1 && s.Length > 6) || (s.IndexOf("#summary") != -1 && s.Length > 8) || (s.IndexOf("#msg") != -1 && s.Length > 4))
+                    if (endQuote != -1 && !anotherCommand) //ends on this line
                     {
-                        //could be multi line description
-                        //check if has both quotes
-                        int firstQuote = s.IndexOf('"');
-                        int secondQuote = s.IndexOf('"', firstQuote + 1);
-                        //first quote mark exists, second does not
-                        //either is multi-line, or quote mark forgotten on the end
-                        if (firstQuote != -1 && secondQuote == -1)
-                        {
-                            bool hasAnotherCommand = HasCommandOnLine(s.Substring(firstQuote)); //only check after the first quote
-                            if (!hasAnotherCommand)
-                            {
-                                isMultiLine = true;
-                                prevLine = s;
-                                continue;
-                            } //if it has another command on that line, the quote was just forgotten
-                        }
-                        ProcessStringToLine(s);
+                        string endLine = prevLine + Environment.NewLine + s;
+                        ProcessStringToLine(endLine);
+                        prevLine = "";
+                        isMultiLine = false;
                     }
-                    else if (isMultiLine && !string.IsNullOrEmpty(prevLine))
+                    else if (anotherCommand) // of course a mod author would end a multi-line and start another command on the same line
                     {
-                        //already on a multi-line, does it continue?
-                        int endQuote = s.IndexOf('"');
-                        bool anotherCommand = HasCommandOnLine(s);
-
-                        if (endQuote != -1 && !anotherCommand) //ends on this line
-                        {
-                            string endLine = prevLine + Environment.NewLine + s;
-                            ProcessStringToLine(endLine);
-                            prevLine = "";
-                            isMultiLine = false;
-                        }
-                        else if (anotherCommand) // of course a mod author would end a multi-line and start another command on the same line
-                        {
-                            //split and add up to the # to the previous string, process it
-                            //and then process the second string
-                            int anotherCommandIndex = GetNextCommandIndex(s);
-                            string leftsplit = s.Substring(0, anotherCommandIndex);
-                            string rightsplit = s.Substring(anotherCommandIndex);
-                            string multiline = prevLine + Environment.NewLine + leftsplit;
-                            ProcessStringToLine(multiline);
-                            ProcessStringToLine(rightsplit);
-                            prevLine = "";
-                            isMultiLine = false;
-                        }
-                        else
-                        {
-                            //no command, no end quote... it must continue as part of the string
-                            prevLine = prevLine + Environment.NewLine + s;
-                        }
+                        //split and add up to the # to the previous string, process it
+                        //and then process the second string
+                        int anotherCommandIndex = GetNextCommandIndex(s);
+                        string leftsplit = s.Substring(0, anotherCommandIndex);
+                        string rightsplit = s.Substring(anotherCommandIndex);
+                        string multiline = prevLine + Environment.NewLine + leftsplit;
+                        ProcessStringToLine(multiline);
+                        ProcessStringToLine(rightsplit);
+                        prevLine = "";
+                        isMultiLine = false;
                     }
                     else
                     {
-                        ProcessStringToLine(s);
+                        //no command, no end quote... it must continue as part of the string
+                        prevLine = prevLine + Environment.NewLine + s;
                     }
                 }
-                LineWasTrimmed = false;
-                LineNumber = -1;
+                else
+                {
+                    ProcessStringToLine(s);
+                }
             }
+            LineWasTrimmed = false;
+            LineNumber = -1;
         }
 
         public bool HasDependencies()
@@ -599,7 +610,7 @@ namespace Dom5Edit
 
         public void ResolveDependencies(List<Mod> mods)
         {
-            Dependencies.Add(VanillaLoader.Vanilla);
+            //Dependencies.Add(VanillaLoader.Vanilla);
             foreach (var file in _dependencies)
             {
                 foreach (var m in mods)
@@ -610,6 +621,7 @@ namespace Dom5Edit
                         break;
                     }
                 }
+                throw new FileNotFoundException("Error: Missing a dependency required for " + this.ModName + ". Missing Mod: " + file);
             }
         }
 

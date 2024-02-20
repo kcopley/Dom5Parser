@@ -50,6 +50,7 @@ namespace Dom5Edit
             Mod m = new Mod();
 
             LoadMonsterData(m);
+            LoadMonsterDescriptions(m);
             LoadWeaponData(m);
             return m;
         }
@@ -217,6 +218,14 @@ namespace Dom5Edit
                         }
                     }
                 }
+            }
+        }
+
+        void LoadMonsterDescriptions(Mod m)
+        {
+            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.VanillaMonsterData)))
+            {
+                m.read_stream(s);
             }
         }
 

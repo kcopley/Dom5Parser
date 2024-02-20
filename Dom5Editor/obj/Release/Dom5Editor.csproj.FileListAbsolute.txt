@@ -1,0 +1,48 @@
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Dom5Editor.exe.config
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Dom5Editor.exe
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Dom5Editor.pdb
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\CommonServiceLocator.dll
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Dom5Edit.dll
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Ookii.Dialogs.Wpf.dll
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\System.Drawing.Common.dll
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\System.Windows.Interactivity.dll
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Dom5Edit.pdb
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Ookii.Dialogs.Wpf.pdb
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\Ookii.Dialogs.Wpf.xml
+C:\Projects\Dom5Parser\Dom5Editor\bin\Release\System.Drawing.Common.xml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor.csprojAssemblyReference.cache
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\CommandView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\DescriptionView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\IntPropertyView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\ModView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\MainWindow.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\MergerMenuTab.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterMagicView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterStatsView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterGearView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\StringOrIDRefView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\StringView.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\App.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor_MarkupCompile.cache
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor_MarkupCompile.lref
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\CommandView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\DescriptionView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\IntPropertyView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\MainTemplates.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\ModView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\MainWindow.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\MergerMenuTab.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterMagicView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterStatsView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Monster\MonsterGearView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\StringOrIDRefView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Menus\Property Menus\StringView.baml
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor.g.resources
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor.Properties.Resources.resources
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor.csproj.GenerateResource.cache
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor.csproj.CopyComplete
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor.exe
+C:\Projects\Dom5Parser\Dom5Editor\obj\Release\Dom5Editor.pdb
