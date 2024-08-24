@@ -123,6 +123,9 @@
     <Compile Include="Menus\Monster\MonsterView.xaml.cs">
       <DependentUpon>MonsterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Menus\Property Menus\NameView.xaml.cs">
+      <DependentUpon>NameView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Menus\Property Menus\StringOrIDRefView.xaml.cs">
       <DependentUpon>StringOrIDRefView.xaml</DependentUpon>
     </Compile>
@@ -203,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Menus\Monster\MonsterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Property Menus\NameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -122,6 +122,8 @@ namespace Dom5Editor
             {
                 kvp.Value.ViewModel = new IntPropertyViewModel(this, kvp.Value.Label, _entity, kvp.Key);
             }
+
+            _monsterName = _entity.Name;
         }
 
         public void SetMonster(Monster m)
@@ -196,11 +198,41 @@ namespace Dom5Editor
             }
         }
 
+        private string _monsterName;
+        public string MonsterName
+        {
+            get => _monsterName;
+            set
+            {
+                if (_monsterName != value)
+                {
+                    _monsterName = value;
+                    if (_entity != null)
+                    {
+                        _entity.Name = value;
+                    }
+                    OnPropertyChanged(nameof(MonsterName));
+                    OnPropertyChanged(nameof(DisplayName));
+                }
+            }
+        }
+
+        private NameViewModel _name;
         public NameViewModel Name
         {
             get
             {
-                return new NameViewModel(_entity, Command.NAME);
+                if (_name == null)
+                {
+                    _name = new NameViewModel(
+                        "Name:",  // Add a label
+                        _entity,
+                        Command.NAME,
+                        () => MonsterName,
+                        value => MonsterName = value
+                    );
+                }
+                return _name;
             }
         }
 
@@ -218,7 +250,7 @@ namespace Dom5Editor
             {
                 if (_entity != null)
                 {
-                    return "(" + _entity.ID + ") " + _entity.Name;
+                    return $"({_entity.ID}) {MonsterName}";
                 }
                 else
                 {

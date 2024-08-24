@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Dom5Editor.Menus.NameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dom5Editor.Menus"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="300">
+    <Border Background="{StaticResource AccentBrush}" CornerRadius="5" Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding Label}" Foreground="{StaticResource TextBrush}" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource ModernTextBoxStyle}" BorderThickness="0" 
+                     Background="Transparent" FontSize="16" FontWeight="Bold"/>
+        </Grid>
+    </Border>
+</UserControl>

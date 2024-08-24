@@ -11,30 +11,43 @@ namespace Dom5Editor.VMs
 {
     public class NameViewModel : PropertyViewModel
     {
-        public NameViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
-        public NameViewModel(IDEntity e, Command c) : base(e, c) { }
+        private readonly Func<string> _getter;
+        private readonly Action<string> _setter;
+
+        public NameViewModel(IDEntity e, Command c) : base(e, c)
+        {
+            _getter = () => e.Name;
+            _setter = value => e.Name = value;
+        }
+
+        public NameViewModel(string label, IDEntity e, Command c) : base(label, e, c)
+        {
+            _getter = () => e.Name;
+            _setter = value => e.Name = value;
+        }
+
+        public NameViewModel(IDEntity e, Command c, Func<string> getter, Action<string> setter) : base(e, c)
+        {
+            _getter = getter;
+            _setter = setter;
+        }
+
+        public NameViewModel(string label, IDEntity e, Command c, Func<string> getter, Action<string> setter) : base(label, e, c)
+        {
+            _getter = getter;
+            _setter = setter;
+        }
 
         public override string Value
         {
-            get
-            {
-                switch (Source.TryGet(Command, out NameProperty ip))
-                {
-                    case ReturnType.FALSE:
-                        break;
-                    case ReturnType.COPIED:
-                        //set to greyed out?
-                        return ip.Value;
-                    case ReturnType.TRUE:
-                        return ip.Value;
-                }
-                return "";
-            }
+            get => _getter();
             set
             {
-                //set entity name here
-                Source.Set<NameProperty>(Command, i => i.Value = value);
-                OnPropertyChanged(Command.ToString());
+                if (_getter() != value)
+                {
+                    _setter(value);
+                    OnPropertyChanged(nameof(Value));
+                }
             }
         }
     }

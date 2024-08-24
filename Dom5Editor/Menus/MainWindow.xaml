@@ -7,22 +7,18 @@
         xmlns:Mods="clr-namespace:Dom5Edit;assembly=Dom5Edit"
          x:Class="Dom5Editor.MainWindow"
         mc:Ignorable="d"
-        Title="Dominions 5 Mod Tools" Height="800" Width="1208">
-    <Window.Resources>
-    </Window.Resources>
+        Title="Dominions 5 Mod Tools" MinHeight="480" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="ModTools" HorizontalAlignment="Left" Height="769" VerticalAlignment="Top" Width="1200" Grid.ColumnSpan="2" Background="#FFE5E6E6">
+        <TabControl x:Name="ModTools" Grid.Column="0">
             <TabItem x:Name="ModMerger" Header="Merge Tool">
-                <local:MergerMenuTab HorizontalAlignment="Left" Width="1194"/>
+                <local:MergerMenuTab/>
             </TabItem>
             <TabItem x:Name="ModEditor" Header="Mod Editor" IsEnabled="True">
                 <local:ModView />
             </TabItem>
         </TabControl>
-
     </Grid>
 </Window>

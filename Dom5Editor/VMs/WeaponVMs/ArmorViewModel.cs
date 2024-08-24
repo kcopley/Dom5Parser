@@ -129,7 +129,7 @@ namespace Dom5Editor
             set { if (_entity != null) _entity.ID = value; }
         }
 
-        public StringViewModel Name => GetAttribute(Command.NAME) as StringViewModel;
+        public NameViewModel Name => GetAttribute(Command.NAME) as NameViewModel;
 
         public override string DisplayName
         {
