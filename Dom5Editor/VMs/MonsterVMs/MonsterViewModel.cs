@@ -16,6 +16,13 @@ using System.Windows.Media.Imaging;
 
 namespace Dom5Editor
 {
+    class AttributeInfo
+    {
+        public string PropertyName { get; set; }
+        public string Label { get; set; }
+        public IntPropertyViewModel ViewModel { get; set; }
+    }
+
     public class MonsterViewModel : IDViewModelBase
     {
         private CollectionViewSource _weaponPropertiesViewSource;
@@ -23,6 +30,8 @@ namespace Dom5Editor
 
         public ICollectionView WeaponPropertiesView => _weaponPropertiesViewSource.View;
         public ICollectionView ArmorPropertiesView => _armorPropertiesViewSource.View;
+
+        private readonly Dictionary<Command, AttributeInfo> _attributeInfos;
 
         public MonsterViewModel(ModViewModel mod, Monster monster)
         {
@@ -79,6 +88,27 @@ namespace Dom5Editor
             };
 
             var a = AllProperties;
+
+            _attributeInfos = new Dictionary<Command, AttributeInfo>
+            {
+                { Command.HP, new AttributeInfo { PropertyName = nameof(HitPoints), Label = "Hit Points:" } },
+                { Command.SIZE, new AttributeInfo { PropertyName = nameof(Size), Label = "Size:" } },
+                { Command.PROT, new AttributeInfo { PropertyName = nameof(Prot), Label = "Nat Prot:" } },
+                { Command.MR, new AttributeInfo { PropertyName = nameof(MR), Label = "Magic Resistance:" } },
+                { Command.ATT, new AttributeInfo { PropertyName = nameof(Attack), Label = "Attack:" } },
+                { Command.DEF, new AttributeInfo { PropertyName = nameof(Defense), Label = "Defense:" } },
+                { Command.STR, new AttributeInfo { PropertyName = nameof(Strength), Label = "Strength:" } },
+                { Command.PREC, new AttributeInfo { PropertyName = nameof(Precision), Label = "Precision:" } },
+                { Command.AP, new AttributeInfo { PropertyName = nameof(CombatSpeed), Label = "Combat Speed:" } },
+                { Command.MAPMOVE, new AttributeInfo { PropertyName = nameof(MapMove), Label = "Map Move:" } },
+                { Command.MOR, new AttributeInfo { PropertyName = nameof(Morale), Label = "Morale:" } },
+                { Command.ENC, new AttributeInfo { PropertyName = nameof(Encumbrance), Label = "Encumbrance:" } }
+            };
+
+            foreach (var kvp in _attributeInfos)
+            {
+                kvp.Value.ViewModel = new IntPropertyViewModel(this, kvp.Value.Label, _entity, kvp.Key);
+            }
         }
 
         public void SetMonster(Monster m)
@@ -165,101 +195,29 @@ namespace Dom5Editor
             }
         }
 
-        public IntPropertyViewModel HitPoints
+        private string GetPropertyName(Command command)
         {
-            get
-            {
-                return new IntPropertyViewModel(this, "Hit Points:", _entity, Command.HP);
-            }
+            return _attributeInfos.TryGetValue(command, out var info) ? info.PropertyName : string.Empty;
         }
 
-        public IntPropertyViewModel Size
+        public IntPropertyViewModel GetAttribute(Command command)
         {
-            get
-            {
-                return new IntPropertyViewModel(this, "Size:", _entity, Command.SIZE);
-            }
+            return _attributeInfos.TryGetValue(command, out var info) ? info.ViewModel : null;
         }
 
-        public IntPropertyViewModel Prot
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Nat Prot:", _entity, Command.PROT);
-            }
-        }
-
-        public IntPropertyViewModel MR
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Magic Resistance:", _entity, Command.MR);
-            }
-        }
-
-        public IntPropertyViewModel Encumbrance
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Encumbrance:", _entity, Command.ENC);
-            }
-        }
-
-        public IntPropertyViewModel Attack
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Attack:", _entity, Command.ATT);
-            }
-        }
-
-        public IntPropertyViewModel Defense
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Defense:", _entity, Command.DEF);
-            }
-        }
-
-        public IntPropertyViewModel Strength
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Strength:", _entity, Command.STR);
-            }
-        }
-
-        public IntPropertyViewModel Precision
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Precision:", _entity, Command.PREC);
-            }
-        }
-
-        public IntPropertyViewModel CombatSpeed
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Combat Speed:", _entity, Command.AP);
-            }
-        }
-
-        public IntPropertyViewModel MapMove
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Map Move:", _entity, Command.MAPMOVE);
-            }
-        }
-
-        public IntPropertyViewModel Morale
-        {
-            get
-            {
-                return new IntPropertyViewModel(this, "Morale:", _entity, Command.MOR);
-            }
-        }
+        // Property definitions
+        public IntPropertyViewModel HitPoints => GetAttribute(Command.HP);
+        public IntPropertyViewModel Size => GetAttribute(Command.SIZE);
+        public IntPropertyViewModel Prot => GetAttribute(Command.PROT);
+        public IntPropertyViewModel MR => GetAttribute(Command.MR);
+        public IntPropertyViewModel Morale => GetAttribute(Command.MOR);
+        public IntPropertyViewModel Attack => GetAttribute(Command.ATT);
+        public IntPropertyViewModel Defense => GetAttribute(Command.DEF);
+        public IntPropertyViewModel Strength => GetAttribute(Command.STR);
+        public IntPropertyViewModel Precision => GetAttribute(Command.PREC);
+        public IntPropertyViewModel CombatSpeed => GetAttribute(Command.AP);
+        public IntPropertyViewModel MapMove => GetAttribute(Command.MAPMOVE);
+        public IntPropertyViewModel Encumbrance => GetAttribute(Command.ENC);
 
         public BitmapSource SpriteImage
         {
@@ -322,30 +280,16 @@ namespace Dom5Editor
             if (parameter is PropertyViewModel propertyVM)
             {
                 _entity.RemoveProperty(propertyVM.Command);
-                OnPropertyChanged(nameof(AllProperties));
-                // Trigger UI update for the specific property
-                OnPropertyChanged(GetPropertyName(propertyVM.Command));
-            }
-        }
 
-        private string GetPropertyName(Command command)
-        {
-            // Map Command to property name
-            switch (command)
-            {
-                case Command.HP:
-                    return nameof(HitPoints);
-                case Command.SIZE:
-                    return nameof(Size);
-                case Command.PROT:
-                    return nameof(Prot);
-                case Command.MR:
-                    return nameof(MR);
-                case Command.MOR:
-                    return nameof(Morale);
-                // Add other cases as needed
-                default:
-                    return string.Empty;
+                // Update AllProperties
+                OnPropertyChanged(nameof(AllProperties));
+
+                // Update the specific attribute property
+                if (_attributeInfos.TryGetValue(propertyVM.Command, out var info))
+                {
+                    OnPropertyChanged(info.PropertyName);
+                    info.ViewModel.OnPropertyChanged(string.Empty);
+                }
             }
         }
     }
