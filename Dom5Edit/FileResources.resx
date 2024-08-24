@@ -121,6 +121,12 @@
   <data name="descriptions" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>VanillaData\descriptions.dm;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="VanillaArmorData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>VanillaData\VanillaArmorData.tsv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VanillaArmorProtData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>VanillaData\VanillaArmorProtData.tsv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="VanillaMonsterData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>VanillaData\VanillaMonsterData.tsv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -189,6 +189,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="VanillaData\descriptions.dm" />
+    <None Include="VanillaData\VanillaArmorData.tsv" />
+    <None Include="VanillaData\VanillaArmorProtData.tsv" />
     <None Include="VanillaData\VanillaMonsterData.tsv" />
     <None Include="VanillaData\VanillaWeaponData.tsv" />
   </ItemGroup>

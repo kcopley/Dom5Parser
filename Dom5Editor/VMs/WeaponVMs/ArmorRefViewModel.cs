@@ -11,22 +11,48 @@ namespace Dom5Editor.VMs
 {
     public class ArmorRefViewModel : PropertyViewModel
     {
+        private ArmorViewModel _selectedID;
         public ArmorRefViewModel(ModViewModel parent, ViewModelBase owner, IDEntity e, ArmorRef p) : base(e, p.Command)
         {
             _parentMod = parent;
             _owner = owner;
             _property = p;
+            InitializeSelectedID();
         }
         public ArmorRefViewModel(ModViewModel parent, ViewModelBase owner, string label, IDEntity e, ArmorRef p) : base(label, e, p.Command)
         {
             _parentMod = parent;
             _owner = owner;
             _property = p;
+            InitializeSelectedID();
         }
 
         internal ModViewModel _parentMod;
         internal ViewModelBase _owner;
         internal ArmorRef _property;
+
+        private void InitializeSelectedID()
+        {
+            try
+            {
+                if (_property.TryGetEntity(out var entity))
+                {
+                    _selectedID = _parentMod.Armors.FirstOrDefault(x => x.ID == entity.ID);
+                    if (_selectedID == null)
+                    {
+                        Console.WriteLine($"Warning: No matching armor found for ID {entity.ID}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Warning: Failed to get entity from property");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error initializing SelectedID: {ex.Message}");
+            }
+        }
 
         public override string Value
         {
@@ -58,23 +84,21 @@ namespace Dom5Editor.VMs
 
         public ArmorViewModel SelectedID
         {
-            get
-            {
-                return _parentMod.Armors.Find(x =>
-                {
-                    if (_property.TryGetEntity(out var e))
-                    {
-                        return x.ID == e.ID;
-                    }
-                    return false;
-                });
-            }
+            get { return _selectedID; }
             set
             {
-                if (value == null) return;
-                _property.Entity = value.Armor;
-                _parentMod.OnPropertyChanged("");
-                _owner.OnPropertyChanged("");
+                if (value != _selectedID)
+                {
+                    _selectedID = value;
+                    if (_selectedID != null)
+                    {
+                        _property.Entity = _selectedID.Armor;
+                        OnPropertyChanged(nameof(Value));
+                    }
+                    OnPropertyChanged(nameof(SelectedID));
+                    _parentMod.OnPropertyChanged("");
+                    _owner.OnPropertyChanged("");
+                }
             }
         }
     }

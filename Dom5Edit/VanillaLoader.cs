@@ -52,6 +52,8 @@ namespace Dom5Edit
             LoadMonsterData(m);
             LoadMonsterDescriptions(m);
             LoadWeaponData(m);
+            LoadArmorData(m);
+            LoadArmorProtData(m);
             return m;
         }
 
@@ -74,6 +76,77 @@ namespace Dom5Edit
                     {
                         var split = line.Split('\t').ToList();
                         m.Parse(Commands.Command.NEWWEAPON, split[0], "");
+                        for (int i = 1; i < split.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(split[i]))
+                                if (header[i].StartsWith("@")) continue;
+                                else switch (header[i])
+                                    {
+                                        default:
+                                            m.ProcessStringToLine(header[i] + " " + split[i]);
+                                            break;
+                                    }
+                        }
+                    }
+                }
+            }
+        }
+
+        void LoadArmorData(Mod m)
+        {
+            bool first = true;
+            List<string> header = new List<string>();
+            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.VanillaArmorData)))
+            {
+                string line;
+                while ((line = s.ReadLine()) != null)
+                {
+                    if (first)
+                    {
+                        first = !first;
+
+                        header = line.Split('\t').ToList();
+                    }
+                    else
+                    {
+                        var split = line.Split('\t').ToList();
+                        m.Parse(Commands.Command.NEWARMOR, split[0], "");
+                        for (int i = 1; i < split.Count; i++)
+                        {
+                            if (!string.IsNullOrEmpty(split[i]))
+                                if (header[i].StartsWith("@")) continue;
+                                else switch (header[i])
+                                    {
+                                        default:
+                                            m.ProcessStringToLine(header[i] + " " + split[i]);
+                                            break;
+                                    }
+                        }
+                    }
+                }
+            }
+            int a = 0;
+        }
+
+        void LoadArmorProtData(Mod m)
+        {
+            bool first = true;
+            List<string> header = new List<string>();
+            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.VanillaArmorProtData)))
+            {
+                string line;
+                while ((line = s.ReadLine()) != null)
+                {
+                    if (first)
+                    {
+                        first = !first;
+
+                        header = line.Split('\t').ToList();
+                    }
+                    else
+                    {
+                        var split = line.Split('\t').ToList();
+                        m.Parse(Commands.Command.SELECTARMOR, split[0], "");
                         for (int i = 1; i < split.Count; i++)
                         {
                             if (!string.IsNullOrEmpty(split[i]))

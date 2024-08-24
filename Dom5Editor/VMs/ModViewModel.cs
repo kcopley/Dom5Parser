@@ -158,8 +158,13 @@ namespace Dom5Editor
             {
                 if (_armors == null)
                 {
-                    var list = _mod.Database[EntityType.ARMOR].GetFullList();
                     _armors = new List<ArmorViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.ARMOR].GetFullList();
+                    foreach (var m in list)
+                    {
+                        _armors.Add(new ArmorViewModel(this, m as Armor));
+                    }
+                    list = _mod.Database[EntityType.ARMOR].GetFullList();
                     foreach (var a in list)
                     {
                         _armors.Add(new ArmorViewModel(this, a as Armor));

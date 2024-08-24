@@ -47,5 +47,16 @@ namespace Dom5Edit.Entities
         {
             return EntityType.ARMOR;
         }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            if (TryGet<ArmorRef>(Command.COPYARMOR, out var statsRef, false) == ReturnType.TRUE)
+            {
+                copy = statsRef.Entity;
+                return true;
+            }
+            copy = null;
+            return false;
+        }
     }
 }
