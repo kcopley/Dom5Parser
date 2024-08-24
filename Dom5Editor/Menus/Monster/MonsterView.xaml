@@ -48,28 +48,58 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.25*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.25*"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="0.25*"/>
                 </Grid.ColumnDefinitions>
-                <ContentControl Content="{Binding Path=HitPoints, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="0"/>
-                <ContentControl Content="{Binding Path=Size, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="1"/>
-                <ContentControl Content="{Binding Path=Prot, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="2"/>
-                <ContentControl Content="{Binding Path=MR, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="3"/>
-                <ContentControl Content="{Binding Path=Morale, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="4"/>
+                <!-- Row 0 -->
+                <ContentControl Grid.Column="0" Grid.Row="0" Content="{Binding Path=HitPoints, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Grid.Row="0" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding HitPoints}" Style="{StaticResource RemoveButtonStyle}"/>
 
-                <ContentControl Content="{Binding Path=Strength, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0"/>
-                <ContentControl Content="{Binding Path=Attack, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
-                <ContentControl Content="{Binding Path=Defense, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
-                <ContentControl Content="{Binding Path=Precision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
-                <ContentControl Content="{Binding Path=CombatSpeed, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                <ContentControl Grid.Column="2" Grid.Row="0" Content="{Binding Path=Strength, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="3" Grid.Row="0" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Strength}" Style="{StaticResource RemoveButtonStyle}"/>
 
-                <ContentControl Content="{Binding Path=MapMove, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="0"/>
-                <ContentControl Content="{Binding Path=Encumbrance, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1"/>
-                <ContentControl Content="{Binding Path=Age, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"/>
-                <ContentControl Content="{Binding Path=MaxAge, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
+                <ContentControl Grid.Column="4" Grid.Row="0" Content="{Binding Path=MapMove, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="5" Grid.Row="0" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding MapMove}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <!-- Row 1 -->
+                <ContentControl Grid.Column="0" Grid.Row="1" Content="{Binding Path=Size, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Grid.Row="1" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Size}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <ContentControl Grid.Column="2" Grid.Row="1" Content="{Binding Path=Attack, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="3" Grid.Row="1" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Attack}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <ContentControl Grid.Column="4" Grid.Row="1" Content="{Binding Path=Encumbrance, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="5" Grid.Row="1" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Encumbrance}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <!-- Row 2 -->
+                <ContentControl Grid.Column="0" Grid.Row="2" Content="{Binding Path=Prot, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Grid.Row="2" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Prot}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <ContentControl Grid.Column="2" Grid.Row="2" Content="{Binding Path=Defense, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="3" Grid.Row="2" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Defense}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <ContentControl Grid.Column="4" Grid.Row="2" Content="{Binding Path=Age, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="5" Grid.Row="2" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Age}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <!-- Row 3 -->
+                <ContentControl Grid.Column="0" Grid.Row="3" Content="{Binding Path=MR, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Grid.Row="3" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding MR}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <ContentControl Grid.Column="2" Grid.Row="3" Content="{Binding Path=Precision, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="3" Grid.Row="3" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Precision}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <ContentControl Grid.Column="4" Grid.Row="3" Content="{Binding Path=MaxAge, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="5" Grid.Row="3" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding MaxAge}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <!-- Row 4 -->
+                <ContentControl Grid.Column="0" Grid.Row="4" Content="{Binding Path=Morale, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Grid.Row="4" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding Morale}" Style="{StaticResource RemoveButtonStyle}"/>
+
+                <ContentControl Grid.Column="2" Grid.Row="4" Content="{Binding Path=CombatSpeed, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="3" Grid.Row="4" Content="X" Command="{Binding RemoveCommand}" CommandParameter="{Binding CombatSpeed}" Style="{StaticResource RemoveButtonStyle}"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="3" Grid.ColumnSpan="2">

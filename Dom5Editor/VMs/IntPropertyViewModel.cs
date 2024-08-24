@@ -10,11 +10,11 @@ using System.Windows.Media;
 
 namespace Dom5Editor.VMs
 {
-    public class IntPropertyViewModel : PropertyViewModel
+    public class IntIntPropertyViewModel : PropertyViewModel
     {
-        public IntPropertyViewModel(IDEntity e, Command c) : base(e, c) { }
-        public IntPropertyViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
-        public IntPropertyViewModel(MonsterViewModel monster, string label, IDEntity e, Command c) : base(label, e, c)
+        public IntIntPropertyViewModel(IDEntity e, Command c) : base(e, c) { }
+        public IntIntPropertyViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
+        public IntIntPropertyViewModel(MonsterViewModel monster, string label, IDEntity e, Command c) : base(label, e, c)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Dom5Editor.VMs
         {
             get
             {
-                var returned = Source.TryGet(Command, out IntProperty ip);
+                var returned = Source.TryGet(Command, out IntIntProperty ip);
                 switch (returned)
                 {
                     case ReturnType.FALSE:
@@ -36,20 +36,20 @@ namespace Dom5Editor.VMs
             }
         }
 
-        public override string Value
+        public string Value1
         {
             get
             {
-                var returned = Source.TryGet(Command, out IntProperty ip);
+                var returned = Source.TryGet(Command, out IntIntProperty ip);
                 switch (returned)
                 {
                     case ReturnType.FALSE:
                         break;
                     case ReturnType.COPIED:
                         //set to greyed out?
-                        return ip.Value.ToString();
+                        return ip.Value1.ToString();
                     case ReturnType.TRUE:
-                        return ip.Value.ToString();
+                        return ip.Value1.ToString();
                 }
                 return "";
             }
@@ -57,11 +57,41 @@ namespace Dom5Editor.VMs
             {
                 if (int.TryParse(value, out int ret))
                 {
-                    Source.Set<IntProperty>(Command, i => i.Value = ret);
+                    Source.Set<IntIntProperty>(Command, i => i.Value1 = ret);
                     OnPropertyChanged("BackgroundColor");
                     OnPropertyChanged("Value");
                 }
             }
         }
+
+        public string Value2
+        {
+            get
+            {
+                var returned = Source.TryGet(Command, out IntIntProperty ip);
+                switch (returned)
+                {
+                    case ReturnType.FALSE:
+                        break;
+                    case ReturnType.COPIED:
+                        //set to greyed out?
+                        return ip.Value2.ToString();
+                    case ReturnType.TRUE:
+                        return ip.Value2.ToString();
+                }
+                return "";
+            }
+            set
+            {
+                if (int.TryParse(value, out int ret))
+                {
+                    Source.Set<IntIntProperty>(Command, i => i.Value2 = ret);
+                    OnPropertyChanged("BackgroundColor");
+                    OnPropertyChanged("Value");
+                }
+            }
+        }
+
+        public override string Value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

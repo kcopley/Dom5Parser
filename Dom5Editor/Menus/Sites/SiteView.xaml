@@ -4,8 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dom5Editor" xmlns:menus="clr-namespace:Dom5Editor.Menus"
+            xmlns:commands="clr-namespace:Dom5Edit.Commands;assembly=Dom5Edit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="CommandEnumProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="commands:Command"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Grid x:Name="SiteMenuHolder" Margin="0" >
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -27,11 +36,15 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <ContentControl Grid.Column="0" Grid.Row="0">
-                    <ListView Background="Transparent" ItemsSource="{Binding Path=ExtraCommands}" HorizontalContentAlignment="Stretch"/>
-                </ContentControl>
+                <StackPanel Grid.Column="0" Grid.RowSpan="3">
+                    <ContentControl>
+                        <ItemsControl Background="Transparent" ItemsSource="{Binding Path=SitePropertiesView}" IsTextSearchEnabled="False"/>
+                    </ContentControl>
+                    <ComboBox ItemsSource="{Binding Path=SiteCommandsView}"
+                        SelectedItem="{Binding SelectedCommand}" />
+                    <Button Content="Add Property" Command="{Binding AddPropertyCommand}" />
+                </StackPanel>
             </Grid>
-            <!-- Magic paths box -->
         </Grid>
     </Grid>
 </UserControl>

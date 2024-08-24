@@ -21,26 +21,22 @@ namespace Dom5Editor
         public ModViewModel Parent { get; protected set; }
         public List<Command> CoreAttributes = new List<Command>() {};
 
-        private ObservableCollection<PropertyViewModel> _properties;
+        private ObservableCollection<PropertyViewModel> _properties = new ObservableCollection<PropertyViewModel>();
         public ObservableCollection<PropertyViewModel> AllProperties {
             get
             {
-                if (_properties == null)
-                {
-                    ObservableCollection<PropertyViewModel> list = new ObservableCollection<PropertyViewModel>();
+                _properties.Clear();
+                //if (_properties == null)
+               // {
+                    //ObservableCollection<PropertyViewModel> list = new ObservableCollection<PropertyViewModel>();
                     foreach (var prop in _entity.Properties)
                     {
-                        list.Add(GetVM(prop));
+                        _properties.Add(GetVM(prop));
                     }
-                    _properties = list;
-                }
+                    //_properties = list;
+               // }
                 return _properties;
             }
-        }
-
-        private void OnRequestRemove(PropertyViewModel viewModel)
-        {
-            AllProperties.Remove(viewModel);
         }
 
         protected PropertyViewModel GetVM(Property p)
@@ -51,6 +47,10 @@ namespace Dom5Editor
             if (t.InheritsFrom(typeof(IntProperty)) || t.Equals(typeof(IntProperty)))
             {
                 viewModel = new IntPropertyViewModel(p.Command.ToString(), _entity, p.Command);
+            }
+            else if (t.InheritsFrom(typeof(IntIntProperty)) || t.Equals(typeof(IntIntProperty)))
+            {
+                viewModel = new IntIntPropertyViewModel(p.Command.ToString(), _entity, p.Command);
             }
             else if (t.InheritsFrom(typeof(StringProperty)) || t.Equals(typeof(StringProperty)))
             {
@@ -81,7 +81,6 @@ namespace Dom5Editor
                 viewModel = new CommandViewModel(p.Command.ToString(), _entity, p.Command); // Default case
             }
 
-            viewModel.RequestRemove += OnRequestRemove;
             return viewModel; // Return the assigned view model
         }
 

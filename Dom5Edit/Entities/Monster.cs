@@ -507,11 +507,7 @@ namespace Dom5Edit.Entities
         {
             get
             {
-                var list = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return p.Command == Command.MAGICSKILL;
-                    }).Cast<IntIntProperty>();
+                var list = this.Properties.Where(p => p.Command == Command.MAGICSKILL).Cast<IntIntProperty>();
                 foreach (var property in list)
                 {
                     yield return new MagicSkill() { Path = (MagicPaths)property.Value1, Level = property.Value2 };
@@ -523,11 +519,7 @@ namespace Dom5Edit.Entities
         {
             get
             {
-                var list = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return p.Command == Command.SPR1 || p.Command == Command.SPR2;
-                    }).Cast<FilePathProperty>();
+                var list = this.Properties.Where(p => p.Command == Command.SPR1 || p.Command == Command.SPR2).Cast<FilePathProperty>();
                 return list;
             }
         }
@@ -536,11 +528,7 @@ namespace Dom5Edit.Entities
         {
             get
             {
-                var list = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return p.Command == Command.CUSTOMMAGIC;
-                    }).Cast<BitmaskChanceProperty>();
+                var list = this.Properties.Where(p => p.Command == Command.CUSTOMMAGIC).Cast<BitmaskChanceProperty>();
                 foreach (var property in list)
                 {
                     ulong fire = 128;

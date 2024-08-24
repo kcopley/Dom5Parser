@@ -71,10 +71,13 @@ namespace Dom5Editor.VMs
             }
             set
             {
-                _property.TrySetEntity(value.Monster);
-                // Source.Set<StringOrIDRef>(_command, id => id.Entity = value.Monster);
-                _parentMod.OnPropertyChanged("");
-                _owner.OnPropertyChanged("");
+                if (value != null)
+                {
+                    _property.TrySetEntity(value.Monster);
+                    // Source.Set<StringOrIDRef>(_command, id => id.Entity = value.Monster);
+                    _parentMod.OnPropertyChanged("");
+                    _owner.OnPropertyChanged("");
+                }
             }
         }
     }

@@ -9,6 +9,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Margin="2" Height="24" TextAlignment="Right" Text="{Binding Path=Label}"/>
         <TextBox Grid.Column="1" Height="24" Margin="2" Text="{Binding Path=Value}" TextAlignment="Center"/>

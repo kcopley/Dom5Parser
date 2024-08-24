@@ -6,9 +6,10 @@
              xmlns:local="clr-namespace:Dom5Editor.Menus"
              mc:Ignorable="d" 
              d:DesignHeight="32">
-    <Grid>
+    <Grid MinWidth="256">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="0.5*" />
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Margin="2" Height="24" TextAlignment="Right" Text="{Binding Path=Label}"/>
     </Grid>

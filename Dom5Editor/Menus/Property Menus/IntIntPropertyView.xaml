@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Dom5Editor.Menus.IntIntPropertyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dom5Editor.Menus"
+             mc:Ignorable="d" 
+             d:DesignHeight="32">
+    <Grid MinWidth="64">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock  MinWidth="64" Margin="2" Height="24" TextAlignment="Left" Text="{Binding Path=Label}"/>
+        <TextBox Grid.Column="1" MinWidth="32"  Height="24" Margin="2" Text="{Binding Path=Value1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TextAlignment="Right" Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="2" MinWidth="32"  Height="24" Margin="2" Text="{Binding Path=Value2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TextAlignment="Right" Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Right"/>
+    </Grid>
+</UserControl>

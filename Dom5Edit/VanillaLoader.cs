@@ -223,7 +223,7 @@ namespace Dom5Edit
 
         void LoadMonsterDescriptions(Mod m)
         {
-            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.VanillaMonsterData)))
+            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.descriptions)))
             {
                 m.read_stream(s);
             }

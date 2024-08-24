@@ -1332,8 +1332,12 @@ namespace Dom5Edit.Commands
 
     public class CommandsMap
     {
+        // Maps strings in mod files to their command representation
         private static Dictionary<string, Command> _commandMap = new Dictionary<string, Command>();
+        // Reversed map of string -> command
         private static Dictionary<Command, string> _stringMap = new Dictionary<Command, string>();
+        // This maps out which commands can only be applied once on an Entity
+        private static HashSet<Command> _singularMap = new HashSet<Command>();
 
         private static Dictionary<Command, string> _toolTipMap = new Dictionary<Command, string>();
         private static HashSet<Command> _nonEditable = new HashSet<Command>();
@@ -2713,6 +2717,9 @@ namespace Dom5Edit.Commands
             {
                 _stringMap.Add(kvp.Value, kvp.Key);
             }
+
+            _singularMap.Add(Command.ATT);
+            // Continue adding the singulars here
         }
 
         public static bool TryGetCommand(string s, out Command c)
@@ -2733,6 +2740,11 @@ namespace Dom5Edit.Commands
         public static bool IsNotEditable(Command c)
         {
             return _nonEditable.Contains(c);
+        }
+
+        public static bool IsSingular(Command c)
+        {
+            return _singularMap.Contains(c);
         }
 
         public static string Format(Command c, string val, bool needsQuotes = false)

@@ -12,7 +12,8 @@ namespace Dom5Edit.Entities
 {
     public class IDEntity : Entity
     {
-        public List<Property> Properties = new List<Property>();
+        private List<Property> _properties = new List<Property>();
+        public IReadOnlyList<Property> Properties => _properties.AsReadOnly();
         public HashSet<Nation> AssociatedNations = new HashSet<Nation>();
         public bool Selected { get; set; }
         public bool Named { get; set; }
@@ -131,7 +132,7 @@ namespace Dom5Edit.Entities
                 if (prop == null)
                 {
                     prop = new StringProperty() { Command = Command.NAME, Value = value };
-                    Add(prop);
+                    AddProperty(prop);
                 }
                 var str = prop as StringProperty;
                 str.Value = value;
@@ -205,6 +206,39 @@ namespace Dom5Edit.Entities
             return ret;
         }
 
+        public IEnumerable<Property> GetAllProperties()
+        {
+            return Properties;
+        }
+
+        public void AddProperty(Property property)
+        {
+            property.Parent = this;
+            _properties.Add(property);
+            _properties = _properties.OrderBy(sort_properties).ToList();
+        }
+
+        public void AddProperties(List<Property> props)
+        {
+            foreach (var p in props)
+            {
+                p.Parent = this;
+                _properties.Add(p);
+            }
+            _properties = _properties.OrderBy(sort_properties).ToList();
+        }
+
+        public void RemoveProperty(Property property)
+        {
+            _properties.Remove(property);
+            _properties = _properties.OrderBy(sort_properties).ToList();
+        }
+
+        public void ClearProperties()
+        {
+            _properties.Clear();
+        }
+
         public override void Parse(Command command, string value, string comment)
         {
             if (GetPropertyMap().TryGetValue(command, out Func<Property> create))
@@ -212,7 +246,7 @@ namespace Dom5Edit.Entities
                 Property prop = create.Invoke();
                 prop.Parent = this; //carry the mod assignation down
                 prop.Parse(command, value, comment);
-                Properties.Add(prop);
+                AddProperty(prop);
             }
             else
             {
@@ -223,22 +257,12 @@ namespace Dom5Edit.Entities
 
         public IEnumerable<Property> GetMultiple(Command c)
         {
-            var prop = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return p.Command == c;
-                    });
-            return prop;
+            return Properties.Where(p => p.Command == c);
         }
 
         public IEnumerable<Property> GetCommandProperties()
         {
-            var prop = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return p.GetType().Equals(typeof(CommandProperty));
-                    });
-            return prop;
+            return Properties.Where(p => p.GetType().Equals(typeof(CommandProperty)));
         }
 
         public void Set<T>(Command c, Action<T> set) where T : Property, new()
@@ -305,37 +329,23 @@ namespace Dom5Edit.Entities
 
         internal T Get<T>(Command c) where T : Property
         {
-            var prop = this.Properties.Find(
-                    delegate (Property p)
-                    {
-                        return p.Command == c && p.GetType() == typeof(T);
-                    });
-            return prop as T;
+            return Properties.OfType<T>().FirstOrDefault(p => p.Command == c);
         }
 
         internal ReturnType Get<T>(Command c, out T t) where T : Property, new()
         {
-            var ret = Get<T>(c);
-            if (ret != null)
-            {
-                t = ret as T;
-                return ReturnType.TRUE;
-            }
-            else
-            {
-                t = null;
-                return ReturnType.FALSE;
-            }
+            t = Get<T>(c);
+            return t != null ? ReturnType.TRUE : ReturnType.FALSE;
         }
 
         public ReturnType TryGet<T>(Command c, out T ret, bool checkCopy = true) where T : Property, new()
         {
-            var exists = Get<T>(c, out ret);
-            if (exists == ReturnType.TRUE)
+            ret = Get<T>(c);
+            if (ret != null)
             {
                 return ReturnType.TRUE;
             }
-            if (exists == ReturnType.FALSE && checkCopy)
+            if (checkCopy)
             {
                 var copyExists = TryGetCopyFrom(out var copy);
                 if (copyExists)
@@ -354,6 +364,38 @@ namespace Dom5Edit.Entities
         public bool HasCommand<T>(Command c) where T : Property, new()
         {
             return TryGet<T>(c, out T ret) != ReturnType.FALSE;
+        }
+
+        public IEnumerable<Property> GetAllPropertiesIncludingCopied()
+        {
+            var allProperties = new List<Property>(Properties);
+            GetCopiedPropertiesRecursively(allProperties, new HashSet<IDEntity> { this });
+            return allProperties;
+        }
+
+        public IEnumerable<Property> GetOnlyCopiedProperties()
+        {
+            var copiedProperties = new List<Property>();
+            GetCopiedPropertiesRecursively(copiedProperties, new HashSet<IDEntity> { this });
+            return copiedProperties;
+        }
+
+        private void GetCopiedPropertiesRecursively(List<Property> propertyList, HashSet<IDEntity> visitedEntities)
+        {
+            if (TryGetCopyFrom(out var copiedEntity) && !visitedEntities.Contains(copiedEntity))
+            {
+                visitedEntities.Add(copiedEntity);
+
+                foreach (var property in copiedEntity.Properties)
+                {
+                    if (!propertyList.Any(p => p.Command == property.Command && p.GetType() == property.GetType()))
+                    {
+                        propertyList.Add(property);
+                    }
+                }
+
+                copiedEntity.GetCopiedPropertiesRecursively(propertyList, visitedEntities);
+            }
         }
 
         /// <summary>
@@ -381,19 +423,28 @@ namespace Dom5Edit.Entities
         public T Create<T>(Command c) where T : Property, new()
         {
             var ret = new T() { Parent = this, Command = c };
-            this.Add(ret);
+            AddProperty(ret);
             return ret;
         }
 
-        public bool Remove<T>(Command c)
+        public bool Remove<T>(Command c) where T : Property
         {
-            if (this.Get<IntProperty>(c, out IntProperty ip) == ReturnType.TRUE)
+            var property = Get<T>(c);
+            if (property != null)
             {
-                var ret = this.Properties.Remove(ip);
-                this.Properties.OrderBy(p => p.Parent.GetPropertyMap().Keys.ToList().IndexOf(p.Command));
+                RemoveProperty(property);
                 return true;
             }
             return false;
+        }
+
+        public void RemoveProperty(Command command)
+        {
+            var propertyToRemove = _properties.FirstOrDefault(p => p.Command == command);
+            if (propertyToRemove != null)
+            {
+                _properties.Remove(propertyToRemove);
+            }
         }
 
         public virtual bool TryGetCopyFrom(out IDEntity copy)
@@ -404,13 +455,6 @@ namespace Dom5Edit.Entities
         public virtual bool TryGetCopySpr(out IDEntity copySpr)
         {
             throw new NotImplementedException();
-        }
-
-        public void Add(Property prop)
-        {
-            prop.Parent = this;
-            this.Properties.Add(prop);
-            this.Properties = this.Properties.OrderBy(sort_properties).ToList();
         }
 
         public int sort_properties(Property p)

@@ -18,6 +18,5 @@
                                                 TextSearch.TextPath="DisplayName" DisplayMemberPath="DisplayName" 
                                                 SelectedItem="{Binding Path=SelectedID }" IsEditable="True" 
                                                 IsManipulationEnabled="True" />
-        <Button Grid.Column="2" Content="-" Command="{Binding RemoveCommand}" CommandParameter="{Binding}"/>
     </Grid>
 </UserControl>

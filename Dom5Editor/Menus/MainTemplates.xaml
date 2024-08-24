@@ -3,8 +3,7 @@
                     xmlns:local="clr-namespace:Dom5Editor"
                     xmlns:Dom5Editor="clr-namespace:Dom5Editor"
                     xmlns:Menus="clr-namespace:Dom5Editor.Menus"
-                    xmlns:VM="clr-namespace:Dom5Editor.VMs"
-                    xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete">
+                    xmlns:VM="clr-namespace:Dom5Editor.VMs">
     
     <DataTemplate DataType="{x:Type Dom5Editor:MonsterViewModel}">
         <Dom5Editor:MonsterView />
@@ -15,7 +14,10 @@
     <DataTemplate DataType="{x:Type VM:IntPropertyViewModel}">
         <Menus:IntPropertyView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type VM:CommandViewModel}">
+    <DataTemplate DataType="{x:Type VM:IntIntPropertyViewModel}">
+        <Menus:IntIntPropertyView />
+    </DataTemplate>
+    <DataTemplate x:Key="CommandView" DataType="{x:Type VM:CommandViewModel}">
         <Menus:CommandView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type VM:StringViewModel}">
@@ -44,4 +46,14 @@
         <Menus:StringOrIDRefView />
     </DataTemplate>
 
+    <Style x:Key="RemoveButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="2,0,5,0"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
 </ResourceDictionary>

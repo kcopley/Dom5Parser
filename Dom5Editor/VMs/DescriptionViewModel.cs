@@ -11,9 +11,9 @@ namespace Dom5Editor.VMs
 {
     public class DescriptionViewModel : PropertyViewModel
     {
-        public DescriptionViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
         public DescriptionViewModel(IDEntity e, Command c) : base(e, c) { }
-
+        public DescriptionViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
+        
         public override string Value
         {
             get

@@ -135,11 +135,7 @@ namespace Dom5Edit.Entities
             {
                 if (this._resolved)
                 {
-                    var list = this.Properties.FindAll(
-                        delegate (Property p)
-                        {
-                            return p.Command == Command.HOMECOM;
-                        }).Cast<MonsterOrMontagRef>();
+                    var list = this.Properties.Where(p => p.Command == Command.HOMECOM).Cast<MonsterOrMontagRef>();
                     foreach (var property in list)
                     {
                         var ret = property?._monsterRef?.Entity as Monster;

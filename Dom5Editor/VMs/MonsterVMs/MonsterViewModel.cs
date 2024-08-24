@@ -59,6 +59,7 @@ namespace Dom5Editor
 
             AddWeaponCommand = new RelayCommand(AddWeapon);
             AddArmorCommand = new RelayCommand(AddArmor);
+            RemoveCommand = new RelayCommand(RemoveProperty);
             //Attributes = new ObservableCollection<Property>(_entity.Properties);
             // Subscribe to CollectionChanged to update the Monster's list when the ObservableCollection changes
             //Attributes.CollectionChanged += Properties_CollectionChanged;
@@ -76,6 +77,8 @@ namespace Dom5Editor
                 var item = e.Item as PropertyViewModel;
                 e.Accepted = item != null && item.Command == Command.ARMOR;
             };
+
+            var a = AllProperties;
         }
 
         public void SetMonster(Monster m)
@@ -90,7 +93,7 @@ namespace Dom5Editor
         private void Properties_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             // Synchronize changes with the Monster's internal list
-            _entity.Properties = Attributes.ToList();
+            //_entity.Properties = Attributes.ToList();
         }
 
         public ICommand AddWeaponCommand { get; private set; }
@@ -309,6 +312,40 @@ namespace Dom5Editor
                     }
                 }
                 return new BitmapImage();
+            }
+        }
+
+        public ICommand RemoveCommand { get; private set; }
+
+        private void RemoveProperty(object parameter)
+        {
+            if (parameter is PropertyViewModel propertyVM)
+            {
+                _entity.RemoveProperty(propertyVM.Command);
+                OnPropertyChanged(nameof(AllProperties));
+                // Trigger UI update for the specific property
+                OnPropertyChanged(GetPropertyName(propertyVM.Command));
+            }
+        }
+
+        private string GetPropertyName(Command command)
+        {
+            // Map Command to property name
+            switch (command)
+            {
+                case Command.HP:
+                    return nameof(HitPoints);
+                case Command.SIZE:
+                    return nameof(Size);
+                case Command.PROT:
+                    return nameof(Prot);
+                case Command.MR:
+                    return nameof(MR);
+                case Command.MOR:
+                    return nameof(Morale);
+                // Add other cases as needed
+                default:
+                    return string.Empty;
             }
         }
     }

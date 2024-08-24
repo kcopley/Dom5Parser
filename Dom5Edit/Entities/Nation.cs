@@ -253,11 +253,7 @@ namespace Dom5Edit.Entities
         {
             get
             {
-                var list = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return p.Command == Command.STARTSITE;
-                    }).Cast<SiteRef>();
+                var list = this.Properties.Where(p => p.Command == Command.STARTSITE).Cast<SiteRef>();
                 foreach (var property in list)
                 {
                     var ret = property?.Entity as Site;
@@ -270,10 +266,7 @@ namespace Dom5Edit.Entities
         {
             get
             {
-                var list = this.Properties.FindAll(
-                    delegate (Property p)
-                    {
-                        return (p.Command == Command.COASTCOM ||
+                var list = this.Properties.Where(p => p.Command == Command.COASTCOM ||
                             p.Command == Command.COASTCOM1 ||
                             p.Command == Command.COASTCOM2 ||
                             p.Command == Command.LANDCOM ||
@@ -284,8 +277,7 @@ namespace Dom5Edit.Entities
                             p.Command == Command.CAVECOM ||
                             p.Command == Command.ADDRECCOM ||
                             p.Command == Command.UWCOM ||
-                            p.Command == Command.SWAMPCOM);
-                    }).Cast<MonsterOrMontagRef>();
+                            p.Command == Command.SWAMPCOM).Cast<MonsterOrMontagRef>();
                 foreach (var property in list)
                 {
                     var ret = property?._monsterRef?.Entity as Monster;
@@ -298,11 +290,7 @@ namespace Dom5Edit.Entities
         {
             get
             {
-                var ret = this.Properties.Find(
-                    delegate (Property p)
-                    {
-                        return p.Command == Command.ERA;
-                    });
+                var ret = this.Properties.FirstOrDefault(p => p.Command == Command.ERA);
                 return ret as IntProperty;
             }
         }

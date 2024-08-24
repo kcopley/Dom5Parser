@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Dom5Editor.Menus
 {
     /// <summary>
-    /// Interaction logic for MonsterStatsView.xaml
+    /// Interaction logic for IntIntPropertyView.xaml
     /// </summary>
-    public partial class MonsterStatsView : UserControl
+    public partial class IntIntPropertyView : UserControl
     {
-        public MonsterStatsView()
+        public IntIntPropertyView()
         {
             InitializeComponent();
         }

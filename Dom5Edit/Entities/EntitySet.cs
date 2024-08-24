@@ -203,13 +203,13 @@ namespace Dom5Edit.Entities
             if (!Entities.ContainsKey(id))
             {
                 m = IDEntity.SelectVanillaEntity<Monster>(id, mod);
-                m.Properties.Add(CommandProperty.Create(Command.CLEARMAGIC, m));
+                m.AddProperty(CommandProperty.Create(Command.CLEARMAGIC, m));
             }
             else
             {
                 m = Entities[id];
-                m.Properties.Clear();
-                m.Properties.Add(CommandProperty.Create(Command.CLEARMAGIC, m));
+                m.ClearProperties();
+                m.AddProperty(CommandProperty.Create(Command.CLEARMAGIC, m));
             }
             Entities.Remove(id);
 
@@ -243,7 +243,7 @@ namespace Dom5Edit.Entities
             {
                 if (entity.DependentEntity != null)
                 {
-                    entity.DependentEntity.Properties.AddRange(entity.Properties);
+                    entity.DependentEntity.AddProperties(entity.Properties.ToList());
                     continue;
                 }
                 if (entity.ID < START_ID && entity.Selected)
@@ -255,7 +255,7 @@ namespace Dom5Edit.Entities
                     }
                     else
                     {
-                        Entities[entity.ID].Properties.AddRange(entity.Properties);
+                        Entities[entity.ID].AddProperties(entity.Properties.ToList());
                     }
                 }
                 else if (entity.ID < START_ID)
@@ -274,7 +274,7 @@ namespace Dom5Edit.Entities
             {
                 if (entity.DependentEntity != null)
                 {
-                    entity.DependentEntity.Properties.AddRange(entity.Properties);
+                    entity.DependentEntity.AddProperties(entity.Properties.ToList());
                     continue;
                 }
                 //assign a new ID upwards

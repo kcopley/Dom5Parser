@@ -21,7 +21,6 @@ namespace Dom5Editor.VMs
             this.Label = c.ToString();
             this.Source = e;
             this.Command = c;
-            RemoveCommand = new RelayCommand(RemoveItem);
         }
 
         public PropertyViewModel(string label, IDEntity e, Command c)
@@ -29,15 +28,6 @@ namespace Dom5Editor.VMs
             this.Label = label;
             this.Source = e;
             this.Command = c;
-            RemoveCommand = new RelayCommand(RemoveItem);
-        }
-
-        public ICommand RemoveCommand { get; private set; }
-
-        public event Action<PropertyViewModel> RequestRemove;
-        private void RemoveItem(object parameter)
-        {
-            RequestRemove?.Invoke(this);
         }
 
         public abstract string Value { get; set; }

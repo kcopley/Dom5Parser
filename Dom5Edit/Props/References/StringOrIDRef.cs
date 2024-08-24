@@ -48,7 +48,7 @@ namespace Dom5Edit.Props
             set
             {
                 _name = value;
-                if (Parent.ParentMod.IsLoaded)
+                if (Parent?.ParentMod?.IsLoaded == true)
                 {
                     Resolve();
                 }
@@ -105,7 +105,7 @@ namespace Dom5Edit.Props
 
             HasValue = s.TryRetrieveNumericFromString(out int val, out string remainder);
 
-            if (HasValue && !Parent.ParentMod.LineWasTrimmed)
+            if (HasValue && !(Parent?.ParentMod?.LineWasTrimmed ?? true))
             {
                 ID = val;
                 IsStringRef = false;
