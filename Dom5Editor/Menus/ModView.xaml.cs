@@ -72,6 +72,24 @@ namespace Dom5Editor
             _vm.OpenSite = site;
         }
 
+        private void EditorWeaponList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EditorWeaponList.SelectedItem != null)
+            {
+                WeaponViewModel wvm = EditorWeaponList.SelectedItem as WeaponViewModel;
+                (DataContext as ModViewModel).OpenWeapon = wvm;
+            }
+        }
+
+        private void EditorArmorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EditorArmorList.SelectedItem != null)
+            {
+                ArmorViewModel avm = EditorArmorList.SelectedItem as ArmorViewModel;
+                (DataContext as ModViewModel).OpenArmor = avm;
+            }
+        }
+
         private void Icon_File_Changed(object sender, TextChangedEventArgs e)
         {
             BindingExpression be = IconImage.GetBindingExpression(Image.SourceProperty);

@@ -564,6 +564,7 @@ namespace Dom5Edit
             s = "";
             return false;
         }
+
         /* magic path for nations, skipping this for now
         public void ExportMagicPaths(string folder)
         {

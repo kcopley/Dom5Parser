@@ -89,20 +89,17 @@ namespace Dom5Editor
         private WeaponViewModel _openWeapon;
         public WeaponViewModel OpenWeapon
         {
-            get
-            {
-                if (_openWeapon == null)
-                {
-                    _openWeapon = null;
-                }
-                return _openWeapon;
-            }
+            get => _openWeapon;
             set
             {
-                _openWeapon = value;
-                OnPropertyChanged("OpenWeapon");
+                if (_openWeapon != value)
+                {
+                    _openWeapon = value;
+                    OnPropertyChanged(nameof(OpenWeapon));
+                }
             }
         }
+
         private ObservableCollection<WeaponViewModel> _openWeapons;
         public ObservableCollection<WeaponViewModel> OpenWeapons
         {
@@ -140,27 +137,35 @@ namespace Dom5Editor
             }
         }
 
-        private List<ArmorViewModel> _Armors;
+        private ArmorViewModel _openArmor;
+        public ArmorViewModel OpenArmor
+        {
+            get => _openArmor;
+            set
+            {
+                if (_openArmor != value)
+                {
+                    _openArmor = value;
+                    OnPropertyChanged(nameof(OpenArmor));
+                }
+            }
+        }
+
+        private List<ArmorViewModel> _armors;
         public List<ArmorViewModel> Armors
         {
             get
             {
-                if (_Armors == null)
+                if (_armors == null)
                 {
-                    _Armors = new List<ArmorViewModel>();
-                    var list = VanillaLoader.Vanilla.Database[EntityType.ARMOR].GetFullList();
-                    foreach (var m in list)
+                    var list = _mod.Database[EntityType.ARMOR].GetFullList();
+                    _armors = new List<ArmorViewModel>();
+                    foreach (var a in list)
                     {
-                        _Armors.Add(new ArmorViewModel(this, m as Armor));
+                        _armors.Add(new ArmorViewModel(this, a as Armor));
                     }
-                    list = _mod.Database[EntityType.WEAPON].GetFullList();
-                    foreach (var m in list)
-                    {
-                        _Armors.Add(new ArmorViewModel(this, m as Armor));
-                    }
-
                 }
-                return _Armors;
+                return _armors;
             }
         }
 

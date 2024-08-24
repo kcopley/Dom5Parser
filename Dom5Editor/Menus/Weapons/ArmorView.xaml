@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Dom5Editor.ArmorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dom5Editor" xmlns:menus="clr-namespace:Dom5Editor.Menus"
+             xmlns:commands="clr-namespace:Dom5Edit.Commands;assembly=Dom5Edit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="CommandEnumProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="commands:Command"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid x:Name="ArmorMenuHolder" Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Name box -->
+        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Margin="2" HorizontalAlignment="Left"  
+                        Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" 
+                        MinWidth="360"/>
+
+        <!-- Properties List -->
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding ArmorProperties}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentControl Grid.Column="0" Content="{Binding}"/>
+                            <Button Grid.Column="1" Content="X" 
+                                    Command="{Binding DataContext.RemovePropertyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource RemoveButtonStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Add Property Controls -->
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Grid.Column="0" ItemsSource="{Binding AvailableCommands}"
+                      SelectedItem="{Binding SelectedCommand}" 
+                      Margin="2"/>
+            <Button Grid.Column="1" Content="Add Property" 
+                    Command="{Binding AddPropertyCommand}" 
+                    Margin="2" Padding="5,2"/>
+        </Grid>
+    </Grid>
+</UserControl>

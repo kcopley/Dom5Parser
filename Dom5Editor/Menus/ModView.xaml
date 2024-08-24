@@ -48,7 +48,22 @@
                     </ContentControl>
                 </Grid>
             </TabItem>
-
+            <TabItem x:Name="ModEditorWeapons" Header="Weapons" Height="20" VerticalAlignment="Top" Margin="-2,0,-22,0" HorizontalAlignment="Left" Width="85">
+                <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="WeaponVMPanel" Margin="185,10,10,10" />
+                    <ListBox x:Name="EditorWeaponList" HorizontalAlignment="Left" Height="672" Margin="0,10,0,0" VerticalAlignment="Top" Width="180" ItemsSource="{Binding Path=Weapons}" DisplayMemberPath="DisplayName" SelectionChanged="EditorWeaponList_SelectionChanged"/>
+                    <ContentControl Background="#FFE5E5E5" x:Name="WeaponVMTabPanel" Content="{Binding Path=OpenWeapon,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="672" Margin="185,10,0,0" VerticalAlignment="Top" Width="999" RenderTransformOrigin="0.38,0.44">
+                    </ContentControl>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="ModEditorArmors" Header="Armors" Height="20" VerticalAlignment="Top" Margin="-2,0,-22,0" HorizontalAlignment="Left" Width="85">
+                <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="ArmorVMPanel" Margin="185,10,10,10" />
+                    <ListBox x:Name="EditorArmorList" HorizontalAlignment="Left" Height="672" Margin="0,10,0,0" VerticalAlignment="Top" Width="180" ItemsSource="{Binding Path=Armors}" DisplayMemberPath="DisplayName" SelectionChanged="EditorArmorList_SelectionChanged"/>
+                    <ContentControl Background="#FFE5E5E5" x:Name="ArmorVMTabPanel" Content="{Binding Path=OpenArmor,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="672" Margin="185,10,0,0" VerticalAlignment="Top" Width="999" RenderTransformOrigin="0.38,0.44">
+                    </ContentControl>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

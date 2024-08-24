@@ -132,6 +132,12 @@
     <Compile Include="Menus\Sites\SiteView.xaml.cs">
       <DependentUpon>SiteView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Menus\Weapons\ArmorView.xaml.cs">
+      <DependentUpon>ArmorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\Weapons\WeaponView.xaml.cs">
+      <DependentUpon>WeaponView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\TargaImage.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="VMs\IntIntPropertyViewModel.cs" />
@@ -211,6 +217,14 @@
     <Page Include="Menus\Sites\SiteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Menus\Weapons\ArmorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\Weapons\WeaponView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
