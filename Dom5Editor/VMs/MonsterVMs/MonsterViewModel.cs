@@ -27,11 +27,20 @@ namespace Dom5Editor
     {
         private CollectionViewSource _weaponPropertiesViewSource;
         private CollectionViewSource _armorPropertiesViewSource;
+        private readonly Dictionary<Command, AttributeInfo> _attributeInfos;
+
+        public ObservableCollection<WeaponRefViewModel> WeaponProperties { get; } = new ObservableCollection<WeaponRefViewModel>();
+        public ObservableCollection<ArmorRefViewModel> ArmorProperties { get; } = new ObservableCollection<ArmorRefViewModel>();
 
         public ICollectionView WeaponPropertiesView => _weaponPropertiesViewSource.View;
         public ICollectionView ArmorPropertiesView => _armorPropertiesViewSource.View;
 
-        private readonly Dictionary<Command, AttributeInfo> _attributeInfos;
+        public Monster Monster { get { return _entity as Monster; } }
+        public ObservableCollection<Property> Attributes { get; }
+        public ICommand AddWeaponCommand { get; private set; }
+        public ICommand AddArmorCommand { get; private set; }
+        public ICommand RemoveWeaponCommand { get; }
+        public ICommand RemoveArmorCommand { get; }
 
         public MonsterViewModel(ModViewModel mod, Monster monster)
         {
@@ -68,6 +77,10 @@ namespace Dom5Editor
 
             AddWeaponCommand = new RelayCommand(AddWeapon);
             AddArmorCommand = new RelayCommand(AddArmor);
+            RemoveWeaponCommand = new RelayCommand<WeaponRefViewModel>(RemoveWeapon);
+            RemoveArmorCommand = new RelayCommand<ArmorRefViewModel>(RemoveArmor);
+            RefreshWeaponProperties();
+            RefreshArmorProperties();
             RemoveCommand = new RelayCommand(RemoveProperty);
             //Attributes = new ObservableCollection<Property>(_entity.Properties);
             // Subscribe to CollectionChanged to update the Monster's list when the ObservableCollection changes
@@ -116,26 +129,13 @@ namespace Dom5Editor
             this._entity = m;
         }
 
-        public Monster Monster { get { return _entity as Monster; } }
-
-        public ObservableCollection<Property> Attributes { get; }
-
-        private void Properties_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            // Synchronize changes with the Monster's internal list
-            //_entity.Properties = Attributes.ToList();
-        }
-
-        public ICommand AddWeaponCommand { get; private set; }
-        public ICommand AddArmorCommand { get; private set; }
-
         private void AddWeapon()
         {
             var newProperty = WeaponRef.Create();
             newProperty.Parent = _entity;
             newProperty.Parse(Command.WEAPON, "1", "");
-            var vm = GetVM(newProperty);
-            AllProperties.Add(vm);
+            _entity.AddProperty(newProperty);
+            RefreshWeaponProperties();
         }
 
         private void AddArmor()
@@ -143,8 +143,40 @@ namespace Dom5Editor
             var newProperty = ArmorRef.Create();
             newProperty.Parent = _entity;
             newProperty.Parse(Command.ARMOR, "1", "");
-            var vm = GetVM(newProperty);
-            AllProperties.Add(vm);
+            _entity.AddProperty(newProperty);
+            RefreshArmorProperties();
+        }
+
+        private void RemoveWeapon(WeaponRefViewModel weaponVM)
+        {
+            _entity.RemoveProperty(weaponVM._property);
+            RefreshWeaponProperties();
+        }
+
+        private void RemoveArmor(ArmorRefViewModel armorVM)
+        {
+            _entity.RemoveProperty(armorVM._property);
+            RefreshArmorProperties();
+        }
+
+        private void RefreshWeaponProperties()
+        {
+            WeaponProperties.Clear();
+            foreach (var prop in _entity.Properties.OfType<WeaponRef>())
+            {
+                WeaponProperties.Add(new WeaponRefViewModel(Parent, this, _entity, prop));
+            }
+            OnPropertyChanged(nameof(WeaponProperties));
+        }
+
+        private void RefreshArmorProperties()
+        {
+            ArmorProperties.Clear();
+            foreach (var prop in _entity.Properties.OfType<ArmorRef>())
+            {
+                ArmorProperties.Add(new ArmorRefViewModel(Parent, this, _entity, prop));
+            }
+            OnPropertyChanged(nameof(ArmorProperties));
         }
 
         public CopyStatsRefViewModel CopyRef
@@ -193,11 +225,6 @@ namespace Dom5Editor
                     return "<No Name>";
                 }
             }
-        }
-
-        private string GetPropertyName(Command command)
-        {
-            return _attributeInfos.TryGetValue(command, out var info) ? info.PropertyName : string.Empty;
         }
 
         public IntPropertyViewModel GetAttribute(Command command)
