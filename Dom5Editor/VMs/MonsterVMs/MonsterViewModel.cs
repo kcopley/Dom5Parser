@@ -20,7 +20,7 @@ namespace Dom5Editor
     {
         public string PropertyName { get; set; }
         public string Label { get; set; }
-        public IntPropertyViewModel ViewModel { get; set; }
+        public PropertyViewModel ViewModel { get; set; }
     }
 
     public class MonsterViewModel : IDViewModelBase
@@ -227,24 +227,24 @@ namespace Dom5Editor
             }
         }
 
-        public IntPropertyViewModel GetAttribute(Command command)
+        public PropertyViewModel GetAttribute(Command command)
         {
             return _attributeInfos.TryGetValue(command, out var info) ? info.ViewModel : null;
         }
 
         // Property definitions
-        public IntPropertyViewModel HitPoints => GetAttribute(Command.HP);
-        public IntPropertyViewModel Size => GetAttribute(Command.SIZE);
-        public IntPropertyViewModel Prot => GetAttribute(Command.PROT);
-        public IntPropertyViewModel MR => GetAttribute(Command.MR);
-        public IntPropertyViewModel Morale => GetAttribute(Command.MOR);
-        public IntPropertyViewModel Attack => GetAttribute(Command.ATT);
-        public IntPropertyViewModel Defense => GetAttribute(Command.DEF);
-        public IntPropertyViewModel Strength => GetAttribute(Command.STR);
-        public IntPropertyViewModel Precision => GetAttribute(Command.PREC);
-        public IntPropertyViewModel CombatSpeed => GetAttribute(Command.AP);
-        public IntPropertyViewModel MapMove => GetAttribute(Command.MAPMOVE);
-        public IntPropertyViewModel Encumbrance => GetAttribute(Command.ENC);
+        public IntPropertyViewModel HitPoints => GetAttribute(Command.HP) as IntPropertyViewModel;
+        public IntPropertyViewModel Size => GetAttribute(Command.SIZE) as IntPropertyViewModel;
+        public IntPropertyViewModel Prot => GetAttribute(Command.PROT) as IntPropertyViewModel;
+        public IntPropertyViewModel MR => GetAttribute(Command.MR) as IntPropertyViewModel;
+        public IntPropertyViewModel Morale => GetAttribute(Command.MOR) as IntPropertyViewModel;
+        public IntPropertyViewModel Attack => GetAttribute(Command.ATT) as IntPropertyViewModel;
+        public IntPropertyViewModel Defense => GetAttribute(Command.DEF) as IntPropertyViewModel;
+        public IntPropertyViewModel Strength => GetAttribute(Command.STR) as IntPropertyViewModel;
+        public IntPropertyViewModel Precision => GetAttribute(Command.PREC) as IntPropertyViewModel;
+        public IntPropertyViewModel CombatSpeed => GetAttribute(Command.AP) as IntPropertyViewModel;
+        public IntPropertyViewModel MapMove => GetAttribute(Command.MAPMOVE) as IntPropertyViewModel;
+        public IntPropertyViewModel Encumbrance => GetAttribute(Command.ENC) as IntPropertyViewModel;
 
         public BitmapSource SpriteImage
         {
