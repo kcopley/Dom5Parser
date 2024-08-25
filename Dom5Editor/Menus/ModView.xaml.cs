@@ -9,19 +9,17 @@ using System.Windows.Data;
 
 namespace Dom5Editor
 {
-    /// <summary>
-    /// Interaction logic for EditorMenuTab.xaml
-    /// </summary>
     public partial class ModView : UserControl
     {
         private ModViewModel _vm;
+
+        public bool IsModLoaded { get; private set; }
 
         public ModView()
         {
             InitializeComponent();
             var m = VanillaLoader.Vanilla;
         }
-
 
         private void SaveModButton_Click(object sender, RoutedEventArgs e)
         {
@@ -40,6 +38,7 @@ namespace Dom5Editor
             {
                 var result = dialog.FileName;
                 _vm = new ModViewModel(result);
+                IsModLoaded = true;
                 this.DataContext = _vm;
             }
         }
@@ -74,35 +73,35 @@ namespace Dom5Editor
 
         private void EditorWeaponList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (EditorWeaponList.SelectedItem != null)
+            if (WeaponList.SelectedItem != null)
             {
-                WeaponViewModel wvm = EditorWeaponList.SelectedItem as WeaponViewModel;
+                WeaponViewModel wvm = WeaponList.SelectedItem as WeaponViewModel;
                 (DataContext as ModViewModel).OpenWeapon = wvm;
             }
         }
 
         private void EditorArmorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (EditorArmorList.SelectedItem != null)
+            if (ArmorList.SelectedItem != null)
             {
-                ArmorViewModel avm = EditorArmorList.SelectedItem as ArmorViewModel;
+                ArmorViewModel avm = ArmorList.SelectedItem as ArmorViewModel;
                 (DataContext as ModViewModel).OpenArmor = avm;
             }
         }
 
         private void EditorItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (EditorItemList.SelectedItem != null)
+            if (ItemList.SelectedItem != null)
             {
-                ((ModViewModel)DataContext).OpenItem = (ItemViewModel)EditorItemList.SelectedItem;
+                ((ModViewModel)DataContext).OpenItem = (ItemViewModel)ItemList.SelectedItem;
             }
         }
 
         private void EditorSpellList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (EditorSpellList.SelectedItem != null)
+            if (SpellList.SelectedItem != null)
             {
-                ((ModViewModel)DataContext).OpenSpell = (SpellViewModel)EditorSpellList.SelectedItem;
+                ((ModViewModel)DataContext).OpenSpell = (SpellViewModel)SpellList.SelectedItem;
             }
         }
 
@@ -121,7 +120,7 @@ namespace Dom5Editor
                 var filePath = Path.GetDirectoryName(_vm.FullFilePath);
                 result = result.Replace(filePath, "");
                 result = result.Trim('/').Trim('\\');
-                IconText.Text = result;
+                _vm.Icon = result;
             }
         }
     }

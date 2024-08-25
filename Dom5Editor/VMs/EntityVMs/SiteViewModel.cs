@@ -27,6 +27,7 @@ namespace Dom5Editor
             };
 
             InitializeAttributeInfos();
+            RefreshEntityProperties();
         }
 
         protected override Dictionary<Command, Func<Property>> GetPropertyMap()

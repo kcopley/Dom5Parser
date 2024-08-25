@@ -13,10 +13,12 @@ namespace Dom5Editor
         {
             CoreAttributes = new List<Command>()
             {
-                Command.NAME
+                Command.NAME,
+                Command.DESCR,
             };
 
             InitializeAttributeInfos();
+            RefreshEntityProperties();
         }
 
         protected override Dictionary<Command, Func<Property>> GetPropertyMap()
@@ -31,6 +33,11 @@ namespace Dom5Editor
         }
 
         public Spell Spell { get { return _entity as Spell; } }
+
+        public DescriptionViewModel Description
+        {
+            get { return new DescriptionViewModel(_entity, Command.DESCR); }
+        }
 
         public void SetSpell(Spell s)
         {

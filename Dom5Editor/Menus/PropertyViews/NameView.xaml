@@ -12,10 +12,13 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding Label}" Foreground="{StaticResource TextBrush}" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Label}" Foreground="{StaticResource TextBrush}" 
+                       FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center"
+                       Style="{StaticResource HeaderTextBlockStyle}"/>
             <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource ModernTextBoxStyle}" BorderThickness="0" 
-                     Background="Transparent" FontSize="16" FontWeight="Bold"/>
+                     Background="Transparent" FontSize="16" FontWeight="Bold"
+                     Foreground="{StaticResource TextBrush}"/>
         </Grid>
     </Border>
 </UserControl>

@@ -43,7 +43,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
             <!-- Header with editable name -->
             <Border Background="{StaticResource AccentBrush}" Padding="20,10" Grid.Row="0">
                 <Grid>
@@ -61,7 +63,7 @@
             </Border>
 
             <!-- Main Stats -->
-            <GroupBox Header="Statistics" Grid.Row="1" Style="{StaticResource CustomGroupBoxStyle}">
+            <GroupBox Header="Statistics" Margin="0,10,0,0" Grid.Row="1" Style="{StaticResource CustomGroupBoxStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -75,35 +77,120 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Stats with Remove Buttons -->
-                    <local:StatDisplay Grid.Column="0" Grid.Row="0" Stat="{Binding HitPoints}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
-                    <local:StatDisplay Grid.Column="1" Grid.Row="0" Stat="{Binding Strength}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
-                    <local:StatDisplay Grid.Column="2" Grid.Row="0" Stat="{Binding Size}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
+                    <!-- Hit Points -->
+                    <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding HitPoints}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding HitPoints}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
 
-                    <local:StatDisplay Grid.Column="0" Grid.Row="1" Stat="{Binding Attack}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
-                    <local:StatDisplay Grid.Column="1" Grid.Row="1" Stat="{Binding Defense}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
-                    <local:StatDisplay Grid.Column="2" Grid.Row="1" Stat="{Binding Prot}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
+                    <!-- Strength -->
+                    <Grid Grid.Column="1" Grid.Row="0" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding Strength}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding Strength}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
 
-                    <local:StatDisplay Grid.Column="0" Grid.Row="2" Stat="{Binding MR}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
-                    <local:StatDisplay Grid.Column="1" Grid.Row="2" Stat="{Binding Precision}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
-                    <local:StatDisplay Grid.Column="2" Grid.Row="2" Stat="{Binding Morale}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
+                    <!-- Size -->
+                    <Grid Grid.Column="2" Grid.Row="0" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding Size}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding Size}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
 
-                    <local:StatDisplay Grid.Column="0" Grid.Row="3" Stat="{Binding CombatSpeed}" 
-                                       RemoveCommand="{Binding RemoveCommand}"/>
+                    <!-- Attack -->
+                    <Grid Grid.Column="0" Grid.Row="1" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding Attack}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding Attack}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+
+                    <!-- Defense -->
+                    <Grid Grid.Column="1" Grid.Row="1" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding Defense}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding Defense}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+
+                    <!-- Protection -->
+                    <Grid Grid.Column="2" Grid.Row="1" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding Prot}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding Prot}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+
+                    <!-- Magic Resistance -->
+                    <Grid Grid.Column="0" Grid.Row="2" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding MR}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding MR}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+
+                    <!-- Precision -->
+                    <Grid Grid.Column="1" Grid.Row="2" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding Precision}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding Precision}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+
+                    <!-- Morale -->
+                    <Grid Grid.Column="2" Grid.Row="2" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding Morale}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding Morale}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+
+                    <!-- Combat Speed -->
+                    <Grid Grid.Column="0" Grid.Row="3" Margin="0,0,5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" Content="{Binding CombatSpeed}"/>
+                        <Button Grid.Column="1" Content="X" Command="{Binding RemoveCommand}" 
+                        CommandParameter="{Binding CombatSpeed}" Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
                 </Grid>
             </GroupBox>
 
             <!-- Monster Image -->
-            <GroupBox Header="Appearance" Grid.Row="2" Style="{StaticResource CustomGroupBoxStyle}">
+            <GroupBox Header="Appearance" Margin="0,10,0,0" Grid.Row="2" Style="{StaticResource CustomGroupBoxStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -119,15 +206,15 @@
             </GroupBox>
 
             <!-- Magic Paths -->
-            <GroupBox Header="Magic Paths" Grid.Row="3" Style="{StaticResource CustomGroupBoxStyle}">
+            <GroupBox Header="Magic Paths" Margin="0,10,0,0" Grid.Row="3" Style="{StaticResource CustomGroupBoxStyle}">
                 <TextBlock Text="Magic Paths data will be displayed here." FontStyle="Italic"/>
             </GroupBox>
 
             <!-- Weapons and Armor -->
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="4" Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Weapons -->
@@ -136,13 +223,21 @@
                         <ItemsControl ItemsSource="{Binding WeaponProperties}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:WeaponDisplay Weapon="{Binding}" 
-                                                         RemoveCommand="{Binding DataContext.RemoveWeaponCommand, 
-                                                         RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ContentControl Grid.Column="0" Content="{Binding}"/>
+                                        <Button Grid.Column="1" Content="X" 
+                                                Command="{Binding DataContext.RemoveWeaponCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource RemoveButtonStyle}"/>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Button Content="Add Weapon" Command="{Binding AddWeaponCommand}" Margin="0,10,0,0"/>
+                        <Button Content="Add Weapon" Command="{Binding AddWeaponCommand}" Margin="0,10,0,0" MaxWidth="300"/>
                     </StackPanel>
                 </GroupBox>
 
@@ -152,9 +247,17 @@
                         <ItemsControl ItemsSource="{Binding ArmorProperties}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:ArmorDisplay Armor="{Binding}" 
-                                                        RemoveCommand="{Binding DataContext.RemoveArmorCommand, 
-                                                        RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ContentControl Grid.Column="0" Content="{Binding}"/>
+                                        <Button Grid.Column="1" Content="X" 
+                                                Command="{Binding DataContext.RemoveArmorCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource RemoveButtonStyle}"/>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -163,9 +266,14 @@
                 </GroupBox>
             </Grid>
 
-            <!-- Description -->
-            <GroupBox Header="Description" Grid.Row="5" Style="{StaticResource CustomGroupBoxStyle}">
-                <ContentControl Content="{Binding Description}"/>
+            <GroupBox Header="Description" Grid.Row="5" Margin="0,10,0,0" Style="{StaticResource CustomGroupBoxStyle}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <TextBox Text="{Binding Description.Value}" TextWrapping="Wrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                 MinHeight="100" MaxHeight="300" Padding="5"
+                 Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}"
+                 Style="{StaticResource ModernTextBoxStyle}"/>
+                </ScrollViewer>
             </GroupBox>
         </Grid>
     </ScrollViewer>

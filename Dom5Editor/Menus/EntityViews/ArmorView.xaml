@@ -26,45 +26,42 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Name box -->
-        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                        Margin="2" HorizontalAlignment="Left"  
-                        Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" 
-                        MinWidth="360"/>
+        <!-- Header with Name Display using ContentControl -->
+        <GroupBox Header="Armor Information" Grid.Row="0" Style="{StaticResource CustomGroupBoxStyle}">
+            <ContentControl Content="{Binding Name}"/>
+        </GroupBox>
 
-        <!-- Properties List -->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding EntityProperties}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ContentControl Grid.Column="0" Content="{Binding}"/>
-                            <Button Grid.Column="1" Content="X" 
-                                    Command="{Binding DataContext.RemovePropertyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
-                                    CommandParameter="{Binding}"
-                                    Style="{StaticResource RemoveButtonStyle}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <!-- Properties List with Remove Option -->
+        <GroupBox Header="Properties" Grid.Row="1" Style="{StaticResource CustomGroupBoxStyle}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding EntityProperties}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentControl Grid.Column="0" Content="{Binding}"/>
+                                <Button Grid.Column="1" Content="X" 
+                                            Command="{Binding DataContext.RemovePropertyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                            CommandParameter="{Binding}" 
+                                            Style="{StaticResource RemoveButtonStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </GroupBox>
 
         <!-- Add Property Controls -->
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Grid.Column="0" ItemsSource="{Binding AvailableCommands}"
-                      SelectedItem="{Binding SelectedCommand}" 
-                      Margin="2"/>
-            <Button Grid.Column="1" Content="Add Property" 
-                    Command="{Binding AddPropertyCommand}" 
-                    Margin="2" Padding="5,2"/>
+            <ComboBox Grid.Column="0" ItemsSource="{Binding AvailableCommands}" SelectedItem="{Binding SelectedCommand}" Margin="2"/>
+            <Button Grid.Column="1" Content="Add Property" Command="{Binding AddPropertyCommand}" Margin="2" Style="{StaticResource ModernButtonStyle}" Padding="5,2"/>
         </Grid>
     </Grid>
 </UserControl>

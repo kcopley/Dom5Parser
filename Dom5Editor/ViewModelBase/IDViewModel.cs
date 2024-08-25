@@ -55,9 +55,6 @@ namespace Dom5Editor
             RemovePropertyCommand = new RelayCommand<PropertyViewModel>(RemoveProperty);
 
             _attributeInfos = new Dictionary<Command, AttributeInfo>();
-
-            InitializeAttributeInfos();
-            RefreshEntityProperties();
         }
 
         protected abstract Dictionary<Command, Func<Property>> GetPropertyMap();

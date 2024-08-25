@@ -60,6 +60,7 @@ namespace Dom5Editor
             InitializeAttributeInfos();
             InitializeCommands();
             InitializeCollectionViews();
+            RefreshEntityProperties();
         }
 
         protected override Dictionary<Command, Func<Property>> GetPropertyMap()
@@ -70,7 +71,7 @@ namespace Dom5Editor
         protected override void InitializeAttributeInfos()
         {
             base.InitializeAttributeInfos();
-            
+
             _attributeInfos[Command.HP] = new AttributeInfo { PropertyName = nameof(HitPoints), Label = "Hit Points:" };
             _attributeInfos[Command.SIZE] = new AttributeInfo { PropertyName = nameof(Size), Label = "Size:" };
             _attributeInfos[Command.PROT] = new AttributeInfo { PropertyName = nameof(Prot), Label = "Nat Prot:" };

@@ -11,10 +11,18 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock  MinWidth="64" Margin="2" Height="24" TextAlignment="Left" Text="{Binding Path=Label}"/>
-        <TextBox Grid.Column="1" MinWidth="32"  Height="24" Margin="2" Text="{Binding Path=Value1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TextAlignment="Right" Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Right"/>
-        <TextBox Grid.Column="2" MinWidth="32"  Height="24" Margin="2" Text="{Binding Path=Value2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TextAlignment="Right" Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Column="0" MinWidth="64" Margin="2" Height="24" TextAlignment="Left" 
+                   Text="{Binding Path=Label}" Style="{StaticResource SubHeaderTextBlockStyle}"/>
+        <TextBox Grid.Column="1" MinWidth="32" Height="24" Margin="2" 
+                 Text="{Binding Path=Value1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
+                 TextAlignment="Right" 
+                 Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                 HorizontalAlignment="Right" Style="{StaticResource ModernTextBoxStyle}"/>
+        <TextBox Grid.Column="2" MinWidth="32" Height="24" Margin="2" 
+                 Text="{Binding Path=Value2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
+                 TextAlignment="Right" 
+                 Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                 HorizontalAlignment="Right" Style="{StaticResource ModernTextBoxStyle}"/>
     </Grid>
 </UserControl>

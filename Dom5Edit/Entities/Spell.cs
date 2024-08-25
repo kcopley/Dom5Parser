@@ -277,6 +277,17 @@ namespace Dom5Edit.Entities
             effect = -1;
             return false;
         }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            if (TryGet<CopySpellRef>(Command.COPYSPELL, out var statsRef, false) == ReturnType.TRUE)
+            {
+                copy = statsRef.Entity;
+                return true;
+            }
+            copy = null;
+            return false;
+        }
     }
 
     public class VanillaSpellMap

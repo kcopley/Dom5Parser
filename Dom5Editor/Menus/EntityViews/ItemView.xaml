@@ -4,68 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dom5Editor" 
-             xmlns:menus="clr-namespace:Dom5Editor.Menus"
-             xmlns:commands="clr-namespace:Dom5Edit.Commands;assembly=Dom5Edit"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <ObjectDataProvider x:Key="CommandEnumProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="commands:Command"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+        <!-- Use resources from MainTemplate.xaml -->
     </UserControl.Resources>
-    <Grid x:Name="ItemMenuHolder" Margin="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
 
-        <!-- Name box -->
-        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                        Margin="2" HorizontalAlignment="Left"  
-                        Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" 
-                        MinWidth="360"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Background="{StaticResource BackgroundBrush}" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- Properties List -->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding EntityProperties}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ContentControl Grid.Column="0" Content="{Binding}"/>
-                            <Button Grid.Column="1" Content="X" 
-                                    Command="{Binding DataContext.RemovePropertyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
-                                    CommandParameter="{Binding}"
-                                    Style="{StaticResource RemoveButtonStyle}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+            <!-- Header with Name Display using ContentControl -->
+            <GroupBox Header="Item Information" Grid.Row="0" Style="{StaticResource CustomGroupBoxStyle}">
+                <ContentControl Content="{Binding Name}"/>
+            </GroupBox>
 
-        <!-- Add Property Controls -->
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <ComboBox Grid.Column="0" ItemsSource="{Binding AvailableCommands}"
-                      SelectedItem="{Binding SelectedCommand}" 
-                      Margin="2"/>
-            <Button Grid.Column="1" Content="Add Property" 
-                    Command="{Binding AddPropertyCommand}" 
-                    Margin="2" Padding="5,2"/>
+            <!-- Properties List with Remove Option -->
+            <GroupBox Header="Properties" Grid.Row="1" Style="{StaticResource CustomGroupBoxStyle}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding EntityProperties}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentControl Grid.Column="0" Content="{Binding}"/>
+                                    <Button Grid.Column="1" Content="X" 
+                                            Command="{Binding DataContext.RemovePropertyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                            CommandParameter="{Binding}" 
+                                            Style="{StaticResource RemoveButtonStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </GroupBox>
+
+            <!-- Add Property Controls -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" ItemsSource="{Binding AvailableCommands}" SelectedItem="{Binding SelectedCommand}" Margin="2"/>
+                <Button Grid.Column="1" Content="Add Property" Command="{Binding AddPropertyCommand}" Margin="2" Style="{StaticResource ModernButtonStyle}" Padding="5,2"/>
+            </Grid>
+
+            <!-- Description -->
+            <GroupBox Header="Description" Grid.Row="3" Margin="0,10,0,0" Style="{StaticResource CustomGroupBoxStyle}">
+                <ContentControl Content="{Binding Description}"/>
+            </GroupBox>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

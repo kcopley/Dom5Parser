@@ -5,121 +5,245 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dom5Editor"
              mc:Ignorable="d">
-    <Grid>
-        <TabControl x:Name="ModEditorTabs">
-            <TabItem x:Name="ModEditorMain" Header="Main">
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with Load/Save Buttons and Mod Name -->
+        <Border Background="{StaticResource AccentBrush}" Padding="20,10" Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button Content="Load" Click="LoadModButton_Click" Margin="0,0,10,0" MinWidth="100"/>
+                    <Button Content="Save" Click="SaveModButton_Click" Margin="0,0,20,0" MinWidth="100"/>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="Mod Name:" Style="{StaticResource HeaderTextBlockStyle}" 
+                           VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBox Grid.Column="2" Text="{Binding Path=ModName, UpdateSourceTrigger=PropertyChanged}" 
+                         FontSize="18" FontWeight="Bold" VerticalAlignment="Center"
+                         Background="Transparent" Foreground="White"
+                         BorderThickness="0" Padding="5,2"/>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area with Tabs -->
+        <TabControl Grid.Row="1" Background="{StaticResource PrimaryBrush}">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Background" Value="{StaticResource SecondaryBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                    <Setter Property="Padding" Value="2,1,2,1"/>
+                    <Setter Property="FontFamily" Value="Cambria"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="MinWidth" Value="84"/>
+                    <Setter Property="MinHeight" Value="28"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" Padding="5,2">
+                                    <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="BorderBrush" Value="White"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                    <Trigger Property="TabStripPlacement" Value="Top">
+                                        <Setter TargetName="Border" Property="CornerRadius" Value="4,4,0,0"/>
+                                    </Trigger>
+                                    <Trigger Property="TabStripPlacement" Value="Bottom">
+                                        <Setter TargetName="Border" Property="CornerRadius" Value="0,0,4,4"/>
+                                    </Trigger>
+                                    <Trigger Property="TabStripPlacement" Value="Left">
+                                        <Setter TargetName="Border" Property="CornerRadius" Value="4,0,0,4"/>
+                                    </Trigger>
+                                    <Trigger Property="TabStripPlacement" Value="Right">
+                                        <Setter TargetName="Border" Property="CornerRadius" Value="0,4,4,0"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Mod Info">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <Grid Margin="10" Background="#FFE5E5E5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="LoadModButton" Content="Load" Margin="10,10,0,0" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Top" Click="LoadModButton_Click"/>
-                        <Button x:Name="SaveModButton" Content="Save" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75" Click="SaveModButton_Click"/>
-                        <TextBox x:Name="EditorModName" Text="{Binding Path=ModName}" HorizontalAlignment="Left" Height="20" Margin="161,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" />
-                        <TextBox x:Name="EditorDescription" Text="{Binding Path=ModDescription}" HorizontalAlignment="Left" Height="111" Margin="10,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="391"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="10,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" Height="19"><Run Text="Description:"/><LineBreak/><Run/></TextBlock>
-                        <TextBlock HorizontalAlignment="Left" Margin="90,10,0,0" TextWrapping="Wrap" Text="Mod Name:" VerticalAlignment="Top" Width="66" Height="20" TextAlignment="Right"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="90,35,0,0" TextWrapping="Wrap" Text="Version:" VerticalAlignment="Top" Height="20" Width="66" TextAlignment="Right"/>
-                        <TextBox x:Name="EditorModVersion" Text="{Binding Path=Version}" HorizontalAlignment="Left" Height="20" Margin="161,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="247,35,0,0" TextWrapping="Wrap" Text="Dom Version:" VerticalAlignment="Top" Height="20" Width="72"/>
-                        <TextBox x:Name="EditorModDomVersion" HorizontalAlignment="Left" Height="20" Margin="324,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77"/>
-                        <Image x:Name="IconImage" Source="{Binding Path=IconBitmap, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="68" Margin="10,104,0,0" VerticalAlignment="Top" Width="391"/>
-                        <TextBox x:Name="IconText" Text="{Binding Path=Icon,UpdateSourceTrigger=PropertyChanged}" TextChanged="Icon_File_Changed" HorizontalAlignment="Left" Height="23" Margin="47,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="354"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="Wrap" Text="Banner" VerticalAlignment="Top"/>
-                        <Button HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="32" Height="23" Click="OpenBanner_Click">
-                            <Image Height="23" Width="22" Source="/Dom5Editor;component/icons/foldericon5.png"/>
-                        </Button>
-                    </Grid>
+                    <StackPanel Margin="10">
+                        <!-- Mod Information -->
+                        <GroupBox Header="Mod Information" Style="{StaticResource CustomGroupBoxStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Version:" Style="{StaticResource SubHeaderTextBlockStyle}" Margin="0,0,10,5"/>
+                                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Path=Version, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,20,5"/>
+
+                                <TextBlock Grid.Column="2" Grid.Row="0" Text="Dom Version:" Style="{StaticResource SubHeaderTextBlockStyle}" Margin="0,0,10,5"/>
+                                <TextBox Grid.Column="3" Grid.Row="0" Text="{Binding Path=ModDomVersion, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Icon:" Style="{StaticResource SubHeaderTextBlockStyle}" Margin="0,0,10,0"/>
+                                <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="IconText" Grid.Column="0" Text="{Binding Path=Icon, UpdateSourceTrigger=PropertyChanged}" TextChanged="Icon_File_Changed"/>
+                                    <Button Grid.Column="1" Content="Browse" Click="OpenBanner_Click" Margin="5,0,0,0"/>
+                                </Grid>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Mod Icon Preview -->
+                        <GroupBox Header="Icon Preview" Style="{StaticResource CustomGroupBoxStyle}">
+                            <Image x:Name="IconImage" Source="{Binding Path=IconBitmap, UpdateSourceTrigger=PropertyChanged}" 
+                                   Height="100" Stretch="Uniform" HorizontalAlignment="Left"/>
+                        </GroupBox>
+
+                        <!-- Mod Description -->
+                        <GroupBox Header="Description" Style="{StaticResource CustomGroupBoxStyle}">
+                            <TextBox Text="{Binding Path=ModDescription, UpdateSourceTrigger=PropertyChanged}" 
+                                     TextWrapping="Wrap" AcceptsReturn="True" MinHeight="100" VerticalAlignment="Stretch"/>
+                        </GroupBox>
+                    </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem x:Name="ModEditorMonsters" Header="Monsters">
+
+            <!-- Mod Content Tabs -->
+            <TabItem Header="Monsters" IsEnabled="{Binding IsModLoaded}">
                 <Grid>
+                    <!-- Adjust the ColumnDefinition widths -->
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Adjusted from 1* to Auto for flexibility -->
+                        <ColumnDefinition Width="5"/>
+                        <!-- Width for GridSplitter -->
                         <ColumnDefinition Width="*"/>
+                        <!-- Remaining space -->
                     </Grid.ColumnDefinitions>
+
+                    <!-- ListBox for monsters -->
                     <ListBox x:Name="EditorMonsterList" Grid.Column="0" 
-                             ItemsSource="{Binding Path=Monsters}" 
-                             DisplayMemberPath="DisplayName" 
-                             SelectionChanged="EditorMonsterList_SelectionChanged"/>
-                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                    <ContentControl Grid.Column="1" x:Name="MonsterVMTabPanel" 
-                                    Content="{Binding Path=OpenMonster, UpdateSourceTrigger=PropertyChanged}"/>
+                     ItemsSource="{Binding Path=Monsters}" 
+                     DisplayMemberPath="DisplayName" 
+                     SelectionChanged="EditorMonsterList_SelectionChanged"/>    
+
+                    <!-- GridSplitter for resizing -->
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Background="#AAA"/>
+
+                    <!-- Content area for selected monster details -->
+                    <ContentControl Grid.Column="2" Content="{Binding Path=OpenMonster, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ModEditorSites" Header="Sites">
+            <TabItem Header="Sites" IsEnabled="{Binding IsModLoaded}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="EditorSiteList" Grid.Column="0" 
-                             ItemsSource="{Binding Path=Sites}" 
-                             DisplayMemberPath="DisplayName" 
-                             SelectionChanged="EditorSiteList_SelectionChanged"/>
-                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                    <ContentControl Grid.Column="1" x:Name="SiteVMTabPanel" 
-                                    Content="{Binding Path=OpenSite, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox x:Name="SiteList" Grid.Column="0"
+                 ItemsSource="{Binding Sites}"
+                 DisplayMemberPath="DisplayName"
+                 SelectedItem="{Binding SelectedSite, Mode=TwoWay}"
+                 SelectionChanged="EditorSiteList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenSite, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ModEditorWeapons" Header="Weapons">
+            <TabItem Header="Weapons" IsEnabled="{Binding IsModLoaded}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="EditorWeaponList" Grid.Column="0" 
-                             ItemsSource="{Binding Path=Weapons}" 
-                             DisplayMemberPath="DisplayName" 
-                             SelectionChanged="EditorWeaponList_SelectionChanged"/>
-                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                    <ContentControl Grid.Column="1" x:Name="WeaponVMTabPanel" 
-                                    Content="{Binding Path=OpenWeapon, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox x:Name="WeaponList" Grid.Column="0"
+                 ItemsSource="{Binding Weapons}"
+                 DisplayMemberPath="DisplayName"
+                 SelectedItem="{Binding SelectedWeapon, Mode=TwoWay}"
+                 SelectionChanged="EditorWeaponList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenWeapon, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ModEditorArmors" Header="Armors">
+            <TabItem Header="Armors" IsEnabled="{Binding IsModLoaded}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="EditorArmorList" Grid.Column="0" 
-                             ItemsSource="{Binding Path=Armors}" 
-                             DisplayMemberPath="DisplayName" 
-                             SelectionChanged="EditorArmorList_SelectionChanged"/>
-                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                    <ContentControl Grid.Column="1" x:Name="ArmorVMTabPanel" 
-                                    Content="{Binding Path=OpenArmor, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox x:Name="ArmorList" Grid.Column="0"
+                 ItemsSource="{Binding Armors}"
+                 DisplayMemberPath="DisplayName"
+                 SelectedItem="{Binding SelectedArmor, Mode=TwoWay}"
+                 SelectionChanged="EditorArmorList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenArmor, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ModEditorItems" Header="Items">
+            <TabItem Header="Items" IsEnabled="{Binding IsModLoaded}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="EditorItemList" Grid.Column="0" 
-                             ItemsSource="{Binding Path=Items}" 
-                             DisplayMemberPath="DisplayName" 
-                             SelectionChanged="EditorItemList_SelectionChanged"/>
-                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                    <ContentControl Grid.Column="1" x:Name="ItemVMTabPanel" 
-                                    Content="{Binding Path=OpenItem, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox x:Name="ItemList" Grid.Column="0"
+                 ItemsSource="{Binding Items}"
+                 DisplayMemberPath="DisplayName"
+                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                 SelectionChanged="EditorItemList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenItem, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ModEditorSpells" Header="Spells">
+            <TabItem Header="Spells" IsEnabled="{Binding IsModLoaded}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="EditorSpellList" Grid.Column="0" 
-                             ItemsSource="{Binding Path=Spells}" 
-                             DisplayMemberPath="DisplayName" 
-                             SelectionChanged="EditorSpellList_SelectionChanged"/>
-                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-                    <ContentControl Grid.Column="1" x:Name="SpellVMTabPanel" 
-                                    Content="{Binding Path=OpenSpell, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox x:Name="SpellList" Grid.Column="0"
+                 ItemsSource="{Binding Spells}"
+                 DisplayMemberPath="DisplayName"
+                 SelectedItem="{Binding SelectedSpell, Mode=TwoWay}"
+                 SelectionChanged="EditorSpellList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenSpell, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
         </TabControl>

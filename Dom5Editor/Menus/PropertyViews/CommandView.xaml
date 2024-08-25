@@ -11,6 +11,7 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="0.5*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Margin="2" Height="24" TextAlignment="Right" Text="{Binding Path=Label}"/>
+        <TextBlock Grid.Column="0" Margin="2" Height="24" TextAlignment="Right" 
+                   Text="{Binding Path=Label}" Style="{StaticResource SubHeaderTextBlockStyle}"/>
     </Grid>
 </UserControl>

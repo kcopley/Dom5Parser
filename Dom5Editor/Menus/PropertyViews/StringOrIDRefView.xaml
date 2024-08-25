@@ -10,13 +10,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="0.5*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Margin="2" Height="24" TextAlignment="Right" Text="{Binding Path=Label}"/>
+        <TextBlock Grid.Column="0" Margin="2" Height="24" TextAlignment="Right" 
+                   Text="{Binding Path=Label}" Style="{StaticResource SubHeaderTextBlockStyle}"/>
         <dotNetKitControls:AutoCompleteComboBox Grid.Column="1" Height="24" Margin="2" 
                                                 ItemsSource="{Binding Path=IDs, Mode=OneWay }"
                                                 TextSearch.TextPath="DisplayName" DisplayMemberPath="DisplayName" 
                                                 SelectedItem="{Binding Path=SelectedID }" IsEditable="True" 
-                                                IsManipulationEnabled="True" />
+                                                IsManipulationEnabled="True"/>
     </Grid>
 </UserControl>

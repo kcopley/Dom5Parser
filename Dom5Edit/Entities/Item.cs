@@ -371,5 +371,16 @@ namespace Dom5Edit.Entities
         {
             return EntityType.ITEM;
         }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            if (TryGet<ItemRef>(Command.COPYITEM, out var statsRef, false) == ReturnType.TRUE)
+            {
+                copy = statsRef.Entity;
+                return true;
+            }
+            copy = null;
+            return false;
+        }
     }
 }
