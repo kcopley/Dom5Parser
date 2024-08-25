@@ -13,7 +13,7 @@ namespace Dom5Edit.Entities
 {
     public class Monster : IDEntity
     {
-        private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
+        public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
         static Monster()
         {

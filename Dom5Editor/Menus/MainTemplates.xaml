@@ -17,6 +17,12 @@
     <DataTemplate DataType="{x:Type Dom5Editor:ArmorViewModel}">
         <Dom5Editor:ArmorView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:ItemViewModel}">
+        <Dom5Editor:ItemView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:SpellViewModel}">
+        <Dom5Editor:SpellView />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type VM:IntPropertyViewModel}">
         <Menus:IntPropertyView />
     </DataTemplate>

@@ -90,6 +90,22 @@ namespace Dom5Editor
             }
         }
 
+        private void EditorItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EditorItemList.SelectedItem != null)
+            {
+                ((ModViewModel)DataContext).OpenItem = (ItemViewModel)EditorItemList.SelectedItem;
+            }
+        }
+
+        private void EditorSpellList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EditorSpellList.SelectedItem != null)
+            {
+                ((ModViewModel)DataContext).OpenSpell = (SpellViewModel)EditorSpellList.SelectedItem;
+            }
+        }
+
         private void Icon_File_Changed(object sender, TextChangedEventArgs e)
         {
             BindingExpression be = IconImage.GetBindingExpression(Image.SourceProperty);

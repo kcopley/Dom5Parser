@@ -102,16 +102,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Menus\Property Menus\CommandView.xaml.cs">
+    <Compile Include="Menus\EntityViews\ItemView.xaml.cs">
+      <DependentUpon>ItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\EntityViews\SpellView.xaml.cs">
+      <DependentUpon>SpellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\PropertyViews\CommandView.xaml.cs">
       <DependentUpon>CommandView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Property Menus\DescriptionView.xaml.cs">
+    <Compile Include="Menus\PropertyViews\DescriptionView.xaml.cs">
       <DependentUpon>DescriptionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Property Menus\IntIntPropertyView.xaml.cs">
+    <Compile Include="Menus\PropertyViews\IntIntPropertyView.xaml.cs">
       <DependentUpon>IntIntPropertyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Property Menus\IntPropertyView.xaml.cs">
+    <Compile Include="Menus\PropertyViews\IntPropertyView.xaml.cs">
       <DependentUpon>IntPropertyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Menus\ModView.xaml.cs">
@@ -120,50 +126,60 @@
     <Compile Include="Menus\MergerMenuTab.xaml.cs">
       <DependentUpon>MergerMenuTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Monster\MonsterView.xaml.cs">
+    <Compile Include="Menus\EntityViews\MonsterView.xaml.cs">
       <DependentUpon>MonsterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Property Menus\NameView.xaml.cs">
+    <Compile Include="Menus\PropertyViews\NameView.xaml.cs">
       <DependentUpon>NameView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Property Menus\StringOrIDRefView.xaml.cs">
+    <Compile Include="Menus\PropertyViews\StringOrIDRefView.xaml.cs">
       <DependentUpon>StringOrIDRefView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Property Menus\StringView.xaml.cs">
+    <Compile Include="Menus\PropertyViews\StringView.xaml.cs">
       <DependentUpon>StringView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Sites\SiteView.xaml.cs">
+    <Compile Include="Menus\EntityViews\SiteView.xaml.cs">
       <DependentUpon>SiteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Weapons\ArmorView.xaml.cs">
+    <Compile Include="Menus\EntityViews\ArmorView.xaml.cs">
       <DependentUpon>ArmorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Weapons\WeaponView.xaml.cs">
+    <Compile Include="Menus\EntityViews\WeaponView.xaml.cs">
       <DependentUpon>WeaponView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\TargaImage.cs" />
     <Compile Include="Utility\Utility.cs" />
+    <Compile Include="VMs\EntityVMs\ItemViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\SpellViewModel.cs" />
     <Compile Include="VMs\IntIntPropertyViewModel.cs" />
     <Compile Include="VMs\RelayCommand.cs" />
-    <Compile Include="VMs\MonsterVMs\CopyStatsRefViewModel.cs" />
-    <Compile Include="VMs\MonsterVMs\MonsterRefViewModel.cs" />
-    <Compile Include="VMs\WeaponVMs\ArmorRefViewModel.cs" />
-    <Compile Include="VMs\WeaponVMs\WeaponRefViewModel.cs" />
-    <Compile Include="VMs\WeaponVMs\ArmorViewModel.cs" />
-    <Compile Include="VMs\WeaponVMs\WeaponViewModel.cs" />
-    <Page Include="Menus\Property Menus\CommandView.xaml">
+    <Compile Include="VMs\RefVMs\CopyStatsRefViewModel.cs" />
+    <Compile Include="VMs\RefVMs\MonsterRefViewModel.cs" />
+    <Compile Include="VMs\RefVMs\ArmorRefViewModel.cs" />
+    <Compile Include="VMs\RefVMs\WeaponRefViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\ArmorViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\WeaponViewModel.cs" />
+    <Page Include="Menus\EntityViews\ItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Property Menus\DescriptionView.xaml">
+    <Page Include="Menus\EntityViews\SpellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Property Menus\IntIntPropertyView.xaml">
+    <Page Include="Menus\PropertyViews\CommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Property Menus\IntPropertyView.xaml">
+    <Page Include="Menus\PropertyViews\DescriptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\PropertyViews\IntIntPropertyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\PropertyViews\IntPropertyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -188,13 +204,12 @@
     <Compile Include="ViewModelBase\ViewModelBase.cs" />
     <Compile Include="VMs\CommandViewModel.cs" />
     <Compile Include="VMs\DescriptionViewModel.cs" />
-    <Compile Include="VMs\MonsterVMs\MonsterGearViewModel.cs" />
-    <Compile Include="VMs\SiteVMs\SiteViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\SiteViewModel.cs" />
     <Compile Include="VMs\NameViewModel.cs" />
     <Compile Include="VMs\StringOrIDRefViewModel.cs" />
     <Compile Include="VMs\StringViewModel.cs" />
     <Compile Include="VMs\IntPropertyViewModel.cs" />
-    <Compile Include="VMs\MonsterVMs\MonsterViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\MonsterViewModel.cs" />
     <Compile Include="VMs\ModViewModel.cs" />
     <Compile Include="VMs\MergerMenuVM.cs" />
     <Compile Include="Menus\MainWindow.xaml.cs">
@@ -205,31 +220,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Monster\MonsterView.xaml">
+    <Page Include="Menus\EntityViews\MonsterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Property Menus\NameView.xaml">
+    <Page Include="Menus\PropertyViews\NameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Property Menus\StringOrIDRefView.xaml">
+    <Page Include="Menus\PropertyViews\StringOrIDRefView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Property Menus\StringView.xaml">
+    <Page Include="Menus\PropertyViews\StringView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Sites\SiteView.xaml">
+    <Page Include="Menus\EntityViews\SiteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Menus\Weapons\ArmorView.xaml">
+    <Page Include="Menus\EntityViews\ArmorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menus\Weapons\WeaponView.xaml">
+    <Page Include="Menus\EntityViews\WeaponView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="Dom5Editor.WeaponView"
+﻿<UserControl x:Class="Dom5Editor.ItemView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Dom5Editor" xmlns:menus="clr-namespace:Dom5Editor.Menus"
+             xmlns:local="clr-namespace:Dom5Editor" 
+             xmlns:menus="clr-namespace:Dom5Editor.Menus"
              xmlns:commands="clr-namespace:Dom5Edit.Commands;assembly=Dom5Edit"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
@@ -15,7 +16,7 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <Grid x:Name="WeaponMenuHolder" Margin="0">
+    <Grid x:Name="ItemMenuHolder" Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -34,7 +35,7 @@
 
         <!-- Properties List -->
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding WeaponProperties}">
+            <ItemsControl ItemsSource="{Binding EntityProperties}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,2">

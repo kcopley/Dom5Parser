@@ -92,6 +92,36 @@
                                     Content="{Binding Path=OpenArmor, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="ModEditorItems" Header="Items">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="EditorItemList" Grid.Column="0" 
+                             ItemsSource="{Binding Path=Items}" 
+                             DisplayMemberPath="DisplayName" 
+                             SelectionChanged="EditorItemList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+                    <ContentControl Grid.Column="1" x:Name="ItemVMTabPanel" 
+                                    Content="{Binding Path=OpenItem, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="ModEditorSpells" Header="Spells">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="EditorSpellList" Grid.Column="0" 
+                             ItemsSource="{Binding Path=Spells}" 
+                             DisplayMemberPath="DisplayName" 
+                             SelectionChanged="EditorSpellList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+                    <ContentControl Grid.Column="1" x:Name="SpellVMTabPanel" 
+                                    Content="{Binding Path=OpenSpell, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

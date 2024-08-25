@@ -188,7 +188,7 @@ namespace Dom5Editor
             set
             {
                 _openSite = value;
-                OnPropertyChanged("OpenSite");
+                OnPropertyChanged(nameof(OpenSite));
             }
         }
         private ObservableCollection<SiteViewModel> _openSites;
@@ -219,6 +219,80 @@ namespace Dom5Editor
                     }
                 }
                 return _sites;
+            }
+        }
+
+        private ItemViewModel _openItem;
+        public ItemViewModel OpenItem
+        {
+            get => _openItem;
+            set
+            {
+                if (_openItem != value)
+                {
+                    _openItem = value;
+                    OnPropertyChanged(nameof(OpenItem));
+                }
+            }
+        }
+
+        private List<ItemViewModel> _items;
+        public List<ItemViewModel> Items
+        {
+            get
+            {
+                if (_items == null)
+                {
+                    _items = new List<ItemViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.ITEM].GetFullList();
+                    foreach (var i in list)
+                    {
+                        _items.Add(new ItemViewModel(this, i as Item));
+                    }
+                    list = _mod.Database[EntityType.ITEM].GetFullList();
+                    foreach (var i in list)
+                    {
+                        _items.Add(new ItemViewModel(this, i as Item));
+                    }
+                }
+                return _items;
+            }
+        }
+
+        private SpellViewModel _openSpell;
+        public SpellViewModel OpenSpell
+        {
+            get => _openSpell;
+            set
+            {
+                if (_openSpell != value)
+                {
+                    _openSpell = value;
+                    OnPropertyChanged(nameof(OpenSpell));
+                }
+            }
+        }
+
+        private List<SpellViewModel> _spells;
+        public List<SpellViewModel> Spells
+        {
+            get
+            {
+                if (_spells == null)
+                {
+                    _spells = new List<SpellViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.SPELL].GetFullList();
+                    foreach (var s in list)
+                    {
+                        _spells.Add(new SpellViewModel(this, s as Spell));
+                    }
+                    list = _mod.Database[EntityType.SPELL].GetFullList();
+                    foreach (var s in list)
+                    {
+                        _spells.Add(new SpellViewModel(this, s as Spell));
+                    }
+                }
+                return _spells;
             }
         }
 

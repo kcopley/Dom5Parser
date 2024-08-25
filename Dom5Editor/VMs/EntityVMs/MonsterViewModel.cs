@@ -16,18 +16,10 @@ using System.Windows.Media.Imaging;
 
 namespace Dom5Editor
 {
-    class AttributeInfo
-    {
-        public string PropertyName { get; set; }
-        public string Label { get; set; }
-        public PropertyViewModel ViewModel { get; set; }
-    }
-
     public class MonsterViewModel : IDViewModelBase
     {
         private CollectionViewSource _weaponPropertiesViewSource;
         private CollectionViewSource _armorPropertiesViewSource;
-        private readonly Dictionary<Command, AttributeInfo> _attributeInfos;
 
         public ObservableCollection<WeaponRefViewModel> WeaponProperties { get; } = new ObservableCollection<WeaponRefViewModel>();
         public ObservableCollection<ArmorRefViewModel> ArmorProperties { get; } = new ObservableCollection<ArmorRefViewModel>();
@@ -35,23 +27,13 @@ namespace Dom5Editor
         public ICollectionView WeaponPropertiesView => _weaponPropertiesViewSource.View;
         public ICollectionView ArmorPropertiesView => _armorPropertiesViewSource.View;
 
-        public Monster Monster { get { return _entity as Monster; } }
-        public ObservableCollection<Property> Attributes { get; }
         public ICommand AddWeaponCommand { get; private set; }
         public ICommand AddArmorCommand { get; private set; }
-        public ICommand RemoveWeaponCommand { get; }
-        public ICommand RemoveArmorCommand { get; }
+        public ICommand RemoveWeaponCommand { get; private set; }
+        public ICommand RemoveArmorCommand { get; private set; }
 
-        public MonsterViewModel(ModViewModel mod, Monster monster)
+        public MonsterViewModel(ModViewModel mod, Monster monster) : base(mod, monster)
         {
-            _entity = monster;
-            Parent = mod;
-
-            //I can define singular attributes here, maybe?
-            //Separate list that's referenced, in a hashset style
-
-            //Core attributes that are displayed in the top section (and thus ignored in the AllProperties view)
-            //Could do a sliced view off that but this is probably better
             CoreAttributes = new List<Command>()
             {
                 Command.COPYSTATS,
@@ -75,60 +57,73 @@ namespace Dom5Editor
                 Command.ENC
             };
 
+            InitializeAttributeInfos();
+            InitializeCommands();
+            InitializeCollectionViews();
+        }
+
+        protected override Dictionary<Command, Func<Property>> GetPropertyMap()
+        {
+            return Monster._propertyMap;
+        }
+
+        protected override void InitializeAttributeInfos()
+        {
+            base.InitializeAttributeInfos();
+            
+            _attributeInfos[Command.HP] = new AttributeInfo { PropertyName = nameof(HitPoints), Label = "Hit Points:" };
+            _attributeInfos[Command.SIZE] = new AttributeInfo { PropertyName = nameof(Size), Label = "Size:" };
+            _attributeInfos[Command.PROT] = new AttributeInfo { PropertyName = nameof(Prot), Label = "Nat Prot:" };
+            _attributeInfos[Command.MR] = new AttributeInfo { PropertyName = nameof(MR), Label = "Magic Resistance:" };
+            _attributeInfos[Command.ATT] = new AttributeInfo { PropertyName = nameof(Attack), Label = "Attack:" };
+            _attributeInfos[Command.DEF] = new AttributeInfo { PropertyName = nameof(Defense), Label = "Defense:" };
+            _attributeInfos[Command.STR] = new AttributeInfo { PropertyName = nameof(Strength), Label = "Strength:" };
+            _attributeInfos[Command.PREC] = new AttributeInfo { PropertyName = nameof(Precision), Label = "Precision:" };
+            _attributeInfos[Command.AP] = new AttributeInfo { PropertyName = nameof(CombatSpeed), Label = "Combat Speed:" };
+            _attributeInfos[Command.MAPMOVE] = new AttributeInfo { PropertyName = nameof(MapMove), Label = "Map Move:" };
+            _attributeInfos[Command.MOR] = new AttributeInfo { PropertyName = nameof(Morale), Label = "Morale:" };
+            _attributeInfos[Command.ENC] = new AttributeInfo { PropertyName = nameof(Encumbrance), Label = "Encumbrance:" };
+
+            //This is where a property is defined to be rendered in advance, as a fixed part of the UI, rather than dynamically generated from the property.
+            foreach (var kvp in _attributeInfos)
+            {
+                if (kvp.Key == Command.NAME)
+                {
+                    kvp.Value.ViewModel = new StringViewModel(kvp.Value.Label, _entity, kvp.Key);
+                }
+                else
+                {
+                    kvp.Value.ViewModel = new IntPropertyViewModel(this, kvp.Value.Label, _entity, kvp.Key);
+                }
+            }
+        }
+
+        private void InitializeCommands()
+        {
             AddWeaponCommand = new RelayCommand(AddWeapon);
             AddArmorCommand = new RelayCommand(AddArmor);
             RemoveWeaponCommand = new RelayCommand<WeaponRefViewModel>(RemoveWeapon);
             RemoveArmorCommand = new RelayCommand<ArmorRefViewModel>(RemoveArmor);
-            RefreshWeaponProperties();
-            RefreshArmorProperties();
-            RemoveCommand = new RelayCommand(RemoveProperty);
-            //Attributes = new ObservableCollection<Property>(_entity.Properties);
-            // Subscribe to CollectionChanged to update the Monster's list when the ObservableCollection changes
-            //Attributes.CollectionChanged += Properties_CollectionChanged;
+        }
 
-            _weaponPropertiesViewSource = new CollectionViewSource { Source = AllProperties };
+        private void InitializeCollectionViews()
+        {
+            _weaponPropertiesViewSource = new CollectionViewSource { Source = EntityProperties };
             _weaponPropertiesViewSource.Filter += (s, e) =>
             {
                 var item = e.Item as PropertyViewModel;
                 e.Accepted = item != null && item.Command == Command.WEAPON;
             };
 
-            _armorPropertiesViewSource = new CollectionViewSource { Source = AllProperties };
+            _armorPropertiesViewSource = new CollectionViewSource { Source = EntityProperties };
             _armorPropertiesViewSource.Filter += (s, e) =>
             {
                 var item = e.Item as PropertyViewModel;
                 e.Accepted = item != null && item.Command == Command.ARMOR;
             };
 
-            var a = AllProperties;
-
-            _attributeInfos = new Dictionary<Command, AttributeInfo>
-            {
-                { Command.HP, new AttributeInfo { PropertyName = nameof(HitPoints), Label = "Hit Points:" } },
-                { Command.SIZE, new AttributeInfo { PropertyName = nameof(Size), Label = "Size:" } },
-                { Command.PROT, new AttributeInfo { PropertyName = nameof(Prot), Label = "Nat Prot:" } },
-                { Command.MR, new AttributeInfo { PropertyName = nameof(MR), Label = "Magic Resistance:" } },
-                { Command.ATT, new AttributeInfo { PropertyName = nameof(Attack), Label = "Attack:" } },
-                { Command.DEF, new AttributeInfo { PropertyName = nameof(Defense), Label = "Defense:" } },
-                { Command.STR, new AttributeInfo { PropertyName = nameof(Strength), Label = "Strength:" } },
-                { Command.PREC, new AttributeInfo { PropertyName = nameof(Precision), Label = "Precision:" } },
-                { Command.AP, new AttributeInfo { PropertyName = nameof(CombatSpeed), Label = "Combat Speed:" } },
-                { Command.MAPMOVE, new AttributeInfo { PropertyName = nameof(MapMove), Label = "Map Move:" } },
-                { Command.MOR, new AttributeInfo { PropertyName = nameof(Morale), Label = "Morale:" } },
-                { Command.ENC, new AttributeInfo { PropertyName = nameof(Encumbrance), Label = "Encumbrance:" } }
-            };
-
-            foreach (var kvp in _attributeInfos)
-            {
-                kvp.Value.ViewModel = new IntPropertyViewModel(this, kvp.Value.Label, _entity, kvp.Key);
-            }
-
-            _monsterName = _entity.Name;
-        }
-
-        public void SetMonster(Monster m)
-        {
-            this._entity = m;
+            RefreshWeaponProperties();
+            RefreshArmorProperties();
         }
 
         private void AddWeapon()
@@ -181,87 +176,23 @@ namespace Dom5Editor
             OnPropertyChanged(nameof(ArmorProperties));
         }
 
+        public Monster Monster { get { return _entity as Monster; } }
+
+        public void SetMonster(Monster m)
+        {
+            SetEntity(m);
+            RefreshWeaponProperties();
+            RefreshArmorProperties();
+        }
+
         public CopyStatsRefViewModel CopyRef
         {
             get { return new CopyStatsRefViewModel(Parent, this, "Copies From:", _entity, Command.COPYSTATS); }
         }
 
-        public int ID
-        {
-            get
-            {
-                return _entity != null ? _entity.ID : -1;
-            }
-            set
-            {
-                if (_entity != null) _entity.ID = value;
-            }
-        }
-
-        private string _monsterName;
-        public string MonsterName
-        {
-            get => _monsterName;
-            set
-            {
-                if (_monsterName != value)
-                {
-                    _monsterName = value;
-                    if (_entity != null)
-                    {
-                        _entity.Name = value;
-                    }
-                    OnPropertyChanged(nameof(MonsterName));
-                    OnPropertyChanged(nameof(DisplayName));
-                }
-            }
-        }
-
-        private NameViewModel _name;
-        public NameViewModel Name
-        {
-            get
-            {
-                if (_name == null)
-                {
-                    _name = new NameViewModel(
-                        "Name:",  // Add a label
-                        _entity,
-                        Command.NAME,
-                        () => MonsterName,
-                        value => MonsterName = value
-                    );
-                }
-                return _name;
-            }
-        }
-
         public DescriptionViewModel Description
         {
-            get
-            {
-                return new DescriptionViewModel(_entity, Command.DESCR);
-            }
-        }
-
-        public override string DisplayName
-        {
-            get
-            {
-                if (_entity != null)
-                {
-                    return $"({_entity.ID}) {MonsterName}";
-                }
-                else
-                {
-                    return "<No Name>";
-                }
-            }
-        }
-
-        public PropertyViewModel GetAttribute(Command command)
-        {
-            return _attributeInfos.TryGetValue(command, out var info) ? info.ViewModel : null;
+            get { return new DescriptionViewModel(_entity, Command.DESCR); }
         }
 
         // Property definitions
@@ -292,11 +223,9 @@ namespace Dom5Editor
                     try
                     {
                         var targa = Paloma.TargaImage.LoadTargaImage(filePath);
-
-                        var ret = targa.ConvertToImage();
-                        return ret;
+                        return targa.ConvertToImage();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         return new BitmapImage();
                     }
@@ -319,36 +248,14 @@ namespace Dom5Editor
                     try
                     {
                         var targa = Paloma.TargaImage.LoadTargaImage(filePath);
-
-                        var ret = targa.ConvertToImage();
-                        return ret;
+                        return targa.ConvertToImage();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         return new BitmapImage();
                     }
                 }
                 return new BitmapImage();
-            }
-        }
-
-        public ICommand RemoveCommand { get; private set; }
-
-        private void RemoveProperty(object parameter)
-        {
-            if (parameter is PropertyViewModel propertyVM)
-            {
-                _entity.RemoveProperty(propertyVM.Command);
-
-                // Update AllProperties
-                OnPropertyChanged(nameof(AllProperties));
-
-                // Update the specific attribute property
-                if (_attributeInfos.TryGetValue(propertyVM.Command, out var info))
-                {
-                    OnPropertyChanged(info.PropertyName);
-                    info.ViewModel.OnPropertyChanged(string.Empty);
-                }
             }
         }
     }
