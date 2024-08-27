@@ -102,8 +102,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Menus\EntityViews\EventView.xaml.cs">
+      <DependentUpon>EventView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Menus\EntityViews\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\EntityViews\MercenaryView.xaml.cs">
+      <DependentUpon>MercenaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\EntityViews\NametypeView.xaml.cs">
+      <DependentUpon>NametypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\EntityViews\NationView.xaml.cs">
+      <DependentUpon>NationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\EntityViews\PoptypeView.xaml.cs">
+      <DependentUpon>PoptypeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Menus\EntityViews\SpellView.xaml.cs">
       <DependentUpon>SpellView.xaml</DependentUpon>
@@ -149,7 +164,12 @@
     </Compile>
     <Compile Include="Utility\TargaImage.cs" />
     <Compile Include="Utility\Utility.cs" />
+    <Compile Include="VMs\EntityVMs\EventViewModel.cs" />
     <Compile Include="VMs\EntityVMs\ItemViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\MercenaryViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\NametypeViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\NationViewModel.cs" />
+    <Compile Include="VMs\EntityVMs\PoptypeViewModel.cs" />
     <Compile Include="VMs\EntityVMs\SpellViewModel.cs" />
     <Compile Include="VMs\IntIntPropertyViewModel.cs" />
     <Compile Include="VMs\RelayCommand.cs" />
@@ -159,7 +179,27 @@
     <Compile Include="VMs\RefVMs\WeaponRefViewModel.cs" />
     <Compile Include="VMs\EntityVMs\ArmorViewModel.cs" />
     <Compile Include="VMs\EntityVMs\WeaponViewModel.cs" />
+    <Page Include="Menus\EntityViews\EventView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Menus\EntityViews\ItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\EntityViews\MercenaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\EntityViews\NametypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\EntityViews\NationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\EntityViews\PoptypeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

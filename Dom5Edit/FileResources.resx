@@ -130,6 +130,9 @@
   <data name="VanillaMonsterData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>VanillaData\VanillaMonsterData.tsv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="VanillaSiteData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>VanillaData\VanillaSiteData.tsv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="VanillaWeaponData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>VanillaData\VanillaWeaponData.tsv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

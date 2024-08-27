@@ -23,6 +23,7 @@ namespace Dom5Edit
                 {
                     _loader = new VanillaLoader();
                     _vanilla = _loader.LoadVanillaData();
+                    _vanilla.Resolve();
                 }
                 return _vanilla;
             }
@@ -54,6 +55,7 @@ namespace Dom5Edit
             LoadWeaponData(m);
             LoadArmorData(m);
             LoadArmorProtData(m);
+            LoadSiteData(m);
             return m;
         }
 
@@ -288,6 +290,92 @@ namespace Dom5Edit
                                             m.ProcessStringToLine(header[i] + " " + split[i]);
                                             break;
                                     }
+                        }
+                    }
+                }
+            }
+        }
+
+        void LoadSiteData(Mod m)
+        {
+            bool first = true;
+            List<string> header = new List<string>();
+            using (StreamReader s = new StreamReader(new MemoryStream(FileResources.VanillaSiteData)))
+            {
+                string line;
+                while ((line = s.ReadLine()) != null)
+                {
+                    if (first)
+                    {
+                        first = !first;
+
+                        header = line.Split('\t').ToList();
+                    }
+                    else
+                    {
+                        var split = line.Split('\t').ToList();
+                        m.Parse(Commands.Command.NEWSITE, split[0], "");
+                        for (int i = 1; i < split.Count; i++)
+                        {
+                            string returnVal;
+                            if (!string.IsNullOrEmpty(split[i])) {
+                                int gems;
+                                if (header[i].StartsWith("@")) continue;
+                                else switch (header[i])
+                                    {
+                                        case "%F":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 0 " + gems);
+                                            }
+                                            break;
+                                        case "%A":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 1 " + gems);
+                                            }
+                                            break;
+                                        case "%W":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 2 " + gems);
+                                            }
+                                            break;
+                                        case "%E":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 3 " + gems);
+                                            }
+                                            break;
+                                        case "%S":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 4 " + gems);
+                                            }
+                                            break;
+                                        case "%D":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 5 " + gems);
+                                            }
+                                            break;
+                                        case "%N":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 6 " + gems);
+                                            }
+                                            break;
+                                        case "%B":
+                                            if (int.TryParse(split[i], out gems))
+                                            {
+                                                m.ProcessStringToLine("#gems 7 " + gems);
+                                            }
+                                            break;
+                                        default:
+                                            m.ProcessStringToLine(header[i] + " " + split[i]);
+                                            break;
+                                    }
+                            }
                         }
                     }
                 }

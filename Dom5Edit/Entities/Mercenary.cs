@@ -11,7 +11,7 @@ namespace Dom5Edit.Entities
 {
     public class Mercenary : IDEntity
     {
-        private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
+        public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
         static Mercenary()
         {
@@ -48,6 +48,12 @@ namespace Dom5Edit.Entities
         internal override EntityType GetEntityType()
         {
             return EntityType.MERCENARY;
+        }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            copy = null;
+            return false;
         }
     }
 }

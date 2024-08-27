@@ -246,6 +246,100 @@
                     <ContentControl Grid.Column="2" Content="{Binding OpenSpell, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Nations" IsEnabled="{Binding IsModLoaded}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="NationList" Grid.Column="0"
+                             ItemsSource="{Binding Nations}"
+                             DisplayMemberPath="DisplayName"
+                             SelectedItem="{Binding SelectedNation, Mode=TwoWay}"
+                             SelectionChanged="EditorNationList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                  Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenNation, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Mercenaries" IsEnabled="{Binding IsModLoaded}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="MercenaryList" Grid.Column="0"
+                             ItemsSource="{Binding Mercenaries}"
+                             DisplayMemberPath="DisplayName"
+                             SelectedItem="{Binding SelectedMercenary, Mode=TwoWay}"
+                             SelectionChanged="EditorMercenaryList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                  Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenMercenary, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Poptypes" IsEnabled="{Binding IsModLoaded}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="PoptypeList" Grid.Column="0"
+                             ItemsSource="{Binding Poptypes}"
+                             DisplayMemberPath="DisplayName"
+                             SelectedItem="{Binding SelectedPoptype, Mode=TwoWay}"
+                             SelectionChanged="EditorPoptypeList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                  Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenPoptype, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Nametypes" IsEnabled="{Binding IsModLoaded}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="NametypeList" Grid.Column="0"
+                             ItemsSource="{Binding Nametypes}"
+                             DisplayMemberPath="DisplayName"
+                             SelectedItem="{Binding SelectedNametype, Mode=TwoWay}"
+                             SelectionChanged="EditorNametypeList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                  Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenNametype, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Events" IsEnabled="{Binding IsModLoaded}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="EventList" Grid.Column="0"
+                             ItemsSource="{Binding Events}"
+                             DisplayMemberPath="DisplayName"
+                             SelectedItem="{Binding SelectedEvent, Mode=TwoWay}"
+                             SelectionChanged="EditorEventList_SelectionChanged"/>
+                    <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                  Background="#AAA"/>
+                    <ContentControl Grid.Column="2" Content="{Binding OpenEvent, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

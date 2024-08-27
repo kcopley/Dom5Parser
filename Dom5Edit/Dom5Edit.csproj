@@ -192,6 +192,7 @@
     <None Include="VanillaData\VanillaArmorData.tsv" />
     <None Include="VanillaData\VanillaArmorProtData.tsv" />
     <None Include="VanillaData\VanillaMonsterData.tsv" />
+    <None Include="VanillaData\VanillaSiteData.tsv" />
     <None Include="VanillaData\VanillaWeaponData.tsv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

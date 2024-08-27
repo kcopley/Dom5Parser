@@ -11,7 +11,7 @@ namespace Dom5Edit.Entities
 {
     public class Poptype : IDEntity
     {
-        private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
+        public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
         static Poptype()
         {
@@ -46,6 +46,12 @@ namespace Dom5Edit.Entities
         internal override EntityType GetEntityType()
         {
             return EntityType.POPTYPE;
+        }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            copy = null;
+            return false;
         }
     }
 }

@@ -105,6 +105,51 @@ namespace Dom5Editor
             }
         }
 
+        private void EditorNationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (NationList.SelectedItem != null)
+            {
+                NationViewModel nvm = NationList.SelectedItem as NationViewModel;
+                (DataContext as ModViewModel).OpenNation = nvm;
+            }
+        }
+
+        private void EditorMercenaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MercenaryList.SelectedItem != null)
+            {
+                MercenaryViewModel mvm = MercenaryList.SelectedItem as MercenaryViewModel;
+                (DataContext as ModViewModel).OpenMercenary = mvm;
+            }
+        }
+
+        private void EditorPoptypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PoptypeList.SelectedItem != null)
+            {
+                PoptypeViewModel pvm = PoptypeList.SelectedItem as PoptypeViewModel;
+                (DataContext as ModViewModel).OpenPoptype = pvm;
+            }
+        }
+
+        private void EditorNametypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (NametypeList.SelectedItem != null)
+            {
+                NametypeViewModel nvm = NametypeList.SelectedItem as NametypeViewModel;
+                (DataContext as ModViewModel).OpenNametype = nvm;
+            }
+        }
+
+        private void EditorEventList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EventList.SelectedItem != null)
+            {
+                EventViewModel evm = EventList.SelectedItem as EventViewModel;
+                (DataContext as ModViewModel).OpenEvent = evm;
+            }
+        }
+
         private void Icon_File_Changed(object sender, TextChangedEventArgs e)
         {
             BindingExpression be = IconImage.GetBindingExpression(Image.SourceProperty);

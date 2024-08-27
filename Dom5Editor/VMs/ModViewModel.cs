@@ -75,8 +75,14 @@ namespace Dom5Editor
             {
                 if (_monsters == null)
                 {
-                    var list = _mod.Database[EntityType.MONSTER].GetFullList();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.MONSTER].GetFullList();
                     _monsters = new List<MonsterViewModel>();
+                    foreach (var m in list)
+                    {
+                        _monsters.Add(new MonsterViewModel(this, m as Monster));
+                    }
+                    
+                    list = _mod.Database[EntityType.MONSTER].GetFullList();
                     foreach (var m in list)
                     {
                         _monsters.Add(new MonsterViewModel(this, m as Monster));
@@ -211,11 +217,16 @@ namespace Dom5Editor
             {
                 if (_sites == null)
                 {
-                    var list = _mod.Database[EntityType.SITE].GetFullList();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.SITE].GetFullList();
                     _sites = new List<SiteViewModel>();
                     foreach (var s in list)
                     {
                         _sites.Add(new SiteViewModel(this, s as Site));
+                    }
+                    list = _mod.Database[EntityType.SITE].GetFullList();
+                    foreach (var i in list)
+                    {
+                        _sites.Add(new SiteViewModel(this, i as Site));
                     }
                 }
                 return _sites;
@@ -293,6 +304,180 @@ namespace Dom5Editor
                     }
                 }
                 return _spells;
+            }
+        }
+
+        private NationViewModel _openNation;
+        public NationViewModel OpenNation
+        {
+            get => _openNation;
+            set
+            {
+                _openNation = value;
+                OnPropertyChanged(nameof(OpenNation));
+            }
+        }
+
+        private List<NationViewModel> _nations;
+        public List<NationViewModel> Nations
+        {
+            get
+            {
+                if (_nations == null)
+                {
+                    _nations = new List<NationViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.NATION].GetFullList();
+                    foreach (var n in list)
+                    {
+                        _nations.Add(new NationViewModel(this, n as Nation));
+                    }
+                    list = _mod.Database[EntityType.NATION].GetFullList();
+                    foreach (var n in list)
+                    {
+                        _nations.Add(new NationViewModel(this, n as Nation));
+                    }
+                }
+                return _nations;
+            }
+        }
+
+        // New properties for Mercenaries
+        private MercenaryViewModel _openMercenary;
+        public MercenaryViewModel OpenMercenary
+        {
+            get => _openMercenary;
+            set
+            {
+                _openMercenary = value;
+                OnPropertyChanged(nameof(OpenMercenary));
+            }
+        }
+
+        private List<MercenaryViewModel> _mercenaries;
+        public List<MercenaryViewModel> Mercenaries
+        {
+            get
+            {
+                if (_mercenaries == null)
+                {
+                    _mercenaries = new List<MercenaryViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.MERCENARY].GetFullList();
+                    foreach (var m in list)
+                    {
+                        _mercenaries.Add(new MercenaryViewModel(this, m as Mercenary));
+                    }
+                    list = _mod.Database[EntityType.MERCENARY].GetFullList();
+                    foreach (var m in list)
+                    {
+                        _mercenaries.Add(new MercenaryViewModel(this, m as Mercenary));
+                    }
+                }
+                return _mercenaries;
+            }
+        }
+
+        // New properties for Poptypes
+        private PoptypeViewModel _openPoptype;
+        public PoptypeViewModel OpenPoptype
+        {
+            get => _openPoptype;
+            set
+            {
+                _openPoptype = value;
+                OnPropertyChanged(nameof(OpenPoptype));
+            }
+        }
+
+        private List<PoptypeViewModel> _poptypes;
+        public List<PoptypeViewModel> Poptypes
+        {
+            get
+            {
+                if (_poptypes == null)
+                {
+                    _poptypes = new List<PoptypeViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.POPTYPE].GetFullList();
+                    foreach (var p in list)
+                    {
+                        _poptypes.Add(new PoptypeViewModel(this, p as Poptype));
+                    }
+                    list = _mod.Database[EntityType.POPTYPE].GetFullList();
+                    foreach (var p in list)
+                    {
+                        _poptypes.Add(new PoptypeViewModel(this, p as Poptype));
+                    }
+                }
+                return _poptypes;
+            }
+        }
+
+        // New properties for Nametypes
+        private NametypeViewModel _openNametype;
+        public NametypeViewModel OpenNametype
+        {
+            get => _openNametype;
+            set
+            {
+                _openNametype = value;
+                OnPropertyChanged(nameof(OpenNametype));
+            }
+        }
+
+        private List<NametypeViewModel> _nametypes;
+        public List<NametypeViewModel> Nametypes
+        {
+            get
+            {
+                if (_nametypes == null)
+                {
+                    _nametypes = new List<NametypeViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.NAMETYPE].GetFullList();
+                    foreach (var n in list)
+                    {
+                        _nametypes.Add(new NametypeViewModel(this, n as Nametype));
+                    }
+                    list = _mod.Database[EntityType.NAMETYPE].GetFullList();
+                    foreach (var n in list)
+                    {
+                        _nametypes.Add(new NametypeViewModel(this, n as Nametype));
+                    }
+                }
+                return _nametypes;
+            }
+        }
+
+        // New properties for Events
+        private EventViewModel _openEvent;
+        public EventViewModel OpenEvent
+        {
+            get => _openEvent;
+            set
+            {
+                _openEvent = value;
+                OnPropertyChanged(nameof(OpenEvent));
+            }
+        }
+
+        private List<EventViewModel> _events;
+        public List<EventViewModel> Events
+        {
+            get
+            {
+                if (_events == null)
+                {
+                    _events = new List<EventViewModel>();
+                    var list = VanillaLoader.Vanilla.Database[EntityType.EVENT].GetFullList();
+                    foreach (var e in list)
+                    {
+                        _events.Add(new EventViewModel(this, e as Event));
+                    }
+                    list = _mod.Database[EntityType.EVENT].GetFullList();
+                    foreach (var e in list)
+                    {
+                        _events.Add(new EventViewModel(this, e as Event));
+                    }
+                }
+                return _events;
             }
         }
 

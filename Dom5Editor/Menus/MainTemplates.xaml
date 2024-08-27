@@ -23,6 +23,21 @@
     <DataTemplate DataType="{x:Type Dom5Editor:SpellViewModel}">
         <Dom5Editor:SpellView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:NationViewModel}">
+        <Dom5Editor:NationView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:MercenaryViewModel}">
+        <Dom5Editor:MercenaryView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:PoptypeViewModel}">
+        <Dom5Editor:PoptypeView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:NametypeViewModel}">
+        <Dom5Editor:NametypeView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type Dom5Editor:EventViewModel}">
+        <Dom5Editor:EventView />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type VM:IntPropertyViewModel}">
         <Menus:IntPropertyView />
     </DataTemplate>

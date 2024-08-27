@@ -103,6 +103,16 @@ namespace Dom5Edit {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] VanillaSiteData {
+            get {
+                object obj = ResourceManager.GetObject("VanillaSiteData", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] VanillaWeaponData {
             get {
                 object obj = ResourceManager.GetObject("VanillaWeaponData", resourceCulture);

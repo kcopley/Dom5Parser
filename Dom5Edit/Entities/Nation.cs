@@ -11,7 +11,7 @@ namespace Dom5Edit.Entities
 {
     public class Nation : IDEntity
     {
-        private static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
+        public static Dictionary<Command, Func<Property>> _propertyMap = new Dictionary<Command, Func<Property>>();
 
         static Nation()
         {
@@ -293,6 +293,12 @@ namespace Dom5Edit.Entities
                 var ret = this.Properties.FirstOrDefault(p => p.Command == Command.ERA);
                 return ret as IntProperty;
             }
+        }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            copy = null;
+            return false;
         }
     }
 }

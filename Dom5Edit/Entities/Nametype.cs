@@ -38,5 +38,11 @@ namespace Dom5Edit.Entities
         {
             return EntityType.NAMETYPE;
         }
+
+        public override bool TryGetCopyFrom(out IDEntity copy)
+        {
+            copy = null;
+            return false;
+        }
     }
 }
