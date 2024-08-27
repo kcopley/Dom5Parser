@@ -2,8 +2,6 @@
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
 using Dom5Editor.VMs;
-using System;
-using System.Collections.Generic;
 
 namespace Dom5Editor
 {

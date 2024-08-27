@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dom5Editor", "Dom5Editor\Dom5Editor.csproj", "{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dom5Edit", "Dom5Edit\Dom5Edit.csproj", "{1D5FE0E3-7B85-4F4C-8C2E-18A95D45C30C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dom5Editor", "Dom5Editor\Dom5Editor.csproj", "{348EC13B-FFB5-4CA3-B49F-0C13F919311D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E33C9E8-C10B-4281-8DD1-001B67B3ABA7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D5FE0E3-7B85-4F4C-8C2E-18A95D45C30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D5FE0E3-7B85-4F4C-8C2E-18A95D45C30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D5FE0E3-7B85-4F4C-8C2E-18A95D45C30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D5FE0E3-7B85-4F4C-8C2E-18A95D45C30C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348EC13B-FFB5-4CA3-B49F-0C13F919311D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348EC13B-FFB5-4CA3-B49F-0C13F919311D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348EC13B-FFB5-4CA3-B49F-0C13F919311D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348EC13B-FFB5-4CA3-B49F-0C13F919311D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
