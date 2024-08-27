@@ -1,19 +1,6 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
-using Dom5Editor.VMs;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace Dom5Editor
 {

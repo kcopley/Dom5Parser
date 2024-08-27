@@ -1,11 +1,9 @@
-﻿using Dom5Edit;
-using Dom5Edit.Entities;
-using Ookii.Dialogs.Wpf;
-using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Dom5Edit;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Dom5Editor
 {
@@ -24,7 +22,7 @@ namespace Dom5Editor
         private void SaveModButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = GetSaveFileDialog();
-            if (dialog.ShowDialog().GetValueOrDefault())
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 var result = dialog.FileName;
                 _vm.Save(result);
@@ -34,7 +32,7 @@ namespace Dom5Editor
         private void LoadModButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = GetOpenFileDialog();
-            if (dialog.ShowDialog().GetValueOrDefault())
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 var result = dialog.FileName;
                 _vm = new ModViewModel(result);
@@ -43,19 +41,35 @@ namespace Dom5Editor
             }
         }
 
-        public VistaOpenFileDialog GetOpenFileDialog()
+        public CommonOpenFileDialog GetOpenFileDialog()
         {
-            var dialog = new VistaOpenFileDialog();
-            dialog.DefaultExt = ".dm";
-            dialog.InitialDirectory = MergerMenuVM.GetDefaultFolderPath();
+            var dir = MergerMenuVM.GetDefaultFolderPath();
+            var dialog = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = false,
+                InitialDirectory = dir,
+                DefaultDirectory = dir,
+                EnsureFileExists = true,
+                EnsurePathExists = true,
+                Multiselect = false
+            };
+            dialog.Filters.Add(new CommonFileDialogFilter("dm", ".dm"));
             return dialog;
         }
 
-        public VistaSaveFileDialog GetSaveFileDialog()
+        public CommonOpenFileDialog GetSaveFileDialog()
         {
-            var dialog = new VistaSaveFileDialog();
-            dialog.DefaultExt = ".dm";
-            dialog.InitialDirectory = MergerMenuVM.GetDefaultFolderPath();
+            var dir = MergerMenuVM.GetDefaultFolderPath();
+            var dialog = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = false,
+                InitialDirectory = dir,
+                DefaultDirectory = dir,
+                EnsureFileExists = false,
+                EnsurePathExists = false,
+                Multiselect = false
+            };
+            dialog.Filters.Add(new CommonFileDialogFilter("dm", ".dm"));
             return dialog;
         }
 
@@ -159,7 +173,7 @@ namespace Dom5Editor
         private void OpenBanner_Click(object sender, RoutedEventArgs e)
         {
             var dialog = GetOpenFileDialog();
-            if (dialog.ShowDialog().GetValueOrDefault())
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 var result = dialog.FileName;
                 var filePath = Path.GetDirectoryName(_vm.FullFilePath);

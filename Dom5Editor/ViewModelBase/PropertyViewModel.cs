@@ -1,12 +1,5 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
-using Dom5Edit.Props;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Dom5Editor.VMs
 {
