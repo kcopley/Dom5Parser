@@ -1,11 +1,4 @@
 ﻿using Dom5Edit.Entities;
-using Dom5Edit.Props;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dom5Edit
 {
