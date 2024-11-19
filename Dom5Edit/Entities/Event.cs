@@ -306,6 +306,82 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.REQ_WORLDITEM, ItemRef.Create);
             _propertyMap.Add(Command.REQ_NOWORLDITEM, ItemRef.Create);
             _propertyMap.Add(Command.SETXP, IntProperty.Create);
+			// Dominions 6 additions:
+			_propertyMap.Add(Command.CLEAR, CommandProperty.Create); //#clear 
+			_propertyMap.Add(Command.REQ_TURNRARE, IntProperty.Create); //#req_turnrare <value>
+			_propertyMap.Add(Command.REQ_MONTH, IntProperty.Create); //#req_month <0 – 11>
+			_propertyMap.Add(Command.REQ_AI, IntProperty.Create); //#req_ai <0 | 1>
+			_propertyMap.Add(Command.REQ_NEARBYCAPITAL, IntProperty.Create); //#req_nearbycapital < 0 | 1 >
+			_propertyMap.Add(Command.REQ_NOTPOPTYPE, IntProperty.Create); //#req_notpoptype <value>
+			_propertyMap.Add(Command.REQ_VOIDOK, IntProperty.Create); //#req_voidok < 0 | 1 >
+			_propertyMap.Add(Command.REQ_FORTID, IntProperty.Create); //#req_fortid <fort number>
+			_propertyMap.Add(Command.REQ_PLANE, IntProperty.Create); //#req_plane < planenr >
+			_propertyMap.Add(Command.REQ_KELP, IntProperty.Create); //#req_kelp < 0 | 1 >
+			_propertyMap.Add(Command.REQ_GORGE, IntProperty.Create); //#req_gorge < 0 | 1 >
+			_propertyMap.Add(Command.REQ_DEEP, IntProperty.Create); //#req_deep < 0 | 1 >
+			_propertyMap.Add(Command.REQ_FORESTCAVE, IntProperty.Create); //#req_forestcave < 0 | 1 >
+			_propertyMap.Add(Command.REQ_DRIP, IntProperty.Create); //#req_drip < 0 | 1 >
+			_propertyMap.Add(Command.REQ_CRYSTAL, IntProperty.Create); //#req_crystal < 0 | 1 >
+			_propertyMap.Add(Command.REQ_NATIVESOIL, CommandProperty.Create); //#req_nativesoil 
+			_propertyMap.Add(Command.REQ_VOID, IntProperty.Create); //#req_void < 0 | 1 >
+			_propertyMap.Add(Command.REQ_GODAWAKE, IntProperty.Create); //#req_godawake <0 - 1>
+			_propertyMap.Add(Command.REQ_PRETISMNR, IntProperty.Create); //#req_pretismnr name | <number>
+			_propertyMap.Add(Command.REQ_PRETAWAKE, IntProperty.Create); //#req_pretawake <0 - 1>
+			_propertyMap.Add(Command.REQ_PATHGLAMOUR, IntProperty.Create); //#req_pathglamour <level>
+			_propertyMap.Add(Command.REQ_NOPATHGLAMOUR, IntProperty.Create); //#req_nopathglamour <level>
+			_propertyMap.Add(Command.REQ_TARGSIGHT, IntProperty.Create); //#req_targsight < 0 | 1 >
+			_propertyMap.Add(Command.REQ_TARGMANYGEMS, IntProperty.Create); //#req_targmanygems <path number>
+			_propertyMap.Add(Command.REQ_TARGHORRORMARK, IntProperty.Create); //#req_targhorrormark <value>
+			_propertyMap.Add(Command.REQ_TARGINSANE, IntProperty.Create); //#req_targinsane <0 | 1>
+			_propertyMap.Add(Command.REQ_TARGSEDUCTIONS, IntProperty.Create); //#req_targseductions <value>
+			_propertyMap.Add(Command.REQ_TARGMINKILLS, IntProperty.Create); //#req_targminkills <value>
+			_propertyMap.Add(Command.REQ_TARGMAXKILLS, IntProperty.Create); //#req_targmaxkills <value>
+			_propertyMap.Add(Command.REQ_NOTCODE, EventCodeRef.Create); //#req_notcode <event code>
+			_propertyMap.Add(Command.REQ_ENCHTARGET, EnchIDRef.Create); //#req_enchtarget <ench nbr>
+			_propertyMap.Add(Command.REQ_ENCHNEARBY, EnchIDRef.Create); //#req_enchnearby <ench nbr>
+			_propertyMap.Add(Command.REQ_MINGLOBALS, IntProperty.Create); //#req_minglobals <nbr>
+			_propertyMap.Add(Command.REQ_MAXGLOBALS, IntProperty.Create); //#req_maxglobals <nbr>
+			_propertyMap.Add(Command.REQ_VARPOS, EventVarRef.Create); //#req_varpos <event var>
+			_propertyMap.Add(Command.REQ_VARNEG, EventVarRef.Create); //#req_varneg <event var>
+			_propertyMap.Add(Command.REQ_VARZERO, EventVarRef.Create); //#req_varzero <event var>
+			_propertyMap.Add(Command.REQ_VARONE, EventVarRef.Create); //#req_varone <event var>
+			_propertyMap.Add(Command.ASSOWNERENCH, EnchIDRef.Create); //#assownerench <ench nbr>
+			_propertyMap.Add(Command.ASSFOLLOWER1, MonsterOrMontagRef.Create); //#assfollower1 name | <number>
+			_propertyMap.Add(Command.ASSFOLLOWER2, MonsterOrMontagRef.Create); //#assfollower2 name | <number>
+			_propertyMap.Add(Command.ASSFOLLOWER3, MonsterOrMontagRef.Create); //#assfollower3 name | <number>
+			_propertyMap.Add(Command.ASSFOLLOWER1D3, MonsterOrMontagRef.Create); //#assfollower1d3 name | <number>
+			_propertyMap.Add(Command.HEALAFF, IntProperty.Create); //#healaff <nbr>
+			_propertyMap.Add(Command.FORCETRANSFORM, MonsterOrMontagRef.Create); //#forcetransform name | <number>
+			_propertyMap.Add(Command.REMOUNT, CommandProperty.Create); //#remount 
+			_propertyMap.Add(Command.CLEARTARG, CommandProperty.Create); //#cleartarg 
+			_propertyMap.Add(Command.KILLTARG, CommandProperty.Create); //#killtarg 
+			_propertyMap.Add(Command.ADDSEDUCTIONS, IntProperty.Create); //#addseductions <value>
+			_propertyMap.Add(Command.ADDKILLS, IntProperty.Create); //#addkills <value>
+			_propertyMap.Add(Command.GLAMOURBOOST, MonsterOrMontagRef.Create); //#glamourboost name | <number>
+			_propertyMap.Add(Command.DISPGLOBALS, IntProperty.Create); //#dispglobals <str>
+			_propertyMap.Add(Command.CLEARVAR, EventVarRef.Create); //#clearvar <event var>
+			_propertyMap.Add(Command.INCVAR, EventVarRef.Create); //#incvar <event var>
+			_propertyMap.Add(Command.DECVAR, EventVarRef.Create); //#decvar <event var>
+			_propertyMap.Add(Command.INC10VAR, EventVarRef.Create); //#inc10var <event var>
+			_propertyMap.Add(Command.DEC10VAR, EventVarRef.Create); //#dec10var <event var>
+			_propertyMap.Add(Command.INVVAR, EventVarRef.Create); //#invvar <event var>
+			_propertyMap.Add(Command.TOGGLEVAR, EventVarRef.Create); //#togglevar <event var>
+			_propertyMap.Add(Command.ADDASCENSION, IntProperty.Create); //#addascension <AP>
+			_propertyMap.Add(Command.MINASCENSION, IntProperty.Create); //#minascension <AP>
+			_propertyMap.Add(Command.REQ_NEARBYTHRONE, IntProperty.Create); //#req_nearbythrone < 0 | 1 >
+			_propertyMap.Add(Command.HEADER, IntProperty.Create); //#header <type>
+			_propertyMap.Add(Command.FORCEGOLD, IntProperty.Create); //#forcegold <value>
+			_propertyMap.Add(Command.FORCEEXACTGOLD, IntProperty.Create); //#forceexactgold <value>
+			_propertyMap.Add(Command.FORCE1D3VIS, IntProperty.Create); //#force1d3vis <gem type>
+			_propertyMap.Add(Command.FORCE1D6VIS, IntProperty.Create); //#force1d6vis <gem type>
+			_propertyMap.Add(Command.FORCE2D4VIS, IntProperty.Create); //#force2d4vis <gem type>
+			_propertyMap.Add(Command.FORCE2D6VIS, IntProperty.Create); //#force2d6vis <gem type>
+			_propertyMap.Add(Command.FORCE3D6VIS, IntProperty.Create); //#force3d6vis <gem type>
+			_propertyMap.Add(Command.FORCE4D6VIS, IntProperty.Create); //#force4d6vis <gem type>
+			_propertyMap.Add(Command.GEMLOSSSMALL, IntProperty.Create); //#gemlosssmall <gem type>
+			_propertyMap.Add(Command.GEMLOSSLARGE, IntProperty.Create); //#gemlosslarge <gem type>
+			_propertyMap.Add(Command.ADDGEO, BitmaskProperty.Create); //#addgeo <terrain bitmask>
+			_propertyMap.Add(Command.REMGEO, BitmaskProperty.Create); //#remgeo <terrain bitmask>
         }
 
         public Event(string value, string comment, Mod _parent, bool selected = false) : base()
@@ -323,7 +399,7 @@ namespace Dom5Edit.Entities
 
         internal override Command GetSelectCommand()
         {
-            throw new NotImplementedException();
+            return Command.SELECTEVENT;
         }
 
         internal override Dictionary<Command, Func<Property>> GetPropertyMap()

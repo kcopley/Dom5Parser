@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Dev2\\Dom5Parser\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{969B7AF1-A05A-446E-8872-CBC54B0934AD}|Dom5Edit\\Dom5Edit.csproj|d:\\dev2\\dom5parser\\dom5edit\\start.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{969B7AF1-A05A-446E-8872-CBC54B0934AD}|Dom5Edit\\Dom5Edit.csproj|solutionrelative:dom5edit\\start.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{969B7AF1-A05A-446E-8872-CBC54B0934AD}|Dom5Edit\\Dom5Edit.csproj|d:\\dev2\\dom5parser\\dom5edit\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{969B7AF1-A05A-446E-8872-CBC54B0934AD}|Dom5Edit\\Dom5Edit.csproj|solutionrelative:dom5edit\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{969B7AF1-A05A-446E-8872-CBC54B0934AD}|Dom5Edit\\Dom5Edit.csproj|d:\\dev2\\dom5parser\\dom5edit\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{969B7AF1-A05A-446E-8872-CBC54B0934AD}|Dom5Edit\\Dom5Edit.csproj|solutionrelative:dom5edit\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Startup.cs",
+              "DocumentMoniker": "D:\\Dev2\\Dom5Parser\\Dom5Edit\\Startup.cs",
+              "RelativeDocumentMoniker": "Dom5Edit\\Startup.cs",
+              "ToolTip": "D:\\Dev2\\Dom5Parser\\Dom5Edit\\Startup.cs",
+              "RelativeToolTip": "Dom5Edit\\Startup.cs",
+              "ViewState": "AQIAANAAAAAAAAAAAAAQwBsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-20T04:29:16.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Startup.cs [Design]",
+              "DocumentMoniker": "D:\\Dev2\\Dom5Parser\\Dom5Edit\\Startup.cs",
+              "RelativeDocumentMoniker": "Dom5Edit\\Startup.cs",
+              "ToolTip": "D:\\Dev2\\Dom5Parser\\Dom5Edit\\Startup.cs [Design]",
+              "RelativeToolTip": "Dom5Edit\\Startup.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-20T04:28:57.474Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Start.cs",
+              "DocumentMoniker": "D:\\Dev2\\Dom5Parser\\Dom5Edit\\Start.cs",
+              "RelativeDocumentMoniker": "Dom5Edit\\Start.cs",
+              "ToolTip": "D:\\Dev2\\Dom5Parser\\Dom5Edit\\Start.cs",
+              "RelativeToolTip": "Dom5Edit\\Start.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-20T04:28:44.323Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
