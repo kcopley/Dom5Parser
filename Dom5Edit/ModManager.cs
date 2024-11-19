@@ -24,29 +24,30 @@ namespace Dom5Edit
         public bool Logging { get; set; } = false;
         private string _folderPath = "";
 
-        internal static int MONSTER_START_ID = 3486;
-        internal static int SITE_START_ID = 1164;
-        internal static int EVENT_START_ID = 6000;
-        internal static int ARMOR_START_ID = 251;
-        internal static int WEAPON_START_ID = 763;
-        internal static int ITEM_START_ID = 446;
-        internal static int SPELL_START_ID = 1177;
-        internal static int NAMETYPE_START_ID = 170;
-        internal static int NATION_START_ID = 109;
-        internal static int MONTAG_START_ID = 1000;
-        internal static int RESTRICTED_ITEM_START_ID = 1;
-        internal static int ENCHANTMENT_START_ID = 106;
-        internal static int EVENT_CODE_START_ID = -300;
-        internal static int EVENT_CODE_EFFECT_START_ID = 14;
-
-        internal static int MONSTER_END_ID = 8999;
-        internal static int SITE_END_ID = 1999;
-        internal static int ARMOR_END_ID = 999;
-        internal static int WEAPON_END_ID = 1999;
-        internal static int ITEM_END_ID = 999;
-        internal static int SPELL_END_ID = 3999;
-        internal static int NAMETYPE_END_ID = 299;
-        internal static int NATION_END_ID = 249;
+		internal static int MONSTER_START_ID = 5000; // Dom5: 3486
+		internal static int SITE_START_ID = 1700; // Dom5: 1164
+		internal static int EVENT_START_ID = 4000; // Dom5: 6000
+		internal static int ARMOR_START_ID = 400; // Dom5: 251
+		internal static int WEAPON_START_ID = 1000; // Dom5: 763
+		internal static int ITEM_START_ID = 700; // Dom5: 446
+		internal static int SPELL_START_ID = 2000; // Dom5: 1177
+		internal static int NAMETYPE_START_ID = 170; // Dom5: 170
+		internal static int NATION_START_ID = 150; // Dom5: 109
+		internal static int MONTAG_START_ID = 1000; // Dom5: 1000
+		internal static int RESTRICTED_ITEM_START_ID = 1; // Dom5: 1
+		internal static int ENCHANTMENT_START_ID = 200; // Dom5: 106
+		internal static int EVENT_CODE_START_ID = -300; // Dom5: -300
+		internal static int EVENT_VAR_START_ID = 1; // Dom5: n/a
+		internal static int EVENT_CODE_EFFECT_START_ID = 50; // Dom5: 14
+			
+		internal static int MONSTER_END_ID = 19999; // Dom5: 8999
+		internal static int SITE_END_ID = 3999; // Dom5: 1999
+		internal static int ARMOR_END_ID = 1999; // Dom5: 999
+		internal static int WEAPON_END_ID = 3999; // Dom5: 1999
+		internal static int ITEM_END_ID = 1999; // Dom5: 999
+		internal static int SPELL_END_ID = 7999; // Dom5: 3999
+		internal static int NAMETYPE_END_ID = 399; // Dom5: 299
+		internal static int NATION_END_ID = 499; // Dom5: 249
 
         public ModManager()
         {
@@ -108,6 +109,7 @@ namespace Dom5Edit
             }
         }
 
+		// TODO: update to dom6
         public void ExportMagicPaths(string folder)
         {
             string separator = "\t";
@@ -238,6 +240,112 @@ namespace Dom5Edit
 
         private double[] GetMagicPaths(Monster m)
         {
+            double[] arr = new double[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            foreach (var magic in m.MagicSkills)
+            {
+                switch (magic.Path)
+                {
+                    case Commands.MagicPaths.FIRE:
+                        arr[0] = Math.Max(magic.Level, arr[0]);
+                        break;
+                    case Commands.MagicPaths.AIR:
+                        arr[1] = Math.Max(magic.Level, arr[1]);
+                        break;
+                    case Commands.MagicPaths.WATER:
+                        arr[2] = Math.Max(magic.Level, arr[2]);
+                        break;
+                    case Commands.MagicPaths.EARTH:
+                        arr[3] = Math.Max(magic.Level, arr[3]);
+                        break;
+                    case Commands.MagicPaths.ASTRAL:
+                        arr[4] = Math.Max(magic.Level, arr[4]);
+                        break;
+                    case Commands.MagicPaths.DEATH:
+                        arr[5] = Math.Max(magic.Level, arr[5]);
+                        break;
+                    case Commands.MagicPaths.NATURE:
+                        arr[6] = Math.Max(magic.Level, arr[6]);
+                        break;
+                    case Commands.MagicPaths.GLAMOUR:
+                        arr[7] = Math.Max(magic.Level, arr[7]);
+                        break;
+                    case Commands.MagicPaths.BLOOD:
+                        arr[7] = Math.Max(magic.Level, arr[8]);
+                        break;
+                    case Commands.MagicPaths.PRIEST:
+                        arr[8] = Math.Max(magic.Level, arr[9]);
+                        break;
+                    case Commands.MagicPaths.ELEMENTAL:
+                        arr[0] = Math.Max(magic.Level, arr[0]);
+                        arr[1] = Math.Max(magic.Level, arr[1]);
+                        arr[2] = Math.Max(magic.Level, arr[2]);
+                        arr[3] = Math.Max(magic.Level, arr[3]);
+                        break;
+                    case Commands.MagicPaths.SORCERY:
+                        arr[4] = Math.Max(magic.Level, arr[4]);
+                        arr[5] = Math.Max(magic.Level, arr[5]);
+                        arr[6] = Math.Max(magic.Level, arr[6]);
+                        arr[7] = Math.Max(magic.Level, arr[7]);
+                        break;
+                    case Commands.MagicPaths.ALL:
+                        arr[0] = Math.Max(magic.Level, arr[0]);
+                        arr[1] = Math.Max(magic.Level, arr[1]);
+                        arr[2] = Math.Max(magic.Level, arr[2]);
+                        arr[3] = Math.Max(magic.Level, arr[3]);
+                        arr[4] = Math.Max(magic.Level, arr[4]);
+                        arr[5] = Math.Max(magic.Level, arr[5]);
+                        arr[6] = Math.Max(magic.Level, arr[6]);
+                        arr[7] = Math.Max(magic.Level, arr[7]);
+                        arr[7] = Math.Max(magic.Level, arr[8]);
+                        break;
+                }
+            }
+            foreach (var magic in m.CustomMagic)
+            {
+                foreach (var mpath in magic.Path)
+                {
+                    switch (mpath)
+                    {
+                        case Commands.MagicPaths.FIRE:
+                            arr[0] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.AIR:
+                            arr[1] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.WATER:
+                            arr[2] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.EARTH:
+                            arr[3] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.ASTRAL:
+                            arr[4] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.DEATH:
+                            arr[5] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.NATURE:
+                            arr[6] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.GLAMOUR:
+                            arr[7] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.BLOOD:
+                            arr[8] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                        case Commands.MagicPaths.PRIEST:
+                            arr[9] += (magic.Chance > .1) ? Math.Ceiling(magic.Chance) : 0;
+                            break;
+                    }
+                }
+            }
+            return arr;
+        }
+		
+		// Dominions 5:
+		/*
+        private double[] GetMagicPaths(Monster m)
+        {
             double[] arr = new double[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             foreach (var magic in m.MagicSkills)
             {
@@ -332,6 +440,7 @@ namespace Dom5Edit
             }
             return arr;
         }
+		*/
 
         private Mod finalizedmod;
         private Mod tempMod;
@@ -345,7 +454,7 @@ namespace Dom5Edit
             finalMod.ModName = this._ModName;
             finalMod.Description = "A merger of all valid mods that were parsed";
             finalMod.Version = "1.0";
-            finalMod.DomVersion = "5.00";
+            finalMod.DomVersion = "6.21";
 
             foreach (Mod m in Mods)
             {
@@ -400,6 +509,7 @@ namespace Dom5Edit
 
                 //event codes
                 MergeEventCodes(m.EventCodes.Values.ToList(), finalMod);
+                MergeEventVars(m.EventVars.Values.ToList(), finalMod);
                 MergeEnchantments(m.Enchantments.Values.ToList(), finalMod);
                 MergeEventEffectCodes(m.EventEffectCodes.Values.ToList(), finalMod);
             }
@@ -607,7 +717,9 @@ namespace Dom5Edit
         {
             foreach (Enchantment item in items)
             {
-                if (item.DependentEnchantment == null && item.EnchID >= 106)
+				// TODO: Not sure why this is hardcoded, updating it to the dom6 lower limit and will check back later
+                // if (item.DependentEnchantment == null && item.EnchID >= 106)
+                if (item.DependentEnchantment == null && item.EnchID >= 200)
                 {
                     item.EnchID = finalMod.GetNextEnchantmentID();
                     finalMod.Enchantments.Add(item.GetID(), item);
@@ -623,6 +735,18 @@ namespace Dom5Edit
                 {
                     item.EventCodeID = finalMod.GetNextEventCodeID();
                     finalMod.EventCodes.Add(item.GetID(), item);
+                }
+            }
+        }
+		
+        public void MergeEventVars(List<EventVar> items, Mod finalMod)
+        {
+            foreach (EventVar item in items)
+            {
+                if (item.DependentEventVar == null)
+                {
+                    item.EventVarID = finalMod.GetNextEventVarID();
+                    finalMod.EventVars.Add(item.GetID(), item);
                 }
             }
         }

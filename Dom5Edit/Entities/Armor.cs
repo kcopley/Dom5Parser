@@ -27,6 +27,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.MAGICARMOR, CommandProperty.Create);
             _propertyMap.Add(Command.IRONARMOR, CommandProperty.Create);
             _propertyMap.Add(Command.WOODENARMOR, CommandProperty.Create);
+			// Dominions 6 additions:
+            _propertyMap.Add(Command.PROTPARTS, IntIntProperty.Create); // #protparts <head prot> <body prot>
         }
 
         public Armor(string value, string comment, Mod _parent, bool selected = false) : base(value, comment, _parent, selected)

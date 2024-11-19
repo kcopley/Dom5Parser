@@ -169,6 +169,7 @@ namespace Dom5Edit.Mods
         public Dictionary<int, RestrictedItem> RestrictedItems = new Dictionary<int, RestrictedItem>();
         public Dictionary<int, Enchantment> Enchantments = new Dictionary<int, Enchantment>();
         public Dictionary<int, EventCode> EventCodes = new Dictionary<int, EventCode>();
+        public Dictionary<int, EventVar> EventVars = new Dictionary<int, EventVar>();
         public Dictionary<int, EventEffectCode> EventEffectCodes = new Dictionary<int, EventEffectCode>();
         public Dictionary<int, IDEntity> Nations = new Dictionary<int, IDEntity>();
         public bool TryGetValueNations(int i, out IDEntity entity)
@@ -220,6 +221,7 @@ namespace Dom5Edit.Mods
         private int _RestrictedItemStartID = ModManager.RESTRICTED_ITEM_START_ID;
         private int _EnchantmentStartID = ModManager.ENCHANTMENT_START_ID;
         private int _EventCodeStartID = ModManager.EVENT_CODE_START_ID;
+        private int _EventVarStartID = ModManager.EVENT_VAR_START_ID;
         private int _EventCodeEffectStartID = ModManager.EVENT_CODE_EFFECT_START_ID;
 
         private Entity _currentEntity = null;
@@ -379,6 +381,37 @@ namespace Dom5Edit.Mods
             int nextIndex = s.IndexOf('#');
             while (nextIndex != -1)
             {
+				
+				if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
+				else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
+				else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
+				else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
+				else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
+				else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
+				else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
+				else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
+				else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
+				else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
+				//else if (s.IndexOf("##godHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+				else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
+				//else if (s.IndexOf("##disHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+				else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
+				else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
+				else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+				else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+				else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
+				else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
+				else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
+				else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+				else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+				else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
+				else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
+				else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
+				else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
+				else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
+				else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
+				else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
+				/* Dominions 5
                 if (s.IndexOf("##landname##", nextIndex) == nextIndex)
                 {
                     nextIndex += 12;
@@ -395,6 +428,7 @@ namespace Dom5Edit.Mods
                 {
                     nextIndex += 15;
                 }
+				*/
                 else
                 {
                     return nextIndex;
@@ -418,6 +452,36 @@ namespace Dom5Edit.Mods
                 int nextIndex = s.IndexOf('#', index + 1);
                 while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
                 {
+					if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
+					else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
+					else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
+					else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
+					else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
+					else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
+					else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
+					else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
+					else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
+					else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
+					//else if (s.IndexOf("##godHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+					else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
+					//else if (s.IndexOf("##disHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+					else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
+					else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
+					else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+					else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+					else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
+					else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
+					else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
+					else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+					else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+					else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
+					else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
+					else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
+					else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
+					else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
+					else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
+					else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
+					/* Dominions 5
                     if (s.IndexOf("##landname##", nextIndex) == nextIndex)
                     {
                         nextIndex += 12;
@@ -426,7 +490,12 @@ namespace Dom5Edit.Mods
                     {
                         nextIndex += 11;
                     }
-                    else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
+					
+					else if (s.IndexOf("##godname##", nextIndex) == nextIndex)
+					{
+						nextIndex += 11;
+					}
+						else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
                     {
                         nextIndex += 12;
                     }
@@ -434,6 +503,7 @@ namespace Dom5Edit.Mods
                     {
                         nextIndex += 15;
                     }
+					*/
                     else
                     {
                         commandIndexes.Add(nextIndex);
@@ -624,6 +694,9 @@ namespace Dom5Edit.Mods
                 case Command.NEWEVENT:
                     _currentEntity = NewEvent(val, comment);
                     break;
+                case Command.SELECTEVENT:
+                    _currentEntity = SelectEvent(val, comment);
+                    break;
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);
                     _currentEntity = null;
@@ -785,6 +858,17 @@ namespace Dom5Edit.Mods
                     if (m.EventCodes.ContainsKey(kvp.Key))
                     {
                         kvp.Value.DependentEventCode = m.EventCodes[kvp.Key];
+                        break;
+                    }
+                }
+            }
+            foreach (var kvp in this.EventVars)
+            {
+                foreach (var m in Dependencies)
+                {
+                    if (m.EventVars.ContainsKey(kvp.Key))
+                    {
+                        kvp.Value.DependentEventVar = m.EventVars[kvp.Key];
                         break;
                     }
                 }
@@ -1049,6 +1133,21 @@ namespace Dom5Edit.Mods
             }
         }
 
+        public EventVar AddEventVar(int ID)
+        {
+            if (ID == -1) return null;
+            if (EventVars.TryGetValue(ID, out var m))
+            {
+                return m;
+            }
+            else
+            {
+                var ret = new EventVar(ID);
+                EventVars.Add(ID, ret);
+                return ret;
+            }
+        }
+
         public EventEffectCode AddEventEffectCode(int ID)
         {
             if (ID == -1) return null;
@@ -1128,6 +1227,18 @@ namespace Dom5Edit.Mods
             return m;
         }
 
+        public IDEntity SelectEvent(string val, string comment)
+        {
+            if (int.TryParse(val, out int id) && Events.TryGetValue(id, out IDEntity m))
+            {
+                return m;
+            }
+            else
+            {
+                return new Event(val, comment, this, true);
+            }
+        }
+		
         public IDEntity NewSpell(string val, string comment, bool selected = false)
         {
             Spell m = new Spell(val, comment, this, selected);
@@ -1366,6 +1477,16 @@ namespace Dom5Edit.Mods
                 _EventCodeStartID--;
             }
             return _EventCodeStartID;
+        }
+		
+        public int GetNextEventVarID()
+        {
+            //very crude search unfortunately, but should be fine for our purposes
+            while (EventVars.ContainsKey(_EventVarStartID))
+            {
+                _EventVarStartID--;
+            }
+            return _EventVarStartID;
         }
 
         public int GetNextEventEffectCodeStartID()

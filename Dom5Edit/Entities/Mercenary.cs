@@ -37,12 +37,12 @@ namespace Dom5Edit.Entities
 
         internal override Command GetNewCommand()
         {
-            return Command.NEWARMOR;
+            return Command.NEWMERC;
         }
 
         internal override Command GetSelectCommand()
         {
-            return Command.SELECTARMOR;
+            throw new NotImplementedException();
         }
 
         internal override Dictionary<Command, Func<Property>> GetPropertyMap()
