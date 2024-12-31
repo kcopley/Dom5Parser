@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-public class TypeManager
+﻿public class TypeManager
 {
     public static Dictionary<Type, Dictionary<string, Type>> CodexOfAllLife = new Dictionary<Type, Dictionary<string, Type>>();
 
