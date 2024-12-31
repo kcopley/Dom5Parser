@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dom5Edit.Commands
+﻿namespace Dom5Edit.Commands
 {
     public enum Command
     {

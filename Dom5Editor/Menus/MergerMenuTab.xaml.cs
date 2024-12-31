@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Dom5Editor
 {
@@ -113,10 +102,17 @@ namespace Dom5Editor
             try
             {
                 var ret = MergerMenuVM.MergeAndExport();
-                var dialog = new Ookii.Dialogs.Wpf.VistaSaveFileDialog();
-                dialog.DefaultExt = ".dm";
-                dialog.InitialDirectory = ret.FolderPath;
-                if (dialog.ShowDialog().GetValueOrDefault())
+                var dialog = new CommonOpenFileDialog()
+                {
+                    IsFolderPicker = false,
+                    InitialDirectory = ret.FolderPath,
+                    DefaultDirectory = ret.FolderPath,
+                    EnsureFileExists = true,
+                    EnsurePathExists = true,
+                    Multiselect = false
+                };
+                dialog.Filters.Add(new CommonFileDialogFilter("dm", ".dm"));
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     ret.FullFilePath = dialog.FileName;
                     ret.Export();
@@ -151,15 +147,19 @@ namespace Dom5Editor
 
         private void FolderDialog_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
-            dialog.RootFolder = Environment.SpecialFolder.Desktop;
+            var dialog = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = true,
+                EnsurePathExists = true,
+                Multiselect = false,
+            };
             if (!string.IsNullOrEmpty(FolderPath.Text) && Directory.Exists(FolderPath.Text))
             {
-                dialog.SelectedPath = FolderPath.Text;
+                dialog.DefaultDirectory = FolderPath.Text;
             }
-            if (dialog.ShowDialog().GetValueOrDefault())
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                FolderPath.Text = dialog.SelectedPath;
+                FolderPath.Text = dialog.FileName;
             }
         }
     }
