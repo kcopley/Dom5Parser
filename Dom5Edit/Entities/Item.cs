@@ -345,6 +345,49 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SLAVERBONUS, IntProperty.Create);
             _propertyMap.Add(Command.SALTVUL, IntProperty.Create);
             _propertyMap.Add(Command.SHAPECHANCE, IntProperty.Create);
+			// Dominions 6 additions:
+			_propertyMap.Add(Command.ACIDRES, IntProperty.Create); //#acidres <prot>
+			_propertyMap.Add(Command.DECAYRES, IntProperty.Create); //#decayres <0 or 1>
+			_propertyMap.Add(Command.NOTFORNATION, NationRef.Create); //#notfornation <nation nbr> | "nation name"
+			_propertyMap.Add(Command.USERESTRICTEDITEM, NationRef.Create); //#userestricteditem <value>
+			_propertyMap.Add(Command.HEAVYITEM, IntProperty.Create); //#heavyitem <0 or 1>
+			_propertyMap.Add(Command.NOFEMALE, CommandProperty.Create); //#nofemale 
+			_propertyMap.Add(Command.ONLYFEMALE, CommandProperty.Create); //#onlyfemale 
+			_propertyMap.Add(Command.DANCEWEAPON, WeaponRef.Create); //#danceweapon <weapon name> | <weapon nbr>
+			_propertyMap.Add(Command.DANCENRATT, IntProperty.Create); //#dancenratt <attacks>
+			_propertyMap.Add(Command.DANCESPR, FlySprProperty.Create); //#dancespr <flysprite nbr>
+			_propertyMap.Add(Command.DANCENOF, IntProperty.Create); //#dancenof <nbr of sprites>
+			_propertyMap.Add(Command.DANCESIZE, IntProperty.Create); //#dancesize <size>
+			_propertyMap.Add(Command.BESTOWTOMOUNT, CommandProperty.Create); //#bestowtomount 
+			_propertyMap.Add(Command.MOBILEARCHER, IntProperty.Create); //#mobilearcher <0 or 1>
+			_propertyMap.Add(Command.STATSTORM, IntProperty.Create); //#statstorm <value>
+			_propertyMap.Add(Command.STATBREAK, IntProperty.Create); //#statbreak <value>
+			_propertyMap.Add(Command.PLAGUEDOCTOR, IntProperty.Create); //#plaguedoctor <percent>
+			_propertyMap.Add(Command.CORRUPTOR, IntProperty.Create); //#corruptor <value>
+			_propertyMap.Add(Command.ICENATPROT, IntProperty.Create); //#icenatprot <prot>
+			_propertyMap.Add(Command.MAXDEADHP, IntProperty.Create); //#maxdeadhp <HP>
+			_propertyMap.Add(Command.XPGAIN, IntProperty.Create); //#xpgain <percent>
+			_propertyMap.Add(Command.CLUMSY, IntProperty.Create); //#clumsy <0 or 1>
+			_propertyMap.Add(Command.TRUESIGHT, CommandProperty.Create); //#truesight 
+			_propertyMap.Add(Command.TWISTFATE, CommandProperty.Create); //#twistfate 
+			_propertyMap.Add(Command.POWEROFDEATH, IntProperty.Create); //#powerofdeath <limit>
+			_propertyMap.Add(Command.FEAROFFLOOD, IntProperty.Create); //#fearofflood <value>
+			_propertyMap.Add(Command.MINDCOLLAR, IntProperty.Create); //#mindcollar <dmg>
+			_propertyMap.Add(Command.FALSESUPPLY, IntProperty.Create); //#falsesupply <value>
+			_propertyMap.Add(Command.GEMPROD, IntIntProperty.Create); //#gemprod <type> <number>
+			_propertyMap.Add(Command.ELEMENTGEMS, IntProperty.Create); //#elementgems <gems>
+			_propertyMap.Add(Command.SORCERYGEMS, IntProperty.Create); //#sorcerygems <gems>
+			_propertyMap.Add(Command.ASSASSIN, CommandProperty.Create); //#assassin 
+			_propertyMap.Add(Command.GLAMOURMANIP, IntProperty.Create); //#glamourmanip <0 or 1>
+			_propertyMap.Add(Command.GLAMOURRANGE, IntProperty.Create); //#glamourrange <range>
+			_propertyMap.Add(Command.HOLYRANGE, IntProperty.Create); //#holyrange <range>
+			_propertyMap.Add(Command.TMPGLAMOURGEMS, IntProperty.Create); //#tmpglamourgems <gems>
+			_propertyMap.Add(Command.FIREELEMENTALS, IntProperty.Create); //#fireelementals <bonus>
+			_propertyMap.Add(Command.AIRELEMENTALS, IntProperty.Create); //#airelementals <bonus>
+			_propertyMap.Add(Command.EARTHELEMENTALS, IntProperty.Create); //#earthelementals <bonus>
+			_propertyMap.Add(Command.WATERELEMENTALS, IntProperty.Create); //#waterelementals <bonus>
+			_propertyMap.Add(Command.UNDISLEADER, IntProperty.Create); //#undisleader <value>
+
         }
 
         public Item(string value, string comment, Mod _parent, bool selected = false) : base()

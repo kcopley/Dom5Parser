@@ -967,6 +967,7 @@ namespace Dom5Edit.Commands
         GHOSTREANIM,
         SELECTPOPTYPE,
         CLEARDEF,
+		
         POPPERGOLD,
         RESOURCEMULT,
         SUPPLYMULT,
@@ -1276,7 +1277,300 @@ namespace Dom5Edit.Commands
         REQ_GODISNOTMNR,
         REQ_WORLDITEM,
         REQ_NOWORLDITEM,
-        SETXP,
+        SETXP,ACIDRES,
+		DECAYRES,
+		NOTFORNATION,
+		USERESTRICTEDITEM,
+		HEAVYITEM,
+		NOFEMALE,
+		ONLYFEMALE,
+		DANCEWEAPON,
+		DANCENRATT,
+		DANCESPR,
+		DANCENOF,
+		DANCESIZE,
+		BESTOWTOMOUNT,
+		MOBILEARCHER,
+		STATSTORM,
+		STATBREAK,
+		PLAGUEDOCTOR,
+		CORRUPTOR,
+		ICENATPROT,
+		MAXDEADHP,
+		XPGAIN,
+		CLUMSY,
+		TRUESIGHT,
+		TWISTFATE,
+		POWEROFDEATH,
+		FEAROFFLOOD,
+		MINDCOLLAR,
+		FALSESUPPLY,
+		GEMPROD,
+		ELEMENTGEMS,
+		SORCERYGEMS,
+		ASSASSIN,
+		GLAMOURMANIP,
+		GLAMOURRANGE,
+		HOLYRANGE,
+		TMPGLAMOURGEMS,
+		FIREELEMENTALS,
+		AIRELEMENTALS,
+		EARTHELEMENTALS,
+		WATERELEMENTALS,
+		UNDISLEADER,
+		THIRDSTR,
+		SPIRITFORMIMMUNE,
+		ILLUSIONSIMMUNE,
+		FALSE,
+		SPEEDMULT,
+		NOTMOUNTED,
+		NOTDISMOUNTED,
+		HOLYIFHIT,
+		KILLMAGICIFHIT,
+		KILLDEMONIFHIT,
+		HOLYSTUNIFHIT,
+		PETRIFYIFHIT,
+		FIREIFHIT,
+		COLDIFHIT,
+		SHOCKIFHIT,
+		POISONIFDMG,
+		AFTERCLOUD,
+		AFTERCLOUDAREA,
+		GODSITE,
+		MOREORDER,
+		MOREPROD,
+		MOREHEAT,
+		MOREGROWTH,
+		MORELUCK,
+		MOREMAGIC,
+		ENCHREBATE75,
+		ENCHREBATE100,
+		HEATRECSCALE,
+		COLDRECSCALE,
+		GROWTHRECSCALE,
+		DEATHRECSCALE,
+		ORDERRECSCALE,
+		CHAOSRECSCALE,
+		NOWEAPON,
+		HOLYCOST,
+		SPIRITFORM,
+		NOSPIRITFORM,
+		DIVINEBEING,
+		MOBILEARCHER,
+		STATSTORM,
+		STATBREAK,
+		CORRUPTOR,
+		PLAGUEDOCTOR,
+		ASSENCLOC,
+		AUTOCORPSEHEALER,
+		MAXDEADHP,
+		XPGAIN,
+		EXTRALIVES,
+		ACIDRES,
+		DECAYRES,
+		ICENATPROT,
+		RECONST,
+		FALSEREGEN,
+		TWISTFATE,
+		GLAMOUR,
+		DREAD,
+		NIGHTMAREAURA,
+		CLUMSY,
+		AUTOBERSERK,
+		TRUESIGHT,
+		GUARDSPIRIT,
+		DT_RAISE,
+		FEAROFFLOOD,
+		MINDCOLLAR,
+		DEATHPOISON,
+		DEATHSHOCK,
+		DEATHSLIME,
+		DEATHGRAB,
+		POWEROFDEATH,
+		FALSESUPPLY,
+		LABXPSHAPE,
+		XPSHAPEMON,
+		XPSHAPELOSS,
+		LICH,
+		BATTLESHAPE,
+		WORLDSHAPE,
+		ANIMATED,
+		FIREELEMENTALS,
+		AIRELEMENTALS,
+		EARTHELEMENTALS,
+		WATERELEMENTALS,
+		MOUNTMNR,
+		UNMOUNTEDSPR1,
+		UNMOUNTEDSPR2,
+		NOFMOUNTS,
+		NOFRIDERS,
+		CORIDERMNR,
+		XSPR1,
+		XSPR2,
+		REGAINMOUNT,
+		NOREMOUNT,
+		SKILLEDRIDER,
+		MOUNTISCOM,
+		NOBARDING,
+		NOTHROWOFF,
+		NOFALLDMG,
+		BRAVEMOUNT,
+		SMARTMOUNT,
+		UNDISLEADER,
+		GLAMOURRANGE,
+		HOLYRANGE,
+		ELEMENTGEMS,
+		SORCERYGEMS,
+		TMPGLAMOURGEMS,
+		TMPBLOODSLAVES,
+		GLAMOURMANIP,
+		LOOK,
+		DEFCOM,
+		DEFUNIT,
+		DEFMULT,
+		GLAMOURRANGE,
+		POPGROWTH,
+		VIEWALLPROV,
+		VIEWALLBAT,
+		MOREORDER,
+		MOREPROD,
+		MOREHEAT,
+		MOREGROWTH,
+		MORELUCK,
+		MOREMAGIC,
+		AIGLAMOURNATION,
+		GUARDCOM,
+		GUARDUNIT,
+		GUARDMULT,
+		SEATRACE,
+		DISBLESS,
+		HIDEDOM,
+		TEMPLEHOLYPOINTS,
+		FORESTFORTREC,
+		FORESTFORTCOM,
+		MOUNTAINFORTREC,
+		MOUNTAINFORTCOM,
+		SWAMPFORTREC,
+		SWAMPFORTCOM,
+		WASTEFORTREC,
+		WASTEFORTCOM,
+		FARMREC,
+		FARMFORTREC,
+		FARMCOM,
+		FARMFORTCOM,
+		CAVEFORTREC,
+		CAVEFORTCOM,
+		DRIPREC,
+		DRIPFORTREC,
+		DRIPCOM,
+		DRIPFORTCOM,
+		COASTFORTREC,
+		COASTFORTCOM,
+		SEAREC,
+		SEAFORTREC,
+		SEACOM,
+		SEAFORTCOM,
+		DEEPREC,
+		DEEPFORTREC,
+		DEEPCOM,
+		DEEPFORTCOM,
+		KELPREC,
+		KELPFORTREC,
+		KELPCOM,
+		KELPFORTCOM,
+		SPEEDMULT,
+		ONLYSITEDST,
+		DISPIMMUNE,
+		NAPBREAKRIT,
+		SUMHEALAFFS,
+		LOCALGLOBAL,
+		WORLDVISIBLE,
+		GLOBALLOOK,
+		PORTENT,
+		CURE,
+		REQNOSPELLSINGER,
+		REQNOTASKMASTER,
+		REQNOSEDUCE,
+		AIASSMOD,
+		CLEARALLEVENTS,
+		REQ_TURNRARE,
+		REQ_MONTH,
+		REQ_AI,
+		REQ_NEARBYCAPITAL,
+		REQ_NOTPOPTYPE,
+		REQ_VOIDOK,
+		REQ_FORTID,
+		REQ_PLANE,
+		REQ_KELP,
+		REQ_GORGE,
+		REQ_DEEP,
+		REQ_FORESTCAVE,
+		REQ_DRIP,
+		REQ_CRYSTAL,
+		REQ_NATIVESOIL,
+		REQ_VOID,
+		REQ_GODAWAKE,
+		REQ_PRETISMNR,
+		REQ_PRETAWAKE,
+		REQ_PATHGLAMOUR,
+		REQ_NOPATHGLAMOUR,
+		REQ_TARGSIGHT,
+		REQ_TARGMANYGEMS,
+		REQ_TARGHORRORMARK,
+		REQ_TARGINSANE,
+		REQ_TARGSEDUCTIONS,
+		REQ_TARGMINKILLS,
+		REQ_TARGMAXKILLS,
+		REQ_NOTCODE,
+		REQ_ENCHTARGET,
+		REQ_ENCHNEARBY,
+		REQ_MINGLOBALS,
+		REQ_MAXGLOBALS,
+		REQ_VARPOS,
+		REQ_VARNEG,
+		REQ_VARZERO,
+		REQ_VARONE,
+		ASSOWNERENCH,
+		ASSFOLLOWER1,
+		ASSFOLLOWER2,
+		ASSFOLLOWER3,
+		ASSFOLLOWER1D3,
+		HEALAFF,
+		FORCETRANSFORM,
+		REMOUNT,
+		CLEARTARG,
+		KILLTARG,
+		ADDSEDUCTIONS,
+		ADDKILLS,
+		GLAMOURBOOST,
+		DISPGLOBALS,
+		CLEARVAR,
+		INCVAR,
+		DECVAR,
+		INC10VAR,
+		DEC10VAR,
+		INVVAR,
+		TOGGLEVAR,
+		ADDASCENSION,
+		MINASCENSION,
+		REQ_NEARBYTHRONE,
+		HEADER,
+		FORCEGOLD,
+		FORCEEXACTGOLD,
+		FORCE1D3VIS,
+		FORCE1D6VIS,
+		FORCE2D4VIS,
+		FORCE2D6VIS,
+		FORCE3D6VIS,
+		FORCE4D6VIS,
+		GEMLOSSSMALL,
+		GEMLOSSLARGE,
+		ADDGEO,
+		REMGEO,
+		STARTRESEARCH,
+		ARENAGOLD,
+		ARENAGEMS,
+		GEMLONGEVITY
     }
 
     public class CommandsMap
@@ -2554,6 +2848,302 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#req_worlditem", Command.REQ_WORLDITEM);
             _commandMap.Add("#req_noworlditem", Command.REQ_NOWORLDITEM);
             _commandMap.Add("#setxp", Command.SETXP);
+			// Dominions 6 additions:
+			_commandMap.Add("#acidres", Command.ACIDRES);
+			_commandMap.Add("#decayres", Command.DECAYRES);
+			_commandMap.Add("#notfornation", Command.NOTFORNATION);
+			_commandMap.Add("#userestricteditem", Command.USERESTRICTEDITEM);
+			_commandMap.Add("#heavyitem", Command.HEAVYITEM);
+			_commandMap.Add("#nofemale", Command.NOFEMALE);
+			_commandMap.Add("#onlyfemale", Command.ONLYFEMALE);
+			_commandMap.Add("#danceweapon", Command.DANCEWEAPON);
+			_commandMap.Add("#dancenratt", Command.DANCENRATT);
+			_commandMap.Add("#dancespr", Command.DANCESPR);
+			_commandMap.Add("#dancenof", Command.DANCENOF);
+			_commandMap.Add("#dancesize", Command.DANCESIZE);
+			_commandMap.Add("#bestowtomount", Command.BESTOWTOMOUNT);
+			_commandMap.Add("#mobilearcher", Command.MOBILEARCHER);
+			_commandMap.Add("#statstorm", Command.STATSTORM);
+			_commandMap.Add("#statbreak", Command.STATBREAK);
+			_commandMap.Add("#plaguedoctor", Command.PLAGUEDOCTOR);
+			_commandMap.Add("#corruptor", Command.CORRUPTOR);
+			_commandMap.Add("#icenatprot", Command.ICENATPROT);
+			_commandMap.Add("#maxdeadhp", Command.MAXDEADHP);
+			_commandMap.Add("#xpgain", Command.XPGAIN);
+			_commandMap.Add("#clumsy", Command.CLUMSY);
+			_commandMap.Add("#truesight", Command.TRUESIGHT);
+			_commandMap.Add("#twistfate", Command.TWISTFATE);
+			_commandMap.Add("#powerofdeath", Command.POWEROFDEATH);
+			_commandMap.Add("#fearofflood", Command.FEAROFFLOOD);
+			_commandMap.Add("#mindcollar", Command.MINDCOLLAR);
+			_commandMap.Add("#falsesupply", Command.FALSESUPPLY);
+			_commandMap.Add("#gemprod", Command.GEMPROD);
+			_commandMap.Add("#elementgems", Command.ELEMENTGEMS);
+			_commandMap.Add("#sorcerygems", Command.SORCERYGEMS);
+			_commandMap.Add("#assassin", Command.ASSASSIN);
+			_commandMap.Add("#glamourmanip", Command.GLAMOURMANIP);
+			_commandMap.Add("#glamourrange", Command.GLAMOURRANGE);
+			_commandMap.Add("#holyrange", Command.HOLYRANGE);
+			_commandMap.Add("#tmpglamourgems", Command.TMPGLAMOURGEMS);
+			_commandMap.Add("#fireelementals", Command.FIREELEMENTALS);
+			_commandMap.Add("#airelementals", Command.AIRELEMENTALS);
+			_commandMap.Add("#earthelementals", Command.EARTHELEMENTALS);
+			_commandMap.Add("#waterelementals", Command.WATERELEMENTALS);
+			_commandMap.Add("#undisleader", Command.UNDISLEADER);
+			_commandMap.Add("#thirdstr", Command.THIRDSTR);
+			_commandMap.Add("#spiritformimmune", Command.SPIRITFORMIMMUNE);
+			_commandMap.Add("#illusionsimmune", Command.ILLUSIONSIMMUNE);
+			_commandMap.Add("#false", Command.FALSE);
+			_commandMap.Add("#speedmult", Command.SPEEDMULT);
+			_commandMap.Add("#notmounted", Command.NOTMOUNTED);
+			_commandMap.Add("#notdismounted", Command.NOTDISMOUNTED);
+			_commandMap.Add("#holyifhit", Command.HOLYIFHIT);
+			_commandMap.Add("#killmagicifhit", Command.KILLMAGICIFHIT);
+			_commandMap.Add("#killdemonifhit", Command.KILLDEMONIFHIT);
+			_commandMap.Add("#holystunifhit", Command.HOLYSTUNIFHIT);
+			_commandMap.Add("#petrifyifhit", Command.PETRIFYIFHIT);
+			_commandMap.Add("#fireifhit", Command.FIREIFHIT);
+			_commandMap.Add("#coldifhit", Command.COLDIFHIT);
+			_commandMap.Add("#shockifhit", Command.SHOCKIFHIT);
+			_commandMap.Add("#poisonifdmg", Command.POISONIFDMG);
+			_commandMap.Add("#aftercloud", Command.AFTERCLOUD);
+			_commandMap.Add("#aftercloudarea", Command.AFTERCLOUDAREA);
+			_commandMap.Add("#godsite", Command.GODSITE);
+			_commandMap.Add("#moreorder", Command.MOREORDER);
+			_commandMap.Add("#moreprod", Command.MOREPROD);
+			_commandMap.Add("#moreheat", Command.MOREHEAT);
+			_commandMap.Add("#moregrowth", Command.MOREGROWTH);
+			_commandMap.Add("#moreluck", Command.MORELUCK);
+			_commandMap.Add("#moremagic", Command.MOREMAGIC);
+			_commandMap.Add("#enchrebate75", Command.ENCHREBATE75);
+			_commandMap.Add("#enchrebate100", Command.ENCHREBATE100);
+			_commandMap.Add("#heatrecscale", Command.HEATRECSCALE);
+			_commandMap.Add("#coldrecscale", Command.COLDRECSCALE);
+			_commandMap.Add("#growthrecscale", Command.GROWTHRECSCALE);
+			_commandMap.Add("#deathrecscale", Command.DEATHRECSCALE);
+			_commandMap.Add("#orderrecscale", Command.ORDERRECSCALE);
+			_commandMap.Add("#chaosrecscale", Command.CHAOSRECSCALE);
+			_commandMap.Add("#noweapon", Command.NOWEAPON);
+			_commandMap.Add("#holycost", Command.HOLYCOST);
+			_commandMap.Add("#spiritform", Command.SPIRITFORM);
+			_commandMap.Add("#nospiritform", Command.NOSPIRITFORM);
+			_commandMap.Add("#divinebeing", Command.DIVINEBEING);
+			_commandMap.Add("#mobilearcher", Command.MOBILEARCHER);
+			_commandMap.Add("#statstorm", Command.STATSTORM);
+			_commandMap.Add("#statbreak", Command.STATBREAK);
+			_commandMap.Add("#corruptor", Command.CORRUPTOR);
+			_commandMap.Add("#plaguedoctor", Command.PLAGUEDOCTOR);
+			_commandMap.Add("#assencloc", Command.ASSENCLOC);
+			_commandMap.Add("#autocorpsehealer", Command.AUTOCORPSEHEALER);
+			_commandMap.Add("#maxdeadhp", Command.MAXDEADHP);
+			_commandMap.Add("#xpgain", Command.XPGAIN);
+			_commandMap.Add("#extralives", Command.EXTRALIVES);
+			_commandMap.Add("#acidres", Command.ACIDRES);
+			_commandMap.Add("#decayres", Command.DECAYRES);
+			_commandMap.Add("#icenatprot", Command.ICENATPROT);
+			_commandMap.Add("#reconst", Command.RECONST);
+			_commandMap.Add("#falseregen", Command.FALSEREGEN);
+			_commandMap.Add("#twistfate", Command.TWISTFATE);
+			_commandMap.Add("#glamour", Command.GLAMOUR);
+			_commandMap.Add("#dread", Command.DREAD);
+			_commandMap.Add("#nightmareaura", Command.NIGHTMAREAURA);
+			_commandMap.Add("#clumsy", Command.CLUMSY);
+			_commandMap.Add("#autoberserk", Command.AUTOBERSERK);
+			_commandMap.Add("#truesight", Command.TRUESIGHT);
+			_commandMap.Add("#guardspirit", Command.GUARDSPIRIT);
+			_commandMap.Add("#dt_raise", Command.DT_RAISE);
+			_commandMap.Add("#fearofflood", Command.FEAROFFLOOD);
+			_commandMap.Add("#mindcollar", Command.MINDCOLLAR);
+			_commandMap.Add("#deathpoison", Command.DEATHPOISON);
+			_commandMap.Add("#deathshock", Command.DEATHSHOCK);
+			_commandMap.Add("#deathslime", Command.DEATHSLIME);
+			_commandMap.Add("#deathgrab", Command.DEATHGRAB);
+			_commandMap.Add("#powerofdeath", Command.POWEROFDEATH);
+			_commandMap.Add("#falsesupply", Command.FALSESUPPLY);
+			_commandMap.Add("#labxpshape", Command.LABXPSHAPE);
+			_commandMap.Add("#xpshapemon", Command.XPSHAPEMON);
+			_commandMap.Add("#xpshapeloss", Command.XPSHAPELOSS);
+			_commandMap.Add("#lich", Command.LICH);
+			_commandMap.Add("#battleshape", Command.BATTLESHAPE);
+			_commandMap.Add("#worldshape", Command.WORLDSHAPE);
+			_commandMap.Add("#animated", Command.ANIMATED);
+			_commandMap.Add("#fireelementals", Command.FIREELEMENTALS);
+			_commandMap.Add("#airelementals", Command.AIRELEMENTALS);
+			_commandMap.Add("#earthelementals", Command.EARTHELEMENTALS);
+			_commandMap.Add("#waterelementals", Command.WATERELEMENTALS);
+			_commandMap.Add("#mountmnr", Command.MOUNTMNR);
+			_commandMap.Add("#unmountedspr1", Command.UNMOUNTEDSPR1);
+			_commandMap.Add("#unmountedspr2", Command.UNMOUNTEDSPR2);
+			_commandMap.Add("#nofmounts", Command.NOFMOUNTS);
+			_commandMap.Add("#nofriders", Command.NOFRIDERS);
+			_commandMap.Add("#coridermnr", Command.CORIDERMNR);
+			_commandMap.Add("#xspr1", Command.XSPR1);
+			_commandMap.Add("#xspr2", Command.XSPR2);
+			_commandMap.Add("#regainmount", Command.REGAINMOUNT);
+			_commandMap.Add("#noremount", Command.NOREMOUNT);
+			_commandMap.Add("#skilledrider", Command.SKILLEDRIDER);
+			_commandMap.Add("#mountiscom", Command.MOUNTISCOM);
+			_commandMap.Add("#nobarding", Command.NOBARDING);
+			_commandMap.Add("#nothrowoff", Command.NOTHROWOFF);
+			_commandMap.Add("#nofalldmg", Command.NOFALLDMG);
+			_commandMap.Add("#bravemount", Command.BRAVEMOUNT);
+			_commandMap.Add("#smartmount", Command.SMARTMOUNT);
+			_commandMap.Add("#undisleader", Command.UNDISLEADER);
+			_commandMap.Add("#glamourrange", Command.GLAMOURRANGE);
+			_commandMap.Add("#holyrange", Command.HOLYRANGE);
+			_commandMap.Add("#elementgems", Command.ELEMENTGEMS);
+			_commandMap.Add("#sorcerygems", Command.SORCERYGEMS);
+			_commandMap.Add("#tmpglamourgems", Command.TMPGLAMOURGEMS);
+			_commandMap.Add("#tmpbloodslaves", Command.TMPBLOODSLAVES);
+			_commandMap.Add("#glamourmanip", Command.GLAMOURMANIP);
+			_commandMap.Add("#look", Command.LOOK);
+			_commandMap.Add("#defcom", Command.DEFCOM);
+			_commandMap.Add("#defunit", Command.DEFUNIT);
+			_commandMap.Add("#defmult", Command.DEFMULT);
+			_commandMap.Add("#glamourrange", Command.GLAMOURRANGE);
+			_commandMap.Add("#popgrowth", Command.POPGROWTH);
+			_commandMap.Add("#viewallprov", Command.VIEWALLPROV);
+			_commandMap.Add("#viewallbat", Command.VIEWALLBAT);
+			_commandMap.Add("#moreorder", Command.MOREORDER);
+			_commandMap.Add("#moreprod", Command.MOREPROD);
+			_commandMap.Add("#moreheat", Command.MOREHEAT);
+			_commandMap.Add("#moregrowth", Command.MOREGROWTH);
+			_commandMap.Add("#moreluck", Command.MORELUCK);
+			_commandMap.Add("#moremagic", Command.MOREMAGIC);
+			_commandMap.Add("#aiglamournation", Command.AIGLAMOURNATION);
+			_commandMap.Add("#guardcom", Command.GUARDCOM);
+			_commandMap.Add("#guardunit", Command.GUARDUNIT);
+			_commandMap.Add("#guardmult", Command.GUARDMULT);
+			_commandMap.Add("#seatrace", Command.SEATRACE);
+			_commandMap.Add("#disbless", Command.DISBLESS);
+			_commandMap.Add("#hidedom", Command.HIDEDOM);
+			_commandMap.Add("#templeholypoints", Command.TEMPLEHOLYPOINTS);
+			_commandMap.Add("#forestfortrec", Command.FORESTFORTREC);
+			_commandMap.Add("#forestfortcom", Command.FORESTFORTCOM);
+			_commandMap.Add("#mountainfortrec", Command.MOUNTAINFORTREC);
+			_commandMap.Add("#mountainfortcom", Command.MOUNTAINFORTCOM);
+			_commandMap.Add("#swampfortrec", Command.SWAMPFORTREC);
+			_commandMap.Add("#swampfortcom", Command.SWAMPFORTCOM);
+			_commandMap.Add("#wastefortrec", Command.WASTEFORTREC);
+			_commandMap.Add("#wastefortcom", Command.WASTEFORTCOM);
+			_commandMap.Add("#farmrec", Command.FARMREC);
+			_commandMap.Add("#farmfortrec", Command.FARMFORTREC);
+			_commandMap.Add("#farmcom", Command.FARMCOM);
+			_commandMap.Add("#farmfortcom", Command.FARMFORTCOM);
+			_commandMap.Add("#cavefortrec", Command.CAVEFORTREC);
+			_commandMap.Add("#cavefortcom", Command.CAVEFORTCOM);
+			_commandMap.Add("#driprec", Command.DRIPREC);
+			_commandMap.Add("#dripfortrec", Command.DRIPFORTREC);
+			_commandMap.Add("#dripcom", Command.DRIPCOM);
+			_commandMap.Add("#dripfortcom", Command.DRIPFORTCOM);
+			_commandMap.Add("#coastfortrec", Command.COASTFORTREC);
+			_commandMap.Add("#coastfortcom", Command.COASTFORTCOM);
+			_commandMap.Add("#searec", Command.SEAREC);
+			_commandMap.Add("#seafortrec", Command.SEAFORTREC);
+			_commandMap.Add("#seacom", Command.SEACOM);
+			_commandMap.Add("#seafortcom", Command.SEAFORTCOM);
+			_commandMap.Add("#deeprec", Command.DEEPREC);
+			_commandMap.Add("#deepfortrec", Command.DEEPFORTREC);
+			_commandMap.Add("#deepcom", Command.DEEPCOM);
+			_commandMap.Add("#deepfortcom", Command.DEEPFORTCOM);
+			_commandMap.Add("#kelprec", Command.KELPREC);
+			_commandMap.Add("#kelpfortrec", Command.KELPFORTREC);
+			_commandMap.Add("#kelpcom", Command.KELPCOM);
+			_commandMap.Add("#kelpfortcom", Command.KELPFORTCOM);
+			_commandMap.Add("#speedmult", Command.SPEEDMULT);
+			_commandMap.Add("#onlysitedst", Command.ONLYSITEDST);
+			_commandMap.Add("#dispimmune", Command.DISPIMMUNE);
+			_commandMap.Add("#napbreakrit", Command.NAPBREAKRIT);
+			_commandMap.Add("#sumhealaffs", Command.SUMHEALAFFS);
+			_commandMap.Add("#localglobal", Command.LOCALGLOBAL);
+			_commandMap.Add("#worldvisible", Command.WORLDVISIBLE);
+			_commandMap.Add("#globallook", Command.GLOBALLOOK);
+			_commandMap.Add("#portent", Command.PORTENT);
+			_commandMap.Add("#cure", Command.CURE);
+			_commandMap.Add("#reqnospellsinger", Command.REQNOSPELLSINGER);
+			_commandMap.Add("#reqnotaskmaster", Command.REQNOTASKMASTER);
+			_commandMap.Add("#reqnoseduce", Command.REQNOSEDUCE);
+			_commandMap.Add("#aiassmod", Command.AIASSMOD);
+			_commandMap.Add("#clearallevents", Command.CLEARALLEVENTS);
+			_commandMap.Add("#req_turnrare", Command.REQ_TURNRARE);
+			_commandMap.Add("#req_month", Command.REQ_MONTH);
+			_commandMap.Add("#req_ai", Command.REQ_AI);
+			_commandMap.Add("#req_nearbycapital", Command.REQ_NEARBYCAPITAL);
+			_commandMap.Add("#req_notpoptype", Command.REQ_NOTPOPTYPE);
+			_commandMap.Add("#req_voidok", Command.REQ_VOIDOK);
+			_commandMap.Add("#req_fortid", Command.REQ_FORTID);
+			_commandMap.Add("#req_plane", Command.REQ_PLANE);
+			_commandMap.Add("#req_kelp", Command.REQ_KELP);
+			_commandMap.Add("#req_gorge", Command.REQ_GORGE);
+			_commandMap.Add("#req_deep", Command.REQ_DEEP);
+			_commandMap.Add("#req_forestcave", Command.REQ_FORESTCAVE);
+			_commandMap.Add("#req_drip", Command.REQ_DRIP);
+			_commandMap.Add("#req_crystal", Command.REQ_CRYSTAL);
+			_commandMap.Add("#req_nativesoil", Command.REQ_NATIVESOIL);
+			_commandMap.Add("#req_void", Command.REQ_VOID);
+			_commandMap.Add("#req_godawake", Command.REQ_GODAWAKE);
+			_commandMap.Add("#req_pretismnr", Command.REQ_PRETISMNR);
+			_commandMap.Add("#req_pretawake", Command.REQ_PRETAWAKE);
+			_commandMap.Add("#req_pathglamour", Command.REQ_PATHGLAMOUR);
+			_commandMap.Add("#req_nopathglamour", Command.REQ_NOPATHGLAMOUR);
+			_commandMap.Add("#req_targsight", Command.REQ_TARGSIGHT);
+			_commandMap.Add("#req_targmanygems", Command.REQ_TARGMANYGEMS);
+			_commandMap.Add("#req_targhorrormark", Command.REQ_TARGHORRORMARK);
+			_commandMap.Add("#req_targinsane", Command.REQ_TARGINSANE);
+			_commandMap.Add("#req_targseductions", Command.REQ_TARGSEDUCTIONS);
+			_commandMap.Add("#req_targminkills", Command.REQ_TARGMINKILLS);
+			_commandMap.Add("#req_targmaxkills", Command.REQ_TARGMAXKILLS);
+			_commandMap.Add("#req_notcode", Command.REQ_NOTCODE);
+			_commandMap.Add("#req_enchtarget", Command.REQ_ENCHTARGET);
+			_commandMap.Add("#req_enchnearby", Command.REQ_ENCHNEARBY);
+			_commandMap.Add("#req_minglobals", Command.REQ_MINGLOBALS);
+			_commandMap.Add("#req_maxglobals", Command.REQ_MAXGLOBALS);
+			_commandMap.Add("#req_varpos", Command.REQ_VARPOS);
+			_commandMap.Add("#req_varneg", Command.REQ_VARNEG);
+			_commandMap.Add("#req_varzero", Command.REQ_VARZERO);
+			_commandMap.Add("#req_varone", Command.REQ_VARONE);
+			_commandMap.Add("#assownerench", Command.ASSOWNERENCH);
+			_commandMap.Add("#assfollower1", Command.ASSFOLLOWER1);
+			_commandMap.Add("#assfollower2", Command.ASSFOLLOWER2);
+			_commandMap.Add("#assfollower3", Command.ASSFOLLOWER3);
+			_commandMap.Add("#assfollower1d3", Command.ASSFOLLOWER1D3);
+			_commandMap.Add("#healaff", Command.HEALAFF);
+			_commandMap.Add("#forcetransform", Command.FORCETRANSFORM);
+			_commandMap.Add("#remount", Command.REMOUNT);
+			_commandMap.Add("#cleartarg", Command.CLEARTARG);
+			_commandMap.Add("#killtarg", Command.KILLTARG);
+			_commandMap.Add("#addseductions", Command.ADDSEDUCTIONS);
+			_commandMap.Add("#addkills", Command.ADDKILLS);
+			_commandMap.Add("#glamourboost", Command.GLAMOURBOOST);
+			_commandMap.Add("#dispglobals", Command.DISPGLOBALS);
+			_commandMap.Add("#clearvar", Command.CLEARVAR);
+			_commandMap.Add("#incvar", Command.INCVAR);
+			_commandMap.Add("#decvar", Command.DECVAR);
+			_commandMap.Add("#inc10var", Command.INC10VAR);
+			_commandMap.Add("#dec10var", Command.DEC10VAR);
+			_commandMap.Add("#invvar", Command.INVVAR);
+			_commandMap.Add("#togglevar", Command.TOGGLEVAR);
+			_commandMap.Add("#addascension", Command.ADDASCENSION);
+			_commandMap.Add("#minascension", Command.MINASCENSION);
+			_commandMap.Add("#req_nearbythrone", Command.REQ_NEARBYTHRONE);
+			_commandMap.Add("#header", Command.HEADER);
+			_commandMap.Add("#forcegold", Command.FORCEGOLD);
+			_commandMap.Add("#forceexactgold", Command.FORCEEXACTGOLD);
+			_commandMap.Add("#force1d3vis", Command.FORCE1D3VIS);
+			_commandMap.Add("#force1d6vis", Command.FORCE1D6VIS);
+			_commandMap.Add("#force2d4vis", Command.FORCE2D4VIS);
+			_commandMap.Add("#force2d6vis", Command.FORCE2D6VIS);
+			_commandMap.Add("#force3d6vis", Command.FORCE3D6VIS);
+			_commandMap.Add("#force4d6vis", Command.FORCE4D6VIS);
+			_commandMap.Add("#gemlosssmall", Command.GEMLOSSSMALL);
+			_commandMap.Add("#gemlosslarge", Command.GEMLOSSLARGE);
+			_commandMap.Add("#addgeo", Command.ADDGEO);
+			_commandMap.Add("#remgeo", Command.REMGEO);
+			_commandMap.Add("#startresearch", Command.STARTRESEARCH);
+			_commandMap.Add("#arenagold", Command.ARENAGOLD);
+			_commandMap.Add("#arenagems", Command.ARENAGEMS);
+			_commandMap.Add("#gemlongevity", Command.GEMLONGEVITY);
+
 
             //Build an inverted map
             foreach (KeyValuePair<string, Command> kvp in _commandMap)
@@ -2594,6 +3184,8 @@ namespace Dom5Edit.Commands
 
     public enum MagicPaths
     {
+		// Dominions 5:
+		/*
         FIRE = 0,
         AIR = 1,
         WATER = 2,
@@ -2603,6 +3195,22 @@ namespace Dom5Edit.Commands
         NATURE = 6,
         BLOOD = 7,
         PRIEST = 8,
+        RANDOM = 50,
+        ELEMENTAL = 51,
+        SORCERY = 52,
+        ALL = 53
+		*/
+		// Dominions 6:
+        FIRE = 0,
+        AIR = 1,
+        WATER = 2,
+        EARTH = 3,
+        ASTRAL = 4,
+        DEATH = 5,
+        NATURE = 6,
+        GLAMOUR = 7,
+        BLOOD = 8,
+        PRIEST = 9,
         RANDOM = 50,
         ELEMENTAL = 51,
         SORCERY = 52,

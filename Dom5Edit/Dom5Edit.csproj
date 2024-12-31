@@ -83,6 +83,7 @@
     <Compile Include="Entities\Enchantment.cs" />
     <Compile Include="Entities\EventEffectCode.cs" />
     <Compile Include="Entities\EventCode.cs" />
+    <Compile Include="Entities\EventVar.cs" />
     <Compile Include="Entities\Poptype.cs" />
     <Compile Include="Entities\Mercenary.cs" />
     <Compile Include="Entities\RestrictedItem.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Props\NameProperty.cs" />
     <Compile Include="Props\References\EventEffectCodeRef.cs" />
     <Compile Include="Props\References\EventCodeRef.cs" />
+    <Compile Include="Props\References\EventVarRef.cs" />
     <Compile Include="Props\References\EnchIDRef.cs" />
     <Compile Include="Props\References\NationOwnerRef.cs" />
     <Compile Include="Props\References\RestrictedItemIDRef.cs" />
