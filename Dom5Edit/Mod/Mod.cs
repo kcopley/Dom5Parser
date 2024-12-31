@@ -1,10 +1,6 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
 
 namespace Dom5Edit
 {

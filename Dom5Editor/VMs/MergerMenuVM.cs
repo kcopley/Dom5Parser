@@ -1,8 +1,6 @@
-﻿using Dom5Edit;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Controls;
+using Dom5Edit;
 
 namespace Dom5Editor
 {
