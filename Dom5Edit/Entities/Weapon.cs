@@ -98,6 +98,25 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.UWOK, CommandProperty.Create);
             _propertyMap.Add(Command.NOUW, CommandProperty.Create);
             _propertyMap.Add(Command.SOULSLAYING, CommandProperty.Create);
+            // Dominions 6 additions:
+            _propertyMap.Add(Command.THIRDSTR, CommandProperty.Create); //#thirdstr 
+            _propertyMap.Add(Command.SPIRITFORMIMMUNE, CommandProperty.Create); //#spiritformimmune 
+            _propertyMap.Add(Command.ILLUSIONSIMMUNE, CommandProperty.Create); //#illusionsimmune 
+            _propertyMap.Add(Command.FALSE, CommandProperty.Create); //#false 
+            _propertyMap.Add(Command.SPEEDMULT, IntProperty.Create); //#speedmult <1 - 3>
+            _propertyMap.Add(Command.NOTMOUNTED, IntProperty.Create); //#notmounted <1 - 2>
+            _propertyMap.Add(Command.NOTDISMOUNTED, CommandProperty.Create); //#notdismounted 
+            _propertyMap.Add(Command.HOLYIFHIT, IntProperty.Create); //#holyifhit <dmg>
+            _propertyMap.Add(Command.KILLMAGICIFHIT, IntProperty.Create); //#killmagicifhit <dmg>
+            _propertyMap.Add(Command.KILLDEMONIFHIT, IntProperty.Create); //#killdemonifhit <dmg>
+            _propertyMap.Add(Command.HOLYSTUNIFHIT, IntProperty.Create); //#holystunifhit <dmg>
+            _propertyMap.Add(Command.PETRIFYIFHIT, IntProperty.Create); //#petrifyifhit <dmg>
+            _propertyMap.Add(Command.FIREIFHIT, IntProperty.Create); //#fireifhit <dmg>
+            _propertyMap.Add(Command.COLDIFHIT, IntProperty.Create); //#coldifhit <dmg>
+            _propertyMap.Add(Command.SHOCKIFHIT, IntProperty.Create); //#shockifhit <dmg>
+            _propertyMap.Add(Command.POISONIFDMG, IntProperty.Create); //#poisonifdmg <dmg>
+            _propertyMap.Add(Command.AFTERCLOUD, IntIntProperty.Create); //#aftercloud <cloudstr> <cloudtype>
+            _propertyMap.Add(Command.AFTERCLOUDAREA, IntProperty.Create); //#aftercloudarea <aoe>
         }
 
         internal override Command GetNewCommand()

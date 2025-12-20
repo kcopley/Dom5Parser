@@ -102,6 +102,12 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.RECALLGOD, IntProperty.Create);
             _propertyMap.Add(Command.DOMWAR, IntProperty.Create);
             _propertyMap.Add(Command.MINEGOLD, IntProperty.Create);
+            _propertyMap.Add(Command.LOOK, IntProperty.Create); //#look <site spr>
+            _propertyMap.Add(Command.DEFCOM, MonsterOrMontagRef.Create); //#defcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DEFUNIT, MonsterOrMontagRef.Create); //#defunit <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DEFMULT, IntProperty.Create); //#defmult <multiplier>
+            _propertyMap.Add(Command.GLAMOURRANGE, IntProperty.Create); //#glamourrange <range>
+            _propertyMap.Add(Command.POPGROWTH, IntProperty.Create); //#popgrowth <per mille>
         }
 
         internal override Command GetNewCommand()

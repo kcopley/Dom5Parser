@@ -473,6 +473,96 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SHAPECHANCE, IntProperty.Create);
             _propertyMap.Add(Command.NOTSACRED, CommandProperty.Create);
             _propertyMap.Add(Command.APPETITE, IntProperty.Create);
+            // Dominions 6 additions:
+            _propertyMap.Add(Command.GLAMOURATTUNED, IntProperty.Create);
+            _propertyMap.Add(Command.GODSITE, SiteRef.Create); //#godsite <site name> | <site nbr>
+            _propertyMap.Add(Command.MOREORDER, IntProperty.Create); //#moreorder <-5 - 5>
+            _propertyMap.Add(Command.MOREPROD, IntProperty.Create); //#moreprod <-5 - 5>
+            _propertyMap.Add(Command.MOREHEAT, IntProperty.Create); //#moreheat <-5 - 5>
+            _propertyMap.Add(Command.MOREGROWTH, IntProperty.Create); //#moregrowth <-5 - 5>
+            _propertyMap.Add(Command.MORELUCK, IntProperty.Create); //#moreluck <-5 - 5>
+            _propertyMap.Add(Command.MOREMAGIC, IntProperty.Create); //#moremagic <-5 - 5>
+            _propertyMap.Add(Command.ENCHREBATE75, EnchIDRef.Create); //#enchrebate75 <enchantment number>
+            _propertyMap.Add(Command.ENCHREBATE100, EnchIDRef.Create); //#enchrebate100 <enchantment number>
+            _propertyMap.Add(Command.HEATRECSCALE, IntProperty.Create); //#heatrecscale <value>
+            _propertyMap.Add(Command.COLDRECSCALE, IntProperty.Create); //#coldrecscale <value>
+            _propertyMap.Add(Command.GROWTHRECSCALE, IntProperty.Create); //#growthrecscale <value>
+            _propertyMap.Add(Command.DEATHRECSCALE, IntProperty.Create); //#deathrecscale <value>
+            _propertyMap.Add(Command.ORDERRECSCALE, IntProperty.Create); //#orderrecscale <value>
+            _propertyMap.Add(Command.CHAOSRECSCALE, IntProperty.Create); //#chaosrecscale <value>
+            _propertyMap.Add(Command.NOWEAPON, IntProperty.Create); //#noweapon <0 or 1>
+            _propertyMap.Add(Command.HOLYCOST, IntProperty.Create); //#holycost <holy points>
+            _propertyMap.Add(Command.SPIRITFORM, CommandProperty.Create); //#spiritform 
+            _propertyMap.Add(Command.NOSPIRITFORM, CommandProperty.Create); //#nospiritform 
+            _propertyMap.Add(Command.DIVINEBEING, CommandProperty.Create); //#divinebeing 
+            _propertyMap.Add(Command.MOBILEARCHER, IntProperty.Create); //#mobilearcher <0 or 1>
+            _propertyMap.Add(Command.STATSTORM, IntProperty.Create); //#statstorm <value>
+            _propertyMap.Add(Command.STATBREAK, IntProperty.Create); //#statbreak <value>
+            _propertyMap.Add(Command.CORRUPTOR, IntProperty.Create); //#corruptor <value>
+            _propertyMap.Add(Command.PLAGUEDOCTOR, IntProperty.Create); //#plaguedoctor <percent>
+            _propertyMap.Add(Command.ASSENCLOC, IntProperty.Create); //#assencloc <value>
+            _propertyMap.Add(Command.AUTOCORPSEHEALER, IntProperty.Create); //#autocorpsehealer <value>
+            _propertyMap.Add(Command.MAXDEADHP, IntProperty.Create); //#maxdeadhp <HP>
+            _propertyMap.Add(Command.XPGAIN, IntProperty.Create); //#xpgain <percent>
+            _propertyMap.Add(Command.EXTRALIVES, IntProperty.Create); //#extralives <percent>
+            _propertyMap.Add(Command.ACIDRES, IntProperty.Create); //#acidres <prot>
+            _propertyMap.Add(Command.DECAYRES, IntProperty.Create); //#decayres <0 or 1>
+            _propertyMap.Add(Command.ICENATPROT, IntProperty.Create); //#icenatprot <prot>
+            _propertyMap.Add(Command.RECONST, IntProperty.Create); //#reconst <percent>
+            _propertyMap.Add(Command.FALSEREGEN, IntProperty.Create); //#falseregen <points>
+            _propertyMap.Add(Command.TWISTFATE, CommandProperty.Create); //#twistfate 
+            _propertyMap.Add(Command.GLAMOUR, CommandProperty.Create); //#glamour 
+            _propertyMap.Add(Command.DREAD, IntProperty.Create); //#dread <value>
+            _propertyMap.Add(Command.NIGHTMAREAURA, IntProperty.Create); //#nightmareaura <area>
+            _propertyMap.Add(Command.CLUMSY, IntProperty.Create); //#clumsy <0 or 1>
+            _propertyMap.Add(Command.AUTOBERSERK, IntProperty.Create); //#autoberserk <value>
+            _propertyMap.Add(Command.TRUESIGHT, CommandProperty.Create); //#truesight 
+            _propertyMap.Add(Command.GUARDSPIRIT, MonsterOrMontagRef.Create); //#guardspirit <monster name> | <nbr>
+            _propertyMap.Add(Command.DT_RAISE, CommandProperty.Create); //#dt_raise 
+            _propertyMap.Add(Command.FEAROFFLOOD, IntProperty.Create); //#fearofflood <value>
+            _propertyMap.Add(Command.MINDCOLLAR, IntProperty.Create); //#mindcollar <dmg>
+            _propertyMap.Add(Command.DEATHPOISON, IntProperty.Create); //#deathpoison <aoe>
+            _propertyMap.Add(Command.DEATHSHOCK, IntProperty.Create); //#deathshock <aoe>
+            _propertyMap.Add(Command.DEATHSLIME, IntProperty.Create); //#deathslime <aoe>
+            _propertyMap.Add(Command.DEATHGRAB, IntProperty.Create); //#deathgrab <aoe>
+            _propertyMap.Add(Command.POWEROFDEATH, IntProperty.Create); //#powerofdeath <limit>
+            _propertyMap.Add(Command.FALSESUPPLY, IntProperty.Create); //#falsesupply <value>
+            _propertyMap.Add(Command.LABXPSHAPE, IntProperty.Create); //#labxpshape <xp value>
+            _propertyMap.Add(Command.XPSHAPEMON, MonsterOrMontagRef.Create); //#xpshapemon <monster name> | <monster nbr>
+            _propertyMap.Add(Command.XPSHAPELOSS, IntProperty.Create); //#xpshapeloss <0-100>
+            _propertyMap.Add(Command.LICH, MonsterOrMontagRef.Create); //#lich <monster name> | <monster nbr>
+            _propertyMap.Add(Command.BATTLESHAPE, MonsterOrMontagRef.Create); //#battleshape <monster name> | <monster nbr>
+            _propertyMap.Add(Command.WORLDSHAPE, MonsterOrMontagRef.Create); //#worldshape <monster name> | <monster nbr>
+            _propertyMap.Add(Command.ANIMATED, MonsterOrMontagRef.Create); //#animated <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FIREELEMENTALS, IntProperty.Create); //#fireelementals <bonus>
+            _propertyMap.Add(Command.AIRELEMENTALS, IntProperty.Create); //#airelementals <bonus>
+            _propertyMap.Add(Command.EARTHELEMENTALS, IntProperty.Create); //#earthelementals <bonus>
+            _propertyMap.Add(Command.WATERELEMENTALS, IntProperty.Create); //#waterelementals <bonus>
+            _propertyMap.Add(Command.MOUNTMNR, MonsterOrMontagRef.Create); //#mountmnr <monster name> | <monster nbr>
+            _propertyMap.Add(Command.UNMOUNTEDSPR1, FilePathProperty.Create); //#unmountedspr1 <imgfile>
+            _propertyMap.Add(Command.UNMOUNTEDSPR2, FilePathProperty.Create); //#unmountedspr2 <imgfile>
+            _propertyMap.Add(Command.NOFMOUNTS, IntProperty.Create); //#nofmounts <mounts>
+            _propertyMap.Add(Command.NOFRIDERS, IntProperty.Create); //#nofriders <riders>
+            _propertyMap.Add(Command.CORIDERMNR, MonsterOrMontagRef.Create); //#coridermnr <monster name> | <monster nbr>
+            _propertyMap.Add(Command.XSPR1, FilePathProperty.Create); //#xspr1 <imgfile>
+            _propertyMap.Add(Command.XSPR2, FilePathProperty.Create); //#xspr2 <imgfile>
+            _propertyMap.Add(Command.REGAINMOUNT, IntProperty.Create); //#regainmount <0 or 1>
+            _propertyMap.Add(Command.NOREMOUNT, CommandProperty.Create); //#noremount 
+            _propertyMap.Add(Command.SKILLEDRIDER, IntProperty.Create); //#skilledrider <value>
+            _propertyMap.Add(Command.MOUNTISCOM, IntProperty.Create); //#mountiscom <0 or 1>
+            _propertyMap.Add(Command.NOBARDING, CommandProperty.Create); //#nobarding 
+            _propertyMap.Add(Command.NOTHROWOFF, CommandProperty.Create); //#nothrowoff 
+            _propertyMap.Add(Command.NOFALLDMG, CommandProperty.Create); //#nofalldmg 
+            _propertyMap.Add(Command.BRAVEMOUNT, IntProperty.Create); //#bravemount <percent>
+            _propertyMap.Add(Command.SMARTMOUNT, IntProperty.Create); //#smartmount <smartness>
+            _propertyMap.Add(Command.UNDISLEADER, IntProperty.Create); //#undisleader <value>
+            _propertyMap.Add(Command.GLAMOURRANGE, IntProperty.Create); //#glamourrange <range>
+            _propertyMap.Add(Command.HOLYRANGE, IntProperty.Create); //#holyrange <range>
+            _propertyMap.Add(Command.ELEMENTGEMS, IntProperty.Create); //#elementgems <gems>
+            _propertyMap.Add(Command.SORCERYGEMS, IntProperty.Create); //#sorcerygems <gems>
+            _propertyMap.Add(Command.TMPGLAMOURGEMS, IntProperty.Create); //#tmpglamourgems <gems>
+            _propertyMap.Add(Command.TMPBLOODSLAVES, IntProperty.Create); //#tmpbloodslaves <slaves>
+            _propertyMap.Add(Command.GLAMOURMANIP, IntProperty.Create); //#glamourmanip <0 or 1>
         }
 
         internal override Command GetNewCommand()
@@ -530,8 +620,9 @@ namespace Dom5Edit.Entities
                     ulong astral = 2048;
                     ulong death = 4096;
                     ulong nature = 8192;
-                    ulong blood = 16384;
-                    ulong priest = 32768;
+                    ulong glamour = 16384;
+                    ulong blood = 32768;
+                    ulong priest = 65536;
 
                     List<MagicPaths> paths = new List<MagicPaths>();
                     if ((property.Bitmask & fire) == fire) paths.Add(MagicPaths.FIRE);
@@ -541,6 +632,7 @@ namespace Dom5Edit.Entities
                     if ((property.Bitmask & astral) == astral) paths.Add(MagicPaths.ASTRAL);
                     if ((property.Bitmask & death) == death) paths.Add(MagicPaths.DEATH);
                     if ((property.Bitmask & nature) == nature) paths.Add(MagicPaths.NATURE);
+                    if ((property.Bitmask & glamour) == glamour) paths.Add(MagicPaths.GLAMOUR);
                     if ((property.Bitmask & blood) == blood) paths.Add(MagicPaths.BLOOD);
                     if ((property.Bitmask & priest) == priest) paths.Add(MagicPaths.PRIEST);
                     double chance = ((double)property.Chance) / 100;

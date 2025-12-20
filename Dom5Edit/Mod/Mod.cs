@@ -42,6 +42,7 @@ namespace Dom5Edit
             { Command.SELECTPOPTYPE, EntityType.POPTYPE },
             { Command.SELECTSITE, EntityType.SITE },
             { Command.NEWSITE, EntityType.SITE },
+            { Command.SELECTEVENT, EntityType.EVENT },
         };
         private Dictionary<Type, EntityType> TypeEntityMap { get; } = new Dictionary<Type, EntityType>()
         {
@@ -60,6 +61,7 @@ namespace Dom5Edit
             { typeof(RestrictedItem), EntityType.RESTRICTED_ITEM },
             { typeof(Enchantment), EntityType.ENCHANTMENT },
             { typeof(EventCode), EntityType.EVENT_CODE },
+            { typeof(EventVar), EntityType.EVENT_VAR },
             { typeof(EventCodeEffect), EntityType.EVENT_CODE_EFFECT },
         };
 
@@ -76,6 +78,7 @@ namespace Dom5Edit
             { EntityType.POPTYPE, new EntitySet<IDEntity>() {  } },
             { EntityType.MERCENARY, new EntitySet<IDEntity>() { } },
             { EntityType.EVENT, new EntitySet<IDEntity>() { START_ID = EVENT_START_ID } },
+            { EntityType.EVENT_VAR, new EntitySet<IDEntity>() { START_ID = EVENT_VAR_START_ID } },
         };
         /// <summary>
         /// Try to get an Entity from the database.
@@ -111,29 +114,30 @@ namespace Dom5Edit
         public List<IDEntity> Events = new List<IDEntity>();
         public List<int> VanillaMageReferences = new List<int>();
 
-        internal static int MONSTER_START_ID = 3486;
-        internal static int SITE_START_ID = 1164;
-        internal static int EVENT_START_ID = 6000;
-        internal static int ARMOR_START_ID = 251;
-        internal static int WEAPON_START_ID = 763;
-        internal static int ITEM_START_ID = 446;
-        internal static int SPELL_START_ID = 1177;
-        internal static int NAMETYPE_START_ID = 170;
-        internal static int NATION_START_ID = 109;
-        internal static int MONTAG_START_ID = 1000;
-        internal static int RESTRICTED_ITEM_START_ID = 1;
-        internal static int ENCHANTMENT_START_ID = 106;
-        internal static int EVENT_CODE_START_ID = -300;
-        internal static int EVENT_CODE_EFFECT_START_ID = 14;
-
-        internal static int MONSTER_END_ID = 8999;
-        internal static int SITE_END_ID = 1999;
-        internal static int ARMOR_END_ID = 999;
-        internal static int WEAPON_END_ID = 1999;
-        internal static int ITEM_END_ID = 999;
-        internal static int SPELL_END_ID = 3999;
-        internal static int NAMETYPE_END_ID = 299;
-        internal static int NATION_END_ID = 249;
+        internal static int MONSTER_START_ID = 5000; // Dom5: 3486
+		internal static int SITE_START_ID = 1700; // Dom5: 1164
+		internal static int EVENT_START_ID = 4000; // Dom5: 6000
+		internal static int ARMOR_START_ID = 400; // Dom5: 251
+		internal static int WEAPON_START_ID = 1000; // Dom5: 763
+		internal static int ITEM_START_ID = 700; // Dom5: 446
+		internal static int SPELL_START_ID = 2000; // Dom5: 1177
+		internal static int NAMETYPE_START_ID = 170; // Dom5: 170
+		internal static int NATION_START_ID = 150; // Dom5: 109
+		internal static int MONTAG_START_ID = 1000; // Dom5: 1000
+		internal static int RESTRICTED_ITEM_START_ID = 1; // Dom5: 1
+		internal static int ENCHANTMENT_START_ID = 200; // Dom5: 106
+		internal static int EVENT_CODE_START_ID = -300; // Dom5: -300
+		internal static int EVENT_VAR_START_ID = 1; // Dom5: n/a
+		internal static int EVENT_CODE_EFFECT_START_ID = 50; // Dom5: 14
+			
+		internal static int MONSTER_END_ID = 19999; // Dom5: 8999
+		internal static int SITE_END_ID = 3999; // Dom5: 1999
+		internal static int ARMOR_END_ID = 1999; // Dom5: 999
+		internal static int WEAPON_END_ID = 3999; // Dom5: 1999
+		internal static int ITEM_END_ID = 1999; // Dom5: 999
+		internal static int SPELL_END_ID = 7999; // Dom5: 3999
+		internal static int NAMETYPE_END_ID = 399; // Dom5: 299
+		internal static int NATION_END_ID = 499; // Dom5: 249
 
         private Entity _currentEntity = null;
 
@@ -347,6 +351,36 @@ namespace Dom5Edit
             int nextIndex = s.IndexOf('#');
             while (nextIndex != -1)
             {
+                if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
+                else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
+                else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
+                else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
+                else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
+                else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
+                else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
+                else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
+                else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
+                else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
+                //else if (s.IndexOf("##godHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+                else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
+                //else if (s.IndexOf("##disHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+                else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
+                else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
+                else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+                else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+                else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
+                else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
+                else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
+                else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+                else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+                else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
+                else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
+                else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
+                else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
+                else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
+                else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
+                else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
+                /* Dominions 5
                 if (s.IndexOf("##landname##", nextIndex) == nextIndex)
                 {
                     nextIndex += 12;
@@ -363,6 +397,7 @@ namespace Dom5Edit
                 {
                     nextIndex += 15;
                 }
+				*/
                 else
                 {
                     return nextIndex;
@@ -386,15 +421,48 @@ namespace Dom5Edit
                 int nextIndex = s.IndexOf('#', index + 1);
                 while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
                 {
+                    if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
+                    else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
+                    else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
+                    else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
+                    else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
+                    else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
+                    else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
+                    else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
+                    else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
+                    else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
+                    //else if (s.IndexOf("##godHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+                    else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
+                    //else if (s.IndexOf("##disHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
+                    else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
+                    else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
+                    else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+                    else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
+                    else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
+                    else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
+                    else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
+                    else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+                    else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
+                    else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
+                    else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
+                    else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
+                    else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
+                    else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
+                    else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
+                    else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
+                    /* Dominions 5
                     if (s.IndexOf("##landname##", nextIndex) == nextIndex)
                     {
                         nextIndex += 12;
-                    }
-                    else if (s.IndexOf("##godname##", nextIndex) == nextIndex)
                     {
                         nextIndex += 11;
                     }
-                    else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
+					
+					else if (s.IndexOf("##godname##", nextIndex) == nextIndex)
+					{
+						nextIndex += 11;
+					}
+						else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
                     {
                         nextIndex += 12;
                     }
@@ -402,6 +470,7 @@ namespace Dom5Edit
                     {
                         nextIndex += 15;
                     }
+					*/
                     else
                     {
                         commandIndexes.Add(nextIndex);
@@ -565,7 +634,9 @@ namespace Dom5Edit
                 case Command.NEWEVENT:
                     _currentEntity = NewEntity<Event>(val, comment);
                     break;
-
+                case Command.SELECTEVENT:
+                    _currentEntity = SelectEntity<Event>(CommandEntityMap[c], val, comment);
+                    break;
                 case Command.SELECTMONSTER:
                     _currentEntity = SelectEntity<Monster>(CommandEntityMap[c], val, comment);
                     break;

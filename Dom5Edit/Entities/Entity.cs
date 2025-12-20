@@ -19,6 +19,7 @@ namespace Dom5Edit.Entities
         RESTRICTED_ITEM,
         ENCHANTMENT,
         EVENT_CODE,
+        EVENT_VAR,
         EVENT_CODE_EFFECT
     }
 

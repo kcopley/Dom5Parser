@@ -9,7 +9,7 @@ namespace Dom5Edit.Entities
 
         static Nation()
         {
-            _propertyMap.Add(Command.INDEPFLAG, FilePathProperty.Create);
+            _propertyMap.Add(Command.INDEPFLAG, FilePathProperty.Create); // TODO: this should be a global property, not a national one
             _propertyMap.Add(Command.NAME, NameProperty.Create);
             _propertyMap.Add(Command.CLEARNATION, CommandProperty.Create);
             _propertyMap.Add(Command.EPITHET, StringProperty.Create);
@@ -216,6 +216,58 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.WASTELABCOST, IntProperty.Create);
             _propertyMap.Add(Command.WASTETEMPLECOST, IntProperty.Create);
             _propertyMap.Add(Command.FUTURESITE, SiteRef.Create);
+            // Dominions 6 additions:
+            _propertyMap.Add(Command.VIEWALLPROV, CommandProperty.Create); //#viewallprov 
+            _propertyMap.Add(Command.VIEWALLBAT, CommandProperty.Create); //#viewallbat 
+            _propertyMap.Add(Command.MOREORDER, IntProperty.Create); //#moreorder <-5 - 5>
+            _propertyMap.Add(Command.MOREPROD, IntProperty.Create); //#moreprod <-5 - 5>
+            _propertyMap.Add(Command.MOREHEAT, IntProperty.Create); //#moreheat <-5 - 5>
+            _propertyMap.Add(Command.MOREGROWTH, IntProperty.Create); //#moregrowth <-5 - 5>
+            _propertyMap.Add(Command.MORELUCK, IntProperty.Create); //#moreluck <-5 - 5>
+            _propertyMap.Add(Command.MOREMAGIC, IntProperty.Create); //#moremagic <-5 - 5>
+            _propertyMap.Add(Command.AIGLAMOURNATION, CommandProperty.Create); //#aiglamournation 
+            _propertyMap.Add(Command.GUARDCOM, MonsterOrMontagRef.Create); //#guardcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.GUARDUNIT, MonsterOrMontagRef.Create); //#guardunit <monster name> | <monster nbr>
+            _propertyMap.Add(Command.GUARDMULT, IntProperty.Create); //#guardmult <multiplier>
+            _propertyMap.Add(Command.SEATRACE, CommandProperty.Create); //#seatrace
+
+            // TODO: should this be a bless reference?
+            _propertyMap.Add(Command.DISBLESS, Property.Create); //#disbless bless name | <nbr>
+
+            _propertyMap.Add(Command.HIDEDOM, IntProperty.Create); //#hidedom <0 or 1>
+            _propertyMap.Add(Command.TEMPLEHOLYPOINTS, IntProperty.Create); //#templeholypoints <value>
+            _propertyMap.Add(Command.FORESTFORTREC, MonsterOrMontagRef.Create); //#forestfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FORESTFORTCOM, MonsterOrMontagRef.Create); //#forestfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.MOUNTAINFORTREC, MonsterOrMontagRef.Create); //#mountainfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.MOUNTAINFORTCOM, MonsterOrMontagRef.Create); //#mountainfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.SWAMPFORTREC, MonsterOrMontagRef.Create); //#swampfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.SWAMPFORTCOM, MonsterOrMontagRef.Create); //#swampfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.WASTEFORTREC, MonsterOrMontagRef.Create); //#wastefortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.WASTEFORTCOM, MonsterOrMontagRef.Create); //#wastefortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FARMREC, MonsterOrMontagRef.Create); //#farmrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FARMFORTREC, MonsterOrMontagRef.Create); //#farmfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FARMCOM, MonsterOrMontagRef.Create); //#farmcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FARMFORTCOM, MonsterOrMontagRef.Create); //#farmfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.CAVEFORTREC, MonsterOrMontagRef.Create); //#cavefortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.CAVEFORTCOM, MonsterOrMontagRef.Create); //#cavefortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DRIPREC, MonsterOrMontagRef.Create); //#driprec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DRIPFORTREC, MonsterOrMontagRef.Create); //#dripfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DRIPCOM, MonsterOrMontagRef.Create); //#dripcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DRIPFORTCOM, MonsterOrMontagRef.Create); //#dripfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.COASTFORTREC, MonsterOrMontagRef.Create); //#coastfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.COASTFORTCOM, MonsterOrMontagRef.Create); //#coastfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.SEAREC, MonsterOrMontagRef.Create); //#searec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.SEAFORTREC, MonsterOrMontagRef.Create); //#seafortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.SEACOM, MonsterOrMontagRef.Create); //#seacom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.SEAFORTCOM, MonsterOrMontagRef.Create); //#seafortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DEEPREC, MonsterOrMontagRef.Create); //#deeprec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DEEPFORTREC, MonsterOrMontagRef.Create); //#deepfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DEEPCOM, MonsterOrMontagRef.Create); //#deepcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.DEEPFORTCOM, MonsterOrMontagRef.Create); //#deepfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.KELPREC, MonsterOrMontagRef.Create); //#kelprec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.KELPFORTREC, MonsterOrMontagRef.Create); //#kelpfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.KELPCOM, MonsterOrMontagRef.Create); //#kelpcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.KELPFORTCOM, MonsterOrMontagRef.Create); //#kelpfortcom <monster name> | <monster nbr>
         }
 
         public override void Parse(Command command, string value, string comment)
@@ -271,7 +323,23 @@ namespace Dom5Edit.Entities
                             p.Command == Command.CAVECOM ||
                             p.Command == Command.ADDRECCOM ||
                             p.Command == Command.UWCOM ||
-                            p.Command == Command.SWAMPCOM).Cast<MonsterOrMontagRef>();
+                            p.Command == Command.SWAMPCOM ||
+                            p.Command == Command.FORESTFORTCOM ||
+                            p.Command == Command.MOUNTAINFORTCOM ||
+                            p.Command == Command.SWAMPFORTCOM ||
+                            p.Command == Command.WASTEFORTCOM ||
+                            p.Command == Command.FARMCOM ||
+                            p.Command == Command.FARMFORTCOM ||
+                            p.Command == Command.CAVEFORTCOM ||
+                            p.Command == Command.DRIPCOM ||
+                            p.Command == Command.DRIPFORTCOM ||
+                            p.Command == Command.COASTFORTCOM ||
+                            p.Command == Command.SEACOM ||
+                            p.Command == Command.SEAFORTCOM ||
+                            p.Command == Command.DEEPCOM ||
+                            p.Command == Command.DEEPFORTCOM ||
+                            p.Command == Command.KELPCOM ||
+                            p.Command == Command.KELPFORTCOM).Cast<MonsterOrMontagRef>();
                 foreach (var property in list)
                 {
                     var ret = property?._monsterRef?.Entity as Monster;
