@@ -1,0 +1,681 @@
+# Command Comparison Report
+
+Generated comparing PDF extraction with existing code.
+
+## Summary
+- Commands in PDF: 1162
+- Commands in code: 1597
+- Missing from code: 93
+- Missing from PDF: 528
+- Type conflicts: 1
+
+## Type Conflicts (REVIEW NEEDED)
+
+These commands may have argument type mismatches:
+
+### `#nametype` in monster
+- Issue: PDF expects integer, code uses NametypeIDRef
+- PDF args: `<name type nbr>`
+- Code type: `NametypeIDRef`
+
+## Commands Missing from Code
+
+These commands are in the PDF but not found in Command.cs:
+
+### Bless
+- `#blessbonus` <0 - 9>
+- `#selectbless` "<bless name>"
+
+### Event
+- `#domstr` <level>
+- `#form` "monster name"
+- `#prison` <id>
+- `#scale` <scale nbr> <value>
+
+### Item
+- `#caveres` <bonus>
+- `#coldscale` <value>
+- `#enchantedblood` <points>
+- `#favrit` <disschool> <level>
+- `#sleepres` 
+
+### Mercenary
+- `#newtemplate` <nation_id>
+
+### Monster
+- `#battlesum1d2` <"monster_name">
+- `#battlesum1d3` <"monster_name">
+- `#battlesumwarm` <"monster_name">
+- `#bugshape` <"monster_name">
+- `#bugswarmshape` <"monster_name">
+- `#bugswarmuwshape` <"monster_name">
+- `#buguwshape` <"monster_name">
+- `#caverecpt` <bonus>
+- `#caveres` <bonus>
+- `#chorusmaster` 
+- `#chorusslave` 
+- `#coldscale` <value>
+- `#faysummon` <id>
+- `#forcess` 
+- `#foreignguardmult` <multiplier>
+- `#foreignwallmult` <multiplier>
+- `#growthpower` <bonus>
+- `#magiconly` 
+- `#magicscale` <value>
+- `#mrhalf` 
+- `#praise` <value>
+- `#sabbathmaster` 
+- `#sabbathslave` 
+- `#sizecost` <value>
+- `#sleepres` 
+- `#spikes` 
+- `#tolerateund` 
+- `#twiceborncost` <value>
+
+### Nation
+- `#blessbonus` <0 - 9>
+- `#caveinc` <bonus>
+- `#foreignguardcom` <"monster_name">
+- `#foreignguardunit` <"monster_name">
+- `#foreignwallcom` <"monster_name">
+- `#foreignwallunit` <"monster_name">
+- `#fortcoldscaleres` <steps>
+- `#fortheatscaleres` <steps>
+- `#fullgodname` 
+- `#fullplayergodname` 
+- `#godhe` 
+- `#godhim` 
+- `#godhimself` 
+- `#godhis` 
+- `#godname` 
+- `#godnat` 
+- `#godthrone` 
+- `#grandcom` <0 | 1>
+- `#homecoldscaleres` <steps>
+- `#homeheatscaleres` <steps>
+- `#playergodname` 
+- `#playergodthrone` 
+- `#selectbless` "<bless name>"
+
+### Site
+- `#chaosscale` <value>
+- `#clearfx` 
+- `#clearscales` 
+- `#copysite` "<site name>"
+- `#cost0` <value>
+- `#cost1` <value>
+- `#deathscale` <value>
+- `#drainscale` <value>
+- `#foreignguardcom` <"monster_name">
+- `#foreignguardunit` <"monster_name">
+- `#foreignwallcom` <"monster_name">
+- `#foreignwallunit` <"monster_name">
+- `#grandcom` <0 | 1>
+- `#growthscale` <value>
+- `#heatscale` <value>
+- `#homecoldscaleres` <steps>
+- `#homeheatscaleres` <steps>
+- `#luckscale` <value>
+- `#misfortscale` <value>
+- `#orderscale` <value>
+- `#path0` <path nbr>
+- `#path1` <path nbr>
+- `#prodscale` <value>
+- `#slothscale` <value>
+
+### Sound
+- `#loop` <sample nbr>
+- `#selectsound` <id>
+- `#smpmode` <mode>
+
+### Spell
+- `#dishe` 
+- `#dishim` 
+- `#dishimself` 
+- `#dishis` 
+- `#disname` 
+- `#disnat` 
+- `#fullplayername` 
+- `#makecrater` <0 | 1>
+- `#notindoors` <-1 to 1>
+- `#playername` 
+- `#playerthrone` 
+- `#researchgoal` "spell name"
+
+### Weapon
+- `#afflictions` 
+- `#defroll` 
+- `#morroll` 
+
+## Commands in Code but not PDF
+
+These may be internal commands or typos:
+
+- `#10d6units` (enum: ZZ10D6UNITS)
+- `#11d6units` (enum: ZZ11D6UNITS)
+- `#12d6units` (enum: ZZ12D6UNITS)
+- `#13d6units` (enum: ZZ13D6UNITS)
+- `#14d6units` (enum: ZZ14D6UNITS)
+- `#15d6units` (enum: ZZ15D6UNITS)
+- `#16d6units` (enum: ZZ16D6UNITS)
+- `#1d3units` (enum: ZZ1D3UNITS)
+- `#1d3vis` (enum: ZZ1D3VIS)
+- `#1d6units` (enum: ZZ1D6UNITS)
+- `#1d6vis` (enum: ZZ1D6VIS)
+- `#1unit` (enum: ZZ1UNIT)
+- `#2com` (enum: ZZ2COM)
+- `#2d3units` (enum: ZZ2D3UNITS)
+- `#2d4vis` (enum: ZZ2D4VIS)
+- `#2d6units` (enum: ZZ2D6UNITS)
+- `#2d6vis` (enum: ZZ2D6VIS)
+- `#3d3units` (enum: ZZ3D3UNITS)
+- `#3d6units` (enum: ZZ3D6UNITS)
+- `#3d6vis` (enum: ZZ3D6VIS)
+- `#4com` (enum: ZZ4COM)
+- `#4d3units` (enum: ZZ4D3UNITS)
+- `#4d6units` (enum: ZZ4D6UNITS)
+- `#4d6vis` (enum: ZZ4D6VIS)
+- `#5com` (enum: ZZ5COM)
+- `#5d6units` (enum: ZZ5D6UNITS)
+- `#6d6units` (enum: ZZ6D6UNITS)
+- `#7d6units` (enum: ZZ7D6UNITS)
+- `#8d6units` (enum: ZZ8D6UNITS)
+- `#9d6units` (enum: ZZ9D6UNITS)
+- `#aboleth` (enum: ABOLETH)
+- `#addascension` (enum: ADDASCENSION)
+- `#addequip` (enum: ADDEQUIP)
+- `#addgeo` (enum: ADDGEO)
+- `#addkills` (enum: ADDKILLS)
+- `#addseductions` (enum: ADDSEDUCTIONS)
+- `#addsite` (enum: ADDSITE)
+- `#adventurers` (enum: ADVENTURERS)
+- `#airboost` (enum: AIRBOOST)
+- `#arena` (enum: ARENA)
+- `#assfollower1` (enum: ASSFOLLOWER1)
+- `#assfollower1d3` (enum: ASSFOLLOWER1D3)
+- `#assfollower2` (enum: ASSFOLLOWER2)
+- `#assfollower3` (enum: ASSFOLLOWER3)
+- `#assowner` (enum: ASSOWNER)
+- `#assownerench` (enum: ASSOWNERENCH)
+- `#astralattuned` (enum: ASTRALATTUNED)
+- `#astralboost` (enum: ASTRALBOOST)
+- `#astralfetters` (enum: ASTRALFETTERS)
+- `#autoblessed` (enum: AUTOBLESSED)
+- `#banished` (enum: BANISHED)
+- `#batstartsum6d6` (enum: BATSTARTSUM6D6)
+- `#batstartsum7d6` (enum: BATSTARTSUM7D6)
+- `#batstartsum8d6` (enum: BATSTARTSUM8D6)
+- `#batstartsum9d6` (enum: BATSTARTSUM9D6)
+- `#bloodattuned` (enum: BLOODATTUNED)
+- `#bloodboost` (enum: BLOODBOOST)
+- `#cavecom` (enum: CAVECOM)
+- `#cavefortcom` (enum: CAVEFORTCOM)
+- `#cavefortrec` (enum: CAVEFORTREC)
+- `#caverec` (enum: CAVEREC)
+- `#changetargetgenderforseductionandseductionimmune` (enum: CHANGETARGETGENDERFORSEDUCTIONANDSEDUCTIONIMMUNE)
+- `#claimthrone` (enum: CLAIMTHRONE)
+- `#clearallevents` (enum: CLEARALLEVENTS)
+- `#cleartarg` (enum: CLEARTARG)
+- `#clearvar` (enum: CLEARVAR)
+- `#clockworklord` (enum: CLOCKWORKLORD)
+- `#coastcom` (enum: COASTCOM)
+- `#coastcom2` (enum: COASTCOM2)
+- `#coastfortcom` (enum: COASTFORTCOM)
+- `#coastfortrec` (enum: COASTFORTREC)
+- `#coastrec` (enum: COASTREC)
+- `#coastunit2` (enum: COASTUNIT2)
+- `#coastunit3` (enum: COASTUNIT3)
+- `#code` (enum: CODE)
+- `#code2` (enum: CODE2)
+- `#codedelay` (enum: CODEDELAY)
+- `#codedelay2` (enum: CODEDELAY2)
+- `#coldsummon` (enum: COLDSUMMON)
+- `#corpseconstruct` (enum: CORPSECONSTRUCT)
+- `#corrupt` (enum: CORRUPT)
+- `#curseattacker` (enum: CURSEATTACKER)
+- `#deathattuned` (enum: DEATHATTUNED)
+- `#deathboost` (enum: DEATHBOOST)
+- `#dec10var` (enum: DEC10VAR)
+- `#decscale2` (enum: DECSCALE2)
+- `#decscale3` (enum: DECSCALE3)
+- `#decvar` (enum: DECVAR)
+- `#deepcom` (enum: DEEPCOM)
+- `#deepfortcom` (enum: DEEPFORTCOM)
+- `#deepfortrec` (enum: DEEPFORTREC)
+- `#deeprec` (enum: DEEPREC)
+- `#defence` (enum: DEFENCE)
+- `#defiler` (enum: DEFILER)
+- `#delay` (enum: DELAY)
+- `#delay25` (enum: DELAY25)
+- `#delay50` (enum: DELAY50)
+- `#delayskip` (enum: DELAYSKIP)
+- `#disbelieve` (enum: DISBELIEVE)
+- `#dispglobals` (enum: DISPGLOBALS)
+- `#dreanimator` (enum: DREANIMATOR)
+- `#dripcom` (enum: DRIPCOM)
+- `#dripfortcom` (enum: DRIPFORTCOM)
+- `#dripfortrec` (enum: DRIPFORTREC)
+- `#driprec` (enum: DRIPREC)
+- `#earthattuned` (enum: EARTHATTUNED)
+- `#earthboost` (enum: EARTHBOOST)
+- `#emigration` (enum: EMIGRATION)
+- `#exactgold` (enum: EXACTGOLD)
+- `#extramsg` (enum: EXTRAMSG)
+- `#farmcom` (enum: FARMCOM)
+- `#farmfortcom` (enum: FARMFORTCOM)
+- `#farmfortrec` (enum: FARMFORTREC)
+- `#farmrec` (enum: FARMREC)
+- `#fireboost` (enum: FIREBOOST)
+- `#flagland` (enum: FLAGLAND)
+- `#force1d3vis` (enum: FORCE1D3VIS)
+- `#force1d6vis` (enum: FORCE1D6VIS)
+- `#force2d4vis` (enum: FORCE2D4VIS)
+- `#force2d6vis` (enum: FORCE2D6VIS)
+- `#force3d6vis` (enum: FORCE3D6VIS)
+- `#force4d6vis` (enum: FORCE4D6VIS)
+- `#forceexactgold` (enum: FORCEEXACTGOLD)
+- `#forcegold` (enum: FORCEGOLD)
+- `#forcetransform` (enum: FORCETRANSFORM)
+- `#foreignmagicboost` (enum: FOREIGNMAGICBOOST)
+- `#forestcom` (enum: FORESTCOM)
+- `#forestfortcom` (enum: FORESTFORTCOM)
+- `#forestfortrec` (enum: FORESTFORTREC)
+- `#gainaff` (enum: GAINAFF)
+- `#gainmark` (enum: GAINMARK)
+- `#gemloss` (enum: GEMLOSS)
+- `#gemlosslarge` (enum: GEMLOSSLARGE)
+- `#gemlosssmall` (enum: GEMLOSSSMALL)
+- `#glamourattuned` (enum: GLAMOURATTUNED)
+- `#glamourboost` (enum: GLAMOURBOOST)
+- `#header` (enum: HEADER)
+- `#healaff` (enum: HEALAFF)
+- `#heathensummon` (enum: HEATHENSUMMON)
+- `#hero10` (enum: HERO10)
+- `#hero2` (enum: HERO2)
+- `#hero3` (enum: HERO3)
+- `#hero4` (enum: HERO4)
+- `#hero5` (enum: HERO5)
+- `#hero6` (enum: HERO6)
+- `#hero7` (enum: HERO7)
+- `#hero8` (enum: HERO8)
+- `#hero9` (enum: HERO9)
+- `#hiddensite` (enum: HIDDENSITE)
+- `#holyboost` (enum: HOLYBOOST)
+- `#horror` (enum: HORROR)
+- `#horrormarked` (enum: HORRORMARKED)
+- `#hpoverslow` (enum: HPOVERSLOW)
+- `#id` (enum: ID)
+- `#illusionary` (enum: ILLUSIONARY)
+- `#inc10var` (enum: INC10VAR)
+- `#inccorpses` (enum: INCCORPSES)
+- `#incdom` (enum: INCDOM)
+- `#incpop` (enum: INCPOP)
+- `#incscale2` (enum: INCSCALE2)
+- `#incscale3` (enum: INCSCALE3)
+- `#incvar` (enum: INCVAR)
+- `#invvar` (enum: INVVAR)
+- `#isadaeva` (enum: ISADAEVA)
+- `#isashah` (enum: ISASHAH)
+- `#isayazad` (enum: ISAYAZAD)
+- `#kelpcom` (enum: KELPCOM)
+- `#kelpfortcom` (enum: KELPFORTCOM)
+- `#kelpfortrec` (enum: KELPFORTREC)
+- `#kelprec` (enum: KELPREC)
+- `#kill` (enum: KILL)
+- `#kill2d6mon` (enum: KILL2D6MON)
+- `#killcom` (enum: KILLCOM)
+- `#killmon` (enum: KILLMON)
+- `#killpop` (enum: KILLPOP)
+- `#killtarg` (enum: KILLTARG)
+- `#labpromotion` (enum: LABPROMOTION)
+- `#landenc` (enum: LANDENC)
+- `#landgold` (enum: LANDGOLD)
+- `#landprod` (enum: LANDPROD)
+- `#landreinvigoration` (enum: LANDREINVIGORATION)
+- `#linger` (enum: LINGER)
+- `#magicitem` (enum: MAGICITEM)
+- `#mcost` (enum: MCOST)
+- `#minascension` (enum: MINASCENSION)
+- `#minegold` (enum: MINEGOLD)
+- `#moralebonus` (enum: MORALEBONUS)
+- `#mountaincom` (enum: MOUNTAINCOM)
+- `#mountainfortcom` (enum: MOUNTAINFORTCOM)
+- `#mountainfortrec` (enum: MOUNTAINFORTREC)
+- `#mountainrec` (enum: MOUNTAINREC)
+- `#mountedberserk` (enum: MOUNTEDBERSERK)
+- `#msg` (enum: MSG)
+- `#multihero2` (enum: MULTIHERO2)
+- `#multihero3` (enum: MULTIHERO3)
+- `#multihero4` (enum: MULTIHERO4)
+- `#multihero5` (enum: MULTIHERO5)
+- `#multihero6` (enum: MULTIHERO6)
+- `#multihero7` (enum: MULTIHERO7)
+- `#mummification` (enum: MUMMIFICATION)
+- `#nation` (enum: NATION)
+- `#nationench` (enum: NATIONENCH)
+- `#natureattuned` (enum: NATUREATTUNED)
+- `#natureboost` (enum: NATUREBOOST)
+- `#newdom` (enum: NEWDOM)
+- `#newevent` (enum: NEWEVENT)
+- `#nolog` (enum: NOLOG)
+- `#notext` (enum: NOTEXT)
+- `#notsacred` (enum: NOTSACRED)
+- `#order` (enum: ORDER)
+- `#pathboost` (enum: PATHBOOST)
+- `#pathboostland` (enum: PATHBOOSTLAND)
+- `#pathboostuw` (enum: PATHBOOSTUW)
+- `#percentpathreduction` (enum: PERCENTPATHREDUCTION)
+- `#petrify` (enum: PETRIFY)
+- `#preanimator` (enum: PREANIMATOR)
+- `#purgecalendar` (enum: PURGECALENDAR)
+- `#purgedelayed` (enum: PURGEDELAYED)
+- `#realm2` (enum: REALM2)
+- `#realm3` (enum: REALM3)
+- `#reincarnation` (enum: REINCARNATION)
+- `#remgeo` (enum: REMGEO)
+- `#remount` (enum: REMOUNT)
+- `#removesite` (enum: REMOVESITE)
+- `#req_2monsters` (enum: REQ_2MONSTERS)
+- `#req_5monsters` (enum: REQ_5MONSTERS)
+- `#req_ai` (enum: REQ_AI)
+- `#req_anycode` (enum: REQ_ANYCODE)
+- `#req_arenadone` (enum: REQ_ARENADONE)
+- `#req_capital` (enum: REQ_CAPITAL)
+- `#req_cave` (enum: REQ_CAVE)
+- `#req_chaos` (enum: REQ_CHAOS)
+- `#req_claimedthrone` (enum: REQ_CLAIMEDTHRONE)
+- `#req_coast` (enum: REQ_COAST)
+- `#req_code` (enum: REQ_CODE)
+- `#req_cold` (enum: REQ_COLD)
+- `#req_commander` (enum: REQ_COMMANDER)
+- `#req_crystal` (enum: REQ_CRYSTAL)
+- `#req_deadmnr` (enum: REQ_DEADMNR)
+- `#req_death` (enum: REQ_DEATH)
+- `#req_deep` (enum: REQ_DEEP)
+- `#req_domchance` (enum: REQ_DOMCHANCE)
+- `#req_dominion` (enum: REQ_DOMINION)
+- `#req_domowner` (enum: REQ_DOMOWNER)
+- `#req_drip` (enum: REQ_DRIP)
+- `#req_ench` (enum: REQ_ENCH)
+- `#req_enchdom` (enum: REQ_ENCHDOM)
+- `#req_enchnearby` (enum: REQ_ENCHNEARBY)
+- `#req_enchtarget` (enum: REQ_ENCHTARGET)
+- `#req_era` (enum: REQ_ERA)
+- `#req_farm` (enum: REQ_FARM)
+- `#req_forest` (enum: REQ_FOREST)
+- `#req_forestcave` (enum: REQ_FORESTCAVE)
+- `#req_fornation` (enum: REQ_FORNATION)
+- `#req_fort` (enum: REQ_FORT)
+- `#req_fortid` (enum: REQ_FORTID)
+- `#req_foundsite` (enum: REQ_FOUNDSITE)
+- `#req_freesites` (enum: REQ_FREESITES)
+- `#req_freshwater` (enum: REQ_FRESHWATER)
+- `#req_friendlyench` (enum: REQ_FRIENDLYENCH)
+- `#req_fullowner` (enum: REQ_FULLOWNER)
+- `#req_gem` (enum: REQ_GEM)
+- `#req_godawake` (enum: REQ_GODAWAKE)
+- `#req_godismnr` (enum: REQ_GODISMNR)
+- `#req_godisnotmnr` (enum: REQ_GODISNOTMNR)
+- `#req_gold` (enum: REQ_GOLD)
+- `#req_gorge` (enum: REQ_GORGE)
+- `#req_growth` (enum: REQ_GROWTH)
+- `#req_heat` (enum: REQ_HEAT)
+- `#req_hiddensite` (enum: REQ_HIDDENSITE)
+- `#req_hostileench` (enum: REQ_HOSTILEENCH)
+- `#req_humanoidres` (enum: REQ_HUMANOIDRES)
+- `#req_indepok` (enum: REQ_INDEPOK)
+- `#req_kelp` (enum: REQ_KELP)
+- `#req_lab` (enum: REQ_LAB)
+- `#req_land` (enum: REQ_LAND)
+- `#req_lazy` (enum: REQ_LAZY)
+- `#req_luck` (enum: REQ_LUCK)
+- `#req_magic` (enum: REQ_MAGIC)
+- `#req_maxcorpses` (enum: REQ_MAXCORPSES)
+- `#req_maxdef` (enum: REQ_MAXDEF)
+- `#req_maxdominion` (enum: REQ_MAXDOMINION)
+- `#req_maxglobals` (enum: REQ_MAXGLOBALS)
+- `#req_maxpop` (enum: REQ_MAXPOP)
+- `#req_maxtroops` (enum: REQ_MAXTROOPS)
+- `#req_maxturn` (enum: REQ_MAXTURN)
+- `#req_maxunrest` (enum: REQ_MAXUNREST)
+- `#req_mincorpses` (enum: REQ_MINCORPSES)
+- `#req_mindef` (enum: REQ_MINDEF)
+- `#req_minglobals` (enum: REQ_MINGLOBALS)
+- `#req_minpop` (enum: REQ_MINPOP)
+- `#req_mintroops` (enum: REQ_MINTROOPS)
+- `#req_minunrest` (enum: REQ_MINUNREST)
+- `#req_mnr` (enum: REQ_MNR)
+- `#req_monster` (enum: REQ_MONSTER)
+- `#req_month` (enum: REQ_MONTH)
+- `#req_mountain` (enum: REQ_MOUNTAIN)
+- `#req_mydominion` (enum: REQ_MYDOMINION)
+- `#req_myench` (enum: REQ_MYENCH)
+- `#req_nation` (enum: REQ_NATION)
+- `#req_nativesoil` (enum: REQ_NATIVESOIL)
+- `#req_nearbycapital` (enum: REQ_NEARBYCAPITAL)
+- `#req_nearbycode` (enum: REQ_NEARBYCODE)
+- `#req_nearbysite` (enum: REQ_NEARBYSITE)
+- `#req_nearbythrone` (enum: REQ_NEARBYTHRONE)
+- `#req_nearowncode` (enum: REQ_NEAROWNCODE)
+- `#req_noench` (enum: REQ_NOENCH)
+- `#req_noera` (enum: REQ_NOERA)
+- `#req_nomnr` (enum: REQ_NOMNR)
+- `#req_nomonster` (enum: REQ_NOMONSTER)
+- `#req_nonation` (enum: REQ_NONATION)
+- `#req_nopathair` (enum: REQ_NOPATHAIR)
+- `#req_nopathall` (enum: REQ_NOPATHALL)
+- `#req_nopathastral` (enum: REQ_NOPATHASTRAL)
+- `#req_nopathblood` (enum: REQ_NOPATHBLOOD)
+- `#req_nopathdeath` (enum: REQ_NOPATHDEATH)
+- `#req_nopathearth` (enum: REQ_NOPATHEARTH)
+- `#req_nopathfire` (enum: REQ_NOPATHFIRE)
+- `#req_nopathglamour` (enum: REQ_NOPATHGLAMOUR)
+- `#req_nopathholy` (enum: REQ_NOPATHHOLY)
+- `#req_nopathnature` (enum: REQ_NOPATHNATURE)
+- `#req_nopathwater` (enum: REQ_NOPATHWATER)
+- `#req_noseason` (enum: REQ_NOSEASON)
+- `#req_nositenbr` (enum: REQ_NOSITENBR)
+- `#req_notanycode` (enum: REQ_NOTANYCODE)
+- `#req_notcode` (enum: REQ_NOTCODE)
+- `#req_notforally` (enum: REQ_NOTFORALLY)
+- `#req_notfornation` (enum: REQ_NOTFORNATION)
+- `#req_notnation` (enum: REQ_NOTNATION)
+- `#req_notpoptype` (enum: REQ_NOTPOPTYPE)
+- `#req_noworlditem` (enum: REQ_NOWORLDITEM)
+- `#req_order` (enum: REQ_ORDER)
+- `#req_owncapital` (enum: REQ_OWNCAPITAL)
+- `#req_pathair` (enum: REQ_PATHAIR)
+- `#req_pathastral` (enum: REQ_PATHASTRAL)
+- `#req_pathblood` (enum: REQ_PATHBLOOD)
+- `#req_pathdeath` (enum: REQ_PATHDEATH)
+- `#req_pathearth` (enum: REQ_PATHEARTH)
+- `#req_pathfire` (enum: REQ_PATHFIRE)
+- `#req_pathglamour` (enum: REQ_PATHGLAMOUR)
+- `#req_pathholy` (enum: REQ_PATHHOLY)
+- `#req_pathnature` (enum: REQ_PATHNATURE)
+- `#req_pathwater` (enum: REQ_PATHWATER)
+- `#req_permonth` (enum: REQ_PERMONTH)
+- `#req_plane` (enum: REQ_PLANE)
+- `#req_pop0ok` (enum: REQ_POP0OK)
+- `#req_poptype` (enum: REQ_POPTYPE)
+- `#req_preach` (enum: REQ_PREACH)
+- `#req_pregame` (enum: REQ_PREGAME)
+- `#req_pretawake` (enum: REQ_PRETAWAKE)
+- `#req_pretismnr` (enum: REQ_PRETISMNR)
+- `#req_prod` (enum: REQ_PROD)
+- `#req_rare` (enum: REQ_RARE)
+- `#req_researcher` (enum: REQ_RESEARCHER)
+- `#req_season` (enum: REQ_SEASON)
+- `#req_site` (enum: REQ_SITE)
+- `#req_story` (enum: REQ_STORY)
+- `#req_swamp` (enum: REQ_SWAMP)
+- `#req_targaff` (enum: REQ_TARGAFF)
+- `#req_targally` (enum: REQ_TARGALLY)
+- `#req_targanimal` (enum: REQ_TARGANIMAL)
+- `#req_targdemon` (enum: REQ_TARGDEMON)
+- `#req_targforeignok` (enum: REQ_TARGFOREIGNOK)
+- `#req_targgod` (enum: REQ_TARGGOD)
+- `#req_targhorrormark` (enum: REQ_TARGHORRORMARK)
+- `#req_targhumanoid` (enum: REQ_TARGHUMANOID)
+- `#req_targimmobile` (enum: REQ_TARGIMMOBILE)
+- `#req_targinanimate` (enum: REQ_TARGINANIMATE)
+- `#req_targinsane` (enum: REQ_TARGINSANE)
+- `#req_targitem` (enum: REQ_TARGITEM)
+- `#req_targmagicbeing` (enum: REQ_TARGMAGICBEING)
+- `#req_targmale` (enum: REQ_TARGMALE)
+- `#req_targmanygems` (enum: REQ_TARGMANYGEMS)
+- `#req_targmaxkills` (enum: REQ_TARGMAXKILLS)
+- `#req_targmaxmorale` (enum: REQ_TARGMAXMORALE)
+- `#req_targmaxsize` (enum: REQ_TARGMAXSIZE)
+- `#req_targmindless` (enum: REQ_TARGMINDLESS)
+- `#req_targminkills` (enum: REQ_TARGMINKILLS)
+- `#req_targminmorale` (enum: REQ_TARGMINMORALE)
+- `#req_targminsize` (enum: REQ_TARGMINSIZE)
+- `#req_targmnr` (enum: REQ_TARGMNR)
+- `#req_targnoaff` (enum: REQ_TARGNOAFF)
+- `#req_targnoitem` (enum: REQ_TARGNOITEM)
+- `#req_targnomnr` (enum: REQ_TARGNOMNR)
+- `#req_targnoorder` (enum: REQ_TARGNOORDER)
+- `#req_targnopath1` (enum: REQ_TARGNOPATH1)
+- `#req_targnopath2` (enum: REQ_TARGNOPATH2)
+- `#req_targnopath3` (enum: REQ_TARGNOPATH3)
+- `#req_targnopath4` (enum: REQ_TARGNOPATH4)
+- `#req_targnotally` (enum: REQ_TARGNOTALLY)
+- `#req_targnotowner` (enum: REQ_TARGNOTOWNER)
+- `#req_targorder` (enum: REQ_TARGORDER)
+- `#req_targowner` (enum: REQ_TARGOWNER)
+- `#req_targpath1` (enum: REQ_TARGPATH1)
+- `#req_targpath2` (enum: REQ_TARGPATH2)
+- `#req_targpath3` (enum: REQ_TARGPATH3)
+- `#req_targpath4` (enum: REQ_TARGPATH4)
+- `#req_targprophet` (enum: REQ_TARGPROPHET)
+- `#req_targseductions` (enum: REQ_TARGSEDUCTIONS)
+- `#req_targsight` (enum: REQ_TARGSIGHT)
+- `#req_targundead` (enum: REQ_TARGUNDEAD)
+- `#req_temple` (enum: REQ_TEMPLE)
+- `#req_thronesite` (enum: REQ_THRONESITE)
+- `#req_turn` (enum: REQ_TURN)
+- `#req_turnrare` (enum: REQ_TURNRARE)
+- `#req_unclaimedthrone` (enum: REQ_UNCLAIMEDTHRONE)
+- `#req_unique` (enum: REQ_UNIQUE)
+- `#req_unluck` (enum: REQ_UNLUCK)
+- `#req_unmagic` (enum: REQ_UNMAGIC)
+- `#req_varneg` (enum: REQ_VARNEG)
+- `#req_varone` (enum: REQ_VARONE)
+- `#req_varpos` (enum: REQ_VARPOS)
+- `#req_varzero` (enum: REQ_VARZERO)
+- `#req_void` (enum: REQ_VOID)
+- `#req_voidok` (enum: REQ_VOIDOK)
+- `#req_waste` (enum: REQ_WASTE)
+- `#req_worlditem` (enum: REQ_WORLDITEM)
+- `#researchaff` (enum: RESEARCHAFF)
+- `#resetcode` (enum: RESETCODE)
+- `#resetcodedelay` (enum: RESETCODEDELAY)
+- `#resetcodedelay2` (enum: RESETCODEDELAY2)
+- `#resolvearena1` (enum: RESOLVEARENA1)
+- `#resolvearena2` (enum: RESOLVEARENA2)
+- `#revealprov` (enum: REVEALPROV)
+- `#revealsite` (enum: REVEALSITE)
+- `#revolt` (enum: REVOLT)
+- `#sailsize` (enum: SAILSIZE)
+- `#saltvul` (enum: SALTVUL)
+- `#seacom` (enum: SEACOM)
+- `#seafortcom` (enum: SEAFORTCOM)
+- `#seafortrec` (enum: SEAFORTREC)
+- `#searec` (enum: SEAREC)
+- `#selectevent` (enum: SELECTEVENT)
+- `#sendlessorhorrormult` (enum: SENDLESSORHORRORMULT)
+- `#setpoptype` (enum: SETPOPTYPE)
+- `#setxp` (enum: SETXP)
+- `#sizewhensailing` (enum: SIZEWHENSAILING)
+- `#soulslaying` (enum: SOULSLAYING)
+- `#spreadchaos` (enum: SPREADCHAOS)
+- `#spreadcold` (enum: SPREADCOLD)
+- `#spreaddeath` (enum: SPREADDEATH)
+- `#spreadheat` (enum: SPREADHEAT)
+- `#spreadlazy` (enum: SPREADLAZY)
+- `#stealthcom` (enum: STEALTHCOM)
+- `#strikeunits` (enum: STRIKEUNITS)
+- `#stunimmunity` (enum: STUNIMMUNITY)
+- `#stupid` (enum: STUPID)
+- `#stygianguide` (enum: STYGIANGUIDE)
+- `#swampcom` (enum: SWAMPCOM)
+- `#swampfortcom` (enum: SWAMPFORTCOM)
+- `#swampfortrec` (enum: SWAMPFORTREC)
+- `#swamprec` (enum: SWAMPREC)
+- `#taxboost` (enum: TAXBOOST)
+- `#tempunits` (enum: TEMPUNITS)
+- `#togglevar` (enum: TOGGLEVAR)
+- `#transform` (enum: TRANSFORM)
+- `#turmoilsummon` (enum: TURMOILSUMMON)
+- `#uncurableaffliction` (enum: UNCURABLEAFFLICTION)
+- `#undying` (enum: UNDYING)
+- `#unrest` (enum: UNREST)
+- `#uwdefcom1` (enum: UWDEFCOM1)
+- `#uwdefcom2` (enum: UWDEFCOM2)
+- `#uwdefmult1` (enum: UWDEFMULT1)
+- `#uwdefmult1b` (enum: UWDEFMULT1B)
+- `#uwdefmult1c` (enum: UWDEFMULT1C)
+- `#uwdefmult1d` (enum: UWDEFMULT1D)
+- `#uwdefmult2` (enum: UWDEFMULT2)
+- `#uwdefmult2b` (enum: UWDEFMULT2B)
+- `#uwdefunit1` (enum: UWDEFUNIT1)
+- `#uwdefunit1b` (enum: UWDEFUNIT1B)
+- `#uwdefunit1c` (enum: UWDEFUNIT1C)
+- `#uwdefunit1d` (enum: UWDEFUNIT1D)
+- `#uwdefunit2` (enum: UWDEFUNIT2)
+- `#uwdefunit2b` (enum: UWDEFUNIT2B)
+- `#visitors` (enum: VISITORS)
+- `#wastecom` (enum: WASTECOM)
+- `#wastefortcom` (enum: WASTEFORTCOM)
+- `#wastefortrec` (enum: WASTEFORTREC)
+- `#wasterec` (enum: WASTEREC)
+- `#waterattuned` (enum: WATERATTUNED)
+- `#waterboost` (enum: WATERBOOST)
+- `#wintersummon1d3` (enum: WINTERSUMMON1D3)
+- `#wolf` (enum: WOLF)
+- `#worldage` (enum: WORLDAGE)
+- `#worldcurse` (enum: WORLDCURSE)
+- `#worlddarkness` (enum: WORLDDARKNESS)
+- `#worlddecscale` (enum: WORLDDECSCALE)
+- `#worlddecscale2` (enum: WORLDDECSCALE2)
+- `#worlddecscale3` (enum: WORLDDECSCALE3)
+- `#worlddisease` (enum: WORLDDISEASE)
+- `#worldheal` (enum: WORLDHEAL)
+- `#worldincdom` (enum: WORLDINCDOM)
+- `#worldincscale` (enum: WORLDINCSCALE)
+- `#worldincscale2` (enum: WORLDINCSCALE2)
+- `#worldincscale3` (enum: WORLDINCSCALE3)
+- `#worldmark` (enum: WORLDMARK)
+- `#worldritrebate` (enum: WORLDRITREBATE)
+- `#worldunrest` (enum: WORLDUNREST)
+- `#zz10d6units` (enum: ZZ10D6UNITS)
+- `#zz11d6units` (enum: ZZ11D6UNITS)
+- `#zz12d6units` (enum: ZZ12D6UNITS)
+- `#zz13d6units` (enum: ZZ13D6UNITS)
+- `#zz14d6units` (enum: ZZ14D6UNITS)
+- `#zz15d6units` (enum: ZZ15D6UNITS)
+- `#zz16d6units` (enum: ZZ16D6UNITS)
+- `#zz1d3units` (enum: ZZ1D3UNITS)
+- `#zz1d3vis` (enum: ZZ1D3VIS)
+- `#zz1d6units` (enum: ZZ1D6UNITS)
+- `#zz1d6vis` (enum: ZZ1D6VIS)
+- `#zz1unit` (enum: ZZ1UNIT)
+- `#zz2com` (enum: ZZ2COM)
+- `#zz2d3units` (enum: ZZ2D3UNITS)
+- `#zz2d4vis` (enum: ZZ2D4VIS)
+- `#zz2d6units` (enum: ZZ2D6UNITS)
+- `#zz2d6vis` (enum: ZZ2D6VIS)
+- `#zz3d3units` (enum: ZZ3D3UNITS)
+- `#zz3d6units` (enum: ZZ3D6UNITS)
+- `#zz3d6vis` (enum: ZZ3D6VIS)
+- `#zz4com` (enum: ZZ4COM)
+- `#zz4d3units` (enum: ZZ4D3UNITS)
+- `#zz4d6units` (enum: ZZ4D6UNITS)
+- `#zz4d6vis` (enum: ZZ4D6VIS)
+- `#zz5com` (enum: ZZ5COM)
+- `#zz5d6units` (enum: ZZ5D6UNITS)
+- `#zz6d6units` (enum: ZZ6D6UNITS)
+- `#zz7d6units` (enum: ZZ7D6UNITS)
+- `#zz8d6units` (enum: ZZ8D6UNITS)
+- `#zz9d6units` (enum: ZZ9D6UNITS)

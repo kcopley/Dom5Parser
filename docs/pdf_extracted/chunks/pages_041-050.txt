@@ -1,0 +1,759 @@
+
+============================================================
+PAGE 41
+============================================================
+
+#blessdarkvis <value> #selectnation <nation nbr>
+Blessed troops get Darkvision. An existing Darkvision ability is Selects the nation that will be affected by the following
+augmented. modding commands. End modding this nation with the #end
+#blessatt <value> command. Nation number is a number between 5 and 499. See
+Blessed troops get increased Attack skill. the three tables below for currently used numbers. You can
+#evil use number 150 and above in order to create new nations
+The throne is evil and is likely to be defended by evil monsters. without overwriting an existing one. Numbers 0 – 4 are used
+#blessdef <value> for various independents and temporary monsters in the game
+Blessed troops get increased Defense skill. and cannot be used for modding.
+#blessprec <value>
+Nation numbers, Early Era
+Blessed troops get increased Precision skill.
+#blessfireres <value> Nbr Nation Epithet
+Blessed troops get increased Fire Resistance. 5 Arcoscephale, Golden Era
+#blesscoldres <value> 6 Mekone, Brazen Giants
+Blessed troops get increased Cold Resistance. 7 Pangaea, Age of Revelry
+#blessshockres <value> 8 Ermor, New Faith
+Blessed troops get increased Shock Resistance. 9 Sauromatia, Amazon Queens
+#blesspoisres <value> 10 Fomoria, The Cursed Ones
+Blessed troops get increased Poison Resistance. 11 Tir na n'Og, Land of the Ever Young
+#blessairshld <value> 12 Marverni, Time of Druids
+Blessed troops get Air Shield like from an Air bless. An existing 13 Ulm, Enigma of Steel
+Air bless is augmented. 14 Pyrène, Kingdom of the Bekrydes
+#blessreinvig <value> 15 Agartha, Pale Ones
+Blessed troops get increased Reinvigoration, like from a bless 16 Abysia, Children of Flame
+with the same name. An existing reinvigoration bless is 17 Hinnom, Sons of the Fallen
+augmented. 18 Ubar, Kingdom of the Unseen
+#blessdtv <value> 19 Ur, The First City
+Blessed troops get undying, like the undying bless effect. An 20 Kailasa, Rise of the Ape Kings
+existing undying bless is augmented. 21 Lanka, Land of Demons
+#wild 22 T'ien Ch'i, Spring and Autumn
+The throne is wild and is likely to be defended by wild 23 Yomi, Oni Kings
+monsters. 24 Caelum, Eagle Kings
+#recallgod <value> 25 Mictlan, Reign of Blood
+This value is added to the priest level of everyone doing Call 26 Xibalba, Vigil of the Sun
+God. 27 C'tis, Lizard Kings
+#domwar <value> 28 Machaka, Lion Kings
+Dominion conflict bonus. 29 Berytos, The Phoenix Empire
+30 Vanheim, Age of Vanir
+31 Helheim, Dusk and Death
+Nation Modding
+32 Rus, Sons of Heaven
+These commands are the basic ones required for creating a 33 Niefelheim, Sons of Winter
+new nation or selecting an existing nation for modification. 34 Muspelheim, Sons of Fire
+40 Pelagia, Pearl Kings
+Name, Era & General
+41 Oceania, Coming of the Capricorns
+42 Therodos, Telkhine Spectre
+#indepflag "<imgfile>"
+43 Atlantis, Emergence of the Deep Ones
+Replace the flag of independents with an image. The image
+44 R'lyeh, Time of Aboleths
+must be 128 pixels wide and 128 pixels high. The flag should be
+positioned at the bottom of this image. This command is special
+in that it should be used when no nation is selected, i.e. before
+#selectnation or #newnation.
+41
+
+============================================================
+PAGE 42
+============================================================
+
+Nation numbers, Middle Era 106 Caelum, Return of the Raptors
+Nbr Nation Epithet 107 Gath, Last of the Giants
+50 Arcoscephale, The Old Kingdom 108 Patala, Reign of the Nagas
+51 Phlegra, Deformed Giants 109 T'ien Ch'i, Barbarian Kings
+52 Pangaea, Age of Bronze 110 Jomon, Human Daimyos
+53 Asphodel, Carrion Woods 111 Mictlan, Blood and Rain
+54 Ermor, Ashen Empire 112 Xibalba, Return of the Zotz
+55 Sceleria, The Reformed Empire 113 C'tis, Desert Tombs
+56 Pythium, Emerald Empire 115 Midgård, Age of Men
+57 Man, Tower of Avalon 116 Bogarus, Age of Heroes
+58 Eriu, Last of the Tuatha 117 Utgård, Well of Urd
+59 Agartha, Golem Cult 118 Vaettiheim, Wolf Kin Jarldom
+60 Ulm, Forges of Ulm 119 Feminie, Sage-Queens
+61 Marignon, Fiery Justice 120 Piconye, Legacy of the Prester King
+62 Pyrène, Time of the Akelarre 121 Andramania, Dog Republic
+63 Abysia, Blood and Fire 125 Erytheia, Kingdom of Two Worlds
+64 Ashdod, Reign of the Anakim 126 Atlantis, Frozen Sea
+65 Na'Ba, Queens of the Desert 127 R'lyeh, Dreamlands
+66 Uruk, City States
+#end
+67 Ind, Magnificent Kingdom of Exalted Virtue
+Always use this command at the end of modifying a nation.
+68 Bandar Log, Land of the Apes
+69 T'ien Ch'i, Imperial Bureaucracy #newnation
+70 Shinuyama, Land of the Bakemono This command can be used to add a new nation instead of
+71 Caelum, Reign of the Seraphim #selectnation. The command automatically uses the first free
+72 Nazca, Kingdom of the Sun nation number of 120 or higher that is available.
+73 Mictlan, Reign of the Lawgiver #name "<nation name>"
+74 Xibalba, Flooded Caves Sets the name of the nation. Even though the name of a nation
+75 C'tis, Miasma is changed, the file names for the 2h and trn files will be the
+76 Machaka, Reign of Sorcerors same as the old nation’s. If the name is changed, then this must
+77 Phaeacia, Isle of the Dark Ships be the first command when modifying the nation.
+78 Vanheim, Arrival of Man #clearnation
+79 Vanarus, Land of the Chuds Clears away all special settings for the nation, like ideal cold,
+80 Jotunheim, Iron Woods reanimating priests, underwater nation, starting sites, heroes,
+81 Nidavangr, Bear, Wolf and Crow pretender god list, local defense, fort type, etc. The list of
+85 Ys, Morgen Queens recruitable units and commanders is not cleared with this
+86 Pelagia, Triton Kings command.
+87 Oceania, Mermidons #epithet "<nation name>"
+88 Atlantis, Kings of the Deep Sets the epithet of a nation, e.g. Enigma of Steel for Early Era
+89 R'lyeh, Fallen Star Ulm.
+#era <era nbr>
+Nation numbers, Late Era
+Which era should this nation appear in. 1 = early, 2 = mid
+Nbr Nation Epithet
+(default), 3 = late or 0 to disable the nation. Two nations with
+95 Arcoscephale, Sibylline Guidance
+the same name cannot be in the same era. If you change this it
+96 Phlegra, Sleeping Giants
+must be set right after #name and #epithet. Importantly
+97 Pangaea, New Era
+descriptions and other texts will not work if the era command
+98 Pythium, Serpent Cult
+is too late in the mod file.
+99 Lemuria, Soul Gates
+#descr "<nation name>"
+100 Man, Towers of Chelms
+A full description of the nation.
+101 Ulm, Black Forest
+#summary "<nation name>"
+102 Agartha, Ktonian Dead
+A summary of the benefits and dominion themes of the nation.
+103 Marignon, Conquerors of the Sea
+#brief "<nation name>"
+104 Abysia, Blood of Humans
+A very brief description for popups.
+105 Ragha, Dual Kingdom
+42
+
+============================================================
+PAGE 43
+============================================================
+
+#color <red> <green> <blue> Library of Time 4 astral pearls
+Each of the three colors is a number between 0.0 and 1.0. This Burial Mound 1 death gem
+color is used for the score graphs. Well of Darkness 3 death gems
+#secondarycolor <red> <green> <blue> Wild Forest 1 nature gem
+The animated background is made up of two colors, the Ancient Forest 2 nature gems
+primary color (from #color) and this one. If the secondary color The Previous Forest 4 nature gems
+is not set, it will be the same as the primary. Dancing Lights 1 glamour gem
+#flag "<imgfile>" Singing Tree 2 glamour gems
+Replace the flag with an image. The image must be 128 pixels
+#islandsite "<site name>"
+wide and 128 pixels high. The flag should be positioned at the
+Like #startsite, but the nation will only get the site if it starts on
+bottom of this image and should usually be smaller than the
+an island.
+entire image. A standard flag only covers about 75 percent of
+#likesterr <terrain mask>
+the height.
+Makes the nation more likely to start in one of the terrains in
+#disableoldnations the terrain mask.
+Disables all old nations (up to number 149) #idealcold <cold>
+#viewallprov Sets the preferred level of cold for the nation. This ranges from
+This nation gets to view all provinces regardless of owner. This -3 (very hot) to 3 (very cold).
+command is intended for debug or observer mods and should #defchaos <-5 - 5>
+not be used for any real nations. Sets the default value of the chaos scale for this nation.
+#viewallbat #defsloth <-5 - 5>
+This nation gets to view all battles for all players, including Sets the default value of the sloth scale for this nation.
+assassinations. This command is intended for debug or #defdeath <-5 - 5>
+observer mods and should not be used for any real nations. Sets the default value of the death scale for this nation.
+#defmisfortune <-5 - 5>
+Sites, Terrain, Temperature Sets the default value of the misfortune scale for this nation.
+#defdrain <-5 - 5>
+These commands set a nation's starting sites and its terrain
+Sets the default value of the drain scale for this nation.
+and temperature preferences.
+#uwnation
+#clearsites Underwater nation. The nation's capital is in a sea province.
+Clears all start sites for this nation. #coastnation
+#startsite "<site name>" The nation's capital is in a coastal land province.
+Adds a start site for this nation. Table "Some magic sites" #riverstart
+shows some suitable start sites. This command can be used up This nation doesn't mind starting surrounded by rivers. C'tis
+to 4 times for multiple start sites. Assignment by site number is has this ability.
+not possible. #cavenation <0-3>
+#futuresite "<site name>" Sets the nation's preference for starting in cave provinces. 0 =
+Nation will get this site in the future, show it in nation never start in caves, 1 = can start in caves, 2 = always start in a
+overview. This command does not actually grant a new site, it cave, 3 = start directly under a cave entrance
+only makes it show up in the nation overview. #caveinc <bonus>
+Bonus in percent to income for all cave forts. Cave nations
+Some magic sites
+usually have about 15 in this value, other nations usually have
+Site Effect
+0 (the default).
+Tar Pits 1 fire gem
+#caveres <bonus>
+The Sun Below 4 fire gems
+Bonus in percent to resources for all cave forts.
+Thunder Oak 1 air gem
+#caverecpt <bonus>
+Palace of Dreams 4 air gems
+Bonus in percent to recruitment points (for units) for all cave
+Weeping Stone 1 water gem
+forts.
+Mercury Pond 2 water gems
+#islandnation
+Frozen Fountain 3 water gems
+The nation prefers to start on an island if possible, or a coast if
+Mineral Cave 1 earth gem
+no suitable island could be found.
+The Deepest Mine 4 earth gems
+Painted Cave 1 astral pearl
+43
+
+============================================================
+PAGE 44
+============================================================
+
+#hatesterr <terrain mask> #aiairnation
+Makes the nation less likely to start in one of the terrains in the Hint to AI that Air magic is used a lot in this nation and that an
+terrain mask. air god is probably good.
+#killcappop <percent> #aiwaternation
+Kills a percentage of the capital's population when the game Hint to AI that Water magic is used a lot in this nation and that
+starts. Value can be negative to increase population instead. a water god is probably good.
+#fortcoldscaleres <steps> #aiearthnation
+Reduces the killing effect of cold scales in forts by this many Hint to AI that Earth magic is used a lot in this nation and that a
+scale steps. earth god is probably good.
+#fortheatscaleres <steps> #ainaturenation
+Reduces the killing effect of heat scales in forts by this many Hint to AI that Nature magic is used a lot in this nation and that
+scale steps. a nature god is probably good.
+#homecoldscaleres <steps> #aiastralnation
+Reduces the killing effect of cold scales in the capital by this Hint to AI that Astral magic is used a lot in this nation and that
+many scale steps. an astral god is probably good.
+#homeheatscaleres <steps> #aideathnation
+Reduces the killing effect of heat scales in the capital by this Hint to AI that Death magic is used a lot in this nation and that
+many scale steps. a death god is probably good.
+#aiglamournation
+#moreorder <-5 - 5>
+Hint to AI that Glamour magic is used a lot in this nation and
+Alters the minimum/maximum allowed value of this scale when
+that a glamour god is probably good.
+designing the pretender's dominion.
+#aibloodnation
+#moreprod <-5 - 5>
+Hint to AI that Blood magic is used a lot in this nation and that a
+Alters the minimum/maximum allowed value of this scale when
+blood god is probably good.
+designing the pretender's dominion.
+#bloodnation
+#moreheat <-5 - 5>
+Makes the AI more likely to research blood magic and hunt for
+Alters the minimum/maximum allowed value of this scale when
+blood slaves. Mictlan has this hint.
+designing the pretender's dominion.
+#aigoodbless <0-100>
+#moregrowth <-5 - 5>
+Use to increase the chance of creating a powerful bless.
+Alters the minimum/maximum allowed value of this scale when
+100=only do gods with a powerful bless effects for this nation.
+designing the pretender's dominion.
+#aimusthavemag <magic path number>
+#moreluck <-5 - 5>
+Makes AI pretender have at least 3 in this magic school. Only
+Alters the minimum/maximum allowed value of this scale when
+one of these possible per nation.
+designing the pretender's dominion.
+#aicheapholy
+#moremagic <-5 - 5>
+Informs the AI that this nation has cheap expendable sacred
+Alters the minimum/maximum allowed value of this scale when
+units. So a Charge Body bless effect or something similar could
+designing the pretender's dominion.
+be appropriate. Marignon and Mictlan has this hint.
+#aiholyranged
+AI Hints
+Informs the AI that this nation has sacred ranged units. So a
+These mod commands are instructions to the Dominions 6 Wind Guide bless or something similar could be appropriate.
+artificial intelligence on certain aspects of managing the #aiheavyrec <0-99>
+nation. They have no effect in a game where the nation is Will make the AI more likely to recruit troops that cost 15 or
+controlled by a human player. more resources. The number is the chance for the AI
+reconsider a non-heavy troop recruitment.
+#aiholdgod
+#aimagerec <0-99>
+When playing this nation, the AI will never leave the home
+Will make the AI more likely to recruit mage commanders than
+province with the pretender.
+other commanders. The number is the chance for the AI
+#aiawake <percent>
+reconsider a non-mage commander recruitment.
+When playing this nation, the AI will have this much extra
+chance of choosing an awake pretender.
+Unit Lists & Recruitment
+#aifirenation
+These commands are used to assign a nation's units,
+Hint to AI that Fire magic is used a lot in this nation and that a
+commanders and heroes. Units recruited from national start
+fire god is probably good.
+sites are not set with these commands.
+44
+
+============================================================
+PAGE 45
+============================================================
+
+#clearrec #startunittype1 "<monster name>" | <monster nbr>
+Clears the list of recruitable units and commanders (but not The commander will have units of this type.
+gods) for this nation. #startunitnbrs1 <nbr of units>
+#startcom "<monster name>" | <monster nbr> The number of start units. Default is 20 units.
+The nation will start with this commander. This command also #startunittype2 "<monster name>" | <monster nbr>
+removes all old start troops and must be used when changing The commander will have a second squad with these units.
+start units. #startunitnbrs2 <nbr of units>
+#addforeignunit "<monster name>" | <monster nbr> The number of start units in the second squad. Default is 20
+This unit can only be recruited in provinces with no fort. units.
+#addforeigncom "<monster name>" | <monster nbr> #addrecunit "<monster name>" | <monster nbr>
+This commander can only be recruited in provinces with no Add a unit to the list of recruits for this nation.
+fort. #addreccom "<monster name>" | <monster nbr>
+Add a unit to the list of recruitable commanders for this nation.
+#(terrain)rec "<monster name>" | <monster nbr>
+#uwrec "<monster name>" | <monster nbr>
+This unit can be recruited in (terrain) provinces without a fort.
+Add a unit to the list of recruitable units in underwater forts for
+See the box below for all possible terrain names. So a complete
+this land-based nation. This command can be repeated multiple
+command would be e.g. #forestrec "Moose". Combine this
+time for many different units.
+command with the next one (...fortrec) to create a unit that is
+#uwcom "<monster name>" | <monster nbr>
+recruitable in a specific terrain regardless of the presence of a
+Add a unit to the list of recruitable commanders in underwater
+fort. Note that "foreign" can only be used with the fortrec
+forts for this land-based nation. This command can be repeated
+command.
+multiple time for many different commanders.
+#landrec ”<monster name>” | <monster nbr>
+#(terrain)fortrec "<monster name>" | <monster nbr>
+Add a unit to the list of recruitable units for this nation in
+This unit can be recruited in (terrain) provinces with a fort. See
+overwater forts. Only use this command for underwater
+the box below for all terrain names. Note that sea, deep and
+nations.
+kelp have no fortrec variants, use #uwrec and #uwcom instead.
+#landcom ”<monster name>” | <monster nbr>
+plain Add a unit to the list of recruitable commanders for this nation
+forest in overwater forts. Only use this command for underwater
+mountain (highlands and mountains) nations.
+swamp #merccost <percent>
+waste Mercenaries are this much more expensive. Can be negative.
+farm #hero1...10 <monster nbr>
+cave (all type of caves) Gives a hero to the modded nation. A nation can have up to ten
+drip (drip caves) different heroes. Use monster nbr -1 to remove a hero.
+coast #multihero1...7 <monster nbr>
+sea (shallow seas) Gives a multihero to the modded nation. Use e.g. #multihero1
+deep (deep seas) to set the first of seven possible multiheroes. A multihero is a
+kelp (kelp seas) hero that never runs out, i.e. there is an infinite supply of that
+foreign (non-capital forts) type of hero.
+#noforeignrec
+#startscout "<monster name>" | <monster nbr>
+Nation cannot recruit independent units.
+The nation will start with this unit as an extra commander.
+#coastunit1...3 ”<monster name>” | <monster nbr>
+This command is deprecated and should not be used.
+#(terrain)com "<monster name>" | <monster nbr>
+#coastcom1...2 ”<monster name>” | <monster nbr>
+This commander can be recruited in (terrain) provinces with or
+This command is deprecated and should not be used.
+without fort. See the box above for all terrain names. Note that
+"foreign" can only be used with the fortcom command.
+Province Defense
+#(terrain)fortcom "<monster name>" | <monster nbr>
+These commands set the nation's province defense (PD).
+This commander can be recruited in (terrain) provinces with a
+fort. See the box above for all terrain names. Note that sea, #defcom1 "<monster name>" | <monster nbr>
+deep and kelp have no fortcom variants, use #uwrec and Commander for local defense. This command also removes all
+#uwcom instead. old defense settings and must be used when changing the
+defense composition.
+45
+
+============================================================
+PAGE 46
+============================================================
+
+#defcom2 "<monster name>" | <monster nbr> #guardcom "<monster name>" | <monster nbr>
+Extra commander for fortified provinces with a province Commander that is in charge of the castle gate defenders.
+defense equal to or greater than 20. There can be multiple of these commands.
+#defunit1 "<monster name>" | <monster nbr> #guardunit "<monster name>" | <monster nbr>
+Standard unit for local defense in provinces with forts. Without Unit type the will guard the gates when the castle is stormed.
+forts, they appear at PD 20+. There can be multiple of these commands, each one should be
+#defunit1b "<monster name>" | <monster nbr> followed by a #guardmult command. The first gate guard type
+Second type of standard unit for local defense. They appear will also be used as city guards during assassin encounters. If
+like defunit1. there are no gate guards the first wall unit will be used instead.
+#defunit1c "<monster name>" | <monster nbr> #guardmult <multiplier>
+Third type of standard unit for local defense. They appear like Modifier for the number of castle gate guards from the
+defunit1. Usually there is no third type and this command isn't previous #guardunit command. 10 is the standard amount.
+used. #foreignwallcom "<monster name>" | <monster nbr>
+#defunit1d "<monster name>" | <monster nbr> Will replace the non-foreign variant for forts that is not the
+Fourth type of standard unit for local defense. They appear capital. This command is used by Muspelheim and most nations
+like defunit1. Usually there is no fourth type and this command never need it.
+isn't used. #foreignwallunit "<monster name>" | <monster nbr>
+#defunit2 "<monster name>" | <monster nbr> Will replace the non-foreign variant for forts that is not the
+Bonus units for local defense equal to or greater than 20 in capital. This command is used by Muspelheim and most nations
+provinces with forts only. never need it.
+#defunit2b "<monster name>" | <monster nbr> #foreignwallmult <multiplier>
+Second type of bonus units for local defense equal to or greater Will replace the non-foreign variant for forts that is not the
+than 20 in provinces with forts. capital. This command is used by Muspelheim and most nations
+#defmult1 <multiplier> never need it.
+Number of units per 10 points of defense. E.g. #defmult1 20 #foreignguardcom "<monster name>" | <monster nbr>
+will yield 2 units per point of defense, which is also the default. Will replace the non-foreign variant for forts that is not the
+#defmult1b <multiplier> capital. This command is used by Muspelheim and most nations
+Number of units per 10 points of defense for the second unit never need it.
+type. The default value is 10. #foreignguardunit "<monster name>" | <monster nbr>
+#defmult1c <multiplier> Will replace the non-foreign variant for forts that is not the
+Number of units per 10 points of defense for the third unit capital. This command is used by Muspelheim and most nations
+type. The default value is 10. never need it.
+#defmult1d <multiplier> #foreignguardmult <multiplier>
+Number of units per 10 points of defense for the fourth unit Will replace the non-foreign variant for forts that is not the
+type. The default value is 10. capital. This command is used by Muspelheim and most nations
+#defmult2 <multiplier> never need it.
+Number of bonus units per 10 points of defense equal to or #badindpd <0 or 1>
+greater than 20. This nation will not have national PD troops in any forted
+#defmult2b <multiplier> province except the home province.
+Number of units per 10 points of defense equal to or greater
+than 20 for the second bonus unit type. The default value is 10. Underwater Province Defense
+#wallcom "<monster name>" | <monster nbr>
+The following commands works just like their land
+Commander that is in charge of the wall defenders. There can
+counterparts, but they set the province defence used in
+be multiple of these commands.
+underwater provinces only. Use this for all underwater
+#wallunit "<monster name>" | <monster nbr>
+nations, a few land nations that also thrive underwater (like
+Unit type the will man the walls when the castle is stormed.
+Jomon) also use this feature.
+There can be multiple of these commands, each one should be
+followed by a #wallmult command. uwdefcom1
+#wallmult <multiplier> uwdefcom2
+Modifier for the number of units from the previous #wallunit uwdefunit1
+command. 10 is the standard amount. uwdefmult1
+uwdefunit1b
+uwdefmult1b
+46
+
+============================================================
+PAGE 47
+============================================================
+
+uwdefunit2 #noundeadgods
+uwdefmult2 This nation cannot choose any pretender that is undead.
+uwdefunit2b Marignon has this feature.
+uwdefmult2b #delgod "<monster>" | <monster nbr>
+uwdefunit1c Deletes a god that is otherwise gained through homerealm use.
+uwdefmult1c #likespop <poptype>
+uwdefunit1d The nation gets cheaper PD from this poptype. Can be used
+uwdefmult1d multiple times for different poptypes.
+#godrebirth
+#uwwallunit "<monster name>" | <monster nbr>
+The nation's god does not lose any magic path levels when
+Sets wall defenders for underwater forts. Works just like the
+recalled from the dead by priests.
+overwater counterpart.
+#cheapgod20 "<monster name>" | <monster nbr>
+#uwwallmult <multiplier>
+Nation can choose this god for 20 design points less.
+Modifier for the number of units from the previous
+#uwbuild <0 or 1>
+#uwwallunit command. Works just like the overwater
+Determines the ability of a land nation to build forts
+counterpart.
+underwater. A value of 1 means yes.
+#uwwallcom "<monster name>" | <monster nbr>
+#cheapgod40 "<monster name>" | <monster nbr>
+Sets wall commander for underwater forts. Works just like the
+Nation can choose this god for 40 design points less.
+overwater counterpart.
+#blessbonus <0 - 9>
+Gods of this nation will get extra bless design points.
+Gods
+#fireblessbonus <0 - 9>
+These commands set the gods for a nation. Gods of this nation will get extra bless design points of this
+type.
+#cleargods
+#airblessbonus <0 - 9>
+Clears the list of pretender gods for this nation. The
+Gods of this nation will get extra bless design points of this
+#clearnation command also does this. This command does not
+type.
+clear homerealm, but #clearnation does. Homerealm gods
+#waterblessbonus <0 - 9>
+must be removed with the #delgod command.
+Gods of this nation will get extra bless design points of this
+#addgod "<monster name>" | <nbr>
+type.
+Adds this monster as a god to the nation's list of valid gods. The
+#earthblessbonus <0 - 9>
+monster must have the #startdom and #pathcost commands
+Gods of this nation will get extra bless design points of this
+set. If the monster does not have a defined homerealm, this
+type.
+command is the only way to add it as a god.
+#astralblessbonus <0 - 9>
+#homerealm <realm nbr>
+Gods of this nation will get extra bless design points of this
+Any gods that belong to this realm (through the use of the
+type.
+#homerealm monster modding command) are automatically
+#deathblessbonus <0 - 9>
+included in the nation's default list of pretenders and need not
+Gods of this nation will get extra bless design points of this
+be separately added to the list with the #addgod command. See
+type.
+Table "Home realms". Unlike the homerealm of a pretender
+#natureblessbonus <0 - 9>
+god, the homerealm of a nation cannot be cleared.
+Gods of this nation will get extra bless design points of this
+type.
+Home realms
+#bloodblessbonus <0 - 9>
+Nbr Realm
+Gods of this nation will get extra bless design points of this
+1 North
+type.
+2 Celtic
+#minprison <0 - 2>
+3 Mediterranean
+Gods of this nation must be imprisoned to at least this level.
+4 Far East
+0=no limit, 1=dormant, 2=imprisoned.
+5 Middle East
+#maxprison <0 - 2>
+6 Middle America
+Gods of this nation must not be imprisoned to more than this
+7 Africa
+level. 0=awake, 1=dormant, 2=no limit.
+8 India
+9 Deeps
+10 Default
+47
+
+============================================================
+PAGE 48
+============================================================
+
+11 Norse
+Forts & Buildings
+13 Eye of the void
+#fortera <0-4> 14 Mayan
+Determines what kind of forts the nation can build. 15 Far East 1
+16 South Indian
+0 = palisades only 1 = standard forts for early era 2 =
+17 Crystal
+standard forts for middle era 3 = standard forts for late era
+18 Far East 2
+4 = better than standard forts for late era
+30 Forest gate
+31 Cave temple
+#fortcost <extra cost>
+32 Opulent hall
+Extra cost is the additional amount of gold the nation must pay
+for its forts, expressed as a percentage of the normal cost for
+#templegems <type>
+building a fort. The default value is 0.
+The nation's temples give gems, up to a maximum of current
+#labcost <price>
+dominion strength. Gem type is a value from 0 to 8, same value
+Gold cost for building a lab. The default is 600.
+as magic paths (0=fire, 8=blood).
+#templecost <price>
+#homefort <fort nbr>
+Gold cost for building a temple. Default is 600.
+The nation will start with this fort in its home province. This
+#forestlabcost <price>
+command does not affect what type of forts the nation can
+Gold cost for building a lab in a forest. Default is 600.
+build. The command is only necessary if the home fort should
+#foresttemplecost <price>
+deviate from the standard one for their fortera. See the table
+Gold cost for building a temple in a forest. Default is 600.
+below for a list of forts.
+#cavelabcost <price>
+Gold cost for building a lab in a cave. Default is 600. Fort numbers
+#cavetemplecost <price> Fort nbr Fort name
+Gold cost for building a temple in a cave. Default is 600. 1 Palisades
+#swamplabcost <price> 2 Fortress (standard era 1)
+Gold cost for building a lab in a swamp. Default is 600. 3 Castle (standard era 2)
+#swamptemplecost <price> 4 Citadel (standard era 3)
+Gold cost for building a temple in a swamp. Default is 600. 5 Rock Walls
+#mountlabcost <price> 6 Fortress (underwater era 1)
+Gold cost for building a lab in highlands. Default is 600. 7 Castle (underwater era 2-3)
+#mounttemplecost <price> 8 Castle of Bronze and Crystal
+Gold cost for building a temple in highlands. Default is 600. 9 Fort of Kelp and Coral
+#wastelabcost <price> 10 Bramble Fort
+Gold cost for building a lab in a waste. Default is 600. 11 City Palisades
+#wastetemplecost <price> 12 Walled City
+Gold cost for building a temple in a waste. Default is 600. 13 Fortified City
+#templepic <pic nbr> 14 Great Walled City
+Temple should look like this. See table below for some pic 15 Giant Palisades
+number values. 16 Giant Fortress
+17 Giant Castle
+Temple pictures
+18 Giant Citadel
+Nbr Temple look
+19 Grand Citadel
+0 Temple pyramid
+20 Ice Walls
+1 Underwater
+21 Ice Fortress
+2 Greek
+22 Ice Castle
+3 Irish monastery
+23 Ice Citadel
+4 Mountain castle
+24 Wizard's Tower
+5 Indian
+25 Citadel of Power
+6 Greek
+26 Half Melted Fort
+7 Southeast Indian
+27 Fortified village
+8 Temple ruins
+28 Wooden Fort
+9 Cathedral
+29 Crystal Citadel
+10 Forest
+48
+
+============================================================
+PAGE 49
+============================================================
+
+30 Kelp Fort 1-3 and indicates the maximum scale value it can raise
+nearby provinces to as well as the speed with which it
+#buildfort <fort nbr>
+spreads.
+The nation will build this type of fort instead of the default one
+for their fortera. #nopreach
+#builduwfort <fort nbr> Priests of this nation cannot preach. Mictlan has this
+The nation will build this type of underwater fort instead of the disadvantage.
+default one for their fortera. #dyingdom
+#buildcoastfort <fort nbr> Dominion is dying and needs blood sacrifice. Temples have no
+The nation will build this type of fort in coastal provinces effect here, except if blood sacrifices are performed there or if
+instead of the default one for their fortera. a priest preaches there. Mictlan has a dominion like this
+#fortunrest <value> combined with #nopreach and #sacrificedom.
+Unrest will increase by 1-value (open ended die roll) in all forts #sacrificedom
+each month. Priests of this nation can make blood sacrifices to increase
+dominion. Mictlan has this benefit.
+Dominion #recallgod <value>
+The nation is better at Call God than other nations. This value
+These commands are set the special attributes of the nation
+is added to the priest level of all priests when they perform Call
+and its Dominion.
+God.
+#nodeathsupply #domkill <value>
+A death scale does not adversely affect supplies. Abysia has The nation's Dominion kills population like Ashen Empire
+this ability. Ermor. Value of $10 = 1%*Dominion$ killed every month.
+#halfdeathinc #domunrest <value>
+The nation will only be half as affected by the death/growth The nation's Dominion causes unrest. Unrest increase is equal
+scale regarding gold income. Abysia has this ability. to $value*0.1*dominion$ per month. Value can be negative for
+#halfdeathpop unrest reducing Dominions.
+The nation will only be half as affected by the death/growth #autoundead
+scale regarding population growth. Abysia has this ability. The nation's Dominion automatically spawns undead like
+#domdeathsense Ashen Empire Ermor.
+Number of unburied corpses will be known where this #guardspirit "<monster name>" | <nbr>
+dominion has influence. Priests of this nation have a chance of receiving a guardian
+#nationinc <percent> angel when in battle. Nbr can be negative for montags.
+The nation will receive this much extra gold each month. The #syncretism <0 or 1>
+percentage value can be negative to make a nation that earn Syncretism enable all priests to convert conquered temples
+less gold. instead of demolishing them.
+#castleprod <resource boost in percent> #domwar <value>
+Resource bonus for forts. Middle Era Ulm has 25 in this, Dominion conflict bonus. Negative values can also be used to
+meaning they get 25% more resources in their fortified make dominion worse at spreading into enemy dominion.
+provinces than another nation with the same fort. Default is 0. #domsail
+#tradecoast <income boost in percent> The nation's Dominion enables all units to sail like the dark
+Income bonus for coastal forts. The nation gains more gold vessels ability of Phaeacia.
+from coastal provinces than another nation with the same fort. #hidedom <0 or 1>
+Berytos has this ability. The default value is 0. This dominion will hide who owns the province unless there is a
+#seatrace scout in the province.
+Can trace gold and gem income over sea provinces, like #templeholypoints <value>
+Vanheim. Every temple gives value number of extra holy points (for
+#golemhp <percent> recruiting sacred units). Ind and Piconye have this ability.
+Inanimate beings in gain a percentage boost to their hit points
+for each dominion candle (Golem Cult dominion like Agartha).
+#disbless "bless name" | <nbr>
+Disables a bless effect for this nation. This blessing can't be
+chosen for pretender gods of this nation.
+NOTE: The value for all scale spread commands can be from
+49
+
+============================================================
+PAGE 50
+============================================================
+
+Undead Reanimation Basic Spell Attributes
+These commands give the nation's priests the ability to #clearallspells
+reanimate various types of undead. Note that #autoundead All researchable spells are removed from the game.
+is not a reanimation command, since it is dependent on #selectspell "<spell name>" | <nbr>
+Dominion, not priest levels or actions by priest Selects an existing spell that will be affected by the following
+commanders. By default priests will not be able to do any modding commands. End modding this spell with the #end
+reanimation unless they also have the #reanimpriest command.
+attribute. #newspell
+Creates a new spell and selects it for modding by the following
+#priestreanim
+commands. End creating the spell with the #end command.
+All priests of this nation are able to reanimate the dead as if the
+#end
+had the #reanimpriest attribute. They also gain the 15 points of
+Always use this command at the end of modifying a spell.
+undead leadership per holy magic level they would have
+received from that attribute.
+Magic schools
+#undeadreanim
+Nbr School
+All undead priests of this nation are able to reanimate the dead
+– 1 cannot be researched
+as if the had the #reanimpriest attribute.
+0 Conjuration
+#horsereanim
+1 Alteration
+Reanimating priests with holy magic of level 3 or higher can
+2 Evocation
+reanimate longdead horsemen. Sceleria and Ashen Empire
+3 Construction
+Ermor have this attribute.
+4 Enchantment
+#wightreanim
+5 Thaumaturgy
+Reanimating priests with holy magic of level 4 or higher can
+6 Blood
+reanimate undead Lictors. Ashen Empire Ermor has this
+7 Divine
+attribute.
+#tombwyrmreanim #clear
+Reanimating priests can reanimate soulless of C'tis, longdead Clears the current spell.
+of C'tis, tomb wyrms and other special C'tissian undead. Desert #copyspell "<spell name>" | <spell nbr>
+Tombs C'tis has this attribute. Copies all stats including name from the specified spell to the
+#manikinreanim current spell.
+Reanimating priest of this nation will create carrion beasts like #name "<new spell name>"
+Asphodel. Sets the name for the active spell. Changing name of a spell will
+#supayareanim also remove its description, so make sure to set name before
+Reanimating priest of this nation will create supayas like description. 38
+Nazca. #descr "<text>"
+#greekreanim A text description of the spell.
+Reanimating priest of this nation will create greek ghosts like #details "<text>"
+Therodos. This command is not necessary. If used it will set the yellow
+#ghostreanim spell detail text under the main spell description.
+Reanimating priest of this nation will create ghosts like #school <school nbr>
+Lemuria. Magic school for this spell. The number ranges from -1 to 7, see
+Table "Magic schools".
+NOTE: Caelian, Atlantian, Jotun, Muspel, Rephaite and #researchlevel <level>
+monkey undead are hard coded for their respective nations Level of research required to learn this spell. The level should
+and their reanimation cannot be unlocked for modding using be a number between 0 and 9.
+reanimation commands. #path <reqnr> <path nbr>
+The path of the spell. Reqnr should be 0 for the first required
+Spell Modding
+path and 1 for the second required path. The path nbr should
+be a number between -1 and 9, see table "Magic path numbers
+These commands allow the modding of spells. The
+for spells".
+maximum number of spells is 3999. Numbers 0 – 1299 are
+#pathlevel <reqnr> <level>
+reserved and numbers 1300 – 3999 can be used for
+Level required to cast this spell.
+modding.
+50

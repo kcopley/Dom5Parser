@@ -1,0 +1,749 @@
+
+============================================================
+PAGE 11
+============================================================
+
+#explspr <fx nbr> 313 4 Sticky goo
+Use this command to set how the explosion looks like when a 339 3 Evil death thingy
+missile hits something or when a melee weapon strikes. Table 350 4 Fire arrow
+Explosion fx shows some numbers that can be used. Any 354 4 Fire javelin
+number between 10001 and 10317 can be used. Use number 362 4 Fire boulder
+-1 to disable an explosion effect. 395 4 Elf shot
+403 1 Blow gun needle
+Explosion fx
+404 3 Green gooey missile
+Fx nbr Looks like 411 4 Throwing axe
+10001 Falling shimmering colors 416 3 Web
+10002 Falling white 419 1 Vine arrow
+10003 Falling red 10061-10080 9 Particle ball
+10004 Falling green 10080-10100 9 Small particle ball
+10005 Falling blue 10179 9 Acid
+10006 Falling light red 10278 9 Web ball
+10007 Falling light green 10287 9 Dragon-fire
+10008 Falling light blue 10290 9 Dragon-frost
+10009 Falling purple 10292 9 Dragon-gas
+10010 Falling yellow 10295 9 Petrifying gas
+10011 Falling orange 10307 9 Lightning particles
+10012 Falling cyan
+10021-10039 Few falling colors #uwok
+10041-10069 Rising mists This ranged weapon can be used underwater and is not
+10101-10119 Explosion affected by storms.
+10121-10139 Exploding gas #nouw
+10108 Cold Blast This ranged weapon cannot be used underwater. This is the
+10113 Fireball default property of all ranged weapons, but the command can
+10141 Rising purple be used to remove the ability to fire underwater from an
+10200 Curse existing ranged weapon (e.g. lightning, mind blast or ethereal
+10206 Soul Slay crossbow).
+10219 Lightning #notmounted <1 - 2>
+This weapon cannot be used while mounted (2=keep this
+#flyspr <flysprite nbr> <animation lgth> secret and don't show it in weapon info).
+Use this command to set how the arrow looks like for a missile #notdismounted
+weapon. A value of -1 for a flysprite means there is no flysprite This weapon cannot be used while dismounted.
+at all. Table Flysprites some numbers that can be used for
+missile weapons. Flysprite numbers of 10000 and higher are Weapon After Effects
+particle effects, lower numbers are hand drawn sprites.
+These effects that will take effect once someone is hit by the
+#speedmult <1 - 3>
+weapon. It is also possible to make these effects using
+Use this command to make the projectiles fly slower or faster.
+secondary effects, this way is just more convenient as these
+By default weapon projectiles have a speed of 2.
+effects are quite common.
+Flysprites
+#holyifhit <dmg>
+Flysprite Anim lgth Looks like
+AN damage that only affect demons and undeads.
+100 1 Boulder
+#killmagicifhit <dmg>
+109 1 Arrow
+AN damage that only affect magic beings.
+110 1 Javelin
+#killdemonifhit <dmg>
+111 1 Sling stone
+AN damage that only affect demons.
+133 4 Fire swirl
+#holystunifhit <dmg>
+137 4 Frost swirl
+Stun that only affects demons and undead. Use 1 as damage
+141 8 Multi colored swirl
+value.
+210 4 Lightning bolt
+#petrifyifhit <dmg>
+274 4 Bane fire arrow
+Petrification. Use 1 as damage value.
+304 4 Blade wind missile
+11
+
+============================================================
+PAGE 12
+============================================================
+
+#fireifhit <dmg> 10 Leather Hauberk
+AP fire damage. 11 Ring Mail Hauberk
+#coldifhit <dmg> 12 Scale Mail Hauberk
+AP cold damage. 13 Chain Mail Hauberk
+#shockifhit <dmg> 14 Plate Hauberk
+AN shock damage. 15 Full Leather Armor
+16 Full Ring Mail
+These effects that will take effect once someone is wounded 17 Full Scale Mail
+by the weapon. It is also possible to make these effects using 18 Full Chain Mail
+secondary effects, this way is just more convenient as these 19 Full Plate Mail
+effects are quite common. 1 Buckler
+2 Round Shield
+#poisonifdmg <dmg>
+3 Kite Shield
+AN poison damage.
+4 Tower Shield
+Clouds will appear after the weapon has been swung
+#newarmor <armor nbr>
+regardless of hit or miss. Cloud strength can vary from 1 to
+Armor nbr should be a number between 300 and 999. It must
+7, all auras in the game have strength 1, but weapons often
+not be the same as any other armor. This new armor will be
+result in more powerful clouds.
+affected by the following modding commands and there should
+#aftercloud <cloudstr> <cloudtype> be an #end command at the end.
+A cloud will appear after attacking with the weapon. The cloud
+#end
+has strength "cloudstr" and is of the "cloudnbr> type. See table
+Ends modding the armor.
+below for possible cloud types.
+#aftercloudarea <aoe> #name "<name>"
+Size of the aftercloud effect of this weapon. Default is 1. This must be the first command for every new armor. It sets the
+name of the armor.
+Type of clouds (cloudtype)
+#clear
+1 Cold
+Clears the current armor.
+8 Heat
+#copyarmor "<armor name>" | <armor nbr>
+64 Poison
+Copies all stats from an existing armor. This command will
+512 Disease
+overwrite all stats for the selected armor, so it should be used
+4096 Sulphur
+as the first command after the #newarmor command.
+32768 Death
+#type <type>
+262144 Sleep
+Type 4=shield, 5=body armor, 6=helmet, 9=barding.
+2097152 Light
+#prot <protection>
+16777216 Leeching
+Sets the protection value of the armor. A chain mail cuirass has
+a protection value of 9.
+Armor Modding
+#protparts <head prot> <body prot>
+Sets the protection value of an armor that has both head and
+#selectarmor "<armor name>" | <nbr>
+body protecion, e.g. a horse barding that includes head
+Selects the armor that will be affected by the following
+protection.
+modding commands. End modding this armor with the #end
+#def <defense>
+command. To find out what the number of a particular unit’s
+Sets the defense bonus. A chain mail cuirass has a defense
+armor, look at the unit’s stats in the game and press ctrl+i.
+bonus of -1. For shields, use this command to set parry value.
+Common armors Final parry value is always the #def value minus #enc value.
+Nbr Armor Name #enc <encumbrance>
+20 Iron Cap Set the encumbrance value. A chain mail cuirass has an
+21 Full Helmet encumbrance of 1. For shields, use this command to set
+5 Leather Cuirass defense penalty (e.g. "#enc 2" means defense -2).
+6 Ring Mail Cuirass #rcost <resources>
+7 Scale Mail Cuirass Sets the resource cost for the armor.
+8 Chain Mail Cuirass
+9 Plate Cuirass
+12
+
+============================================================
+PAGE 13
+============================================================
+
+#magicarmor #spr1 "<imgfile>"
+Indicates that the armor is magic. Magic armors are more The file name of the normal image for the monster. The size of
+resistant to being destroyed by magic effects. the image should be 8, 16, 32, 64 or 128 pixels wide/high. A
+#ironarmor human being should be about 32 pixels high and there should
+Indicates that the armor is made of iron. be 2 pixels of free space between his feet and the bottom of the
+#woodenarmor image. You can use an alpha channel in the image or not. If not
+Indicates that the armor is made of wood. you should instead use black (RGB 0 0 0) as background and
+magenta (RGB 255 0 255) for shadows.
+Monster Modding, Basic #spr2 "<imgfile>"
+The file name of the attack image for the monster. If this is not
+Basic Commands
+set, then spr1 will be used for this image too.
+These commands cover certain aspects of basic monster #speciallook <value>
+modding and general commands that are not related to a This command surround a monster with a particle effect. Value
+specific group of special abilities. They include basic can be from 1 to 3 and represents fire shield look, astral shield
+manipulation of monster data structures, common statistics, look and a burning look respectively. A value of 100 to 199 will
+recruitment and what kind of items a monster can use (if give the unit a fixed alpha value of 0-99 (low values will make it
+any). impossible to see).
+#drawsize <value>
+#selectmonster "<monster name>" | <monster nbr>
+The value indicates how many percent larger size the sprite
+Selects the monster that will be affected by the following
+should be drawn at. A negative value means it will be draw at a
+modding commands. End modding this unit with the #end
+smaller size than normal.
+command. To find out what number a particular unit has, look
+at his stats in the game and press ctrl+i. Clearing & Copying
+#newmonster [<monster nbr>] #clear
+Monster nbr should be a number between 5000 and 8999. It Removes all weapons, armors, stats, magic skills and special
+must not be the same as any other monster. This new monster abilities from the monster. A useful command when modifying
+will be affected by the following modding commands and there an existing monster.
+should be an #end command at the end. It is not necessary to #clearweapons
+set a monster number when creating a new monster. It is not Removes all weapons from the active monster. Must be used
+recommended to use a monster number with monsters that before assigning new weapons or the monster will have both
+have unique names like Sorceress of the Sacred Fire because old and new weapons.
+that will reduce the risk of conflicts between mods. If a #cleararmor
+monster number is not used, Dominions will automatically use Removes all armor from the active monster. Must be used
+the first free number from 5000+ for the monster. In this before assigning new armor or armor assignment does not
+instance all references to the monster in other modding (such work correctly.
+as spells or magic sites) must be by name. Using lower hard #clearmagic
+coded numbers later in the mod may overwrite the number Removes all magic skills from the active monster.
+initially assigned by a numberless #newmonster command. #clearspec
+Removes all special abilities from the active monster. The
+#end
+special abilities are stuff like Holy, Fire Resistance, Awe, etc.
+Always use this command at the end of modifying or creating a
+#copystats <monster nbr>
+monster.
+Copies all weapons, armors, stats, magic skills and special
+#name "<name>" abilities from an existing monster. The existing monster can be
+This must be the first command for every new monster. It sets a monster that has been created previously in the mod.
+the name of the monster. Copystats will overwrite all previous commands for the
+#fixedname "<Name>" selected monster, so it should be used as the first command
+Gives a fixed name to a monster if it is a commander. Useful for after the #newmonster command.
+giving specific names to heroes. #copyspr <monster nbr>
+#descr "<text description>" Copies the sprite from an existing monster to the current one.
+This is the text information that is displayed when you view the Do not use this if you intend to change the sprite using the
+monster stats. #spr1 command as it would then change the looks of both
+monsters.
+Visuals
+13
+
+============================================================
+PAGE 14
+============================================================
+
+#triple3mon
+Pretender God Commands
+The trinity god has 3 different monsters. The monsters must be
+#pathcost <design points> created after one another and the first one should be used as
+The cost for a new path in design points when this monster is the god. Only the first monster needs this command.
+used as a god. Standard is a value between 10 (arch mage) and #minprison <0 - 2>
+80 (dragon). By using this command the monster will also be Sets the minimum imprisonment level for this pretender.
+selectable as a god. 0=awake, 1=dormant, 2=imprisoned. The Uttervast pretender
+#startdom <dominion strength> god has this attribute.
+The default dominion strength this monster is used as a god. #maxprison <0 - 2>
+Standard is a value between 1 (arch mage) and 4 (oracle). This Sets the maximum imprisonment level for this pretender.
+command also makes the monster selectable as a god. 0=disabled, 1=awake, 2=dormant. Note that the numbers
+#homerealm <realm nbr> mean different things than in #minprison.
+Sets the home realm of the god, which makes the god available #godsite "<site name>" | <site nbr>
+as a default choice for nations that belong to the same realm. The pretender will start with this site in its home province.
+See Table "Home realms" for home realm numbers. This
+#moreorder <-5 - 5>
+command is not needed and should not be used if you only
+Alters the minimum/maximum allowed value of this scale when
+intend the god to be used by a single nation or a few nations
+designing the pretender's dominion.
+instead of being widely available. Use #homerealm 0 to clear
+#moreprod <-5 - 5>
+the homerealm of a pretender god.
+Alters the minimum/maximum allowed value of this scale when
+Home realms designing the pretender's dominion.
+Nbr Realm #moreheat <-5 - 5>
+1 North Alters the minimum/maximum allowed value of this scale when
+2 Celtic designing the pretender's dominion.
+3 Mediterranean #moregrowth <-5 - 5>
+4 Far East Alters the minimum/maximum allowed value of this scale when
+5 Middle East designing the pretender's dominion.
+6 Middle America #moreluck <-5 - 5>
+7 Africa Alters the minimum/maximum allowed value of this scale when
+8 India designing the pretender's dominion.
+9 Deeps #moremagic <-5 - 5>
+10 Default Alters the minimum/maximum allowed value of this scale when
+designing the pretender's dominion.
+#gcost <gold>
+The cost in gold is also the cost in design points for pretenders.
+Recruitment Rules
+For shape changing pretenders, the gold cost should always be
+These commands govern the limits and special rules that
+fixed. For other pretenders, the gcost can be set to 10000,
+apply when recruiting the monster.
+meaning the cost will be calculated automatically based on
+attributes and special abilities. Pretender autocalc uses
+#slowrec
+different rules than autocalc for normal units and commanders.
+Takes double the amount of commander points to recruit this
+To tweak the autocost add or subtract a small amount to the
+monster, it can only be used on commanders.
+10000 number.
+#noslowrec
+#triplegod <type>
+Removes the slowrec attribute.
+The pretender is a Trinity God. Splits god into three when game
+#reclimit <units / turn>
+starts. The type value determines how the magic should be split
+The monster can only be recruited in limited numbers. You can
+between the 3 pretenders. Type: 1=full magic, 2=split magic,
+only recruit <units / turn> of this monster in any one province.
+3=reduced magic, 4=like the grey one, 5=like titan of the
+0 and lower values have special meanings: 0 = no reclimit, -1 =
+crossroads.
+0/turn, -2 = -1/turn.
+#triplegodmag <penalty>
+#enchrebate10 <enchantment number>
+Magic penalty for trinity gods when they are not in the same
+The monster will be 10 gold cheaper to recruit when this
+province. The penalty is usually set to 2.
+enchantment is active.
+#unify
+Any one of the trinity gods can use the unify order to call the
+other parts of the trinity.
+14
+
+============================================================
+PAGE 15
+============================================================
+
+#enchrebate20 <enchantment number> #domrec <dominion>
+The monster will be 20 gold cheaper to recruit when this This monster can only be recruited if the dominion value of the
+enchantment is active. province is at least this high.
+#enchrebate50 <enchantment number> #heatrecscale <value>
+The monster will be 50 gold cheaper to recruit when this Heat scale requirement for recruitment. (The old #heatrec
+enchantment is active. command also works, but is deprecated).
+#enchrebate75 <enchantment number> #coldrecscale <value>
+The monster will be 75 gold cheaper to recruit when this Cold scale requirement for recruitment. (The old #coldrec
+enchantment is active. command also works, but is deprecated).
+#enchrebate100 <enchantment number> #growthrecscale <value>
+The monster will be 100 gold cheaper to recruit when this Growth scale requirement for recruitment.
+enchantment is active. #deathrecscale <value>
+#enchrebate25p <enchantment number> Death scale requirement for recruitment.
+The monster will be 25 percent cheaper to recruit when this #orderrecscale <value>
+enchantment is active. Order scale requirement for recruitment.
+#enchrebate50p <enchantment number> #chaosrecscale <value>
+The monster will be 50 percent cheaper to recruit when this Chaos scale requirement for recruitment.
+enchantment is active.
+#reqlab Desertion
+Recruiting the monster requires a lab.
+These commands affect how long the monster remains in
+#noreqlab
+service to a player and when it leaves.
+Recruiting this monster never requires a lab, even if it is a
+mage. #singlebattle
+#reqtemple The monster only fights in one battle and then leaves, like the
+Recruiting the monster requires a temple. gladiators of Ermor and Pythium. It has to kill someone or get
+#noreqtemple wounded to count as having fought.
+Recruiting the monster never requires a temple, even if it is #deserter <percent>
+sacred. A commander with this attribute has chance of deserting each
+#chaosrec <value> month.
+The monster is cheaper to recruit if there are Turmoil scales in #horrordeserter <percent>
+the province. The monster costs (<value> x <Turmoil level>) Like #deserter, but the desertion chance is increased during
+less gold to recruit. Order scales do not affect the price. The astral corruption.
+recruiting player pays full price for the unit on purchase, but #defector <percent>
+gets the turmoil discount back into the treasury when the The monster has a chance to become independent if owned by
+monster joins the army. a player. The Unfettered form of the Eater of the Dead uses
+#deathrec <value> this mechanic. This command only affects commanders.
+The monster is cheaper to recruit if there are Death scales in #nowish
+the province. Works identically to #chaosrec. Growth scales do This monster cannot be wished for.
+not affect the price.
+#aisinglerec Gold & Resource Cost
+Will tell the AI to only recruit a single one of these per batch.
+#rcost <resources>
+#ainorec
+The cost in resources. The resource cost of weapons and armor
+Will tell the AI to never recruit this monster.
+will be added to this. Most human troops have a rcost of one.
+#monpresentrec "<monster name>" | <monster nbr>
+This monster can only be recruited if a unit of "monster name" #gcost <gold>
+type is present in the recruiting province. Montag numbers can The cost in gold. Most human troops have a gold cost of 10.
+be used.
+#rpcost <recruitment points>
+#ownsmonrec "<monster name>" | <monster nbr>
+The cost in recruitment points for the monster. 1 is standard
+This monster can only be recruited if a unit of "monster name"
+for a simple commander and about 10 for a normal soldier.
+type is owned by the recruiting player. Montag numbers can be
+used.
+A value of "base price"*1000 means it will be auto-
+calculated. Most human troops and commander have the
+15
+
+============================================================
+PAGE 16
+============================================================
+
+value 10000, meaning that it will be calculated as units and as commanders.
+automatically based on the monster's age and that it has a
+Base gold costs
+base price of 10 gold, commanders also have magic and
+Monster Type Basecost
+other skills taken into account.
+Markata 5
+#ressize <size> Harpy, Vaetti, Hoburg 7
+Use this command with a size value of 3 to give a flier resource Bakemono 8
+cost calculated based on size 3 instead of 4. Size value must be Satyr 9
+a number between 1 and 10. C'tis, Caelum, Pale One 10
+Human, Dwarf, Vanara 10
+Automatic Gold Cost Calculation Firbolg, Humanbred 13
+Lizard (predator) 14
+The gold cost of monsters can be either fixed or calculated
+Enkidu 17
+automatically. Monsters with a fixed cost will always cost
+Abysia, Bandar, Naga, Colossi 20
+the same amount of gold, whether recruited as a unit or as a
+Centaur, Dryad 25
+commander. A fixed gold cost should be used for special
+O-Bakemono, Horite 25
+monsters like elephants or chariots.
+Sidhe, Vanir, Yaksha 25
+An automatically calculated (autocalc) gold cost means that Avvite, Edomite 30
+the unit will cost one amount of gold when recruited as a Dai Bakemono, Oni 30
+unit and a different amount when recruited as a Demonbred, Sobek 30
+commander. Jotun, Fomorian (unmarked) 30
+Nemedian, Tuatha 30
+These rules do not cover pretender gods. They only apply to
+Ancient One 35
+normal units and commanders.
+Minotaur, Pan, Yazata 40
+Burning One 45
+An autocalc monster is assigned a base gold cost that is
+Rephaite 45
+farther modified by the following attributes:
+Starspawn 50
+* Leadership Fomorian Giant, Troll 60
+* Magic Skills Anakite 90
+* Spy/Assassin Dai Oni 90
+* Sacred Ba'al, Melqart 120
+Niefel Giant 120
+To make a monster's gold cost autocalc, add 10000 to the
+base cost. Using numbers less than 10000 (e.g. 9960 like EA Basic Attributes
+Mictlan's priests) makes the initial cost negative and
+#hp <hit points>
+autocalc values are added to that for the final result. This is
+The maximum number of hit points for the monster. A normal
+useful for commanders, but not regular units.
+human has 10 hit points, a giant has 30 hit points and a huge
+When estimating a base cost, skill level of the unit in dragon has 125 hit points.
+question should influence the base price. Militia units #str <strength>
+should have 2 or 3 points lower base price while elite units The strength of the monster. A normal human soldier has 10, a
+should have between 2 and 8 points higher base price giant has 20 and a dragon has 25 or more.
+(depending on strength, attack, damage, special abilities #att <attack skill>
+etc.). The basic attack skill of the monster. A normal human soldier
+has 10 and only the elite of the elite may have 15. The most
+Some of the typical base prices have been listed in the "Base
+skilled human unit in the game is the Emerald Lord with attack
+gold costs" table, but they do not cover the full range of
+15 and defense 14. A dragon has attack 15 and defense 12.
+creatures.
+#def <defense skill>
+The basic defense skill of the monster. A normal human soldier
+Use Ctrl+i in-game to examine units to get an idea of their
+has 10.
+base price. Note that most automatic gold cost modifiers
+#prec <precision>
+only apply to the monster when it is recruited as a
+The basic precision of the monster. A normal human archer has
+commander (all magic skills add to the cost). The costs for
+10.
+being sacred is an exception and apply to all monsters both
+16
+
+============================================================
+PAGE 17
+============================================================
+
+#prot <protection> Atlantis 12
+The monster’s natural protection. This value should be 0 for all Shambler 14
+humans, 5 for a lizardman or about 18 for a huge and scaly Triton 16
+dragon. Bandar 12
+#size <size> Vanara 14
+The size of the monster. 1 = bug, 2 = hoburg, 3 = human & wolf, Colossi 18
+4 = bandar & lion, 5 = enkidu & horse, 6 = jotun giant & ice Pale One 12
+drake, 7 = anakite & cave grub, 8 = small titan & monster boar, Ancient One 14
+9 = large titan & elephant, 10 = dragon. Monsters with wings Horse 20
+usually get 1 extra size, e.g. a flying human sized unit should Feyhorse 26
+have size 4. Serpent 18
+#mr <magic resistance> Undead 20
+The magic resistance of the monster. A normal human has 10, Demon 20
+1st level mages have 13 and 3rd level mages have 15. No one
+#ap <action points>
+has magic resistance above 18, except some beings from the
+The number of action points when the monster is
+void that may have up to 20.
+unencumbered. This should be about 12 for a human, 20 for a
+#mor <morale>
+knight or 25 for light cavalry. Action points is the same as
+The morale of the monster. A normal human soldier has morale
+combat speed.
+10, a satyr of Pangaea has 8 and a fierce minotaur has 13.
+#eyes <nbr of eyes>
+Giving a monster 50 in morale makes it mindless and prone to
+Sets the number of eyes for a monster. Number of eyes must be
+dissolving due to lack of proper leadership. Undead with a
+at least one unless the monster is #blind. The number of eyes
+mind but nothing to lose usually have 30 in morale.
+affects how easily a monster goes blind by battle afflictions.
+#enc <encumbrance>
+#voidsanity <value>
+The basic encumbrance of the monster. Normal humans have 3
+Reduces susceptibility to insanity. Insanity chance is divided by
+and undead beings or machines have 0. Monsters with 0
+<value>, e.g. 10. Horrors and Void beings have a voidsanity
+encumbrance never get exhausted by fighting, only
+value of 20.
+spellcasting.
+#mapmove <speed>
+Weapons & Armor
+The speed at which the monster travels on the world map. The
+old Dominions 4 values are 1 for heavy infantry, 2 for a lightly #weapon "<weapon name>" | <nbr>
+armed human or knights and 3 for light cavalry. You can use Equips the monster with this weapon. A monster can have
+these values and the game will automatically convert them to multiple weapons and all melee weapons will be used
+values suitable for Dominions 6. simultaneously.
+In Dominions 6 a human has mapmove 14 and a horse 20. A All weapons found in Dominions can be used, but some
+value of 0 will make the unit unable to move on the world different weapons have the same name so you might have to
+map, except by means of teleport rituals. Armor will use the weapon number instead. The most common
+automatically reduce the map move and receiving a mount weapons can be found among the weapon tables.
+will increase it. See the following table for suitable
+mapmoves. Press ctrl+i when viewing a unit’s stats to find out the
+weapon, armor and monster number for that particular unit.
+Human 14
+Giant 16 When modding an existing monster that already has
+Vaetti 12 weapons, each new #weapon command will add a new
+Lizard 12 weapon to the monster. If you want to change the monster’s
+Naga 10 weapons without adding new ones, you must use the
+Wyrm 14 #clearweapons command to remove the existing weapons
+Enkidu 16 first.
+Satyr 16
+#armor "<armor name>" | <armor nbr>
+Legion 18
+Equips the monster with this armor. A monster can have up to
+Titan 20
+three armors. One helm, one body armor and one shield. Some
+Caelum 20
+common armors can be seen in the Armor Tables section.
+Zotz 20
+When modding an existing monster that already has armor,
+Abysia 12
+17
+
+============================================================
+PAGE 18
+============================================================
+
+each new #armor command will add a new armor to the #noitem
+monster (up to the limit of three). If you want to change the This monster can only use misc items.
+monster’s armor without adding new ones, you must use the #itemslots <slot value>
+#cleararmor command to remove the existing armor first. Sets which item slots are available for this monster. See Table
+"Item slot values" for useful slot values. If you want to have 2
+Bodytype hand slots and 1 body slot then just add those two numbers
+together. Never add 1 hand and 1 hand, use the 2 hands value
+The bodytype determines what hit locations the monster
+instead. The bottom three entries in the table are some
+has and how difficult they are to reach and hit. Default is
+precalculated values for your convenience. You can omit this
+humanoid. Setting a bodytype will also set the item slots to
+command if you want the standard for the current bodytype
+something that is suitable for that bodytype, e.g. the Snake
+(humanoid = 2 hands, 1 head, 1 body, 1 feet and 2 misc).
+bodytype will only have misc slots.
+#noweapon <0 or 1>
+The item slots can be tweaked afterwards by using the item Use this on monsters with no weapons that are not supposed
+slot commands in the next section. Changing the item slots to attack at all in combat. This will prevent them from getting a
+might also alter the hit locations, e.g. the number of head fist or a headbutt as default weapon. Immobile units do not
+slots a monster has determines the number of heads that need this command.
+can be hit.
+Item slot values
+#humanoid Value Item Slots
+The default bodytype. Use this for humans, ogres, angels, 1 No slots
+humanlike statues and similar. 2 1 hand
+#mountedhumanoid 6 2 hands
+Regarding hit locations this is the same as humanoid, but it 14 3 hands
+removes the boot item slot and is provided for convenience for 30 4 hands
+centaurs and similar. Don't use it for knight, they should be 126 6 hands
+humanoid and then mounted on a horse that is an quadruped. 512 1 bow
+#quadruped 8192 1 head
+Four legged beasts. Use this for Elephants, lions, wolves and 24576 2 heads
+similar. 65536 1 body
+#lizard 131072 1 feet
+Four legged beast, but lower. Use this for dragons. 262144 1 misc
+#naga 786432 2 miscs
+Snake like lower part and a humanoid upper body. Use this for 1835008 3 miscs
+nagas. 3932160 4 miscs
+#snake 16777216 Head slots can only have crowns
+Use this for snakes, wyrms and other monsters without legs. 860678 2 hands, bow, head, body, 2 misc
+#bird 17768966 2 hands, bow, head (crown), body, feet, 2 misc
+Use this for birds, rocs, couatl and similar things.
+#djinn Monster Modding, Special Abilities
+Use this for djinns with a humanoid body, but no lower part.
+A word of warning on monster modding: A single monster
+#troglodyte
+can only have a limited number of special abilities so don’t
+Use this for humanoids without a head.
+put them all on the same monster. This is especially
+#miscshape
+apparent on gods as dominion strength and path costs are
+Use this for strange things like cubes or fountains.
+special abilities too. The limit is quite high though, so unless
+you go overboard with abilities it shouldn't be a problem.
+Item Slots
+#startitem "item name" | <item nbr> Creature Type & Status
+The monster starts with this item if it is a commander. This
+#female
+command can be used multiple times on the same monster for
+Being female is a minor advantage that makes you immune to
+more than 1 starting weapon.
+being charmed by the Succubus. Commanders with this tag get
+#userestricteditem <value>
+feminine names.
+The monster can use restricted items of the same value. Value
+can be 1-10000. See Item Modding for more information.
+18
+
+============================================================
+PAGE 19
+============================================================
+
+#coldblood #dungeon
+Cold blooded like the lizards of C’tis. The monster is a suitable encounter in a dungeon.
+#drake #lanceok
+The monster is a drake and is affected by the Dragon Master This monster can use lances even though it is not flying or
+ability. mounted. Use this attribute on centaurs.
+#plant #spiritform
+The monster is a plant. Plants cannot be turned into zombies by This monster is a spiritlike being and is immune to certain spells
+Raise Dead or other methods. like stoneskin and polymorph.
+#lesserhorror #nospiritform
+Monsters with this tag are used as lesser horrors. All horrors Use to remove spiritform.
+automatically gain spirit sight. #illusion
+#greaterhorror This monster is an illusion. This is like spiritform, but illusions
+Monsters with this tag are used as horrors. All horrors can be affected by illusion magic even if they are mindless and
+automatically gain spirit sight. should otherwise be immune.
+#doomhorror #divinebeing
+Monsters with this tag are used as doom horrors. All horrors This monster functions like a pretender god, but it is not the
+automatically gain spirit sight. actual pretender. It will have stats depending on dominion,
+#holy cannot become prophet, cannot be charmed and has no upkeep
+Holy (sacred) troops can be blessed by priests. cost. This command is used for intelligent and significant
+#holycost <holy points> mounts of pretenders.
+Sets the holy point cost for recruiting this unit, minimum is 1. #polyimmune
+Can only be used on sacred units. If this command is not used This monster cannot be polymorphed and it cannot transform
+they will cost the usual one holy point. itself using rituals either.
+#animal
+Indicates that the monster is an animal. Animals are affected by Movement
+the Animal Awe power. Animals receive a morale bonus when
+#immobile
+led to combat by a beast master.
+This monster is immobile and cannot move in combat.
+#unique
+Immobile does not affect map move, use "#mapmove 0" to
+There can only be one of this monster. If it dies and is
+make a monster immobile on the strategic map.
+resummoned, it will still be the same monster and it will have
+#aquatic
+retained experience, curses, afflictions, magic etc.
+This monster can only live under water.
+#undead
+#amphibian
+This monster is an undead.
+This monster can travel both under and over water.
+#bug
+#pooramphibian
+Monsters with this tag are summoned by the Swarm spell on
+This monster can travel under water, but is hindered by it.
+land.
+#float
+#demon
+The monster floats in the air and can cross rivers. It is also
+This monster is a demon.
+immune to earthquakes and other effects that only affect
+#magicbeing
+ground bound monsters.
+This monster is a magic being.
+#flying
+#autocompete
+This monster can fly. To be able to fly in a storm, the monster
+This monster will automatically compete in the Arena
+must also be #stormimmune. The monster can cross rivers. It
+deathmatch.
+can also cross mountain passes if it is not cold in the provinces
+#blind
+the pass connects.
+This monster has no eyes and cannot be affected by blindness.
+#swimming
+#uwbug
+The monster can cross rivers.
+Monsters with this tag are summoned by the Swarm spell
+#snow
+underwater.
+The monster is unhindered by snow.
+#stonebeing
+#stormimmune
+This monster is a stone being and immune to petrification.
+This monster can fly during a storm. If the monster has the
+#inanimate
+#stormpower attribute, this command is redundant.
+Inanimate beings are immune to some spells.
+19
+
+============================================================
+PAGE 20
+============================================================
+
+#teleport #mobilearcher <0 or 1>
+The monster can teleport. Movement on the battlefield is Mobile archers can shoot while their mount is moving. This is
+instantaneous and the monster is not hindered by storms. The used for mobile archer cavalry units.
+command automatically sets mapmove to 100 and the creature #farsail <extra provinces>
+ignores terrain restrictions and the Sea of Ice spell. Commander will be able to sail further if it can sail.
+#mapteleport #statstorm <value>
+Like #teleport but only grants teleport ability on the map, not 1+ = Can storm forts even if it is stationary (map move 0),
+in combat. which would otherwise make it unable to.
+#blink #statbreak <value>
+Like #teleport, but only in combat. 1+ = Can break siege even if it is stationary (map move 0),
+#unteleportable which would otherwise make it unable to.
+The monster cannot use Teleport, Gateway or Astral Travel
+spells to move. It can still use Stygian Paths and Faery Trod. Stealth & Assassination
+#noriverpass
+The commands in this section deal with stealth, spying and
+The monster is unable to cross rivers even when they are
+various forms of assassination. With the exception of
+frozen, like a vampire.
+#illusion, all of these commands should be combined with
+#forestsurvival
+#stealthy in order to be meaningful.
+Monster has the Forest Survival skill. Forest terrain does not
+hinder movement. #seduce <value>
+#mountainsurvival Gives the monster the ability to seduce like a Nagini. The value
+Monster has the Mountain Survival skill. Mountain terrain indicates the difficulty of the morale check, 10 is standard.
+does not hinder movement and the monster can cross #succubus <value>
+mountain passes even if it is cold in the provinces the pass Gives the monster the dream seduction ability like a Succubus.
+connects. The value indicates the difficulty of the morale check, 10 is
+#swampsurvival standard.
+Monster has the Swamp Survival skill. Swamp terrain does not #corruptor <value>
+hinder movement. Gives the monster the corruption ability like a Shaytan. The
+#wastesurvival value indicates the difficulty of the morale check, 10 is
+Monster has the Waste Survival skill. Waste terrain does not standard.
+hinder movement. #stealthy <value>
+#sailing <ship size> <max unit size> This monster can sneak into enemy provinces. The default
+A commander with this ability is able to sail over two sea value when using this modding command is 0. Scouts are
+provinces with his troops. Ship size is the size of the boat and harder to detect and have a standard value of 10. A Spy has 20.
+indicates how many size points the commander can transport. The number of patrolling units required to have a 50% chance
+Standard value is 999. Max unit size is the maximum size unit of detecting the sneaking monster is <value> + 40. This means
+that can be transported, usually 3 or 5. that 40 patrolling units are required to have a 50% chance of
+#giftofwater <size points> detecting a standard stealthy unit, while 50 patrolling units are
+A commander with this ability is able to bring a number of units required to have an equal chance of detecting a sneaking scout.
+underwater with him as long as their combined size points do #spy
+not exceed the value of this ability. This monster is a spy.
+#indepmove <percent> #assassin
+This ability is used by certain horrors to make them move on This monster is an assassin.
+the world map. A monster with this ability have percent chance #patience <value>
+of moving each month as long as it is owned by independents. The patience value increases the chances of the assassin to
+#indepstay <0 - 1> catch his target unawares and without bodyguards. Each point
+A 1 in this ability means that the monster will stop moving once of patience decreases the chance of bodyguards being present
+it has reached a throne province. by 10%. If the bodyguard unit has the Bodyguard ability, it
+#norange <chance> reduces the effectiveness of the assassin's Patience.
+The chance in percent that the unit will skip standing still and #scalewalls
+fire. Horrors with range weapons have this ability. The monster can assassinate commanders even when they are
+#nomovepen in besieged castles.
+Monster ignores movement penalty from armor. This is used
+for chariots.
+20

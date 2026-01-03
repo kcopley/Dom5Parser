@@ -1,0 +1,724 @@
+
+============================================================
+PAGE 1
+============================================================
+
+Nametypes 30
+Dominions 6 Modding Manual
+Mounts & Riders 30
+Illwinter Game Design (ver 6.33) Mount commands 31
+Monster Modding, Leadership & Morale 31
+Requirements 3
+Normal Leadership 31
+Data Directories & Files 3
+Magic Leadership 31
+Data Location 3
+Undead Leadership 32
+Files and File Formats 3
+Morale Related Abilities 32
+Filenames 3
+Monster Modding, Magic 33
+Mod Mechanics 3
+Magic Paths 33
+Syntax 3
+Spell Range 33
+Multiple Mods 4
+Magic Research 34
+Loading mods 4
+Gem Production 34
+Altering Mods in Midgame 4
+Other Magic Abilities 35
+Mod Command Load Order 4
+Monster Modding, New Abilities for Dominions 5 36
+Mod update compatibility 4
+Name Modding 36
+Mod Info 5
+Bless Modding 36
+Sound Modding 5
+Basic Bless Attributes 36
+Basic Sound Commands 5
+Scale Requirements 37
+Weapon Modding 6
+Bless Effects 37
+Basic Weapon Attributes 6
+Magic Site Modding 37
+Weapon Damage Types 7
+Basic Site Modding 37
+Damage Qualifiers 9
+Monsters 38
+Other Weapon Properties 10
+Scale Effects 39
+Weapon After Effects 11
+Magic Rituals & Scrying 39
+Armor Modding 12
+Ritual Range Boost 39
+Monster Modding, Basic 13
+Special Effects 40
+Basic Commands 13
+Throne Effects 40
+Visuals 13
+Nation Modding 41
+Clearing & Copying 13
+Name, Era & General 41
+Pretender God Commands 14
+Sites, Terrain, Temperature 43
+Recruitment Rules 14
+AI Hints 44
+Desertion 15
+Unit Lists & Recruitment 44
+Gold & Resource Cost 15
+Province Defense 45
+Automatic Gold Cost Calculation 16
+Underwater Province Defense 46
+Basic Attributes 16
+Gods 47
+Weapons & Armor 17
+Forts & Buildings 48
+Bodytype 18
+Dominion 49
+Item Slots 18
+Undead Reanimation 50
+Monster Modding, Special Abilities 18
+Spell Modding 50
+Creature Type & Status 18
+Basic Spell Attributes 50
+Movement 19
+Spell Effects 51
+Stealth & Assassination 20
+Look & Sound of Combat Spells 52
+Age, Healing & Afflictions 21
+Spell Range & Targeting 52
+Damage Reduction 22
+Spell Special Attributes 53
+Immortality 23
+Global Enchantments 54
+Combat Auras 23
+Rare Caster Requirements 54
+Seasonal Powers 24
+Spell AI Hints 55
+Elemental & Scale Powers 24
+Magic Item Modding 55
+Combat Abilities 25
+Magic & Spells 56
+Non-Combat Abilities 26
+Attributes & Resistances 56
+Shape Changing 27
+Movement & Combat 57
+Monster Summoning 29
+Restrictions 57
+1
+
+============================================================
+PAGE 2
+============================================================
+
+Curses & Afflictions 57
+Dancing Weapon 58
+Miscellaneous 58
+Monster Modding Commands 58
+General Modding 61
+Poptype Modding 62
+Mercenary Modding 63
+AI Modding 63
+Basic Template Creation 63
+Pretender Design 64
+Research Targets 64
+Event Modding 64
+Minimal Example Mod 64
+Important Notes 64
+Modding Number Limits 64
+Converting Dom5 Mods to Dom6 64
+2
+
+============================================================
+PAGE 3
+============================================================
+
+interprets the commands, not Windows.
+Requirements
+With the help of a simple text editor it is possible to create Example: If an icon is in a subdirectory setting the command
+new weapons, armors, units and entire nations. It is also to use that icon would look like this:
+possible to modify existing weapon, armors, units, nations,
+#icon "mod_subdirectory/mod_icon.tga"
+spells and magic items as well as magic sites, population
+types and the effects of scales.
+Filenames
+With the help of a paint program you will also be able to add Filenames must not contain any spaces or special
+new graphics to units, magic items or nation flags. characters. Using spaces or special characters will make the
+mod not work in the network lobby.
+Free programs suitable for this are e.g. Notepad++ for text
+and GIMP for graphics. Mod filenames and the filenames of all image files are case
+sensitive, so make sure to get lower and UPPER case letters
+Data Directories & Files correct.
+Data Location
+Mod Mechanics
+The data directory for storing saved games, mods and maps
+Syntax
+is different depending on the operating system.
+Two consecutive dashes (- -) are used to denote comments.
+The easiest way to locate the data directories in Dominions
+Anything after the dashes is ignored. This can be used to
+6 is by opening Game Tools from the Main Menu and using
+add explanations of what is being modded and what is being
+the Open User Data Directory function. The operating
+intended with the commands.
+system will open the user data directory in a separate file
+manager window. All Dominions 6 modding commands begin with a hash sign
+(#).
+By default the data directory is located here:
+Modding commands may or may not have arguments. An
+* Linux: ~/.dominions6/
+argument is a value after the command itself to denote
+* Mac: ~/.dominions6/
+something. Arguments are indicated by <arg> after the
+* Windows: %APPDATA%\\dominions6\
+command itself, e.g. #gcost <gold>.
+The subdirectories of the Dominions 6 data directory are
+The mod commands sometimes have a vertical line (|) among
+* maps their arguments. This line means OR. So use either the
+* mods argument on the left side of the line or the one on the other
+* savedgames side, not both.
+A modding command that does not have an argument is
+Files and File Formats
+used to control a binary attribute. This means that if the
+All images must be saved as Targa (.tga) or PNG images.
+command is used, then the weapon, monster, magic site or
+other object being modded has that attribute and the effects
+Targa image files must have 24- or 32-bit color and be
+of the attribute are fixed.
+uncompressed or RLE. If the image is has no alpha channel
+(24-bit), black will be replaced with a fully transparent color
+Some modding commands have an argument enclosed in
+and magenta will be replaced by a shadow (black with 50%
+brackets []. This means that the argument is optional and
+alpha).
+can be omitted.
+All modding commands must be saved in a text file with the
+Modding commands that have arguments can have one or
+.dm (dominions mod) extension. The dm file must be located
+more of them and the arguments may be of several different
+in a directory with the same name as the mod (minus .dm)
+types. Some commands require more than one type of
+inside the directory called mods in the data directory.
+argument to work.
+All files used by a mod should be stored within its own
+The following types of arguments are used for modding
+directory or a subdirectory of that one. Subdirectories
+commands in Dominions 6:
+within a mod are referenced with forward slashes (/) in the
+Linux style (even in Windows), because Dominions
+3
+
+============================================================
+PAGE 4
+============================================================
+
+integer to try.
+a whole number
+percent Load a mod you're working on, create a game and if the
+a percentage value (may be higher than 100 in some cases). results are not quite as you expected, change the mod and
+Expressed as an integer in mod syntax. load that same game to instantly see the effects of the
+string change. If you do not quit Dominions between mod changes,
+text such as monster names, descriptions etc. you must first load a different game with different mods (or
+bitmask no mods), quit that game to main menu and load the game
+a bitmask is a special type of integer number. Any integer can you use for testing. This will reload the mod and apply your
+be expressed as a sum of the powers of 2. In a bitmask number changes immediately.
+each power of 2 that it contains means a different thing. A
+Mod Command Load Order
+bitmask argument assigns ALL of these attributes to the object
+being modded.
+All mods are loaded separately, one entire mod at a time.
+Mod instructions are parsed in the following order:
+For example, giving a monster custom random magic paths
+is a bitmask operation where 128 (2^7) is Fire magic and * mod info
+subsequent powers of 2 other paths. A bitmask of 384 (128 * weapons
++ 256) would thus give the monster a random magic path * armors
+that is either Fire (128) or Air (256), because it contains both * units
+separate values. * names
+* blessings
+Multiple Mods * sites
+* nations
+It is possible to have many mods enabled at once. For
+* spells
+instance you can enable a mod that turns Abysia into giants
+* magic items
+at the same time as you have a mod that adds a new Hoburg
+* general
+nation.
+* poptypes
+Two mods should never try to modify the same thing. This * mercenaries
+can result in unpredictable behavior. * events
+Loading mods All mods will modify or add new weapons before any
+modification is done on units and so forth. Because entire
+A game created when a mod is enabled in the mod
+mods are loaded one at a time, it is impossible to reliably
+preferences will automatically activate this mod for all
+reference objects contained in other mods by name.
+players participating in that game, even if the mod is not
+active when the game is loaded. There will be an error
+Mod update compatibility
+message for any player that hasn’t downloaded the mod.
+Updating a mod has to be done carefully if you want to avoid
+When you want to create a new game with mods, enable the breaking ongoing game that uses that mod.
+mods you want and then get started. Or if you already had a
+The easiest way to break ongoing games is to add a new
+game that used the mods you wanted, load that game, exit to
+monster in the middle of the mod by using the #newmonster
+main menu and create a new game and you will have those
+command without a number. If you do this, monsters after
+mods active.
+the new one will have their monster numbers increased by
+Altering Mods in Midgame one and old games will now reference the wrong monster.
+If you modify a mod that one of your games is using, the This can be avoided by either always giving a fixed number
+changes made to the mod will take effect immediately when to #newmonster, or by adding a few extra unused monsters
+you next load the game. in the mod. When adding a new monster, simply use one of
+the unused monsters instead.
+For example, if you make an alteration that modifies all
+militia units to use axes instead of spears, all militia Another way would be to add the #newmonster command
+(including units already bought in-game) will be instantly at the end, but that won't work if multiple mods are enabled.
+changed. This makes it possible to test different things
+without creating a new game for every new thing you want The same thing also applies to the #newsite and #newspell
+4
+
+============================================================
+PAGE 5
+============================================================
+
+commands. #end
+Always use this command at the end of modifying a sample.
+If you follow these guidelines it is possible to make a mod
+#sample "<filename>"
+that plays nicely with ongoing games.
+Imports the sound from this sound file.
+#smpmode <mode>
+Mod Info
+Mode should be 0 for standard sound effect and 2 for music.
+All mod files must contain most of the following commands.
+Sound effects can also use number 3-5. 3=less random pitch,
+The exceptions are the #icon and #domversion commands
+4=no random pitch, 5=extra random pitch.
+that are not necessarily needed.
+#loop <sample nbr>
+This should be -1 for sound effects, -2 for music, -4 for battle
+#modname "<name>"
+music and -5 for the intro tune. A postitive number means the
+A short name for the mod. It will be displayed in the mod
+sample will loop to the sample with that number after finishing
+preferences screen.
+(this is never used in Dominions).
+#description "<piece of text>"
+Sound samples
+A description of what the mod does, who has created it and so
+forth. Sample nbr Sound effect
+7 Dagger
+#icon "<image.tga>" 8 Sword
+A banner image for your mod. This image should be a 128x32 9 Whip
+or 256x64 pixels large TGA image. 10 Club, axe
+11 Flail, morning star
+#version x.yy
+12 Spear, pike
+The version number of your mod. E.g. 1.00 or 1.10.
+13 Crossbow, arbalest
+#domversion x.yy 14 Bow (random bow sound, bow 1-4)
+The minimum required version of Dominions for the mod to 15 Sling
+work correctly. If not sure, then leave this command out. For 16 Fire flare
+example, 6.00, for Dominions version 6.00 required. 17 Earthquake
+18 Life drain
+Sound Modding 19 Javelin
+20 Banshee
+These commands allow the modding of the sound samples.
+21 Frost blast
+22 Mind blast
+All sound sample files must be in one of the following
+24 Electricity
+formats:
+26 Howl
+* Mono signed word (.sw), 16-bit, 22 kHz * Stereo signed 27 Thunder
+word (.sw2), 16-bit, 22 kHz 28 Saw
+29 Elf shot
+Sound effects should always be mono. Music can use both 30 Chyme
+formats. 31 Magic
+38 Claw, bite, kick
+New sound effect samples can also be added by using the
+39 Snow
+#sample command when modding a weapon. But this way
+46 Blow pipe
+offers more control and can also modify the music.
+50 Serpent
+55-77 Music tracks
+Basic Sound Commands
+78,79 Lion
+#selectsound <nbr> 87 Whip
+Selects an existing or a new sample (sound effect or 89 Explosion
+background music) that will be affected by the following 90-96 Music tracks
+modding commands. End modding this sample with the #end 100 Trumpet
+command. Number 150+ can be used to add new samples for 101 Incorporate
+mods. The highest number that can be used is 248. 102 Swosh (start of missile spells)
+103 Whip 2 (for tail attacks)
+5
+
+============================================================
+PAGE 6
+============================================================
+
+104 Springgun 22 Sling
+105 Banishment 21 Javelin
+106 Sizzle 23 Short Bow
+107 Short sizzle 24 Long Bow
+108 Wind 264 Composite Bow
+109 Wind short 25 Crossbow
+110 Short saw 26 Arbalest
+111 Laughter 257 Bardiche
+112 Horn 256 Kryss
+113 Bird 253 Hatchet
+114 Spell 258 Claymore
+115 Bomb 259 Executioner’s Axe
+116 Bubble 153 Stick
+117 Muffled 252 Club
+118 Small fire 265 Spiked Club
+119 Small snow 165 Great Club
+120 Elephant1 267 Pick Axe
+121 Elephant2 263 Net
+122 Elephant3 260 Throwing Axe
+123 Short fire 266 Great Bow
+124 Bow 2
+Natural weapons
+125 Bow 3
+126 Bow 4 Nbr Weapon Name Notes
+127 Fire swoosh 92 Fist
+29 Claw
+33 Claws
+Weapon Modding
+20 Bite
+Basic Weapon Attributes 235 Pincer
+85 Tentacle
+#selectweapon "<weapon name>" | <weapon nbr>
+55 Hoof
+Selects the weapon that will be affected by the following
+56 Hoof dmg=13, for knights
+modding commands. End modding this weapon with the #end
+144 Stinger death poison
+command. To find out the numbers of a particular unit’s
+127 Venomous Bite weak poison
+weapons, look at the unit’s stats in the game and press ctrl+i.
+239 Venomous Fangs strong poison
+Manufactured weapons 65 Venomous Fangs death poison
+251 Venomous Fangs paralyzing poison
+Nbr Weapon name
+248 Venomous Claw weak poison
+1 Spear
+249 Venomous Claw strong poison
+2 Pike
+146 Venomous Claw death poison
+5 Halberd
+250 Poisoned Claw weak paralyzing poison
+4 Lance
+43 Poisoned Claw paralyzing poison
+9 Dagger
+185 Lightning Swarm
+6 Short Sword
+63 Life Drain
+8 Broad Sword
+142 Touch of Leprosy
+11 Great Sword
+261 Web
+12 Mace
+225 Fire Breath missile weapon
+13 Hammer
+93 Cold Breath missile weapon
+14 Maul
+62 Bile missile weapon
+15 Morning Star
+224 Poison Spit missile weapon
+16 Flail
+262 Web Spit missile weapon
+17 Axe
+18 Battle Axe
+#end
+7 Quarterstaff
+Always use this command at the end of modifying a weapon.
+40 Whip
+6
+
+============================================================
+PAGE 7
+============================================================
+
+#name "<name>" 16 Fire flare
+This must be the first command for every new weapon. It sets 18 Life drain
+the name of the weapon. 19 Javelin
+#clear 20 Banshee
+Clears the current weapon. 21 Frost blast
+#copyweapon "<weapon name>" | <weapon nbr> 22 Mind blast
+Copies all stats from an existing weapon. This command will 24 Electricity
+overwrite all stats for the selected weapon, so it should be used 29 Elf shot
+as the first command after the #newweapon command. 38 Claw, bite, kick
+#dmg <damage> 46 Blow pipe
+Sets the damage value of the weapon. A spear has a damage 50 Serpent
+value of 3 and a sword has 6. 78,79 Lion
+#nratt <nbr of attacks> 87 Whip
+Sets the number of attacks per round for a weapon. For slow 89 Explosion
+missile weapons set this value to -2 for every other round or -3
+#range
+for every third round.
+<range> Sets the maximum firing range for a missile weapon.
+#att <attack>
+This command also turns the weapon into a missile weapon
+Sets the attack value of the weapon. A spear has an attack
+that cannot be used in melee combat. A short bow has a range
+value of 0 and a sword has 1. This value is also used as precision
+of 35. A value of -1 sets the weapon range to equal the strength
+for missile weapons.
+of the monster (like a javelin), -2 to strength/2, -3 to strength/3,
+#def <defense>
+etc.
+Sets the defense value of the weapon. A spear has a defense
+#ammo
+value of 0 and a sword has 1.
+<ammo> This is the number of times that this weapon can be
+#newweapon <weapon nbr>
+fired in combat. The default value is 12. The maximum value for
+Weapon number for new weapons should be a number
+normal ammunition is 30. Values over 1000 means fatigue cost
+between 1000 and 3999. It must not be the same as any other
+instead of limited ammunition, the cost per attack is this value
+weapon. This new weapon will be affected by the following
+minus 1000.
+modding commands and there should be an #end command at
+#rcost
+the end.
+<resources> Sets the resource cost for the weapon. Default
+#len <length>
+value is 0, a spear costs 1 resource and a sword costs 3.
+Sets the length of the weapon. This should be a value between
+#sample
+0 (fist) and 5 (pike). A spear has a value of 3 and a sword 1.
+"filename" Uses this sample as sound effect. The sample must
+#twohanded
+be in .sw (16-bit signed words, 22050 Hz, mono) or .al (a-law,
+Makes the weapon a two-handed weapon. This means the
+22050 Hz, mono) format. This command can also be used for
+weapon cannot be combined with a shield if you have only two
+spells.
+arms. Two-handed weapons also receive increased bonus
+#natural
+damage from strength.
+Marks the weapon as a natural ranged weapon. Use this for
+#sound <sample nbr>
+things like breath weapons or mind blasts. Weapons with this
+The sound effect that will be played when this weapon strikes.
+attribute will not be affected by blesses like fire weapons.
+Some commonly used sounds can be found in the sound effects
+table.
+Weapon Damage Types
+Sound effects
+These commands set damage type for a weapon. A single
+Sample Sound effect
+weapon can only have one damage type, setting another
+7 Dagger
+damage type will remove the previous one.
+8 Sword
+9 Whip #dt_normal
+10 Club, axe Sets the damage type to normal damage. This is the default.
+11 Flail, morning star #dt_poison
+12 Spear, pike Sets the damage delivery mechanism to poison damage. Poison
+13 Crossbow, arbalest damage is caused over several combat rounds. To make a
+14 Bow poisoned weapon, do NOT use this command. Use a secondary
+15 Sling effect that has both #poison and this command.
+7
+
+============================================================
+PAGE 8
+============================================================
+
+#dt_demon #dt_aff
+Sets the damage type to anti-demon damage. This means Sets the damage type of the weapon to a special effect or
+double damage to demons. affliction. The specific affliction the weapon inflicts is set with
+#dt_small the #dmg command, so the weapon's damage value is
+The weapon does double damage against creatures smaller interpreted as a bitmask value according to the (affliction
+than the attacker. table)(#afflictions). The table uses bitmask values, meaning
+#dt_magic powers of 2. The numbers are expressed as powers of 2,
+The weapon does double damage to magic beings. because numbers after about 2^20 get very big very quickly.
+#dt_large
+Affliction numbers
+The weapon does triple damage against creatures larger than
+the attacker. 2^x Affliction
+#dt_constructonly 0 disease
+Only inanimate beings are affected by this weapon. 1 curse
+#dt_raise 3 plague
+If the target is killed by the weapon, it is animated as a soulless 5 curse of stones
+servant of the attacker. 6 entangle
+#dt_cap 7 rage
+Sets the damage type to capped damage (max 1 HP damage) 8 decay
+like a whip or a blowgun. 9 burn
+#dt_weakness 10 asleep
+The weapon drains strength from its target instead of doing 11 rusty armor
+normal damage. 12 blind
+#dt_holy 13 bleed
+Sets the damage type to holy damage. This means triple 14 earth grip
+damage to undead and demons. 16 fire bonds
+#dt_drain 17 false fetters
+The weapon drains life force from its target, healing damage 18 limp
+and reducing fatigue for the attacker. 19 lost eye
+#dt_sizestun 20 weakness
+Sets the damage type to fatigue damage that is less effective on 21 battle fright
+large targets. Effectively the same as #dt_stun + #sizeresist. 22 mute
+#dt_weapondrain 23 chest wound
+The weapon drains life, but max 5 points of the damage is used 24 crippled
+to heal the wielder. Use this for draining weapons that can be 25 feeble minded
+wielded or forged. 26 never healing wound
+#dt_stun 27 slime
+Sets the damage type to fatigue damage. 28 frozen
+#dt_realstun 29 webbed
+Sets the damage type to stun. The damage value for stun 30 arm loss
+weapons should be 100. Stunned units are unable to take any 32 shrinked
+action for about 1 combat round. 34 confused
+#dt_interrupt 36 slowed
+This damage is not real, but it can still interrupt mages casting 41 rusty
+spells. 49 soul slayed
+#dt_bouncekill 50 caught in net
+This effect will bounce a few times to nearby targets, like a 53 surprised
+chain lightning. Weapons with this effect should have aoe = 1.
+For example, in order to make a weapon inflict plague (3),
+#dt_paralyze
+you must enter the value of 2^3 as an argument to #dmg in
+Sets the damage type to paralyze. Damage value is NOT
+order to get the correct result. In this case the correct value
+directly turns of paralysis. Use 10 for a standard strength
+would be 8. and the mod code would look like this, for
+paralyze.
+example:
+8
+
+============================================================
+PAGE 9
+============================================================
+
+#newweapon 1200 #nostr
+#name "Plague Stick" The strength of the weapon wielder will not be added to the
+#len 1 damage.
+#att 0 #bowstr
+#def 0 This is the same as the #thirdstr command. It is an old
+#dt_aff command that was used for bows in Dominions 5.
+#dmg 8 #thirdstr
+#end Only one third of the weapon wielder's strength will be added
+to the damage. This is normally used for crossbows.
+Damage Qualifiers #halfstr
+Only one half of the weapon wielder's strength will be added to
+These commands add additional modification to the type of
+the damage. This is normally used for bows, slings and the
+damage the weapon inflicts, such as completely or partially
+breath weapons of dragons.
+ignoring armor, doing extra damage to certain kinds of
+#fullstr
+enemies, only doing damage to specific types of creatures,
+The full weapon wielder's strength will be added to the
+how it can be resisted etc. Multiple qualifier can be used on
+damage. This is the default and need not be specified.
+one weapon.
+#mrnegates
+#poison The effects of the weapon can be resisted by MR.
+Gives poison immune beings immunity to this weapon. For #mrnegateseasily
+example, Poison Sling and Snake Bladder Stick both have this The effects of the weapon can be easily resisted by MR.
+attribute and the #dt_poison attribute. #hardmrneg
+#acid The effects of the weapon may be resisted by MR, but there is a
+This weapon does acid damage. Acid weapons can damage penalty to the MR check.
+armor. Damaged armor will break if subjected to more blows, #mrhalf
+but will be repaired if there are enough resources in the A successful MR check will halve the damage received from
+province the monster is in. this attack.
+#slash #sizeresist
+The weapon does slashing damage. Monsters with Slash Units that are size 3 or 4 have a chance of resisting the effects
+Resistance only take half damage. of the weapon. Size 5+ units always resist the effects and size 1
+#pierce and 2 units never resist the effect. Str 15+ also has a chance to
+The weapon does piercing damage. Monsters with Pierce resist and Str 35+ always resists.
+Resistance only take half damage. #mind
+#blunt Mindless beings are immune to this weapon.
+The weapon does blunt damage. Monsters with Blunt #undeadimmune
+Resistance only take half damage. Undead beings are immune to this weapon.
+#cold #inanimateimmune
+This weapon does cold damage. A cold resistant being will take Lifeless beings are immune to this weapon.
+reduced damage from this weapon. #flyingimmune
+#fire Flying and floating beings are immune to this weapon.
+This weapon does fire damage. A fire resistant being will take #enemyimmune
+reduced damage from this weapon. Enemy units are immune to this weapon.
+#shock #friendlyimmune
+This weapon does shock damage. A shock resistant being will Friendly units are immune to this weapon.
+take reduced damage from this weapon. #undeadonly
+#magic The weapon only affects undead.
+This is a magic weapon that can harm ethereal units with ease. #sacredonly
+#armorpiercing The weapon only affects sacred troops.
+The weapon is armor piercing. Armor protection is halved #demononly
+when determining damage. The weapon only causes affects demons.
+#armornegating #demonundead
+The weapon is armor negating. Armor is completely ignored The weapon only affects demons and undead.
+when determining damage. #magiconly
+The weapon only affects magic beings.
+9
+
+============================================================
+PAGE 10
+============================================================
+
+#internal 50 Weak Poison
+The weapon inflicts internal damage that cannot be negated by 51 Strong Poison
+effects like mist form, mossbody, etc. Used on e.g. Incinerate 52 Death Poison
+and Disintegrate. 53 Debilitative Poison
+#spiritformimmune 54 Paralyzing Poison
+Spiritform beings and illusions are immune to this weapon. 64 Decay
+#illusionsimmune 104 Area Petrification
+Illusions are immune to this weapon. 114 Small Area Shock
+#false 137 Entanglement
+The weapon causes false damage (like most glamour magic) 143 Disease (non resistable)
+instead of real damage. 171 Small Area Fire
+#defroll 216 Fire (AP 8)
+If the victim passes a defence roll vs 3d6, there will be no 221 Fire (AP 12)
+effect. 222 Cold (AP 12)
+#morroll 232 Shock (AN 10)
+If the victim passes a morale roll vs 3d6, there will be no effect. 255 Area Fear
+276 Small Area Holy Fire
+Other Weapon Properties 306 Weakness
+342 Poison Ink
+#aoe <squares>
+765 Frozen Flames
+This is the area of effect in squares. A value of zero (default)
+means that only one opponent will be affected. A value of one #ironweapon
+or more indicates the number of squares that will be affected. The weapon is made of iron and is subject to rust and spells
+An area of two or more squares is large enough that the user of that damage iron equipment.
+this weapon might hit himself as well. #woodenweapon
+The weapon is made of wood.
+#bonus
+#iceweapon
+This is an intrinsic weapon that will not incur a multiple weapon
+The weapon is made of ice and cannot be fire blessed.
+penalty or get replaced when the commander is equipped with
+#charge
+a magic weapon item. If a monster doesn't have any hands to
+The weapon will receive a damage bonus on its first attack. This
+hold weapons, it should only have bonus weapons. Monsters
+bonus is proportional to the unit’s maximum number of action
+without hand slots risk getting all non-bonus weapons disabled.
+points.
+#secondaryeffect "<weapon name>" | <weapon nbr> #flail
+This secondary effect will affect anyone harmed by the The weapon has a +2 attack bonus against shields.
+weapon. See Table secondary weapon effects on page <<-1 for Morningstars and flails have this feature. Whips do not,
+some premade effects. The effects are also weapons and share because they do not have enough momentum when they wrap
+the same numbers as all other weapons and you can create a around a shield.
+new secondary effect by creating a new weapon. #norepel
+This weapon cannot be used to repel attacks.
+#secondaryeffectalways "<weapon name>" | <weapon nbr> #unrepel
+This secondary effect will affect anyone attacked by the Attacks with this weapon cannot be repelled.
+weapon, no matter if it was a hit or not, as long as the #beam
+secondary effect itself has an area of effect of one or greater. If Beam weapon, like dragon breath.
+the secondary effect does not have an area of effect, it will #range050
+activate when the target is hit, even if actual damage is not This ranged weapon has a 50% chance of being used in melee.
+inflicted. See table secondary weapon effects on page <<-1 for #range0
+some premade effects. Only one of #secondaryeffectalways This ranged weapon can also be used in melee.
+and #secondaryeffect can be used. You must use the always #melee50
+variant with area effects. For non-area effects either one can This melee weapon only has 50% chance of being used.
+be used, but you usually want the non-always variant for these #skip
+weapons. Once this weapon is used, skip the next weapon.
+#skip2
+Secondary weapon effects
+Once this weapon is used, skip the next 2 weapons.
+Nbr Type of effect
+10

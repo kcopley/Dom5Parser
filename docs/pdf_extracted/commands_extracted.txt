@@ -1,0 +1,2863 @@
+# Extracted Commands from dom6modman.pdf
+
+#icon
+  // "mod_subdirectory/mod_icon.tga"
+
+#gcost <gold>
+  // .
+
+#newmonster
+
+#newsite
+  // and #newspell
+
+#newspell
+
+#end
+
+#sample
+  // "<filename>"
+
+#smpmode <mode>
+
+#domversion
+  // commands
+
+#loop <sample nbr>
+
+#modname
+  // "<name>"
+
+#description
+  // "<piece of text>"
+
+#version
+  // x.yy
+
+#selectsound <nbr>
+  // 87 Whip
+
+#selectweapon
+  // "<weapon name>" | <weapon nbr>
+
+#name
+  // "<name>" 16 Fire flare
+
+#clear
+  // 20 Banshee
+
+#copyweapon
+  // "<weapon name>" | <weapon nbr> 22 Mind blast
+
+#newweapon
+  // command. 38 Claw, bite, kick
+
+#dmg <damage>
+  // 46 Blow pipe
+
+#nratt <nbr of attacks>
+  // 87 Whip
+
+#range
+
+#att <attack>
+
+#def <defense>
+
+#ammo
+
+#rcost
+
+#len <length>
+
+#twohanded
+
+#natural
+
+#sound <sample nbr>
+
+#dt_normal
+
+#dt_poison
+
+#poison
+  // and this command.
+
+#dt_demon
+  // #dt_aff
+
+#dt_aff
+
+#dt_small
+  // the #dmg command, so the weapon's damage value is
+
+#afflictions
+  // ). The table uses bitmask values, meaning
+
+#dt_magic
+  // powers of 2. The numbers are expressed as powers of 2,
+
+#dt_large
+
+#dt_constructonly
+  // 0 disease
+
+#dt_raise
+  // 3 plague
+
+#dt_cap
+  // 7 rage
+
+#dt_weakness
+  // 10 asleep
+
+#dt_holy
+  // 13 bleed
+
+#dt_drain
+  // 17 false fetters
+
+#dt_sizestun
+  // 20 weakness
+
+#dt_stun
+  // + #sizeresist. 22 mute
+
+#sizeresist
+  // . 22 mute
+
+#dt_weapondrain
+  // 23 chest wound
+
+#dt_realstun
+  // 29 webbed
+
+#dt_interrupt
+  // 36 slowed
+
+#dt_bouncekill
+  // 50 caught in net
+
+#dt_paralyze
+
+#nostr
+
+#bowstr
+
+#thirdstr
+  // command. It is an old
+
+#halfstr
+
+#fullstr
+
+#mrnegates
+
+#mrnegateseasily
+
+#hardmrneg
+
+#acid
+  // The effects of the weapon may be resisted by MR, but there is a
+
+#mrhalf
+
+#slash
+  // #sizeresist
+
+#pierce
+  // and 2 units never resist the effect. Str 15+ also has a chance to
+
+#mind
+
+#blunt
+  // Mindless beings are immune to this weapon.
+
+#undeadimmune
+
+#cold
+  // #inanimateimmune
+
+#inanimateimmune
+
+#flyingimmune
+
+#fire
+  // Flying and floating beings are immune to this weapon.
+
+#enemyimmune
+
+#shock
+  // #friendlyimmune
+
+#friendlyimmune
+
+#undeadonly
+
+#magic
+  // The weapon only affects undead.
+
+#sacredonly
+
+#armorpiercing
+  // The weapon only affects sacred troops.
+
+#demononly
+
+#armornegating
+  // #demonundead
+
+#demonundead
+
+#magiconly
+
+#internal
+  // 50 Weak Poison
+
+#spiritformimmune
+  // 54 Paralyzing Poison
+
+#illusionsimmune
+  // 104 Area Petrification
+
+#false
+  // 137 Entanglement
+
+#defroll
+  // 216 Fire (AP 8)
+
+#morroll
+  // 232 Shock (AN 10)
+
+#aoe <squares>
+
+#ironweapon
+
+#woodenweapon
+
+#bonus
+
+#iceweapon
+
+#charge
+
+#secondaryeffect
+  // "<weapon name>" | <weapon nbr> #flail
+
+#flail
+
+#norepel
+
+#secondaryeffectalways
+  // "<weapon name>" | <weapon nbr> #unrepel
+
+#unrepel
+
+#beam
+
+#range050
+
+#range0
+
+#melee50
+
+#skip
+
+#skip2
+
+#explspr <fx nbr>
+  // 313 4 Sticky goo
+
+#uwok
+
+#nouw
+
+#notmounted <1 - 2>
+
+#flyspr <flysprite nbr> <animation lgth>
+  // secret and don't show it in weapon info).
+
+#notdismounted
+
+#speedmult <1 - 3>
+
+#holyifhit <dmg>
+
+#killmagicifhit <dmg>
+
+#killdemonifhit <dmg>
+
+#holystunifhit <dmg>
+
+#petrifyifhit <dmg>
+
+#fireifhit <dmg>
+  // 10 Leather Hauberk
+
+#coldifhit <dmg>
+  // 12 Scale Mail Hauberk
+
+#shockifhit <dmg>
+  // 14 Plate Hauberk
+
+#poisonifdmg <dmg>
+
+#newarmor <armor nbr>
+
+#aftercloud <cloudstr> <cloudtype>
+  // be an #end command at the end.
+
+#aftercloudarea <aoe>
+  // #name "<name>"
+
+#copyarmor
+  // "<armor name>" | <armor nbr>
+
+#type <type>
+
+#prot <protection>
+
+#protparts <head prot> <body prot>
+
+#selectarmor
+  // "<armor name>" | <nbr>
+
+#enc
+  // value.
+
+#magicarmor
+  // #spr1 "<imgfile>"
+
+#spr1
+  // "<imgfile>"
+
+#ironarmor
+  // human being should be about 32 pixels high and there should
+
+#woodenarmor
+  // image. You can use an alpha channel in the image or not. If not
+
+#spr2
+  // "<imgfile>"
+
+#speciallook <value>
+
+#drawsize <value>
+
+#selectmonster
+  // "<monster name>" | <monster nbr>
+
+#clearweapons
+
+#cleararmor
+
+#clearmagic
+
+#clearspec
+
+#copystats <monster nbr>
+
+#fixedname
+  // "<Name>" selected monster, so it should be used as the first command
+
+#copyspr <monster nbr>
+
+#descr
+  // "<text description>" Copies the sprite from an existing monster to the current one.
+
+#triple3mon
+
+#pathcost <design points>
+  // created after one another and the first one should be used as
+
+#minprison <0 - 2>
+
+#startdom <dominion strength>
+  // god has this attribute.
+
+#maxprison <0 - 2>
+
+#homerealm <realm nbr>
+  // mean different things than in #minprison.
+
+#godsite
+  // "<site name>" | <site nbr>
+
+#moreorder <-5 - 5>
+
+#moreprod <-5 - 5>
+
+#moreheat <-5 - 5>
+
+#moregrowth <-5 - 5>
+
+#moreluck <-5 - 5>
+
+#moremagic <-5 - 5>
+
+#slowrec
+
+#noslowrec
+
+#triplegod <type>
+
+#reclimit <units / turn>
+
+#triplegodmag <penalty>
+
+#enchrebate10 <enchantment number>
+
+#unify
+
+#enchrebate20 <enchantment number>
+  // #domrec <dominion>
+
+#domrec <dominion>
+
+#enchrebate50 <enchantment number>
+  // #heatrecscale <value>
+
+#heatrecscale <value>
+
+#heatrec
+
+#enchrebate75 <enchantment number>
+  // #coldrecscale <value>
+
+#coldrecscale <value>
+
+#coldrec
+
+#enchrebate100 <enchantment number>
+  // #growthrecscale <value>
+
+#growthrecscale <value>
+
+#deathrecscale <value>
+
+#enchrebate25p <enchantment number>
+  // Death scale requirement for recruitment.
+
+#orderrecscale <value>
+
+#enchrebate50p <enchantment number>
+  // #chaosrecscale <value>
+
+#chaosrecscale <value>
+
+#reqlab
+  // Desertion
+
+#noreqlab
+
+#singlebattle
+
+#reqtemple
+  // The monster only fights in one battle and then leaves, like the
+
+#noreqtemple
+  // wounded to count as having fought.
+
+#deserter <percent>
+
+#chaosrec <value>
+  // month.
+
+#horrordeserter <percent>
+
+#defector <percent>
+
+#deathrec <value>
+  // this mechanic. This command only affects commanders.
+
+#nowish
+
+#aisinglerec
+  // Gold & Resource Cost
+
+#ainorec
+
+#monpresentrec
+  // "<monster name>" | <monster nbr>
+
+#rpcost <recruitment points>
+
+#ownsmonrec
+  // "<monster name>" | <monster nbr>
+
+#ressize <size>
+  // Harpy, Vaetti, Hoburg 7
+
+#hp <hit points>
+
+#str <strength>
+
+#prec <precision>
+
+#size <size>
+  // Vanara 14
+
+#mr <magic resistance>
+  // Undead 20
+
+#ap <action points>
+
+#mor <morale>
+
+#eyes <nbr of eyes>
+
+#blind
+  // . The number of eyes
+
+#voidsanity <value>
+
+#mapmove <speed>
+
+#weapon
+  // "<weapon name>" | <nbr>
+
+#armor
+  // "<armor name>" | <armor nbr>
+
+#noitem
+
+#itemslots <slot value>
+
+#noweapon <0 or 1>
+
+#humanoid
+  // Value Item Slots
+
+#mountedhumanoid
+  // 6 2 hands
+
+#quadruped
+  // 8192 1 head
+
+#lizard
+  // 131072 1 feet
+
+#naga
+  // 786432 2 miscs
+
+#snake
+  // 16777216 Head slots can only have crowns
+
+#bird
+  // 17768966 2 hands, bow, head (crown), body, feet, 2 misc
+
+#djinn
+  // Monster Modding, Special Abilities
+
+#troglodyte
+
+#miscshape
+
+#startitem
+  // "item name" | <item nbr> Creature Type & Status
+
+#female
+
+#userestricteditem <value>
+
+#coldblood
+  // #dungeon
+
+#dungeon
+
+#drake
+  // #lanceok
+
+#lanceok
+
+#plant
+  // #spiritform
+
+#spiritform
+
+#lesserhorror
+  // #nospiritform
+
+#nospiritform
+
+#illusion
+
+#greaterhorror
+  // This monster is an illusion. This is like spiritform, but illusions
+
+#doomhorror
+  // #divinebeing
+
+#divinebeing
+
+#holy
+  // cannot become prophet, cannot be charmed and has no upkeep
+
+#holycost <holy points>
+  // mounts of pretenders.
+
+#polyimmune
+
+#animal
+
+#immobile
+
+#unique
+
+#aquatic
+
+#undead
+
+#amphibian
+
+#bug
+
+#pooramphibian
+
+#float
+
+#demon
+
+#magicbeing
+
+#flying
+
+#autocompete
+
+#stormimmune
+  // . The monster can cross rivers. It
+
+#swimming
+
+#uwbug
+
+#snow
+
+#stonebeing
+
+#inanimate
+
+#stormpower
+  // attribute, this command is redundant.
+
+#teleport
+  // #mobilearcher <0 or 1>
+
+#mobilearcher <0 or 1>
+
+#farsail <extra provinces>
+
+#mapteleport
+  // #statstorm <value>
+
+#statstorm <value>
+
+#blink
+  // #statbreak <value>
+
+#statbreak <value>
+
+#unteleportable
+  // which would otherwise make it unable to.
+
+#noriverpass
+
+#forestsurvival
+
+#stealthy
+  // in order to be meaningful.
+
+#seduce <value>
+
+#mountainsurvival
+  // Gives the monster the ability to seduce like a Nagini. The value
+
+#succubus <value>
+
+#swampsurvival
+  // standard.
+
+#corruptor <value>
+
+#wastesurvival
+  // value indicates the difficulty of the morale check, 10 is
+
+#sailing <ship size> <max unit size>
+  // This monster can sneak into enemy provinces. The default
+
+#giftofwater <size points>
+  // detecting a standard stealthy unit, while 50 patrolling units are
+
+#spy
+
+#indepmove <percent>
+  // #assassin
+
+#assassin
+
+#patience <value>
+
+#indepstay <0 - 1>
+  // catch his target unawares and without bodyguards. Each point
+
+#norange <chance>
+  // reduces the effectiveness of the assassin's Patience.
+
+#scalewalls
+
+#nomovepen
+  // in besieged castles.
+
+#beckon <value>
+  // #addrandomage <years>
+
+#addrandomage <years>
+
+#uwdamage <percent>
+
+#falsearmy <value>
+  // of its total hit points every turn it spends underwater (i.e. in a
+
+#heal
+
+#foolscouts <value>
+  // Grants Pangaea-like healing powers to the monster
+
+#noheal
+
+#plaguedoctor <percent>
+  // #landdamage <percent>
+
+#landdamage <percent>
+
+#assencloc <value>
+  // percentage of its total hit points every turn it spends in a land
+
+#healer <percent>
+
+#autohealer
+  // or #autodishealer mechanic.
+
+#autodishealer
+  // mechanic.
+
+#homesick <percent>
+
+#startage <age>
+
+#maxage <age>
+
+#autodisgrinder <value>
+
+#autocorpsehealer <value>
+
+#diseaseres <percent>
+
+#older <age>
+
+#woundfend <value>
+  // giants have cold resistance 25. Some creatures like Fire
+
+#hpoverflow
+  // To make a monster more vulnerable to a particular type of
+
+#digest
+  // swallowed monsters.
+
+#bluntres
+
+#corpseeater <value>
+
+#ethereal
+
+#deadhp
+  // .
+
+#maxdeadhp <HP>
+
+#coldres <prot>
+
+#startaff <percent>
+
+#fireres <prot>
+
+#startmajoraff <percent>
+
+#poisonres <prot>
+
+#startingaff <affliction bitmask>
+
+#shockres <prot>
+
+#acidres <prot>
+
+#insane <percent>
+
+#decayres <0 or 1>
+
+#startheroab <percent>
+
+#iceprot <prot>
+
+#xpgain <percent>
+
+#icenatprot <prot>
+
+#extralives <percent>
+
+#invulnerable <prot>
+
+#regeneration <percent>
+
+#doheal
+
+#undregen <percent>
+
+#reconst <percent>
+  // #bugreform <nbr of bugs>
+
+#bugreform <nbr of bugs>
+
+#uwregen <percent>
+  // myriad of bugs and reform a little while later. The worm mage
+
+#falseregen <points>
+  // the following 4 commands.
+
+#bugshape
+  // "<monster name>" | <monster nbr>
+
+#enchantedblood <points>
+  // This is the shape for the "soul bug". It's the one that will later be
+
+#pierceres
+  // #buguwshape "<monster name>" | <monster nbr>
+
+#buguwshape
+  // "<monster name>" | <monster nbr>
+
+#slashres
+  // #bugswarmshape "<monster name>" | <monster nbr>
+
+#bugswarmshape
+  // "<monster name>" | <monster nbr>
+
+#reinvigoration <points>
+  // main part of the swarm. By default this is a random bug
+
+#bugswarmuwshape
+  // "<monster name>" | <monster nbr>
+
+#airshield <percent>
+  // Combat Auras
+
+#ironvul <points>
+
+#twistfate
+
+#heat <value>
+
+#glamour
+  // aura is <value> + Fire magic squares in size. Standard value is 3.
+
+#uwheat <0-100>
+
+#poisonarmor <dmg>
+
+#poisonskin <0-500>
+
+#immortal
+  // weapons. The value is the damage rating of the poison.
+
+#poisoncloud <size>
+
+#domimmortal
+  // Monster is surrounded by a poison cloud. Standard size is 6.
+
+#diseasecloud <size>
+
+#reformtime <extra months>
+  // Monster is surrounded by a disease cloud. Standard size is 6.
+
+#animalawe <bonus>
+
+#springimmortal
+  // that animals with a morale of 11 have about 50% chance of
+
+#reform <chance>
+  // 20 to get a 50% chance. Standard value is 1 (for Awe(+1) ).
+
+#awe <bonus>
+  // #slimer <strength>
+
+#slimer <strength>
+
+#damagerev
+  // .
+
+#sunawe <bonus>
+  // #entangle
+
+#entangle
+
+#eyeloss
+
+#haltheretic <bonus>
+  // Anyone striking this monster may lose an eye.
+
+#horrormark
+
+#fear <value>
+  // Anyone striking this monster may be horror marked.
+
+#mindslime <area>
+
+#overcharged <dmg>
+<value>
+  // squares around it. Affected squares are randomly Grants the overcharged ability. A damage value of 1
+
+#dread <value>
+  // #sleepaura <area>
+
+#sleepaura <area>
+
+#fireshield <damage>
+  // Shuten-doji has this ability with area 10.
+
+#nightmareaura <area>
+
+#spikes <dmg>
+
+#uwfireshield <damage>
+  // This unit is covered in sharp spikes barbs. Anyone striking it
+
+#banefireshield <damage>
+  // damaged. The damage is not severe, it is capped at 1 point and
+
+#acidshield <damage>
+
+#springpower <percent>
+
+#curseluckshield <penetration bonus>
+  // The monster has increased hit points in spring and lowered hit
+
+#summerpower <percent>
+
+#fallpower <percent>
+
+#winterpower <percent>
+
+#yearturn <bonus>
+
+#bloodvengeance <strength>
+  // the height of each season and will get increased Strength,
+
+#blessbers
+
+#blessfly
+
+#darkvision <percent>
+
+#chaospower <bonus>
+
+#spiritsight
+
+#coldpower <bonus>
+
+#truesight
+
+#firepower <bonus>
+
+#deathpower <bonus>
+
+#invisible
+
+#growthpower <bonus>
+
+#darkpower <bonus>
+
+#unseen
+
+#guardspiritbonus <value>
+
+#guardspirit
+  // command set.
+
+#trampswallow
+
+#magicpower <bonus>
+
+#slothpower <bonus>
+
+#raiseonkill <chance>
+
+#dompower <bonus>
+
+#trample
+
+#ambidextrous <bonus>
+
+#aciddigest <dmg>
+
+#clumsy <0 or 1>
+
+#incorporate <dmg>
+
+#berserk <bonus>
+
+#autoberserk <value>
+
+#raiseshape
+  // "<monster name>" | <monster nbr>
+
+#castledef <value>
+
+#fearofflood <value>
+  // counts as <value> extra monsters when defending a fort from a
+
+#mindcollar <dmg>
+  // #siegebonus <value>
+
+#siegebonus <value>
+
+#deathcurse
+
+#patrolbonus <value>
+
+#deathpoison <aoe>
+
+#pillagebonus <value>
+
+#deathdisease <aoe>
+
+#inquisitor
+
+#deathparalyze <aoe>
+
+#supplybonus <value>
+
+#deathfire <aoe>
+
+#falsesupply <value>
+
+#deathshock <aoe>
+
+#appetite <value>
+
+#deathslime <aoe>
+
+#heretic <value>
+
+#deathgrab <aoe>
+
+#powerofdeath <limit>
+
+#resources <value>
+
+#sleepres <bonus>
+
+#iceforging <value>
+
+#neednoteat
+
+#beartattoo <value>
+
+#horsetattoo <value>
+
+#elegist <value>
+
+#wolftattoo <value>
+
+#boartattoo <value>
+
+#spreaddom <candles>
+
+#snaketattoo <value>
+
+#praise <value>
+  // #incscale <scale>
+
+#incscale <scale>
+
+#nobadevents <value>
+  // maximum of -3 / 3. This command functions as #decscale for
+
+#decscale
+  // for
+
+#shatteredsoul <percent>
+  // maximum of -3 / 3. This command functions as #incscale for the
+
+#fortkill <chance>
+
+#incunrest <value>
+  // destroyed each turn.
+
+#thronekill <chance>
+
+#incprovdef <value>
+  // chance in percent that the throne will be destroyed each turn.
+
+#farthronekill <part>
+
+#taxcollector
+  // province, even if they are protected by a fort. Part is the
+
+#gold <gold / month>
+  // #localsun
+
+#localsun
+
+#addupkeep <gold>
+  // #adeptsacr <value>
+
+#adeptsacr <value>
+
+#leper <percent>
+  // number of extra blood magic level for this purpose.
+
+#mindvessel <0 or 1>
+
+#popkill <amount>
+
+#shapechange
+  // "<monster name>" | <monster nbr>
+
+#insanify <percent>
+
+#prophetshape
+  // "<monster name>" | <monster nbr>
+
+#nohof
+
+#alchemy <percent>
+
+#firstshape
+  // "<monster name>" | <monster nbr>
+
+#mason
+
+#secondshape
+  // "<monster name>" | <monster nbr>
+
+#labxpshape <xp value>
+
+#secondtmpshape
+  // "<monster name>" | <monster nbr> The monster will change into the next monster type (next
+
+#xpshapemon
+  // "<monster name>" | <monster nbr>
+
+#shapechance <percent>
+  // Monster number can be negative for montag usage.
+
+#xpshapeloss <0-100>
+
+#xploss <0-100>
+
+#forestshape
+  // "<monster name>" | <monster nbr> taking damage.
+
+#transformation <value>
+
+#plainshape
+  // "<monster name>" | <monster nbr> Value can be -1 for a bad result, 0 to disable and 1 for a good
+
+#fireattuned
+  // ,
+
+#foreignshape
+  // "<monster name>" | <monster nbr> #airattuned etc).
+
+#airattuned
+  // etc).
+
+#cleanshape
+
+#homeshape
+  // "<monster name>" | <monster nbr> from secondshape to firstshape. This command must be
+
+#domshape
+  // "<monster name>" | <monster nbr> #forcess
+
+#forcess
+
+#notdomshape
+  // "<monster name>" | <monster nbr> that the shape change takes place even if the target got soul
+
+#landshape
+  // "<monster name>" | <monster nbr>
+
+#springshape
+  // "<monster name>" | <monster nbr> The monster changes to this shape when moving from a water
+
+#summershape
+  // "<monster name>" | <monster nbr> #watershape "<monster name>" | <monster nbr>
+
+#watershape
+  // "<monster name>" | <monster nbr>
+
+#autumnshape
+  // "<monster name>" | <monster nbr> province to a water province.
+
+#twiceborn
+  // "<monster name>" | <monster nbr>
+
+#wintershape
+  // "<monster name>" | <monster nbr> The monster will get this shape if it dies and rises again due to
+
+#growhp <hit points>
+  // #lich "<monster name>" | <monster nbr>
+
+#lich
+  // "<monster name>" | <monster nbr>
+
+#battleshape
+  // "<monster name>" | <monster nbr>
+
+#shrinkhp <hit points>
+  // The monster changes to this shape when in battle.
+
+#worldshape
+  // "<monster name>" | <monster nbr>
+
+#xpshape <xp value>
+  // #animated "<monster name>" | <monster nbr>
+
+#animated
+  // "<monster name>" | <monster nbr>
+
+#batstartsum1d6
+  // ...9d6 "<monster name>" | <monster nbr>
+
+#reanimator <nbr>
+  // can be used up to 3 times on one monster.
+
+#reanimpriest
+  // number values to provide a random summon of a specific
+
+#domsummon
+  // "<monster name>" | <monster nbr> randomly summonable creatures types.
+
+#domsummon2
+  // "<monster name>" | <monster nbr>
+
+#domsummon20
+  // "<monster name>" | <monster nbr>
+
+#raredomsummon
+  // "<monster name>" | <monster nbr>
+
+#templetrainer
+  // "<monster name>" | <monster nbr>
+
+#makemonsters1
+  // ...5 "<monster name>" | <monster nbr>
+
+#makemonsters2
+  // to #makemonsters5 can also be
+
+#makemonsters5
+  // can also be
+
+#summon1
+  // ...5 "<monster name>" | <monster nbr>
+
+#summon2
+  // to #summon5 more according to the number in the
+
+#summon5
+  // more according to the number in the
+
+#battlesum1
+  // ...5 "<monster name>" | <monster nbr>
+
+#battlesum5
+  // command summons 0-5 and
+
+#battlesum1d2
+  // "<monster name>" | <monster nbr>
+
+#battlesum1d3
+  // "<monster name>" | <monster nbr>
+
+#montag <value>
+
+#battlesumwarm
+  // "<monster name>" | <monster nbr> This command assigns a monster tag value to a creature. The
+
+#batstartsum1
+  // ...5 "<monster name>" | <monster nbr> modding to summon randomly determined monsters from a
+
+#batstartsum1d3
+  // "<monster name>" | <monster nbr> summoned. Use a minus sign before the value when using it in
+
+#waterelementals <bonus>
+
+#montagweight <weight>
+  // anyway. Nametypes 170 – 399 should be used for modding
+
+#nametype <name type nbr>
+
+#ivylord <nbr>
+
+#dragonlord <nbr>
+  // Here are the commands that are used to pair riders and
+
+#lamialord <nbr>
+
+#mountmnr
+  // "<monster name>" | <monster nbr>
+
+#unmountedspr1
+  // "<imgfile>"
+
+#corpselord <nbr>
+
+#unmountedspr2
+  // "<imgfile>"
+
+#onisummon <0 - 100>
+
+#slaver
+  // "<monster name>" | <monster nbr> #nofmounts <mounts>
+
+#nofmounts <mounts>
+
+#slaverbonus <modifier>
+  // mounts.
+
+#nofriders <riders>
+
+#faysummon <nbr>
+  // But e.g. a elephant rider that is accomanied by two more
+
+#coridermnr
+  // "<monster name>" | <monster nbr>
+
+#fireelementals <bonus>
+
+#airelementals <bonus>
+
+#earthelementals <bonus>
+
+#xspr1
+  // "<imgfile>"
+
+#bravemount <percent>
+
+#xspr2
+  // commands can be repeated multiple times to create continuing to fight. Default is 0.
+
+#smartmount <smartness>
+
+#regainmount <0 or 1>
+  // Monster Modding, Leadership & Morale
+
+#noremount
+
+#skilledrider <value>
+  // Demons require undead leadership Magic beings require
+
+#noleader
+
+#mountiscom <0 or 1>
+  // #poorleader
+
+#poorleader
+
+#nobarding
+  // squad and an additional -1 for every additional squad.
+
+#okleader
+
+#nothrowoff
+  // standard for non-elite commanders. Commanded units have a
+
+#goodleader
+
+#nofalldmg
+  // modifier of +1 for up to 3 squads and -1 for every additional
+
+#expertleader
+
+#mounted
+
+#superiorleader
+
+#command <value>
+
+#superiorundeadleader
+
+#undcommand <value>
+
+#nomagicleader
+
+#almostundead
+
+#poormagicleader
+
+#almostliving
+
+#okmagicleader
+
+#inspirational <bonus>
+
+#goodmagicleader
+
+#expertmagicleader
+
+#beastmaster <bonus>
+
+#taskmaster <bonus>
+
+#superiormagicleader
+
+#slave
+
+#magiccommand <value>
+
+#undisciplined
+
+#noundeadleader
+
+#formationfighter <xsize>
+
+#poorundeadleader
+
+#okundeadleader
+
+#bodyguard <bonus>
+
+#goodundeadleader
+
+#warning <bonus>
+
+#expertundeadleader
+
+#standard <bonus>
+
+#latehero <min turn>
+  // chance of getting one level higher in Fire or Air magic.
+
+#undisleader <value>
+  // (getting two or more levels of the same random path from
+
+#tolerateund
+  // 200% random chance means +2 levels in the path. This is
+
+#custommagic
+
+#magicboost <path> <boost>
+
+#masterrit <value>
+
+#magicskill <path> <level>
+
+#firerange <range>
+
+#airrange <range>
+
+#waterrange <range>
+
+#earthrange <range>
+
+#astralrange <range>
+
+#deathrange <range>
+
+#naturerange <range>
+
+#glamourrange <range>
+
+#gemprod <type> <number>
+
+#bloodrange <range>
+
+#holyrange <range>
+
+#elementgems <gems>
+
+#elementrange <range>
+
+#sorcerygems <gems>
+
+#sorceryrange <range>
+
+#tmpfiregems <gems>
+
+#allrange <range>
+
+#tmpairgems <gems>
+
+#tmpwatergems <gems>
+
+#fixedresearch <value>
+
+#researchbonus <value>
+
+#tmpearthgems <gems>
+
+#inspiringres <value>
+
+#tmpastralgems <gems>
+
+#slothresearch <value>
+
+#tmpdeathgems <gems>
+
+#drainimmune
+
+#tmpnaturegems <gems>
+
+#tmpglamourgems <gems>
+
+#magicimmune
+
+#tmpbloodslaves <slaves>
+
+#divineins
+
+#douse <bonus>
+  // #allret <chance>
+
+#allret <chance>
+
+#randomspell <percent>
+
+#makepearls <value>
+  // The monster has a <percent> chance of casting a random spell
+
+#carcasscollector <value>
+  // #tainted <chance>
+
+#tainted <chance>
+
+#forgebonus <percent>
+
+#fixforgebonus <value>
+
+#bonusspells <spells per round>
+  // #mastersmith <value>
+
+#mastersmith <value>
+
+#commaster
+
+#onebattlespell
+  // "<spell name>" | <nbr> The monster is automatically a communion master and does
+
+#comslave
+
+#3castbattlespell
+  // "<spell name>" | <nbr> #sabbathslave
+
+#sabbathslave
+
+#chorusmaster
+
+#crossbreeder <value>
+  // The monster is automatically a chorus master and does not
+
+#chorusslave
+
+#deathbanish <-11 to -13>
+  // #grandcom <0 or 1>
+
+#grandcom <0 or 1>
+
+#indepspells <level>
+
+#kokytosret <chance>
+  // spells. This command will give them access to all spell with this
+
+#fastcast <speedup>
+
+#infernoret <chance>
+  // Affects the spell casting time for commanders. Speedup
+
+#spellsinger
+
+#voidret <chance>
+  // Unit takes 50% longer to cast spells, but at half fatigue cost.
+
+#magicstudy <bonus>
+
+#glamourmanip <0 or 1>
+
+#bringeroffortune <-100 - 100>
+  // 131 EA Ulm male
+
+#combatcaster
+  // 132 EA Ulm female
+
+#unsurr <0 - 1000>
+  // 133 Japanese female
+
+#skirmisher <-25 - 25>
+  // 134 Japanese male
+
+#minsizeleader <0 - 6>
+  // 135 Amazon
+
+#selectnametype <nametype nbr>
+
+#addname
+  // "name"
+
+#selectbless
+  // "<bless name>" | <nbr>
+
+#path0 <path nbr>
+
+#cost0 <value>
+  // Basic Site Modding
+
+#selectsite
+  // "<site name>" | <site nbr>
+
+#path1 <path nbr>
+
+#cost1 <value>
+
+#clearscales
+
+#orderscale <value>
+
+#prodscale <value>
+  // Always use this command at the end of modifying a site.
+
+#heatscale <value>
+
+#growthscale <value>
+
+#copysite
+  // "<site name>" | <site nbr>
+
+#luckscale <value>
+
+#path <path nbr>
+
+#magicscale <value>
+
+#look <site spr>
+
+#chaosscale <value>
+
+#slothscale <value>
+
+#coldscale <value>
+  // #loc <locmask>
+
+#loc <locmask>
+
+#deathscale <value>
+  // certain terrains or flag the site as unique.
+
+#misfortscale <value>
+  // Useful numbers are 735 for a site that can be located in any
+
+#drainscale <value>
+  // in any sea. Locmask 1023 means a site can appear in any
+
+#clearfx
+  // The value Unique is special and indicates that there can only
+
+#natcom
+  // "<monster name>" | <monster nbr>
+
+#nat
+  // command.
+
+#summon
+  // "<monster name>" | <monster nbr>
+
+#summonlvl2
+  // "<monster name>" | <monster nbr>
+
+#summonlvl3
+  // "<monster name>" | <monster nbr>
+
+#gems <path> <amount>
+  // #summonlvl4 "<monster name>" | <monster nbr>
+
+#summonlvl4
+  // "<monster name>" | <monster nbr>
+
+#voidgate <success chance>
+
+#res <amount>
+  // Void creatures. Void Summoning skill increases the success
+
+#level <level>
+  // may become insane or feebleminded.
+
+#wallcom
+  // "<monster name>" | <monster nbr>
+
+#rarity <rarity>
+  // #wallunit "<monster name>" | <monster nbr>
+
+#wallunit
+  // "<monster name>" | <monster nbr>
+
+#wallmult <multiplier>
+
+#decunrest <value>
+  // Adds to castle defenders. Works just like the nation modding
+
+#uwwallunit
+  // "<monster name>" | <monster nbr>
+
+#supply <value>
+  // Adds to castle defenders. Works just like the nation modding
+
+#uwwallmult <multiplier>
+
+#uwwallcom
+  // "<monster name>" | <monster nbr>
+
+#homemon
+  // "<monster name>" | <monster nbr>
+
+#defcom
+  // "<monster name>" | <monster nbr>
+
+#homecom
+  // "<monster name>" | <monster nbr>
+
+#defunit
+  // "<monster name>" | <monster nbr>
+
+#mon
+  // "<monster name>" | <monster nbr>
+
+#com
+  // "<monster name>" | <monster nbr>
+
+#defmult <multiplier>
+
+#natmon
+  // "<monster name>" | <monster nbr>
+
+#bloodcost <bonus>
+
+#scry <duration>
+
+#scryrange <range>
+
+#conjcost <bonus>
+
+#altcost <bonus>
+
+#evocost <bonus>
+
+#constcost <bonus>
+
+#enchcost <bonus>
+
+#thaucost <bonus>
+
+#popgrowth <per mille>
+
+#curse <chance>
+
+#claim
+
+#cluster <value>
+  // command are not active until the throne is claimed by a god, a
+
+#dominion <temple checks per month>
+
+#disease <chance>
+  // initiating a number of temple checks per month.
+
+#goddomchaos <value>
+
+#goddomlazy <value>
+
+#holyfire <chance>
+  // value to increase Production.
+
+#goddomcold <value>
+
+#goddomdeath <value>
+
+#holypower <chance>
+  // Increases the Death scale of the god's dominion. Use a
+
+#goddommisfortune <value>
+
+#xp <value>
+  // #goddomdrain <value>
+
+#goddomdrain <value>
+
+#adventureruin <success chance>
+  // #blesshp <value>
+
+#blesshp <value>
+
+#blessanimawe <value>
+
+#lab
+  // is augmented.
+
+#blessmr <value>
+
+#temple
+  // #blessawe <value>
+
+#blessawe <value>
+
+#blessmor <value>
+
+#fort <fort nbr>
+  // Blessed troops get increased Morale.
+
+#blessstr <value>
+
+#blessdarkvis <value>
+  // #selectnation <nation nbr>
+
+#selectnation <nation nbr>
+
+#blessatt <value>
+  // command. Nation number is a number between 5 and 499. See
+
+#evil
+  // use number 150 and above in order to create new nations
+
+#blessdef <value>
+  // for various independents and temporary monsters in the game
+
+#blessprec <value>
+
+#blessfireres <value>
+  // Nbr Nation Epithet
+
+#blesscoldres <value>
+  // 6 Mekone, Brazen Giants
+
+#blessshockres <value>
+  // 8 Ermor, New Faith
+
+#blesspoisres <value>
+  // 10 Fomoria, The Cursed Ones
+
+#blessairshld <value>
+  // 12 Marverni, Time of Druids
+
+#blessreinvig <value>
+  // 15 Agartha, Pale Ones
+
+#blessdtv <value>
+  // 19 Ur, The First City
+
+#wild
+  // 22 T'ien Ch'i, Spring and Autumn
+
+#recallgod <value>
+  // 25 Mictlan, Reign of Blood
+
+#domwar <value>
+  // 28 Machaka, Lion Kings
+
+#indepflag
+  // "<imgfile>"
+
+#newnation
+  // .
+
+#clearnation
+
+#epithet
+  // "<nation name>"
+
+#era <era nbr>
+
+#summary
+  // "<nation name>"
+
+#brief
+  // "<nation name>"
+
+#color <red> <green> <blue>
+  // Library of Time 4 astral pearls
+
+#secondarycolor <red> <green> <blue>
+  // Wild Forest 1 nature gem
+
+#flag
+  // "<imgfile>" Singing Tree 2 glamour gems
+
+#islandsite
+  // "<site name>"
+
+#startsite
+  // , but the nation will only get the site if it starts on
+
+#likesterr <terrain mask>
+
+#disableoldnations
+  // the terrain mask.
+
+#idealcold <cold>
+
+#viewallprov
+  // Sets the preferred level of cold for the nation. This ranges from
+
+#defchaos <-5 - 5>
+
+#viewallbat
+  // #defsloth <-5 - 5>
+
+#defsloth <-5 - 5>
+
+#defdeath <-5 - 5>
+
+#defmisfortune <-5 - 5>
+
+#defdrain <-5 - 5>
+
+#uwnation
+
+#clearsites
+  // Underwater nation. The nation's capital is in a sea province.
+
+#coastnation
+
+#riverstart
+
+#cavenation <0-3>
+
+#futuresite
+  // "<site name>" Sets the nation's preference for starting in cave provinces. 0 =
+
+#caveinc <bonus>
+
+#caveres <bonus>
+
+#caverecpt <bonus>
+
+#islandnation
+
+#hatesterr <terrain mask>
+  // #aiairnation
+
+#aiairnation
+
+#killcappop <percent>
+  // #aiwaternation
+
+#aiwaternation
+
+#fortcoldscaleres <steps>
+  // #aiearthnation
+
+#aiearthnation
+
+#fortheatscaleres <steps>
+  // #ainaturenation
+
+#ainaturenation
+
+#homecoldscaleres <steps>
+  // #aiastralnation
+
+#aiastralnation
+
+#homeheatscaleres <steps>
+  // #aideathnation
+
+#aideathnation
+
+#aiglamournation
+
+#aibloodnation
+
+#bloodnation
+
+#aigoodbless <0-100>
+
+#aimusthavemag <magic path number>
+
+#aicheapholy
+
+#aiholyranged
+
+#aiheavyrec <0-99>
+
+#aiholdgod
+
+#aimagerec <0-99>
+
+#aiawake <percent>
+
+#aifirenation
+
+#clearrec
+  // #startunittype1 "<monster name>" | <monster nbr>
+
+#startunittype1
+  // "<monster name>" | <monster nbr>
+
+#startunitnbrs1 <nbr of units>
+
+#startcom
+  // "<monster name>" | <monster nbr> The number of start units. Default is 20 units.
+
+#startunittype2
+  // "<monster name>" | <monster nbr>
+
+#startunitnbrs2 <nbr of units>
+
+#addforeignunit
+  // "<monster name>" | <monster nbr> The number of start units in the second squad. Default is 20
+
+#addforeigncom
+  // "<monster name>" | <monster nbr> #addrecunit "<monster name>" | <monster nbr>
+
+#addrecunit
+  // "<monster name>" | <monster nbr>
+
+#addreccom
+  // "<monster name>" | <monster nbr>
+
+#uwrec
+  // "<monster name>" | <monster nbr>
+
+#forestrec
+  // "Moose". Combine this
+
+#uwcom
+  // "<monster name>" | <monster nbr>
+
+#landrec
+  // ”<monster name>” | <monster nbr>
+
+#landcom
+  // ”<monster name>” | <monster nbr>
+
+#merccost <percent>
+
+#hero1
+  // ...10 <monster nbr>
+
+#multihero1
+  // ...7 <monster nbr>
+
+#noforeignrec
+
+#startscout
+  // "<monster name>" | <monster nbr>
+
+#coastunit1
+  // ...3 ”<monster name>” | <monster nbr>
+
+#coastcom1
+  // ...2 ”<monster name>” | <monster nbr>
+
+#defcom1
+  // "<monster name>" | <monster nbr>
+
+#defcom2
+  // "<monster name>" | <monster nbr> #guardcom "<monster name>" | <monster nbr>
+
+#guardcom
+  // "<monster name>" | <monster nbr>
+
+#defunit1
+  // "<monster name>" | <monster nbr> #guardunit "<monster name>" | <monster nbr>
+
+#guardunit
+  // "<monster name>" | <monster nbr>
+
+#defunit1b
+  // "<monster name>" | <monster nbr> followed by a #guardmult command. The first gate guard type
+
+#guardmult
+  // command. The first gate guard type
+
+#defunit1c
+  // "<monster name>" | <monster nbr> #guardmult <multiplier>
+
+#foreignwallcom
+  // "<monster name>" | <monster nbr>
+
+#defunit1d
+  // "<monster name>" | <monster nbr> Will replace the non-foreign variant for forts that is not the
+
+#foreignwallunit
+  // "<monster name>" | <monster nbr>
+
+#defunit2
+  // "<monster name>" | <monster nbr> Will replace the non-foreign variant for forts that is not the
+
+#defunit2b
+  // "<monster name>" | <monster nbr> #foreignwallmult <multiplier>
+
+#foreignwallmult <multiplier>
+
+#defmult1 <multiplier>
+  // never need it.
+
+#foreignguardcom
+  // "<monster name>" | <monster nbr>
+
+#defmult1b <multiplier>
+  // capital. This command is used by Muspelheim and most nations
+
+#foreignguardunit
+  // "<monster name>" | <monster nbr>
+
+#defmult1c <multiplier>
+  // Will replace the non-foreign variant for forts that is not the
+
+#defmult1d <multiplier>
+  // #foreignguardmult <multiplier>
+
+#foreignguardmult <multiplier>
+
+#defmult2 <multiplier>
+  // never need it.
+
+#badindpd <0 or 1>
+
+#defmult2b <multiplier>
+  // province except the home province.
+
+#noundeadgods
+
+#delgod
+  // "<monster>" | <monster nbr>
+
+#likespop <poptype>
+
+#godrebirth
+
+#cheapgod20
+  // "<monster name>" | <monster nbr>
+
+#uwbuild <0 or 1>
+
+#cheapgod40
+  // "<monster name>" | <monster nbr>
+
+#blessbonus <0 - 9>
+
+#fireblessbonus <0 - 9>
+
+#cleargods
+
+#airblessbonus <0 - 9>
+
+#waterblessbonus <0 - 9>
+
+#addgod
+  // "<monster name>" | <nbr>
+
+#earthblessbonus <0 - 9>
+
+#astralblessbonus <0 - 9>
+
+#deathblessbonus <0 - 9>
+
+#natureblessbonus <0 - 9>
+
+#bloodblessbonus <0 - 9>
+
+#fortera <0-4>
+  // 14 Mayan
+
+#fortcost <extra cost>
+
+#templegems <type>
+
+#labcost <price>
+
+#templecost <price>
+
+#homefort <fort nbr>
+
+#forestlabcost <price>
+
+#foresttemplecost <price>
+
+#cavelabcost <price>
+
+#cavetemplecost <price>
+  // Fort nbr Fort name
+
+#swamplabcost <price>
+  // 2 Fortress (standard era 1)
+
+#swamptemplecost <price>
+  // 4 Citadel (standard era 3)
+
+#mountlabcost <price>
+  // 6 Fortress (underwater era 1)
+
+#mounttemplecost <price>
+  // 8 Castle of Bronze and Crystal
+
+#wastelabcost <price>
+  // 10 Bramble Fort
+
+#wastetemplecost <price>
+  // 12 Walled City
+
+#templepic <pic nbr>
+  // 14 Great Walled City
+
+#buildfort <fort nbr>
+
+#nopreach
+
+#builduwfort <fort nbr>
+  // Priests of this nation cannot preach. Mictlan has this
+
+#dyingdom
+
+#buildcoastfort <fort nbr>
+  // Dominion is dying and needs blood sacrifice. Temples have no
+
+#fortunrest <value>
+  // combined with #nopreach and #sacrificedom.
+
+#sacrificedom
+  // .
+
+#nodeathsupply
+  // #domkill <value>
+
+#domkill <value>
+
+#halfdeathinc
+  // #domunrest <value>
+
+#domunrest <value>
+
+#halfdeathpop
+  // unrest reducing Dominions.
+
+#autoundead
+
+#domdeathsense
+  // Ashen Empire Ermor.
+
+#nationinc <percent>
+  // angel when in battle. Nbr can be negative for montags.
+
+#syncretism <0 or 1>
+
+#castleprod <resource boost in percent>
+  // #domwar <value>
+
+#domsail
+
+#tradecoast <income boost in percent>
+  // The nation's Dominion enables all units to sail like the dark
+
+#hidedom <0 or 1>
+
+#seatrace
+  // scout in the province.
+
+#templeholypoints <value>
+
+#golemhp <percent>
+  // recruiting sacred units). Ind and Piconye have this ability.
+
+#disbless
+  // "bless name" | <nbr>
+
+#clearallspells
+
+#selectspell
+  // "<spell name>" | <nbr>
+
+#priestreanim
+
+#undeadreanim
+
+#horsereanim
+
+#wightreanim
+
+#tombwyrmreanim
+  // #clear
+
+#copyspell
+  // "<spell name>" | <spell nbr>
+
+#manikinreanim
+  // current spell.
+
+#supayareanim
+  // also remove its description, so make sure to set name before
+
+#greekreanim
+  // A text description of the spell.
+
+#details
+  // "<text>"
+
+#ghostreanim
+  // spell detail text under the main spell description.
+
+#school <school nbr>
+
+#researchlevel <level>
+
+#pathlevel <reqnr> <level>
+
+#fatiguecost <fat>
+  // 24 Holy damage (x3 vs undead and demons)
+
+#damage <dmg>
+
+#damagemon
+  // "<monster name>" 10037 Farsummon Mon nbr
+
+#nextspell
+  // "<spell name>" | <nbr>
+
+#nextingeo <terrain mask>
+
+#effect <eff>
+  // 10163 Create Nexus gate 1
+
+#nreff <nbr of effects>
+  // Terrain masks
+
+#precision <prec>
+  // 10 1024 Many Sites
+
+#flightspr <flysprite nbr>
+  // #nogeosrc <terrain mask>__ Spell or ritual cannot be cast
+
+#nogeosrc <terrain mask>
+  // __ Spell or ritual cannot be cast
+
+#onlygeodst <terrain mask>
+
+#nogeodst <terrain mask>
+
+#onlycoastsrc <0 - 1>
+
+#strikesound <sample nbr>
+  // #onlyatsite <"site name"> | <site nbr>
+
+#onlyatsite <"site name">
+  // | <site nbr>
+
+#onlysitedst <"site name">
+  // | <site nbr>
+
+#onlyfriendlydst <0 - 2>
+
+#onlyowndst <0 or 1>
+
+#nowatertrace <0 or 1>
+
+#makecrater <0 or 1>
+  // 1 = ritual range cannot trace through water provinces. 0 =
+
+#nolandtrace <0 or 1>
+
+#provrange <range>
+
+#walkable <0 or 1>
+
+#onlygeosrc <terrain mask>
+
+#restricted <nation nbr>
+  // | "nation name"
+
+#spec <spec bitmask>
+
+#notfornation <nation nbr>
+  // | "nation name"
+
+#farsumcom
+  // "<monster name>" | <monster nbr>
+
+#casttime <1-1000>
+
+#godpathspell <-1 - 7>
+
+#friendlyench <0 - 1>
+
+#hiddenench <0 - 1>
+
+#nocastmindless <0 - 1>
+
+#spellreqfly <0 - 1>
+
+#onlymnr
+  // "<monster name>" | <monster nbr>
+
+#notmnr
+  // "<monster name>" | <monster nbr>
+
+#polygetmagic <0 - 1>
+
+#maxbounces <bounces>
+  // Values for globallook
+
+#sethome
+  // 3 Well of Misery
+
+#reqsun <0 - 1>
+  // 6 Blood Vortex
+
+#dispimmune <0 - 2>
+
+#portent
+  // "text"
+
+#napbreakrit <value>
+  // that is sent to all players. Don't write "A dire portent..." that
+
+#sumhealaffs <value>
+  // things like the name of the caster's god.
+
+#cure
+  // "text"
+
+#notindoors <-1 to 1>
+
+#fullgodname
+  // ##
+
+#godname
+  // ##
+
+#disname
+  // ##
+
+#fullplayername
+  // ##
+
+#playername
+  // ##
+
+#sizecost <value>
+
+#playergodname
+  // ##
+
+#fullplayergodname
+  // ##
+
+#godhe
+  // ##
+
+#dishe
+  // ##
+
+#twiceborncost <value>
+
+#godhis
+  // ##
+
+#godHis
+  // ##
+
+#dishis
+  // ##
+
+#disHis
+  // ##
+
+#godhim
+  // ##
+
+#dishim
+  // ##
+
+#godhimself
+  // ##
+
+#dishimself
+  // ##
+
+#godthrone
+  // ##
+
+#playerthrone
+  // ##
+
+#localglobal <0 - 1>
+
+#playergodthrone
+  // ##
+
+#godnat
+  // ##
+
+#disnat
+  // ##
+
+#worldvisible <0 - 1>
+
+#globallook <1 - 9>
+
+#selectitem
+  // "<item name>" | <item nbr>
+
+#reqspellsinger
+
+#reqtaskmaster
+
+#reqseduce
+  // Always use this command at the end of modifying a magic item.
+
+#clearallitems
+
+#reqplant
+
+#reqnospellsinger
+  // Removes all abilities and stats from the magic item.
+
+#constlevel <level>
+
+#reqnotaskmaster
+  // Level of construction required to forge this item. This level can
+
+#reqnoseduce
+  // unforgable item, 13 = unforgable unique artifact, 15 =
+
+#reqnoplant
+  // #mainpath <path>
+
+#mainpath <path>
+
+#mainlevel <path>
+
+#ainocast <0 or 1>
+
+#secondarypath <path>
+
+#aibadlvl <level>
+
+#secondarylevel <path>
+
+#aispellmod <bonus>
+
+#copyitem
+  // "<item name>" | <item nbr>
+
+#spr
+  // "<filename>"
+
+#aiassmod <bonus>
+
+#newitem
+
+#luck
+
+#morale <value>
+
+#quickness
+
+#bless
+
+#pen <value>
+
+#barkskin
+
+#spell
+  // "<spell name>"
+
+#autospell
+  // "<spell name>"
+
+#autospellrepeat
+  // is also used.
+
+#stoneskin
+
+#ironskin
+
+#bers
+
+#extralife
+
+#nationrebate <nation nbr>
+  // | "nation name"
+
+#limitedregen <percent>
+  // nation nbr of -1 uses the last manipulated nation, so this
+
+#noforgebonus
+
+#islance
+
+#autobless
+  // #minsize <size>
+
+#minsize <size>
+
+#maxsize <size>
+
+#mapspeed <value>
+
+#heavyitem <0 or 1>
+
+#waterbreathing
+
+#fly
+
+#cursed
+
+#run
+  // The item is cursed and cannot be dropped.
+
+#nomounted
+
+#sneakunit <value>
+  // #curse
+
+#stealthboost <value>
+  // #nocoldblood
+
+#nocoldblood
+
+#swift <percent>
+  // #disease
+
+#nodemon
+
+#chestwound
+
+#reqeyes
+
+#noundead
+
+#noinanim
+
+#noimmobile
+
+#nofind
+
+#nofemale
+
+#feeblemind
+
+#restricteditem <value>
+
+#mute
+
+#itemcost1 <bonus>
+
+#onlymounted
+  // This command makes the item bonus percent more expensive
+
+#onlycoldblood
+  // The itemcost1 command only affects the cost of the first magic
+
+#nhwound
+  // #itemcost2 <bonus>
+
+#itemcost2 <bonus>
+
+#onlydemon
+  // The itemcost2 command only affects the cost of the second
+
+#crippled
+  // #itemdrawsize <value>
+
+#itemdrawsize <value>
+
+#onlyundead
+  // draw at a smaller size than normal.
+
+#champprize
+
+#loseeye
+  // This item is given as a reward for winning the championship of
+
+#onlyinanim
+  // The bearer of this item will automatically compete in the Arena
+
+#onlyimmobile
+  // #bestowtomount
+
+#bestowtomount
+
+#onlyfemale
+  // as well, if any. This doesn't work with all effects that are
+
+#recuperation
+
+#yearaging <value>
+
+#noaging <percent>
+
+#noagingland <percent>
+  // #singlebattle
+
+#danceweapon
+  // "<weapon name>" | <weapon nbr> #nomovepen
+
+#dancenratt <attacks>
+  // #norange
+
+#dancespr <flysprite nbr>
+  // #statstorm
+
+#dancenof <nbr of sprites>
+
+#dancesize <size>
+  // #seduce
+
+#sabbathmaster
+
+#poppergold <people>
+
+#resourcemult <percent>
+
+#supplymult <percent>
+
+#unresthalfinc <unrest level>
+
+#unresthalfres <unrest level>
+
+#summon3
+  // #eventisrare <percent>
+
+#eventisrare <percent>
+
+#summon4
+  // Random events are divided into two categories, common and
+
+#turmoilincome <percent>
+
+#makemonsters3
+  // The effect turmoil and order has on income. Default is 3.
+
+#makemonsters4
+  // #turmoilevents <percent>
+
+#turmoilevents <percent>
+
+#deathincome <percent>
+
+#battlesum2
+  // The effect death and growth has on income. Default is 2.
+
+#battlesum3
+  // #deathsupply <percent>
+
+#deathsupply <percent>
+
+#battlesum4
+  // The effect death and growth has on supplies. Default is 10.
+
+#deathdeath <0.01 percent>
+
+#slothincome <percent>
+
+#batstartsum2
+  // #slothresources <percent>
+
+#slothresources <percent>
+
+#batstartsum3
+  // The effect sloth and productivity have on resources. Default is
+
+#batstartsum4
+  // 15.
+
+#batstartsum5
+  // #coldincome <percent>
+
+#coldincome <percent>
+
+#batstartsum2d6
+  // #coldsupply <percent>
+
+#coldsupply <percent>
+
+#batstartsum3d6
+  // The effect cold and heat has on supplies. Default is 10.
+
+#batstartsum4d6
+  // #tempscalecap <value>
+
+#tempscalecap <value>
+
+#batstartsum5d6
+  // Changing any scale more than this does not yield extra design
+
+#misfortune
+  // <percent>
+
+#luckevents <percent>
+
+#researchscale <bonus>
+
+#startresearch <RP>
+  // 54 Hvy Inf, Hvy Cavalry
+
+#arenagold <amount>
+  // 57 Shamblers
+
+#arenagems <amount>
+  // 60 Militia, Lt Inf, Archers
+
+#gemlongevity <level>
+  // 63 Tritons
+
+#selectpoptype <poptype>
+  // 71 Trolls
+
+#minmen <value>
+
+#minpay <gold>
+
+#cleardef
+  // The minimum amount of gold the band can be hired for.
+
+#randequip <0-3>
+
+#recrate <value>
+
+#item
+  // "<item name>"
+
+#eramask <value>
+
+#newmerc
+
+#clearmercs
+  // normal, then press ctrl+shift+s to save a file containing the
+
+#bossname
+  // "<name>"
+
+#newtemplate <nation nbr>
+
+#unit
+  // "<monster name>" Always start a new template with this command. It creates a
+
+#nrunits <value>
+
+#form
+  // "monster name"
+
+#prison <nbr>
+
+#domstr <level>
+
+#scale <scale nbr> <value>
+  // Modding Number Limits
+
+#researchgoal
+  // "spell name" | "item name"
+
+#favrit <disschool> <level>
+  // "ritual name" | "item name"
+
