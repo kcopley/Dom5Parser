@@ -232,7 +232,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SEATRACE, CommandProperty.Create); //#seatrace
 
             // TODO: should this be a bless reference?
-            _propertyMap.Add(Command.DISBLESS, Property.Create); //#disbless bless name | <nbr>
+            _propertyMap.Add(Command.DISBLESS, StringProperty.Create); //#disbless bless name | <nbr>
 
             _propertyMap.Add(Command.HIDEDOM, IntProperty.Create); //#hidedom <0 or 1>
             _propertyMap.Add(Command.TEMPLEHOLYPOINTS, IntProperty.Create); //#templeholypoints <value>
