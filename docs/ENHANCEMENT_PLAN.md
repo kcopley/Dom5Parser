@@ -8,9 +8,9 @@ Create a UI-based editor that:
 - Displays all entities (monsters, weapons, spells, etc.) in navigable lists
 - Provides editing interfaces for each entity type
 - Saves changes back to .dm format cleanly
-- Supports both Dominions 5 and Dominions 6 formats
+- **Primary focus: Dominions 6** (Dom5 support maintained where practical)
 
-## Phase 1: Property Metadata System
+## Phase 1: Property Metadata System (COMPLETE)
 
 Add metadata to property definitions to support UI generation.
 
@@ -51,30 +51,61 @@ public class PropertyDefinition
 - **Recruitment**: Gcost, Rcost, Rpcost, Slowrec, Reclimit
 - **Miscellaneous**: Flags and other properties
 
+### Implementation Status
+- `PropertyDefinition.cs` - Core metadata class with fluent builders
+- `PropertyMetadata.cs` - Registry with lookup, validation, and sample definitions
+- `MetadataLoader.cs` - JSON loader for loading metadata from extracted PDF data
+- Sample metadata defined for common commands (HP, STR, weapons, etc.)
+
+### Remaining Work
+- Load comprehensive metadata from `commands_clean.json` at startup
+- Integrate metadata into ViewModels for display names/tooltips
+- Wire up validation using metadata constraints
+
 ## Phase 2: Mod Class Refactoring
 
-Split responsibilities of the Mod class:
+### 2.1: Vanilla Data Migration (FIRST)
 
-### ModParser
+**Goal:** Switch from TSV spreadsheet loading to vanilla.dm file parsing for Dom6.
+
+Current state:
+- VanillaLoader.cs loads from TSV files in VanillaData/ folder
+- Data converted to internal Mod representation
+
+Migration tasks:
+- Analyze current VanillaLoader implementation and internal format
+- Verify vanilla.dm file location and format
+- Update loading to parse vanilla.dm using existing Mod.Parse()
+- Mark loaded entities as vanilla/read-only
+- Remove or deprecate TSV loading code
+- Update ID ranges for Dom6 (already partially done in Mod.cs)
+
+This ensures all vanilla entity references resolve correctly before refactoring.
+
+### 2.2: Split Mod Class Responsibilities
+
+Split the ~960 line Mod class into focused components:
+
+**ModParser**
 - Line-by-line parsing logic
 - Command recognition
 - Multi-line string handling
 - Comment preservation
 
-### ModDocument
+**ModDocument**
 - Entity storage (Database, Dependents)
 - Entity queries and lookups
 - Change tracking for dirty state
 
-### ModExporter
+**ModExporter**
 - Export formatting
 - ID remapping during merge
 - File writing
 
-### Mod (Facade)
+**Mod (Facade)**
 - High-level operations
 - Import/Export entry points
-- Backwards compatibility
+- Backwards compatibility with existing code
 
 ## Phase 3: Editor Infrastructure
 

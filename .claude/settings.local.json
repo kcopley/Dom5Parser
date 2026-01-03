@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet:*)",
+      "Bash(dotnet build:*)",
+      "Bash(pip3 list:*)",
+      "Bash(/mnt/c/Program Files/dotnet/dotnet.exe build:*)",
+      "Bash(python3:*)",
+      "Bash(pip3 install:*)",
+      "Bash(apt list:*)",
+      "Bash(/mnt/c/Users/*/AppData/Local/Programs/Python/Python*/python.exe)",
+      "Bash(/mnt/c/Users/kurtc/AppData/Local/Programs/Python/Python310/python.exe:*)",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Edit\\\\Dom5Edit.csproj\")"
+    ]
+  }
+}

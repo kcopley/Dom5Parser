@@ -4,71 +4,31 @@ Potential bugs and critical problems identified during code review.
 
 ---
 
-## Potential Bugs
+## Fixed Issues (Commit: "Small bug fixes")
 
-### 1. Incorrect HasFlag Usage in IDEntity.cs:113
+### ~~1. Incorrect HasFlag Usage in IDEntity.cs:113~~ FIXED
 
-**File:** `Dom5Edit/Entities/IDEntity.cs`
-**Line:** 113
+Fixed: Changed to `if (exists == ReturnType.TRUE || exists == ReturnType.COPIED)`
 
-```csharp
-if ((ReturnType.TRUE | ReturnType.COPIED).HasFlag(exists))
-```
+### ~~2. Hardcoded ERA Value in IntProperty.cs:41-43~~ FIXED
 
-**Problem:** This logic is inverted. `HasFlag` checks if the caller contains the argument, not the other way around. This will always return true when `exists` is `TRUE` or `COPIED`, but the intent appears to be checking if `exists` is one of those values.
+Fixed: Removed the hardcoded ERA special case.
 
-**Fix:**
-```csharp
-if (exists == ReturnType.TRUE || exists == ReturnType.COPIED)
-// or
-if (exists != ReturnType.FALSE)
-```
+### ~~3. Debug Code in EntitySet.cs:72-76~~ FIXED
 
-**Impact:** May cause incorrect property resolution when getting entity names.
+Fixed: Removed debug breakpoint code.
 
----
+### ~~4. Unused usings in Reference.cs~~ FIXED
 
-### 2. Hardcoded ERA Value in IntProperty.cs:41-43
+Fixed: Removed unused using statements.
 
-**File:** `Dom5Edit/Props/IntProperty.cs`
-**Lines:** 41-43
+### ~~5. _StringExported not static in StringOrIDRef.cs~~ FIXED
 
-```csharp
-if (Command == Command.ERA)
-{
-    return s + " " + 2 + " -- " + Comment;
-}
-```
+Fixed: Made `_StringExported` static readonly.
 
-**Problem:** The ERA value is always exported as `2` regardless of the actual value stored. This appears to be debug/test code that was never removed.
+### ~~6. Property.Create in Nation.cs~~ FIXED
 
-**Impact:** All mods exported will have their nations set to Era 2 (Middle Ages) regardless of the intended era.
-
-**Fix:** Remove this special case or clarify the intent:
-```csharp
-// Remove lines 41-43 entirely
-```
-
----
-
-### 3. Debug Code in EntitySet.cs:72-76
-
-**File:** `Dom5Edit/Entities/EntitySet.cs`
-**Lines:** 72-76
-
-```csharp
-if (id == 7712 || id == 7713)
-{
-    int abc = 0;
-    abc++;
-}
-```
-
-**Problem:** Debugging breakpoint code left in production.
-
-**Impact:** No functional impact, but indicates incomplete cleanup and reduces code quality.
-
-**Fix:** Remove these lines.
+Fixed: Changed `Property.Create` to `StringProperty.Create` for DISBLESS command.
 
 ---
 

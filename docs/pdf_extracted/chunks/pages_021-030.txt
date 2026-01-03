@@ -1,0 +1,807 @@
+
+============================================================
+PAGE 21
+============================================================
+
+#beckon <value> #addrandomage <years>
+Gives the monster the ability to lure enemy commanders like Makes the monster start 1 to years (a random die) older.
+the Siren. The value indicates the difficulty of the morale check, #uwdamage <percent>
+10 is standard. This monster takes damage equal to the indicated percentage
+#falsearmy <value> of its total hit points every turn it spends underwater (i.e. in a
+The monster creates the false impression of greater numbers sea province). Vampires have #uwdamage 100 so they cannot
+than there really are. Enemy scouting reports will inflate the go underwater at all.
+size of the army by <value> units. #heal
+#foolscouts <value> Grants Pangaea-like healing powers to the monster
+The monster creates the false impression of uniformity in its (Recuperation special ability).
+own army. Enemy scouting reports will perceive the army to #noheal
+only contain one type of troop. The reported troop type is This monster does not heal naturally. If it is a magic being it will
+usually the most common troop type present. heal if it is located in a province with a lab.
+#plaguedoctor <percent> #landdamage <percent>
+A commander with this ability can use the make plague order. The monster will take damage equal to the indicated
+#assencloc <value> percentage of its total hit points every turn it spends in a land
+Specifies an encounter location that the assassinations will province instead of underwater.
+appear in. If not specified, a suitable one for each occasion will #healer <percent>
+be used. Possible values can be seen below. Grants a commander the Heal Troops ability. The percent
+value is the chance of success for every unit in the province.
+Encounter locations
+Success chance is checked against every unit to see if the
+0 random suitable commander successfully uses the healing ability. If successful,
+1 tavern a check is made against the difficulty of each affliction and if it
+2 courtyard succeeds, the affliction in question is healed. Some afflictions
+3 outside are harder to heal than others. This command still works, but it
+4 bedroom is replaced in all instances of in-game occurrence with the
+5 library #autohealer or #autodishealer mechanic.
+6 commoner house #homesick <percent>
+7 summoning circle (assassin inside circle) This monster takes damage equal to the indicated percentage
+8 summoning circle (assassin at entrance) of its total hit points every turn it spends away from its home
+7 exploring old ruins province (the province where it was first recruited, summoned
+or spawned).
+Age, Healing & Afflictions
+#autohealer <value>
+The monster automatically heals <value> afflictions from units
+#startage <age>
+in the same province. The default value is 1. Only very powerful
+The start age for a monster. Usually there is no need to set this
+healers should have higher values. The Chalice artifact has a
+as it will be calculated automatically depending on maxage and
+value of 5.
+skills. An age of zero clears this command and an age of -1 sets
+#autodishealer <value>
+start age to zero. The startage value is the starting point for
+The monster automatically heals disease from <value> units in
+actual age calculations based on magic and other skills.
+the same province. The default value is 1. Only very powerful
+#maxage <age>
+disease healers should have higher values.
+This maximum age for a monster. After this age it will risk
+#autodisgrinder <value>
+getting afflictions and eventually die. Default is 50 for humans,
+The monster automatically heals disease from <value> units in
+500 for undead, 1000 for demons. Different magic paths
+the same province. Each disease healed is converted to a Death
+increase maxage 50% of this value per point of magic,
+gem.
+depending on the type of creature. Undead are affected by
+#autocorpsehealer <value>
+Death magic, inanimate creatures by Earth magic, demons by
+Gives the Corpse Stitcher ability. The monster automatically
+Blood magic and all others by Nature magic, in that order (if the
+heals <value> afflictions from corporeal undead units in the
+monster belongs to more than one of these categories at once,
+same province.
+e.g. lifeless undead).
+#diseaseres <percent>
+#older <age>
+Protects a unit when diseased. Value is the chance of not being
+Makes the monster start somewhat older or younger than its
+negatively affected by the disease each month.
+calculated or preset start age.
+21
+
+============================================================
+PAGE 22
+============================================================
+
+#woundfend <value> giants have cold resistance 25. Some creatures like Fire
+The monster is less likely to suffer an affliction when taking Elementals have a fire resistance of 75 because they are
+damage. A value of 1 makes it half as likely, a value of 2 makes it composed entirely of their element and cannot be harmed
+one third as likely, etc. Air Elementals and similar have a value by it at all.
+of 99, making it almost impossible to get an affliction.
+#hpoverflow To make a monster more vulnerable to a particular type of
+The monster's hit points can increase past the normal elemental damage, it can be given a negative resistance
+maximum. The extra HP are permanently retained until lost value. In this case the affected type of damage is increased
+due to damage. This command is useful for units that possess by an amount equal to the penalty.
+life drain attacks or that can #digest swallowed monsters.
+#bluntres
+#corpseeater <value>
+The monster takes half damage from blunt weapons.
+The monster will eat this amount of corpses per month if
+#ethereal
+possible and gain HP for it equal to the value in #deadhp.
+The monster is ethereal. Non-magical weapons have only 25%
+#deadhp <value>
+chance of harming the monster when they hit, but when they
+Number of HP gained per corpse eaten.
+do, they inflict full damage unless mitigated by another ability.
+#maxdeadhp <HP>
+Ethereal monsters can pass through walls during the storming
+The monster's bonus HP gained from corpse eating can never
+of a fortress.
+go above this.
+#coldres <prot>
+#startaff <percent>
+Grants cold resistance to the monster. A value of 5 or more
+The monster has a chance of starting with a random lesser
+protects the monster from the fatigue effects of a chill aura.
+affliction like a flagellant.
+#fireres <prot>
+#startmajoraff <percent>
+Grants fire resistance to the monster. A value of 5 or more
+The monster has a chance of starting with a random major
+protects the monster from the fatigue effects of a heat aura.
+affliction.
+#poisonres <prot>
+#startingaff <affliction bitmask>
+Grants poison resistance to the monster.
+Monster always starts with one (or more) afflictions as
+#shockres <prot>
+indicated by the affliction bitmask. See the Affliction table in
+Grants shock resistance to the monster.
+the weapon modding section for suitable values.
+#acidres <prot>
+#insane <percent>
+Grants acid resistance to the monster.
+The monster has a chance of being insane each turn. The Mad
+#decayres <0 or 1>
+Priests of R'lyeh have a value of 50 in this attribute.
+Grants immunity to decay.
+#startheroab <percent>
+#iceprot <prot>
+The monster has a chance of starting with a heroic ability, like
+Armor protection varies with the temperature in the province.
+you receive when entering the hall of fame.
+The protection value is added or subtracted for every step on
+#xpgain <percent>
+the Cold scale.
+Will earn XP this many percent faster (or slower) than normal
+#icenatprot <prot>
+units.
+Natural protection varies with the temperature in the
+#extralives <percent>
+province. The protection value is added or subtracted for every
+Will get dominion times this value amount of scar souls (extra
+step on the Cold scale.
+lives).
+#invulnerable <prot>
+The monster has invulnerability to non-magical weapons. The
+Damage Reduction
+invulnerability value counts as natural protection against
+This section deals with abilities that reduce (or maybe normal weapons.
+increase) damage the monster receives from attacks. #regeneration <percent>
+Elemental resistances function like armor by lessening The monster regenerates like a troll and heals damage every
+damage from attacks of a particular type of element (fire, combat round. The percent value indicates how many percent
+cold, shock or poison). of its total hit points are regenerated every turn. The standard
+value for regeneration is 10.
+Some monsters have values as high as 25 for elemental
+#doheal
+resistances because they are intended to be immune to any
+Unit heals normally despite not usually being able to heal.
+normally conceivable damage from that element. For
+#undregen <percent>
+example, all undead and inanimate creatures have poison
+Works like regeneration, but only affects undead beings.
+resistance 25, Abysians have fire resistance 25 and Niefel
+22
+
+============================================================
+PAGE 23
+============================================================
+
+#reconst <percent> #bugreform <nbr of bugs>
+Works like regeneration, but only affects inanimate beings. This is a combat ability. When killed the monster will turn into a
+#uwregen <percent> myriad of bugs and reform a little while later. The worm mage
+Works like regeneration, but only works underwater. has this ability. The type of bugs created can be controlled by
+#falseregen <points> the following 4 commands.
+Heals false damage by this amount of points per combat round. #bugshape "<monster name>" | <monster nbr>
+#enchantedblood <points> This is the shape for the "soul bug". It's the one that will later be
+Gets points bonus to MR and heals about 0.5 HP per combat reformed into the mage if it survives long enough. By default it
+round. Also stops bleeding quickly. is a bug soul vessel (a beetle with immortality).
+#pierceres #buguwshape "<monster name>" | <monster nbr>
+The monster takes half damage from piercing weapons. This is the shape for the "soul bug" if it is underwater.
+#slashres #bugswarmshape "<monster name>" | <monster nbr>
+The monster takes half damage from slashing weapons. This is the shape of the random bugs that will make up that
+#reinvigoration <points> main part of the swarm. By default this is a random bug
+Reduces the fatigue by points amount every turn in battle. This (monster nbr = -9).
+value can be negative to gain extra fatigue in battle instead. #bugswarmuwshape "<monster name>" | <monster nbr>
+Lower fatigue reduces the chance of the monster suffering This is the shape of the random bugs if they are underwater.
+critical hits while higher fatigue increases it.
+#airshield <percent> Combat Auras
+The monster gains the airshield special ability.
+These abilities grant the monster an aura that affects the
+#ironvul <points>
+battlefield around it or enemies that attack it in some
+The monster will take points amount of extra damage when
+manner. Abilities that trigger only when the monster is killed
+wounded by an iron weapon in melee.
+are in the Other Combat Abilities section.
+#twistfate
+Will start with a twist fate in combat. Also receives a twist fate #heat <value>
+at the start of each new month. This monster is surrounded by heat like an Abysian. The heat
+#glamour aura is <value> + Fire magic squares in size. Standard value is 3.
+Gives a monster the glamour ability of a Van (not the magic #cold <value>
+path with the same name). These monsters cannot be This monster is surrounded by cold like a Winter Wolf. The chill
+discovered by scouts and have a mirror image protecting them aura is <value> + Water magic squares in size. Standard value
+in battles. This command adds 25 to the monster's existing is 3.
+stealth value if it already has the #stealthy attribute. Glamour #uwheat <0-100>
+does not grant stealth to monsters that have no stealth to Like #heat, but also works underwater.
+begin with. #poisonarmor <dmg>
+Anyone striking this monster with short weapons will be
+Immortality poisoned.
+#poisonskin <0-500>
+This section covers different the different kinds of
+The monster has a skin that exudes a paralyzing poison, which
+immortality available for monsters.
+does fatigue damage to anyone attacking it with length 0
+#immortal weapons. The value is the damage rating of the poison.
+This monster is immortal like a Lich. #poisoncloud <size>
+#domimmortal Monster is surrounded by a poison cloud. Standard size is 6.
+This monster is dominion immortal like a Phoenix. #diseasecloud <size>
+#reformtime <extra months> Monster is surrounded by a disease cloud. Standard size is 6.
+Alters the time taken to reform the immortal's body. The The disease cloud adds the Plague Carrier icon to the monster.
+standard time is 3 months, use #reformtime -2 if you want the #animalawe <bonus>
+immortal to reappear the next month. Bonus can be a value of one or more. A bonus of one means
+#springimmortal that animals with a morale of 11 have about 50% chance of
+The immortal will reform his body in the spring. daring to strike. A bonus of 10 means that you need a morale of
+#reform <chance> 20 to get a 50% chance. Standard value is 1 (for Awe(+1) ).
+This is a combat ability. The monster has this chance of getting
+a new healthy body when killed.
+23
+
+============================================================
+PAGE 24
+============================================================
+
+#awe <bonus> #slimer <strength>
+Bonus can be a value of one or more. A bonus of one means Any unit attacking this monster must make a magic resistance
+that people with a morale of 11 have about 50% chance of check or become immobilized by oozing slime, identical to the
+daring to strike. A bonus of 10 means that you need a morale of effects of the Slime spell. Strength works identically to
+20 to get a 50% chance. Standard value is 1 (for Awe(+1) ). 24 #damagerev.
+#sunawe <bonus> #entangle
+Works like Awe, except that it doesn't work if there is no sun Anyone striking this monster may get entangled.
+shining. #eyeloss
+#haltheretic <bonus> Anyone striking this monster may lose an eye.
+Works like Awe, except that it only works against sacred units. #horrormark
+#fear <value> Anyone striking this monster may be horror marked.
+This monster is very fearsome. A high value indicates higher #mindslime <area>
+fear. The standard value is 5. Death magic increases the fear Grants the mindslime ability.
+value. The monster lowers the morale of enemy units in #overcharged <dmg>
+<value> squares around it. Affected squares are randomly Grants the overcharged ability. A damage value of 1 means
+determined. Units with Death magic 5 gain Fear even without that it is a capped damage, greater values give uncapped
+this command. damage.
+#dread <value> #sleepaura <area>
+Like fear, but negated by true sight. Grant the Sleep Aura effect with this area of effect. The
+#fireshield <damage> Shuten-doji has this ability with area 10.
+Anyone striking this monster will take <damage> points of #nightmareaura <area>
+armor piercing fire damage. Standard damage for fire shields is Grant the Nightmare Aura effect with this area of effect.
+8. Fire magic increases the amount of damage. #spikes <dmg>
+#uwfireshield <damage> This unit is covered in sharp spikes barbs. Anyone striking it
+Like fireshield, but works underwater too. with a short weapon (length no more than 1) will risk getting
+#banefireshield <damage> damaged. The damage is not severe, it is capped at 1 point and
+Anyone striking this monster will take <damage> points of armor also protects.
+armor piercing bane fire damage. The damaged unit will also
+suffer the effect of the Decay spell if it fails an MR check. Seasonal Powers
+Standard damage for bane fire shields is 8.
+The seasonal powers affect the monster's hit points. During
+#acidshield <damage>
+the season of power the monster gets a percentage increase
+Anyone striking this monster will take <damage> points of
+to its maximum hit points. During the opposite season, it
+armor piercing acid damage. The damaged unit will also suffer
+gets a percentage reduction to its maximum hit points.
+the effect of weakened armor, as if from the Rust Mist spell.
+Standard damage for acid shields is 8. #springpower <percent>
+#curseluckshield <penetration bonus> The monster has increased hit points in spring and lowered hit
+Grants the Fateweaving ability. Anyone striking the unit will points in autumn.
+have their fate rewritten and suffer from misfortunes for the #summerpower <percent>
+next few rounds of battle. The effect can be resisted with a The monster has increased hit points in summer and lowered
+successful Magic Resistance check. The penetration bonus hit points in winter.
+makes the effect harder to resist. #fallpower <percent>
+#damagerev <strength> The monster has increased hit points in autumn and lowered
+The monster has the Damage Reversal ability. Any creature hit points in spring.
+that hits the monster must make a magic resistance check or #winterpower <percent>
+suffer the damage itself instead of harming the target. Strength The monster has increased hit points in winter and lowered hit
+must be at least one and strength minus one is the penalty to points in summer.
+the MR check. Use strength 1 for standard damage reversal #yearturn <bonus>
+with no penalty. Power of the Turning Year. This unit is more powerful during
+#bloodvengeance <strength> the height of each season and will get increased Strength,
+The monster has the Blood Vengeance ability. Any creature Attack and Defence during those months.
+that hits the monster must make a magic resistance check or
+suffer the same damage that it inflicts on its target. Strength Elemental & Scale Powers
+works identically to #damagerev.
+These commands give the monster bonuses to their
+24
+
+============================================================
+PAGE 25
+============================================================
+
+statistics when they are subject to the effects of certain #blessbers
+scales or other conditions. The effect of the powers tied to Will make unit go berserk when blessed.
+dominion scales is a ( bonus x ± 1 ) point increase or #blessfly
+decrease to Strength, Attack, Defense and Action Points per Will grant the unit flying when blessed.
+scale level, with no modifier when the scales are neutral. #darkvision <percent>
+Gives monster darkvision, lessening penalties for fighting
+#chaospower <bonus>
+under darkness. Use value 100 for perfect darkvision.
+The monster will get stat increases or decreases depending on
+#spiritsight
+the Turmoil scale.
+Spirit sight makes it possible to see into the spirit realm and see
+#coldpower <bonus>
+the true essence of beings. Units with spirit sight gets no
+The monster will get stat increases or decreases depending on
+penalties from darkness and can see invisible units.
+the Cold scale.
+#truesight
+#firepower <bonus>
+True sight makes it possible to see through illusions and
+The monster will get stat increases or decreases depending on
+glamour. Units with true sight get no penalties when fighting
+the Heat scale.
+units who are invisible or enchanted with glamour spells such
+#deathpower <bonus>
+as Blur.
+The monster will get stat increases or decreases depending on
+#invisible
+the Death scale.
+Invisible units can only be seen by units with spirit sight. When
+#growthpower <bonus>
+a unit with invisibility is sneaking, only patrolling units with
+The monster will get stat increases or decreases depending on
+spirit sight will be able to find it. In combat invisibility gives any
+the Growth scale.
+melee attackers -10 to their attack skill unless they have spirit
+#darkpower <bonus>
+sight.
+The monster will get stat increases in darkness. Only active in
+#unseen
+combat.
+Like invisible, but will pop once hit.
+#stormpower <bonus>
+#guardspiritbonus <value>
+The monster gets stat increases in combat during storms. This
+Increases the chance of receiving a guardian spirit with +value
+attribute also duplicates the effects of the #stormimmune
+percent. Command has no effect if the nation does not have
+attribute, giving the monster the ability to fly during a storm.
+#guardspirit command set.
+Only active in combat.
+#trampswallow
+#magicpower <bonus>
+The monster automatically swallows the targets of a successful
+The monster will get stat increases or decreases depending on
+trampling attack. Swallowed monsters are removed from the
+the Magic scale.
+battlefield until the swallowing monster is killed.
+#slothpower <bonus>
+#raiseonkill <chance>
+The monster will get stat increases or decreases depending on
+Monster has a chance in percent to raise the people it kills as
+the Sloth scale.
+soulless.
+#dompower <bonus>
+#trample
+The monster will get stat increases or decreases depending on
+This monster can trample smaller beings.
+the strength of the dominion in the province.
+#digest <dmg>
+The monster digests any swallowed creatures. Swallowed
+Combat Abilities
+creatures take <dmg> damage every combat round until dead
+or until the monster that swallowed them is killed.
+#ambidextrous <bonus>
+#aciddigest <dmg>
+This monster gets reduced attack penalty when using two
+The monster digests any swallowed creatures and causes their
+weapons. A normal value is 2 or 3.
+armor to be weakened, like the Rust Mist spell.
+#clumsy <0 or 1>
+#incorporate <dmg>
+This monster will only receive half att/def bonuses from
+The monster incorporates any swallowed creatures as a part of
+weapons.
+itself. Swallowed creatures take damage every combat round
+#berserk <bonus>
+until dead or until the monster that swallowed them is killed.
+This monster can go berserk like a barbarian chief or a
+The monster that incorporates them heals a number of hit
+minotaur. The bonus value will be added to strength and attack
+points equal to damage inflicted every combat round.
+and subtracted from defense. It also increases encumbrance. A
+normal bonus value is 3.
+#autoberserk <value>
+1 = will start the combat by going berserk.
+25
+
+============================================================
+PAGE 26
+============================================================
+
+#raiseshape "<monster name>" | <monster nbr>
+Non-Combat Abilities
+Changes soulless to another kind of unit for the #raiseonkill or
+#dt_raise effects. Monster number can be negative for montag #castledef <value>
+usage. Gives a castle defense bonus to the monster. The monster
+#fearofflood <value> counts as <value> extra monsters when defending a fort from a
+Morale penalty when it is raining. siege.
+#mindcollar <dmg> #siegebonus <value>
+Unit will take this amount of damage if it breaks in combat. A value of ten will make this monster count as ten extra
+humans when it comes to breaking down castle gates.
+#deathcurse
+#patrolbonus <value>
+When this monster dies, the unit that strikes the killing blow is
+A value of ten will make this monster count as ten extra
+cursed.
+humans when it comes to patrolling. This value can also be
+#deathpoison <aoe>
+negative for extra poor performance.
+The monster bursts in a cloud of poison when it dies, infecting
+#pillagebonus <value>
+its killer and anyone nearby with poison (str 2 poison cloud).
+A monster with this ability excels at pillaging. A barbarian has a
+#deathdisease <aoe>
+pillage bonus of one which makes them count as one man extra
+The monster bursts in a cloud of disease ridden fumes when it
+when it comes to pillaging.
+dies, infecting its killer and anyone nearby with disease.
+#inquisitor
+#deathparalyze <aoe>
+This monster has a bonus when preaching against enemy
+The monster erupts in a paralyzing explosion on death, forcing
+Dominion. Its holy magic level counts as double for this
+everyone in the area of effect to make a MR check or become
+purpose. The monster must have the #holy tag.
+paralyzed.
+#supplybonus <value>
+#deathfire <aoe>
+A monster with this ability produces extra supplies.
+The monster erupts in a fiery explosion when it dies, inflicting
+#falsesupply <value>
+10 AP fire damage to everyone in the area of effect.
+A monster with this ability produces extra false supplies.
+#deathshock <aoe>
+#appetite <value>
+The monster erupts in a shock explosion when it dies, inflicting
+A monster with this ability will eat supplies as if he was this
+capped 1 AN shock damage to everyone in the area of effect.
+many points larger than he actually is and get the Gluttony
+#deathslime <aoe>
+icon. A negative value can also be used to eat less, but it will not
+The monster erupts in a slime explosion when it dies, inflicting
+result in any ability icon.
+slime (water breathers immune) to everyone in the area of
+#heretic <value>
+effect.
+The monster decreases dominion in the province it resides in as
+#deathgrab <aoe>
+if it was an enemy priest engaged in preaching. The value of the
+The monster erupts in a earth grip explosion when it dies,
+heretic ability acts as the priest level and should be set within
+inflicting earth grip to everyone in the area of effect.
+the range of 1 – 5.
+#powerofdeath <limit>
+#resources <value>
+The monster will become more powerful every time it dies, up
+The monster generates <value> resources in the province it is
+to at most limit number of deaths.
+in, like a Master Smith of Ulm.
+#sleepres <bonus>
+#iceforging <value>
+Monster will get the Undreaming ability giving this bonus to its
+The monster generates <value> resources in cold provinces.
+MR against sleep effects.
+#neednoteat
+This monster doesn’t need any food and doesn’t consume any
+#beartattoo <value>
+supplies. To create a monster that cannot starve but still eats,
+Magic tattoo like the units of Marverni and Sauromatia have.
+combine this effect with a negative #supplybonus.
+#horsetattoo <value>
+#elegist <value>
+Magic tattoo like the units of Marverni and Sauromatia have.
+The monster is more effective than its normal priest level when
+#wolftattoo <value>
+calling a god or disciple back from death. The Elegist value is
+Magic tattoo like the units of Marverni and Sauromatia have.
+added to its priest level when performing this action.
+#boartattoo <value>
+#spreaddom <candles>
+Magic tattoo like the units of Marverni and Sauromatia have.
+The monster spreads the Dominion of the pretender god by its
+#snaketattoo <value>
+mere presence. The candles value should usually be one,
+Magic tattoo like the units of Marverni and Sauromatia have.
+meaning that the monster spreads as much dominion as one
+prophet.
+26
+
+============================================================
+PAGE 27
+============================================================
+
+#praise <value> #incscale <scale>
+The praise ability raises friendly dominion in the province. Increases the selected scale by one point per turn to a
+#nobadevents <value> maximum of -3 / 3. This command functions as #decscale for
+The monster will reduce the chance of negative events in his the opposite scales.
+current province. The value is the percent chance of negating a #decscale <scale>
+possible bad event. Decreases the selected scale by one point per turn to a
+#shatteredsoul <percent> maximum of -3 / 3. This command functions as #incscale for the
+The monster suffers from a shattered soul like a Tartarian. opposite scales.
+There is a <percent> chance each turn that the monster (if a #fortkill <chance>
+commander) does not obey orders but does something else This monster will automatically destroy forts in the same
+instead. province. Chance is the chance in percent that the fort will be
+#incunrest <value> destroyed each turn.
+The monster will increase or decrease unrest at his location. #thronekill <chance>
+The value divided by 10 is the amount increased per month. A This monster will automatically destroy thrones in the same
+negative can be used to decrease unrest instead. province, unless they are protected by a fort. Chance is the
+#incprovdef <value> chance in percent that the throne will be destroyed each turn.
+The monster is good at organizing province defenses. PD is #farthronekill <part>
+increased by <value> per turn, to a maximum of 19. This monster will automatically destroy thrones in the same
+#taxcollector province, even if they are protected by a fort. Part is the
+The monster can collect taxes from provinces that cannot trace percentage part that will be destroyed each turn, 100 means it
+a route to the nearest fort. will be destroyed in a single turn.
+#gold <gold / month> #localsun
+The monster generates gold that is added to the treasury. Use This monster will count as the sun being present in the current
+a negative value for a monster that costs gold every month province. This can be important when trying to cast certain
+above and beyond the normal upkeep. spells that cannot be cast when there is no sun.
+#addupkeep <gold> #adeptsacr <value>
+Upkeep will be calculated as if the unit cost this much more to Adept Sacrificer. This unit is better at performing blood
+recruit. sacrifices in order to spread the dominion. The value equals
+#leper <percent> number of extra blood magic level for this purpose.
+The monster spreads a very deadly disease that kills population #mindvessel <0 or 1>
+and infects military units in the province. The percent value is Monster can be the target of the mind vessel ritual.
+the chance for a military unit in the same province to be
+infected. Shape Changing
+#popkill <amount>
+#shapechange "<monster name>" | <monster nbr>
+The monster kills (10 x amount) of population in the province it
+This monster is able to change shape to and from another
+resides in every month. This applies to both commander and
+monster at will. The other monster is not affected by this
+non-commander units with this attribute.
+command and must be given #shapechange command with the
+#insanify <percent>
+first form as the value. Dragons use this ability. It is also
+The monster spreads insanity to both military units and
+possible to do multiple form shape changers such as the Jotun
+population in the province. The percent value is the chance for
+Skratti by chaining this command over several monsters.
+a military unit in the same province to be infected.
+#prophetshape "<monster name>" | <monster nbr>
+#nohof
+Unit will change into this monster when made a prophet.
+The monster cannot enter the Hall of Fame.
+Monster nbr can be negative for montag usage.
+#alchemy <percent>
+#firstshape "<monster name>" | <monster nbr>
+The monster is more efficient when casting spells the converts
+This monster will change shape to its first shape when it feels
+gems into gold. A typical Alchemist has a value of 50.
+ok. Werewolves have this ability in their wolf shapes. Monster
+#mason
+nbr can be negative for montags.
+A mason is able to lead the construction of more advanced
+#secondshape "<monster name>" | <monster nbr>
+forts than what would otherwise be possible for the nation. A
+This monster will assume another shape when it gets seriously
+mason will be able to upgrade a fortress one step further than
+wounded. Remember to give the other shape the #firstshape
+normally possible.
+command if you want it to return to the primary form when it
+feels better. Werewolves in human form use this ability.
+27
+
+============================================================
+PAGE 28
+============================================================
+
+Monster nbr can be negative for montags. #labxpshape <xp value>
+#secondtmpshape "<monster name>" | <monster nbr> The monster will change into the next monster type (next
+This monster will transform into another monster when it is monster number) after reaching this amount of xp and when
+killed in battle. This other monster will be removed after battle. being in a province with a lab.
+Serpent Cataphracts use this ability. Monster nbr can be #xpshapemon "<monster name>" | <monster nbr>
+negative for montags. Alters what monster xpshape & labxpshape transforms into.
+#shapechance <percent> Monster number can be negative for montag usage.
+Extra chance of the shapechange or secondshape #xpshapeloss <0-100>
+transformations actually taking effect. Default chance is 100, The monster loses 0-100% of xp when changing shape due
+so this chance should be negative to have any effect. E.g. a xpshape/xplabshape.
+monster with shapechance -75 would only have a 25% chance #xploss <0-100>
+of getting to his second shape when the first one gets killes. The monster loses 0-100% of xp when changing shape due to
+#forestshape "<monster name>" | <monster nbr> taking damage.
+The monster changes to this shape when moving from a #transformation <value>
+non-forest province to a forest province. The monster is a possible target for the Transformation spell.
+#plainshape "<monster name>" | <monster nbr> Value can be -1 for a bad result, 0 to disable and 1 for a good
+The monster changes to this shape when moving from a forest result.
+province to a non-forest province. If the monster also has a #(path)attuned <chance>
+watershape, the watershape takes precedence over the Chance of getting a bonus level of magic when transformed
+plainshape, such as when moving from a forest to a water into this being. In place of (path), insert the name of the magic
+province. path in all lower case for the correct command (#fireattuned,
+#foreignshape "<monster name>" | <monster nbr> #airattuned etc).
+The monster changes to this shape when moving out of its #cleanshape
+home province. The monster will heal all afflictions and hp if changing shape
+#homeshape "<monster name>" | <monster nbr> from secondshape to firstshape. This command must be
+The monster changes to this shape when moving into its home applied to the monster's firstshape, so for a werewolf the
+province. human form.
+#domshape "<monster name>" | <monster nbr> #forcess
+The monster changes to this shape when inside a friendly Usually being soul slayed will prevent any shape change or
+dominion. second shapes to save the victim. This command makes sure
+#notdomshape "<monster name>" | <monster nbr> that the shape change takes place even if the target got soul
+The monster changes to this shape when not inside a friendly slayed.
+dominion. #landshape "<monster name>" | <monster nbr>
+#springshape "<monster name>" | <monster nbr> The monster changes to this shape when moving from a water
+Changes into another monster when this season is active. province to a land province.
+#summershape "<monster name>" | <monster nbr> #watershape "<monster name>" | <monster nbr>
+Changes into another monster when this season is active. The monster changes to this shape when moving from a land
+#autumnshape "<monster name>" | <monster nbr> province to a water province.
+Changes into another monster when this season is active. #twiceborn "<monster name>" | <monster nbr>
+#wintershape "<monster name>" | <monster nbr> The monster will get this shape if it dies and rises again due to
+Changes into another monster when this season is active. the twiceborn ritual.
+#growhp <hit points> #lich "<monster name>" | <monster nbr>
+The monster grows into the previous monster once it has this The monster will get this shape if it is transformed into a lich.
+many hit points or more. Hydras use this mechanic. #battleshape "<monster name>" | <monster nbr>
+#shrinkhp <hit points> The monster changes to this shape when in battle.
+The monster shrinks to the following monster once it has this #worldshape "<monster name>" | <monster nbr>
+many hit points or less. Hydras use this mechanic. The monster changes to this shape when not in battle.
+#xpshape <xp value> #animated "<monster name>" | <monster nbr>
+The monster will change into the next monster type (next The monster becomes this if affected by the animate tree spell.
+monster number) after reaching this amount of xp. This command should only be used on the background trees
+and bushes that can be found on the battlefield.
+28
+
+============================================================
+PAGE 29
+============================================================
+
+#batstartsum1d6...9d6 "<monster name>" | <monster nbr>
+Monster Summoning
+Summons xd6 monsters at start of battle. The same command
+#reanimator <nbr> can be used up to 3 times on one monster.
+The monster will reanimate this number of corpses
+automatically every turn. All of the monster summoning commands accept negative
+#reanimpriest number values to provide a random summon of a specific
+A priest with this attribute will be able to raise undead. type. See table "Negative Monster Numbers" for the list of
+#domsummon "<monster name>" | <monster nbr> randomly summonable creatures types.
+Summons a number of monsters each month spent inside
+Negative Monster Numbers
+friendly dominion. The amount summoned is a dominion
+Nbr Monster
+strength sided open ended die roll.
+-2 Longdead
+#domsummon2 "<monster name>" | <monster nbr>
+-3 Soulless (requires corpses)
+Half as effective as #domsummon.
+-4 Ghoul
+#domsummon20 "<monster name>" | <monster nbr>
+-5 Random animal
+A twentieth as effective as #domsummon.
+-6 Lesser horror*
+#raredomsummon "<monster name>" | <monster nbr>
+-7 Horror*
+There is a flat 8% chance of summoning one creature of this
+-8 Doom Horror
+type when in a province with friendly dominion.
+-9 Random bug
+#templetrainer "<monster name>" | <monster nbr>
+-10 Random good crossbreed
+A commander with this ability will be able to summon a
+-11 Random bad crossbreed
+monster per turn when in a temple province. Only one
+-12 Random crossbreed (3% good)
+commander can do this per temple province.
+-13 Random hero
+#makemonsters1...5 "<monster name>" | <monster nbr>
+-14 Random dungeon monster
+Gives the monster a special order that can summon a monster
+-15 Soulless
+per month. #makemonsters2 to #makemonsters5 can also be
+-16 Random yazad
+used to summon more monsters per month.
+-17 Random yata
+#summon1...5 "<monster name>" | <monster nbr>
+-18 Soul trap ghost
+Automatically summons monsters each month. The
+-19 Lion of strange color
+#summon1 command summons one monster per month and
+-20 Random bird
+#summon2 to #summon5 more according to the number in the
+-21 Random directional dwarf
+command.
+-22 Random size 5 elemental
+#battlesum1...5 "<monster name>" | <monster nbr>
+-23 Random scorpion
+Automatically summons 0-x monsters to the battlefield each
+-24 Lesser horror
+combat round. The #battlesum5 command summons 0-5 and
+-25 Horror
+#battlesum1 summons 0-1 monsters etc.
+-26 Fayfolk
+#battlesum1d2 "<monster name>" | <monster nbr>
+Automatically summons 1-2 monsters to the battlefield each
+Entries marked with an asterisk may be made worse if the
+combat round.
+Astral Corruption global enchantment is active or if the
+#battlesum1d3 "<monster name>" | <monster nbr>
+cataclysm has occurred.
+Automatically summons 1-3 monsters to the battlefield each
+combat round. #montag <value>
+#battlesumwarm "<monster name>" | <monster nbr> This command assigns a monster tag value to a creature. The
+Automatically summons 1-4(-cold scale) monsters to the value must be a number between 1000 and 100000. The
+battlefield each combat round. Heat scales will not increase the monster tag value is a summoning marker that can be used
+number above 1-4. with the other monster summoning commands and in spell
+#batstartsum1...5 "<monster name>" | <monster nbr> modding to summon randomly determined monsters from a
+Summons x monsters at start of battle. The same command can defined list. When a summoning command or spell is used with
+be used up to 3 times on one monster. the montag value, a random creature with that montag value is
+#batstartsum1d3 "<monster name>" | <monster nbr> summoned. Use a minus sign before the value when using it in
+Summons 1d3 monsters at start of battle. The same command this manner for the command to work correctly.
+can be used up to 3 times on one monster.
+Example: Five monsters with a #montag 2500 could be set
+as random monster summons by assigning #summon2
+29
+
+============================================================
+PAGE 30
+============================================================
+
+-2500 to another monster. This would result in two random #waterelementals <bonus>
+monsters from those five being summoned. Gives a size bonus to summoned water elementals.
+The monster tag can also be used as damage value for Nametypes
+summoning spells, which will then summon a random
+If you do not set the nametype explicitly, then Dominions
+monster from the group with the same tag. To use it that
+will take a guess based on gender, size, resistances and so
+way, set spell damage to (minus)<montag value>.
+forth and sometimes come up with the correct result
+#montagweight <weight> anyway. Nametypes 170 – 399 should be used for modding
+Use this command after a montag command to make it more purposes.
+likely to appear than other monster with the same montag. The
+See list on page 36 to view all predefined nametypes.
+weight defaults to 1 which gives this montag the same chance
+of occurring as other montags with weight 1 (or no specified #nametype <name type nbr>
+weight). A weight of 2 will make it twice as likely to appear, and Sets the type of random name that this monster gets when it’s
+so forth. Maximum weight is 100. a commander. For name numbers and their meaning see table
+"Name Types".
+#ivylord <nbr>
+This monster will receive extra units when summoning Vine
+Mounts & Riders
+Men of different kind.
+#dragonlord <nbr> Here are the commands that are used to pair riders and
+This monster will receive extra units when summoning Drakes mounts. All of these commands, except the last few in the
+of different kind. mount command chapter are only give to the rider unit.
+#lamialord <nbr>
+#mountmnr "<monster name>" | <monster nbr>
+This monster will receive extra units when summoning Lamias
+Use this to give a mount to a rider. The sprite of the unit should
+of different kind. This ability will not be visible when inspecting
+be the standard sprite of the rider sitting on his mount.
+the monster.
+#unmountedspr1 "<imgfile>"
+#corpselord <nbr>
+Creates a sprite that is used when the rider loses his mount.
+This monster will receive extra units when creating Corpse
+#unmountedspr2 "<imgfile>"
+Men. This ability will not be visible when inspecting the
+The attack animation sprite for the unmounted sprite. This
+monster.
+must always be set after unmountedspr1 has been set, not
+#onisummon <0 - 100>
+before.
+This unit has a chance of attracting one or more Ko-Oni per
+month. The Oni will only come if there is unrest or a turmoil
+Special units can have multiple mounts with the same rider,
+scale in the province. The higher the unrest and turmoil the
+or many riders on the same mount. It is not possile to have
+greater chance that a group of Ko-Oni will appear. The value of
+multiple riders and multiple mounts at once though.
+this ability will also modify this chance. A normal value is 50.
+#slaver "<monster name>" | <monster nbr> #nofmounts <mounts>
+Gets the capture slave ability. The number of slaves captured Sets the number of mounts that this rider has. The default is
+will be 1d6+4 (open ended) per month and unrest will increase one and usually there is no need for this command. But e.g. an
+by 1 for every slave captured. emperor with two people carrying his throne needs two
+#slaverbonus <modifier> mounts.
+Modifies the number of slaves captured with the Slaver ability. #nofriders <riders>
+E.g. a modifier of -2 will make the slaver ability catch 1d6+2 Sets the number of riders that sits on the same mount. The
+slaves per month. default is one and usually there is no need for this command.
+#faysummon <nbr> But e.g. a elephant rider that is accomanied by two more
+This monster will receive extra units when summoning fay people on top of the elephant would need this command with a
+folks of different kinds. value of 3.
+#coridermnr "<monster name>" | <monster nbr>
+#fireelementals <bonus>
+Use this to set the type of co-riders if any. Unless there are
+Gives a size bonus to summoned fire elementals.
+more than one rider on the same mount there is no need for
+#airelementals <bonus>
+this command.
+Gives a size bonus to summoned air elementals.
+#earthelementals <bonus>
+Gives a size bonus to summoned earth elementals.
+30

@@ -1,0 +1,763 @@
+
+============================================================
+PAGE 51
+============================================================
+
+Magic path numbers for spells are combat spells. There are many other values that can be
+Nbr Magic Path used, but these are the only documented ones for now. Press
+-1 None ctrl-i in game when viewing the spell details to see some
+0 Fire modding information including the effect value.
+1 Air
+Combat spell effects
+2 Water
+Nbr Effect
+3 Earth
+1 Summon monster
+4 Astral
+2 Damage
+5 Death
+3 Fatigue damage
+6 Nature
+7 Poison damage
+7 Glamour
+8 Relief
+8 Blood
+13 Healing
+9 Priest
+20 Blink
+#fatiguecost <fat> 24 Holy damage (x3 vs undead and demons)
+Set the fatigue cost for this spell. Every 100 in fatigue cost 28 Enslave
+raises the required number of gems or blood slaves by one. 29 Charm
+Must be used also for rituals to set their gem cost. 31 Summon independent
+43 Border summon
+Spell Effects 66 Paralyze
+73 Anti magic damage (x2 vs magic beings)
+#aoe <squares>
+103 Drain life
+Sets the area of effect for this spell. Add 1000 to this value to
+107 Holy damage (x2 vs demons)
+give larger areas to more powerful casters. E.g. 1001 means
+109 Capped damage
+area = 1+1/level of caster (area would be 2 for a level 1 mage).
+124 Holy damage (x2 vs undead)
+A value of 666 means that the entire battlefield is affected. 663
+126 Border summon independent
+means that 50% of all squares are affected, 665 = 25%, 664 =
+128 Stun
+10%, 662 = 5%.
+134 Bounce damage
+#damage <dmg>
+Ritual spell effects
+Set the damage for this spell. Add 1000 to dmg to make the
+Nbr Effect Damage
+damage be variable with the level of the caster. Damage means
+10001 Summon monster Mon nbr
+damage for damage spells, but it can also mean many other
+10019 Teleport 1
+things for different spells. E.g. summoning spells use this value
+10021 Summon commander Mon nbr
+to determine which monster is summoned.
+10035 Crossbreed 1
+#damagemon "<monster name>" 10037 Farsummon Mon nbr
+Use this to set a spell's damage to a monster if you don't know 10038 Indep. farsummon Mon nbr
+its number. 10039 Gift of Reason 1
+10042 Cause event Eventid
+#nextspell "<spell name>" | <nbr>
+10044 Transform 1
+With this command the effect of another spell will also take
+10045 Force-transform 1
+place when the effect of the main spell occurs. The nextspell
+10048 Find sites Path
+takes place on every area where the main spell takes effect. So
+10050 Assassination Mon nbr
+make sure the area of the second spell isn’t greater than 1 or
+10063 Build fort Fort nbr
+there will be overlaps.
+10064 Afflict army Aff bitmask
+10077 Army gateway 1
+#nextingeo <terrain mask>
+10094 Beckoning 999
+The spell after this will also take effect if it cast in this terrain.
+10095 Cloud trapeze 1
+For combat spells only.
+10117 Old alchemy Gold per gem
+#effect <eff> 10163 Create Nexus gate 1
+Set the effect of the spell. Some of the most common eff values 10164 Alchemy Gold
+can be seen in tables "Ritual spell effects" and "Combat spell 10169 Army teleport 1
+effects". Value higher than 10000 are rituals and those lower
+51
+
+============================================================
+PAGE 52
+============================================================
+
+#nreff <nbr of effects> Terrain masks
+Sets the number of effects for this spell. For summoning spells 2^x Nbr Terrain
+this determines how many creatures are summoned. Add - 0 Plains
+1000, 2000 or 3000 to this value to give more powerful casters 0 1 Small Province
+more effects. Every 1000 gives one additional effect for every 1 2 Large Province
+level of the caster. Add 500 instead to give one extra effect for 2 4 Sea
+every two levels the caster exceeds the requirement of the 3 8 Freshwater
+spell. 4 16 Mountain
+5 32 Swamp
+#range <range>
+6 64 Waste
+Sets the battlefield range for this spell. Add 5000 to this value
+7 128 Forest
+to give longer range (5 extra per level) to more powerful
+8 256 Farm
+casters.
+9 512 Nostart
+#precision <prec> 10 1024 Many Sites
+Set the precision for this spell. 11 2048 Deep Sea
+12 4096 Cave
+Look & Sound of Combat Spells 23 8388608 Border Mountain
+#flightspr <flysprite nbr> #nogeosrc <terrain mask>__ Spell or ritual cannot be cast
+Set the sprite or particle effect to be used when this spell is from any of these terrains. See table "Terrain masks".
+flying. The flysprite nbr should be a value from the table #onlygeodst <terrain mask>
+"Flysprites". Ranged ritual can only target one of these terrains. See table
+#explspr <fx nbr> "Terrain masks". Only used for spells that target faraway
+Set the particle effect to be used when this spell explodes. -1 = provinces.
+no explosion. See table "Explosion fx" to find a suitable #nogeodst <terrain mask>
+explosion. Ritual cannot target provinces with any of these terrains. See
+#sound <sample nbr> table "Terrain masks". Only used for spells that target faraway
+The sample that will sound when this spell is cast. Samples have provinces.
+the same number as the weapon samples, see table "Sound #onlycoastsrc <0 - 1>
+effects". 1 means this ritual can only be cast from a coast province.
+#strikesound <sample nbr> #onlyatsite <"site name"> | <site nbr>
+The sample that will sound when this spell strikes down. Ritual can only be cast in provinces containing this site.
+Samples have the same number as the weapon samples, see #onlysitedst <"site name"> | <site nbr>
+table "Sound effects". Ritual can only target provinces containing this site. The site
+#sample "<filename>" must be revealed to be targetted.
+Uses this sample as sound effect for when the spell is cast. The #onlyfriendlydst <0 - 2>
+sample must be in .sw (16-bit signed words, 22050 Hz, mono) 1 = can only target allied provinces, 2 = can also target allied
+or .al (a-law, 22050 Hz, mono) format. This command can also forts even when besieged.
+be used for weapons. #onlyowndst <0 or 1>
+#speedmult <1 - 3> 1 = can only target own provinces. 0 = can target any province
+Use this command to make the spell projectiles fly slower or (default)
+faster. By default spell projectiles have a speed of 1. #nowatertrace <0 or 1>
+#makecrater <0 or 1> 1 = ritual range cannot trace through water provinces. 0 =
+Makes a crater where it lands. Ritual range can trace through water provinces (default)
+#nolandtrace <0 or 1>
+Spell Range & Targeting 1 = ritual range cannot trace over land. 0 = ritual range can
+trace over land (default)
+#provrange <range>
+#walkable <0 or 1>
+Sets the range of a ritual in provinces.
+1 = ritual range must trace along a walkable path. 0 = ritual
+#onlygeosrc <terrain mask>
+range need not be walkable (default)
+Spell or ritual can only be cast from one of these terrains. See
+table "Terrain masks" for possible terrain mask values.
+52
+
+============================================================
+PAGE 53
+============================================================
+
+61 MR check for half damage
+Spell Special Attributes
+#restricted <nation nbr> | "nation name"
+#spec <spec bitmask>
+Spell will only be available for this nation. You can use up to 12
+Sets the special abilities of a spell. 8388608 is a useful number
+of these commands for a single spell, thus enabling up to 12
+and it means that the spell can be cast under water. 64 is armor
+nations to research the spell. A value of -1 restricts the spell to
+piercing, 128 is armor negating and 4096 means MR negates.
+the last manipulated nation, so this command can be used with
+Add values together to make combinations.
+#newnation. The number of times this command can be used
+Spec bitmask on a single spell is also somewhat dependent on how many
+2^x Spec other things the spell does, so limiting the use of this command
+2 Spiritforms are immune to less than the total number allowed is advised.
+3 Non-demon/non-undead immune #notfornation <nation nbr> | "nation name"
+4 Non-magic beings immune Restricts a spell so that it cannot be used by this nation. This
+5 Fire immunity negates command can be used multiple times on the same spell.
+6 Armor piercing #homerealm <realm nbr>
+7 Armor negating Restrict the spell to nations belonging to a certain home realm.
+8 Soul slaying attack
+#farsumcom "<monster name>" | <monster nbr>
+9 Cold immunity negates
+Sets the commander for farsummoned units to something
+11 Shock immunity negates
+other than the normal units.
+12 MR roll negates
+#casttime <1-1000>
+13 Poison immunity negates
+Set the casting time of a spell, the casting time is 100 for a
+14 Always hits someone in square
+standard spell. There is usually no need to set this value as
+15 Non-sacreds/pretenders immune
+Dominions will automatically give certain spells like battle
+16 Does not affect UW units
+enchantments higher casting time to fit in with all the other
+17 Does not affect mindless
+spells.
+18 Does not affect friends
+#godpathspell <-1 - 7>
+19 Does not affect undeads
+This is used for divine spells that should only be available when
+20 Def roll negates damage
+the God is best with this particular magic path. -1 can be used
+21 Mundane attack
+for the fallback spell that should be available when the god has
+22 Does not affect enemies
+no path that is good enough.
+23 Can be cast underwater
+#friendlyench <0 - 1>
+24 MR roll negates (easy)
+1 means the enchantment created by this spell is friendly. It will
+25 Can only be cast underwater
+be dispelled automatically if the province is conquered by the
+26 Iron attack
+enemy.
+28 Demons are immune
+#hiddenench <0 - 1>
+29 Inanimates are immune
+1 means the enchantment created by this spell is not visible
+32 Illusions are immune
+during battles. It should be used on enchantments that does
+33 Hits both rider and mount
+not affect battles.
+34 False damage
+#nocastmindless <0 - 1>
+41 Acid immunity negates
+1 means mindless units cannot cast this spell.
+42 Size 4+ can resist
+#spellreqfly <0 - 1>
+43 Morale roll negates
+1 means only flying units can cast this ritual.
+44 MR roll negates (difficult)
+#onlymnr "<monster name>" | <monster nbr>
+46 Does not affect flying/floating
+Only this type of monster is able to cast this spell. Monster nbr
+47 Does not affect the caster or his mount
+can be negative for a montag. This command can be used
+48 Does not affect non-animals
+multiple times on the same spell for non-montags.
+49 More likely to hit in the head (75%)
+#notmnr "<monster name>" | <monster nbr>
+50 Does not affect true sight
+This type of monster is unable to cast this spell. Monster nbr
+51 Only affects mounts
+can be negative for a montag. This command can be used
+52 Void sane beings are immune
+multiple times on the same spell for non-montags.
+54 Real damage (never negated)
+#polygetmagic <0 - 1>
+55 Internal damage
+1 means a unit polymorphed by this ritual will get the magic of
+57 Animals are immune
+the target creature.
+53
+
+============================================================
+PAGE 54
+============================================================
+
+#maxbounces <bounces> Values for globallook
+Set the maximum number of bounces for a chain lightning 1 Eternal Pyre
+(effect 134) type of spell effect. 2 Mother Oak
+#sethome 3 Well of Misery
+The commander casting this ritual will get his home province 4 Stellar Focus
+set to the current province. 5 Maelstrom
+#reqsun <0 - 1> 6 Blood Vortex
+This command can make a combat spell uncastable when there 7 Winds of Parched Magic
+is no sun present. A sun is usually not present in caves, deep 8 Gates of Horn and Ivory
+seas and during the night. 9 Earthblood Deepwell
+#dispimmune <0 - 2>
+This command will make an enchantment immune to dispels. #portent "text"
+This command works for both local and global enchentments. 1 Global enchantments come with a "dire portent" message to all
+= immune to astral disruption only, 2 = immune to all dispels. players. This command can be used to set the part of the text
+#napbreakrit <value> that is sent to all players. Don't write "A dire portent..." that
+A positive value means the ritual counts as a NAP violation. A part is added at the start automatically. Special tags shown in
+negative value means it will never count as a NAP violation. the table below can be inserted in the message to reference
+#sumhealaffs <value> things like the name of the caster's god.
+Units summoned by this spell will have up to value number of #cure "text"
+afflictions healed. This can be useful if summoning an immortal This is the part of the dire portent message that is only sent to
+or unique monster that might have accumulated afflictions in the enemies of the caster. It can use the same special tags.
+its previous life.
+Dire portent tags
+#notindoors <-1 to 1>
+##fullgodname##
+1 = cannot be cast indoors, -1 = can be cast indoors, even it it
+##godname##
+usually should not be castable there. Battlefield enchantments
+##disname##
+and other battlefield wide spells cannot be cast indoors by
+##fullplayername##
+default.
+##playername##
+#sizecost <value>
+##playergodname##
+Units that are not human sized will have the cost of the ritual
+##fullplayergodname##
+adjusted by (value)*(size difference). Cost will never go below
+##godhe##
+zero.
+##dishe##
+#twiceborncost <value>
+##godhis##
+Units that are not human sized after being transformed by the
+##godHis##
+twiceborn ritual will have the cost of the ritual adjusted by
+##dishis##
+(value)*(size difference after twiceborn). Cost will never go
+##disHis##
+below zero.
+##godhim##
+##dishim##
+Global Enchantments
+##godhimself##
+Global enchantments have some special settings that can be ##dishimself##
+manipulated with the following commands. ##godthrone##
+##playerthrone##
+#localglobal <0 - 1>
+##playergodthrone##
+This is a localized global enchantment. It will have its origin in
+##godnat##
+the province where it was cast.
+##disnat##
+#worldvisible <0 - 1>
+This enchantment can be seen from all over the world. Use
+Tags that contain "god" references the caster's god. Those
+together with #localglobal.
+that contain "dis" references the nation's leader, this can be
+#globallook <1 - 9>
+a disciple or a god. The tag "player" references the player
+If global should be visible from map (localglobal only) this
+that is receiving the message.
+command can be used to determine what it should look like.
+Rare Caster Requirements
+A single spell can have at most one positive rare caster
+54
+
+============================================================
+PAGE 55
+============================================================
+
+requirement (req...) and at most one negative (reqno...) #selectitem "<item name>" | <item nbr>
+requirement. Selects the magic item that will be affected by the following
+modding commands. End modding this item with the #end
+#reqspellsinger
+command. In the game you can press ctrl+i when viewing a
+Only units with the spell singing ability can cast this spell.
+magic item to see what number it has.
+#reqtaskmaster
+Only units with the task master ability can cast this spell. #end
+#reqseduce Always use this command at the end of modifying a magic item.
+Only units with the seduce ability can cast this spell.
+#clearallitems
+#reqplant
+All forgeable magic items are removed from the game.
+Only trees and plants can cast this spell.
+#clear
+#reqnospellsinger Removes all abilities and stats from the magic item.
+Units with the spell singing ability cannot cast this spell. #constlevel <level>
+#reqnotaskmaster Level of construction required to forge this item. This level can
+Units with the task master ability cannot cast this spell. be 1,3,5,7,9 or 11,13,15 for items that cannot be forged. 11 =
+#reqnoseduce unforgable item, 13 = unforgable unique artifact, 15 =
+Units with the seduce ability cannot cast this spell. unforgable unique per nation artifact.
+#reqnoplant #mainpath <path>
+Trees and plants cannot cast this spell. Main path required to forge this magic item. The path is a
+number from 0 to 7 (see table "Magic path numbers").
+Spell AI Hints #mainlevel <path>
+Main path level requirement to forge this magic item. The level
+#ainocast <0 or 1>
+can be anything from 1 to 8. The cost of forging the magic item
+The spell AI will never select this spell unless it has been
+also depends on the level requirements.
+scripted. Use this for spells like Returning that should normally
+#secondarypath <path>
+never be cast.
+Secondary path required to forge this magic item. The path is a
+#aibadlvl <level>
+number from -1 to 7 from Table 20.
+The spell AI will never choose this spell if is is level or higher in
+#secondarylevel <path>
+the required magic path.
+Secondary path level requirement to forge this magic item.
+#aispellmod <bonus>
+Works like #mainlevel.
+This modifies the spell AI to (dis)like this spell. Usually there is
+#copyitem "<item name>" | <item nbr>
+no need for this command. A value of -50 makes it half as
+Copies all stats from an existing item to the current item.
+likable for the spell AI and a value of 100 makes it twice as
+#copyspr <item nbr>
+likable for the spell AI. The value can be between -100 and
+Copies the sprite of the specified magic item to the current
+1000, a value of -100 will make it never be cast, even if scripted
+magic item.
+to cast it.
+#spr "<filename>"
+#aiassmod <bonus>
+Uses a user made image for item sprite. The image should be
+This modifies the spell AI to (dis)like this spell when in an
+32x32 or 64x64 with the item centered in the picture. The item
+assassination battle. Usually there is no need for this command.
+itself should not be larger than 40x40 pixels. Black will be
+A value of -100 makes it never be cast and a value of 100
+transparent unless the image is saved with alpha information,
+makes it twice as likable for the spell AI.
+in which case that will be used instead.
+#type <nbr>
+Magic Item Modding
+Defines whether the item is 1-handed or 2- handed weapon, a
+shield, a helmet, a body armor, a pair of boots or something
+These commands allow the modding of magic items. The
+else. See table "Item types".
+maximum number of attributes a magic item may have is
+roughly sixteen. However, the total number of attributes is
+not so straightforward, because some attributes are 'free'.
+#newitem
+Creates a new magic item and selects it for modding by the
+following commands. End modding the magic item with the
+#end command.
+55
+
+============================================================
+PAGE 56
+============================================================
+
+Item types
+Attributes & Resistances
+Nbr Item Type
+#hp <value>
+1 1-handed Weapon
+The item grants a bonus to hit points.
+2 2-handed Weapon
+#str <value>
+3 Missile Weapon
+The item grants a strength bonus.
+4 Shield
+#att <value>
+5 Body Armor
+The item grants an attack bonus.
+6 Helmet
+#def <value>
+7 Boots
+The item grants a defense bonus.
+8 Misc Item
+#prec <value>
+9 Crown
+The item grants a precision bonus.
+10 Barding
+#mr <value>
+#name "<name>" The item grants a magic resistance bonus.
+Sets the name for the active magic item. Changing name of a #luck
+magic item will remove its description as well, so make sure to The item grants Luck to its bearer, like Faithful.
+set item name before its description. #morale <value>
+#descr "<text>" The item grants a morale bonus.
+A text description of the magic item. #quickness
+#weapon "<weapon name>" | <weapon nbr> The item grants Quickness (double movement, +2 attack &
+Defines what kind of a weapon, if any, the unit gets when it defense, attacks twice as often).
+uses the item. Works on misc item, boots, shield, 2-h weapon, #voidsanity <value>
+1-h weapon. Does not work for helmets or armor. Use The item grants a voidsanity bonus.
+#weapon 0 to clear an existing weapon from a copied item. #bless
+#armor "<armor name>" | <armor nbr> The item automatically applies the Bless spell to the bearer,
+Defines what kind of armor, if any, the units gets when it uses like the Shroud of the Battle Saint.
+the item. Use #armor 0 to clear an existing armor from a copied #fireres <value>
+item. The item grants a Fire Resistance bonus.
+#coldres <value>
+Magic & Spells The item grants a Cold Resistance bonus.
+#acidres <value>
+#magicboost <path> <value>
+The item grants an Acid Resistance bonus.
+The item increases the bearer's magic skill. Path is 0-8 or
+#decayres <0 or 1>
+51=elements, 52=sorcery, 53=all.
+Grants immunity to decay.
+#pen <value>
+#barkskin
+The item grants a penetration bonus that makes spells cast by
+The item automatically applies the Barkskin spell to the bearer,
+the bearer harder to resist.
+like the Barkskin Amulet.
+#spell "<spell name>"
+#shockres <value>
+Enables user of item to cast this spell in battle or as a ritual
+The item grants a Shock Resistance bonus.
+#autospell "<spell name>"
+#poisonres <value>
+Makes the item cast this spell automatically in battle. It will
+The item grants a Poison Resistance bonus.
+only be cast once unless #autospellrepeat is also used.
+#stoneskin
+#autospellrepeat <spells / round>
+The item automatically applies the Stoneskin spell to the
+Makes an item cast its autospell every round of combat.
+bearer, like the Boots of Stone.
+#randomspell <percent>
+#ironskin
+The monster has a <percent> chance of casting a random spell
+The item automatically applies the Ironskin spell to the bearer.
+in combat instead of a good one.
+#bers
+The bearer of the item will go berserk as soon as battle begins.
+Berserker Pelt has this attribute.
+#extralife
+The bearer of the item is resurrected once when killed in
+combat. The item disappears when the bearer is resurrected.
+56
+
+============================================================
+PAGE 57
+============================================================
+
+#guardspiritbonus <value> #nationrebate <nation nbr> | "nation name"
+Increases the chance of receiving a guardian spirit with +value The item is 20% cheaper to forge for this nation. Can be used
+percent. multiple times on one item to enable it for a few nations. A
+#limitedregen <percent> nation nbr of -1 uses the last manipulated nation, so this
+Like regeneration, but doesn't work on inanimate beings. command can be used with #newnation.
+#enchantedblood <points> #noforgebonus
+Gets points bonus to MR and heals about 0.5 HP per combat Dwarven hammers and similar will not grant any rebate when
+round. Also stops bleeding quickly. used to create this item.
+#polyimmune #islance
+This monster cannot be polymorphed in combat or by the use This item can only be used by mounted or flying units or
+of transformation rituals. centaurs.
+#autobless #minsize <size>
+This bearer of this item will be blessed automatically if it is This item can only by a unit of this size or larger.
+sacred. Like the Flask of Holy Water magic item. #maxsize <size>
+This item can only by a unit of this size or smaller.
+Movement & Combat #unique
+The item can only be forged once, making the item behave like
+#mapspeed <value>
+an artifact without being construction level 8.
+Increase the map movement value for the item's bearer.
+#heavyitem <0 or 1>
+#waterbreathing
+A heavy item cannot be transported with the help of certain
+The item grants water breathing to its bearer.
+magic rituals.
+#float
+The item grants its bearer the ability to float.
+Curses & Afflictions
+#fly
+The item grants its bearer the ability to fly. #tainted <chance>
+#stormimmune Percent chance of being horror marked each turn.
+The bearer of the can fly during a storm. #cursed
+#run The item is cursed and cannot be dropped.
+The bearer of the item is able to move further on the battlefield #nomounted
+(double combat speed). The item cannot be used by mounted beings.
+#sneakunit <value> #curse
+The item will grant stealth to non-stealthy units. The item curses its bearer.
+#stealthboost <value> #nocoldblood
+The item will grant a stealth bonus to already stealthy units. The item cannot be used by coldblooded beings.
+#swift <percent> #disease
+Grants extra combat speed to the wielder. The item diseases its bearer.
+#nodemon
+Restrictions The item cannot be used by demons.
+#chestwound
+#reqeyes
+The item bearer suffers a Chest Wound affliction, which cannot
+The item can only be used by a being with eyes.
+be healed until the item is removed.
+#restricted <nation nbr> | "nation name"
+#noundead
+The item is restricted to this nation only. Can be used multiple
+The item cannot be used by undead.
+times on one item to enable it for a few nations. A nation nbr of
+#noinanim
+-1 restricts the item to the last manipulated nation, so this
+The item cannot be used by inanimate beings.
+command can be used with #newnation.
+#noimmobile
+#nofind
+The item cannot be used by immobile beings.
+The item cannot be found after battle.
+#nofemale
+#notfornation <nation nbr> | "nation name"
+The item cannot be used by females.
+Restricts an item so that it cannot be used by this nation. This
+#feeblemind
+command can be used multiple times on the same item.
+The item bearer becomes Feebleminded. The affliction cannot
+#restricteditem <value>
+be healed until the item is removed.
+This item can only be used by monsters with the proper
+#userestricteditem ability value.
+57
+
+============================================================
+PAGE 58
+============================================================
+
+#mute
+Miscellaneous
+The item bearer becomes Mute. The affliction cannot be healed
+until the item is removed. #itemcost1 <bonus>
+#onlymounted This command makes the item bonus percent more expensive
+The item can only be used by mounted beings. to forge. Negative values can also be used to make it cheaper.
+#onlycoldblood The itemcost1 command only affects the cost of the first magic
+The item can only be used by coldblooded beings. path.
+#nhwound #itemcost2 <bonus>
+The item bearer suffers a Never Healing Wound, which cannot This command makes the item bonus percent more expensive
+be healed until the item is removed. to forge. Negative values can also be used to make it cheaper.
+#onlydemon The itemcost2 command only affects the cost of the second
+The item can only be used by demons. magic path.
+#crippled #itemdrawsize <value>
+The item bearer becomes Crippled. The affliction cannot be The value indicates how many percent larger size the item
+healed until the item is removed. sprite should be drawn at. A negative value means it will be
+#onlyundead draw at a smaller size than normal.
+The item can only be used by undead. #champprize
+#loseeye This item is given as a reward for winning the championship of
+The item bearer loses an eye. The affliction cannot be healed the Arena deathmatch.
+until the item is removed. #autocompete
+#onlyinanim The bearer of this item will automatically compete in the Arena
+The item can only be used by inanimate beings. deathmatch.
+#onlyimmobile #bestowtomount
+The item can only be used by immobile beings. The effects after this command will be bestowed to the mount
+#onlyfemale as well, if any. This doesn't work with all effects that are
+The item can only be used by females. possible to put on a magic item, but with most.
+#recuperation
+The item grants the recuperation ability. Monster Modding Commands
+#yearaging <value>
+The following commands are exactly like the monster
+The wielder of this item will age this many extra years each
+commands with the same name, so no explanation or
+year.
+parameters are written here.
+#noaging <percent>
+The wielder of this item has a chance of not aging each year. UNCATEGORIZED MISC
+#noagingland <percent> #singlebattle
+Friendly units in the same province as this item have a chance #chaosrec
+of not aging each year. #stonebeing
+Dancing Weapon MOVEMENT
+#noriverpass
+Use these commands to create a weapon that floats around
+#unteleportable
+its owner and attacks automatically, like the dancing trident.
+#giftofwater
+#danceweapon "<weapon name>" | <weapon nbr> #nomovepen
+The weapon used for the attack. #farsail
+#dancenratt <attacks> #norange
+The number of attacks made per combat round. Minimum is 2. #mobilearcher
+#dancespr <flysprite nbr> #statstorm
+The look of the sprite circling the unit. #statbreak
+#dancenof <nbr of sprites>
+The number of sprites circling the unit. STEALTH
+#dancesize <size> #seduce
+The size in percent of normal size, default is 100. #succubus
+#beckon
+#falsearmy
+58
+
+============================================================
+PAGE 59
+============================================================
+
+#foolscouts
+#scalewalls COMBAT AURAS
+#plaguedoctor #diseasecloud
+#corruptor #poisoncloud
+#poisonskin
+DAMAGE REDUCTION #poisonarmor
+#slashres #animalawe
+#pierceres #awe
+#bluntres #curseluckshield
+#iceprot #sunawe
+#icenatprot #haltheretic
+#invulnerable #fear
+#ethereal #fireshield
+#airshield #uwfireshield
+#ironvul #banefireshield
+#acidshield
+HEALING & DISEASE #damagerev
+#healer #bloodvengeance
+#autohealer #slimer
+#autodishealer #deathcurse
+#autodisgrinder #deathdisease
+#diseaseres #deathfire
+#homesick #deathparalyze
+#uwdamage #uwheat
+#regeneration #mindslime
+#reinvigoration #heat
+#woundfend #cold
+#hpoverflow #overcharged
+#deadhp #eyeloss
+#maxdeadhp #spikes
+#doheal
+#undregen OTHER COMBAT ABILITIES
+#uwregen #ambidextrous
+#xpgain #clumsy
+#berserk
+SEASONAL POWERS #blessbers
+#springpower #blessfly
+#summerpower #darkvision
+#fallpower #trample
+#winterpower #trampswallow
+#yearturn #digest
+#aciddigest
+ELEMENTAL & SCALES #incorporate
+#chaospower #raiseonkill
+#firepower #raiseshape
+#coldpower #unsurr
+#magicpower #spiritsight
+#stormpower #truesight
+#darkpower #invisible
+#slothpower #unseen
+#deathpower #twistfate
+#growthpower #powerofdeath
+#dompower #fearofflood
+59
+
+============================================================
+PAGE 60
+============================================================
+
+#mindcollar #warning
+#sleepres
+MAGIC ABILITIES
+NON-COMBAT ABILITIES #douse
+#castledef #researchbonus
+#siegebonus #slothresearch
+#patrolbonus #inspiringres
+#pillagebonus #divineins
+#supplybonus #drainimmune
+#falsesupply #magicimmune
+#iceforging #forgebonus
+#nobadevents #fixforgebonus
+#incprovdef #crossbreeder
+#incunrest #bonusspells
+#leper #comslave
+#popkill #commaster
+#insanify #sabbathmaster
+#inquisitor #sabbathslave
+#heretic #chorusmaster
+#elegist #chorusslave
+#spreaddom #grandcom
+#praise #deathbanish
+#shatteredsoul #kokytosret
+#taxcollector #infernoret
+#gold #voidret
+#addupkeep #allret
+#xploss #spellsinger
+#alchemy #fastcast
+#mason #magicstudy
+#incscale #bringeroffortune
+#decscale #combatcaster
+#fortkill #glamourmanip
+#thronekill
+#farthronekill RITUAL RANGE BOOST
+#localsun #firerange
+#adeptsacr #airrange
+#gemprod #waterrange
+#elementgems #earthrange
+#sorcerygems #astralrange
+#assassin #deathrange
+#naturerange
+LEADERSHIP #glamourrange
+#inspirational #bloodrange
+#beastmaster #holyrange
+#taskmaster #elementrange
+#undisciplined #sorceryrange
+#formationfighter #allrange
+#bodyguard
+#standard GEM PRODUCTION
+#command #makepearls
+#magiccommand #tmpfiregems
+#undcommand #tmpairgems
+#skirmisher #tmpwatergems
+60

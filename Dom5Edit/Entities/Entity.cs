@@ -38,6 +38,11 @@ namespace Dom5Edit.Entities
         public HashSet<IDEntity> RequiredEntities = new HashSet<IDEntity>();
         public HashSet<IDEntity> UsedByEntities = new HashSet<IDEntity>();
 
+        /// <summary>
+        /// Indicates this entity is from vanilla game data and should be treated as read-only.
+        /// </summary>
+        public bool IsVanilla { get; set; }
+
         public string DisplayName { get { return GetName(); } }
 
         public virtual string GetName()

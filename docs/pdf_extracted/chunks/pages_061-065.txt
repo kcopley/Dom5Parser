@@ -1,0 +1,288 @@
+
+============================================================
+PAGE 61
+============================================================
+
+#tmpearthgems
+General Modding
+#tmpastralgems
+#tmpdeathgems #poppergold <people>
+#tmpnaturegems The amount of people required for one gold in taxes. Default is
+#tmpglamourgems 100.
+#tmpbloodslaves #resourcemult <percent>
+#carcasscollector A multiplier for the amount of resource found in a land. Default
+is 100.
+MONSTER SUMMONING #supplymult <percent>
+#domsummon A multiplier for the amount of supplies found in a land. Default
+#domsummon2 is 100.
+#domsummon20 #unresthalfinc <unrest level>
+#raredomsummon The amount of unrest that cuts income in half. Default is 50.
+#templetrainer #unresthalfres <unrest level>
+#summon1 The amount of unrest that cuts resources in half. Default is
+#summon2 100.
+#summon3 #eventisrare <percent>
+#summon4 Random events are divided into two categories, common and
+#summon5 rare. This value is the chance of a random event to be a rare
+#makemonsters1 one. Default is 15.
+#makemonsters2 #turmoilincome <percent>
+#makemonsters3 The effect turmoil and order has on income. Default is 3.
+#makemonsters4 #turmoilevents <percent>
+#makemonsters5 How turmoil affects the event frequency. Default is 2.
+#battlesum1 #deathincome <percent>
+#battlesum2 The effect death and growth has on income. Default is 2.
+#battlesum3 #deathsupply <percent>
+#battlesum4 The effect death and growth has on supplies. Default is 10.
+#battlesum5 #deathdeath <0.01 percent>
+#battlesum1d2 The effect death and growth has on population death in 0.01%
+#battlesum1d3 per month. Default is 20.
+#battlesumwarm #slothincome <percent>
+#batstartsum1 The effect sloth and productivity has on income. Default is 3.
+#batstartsum2 #slothresources <percent>
+#batstartsum3 The effect sloth and productivity have on resources. Default is
+#batstartsum4 15.
+#batstartsum5 #coldincome <percent>
+#batstartsum1d6 The effect cold and heat have on income. Default is 5.
+#batstartsum2d6 #coldsupply <percent>
+#batstartsum3d6 The effect cold and heat has on supplies. Default is 10.
+#batstartsum4d6 #tempscalecap <value>
+#batstartsum5d6 Changing any scale more than this does not yield extra design
+#ivylord points. Default value is 3.
+#dragonlord #misfortune<percent>
+#lamialord How (mis)fortune affects the possibility of an event being good.
+#corpselord Default is 15.
+#onisummon #luckevents <percent>
+#reanimpriest How luck affects event frequency. Default is 5.
+#fireelementals #researchscale <bonus>
+#airelementals The amount of research bonus received per mage from a magic
+#earthelementals scale of +3. Default is 3.
+#waterelementals
+61
+
+============================================================
+PAGE 62
+============================================================
+
+#startresearch <RP> 54 Hvy Inf, Hvy Cavalry
+The amount of start research per magic scale above -3. Default 55 Hvy Inf, Hvy Cavalry
+is 50 research points. 56 Hvy Inf, Hvy Cavalry
+#arenagold <amount> 57 Shamblers
+About this much gold will be awarded as the prize for winning 58 Lt Inf, Hvy Inf, X-Bow
+the arena. Default is 500. 59 Militia, Lt Inf, Archers
+#arenagems <amount> 60 Militia, Lt Inf, Archers
+About this many fire gems will be awarded as the prize for 61 Vaettir, Trolls
+winning the arena. Default is 25. 62 Tribals, Deer
+#gemlongevity <level> 63 Tritons
+This command can be used to make magic gems last for 64 Tritons
+multiple battle within one month. Level 0=normal, 1=gems last 65 Ichtyids
+entire magic or move phase, 2=gems last entire month. 66 Vaettir
+67 Vaettir, Dwarven Smith
+Poptype Modding 68 Slingers, Hvy Inf, Elephants
+69 Asmeg
+Use these commands to mod poptypes.
+70 Vaettir, Svartalf
+#selectpoptype <poptype> 71 Trolls
+A poptype must be selected before using any other poptype 72 Mermen
+commands. Numbers from 1 to 249 are valid. See table below 73 Tritons, Triton Knights
+for poptype numbers used in the game. 74 Lt Inf, Lt Cav, Cataphracts
+75 Hoburg, LA
+Poptypes 76 Hoburg, EA
+Nbr Poptype 77 Atavi Apes
+25 Barbarians 78 Tribals, Wolf
+26 Horse Tribe 79 Tribals, Bear
+27 Militia, Archers, Hvy Inf 80 Tribals, Lion
+28 Militia, Archers, Hvy Inf 81 Pale Ones
+29 Militia, Archers, Hvy Inf 82 Tribals, Jaguar
+30 Militia, Longbow, Knight 83 Tribals, Toad
+31 Tritons 84 Cavemen
+32 Lt Inf, Hvy Inf, X-Bow 85 Kappa
+33 Lt Inf, Hvy Inf, X-Bow 86 Bakemono
+34 Raptors 87 Bakemono
+35 Slingers 88 Ko-Oni
+36 Lizards 89 Fir Bolg
+37 Woodsmen 90 Turtle Tribe Tritons
+38 Hoburg 91 Shark Tribe Tritons
+39 Militia, Archers, Lt Inf 92 Shark Tribe, Shark Riders
+40 Amazon, Crystal 93 Zotz
+41 Amazon, Garnet 94 Lava-born
+42 Amazon, Jade 95 Ichtyids with Shaman
+43 Amazon, Onyx 96 Bone Tribe
+44 Troglodytes 97 Merrow
+45 Tritons, Shark Knights 98 Kulullu
+46 Amber Clan Tritons 99 Bronze Hoplites
+47 X-Bow, Hvy Cavalry 100 Bronze Hvy Inf
+48 Militia, Lt Inf, Hvy Inf 101 Bronze Hvy Cav, Hvy Inf
+49 Militia, Lt Inf, Hvy Inf 102 Bronze Hvy Spear
+50 Militia, Lt Inf, Hvy Inf 103 Cynocephalians
+51 Militia, Lt Cav, Hvy Cav 104 Bekrydes
+52 Militia, Lt Cav, Hvy Cav 105 Wet Ones
+53 Militia, Lt Cav, Hvy Cav 106 Nexus
+62
+
+============================================================
+PAGE 63
+============================================================
+
+#end #minmen <value>
+End modding each poptype with this command. Once the number of troops fall below this, recruitment of new
+#clearrec troops will start.
+Clears the recruitment list of all units and commanders. #minpay <gold>
+#cleardef The minimum amount of gold the band can be hired for.
+Clears province defence units from the poptype. #xp <value>
+#addrecunit "<monster name>" | <monster nbr> Starting experience for the troops. The commander has twice
+Adds a unit to the recruitment list. this amount.
+#addreccom "<monster name>" | <monster nbr> #randequip <0-3>
+Adds a commander to the recruitment list. How powerful magic equipment the commander will have.
+#defcom1 "<monster name>" | <monster nbr> 0=none, 3=extremely powerful stuff.
+Sets the secondary commander for this poptype's PD when PD #recrate <value>
+is 20 or higher. The rate at which new troops are bought. A value of 100 means
+#defunit1 "<monster name>" | <monster nbr> one per month.
+Sets the first type of unit in the poptype PD. #item "<item name>"
+#defunit1b "<monster name>" | <monster nbr> A specific magic item for the commander. A maximum four
+Sets the second type of unit in the poptype PD. items per band can be assigned.
+#defunit1c "<monster name>" | <monster nbr> #eramask <value>
+Sets the third type of unit in the poptype PD. The era mask determines which eras the band can appear in.
+#defmult1 <multiplier> See table "Era masks". The default value is All eras.
+Number of units per 10 points of defense. E.g. #defmult1 20
+Era masks
+will yield 2 units per point of defense, which is also the default.
+#defmult1b <multiplier> Mask Era
+Number of units per 10 points of defense for the second unit 1 Early era
+type. 2 Middle era
+#defmult1c <multiplier> 3 Early + middle
+Number of units per 10 points of defense for the third unit 4 Late era
+type. 5 Early + late
+6 Middle + late
+7 All eras
+Mercenary Modding
+These commands can be used to create new mercenaries for
+AI Modding
+Dominions 6.
+These commands can be used to set predesigned pretenders
+#newmerc
+and specific research targets for AI players.
+Creates a new mercenary band. Always end modifying it with
+an #end command. Creating a valid pretender design using these commands
+#end only will be challenging, so there is an easy way to create
+This command must be used to end modding a mercenary band, them from within the game. Just design a pretender like
+#clearmercs normal, then press ctrl+shift+s to save a file containing the
+Removes all mercenary bands. necessary commands.
+#name "<name>"
+Name of the mercenary band. Basic Template Creation
+#level <0-2>
+Each template will determine how the AI designs its god for
+Level 0 bands appear early in the game. Level 1 bands appear
+a specific nation and possibly also what research targets it
+later and level 2 last of all.
+will have when using this god. There can be multiple
+#bossname "<name>"
+templates for the same nation, in which case a random one
+Name of the band's leader.
+will be used.
+#com "<monster name>"
+What type of monster the commander is. #newtemplate <nation nbr>
+#unit "<monster name>" Always start a new template with this command. It creates a
+What type of monster the mercenaries are. new template for a specific nation.
+#nrunits <value>
+Number of troops in the band.
+63
+
+============================================================
+PAGE 64
+============================================================
+
+#end #modname "Minimal Mod"
+Always put this command last, after all commands belonging to #description "Add a new minimal nation for the middle
+the new template. ages"
+#version 1.00
+Pretender Design #newnation
+#name "Gnuland"
+#form "monster name"
+#epithet "Kingdom of Gnus"
+The physical form of the pretender. Optionally the monster
+#era 2
+name can end with the monster number in parentesis, like
+#descr "This is a test nation, it has no units and
+"Dragon (265)" to distinguish between different monsters of
+requires more work to be useful."
+the same name.
+#color 0.8 0.1 0.2
+#prison <nbr>
+#secondarycolor 0.9 0.9 0.9
+0=awake, 1=dormant, 2=imprisoned.
+#homerealm 10
+#magic <path> <level>
+#end
+Give start magic to pretender.
+#domstr <level>
+Important Notes
+Set dominion strength 1-10.
+#scale <scale nbr> <value> Modding Number Limits
+Scales are numbered from 0-5 and they can have values of -5 to
+These are the number ranges that can be used for modding
+5.
+various aspects of Dominions 6.
+#bless "bless name"
+The bless effects for this pretender.
+* Sound: 0-248, 150+ for modding
+* Weapons: 0-3999, 1000+ for modding
+Research Targets
+* Armor: 0-1999, 400+ for modding
+* Monsters: 0-19999, 5000+ for modding
+#researchgoal "spell name" | "item name"
+* Nametypes: 100-399, 170+ for modding
+This will make the AI research to get access to this spell or
+* Spells: 0-7999, 2000+ for modding
+magic item. Many researchgoal can be set, in which case the AI
+* Enchantments: 0-9999, 200+ for modding
+will research to get them in that order. The AI's research might
+* Items: 0-1999, 700+ for modding
+not be exactly like ordered, but it will mostly follow the plans.
+* Magic Sites: 0-3999, 1700+ for modding
+#favrit <disschool> <level> "ritual name" | "item name"
+* Nations: 0-499, 150+ for modding
+Makes the AI prioritize casting this ritual or forging this magic
+* Poptypes: 0-249, 125+ for modding
+item. Many favrit commands can be used to make the AI
+* Descriptions: Max 1999 characters for a single description
+prioritize multiple things. Disschool and level can be set to -1,-1
+to never disable this favorite. Otherwise school should be a
+Converting Dom5 Mods to Dom6
+spell school and level a research level, when the AI reaches this
+the command will be disabled. Dominions 5 mods are almost compatible with Dominions 6,
+but some number usually have to be changed. The following
+Event Modding objects have been modified and have different numbers in
+Dominions 6 than they had in Dominions 5:
+Random events can be modded too and is documented in
+the separate Event Modding Manual. * Nations
+* Magic items
+Minimal Example Mod * Magic sites
+* Spells
+Here is a minimal mod that creates a new nation in the
+* Forts
+middle era. If you create a text file that is called
+* Random events
+"gnukingdom.dm" with the following contents and puts it in
+"mods/gnukingdom", it should give you a new middle era
+In Dominions 6 mounted units are much different and need
+nation when you enable the mod.
+a separate monster for the steed and some new commands
+to put them together.
+You have to create the "gnukingdom" folder inside the
+Dominions 6 mods folder that already exists. To find where
+As illusions are now in the glamour path, some old nations
+the mods folder is located, you can click on "game tools /
+with air magic might want to utilize glamour magic instead.
+open user directory" in Dominions 6.
+64
+
+============================================================
+PAGE 65
+============================================================
+
+All armies are a little bit larger in Dominions 6 and the size
+of the start armies should probably be increased by about
+50% to keep them in line with the other nations.
+All mod files (.dm) in Dominions 6 must reside inside its own
+folder now, in Dominions 5 only the data files were inside a
+folder.
+65

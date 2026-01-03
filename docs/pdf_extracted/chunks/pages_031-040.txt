@@ -1,0 +1,825 @@
+
+============================================================
+PAGE 31
+============================================================
+
+#xspr1 "<imgfile>"
+Mount commands
+Creates a sprite that is used when one corider is lost. This
+command must be placed right after the #spr1 and #spr2 #bravemount <percent>
+commands. If a there are more than 1 corider the #xspr1 and The chance of the mount remaining on the battlefield and
+#xspr2 commands can be repeated multiple times to create continuing to fight. Default is 0.
+sprites with fewer and fewer riders left. #smartmount <smartness>
+#xspr2 "<imgfile>" The smartness determines the chance for the mount to try to
+Creates the attack sprite that is used when one corider is lost. make it home. A smart magical unicorn has smartness 100, a
+This command must be place right after the #xspr1 command. normal horse doesn't have this ability at all.
+#regainmount <0 or 1> Monster Modding, Leadership & Morale
+If this is set to one the rider will regain any lost mount(s) for
+free after the battle. This only works for commanders. Normal Leadership
+#noremount
+These commands are used to set basic leadership values for
+The commander will no be able to reclaim his mount through a
+monsters.
+reclaim mount order. This is used for certain gods that have
+divine mounts that must be prayed back. Leadership Rules: Undead beings require undead leadership
+#skilledrider <value> Demons require undead leadership Magic beings require
+A skilled rider will increase the Morale and Defence Skill of his magic leadership. Monsters that are both undead and magic
+mount. The defence increase is most effective on lightly being OR demon and magic being require undead leadership
+armored horses as it is reduced by the encumbrance value of
+#noleader
+the mount's armor. This ability should be given to the rider and
+This monster cannot lead units when it is a commander. Use
+not to the mount.
+this for scouts and assassins.
+#mountiscom <0 or 1> #poorleader
+If this is set to one the mount is also a commander. This Leadership value 10. This is the standard value for mages.
+command is used for some gods that has divine mounts. Commanded units have a morale modifier of -1 if in a single
+#nobarding squad and an additional -1 for every additional squad.
+This mount does not have a barding slot. This is used for e.g. the #okleader
+humans that carry a throne with an emperor in it. Leadership value 50. This is the default value and it is the
+#nothrowoff standard for non-elite commanders. Commanded units have a
+This mount will not throw off its rider if it routs or gets morale modifier of 0 for two or fewer squads and -1 for every
+paralyzed. This is used on mounts that are more important than additional squad.
+the rider, e.g. elephants, where the rider will never get off #goodleader
+voluntarily in order to fight on the ground. Leadership value 100. Commanded units have a morale
+#nofalldmg modifier of +1 for up to 3 squads and -1 for every additional
+This rider will not take any damage when falling off his mount. squad.
+This is used for chariot drivers that are always close to the #expertleader
+ground. Leadership value 150. Commanded units have a morale
+modifier of +2 for up to 4 squads and -1 for every additional
+#mounted
+squad.
+This command should only be used in rare cases where the
+#superiorleader
+Dominions 6 system of seperate stats for rider and mount is
+Leadership value 200. Commanded units have a morale
+not suitable. It was used for mounted units in Dominions 5
+modifier of +3.
+where the rider and horse shared the same stats. This
+#command <value>
+command will give a defence bonus to the unit as well as
+Increases leadership value by this amount.
+reduced encumbrance.
+Magic Leadership
+In addition to these commands, a monster has magic
+leadership based on its magic paths (10 per level of Astral
+and 5 per level of any other magic than Death) These
+commands govern the level of undead leadership the
+monster possesses. Additionally, undead leadership is
+31
+
+============================================================
+PAGE 32
+============================================================
+
+increased by 15 points for each priest level if the priest #superiorundeadleader
+serves a nation that can reanimate undead. The nations that This monster has an innate ability to command 200 undead
+have this benefit are Lanka, Asphodel, Sceleria, Ermor beings. This is a rare ability that usually only demons or undead
+(Ashen Empire) and Lemuria. beings possess.
+#undcommand <value>
+#nomagicleader
+Increases undead leadership by this amount.
+This monster cannot lead magic units when it is a commander
+#almostundead
+(unless it it is a mage). This is the default.
+Unit will require undead leadership to lead, even though it isn't
+#poormagicleader
+an undead or a demon.
+This monster has an innate ability to command 10 magic
+#almostliving
+beings. This is a very rare ability that only most magic beings
+Unit will require not undead leadership to lead, even though it
+possess.
+is undead. This command must come after the #undead
+#okmagicleader
+command.
+This monster has an innate ability to command 50 magic
+beings. This is a very rare ability that only most magic beings Morale Related Abilities
+possess.
+#inspirational <bonus>
+#goodmagicleader
+All units under the command of this monster have their morale
+This monster has an innate ability to command 100 magic
+increased by <bonus> in addition to modifiers from base
+beings. This is a very rare ability that only most magic beings
+leadership. Commander cost +10 per point. The value can be
+possess.
+negative.
+#expertmagicleader
+#beastmaster <bonus>
+This monster has an innate ability to command 150 magic
+All animals under the command of this monster have their
+beings. This is a very rare ability that only most magic beings
+morale increased by <bonus>.
+possess.
+#taskmaster <bonus>
+#superiormagicleader
+All slaves under the command of this monster have their
+This monster has an innate ability to command 200 magic
+morale increased by <bonus>.
+beings. This is a very rare ability that only most magic beings
+#slave
+possess.
+Slaves are typically untrained fodder who are given weapons
+#magiccommand <value>
+and herded into battle. They have low morale and are easily
+Increases magic leadership by this amount.
+routed. Their morale is improved when led by a taskmaster.
+Undead Leadership #undisciplined
+Undisciplined monsters cannot be given orders in battle. They
+#noundeadleader
+can only deploy in the skirmish formation and will attack the
+This monster cannot lead undead units when it is a commander
+enemy without regard for any battle plan.
+(unless it it is a death or blood mage). This is the default.
+#formationfighter <xsize>
+#poorundeadleader
+A formation fighter is well drilled in using tight formations and
+This monster has an innate ability to command 10 undead
+can fit more units into one square. The xsize value indicates the
+beings. This is a rare ability that usually only demons or undead
+extra size points that will fit in a square. Use a value of 2 for a
+beings possess.
+normal formation fighting human.
+#okundeadleader
+#bodyguard <bonus>
+This monster has an innate ability to command 50 undead
+The monster's morale is increased by <bonus> when its orders
+beings. This is a rare ability that usually only demons or undead
+are set to Guard Commander. The bodyguard bonus reduces
+beings possess.
+an assassin's Patience value when determining whether the
+#goodundeadleader
+bodyguard is present during an assassination.
+This monster has an innate ability to command 100 undead
+#warning <bonus>
+beings. This is a rare ability that usually only demons or undead
+This ability lets a commander avoid assassination and
+beings possess.
+seduction attempts.
+#expertundeadleader
+#standard <bonus>
+This monster has an innate ability to command 150 undead
+The monster increases the morale of units in the same squad by
+beings. This is a rare ability that usually only demons or undead
+<bonus>. Multiple standards in the same squad do not stack.
+beings possess.
+Only the highest standard value in the squad counts. The
+normal value for this command is 1.
+32
+
+============================================================
+PAGE 33
+============================================================
+
+#latehero <min turn> chance of getting one level higher in Fire or Air magic.
+Use this command on a hero unit to prevent it from appearing
+before this turn. A chance of more than 100% creates a linked random
+#undisleader <value> (getting two or more levels of the same random path from
+1=will negate undisciplined on his followers. one random pick like e.g. King of the Deep). For example, a
+#tolerateund 200% random chance means +2 levels in the path. This is
+Will tolerate undead beings in same squad without receiving displayed in the unit’s random magic information.
+any morale penalty. This command is used for the units in the
+Path masks
+squad, not the leader.
+Number Magic Path
+128 Fire
+Monster Modding, Magic
+256 Air
+This chapter introduces the commands related to granting 512 Water
+monsters magic skills and special abilities related to magic 1024 Earth
+(research, magic item forging, magic gems etc.). 2048 Astral
+4096 Death
+Magic Paths 8192 Nature
+16384 Glamour
+Use these commands to grant monsters magic paths and
+32768 Blood
+random magic picks and for altering the strength of their
+65536 Priest
+magic.
+Magic path numbers NOTE: Using only a random priest level in a #custommagic
+Nbr Magic Path mask causes the mod to crash. It is highly recommended not
+0 Fire to use random priest levels unless you know exactly what
+1 Air you are doing to avoid problems.
+2 Water
+#magicboost <path> <boost>
+3 Earth
+Gives a boost or reduction to the monster's magic ability for
+4 Astral
+one or all magic paths. The boost can be from -5 to 5 levels. See
+5 Death
+table "Magic path numbers" for path numbers (0-9, 51-53).
+6 Nature
+7 Glamour #masterrit <value>
+8 Blood Pathboost for the purpose of casting rituals. A monster with
+9 Priest this ability can cast rituals that would require <value> higher
+50 Random magic paths than it actually has. A negative value makes the
+51 Elemental monster worse at casting rituals.
+52 Sorcery
+53 All Spell Range
+These commands increase the maximum range of spells and
+#magicskill <path> <level>
+rituals cast by the monster. Ritual range is increased by 1
+Gives a magic skill to the active monster. The path must be a
+province per range value and combat range is increased in
+number from the "Magic path numbers" table and level should
+steps of 25%.
+be a number from 1 to 10. If the monster already has this magic
+skill then the old level will be replaced by the new one, unless it
+#firerange <range>
+is a random skill. Units with Holy magic must also have the
+Fire magic cast by the monster have increased range.
+#holy command.
+#airrange <range>
+Air magic cast by the monster have increased range.
+#custommagic <path mask> <chance>
+#waterrange <range>
+Gives a chance for another magic skill to the active monster.
+Water magic cast by the monster have increased range.
+The path mask must be a number from Table 18 or a sum of #earthrange <range>
+multiple masks from this table. Earth magic cast by the monster have increased range.
+#astralrange <range>
+Chance should be a number from 1 to 100. Use this Astral magic cast by the monster have increased range.
+command multiple times for many random picks. E.g. use
+path mask 384 and chance 50 to give a commander a 50%
+33
+
+============================================================
+PAGE 34
+============================================================
+
+#deathrange <range>
+Gem Production
+Death magic cast by the monster have increased range.
+These commands cause the monster to produce permanent
+#naturerange <range>
+or temporary magic gems when it is a commander.
+Nature magic cast by the monster have increased range.
+#glamourrange <range>
+#gemprod <type> <number>
+Glamour magic cast by the monster have increased range.
+This monster produces a number of magic gems each month.
+#bloodrange <range>
+The type ranges from 0 (fire gems) to 8 (blood slaves). See table
+Blood magic cast by the monster have increased range.
+"Magic path numbers".
+#holyrange <range>
+#elementgems <gems>
+Holy magic cast by the monster have increased range.
+This monster produces a number of magic gems each month.
+#elementrange <range>
+They are of a single random type of elemental gem.
+Elemental magic (Fire, Air, Water, Earth) cast by the monster
+#sorcerygems <gems>
+have increased range.
+This monster produces a number of magic gems each month.
+#sorceryrange <range>
+They are of a single random type of sorcery gem.
+Sorcery (Astral, Death, Nature, Glamour) rituals by the
+#tmpfiregems <gems>
+monster have increased range.
+The monster produces a number of fire gems that can be used
+#allrange <range>
+in combat. The gems are not stable enough to be used for ritual
+All magic cast by the monster have an increased range.
+spellcasting.
+#tmpairgems <gems>
+Magic Research
+The monster produces a number of air gems that can be used in
+These commands affect the magic research abilities of the combat. The gems are not stable enough to be used for ritual
+monster. spellcasting.
+#tmpwatergems <gems>
+#fixedresearch <value>
+The monster produces a number of water gems that can be
+The monster produces this amount of research even without
+used in combat. The gems are not stable enough to be used for
+magic skills.
+ritual spellcasting.
+#researchbonus <value>
+#tmpearthgems <gems>
+Makes a commander better or worse at magic research. A sage
+The monster produces a number of earth gems that can be
+has a value of 8.
+used in combat. The gems are not stable enough to be used for
+#inspiringres <value>
+ritual spellcasting.
+The monster inspires other mages to be more effective
+#tmpastralgems <gems>
+researchers. All other mages in the same province gain a
+The monster produces a number of astral pearls that can be
+research bonus equal to <value> while the monster stays in the
+used in combat. The gems are not stable enough to be used for
+province. Only the highest value present counts.
+ritual spellcasting.
+#slothresearch <value>
+#tmpdeathgems <gems>
+The monster gains <value> research bonus per step of sloth in
+The monster produces a number of death gems that can be
+the province.
+used in combat. The gems are not stable enough to be used for
+#drainimmune
+ritual spellcasting.
+The monster is immune to the effects of Drain scale like the
+#tmpnaturegems <gems>
+Master Smiths of Ulm. There is no research penalty from Drain
+The monster produces a number of nature gems that can be
+scale and in combat the fatigue costs of spells are not increased
+used in combat. The gems are not stable enough to be used for
+by the Drain scale. The monster gains all normal bonuses from
+ritual spellcasting.
+an increased Magic scale.
+#tmpglamourgems <gems>
+#magicimmune
+The monster produces a number of glamour gems that can be
+The monster is immune to the research effects of Drain and
+used in combat. The gems are not stable enough to be used for
+Magic scales. There is no research penalty for Drain scale and
+ritual spellcasting.
+no research bonus for magic scale.
+#tmpbloodslaves <slaves>
+#divineins
+The monster can use his own blood equal to this number of
+There can only be a number of divinely inspired researchers
+blood slaves for combat spell casting. Using a temporary blood
+per province equal to the dominion strength in that province.
+slave this way will result in the profuse bleeding affliction on
+Any extra divinely inspired researchers have their research
+the caster.
+value ignored. The monks of Man use this mechanic.
+34
+
+============================================================
+PAGE 35
+============================================================
+
+#douse <bonus> #allret <chance>
+This monster gets a blood magic bonus when searching for Extra chance of returning from any of the other planes a
+blood slaves. Works like a Sanguine Dousing Rod (this item has monster can be banished to.
+a bonus of 1). #randomspell <percent>
+#makepearls <value> The monster has a <percent> chance of casting a random spell
+The monster can turn <value> water gems to <value> astral in combat instead of a good one. The ability only works for
+pearls per turn. commanders, because only commanders can cast spells.
+#carcasscollector <value> #tainted <chance>
+The monster can turn <value> nature gems to <value> death Chance in percent of being horror marked each turn.
+gems per turn. #forgebonus <percent>
+Makes it cheaper to create magic items.
+Other Magic Abilities #fixforgebonus <value>
+Gem reduction when forging items. The value is in absolute
+These commands grant other, uncategorized magic abilities
+numbers of gems, not in percent like the other forgebonus. This
+related to spells, item forging and other planes of existence.
+is the default forgebonus mechanic.
+#bonusspells <spells per round> #mastersmith <value>
+The monster gets the Innate Spellcaster ability and can cast a The monster's magic paths are counted as <value> higher than
+number of spells every combat round in addition to its normal actual when forging items so a mage with a bonus of 1 and Fire
+attacks. The spellcasting cannot be interrupted or prevented magic 1 would be able to forge items that require Fire 2 to
+by adjacent enemy units, unlike normal spellcasting. A forge. A negative value makes the monster worse at forging
+maximum value of 4 can be used, but no unit in the standard items.
+game has more than 3. #commaster
+#onebattlespell "<spell name>" | <nbr> The monster is automatically a communion master and does
+Monster will automatically cast this spell just before the battle not need to cast the Communion Master spell to join a
+starts. There is no fatigue cost. This spell cannot be a spell communion, like the Trophimos Oppressors.
+added by a mod, it must be an original Dominions 6 spell. You #comslave
+can modify the spell used by this command though. This ability The monster is automatically a sabbath master and does not
+only works for commanders. need to cast the Communion Master spell to join a sabbath.
+#3castbattlespell "<spell name>" | <nbr> #sabbathslave
+Works just like the previous ability, except that at least three The monster is automatically a sabbath slave and does not
+monsters of this type must be present on the battlefield for the need to cast the Communion Slave spell to join a sabbath.
+spell to be cast. #chorusmaster
+#crossbreeder <value> The monster is automatically a chorus master and does not
+The monster is skilled in crossbreeding and gets a bonus when need to cast the Communion Master spell to join a chorus.
+using the Crossbreeding or Improved Crossbreeding ritual #chorusslave
+from the Blood magic school. The crossbreeder receives more The monster is automatically a chorus slave and does not need
+units per casting and a higher chance of extraordinary results. to cast the Communion Slave spell to join a chorus.
+#deathbanish <-11 to -13> #grandcom <0 or 1>
+Whoever strikes the killing blow against this monster is This monster can participate in grand communions.
+banished to another plane. -11=The Void, -12=The Inferno, #indepspells <level>
+-13=Kokytos Usually independent mages will only know low level research
+#kokytosret <chance> spells. This command will give them access to all spell with this
+Extra chance per month of returning from Kokytos, the infernal research level and lower when they fight as independent.
+realm of ice. #fastcast <speedup>
+#infernoret <chance> Affects the spell casting time for commanders. Speedup
+Extra chance per month of returning from the Inferno, the 100=half time, 200=one third time, -50=double time.
+infernal realm of fire. #spellsinger
+#voidret <chance> Unit takes 50% longer to cast spells, but at half fatigue cost.
+Extra chance per month of returning from the Void, the plane #magicstudy <bonus>
+between worlds and the home of horrors and the Void beings Research bonus depending on the magic scale of the province.
+of R'lyeh. #glamourmanip <0 or 1>
+This monster is a glamour manipulator and counts as a glamour
+mage when it comes to upholding illusions and false damage.
+35
+
+============================================================
+PAGE 36
+============================================================
+
+123 Mictlan male
+Monster Modding, New Abilities for
+124 Mictlan female
+Dominions 5 125 Machaka female
+126 Machaka male
+These Modding commands were new for Dominions 5 and
+129 Monkey male
+have still not received any detailed descriptions.
+130 Monkey female
+#bringeroffortune <-100 - 100> 131 EA Ulm male
+#combatcaster 132 EA Ulm female
+#unsurr <0 - 1000> 133 Japanese female
+#skirmisher <-25 - 25> 134 Japanese male
+#minsizeleader <0 - 6> 135 Amazon
+136 Sauromatia
+Name Modding 137 Marverni male
+138 Marverni female
+#selectnametype <nametype nbr>
+139 Angels
+Selects the nametype that will be affected by the following
+140 Demons
+modding commands. Nametype nbr is a number between 100
+141 Inuit
+and 399. See Table Name Types below. Numbers 170 – 399
+142 Tir na n‘Og male
+can be used to make your own name tables without altering
+143 Tir na n‘Og female
+existing ones.
+144 Nature beasts
+#end
+145 Wooden beasts
+Always use this command at the end of modifying a nametype.
+146 Rus male
+#addname "name"
+147 Rus female
+Adds a name to the selected nametype. A single nametype can
+148 Gath male
+contain up to 1499 different names.
+149 Rephaim
+#clear
+150 Gath/Rephaim female
+Removes all names from the selected nametype.
+151 Ur male
+152 Ur female
+Name Types
+153 Agartha male
+Number Type of Name
+154 Agartha female
+100 Misc male
+155 Nazca male
+101 Abysian
+156 Nazca female
+102 Man male
+157 Xibalba male
+103 Man female
+158 Xibalba female
+104 Ulm male
+159 Oceania male
+105 Undead
+160 Oceania female
+106 Pythium male
+161 Telkine male
+107 Arcoscephale male
+162 Greek male giants
+108 Arcoscephale female
+163 Na'Ba male
+109 Pangaea male
+164 Na'Ba female
+110 Pangaea female
+165-169 Reserved
+111 Caelum male
+170-399 Custom name lists
+112 Caelum female
+113 C’tis male
+Bless Modding
+114 Marignon male
+115 Jotunheim male These commands allow the modding of blessings.
+116 Jotunheim female
+117 Deep One Basic Bless Attributes
+118 Pythium female
+#selectbless "<bless name>" | <nbr>
+119 Misc female
+Selects an existing blessing that will be affected by the
+120 C'tis female
+following modding commands. End modding this blessing with
+121 T'ien Ch'i male
+the #end command.
+122 T'ien Ch'i female
+36
+
+============================================================
+PAGE 37
+============================================================
+
+#end
+Magic Site Modding
+Always use this command at the end of modifying a blessing.
+This section contains the commands for modding magic
+#name "<new bless name>"
+sites. Note that a magic site may only have 15 different
+Sets the name for the active blessing. Changing name of a
+attributes assigned to it at the same time. For example, eight
+blessing will also remove its description.
+different types of gems and seven other attributes would
+#path0 <path nbr>
+use up all of the attribute slots.
+The path (0-8) required to choose this blessing.
+#cost0 <value> Basic Site Modding
+The minimum skill required in path0 and also the cost in bless
+#selectsite "<site name>" | <site nbr>
+points.
+Selects the magic site that will be affected by the following
+#path1 <path nbr>
+modding commands. End modding this site with the #end
+An optional secondary path requirement. Use -1 to clear this.
+command.
+#cost1 <value>
+The minimum skill required in path1 and also added to the cost
+#newsite [<site nbr>]
+in bless points.
+Site nbr (optional) should be a number between 1700 and
+3999. It must not be the same as any other site. This new site
+Scale Requirements
+will be affected by the following modding commands and there
+A single bless effect can have multiple scale requirements should be an #end command at the end.
+(max 4).
+It is recommended not to use a site number for sites with a
+#clearscales
+unique name, because this will lessen the risk of conflicts
+Clear the scale requirements
+between mods.
+#orderscale <value>
+The bless requires an order scale of value or more. #end
+#prodscale <value> Always use this command at the end of modifying a site.
+The bless requires a production scale of value or more.
+#name "<name>"
+#heatscale <value>
+This sets the name of the site.
+The bless requires a heat scale of value or more.
+#clear
+#growthscale <value>
+Clears the attributes of the selected magic site.
+The bless requires a growth scale of value or more.
+#copysite "<site name>" | <site nbr>
+#luckscale <value>
+Copies all site stats from this site, including name.
+The bless requires a luck scale of value or more.
+#path <path nbr>
+#magicscale <value>
+The magic path associated with this site.
+The bless requires a magic scale of value or more.
+#look <site spr>
+#chaosscale <value>
+Set what the site should look like. Site spr -1 = default look, 0-9
+The bless requires a chaos scale of value or more.
+= specific sprite (for some paths not all 9 are available and the
+#slothscale <value>
+last ones will look the same).
+The bless requires a sloth scale of value or more.
+#coldscale <value> #loc <locmask>
+The bless requires a cold scale of value or more. This command can restrict the random placement of a site to
+#deathscale <value> certain terrains or flag the site as unique.
+The bless requires a death scale of value or more.
+#misfortscale <value> Useful numbers are 735 for a site that can be located in any
+The bless requires a misfortune scale of value or more. land province (default) and 288 for sites that can be located
+#drainscale <value> in any sea. Locmask 1023 means a site can appear in any
+The bless requires a drain scale of value or more. province, land or sea. You can calculate your own locmask
+by adding all the places your site is allowed to appear in on
+Bless Effects Table 27.
+#clearfx The value Unique is special and indicates that there can only
+Clear all effects of this bless. be one of that site in a given world unless also scripted in a
+map file.
+37
+
+============================================================
+PAGE 38
+============================================================
+
+Magic site locmasks #natcom "<monster name>" | <monster nbr>
+Mask Terrain Adds a monster that can be recruited as commander if the site
+1 Plain is owned by the nation set by the #nat command.
+2 Forest #summon "<monster name>" | <monster nbr>
+4 Mountain A mage of the same magic path as the site may enter to
+8 Waste summon the specified monster. To summon more than one
+16 Farm monster of the same type, the command must be used multiple
+32 Sea times.
+64 Coast #summonlvl2 "<monster name>" | <monster nbr>
+128 Swamp Like #summon, except that the mage summoning must be at
+256 Deep sea least level 2.
+512 Cave #summonlvl3 "<monster name>" | <monster nbr>
+16384 unique Like #summon, except that the mage summoning must be at
+least level 3.
+#gems <path> <amount> #summonlvl4 "<monster name>" | <monster nbr>
+Gives gem income to the magic site. Path should be a number Like #summon, except that the mage summoning must be at
+between 0 and 8. See table <<-1. least level 4.
+#gold <amount> #voidgate <success chance>
+Adds a gold income to the site. A mage with the same path as the site may enter to summon
+#res <amount> Void creatures. Void Summoning skill increases the success
+Adds a resource bonus to the site. chance. A mage who does not have the Voidsanity attribute
+#level <level> may become insane or feebleminded.
+Level should be a number between 0 and 4 and is the level of #wallcom "<monster name>" | <monster nbr>
+magic required to find the site. Level 0 sites are automatically Adds to castle defenders. Works just like the nation modding
+discovered. command with the same name.
+#rarity <rarity> #wallunit "<monster name>" | <monster nbr>
+Rarity should be 0 for common, 1 for uncommon, 2 for rare and Adds to castle defenders. Works just like the nation modding
+5 for sites that are never used as a random site. Rarity 11-13 command with the same name.
+means a Throne of Ascension of level 1-3. #wallmult <multiplier>
+#decunrest <value> Adds to castle defenders. Works just like the nation modding
+The site decreases unrest in the province. The value can be command with the same name.
+negative in order to increase unrest. #uwwallunit "<monster name>" | <monster nbr>
+#supply <value> Adds to castle defenders. Works just like the nation modding
+The magic site provides <value> supplies to the province command with the same name.
+where it is located. #uwwallmult <multiplier>
+Adds to castle defenders. Works just like the nation modding
+Monsters
+command with the same name.
+#uwwallcom "<monster name>" | <monster nbr>
+#homemon "<monster name>" | <monster nbr>
+Adds to castle defenders. Works just like the nation modding
+Adds a monster that can be recruited by the original owner of
+command with the same name.
+this site only.
+#defcom "<monster name>" | <monster nbr>
+#homecom "<monster name>" | <monster nbr>
+Extra commander for province defense. This will be in addition
+Adds a monster that can be recruited as commander by the
+to the normal defence.
+original owner of this site only.
+#defunit "<monster name>" | <monster nbr>
+#mon "<monster name>" | <monster nbr>
+Extra units for province defense. This will be in addition to the
+Adds a monster that can be recruited by the owner of this site.
+normal defence.
+#com "<monster name>" | <monster nbr>
+#defmult <multiplier>
+Adds a monster that can be recruited as commander by the
+Number of units per 10 points of defense. Default is 10.
+owner of this site.
+#nat <nation nbr>
+Sets the nation for the following two commands.
+#natmon "<monster name>" | <monster nbr>
+Adds a monster that can be recruited if the site is owned by the
+nation set by the #nat command.
+38
+
+============================================================
+PAGE 39
+============================================================
+
+#bloodcost <bonus>
+Scale Effects
+All rituals of the Blood Magic school cast in this province cost
+These commands cause the magic site to alter the scales in
+<bonus> % less to cast.
+the province. The effect of the site is active even if it has not
+#scry <duration>
+been discovered yet.
+A mage with the same path as the site may enter to scry a
+distant province. The scrying is a magic ritual which provides
+Scale numbers
+accurate scouting information on the province for <duration>
+Nbr Scale Opposite
+turns and reveals the icons for revealed magic sites. Site names
+0 Turmoil Order
+or other properties are not shown.
+1 Sloth Productivity
+#scryrange <range>
+2 Cold Heat
+Set the maximum range of the scry ability. If not set a maximum
+3 Death Growth
+range of 6 provinces will be used.
+4 Misfortune Luck
+5 Drain Magic
+Ritual Range Boost
+#incscale <scale>
+#firerange <range boost>
+Increases the selected scale by one point per turn to a
+All Fire rituals cast in this province have their range increased
+maximum of -3 / 3. This command functions as #decscale for
+by <range boost> provinces.
+the opposite scales.
+#airrange <range boost>
+All Air rituals cast in this province have their range increased
+#decscale <scale>
+by <range boost> provinces.
+Decreases the selected scale by one point per turn to a
+#waterrange <range boost>
+maximum of -3 / 3. This command functions as #incscale for the
+All Water rituals cast in this province have their range
+opposite scales.
+increased by <range boost> provinces.
+Magic Rituals & Scrying #earthrange <range boost>
+All Earth rituals cast in this province have their range increased
+These commands govern the casting cost of rituals when the
+by <range boost> provinces.
+site is discovered. A ritual cast at a discount has all the
+#astralrange <range boost>
+normal effects for fewer gems. These commands boost the
+All Astral rituals cast in this province have their range
+range of rituals of the appropriate magic path, regardless of
+increased by <range boost> provinces.
+which magic school the ritual belongs to. For global
+#deathrange <range boost>
+enchantments cast at a discount, the gems between its
+All Death rituals cast in this province have their range
+normal cost and discounted cost count toward making
+increased by <range boost> provinces.
+dispelling the global enchantment more difficult.
+#naturerange <range boost>
+All Nature rituals cast in this province have their range
+#conjcost <bonus>
+increased by <range boost> provinces.
+All rituals of the Conjuration school cast in this province cost
+#glamourrange <range boost>
+<bonus> % less to cast.
+All Glamour rituals cast in this province have their range
+#altcost <bonus>
+increased by <range boost> provinces.
+All rituals of the Alteration school cast in this province cost
+#bloodrange <range boost>
+<bonus> % less to cast.
+All Blood rituals cast in this province have their range
+#evocost <bonus>
+increased by <range boost> provinces.
+All rituals of the Evocation school cast in this province cost
+#elementrange <range boost>
+<bonus> % less to cast.
+All Elemental magic (Fire, Air, Water, Earth) rituals cast in this
+#constcost <bonus>
+province have their range increased by <range boost>
+All rituals of the Construction school cast in this province cost
+provinces.
+<bonus> % less to cast.
+#sorceryrange <range boost>
+#enchcost <bonus>
+All Sorcery magic (Astral, Death, Nature, Blood) rituals cast in
+All rituals of the Enchantment school cast in this province cost
+this province have their range increased by <range boost>
+<bonus> % less to cast.
+provinces.
+#thaucost <bonus>
+#allrange <range boost>
+All rituals of the Thaumaturgy school cast in this province cost
+All magic rituals cast in this province have their range
+<bonus> % less to cast.
+increased by <range boost> provinces.
+39
+
+============================================================
+PAGE 40
+============================================================
+
+table <<-1 for a list of forts.
+Special Effects
+#popgrowth <per mille>
+#heal <chance> Bonus to population growth in province once site has been
+The site causes a healing check to be performed at the found.
+indicated percent chance on every unit in the province, like a
+healing unit set to Heal Troops. If the healing check is Throne Effects
+successful, a check against the healing difficulty of any
+The following commands are specifically intended for use as
+affliction the unit has is performed. If the difficulty check is
+Throne of Ascension effects. Any magic site command can
+successful, up to one affliction is removed.
+be used in the same manner.
+#curse <chance>
+Every turn any unit in the province has the indicated chance #claim
+(percent) to become cursed. The effects of magic site commands that appear after this
+#cluster <value> command are not active until the throne is claimed by a god, a
+Assigns a cluster value to a throne. A throne is likely to appear disciple, a prophet or a priest with Holy level 3 or higher. If you
+together with other thrones of same cluster value when a map modify an already existing throne there is no need to add this
+is created. For example, the Throne of Spring and the Throne of command, all effects will be put after a claim requirment that is
+Autumn have the same cluster value and if one of them appears already there (unless you clear the site).
+on the map, the other is also very likely to appear. Cluster value #dominion <temple checks per month>
+can be a number from 1 to 32000. The site will spread the god's dominion by automatically
+#disease <chance> initiating a number of temple checks per month.
+Every turn any unit in the province has the indicated chance #goddomchaos <value>
+(percent) to become diseased. Increases the Turmoil or chaos scale of the god's dominion. Use
+#horrormark <chance> a negative value to increase Order.
+Every turn any unit in the province has the indicated chance #goddomlazy <value>
+(percent) to be horror marked. Increases the Sloth scale of the god's dominion. Use a negative
+#holyfire <chance> value to increase Production.
+Every turn any undead or demonic troops in the province have #goddomcold <value>
+the indicated chance (percent) to be struck by holy fire, which Increases the Cold scale of the god's dominion. Use a negative
+deals 10 points of armor-negating damage if they fail a MR value to increase Heat.
+check against an attack value of 12. #goddomdeath <value>
+#holypower <chance> Increases the Death scale of the god's dominion. Use a
+Every turn any undead troops in the province have the negative value to increase Growth.
+indicated chance (percent) to be struck by holy power, which #goddommisfortune <value>
+deals 10 points of armor- negating damage if they fail a MR Increases the Misfortune scale of the god's dominion. Use
+check against an attack value of 12. negative value to increase Luck.
+#xp <value> #goddomdrain <value>
+A commander may enter the site to gain <value> experience Increases the Drain scale of the god's dominion. Use a negative
+points per turn for himself and all troops under his command. value to increase Magic.
+#adventureruin <success chance> #blesshp <value>
+A commander who enters the ruin has a chance to discover Blessed troops get increased Hit Points.
+gold, gems, magic items or other rewards. Those who fail may #blessanimawe <value>
+fall victim to lethal traps or bloodthirsty monsters. Blessed troops get Animal Awe. An existing Animal Awe ability
+#lab is augmented.
+Constructs a lab in the province when the site is discovered. If a #blessmr <value>
+lab is already present, there is no effect. Blessed troops get increased Magic Resistance.
+#temple #blessawe <value>
+Constructs a temple in the province when the site is Blessed troops get Awe. An existing Awe ability is augmented.
+discovered. If a temple is already present, there is no effect. #blessmor <value>
+#fort <fort nbr> Blessed troops get increased Morale.
+Constructs a fort in the province when the site is discovered. If #blessstr <value>
+a fort is already present, there is no effect. If a fort is under Blessed troops get increased Strength.
+construction, the construction is canceled and the fort
+discovered by the site is constructed immediately instead. See
+40

@@ -1,0 +1,2883 @@
+{
+  "conflicts": [
+    {
+      "command": "#nametype",
+      "entity": "monster",
+      "issue": "PDF expects integer, code uses NametypeIDRef",
+      "pdf_args": "<name type nbr>",
+      "code_type": "NametypeIDRef"
+    }
+  ],
+  "missing_in_code": [
+    {
+      "command": "#afflictions",
+      "args": "",
+      "entity_types": [
+        "weapon"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#battlesum1d2",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "Automatically summons 1-2 monsters to the battlefield each Entries marked with an asterisk may be ma"
+    },
+    {
+      "command": "#battlesum1d3",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "Cataclysm has occurred."
+    },
+    {
+      "command": "#battlesumwarm",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "This command assigns a monster tag value to a creature."
+    },
+    {
+      "command": "#blessbonus",
+      "args": "<0 - 9>",
+      "entity_types": [
+        "bless",
+        "nation"
+      ],
+      "description": "Gods of this nation will get extra bless design points."
+    },
+    {
+      "command": "#bugshape",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "monster"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#bugswarmshape",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "The monster takes half damage from slashing weapons."
+    },
+    {
+      "command": "#bugswarmuwshape",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "Lower fatigue reduces the chance of the monster suffering This is the shape of the random bugs if th"
+    },
+    {
+      "command": "#buguwshape",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "The monster takes half damage from piercing weapons."
+    },
+    {
+      "command": "#caveinc",
+      "args": "<bonus>",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "Bonus in percent to income for all cave forts."
+    },
+    {
+      "command": "#caverecpt",
+      "args": "<bonus>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "Palace of Dreams 4 air gems Bonus in percent to recruitment points (for units) for all cave Weeping "
+    },
+    {
+      "command": "#caveres",
+      "args": "<bonus>",
+      "entity_types": [
+        "item",
+        "monster"
+      ],
+      "description": "The Sun Below 4 fire gems Bonus in percent to resources for all cave forts."
+    },
+    {
+      "command": "#chaosscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Set what the site should look like."
+    },
+    {
+      "command": "#chorusmaster",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "#crossbreeder <value> The monster is automatically a chorus master and does not The monster is skill"
+    },
+    {
+      "command": "#chorusslave",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "From the Blood magic school."
+    },
+    {
+      "command": "#clearfx",
+      "args": "",
+      "entity_types": [
+        "site"
+      ],
+      "description": "The value Unique is special and indicates that there can only Clear all effects of this bless."
+    },
+    {
+      "command": "#clearscales",
+      "args": "",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Unique name, because this will lessen the risk of conflicts Clear the scale requirements between mod"
+    },
+    {
+      "command": "#coldscale",
+      "args": "<value>",
+      "entity_types": [
+        "item",
+        "monster"
+      ],
+      "description": "#loc <locmask> The bless requires a cold scale of value or more."
+    },
+    {
+      "command": "#copysite",
+      "args": "\"<site name>\"",
+      "entity_types": [
+        "site"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#cost0",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Basic Site Modding The minimum skill required in path0 and also the cost in bless."
+    },
+    {
+      "command": "#cost1",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "The minimum skill required in path1 and also added to the cost."
+    },
+    {
+      "command": "#deathscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Certain terrains or flag the site as unique."
+    },
+    {
+      "command": "#defroll",
+      "args": "",
+      "entity_types": [
+        "weapon"
+      ],
+      "description": "(AP 8) If the victim passes a defence roll vs 3d6, there will be no 221 Fire (AP 12) effect."
+    },
+    {
+      "command": "#dishe",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#dishim",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "## Global Enchantments ##godhimself## Global enchantments have some special settings that can be ##d"
+    },
+    {
+      "command": "#dishimself",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "## manipulated with the following commands."
+    },
+    {
+      "command": "#dishis",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "## (value)*(size difference after twiceborn)."
+    },
+    {
+      "command": "#disname",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "## and other battlefield wide spells cannot be cast indoors by ##fullplayername## default."
+    },
+    {
+      "command": "#disnat",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#domstr",
+      "args": "<level>",
+      "entity_types": [
+        "event"
+      ],
+      "description": "Important Notes Set dominion strength."
+    },
+    {
+      "command": "#drainscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "In any sea"
+    },
+    {
+      "command": "#enchantedblood",
+      "args": "<points>",
+      "entity_types": [
+        "item"
+      ],
+      "description": "#noforgebonus Gets points bonus to MR and heals about."
+    },
+    {
+      "command": "#favrit",
+      "args": "<disschool> <level>",
+      "entity_types": [
+        "item"
+      ],
+      "description": "\"ritual name\" | \"item name\" * Nations: 0-499, 150+ for modding Makes the AI prioritize casting this "
+    },
+    {
+      "command": "#faysummon",
+      "args": "<id>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "But e"
+    },
+    {
+      "command": "#forcess",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "The monster changes to this shape when inside a friendly Usually being soul slayed will prevent any "
+    },
+    {
+      "command": "#foreignguardcom",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "nation",
+        "site"
+      ],
+      "description": "Will yield 2 units per point of defense, which is also the default."
+    },
+    {
+      "command": "#foreignguardmult",
+      "args": "<multiplier>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "Number of units per 10 points of defense for the fourth unit Will replace the non-foreign variant fo"
+    },
+    {
+      "command": "#foreignguardunit",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "nation",
+        "site"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#foreignwallcom",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "nation",
+        "site"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#foreignwallmult",
+      "args": "<multiplier>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "Second type of bonus units for local defense equal to or greater Will replace the non-foreign varian"
+    },
+    {
+      "command": "#foreignwallunit",
+      "args": "<\"monster_name\">",
+      "entity_types": [
+        "nation",
+        "site"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#form",
+      "args": "\"monster name\"",
+      "entity_types": [
+        "event"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#fortcoldscaleres",
+      "args": "<steps>",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "#aiearthnation Reduces the killing effect of cold scales in forts by this many Hint to AI that Earth"
+    },
+    {
+      "command": "#fortheatscaleres",
+      "args": "<steps>",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "#ainaturenation Reduces the killing effect of heat scales in forts by this many Hint to AI that Natu"
+    },
+    {
+      "command": "#fullgodname",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## 1 = cannot be cast indoors, -1 = can be cast indoors, even it it ##godname## usually should not b"
+    },
+    {
+      "command": "#fullplayergodname",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## adjusted by (value)*(size difference)."
+    },
+    {
+      "command": "#fullplayername",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "## default"
+    },
+    {
+      "command": "#godhe",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## zero"
+    },
+    {
+      "command": "#godhim",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## ##dishim## Global Enchantments ##godhimself## Global enchantments have some special settings that"
+    },
+    {
+      "command": "#godhimself",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## Global enchantments have some special settings that can be ##dishimself## manipulated with the fo"
+    },
+    {
+      "command": "#godhis",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## Units that are not human sized after being transformed by the ##godHis## twiceborn ritual will ha"
+    },
+    {
+      "command": "#godname",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## usually should not be castable there."
+    },
+    {
+      "command": "#godnat",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## the province where it was cast."
+    },
+    {
+      "command": "#godthrone",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## ##playerthrone##."
+    },
+    {
+      "command": "#grandcom",
+      "args": "<0 | 1>",
+      "entity_types": [
+        "nation",
+        "site"
+      ],
+      "description": "Whoever strikes the killing blow against this monster is This monster can participate in grand commu"
+    },
+    {
+      "command": "#growthpower",
+      "args": "<bonus>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "A unit with invisibility is sneaking, only patrolling units with The monster will get stat increases"
+    },
+    {
+      "command": "#growthscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Clears the attributes of the selected magic site."
+    },
+    {
+      "command": "#heatscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "This sets the name of the site."
+    },
+    {
+      "command": "#homecoldscaleres",
+      "args": "<steps>",
+      "entity_types": [
+        "nation",
+        "site"
+      ],
+      "description": "#aiastralnation Reduces the killing effect of cold scales in the capital by this Hint to AI that Ast"
+    },
+    {
+      "command": "#homeheatscaleres",
+      "args": "<steps>",
+      "entity_types": [
+        "nation",
+        "site"
+      ],
+      "description": "#aideathnation Reduces the killing effect of heat scales in the capital by this Hint to AI that Deat"
+    },
+    {
+      "command": "#loop",
+      "args": "<sample nbr>",
+      "entity_types": [
+        "sound"
+      ],
+      "description": "This should be -1 for sound effects, -2 for music, -4 for battle."
+    },
+    {
+      "command": "#luckscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Copies all site stats from this site, including name."
+    },
+    {
+      "command": "#magiconly",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "The weapon only affects magic beings."
+    },
+    {
+      "command": "#magicscale",
+      "args": "<value>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "The magic path associated with this site."
+    },
+    {
+      "command": "#makecrater",
+      "args": "<0 | 1>",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "= ritual range cannot trace through water provinces."
+    },
+    {
+      "command": "#misfortscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Useful numbers are 735 for a site that can be located in any The bless requires a misfortune scale o"
+    },
+    {
+      "command": "#morroll",
+      "args": "",
+      "entity_types": [
+        "weapon"
+      ],
+      "description": "(AN 10) If the victim passes a morale roll vs 3d6, there will be no effect."
+    },
+    {
+      "command": "#mrhalf",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "But will be repaired if there are enough resources in the A successful MR check will halve the damag"
+    },
+    {
+      "command": "#newtemplate",
+      "args": "<nation_id>",
+      "entity_types": [
+        "mercenary"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#notindoors",
+      "args": "<-1 to 1>",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "##fullgodname## 1 = cannot be cast indoors, -1 = can be cast indoors, even it it ##godname## usually"
+    },
+    {
+      "command": "#orderscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "The bless requires an order scale of value or more."
+    },
+    {
+      "command": "#path0",
+      "args": "<path nbr>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Use up all of the attribute slots."
+    },
+    {
+      "command": "#path1",
+      "args": "<path nbr>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Modding commands."
+    },
+    {
+      "command": "#playergodname",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## Units that are not human sized will have the cost of the ritual ##fullplayergodname## adjusted by"
+    },
+    {
+      "command": "#playergodthrone",
+      "args": "",
+      "entity_types": [
+        "nation"
+      ],
+      "description": "## This is a localized global enchantment."
+    },
+    {
+      "command": "#playername",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#playerthrone",
+      "args": "",
+      "entity_types": [
+        "spell"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#praise",
+      "args": "<value>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "#incscale <scale> The praise ability raises friendly dominion in the province."
+    },
+    {
+      "command": "#prison",
+      "args": "<id>",
+      "entity_types": [
+        "event"
+      ],
+      "description": ""
+    },
+    {
+      "command": "#prodscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Always use this command at the end of modifying a site."
+    },
+    {
+      "command": "#researchgoal",
+      "args": "\"spell name\"",
+      "entity_types": [
+        "spell"
+      ],
+      "description": "\"item name\" * Nametypes: 100-399, 170+ for modding This will make the AI research to get access to t"
+    },
+    {
+      "command": "#sabbathmaster",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "#inquisitor #sabbathslave."
+    },
+    {
+      "command": "#sabbathslave",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "Works just like the previous ability, except that at least three The monster is automatically a sabb"
+    },
+    {
+      "command": "#scale",
+      "args": "<scale nbr> <value>",
+      "entity_types": [
+        "event"
+      ],
+      "description": "Modding Number Limits Scales are numbered from 0-5 and they can have values of -5 to These are the n"
+    },
+    {
+      "command": "#selectbless",
+      "args": "\"<bless name>\"",
+      "entity_types": [
+        "bless",
+        "nation"
+      ],
+      "description": "<nbr> 119 Misc female Selects an existing blessing that will be affected by the 120 C'tis female fol"
+    },
+    {
+      "command": "#selectsound",
+      "args": "<id>",
+      "entity_types": [
+        "sound"
+      ],
+      "description": "Selects an existing or a new sample (sound effect or 89 Explosion background music) that will be aff"
+    },
+    {
+      "command": "#sizecost",
+      "args": "<value>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "##playergodname## Units that are not human sized will have the cost of the ritual ##fullplayergodnam"
+    },
+    {
+      "command": "#sleepres",
+      "args": "",
+      "entity_types": [
+        "item",
+        "monster"
+      ],
+      "description": "MAGIC ABILITIES NON-COMBAT ABILITIES #douse."
+    },
+    {
+      "command": "#slothscale",
+      "args": "<value>",
+      "entity_types": [
+        "site"
+      ],
+      "description": "Last ones will look the same)."
+    },
+    {
+      "command": "#smpmode",
+      "args": "<mode>",
+      "entity_types": [
+        "sound"
+      ],
+      "description": "Mod Info Mode should be 0 for standard sound effect and 2 for music."
+    },
+    {
+      "command": "#spikes",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "#doheal"
+    },
+    {
+      "command": "#tolerateund",
+      "args": "",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "% random chance means +2 levels in the path."
+    },
+    {
+      "command": "#twiceborncost",
+      "args": "<value>",
+      "entity_types": [
+        "monster"
+      ],
+      "description": "##godhis## Units that are not human sized after being transformed by the ##godHis## twiceborn ritual"
+    }
+  ],
+  "missing_in_pdf": [
+    {
+      "command": "#req_nopathair",
+      "enum": "REQ_NOPATHAIR"
+    },
+    {
+      "command": "#soulslaying",
+      "enum": "SOULSLAYING"
+    },
+    {
+      "command": "#req_drip",
+      "enum": "REQ_DRIP"
+    },
+    {
+      "command": "#req_magic",
+      "enum": "REQ_MAGIC"
+    },
+    {
+      "command": "#notsacred",
+      "enum": "NOTSACRED"
+    },
+    {
+      "command": "#header",
+      "enum": "HEADER"
+    },
+    {
+      "command": "#uwdefmult1",
+      "enum": "UWDEFMULT1"
+    },
+    {
+      "command": "#hero6",
+      "enum": "HERO6"
+    },
+    {
+      "command": "#turmoilsummon",
+      "enum": "TURMOILSUMMON"
+    },
+    {
+      "command": "#req_targmale",
+      "enum": "REQ_TARGMALE"
+    },
+    {
+      "command": "#uwdefunit2b",
+      "enum": "UWDEFUNIT2B"
+    },
+    {
+      "command": "#seacom",
+      "enum": "SEACOM"
+    },
+    {
+      "command": "#realm3",
+      "enum": "REALM3"
+    },
+    {
+      "command": "#farmcom",
+      "enum": "FARMCOM"
+    },
+    {
+      "command": "#hero3",
+      "enum": "HERO3"
+    },
+    {
+      "command": "#petrify",
+      "enum": "PETRIFY"
+    },
+    {
+      "command": "#req_targforeignok",
+      "enum": "REQ_TARGFOREIGNOK"
+    },
+    {
+      "command": "#zz4d3units",
+      "enum": "ZZ4D3UNITS"
+    },
+    {
+      "command": "#req_nopathall",
+      "enum": "REQ_NOPATHALL"
+    },
+    {
+      "command": "#kelpfortrec",
+      "enum": "KELPFORTREC"
+    },
+    {
+      "command": "#exactgold",
+      "enum": "EXACTGOLD"
+    },
+    {
+      "command": "#removesite",
+      "enum": "REMOVESITE"
+    },
+    {
+      "command": "#mcost",
+      "enum": "MCOST"
+    },
+    {
+      "command": "#force2d4vis",
+      "enum": "FORCE2D4VIS"
+    },
+    {
+      "command": "#req_pregame",
+      "enum": "REQ_PREGAME"
+    },
+    {
+      "command": "#aboleth",
+      "enum": "ABOLETH"
+    },
+    {
+      "command": "#req_crystal",
+      "enum": "REQ_CRYSTAL"
+    },
+    {
+      "command": "#resetcode",
+      "enum": "RESETCODE"
+    },
+    {
+      "command": "#landenc",
+      "enum": "LANDENC"
+    },
+    {
+      "command": "#dripcom",
+      "enum": "DRIPCOM"
+    },
+    {
+      "command": "#10d6units",
+      "enum": "ZZ10D6UNITS"
+    },
+    {
+      "command": "#req_capital",
+      "enum": "REQ_CAPITAL"
+    },
+    {
+      "command": "#zz8d6units",
+      "enum": "ZZ8D6UNITS"
+    },
+    {
+      "command": "#worldritrebate",
+      "enum": "WORLDRITREBATE"
+    },
+    {
+      "command": "#worldmark",
+      "enum": "WORLDMARK"
+    },
+    {
+      "command": "#force3d6vis",
+      "enum": "FORCE3D6VIS"
+    },
+    {
+      "command": "#req_maxglobals",
+      "enum": "REQ_MAXGLOBALS"
+    },
+    {
+      "command": "#mountainrec",
+      "enum": "MOUNTAINREC"
+    },
+    {
+      "command": "#disbelieve",
+      "enum": "DISBELIEVE"
+    },
+    {
+      "command": "#zz2d4vis",
+      "enum": "ZZ2D4VIS"
+    },
+    {
+      "command": "#req_pretawake",
+      "enum": "REQ_PRETAWAKE"
+    },
+    {
+      "command": "#req_targmagicbeing",
+      "enum": "REQ_TARGMAGICBEING"
+    },
+    {
+      "command": "#code2",
+      "enum": "CODE2"
+    },
+    {
+      "command": "#req_gold",
+      "enum": "REQ_GOLD"
+    },
+    {
+      "command": "#zz4com",
+      "enum": "ZZ4COM"
+    },
+    {
+      "command": "#req_noworlditem",
+      "enum": "REQ_NOWORLDITEM"
+    },
+    {
+      "command": "#req_pathfire",
+      "enum": "REQ_PATHFIRE"
+    },
+    {
+      "command": "#sizewhensailing",
+      "enum": "SIZEWHENSAILING"
+    },
+    {
+      "command": "#claimthrone",
+      "enum": "CLAIMTHRONE"
+    },
+    {
+      "command": "#coastfortrec",
+      "enum": "COASTFORTREC"
+    },
+    {
+      "command": "#worldheal",
+      "enum": "WORLDHEAL"
+    },
+    {
+      "command": "#req_mountain",
+      "enum": "REQ_MOUNTAIN"
+    },
+    {
+      "command": "#req_targinsane",
+      "enum": "REQ_TARGINSANE"
+    },
+    {
+      "command": "#9d6units",
+      "enum": "ZZ9D6UNITS"
+    },
+    {
+      "command": "#req_pathholy",
+      "enum": "REQ_PATHHOLY"
+    },
+    {
+      "command": "#req_targminsize",
+      "enum": "REQ_TARGMINSIZE"
+    },
+    {
+      "command": "#wolf",
+      "enum": "WOLF"
+    },
+    {
+      "command": "#deepfortcom",
+      "enum": "DEEPFORTCOM"
+    },
+    {
+      "command": "#req_nearbysite",
+      "enum": "REQ_NEARBYSITE"
+    },
+    {
+      "command": "#uwdefmult1d",
+      "enum": "UWDEFMULT1D"
+    },
+    {
+      "command": "#req_kelp",
+      "enum": "REQ_KELP"
+    },
+    {
+      "command": "#worldincdom",
+      "enum": "WORLDINCDOM"
+    },
+    {
+      "command": "#req_anycode",
+      "enum": "REQ_ANYCODE"
+    },
+    {
+      "command": "#req_turn",
+      "enum": "REQ_TURN"
+    },
+    {
+      "command": "#req_fornation",
+      "enum": "REQ_FORNATION"
+    },
+    {
+      "command": "#dripfortrec",
+      "enum": "DRIPFORTREC"
+    },
+    {
+      "command": "#zz11d6units",
+      "enum": "ZZ11D6UNITS"
+    },
+    {
+      "command": "#incscale2",
+      "enum": "INCSCALE2"
+    },
+    {
+      "command": "#req_temple",
+      "enum": "REQ_TEMPLE"
+    },
+    {
+      "command": "#5d6units",
+      "enum": "ZZ5D6UNITS"
+    },
+    {
+      "command": "#req_owncapital",
+      "enum": "REQ_OWNCAPITAL"
+    },
+    {
+      "command": "#req_freshwater",
+      "enum": "REQ_FRESHWATER"
+    },
+    {
+      "command": "#mountaincom",
+      "enum": "MOUNTAINCOM"
+    },
+    {
+      "command": "#cavecom",
+      "enum": "CAVECOM"
+    },
+    {
+      "command": "#zz2d6vis",
+      "enum": "ZZ2D6VIS"
+    },
+    {
+      "command": "#banished",
+      "enum": "BANISHED"
+    },
+    {
+      "command": "#req_nopathblood",
+      "enum": "REQ_NOPATHBLOOD"
+    },
+    {
+      "command": "#worldincscale3",
+      "enum": "WORLDINCSCALE3"
+    },
+    {
+      "command": "#req_season",
+      "enum": "REQ_SEASON"
+    },
+    {
+      "command": "#req_indepok",
+      "enum": "REQ_INDEPOK"
+    },
+    {
+      "command": "#req_minunrest",
+      "enum": "REQ_MINUNREST"
+    },
+    {
+      "command": "#natureattuned",
+      "enum": "NATUREATTUNED"
+    },
+    {
+      "command": "#req_death",
+      "enum": "REQ_DEATH"
+    },
+    {
+      "command": "#labpromotion",
+      "enum": "LABPROMOTION"
+    },
+    {
+      "command": "#3d3units",
+      "enum": "ZZ3D3UNITS"
+    },
+    {
+      "command": "#req_nearbycode",
+      "enum": "REQ_NEARBYCODE"
+    },
+    {
+      "command": "#flagland",
+      "enum": "FLAGLAND"
+    },
+    {
+      "command": "#deepfortrec",
+      "enum": "DEEPFORTREC"
+    },
+    {
+      "command": "#req_pathglamour",
+      "enum": "REQ_PATHGLAMOUR"
+    },
+    {
+      "command": "#bloodboost",
+      "enum": "BLOODBOOST"
+    },
+    {
+      "command": "#worldcurse",
+      "enum": "WORLDCURSE"
+    },
+    {
+      "command": "#mummification",
+      "enum": "MUMMIFICATION"
+    },
+    {
+      "command": "#req_targminkills",
+      "enum": "REQ_TARGMINKILLS"
+    },
+    {
+      "command": "#uwdefmult2",
+      "enum": "UWDEFMULT2"
+    },
+    {
+      "command": "#corrupt",
+      "enum": "CORRUPT"
+    },
+    {
+      "command": "#gemloss",
+      "enum": "GEMLOSS"
+    },
+    {
+      "command": "#req_notfornation",
+      "enum": "REQ_NOTFORNATION"
+    },
+    {
+      "command": "#req_targinanimate",
+      "enum": "REQ_TARGINANIMATE"
+    },
+    {
+      "command": "#uwdefcom1",
+      "enum": "UWDEFCOM1"
+    },
+    {
+      "command": "#req_mintroops",
+      "enum": "REQ_MINTROOPS"
+    },
+    {
+      "command": "#req_mydominion",
+      "enum": "REQ_MYDOMINION"
+    },
+    {
+      "command": "#req_luck",
+      "enum": "REQ_LUCK"
+    },
+    {
+      "command": "#req_targitem",
+      "enum": "REQ_TARGITEM"
+    },
+    {
+      "command": "#decscale3",
+      "enum": "DECSCALE3"
+    },
+    {
+      "command": "#isayazad",
+      "enum": "ISAYAZAD"
+    },
+    {
+      "command": "#req_deep",
+      "enum": "REQ_DEEP"
+    },
+    {
+      "command": "#farmfortcom",
+      "enum": "FARMFORTCOM"
+    },
+    {
+      "command": "#multihero7",
+      "enum": "MULTIHERO7"
+    },
+    {
+      "command": "#isashah",
+      "enum": "ISASHAH"
+    },
+    {
+      "command": "#force2d6vis",
+      "enum": "FORCE2D6VIS"
+    },
+    {
+      "command": "#req_chaos",
+      "enum": "REQ_CHAOS"
+    },
+    {
+      "command": "#req_nositenbr",
+      "enum": "REQ_NOSITENBR"
+    },
+    {
+      "command": "#req_varone",
+      "enum": "REQ_VARONE"
+    },
+    {
+      "command": "#deepcom",
+      "enum": "DEEPCOM"
+    },
+    {
+      "command": "#req_ench",
+      "enum": "REQ_ENCH"
+    },
+    {
+      "command": "#req_preach",
+      "enum": "REQ_PREACH"
+    },
+    {
+      "command": "#req_pathwater",
+      "enum": "REQ_PATHWATER"
+    },
+    {
+      "command": "#req_unluck",
+      "enum": "REQ_UNLUCK"
+    },
+    {
+      "command": "#farmrec",
+      "enum": "FARMREC"
+    },
+    {
+      "command": "#emigration",
+      "enum": "EMIGRATION"
+    },
+    {
+      "command": "#req_targsight",
+      "enum": "REQ_TARGSIGHT"
+    },
+    {
+      "command": "#zz1d3vis",
+      "enum": "ZZ1D3VIS"
+    },
+    {
+      "command": "#req_minglobals",
+      "enum": "REQ_MINGLOBALS"
+    },
+    {
+      "command": "#wintersummon1d3",
+      "enum": "WINTERSUMMON1D3"
+    },
+    {
+      "command": "#zz5com",
+      "enum": "ZZ5COM"
+    },
+    {
+      "command": "#req_humanoidres",
+      "enum": "REQ_HUMANOIDRES"
+    },
+    {
+      "command": "#farmfortrec",
+      "enum": "FARMFORTREC"
+    },
+    {
+      "command": "#req_targpath4",
+      "enum": "REQ_TARGPATH4"
+    },
+    {
+      "command": "#inc10var",
+      "enum": "INC10VAR"
+    },
+    {
+      "command": "#zz3d6units",
+      "enum": "ZZ3D6UNITS"
+    },
+    {
+      "command": "#stygianguide",
+      "enum": "STYGIANGUIDE"
+    },
+    {
+      "command": "#stunimmunity",
+      "enum": "STUNIMMUNITY"
+    },
+    {
+      "command": "#heathensummon",
+      "enum": "HEATHENSUMMON"
+    },
+    {
+      "command": "#nolog",
+      "enum": "NOLOG"
+    },
+    {
+      "command": "#req_nomnr",
+      "enum": "REQ_NOMNR"
+    },
+    {
+      "command": "#foreignmagicboost",
+      "enum": "FOREIGNMAGICBOOST"
+    },
+    {
+      "command": "#seafortcom",
+      "enum": "SEAFORTCOM"
+    },
+    {
+      "command": "#uwdefmult1b",
+      "enum": "UWDEFMULT1B"
+    },
+    {
+      "command": "#req_targmaxkills",
+      "enum": "REQ_TARGMAXKILLS"
+    },
+    {
+      "command": "#kelpcom",
+      "enum": "KELPCOM"
+    },
+    {
+      "command": "#kill2d6mon",
+      "enum": "KILL2D6MON"
+    },
+    {
+      "command": "#revealprov",
+      "enum": "REVEALPROV"
+    },
+    {
+      "command": "#pathboostuw",
+      "enum": "PATHBOOSTUW"
+    },
+    {
+      "command": "#resetcodedelay2",
+      "enum": "RESETCODEDELAY2"
+    },
+    {
+      "command": "#req_unmagic",
+      "enum": "REQ_UNMAGIC"
+    },
+    {
+      "command": "#assfollower1",
+      "enum": "ASSFOLLOWER1"
+    },
+    {
+      "command": "#zz7d6units",
+      "enum": "ZZ7D6UNITS"
+    },
+    {
+      "command": "#zz16d6units",
+      "enum": "ZZ16D6UNITS"
+    },
+    {
+      "command": "#extramsg",
+      "enum": "EXTRAMSG"
+    },
+    {
+      "command": "#hero9",
+      "enum": "HERO9"
+    },
+    {
+      "command": "#astralfetters",
+      "enum": "ASTRALFETTERS"
+    },
+    {
+      "command": "#req_noseason",
+      "enum": "REQ_NOSEASON"
+    },
+    {
+      "command": "#delayskip",
+      "enum": "DELAYSKIP"
+    },
+    {
+      "command": "#zz6d6units",
+      "enum": "ZZ6D6UNITS"
+    },
+    {
+      "command": "#zz13d6units",
+      "enum": "ZZ13D6UNITS"
+    },
+    {
+      "command": "#tempunits",
+      "enum": "TEMPUNITS"
+    },
+    {
+      "command": "#clockworklord",
+      "enum": "CLOCKWORKLORD"
+    },
+    {
+      "command": "#remount",
+      "enum": "REMOUNT"
+    },
+    {
+      "command": "#req_forestcave",
+      "enum": "REQ_FORESTCAVE"
+    },
+    {
+      "command": "#revolt",
+      "enum": "REVOLT"
+    },
+    {
+      "command": "#hero10",
+      "enum": "HERO10"
+    },
+    {
+      "command": "#airboost",
+      "enum": "AIRBOOST"
+    },
+    {
+      "command": "#corpseconstruct",
+      "enum": "CORPSECONSTRUCT"
+    },
+    {
+      "command": "#req_targnotally",
+      "enum": "REQ_TARGNOTALLY"
+    },
+    {
+      "command": "#curseattacker",
+      "enum": "CURSEATTACKER"
+    },
+    {
+      "command": "#multihero2",
+      "enum": "MULTIHERO2"
+    },
+    {
+      "command": "#req_targnoorder",
+      "enum": "REQ_TARGNOORDER"
+    },
+    {
+      "command": "#coastunit2",
+      "enum": "COASTUNIT2"
+    },
+    {
+      "command": "#codedelay2",
+      "enum": "CODEDELAY2"
+    },
+    {
+      "command": "#stupid",
+      "enum": "STUPID"
+    },
+    {
+      "command": "#req_targally",
+      "enum": "REQ_TARGALLY"
+    },
+    {
+      "command": "#newdom",
+      "enum": "NEWDOM"
+    },
+    {
+      "command": "#req_targhorrormark",
+      "enum": "REQ_TARGHORRORMARK"
+    },
+    {
+      "command": "#req_claimedthrone",
+      "enum": "REQ_CLAIMEDTHRONE"
+    },
+    {
+      "command": "#transform",
+      "enum": "TRANSFORM"
+    },
+    {
+      "command": "#req_unclaimedthrone",
+      "enum": "REQ_UNCLAIMEDTHRONE"
+    },
+    {
+      "command": "#incdom",
+      "enum": "INCDOM"
+    },
+    {
+      "command": "#searec",
+      "enum": "SEAREC"
+    },
+    {
+      "command": "#addequip",
+      "enum": "ADDEQUIP"
+    },
+    {
+      "command": "#zz4d6vis",
+      "enum": "ZZ4D6VIS"
+    },
+    {
+      "command": "#req_thronesite",
+      "enum": "REQ_THRONESITE"
+    },
+    {
+      "command": "#req_poptype",
+      "enum": "REQ_POPTYPE"
+    },
+    {
+      "command": "#req_targimmobile",
+      "enum": "REQ_TARGIMMOBILE"
+    },
+    {
+      "command": "#req_targundead",
+      "enum": "REQ_TARGUNDEAD"
+    },
+    {
+      "command": "#addseductions",
+      "enum": "ADDSEDUCTIONS"
+    },
+    {
+      "command": "#zz12d6units",
+      "enum": "ZZ12D6UNITS"
+    },
+    {
+      "command": "#req_enchtarget",
+      "enum": "REQ_ENCHTARGET"
+    },
+    {
+      "command": "#req_nearbycapital",
+      "enum": "REQ_NEARBYCAPITAL"
+    },
+    {
+      "command": "#req_deadmnr",
+      "enum": "REQ_DEADMNR"
+    },
+    {
+      "command": "#resetcodedelay",
+      "enum": "RESETCODEDELAY"
+    },
+    {
+      "command": "#req_notnation",
+      "enum": "REQ_NOTNATION"
+    },
+    {
+      "command": "#horror",
+      "enum": "HORROR"
+    },
+    {
+      "command": "#coastunit3",
+      "enum": "COASTUNIT3"
+    },
+    {
+      "command": "#multihero4",
+      "enum": "MULTIHERO4"
+    },
+    {
+      "command": "#req_godisnotmnr",
+      "enum": "REQ_GODISNOTMNR"
+    },
+    {
+      "command": "#req_notanycode",
+      "enum": "REQ_NOTANYCODE"
+    },
+    {
+      "command": "#req_domowner",
+      "enum": "REQ_DOMOWNER"
+    },
+    {
+      "command": "#req_targminmorale",
+      "enum": "REQ_TARGMINMORALE"
+    },
+    {
+      "command": "#earthboost",
+      "enum": "EARTHBOOST"
+    },
+    {
+      "command": "#2d4vis",
+      "enum": "ZZ2D4VIS"
+    },
+    {
+      "command": "#req_enchnearby",
+      "enum": "REQ_ENCHNEARBY"
+    },
+    {
+      "command": "#incpop",
+      "enum": "INCPOP"
+    },
+    {
+      "command": "#req_noench",
+      "enum": "REQ_NOENCH"
+    },
+    {
+      "command": "#deathattuned",
+      "enum": "DEATHATTUNED"
+    },
+    {
+      "command": "#earthattuned",
+      "enum": "EARTHATTUNED"
+    },
+    {
+      "command": "#pathboostland",
+      "enum": "PATHBOOSTLAND"
+    },
+    {
+      "command": "#req_nopathglamour",
+      "enum": "REQ_NOPATHGLAMOUR"
+    },
+    {
+      "command": "#req_researcher",
+      "enum": "REQ_RESEARCHER"
+    },
+    {
+      "command": "#req_varzero",
+      "enum": "REQ_VARZERO"
+    },
+    {
+      "command": "#req_targpath2",
+      "enum": "REQ_TARGPATH2"
+    },
+    {
+      "command": "#req_growth",
+      "enum": "REQ_GROWTH"
+    },
+    {
+      "command": "#notext",
+      "enum": "NOTEXT"
+    },
+    {
+      "command": "#req_notcode",
+      "enum": "REQ_NOTCODE"
+    },
+    {
+      "command": "#horrormarked",
+      "enum": "HORRORMARKED"
+    },
+    {
+      "command": "#worldunrest",
+      "enum": "WORLDUNREST"
+    },
+    {
+      "command": "#gainaff",
+      "enum": "GAINAFF"
+    },
+    {
+      "command": "#req_friendlyench",
+      "enum": "REQ_FRIENDLYENCH"
+    },
+    {
+      "command": "#resolvearena2",
+      "enum": "RESOLVEARENA2"
+    },
+    {
+      "command": "#zz14d6units",
+      "enum": "ZZ14D6UNITS"
+    },
+    {
+      "command": "#req_5monsters",
+      "enum": "REQ_5MONSTERS"
+    },
+    {
+      "command": "#req_worlditem",
+      "enum": "REQ_WORLDITEM"
+    },
+    {
+      "command": "#req_targpath3",
+      "enum": "REQ_TARGPATH3"
+    },
+    {
+      "command": "#req_fortid",
+      "enum": "REQ_FORTID"
+    },
+    {
+      "command": "#req_targorder",
+      "enum": "REQ_TARGORDER"
+    },
+    {
+      "command": "#req_targmnr",
+      "enum": "REQ_TARGMNR"
+    },
+    {
+      "command": "#setxp",
+      "enum": "SETXP"
+    },
+    {
+      "command": "#illusionary",
+      "enum": "ILLUSIONARY"
+    },
+    {
+      "command": "#incscale3",
+      "enum": "INCSCALE3"
+    },
+    {
+      "command": "#swampfortrec",
+      "enum": "SWAMPFORTREC"
+    },
+    {
+      "command": "#decvar",
+      "enum": "DECVAR"
+    },
+    {
+      "command": "#astralboost",
+      "enum": "ASTRALBOOST"
+    },
+    {
+      "command": "#uwdefunit1b",
+      "enum": "UWDEFUNIT1B"
+    },
+    {
+      "command": "#addkills",
+      "enum": "ADDKILLS"
+    },
+    {
+      "command": "#waterboost",
+      "enum": "WATERBOOST"
+    },
+    {
+      "command": "#req_targanimal",
+      "enum": "REQ_TARGANIMAL"
+    },
+    {
+      "command": "#landprod",
+      "enum": "LANDPROD"
+    },
+    {
+      "command": "#hero4",
+      "enum": "HERO4"
+    },
+    {
+      "command": "#req_nearowncode",
+      "enum": "REQ_NEAROWNCODE"
+    },
+    {
+      "command": "#landreinvigoration",
+      "enum": "LANDREINVIGORATION"
+    },
+    {
+      "command": "#mountedberserk",
+      "enum": "MOUNTEDBERSERK"
+    },
+    {
+      "command": "#nationench",
+      "enum": "NATIONENCH"
+    },
+    {
+      "command": "#gainmark",
+      "enum": "GAINMARK"
+    },
+    {
+      "command": "#req_targgod",
+      "enum": "REQ_TARGGOD"
+    },
+    {
+      "command": "#realm2",
+      "enum": "REALM2"
+    },
+    {
+      "command": "#req_targnomnr",
+      "enum": "REQ_TARGNOMNR"
+    },
+    {
+      "command": "#undying",
+      "enum": "UNDYING"
+    },
+    {
+      "command": "#wastecom",
+      "enum": "WASTECOM"
+    },
+    {
+      "command": "#req_nativesoil",
+      "enum": "REQ_NATIVESOIL"
+    },
+    {
+      "command": "#req_forest",
+      "enum": "REQ_FOREST"
+    },
+    {
+      "command": "#kelpfortcom",
+      "enum": "KELPFORTCOM"
+    },
+    {
+      "command": "#preanimator",
+      "enum": "PREANIMATOR"
+    },
+    {
+      "command": "#req_hostileench",
+      "enum": "REQ_HOSTILEENCH"
+    },
+    {
+      "command": "#req_arenadone",
+      "enum": "REQ_ARENADONE"
+    },
+    {
+      "command": "#req_plane",
+      "enum": "REQ_PLANE"
+    },
+    {
+      "command": "#1d3vis",
+      "enum": "ZZ1D3VIS"
+    },
+    {
+      "command": "#req_nopathearth",
+      "enum": "REQ_NOPATHEARTH"
+    },
+    {
+      "command": "#req_era",
+      "enum": "REQ_ERA"
+    },
+    {
+      "command": "#multihero5",
+      "enum": "MULTIHERO5"
+    },
+    {
+      "command": "#zz10d6units",
+      "enum": "ZZ10D6UNITS"
+    },
+    {
+      "command": "#cavefortcom",
+      "enum": "CAVEFORTCOM"
+    },
+    {
+      "command": "#kill",
+      "enum": "KILL"
+    },
+    {
+      "command": "#req_notpoptype",
+      "enum": "REQ_NOTPOPTYPE"
+    },
+    {
+      "command": "#req_mindef",
+      "enum": "REQ_MINDEF"
+    },
+    {
+      "command": "#2d6units",
+      "enum": "ZZ2D6UNITS"
+    },
+    {
+      "command": "#req_minpop",
+      "enum": "REQ_MINPOP"
+    },
+    {
+      "command": "#uwdefmult2b",
+      "enum": "UWDEFMULT2B"
+    },
+    {
+      "command": "#req_nation",
+      "enum": "REQ_NATION"
+    },
+    {
+      "command": "#dispglobals",
+      "enum": "DISPGLOBALS"
+    },
+    {
+      "command": "#assowner",
+      "enum": "ASSOWNER"
+    },
+    {
+      "command": "#req_pathnature",
+      "enum": "REQ_PATHNATURE"
+    },
+    {
+      "command": "#req_lab",
+      "enum": "REQ_LAB"
+    },
+    {
+      "command": "#req_code",
+      "enum": "REQ_CODE"
+    },
+    {
+      "command": "#batstartsum7d6",
+      "enum": "BATSTARTSUM7D6"
+    },
+    {
+      "command": "#req_targseductions",
+      "enum": "REQ_TARGSEDUCTIONS"
+    },
+    {
+      "command": "#togglevar",
+      "enum": "TOGGLEVAR"
+    },
+    {
+      "command": "#remgeo",
+      "enum": "REMGEO"
+    },
+    {
+      "command": "#req_pathdeath",
+      "enum": "REQ_PATHDEATH"
+    },
+    {
+      "command": "#gemlosslarge",
+      "enum": "GEMLOSSLARGE"
+    },
+    {
+      "command": "#worlddecscale3",
+      "enum": "WORLDDECSCALE3"
+    },
+    {
+      "command": "#zz2d3units",
+      "enum": "ZZ2D3UNITS"
+    },
+    {
+      "command": "#worlddarkness",
+      "enum": "WORLDDARKNESS"
+    },
+    {
+      "command": "#req_turnrare",
+      "enum": "REQ_TURNRARE"
+    },
+    {
+      "command": "#zz1d6units",
+      "enum": "ZZ1D6UNITS"
+    },
+    {
+      "command": "#glamourboost",
+      "enum": "GLAMOURBOOST"
+    },
+    {
+      "command": "#uwdefunit2",
+      "enum": "UWDEFUNIT2"
+    },
+    {
+      "command": "#coastcom2",
+      "enum": "COASTCOM2"
+    },
+    {
+      "command": "#4com",
+      "enum": "ZZ4COM"
+    },
+    {
+      "command": "#wastefortcom",
+      "enum": "WASTEFORTCOM"
+    },
+    {
+      "command": "#req_maxunrest",
+      "enum": "REQ_MAXUNREST"
+    },
+    {
+      "command": "#kelprec",
+      "enum": "KELPREC"
+    },
+    {
+      "command": "#req_maxcorpses",
+      "enum": "REQ_MAXCORPSES"
+    },
+    {
+      "command": "#uwdefcom2",
+      "enum": "UWDEFCOM2"
+    },
+    {
+      "command": "#req_heat",
+      "enum": "REQ_HEAT"
+    },
+    {
+      "command": "#zz2com",
+      "enum": "ZZ2COM"
+    },
+    {
+      "command": "#4d6units",
+      "enum": "ZZ4D6UNITS"
+    },
+    {
+      "command": "#zz2d6units",
+      "enum": "ZZ2D6UNITS"
+    },
+    {
+      "command": "#req_gem",
+      "enum": "REQ_GEM"
+    },
+    {
+      "command": "#req_land",
+      "enum": "REQ_LAND"
+    },
+    {
+      "command": "#req_targnoaff",
+      "enum": "REQ_TARGNOAFF"
+    },
+    {
+      "command": "#req_maxturn",
+      "enum": "REQ_MAXTURN"
+    },
+    {
+      "command": "#order",
+      "enum": "ORDER"
+    },
+    {
+      "command": "#killpop",
+      "enum": "KILLPOP"
+    },
+    {
+      "command": "#req_freesites",
+      "enum": "REQ_FREESITES"
+    },
+    {
+      "command": "#mountainfortcom",
+      "enum": "MOUNTAINFORTCOM"
+    },
+    {
+      "command": "#req_rare",
+      "enum": "REQ_RARE"
+    },
+    {
+      "command": "#req_nopathholy",
+      "enum": "REQ_NOPATHHOLY"
+    },
+    {
+      "command": "#wasterec",
+      "enum": "WASTEREC"
+    },
+    {
+      "command": "#req_permonth",
+      "enum": "REQ_PERMONTH"
+    },
+    {
+      "command": "#minegold",
+      "enum": "MINEGOLD"
+    },
+    {
+      "command": "#wastefortrec",
+      "enum": "WASTEFORTREC"
+    },
+    {
+      "command": "#req_nonation",
+      "enum": "REQ_NONATION"
+    },
+    {
+      "command": "#purgedelayed",
+      "enum": "PURGEDELAYED"
+    },
+    {
+      "command": "#worldincscale",
+      "enum": "WORLDINCSCALE"
+    },
+    {
+      "command": "#zz3d3units",
+      "enum": "ZZ3D3UNITS"
+    },
+    {
+      "command": "#arena",
+      "enum": "ARENA"
+    },
+    {
+      "command": "#req_varpos",
+      "enum": "REQ_VARPOS"
+    },
+    {
+      "command": "#req_noera",
+      "enum": "REQ_NOERA"
+    },
+    {
+      "command": "#clearallevents",
+      "enum": "CLEARALLEVENTS"
+    },
+    {
+      "command": "#natureboost",
+      "enum": "NATUREBOOST"
+    },
+    {
+      "command": "#deeprec",
+      "enum": "DEEPREC"
+    },
+    {
+      "command": "#req_domchance",
+      "enum": "REQ_DOMCHANCE"
+    },
+    {
+      "command": "#req_nopathastral",
+      "enum": "REQ_NOPATHASTRAL"
+    },
+    {
+      "command": "#taxboost",
+      "enum": "TAXBOOST"
+    },
+    {
+      "command": "#req_farm",
+      "enum": "REQ_FARM"
+    },
+    {
+      "command": "#defence",
+      "enum": "DEFENCE"
+    },
+    {
+      "command": "#req_prod",
+      "enum": "REQ_PROD"
+    },
+    {
+      "command": "#req_maxdominion",
+      "enum": "REQ_MAXDOMINION"
+    },
+    {
+      "command": "#req_waste",
+      "enum": "REQ_WASTE"
+    },
+    {
+      "command": "#spreadlazy",
+      "enum": "SPREADLAZY"
+    },
+    {
+      "command": "#nation",
+      "enum": "NATION"
+    },
+    {
+      "command": "#multihero6",
+      "enum": "MULTIHERO6"
+    },
+    {
+      "command": "#hero5",
+      "enum": "HERO5"
+    },
+    {
+      "command": "#defiler",
+      "enum": "DEFILER"
+    },
+    {
+      "command": "#7d6units",
+      "enum": "ZZ7D6UNITS"
+    },
+    {
+      "command": "#req_pathair",
+      "enum": "REQ_PATHAIR"
+    },
+    {
+      "command": "#zz15d6units",
+      "enum": "ZZ15D6UNITS"
+    },
+    {
+      "command": "#delay50",
+      "enum": "DELAY50"
+    },
+    {
+      "command": "#sendlessorhorrormult",
+      "enum": "SENDLESSORHORRORMULT"
+    },
+    {
+      "command": "#req_enchdom",
+      "enum": "REQ_ENCHDOM"
+    },
+    {
+      "command": "#forcetransform",
+      "enum": "FORCETRANSFORM"
+    },
+    {
+      "command": "#req_month",
+      "enum": "REQ_MONTH"
+    },
+    {
+      "command": "#req_targnopath4",
+      "enum": "REQ_TARGNOPATH4"
+    },
+    {
+      "command": "#worldincscale2",
+      "enum": "WORLDINCSCALE2"
+    },
+    {
+      "command": "#req_cold",
+      "enum": "REQ_COLD"
+    },
+    {
+      "command": "#swampcom",
+      "enum": "SWAMPCOM"
+    },
+    {
+      "command": "#req_targowner",
+      "enum": "REQ_TARGOWNER"
+    },
+    {
+      "command": "#req_pathearth",
+      "enum": "REQ_PATHEARTH"
+    },
+    {
+      "command": "#req_targmanygems",
+      "enum": "REQ_TARGMANYGEMS"
+    },
+    {
+      "command": "#inccorpses",
+      "enum": "INCCORPSES"
+    },
+    {
+      "command": "#incvar",
+      "enum": "INCVAR"
+    },
+    {
+      "command": "#code",
+      "enum": "CODE"
+    },
+    {
+      "command": "#multihero3",
+      "enum": "MULTIHERO3"
+    },
+    {
+      "command": "#landgold",
+      "enum": "LANDGOLD"
+    },
+    {
+      "command": "#req_commander",
+      "enum": "REQ_COMMANDER"
+    },
+    {
+      "command": "#req_nopathwater",
+      "enum": "REQ_NOPATHWATER"
+    },
+    {
+      "command": "#req_gorge",
+      "enum": "REQ_GORGE"
+    },
+    {
+      "command": "#5com",
+      "enum": "ZZ5COM"
+    },
+    {
+      "command": "#16d6units",
+      "enum": "ZZ16D6UNITS"
+    },
+    {
+      "command": "#adventurers",
+      "enum": "ADVENTURERS"
+    },
+    {
+      "command": "#msg",
+      "enum": "MSG"
+    },
+    {
+      "command": "#req_myench",
+      "enum": "REQ_MYENCH"
+    },
+    {
+      "command": "#req_godismnr",
+      "enum": "REQ_GODISMNR"
+    },
+    {
+      "command": "#autoblessed",
+      "enum": "AUTOBLESSED"
+    },
+    {
+      "command": "#4d6vis",
+      "enum": "ZZ4D6VIS"
+    },
+    {
+      "command": "#req_unique",
+      "enum": "REQ_UNIQUE"
+    },
+    {
+      "command": "#req_pathblood",
+      "enum": "REQ_PATHBLOOD"
+    },
+    {
+      "command": "#req_nearbythrone",
+      "enum": "REQ_NEARBYTHRONE"
+    },
+    {
+      "command": "#dreanimator",
+      "enum": "DREANIMATOR"
+    },
+    {
+      "command": "#2d6vis",
+      "enum": "ZZ2D6VIS"
+    },
+    {
+      "command": "#uwdefunit1c",
+      "enum": "UWDEFUNIT1C"
+    },
+    {
+      "command": "#forceexactgold",
+      "enum": "FORCEEXACTGOLD"
+    },
+    {
+      "command": "#3d6units",
+      "enum": "ZZ3D6UNITS"
+    },
+    {
+      "command": "#worlddisease",
+      "enum": "WORLDDISEASE"
+    },
+    {
+      "command": "#req_godawake",
+      "enum": "REQ_GODAWAKE"
+    },
+    {
+      "command": "#req_2monsters",
+      "enum": "REQ_2MONSTERS"
+    },
+    {
+      "command": "#req_pretismnr",
+      "enum": "REQ_PRETISMNR"
+    },
+    {
+      "command": "#force1d6vis",
+      "enum": "FORCE1D6VIS"
+    },
+    {
+      "command": "#batstartsum9d6",
+      "enum": "BATSTARTSUM9D6"
+    },
+    {
+      "command": "#req_nomonster",
+      "enum": "REQ_NOMONSTER"
+    },
+    {
+      "command": "#coastrec",
+      "enum": "COASTREC"
+    },
+    {
+      "command": "#hero2",
+      "enum": "HERO2"
+    },
+    {
+      "command": "#isadaeva",
+      "enum": "ISADAEVA"
+    },
+    {
+      "command": "#req_coast",
+      "enum": "REQ_COAST"
+    },
+    {
+      "command": "#hpoverslow",
+      "enum": "HPOVERSLOW"
+    },
+    {
+      "command": "#spreaddeath",
+      "enum": "SPREADDEATH"
+    },
+    {
+      "command": "#strikeunits",
+      "enum": "STRIKEUNITS"
+    },
+    {
+      "command": "#worlddecscale",
+      "enum": "WORLDDECSCALE"
+    },
+    {
+      "command": "#req_story",
+      "enum": "REQ_STORY"
+    },
+    {
+      "command": "#1d6units",
+      "enum": "ZZ1D6UNITS"
+    },
+    {
+      "command": "#req_targhumanoid",
+      "enum": "REQ_TARGHUMANOID"
+    },
+    {
+      "command": "#assfollower2",
+      "enum": "ASSFOLLOWER2"
+    },
+    {
+      "command": "#assownerench",
+      "enum": "ASSOWNERENCH"
+    },
+    {
+      "command": "#sailsize",
+      "enum": "SAILSIZE"
+    },
+    {
+      "command": "#zz1unit",
+      "enum": "ZZ1UNIT"
+    },
+    {
+      "command": "#seafortrec",
+      "enum": "SEAFORTREC"
+    },
+    {
+      "command": "#forestcom",
+      "enum": "FORESTCOM"
+    },
+    {
+      "command": "#killmon",
+      "enum": "KILLMON"
+    },
+    {
+      "command": "#fireboost",
+      "enum": "FIREBOOST"
+    },
+    {
+      "command": "#6d6units",
+      "enum": "ZZ6D6UNITS"
+    },
+    {
+      "command": "#req_monster",
+      "enum": "REQ_MONSTER"
+    },
+    {
+      "command": "#uncurableaffliction",
+      "enum": "UNCURABLEAFFLICTION"
+    },
+    {
+      "command": "#spreadcold",
+      "enum": "SPREADCOLD"
+    },
+    {
+      "command": "#percentpathreduction",
+      "enum": "PERCENTPATHREDUCTION"
+    },
+    {
+      "command": "#delay25",
+      "enum": "DELAY25"
+    },
+    {
+      "command": "#req_order",
+      "enum": "REQ_ORDER"
+    },
+    {
+      "command": "#req_maxpop",
+      "enum": "REQ_MAXPOP"
+    },
+    {
+      "command": "#zz1d6vis",
+      "enum": "ZZ1D6VIS"
+    },
+    {
+      "command": "#req_dominion",
+      "enum": "REQ_DOMINION"
+    },
+    {
+      "command": "#coastfortcom",
+      "enum": "COASTFORTCOM"
+    },
+    {
+      "command": "#dec10var",
+      "enum": "DEC10VAR"
+    },
+    {
+      "command": "#req_void",
+      "enum": "REQ_VOID"
+    },
+    {
+      "command": "#hero8",
+      "enum": "HERO8"
+    },
+    {
+      "command": "#hiddensite",
+      "enum": "HIDDENSITE"
+    },
+    {
+      "command": "#invvar",
+      "enum": "INVVAR"
+    },
+    {
+      "command": "#req_targnopath1",
+      "enum": "REQ_TARGNOPATH1"
+    },
+    {
+      "command": "#12d6units",
+      "enum": "ZZ12D6UNITS"
+    },
+    {
+      "command": "#req_nopathdeath",
+      "enum": "REQ_NOPATHDEATH"
+    },
+    {
+      "command": "#force4d6vis",
+      "enum": "FORCE4D6VIS"
+    },
+    {
+      "command": "#dripfortcom",
+      "enum": "DRIPFORTCOM"
+    },
+    {
+      "command": "#req_targaff",
+      "enum": "REQ_TARGAFF"
+    },
+    {
+      "command": "#req_targmindless",
+      "enum": "REQ_TARGMINDLESS"
+    },
+    {
+      "command": "#4d3units",
+      "enum": "ZZ4D3UNITS"
+    },
+    {
+      "command": "#saltvul",
+      "enum": "SALTVUL"
+    },
+    {
+      "command": "#req_fullowner",
+      "enum": "REQ_FULLOWNER"
+    },
+    {
+      "command": "#newevent",
+      "enum": "NEWEVENT"
+    },
+    {
+      "command": "#14d6units",
+      "enum": "ZZ14D6UNITS"
+    },
+    {
+      "command": "#req_maxtroops",
+      "enum": "REQ_MAXTROOPS"
+    },
+    {
+      "command": "#killcom",
+      "enum": "KILLCOM"
+    },
+    {
+      "command": "#unrest",
+      "enum": "UNREST"
+    },
+    {
+      "command": "#bloodattuned",
+      "enum": "BLOODATTUNED"
+    },
+    {
+      "command": "#req_mincorpses",
+      "enum": "REQ_MINCORPSES"
+    },
+    {
+      "command": "#assfollower1d3",
+      "enum": "ASSFOLLOWER1D3"
+    },
+    {
+      "command": "#forcegold",
+      "enum": "FORCEGOLD"
+    },
+    {
+      "command": "#deathboost",
+      "enum": "DEATHBOOST"
+    },
+    {
+      "command": "#addsite",
+      "enum": "ADDSITE"
+    },
+    {
+      "command": "#worlddecscale2",
+      "enum": "WORLDDECSCALE2"
+    },
+    {
+      "command": "#zz3d6vis",
+      "enum": "ZZ3D6VIS"
+    },
+    {
+      "command": "#researchaff",
+      "enum": "RESEARCHAFF"
+    },
+    {
+      "command": "#11d6units",
+      "enum": "ZZ11D6UNITS"
+    },
+    {
+      "command": "#uwdefunit1",
+      "enum": "UWDEFUNIT1"
+    },
+    {
+      "command": "#driprec",
+      "enum": "DRIPREC"
+    },
+    {
+      "command": "#batstartsum8d6",
+      "enum": "BATSTARTSUM8D6"
+    },
+    {
+      "command": "#magicitem",
+      "enum": "MAGICITEM"
+    },
+    {
+      "command": "#req_targmaxsize",
+      "enum": "REQ_TARGMAXSIZE"
+    },
+    {
+      "command": "#gemlosssmall",
+      "enum": "GEMLOSSSMALL"
+    },
+    {
+      "command": "#req_notforally",
+      "enum": "REQ_NOTFORALLY"
+    },
+    {
+      "command": "#glamourattuned",
+      "enum": "GLAMOURATTUNED"
+    },
+    {
+      "command": "#req_pop0ok",
+      "enum": "REQ_POP0OK"
+    },
+    {
+      "command": "#req_foundsite",
+      "enum": "REQ_FOUNDSITE"
+    },
+    {
+      "command": "#req_site",
+      "enum": "REQ_SITE"
+    },
+    {
+      "command": "#req_fort",
+      "enum": "REQ_FORT"
+    },
+    {
+      "command": "#holyboost",
+      "enum": "HOLYBOOST"
+    },
+    {
+      "command": "#delay",
+      "enum": "DELAY"
+    },
+    {
+      "command": "#req_lazy",
+      "enum": "REQ_LAZY"
+    },
+    {
+      "command": "#req_nopathnature",
+      "enum": "REQ_NOPATHNATURE"
+    },
+    {
+      "command": "#decscale2",
+      "enum": "DECSCALE2"
+    },
+    {
+      "command": "#clearvar",
+      "enum": "CLEARVAR"
+    },
+    {
+      "command": "#req_targpath1",
+      "enum": "REQ_TARGPATH1"
+    },
+    {
+      "command": "#selectevent",
+      "enum": "SELECTEVENT"
+    },
+    {
+      "command": "#swampfortcom",
+      "enum": "SWAMPFORTCOM"
+    },
+    {
+      "command": "#uwdefunit1d",
+      "enum": "UWDEFUNIT1D"
+    },
+    {
+      "command": "#linger",
+      "enum": "LINGER"
+    },
+    {
+      "command": "#1unit",
+      "enum": "ZZ1UNIT"
+    },
+    {
+      "command": "#forestfortcom",
+      "enum": "FORESTFORTCOM"
+    },
+    {
+      "command": "#batstartsum6d6",
+      "enum": "BATSTARTSUM6D6"
+    },
+    {
+      "command": "#purgecalendar",
+      "enum": "PURGECALENDAR"
+    },
+    {
+      "command": "#assfollower3",
+      "enum": "ASSFOLLOWER3"
+    },
+    {
+      "command": "#zz5d6units",
+      "enum": "ZZ5D6UNITS"
+    },
+    {
+      "command": "#caverec",
+      "enum": "CAVEREC"
+    },
+    {
+      "command": "#resolvearena1",
+      "enum": "RESOLVEARENA1"
+    },
+    {
+      "command": "#cavefortrec",
+      "enum": "CAVEFORTREC"
+    },
+    {
+      "command": "#req_varneg",
+      "enum": "REQ_VARNEG"
+    },
+    {
+      "command": "#req_targprophet",
+      "enum": "REQ_TARGPROPHET"
+    },
+    {
+      "command": "#spreadchaos",
+      "enum": "SPREADCHAOS"
+    },
+    {
+      "command": "#spreadheat",
+      "enum": "SPREADHEAT"
+    },
+    {
+      "command": "#req_targnopath3",
+      "enum": "REQ_TARGNOPATH3"
+    },
+    {
+      "command": "#2d3units",
+      "enum": "ZZ2D3UNITS"
+    },
+    {
+      "command": "#hero7",
+      "enum": "HERO7"
+    },
+    {
+      "command": "#req_nopathfire",
+      "enum": "REQ_NOPATHFIRE"
+    },
+    {
+      "command": "#codedelay",
+      "enum": "CODEDELAY"
+    },
+    {
+      "command": "#cleartarg",
+      "enum": "CLEARTARG"
+    },
+    {
+      "command": "#changetargetgenderforseductionandseductionimmune",
+      "enum": "CHANGETARGETGENDERFORSEDUCTIONANDSEDUCTIONIMMUNE"
+    },
+    {
+      "command": "#setpoptype",
+      "enum": "SETPOPTYPE"
+    },
+    {
+      "command": "#req_swamp",
+      "enum": "REQ_SWAMP"
+    },
+    {
+      "command": "#killtarg",
+      "enum": "KILLTARG"
+    },
+    {
+      "command": "#stealthcom",
+      "enum": "STEALTHCOM"
+    },
+    {
+      "command": "#req_pathastral",
+      "enum": "REQ_PATHASTRAL"
+    },
+    {
+      "command": "#waterattuned",
+      "enum": "WATERATTUNED"
+    },
+    {
+      "command": "#healaff",
+      "enum": "HEALAFF"
+    },
+    {
+      "command": "#3d6vis",
+      "enum": "ZZ3D6VIS"
+    },
+    {
+      "command": "#req_mnr",
+      "enum": "REQ_MNR"
+    },
+    {
+      "command": "#minascension",
+      "enum": "MINASCENSION"
+    },
+    {
+      "command": "#astralattuned",
+      "enum": "ASTRALATTUNED"
+    },
+    {
+      "command": "#15d6units",
+      "enum": "ZZ15D6UNITS"
+    },
+    {
+      "command": "#addascension",
+      "enum": "ADDASCENSION"
+    },
+    {
+      "command": "#2com",
+      "enum": "ZZ2COM"
+    },
+    {
+      "command": "#13d6units",
+      "enum": "ZZ13D6UNITS"
+    },
+    {
+      "command": "#uwdefmult1c",
+      "enum": "UWDEFMULT1C"
+    },
+    {
+      "command": "#swamprec",
+      "enum": "SWAMPREC"
+    },
+    {
+      "command": "#req_targdemon",
+      "enum": "REQ_TARGDEMON"
+    },
+    {
+      "command": "#moralebonus",
+      "enum": "MORALEBONUS"
+    },
+    {
+      "command": "#addgeo",
+      "enum": "ADDGEO"
+    },
+    {
+      "command": "#visitors",
+      "enum": "VISITORS"
+    },
+    {
+      "command": "#req_targnotowner",
+      "enum": "REQ_TARGNOTOWNER"
+    },
+    {
+      "command": "#id",
+      "enum": "ID"
+    },
+    {
+      "command": "#req_ai",
+      "enum": "REQ_AI"
+    },
+    {
+      "command": "#force1d3vis",
+      "enum": "FORCE1D3VIS"
+    },
+    {
+      "command": "#req_hiddensite",
+      "enum": "REQ_HIDDENSITE"
+    },
+    {
+      "command": "#req_voidok",
+      "enum": "REQ_VOIDOK"
+    },
+    {
+      "command": "#req_targmaxmorale",
+      "enum": "REQ_TARGMAXMORALE"
+    },
+    {
+      "command": "#8d6units",
+      "enum": "ZZ8D6UNITS"
+    },
+    {
+      "command": "#worldage",
+      "enum": "WORLDAGE"
+    },
+    {
+      "command": "#reincarnation",
+      "enum": "REINCARNATION"
+    },
+    {
+      "command": "#req_cave",
+      "enum": "REQ_CAVE"
+    },
+    {
+      "command": "#revealsite",
+      "enum": "REVEALSITE"
+    },
+    {
+      "command": "#req_targnopath2",
+      "enum": "REQ_TARGNOPATH2"
+    },
+    {
+      "command": "#req_maxdef",
+      "enum": "REQ_MAXDEF"
+    },
+    {
+      "command": "#zz1d3units",
+      "enum": "ZZ1D3UNITS"
+    },
+    {
+      "command": "#req_targnoitem",
+      "enum": "REQ_TARGNOITEM"
+    },
+    {
+      "command": "#1d3units",
+      "enum": "ZZ1D3UNITS"
+    },
+    {
+      "command": "#forestfortrec",
+      "enum": "FORESTFORTREC"
+    },
+    {
+      "command": "#zz4d6units",
+      "enum": "ZZ4D6UNITS"
+    },
+    {
+      "command": "#coldsummon",
+      "enum": "COLDSUMMON"
+    },
+    {
+      "command": "#zz9d6units",
+      "enum": "ZZ9D6UNITS"
+    },
+    {
+      "command": "#coastcom",
+      "enum": "COASTCOM"
+    },
+    {
+      "command": "#pathboost",
+      "enum": "PATHBOOST"
+    },
+    {
+      "command": "#mountainfortrec",
+      "enum": "MOUNTAINFORTREC"
+    },
+    {
+      "command": "#1d6vis",
+      "enum": "ZZ1D6VIS"
+    }
+  ]
+}
