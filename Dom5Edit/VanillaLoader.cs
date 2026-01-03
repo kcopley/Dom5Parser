@@ -2,10 +2,57 @@
 
 namespace Dom5Edit
 {
+    /// <summary>
+    /// Specifies which game version's vanilla data to load.
+    /// </summary>
+    public enum GameVersion
+    {
+        /// <summary>
+        /// Dominions 5 - loads from TSV spreadsheets (legacy).
+        /// </summary>
+        Dom5,
+
+        /// <summary>
+        /// Dominions 6 - loads from vanilla.dm file.
+        /// </summary>
+        Dom6
+    }
+
     public class VanillaLoader
     {
         private static VanillaLoader _loader;
         private static Mod _vanilla;
+        private static GameVersion _gameVersion = GameVersion.Dom6; // Default to Dom6
+        private static string _vanillaDmPath = null;
+
+        /// <summary>
+        /// Gets or sets the game version for vanilla data loading.
+        /// Must be set before accessing Vanilla property.
+        /// </summary>
+        public static GameVersion GameVersion
+        {
+            get => _gameVersion;
+            set
+            {
+                if (_vanilla != null && _gameVersion != value)
+                {
+                    // Reset cached vanilla if version changes
+                    _vanilla = null;
+                }
+                _gameVersion = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the path to vanilla.dm file for Dom6.
+        /// If null, will search common locations.
+        /// </summary>
+        public static string VanillaDmPath
+        {
+            get => _vanillaDmPath;
+            set => _vanillaDmPath = value;
+        }
+
         public static Mod Vanilla
         {
             get
@@ -13,15 +60,91 @@ namespace Dom5Edit
                 if (_vanilla == null)
                 {
                     _loader = new VanillaLoader();
-                    _vanilla = _loader.LoadVanillaData();
+                    _vanilla = _gameVersion == GameVersion.Dom6
+                        ? _loader.LoadVanillaFromDm()
+                        : _loader.LoadVanillaData();
                     _vanilla.Resolve();
                 }
                 return _vanilla;
             }
         }
 
+        /// <summary>
+        /// Forces a reload of vanilla data. Call after changing GameVersion or VanillaDmPath.
+        /// </summary>
+        public static void Reload()
+        {
+            _vanilla = null;
+        }
+
         VanillaLoader()
         {
+        }
+
+        /// <summary>
+        /// Loads vanilla data from a .dm file (Dom6 format).
+        /// </summary>
+        Mod LoadVanillaFromDm()
+        {
+            Mod m = new Mod();
+
+            string dmPath = FindVanillaDmPath();
+            if (string.IsNullOrEmpty(dmPath) || !File.Exists(dmPath))
+            {
+                // Fall back to TSV if vanilla.dm not found
+                return LoadVanillaData();
+            }
+
+            m.Parse(dmPath);
+            MarkAllEntitiesAsVanilla(m);
+            return m;
+        }
+
+        /// <summary>
+        /// Finds the vanilla.dm file path.
+        /// </summary>
+        private string FindVanillaDmPath()
+        {
+            // If explicitly set, use that
+            if (!string.IsNullOrEmpty(_vanillaDmPath))
+                return _vanillaDmPath;
+
+            // Check common locations
+            var searchPaths = new[]
+            {
+                "vanilla.dm", // Current directory
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "vanilla.dm"),
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VanillaData", "vanilla.dm"),
+            };
+
+            foreach (var path in searchPaths)
+            {
+                if (File.Exists(path))
+                    return path;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Marks all entities in the mod as vanilla (read-only).
+        /// </summary>
+        private void MarkAllEntitiesAsVanilla(Mod m)
+        {
+            foreach (var entitySet in m.Database.Values)
+            {
+                foreach (var entity in entitySet.GetFullList())
+                {
+                    entity.IsVanilla = true;
+                }
+            }
+            foreach (var dependentSet in m.Dependents.Values)
+            {
+                foreach (var entity in dependentSet.Values)
+                {
+                    entity.IsVanilla = true;
+                }
+            }
         }
 
         private enum CustomMagic
