@@ -110,7 +110,7 @@ namespace Dom5Edit.Entities
             get
             {
                 var exists = TryGet<NameProperty>(Command.NAME, out var np);
-                if ((ReturnType.TRUE | ReturnType.COPIED).HasFlag(exists))
+                if (exists == ReturnType.TRUE || exists == ReturnType.COPIED)
                 {
                     return np.Value;
                 }

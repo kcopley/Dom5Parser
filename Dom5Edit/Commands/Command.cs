@@ -1352,6 +1352,7 @@
         RECONST,
         FALSEREGEN,
         GLAMOUR,
+        GLAMOURATTUNED,
         DREAD,
         NIGHTMAREAURA,
         AUTOBERSERK,
@@ -1581,6 +1582,7 @@
 
         private static Dictionary<Command, string> _toolTipMap = new Dictionary<Command, string>();
         private static HashSet<Command> _nonEditable = new HashSet<Command>();
+        private static HashSet<Command> _singularMap = new HashSet<Command>();
 
         static CommandsMap()
         {
@@ -2934,6 +2936,7 @@
             _commandMap.Add("#reconst", Command.RECONST);
             _commandMap.Add("#falseregen", Command.FALSEREGEN);
             _commandMap.Add("#glamour", Command.GLAMOUR);
+            _commandMap.Add("#glamourattuned", Command.GLAMOURATTUNED);
             _commandMap.Add("#dread", Command.DREAD);
             _commandMap.Add("#nightmareaura", Command.NIGHTMAREAURA);
             _commandMap.Add("#autoberserk", Command.AUTOBERSERK);

@@ -69,11 +69,6 @@ namespace Dom5Edit.Entities
 
         public void Add(int id, string name, T t)
         {
-            if (id == 7712 || id == 7713)
-            {
-                int abc = 0;
-                abc++;
-            }
             if (id > 0)
             {
                 if (!Entities.ContainsKey(id))

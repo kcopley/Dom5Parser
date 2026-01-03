@@ -115,7 +115,7 @@ namespace Dom5Edit.Props
             }
         }
 
-        public List<Command> _StringExported = new List<Command>()
+        private static readonly List<Command> _StringExported = new List<Command>()
         {
             Command.STARTSITE,
             Command.SPELL,

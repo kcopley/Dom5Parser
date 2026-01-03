@@ -38,10 +38,6 @@ namespace Dom5Edit.Props
                 {
                     if (Value != int.MinValue)
                     {
-                        if (Command == Command.ERA)
-                        {
-                            return s + " " + 2 + " -- " + Comment;
-                        }
                         return s + " " + Value + " -- " + Comment;
                     }
                     else
