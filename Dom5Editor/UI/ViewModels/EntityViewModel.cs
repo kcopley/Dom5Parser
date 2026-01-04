@@ -53,6 +53,48 @@ namespace Dom5Editor.UI.Views
             _entity = entity;
             _history = history;
             _source = source;
+
+            // Subscribe to undo/redo notifications to refresh the view
+            if (_history != null)
+            {
+                _history.PropertyChangedByHistory += OnPropertyChangedByHistory;
+            }
+        }
+
+        /// <summary>
+        /// Handles property change notifications from undo/redo operations.
+        /// Refreshes the view when this entity's properties are affected.
+        /// </summary>
+        private void OnPropertyChangedByHistory(object sender, PropertyChangedByHistoryEventArgs e)
+        {
+            // Only handle changes to this entity
+            if (e.Entity != _entity)
+                return;
+
+            // Notify that the property may have changed
+            // We use a generic approach - notify common property name patterns
+            var commandName = e.PropertyCommand.ToString();
+            OnPropertyChanged(commandName);
+
+            // Also notify related properties that might be derived from this
+            OnPropertyChanged($"Is{commandName}Modified");
+            OnPropertyChanged($"Is{commandName}SessionEdit");
+            OnPropertyChanged($"Is{commandName}Inherited");
+
+            // Notify that session changes flag may have changed
+            OnPropertyChanged(nameof(HasSessionChanges));
+
+            // Call virtual method for subclass-specific refresh
+            OnPropertyRefreshedByHistory(e.PropertyCommand);
+        }
+
+        /// <summary>
+        /// Called when a property is refreshed via undo/redo.
+        /// Override in subclasses to handle specific property refresh needs.
+        /// </summary>
+        protected virtual void OnPropertyRefreshedByHistory(Command command)
+        {
+            // Default: no-op. Subclasses can override.
         }
 
         /// <summary>
@@ -226,21 +268,16 @@ namespace Dom5Editor.UI.Views
 
         protected void SetStringProperty(Command command, string value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
         {
-            _entity.Set<StringProperty>(command, p => p.Value = value);
-
-            // Check if value matches original - if so, revert from ChangesMod instead of recording
-            if (_changesMod != null)
+            // Use CommandHistory for undo/redo support
+            if (_history != null)
             {
-                var original = GetOriginalStringValue(command);
-                if (value == original)
-                {
-                    _changesMod.RevertPropertyChange(_entity, command);
-                }
-                else
-                {
-                    var prop = new StringProperty { Command = command, Value = value };
-                    _changesMod.RecordPropertyChange(_entity, prop);
-                }
+                var cmd = new SetStringPropertyCommand(_entity, command, value);
+                _history.Execute(cmd);
+            }
+            else
+            {
+                // Fallback: direct modification (no undo support)
+                _entity.Set<StringProperty>(command, p => p.Value = value);
             }
 
             HasSessionChanges = true;
@@ -280,43 +317,39 @@ namespace Dom5Editor.UI.Views
 
         protected void SetIntProperty(Command command, int? value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
         {
-            if (value.HasValue)
+            // Use CommandHistory for undo/redo support
+            if (_history != null)
             {
-                _entity.Set<IntProperty>(command, p => p.Value = value.Value);
-
-                // Check if value matches original - if so, revert from ChangesMod instead of recording
-                if (_changesMod != null)
+                if (value.HasValue)
                 {
-                    var original = GetOriginalIntValue(command);
-                    if (value.Value == original)
+                    var cmd = new SetIntPropertyCommand(_entity, command, value.Value);
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    // Removing property - get the existing property first for undo support
+                    var result = _entity.TryGet<IntProperty>(command, out var existingProp, checkCopy: false);
+                    if (result == ReturnType.TRUE && existingProp != null)
                     {
-                        _changesMod.RevertPropertyChange(_entity, command);
+                        var cmd = new RemovePropertyCommand(_entity, existingProp, $"Remove {command}");
+                        _history.Execute(cmd);
                     }
-                    else
-                    {
-                        var prop = new IntProperty { Command = command, Value = value.Value };
-                        _changesMod.RecordPropertyChange(_entity, prop);
-                    }
+                    // If property doesn't exist, nothing to remove
                 }
             }
             else
             {
-                _entity.Remove<IntProperty>(command);
-
-                // Check if null matches original (property didn't exist originally)
-                if (_changesMod != null)
+                // Fallback: direct modification (no undo support)
+                if (value.HasValue)
                 {
-                    var original = GetOriginalIntValue(command);
-                    if (original == null)
-                    {
-                        _changesMod.RevertPropertyChange(_entity, command);
-                    }
-                    else
-                    {
-                        _changesMod.RecordPropertyRemoval(_entity, command);
-                    }
+                    _entity.Set<IntProperty>(command, p => p.Value = value.Value);
+                }
+                else
+                {
+                    _entity.Remove<IntProperty>(command);
                 }
             }
+
             HasSessionChanges = true;
             OnPropertyChanged(propertyName);
             // Notify related session edit and modified properties
@@ -351,43 +384,25 @@ namespace Dom5Editor.UI.Views
 
         protected void SetCommandProperty(Command command, bool value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
         {
-            if (value)
+            // Use CommandHistory for undo/redo support
+            if (_history != null)
             {
-                _entity.SetCommand<CommandProperty>(command);
-
-                // Check if value matches original - if so, revert from ChangesMod instead of recording
-                if (_changesMod != null)
-                {
-                    var original = GetOriginalCommandValue(command);
-                    if (original) // Original was true, setting to true - revert
-                    {
-                        _changesMod.RevertPropertyChange(_entity, command);
-                    }
-                    else
-                    {
-                        var prop = new CommandProperty { Command = command };
-                        _changesMod.RecordPropertyChange(_entity, prop);
-                    }
-                }
+                var cmd = new SetCommandPropertyCommand(_entity, command, value);
+                _history.Execute(cmd);
             }
             else
             {
-                _entity.Remove<CommandProperty>(command);
-
-                // Check if false matches original (property didn't exist originally)
-                if (_changesMod != null)
+                // Fallback: direct modification (no undo support)
+                if (value)
                 {
-                    var original = GetOriginalCommandValue(command);
-                    if (!original) // Original was false, setting to false - revert
-                    {
-                        _changesMod.RevertPropertyChange(_entity, command);
-                    }
-                    else
-                    {
-                        _changesMod.RecordPropertyRemoval(_entity, command);
-                    }
+                    _entity.SetCommand<CommandProperty>(command);
+                }
+                else
+                {
+                    _entity.Remove<CommandProperty>(command);
                 }
             }
+
             HasSessionChanges = true;
             OnPropertyChanged(propertyName);
             // Notify related session edit and modified properties

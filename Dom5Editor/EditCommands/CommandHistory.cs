@@ -1,9 +1,26 @@
 using System;
 using System.Collections.Generic;
 using Dom5Edit;
+using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 
 namespace Dom5Editor.EditCommands
 {
+    /// <summary>
+    /// Event args for property change notifications from undo/redo.
+    /// </summary>
+    public class PropertyChangedByHistoryEventArgs : EventArgs
+    {
+        public IDEntity Entity { get; }
+        public Command PropertyCommand { get; }
+
+        public PropertyChangedByHistoryEventArgs(IDEntity entity, Command propertyCommand)
+        {
+            Entity = entity;
+            PropertyCommand = propertyCommand;
+        }
+    }
+
     /// <summary>
     /// Manages undo/redo stacks for edit commands.
     /// Each document (mod) should have its own CommandHistory instance.
@@ -25,6 +42,11 @@ namespace Dom5Editor.EditCommands
         /// Raised when the command history changes (after execute, undo, or redo).
         /// </summary>
         public event Action HistoryChanged;
+
+        /// <summary>
+        /// Raised when a property is changed via undo or redo, allowing ViewModels to refresh.
+        /// </summary>
+        public event EventHandler<PropertyChangedByHistoryEventArgs> PropertyChangedByHistory;
 
         /// <summary>
         /// Returns true if there are commands that can be undone.
@@ -99,6 +121,9 @@ namespace Dom5Editor.EditCommands
             // Revert the change in ChangesMod
             RevertPropertyChange(command);
 
+            // Notify ViewModels to refresh
+            NotifyPropertyChanged(command);
+
             OnHistoryChanged();
         }
 
@@ -117,6 +142,9 @@ namespace Dom5Editor.EditCommands
 
             // Re-record the change in ChangesMod
             RecordPropertyChange(command);
+
+            // Notify ViewModels to refresh
+            NotifyPropertyChanged(command);
 
             OnHistoryChanged();
         }
@@ -145,6 +173,18 @@ namespace Dom5Editor.EditCommands
         private void OnHistoryChanged()
         {
             HistoryChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Notifies ViewModels that a property was changed via undo/redo.
+        /// </summary>
+        private void NotifyPropertyChanged(IEditCommand command)
+        {
+            if (command is IPropertyEditCommand propCommand && propCommand.Entity != null)
+            {
+                PropertyChangedByHistory?.Invoke(this, new PropertyChangedByHistoryEventArgs(
+                    propCommand.Entity, propCommand.PropertyCommand));
+            }
         }
 
         /// <summary>

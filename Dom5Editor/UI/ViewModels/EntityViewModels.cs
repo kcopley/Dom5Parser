@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.Data;
 using Dom5Editor.EditCommands;
 using Dom5Editor.UI.Controls;
 using Paloma;
@@ -941,6 +943,216 @@ namespace Dom5Editor.UI.Views
         public void AddSpecialCommand(Command command) { SetCommandProperty(command, true); RefreshSpecialCommands(); }
         public void RemoveSpecialCommand(Command command) { SetCommandProperty(command, false); RefreshSpecialCommands(); }
 
+        // ===== BADGE-BASED COLLECTIONS (Compact UI) =====
+        // Three main sections: Types (read-only), General (non-combat), Combat, Resistances
+
+        // Lazy-loaded badge configuration from JSON
+        private static BadgeConfig? _badgeConfig;
+        private static BadgeConfig BadgeConfig => _badgeConfig ??= BadgeConfigLoader.LoadConfig("monster") ?? new BadgeConfig();
+
+        /// <summary>
+        /// Builds badges for a section using JSON configuration.
+        /// Falls back to hardcoded arrays if JSON section not found.
+        /// </summary>
+        private (System.Collections.ObjectModel.ObservableCollection<BadgeItem> active,
+                 System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> available)
+            BuildBadgesFromSection(string sectionId, EventHandler<int>? valueChangedHandler = null)
+        {
+            var active = new System.Collections.ObjectModel.ObservableCollection<BadgeItem>();
+            var available = new System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem>();
+            var usedCommands = new HashSet<Command>();
+
+            var section = BadgeConfig.GetSection(sectionId);
+            if (section == null)
+            {
+                return (active, available);
+            }
+
+            foreach (var cmdDef in section.Commands)
+            {
+                if (!BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
+                    continue;
+
+                bool hasValue = false;
+                int? value = null;
+
+                if (cmdDef.IsFlag)
+                {
+                    hasValue = GetCommandProperty(command);
+                }
+                else if (cmdDef.IsInt)
+                {
+                    value = GetIntProperty(command);
+                    hasValue = value.HasValue;
+                }
+
+                if (hasValue)
+                {
+                    var badge = BadgeConfigLoader.CreateBadgeItem(cmdDef, value, false, false);
+                    badge.CanRemove = !section.ReadOnly;
+                    badge.IsInherited = section.ReadOnly;
+
+                    if (valueChangedHandler != null && cmdDef.IsInt)
+                    {
+                        badge.ValueChanged += valueChangedHandler;
+                    }
+
+                    active.Add(badge);
+                    usedCommands.Add(command);
+                }
+            }
+
+            // Build available list (excluding already used commands)
+            if (!section.ReadOnly)
+            {
+                foreach (var cmdDef in section.Commands)
+                {
+                    if (BadgeConfigLoader.TryGetCommand(cmdDef, out var command) && !usedCommands.Contains(command))
+                    {
+                        available.Add(BadgeConfigLoader.CreateAvailableItem(cmdDef));
+                    }
+                }
+            }
+
+            return (active, available);
+        }
+
+        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _typeBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableTypeBadges;
+        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _generalBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableGeneralBadges;
+        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _combatBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableCombatBadges;
+        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _resistanceBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableResistanceBadges;
+
+        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> TypeBadges
+        {
+            get { if (_typeBadges == null) RefreshTypeBadges(); return _typeBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableTypeBadges
+        {
+            get { if (_availableTypeBadges == null) RefreshTypeBadges(); return _availableTypeBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> GeneralBadges
+        {
+            get { if (_generalBadges == null) RefreshGeneralBadges(); return _generalBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableGeneralBadges
+        {
+            get { if (_availableGeneralBadges == null) RefreshGeneralBadges(); return _availableGeneralBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> CombatBadges
+        {
+            get { if (_combatBadges == null) RefreshCombatBadges(); return _combatBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableCombatBadges
+        {
+            get { if (_availableCombatBadges == null) RefreshCombatBadges(); return _availableCombatBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> ResistanceBadges
+        {
+            get { if (_resistanceBadges == null) RefreshResistanceBadges(); return _resistanceBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableResistanceBadges
+        {
+            get { if (_availableResistanceBadges == null) RefreshResistanceBadges(); return _availableResistanceBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<BadgeItem> _removeGeneralBadgeCommand;
+        private RelayCommand<AvailableBadgeItem> _addGeneralBadgeCommand;
+        private RelayCommand<BadgeItem> _removeCombatBadgeCommand;
+        private RelayCommand<AvailableBadgeItem> _addCombatBadgeCommand;
+        private RelayCommand<BadgeItem> _removeResistanceBadgeCommand;
+        private RelayCommand<AvailableBadgeItem> _addResistanceBadgeCommand;
+
+        public RelayCommand<BadgeItem> RemoveGeneralBadgeCommand => _removeGeneralBadgeCommand ??= new RelayCommand<BadgeItem>(b =>
+        {
+            if (b.HasValue) SetIntProperty(b.Command, null);
+            else SetCommandProperty(b.Command, false);
+            RefreshGeneralBadges();
+        });
+
+        public RelayCommand<AvailableBadgeItem> AddGeneralBadgeCommand => _addGeneralBadgeCommand ??= new RelayCommand<AvailableBadgeItem>(b =>
+        {
+            if (b.DefaultValue.HasValue) SetIntProperty(b.Command, b.DefaultValue.Value);
+            else SetCommandProperty(b.Command, true);
+            RefreshGeneralBadges();
+        });
+
+        public RelayCommand<BadgeItem> RemoveCombatBadgeCommand => _removeCombatBadgeCommand ??= new RelayCommand<BadgeItem>(b => { SetIntProperty(b.Command, null); RefreshCombatBadges(); });
+        public RelayCommand<AvailableBadgeItem> AddCombatBadgeCommand => _addCombatBadgeCommand ??= new RelayCommand<AvailableBadgeItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 1); RefreshCombatBadges(); });
+        public RelayCommand<BadgeItem> RemoveResistanceBadgeCommand => _removeResistanceBadgeCommand ??= new RelayCommand<BadgeItem>(b => { SetIntProperty(b.Command, null); RefreshResistanceBadges(); });
+        public RelayCommand<AvailableBadgeItem> AddResistanceBadgeCommand => _addResistanceBadgeCommand ??= new RelayCommand<AvailableBadgeItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 0); RefreshResistanceBadges(); });
+
+        private void RefreshTypeBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("types", null);
+            _typeBadges = active;
+            _availableTypeBadges = available;
+            OnPropertyChanged(nameof(TypeBadges));
+            OnPropertyChanged(nameof(AvailableTypeBadges));
+        }
+
+        private void RefreshGeneralBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("general", OnGeneralBadgeValueChanged);
+            _generalBadges = active;
+            _availableGeneralBadges = available;
+            OnPropertyChanged(nameof(GeneralBadges));
+            OnPropertyChanged(nameof(AvailableGeneralBadges));
+        }
+
+        private void OnGeneralBadgeValueChanged(object sender, int newValue)
+        {
+            if (sender is BadgeItem badge)
+            {
+                SetIntProperty(badge.Command, newValue);
+            }
+        }
+
+        private void RefreshCombatBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("combat", OnCombatBadgeValueChanged);
+            _combatBadges = active;
+            _availableCombatBadges = available;
+            OnPropertyChanged(nameof(CombatBadges));
+            OnPropertyChanged(nameof(AvailableCombatBadges));
+        }
+
+        private void OnCombatBadgeValueChanged(object sender, int newValue)
+        {
+            if (sender is BadgeItem badge)
+            {
+                SetIntProperty(badge.Command, newValue);
+            }
+        }
+
+        private void RefreshResistanceBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("resistances", OnResistanceBadgeValueChanged);
+            _resistanceBadges = active;
+            _availableResistanceBadges = available;
+            OnPropertyChanged(nameof(ResistanceBadges));
+            OnPropertyChanged(nameof(AvailableResistanceBadges));
+        }
+
+        private void OnResistanceBadgeValueChanged(object sender, int newValue)
+        {
+            if (sender is BadgeItem badge)
+            {
+                SetIntProperty(badge.Command, newValue);
+            }
+        }
+
         // ===== Magic Paths =====
         private System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem> _magicPathsList;
         private System.Collections.ObjectModel.ObservableCollection<UI.Controls.AvailableMagicPath> _availableMagicPaths;
@@ -1041,10 +1253,7 @@ namespace Dom5Editor.UI.Views
                 var props = monster.Properties.Where(p => p.Command == Command.MAGICSKILL)
                     .Cast<Dom5Edit.Props.IntIntProperty>().ToList();
                 var existing = props.FirstOrDefault(p => p.Value1 == pathId);
-                if (existing != null)
-                {
-                    monster.RemoveProperty(existing);
-                }
+
                 var newProp = new Dom5Edit.Props.IntIntProperty
                 {
                     Command = Command.MAGICSKILL,
@@ -1052,8 +1261,25 @@ namespace Dom5Editor.UI.Views
                     Value2 = newLevel,
                     HasValue = true
                 };
-                monster.AddProperty(newProp);
-                // TODO: Add proper tracking for IntIntProperty changes
+
+                // Use CommandHistory for undo/redo support
+                if (_history != null && existing != null)
+                {
+                    // Use SetIntIntPropertyCommand for changing level
+                    var cmd = new SetIntIntPropertyCommand(_entity, Command.MAGICSKILL, pathId, newLevel);
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    // Fallback: direct modification
+                    if (existing != null)
+                    {
+                        monster.RemoveProperty(existing);
+                    }
+                    monster.AddProperty(newProp);
+                }
+
+                HasSessionChanges = true;
             }
         }
 
@@ -1069,7 +1295,19 @@ namespace Dom5Editor.UI.Views
                     Value2 = level,
                     HasValue = true
                 };
-                monster.AddProperty(newProp);
+
+                // Use CommandHistory for undo/redo support
+                if (_history != null)
+                {
+                    var cmd = new AddPropertyCommand(_entity, newProp, $"Add Magic Path {pathId}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    monster.AddProperty(newProp);
+                }
+
+                HasSessionChanges = true;
                 RefreshMagicPaths();
             }
         }
@@ -1084,10 +1322,108 @@ namespace Dom5Editor.UI.Views
                 var existing = props.FirstOrDefault(p => p.Value1 == pathId);
                 if (existing != null)
                 {
-                    monster.RemoveProperty(existing);
+                    // Use CommandHistory for undo/redo support
+                    if (_history != null)
+                    {
+                        var cmd = new RemovePropertyCommand(_entity, existing, $"Remove Magic Path {pathId}");
+                        _history.Execute(cmd);
+                    }
+                    else
+                    {
+                        monster.RemoveProperty(existing);
+                    }
+
+                    HasSessionChanges = true;
                     RefreshMagicPaths();
                 }
             }
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            // Refresh magic paths list when MAGICSKILL changes
+            if (command == Command.MAGICSKILL)
+            {
+                RefreshMagicPaths();
+            }
+
+            // Map Command enum to actual property names (they don't always match)
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged($"Is{propertyName}Inherited");
+            }
+
+            // Refresh command lists when related commands change
+            RefreshCommandLists();
+            RefreshIntPropertyLists();
+        }
+
+        /// <summary>
+        /// Maps Command enum values to ViewModel property names.
+        /// Returns null if no mapping exists (base class handles it).
+        /// </summary>
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                // Core stats with different names
+                Command.HP => "Hp",
+                Command.STR => "Strength",
+                Command.ATT => "Attack",
+                Command.DEF => "Defense",
+                Command.PREC => "Precision",
+                Command.MR => "MagicResistance",
+                Command.MOR => "Morale",
+                Command.ENC => "Encumbrance",
+                Command.PROT => "Protection",
+                Command.AP => "ActionPoints",
+                Command.MAPMOVE => "MapMove",
+                Command.SIZE => "Size",
+                Command.RESSIZE => "ResearchSize",
+                Command.EYES => "Eyes",
+
+                // Cost
+                Command.GCOST => "GoldCost",
+                Command.RCOST => "ResourceCost",
+
+                // Identity
+                Command.FIXEDNAME => "FixedName",
+                Command.DESCR => "Description",
+                Command.SPR1 => "Sprite1",
+                Command.SPR2 => "Sprite2",
+
+                _ => null  // Let base class handle or it matches Command name
+            };
+        }
+
+        /// <summary>
+        /// Refreshes all command list collections (movement, type, leader, special).
+        /// </summary>
+        private void RefreshCommandLists()
+        {
+            OnPropertyChanged(nameof(MovementCommandsList));
+            OnPropertyChanged(nameof(AvailableMovementCommands));
+            OnPropertyChanged(nameof(TypeCommandsList));
+            OnPropertyChanged(nameof(AvailableTypeCommands));
+            OnPropertyChanged(nameof(LeaderCommandsList));
+            OnPropertyChanged(nameof(AvailableLeaderCommands));
+            OnPropertyChanged(nameof(SpecialCommandsList));
+            OnPropertyChanged(nameof(AvailableSpecialCommands));
+        }
+
+        /// <summary>
+        /// Refreshes all int property list collections (combat, resistances).
+        /// </summary>
+        private void RefreshIntPropertyLists()
+        {
+            OnPropertyChanged(nameof(CombatList));
+            OnPropertyChanged(nameof(AvailableCombat));
+            OnPropertyChanged(nameof(ResistancesList));
+            OnPropertyChanged(nameof(AvailableResistances));
         }
 
         protected override string GetCommandDisplayName(Command command)

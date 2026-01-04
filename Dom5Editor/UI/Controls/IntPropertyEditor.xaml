@@ -63,11 +63,11 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <!-- Value TextBox -->
+        <!-- Value TextBox - uses Explicit trigger with debounced update -->
         <TextBox Grid.Column="3" x:Name="ValueTextBox"
-                 Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullableIntToStringConverter}}"
+                 Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=Explicit, Converter={StaticResource NullableIntToStringConverter}}"
                  Style="{DynamicResource TextBoxBase}" VerticalAlignment="Center" FontSize="10" Padding="3,2"
-                 PreviewTextInput="OnPreviewTextInput"/>
+                 PreviewTextInput="OnPreviewTextInput" TextChanged="OnTextChanged" LostFocus="OnLostFocus"/>
 
         <!-- Inherited indicator -->
         <Border Grid.Column="4" Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"
