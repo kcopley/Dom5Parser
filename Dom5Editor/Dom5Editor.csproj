@@ -18,4 +18,11 @@
       <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
     </ItemGroup>
 
+    <!-- Badge configuration JSON files - copied to output for easy editing -->
+    <ItemGroup>
+      <Content Include="Data\*_badges.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

@@ -105,172 +105,6 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
-            <!-- Recruitment Section (3 columns) -->
-            <controls:PropertyGroupControl Header="Recruitment" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="0" Label="Gold" Value="{Binding GoldCost, Mode=TwoWay}" IsModified="{Binding IsGoldCostModified}" IsSessionEdit="{Binding IsGoldCostSessionEdit}" IsInherited="{Binding IsGoldCostInherited}" Margin="0,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="1" Label="Res" Value="{Binding ResourceCost, Mode=TwoWay}" IsModified="{Binding IsResourceCostModified}" IsSessionEdit="{Binding IsResourceCostSessionEdit}" IsInherited="{Binding IsResourceCostInherited}" Margin="4,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="2" Label="ResSize" Value="{Binding ResourceSize, Mode=TwoWay}" IsModified="{Binding IsResourceSizeModified}" IsSessionEdit="{Binding IsResourceSizeSessionEdit}" IsInherited="{Binding IsResourceSizeInherited}" Margin="4,0,0,4"/>
-
-                        <controls:CommandPropertyEditor Grid.Row="1" Grid.Column="0" Label="Req Lab" IsChecked="{Binding RequiresLab, Mode=TwoWay}" IsModified="{Binding IsRequiresLabModified}" IsSessionEdit="{Binding IsRequiresLabSessionEdit}" IsInherited="{Binding IsRequiresLabInherited}" Margin="0,0,4,0"/>
-                        <controls:CommandPropertyEditor Grid.Row="1" Grid.Column="1" Label="Req Temple" IsChecked="{Binding RequiresTemple, Mode=TwoWay}" IsModified="{Binding IsRequiresTempleModified}" IsSessionEdit="{Binding IsRequiresTempleSessionEdit}" IsInherited="{Binding IsRequiresTempleInherited}" Margin="4,0,4,0"/>
-                    </Grid>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Age Section -->
-            <controls:PropertyGroupControl Header="Age" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <controls:IntPropertyEditor Grid.Column="0" Label="Start Age" Value="{Binding StartAge, Mode=TwoWay}" IsModified="{Binding IsStartAgeModified}" IsSessionEdit="{Binding IsStartAgeSessionEdit}" IsInherited="{Binding IsStartAgeInherited}" Margin="0,0,4,0"/>
-                        <controls:IntPropertyEditor Grid.Column="1" Label="Max Age" Value="{Binding MaxAge, Mode=TwoWay}" IsModified="{Binding IsMaxAgeModified}" IsSessionEdit="{Binding IsMaxAgeSessionEdit}" IsInherited="{Binding IsMaxAgeInherited}" Margin="4,0,0,0"/>
-                    </Grid>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Stealth/Covert Section -->
-            <controls:PropertyGroupControl Header="Stealth" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <controls:IntPropertyEditor Grid.Column="0" Label="Stealth" Value="{Binding Stealthy, Mode=TwoWay}" IsModified="{Binding IsStealthyModified}" IsSessionEdit="{Binding IsStealthySessionEdit}" IsInherited="{Binding IsStealthyInherited}" Margin="0,0,4,0"/>
-                        <controls:CommandPropertyEditor Grid.Column="1" Label="Spy" IsChecked="{Binding IsSpy, Mode=TwoWay}" IsModified="{Binding IsSpyModified}" IsSessionEdit="{Binding IsSpySessionEdit}" IsInherited="{Binding IsSpyInherited}" Margin="4,0,4,0"/>
-                        <controls:CommandPropertyEditor Grid.Column="2" Label="Assassin" IsChecked="{Binding IsAssassin, Mode=TwoWay}" IsModified="{Binding IsAssassinModified}" IsSessionEdit="{Binding IsAssassinSessionEdit}" IsInherited="{Binding IsAssassinInherited}" Margin="4,0,0,0"/>
-                    </Grid>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Province Effects Section -->
-            <controls:PropertyGroupControl Header="Province Effects" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="0" Label="PopKill" Value="{Binding PopKill, Mode=TwoWay}" IsModified="{Binding IsPopKillModified}" IsSessionEdit="{Binding IsPopKillSessionEdit}" IsInherited="{Binding IsPopKillInherited}" Margin="0,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="1" Label="Unrest" Value="{Binding IncUnrest, Mode=TwoWay}" IsModified="{Binding IsIncUnrestModified}" IsSessionEdit="{Binding IsIncUnrestSessionEdit}" IsInherited="{Binding IsIncUnrestInherited}" Margin="4,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="2" Label="SpreadDom" Value="{Binding SpreadDom, Mode=TwoWay}" IsModified="{Binding IsSpreadDomModified}" IsSessionEdit="{Binding IsSpreadDomSessionEdit}" IsInherited="{Binding IsSpreadDomInherited}" Margin="4,0,0,4"/>
-
-                        <controls:IntPropertyEditor Grid.Row="1" Grid.Column="0" Label="Patrol" Value="{Binding PatrolBonus, Mode=TwoWay}" IsModified="{Binding IsPatrolBonusModified}" IsSessionEdit="{Binding IsPatrolBonusSessionEdit}" IsInherited="{Binding IsPatrolBonusInherited}" Margin="0,0,4,0"/>
-                        <controls:IntPropertyEditor Grid.Row="1" Grid.Column="1" Label="Supply" Value="{Binding SupplyBonus, Mode=TwoWay}" IsModified="{Binding IsSupplyBonusModified}" IsSessionEdit="{Binding IsSupplyBonusSessionEdit}" IsInherited="{Binding IsSupplyBonusInherited}" Margin="4,0,4,0"/>
-                    </Grid>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Type & Leadership (side by side) -->
-            <controls:PropertyGroupControl Header="Type &amp; Leadership" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
-                            <TextBlock Text="Type" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
-                            <controls:CommandListEditor ActiveCommands="{Binding TypeCommandsList}"
-                                                        AvailableCommands="{Binding AvailableTypeCommands}"
-                                                        CommandAdded="OnTypeCommandAdded"
-                                                        CommandRemoved="OnTypeCommandRemoved"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="4,0,0,0">
-                            <TextBlock Text="Leadership" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
-                            <controls:CommandListEditor ActiveCommands="{Binding LeaderCommandsList}"
-                                                        AvailableCommands="{Binding AvailableLeaderCommands}"
-                                                        CommandAdded="OnLeaderCommandAdded"
-                                                        CommandRemoved="OnLeaderCommandRemoved"/>
-                        </StackPanel>
-                    </Grid>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Movement & Special (side by side) -->
-            <controls:PropertyGroupControl Header="Movement &amp; Special" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
-                            <TextBlock Text="Movement" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
-                            <controls:CommandListEditor ActiveCommands="{Binding MovementCommandsList}"
-                                                        AvailableCommands="{Binding AvailableMovementCommands}"
-                                                        CommandAdded="OnMovementCommandAdded"
-                                                        CommandRemoved="OnMovementCommandRemoved"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="4,0,0,0">
-                            <TextBlock Text="Special Abilities" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
-                            <controls:CommandListEditor ActiveCommands="{Binding SpecialCommandsList}"
-                                                        AvailableCommands="{Binding AvailableSpecialCommands}"
-                                                        CommandAdded="OnSpecialCommandAdded"
-                                                        CommandRemoved="OnSpecialCommandRemoved"/>
-                        </StackPanel>
-                    </Grid>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Resistances & Combat (side by side) -->
-            <controls:PropertyGroupControl Header="Resistances &amp; Combat" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
-                            <TextBlock Text="Resistances &amp; Immunities" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
-                            <controls:IntPropertyListEditor ActiveProperties="{Binding ResistancesList}"
-                                                            AvailableProperties="{Binding AvailableResistances}"
-                                                            PropertyAdded="OnResistanceAdded"
-                                                            PropertyRemoved="OnResistanceRemoved"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="4,0,0,0">
-                            <TextBlock Text="Combat Abilities" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
-                            <controls:IntPropertyListEditor ActiveProperties="{Binding CombatList}"
-                                                            AvailableProperties="{Binding AvailableCombat}"
-                                                            PropertyAdded="OnCombatAdded"
-                                                            PropertyRemoved="OnCombatRemoved"/>
-                        </StackPanel>
-                    </Grid>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Auras Section -->
-            <controls:PropertyGroupControl Header="Auras &amp; Effects" IsExpanded="False">
-                <controls:PropertyGroupControl.GroupContent>
-                    <controls:IntPropertyListEditor ActiveProperties="{Binding AuraList}"
-                                                    AvailableProperties="{Binding AvailableAuras}"
-                                                    PropertyAdded="OnAuraAdded"
-                                                    PropertyRemoved="OnAuraRemoved"/>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
             <!-- Magic Paths Section -->
             <controls:PropertyGroupControl Header="Magic Paths" IsExpanded="False">
                 <controls:PropertyGroupControl.GroupContent>
@@ -278,6 +112,51 @@
                                               AvailablePaths="{Binding AvailableMagicPaths}"
                                               PathAdded="OnMagicPathAdded"
                                               PathRemoved="OnMagicPathRemoved"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Abilities - Compact Badge Layout -->
+            <controls:PropertyGroupControl Header="Abilities" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <!-- Types (read-only, inherited) -->
+                        <TextBlock Text="TYPES (inherited)" FontSize="8" FontWeight="Bold"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                        <controls:BadgeWrapPanel
+                            ItemsSource="{Binding TypeBadges}"
+                            AvailableItems="{Binding AvailableTypeBadges}"
+                            ShowAddButton="False"/>
+
+                        <!-- General (movement, leadership, special, province, stealth, recruitment) -->
+                        <TextBlock Text="GENERAL" FontSize="8" FontWeight="Bold"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,8,0,2"/>
+                        <controls:BadgeWrapPanel
+                            ItemsSource="{Binding GeneralBadges}"
+                            AvailableItems="{Binding AvailableGeneralBadges}"
+                            RemoveCommand="{Binding RemoveGeneralBadgeCommand}"
+                            AddCommand="{Binding AddGeneralBadgeCommand}"
+                            ShowAddButton="True"/>
+
+                        <!-- Combat (combat abilities + auras) -->
+                        <TextBlock Text="COMBAT" FontSize="8" FontWeight="Bold"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,8,0,2"/>
+                        <controls:BadgeWrapPanel
+                            ItemsSource="{Binding CombatBadges}"
+                            AvailableItems="{Binding AvailableCombatBadges}"
+                            RemoveCommand="{Binding RemoveCombatBadgeCommand}"
+                            AddCommand="{Binding AddCombatBadgeCommand}"
+                            ShowAddButton="True"/>
+
+                        <!-- Resistances (colored value badges) -->
+                        <TextBlock Text="RESISTANCES" FontSize="8" FontWeight="Bold"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,8,0,2"/>
+                        <controls:BadgeWrapPanel
+                            ItemsSource="{Binding ResistanceBadges}"
+                            AvailableItems="{Binding AvailableResistanceBadges}"
+                            RemoveCommand="{Binding RemoveResistanceBadgeCommand}"
+                            AddCommand="{Binding AddResistanceBadgeCommand}"
+                            ShowAddButton="True"/>
+                    </StackPanel>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 

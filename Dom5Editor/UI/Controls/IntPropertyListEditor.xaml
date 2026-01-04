@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:behaviors="clr-namespace:Dom5Editor.UI.Behaviors"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="300"
              x:Name="Root">
@@ -55,14 +56,15 @@
                                        Foreground="{DynamicResource TextPrimaryBrush}"
                                        FontSize="12"/>
 
-                            <!-- Value TextBox -->
+                            <!-- Value TextBox - debounced -->
                             <TextBox Grid.Column="3"
-                                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                                      Style="{DynamicResource TextBoxBase}"
                                      VerticalAlignment="Center"
                                      HorizontalContentAlignment="Center"
                                      IsEnabled="{Binding CanEdit}"
-                                     Margin="8,0"/>
+                                     Margin="8,0"
+                                     behaviors:DebouncedTextBoxBehavior.IsEnabled="True"/>
 
                             <!-- Inherited Badge -->
                             <Border Grid.Column="4"

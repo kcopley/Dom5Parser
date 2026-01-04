@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:behaviors="clr-namespace:Dom5Editor.UI.Behaviors"
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="400"
              x:Name="Root">
@@ -36,14 +37,15 @@
                             <TextBlock Text="{Binding PathLetter}" FontSize="11" FontWeight="Bold"
                                        Foreground="{Binding TextColor}" VerticalAlignment="Center"/>
 
-                            <!-- Level value -->
-                            <TextBox Text="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <!-- Level value - debounced -->
+                            <TextBox Text="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                                      Width="24" FontSize="10" Padding="2,1" Margin="2,0,0,0"
                                      HorizontalContentAlignment="Center" VerticalAlignment="Center"
                                      Background="{DynamicResource BackgroundDarkBrush}"
                                      Foreground="{DynamicResource TextPrimaryBrush}"
                                      BorderBrush="{DynamicResource BorderBrush}"
-                                     BorderThickness="1"/>
+                                     BorderThickness="1"
+                                     behaviors:DebouncedTextBoxBehavior.IsEnabled="True"/>
 
                             <!-- Inherited badge -->
                             <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"

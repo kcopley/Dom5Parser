@@ -1,12 +1,30 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Dom5Editor.UI.Controls
 {
+    /// <summary>
+    /// Editor control for string properties with debounced updates.
+    /// </summary>
     public partial class StringPropertyEditor : UserControl
     {
-        public StringPropertyEditor() => InitializeComponent();
+        private readonly DispatcherTimer _debounceTimer;
+        private const int DebounceDelayMs = 400;
+
+        public StringPropertyEditor()
+        {
+            InitializeComponent();
+
+            _debounceTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(DebounceDelayMs)
+            };
+            _debounceTimer.Tick += OnDebounceTimerTick;
+        }
 
         public static readonly DependencyProperty LabelProperty =
             DependencyProperty.Register(nameof(Label), typeof(string), typeof(StringPropertyEditor), new PropertyMetadata("Property"));
@@ -36,6 +54,44 @@ namespace Dom5Editor.UI.Controls
         public static readonly DependencyProperty ResetCommandProperty =
             DependencyProperty.Register(nameof(ResetCommand), typeof(ICommand), typeof(StringPropertyEditor), new PropertyMetadata(null));
         public ICommand ResetCommand { get => (ICommand)GetValue(ResetCommandProperty); set => SetValue(ResetCommandProperty, value); }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Reset debounce timer on each keystroke
+            _debounceTimer.Stop();
+            _debounceTimer.Start();
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            // Commit immediately when focus is lost
+            CommitValue();
+        }
+
+        private void OnDebounceTimerTick(object sender, EventArgs e)
+        {
+            _debounceTimer.Stop();
+            CommitValue();
+        }
+
+        private void CommitValue()
+        {
+            _debounceTimer.Stop();
+
+            // Only update if value actually changed
+            var binding = ValueTextBox.GetBindingExpression(TextBox.TextProperty);
+            if (binding == null)
+                return;
+
+            // Get current source value for comparison
+            var currentSourceValue = Value ?? "";
+            var currentTextValue = ValueTextBox.Text ?? "";
+
+            if (currentTextValue != currentSourceValue)
+            {
+                binding.UpdateSource();
+            }
+        }
 
         private void OnResetClick(object sender, RoutedEventArgs e) => ResetCommand?.Execute(null);
     }

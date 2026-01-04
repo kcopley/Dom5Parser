@@ -1,20 +1,31 @@
+using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Dom5Editor.UI.Controls
 {
     /// <summary>
-    /// Editor control for integer properties.
+    /// Editor control for integer properties with debounced updates.
     /// </summary>
     public partial class IntPropertyEditor : UserControl
     {
         private static readonly Regex _numericRegex = new Regex(@"^-?\d*$");
+        private readonly DispatcherTimer _debounceTimer;
+        private const int DebounceDelayMs = 400;
 
         public IntPropertyEditor()
         {
             InitializeComponent();
+
+            _debounceTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(DebounceDelayMs)
+            };
+            _debounceTimer.Tick += OnDebounceTimerTick;
         }
 
         public static readonly DependencyProperty LabelProperty =
@@ -80,6 +91,44 @@ namespace Dom5Editor.UI.Controls
             var textBox = sender as TextBox;
             string newText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
             e.Handled = !_numericRegex.IsMatch(newText);
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Reset debounce timer on each keystroke
+            _debounceTimer.Stop();
+            _debounceTimer.Start();
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            // Commit immediately when focus is lost
+            CommitValue();
+        }
+
+        private void OnDebounceTimerTick(object sender, EventArgs e)
+        {
+            _debounceTimer.Stop();
+            CommitValue();
+        }
+
+        private void CommitValue()
+        {
+            _debounceTimer.Stop();
+
+            // Only update if value actually changed
+            var binding = ValueTextBox.GetBindingExpression(TextBox.TextProperty);
+            if (binding == null)
+                return;
+
+            // Get current source value for comparison
+            var currentSourceValue = Value?.ToString() ?? "";
+            var currentTextValue = ValueTextBox.Text ?? "";
+
+            if (currentTextValue != currentSourceValue)
+            {
+                binding.UpdateSource();
+            }
         }
 
         private void OnResetClick(object sender, RoutedEventArgs e)
