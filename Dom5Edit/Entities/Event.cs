@@ -376,6 +376,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.GEMLOSSLARGE, IntProperty.Create); //#gemlosslarge <gem type>
             _propertyMap.Add(Command.ADDGEO, BitmaskProperty.Create); //#addgeo <terrain bitmask>
             _propertyMap.Add(Command.REMGEO, BitmaskProperty.Create); //#remgeo <terrain bitmask>
+            // Additional Dom6 additions
+            _propertyMap.Add(Command.REQ_TARGREALMNR, IntProperty.Create); //#req_targrealmnr <value>
         }
 
 

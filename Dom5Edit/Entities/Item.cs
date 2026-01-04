@@ -380,6 +380,12 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.EARTHELEMENTALS, IntProperty.Create); //#earthelementals <bonus>
             _propertyMap.Add(Command.WATERELEMENTALS, IntProperty.Create); //#waterelementals <bonus>
             _propertyMap.Add(Command.UNDISLEADER, IntProperty.Create); //#undisleader <value>
+            // Additional Dom6 additions
+            _propertyMap.Add(Command.TAINT, IntProperty.Create); //#taint <value>
+            _propertyMap.Add(Command.RECONST, IntProperty.Create); //#reconst <percent>
+            _propertyMap.Add(Command.SKILLEDRIDER, IntProperty.Create); //#skilledrider <value>
+            _propertyMap.Add(Command.AUTOBERSERK, IntProperty.Create); //#autoberserk <value>
+            _propertyMap.Add(Command.ONEBATTLESPELL, SpellRef.Create); //#onebattlespell <spell name> | <spell nbr>
         }
 
         public override void Export(StreamWriter writer)

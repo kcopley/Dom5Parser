@@ -268,6 +268,23 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.KELPFORTREC, MonsterOrMontagRef.Create); //#kelpfortrec <monster name> | <monster nbr>
             _propertyMap.Add(Command.KELPCOM, MonsterOrMontagRef.Create); //#kelpcom <monster name> | <monster nbr>
             _propertyMap.Add(Command.KELPFORTCOM, MonsterOrMontagRef.Create); //#kelpfortcom <monster name> | <monster nbr>
+            // Additional Dom6 additions
+            _propertyMap.Add(Command.CLEAR, CommandProperty.Create); //#clear
+            _propertyMap.Add(Command.BLESSBONUS, IntIntProperty.Create); //#blessbonus <bless id> <bonus>
+            _propertyMap.Add(Command.PLAINFORTREC, MonsterOrMontagRef.Create); //#plainfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.PLAINFORTCOM, MonsterOrMontagRef.Create); //#plainfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FOREIGNFORTREC, MonsterOrMontagRef.Create); //#foreignfortrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.FOREIGNFORTCOM, MonsterOrMontagRef.Create); //#foreignfortcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.UWGUARDCOM, MonsterOrMontagRef.Create); //#uwguardcom <monster name> | <monster nbr>
+            _propertyMap.Add(Command.UWGUARDUNIT, MonsterOrMontagRef.Create); //#uwguardunit <monster name> | <monster nbr>
+            _propertyMap.Add(Command.UWGUARDMULT, IntProperty.Create); //#uwguardmult <multiplier>
+            _propertyMap.Add(Command.FORTHEATSCALERES, IntProperty.Create); //#fortheatscaleres <value>
+            _propertyMap.Add(Command.FORTCOLDSCALERES, IntProperty.Create); //#fortcoldscaleres <value>
+            _propertyMap.Add(Command.HOMEHEATSCALERES, IntProperty.Create); //#homeheatscaleres <value>
+            _propertyMap.Add(Command.PLAINREC, MonsterOrMontagRef.Create); //#plainrec <monster name> | <monster nbr>
+            _propertyMap.Add(Command.CAVEINC, IntProperty.Create); //#caveinc <value>
+            _propertyMap.Add(Command.CAVERES, IntProperty.Create); //#caveres <value>
+            _propertyMap.Add(Command.CAVERECPT, IntProperty.Create); //#caverecpt <value>
         }
 
         public override void Parse(Command command, string value, string comment)

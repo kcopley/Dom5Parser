@@ -24,6 +24,8 @@ namespace Dom5Edit
         private static Mod _vanilla;
         private static GameVersion _gameVersion = GameVersion.Dom6; // Default to Dom6
         private static string _vanillaDmPath = null;
+        private static string _spellEffectMappingPath = null;
+        private static string _spellEffectTypesPath = null;
 
         /// <summary>
         /// Gets or sets the game version for vanilla data loading.
@@ -53,6 +55,25 @@ namespace Dom5Edit
             set => _vanillaDmPath = value;
         }
 
+        /// <summary>
+        /// Gets or sets the path to spell_effects_mapping.json.
+        /// If null, will search common locations.
+        /// </summary>
+        public static string SpellEffectMappingPath
+        {
+            get => _spellEffectMappingPath;
+            set => _spellEffectMappingPath = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the path to spell_effect_types.json (optional).
+        /// </summary>
+        public static string SpellEffectTypesPath
+        {
+            get => _spellEffectTypesPath;
+            set => _spellEffectTypesPath = value;
+        }
+
         public static Mod Vanilla
         {
             get
@@ -60,6 +81,10 @@ namespace Dom5Edit
                 if (_vanilla == null)
                 {
                     _loader = new VanillaLoader();
+
+                    // Load spell effect data first (if paths are set)
+                    LoadSpellEffectData();
+
                     _vanilla = _gameVersion == GameVersion.Dom6
                         ? _loader.LoadVanillaFromDm()
                         : _loader.LoadVanillaData();
@@ -75,6 +100,63 @@ namespace Dom5Edit
         public static void Reload()
         {
             _vanilla = null;
+            // Also reload spell effect data
+            LoadSpellEffectData();
+        }
+
+        /// <summary>
+        /// Load spell effect data from JSON files.
+        /// </summary>
+        private static void LoadSpellEffectData()
+        {
+            // Try to find spell effect mapping file
+            string mappingPath = _spellEffectMappingPath;
+            string typesPath = _spellEffectTypesPath;
+
+            if (string.IsNullOrEmpty(mappingPath))
+            {
+                // Search for the file in common locations
+                var searchPaths = new[]
+                {
+                    "spell_effects_mapping.json",
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "spell_effects_mapping.json"),
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "spell_effects_mapping.json"),
+                };
+
+                foreach (var path in searchPaths)
+                {
+                    if (File.Exists(path))
+                    {
+                        mappingPath = path;
+                        break;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(typesPath))
+            {
+                // Search for effect types file
+                var searchPaths = new[]
+                {
+                    "spell_effect_types.json",
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "spell_effect_types.json"),
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "spell_effect_types.json"),
+                };
+
+                foreach (var path in searchPaths)
+                {
+                    if (File.Exists(path))
+                    {
+                        typesPath = path;
+                        break;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(mappingPath) && File.Exists(mappingPath))
+            {
+                SpellEffectData.Instance.Load(mappingPath, typesPath);
+            }
         }
 
         VanillaLoader()

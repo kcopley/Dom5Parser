@@ -6,10 +6,9 @@ namespace Dom5Edit
 {
     public class Mod
     {
-        private readonly char spaceDelimiter = ' ';
-        private readonly string tabDelimiter = "\t";
-        private readonly string commentDelimiter = "--";
-        private readonly char[] commandDelimiter = new char[] { '#' };
+        // Parser and exporter instances for delegation
+        private readonly ModParser _parser;
+        private readonly ModExporter _exporter;
 
         public string ModName { get; set; }
         public string ModFileName { get { return Path.GetFileName(FullFilePath); } }
@@ -108,6 +107,7 @@ namespace Dom5Edit
             {  EntityType.ENCHANTMENT, new DependentEntitySet() { START_ID = ENCHANTMENT_START_ID } },
             {  EntityType.EVENT_CODE, new DependentEntitySet() { START_ID = EVENT_CODE_START_ID, ID_DOWN = true } },
             {  EntityType.EVENT_CODE_EFFECT, new DependentEntitySet() { START_ID = EVENT_CODE_EFFECT_START_ID } },
+            {  EntityType.EVENT_VAR, new DependentEntitySet() { START_ID = EVENT_VAR_START_ID } },
         };
 
         public List<SpellDamage> SpellDamages = new List<SpellDamage>();
@@ -145,6 +145,8 @@ namespace Dom5Edit
 
         public Mod()
         {
+            _parser = new ModParser();
+            _exporter = new ModExporter();
             Init();
             foreach (EntitySet<IDEntity> set in Database.Values)
             {
@@ -154,6 +156,8 @@ namespace Dom5Edit
 
         public Mod(string filePath)
         {
+            _parser = new ModParser();
+            _exporter = new ModExporter();
             Init();
             this.FullFilePath = filePath;
         }
@@ -164,6 +168,25 @@ namespace Dom5Edit
             {
                 kvp.Value.Parent = this;
             }
+            SetupParserCallbacks();
+        }
+
+        private void SetupParserCallbacks()
+        {
+            _parser.OnCommand = cmd =>
+            {
+                LineNumber = cmd.LineNumber;
+                LineWasTrimmed = _parser.LineWasTrimmed;
+                HandleParsedCommand(cmd.Command, cmd.Value, cmd.Comment);
+            };
+            _parser.OnLog = (line, msg) =>
+            {
+                LineNumber = line;
+                if (_currentEntity != null)
+                    Log($"Invalid, incorrectly spelled, or nonexistent command for: {_currentEntity.GetType()} - {msg}");
+                else
+                    Log(msg);
+            };
         }
 
         public int LineNumber { get; private set; } = 0;
@@ -205,399 +228,62 @@ namespace Dom5Edit
 
         internal void read_stream(StreamReader sr)
         {
-            string s = "";
-
-            bool isMultiLine = false;
-            string prevLine = "";
-
-            while ((s = sr.ReadLine()) != null)
-            {
-                LineNumber++;
-                s = s.Trim(); //remove whitespaces
-                s = s.Replace('\t', ' ');
-                if (s.Length < 1) continue; //empty line
-                                            //pull comments first
-
-                //mod information data
-                int ind = s.IndexOf("#dependency", StringComparison.OrdinalIgnoreCase);
-
-                if (ind != -1)
-                {
-                    continue; //skip these lines, grabbed above
-                }
-
-                if ((s.IndexOf("#descr") != -1 && s.Length > 6) || (s.IndexOf("#summary") != -1 && s.Length > 8) || (s.IndexOf("#msg") != -1 && s.Length > 4))
-                {
-                    //could be multi line description
-                    //check if has both quotes
-                    int firstQuote = s.IndexOf('"');
-                    int secondQuote = s.IndexOf('"', firstQuote + 1);
-                    //first quote mark exists, second does not
-                    //either is multi-line, or quote mark forgotten on the end
-                    if (firstQuote != -1 && secondQuote == -1)
-                    {
-                        bool hasAnotherCommand = HasCommandOnLine(s.Substring(firstQuote)); //only check after the first quote
-                        if (!hasAnotherCommand)
-                        {
-                            isMultiLine = true;
-                            prevLine = s;
-                            continue;
-                        } //if it has another command on that line, the quote was just forgotten
-                    }
-                    ProcessStringToLine(s);
-                }
-                else if (isMultiLine && !string.IsNullOrEmpty(prevLine))
-                {
-                    //already on a multi-line, does it continue?
-                    int endQuote = s.IndexOf('"');
-                    bool anotherCommand = HasCommandOnLine(s);
-
-                    if (endQuote != -1 && !anotherCommand) //ends on this line
-                    {
-                        string endLine = prevLine + Environment.NewLine + s;
-                        ProcessStringToLine(endLine);
-                        prevLine = "";
-                        isMultiLine = false;
-                    }
-                    else if (anotherCommand) // of course a mod author would end a multi-line and start another command on the same line
-                    {
-                        //split and add up to the # to the previous string, process it
-                        //and then process the second string
-                        int anotherCommandIndex = GetNextCommandIndex(s);
-                        string leftsplit = s.Substring(0, anotherCommandIndex);
-                        string rightsplit = s.Substring(anotherCommandIndex);
-                        string multiline = prevLine + Environment.NewLine + leftsplit;
-                        ProcessStringToLine(multiline);
-                        ProcessStringToLine(rightsplit);
-                        prevLine = "";
-                        isMultiLine = false;
-                    }
-                    else
-                    {
-                        //no command, no end quote... it must continue as part of the string
-                        prevLine = prevLine + Environment.NewLine + s;
-                    }
-                }
-                else
-                {
-                    ProcessStringToLine(s);
-                }
-            }
+            // Delegate to ModParser
+            _parser.Parse(sr);
             LineWasTrimmed = false;
             LineNumber = -1;
         }
 
+        /// <summary>
+        /// Handles a parsed command, routing mod metadata to properties and entity commands to Parse().
+        /// </summary>
+        private void HandleParsedCommand(Command c, string value, string comment)
+        {
+            switch (c)
+            {
+                case Command.MODNAME:
+                    ModName = value;
+                    break;
+                case Command.DESCRIPTION:
+                    Description = value;
+                    break;
+                case Command.VERSION:
+                    Version = value;
+                    break;
+                case Command.DOMVERSION:
+                    DomVersion = value;
+                    break;
+                case Command.ICON:
+                    Icon = value;
+                    break;
+                default:
+                    Parse(c, value, comment);
+                    break;
+            }
+        }
+
+        #region Legacy Parsing Methods (Dom5 TSV loading only)
+        // These methods delegate to ModParser. Used by VanillaLoader for Dom5 TSV loading.
+        // Can be removed when Dom5 support is no longer needed.
+
+        [Obsolete("Use ModParser directly. Only kept for Dom5 TSV loading in VanillaLoader.")]
+        public bool HasCommandOnLine(string s) => _parser.HasCommandOnLine(s);
+
+        [Obsolete("Use ModParser directly. Only kept for Dom5 TSV loading in VanillaLoader.")]
+        public int GetNextCommandIndex(string s) => _parser.GetNextCommandIndex(s);
+
+        [Obsolete("Use ModParser directly. Only kept for Dom5 TSV loading in VanillaLoader.")]
+        public void ProcessStringToLine(string s) => _parser.ProcessStringToLine(s);
+
+        [Obsolete("Use ModParser directly. Only kept for Dom5 TSV loading in VanillaLoader.")]
+        public void ProcessLine(string s) => _parser.ProcessLine(s);
+
+        #endregion
+
         public bool HasDependencies()
         {
-            string dmFile = this.FullFilePath;
-            using (StreamReader sr = File.OpenText(dmFile))
-            {
-                string s = "";
-
-                while ((s = sr.ReadLine()) != null)
-                {
-                    LineNumber++;
-                    s = s.Trim(); //remove whitespaces
-                    s = s.Replace('\t', ' ');
-                    if (s.Length < 1) continue; //empty line
-                                                //pull comments first
-
-                    //mod information data
-                    int ind = s.IndexOf("#dependency", StringComparison.OrdinalIgnoreCase);
-
-                    if (ind != -1)
-                    {
-                        ind += 12;
-                        string file = s.Substring(ind);
-                        if (file.Length > 0)
-                        {
-                            file = file.Trim();
-                            _dependencies.Add(file);
-                        }
-                        continue;
-                    }
-                }
-            }
-
+            _dependencies = ModParser.ScanDependencies(this.FullFilePath);
             return _dependencies?.Count > 0;
-        }
-
-        public bool HasCommandOnLine(string s)
-        {
-            //did they add another command alongside on this line?
-            int anotherCommand = GetNextCommandIndex(s);
-            if (anotherCommand < 0) return false;
-            int spaceAfter = s.IndexOf(' ', anotherCommand);
-            bool hasValidCommand = false;
-
-            if (anotherCommand != -1)
-            {
-                string comm;
-                if (spaceAfter != -1)
-                {
-                    comm = s.Substring(anotherCommand, spaceAfter - anotherCommand);
-                }
-                else
-                {
-                    comm = s.Substring(anotherCommand);
-                }
-                hasValidCommand = CommandsMap.TryGetCommand(comm, out _); //this is a valid command on this line
-            }
-            return hasValidCommand;
-        }
-
-        public int GetNextCommandIndex(string s)
-        {
-            int nextIndex = s.IndexOf('#');
-            while (nextIndex != -1)
-            {
-                if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
-                else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
-                else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
-                else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
-                else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                //else if (s.IndexOf("##godHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
-                else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                //else if (s.IndexOf("##disHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
-                else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
-                else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
-                else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
-                else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
-                else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                /* Dominions 5
-                if (s.IndexOf("##landname##", nextIndex) == nextIndex)
-                {
-                    nextIndex += 12;
-                }
-                else if (s.IndexOf("##godname##", nextIndex) == nextIndex)
-                {
-                    nextIndex += 11;
-                }
-                else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
-                {
-                    nextIndex += 12;
-                }
-                else if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex)
-                {
-                    nextIndex += 15;
-                }
-				*/
-                else
-                {
-                    return nextIndex;
-                }
-                nextIndex = s.IndexOf('#', nextIndex + 1);
-            }
-            return -1;
-        }
-
-        public void ProcessStringToLine(string s)
-        {
-            // continue on
-            int commentIndex = s.IndexOf(commentDelimiter);
-
-            //is there another command on the same line?
-            List<int> commandIndexes = new List<int>();
-            int index = s.IndexOf('#');
-            if (index != -1 && (index < commentIndex || commentIndex == -1))
-            {
-                commandIndexes.Add(index);
-                int nextIndex = s.IndexOf('#', index + 1);
-                while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
-                {
-                    if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
-                    else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
-                    else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
-                    else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
-                    else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                    else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                    else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    //else if (s.IndexOf("##godHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
-                    else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    //else if (s.IndexOf("##disHis##", nextIndex) == nextIndex) { nextIndex += 10; } // Not sure on case sensitivity
-                    else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
-                    else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
-                    else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
-                    else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                    else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                    else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
-                    else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                    /* Dominions 5
-                    if (s.IndexOf("##landname##", nextIndex) == nextIndex)
-                    {
-                        nextIndex += 12;
-                    {
-                        nextIndex += 11;
-                    }
-					
-					else if (s.IndexOf("##godname##", nextIndex) == nextIndex)
-					{
-						nextIndex += 11;
-					}
-						else if (s.IndexOf("##targname##", nextIndex) == nextIndex)
-                    {
-                        nextIndex += 12;
-                    }
-                    else if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex)
-                    {
-                        nextIndex += 15;
-                    }
-					*/
-                    else
-                    {
-                        commandIndexes.Add(nextIndex);
-                    }
-                    nextIndex = s.IndexOf('#', nextIndex + 1);
-                }
-
-                for (int i = 0; i < commandIndexes.Count; i++)
-                {
-                    int nextCommand = i + 1;
-                    string line;
-                    if (nextCommand < commandIndexes.Count)
-                    {
-                        line = s.Substring(commandIndexes[i], commandIndexes[nextCommand] - commandIndexes[i]);
-                    }
-                    else
-                    {
-                        line = s.Substring(commandIndexes[i]);
-                    }
-                    ProcessLine(line);
-                }
-            }
-        }
-
-        public void ProcessLine(string s)
-        {
-            string line = s;
-            int commentIndex = s.IndexOf(commentDelimiter);
-            string comment = ""; //set to empty string, not null
-
-            if (commentIndex == -1) //check for single dash
-            {
-                int singleDash = s.IndexOf('-');
-                //if single dash exists, if the next character exists, and next char is not an integer
-                if (singleDash != -1 && s.Length > singleDash + 1 && !int.TryParse(s[singleDash + 1].ToString(), out _))
-                {
-                    //if it has quotes, it could be a dash in a description
-                    int quoteIndex = s.IndexOf('"');
-                    if (quoteIndex != -1)
-                    {
-                        // assume if there's a first quote, check for a second quote mark
-                        int secondQuoteIndex = s.IndexOf('"', quoteIndex + 1);
-                        // only allow a single dash as a comment if it comes after a second quote mark
-                        if (singleDash > secondQuoteIndex)
-                        {
-                            line = s.Substring(0, singleDash).Trim();
-                            comment = s.Substring(singleDash + 1).Trim();
-                        }
-                    }
-                    else //no quote marks either
-                    {
-                        line = s.Substring(0, singleDash).Trim();
-                        comment = s.Substring(singleDash + 1).Trim();
-                    }
-                }
-            }
-            else if (commentIndex != -1) //has a comment
-            {
-                line = s.Substring(0, commentIndex).Trim();
-                comment = s.Substring(commentIndex + 2).Trim();
-            }
-
-            //grab the command & value
-
-            int spaceIndex = line.IndexOf(spaceDelimiter);
-            int tabIndex = line.IndexOf(tabDelimiter);
-            string command = line;
-            string value = ""; //set to empty string, not null
-            if (spaceIndex != -1) //has a value (but could be spaces before a comment? should be handled by trim above)
-            {
-                command = line.Substring(0, spaceIndex).Trim();
-                value = line.Substring(spaceIndex + 1).Trim();
-                if (value.StartsWith("\"") || value.EndsWith("\""))
-                {
-                    value = value.Trim('\"');
-                    this.LineWasTrimmed = true;
-                }
-                else
-                {
-                    LineWasTrimmed = false;
-                }
-            }
-            else if (tabIndex != -1)
-            {
-                command = line.Substring(0, tabIndex).Trim();
-                value = line.Substring(tabIndex + 1).Trim();
-                if (value.StartsWith("\"") || value.EndsWith("\""))
-                {
-                    value = value.Trim('\"');
-                    this.LineWasTrimmed = true;
-                }
-                else
-                {
-                    LineWasTrimmed = false;
-                }
-            }
-            if (CommandsMap.TryGetCommand(command, out Command c))
-            {
-                switch (c)
-                {
-                    case Command.MODNAME:
-                        ModName = value;
-                        break;
-                    case Command.DESCRIPTION:
-                        Description = value;
-                        break;
-                    case Command.VERSION:
-                        Version = value;
-                        break;
-                    case Command.DOMVERSION:
-                        DomVersion = value;
-                        break;
-                    case Command.ICON:
-                        Icon = value;
-                        break;
-                    default:
-                        Parse(c, value, comment);
-                        break;
-                }
-            }
-            else
-            {
-                if (_currentEntity != null)
-                    Log("Invalid, incorrectly spelled, or nonexistent command for: " + _currentEntity.GetType() + " for command: " + command);
-                else
-                    Log("Invalid, incorrectly spelled, or nonexistent command for: " + command);
-            }
         }
 
         /*
@@ -743,30 +429,12 @@ namespace Dom5Edit
             {
                 this.FullFilePath = file;
             }
-            if (File.Exists(file))
-            {
-                if (!overwrite) return;
-            }
-            using (StreamWriter writer = new StreamWriter(file))
-            {
-                Export(writer);
-            }
+            _exporter.Export(this, file, overwrite);
         }
 
         public void Export(StreamWriter writer)
         {
-            writer.WriteLine(CommandsMap.Format(Command.MODNAME, ModName, true));
-            if (Version?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.VERSION, Version));
-            if (DomVersion?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DOMVERSION, DomVersion));
-            if (Icon?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.ICON, Icon, true));
-            if (Description?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DESCRIPTION, Description, true));
-
-            writer.WriteLine();
-
-            foreach (var kvp in Database)
-            {
-                kvp.Value.Export(writer);
-            }
+            _exporter.Export(this, writer);
         }
 
         #endregion
@@ -879,85 +547,5 @@ namespace Dom5Edit
         }
         #endregion
 
-        #region Nation Association Code - Look at later
-        //Look at this later
-        private HashSet<Nation> CurrentNationSet;
-        private void ExportNationSet(StreamWriter writer, HashSet<Nation> nations)
-        {
-            /*
-            CurrentNationSet = nations;
-            writer.WriteLine(CommandsMap.Format(Command.MODNAME, ModName, true));
-            if (Version?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.VERSION, Version));
-            if (DomVersion?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DOMVERSION, DomVersion));
-            if (Icon?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.ICON, Icon, true));
-            if (Description?.Length > 0) writer.WriteLine(CommandsMap.Format(Command.DESCRIPTION, Description, true));
-
-            writer.WriteLine();
-
-            Func<KeyValuePair<int, IDEntity>, bool> exclusiveDictCheck = x =>
-            {
-                return x.Value.AssociatedNations.IsSubsetOf(nations) && x.Value.AssociatedNations.Count > 0;
-            };
-            Func<IDEntity, bool> exclusiveListCheck = x =>
-            {
-                return x.AssociatedNations.IsSubsetOf(nations) && x.AssociatedNations.Count > 0;
-            };
-            Func<KeyValuePair<int, IDEntity>, bool> inclusiveDictCheck = x =>
-            {
-                return (x.Value.AssociatedNations.IsSubsetOf(nations) && x.Value.AssociatedNations.Count > 0) || x.Value.AssociatedNations.IsSupersetOf(nations);
-            };
-            Func<IDEntity, bool> inclusiveListCheck = x =>
-            {
-                return (x.AssociatedNations.IsSubsetOf(nations) && x.AssociatedNations.Count > 0) || x.AssociatedNations.IsSupersetOf(nations);
-            };
-
-            //Weapons - exclusive, only subset
-            Export(writer, Weapons.OrderBy(x => x.Key).Where(exclusiveDictCheck), ModManager.WEAPON_START_ID);
-            Export(writer, NamedWeapons.Values.ToList().Where(exclusiveListCheck));
-            //Armors - exclusive, only subset
-            Export(writer, Armors.OrderBy(x => x.Key).Where(exclusiveDictCheck), ModManager.ARMOR_START_ID);
-            Export(writer, NamedArmors.Values.ToList().Where(exclusiveListCheck));
-
-            //Monsters - exclusive, only subset
-            Export(writer, DisabledMonsters.OrderBy(x => x.Key).Where(exclusiveDictCheck), ModManager.MONSTER_START_ID);
-            Export(writer, Monsters.OrderBy(x => x.Key).Where(exclusiveDictCheck), ModManager.MONSTER_START_ID);
-            Export(writer, NamedMonsters.Values.ToList().Where(exclusiveListCheck));
-            //Nametypes - exclusive, only subset
-            Export(writer, Nametypes.OrderBy(x => x.Key).Where(exclusiveDictCheck), ModManager.NAMETYPE_START_ID);
-            //Sites - exclusive, only subset
-            Export(writer, Sites.OrderBy(x => x.Key).Where(exclusiveDictCheck), ModManager.SITE_START_ID);
-            Export(writer, NamedSites.Values.ToList().Where(exclusiveListCheck));
-            Export(writer, SitesThatNeedIDs.Where(exclusiveListCheck));
-            //Nations - exclusive, only subset
-            Export(writer, Nations.OrderBy(x => x.Key).Where(exclusiveDictCheck), ModManager.NATION_START_ID);
-
-            //spells - inclusive, subset or superset
-            Export(writer, Spells.OrderBy(x => x.Key).Where(inclusiveDictCheck), ModManager.SPELL_START_ID);
-            Export(writer, NamedSpells.Values.ToList().Where(inclusiveListCheck));
-            Export(writer, SpellsWithNoNameYet.ToList().Where(inclusiveListCheck));
-
-            //magic items - inclusive, subset or superset
-            Export(writer, Items.OrderBy(x => x.Key).Where(inclusiveDictCheck), ModManager.ITEM_START_ID);
-            Export(writer, NamedItems.Values.ToList().Where(inclusiveListCheck));
-            Export(writer, ItemsWithNoNameYet.ToList().Where(inclusiveListCheck));
-
-            Export(writer, Poptypes.OrderBy(x => x.Key).Where(exclusiveDictCheck));
-            //- inclusive, subset or superset
-            Export(writer, Events.Where(inclusiveListCheck));
-            CurrentNationSet = null;
-            */
-        }
-
-        private void AddNationAssociation(Nation nation, IDEntity entity)
-        {
-            if (entity.AssociatedNations.Contains(nation)) return;
-            if (entity is Nation) return;
-            entity.AssociatedNations.Add(nation);
-            foreach (var e in entity.RequiredEntities)
-            {
-                AddNationAssociation(nation, e);
-            }
-        }
-        #endregion
     }
 }

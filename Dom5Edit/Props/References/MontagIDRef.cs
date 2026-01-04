@@ -22,7 +22,10 @@ namespace Dom5Edit.Props
             base.Parse(c, s, comment);
             if (c != Command.MONTAG) ID = -ID;
             _montag = this.Parent.ParentMod.AddDependent(EntityType.MONTAG, ID);
-            _montag.ReferencedEntities.Add(this.Parent as IDEntity);
+            if (_montag != null)
+            {
+                _montag.ReferencedEntities.Add(this.Parent as IDEntity);
+            }
             HasMontagID = _montag != null;
         }
 
