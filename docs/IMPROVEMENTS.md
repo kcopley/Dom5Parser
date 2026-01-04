@@ -4,6 +4,52 @@ Small fixes and organizational improvements to simplify the codebase before impl
 
 ---
 
+## Recently Completed Improvements
+
+### UI Component System (Phase 6)
+
+**Property Editor Controls Created:**
+- `IntPropertyEditor` - Compact layout with 10px fonts, modification indicators
+- `StringPropertyEditor` - String editing with same visual patterns
+- `CommandPropertyEditor` - Toggle buttons for flag commands
+- `ReferencePropertyEditor` - Entity reference selection with ComboBox
+- `CommandListEditor` - List editor for flag commands with badges
+- `IntPropertyListEditor` - List editor for value-based commands
+- `MagicPathEditor` - Specialized magic path editor with colored badges
+
+**Theme System Created:**
+- Dark theme with teal accent colors
+- Consistent styling for all controls
+- Modification state indicators (gold for modified, cyan for session edits)
+- Inherited value badges ("inh" for copystats)
+
+**ComboBox Scroll Fix:**
+- Added `PreviewMouseWheel` handler to list editor ComboBoxes
+- Prevents scroll wheel from adding items when dropdown is closed
+- Uses `DispatcherPriority.Input` delay for auto-add on selection
+
+**Magic Path Editor:**
+- Color-coded badges matching Dominions game (F, A, W, E, S, D, N, G, B, H)
+- Inline level editing within badges
+- Add buttons for each available path
+- Fixed binding issue (don't set DataContext = this in UserControl)
+
+**MonsterView Enhancements:**
+- Added Combat section with IntPropertyListEditor (AWE, FEAR, BERSERK, BODYGUARD, etc.)
+- Added Resistances section with IntPropertyListEditor
+- Added Movement section with CommandListEditor
+- Added Magic Paths section with MagicPathEditor
+- Added Type Commands, Leader Commands, Special Commands sections
+
+**ViewModel Improvements:**
+- `MonsterViewModel.MagicPathsList` for magic path display
+- `MonsterViewModel.RefreshMagicPaths()` rebuilds from entity
+- `MonsterViewModel.AddMagicPath()`/`RemoveMagicPath()` methods
+- `IsIntIntPropertyModifiedFromVanilla()` for modification checking
+- Added display names for many commands (BODYGUARD, WARNING, etc.)
+
+---
+
 ## Dom5Edit/Entities/
 
 ### IDEntity.cs

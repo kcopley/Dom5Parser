@@ -1,5 +1,6 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -32,6 +33,12 @@ namespace Dom5Editor.VMs
             _setter = setter;
         }
 
+        public NameViewModel(string label, IDEntity e, Command c, CommandHistory history) : base(label, e, c, history)
+        {
+            _getter = () => e.Name;
+            _setter = value => e.Name = value;
+        }
+
         public override string Value
         {
             get => _getter();
@@ -39,7 +46,15 @@ namespace Dom5Editor.VMs
             {
                 if (_getter() != value)
                 {
-                    _setter(value);
+                    if (History != null)
+                    {
+                        var cmd = new SetNameCommand(_getter, _setter, value, Label ?? "Name");
+                        History.Execute(cmd);
+                    }
+                    else
+                    {
+                        _setter(value);
+                    }
                     OnPropertyChanged(nameof(Value));
                 }
             }

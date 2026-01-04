@@ -20,7 +20,10 @@
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" run --project \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Tests\\\\Dom5Tests.csproj\" -- mod)",
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" run --project \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Tests\\\\Dom5Tests.csproj\" -- vanilla)",
       "Bash(cat:*)",
-      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build Dom5Edit.sln)"
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build Dom5Edit.sln)",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"Dom5Edit.sln\")",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"/mnt/d/Projects/Dom5Parser/Dom5Editor/Dom5Editor.csproj\")",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"Dom5Editor/Dom5Editor.csproj\")"
     ]
   }
 }

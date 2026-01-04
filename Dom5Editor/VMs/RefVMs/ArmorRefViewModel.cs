@@ -1,5 +1,6 @@
 ﻿using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -11,6 +12,7 @@ namespace Dom5Editor.VMs
             _parentMod = parent;
             _owner = owner;
             _property = p;
+            History = parent?.History;
             InitializeSelectedID();
         }
         public ArmorRefViewModel(ModViewModel parent, ViewModelBase owner, string label, IDEntity e, ArmorRef p) : base(label, e, p.Command)
@@ -18,6 +20,7 @@ namespace Dom5Editor.VMs
             _parentMod = parent;
             _owner = owner;
             _property = p;
+            History = parent?.History;
             InitializeSelectedID();
         }
 
@@ -57,7 +60,6 @@ namespace Dom5Editor.VMs
                     case ReturnType.FALSE:
                         break;
                     case ReturnType.COPIED:
-                        //set to greyed out?
                         return ip.Command.ToString();
                     case ReturnType.TRUE:
                         return ip.Command.ToString();
@@ -83,12 +85,18 @@ namespace Dom5Editor.VMs
             {
                 if (value != _selectedID)
                 {
-                    _selectedID = value;
-                    if (_selectedID != null)
+                    if (value != null && History != null)
                     {
-                        _property.Entity = _selectedID.Armor;
-                        OnPropertyChanged(nameof(Value));
+                        var cmd = new SetReferenceCommand(_property, value.Armor, "Armor");
+                        History.Execute(cmd);
                     }
+                    else if (value != null)
+                    {
+                        _property.Entity = value.Armor;
+                    }
+
+                    _selectedID = value;
+                    OnPropertyChanged(nameof(Value));
                     OnPropertyChanged(nameof(SelectedID));
                     _parentMod.OnPropertyChanged("");
                     _owner.OnPropertyChanged("");

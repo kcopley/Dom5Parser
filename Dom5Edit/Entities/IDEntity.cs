@@ -341,7 +341,7 @@ namespace Dom5Edit.Entities
             if (checkCopy)
             {
                 var copyExists = TryGetCopyFrom(out var copy);
-                if (copyExists)
+                if (copyExists && copy != null)
                 {
                     var commandExists = copy.TryGet(c, out ret);
                     if (commandExists == ReturnType.TRUE || commandExists == ReturnType.COPIED)
@@ -375,7 +375,7 @@ namespace Dom5Edit.Entities
 
         private void GetCopiedPropertiesRecursively(List<Property> propertyList, HashSet<IDEntity> visitedEntities)
         {
-            if (TryGetCopyFrom(out var copiedEntity) && !visitedEntities.Contains(copiedEntity))
+            if (TryGetCopyFrom(out var copiedEntity) && copiedEntity != null && !visitedEntities.Contains(copiedEntity))
             {
                 visitedEntities.Add(copiedEntity);
 
@@ -401,7 +401,7 @@ namespace Dom5Edit.Entities
         public ReturnType TryGetCopyValue<T>(Command c, out T ret) where T : Property, new()
         {
             var copyExists = TryGetCopyFrom(out var copy);
-            if (copyExists)
+            if (copyExists && copy != null)
             {
                 var commandExists = copy.TryGet(c, out ret);
                 if (commandExists == ReturnType.TRUE || commandExists == ReturnType.COPIED)

@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:Dom5Editor.UI.Converters">
+
+    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <converters:BoolToVisibilityInverseConverter x:Key="BoolToVisibilityInverseConverter"/>
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    <converters:NullToVisibilityInverseConverter x:Key="NullToVisibilityInverseConverter"/>
+    <converters:BoolToTextWrappingConverter x:Key="BoolToTextWrappingConverter"/>
+    <converters:NullableIntToStringConverter x:Key="NullableIntToStringConverter"/>
+
+</ResourceDictionary>

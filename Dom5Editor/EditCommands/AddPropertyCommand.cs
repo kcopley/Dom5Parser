@@ -1,18 +1,26 @@
+using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
 
-namespace Dom5Editor.Commands
+namespace Dom5Editor.EditCommands
 {
     /// <summary>
     /// Command for adding a property to an entity.
     /// Used for multi-value properties like weapons and armor on monsters.
     /// </summary>
-    public class AddPropertyCommand : IEditCommand
+    public class AddPropertyCommand : IPropertyEditCommand
     {
         private readonly IDEntity _entity;
         private readonly Property _property;
 
         public string Description { get; }
+
+        // IPropertyEditCommand implementation
+        public IDEntity Entity => _entity;
+        public Command PropertyCommand => _property.Command;
+        public bool IsRemoval => false;
+
+        public Property GetResultingProperty() => _property;
 
         /// <summary>
         /// Creates a command to add a property to an entity.

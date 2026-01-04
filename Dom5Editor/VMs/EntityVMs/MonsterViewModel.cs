@@ -1,5 +1,5 @@
 ﻿using Dom5Editor.VMs;
-using Dom5Editor.Commands;
+using Dom5Editor.EditCommands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
