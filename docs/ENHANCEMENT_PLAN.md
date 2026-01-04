@@ -141,9 +141,9 @@ Split the ~960 line Mod class into focused components:
 - Removed dead nation association code (~80 lines)
 - **Result: Mod.cs reduced from ~960 to 550 lines (43% smaller)**
 
-## Phase 3: Editor Infrastructure
+## Phase 3: Editor Infrastructure (IN PROGRESS)
 
-Assume that all current UI infrastructure is replaceable and can be deprecated. If it's useful, good, but nothing is required to be retained.
+**Design Philosophy:** All current UI infrastructure (ViewModels, Views, patterns) is replaceable and can be deprecated or redesigned. If existing code is useful, reuse it; otherwise, feel free to redesign from scratch. The goal is a clean, maintainable architecture - not preserving legacy patterns.
 
 ### Current Architecture Analysis
 
@@ -395,6 +395,26 @@ public class ModValidator
 4. **Validation framework** - Add validators one at a time
 5. **Dirty tracking** - Already handled by CommandHistory.IsDirty
 6. **Expand to all ViewModels** - Apply pattern across the editor
+
+### Implementation Status
+
+**Completed:**
+- `Dom5Editor/Commands/IEditCommand.cs` - Base interface for edit commands
+- `Dom5Editor/Commands/CommandHistory.cs` - Undo/redo stack with dirty tracking
+- `Dom5Editor/Commands/SetIntPropertyCommand.cs` - Command for setting integer properties
+- `Dom5Editor/Commands/AddPropertyCommand.cs` - Command for adding properties
+- `Dom5Editor/Commands/RemovePropertyCommand.cs` - Command for removing properties
+- `ModViewModel` - Added History, IsDirty, CanUndo/CanRedo, UndoCommand/RedoCommand
+- `PropertyViewModel` - Added optional CommandHistory property
+- `IntPropertyViewModel` - Uses commands when History is available
+- `IDViewModelBase` - AddProperty/RemoveProperty now use commands
+- `MonsterViewModel` - AddWeapon/AddArmor/RemoveWeapon/RemoveArmor use commands
+
+**Next Steps:**
+- Add UI bindings for Undo/Redo in main window (Ctrl+Z, Ctrl+Y)
+- Create commands for other property types (String, IntInt, etc.)
+- Implement validation framework
+- Add dirty indicator to window title
 
 ### Files to Create
 

@@ -2,6 +2,7 @@
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.Commands;
 
 namespace Dom5Editor.VMs
 {
@@ -11,7 +12,12 @@ namespace Dom5Editor.VMs
         public IntPropertyViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
         public IntPropertyViewModel(MonsterViewModel monster, string label, IDEntity e, Command c) : base(label, e, c)
         {
+            // Get History from the parent ModViewModel
+            History = monster?.Parent?.History;
         }
+
+        public IntPropertyViewModel(string label, IDEntity e, Command c, CommandHistory history)
+            : base(label, e, c, history) { }
 
         public SolidColorBrush BackgroundColor
         {
@@ -52,7 +58,17 @@ namespace Dom5Editor.VMs
             {
                 if (int.TryParse(value, out int ret))
                 {
-                    Source.Set<IntProperty>(Command, i => i.Value = ret);
+                    if (History != null)
+                    {
+                        // Use command pattern for undo/redo support
+                        var cmd = new SetIntPropertyCommand(Source, Command, ret);
+                        History.Execute(cmd);
+                    }
+                    else
+                    {
+                        // Fallback to direct modification (for backwards compatibility)
+                        Source.Set<IntProperty>(Command, i => i.Value = ret);
+                    }
                     OnPropertyChanged("BackgroundColor");
                     OnPropertyChanged("Value");
                 }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Dom5Edit;
 using Dom5Edit.Entities;
+using Dom5Editor.Commands;
 
 namespace Dom5Editor
 {
@@ -10,19 +12,74 @@ namespace Dom5Editor
     {
         private Mod _mod;
 
+        /// <summary>
+        /// Manages undo/redo history for this mod.
+        /// </summary>
+        public CommandHistory History { get; } = new CommandHistory();
+
         public ModViewModel(string file)
         {
             this._mod = Mod.Import(file);
+            InitializeHistory();
         }
 
         public ModViewModel(Mod m)
         {
             this._mod = m;
+            InitializeHistory();
         }
+
+        private void InitializeHistory()
+        {
+            History.HistoryChanged += () =>
+            {
+                OnPropertyChanged(nameof(CanUndo));
+                OnPropertyChanged(nameof(CanRedo));
+                OnPropertyChanged(nameof(IsDirty));
+                OnPropertyChanged(nameof(UndoDescription));
+                OnPropertyChanged(nameof(RedoDescription));
+            };
+        }
+
+        /// <summary>
+        /// Returns true if there are unsaved changes.
+        /// </summary>
+        public bool IsDirty => History.IsDirty;
+
+        /// <summary>
+        /// Returns true if there are commands that can be undone.
+        /// </summary>
+        public bool CanUndo => History.CanUndo;
+
+        /// <summary>
+        /// Returns true if there are commands that can be redone.
+        /// </summary>
+        public bool CanRedo => History.CanRedo;
+
+        /// <summary>
+        /// Description of the command that would be undone.
+        /// </summary>
+        public string UndoDescription => History.UndoDescription;
+
+        /// <summary>
+        /// Description of the command that would be redone.
+        /// </summary>
+        public string RedoDescription => History.RedoDescription;
+
+        /// <summary>
+        /// Command to undo the last edit.
+        /// </summary>
+        public ICommand UndoCommand => new RelayCommand(() => History.Undo(), () => CanUndo);
+
+        /// <summary>
+        /// Command to redo the last undone edit.
+        /// </summary>
+        public ICommand RedoCommand => new RelayCommand(() => History.Redo(), () => CanRedo);
 
         public bool Save(string file)
         {
             _mod.Export(file);
+            History.MarkSaved();
             return true;
         }
 
