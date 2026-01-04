@@ -64,67 +64,358 @@ public class PropertyDefinition
 
 ## Phase 2: Mod Class Refactoring
 
-### 2.1: Vanilla Data Migration (FIRST)
+### 2.1: Vanilla Data Migration (COMPLETE)
 
 **Goal:** Switch from TSV spreadsheet loading to vanilla.dm file parsing for Dom6.
 
-Current state:
-- VanillaLoader.cs loads from TSV files in VanillaData/ folder
-- Data converted to internal Mod representation
+**Implementation:**
+- Added `GameVersion` enum (Dom5, Dom6) to select data source
+- Added `IsVanilla` property to `Entity` and `DependentEntity` classes
+- VanillaLoader now supports both:
+  - **Dom6**: Loads from `vanilla.dm` file using existing `Mod.Parse()`
+  - **Dom5**: Falls back to TSV spreadsheet loading (legacy)
+- Entities loaded from vanilla.dm are marked `IsVanilla = true`
+- `VanillaLoader.VanillaDmPath` can be set to specify custom vanilla.dm location
+- `VanillaLoader.Reload()` forces reload after changing settings
 
-Migration tasks:
-- Analyze current VanillaLoader implementation and internal format
-- Verify vanilla.dm file location and format
-- Update loading to parse vanilla.dm using existing Mod.Parse()
-- Mark loaded entities as vanilla/read-only
-- Remove or deprecate TSV loading code
-- Update ID ranges for Dom6 (already partially done in Mod.cs)
+**Usage:**
+```csharp
+// Default: Dom6 mode, loads from vanilla.dm
+var vanilla = VanillaLoader.Vanilla;
 
-This ensures all vanilla entity references resolve correctly before refactoring.
+// Switch to Dom5 mode (TSV spreadsheets)
+VanillaLoader.GameVersion = GameVersion.Dom5;
+VanillaLoader.Reload();
 
-### 2.2: Split Mod Class Responsibilities
+// Custom vanilla.dm path
+VanillaLoader.VanillaDmPath = @"C:\Games\Dominions6\vanilla.dm";
+VanillaLoader.Reload();
+```
+
+**Remaining (optional):**
+- Remove or deprecate TSV loading code once Dom5 support is no longer needed
+- Update ID ranges in Mod.cs for Dom6 (currently uses Dom5 ranges)
+
+### 2.3: Dynamic Spell Effect Loading (COMPLETE)
+
+**Goal:** Replace hardcoded Dom5 spell effect data with dynamically loaded JSON data.
+
+**Implementation:**
+- Created `SpellEffectData.cs` singleton to load spell effect mappings at runtime
+- Loads from `spell_effects_mapping.json` (spell ID → effect number)
+- Loads from `spell_effect_types.json` (effect classification: summon, enchant, bitmask)
+- `VanillaSpellMap` now delegates to `SpellEffectData` when loaded
+- Added `VanillaLoader.SpellEffectMappingPath` and `SpellEffectTypesPath` properties
+- Proper cycle detection in `Spell.IsSummon()`, `IsEnchant()`, `IsEventEffect()`
+- Added many missing Dom6 commands (see RECENTLY_ADDED_COMMANDS.md)
+
+**Result:** Vanilla.dm warnings reduced from 110 to 0; DomEnhanced warnings from 695 to 284 (58% reduction). Remaining warnings are mod author issues (typos, missing entities) not parser issues.
+
+### 2.2: Split Mod Class Responsibilities (COMPLETE)
 
 Split the ~960 line Mod class into focused components:
 
-**ModParser**
-- Line-by-line parsing logic
-- Command recognition
-- Multi-line string handling
+**ModParser** (COMPLETE - `Dom5Edit/Mod/ModParser.cs`)
+- Line-by-line parsing logic with callback-based command emission
+- Command recognition via `CommandsMap`
+- Multi-line string handling for descriptions
 - Comment preservation
+- Placeholder skipping (##godname##, etc.)
+- Static `ScanDependencies()` for quick dependency detection
 
-**ModDocument**
-- Entity storage (Database, Dependents)
-- Entity queries and lookups
-- Change tracking for dirty state
+**ModExporter** (COMPLETE - `Dom5Edit/Mod/ModExporter.cs`)
+- Export formatting for mod header and entities
+- Stream-based export
+- `ExportForNations()` for filtered nation exports
 
-**ModExporter**
-- Export formatting
-- ID remapping during merge
-- File writing
+**ModDocument** (DEFERRED)
+- Entity storage remains in Mod class for now
+- Will extract when implementing change tracking for dirty state
+- Not needed until Phase 3 (Undo/Redo, Dirty Tracking)
 
-**Mod (Facade)**
-- High-level operations
-- Import/Export entry points
-- Backwards compatibility with existing code
+**Mod (Facade)** (COMPLETE)
+- Delegates parsing to `ModParser` via callbacks
+- Delegates export to `ModExporter`
+- Entity management remains in Mod (tightly coupled, works well)
+- Legacy methods (`HasCommandOnLine`, `ProcessLine`, etc.) marked `[Obsolete]`, delegate to parser
+- Removed dead nation association code (~80 lines)
+- **Result: Mod.cs reduced from ~960 to 550 lines (43% smaller)**
 
 ## Phase 3: Editor Infrastructure
 
-### Change Notification
-- Implement `INotifyPropertyChanged` on model classes or use wrapper pattern
-- Propagate changes from entities to UI
+Assume that all current UI infrastructure is replaceable and can be deprecated. If it's useful, good, but nothing is required to be retained.
 
-### Undo/Redo
-- Command pattern for entity modifications
-- Undo stack per document
+### Current Architecture Analysis
 
-### Validation
-- Validate entity completeness before export
-- Check reference validity (referenced entities exist)
-- Warn about ID range violations
+**Model Layer (Dom5Edit):**
+- `Entity`, `IDEntity`, `Property` classes are plain C# objects
+- No `INotifyPropertyChanged` - model is unaware of UI
+- Mutable operations: `AddProperty()`, `RemoveProperty()`, `Set<T>()` modify state directly
 
-### Dirty Tracking
-- Track unsaved changes per mod
-- Prompt before closing unsaved mods
+**ViewModel Layer (Dom5Editor):**
+- `ViewModelBase` implements `INotifyPropertyChanged`
+- ViewModels call `Source.Set<T>(...)` then manually call `OnPropertyChanged()`
+- Pattern works but provides no undo/redo or dirty tracking
+
+### Design Decision: Command Pattern Approach
+
+Keep model layer clean (no WPF dependencies). All modifications go through commands that:
+1. Execute changes on the model
+2. Fire change notifications
+3. Enable undo/redo via command stack
+4. Enable dirty tracking (uncommitted commands = dirty)
+
+### 3.1: Edit Command Infrastructure
+
+**Location:** `Dom5Editor/Commands/` (separate from `Dom5Edit/Commands/`)
+
+```csharp
+// Base interface for all edit commands
+public interface IEditCommand
+{
+    string Description { get; }
+    void Execute();
+    void Undo();
+}
+
+// Manages undo/redo stacks per document
+public class CommandHistory
+{
+    private Stack<IEditCommand> _undoStack = new();
+    private Stack<IEditCommand> _redoStack = new();
+
+    public bool CanUndo => _undoStack.Count > 0;
+    public bool CanRedo => _redoStack.Count > 0;
+    public bool IsDirty => _undoStack.Count > 0;
+
+    public event Action OnChange;
+
+    public void Execute(IEditCommand command)
+    {
+        command.Execute();
+        _undoStack.Push(command);
+        _redoStack.Clear();
+        OnChange?.Invoke();
+    }
+
+    public void Undo()
+    {
+        if (CanUndo)
+        {
+            var cmd = _undoStack.Pop();
+            cmd.Undo();
+            _redoStack.Push(cmd);
+            OnChange?.Invoke();
+        }
+    }
+
+    public void Redo()
+    {
+        if (CanRedo)
+        {
+            var cmd = _redoStack.Pop();
+            cmd.Execute();
+            _undoStack.Push(cmd);
+            OnChange?.Invoke();
+        }
+    }
+
+    public void MarkSaved() => _savePoint = _undoStack.Count;
+    public bool IsDirty => _undoStack.Count != _savePoint;
+}
+```
+
+### 3.2: Property Edit Commands
+
+```csharp
+// Generic command for modifying a property value
+public class SetPropertyCommand<T> : IEditCommand where T : Property, new()
+{
+    private readonly IDEntity _entity;
+    private readonly Command _command;
+    private readonly Action<T> _setter;
+    private readonly T _oldValue;
+    private readonly T _newValue;
+
+    public string Description => $"Set {_command}";
+
+    public SetPropertyCommand(IDEntity entity, Command command, Action<T> setter)
+    {
+        _entity = entity;
+        _command = command;
+        _setter = setter;
+        // Capture old value before modification
+        _entity.TryGet<T>(command, out _oldValue);
+    }
+
+    public void Execute()
+    {
+        _entity.Set<T>(_command, _setter);
+    }
+
+    public void Undo()
+    {
+        if (_oldValue == null)
+            _entity.Remove<T>(_command);
+        else
+            _entity.Set<T>(_command, p => /* restore old value */);
+    }
+}
+
+// Command for adding a property (e.g., adding a weapon to a monster)
+public class AddPropertyCommand : IEditCommand
+{
+    private readonly IDEntity _entity;
+    private readonly Property _property;
+
+    public void Execute() => _entity.AddProperty(_property);
+    public void Undo() => _entity.RemoveProperty(_property);
+}
+
+// Command for removing a property
+public class RemovePropertyCommand : IEditCommand
+{
+    private readonly IDEntity _entity;
+    private readonly Property _property;
+    private int _index;  // For restoring at correct position
+
+    public void Execute()
+    {
+        _index = _entity.Properties.ToList().IndexOf(_property);
+        _entity.RemoveProperty(_property);
+    }
+
+    public void Undo() => _entity.AddProperty(_property);  // Will sort
+}
+```
+
+### 3.3: ViewModel Integration
+
+Modify ViewModels to use commands instead of direct modification:
+
+```csharp
+// Current pattern (MonsterViewModel):
+public string Value
+{
+    set
+    {
+        Source.Set<IntProperty>(Command, i => i.Value = ret);
+        OnPropertyChanged("Value");
+    }
+}
+
+// New pattern with commands:
+public string Value
+{
+    set
+    {
+        var cmd = new SetPropertyCommand<IntProperty>(
+            Source, Command, i => i.Value = ret);
+        _commandHistory.Execute(cmd);
+        OnPropertyChanged("Value");
+    }
+}
+```
+
+### 3.4: Change Notification Strategy
+
+Use events from `CommandHistory` to trigger UI updates:
+
+```csharp
+public class ModViewModel : ViewModelBase
+{
+    public CommandHistory History { get; } = new();
+
+    public ModViewModel()
+    {
+        History.OnChange += () =>
+        {
+            OnPropertyChanged(nameof(CanUndo));
+            OnPropertyChanged(nameof(CanRedo));
+            OnPropertyChanged(nameof(IsDirty));
+        };
+    }
+
+    public bool CanUndo => History.CanUndo;
+    public bool CanRedo => History.CanRedo;
+    public bool IsDirty => History.IsDirty;
+
+    public ICommand UndoCommand => new RelayCommand(() => History.Undo());
+    public ICommand RedoCommand => new RelayCommand(() => History.Redo());
+}
+```
+
+### 3.5: Validation System
+
+**Location:** `Dom5Edit/Validation/`
+
+```csharp
+public interface IValidator
+{
+    IEnumerable<ValidationIssue> Validate(Mod mod);
+}
+
+public class ValidationIssue
+{
+    public ValidationSeverity Severity { get; set; }  // Error, Warning, Info
+    public string Message { get; set; }
+    public IDEntity Entity { get; set; }
+    public Property Property { get; set; }
+    public int? LineNumber { get; set; }
+}
+
+// Specific validators
+public class ReferenceValidator : IValidator { }      // Check referenced entities exist
+public class IdRangeValidator : IValidator { }        // Check IDs within allowed ranges
+public class DuplicateIdValidator : IValidator { }    // Check for duplicate IDs
+public class RequiredPropertyValidator : IValidator { } // Check required properties set
+
+// Composite validator
+public class ModValidator
+{
+    private readonly List<IValidator> _validators = new()
+    {
+        new ReferenceValidator(),
+        new IdRangeValidator(),
+        new DuplicateIdValidator()
+    };
+
+    public IEnumerable<ValidationIssue> Validate(Mod mod)
+    {
+        return _validators.SelectMany(v => v.Validate(mod));
+    }
+}
+```
+
+### Implementation Order
+
+1. **CommandHistory class** - Core undo/redo infrastructure
+2. **Base edit commands** - SetPropertyCommand, AddPropertyCommand, RemovePropertyCommand
+3. **Wire into one ViewModel** - Test with IntPropertyViewModel as proof of concept
+4. **Validation framework** - Add validators one at a time
+5. **Dirty tracking** - Already handled by CommandHistory.IsDirty
+6. **Expand to all ViewModels** - Apply pattern across the editor
+
+### Files to Create
+
+```
+Dom5Editor/
+  Commands/
+    IEditCommand.cs           # Interface
+    CommandHistory.cs         # Undo/redo stack manager
+    SetPropertyCommand.cs     # Property modification command
+    AddPropertyCommand.cs     # Add property command
+    RemovePropertyCommand.cs  # Remove property command
+
+Dom5Edit/
+  Validation/
+    IValidator.cs             # Validator interface
+    ValidationIssue.cs        # Issue data class
+    ReferenceValidator.cs     # Validates entity references
+    IdRangeValidator.cs       # Validates ID ranges
+    DuplicateIdValidator.cs   # Detects duplicate IDs
+    ModValidator.cs           # Composite validator
+```
 
 ## Phase 4: UI Components
 

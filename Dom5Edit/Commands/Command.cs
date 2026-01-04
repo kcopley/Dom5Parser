@@ -202,6 +202,7 @@
         UWBUG,
         STONEBEING,
         INANIMATE,
+        MINDLESS,
         DUNGEON,
         LANCEOK,
         IMMOBILE,
@@ -498,6 +499,8 @@
         CUSTOMMAGIC,
         MAGICBOOST,
         MASTERRIT,
+        CHORUSMASTER,
+        CHORUSSLAVE,
         FIRERANGE,
         AIRRANGE,
         WATERRANGE,
@@ -1571,6 +1574,49 @@
         STYGIANGUIDE,
         PROTPARTS,
         SELECTEVENT,
+        // Dom6 additions for weapon
+        DEFROLL,
+        DMGINSPECTOR,
+        MORROLL,
+        // Dom6 additions for armor
+        PROTINSPECTOR,
+        // Dom6 additions for monster
+        MOUNTEDINSPECTOR,
+        GROWTHPOWER,
+        ICEPROTINSPECTOR,
+        PRAISE,
+        MOUNTEDSPR1,
+        MOUNTEDSPR2,
+        ENCHANTEDBLOOD,
+        REGAINMOUNTS,
+        REGEN,
+        COLRES,
+        AMPHIBIOUS,
+        // Dom6 additions for site
+        COPYSITE,
+        // Dom6 additions for nation
+        BLESSBONUS,
+        PLAINFORTREC,
+        PLAINFORTCOM,
+        FOREIGNFORTREC,
+        FOREIGNFORTCOM,
+        UWGUARDCOM,
+        UWGUARDUNIT,
+        UWGUARDMULT,
+        FORTHEATSCALERES,
+        FORTCOLDSCALERES,
+        HOMEHEATSCALERES,
+        PLAINREC,
+        CAVEINC,
+        CAVERES,
+        CAVERECPT,
+        // Dom6 additions for spell
+        AOEINSPECTOR,
+        FATIGUECOSTINSPECTOR,
+        // Dom6 additions for item
+        TAINT,
+        // Dom6 additions for event
+        REQ_TARGREALMNR,
     }
 
     public class CommandsMap
@@ -1786,6 +1832,7 @@
             _commandMap.Add("#uwbug", Command.UWBUG);
             _commandMap.Add("#stonebeing", Command.STONEBEING);
             _commandMap.Add("#inanimate", Command.INANIMATE);
+            _commandMap.Add("#mindless", Command.MINDLESS);
             _commandMap.Add("#dungeon", Command.DUNGEON);
             _commandMap.Add("#lanceok", Command.LANCEOK);
             _commandMap.Add("#immobile", Command.IMMOBILE);
@@ -2082,6 +2129,8 @@
             _commandMap.Add("#custommagic", Command.CUSTOMMAGIC);
             _commandMap.Add("#magicboost", Command.MAGICBOOST);
             _commandMap.Add("#masterrit", Command.MASTERRIT);
+            _commandMap.Add("#chorusmaster", Command.CHORUSMASTER);
+            _commandMap.Add("#chorusslave", Command.CHORUSSLAVE);
             _commandMap.Add("#firerange", Command.FIRERANGE);
             _commandMap.Add("#airrange", Command.AIRRANGE);
             _commandMap.Add("#waterrange", Command.WATERRANGE);
@@ -3153,6 +3202,51 @@
             _commandMap.Add("#autoblessed", Command.AUTOBLESSED);
             _commandMap.Add("#wintersummon1d3", Command.WINTERSUMMON1D3);
             _commandMap.Add("#stygianguide", Command.STYGIANGUIDE);
+            // Dom6 additions for weapon
+            _commandMap.Add("#defroll", Command.DEFROLL);
+            _commandMap.Add("#dmginspector", Command.DMGINSPECTOR);
+            _commandMap.Add("#morroll", Command.MORROLL);
+            // Dom6 additions for armor
+            _commandMap.Add("#protparts", Command.PROTPARTS);
+            _commandMap.Add("#protinspector", Command.PROTINSPECTOR);
+            // Dom6 additions for monster
+            _commandMap.Add("#mountedinspector", Command.MOUNTEDINSPECTOR);
+            _commandMap.Add("#growthpower", Command.GROWTHPOWER);
+            _commandMap.Add("#iceprotinspector", Command.ICEPROTINSPECTOR);
+            _commandMap.Add("#praise", Command.PRAISE);
+            _commandMap.Add("#mountedspr1", Command.MOUNTEDSPR1);
+            _commandMap.Add("#mountedspr2", Command.MOUNTEDSPR2);
+            _commandMap.Add("#enchantedblood", Command.ENCHANTEDBLOOD);
+            _commandMap.Add("#regainmounts", Command.REGAINMOUNTS);
+            _commandMap.Add("#regen", Command.REGEN);
+            _commandMap.Add("#colres", Command.COLRES);
+            _commandMap.Add("#amphibious", Command.AMPHIBIOUS);
+            // Dom6 additions for site
+            _commandMap.Add("#copysite", Command.COPYSITE);
+            // Dom6 additions for nation
+            _commandMap.Add("#blessbonus", Command.BLESSBONUS);
+            _commandMap.Add("#plainfortrec", Command.PLAINFORTREC);
+            _commandMap.Add("#plainfortcom", Command.PLAINFORTCOM);
+            _commandMap.Add("#foreignfortrec", Command.FOREIGNFORTREC);
+            _commandMap.Add("#foreignfortcom", Command.FOREIGNFORTCOM);
+            _commandMap.Add("#uwguardcom", Command.UWGUARDCOM);
+            _commandMap.Add("#uwguardunit", Command.UWGUARDUNIT);
+            _commandMap.Add("#uwguardmult", Command.UWGUARDMULT);
+            _commandMap.Add("#fortheatscaleres", Command.FORTHEATSCALERES);
+            _commandMap.Add("#fortcoldscaleres", Command.FORTCOLDSCALERES);
+            _commandMap.Add("#homeheatscaleres", Command.HOMEHEATSCALERES);
+            _commandMap.Add("#plainrec", Command.PLAINREC);
+            _commandMap.Add("#caveinc", Command.CAVEINC);
+            _commandMap.Add("#caveres", Command.CAVERES);
+            _commandMap.Add("#caverecpt", Command.CAVERECPT);
+            // Dom6 additions for spell
+            _commandMap.Add("#aoeinspector", Command.AOEINSPECTOR);
+            _commandMap.Add("#fatiguecostinspector", Command.FATIGUECOSTINSPECTOR);
+            // Dom6 additions for item
+            _commandMap.Add("#taint", Command.TAINT);
+            // Dom6 additions for event
+            _commandMap.Add("#req_targrealmnr", Command.REQ_TARGREALMNR);
+            _commandMap.Add("#selectevent", Command.SELECTEVENT);
 
             _nonEditable.Add(Command.CORRUPT);
             _nonEditable.Add(Command.REINCARNATION);

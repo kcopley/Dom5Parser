@@ -113,6 +113,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.UWBUG, CommandProperty.Create);
             _propertyMap.Add(Command.STONEBEING, CommandProperty.Create);
             _propertyMap.Add(Command.INANIMATE, CommandProperty.Create);
+            _propertyMap.Add(Command.MINDLESS, CommandProperty.Create);
             _propertyMap.Add(Command.DUNGEON, CommandProperty.Create);
             _propertyMap.Add(Command.LANCEOK, CommandProperty.Create);
             _propertyMap.Add(Command.IMMOBILE, CommandProperty.Create);
@@ -124,6 +125,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SWIMMING, CommandProperty.Create);
             _propertyMap.Add(Command.SNOW, CommandProperty.Create);
             _propertyMap.Add(Command.STORMIMMUNE, CommandProperty.Create);
+            _propertyMap.Add(Command.STUNIMMUNITY, CommandProperty.Create);
+            _propertyMap.Add(Command.UNSEEN, CommandProperty.Create);
             _propertyMap.Add(Command.TELEPORT, CommandProperty.Create);
             _propertyMap.Add(Command.MAPTELEPORT, CommandProperty.Create);
             _propertyMap.Add(Command.BLINK, CommandProperty.Create);
@@ -410,6 +413,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.CUSTOMMAGIC, BitmaskChanceProperty.Create);
             _propertyMap.Add(Command.MAGICBOOST, IntIntProperty.Create);
             _propertyMap.Add(Command.MASTERRIT, IntProperty.Create);
+            _propertyMap.Add(Command.CHORUSMASTER, IntProperty.Create);
+            _propertyMap.Add(Command.CHORUSSLAVE, IntProperty.Create);
             _propertyMap.Add(Command.FIRERANGE, IntProperty.Create);
             _propertyMap.Add(Command.AIRRANGE, IntProperty.Create);
             _propertyMap.Add(Command.WATERRANGE, IntProperty.Create);
@@ -563,6 +568,19 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.TMPGLAMOURGEMS, IntProperty.Create); //#tmpglamourgems <gems>
             _propertyMap.Add(Command.TMPBLOODSLAVES, IntProperty.Create); //#tmpbloodslaves <slaves>
             _propertyMap.Add(Command.GLAMOURMANIP, IntProperty.Create); //#glamourmanip <0 or 1>
+            // Additional Dom6 additions
+            _propertyMap.Add(Command.MORALE, IntProperty.Create); //#morale <value>
+            _propertyMap.Add(Command.MOUNTEDINSPECTOR, IntProperty.Create); //#mountedinspector <value>
+            _propertyMap.Add(Command.GROWTHPOWER, IntProperty.Create); //#growthpower <value>
+            _propertyMap.Add(Command.ICEPROTINSPECTOR, IntProperty.Create); //#iceprotinspector <value>
+            _propertyMap.Add(Command.PRAISE, IntProperty.Create); //#praise <value>
+            _propertyMap.Add(Command.MOUNTEDSPR1, FilePathProperty.Create); //#mountedspr1 <imgfile>
+            _propertyMap.Add(Command.MOUNTEDSPR2, FilePathProperty.Create); //#mountedspr2 <imgfile>
+            _propertyMap.Add(Command.ENCHANTEDBLOOD, IntProperty.Create); //#enchantedblood <value>
+            _propertyMap.Add(Command.REGAINMOUNTS, CommandProperty.Create); //#regainmounts
+            _propertyMap.Add(Command.REGEN, IntProperty.Create); //#regen <value>
+            _propertyMap.Add(Command.COLRES, IntProperty.Create); //#colres <value>
+            _propertyMap.Add(Command.AMPHIBIOUS, CommandProperty.Create); //#amphibious
         }
 
         internal override Command GetNewCommand()

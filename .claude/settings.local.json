@@ -10,7 +10,17 @@
       "Bash(apt list:*)",
       "Bash(/mnt/c/Users/*/AppData/Local/Programs/Python/Python*/python.exe)",
       "Bash(/mnt/c/Users/kurtc/AppData/Local/Programs/Python/Python310/python.exe:*)",
-      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Edit\\\\Dom5Edit.csproj\")"
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Edit\\\\Dom5Edit.csproj\")",
+      "Bash(/mnt/c/Program\\\\ Files/dotnet/dotnet.exe run:*)",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build:*)",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Edit.sln\")",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" run --project \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Tests\\\\Dom5Tests.csproj\" -- \"D:\\\\Projects\\\\Dom5Parser\\\\vanilla.dm\")",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Tests\\\\Dom5Tests.csproj\")",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" run --project \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Tests\\\\Dom5Tests.csproj\")",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" run --project \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Tests\\\\Dom5Tests.csproj\" -- mod)",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" run --project \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Tests\\\\Dom5Tests.csproj\" -- vanilla)",
+      "Bash(cat:*)",
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build Dom5Edit.sln)"
     ]
   }
 }

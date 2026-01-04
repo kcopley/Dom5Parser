@@ -19,6 +19,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.LEVEL, IntProperty.Create);
             _propertyMap.Add(Command.RARITY, IntProperty.Create);
             _propertyMap.Add(Command.DECUNREST, IntProperty.Create);
+            _propertyMap.Add(Command.INCUNREST, IntProperty.Create);
             _propertyMap.Add(Command.SUPPLY, IntProperty.Create);
             _propertyMap.Add(Command.HOMEMON, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.HOMECOM, MonsterOrMontagRef.Create);
@@ -108,6 +109,9 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.DEFMULT, IntProperty.Create); //#defmult <multiplier>
             _propertyMap.Add(Command.GLAMOURRANGE, IntProperty.Create); //#glamourrange <range>
             _propertyMap.Add(Command.POPGROWTH, IntProperty.Create); //#popgrowth <per mille>
+            // Additional Dom6 additions
+            _propertyMap.Add(Command.UNREST, IntProperty.Create); //#unrest <value>
+            _propertyMap.Add(Command.COPYSITE, SiteRef.Create); //#copysite <site name> | <site nbr>
         }
 
         internal override Command GetNewCommand()

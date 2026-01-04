@@ -69,6 +69,12 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.AISPELLMOD, IntProperty.Create);
             _propertyMap.Add(Command.REQPLANT, CommandProperty.Create);
             _propertyMap.Add(Command.REQNOPLANT, CommandProperty.Create);
+            // Additional Dom6 additions
+            _propertyMap.Add(Command.PORTENT, IntProperty.Create); //#portent <value>
+            _propertyMap.Add(Command.PREC, IntProperty.Create); //#prec <value>
+            _propertyMap.Add(Command.ONLYSITEDST, SiteRef.Create); //#onlysitedst <site name> | <site nbr>
+            _propertyMap.Add(Command.AOEINSPECTOR, IntProperty.Create); //#aoeinspector <value>
+            _propertyMap.Add(Command.FATIGUECOSTINSPECTOR, IntProperty.Create); //#fatiguecostinspector <value>
         }
 
         public override void Export(StreamWriter writer)
@@ -97,7 +103,9 @@ namespace Dom5Edit.Entities
             return EntityType.SPELL;
         }
 
-        internal bool IsSummon()
+        internal bool IsSummon() => IsSummon(null);
+
+        private bool IsSummon(HashSet<Spell>? visited)
         {
             //check for the spell effect
             //if no, check for a copyspell
@@ -124,7 +132,10 @@ namespace Dom5Edit.Entities
                 }
                 else if (copy.TryGetSpell(out Spell spell))
                 {
-                    return spell.IsSummon();
+                    visited ??= new HashSet<Spell>();
+                    if (visited.Contains(spell)) return false; // Cycle detected
+                    visited.Add(this);
+                    return spell.IsSummon(visited);
                 }
             }
             return false;
@@ -158,7 +169,9 @@ namespace Dom5Edit.Entities
             return false;
         }
 
-        internal bool IsEnchant()
+        internal bool IsEnchant() => IsEnchant(null);
+
+        private bool IsEnchant(HashSet<Spell>? visited)
         {
             //check for the spell effect
             //if no, check for a copyspell
@@ -181,13 +194,18 @@ namespace Dom5Edit.Entities
                 }
                 else if (copy.TryGetSpell(out Spell spell))
                 {
-                    return spell.IsEnchant();
+                    visited ??= new HashSet<Spell>();
+                    if (visited.Contains(spell)) return false; // Cycle detected
+                    visited.Add(this);
+                    return spell.IsEnchant(visited);
                 }
             }
             return false;
         }
 
-        internal bool IsEventEffect()
+        internal bool IsEventEffect() => IsEventEffect(null);
+
+        private bool IsEventEffect(HashSet<Spell>? visited)
         {
             //check for the spell effect
             //if no, check for a copyspell
@@ -210,7 +228,10 @@ namespace Dom5Edit.Entities
                 }
                 else if (copy.TryGetSpell(out Spell spell))
                 {
-                    return spell.IsEventEffect();
+                    visited ??= new HashSet<Spell>();
+                    if (visited.Contains(spell)) return false; // Cycle detected
+                    visited.Add(this);
+                    return spell.IsEventEffect(visited);
                 }
             }
             return false;
@@ -2612,71 +2633,95 @@ namespace Dom5Edit.Entities
             SpellNameEffectMap.Add("Summon Si'lat", 21);
         }
 
+        // Use dynamic data if loaded, otherwise fall back to hardcoded data
+        private static bool UseDynamicData => SpellEffectData.Instance.IsLoaded;
+
         public static bool ContainsSpell(int id)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.ContainsSpell(id);
             return SpellIDEffectMap.ContainsKey(id);
         }
 
         public static bool ContainsSpell(string id)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.ContainsSpell(id);
             return SpellNameEffectMap.ContainsKey(id);
         }
 
         public static bool TryGetEffect(int ID, out int effect)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.TryGetEffect(ID, out effect);
             return SpellIDEffectMap.TryGetValue(ID, out effect);
         }
 
         public static bool TryGetEffect(string ID, out int effect)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.TryGetEffect(ID, out effect);
             return SpellNameEffectMap.TryGetValue(ID, out effect);
         }
 
         public static bool IsSummonEffect(int effect)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsSummonEffect(effect);
             if (effect > 10000) effect -= 10000;
             return _summonEffects.Contains(effect);
         }
 
         public static bool IsEnchantEffect(int effect)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsEnchantEffect(effect);
             if (effect > 10000) effect -= 10000;
             return _enchantEffects.Contains(effect);
         }
 
         public static bool IsEventEffect(int effect)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsEventEffect(effect);
             if (effect > 10000) effect -= 10000;
             return _eventEffects.Contains(effect);
         }
 
+        public static bool IsBitmaskEffect(int effect)
+        {
+            if (UseDynamicData) return SpellEffectData.Instance.IsBitmaskEffect(effect);
+            // Default bitmask effects: 10, 11, 23
+            if (effect > 10000) effect -= 10000;
+            return effect == 10 || effect == 11 || effect == 23;
+        }
+
         public static bool IsSummonSpell(int spellID)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsSummonSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsSummonEffect(effect);
         }
 
         public static bool IsSummonSpell(string spellID)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsSummonSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsSummonEffect(effect);
         }
 
         public static bool IsEnchantSpell(int spellID)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsEnchantSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEnchantEffect(effect);
         }
 
         public static bool IsEnchantSpell(string spellID)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsEnchantSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEnchantEffect(effect);
         }
 
         public static bool IsEventEffectSpell(int spellID)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsEventEffectSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEventEffect(effect);
         }
 
         public static bool IsEventEffectSpell(string spellID)
         {
+            if (UseDynamicData) return SpellEffectData.Instance.IsEventEffectSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEventEffect(effect);
         }
     }

@@ -21,6 +21,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.IRONARMOR, CommandProperty.Create);
             _propertyMap.Add(Command.WOODENARMOR, CommandProperty.Create);
             _propertyMap.Add(Command.PROTPARTS, IntIntProperty.Create); // #protparts <head prot> <body prot>
+            _propertyMap.Add(Command.PROTINSPECTOR, IntProperty.Create); // #protinspector <value>
         }
 
         internal override Command GetNewCommand()

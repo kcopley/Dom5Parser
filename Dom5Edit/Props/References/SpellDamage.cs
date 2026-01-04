@@ -27,8 +27,24 @@ namespace Dom5Edit.Props
 
         public override void Resolve()
         {
-            //is this a summon?
             Spell parent = (Spell)Parent;
+
+            // First check if the spell's effect type uses bitmask damage
+            if (parent.TryGetSpellEffect(out int effect) && VanillaSpellMap.IsBitmaskEffect(effect))
+            {
+                // Leave as raw string for export
+                return;
+            }
+
+            // Fallback: check if damage value looks like a bitmask (power of 2 > 8192)
+            // These encode special damage effects, not monster IDs
+            if (IsBitmaskDamage(_val))
+            {
+                // Leave as raw string for export
+                return;
+            }
+
+            //is this a summon?
             if (parent.IsSummon()) ResolveAsSummon();
             else if (parent.IsEnchant()) ResolveAsEnchant();
             else if (parent.IsEventEffect()) ResolveAsEventEffect();
@@ -37,6 +53,16 @@ namespace Dom5Edit.Props
             //resolve to an ID
             //or a bitmask
             //if the bitmask, leave it as a string export w/ no quotes
+        }
+
+        private static bool IsBitmaskDamage(string val)
+        {
+            if (!int.TryParse(val.Trim(), out int damage)) return false;
+            if (damage <= 8192) return false; // Could be a valid monster ID
+
+            // Check if it's a power of 2 (single bit set) - common bitmask pattern
+            // Also check for combined bitmasks (multiple bits set but still large)
+            return (damage & (damage - 1)) == 0 || damage > 100000;
         }
 
         public override bool TryGetEntity(out IDEntity e)
