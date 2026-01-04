@@ -1,4 +1,5 @@
 ﻿using Dom5Editor.VMs;
+using Dom5Editor.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -127,7 +128,16 @@ namespace Dom5Editor
             var newProperty = WeaponRef.Create();
             newProperty.Parent = _entity;
             newProperty.Parse(Command.WEAPON, "1", "");
-            _entity.AddProperty(newProperty);
+
+            if (Parent?.History != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProperty, "Add Weapon");
+                Parent.History.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProperty);
+            }
             RefreshWeaponProperties();
         }
 
@@ -136,19 +146,44 @@ namespace Dom5Editor
             var newProperty = ArmorRef.Create();
             newProperty.Parent = _entity;
             newProperty.Parse(Command.ARMOR, "1", "");
-            _entity.AddProperty(newProperty);
+
+            if (Parent?.History != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProperty, "Add Armor");
+                Parent.History.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProperty);
+            }
             RefreshArmorProperties();
         }
 
         private void RemoveWeapon(WeaponRefViewModel weaponVM)
         {
-            _entity.RemoveProperty(weaponVM._property);
+            if (Parent?.History != null)
+            {
+                var cmd = new RemovePropertyCommand(_entity, weaponVM._property, "Remove Weapon");
+                Parent.History.Execute(cmd);
+            }
+            else
+            {
+                _entity.RemoveProperty(weaponVM._property);
+            }
             RefreshWeaponProperties();
         }
 
         private void RemoveArmor(ArmorRefViewModel armorVM)
         {
-            _entity.RemoveProperty(armorVM._property);
+            if (Parent?.History != null)
+            {
+                var cmd = new RemovePropertyCommand(_entity, armorVM._property, "Remove Armor");
+                Parent.History.Execute(cmd);
+            }
+            else
+            {
+                _entity.RemoveProperty(armorVM._property);
+            }
             RefreshArmorProperties();
         }
 

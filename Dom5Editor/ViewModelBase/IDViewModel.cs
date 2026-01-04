@@ -1,5 +1,7 @@
 ﻿using Dom5Editor.VMs;
+using Dom5Editor.Commands;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -68,7 +70,7 @@ namespace Dom5Editor
             if (command == Command.NAME)
                 return new StringViewModel(label, _entity, command);
             else
-                return new IntPropertyViewModel(label, _entity, command);
+                return new IntPropertyViewModel(label, _entity, command, Parent?.History);
         }
 
         protected virtual void AddProperty()
@@ -78,14 +80,37 @@ namespace Dom5Editor
                 var property = creator.Invoke();
                 property.Parent = _entity;
                 property.Parse(SelectedCommand, "0", "");
-                _entity.AddProperty(property);
+
+                if (Parent?.History != null)
+                {
+                    // Use command pattern for undo/redo support
+                    var cmd = new AddPropertyCommand(_entity, property);
+                    Parent.History.Execute(cmd);
+                }
+                else
+                {
+                    // Fallback to direct modification
+                    _entity.AddProperty(property);
+                }
                 RefreshEntityProperties();
             }
         }
 
         protected virtual void RemoveProperty(PropertyViewModel propertyVM)
         {
-            _entity.RemoveProperty(propertyVM.Command);
+            // Find the actual property from the entity
+            var property = _entity.Properties.FirstOrDefault(p => p.Command == propertyVM.Command);
+            if (property != null && Parent?.History != null)
+            {
+                // Use command pattern for undo/redo support
+                var cmd = new RemovePropertyCommand(_entity, property);
+                Parent.History.Execute(cmd);
+            }
+            else
+            {
+                // Fallback to direct modification
+                _entity.RemoveProperty(propertyVM.Command);
+            }
             RefreshEntityProperties();
         }
 
@@ -151,7 +176,7 @@ namespace Dom5Editor
 
             if (propertyType == typeof(IntProperty) || propertyType.IsSubclassOf(typeof(IntProperty)))
             {
-                return new IntPropertyViewModel(label, _entity, p.Command);
+                return new IntPropertyViewModel(label, _entity, p.Command, Parent?.History);
             }
             else if (propertyType == typeof(IntIntProperty) || propertyType.IsSubclassOf(typeof(IntIntProperty)))
             {
