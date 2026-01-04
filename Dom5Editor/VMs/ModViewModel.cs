@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Dom5Edit;
 using Dom5Edit.Entities;
-using Dom5Editor.Commands;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor
 {
@@ -17,16 +17,23 @@ namespace Dom5Editor
         /// </summary>
         public CommandHistory History { get; } = new CommandHistory();
 
+        /// <summary>
+        /// Tracks changes made during this editing session for select-on-edit export.
+        /// </summary>
+        public ChangesMod Changes { get; private set; }
+
         public ModViewModel(string file)
         {
             this._mod = Mod.Import(file);
             InitializeHistory();
+            InitializeChangesMod();
         }
 
         public ModViewModel(Mod m)
         {
             this._mod = m;
             InitializeHistory();
+            InitializeChangesMod();
         }
 
         private void InitializeHistory()
@@ -38,13 +45,25 @@ namespace Dom5Editor
                 OnPropertyChanged(nameof(IsDirty));
                 OnPropertyChanged(nameof(UndoDescription));
                 OnPropertyChanged(nameof(RedoDescription));
+                OnPropertyChanged(nameof(HasChanges));
             };
+        }
+
+        private void InitializeChangesMod()
+        {
+            Changes = new ChangesMod { LoadedMod = _mod };
+            History.ChangesMod = Changes;
         }
 
         /// <summary>
         /// Returns true if there are unsaved changes.
         /// </summary>
         public bool IsDirty => History.IsDirty;
+
+        /// <summary>
+        /// Returns true if there are any changes recorded in the ChangesMod.
+        /// </summary>
+        public bool HasChanges => Changes?.HasChanges ?? false;
 
         /// <summary>
         /// Returns true if there are commands that can be undone.
@@ -76,10 +95,52 @@ namespace Dom5Editor
         /// </summary>
         public ICommand RedoCommand => new RelayCommand(() => History.Redo(), () => CanRedo);
 
+        /// <summary>
+        /// Exports the mod with all changes applied.
+        /// Uses ChangesModExporter for proper change tracking.
+        /// </summary>
         public bool Save(string file)
         {
-            _mod.Export(file);
+            using (var writer = new StreamWriter(file))
+            {
+                var exporter = new ChangesModExporter(Changes);
+                exporter.Export(writer, ModName ?? "Mod", ModDescription);
+            }
             History.MarkSaved();
+            return true;
+        }
+
+        /// <summary>
+        /// Exports only the changes (vanilla overrides and new entities).
+        /// Does not include the loaded mod entities.
+        /// </summary>
+        public bool ExportChangesOnly(string file, string modName = null, string description = null)
+        {
+            // Temporarily clear LoadedMod to force changes-only export
+            var originalMod = Changes.LoadedMod;
+            Changes.LoadedMod = null;
+
+            try
+            {
+                using (var writer = new StreamWriter(file))
+                {
+                    var exporter = new ChangesModExporter(Changes);
+                    exporter.Export(writer, modName ?? "Changes", description);
+                }
+                return true;
+            }
+            finally
+            {
+                Changes.LoadedMod = originalMod;
+            }
+        }
+
+        /// <summary>
+        /// Exports the original mod without any changes.
+        /// </summary>
+        public bool ExportOriginal(string file)
+        {
+            _mod.Export(file);
             return true;
         }
 

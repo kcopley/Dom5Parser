@@ -1,6 +1,7 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -10,11 +11,13 @@ namespace Dom5Editor.VMs
         {
             _parentMod = parent;
             _owner = owner;
+            History = parent?.History;
         }
         public CopyStatsRefViewModel(ModViewModel parent, ViewModelBase owner, string label, IDEntity e, Command c) : base(label, e, c)
         {
             _parentMod = parent;
             _owner = owner;
+            History = parent?.History;
         }
 
         internal ModViewModel _parentMod;
@@ -51,7 +54,7 @@ namespace Dom5Editor.VMs
         public MonsterViewModel SelectedID
         {
             get
-            { 
+            {
                 if (Source.TryGet<CopyStatsRef>(Command, out var rf) == ReturnType.TRUE)
                 {
                     return _parentMod.Monsters.Find(x => x.ID == rf.ID);
@@ -60,17 +63,48 @@ namespace Dom5Editor.VMs
             }
             set
             {
-                if (this.Command == Command.COPYSTATS)
-                {
-                    Source.Set<CopyStatsRef>(Command, id => id.Entity = value.Monster);
+                if (value == null) return;
 
+                if (History != null)
+                {
+                    // Get the reference property for command support
+                    if (this.Command == Command.COPYSTATS && Source.TryGet<CopyStatsRef>(Command, out var copyRef) == ReturnType.TRUE)
+                    {
+                        var cmd = new SetReferenceCommand(copyRef, value.Monster, "CopyStats");
+                        History.Execute(cmd);
+                    }
+                    else if (Source.TryGet<StringOrIDRef>(Command, out var idRef) == ReturnType.TRUE)
+                    {
+                        var cmd = new SetReferenceCommand(idRef, value.Monster, "Reference");
+                        History.Execute(cmd);
+                    }
+                    else
+                    {
+                        // Fallback to direct set if property doesn't exist yet
+                        if (this.Command == Command.COPYSTATS)
+                        {
+                            Source.Set<CopyStatsRef>(Command, id => id.Entity = value.Monster);
+                        }
+                        else
+                        {
+                            Source.Set<StringOrIDRef>(Command, id => id.Entity = value.Monster);
+                        }
+                    }
                 }
                 else
                 {
-                    Source.Set<StringOrIDRef>(Command, id => id.Entity = value.Monster);
+                    if (this.Command == Command.COPYSTATS)
+                    {
+                        Source.Set<CopyStatsRef>(Command, id => id.Entity = value.Monster);
+                    }
+                    else
+                    {
+                        Source.Set<StringOrIDRef>(Command, id => id.Entity = value.Monster);
+                    }
                 }
                 _parentMod.OnPropertyChanged("");
                 _owner.OnPropertyChanged("");
+                OnPropertyChanged(nameof(SelectedID));
             }
         }
     }

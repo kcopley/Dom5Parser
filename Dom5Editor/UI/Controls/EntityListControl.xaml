@@ -1,0 +1,155 @@
+<UserControl x:Class="Dom5Editor.UI.Controls.EntityListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="280">
+
+    <Grid Background="{DynamicResource BackgroundMediumBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Search Box -->
+        <Border Grid.Row="0"
+                Padding="8"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="SearchBox"
+                         Grid.Column="0"
+                         Style="{DynamicResource TextBoxBase}"
+                         Text="{Binding SearchText, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
+                         Tag="Search..."/>
+
+                <Button x:Name="ClearSearchButton"
+                        Grid.Column="1"
+                        Content="X"
+                        Style="{DynamicResource ButtonIcon}"
+                        Margin="4,0,0,0"
+                        Visibility="{Binding HasSearchText, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Click="ClearSearchButton_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- Filter Options -->
+        <Border Grid.Row="1"
+                Padding="8,6"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="ShowVanillaCheck"
+                          Content="Vanilla"
+                          Style="{DynamicResource CheckBoxBase}"
+                          IsChecked="{Binding ShowVanilla, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                          Margin="0,0,12,0"/>
+                <CheckBox x:Name="ShowModifiedCheck"
+                          Content="Modified"
+                          Style="{DynamicResource CheckBoxBase}"
+                          IsChecked="{Binding ShowModified, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                          Margin="0,0,12,0"/>
+                <CheckBox x:Name="ShowNewCheck"
+                          Content="New"
+                          Style="{DynamicResource CheckBoxBase}"
+                          IsChecked="{Binding ShowNew, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Entity List -->
+        <ListBox x:Name="EntityListBox"
+                 Grid.Row="2"
+                 Style="{DynamicResource ListBoxBase}"
+                 ItemsSource="{Binding FilteredEntities, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 SelectedItem="{Binding SelectedEntity, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
+                 VirtualizingPanel.IsVirtualizing="True"
+                 VirtualizingPanel.VirtualizationMode="Recycling"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBase}">
+                    <Setter Property="Padding" Value="8,6"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- State Indicator -->
+                        <Border x:Name="StateIndicator"
+                                Grid.Column="0"
+                                Width="4"
+                                CornerRadius="2"
+                                Margin="0,0,8,0"
+                                Background="{DynamicResource VanillaBrush}"/>
+
+                        <!-- Entity Name and ID -->
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding DisplayName}"
+                                       Style="{DynamicResource TextBlockBase}"
+                                       FontSize="12"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding ID, StringFormat='#{0}'}"
+                                       Style="{DynamicResource MutedText}"
+                                       FontSize="10"/>
+                        </StackPanel>
+
+                        <!-- Vanilla/Modified indicator -->
+                        <TextBlock x:Name="VanillaLabel"
+                                   Grid.Column="2"
+                                   Text="V"
+                                   Style="{DynamicResource MutedText}"
+                                   FontSize="9"
+                                   VerticalAlignment="Center"
+                                   ToolTip="Vanilla entity"
+                                   Visibility="Collapsed"/>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsVanilla}" Value="True">
+                            <Setter TargetName="VanillaLabel" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="StateIndicator" Property="Background" Value="{DynamicResource VanillaBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsModified}" Value="True">
+                            <Setter TargetName="StateIndicator" Property="Background" Value="{DynamicResource ModifiedBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsNew}" Value="True">
+                            <Setter TargetName="StateIndicator" Property="Background" Value="{DynamicResource NewBrush}"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Footer: Count and Add Button -->
+        <Border Grid.Row="3"
+                Padding="8"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="0,1,0,0">
+            <DockPanel>
+                <TextBlock x:Name="CountText"
+                           Text="{Binding FilteredCount, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat='{}{0} items'}"
+                           Style="{DynamicResource MutedText}"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Left"/>
+                <Button x:Name="AddButton"
+                        Content="+ Add"
+                        Style="{DynamicResource ButtonSmall}"
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                        Click="AddButton_Click"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

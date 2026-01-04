@@ -1,5 +1,6 @@
 ﻿using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -10,12 +11,14 @@ namespace Dom5Editor.VMs
             _parentMod = parent;
             _owner = owner;
             _property = p;
+            History = parent?.History;
         }
         public WeaponRefViewModel(ModViewModel parent, ViewModelBase owner, string label, IDEntity e, WeaponRef p) : base(label, e, p.Command)
         {
             _parentMod = parent;
             _owner = owner;
             _property = p;
+            History = parent?.History;
         }
 
         internal ModViewModel _parentMod;
@@ -31,7 +34,6 @@ namespace Dom5Editor.VMs
                     case ReturnType.FALSE:
                         break;
                     case ReturnType.COPIED:
-                        //set to greyed out?
                         return ip.Command.ToString();
                     case ReturnType.TRUE:
                         return ip.Command.ToString();
@@ -66,9 +68,19 @@ namespace Dom5Editor.VMs
             set
             {
                 if (value == null) return;
-                _property.Entity = value.Weapon;
+
+                if (History != null)
+                {
+                    var cmd = new SetReferenceCommand(_property, value.Weapon, "Weapon");
+                    History.Execute(cmd);
+                }
+                else
+                {
+                    _property.Entity = value.Weapon;
+                }
                 _parentMod.OnPropertyChanged("");
                 _owner.OnPropertyChanged("");
+                OnPropertyChanged(nameof(SelectedID));
             }
         }
     }

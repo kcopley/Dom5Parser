@@ -141,7 +141,7 @@ Split the ~960 line Mod class into focused components:
 - Removed dead nation association code (~80 lines)
 - **Result: Mod.cs reduced from ~960 to 550 lines (43% smaller)**
 
-## Phase 3: Editor Infrastructure (IN PROGRESS)
+## Phase 3: Editor Infrastructure (COMPLETE)
 
 **Design Philosophy:** All current UI infrastructure (ViewModels, Views, patterns) is replaceable and can be deprecated or redesigned. If existing code is useful, reuse it; otherwise, feel free to redesign from scratch. The goal is a clean, maintainable architecture - not preserving legacy patterns.
 
@@ -167,7 +167,7 @@ Keep model layer clean (no WPF dependencies). All modifications go through comma
 
 ### 3.1: Edit Command Infrastructure
 
-**Location:** `Dom5Editor/Commands/` (separate from `Dom5Edit/Commands/`)
+**Location:** `Dom5Editor/EditCommands/` (separate from `Dom5Edit/Commands/` which contains mod commands)
 
 ```csharp
 // Base interface for all edit commands
@@ -398,46 +398,194 @@ public class ModValidator
 
 ### Implementation Status
 
-**Completed:**
-- `Dom5Editor/Commands/IEditCommand.cs` - Base interface for edit commands
-- `Dom5Editor/Commands/CommandHistory.cs` - Undo/redo stack with dirty tracking
-- `Dom5Editor/Commands/SetIntPropertyCommand.cs` - Command for setting integer properties
-- `Dom5Editor/Commands/AddPropertyCommand.cs` - Command for adding properties
-- `Dom5Editor/Commands/RemovePropertyCommand.cs` - Command for removing properties
+**Completed - Command Infrastructure:**
+- `Dom5Editor/EditCommands/IEditCommand.cs` - Base interface for edit commands
+- `Dom5Editor/EditCommands/CommandHistory.cs` - Undo/redo stack with dirty tracking
+- `Dom5Editor/EditCommands/SetIntPropertyCommand.cs` - Command for setting integer properties
+- `Dom5Editor/EditCommands/SetStringPropertyCommand.cs` - Command for setting string properties
+- `Dom5Editor/EditCommands/SetIntIntPropertyCommand.cs` - Command for setting two-integer properties
+- `Dom5Editor/EditCommands/SetCommandPropertyCommand.cs` - Command for boolean flag properties
+- `Dom5Editor/EditCommands/SetNameCommand.cs` - Command for entity names
+- `Dom5Editor/EditCommands/SetReferenceCommand.cs` - Command for reference properties (weapon, armor, monster, etc.)
+- `Dom5Editor/EditCommands/AddPropertyCommand.cs` - Command for adding properties
+- `Dom5Editor/EditCommands/RemovePropertyCommand.cs` - Command for removing properties
+
+**Completed - ViewModel Integration:**
 - `ModViewModel` - Added History, IsDirty, CanUndo/CanRedo, UndoCommand/RedoCommand
 - `PropertyViewModel` - Added optional CommandHistory property
 - `IntPropertyViewModel` - Uses commands when History is available
+- `IntIntPropertyViewModel` - Uses commands when History is available
+- `StringViewModel` - Uses commands when History is available
+- `CommandViewModel` - Uses commands when History is available
+- `NameViewModel` - Uses commands when History is available
+- `DescriptionViewModel` - Uses commands when History is available
+- `WeaponRefViewModel` - Uses commands when History is available
+- `ArmorRefViewModel` - Uses commands when History is available
+- `MonsterRefViewModel` - Uses commands when History is available
+- `CopyStatsRefViewModel` - Uses commands when History is available
+- `StringOrIDRefViewModel` - Uses commands when History is available
 - `IDViewModelBase` - AddProperty/RemoveProperty now use commands
 - `MonsterViewModel` - AddWeapon/AddArmor/RemoveWeapon/RemoveArmor use commands
 
-**Next Steps:**
-- Add UI bindings for Undo/Redo in main window (Ctrl+Z, Ctrl+Y)
-- Create commands for other property types (String, IntInt, etc.)
-- Implement validation framework
-- Add dirty indicator to window title
+**Completed - Validation Framework:**
+- `Dom5Edit/Validation/IValidator.cs` - Validator interface
+- `Dom5Edit/Validation/ValidationIssue.cs` - Issue data class with severity levels
+- `Dom5Edit/Validation/ReferenceValidator.cs` - Validates entity references exist
+- `Dom5Edit/Validation/IdRangeValidator.cs` - Validates IDs within allowed ranges
+- `Dom5Edit/Validation/DuplicateIdValidator.cs` - Detects duplicate IDs
+- `Dom5Edit/Validation/ModValidator.cs` - Composite validator with summary results
 
-### Files to Create
+**Completed UI:**
+- Keyboard shortcuts (Ctrl+Z, Ctrl+Y) added to ModView
+- Undo/Redo buttons in toolbar with tooltips
+- Dirty indicator (*) in toolbar when unsaved changes exist
+
+**Next Steps:**
+- Integrate validation into UI (validation panel, error highlighting)
+
+### 3.6: Change Tracking (ChangesMod) - COMPLETE
+
+**Goal:** Implement the select-on-edit architecture described in the design considerations below.
+
+**Implementation:**
+- `Dom5Edit/Mod/EntityChanges.cs` - Tracks property-level changes for a single entity
+- `Dom5Edit/Mod/ChangesMod.cs` - Tracks all changes during an editing session
+- `Dom5Edit/Mod/ChangesModExporter.cs` - Exports changes standalone or merged with loaded mod
+
+**Key Classes:**
+
+```csharp
+// Tracks changes to a single entity
+public class EntityChanges
+{
+    public int EntityId { get; set; }
+    public EntityType EntityType { get; set; }
+    public bool IsVanillaOverride { get; set; }
+    public Dictionary<Command, Property> ChangedProperties { get; }
+    public HashSet<Command> RemovedProperties { get; }  // Only for mod entities
+}
+
+// Tracks all changes during editing session
+public class ChangesMod
+{
+    public Mod LoadedMod { get; set; }  // Null if editing vanilla only
+    public bool HasChanges { get; }
+
+    void RecordPropertyChange(IDEntity entity, Property property);
+    bool RecordPropertyRemoval(IDEntity entity, Command command);
+    void AddNewEntity(IDEntity entity);
+    bool RemoveEntity(IDEntity entity);  // Only for mod entities
+}
+```
+
+**Integration with CommandHistory:**
+- CommandHistory now has `ChangesMod` property
+- When executing `IPropertyEditCommand`, automatically records to ChangesMod
+- When undoing, reverts the change from ChangesMod
+- ModViewModel initializes ChangesMod and wires it to CommandHistory
+
+**Export Modes:**
+1. **No mod loaded** → Exports ChangesMod only (vanilla overrides + new entities)
+2. **Mod loaded** → Exports merged result (loaded mod + changes - removals)
+
+**Three-Layer Model:**
+- Vanilla (read-only) - Can only be overridden via #select* blocks
+- LoadedMod (editable) - Can add, modify, or remove entities/properties
+- ChangesMod (changes layer) - Tracks deltas from vanilla/mod
+
+**Files Created:**
+```
+Dom5Edit/
+  Mod/
+    EntityChanges.cs      # [DONE] Per-entity change tracking
+    ChangesMod.cs         # [DONE] Session-wide change tracking
+    ChangesModExporter.cs # [DONE] Export logic for changes
+
+Dom5Editor/
+  EditCommands/
+    IEditCommand.cs       # [UPDATED] Added IPropertyEditCommand interface
+    CommandHistory.cs     # [UPDATED] Added ChangesMod integration
+```
+
+### Design Consideration: Change Tracking and Export (IMPLEMENTED)
+
+**Problem:** When editing vanilla entities, how do we export only the changes?
+
+**Options:**
+1. **Diff-based export**: Track all commands executed, export only entities that were modified
+2. **Clone-on-edit**: When first modifying a vanilla entity, create a copy in a "user mod" container. All edits apply to the copy. Export only exports user mod contents.
+3. **Hybrid**: Clone on edit, but also track original state for "revert to vanilla" functionality
+
+**Solution Implemented:** Option 2 (Select-on-edit) using .dm mod semantics via `ChangesMod`:
+- Entities marked `IsVanilla = true` are never directly modified
+- First edit on vanilla entity creates an empty "override" entity with just ID
+- Only changed properties are stored in the override entity
+- Export produces `#selectmonster <id>` + only the changed properties
+- **Important limitation**: Cannot "remove" vanilla properties, only override or add
+
+**Implementation (now in ChangesMod):**
+```csharp
+// CommandHistory.Execute() automatically records to ChangesMod:
+if (command is IPropertyEditCommand propCommand)
+{
+    var entity = propCommand.Entity;
+    if (propCommand.IsRemoval)
+        ChangesMod.RecordPropertyRemoval(entity, propCommand.PropertyCommand);
+    else
+        ChangesMod.RecordPropertyChange(entity, propCommand.GetResultingProperty());
+}
+
+// Export produces (via ChangesModExporter):
+// #selectmonster 1234
+// #hp 150           <-- only the changed property
+// #end
+```
+
+**UI considerations (for future implementation):**
+- Show vanilla values as read-only baseline (grayed out)
+- Show override values as editable (normal color)
+- "Revert" button removes property from override (restores vanilla value)
+- Properties that don't exist in vanilla can be added normally
+
+### Files Created
 
 ```
 Dom5Editor/
-  Commands/
-    IEditCommand.cs           # Interface
-    CommandHistory.cs         # Undo/redo stack manager
-    SetPropertyCommand.cs     # Property modification command
-    AddPropertyCommand.cs     # Add property command
-    RemovePropertyCommand.cs  # Remove property command
+  EditCommands/               # Renamed from Commands/ to avoid confusion with Dom5Edit/Commands/
+    IEditCommand.cs           # [DONE] Base interface + IPropertyEditCommand for ChangesMod
+    CommandHistory.cs         # [DONE] Undo/redo stack manager with ChangesMod integration
+    SetIntPropertyCommand.cs  # [DONE] Integer property command
+    SetStringPropertyCommand.cs # [DONE] String property command
+    SetIntIntPropertyCommand.cs # [DONE] Two-integer property command
+    SetCommandPropertyCommand.cs # [DONE] Boolean flag command
+    SetNameCommand.cs         # [DONE] Entity name command
+    SetReferenceCommand.cs    # [DONE] Reference property command
+    AddPropertyCommand.cs     # [DONE] Add property command
+    RemovePropertyCommand.cs  # [DONE] Remove property command
 
 Dom5Edit/
+  Mod/
+    EntityChanges.cs          # [DONE] Per-entity change tracking
+    ChangesMod.cs             # [DONE] Session-wide change tracking
+    ChangesModExporter.cs     # [DONE] Export logic for changes
   Validation/
-    IValidator.cs             # Validator interface
-    ValidationIssue.cs        # Issue data class
-    ReferenceValidator.cs     # Validates entity references
-    IdRangeValidator.cs       # Validates ID ranges
-    DuplicateIdValidator.cs   # Detects duplicate IDs
-    ModValidator.cs           # Composite validator
+    IValidator.cs             # [DONE] Validator interface
+    ValidationIssue.cs        # [DONE] Issue data class
+    ReferenceValidator.cs     # [DONE] Validates entity references
+    IdRangeValidator.cs       # [DONE] Validates ID ranges
+    DuplicateIdValidator.cs   # [DONE] Detects duplicate IDs
+    ModValidator.cs           # [DONE] Composite validator
 ```
 
 ## Phase 4: UI Components
+
+### Command Metadata from JSON
+- Load all command display names and descriptions from JSON metadata file
+- Display names used in UI labels (e.g., "Fire Resistance" instead of "FIRERES")
+- Descriptions used for mouseover tooltips with detailed info
+- Categories defined in JSON for grouping in UI
+- Validation ranges (min/max values) stored in metadata
+- Path: `Dom5Edit/CommandMetadata.json` or similar
 
 ### Entity List Views
 - Sortable, filterable lists for each entity type
@@ -477,3 +625,203 @@ Dom5Edit/
 ### Export Options
 - Export single nation with dependencies
 - Merge multiple mods with conflict resolution UI
+
+## Phase 6: Property Editor System (IN PROGRESS)
+
+Building reusable, themed property editor controls with modification tracking and visual feedback.
+
+### 6.1: Theme System (COMPLETE)
+
+**Location:** `Dom5Editor/UI/Theme/`
+
+Created a centralized theming system for consistent dark-themed UI:
+
+**Files:**
+- `AppTheme.xaml` - Global color definitions and brush resources
+- `AppResources.xaml` - Control styles (TextBox, Button, ComboBox, etc.)
+- `Converters.xaml` - Common value converters
+
+**Key Brushes:**
+- `BackgroundBrush`, `BackgroundDarkBrush`, `BackgroundLightBrush` - Background colors
+- `TextPrimaryBrush`, `TextSecondaryBrush`, `TextDisabledBrush` - Text colors
+- `AccentBrush`, `AccentHighlightBrush` - Accent colors (teal theme)
+- `AccentSecondaryBrush` - Secondary accent (purple)
+- `ErrorBrush` - Error state color (red)
+- `SessionEditBrush` - Cyan indicator for session edits
+- `ModifiedFromModBrush` - Gold indicator for mod-modified values
+- `ModifiedFromVanillaBrush` - Orange indicator for vanilla-modified values
+
+### 6.2: Property Editor Controls (COMPLETE)
+
+**Location:** `Dom5Editor/UI/Controls/`
+
+Reusable controls for editing different property types:
+
+#### IntPropertyEditor
+- Label + TextBox for integer values
+- Compact layout with 10px fonts
+- Visual indicators for modification state (gold bar for modified, cyan dot for session edits)
+- Inherited value badge ("inh") for copystats inheritance
+- Supports tooltips from property metadata
+
+#### StringPropertyEditor
+- Label + TextBox for string values
+- Same modification indicators as IntPropertyEditor
+
+#### CommandPropertyEditor
+- Toggle button for boolean flag properties (Command properties with no value)
+- Shows as colored badge when enabled
+
+#### ReferencePropertyEditor
+- ComboBox for selecting referenced entities (weapons, armor, monsters)
+- Shows entity name and ID in dropdown
+- Auto-complete search support
+
+#### CommandListEditor
+- For lists of flag commands (type commands, movement commands, etc.)
+- Shows active commands as removable colored badges
+- Add dropdown with available commands
+- Mouse wheel scroll fix (scroll while hovering doesn't add items)
+- Auto-add on combobox selection with dispatcher delay to prevent scroll issues
+
+#### IntPropertyListEditor
+- For lists of int/int properties (resistances, combat modifiers, auras)
+- Shows active properties with editable values
+- Similar UX to CommandListEditor
+
+#### MagicPathEditor (NEW)
+- Specialized control for editing magic paths (MAGICSKILL command)
+- Colored badges for each path (F, A, W, E, S, D, N, G, B, H)
+- Path colors match Dominions game colors
+- Level editor within each badge
+- Inherited indicator for copystats inheritance
+- Add buttons for each available path
+
+**Magic Path Color Definitions:**
+```csharp
+(0, "F", "Fire",    RGB(220, 60, 40),  White)
+(1, "A", "Air",     RGB(180,180,240),  Black)
+(2, "W", "Water",   RGB(60, 120,200),  White)
+(3, "E", "Earth",   RGB(139, 90, 43),  White)
+(4, "S", "Astral",  RGB(255,215,  0),  Black)
+(5, "D", "Death",   RGB(50,  50, 50),  White)
+(6, "N", "Nature",  RGB(60, 160, 60),  White)
+(7, "G", "Glamour", RGB(180,100,180),  White)
+(8, "B", "Blood",   RGB(140, 20, 20),  White)
+(9, "H", "Holy",    RGB(255,255,200),  Black)
+```
+
+### 6.3: Entity View Architecture (IN PROGRESS)
+
+**Pattern:** MonsterView serves as the template for all entity views.
+
+**Structure:**
+```
+Dom5Editor/UI/
+  Views/
+    MainWindow.xaml/.cs         - Main application window
+    MainWindowViewModel.cs      - Main window state/logic
+    MonsterView.xaml/.cs        - Template entity view (REFERENCE)
+  ViewModels/
+    EntityViewModel.cs          - Base class for entity ViewModels
+    EntityViewModels.cs         - Concrete ViewModels (MonsterViewModel, etc.)
+  Controls/
+    [Property editors listed above]
+```
+
+**MonsterView Sections (Template):**
+1. **Identity** - Name, ID, Sprites, Description
+2. **Core Stats** - HP, STR, ATT, DEF, PREC, MR, MOR, etc.
+3. **Movement** - Mapmove, flying, swimming, etc.
+4. **Combat** - AWE, FEAR, BERSERK, etc. with IntPropertyListEditor
+5. **Resistances** - Fire, Cold, Shock, etc. with IntPropertyListEditor
+6. **Equipment** - Weapon slots, Armor with ReferencePropertyEditor
+7. **Magic Paths** - MagicPathEditor control
+8. **Type Commands** - CommandListEditor for unit type flags
+9. **Leader Commands** - CommandListEditor for leadership abilities
+10. **Special Commands** - CommandListEditor for misc abilities
+
+### 6.4: MonsterViewModel Magic Path Support (COMPLETE)
+
+**Implementation:**
+- `MagicPathsList` - ObservableCollection of MagicPathItem for display
+- `AvailableMagicPaths` - List of paths available to add
+- `RefreshMagicPaths()` - Rebuilds path list from entity properties
+- `AddMagicPath(pathId, level)` - Creates IntIntProperty for MAGICSKILL
+- `RemoveMagicPath(pathId)` - Removes MAGICSKILL property
+- `OnMagicPathLevelChanged()` - Updates existing property value
+- `IsIntIntPropertyModifiedFromVanilla()` - Checks if property differs from vanilla
+
+**Modification Tracking:**
+- Compares current entity properties against vanilla entity
+- Gold indicator for values modified from vanilla
+- Cyan indicator for values added in current session
+- "inh" badge for values inherited via copystats
+
+### 6.5: Remaining Work - MonsterView Polish
+
+Before templating to other entity views:
+
+**High Priority:**
+1. [ ] CUSTOMMAGIC support - Complex bitmask for random magic paths
+2. [ ] Session edit tracking for magic paths (currently no cyan dot on add)
+3. [ ] Reset to vanilla button for individual properties
+4. [ ] Reset to vanilla button for entire entity
+5. [ ] Validate magic path levels (0-10 range typically)
+
+**Medium Priority:**
+6. [ ] Sprite image display in Identity section
+7. [ ] Weapon/Armor slot indicators (what slots are filled)
+8. [ ] Property metadata integration (tooltips from JSON)
+9. [ ] Collapsible sections for space management
+10. [ ] Search/filter within property lists
+
+**Low Priority:**
+11. [ ] Keyboard shortcuts within view (Tab navigation, Enter to commit)
+12. [ ] Drag-drop reordering for equipment
+13. [ ] Copy/paste properties between entities
+
+### 6.6: Template Other Entity Views
+
+Once MonsterView is polished, create views for:
+
+| Entity    | Priority | Complexity | Notes |
+|-----------|----------|------------|-------|
+| Weapon    | High     | Medium     | Similar to Monster, fewer sections |
+| Armor     | High     | Low        | Simple property editor |
+| Item      | High     | Medium     | Magic item commands |
+| Spell     | High     | High       | Many effect types, path requirements |
+| Site      | Medium   | Medium     | Gem income, recruitment |
+| Nation    | Medium   | High       | Many sub-entities (recruitables, sites) |
+| Event     | Low      | High       | Complex triggers and effects |
+| Mercenary | Low      | Medium     | Recruitment conditions |
+| Nametype  | Low      | Low        | String lists |
+| Poptype   | Low      | Low        | Simple editor |
+
+**Templating Strategy:**
+1. Create base `EntityView` UserControl with common layout
+2. Entity-specific views inherit layout, add custom sections
+3. ViewModels share `EntityViewModelBase` for common operations
+4. Property editors are fully reusable across all entity types
+
+### 6.7: Known UI Issues
+
+**Combobox Scroll Behavior:**
+- FIXED: Scroll wheel while hovering over closed ComboBox was adding items
+- Solution: PreviewMouseWheel handler checks IsDropDownOpen
+
+**Magic Path Editor Bindings:**
+- FIXED: Nothing displaying in MagicPathEditor
+- Solution: Don't set `DataContext = this` in UserControl, use `ElementName=Root` for command bindings
+
+**WPF UserControl Binding Pattern:**
+```csharp
+// WRONG - breaks parent DataContext inheritance:
+public MyControl() {
+    InitializeComponent();
+    DataContext = this;  // DON'T DO THIS
+}
+
+// RIGHT - use ElementName or RelativeSource:
+<Button Command="{Binding MyCommand, ElementName=Root}"/>
+```

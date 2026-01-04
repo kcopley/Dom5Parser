@@ -2,7 +2,7 @@
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
-using Dom5Editor.Commands;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {

@@ -1,6 +1,7 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -8,7 +9,9 @@ namespace Dom5Editor.VMs
     {
         public DescriptionViewModel(IDEntity e, Command c) : base(e, c) { }
         public DescriptionViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
-        
+        public DescriptionViewModel(string label, IDEntity e, Command c, CommandHistory history)
+            : base(label, e, c, history) { }
+
         public override string Value
         {
             get
@@ -18,7 +21,6 @@ namespace Dom5Editor.VMs
                     case ReturnType.FALSE:
                         break;
                     case ReturnType.COPIED:
-                        //set to greyed out?
                         return ip.Value;
                     case ReturnType.TRUE:
                         return ip.Value;
@@ -27,9 +29,17 @@ namespace Dom5Editor.VMs
             }
             set
             {
-                //set entity name here
-                Source.Set<StringProperty>(Command, i => i.Value = value);
+                if (History != null)
+                {
+                    var cmd = new SetStringPropertyCommand(Source, Command, value);
+                    History.Execute(cmd);
+                }
+                else
+                {
+                    Source.Set<StringProperty>(Command, i => i.Value = value);
+                }
                 OnPropertyChanged(Command.ToString());
+                OnPropertyChanged(nameof(Value));
             }
         }
     }

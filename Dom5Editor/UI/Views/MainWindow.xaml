@@ -1,0 +1,410 @@
+<Window x:Class="Dom5Editor.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+        mc:Ignorable="d"
+        Title="Dom5 Editor"
+        Height="900" Width="1400"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource AppWindowStyle}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ========================================
+             TOOLBAR
+             ======================================== -->
+        <Border Grid.Row="0"
+                Background="{StaticResource BackgroundMediumBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="8,6">
+            <DockPanel>
+                <!-- Left side: File operations -->
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <Button x:Name="NewButton"
+                            Content="New"
+                            Style="{StaticResource ButtonBase}"
+                            Margin="0,0,4,0"
+                            Click="NewButton_Click"/>
+                    <Button x:Name="LoadButton"
+                            Content="Load"
+                            Style="{StaticResource ButtonBase}"
+                            Margin="0,0,4,0"
+                            Click="LoadButton_Click"/>
+                    <Button x:Name="SaveButton"
+                            Content="Save"
+                            Style="{StaticResource ButtonBase}"
+                            Margin="0,0,4,0"
+                            IsEnabled="{Binding HasMod}"
+                            Click="SaveButton_Click"/>
+                    <Button x:Name="SaveAsButton"
+                            Content="Save As"
+                            Style="{StaticResource ButtonBase}"
+                            Margin="0,0,16,0"
+                            IsEnabled="{Binding HasMod}"
+                            Click="SaveAsButton_Click"/>
+
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="0,2,16,2"/>
+
+                    <Button x:Name="UndoButton"
+                            Content="Undo"
+                            Style="{StaticResource ButtonBase}"
+                            Margin="0,0,4,0"
+                            IsEnabled="{Binding CanUndo}"
+                            ToolTip="{Binding UndoDescription}"
+                            Click="UndoButton_Click"/>
+                    <Button x:Name="RedoButton"
+                            Content="Redo"
+                            Style="{StaticResource ButtonBase}"
+                            IsEnabled="{Binding CanRedo}"
+                            ToolTip="{Binding RedoDescription}"
+                            Click="RedoButton_Click"/>
+                </StackPanel>
+
+                <!-- Right side: Status indicators -->
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right">
+                    <TextBlock x:Name="ModifiedIndicator"
+                               Text="*"
+                               Style="{StaticResource HeaderText}"
+                               Foreground="{StaticResource WarningBrush}"
+                               Visibility="{Binding IsDirty, Converter={StaticResource BoolToVisibilityConverter}}"
+                               ToolTip="Unsaved changes"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ModNameDisplay"
+                               Text="{Binding ModName, FallbackValue='No mod loaded'}"
+                               Style="{StaticResource SubHeaderText}"/>
+                </StackPanel>
+
+                <!-- Center: Validation button -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="ValidateButton"
+                            Content="Validate"
+                            Style="{StaticResource ButtonBase}"
+                            IsEnabled="{Binding HasMod}"
+                            Click="ValidateButton_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- ========================================
+             MAIN CONTENT - Entity Type Tabs
+             ======================================== -->
+        <TabControl x:Name="EntityTabs"
+                    Grid.Row="1"
+                    Style="{StaticResource TabControlBase}"
+                    IsEnabled="{Binding HasMod}">
+
+            <!-- Monsters Tab -->
+            <TabItem Header="Monsters" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="MonsterList"
+                                                 Grid.Column="0"
+                                                 EntityType="Monster"
+                                                 Entities="{Binding Monsters}"
+                                                 SelectedEntity="{Binding SelectedMonster, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedMonster}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Weapons Tab -->
+            <TabItem Header="Weapons" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="WeaponList"
+                                                 Grid.Column="0"
+                                                 EntityType="Weapon"
+                                                 Entities="{Binding Weapons}"
+                                                 SelectedEntity="{Binding SelectedWeapon, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedWeapon}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Armor Tab -->
+            <TabItem Header="Armor" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="ArmorList"
+                                                 Grid.Column="0"
+                                                 EntityType="Armor"
+                                                 Entities="{Binding Armors}"
+                                                 SelectedEntity="{Binding SelectedArmor, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedArmor}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Spells Tab -->
+            <TabItem Header="Spells" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="SpellList"
+                                                 Grid.Column="0"
+                                                 EntityType="Spell"
+                                                 Entities="{Binding Spells}"
+                                                 SelectedEntity="{Binding SelectedSpell, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedSpell}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Items Tab -->
+            <TabItem Header="Items" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="ItemList"
+                                                 Grid.Column="0"
+                                                 EntityType="Item"
+                                                 Entities="{Binding Items}"
+                                                 SelectedEntity="{Binding SelectedItem, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedItem}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Sites Tab -->
+            <TabItem Header="Sites" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="SiteList"
+                                                 Grid.Column="0"
+                                                 EntityType="Site"
+                                                 Entities="{Binding Sites}"
+                                                 SelectedEntity="{Binding SelectedSite, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedSite}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Nations Tab -->
+            <TabItem Header="Nations" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="NationList"
+                                                 Grid.Column="0"
+                                                 EntityType="Nation"
+                                                 Entities="{Binding Nations}"
+                                                 SelectedEntity="{Binding SelectedNation, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedNation}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Events Tab -->
+            <TabItem Header="Events" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="EventList"
+                                                 Grid.Column="0"
+                                                 EntityType="Event"
+                                                 Entities="{Binding Events}"
+                                                 SelectedEntity="{Binding SelectedEvent, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedEvent}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Mercenaries Tab -->
+            <TabItem Header="Mercenaries" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="MercenaryList"
+                                                 Grid.Column="0"
+                                                 EntityType="Mercenary"
+                                                 Entities="{Binding Mercenaries}"
+                                                 SelectedEntity="{Binding SelectedMercenary, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedMercenary}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- ========================================
+             STATUS BAR
+             ======================================== -->
+        <Border Grid.Row="2"
+                Background="{StaticResource BackgroundMediumBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="12,6">
+            <DockPanel>
+                <TextBlock x:Name="StatusText"
+                           Text="{Binding StatusMessage, FallbackValue='Ready'}"
+                           Style="{StaticResource MutedText}"
+                           DockPanel.Dock="Left"/>
+                <TextBlock x:Name="EntityCountText"
+                           Text="{Binding EntityCount, StringFormat='Entities: {0}'}"
+                           Style="{StaticResource MutedText}"
+                           DockPanel.Dock="Right"
+                           HorizontalAlignment="Right"/>
+            </DockPanel>
+        </Border>
+
+        <!-- ========================================
+             NO MOD LOADED OVERLAY
+             ======================================== -->
+        <Border x:Name="NoModOverlay"
+                Grid.Row="1"
+                Background="{StaticResource BackgroundDarkBrush}"
+                Visibility="{Binding HasMod, Converter={StaticResource BoolToVisibilityInverseConverter}}">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="No mod loaded"
+                           Style="{StaticResource HeaderText}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,16"/>
+                <TextBlock Text="Load an existing mod or create a new one to get started."
+                           Style="{StaticResource SubHeaderText}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,24"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="New Mod"
+                            Style="{StaticResource ButtonAccent}"
+                            Margin="0,0,8,0"
+                            Click="NewButton_Click"/>
+                    <Button Content="Load Mod"
+                            Style="{StaticResource ButtonBase}"
+                            Click="LoadButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

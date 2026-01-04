@@ -1,6 +1,7 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -8,6 +9,38 @@ namespace Dom5Editor.VMs
     {
         public CommandViewModel(IDEntity e, Command c) : base(e, c) { }
         public CommandViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
+        public CommandViewModel(string label, IDEntity e, Command c, CommandHistory history)
+            : base(label, e, c, history) { }
+
+        /// <summary>
+        /// Gets or sets whether this command flag is enabled.
+        /// For binding to checkboxes.
+        /// </summary>
+        public bool IsChecked
+        {
+            get
+            {
+                var result = Source.TryGet(Command, out CommandProperty _);
+                return result == ReturnType.TRUE || result == ReturnType.COPIED;
+            }
+            set
+            {
+                if (History != null)
+                {
+                    var cmd = new SetCommandPropertyCommand(Source, Command, value);
+                    History.Execute(cmd);
+                }
+                else
+                {
+                    if (value)
+                        Source.SetCommand<CommandProperty>(Command);
+                    else
+                        Source.Remove<CommandProperty>(Command);
+                }
+                OnPropertyChanged(nameof(IsChecked));
+                OnPropertyChanged(nameof(Value));
+            }
+        }
 
         public override string Value
         {
@@ -18,7 +51,6 @@ namespace Dom5Editor.VMs
                     case ReturnType.FALSE:
                         break;
                     case ReturnType.COPIED:
-                        //set to greyed out?
                         return ip.Command.ToString();
                     case ReturnType.TRUE:
                         return ip.Command.ToString();
@@ -27,8 +59,8 @@ namespace Dom5Editor.VMs
             }
             set
             {
-                Source.SetCommand<CommandProperty>(Command);
-                OnPropertyChanged(Command.ToString());
+                // Toggle the flag
+                IsChecked = !IsChecked;
             }
         }
     }

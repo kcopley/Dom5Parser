@@ -1,6 +1,7 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -8,6 +9,8 @@ namespace Dom5Editor.VMs
     {
         public StringViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
         public StringViewModel(IDEntity e, Command c) : base(e, c) { }
+        public StringViewModel(string label, IDEntity e, Command c, CommandHistory history)
+            : base(label, e, c, history) { }
 
         public override string Value
         {
@@ -27,8 +30,19 @@ namespace Dom5Editor.VMs
             }
             set
             {
-                Source.Set<StringProperty>(Command, i => i.Value = value);
+                if (History != null)
+                {
+                    // Use command pattern for undo/redo support
+                    var cmd = new SetStringPropertyCommand(Source, Command, value);
+                    History.Execute(cmd);
+                }
+                else
+                {
+                    // Fallback to direct modification
+                    Source.Set<StringProperty>(Command, i => i.Value = value);
+                }
                 OnPropertyChanged(Command.ToString());
+                OnPropertyChanged(nameof(Value));
             }
         }
     }

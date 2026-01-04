@@ -2,13 +2,13 @@ using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
 
-namespace Dom5Editor.Commands
+namespace Dom5Editor.EditCommands
 {
     /// <summary>
     /// Command for setting an integer property value on an entity.
     /// Supports undo by capturing the previous state before modification.
     /// </summary>
-    public class SetIntPropertyCommand : IEditCommand
+    public class SetIntPropertyCommand : IPropertyEditCommand
     {
         private readonly IDEntity _entity;
         private readonly Command _command;
@@ -17,6 +17,17 @@ namespace Dom5Editor.Commands
         private readonly bool _propertyExisted;
 
         public string Description => $"Set {_command} to {_newValue}";
+
+        // IPropertyEditCommand implementation
+        public IDEntity Entity => _entity;
+        public Command PropertyCommand => _command;
+        public bool IsRemoval => false;
+
+        public Property GetResultingProperty()
+        {
+            _entity.TryGet<IntProperty>(_command, out var prop, checkCopy: false);
+            return prop;
+        }
 
         /// <summary>
         /// Creates a command to set an integer property value.

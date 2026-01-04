@@ -2,6 +2,7 @@
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.EditCommands;
 
 namespace Dom5Editor.VMs
 {
@@ -9,8 +10,11 @@ namespace Dom5Editor.VMs
     {
         public IntIntPropertyViewModel(IDEntity e, Command c) : base(e, c) { }
         public IntIntPropertyViewModel(string label, IDEntity e, Command c) : base(label, e, c) { }
+        public IntIntPropertyViewModel(string label, IDEntity e, Command c, CommandHistory history)
+            : base(label, e, c, history) { }
         public IntIntPropertyViewModel(MonsterViewModel monster, string label, IDEntity e, Command c) : base(label, e, c)
         {
+            History = monster?.Parent?.History;
         }
 
         public SolidColorBrush BackgroundColor
@@ -41,7 +45,6 @@ namespace Dom5Editor.VMs
                     case ReturnType.FALSE:
                         break;
                     case ReturnType.COPIED:
-                        //set to greyed out?
                         return ip.Value1.ToString();
                     case ReturnType.TRUE:
                         return ip.Value1.ToString();
@@ -52,9 +55,17 @@ namespace Dom5Editor.VMs
             {
                 if (int.TryParse(value, out int ret))
                 {
-                    Source.Set<IntIntProperty>(Command, i => i.Value1 = ret);
-                    OnPropertyChanged("BackgroundColor");
-                    OnPropertyChanged("Value");
+                    if (History != null)
+                    {
+                        var cmd = SetIntIntPropertyCommand.ForValue1(Source, Command, ret);
+                        History.Execute(cmd);
+                    }
+                    else
+                    {
+                        Source.Set<IntIntProperty>(Command, i => i.Value1 = ret);
+                    }
+                    OnPropertyChanged(nameof(BackgroundColor));
+                    OnPropertyChanged(nameof(Value1));
                 }
             }
         }
@@ -69,7 +80,6 @@ namespace Dom5Editor.VMs
                     case ReturnType.FALSE:
                         break;
                     case ReturnType.COPIED:
-                        //set to greyed out?
                         return ip.Value2.ToString();
                     case ReturnType.TRUE:
                         return ip.Value2.ToString();
@@ -80,9 +90,17 @@ namespace Dom5Editor.VMs
             {
                 if (int.TryParse(value, out int ret))
                 {
-                    Source.Set<IntIntProperty>(Command, i => i.Value2 = ret);
-                    OnPropertyChanged("BackgroundColor");
-                    OnPropertyChanged("Value");
+                    if (History != null)
+                    {
+                        var cmd = SetIntIntPropertyCommand.ForValue2(Source, Command, ret);
+                        History.Execute(cmd);
+                    }
+                    else
+                    {
+                        Source.Set<IntIntProperty>(Command, i => i.Value2 = ret);
+                    }
+                    OnPropertyChanged(nameof(BackgroundColor));
+                    OnPropertyChanged(nameof(Value2));
                 }
             }
         }

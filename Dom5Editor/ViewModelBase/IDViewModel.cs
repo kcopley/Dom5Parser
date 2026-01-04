@@ -1,5 +1,5 @@
 ﻿using Dom5Editor.VMs;
-using Dom5Editor.Commands;
+using Dom5Editor.EditCommands;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -68,7 +68,7 @@ namespace Dom5Editor
         protected virtual PropertyViewModel CreatePropertyViewModel(string label, Command command)
         {
             if (command == Command.NAME)
-                return new StringViewModel(label, _entity, command);
+                return new StringViewModel(label, _entity, command, Parent?.History);
             else
                 return new IntPropertyViewModel(label, _entity, command, Parent?.History);
         }
@@ -180,15 +180,15 @@ namespace Dom5Editor
             }
             else if (propertyType == typeof(IntIntProperty) || propertyType.IsSubclassOf(typeof(IntIntProperty)))
             {
-                return new IntIntPropertyViewModel(label, _entity, p.Command);
+                return new IntIntPropertyViewModel(label, _entity, p.Command, Parent?.History);
             }
             else if (propertyType == typeof(StringProperty) || propertyType.IsSubclassOf(typeof(StringProperty)))
             {
-                return new StringViewModel(label, _entity, p.Command);
+                return new StringViewModel(label, _entity, p.Command, Parent?.History);
             }
             else if (propertyType == typeof(CommandProperty) || propertyType.IsSubclassOf(typeof(CommandProperty)))
             {
-                return new CommandViewModel(label, _entity, p.Command);
+                return new CommandViewModel(label, _entity, p.Command, Parent?.History);
             }
             else if (propertyType == typeof(MonsterOrMontagRef) || propertyType.IsSubclassOf(typeof(MonsterOrMontagRef)))
             {
