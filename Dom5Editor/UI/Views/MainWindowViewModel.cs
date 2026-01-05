@@ -251,8 +251,8 @@ namespace Dom5Editor.UI.Views
         {
             _mod = new Mod();
             _currentFilePath = null;
+            ClearHistory();  // Must come BEFORE InitializeCollections so VMs get the new ChangesMod
             InitializeCollections();
-            ClearHistory();
             StatusMessage = "Created new mod";
         }
 
@@ -260,9 +260,9 @@ namespace Dom5Editor.UI.Views
         {
             _mod = Mod.Import(filePath);
             _currentFilePath = filePath;
-            InitializeCollections();
-            ClearHistory();
+            ClearHistory();  // Must come BEFORE InitializeCollections so VMs get the new ChangesMod
             Changes.LoadedMod = _mod;
+            InitializeCollections();
             StatusMessage = $"Loaded: {System.IO.Path.GetFileName(filePath)}";
         }
 

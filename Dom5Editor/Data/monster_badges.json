@@ -126,6 +126,20 @@
       ]
     },
     {
+      "id": "magic",
+      "displayName": "Magic",
+      "description": "Magic paths and custom magic configuration",
+      "renderer": "magic",
+      "commands": [
+        {
+          "name": "custommagic",
+          "display": "Custom Magic",
+          "type": "bitmaskChance",
+          "description": "Custom magic path configuration with bitmask and chance"
+        }
+      ]
+    },
+    {
       "id": "types",
       "displayName": "TYPES",
       "description": "Creature type flags (read-only, inherited)",
@@ -1198,8 +1212,9 @@
         {
           "name": "animated",
           "display": "Animated",
-          "type": "flag",
-          "description": "The monster will change into the next monster type (next The monster becomes this if affected by the animate tree spell."
+          "type": "ref",
+          "description": "The monster will change into the next monster type (next The monster becomes this if affected by the animate tree spell.",
+          "refType": "monster"
         },
         {
           "name": "autodisgrinder",
@@ -1211,14 +1226,16 @@
         {
           "name": "autumnshape",
           "display": "Autumnshape",
-          "type": "flag",
-          "description": "Province to a water province."
+          "type": "ref",
+          "description": "Province to a water province.",
+          "refType": "monster"
         },
         {
           "name": "batstartsum1d3",
           "display": "Batstartsum1D3",
-          "type": "flag",
-          "description": "Summoned"
+          "type": "ref",
+          "description": "Summoned",
+          "refType": "monster"
         },
         {
           "name": "beartattoo",
@@ -1249,25 +1266,29 @@
         {
           "name": "bugshape",
           "display": "Bugshape",
-          "type": "flag"
+          "type": "ref",
+          "refType": "monster"
         },
         {
           "name": "bugswarmshape",
           "display": "Bugswarmshape",
-          "type": "flag",
-          "description": "The monster takes half damage from slashing weapons."
+          "type": "ref",
+          "description": "The monster takes half damage from slashing weapons.",
+          "refType": "monster"
         },
         {
           "name": "bugswarmuwshape",
           "display": "Bugswarmuwshape",
-          "type": "flag",
-          "description": "Lower fatigue reduces the chance of the monster suffering This is the shape of the random bugs if they are underwater."
+          "type": "ref",
+          "description": "Lower fatigue reduces the chance of the monster suffering This is the shape of the random bugs if they are underwater.",
+          "refType": "monster"
         },
         {
           "name": "buguwshape",
           "display": "Buguwshape",
-          "type": "flag",
-          "description": "The monster takes half damage from piercing weapons."
+          "type": "ref",
+          "description": "The monster takes half damage from piercing weapons.",
+          "refType": "monster"
         },
         {
           "name": "casttime",
@@ -1299,8 +1320,9 @@
         {
           "name": "cleanshape",
           "display": "Cleanshape",
-          "type": "flag",
-          "description": "Home province."
+          "type": "ref",
+          "description": "Home province.",
+          "refType": "monster"
         },
         {
           "name": "clear",
@@ -1329,19 +1351,22 @@
         {
           "name": "copyspr",
           "display": "Copyspr",
-          "type": "flag",
-          "description": "Likable for the spell AI."
+          "type": "ref",
+          "description": "Likable for the spell AI.",
+          "refType": "monster"
         },
         {
           "name": "copystats",
           "display": "Copystats",
-          "type": "flag",
-          "description": "Copies all stats from another monster."
+          "type": "ref",
+          "description": "Copies all stats from another monster.",
+          "refType": "monster"
         },
         {
           "name": "coridermnr",
           "display": "Coridermnr",
-          "type": "flag"
+          "type": "ref",
+          "refType": "monster"
         },
         {
           "name": "corpseeater",
@@ -1353,8 +1378,9 @@
         {
           "name": "corpselord",
           "display": "Corpselord",
-          "type": "flag",
-          "description": "Creates a sprite that is used when the rider loses his mount."
+          "type": "ref",
+          "description": "Creates a sprite that is used when the rider loses his mount.",
+          "refType": "monster"
         },
         {
           "name": "dancenof",
@@ -1453,26 +1479,30 @@
         {
           "name": "domshape",
           "display": "Domshape",
-          "type": "flag",
-          "description": "#forcess The monster changes to this shape when inside a friendly Usually being soul slayed will prevent any shape change or dominion."
+          "type": "ref",
+          "description": "#forcess The monster changes to this shape when inside a friendly Usually being soul slayed will prevent any shape change or dominion.",
+          "refType": "monster"
         },
         {
           "name": "domsummon2",
           "display": "Domsummon2",
-          "type": "flag",
-          "description": "Soulless (requires corpses) Half as effective as #domsummon."
+          "type": "ref",
+          "description": "Soulless (requires corpses) Half as effective as #domsummon.",
+          "refType": "monster"
         },
         {
           "name": "domsummon20",
           "display": "Domsummon20",
-          "type": "flag",
-          "description": "Random animal A twentieth as effective as #domsummon."
+          "type": "ref",
+          "description": "Random animal A twentieth as effective as #domsummon.",
+          "refType": "monster"
         },
         {
           "name": "dragonlord",
           "display": "Dragonlord",
-          "type": "flag",
-          "description": "Here are the commands that are used to pair riders and This monster will receive extra units when summoning Drakes mounts."
+          "type": "ref",
+          "description": "Here are the commands that are used to pair riders and This monster will receive extra units when summoning Drakes mounts.",
+          "refType": "monster"
         },
         {
           "name": "drawsize",
@@ -1592,8 +1622,9 @@
         {
           "name": "faysummon",
           "display": "Faysummon",
-          "type": "flag",
-          "description": "But e"
+          "type": "ref",
+          "description": "But e",
+          "refType": "monster"
         },
         {
           "name": "fire",
@@ -1623,8 +1654,9 @@
         {
           "name": "firstshape",
           "display": "Firstshape",
-          "type": "flag",
-          "description": "The monster is more efficient when casting spells the converts This monster will change shape to its first shape when it feels gems into gold."
+          "type": "ref",
+          "description": "The monster is more efficient when casting spells the converts This monster will change shape to its first shape when it feels gems into gold.",
+          "refType": "monster"
         },
         {
           "name": "fixedname",
@@ -1648,8 +1680,9 @@
         {
           "name": "foreignshape",
           "display": "Foreignshape",
-          "type": "flag",
-          "description": "#airattuned etc)."
+          "type": "ref",
+          "description": "#airattuned etc).",
+          "refType": "monster"
         },
         {
           "name": "foreignwallmult",
@@ -1773,8 +1806,9 @@
         {
           "name": "ivylord",
           "display": "Ivylord",
-          "type": "flag",
-          "description": "This monster will receive extra units when summoning Vine Mounts & Riders Men of different kind."
+          "type": "ref",
+          "description": "This monster will receive extra units when summoning Vine Mounts & Riders Men of different kind.",
+          "refType": "monster"
         },
         {
           "name": "kokytosret",
@@ -1797,7 +1831,8 @@
         {
           "name": "landshape",
           "display": "Landshape",
-          "type": "flag"
+          "type": "ref",
+          "refType": "monster"
         },
         {
           "name": "latehero",
@@ -1809,8 +1844,9 @@
         {
           "name": "lich",
           "display": "Lich",
-          "type": "flag",
-          "description": "The monster grows into the previous monster once it has this The monster will get this shape if it is transformed into a lich."
+          "type": "ref",
+          "description": "The monster grows into the previous monster once it has this The monster will get this shape if it is transformed into a lich.",
+          "refType": "monster"
         },
         {
           "name": "likespop",
@@ -1899,8 +1935,9 @@
         {
           "name": "montag",
           "display": "Montag",
-          "type": "flag",
-          "description": "Could be set as random monster summons by assigning #summon."
+          "type": "ref",
+          "description": "Could be set as random monster summons by assigning #summon.",
+          "refType": "montag"
         },
         {
           "name": "montagweight",
@@ -1933,8 +1970,9 @@
         {
           "name": "mountmnr",
           "display": "Mountmnr",
-          "type": "flag",
-          "description": "This monster will receive extra units when summoning Lamias Use this to give a mount to a rider."
+          "type": "ref",
+          "description": "This monster will receive extra units when summoning Lamias Use this to give a mount to a rider.",
+          "refType": "monster"
         },
         {
           "name": "mrhalf",
@@ -1951,15 +1989,17 @@
         {
           "name": "nametype",
           "display": "Nametype",
-          "type": "int",
+          "type": "ref",
           "default": 0,
-          "description": "Weight)"
+          "description": "Weight)",
+          "refType": "nametype"
         },
         {
           "name": "natmon",
           "display": "Natmon",
-          "type": "flag",
-          "description": "Adds a monster that can be recruited if the site is owned by the nation set by the #nat command."
+          "type": "ref",
+          "description": "Adds a monster that can be recruited if the site is owned by the nation set by the #nat command.",
+          "refType": "monster"
         },
         {
           "name": "newmonster",
@@ -2033,8 +2073,9 @@
         {
           "name": "notdomshape",
           "display": "Notdomshape",
-          "type": "flag",
-          "description": "That the shape change takes place even if the target got soul The monster changes to this shape when not inside a friendly slayed."
+          "type": "ref",
+          "description": "That the shape change takes place even if the target got soul The monster changes to this shape when not inside a friendly slayed.",
+          "refType": "monster"
         },
         {
           "name": "nothrowoff",
@@ -2045,8 +2086,9 @@
         {
           "name": "notmnr",
           "display": "Notmnr",
-          "type": "flag",
-          "description": "Does not affect true sight This type of monster is unable to cast this spell."
+          "type": "ref",
+          "description": "Does not affect true sight This type of monster is unable to cast this spell.",
+          "refType": "monster"
         },
         {
           "name": "onlyfemale",
@@ -2057,8 +2099,9 @@
         {
           "name": "onlymnr",
           "display": "Onlymnr",
-          "type": "flag",
-          "description": "Does not affect flying/floating Only this type of monster is able to cast this spell."
+          "type": "ref",
+          "description": "Does not affect flying/floating Only this type of monster is able to cast this spell.",
+          "refType": "monster"
         },
         {
           "name": "onlyundead",
@@ -2076,8 +2119,9 @@
         {
           "name": "ownsmonrec",
           "display": "Ownsmonrec",
-          "type": "flag",
-          "description": "The cost in recruitment points for the monster."
+          "type": "ref",
+          "description": "The cost in recruitment points for the monster.",
+          "refType": "monster"
         },
         {
           "name": "pathcost",
@@ -2096,8 +2140,9 @@
         {
           "name": "plainshape",
           "display": "Plainshape",
-          "type": "flag",
-          "description": "Value can be -1 for a bad result, 0 to disable and 1 for a good The monster changes to this shape when moving from a forest result."
+          "type": "ref",
+          "description": "Value can be -1 for a bad result, 0 to disable and 1 for a good The monster changes to this shape when moving from a forest result.",
+          "refType": "monster"
         },
         {
           "name": "polygetmagic",
@@ -2109,25 +2154,29 @@
         {
           "name": "prophetshape",
           "display": "Prophetshape",
-          "type": "flag"
+          "type": "ref",
+          "refType": "monster"
         },
         {
           "name": "raiseshape",
           "display": "Raiseshape",
-          "type": "flag",
-          "description": "Non-Combat Abilities Changes soulless to another kind of unit for the #raiseonkill or."
+          "type": "ref",
+          "description": "Non-Combat Abilities Changes soulless to another kind of unit for the #raiseonkill or.",
+          "refType": "monster"
         },
         {
           "name": "raredomsummon",
           "display": "Raredomsummon",
-          "type": "flag",
-          "description": "Horror* There is a flat 8% chance of summoning one creature of this -8 Doom Horror type when in a province with friendly dominion."
+          "type": "ref",
+          "description": "Horror* There is a flat 8% chance of summoning one creature of this -8 Doom Horror type when in a province with friendly dominion.",
+          "refType": "monster"
         },
         {
           "name": "reanimator",
           "display": "Reanimator",
-          "type": "flag",
-          "description": "Can be used up to 3 times on one monster."
+          "type": "ref",
+          "description": "Can be used up to 3 times on one monster.",
+          "refType": "monster"
         },
         {
           "name": "reclimit",
@@ -2158,8 +2207,9 @@
         {
           "name": "secondtmpshape",
           "display": "Secondtmpshape",
-          "type": "flag",
-          "description": "The monster will change into the next monster type (next This monster will transform into another monster when it is monster number) after reaching this amount of xp and when killed in."
+          "type": "ref",
+          "description": "The monster will change into the next monster type (next This monster will transform into another monster when it is monster number) after reaching this amount of xp and when killed in.",
+          "refType": "monster"
         },
         {
           "name": "selectmonster",
@@ -2177,8 +2227,9 @@
         {
           "name": "shapechange",
           "display": "Shapechange",
-          "type": "flag",
-          "description": "The monster kills (10 x amount) of population in the province it This monster is able to change shape to and from another resides in every month."
+          "type": "ref",
+          "description": "The monster kills (10 x amount) of population in the province it This monster is able to change shape to and from another resides in every month.",
+          "refType": "monster"
         },
         {
           "name": "shatteredsoul",
@@ -2211,8 +2262,9 @@
         {
           "name": "slaver",
           "display": "Slaver",
-          "type": "flag",
-          "description": "#nofmounts <mounts> Gets the capture slave ability."
+          "type": "ref",
+          "description": "#nofmounts <mounts> Gets the capture slave ability.",
+          "refType": "monster"
         },
         {
           "name": "slaverbonus",
@@ -2276,8 +2328,9 @@
         {
           "name": "springshape",
           "display": "Springshape",
-          "type": "flag",
-          "description": "The monster changes to this shape when moving from a water Changes into another monster when this season is active."
+          "type": "ref",
+          "description": "The monster changes to this shape when moving from a water Changes into another monster when this season is active.",
+          "refType": "monster"
         },
         {
           "name": "startaff",
@@ -2301,8 +2354,9 @@
         {
           "name": "startitem",
           "display": "Startitem",
-          "type": "flag",
-          "description": "Creature Type & Status The monster starts with this item if it is a commander."
+          "type": "ref",
+          "description": "Creature Type & Status The monster starts with this item if it is a commander.",
+          "refType": "item"
         },
         {
           "name": "startmajoraff",
@@ -2314,8 +2368,9 @@
         {
           "name": "startscout",
           "display": "Startscout",
-          "type": "flag",
-          "description": "Nation cannot recruit independent units."
+          "type": "ref",
+          "description": "Nation cannot recruit independent units.",
+          "refType": "monster"
         },
         {
           "name": "statbreak",
@@ -2340,38 +2395,44 @@
         {
           "name": "summershape",
           "display": "Summershape",
-          "type": "flag",
-          "description": "Changes into another monster when this season is active."
+          "type": "ref",
+          "description": "Changes into another monster when this season is active.",
+          "refType": "monster"
         },
         {
           "name": "summon",
           "display": "Summon",
-          "type": "flag",
-          "description": "Mountain A mage of the same magic path as the site may enter to 8 Waste summon the specified monster."
+          "type": "ref",
+          "description": "Mountain A mage of the same magic path as the site may enter to 8 Waste summon the specified monster.",
+          "refType": "monster"
         },
         {
           "name": "summon1",
           "display": "Summon1",
-          "type": "flag",
-          "description": "Command summons one monster per month and."
+          "type": "ref",
+          "description": "Command summons one monster per month and.",
+          "refType": "monster"
         },
         {
           "name": "summon2",
           "display": "Summon2",
-          "type": "flag",
-          "description": "To #summon5 more according to the number in the -21 Random directional dwarf command."
+          "type": "ref",
+          "description": "To #summon5 more according to the number in the -21 Random directional dwarf command.",
+          "refType": "monster"
         },
         {
           "name": "summon5",
           "display": "Summon5",
-          "type": "flag",
-          "description": "More according to the number in the -21 Random directional dwarf command."
+          "type": "ref",
+          "description": "More according to the number in the -21 Random directional dwarf command.",
+          "refType": "monster"
         },
         {
           "name": "templetrainer",
           "display": "Templetrainer",
-          "type": "flag",
-          "description": "Random good crossbreed A commander with this ability will be able to summon a -11 Random bad crossbreed monster per turn when in a temple province."
+          "type": "ref",
+          "description": "Random good crossbreed A commander with this ability will be able to summon a -11 Random bad crossbreed monster per turn when in a temple province.",
+          "refType": "monster"
         },
         {
           "name": "tmpfiregems",
@@ -2403,7 +2464,8 @@
         {
           "name": "twiceborn",
           "display": "Twiceborn",
-          "type": "flag"
+          "type": "ref",
+          "refType": "monster"
         },
         {
           "name": "twiceborncost",
@@ -2437,8 +2499,9 @@
         {
           "name": "uwrec",
           "display": "Uwrec",
-          "type": "flag",
-          "description": "This unit can be recruited in (terrain) provinces without a fort."
+          "type": "ref",
+          "description": "This unit can be recruited in (terrain) provinces without a fort.",
+          "refType": "monster"
         },
         {
           "name": "voidret",
@@ -2470,8 +2533,9 @@
         {
           "name": "wintershape",
           "display": "Wintershape",
-          "type": "flag",
-          "description": "The monster will get this shape if it dies and rises again due to Changes into another monster when this season is active."
+          "type": "ref",
+          "description": "The monster will get this shape if it dies and rises again due to Changes into another monster when this season is active.",
+          "refType": "monster"
         },
         {
           "name": "wolftattoo",
@@ -2483,8 +2547,9 @@
         {
           "name": "worldshape",
           "display": "Worldshape",
-          "type": "flag",
-          "description": "Many hit points or less."
+          "type": "ref",
+          "description": "Many hit points or less.",
+          "refType": "monster"
         },
         {
           "name": "xploss",
@@ -2510,8 +2575,9 @@
         {
           "name": "xpshapemon",
           "display": "Xpshapemon",
-          "type": "flag",
-          "description": "Negative for montags."
+          "type": "ref",
+          "description": "Negative for montags.",
+          "refType": "monster"
         },
         {
           "name": "xspr1",
@@ -3215,7 +3281,8 @@
         {
           "name": "battleshape",
           "display": "Battleshape",
-          "type": "flag"
+          "type": "ref",
+          "refType": "monster"
         },
         {
           "name": "battlesum1",
@@ -3226,14 +3293,16 @@
         {
           "name": "battlesum1d2",
           "display": "Battlesum1D2",
-          "type": "flag",
-          "description": "Automatically summons 1-2 monsters to the battlefield each Entries marked with an asterisk may be made worse if the combat round."
+          "type": "ref",
+          "description": "Automatically summons 1-2 monsters to the battlefield each Entries marked with an asterisk may be made worse if the combat round.",
+          "refType": "monster"
         },
         {
           "name": "battlesum1d3",
           "display": "Battlesum1D3",
-          "type": "flag",
-          "description": "Cataclysm has occurred."
+          "type": "ref",
+          "description": "Cataclysm has occurred.",
+          "refType": "monster"
         },
         {
           "name": "battlesum5",
@@ -3244,8 +3313,9 @@
         {
           "name": "battlesumwarm",
           "display": "Battlesumwarm",
-          "type": "flag",
-          "description": "This command assigns a monster tag value to a creature."
+          "type": "ref",
+          "description": "This command assigns a monster tag value to a creature.",
+          "refType": "monster"
         },
         {
           "name": "bloodrange",
@@ -3308,8 +3378,9 @@
         {
           "name": "damagemon",
           "display": "Damagemon",
-          "type": "flag",
-          "description": "Mon nbr Use this to set a spell's damage to a monster if you don't know 10038 Indep."
+          "type": "ref",
+          "description": "Mon nbr Use this to set a spell's damage to a monster if you don't know 10038 Indep.",
+          "refType": "monster"
         },
         {
           "name": "deathrec",
@@ -3367,8 +3438,9 @@
         {
           "name": "forestshape",
           "display": "Forestshape",
-          "type": "flag",
-          "description": "Taking damage."
+          "type": "ref",
+          "description": "Taking damage.",
+          "refType": "monster"
         },
         {
           "name": "fortunrest",
@@ -3451,8 +3523,9 @@
         {
           "name": "monpresentrec",
           "display": "Monpresentrec",
-          "type": "flag",
-          "description": "This monster can only be recruited if a unit of \"monster name\" #gcost <gold> type is present in the recruiting province."
+          "type": "ref",
+          "description": "This monster can only be recruited if a unit of \"monster name\" #gcost <gold> type is present in the recruiting province.",
+          "refType": "monster"
         },
         {
           "name": "nocoldblood",
@@ -3495,8 +3568,9 @@
         {
           "name": "restricted",
           "display": "Restricted",
-          "type": "flag",
-          "description": "\"nation name\"."
+          "type": "ref",
+          "description": "\"nation name\".",
+          "refType": "nation"
         },
         {
           "name": "shock",
@@ -3552,9 +3626,10 @@
         {
           "name": "userestricteditem",
           "display": "Userestricteditem",
-          "type": "int",
+          "type": "ref",
           "default": 0,
-          "description": "Feminine names."
+          "description": "Feminine names.",
+          "refType": "item"
         },
         {
           "name": "uwdamage",
@@ -3579,8 +3654,9 @@
         {
           "name": "watershape",
           "display": "Watershape",
-          "type": "flag",
-          "description": "Changes into another monster when this season is active."
+          "type": "ref",
+          "description": "Changes into another monster when this season is active.",
+          "refType": "monster"
         },
         {
           "name": "weapon",

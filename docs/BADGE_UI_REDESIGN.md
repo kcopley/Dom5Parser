@@ -160,14 +160,13 @@ Colored value badges for protections:
 ### Completed Recently
 - [x] JSON loader for property categories (`BadgeConfigLoader.cs`)
 - [x] Property model classes (`BadgeConfig.cs`, `PropertyItem`, `AvailablePropertyItem`)
-- [x] Integration with EntityViewModels (JSON-only, no fallback)
+- [x] Integration with EntityViewModels via `BuildBadgesFromSection()`
 - [x] Tooltip descriptions from command reference JSON
-- [x] Removed all hardcoded Command arrays (GeneralFlagCommands, GeneralIntCommands, BadgeCombatCommands, BadgeResistanceCommands)
 - [x] Removed fallback methods (RefreshTypeBadgesFallback, etc.)
-- [x] Removed duplicate View sections (Recruitment, Age, Stealth, Province Effects) - now covered by properties
-- [x] Removed resistance display helper methods (colors now in JSON)
 - [x] Renamed `BadgeItem` to `PropertyItem`, `AvailableBadgeItem` to `AvailablePropertyItem`
 - [x] Fixed JSON command lookup (added `#` prefix handling for CommandsMap)
+
+**Note:** Some hardcoded Command arrays still exist in EntityViewModels.cs (TypeCommands, LeaderCommands, MovementCommands, ResistanceCommands, CombatCommands, AuraCommands, SpecialCommands). These work alongside the JSON badge system.
 
 ### Future
 - [ ] Weapon/Armor/Spell badge definitions (create JSON files)
