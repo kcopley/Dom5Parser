@@ -829,228 +829,6 @@ namespace Dom5Editor.UI.Views
         public bool IsSeduceSessionEdit => IsPropertyEditedInSession(Command.SEDUCE);
         public bool IsSeduceInherited => IsIntPropertyInherited(Command.SEDUCE);
 
-        // ========================================
-        // Command List Properties (for CommandListEditor)
-        // ========================================
-
-        private static readonly Command[] TypeCommands = new[]
-        {
-            Command.HUMANOID, Command.MOUNTEDHUMANOID, Command.QUADRUPED, Command.LIZARD,
-            Command.NAGA, Command.SNAKE, Command.BIRD, Command.DJINN, Command.TROGLODYTE,
-            Command.MISCSHAPE, Command.MOUNTED, Command.UNDEAD, Command.DEMON,
-            Command.MAGICBEING, Command.HOLY, Command.ANIMAL, Command.UNIQUE,
-            Command.INANIMATE, Command.MINDLESS, Command.BLIND, Command.COLDBLOOD,
-            Command.IMMORTAL, Command.FEMALE, Command.IMMOBILE, Command.STONEBEING,
-            Command.PLANT, Command.DRAKE, Command.BUG, Command.LESSERHORROR,
-            Command.GREATERHORROR, Command.DOOMHORROR
-        };
-
-        private static readonly Command[] LeaderCommands = new[]
-        {
-            Command.NOLEADER, Command.POORLEADER, Command.OKLEADER, Command.GOODLEADER,
-            Command.EXPERTLEADER, Command.SUPERIORLEADER, Command.NOMAGICLEADER,
-            Command.POORMAGICLEADER, Command.OKMAGICLEADER, Command.GOODMAGICLEADER,
-            Command.EXPERTMAGICLEADER, Command.SUPERIORMAGICLEADER, Command.NOUNDEADLEADER,
-            Command.POORUNDEADLEADER, Command.OKUNDEADLEADER, Command.GOODUNDEADLEADER,
-            Command.EXPERTUNDEADLEADER, Command.SUPERIORUNDEADLEADER
-        };
-
-        private static readonly Command[] MovementCommands = new[]
-        {
-            Command.FLYING, Command.AQUATIC, Command.AMPHIBIAN, Command.POORAMPHIBIAN,
-            Command.FLOAT, Command.SWIMMING, Command.TELEPORT, Command.MAPTELEPORT,
-            Command.BLINK, Command.FORESTSURVIVAL, Command.MOUNTAINSURVIVAL,
-            Command.SWAMPSURVIVAL, Command.WASTESURVIVAL, Command.SNOW
-        };
-
-        private static readonly Command[] ResistanceCommands = new[]
-        {
-            Command.FIRERES, Command.COLDRES, Command.SHOCKRES, Command.POISONRES,
-            Command.REGENERATION, Command.INVULNERABLE, Command.AIRSHIELD, Command.ICEPROT,
-            Command.REINVIGORATION, Command.IRONVUL, Command.BLUNTRES, Command.PIERCERES,
-            Command.SLASHRES, Command.DISEASERES, Command.MAGICIMMUNE, Command.STORMIMMUNE,
-            Command.STUNIMMUNITY, Command.POLYIMMUNE, Command.ACIDRES, Command.DECAYRES
-        };
-
-        private static readonly Command[] CombatCommands = new[]
-        {
-            Command.AWE, Command.FEAR, Command.BERSERK, Command.AMBIDEXTROUS,
-            Command.DARKVISION, Command.TRAMPLE, Command.DEATHCURSE, Command.BODYGUARD,
-            Command.WARNING, Command.STANDARD, Command.FORMATIONFIGHTER, Command.PATIENCE,
-            Command.CHAOSPOWER, Command.MAGICPOWER, Command.ETHEREAL, Command.GLAMOUR
-        };
-
-        private static readonly Command[] AuraCommands = new[]
-        {
-            Command.HEAT, Command.COLD, Command.FIRESHIELD, Command.POISONCLOUD,
-            Command.DISEASECLOUD, Command.POISONSKIN, Command.POISONARMOR, Command.ACIDSHIELD,
-            Command.SLEEPAURA, Command.ANIMALAWE, Command.SUNAWE, Command.HALTHERETIC
-        };
-
-        private static readonly Command[] SpecialCommands = new[]
-        {
-            Command.HEAL, Command.NOHEAL, Command.HEALER, Command.AUTOHEALER,
-            Command.NEEDNOTEAT, Command.TAXCOLLECTOR, Command.INQUISITOR, Command.MASON,
-            Command.LOCALSUN, Command.COMMASTER, Command.COMSLAVE, Command.SPELLSINGER,
-            Command.COMBATCASTER, Command.DRAINIMMUNE, Command.DIVINEINS, Command.NOITEM
-        };
-
-        private System.Collections.ObjectModel.ObservableCollection<CommandListItem> _typeCommandsList;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> _availableTypeCommands;
-        private System.Collections.ObjectModel.ObservableCollection<CommandListItem> _leaderCommandsList;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> _availableLeaderCommands;
-        private System.Collections.ObjectModel.ObservableCollection<CommandListItem> _movementCommandsList;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> _availableMovementCommands;
-        private System.Collections.ObjectModel.ObservableCollection<IntPropertyListItem> _resistancesList;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableIntPropertyItem> _availableResistances;
-        private System.Collections.ObjectModel.ObservableCollection<IntPropertyListItem> _combatList;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableIntPropertyItem> _availableCombat;
-        private System.Collections.ObjectModel.ObservableCollection<IntPropertyListItem> _auraList;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableIntPropertyItem> _availableAuras;
-        private System.Collections.ObjectModel.ObservableCollection<CommandListItem> _specialCommandsList;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> _availableSpecialCommands;
-
-        public System.Collections.ObjectModel.ObservableCollection<CommandListItem> TypeCommandsList
-        {
-            get { if (_typeCommandsList == null) RefreshTypeCommands(); return _typeCommandsList; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> AvailableTypeCommands
-        {
-            get { if (_availableTypeCommands == null) RefreshTypeCommands(); return _availableTypeCommands; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<CommandListItem> LeaderCommandsList
-        {
-            get { if (_leaderCommandsList == null) RefreshLeaderCommands(); return _leaderCommandsList; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> AvailableLeaderCommands
-        {
-            get { if (_availableLeaderCommands == null) RefreshLeaderCommands(); return _availableLeaderCommands; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<CommandListItem> MovementCommandsList
-        {
-            get { if (_movementCommandsList == null) RefreshMovementCommands(); return _movementCommandsList; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> AvailableMovementCommands
-        {
-            get { if (_availableMovementCommands == null) RefreshMovementCommands(); return _availableMovementCommands; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<IntPropertyListItem> ResistancesList
-        {
-            get { if (_resistancesList == null) RefreshResistances(); return _resistancesList; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<AvailableIntPropertyItem> AvailableResistances
-        {
-            get { if (_availableResistances == null) RefreshResistances(); return _availableResistances; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<IntPropertyListItem> CombatList
-        {
-            get { if (_combatList == null) RefreshCombat(); return _combatList; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<AvailableIntPropertyItem> AvailableCombat
-        {
-            get { if (_availableCombat == null) RefreshCombat(); return _availableCombat; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<IntPropertyListItem> AuraList
-        {
-            get { if (_auraList == null) RefreshAuras(); return _auraList; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<AvailableIntPropertyItem> AvailableAuras
-        {
-            get { if (_availableAuras == null) RefreshAuras(); return _availableAuras; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<CommandListItem> SpecialCommandsList
-        {
-            get { if (_specialCommandsList == null) RefreshSpecialCommands(); return _specialCommandsList; }
-        }
-
-        public System.Collections.ObjectModel.ObservableCollection<AvailableCommandItem> AvailableSpecialCommands
-        {
-            get { if (_availableSpecialCommands == null) RefreshSpecialCommands(); return _availableSpecialCommands; }
-        }
-
-        private void RefreshTypeCommands()
-        {
-            _typeCommandsList = BuildCommandList(TypeCommands);
-            _availableTypeCommands = BuildAvailableCommandList(_typeCommandsList, TypeCommands);
-            OnPropertyChanged(nameof(TypeCommandsList));
-            OnPropertyChanged(nameof(AvailableTypeCommands));
-        }
-
-        private void RefreshLeaderCommands()
-        {
-            _leaderCommandsList = BuildCommandList(LeaderCommands);
-            _availableLeaderCommands = BuildAvailableCommandList(_leaderCommandsList, LeaderCommands);
-            OnPropertyChanged(nameof(LeaderCommandsList));
-            OnPropertyChanged(nameof(AvailableLeaderCommands));
-        }
-
-        private void RefreshMovementCommands()
-        {
-            _movementCommandsList = BuildCommandList(MovementCommands);
-            _availableMovementCommands = BuildAvailableCommandList(_movementCommandsList, MovementCommands);
-            OnPropertyChanged(nameof(MovementCommandsList));
-            OnPropertyChanged(nameof(AvailableMovementCommands));
-        }
-
-        private void RefreshResistances()
-        {
-            _resistancesList = BuildIntPropertyList(ResistanceCommands);
-            _availableResistances = BuildAvailableIntPropertyList(_resistancesList, ResistanceCommands);
-            OnPropertyChanged(nameof(ResistancesList));
-            OnPropertyChanged(nameof(AvailableResistances));
-        }
-
-        private void RefreshCombat()
-        {
-            _combatList = BuildIntPropertyList(CombatCommands);
-            _availableCombat = BuildAvailableIntPropertyList(_combatList, CombatCommands);
-            OnPropertyChanged(nameof(CombatList));
-            OnPropertyChanged(nameof(AvailableCombat));
-        }
-
-        private void RefreshAuras()
-        {
-            _auraList = BuildIntPropertyList(AuraCommands);
-            _availableAuras = BuildAvailableIntPropertyList(_auraList, AuraCommands);
-            OnPropertyChanged(nameof(AuraList));
-            OnPropertyChanged(nameof(AvailableAuras));
-        }
-
-        private void RefreshSpecialCommands()
-        {
-            _specialCommandsList = BuildCommandList(SpecialCommands);
-            _availableSpecialCommands = BuildAvailableCommandList(_specialCommandsList, SpecialCommands);
-            OnPropertyChanged(nameof(SpecialCommandsList));
-            OnPropertyChanged(nameof(AvailableSpecialCommands));
-        }
-
-        public void AddTypeCommand(Command command) { SetCommandProperty(command, true); RefreshTypeCommands(); }
-        public void RemoveTypeCommand(Command command) { SetCommandProperty(command, false); RefreshTypeCommands(); }
-        public void AddLeaderCommand(Command command) { SetCommandProperty(command, true); RefreshLeaderCommands(); }
-        public void RemoveLeaderCommand(Command command) { SetCommandProperty(command, false); RefreshLeaderCommands(); }
-        public void AddMovementCommand(Command command) { SetCommandProperty(command, true); RefreshMovementCommands(); }
-        public void RemoveMovementCommand(Command command) { SetCommandProperty(command, false); RefreshMovementCommands(); }
-        public void AddResistance(Command command, int value) { SetIntProperty(command, value); RefreshResistances(); }
-        public void RemoveResistance(Command command) { SetIntProperty(command, null); RefreshResistances(); }
-        public void AddCombat(Command command, int value) { SetIntProperty(command, value); RefreshCombat(); }
-        public void RemoveCombat(Command command) { SetIntProperty(command, null); RefreshCombat(); }
-        public void AddAura(Command command, int value) { SetIntProperty(command, value); RefreshAuras(); }
-        public void RemoveAura(Command command) { SetIntProperty(command, null); RefreshAuras(); }
-        public void AddSpecialCommand(Command command) { SetCommandProperty(command, true); RefreshSpecialCommands(); }
-        public void RemoveSpecialCommand(Command command) { SetCommandProperty(command, false); RefreshSpecialCommands(); }
-
         // ===== BADGE-BASED COLLECTIONS (Compact UI) =====
         // Three main sections: Types (read-only), General (non-combat), Combat, Resistances
 
@@ -1166,8 +944,14 @@ namespace Dom5Editor.UI.Views
                 if (hasValue && (cmdDef.IsFlag ? effectiveFlagValue : true))
                 {
                     var badge = BadgeConfigLoader.CreatePropertyItem(cmdDef, effectiveValue, isModified, isSessionEdit);
-                    // Can only remove if property is directly on the entity (not inherited/copied)
-                    badge.CanRemove = !section.ReadOnly && entityHasDirect;
+                    // Can only remove if:
+                    // 1. Section is not read-only (from JSON config)
+                    // 2. Property is directly on the entity (not inherited from copystats)
+                    // 3. Entity source allows removal (not pure vanilla - can only remove from mod or session edits)
+                    bool canRemoveBasedOnSource = _source == EntitySource.FromMod
+                                                  || _source == EntitySource.VanillaModified
+                                                  || _source == EntitySource.New;
+                    badge.CanRemove = !section.ReadOnly && entityHasDirect && canRemoveBasedOnSource;
                     badge.IsInherited = section.ReadOnly || isInherited;
 
                     if (valueChangedHandler != null && cmdDef.IsInt)
@@ -1294,6 +1078,9 @@ namespace Dom5Editor.UI.Views
             if (sender is PropertyItem badge)
             {
                 SetIntProperty(badge.Command, newValue);
+                // Update the badge's session edit indicator
+                badge.IsSessionEdit = IsPropertyEditedInSession(badge.Command);
+                badge.IsModified = true;
             }
         }
 
@@ -1311,6 +1098,9 @@ namespace Dom5Editor.UI.Views
             if (sender is PropertyItem badge)
             {
                 SetIntProperty(badge.Command, newValue);
+                // Update the badge's session edit indicator
+                badge.IsSessionEdit = IsPropertyEditedInSession(badge.Command);
+                badge.IsModified = true;
             }
         }
 
@@ -1328,6 +1118,9 @@ namespace Dom5Editor.UI.Views
             if (sender is PropertyItem badge)
             {
                 SetIntProperty(badge.Command, newValue);
+                // Update the badge's session edit indicator
+                badge.IsSessionEdit = IsPropertyEditedInSession(badge.Command);
+                badge.IsModified = true;
             }
         }
 
@@ -1565,10 +1358,6 @@ namespace Dom5Editor.UI.Views
                 OnPropertyChanged($"Is{propertyName}SessionEdit");
                 OnPropertyChanged($"Is{propertyName}Inherited");
             }
-
-            // Refresh command lists when related commands change
-            RefreshCommandLists();
-            RefreshIntPropertyLists();
         }
 
         /// <summary>
@@ -1607,32 +1396,6 @@ namespace Dom5Editor.UI.Views
 
                 _ => null  // Let base class handle or it matches Command name
             };
-        }
-
-        /// <summary>
-        /// Refreshes all command list collections (movement, type, leader, special).
-        /// </summary>
-        private void RefreshCommandLists()
-        {
-            OnPropertyChanged(nameof(MovementCommandsList));
-            OnPropertyChanged(nameof(AvailableMovementCommands));
-            OnPropertyChanged(nameof(TypeCommandsList));
-            OnPropertyChanged(nameof(AvailableTypeCommands));
-            OnPropertyChanged(nameof(LeaderCommandsList));
-            OnPropertyChanged(nameof(AvailableLeaderCommands));
-            OnPropertyChanged(nameof(SpecialCommandsList));
-            OnPropertyChanged(nameof(AvailableSpecialCommands));
-        }
-
-        /// <summary>
-        /// Refreshes all int property list collections (combat, resistances).
-        /// </summary>
-        private void RefreshIntPropertyLists()
-        {
-            OnPropertyChanged(nameof(CombatList));
-            OnPropertyChanged(nameof(AvailableCombat));
-            OnPropertyChanged(nameof(ResistancesList));
-            OnPropertyChanged(nameof(AvailableResistances));
         }
 
         protected override string GetCommandDisplayName(Command command)
@@ -2149,6 +1912,390 @@ namespace Dom5Editor.UI.Views
         {
             ArmorNavigationRequested?.Invoke(this, armorId);
         }
+
+        // ========================================
+        // Available Entities for Reference Selection
+        // ========================================
+
+        private List<AvailableEquipmentItem> _availableMonsters;
+        public List<AvailableEquipmentItem> AvailableMonsters
+        {
+            get
+            {
+                if (_availableMonsters == null)
+                    RefreshAvailableMonsters();
+                return _availableMonsters;
+            }
+        }
+
+        private void RefreshAvailableMonsters()
+        {
+            _availableMonsters = new List<AvailableEquipmentItem>();
+
+            // Add vanilla monsters
+            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.MONSTER, out var vanillaSet) == true)
+            {
+                foreach (var entity in vanillaSet.GetFullList())
+                {
+                    if (entity is Monster monster)
+                    {
+                        _availableMonsters.Add(new AvailableEquipmentItem
+                        {
+                            ID = monster.ID,
+                            Name = monster.Name,
+                            Source = "Vanilla"
+                        });
+                    }
+                }
+            }
+
+            // Add mod monsters
+            var mod = _entity.ParentMod;
+            if (mod != null && mod.Database.TryGetValue(EntityType.MONSTER, out var modSet))
+            {
+                foreach (var entity in modSet.GetFullList())
+                {
+                    if (entity is Monster monster && !_availableMonsters.Any(m => m.ID == monster.ID))
+                    {
+                        _availableMonsters.Add(new AvailableEquipmentItem
+                        {
+                            ID = monster.ID,
+                            Name = monster.Name,
+                            Source = "Mod"
+                        });
+                    }
+                }
+            }
+
+            _availableMonsters = _availableMonsters.OrderBy(m => m.ID).ToList();
+        }
+
+        private List<AvailableEquipmentItem> _availableItems;
+        public List<AvailableEquipmentItem> AvailableItems
+        {
+            get
+            {
+                if (_availableItems == null)
+                    RefreshAvailableItems();
+                return _availableItems;
+            }
+        }
+
+        private void RefreshAvailableItems()
+        {
+            _availableItems = new List<AvailableEquipmentItem>();
+
+            // Add vanilla items
+            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.ITEM, out var vanillaSet) == true)
+            {
+                foreach (var entity in vanillaSet.GetFullList())
+                {
+                    if (entity is Item item)
+                    {
+                        _availableItems.Add(new AvailableEquipmentItem
+                        {
+                            ID = item.ID,
+                            Name = item.Name,
+                            Source = "Vanilla"
+                        });
+                    }
+                }
+            }
+
+            // Add mod items
+            var mod = _entity.ParentMod;
+            if (mod != null && mod.Database.TryGetValue(EntityType.ITEM, out var modSet))
+            {
+                foreach (var entity in modSet.GetFullList())
+                {
+                    if (entity is Item item && !_availableItems.Any(i => i.ID == item.ID))
+                    {
+                        _availableItems.Add(new AvailableEquipmentItem
+                        {
+                            ID = item.ID,
+                            Name = item.Name,
+                            Source = "Mod"
+                        });
+                    }
+                }
+            }
+
+            _availableItems = _availableItems.OrderBy(i => i.ID).ToList();
+        }
+
+        private List<AvailableEquipmentItem> _availableNations;
+        public List<AvailableEquipmentItem> AvailableNations
+        {
+            get
+            {
+                if (_availableNations == null)
+                    RefreshAvailableNations();
+                return _availableNations;
+            }
+        }
+
+        private void RefreshAvailableNations()
+        {
+            _availableNations = new List<AvailableEquipmentItem>();
+
+            // Add vanilla nations
+            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.NATION, out var vanillaSet) == true)
+            {
+                foreach (var entity in vanillaSet.GetFullList())
+                {
+                    if (entity is Nation nation)
+                    {
+                        _availableNations.Add(new AvailableEquipmentItem
+                        {
+                            ID = nation.ID,
+                            Name = nation.Name,
+                            Source = "Vanilla"
+                        });
+                    }
+                }
+            }
+
+            // Add mod nations
+            var mod = _entity.ParentMod;
+            if (mod != null && mod.Database.TryGetValue(EntityType.NATION, out var modSet))
+            {
+                foreach (var entity in modSet.GetFullList())
+                {
+                    if (entity is Nation nation && !_availableNations.Any(n => n.ID == nation.ID))
+                    {
+                        _availableNations.Add(new AvailableEquipmentItem
+                        {
+                            ID = nation.ID,
+                            Name = nation.Name,
+                            Source = "Mod"
+                        });
+                    }
+                }
+            }
+
+            _availableNations = _availableNations.OrderBy(n => n.ID).ToList();
+        }
+
+        // ========================================
+        // Reference Properties (Read current values)
+        // ========================================
+
+        /// <summary>
+        /// Gets the list of start items on this monster.
+        /// </summary>
+        public ObservableCollection<EquipmentItem> StartItemsList
+        {
+            get
+            {
+                var items = new ObservableCollection<EquipmentItem>();
+                foreach (var prop in _entity.GetMultiple(Command.STARTITEM))
+                {
+                    if (prop is ItemRef itemRef && itemRef.HasValue)
+                    {
+                        items.Add(new EquipmentItem
+                        {
+                            ID = itemRef.ID,
+                            Name = itemRef.Entity?.Name,
+                            IsModified = true,
+                            SourceCommand = Command.STARTITEM
+                        });
+                    }
+                }
+                return items;
+            }
+        }
+
+        private AvailableEquipmentItem _selectedItemToAdd;
+        public AvailableEquipmentItem SelectedItemToAdd
+        {
+            get => _selectedItemToAdd;
+            set
+            {
+                _selectedItemToAdd = value;
+                OnPropertyChanged(nameof(SelectedItemToAdd));
+            }
+        }
+
+        private ICommand _addStartItemCommand;
+        public ICommand AddStartItemCommand => _addStartItemCommand ??= new RelayCommand<AvailableEquipmentItem>(AddStartItem);
+
+        private ICommand _removeStartItemCommand;
+        public ICommand RemoveStartItemCommand => _removeStartItemCommand ??= new RelayCommand<EquipmentItem>(RemoveStartItem);
+
+        private void AddStartItem(AvailableEquipmentItem item)
+        {
+            if (item == null) return;
+
+            var newProp = new ItemRef { Parent = _entity, Command = Command.STARTITEM };
+            newProp.ID = item.ID;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Start Item #{item.ID}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            OnPropertyChanged(nameof(StartItemsList));
+        }
+
+        private void RemoveStartItem(EquipmentItem item)
+        {
+            if (item == null) return;
+
+            var props = _entity.GetMultiple(Command.STARTITEM).ToList();
+            var toRemove = props.FirstOrDefault(p => p is ItemRef ir && ir.ID == item.ID);
+
+            if (toRemove != null)
+            {
+                if (_history != null)
+                {
+                    var cmd = new RemovePropertyCommand(_entity, toRemove, $"Remove Start Item #{item.ID}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    _entity.RemoveProperty(toRemove);
+                }
+
+                HasSessionChanges = true;
+                OnPropertyChanged(nameof(StartItemsList));
+            }
+        }
+
+        // ========================================
+        // CUSTOMMAGIC Support
+        // ========================================
+
+        /// <summary>
+        /// Gets the list of custom magic configurations on this monster.
+        /// </summary>
+        public ObservableCollection<CustomMagicItem> CustomMagicList
+        {
+            get
+            {
+                var items = new ObservableCollection<CustomMagicItem>();
+                foreach (var prop in _entity.GetMultiple(Command.CUSTOMMAGIC))
+                {
+                    if (prop is BitmaskChanceProperty bcp && bcp.HasValue)
+                    {
+                        items.Add(new CustomMagicItem
+                        {
+                            Bitmask = bcp.Bitmask,
+                            Chance = bcp.Chance,
+                            Property = bcp
+                        });
+                    }
+                }
+                return items;
+            }
+        }
+
+        private ICommand _addCustomMagicCommand;
+        public ICommand AddCustomMagicCommand => _addCustomMagicCommand ??= new RelayCommand(AddCustomMagic);
+
+        private ICommand _removeCustomMagicCommand;
+        public ICommand RemoveCustomMagicCommand => _removeCustomMagicCommand ??= new RelayCommand<CustomMagicItem>(RemoveCustomMagic);
+
+        private void AddCustomMagic()
+        {
+            var newProp = new BitmaskChanceProperty
+            {
+                Parent = _entity,
+                Command = Command.CUSTOMMAGIC,
+                Bitmask = 0,
+                Chance = 100,
+                HasValue = true
+            };
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, "Add Custom Magic");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            OnPropertyChanged(nameof(CustomMagicList));
+        }
+
+        private void RemoveCustomMagic(CustomMagicItem item)
+        {
+            if (item?.Property == null) return;
+
+            if (_history != null)
+            {
+                var cmd = new RemovePropertyCommand(_entity, item.Property, "Remove Custom Magic");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.RemoveProperty(item.Property);
+            }
+
+            HasSessionChanges = true;
+            OnPropertyChanged(nameof(CustomMagicList));
+        }
+
+        public void UpdateCustomMagic(CustomMagicItem item, ulong newBitmask, int newChance)
+        {
+            if (item?.Property == null) return;
+
+            item.Property.Bitmask = newBitmask;
+            item.Property.Chance = newChance;
+            item.Bitmask = newBitmask;
+            item.Chance = newChance;
+
+            HasSessionChanges = true;
+            OnPropertyChanged(nameof(CustomMagicList));
+        }
+    }
+
+    /// <summary>
+    /// Represents a CUSTOMMAGIC entry for display.
+    /// </summary>
+    public class CustomMagicItem
+    {
+        public ulong Bitmask { get; set; }
+        public int Chance { get; set; }
+        public BitmaskChanceProperty Property { get; set; }
+
+        // Path helpers for UI binding
+        public bool HasFire => (Bitmask & (1UL << 0)) != 0;
+        public bool HasAir => (Bitmask & (1UL << 1)) != 0;
+        public bool HasWater => (Bitmask & (1UL << 2)) != 0;
+        public bool HasEarth => (Bitmask & (1UL << 3)) != 0;
+        public bool HasAstral => (Bitmask & (1UL << 4)) != 0;
+        public bool HasDeath => (Bitmask & (1UL << 5)) != 0;
+        public bool HasNature => (Bitmask & (1UL << 6)) != 0;
+        public bool HasBlood => (Bitmask & (1UL << 7)) != 0;
+
+        public string PathsDisplay
+        {
+            get
+            {
+                var paths = new List<string>();
+                if (HasFire) paths.Add("F");
+                if (HasAir) paths.Add("A");
+                if (HasWater) paths.Add("W");
+                if (HasEarth) paths.Add("E");
+                if (HasAstral) paths.Add("S");
+                if (HasDeath) paths.Add("D");
+                if (HasNature) paths.Add("N");
+                if (HasBlood) paths.Add("B");
+                return paths.Count > 0 ? string.Join("", paths) : "(none)";
+            }
+        }
+
+        public string Display => $"{PathsDisplay} @ {Chance}%";
     }
 
     /// <summary>

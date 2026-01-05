@@ -224,7 +224,6 @@ namespace Dom5Edit.Entities
         public void RemoveProperty(Property property)
         {
             _properties.Remove(property);
-            _properties = _properties.OrderBy(sort_properties).ToList();
         }
 
         public void ClearProperties()

@@ -108,6 +108,12 @@ namespace Dom5Editor.Data
         public string Description { get; set; }
 
         /// <summary>
+        /// For reference types, specifies the target entity type (monster, item, montag, nametype, nation, spell, site).
+        /// </summary>
+        [JsonPropertyName("refType")]
+        public string RefType { get; set; }
+
+        /// <summary>
         /// Returns true if this is a flag (boolean) command.
         /// </summary>
         public bool IsFlag => Type == "flag";
@@ -116,6 +122,16 @@ namespace Dom5Editor.Data
         /// Returns true if this is an integer value command.
         /// </summary>
         public bool IsInt => Type == "int";
+
+        /// <summary>
+        /// Returns true if this is a reference to another entity.
+        /// </summary>
+        public bool IsRef => Type == "ref";
+
+        /// <summary>
+        /// Returns true if this is a bitmask+chance command (like CUSTOMMAGIC).
+        /// </summary>
+        public bool IsBitmaskChance => Type == "bitmaskChance";
 
         /// <summary>
         /// Returns true if this command has custom colors.

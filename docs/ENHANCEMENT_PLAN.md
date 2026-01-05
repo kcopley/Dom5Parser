@@ -2,6 +2,8 @@
 
 This document outlines the planned enhancements to build out Dom5Parser into a full UI-based .dm file editor.
 
+**Last Updated:** 2026-01-05
+
 ## Goal
 
 Create a UI-based editor that:
@@ -16,9 +18,11 @@ Create a UI-based editor that:
 
 ### Work Priorities
 
-1. ~~**JSON-Driven UI** - Replace hardcoded command arrays with JSON configuration~~ (COMPLETE)
-2. ~~**Remove Legacy Code** - Clean up fallback arrays and deprecated ViewModels~~ (COMPLETE)
-3. **Feature Expansion** - Reference editors, CUSTOMMAGIC, sprite preview
+1. ~~**JSON-Driven UI** - Badge system with JSON configuration~~ (COMPLETE)
+2. ~~**Undo/Redo Infrastructure** - CommandHistory integration~~ (COMPLETE)
+3. ~~**ChangesMod Session Tracking** - Track edits for export~~ (COMPLETE)
+4. **Other Entity Views** - WeaponView, ArmorView, SpellView, etc.
+5. **Feature Expansion** - CUSTOMMAGIC editor, entity navigation, sprite preview
 
 ### Command Coverage
 
@@ -160,10 +164,9 @@ See `BADGE_UI_REDESIGN.md` for full details.
 - `PropertyItem` / `AvailablePropertyItem` data models with ValueChanged event
 - JSON configuration (`monster_badges.json`) with renderer hints
 - `BadgeConfigLoader` - Loads property config from JSON (with `#` prefix handling for CommandsMap)
-- Integration with EntityViewModels (JSON-only, no fallback)
-- Removed all hardcoded Command arrays
-- Removed all fallback methods
+- Integration with EntityViewModels via `BuildBadgesFromSection()`
 - Fixed JSON loading path resolution for .NET 8
+- Removed legacy hardcoded command arrays (all commands now driven by JSON)
 
 ### 6.4: Entity View Architecture
 
@@ -227,12 +230,12 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 
 ### Quick Wins (Low Effort)
 
-1. Remove debug code from EntitySet.cs (lines 72-76)
-2. Make `_StringExported` static in StringOrIDRef.cs
-3. Remove unused usings in Reference.cs
-4. Fix HasFlag usage in IDEntity.cs line 113
-5. Make throwing methods abstract in IDEntity.cs
-6. Remove unnecessary re-sort in IDEntity.RemoveProperty()
+1. ~~Remove debug code from EntitySet.cs~~ (done)
+2. ~~Make `_StringExported` static in StringOrIDRef.cs~~ (done)
+3. ~~Remove unused usings in Reference.cs~~ (done)
+4. ~~Fix HasFlag usage in IDEntity.cs~~ (done)
+5. Make throwing methods abstract in IDEntity.cs (would require making class abstract)
+6. ~~Remove unnecessary re-sort in IDEntity.RemoveProperty()~~ (done)
 
 ### Medium Effort
 
@@ -251,22 +254,29 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 ## Feature Backlog (Post-Redesign)
 
 ### HIGH Priority
+- **Other Entity Views** - Weapon, Armor, Spell, Item, Site, Nation, Event views
 - CUSTOMMAGIC editor (complex bitmask)
-- ~~Reference editors (WEAPON, ARMOR, COPYSTATS, STARTITEM)~~ WEAPON/ARMOR complete
-- Reset to original buttons
-- Navigation between entity views (weapon/armor hyperlinks)
+- Navigation between entity views (clicking weapon/armor to view that entity)
+- Reset to original buttons (per-property revert)
 
 ### MEDIUM Priority
-- ~~Shapechange commands~~ Complete (29 commands in general section)
-- ~~Summoning commands~~ Complete (16 commands in general section)
-- ~~Property tooltips from metadata~~ Complete (all commands have descriptions)
-- Sprite preview
+- Typable combobox for ability dropdowns (like weapon/armor selectors) - improves discoverability
+- Weapon/Armor list with stat columns (header row with ID, Name, Atk, Dmg, etc. for weapons; ID, Name, Prot, Def, Enc for armor)
+- Sprite preview (TGA loading infrastructure exists)
+- NAMETYPE, MONTAG editors
+- Validation report panel
 
 ### LOW Priority
-- ~~Recruitment commands~~ Complete (in general section)
-- NAMETYPE, MONTAG editors
 - Keyboard shortcuts within views
 - Copy/paste properties
+- Mod comparison/diff tool
+
+### Completed
+- ~~Reference editors (WEAPON, ARMOR, COPYSTATS)~~ - Equipment section complete
+- ~~Shapechange commands~~ - In general section
+- ~~Summoning commands~~ - In general section
+- ~~Property tooltips from metadata~~ - All commands have descriptions
+- ~~Recruitment commands~~ - In general section
 
 ---
 
