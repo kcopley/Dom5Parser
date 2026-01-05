@@ -38,7 +38,7 @@
                             IsSessionEdit="{Binding IsSessionEdit}"
                             IsInherited="{Binding IsInherited}"
                             CanRemove="{Binding CanRemove}"
-                            RemoveCommand="{Binding RemoveCommand, ElementName=Root}"
+                            RemoveCommand="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=local:BadgeWrapPanel}}"
                             CommandParameter="{Binding}"
                             Tooltip="{Binding Tooltip}"/>
                     </DataTemplate>

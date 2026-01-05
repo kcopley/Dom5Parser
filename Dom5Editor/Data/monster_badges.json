@@ -7,18 +7,90 @@
       "renderer": "statsGrid",
       "readOnly": false,
       "commands": [
-        { "name": "hp", "display": "HP", "type": "int", "default": 10 },
-        { "name": "str", "display": "STR", "type": "int", "default": 10 },
-        { "name": "att", "display": "ATT", "type": "int", "default": 10 },
-        { "name": "def", "display": "DEF", "type": "int", "default": 10 },
-        { "name": "mr", "display": "MR", "type": "int", "default": 10 },
-        { "name": "mor", "display": "MOR", "type": "int", "default": 10 },
-        { "name": "size", "display": "SIZE", "type": "int", "default": 2 },
-        { "name": "prot", "display": "PROT", "type": "int", "default": 0 },
-        { "name": "enc", "display": "ENC", "type": "int", "default": 3 },
-        { "name": "prec", "display": "PREC", "type": "int", "default": 10 },
-        { "name": "ap", "display": "AP", "type": "int", "default": 12 },
-        { "name": "mapmove", "display": "MAP", "type": "int", "default": 1 }
+        {
+          "name": "hp",
+          "display": "HP",
+          "type": "int",
+          "default": 10,
+          "description": "Sets hit points."
+        },
+        {
+          "name": "str",
+          "display": "STR",
+          "type": "int",
+          "default": 10,
+          "description": "Sets strength."
+        },
+        {
+          "name": "att",
+          "display": "ATT",
+          "type": "int",
+          "default": 10,
+          "description": "Sets attack skill."
+        },
+        {
+          "name": "def",
+          "display": "DEF",
+          "type": "int",
+          "default": 10,
+          "description": "Sets defense skill."
+        },
+        {
+          "name": "mr",
+          "display": "MR",
+          "type": "int",
+          "default": 10,
+          "description": "Sets magic resistance."
+        },
+        {
+          "name": "mor",
+          "display": "MOR",
+          "type": "int",
+          "default": 10,
+          "description": "Sets morale."
+        },
+        {
+          "name": "size",
+          "display": "SIZE",
+          "type": "int",
+          "default": 2,
+          "description": "Sets unit size (1-6)."
+        },
+        {
+          "name": "prot",
+          "display": "PROT",
+          "type": "int",
+          "default": 0,
+          "description": "Sets natural protection."
+        },
+        {
+          "name": "enc",
+          "display": "ENC",
+          "type": "int",
+          "default": 3,
+          "description": "Sets encumbrance."
+        },
+        {
+          "name": "prec",
+          "display": "PREC",
+          "type": "int",
+          "default": 10,
+          "description": "Sets precision."
+        },
+        {
+          "name": "ap",
+          "display": "AP",
+          "type": "int",
+          "default": 12,
+          "description": "Sets action points (movement in combat)."
+        },
+        {
+          "name": "mapmove",
+          "display": "MAP",
+          "type": "int",
+          "default": 1,
+          "description": "Sets strategic map movement."
+        }
       ]
     },
     {
@@ -28,8 +100,29 @@
       "renderer": "magicPathEditor",
       "readOnly": false,
       "commands": [
-        { "name": "magicskill", "display": "Magic Skill", "type": "path", "paths": ["F", "A", "W", "E", "S", "D", "N", "B", "H"] },
-        { "name": "custommagic", "display": "Random Magic", "type": "randompaths" }
+        {
+          "name": "magicskill",
+          "display": "Magic Skill",
+          "type": "path",
+          "paths": [
+            "F",
+            "A",
+            "W",
+            "E",
+            "S",
+            "D",
+            "N",
+            "B",
+            "H"
+          ],
+          "description": "Rituals cast by the monster."
+        },
+        {
+          "name": "custommagic",
+          "display": "Random Magic",
+          "type": "randompaths",
+          "description": "Nbr Magic Path mask causes the mod to crash."
+        }
       ]
     },
     {
@@ -39,37 +132,188 @@
       "renderer": "badge",
       "readOnly": true,
       "commands": [
-        { "name": "humanoid", "display": "Humanoid", "type": "flag" },
-        { "name": "mountedhumanoid", "display": "Mounted Human", "type": "flag" },
-        { "name": "quadruped", "display": "Quadruped", "type": "flag" },
-        { "name": "lizard", "display": "Lizard", "type": "flag" },
-        { "name": "naga", "display": "Naga", "type": "flag" },
-        { "name": "snake", "display": "Snake", "type": "flag" },
-        { "name": "bird", "display": "Bird", "type": "flag" },
-        { "name": "djinn", "display": "Djinn", "type": "flag" },
-        { "name": "troglodyte", "display": "Troglodyte", "type": "flag" },
-        { "name": "miscshape", "display": "Misc Shape", "type": "flag" },
-        { "name": "mounted", "display": "Mounted", "type": "flag" },
-        { "name": "undead", "display": "Undead", "type": "flag" },
-        { "name": "demon", "display": "Demon", "type": "flag" },
-        { "name": "magicbeing", "display": "Magic Being", "type": "flag" },
-        { "name": "holy", "display": "Holy", "type": "flag" },
-        { "name": "animal", "display": "Animal", "type": "flag" },
-        { "name": "unique", "display": "Unique", "type": "flag" },
-        { "name": "inanimate", "display": "Inanimate", "type": "flag" },
-        { "name": "mindless", "display": "Mindless", "type": "flag" },
-        { "name": "blind", "display": "Blind", "type": "flag" },
-        { "name": "coldblood", "display": "Cold Blood", "type": "flag" },
-        { "name": "immortal", "display": "Immortal", "type": "flag" },
-        { "name": "female", "display": "Female", "type": "flag" },
-        { "name": "immobile", "display": "Immobile", "type": "flag" },
-        { "name": "stonebeing", "display": "Stone Being", "type": "flag" },
-        { "name": "plant", "display": "Plant", "type": "flag" },
-        { "name": "drake", "display": "Drake", "type": "flag" },
-        { "name": "bug", "display": "Bug", "type": "flag" },
-        { "name": "lesserhorror", "display": "Lesser Horror", "type": "flag" },
-        { "name": "greaterhorror", "display": "Greater Horror", "type": "flag" },
-        { "name": "doomhorror", "display": "Doom Horror", "type": "flag" }
+        {
+          "name": "humanoid",
+          "display": "Humanoid",
+          "type": "flag"
+        },
+        {
+          "name": "mountedhumanoid",
+          "display": "Mounted Human",
+          "type": "flag"
+        },
+        {
+          "name": "quadruped",
+          "display": "Quadruped",
+          "type": "flag",
+          "description": "Head Four legged beasts."
+        },
+        {
+          "name": "lizard",
+          "display": "Lizard",
+          "type": "flag",
+          "description": "Feet Four legged beast, but lower."
+        },
+        {
+          "name": "naga",
+          "display": "Naga",
+          "type": "flag",
+          "description": "Miscs Snake like lower part and a humanoid upper body."
+        },
+        {
+          "name": "snake",
+          "display": "Snake",
+          "type": "flag",
+          "description": "Slots can only have crowns Use this for snakes, wyrms and other monsters without legs."
+        },
+        {
+          "name": "bird",
+          "display": "Bird",
+          "type": "flag",
+          "description": "Hands, bow, head (crown), body, feet, 2 misc Use this for birds, rocs, couatl and similar things."
+        },
+        {
+          "name": "djinn",
+          "display": "Djinn",
+          "type": "flag",
+          "description": "Monster Modding, Special Abilities Use this for djinns with a humanoid body, but no lower part."
+        },
+        {
+          "name": "troglodyte",
+          "display": "Troglodyte",
+          "type": "flag",
+          "description": "Can only have a limited number of special abilities so don\u2019t Use this for humanoids without a head."
+        },
+        {
+          "name": "miscshape",
+          "display": "Misc Shape",
+          "type": "flag",
+          "description": "Apparent on gods as dominion strength and path costs are Use this for strange things like cubes or fountains."
+        },
+        {
+          "name": "mounted",
+          "display": "Mounted",
+          "type": "flag",
+          "description": "Squad"
+        },
+        {
+          "name": "undead",
+          "display": "Undead",
+          "type": "flag",
+          "description": "#amphibian This monster is an undead."
+        },
+        {
+          "name": "demon",
+          "display": "Demon",
+          "type": "flag",
+          "description": "The monster floats in the air and can cross rivers."
+        },
+        {
+          "name": "magicbeing",
+          "display": "Magic Being",
+          "type": "flag",
+          "description": "Ground bound monsters."
+        },
+        {
+          "name": "holy",
+          "display": "Holy",
+          "type": "flag",
+          "description": "Cannot become prophet, cannot be charmed and has no upkeep Holy (sacred) troops can be blessed by priests."
+        },
+        {
+          "name": "animal",
+          "display": "Animal",
+          "type": "flag",
+          "description": "Indicates that the monster is an animal."
+        },
+        {
+          "name": "unique",
+          "display": "Unique",
+          "type": "flag",
+          "description": "Immobile does not affect map move, use \"#mapmove 0\" to There can only be one of this monster."
+        },
+        {
+          "name": "inanimate",
+          "display": "Inanimate",
+          "type": "flag",
+          "description": "#stormpower attribute, this command is redundant."
+        },
+        {
+          "name": "mindless",
+          "display": "Mindless",
+          "type": "flag"
+        },
+        {
+          "name": "blind",
+          "display": "Blind",
+          "type": "flag",
+          "description": "The pass connects."
+        },
+        {
+          "name": "coldblood",
+          "display": "Cold Blood",
+          "type": "flag",
+          "description": "#dungeon Cold blooded like the lizards of C\u2019tis."
+        },
+        {
+          "name": "immortal",
+          "display": "Immortal",
+          "type": "flag"
+        },
+        {
+          "name": "female",
+          "display": "Female",
+          "type": "flag",
+          "description": "Command can be used multiple times on the same monster for Being female is a minor advantage that makes you immune to more than 1 starting weapon."
+        },
+        {
+          "name": "immobile",
+          "display": "Immobile",
+          "type": "flag",
+          "description": "Led to combat by a beast master."
+        },
+        {
+          "name": "stonebeing",
+          "display": "Stone Being",
+          "type": "flag",
+          "description": "#stormimmune This monster is a stone being and immune to petrification."
+        },
+        {
+          "name": "plant",
+          "display": "Plant",
+          "type": "flag",
+          "description": "#spiritform The monster is a plant."
+        },
+        {
+          "name": "drake",
+          "display": "Drake",
+          "type": "flag",
+          "description": "#lanceok The monster is a drake and is affected by the Dragon Master This monster can use lances even though it is not flying or ability."
+        },
+        {
+          "name": "bug",
+          "display": "Bug",
+          "type": "flag",
+          "description": "#pooramphibian Monsters with this tag are summoned by the Swarm spell on This monster can travel under water, but is hindered by it."
+        },
+        {
+          "name": "lesserhorror",
+          "display": "Lesser Horror",
+          "type": "flag",
+          "description": "#nospiritform Monsters with this tag are used as lesser horrors."
+        },
+        {
+          "name": "greaterhorror",
+          "display": "Greater Horror",
+          "type": "flag",
+          "description": "This monster is an illusion."
+        },
+        {
+          "name": "doomhorror",
+          "display": "Doom Horror",
+          "type": "flag",
+          "description": "#divinebeing Monsters with this tag are used as doom horrors."
+        }
       ]
     },
     {
@@ -79,70 +323,841 @@
       "renderer": "badge",
       "readOnly": false,
       "commands": [
-        { "name": "flying", "display": "Flying", "type": "flag" },
-        { "name": "aquatic", "display": "Aquatic", "type": "flag" },
-        { "name": "amphibian", "display": "Amphibian", "type": "flag" },
-        { "name": "pooramphibian", "display": "Poor Amphib", "type": "flag" },
-        { "name": "float", "display": "Float", "type": "flag" },
-        { "name": "swimming", "display": "Swimming", "type": "flag" },
-        { "name": "teleport", "display": "Teleport", "type": "flag" },
-        { "name": "mapteleport", "display": "Map Teleport", "type": "flag" },
-        { "name": "blink", "display": "Blink", "type": "flag" },
-        { "name": "forestsurvival", "display": "Forest Surv", "type": "flag" },
-        { "name": "mountainsurvival", "display": "Mountain Surv", "type": "flag" },
-        { "name": "swampsurvival", "display": "Swamp Surv", "type": "flag" },
-        { "name": "wastesurvival", "display": "Waste Surv", "type": "flag" },
-        { "name": "snow", "display": "Snow Move", "type": "flag" },
-        { "name": "noleader", "display": "No Leader", "type": "flag" },
-        { "name": "poorleader", "display": "Poor Leader", "type": "flag" },
-        { "name": "okleader", "display": "OK Leader", "type": "flag" },
-        { "name": "goodleader", "display": "Good Leader", "type": "flag" },
-        { "name": "expertleader", "display": "Expert Leader", "type": "flag" },
-        { "name": "superiorleader", "display": "Superior Ldr", "type": "flag" },
-        { "name": "nomagicleader", "display": "No Mag Ldr", "type": "flag" },
-        { "name": "poormagicleader", "display": "Poor Mag Ldr", "type": "flag" },
-        { "name": "okmagicleader", "display": "OK Mag Ldr", "type": "flag" },
-        { "name": "goodmagicleader", "display": "Good Mag Ldr", "type": "flag" },
-        { "name": "expertmagicleader", "display": "Expert Mag Ldr", "type": "flag" },
-        { "name": "superiormagicleader", "display": "Sup Mag Ldr", "type": "flag" },
-        { "name": "noundeadleader", "display": "No Und Ldr", "type": "flag" },
-        { "name": "poorundeadleader", "display": "Poor Und Ldr", "type": "flag" },
-        { "name": "okundeadleader", "display": "OK Und Ldr", "type": "flag" },
-        { "name": "goodundeadleader", "display": "Good Und Ldr", "type": "flag" },
-        { "name": "expertundeadleader", "display": "Expert Und Ldr", "type": "flag" },
-        { "name": "superiorundeadleader", "display": "Sup Und Ldr", "type": "flag" },
-        { "name": "heal", "display": "Heal", "type": "flag" },
-        { "name": "noheal", "display": "No Heal", "type": "flag" },
-        { "name": "healer", "display": "Healer", "type": "flag" },
-        { "name": "autohealer", "display": "Auto Healer", "type": "flag" },
-        { "name": "neednoteat", "display": "No Eat", "type": "flag" },
-        { "name": "taxcollector", "display": "Tax Collector", "type": "flag" },
-        { "name": "inquisitor", "display": "Inquisitor", "type": "flag" },
-        { "name": "mason", "display": "Mason", "type": "flag" },
-        { "name": "localsun", "display": "Local Sun", "type": "flag" },
-        { "name": "commaster", "display": "Com Master", "type": "flag" },
-        { "name": "comslave", "display": "Com Slave", "type": "flag" },
-        { "name": "spellsinger", "display": "Spellsinger", "type": "flag" },
-        { "name": "combatcaster", "display": "Combat Caster", "type": "flag" },
-        { "name": "drainimmune", "display": "Drain Immune", "type": "flag" },
-        { "name": "divineins", "display": "Divine Ins", "type": "flag" },
-        { "name": "noitem", "display": "No Item", "type": "flag" },
-        { "name": "spy", "display": "Spy", "type": "flag" },
-        { "name": "assassin", "display": "Assassin", "type": "flag" },
-        { "name": "reqlab", "display": "Req Lab", "type": "flag" },
-        { "name": "reqtemple", "display": "Req Temple", "type": "flag" },
-        { "name": "stealthy", "display": "Stealthy", "type": "int", "default": 0 },
-        { "name": "seduce", "display": "Seduce", "type": "int", "default": 0 },
-        { "name": "popkill", "display": "Pop Kill", "type": "int", "default": 0 },
-        { "name": "incunrest", "display": "Inc Unrest", "type": "int", "default": 0 },
-        { "name": "spreaddom", "display": "Spread Dom", "type": "int", "default": 0 },
-        { "name": "patrolbonus", "display": "Patrol Bonus", "type": "int", "default": 0 },
-        { "name": "supplybonus", "display": "Supply Bonus", "type": "int", "default": 0 },
-        { "name": "startage", "display": "Start Age", "type": "int", "default": 0 },
-        { "name": "maxage", "display": "Max Age", "type": "int", "default": 0 },
-        { "name": "gcost", "display": "Gold Cost", "type": "int", "default": 0 },
-        { "name": "rcost", "display": "Res Cost", "type": "int", "default": 0 },
-        { "name": "rpcost", "display": "RP Cost", "type": "int", "default": 0 }
+        {
+          "name": "flying",
+          "display": "Flying",
+          "type": "flag",
+          "description": "#autocompete This monster can fly."
+        },
+        {
+          "name": "aquatic",
+          "display": "Aquatic",
+          "type": "flag",
+          "description": "Retained experience, curses, afflictions, magic etc."
+        },
+        {
+          "name": "amphibian",
+          "display": "Amphibian",
+          "type": "flag",
+          "description": "This monster is an undead."
+        },
+        {
+          "name": "pooramphibian",
+          "display": "Poor Amphib",
+          "type": "flag",
+          "description": "Monsters with this tag are summoned by the Swarm spell on This monster can travel under water, but is hindered by it."
+        },
+        {
+          "name": "float",
+          "display": "Float",
+          "type": "flag",
+          "description": "#demon The monster floats in the air and can cross rivers."
+        },
+        {
+          "name": "swimming",
+          "display": "Swimming",
+          "type": "flag",
+          "description": "#uwbug The monster can cross rivers."
+        },
+        {
+          "name": "teleport",
+          "display": "Teleport",
+          "type": "flag",
+          "description": "But only grants teleport ability on the map, not 1+ = Can storm forts even if it is stationary (map move 0), in combat."
+        },
+        {
+          "name": "mapteleport",
+          "display": "Map Teleport",
+          "type": "flag",
+          "description": "#statstorm <value> Like #teleport but only grants teleport ability on the map, not 1+ = Can storm forts even if it is stationary (map move 0), in combat."
+        },
+        {
+          "name": "blink",
+          "display": "Blink",
+          "type": "flag",
+          "description": "#statbreak <value> Like #teleport, but only in combat."
+        },
+        {
+          "name": "sailing",
+          "display": "Sailing",
+          "type": "int",
+          "default": 0,
+          "description": "This monster can sneak into enemy provinces."
+        },
+        {
+          "name": "farsail",
+          "display": "Far Sail",
+          "type": "flag",
+          "description": "#dancenratt <attacks> #norange The number of attacks made per combat round."
+        },
+        {
+          "name": "domsail",
+          "display": "Dominion Sail",
+          "type": "flag",
+          "description": "#tradecoast <income boost in percent> The nation's Dominion enables all units to sail like the dark Income bonus for coastal forts."
+        },
+        {
+          "name": "landrec",
+          "display": "Land Recruit",
+          "type": "flag",
+          "description": "\u201d<monster name>\u201d #(terrain)fortrec \"<monster name>\" Add a unit to the list of recruitable units for this nation in This unit can be recruited in (terrain) provinces wit."
+        },
+        {
+          "name": "noriverpass",
+          "display": "No River Cross",
+          "type": "flag",
+          "description": "The commands in this section deal with stealth, spying and The monster is unable to cross rivers even when they are various forms of assassination."
+        },
+        {
+          "name": "unteleportable",
+          "display": "Unteleportable",
+          "type": "flag",
+          "description": "Its owner and attacks automatically, like the dancing trident."
+        },
+        {
+          "name": "forestsurvival",
+          "display": "Forest Surv",
+          "type": "flag",
+          "description": "#stealthy in order to be meaningful."
+        },
+        {
+          "name": "mountainsurvival",
+          "display": "Mountain Surv",
+          "type": "flag",
+          "description": "Gives the monster the ability to seduce like a Nagini."
+        },
+        {
+          "name": "swampsurvival",
+          "display": "Swamp Surv",
+          "type": "flag",
+          "description": "Standard"
+        },
+        {
+          "name": "wastesurvival",
+          "display": "Waste Surv",
+          "type": "flag",
+          "description": "Value indicates the difficulty of the morale check, 10 is Monster has the Waste Survival skill."
+        },
+        {
+          "name": "snow",
+          "display": "Snow Move",
+          "type": "flag",
+          "description": "Underwater"
+        },
+        {
+          "name": "noleader",
+          "display": "No Leader",
+          "type": "flag",
+          "description": "The mount's armor."
+        },
+        {
+          "name": "poorleader",
+          "display": "Poor Leader",
+          "type": "flag",
+          "description": "If this is set to one the mount is also a commander."
+        },
+        {
+          "name": "okleader",
+          "display": "OK Leader",
+          "type": "flag",
+          "description": "Humans that carry a throne with an emperor in it."
+        },
+        {
+          "name": "goodleader",
+          "display": "Good Leader",
+          "type": "flag",
+          "description": "Voluntarily in order to fight on the ground."
+        },
+        {
+          "name": "expertleader",
+          "display": "Expert Leader",
+          "type": "flag",
+          "description": "Ground"
+        },
+        {
+          "name": "superiorleader",
+          "display": "Superior Ldr",
+          "type": "flag",
+          "description": "Dominions 6 system of seperate stats for rider and mount is Leadership value."
+        },
+        {
+          "name": "nomagicleader",
+          "display": "No Mag Ldr",
+          "type": "flag",
+          "description": "Increases undead leadership by this amount."
+        },
+        {
+          "name": "poormagicleader",
+          "display": "Poor Mag Ldr",
+          "type": "flag",
+          "description": "An undead or a demon."
+        },
+        {
+          "name": "okmagicleader",
+          "display": "OK Mag Ldr",
+          "type": "flag",
+          "description": "Command"
+        },
+        {
+          "name": "goodmagicleader",
+          "display": "Good Mag Ldr",
+          "type": "flag",
+          "description": "All units under the command of this monster have their morale This monster has an innate ability to command 100 magic increased by <bonus> in addition to modifiers from base beings."
+        },
+        {
+          "name": "expertmagicleader",
+          "display": "Expert Mag Ldr",
+          "type": "flag",
+          "description": "#beastmaster <bonus> This monster has an innate ability to command 150 magic All animals under the command of this monster have their beings."
+        },
+        {
+          "name": "superiormagicleader",
+          "display": "Sup Mag Ldr",
+          "type": "flag",
+          "description": "All slaves under the command of this monster have their This monster has an innate ability to command 200 magic morale increased by <bonus>."
+        },
+        {
+          "name": "noundeadleader",
+          "display": "No Und Ldr",
+          "type": "flag",
+          "description": "Can only deploy in the skirmish formation and will attack the This monster cannot lead undead units when it is a commander enemy without regard for any battle plan."
+        },
+        {
+          "name": "poorundeadleader",
+          "display": "Poor Und Ldr",
+          "type": "flag",
+          "description": "A formation fighter is well drilled in using tight formations and This monster has an innate ability to command 10 undead can fit more units into one square."
+        },
+        {
+          "name": "okundeadleader",
+          "display": "OK Und Ldr",
+          "type": "flag",
+          "description": "#bodyguard <bonus> This monster has an innate ability to command 50 undead The monster's morale is increased by <bonus> when its orders beings."
+        },
+        {
+          "name": "goodundeadleader",
+          "display": "Good Und Ldr",
+          "type": "flag"
+        },
+        {
+          "name": "expertundeadleader",
+          "display": "Expert Und Ldr",
+          "type": "flag",
+          "description": "#standard <bonus> This monster has an innate ability to command 150 undead The monster increases the morale of units in the same squad by beings."
+        },
+        {
+          "name": "superiorundeadleader",
+          "display": "Sup Und Ldr",
+          "type": "flag"
+        },
+        {
+          "name": "magiccommand",
+          "display": "Magic Cmd",
+          "type": "int",
+          "default": 0,
+          "description": "And herded into battle."
+        },
+        {
+          "name": "undisleader",
+          "display": "Undis Leader",
+          "type": "int",
+          "default": 0,
+          "description": "(getting two or more levels of the same random path from 1=will negate undisciplined on his followers."
+        },
+        {
+          "name": "inspirational",
+          "display": "Inspirational",
+          "type": "flag",
+          "description": "#bloodrange."
+        },
+        {
+          "name": "inspiringres",
+          "display": "Inspiring Res",
+          "type": "flag",
+          "description": "#pillagebonus #divineins."
+        },
+        {
+          "name": "heal",
+          "display": "Heal",
+          "type": "flag",
+          "description": "#foolscouts <value> Grants Pangaea-like healing powers to the monster The monster creates the false impression of uniformity in its (Recuperation special ability)."
+        },
+        {
+          "name": "noheal",
+          "display": "No Heal",
+          "type": "flag",
+          "description": "Only contain one type of troop."
+        },
+        {
+          "name": "doheal",
+          "display": "Do Heal",
+          "type": "flag",
+          "description": "Resistances because they are intended to be immune to any Unit heals normally despite not usually being able to heal."
+        },
+        {
+          "name": "healer",
+          "display": "Healer",
+          "type": "int",
+          "default": 0,
+          "description": "#bloodvengeance."
+        },
+        {
+          "name": "autohealer",
+          "display": "Auto Healer",
+          "type": "int",
+          "default": 0,
+          "description": "The monster automatically heals <value> afflictions from units."
+        },
+        {
+          "name": "autodishealer",
+          "display": "Auto Dis Heal",
+          "type": "int",
+          "default": 0,
+          "description": "Start age to zero."
+        },
+        {
+          "name": "plaguedoctor",
+          "display": "Plague Doc",
+          "type": "int",
+          "default": 0,
+          "description": "#landdamage <percent> A commander with this ability can use the make plague order."
+        },
+        {
+          "name": "neednoteat",
+          "display": "No Eat",
+          "type": "flag",
+          "description": "This monster doesn\u2019t need any food and doesn\u2019t consume any."
+        },
+        {
+          "name": "taxcollector",
+          "display": "Tax Collector",
+          "type": "flag",
+          "description": "Province, even if they are protected by a fort."
+        },
+        {
+          "name": "inquisitor",
+          "display": "Inquisitor",
+          "type": "flag",
+          "description": "#deathparalyze <aoe> This monster has a bonus when preaching against enemy The monster erupts in a paralyzing explosion on death, forcing Dominion."
+        },
+        {
+          "name": "mason",
+          "display": "Mason",
+          "type": "int",
+          "default": 0,
+          "description": "Nbr can be negative for montags."
+        },
+        {
+          "name": "castledef",
+          "display": "Castle Def",
+          "type": "int",
+          "default": 0,
+          "description": "#researchbonus."
+        },
+        {
+          "name": "localsun",
+          "display": "Local Sun",
+          "type": "flag",
+          "description": "The monster generates gold that is added to the treasury."
+        },
+        {
+          "name": "commaster",
+          "display": "Com Master",
+          "type": "flag"
+        },
+        {
+          "name": "comslave",
+          "display": "Com Slave",
+          "type": "flag"
+        },
+        {
+          "name": "chorusmaster",
+          "display": "Chorus Master",
+          "type": "flag",
+          "description": "#crossbreeder <value> The monster is automatically a chorus master and does not The monster is skilled in crossbreeding and gets a bonus when need to cast the Communion Master spell to join a chorus."
+        },
+        {
+          "name": "chorusslave",
+          "display": "Chorus Slave",
+          "type": "flag",
+          "description": "From the Blood magic school."
+        },
+        {
+          "name": "sabbathmaster",
+          "display": "Sabbath Master",
+          "type": "flag",
+          "description": "#inquisitor #sabbathslave."
+        },
+        {
+          "name": "sabbathslave",
+          "display": "Sabbath Slave",
+          "type": "flag",
+          "description": "Works just like the previous ability, except that at least three The monster is automatically a sabbath slave and does not monsters of this type must be present on the battlefield for the need to cast."
+        },
+        {
+          "name": "spellsinger",
+          "display": "Spellsinger",
+          "type": "flag"
+        },
+        {
+          "name": "combatcaster",
+          "display": "Combat Caster",
+          "type": "flag"
+        },
+        {
+          "name": "drainimmune",
+          "display": "Drain Immune",
+          "type": "flag",
+          "description": "#falsesupply #magicimmune."
+        },
+        {
+          "name": "divineins",
+          "display": "Divine Ins",
+          "type": "flag",
+          "description": "The monster can use his own blood equal to this number of There can only be a number of divinely inspired researchers blood slaves for combat spell casting."
+        },
+        {
+          "name": "noitem",
+          "display": "No Item",
+          "type": "flag",
+          "description": "Monster (up to the limit of three)."
+        },
+        {
+          "name": "spy",
+          "display": "Spy",
+          "type": "flag",
+          "description": "Not exceed the value of this ability."
+        },
+        {
+          "name": "assassin",
+          "display": "Assassin",
+          "type": "flag",
+          "description": "This ability is used by certain horrors to make them move on This monster is an assassin."
+        },
+        {
+          "name": "invisible",
+          "display": "Invisible",
+          "type": "flag",
+          "description": "#slothpower #unseen."
+        },
+        {
+          "name": "illusion",
+          "display": "Illusion",
+          "type": "flag",
+          "description": ", all of these commands should be combined with."
+        },
+        {
+          "name": "falsearmy",
+          "display": "False Army",
+          "type": "int",
+          "default": 0,
+          "description": "Of its total hit points every turn it spends underwater (i."
+        },
+        {
+          "name": "foolscouts",
+          "display": "Fool Scouts",
+          "type": "int",
+          "default": 0,
+          "description": "Grants Pangaea-like healing powers to the monster The monster creates the false impression of uniformity in its (Recuperation special ability)."
+        },
+        {
+          "name": "unseen",
+          "display": "Unseen",
+          "type": "flag",
+          "description": "#deathpower #twistfate."
+        },
+        {
+          "name": "reqlab",
+          "display": "Req Lab",
+          "type": "flag",
+          "description": "Desertion Recruiting the monster requires a lab."
+        },
+        {
+          "name": "reqtemple",
+          "display": "Req Temple",
+          "type": "flag",
+          "description": "The monster only fights in one battle and then leaves, like the Recruiting the monster requires a temple."
+        },
+        {
+          "name": "stealthy",
+          "display": "Stealthy",
+          "type": "int",
+          "default": 0,
+          "description": "In order to be meaningful."
+        },
+        {
+          "name": "seduce",
+          "display": "Seduce",
+          "type": "int",
+          "default": 0,
+          "description": "The size in percent of normal size, default is."
+        },
+        {
+          "name": "succubus",
+          "display": "Succubus",
+          "type": "int",
+          "default": 0,
+          "description": "Mountain passes even if it is cold in the provinces the pass Gives the monster the dream seduction ability like a Succubus."
+        },
+        {
+          "name": "beckon",
+          "display": "Beckon",
+          "type": "int",
+          "default": 0,
+          "description": "#addrandomage <years> Gives the monster the ability to lure enemy commanders like Makes the monster start 1 to years (a random die) older."
+        },
+        {
+          "name": "popkill",
+          "display": "Pop Kill",
+          "type": "int",
+          "default": 0,
+          "description": "#commaster"
+        },
+        {
+          "name": "incunrest",
+          "display": "Inc Unrest",
+          "type": "int",
+          "default": 0,
+          "description": "Destroyed each turn."
+        },
+        {
+          "name": "domunrest",
+          "display": "Dom Unrest",
+          "type": "int",
+          "default": 0,
+          "description": "The nation will only be half as affected by the death/growth The nation's Dominion causes unrest."
+        },
+        {
+          "name": "spreaddom",
+          "display": "Spread Dom",
+          "type": "int",
+          "default": 0,
+          "description": "Magic tattoo like the units of Marverni and Sauromatia have."
+        },
+        {
+          "name": "patrolbonus",
+          "display": "Patrol Bonus",
+          "type": "int",
+          "default": 0,
+          "description": "When this monster dies, the unit that strikes the killing blow is A value of ten will make this monster count as ten extra cursed."
+        },
+        {
+          "name": "supplybonus",
+          "display": "Supply Bonus",
+          "type": "int",
+          "default": 0,
+          "description": "#drainimmune."
+        },
+        {
+          "name": "incprovdef",
+          "display": "Inc Prov Def",
+          "type": "int",
+          "default": 0,
+          "description": "Chance in percent that the throne will be destroyed each turn."
+        },
+        {
+          "name": "nobadevents",
+          "display": "No Bad Events",
+          "type": "int",
+          "default": 0,
+          "description": "Maximum of -3 /."
+        },
+        {
+          "name": "fortkill",
+          "display": "Fort Kill",
+          "type": "int",
+          "default": 0,
+          "description": "Commander) does not obey orders but does something else This monster will automatically destroy forts in the same instead."
+        },
+        {
+          "name": "thronekill",
+          "display": "Throne Kill",
+          "type": "int",
+          "default": 0,
+          "description": "The value divided by 10 is the amount increased per month."
+        },
+        {
+          "name": "curse",
+          "display": "Curse Aura",
+          "type": "int",
+          "default": 0,
+          "description": "Every turn any unit in the province has the indicated chance #claim (percent) to become cursed."
+        },
+        {
+          "name": "heretic",
+          "display": "Heretic",
+          "type": "int",
+          "default": 0,
+          "description": "#chorusmaster."
+        },
+        {
+          "name": "resources",
+          "display": "Resources",
+          "type": "int",
+          "default": 0,
+          "description": "The monster will become more powerful every time it dies, up The monster generates <value> resources in the province it is to at most limit number of deaths."
+        },
+        {
+          "name": "praise",
+          "display": "Praise",
+          "type": "int",
+          "default": 0,
+          "description": "#incscale <scale> The praise ability raises friendly dominion in the province."
+        },
+        {
+          "name": "researchbonus",
+          "display": "Research Bonus",
+          "type": "int",
+          "default": 0,
+          "description": "#siegebonus #slothresearch."
+        },
+        {
+          "name": "slothresearch",
+          "display": "Sloth Research",
+          "type": "flag",
+          "description": "#patrolbonus #inspiringres."
+        },
+        {
+          "name": "magicstudy",
+          "display": "Magic Study",
+          "type": "int",
+          "default": 0,
+          "description": "Between worlds and the home of horrors and the Void beings Research bonus depending on the magic scale of the province."
+        },
+        {
+          "name": "fixedresearch",
+          "display": "Fixed Research",
+          "type": "int",
+          "default": 0,
+          "description": "The monster produces a number of water gems that can be The monster produces this amount of research even without used in combat."
+        },
+        {
+          "name": "fastcast",
+          "display": "Fast Cast",
+          "type": "int",
+          "default": 0,
+          "description": "#mason #magicstudy."
+        },
+        {
+          "name": "bonusspells",
+          "display": "Bonus Spells",
+          "type": "int",
+          "default": 0,
+          "description": "#mastersmith <value> The monster gets the Innate Spellcaster ability and can cast a The monster's magic paths are counted as <value> higher than number of spells every combat round in addition to its."
+        },
+        {
+          "name": "mastersmith",
+          "display": "Master Smith",
+          "type": "int",
+          "default": 0,
+          "description": "The monster gets the Innate Spellcaster ability and can cast a The monster's magic paths are counted as <value> higher than number of spells every combat round in addition to its normal actual when fo."
+        },
+        {
+          "name": "masterrit",
+          "display": "Master Ritual",
+          "type": "int",
+          "default": 0,
+          "description": "Pathboost for the purpose of casting rituals."
+        },
+        {
+          "name": "beastmaster",
+          "display": "Beast Master",
+          "type": "int",
+          "default": 0,
+          "description": "This monster has an innate ability to command 150 magic All animals under the command of this monster have their beings."
+        },
+        {
+          "name": "taskmaster",
+          "display": "Task Master",
+          "type": "int",
+          "default": 0,
+          "description": "#elementrange."
+        },
+        {
+          "name": "reanimpriest",
+          "display": "Reanim Priest",
+          "type": "flag",
+          "description": "Number values to provide a random summon of a specific A priest with this attribute will be able to raise undead."
+        },
+        {
+          "name": "crossbreeder",
+          "display": "Crossbreeder",
+          "type": "int",
+          "default": 0,
+          "description": "The monster is automatically a chorus master and does not The monster is skilled in crossbreeding and gets a bonus when need to cast the Communion Master spell to join a chorus."
+        },
+        {
+          "name": "makepearls",
+          "display": "Make Pearls",
+          "type": "int",
+          "default": 0,
+          "description": "The monster has a <percent> chance of casting a random spell The monster can turn <value> water gems to <value> astral in combat instead of a good one."
+        },
+        {
+          "name": "douse",
+          "display": "Douse",
+          "type": "int",
+          "default": 0,
+          "description": "#allret <chance> This monster gets a blood magic bonus when searching for Extra chance of returning from any of the other planes a blood slaves."
+        },
+        {
+          "name": "carcasscollector",
+          "display": "Carcass Coll",
+          "type": "int",
+          "default": 0,
+          "description": "#tainted <chance> The monster can turn <value> nature gems to <value> death Chance in percent of being horror marked each turn."
+        },
+        {
+          "name": "gemprod",
+          "display": "Gem Prod",
+          "type": "int",
+          "default": 0,
+          "description": "Glamour magic cast by the monster have increased range."
+        },
+        {
+          "name": "startage",
+          "display": "Start Age",
+          "type": "int",
+          "default": 0,
+          "description": "In the same province."
+        },
+        {
+          "name": "maxage",
+          "display": "Max Age",
+          "type": "int",
+          "default": 0,
+          "description": "Disease healers should have higher values."
+        },
+        {
+          "name": "older",
+          "display": "Older",
+          "type": "int",
+          "default": 0,
+          "description": "Protects a unit when diseased."
+        },
+        {
+          "name": "yearaging",
+          "display": "Year Aging",
+          "type": "int",
+          "default": 0,
+          "description": "The following commands are exactly like the monster The wielder of this item will age this many extra years each commands with the same name, so no explanation or year."
+        },
+        {
+          "name": "xpgain",
+          "display": "XP Gain",
+          "type": "int",
+          "default": 0,
+          "description": "The Cold scale."
+        },
+        {
+          "name": "undisciplined",
+          "display": "Undisciplined",
+          "type": "flag",
+          "description": "Undisciplined monsters cannot be given orders in battle."
+        },
+        {
+          "name": "slave",
+          "display": "Slave",
+          "type": "flag",
+          "description": "Possess"
+        },
+        {
+          "name": "defector",
+          "display": "Defector",
+          "type": "int",
+          "default": 0,
+          "description": "Gets the turmoil discount back into the treasury when the The monster has a chance to become independent if owned by monster joins the army."
+        },
+        {
+          "name": "deserter",
+          "display": "Deserter",
+          "type": "flag",
+          "description": ", but the desertion chance is increased during less gold to recruit."
+        },
+        {
+          "name": "singlebattle",
+          "display": "Single Battle",
+          "type": "flag",
+          "description": "#reqtemple The monster only fights in one battle and then leaves, like the Recruiting the monster requires a temple."
+        },
+        {
+          "name": "insane",
+          "display": "Insane",
+          "type": "int",
+          "default": 0,
+          "description": "Grants acid resistance to the monster."
+        },
+        {
+          "name": "tainted",
+          "display": "Tainted",
+          "type": "int",
+          "default": 0,
+          "description": "The monster can turn <value> nature gems to <value> death Chance in percent of being horror marked each turn."
+        },
+        {
+          "name": "leper",
+          "display": "Leper",
+          "type": "int",
+          "default": 0,
+          "description": "Number of extra blood magic level for this purpose."
+        },
+        {
+          "name": "mounted",
+          "display": "Mounted",
+          "type": "flag",
+          "description": "Squad"
+        },
+        {
+          "name": "skilledrider",
+          "display": "Skilled Rider",
+          "type": "int",
+          "default": 0,
+          "description": "Demons require undead leadership Magic beings require A skilled rider will increase the Morale and Defence Skill of his magic leadership."
+        },
+        {
+          "name": "noforeignrec",
+          "display": "No Foreign Rec",
+          "type": "flag",
+          "description": "Nation cannot recruit independent units."
+        },
+        {
+          "name": "tolerateund",
+          "display": "Tolerate Und",
+          "type": "flag",
+          "description": "% random chance means +2 levels in the path."
+        },
+        {
+          "name": "nohof",
+          "display": "No Hall Fame",
+          "type": "flag",
+          "description": "Unit will change into this monster when made a prophet."
+        },
+        {
+          "name": "nowish",
+          "display": "No Wish",
+          "type": "flag",
+          "description": "The province."
+        },
+        {
+          "name": "gcost",
+          "display": "Gold Cost",
+          "type": "int",
+          "default": 0,
+          "description": "Sets the gold cost for recruitment."
+        },
+        {
+          "name": "rcost",
+          "display": "Res Cost",
+          "type": "int",
+          "default": 0,
+          "description": "Sets the resource cost."
+        },
+        {
+          "name": "rpcost",
+          "display": "RP Cost",
+          "type": "int",
+          "default": 0
+        }
       ]
     },
     {
@@ -152,34 +1167,640 @@
       "renderer": "badge",
       "readOnly": false,
       "commands": [
-        { "name": "awe", "display": "Awe", "type": "int", "default": 1 },
-        { "name": "fear", "display": "Fear", "type": "int", "default": 1 },
-        { "name": "berserk", "display": "Berserk", "type": "int", "default": 1 },
-        { "name": "ambidextrous", "display": "Ambidextrous", "type": "int", "default": 1 },
-        { "name": "darkvision", "display": "Darkvision", "type": "int", "default": 50 },
-        { "name": "trample", "display": "Trample", "type": "int", "default": 1 },
-        { "name": "deathcurse", "display": "Death Curse", "type": "int", "default": 1 },
-        { "name": "bodyguard", "display": "Bodyguard", "type": "int", "default": 1 },
-        { "name": "warning", "display": "Warning", "type": "int", "default": 1 },
-        { "name": "standard", "display": "Standard", "type": "int", "default": 1 },
-        { "name": "formationfighter", "display": "Formation", "type": "int", "default": 1 },
-        { "name": "patience", "display": "Patience", "type": "int", "default": 1 },
-        { "name": "chaospower", "display": "Chaos Power", "type": "int", "default": 1 },
-        { "name": "magicpower", "display": "Magic Power", "type": "int", "default": 1 },
-        { "name": "ethereal", "display": "Ethereal", "type": "int", "default": 1 },
-        { "name": "glamour", "display": "Glamour", "type": "int", "default": 1 },
-        { "name": "heat", "display": "Heat", "type": "int", "default": 1 },
-        { "name": "cold", "display": "Cold", "type": "int", "default": 1 },
-        { "name": "fireshield", "display": "Fire Shield", "type": "int", "default": 1 },
-        { "name": "poisoncloud", "display": "Poison Cloud", "type": "int", "default": 1 },
-        { "name": "diseasecloud", "display": "Disease Cloud", "type": "int", "default": 1 },
-        { "name": "poisonskin", "display": "Poison Skin", "type": "int", "default": 1 },
-        { "name": "poisonarmor", "display": "Poison Armor", "type": "int", "default": 1 },
-        { "name": "acidshield", "display": "Acid Shield", "type": "int", "default": 1 },
-        { "name": "sleepaura", "display": "Sleep Aura", "type": "int", "default": 1 },
-        { "name": "animalawe", "display": "Animal Awe", "type": "int", "default": 1 },
-        { "name": "sunawe", "display": "Sun Awe", "type": "int", "default": 1 },
-        { "name": "haltheretic", "display": "Halt Heretic", "type": "int", "default": 1 }
+        {
+          "name": "awe",
+          "display": "Awe",
+          "type": "int",
+          "default": 1,
+          "description": "#slimer <strength> Bonus can be a value of one or more."
+        },
+        {
+          "name": "fear",
+          "display": "Fear",
+          "type": "int",
+          "default": 1,
+          "description": "Anyone striking this monster may be horror marked."
+        },
+        {
+          "name": "dread",
+          "display": "Dread",
+          "type": "int",
+          "default": 1,
+          "description": "#sleepaura <area> Like fear, but negated by true sight."
+        },
+        {
+          "name": "berserk",
+          "display": "Berserk",
+          "type": "int",
+          "default": 1,
+          "description": "Until dead or until the monster that swallowed them is killed."
+        },
+        {
+          "name": "autoberserk",
+          "display": "Auto Berserk",
+          "type": "int",
+          "default": 0,
+          "description": "= will start the combat by going berserk."
+        },
+        {
+          "name": "ambidextrous",
+          "display": "Ambidextrous",
+          "type": "int",
+          "default": 1,
+          "description": "#xpgain #clumsy."
+        },
+        {
+          "name": "darkvision",
+          "display": "Darkvision",
+          "type": "int",
+          "default": 50,
+          "description": "Gives monster darkvision, lessening penalties for fighting."
+        },
+        {
+          "name": "truesight",
+          "display": "True Sight",
+          "type": "flag",
+          "description": "#firepower <bonus> True sight makes it possible to see through illusions and The monster will get stat increases or decreases depending on glamour."
+        },
+        {
+          "name": "spiritsight",
+          "display": "Spirit Sight",
+          "type": "flag",
+          "description": "#stormpower #truesight."
+        },
+        {
+          "name": "trample",
+          "display": "Trample",
+          "type": "int",
+          "default": 1,
+          "description": "The monster will get stat increases or decreases depending on This monster can trample smaller beings."
+        },
+        {
+          "name": "trampswallow",
+          "display": "Tramp Swallow",
+          "type": "flag",
+          "description": "#magicpower <bonus> The monster automatically swallows the targets of a successful The monster will get stat increases or decreases depending on trampling attack."
+        },
+        {
+          "name": "digest",
+          "display": "Digest",
+          "type": "int",
+          "default": 0,
+          "description": "The monster digests any swallowed creatures."
+        },
+        {
+          "name": "aciddigest",
+          "display": "Acid Digest",
+          "type": "int",
+          "default": 0,
+          "description": "This monster gets reduced attack penalty when using two The monster digests any swallowed creatures and causes their weapons."
+        },
+        {
+          "name": "incorporate",
+          "display": "Incorporate",
+          "type": "int",
+          "default": 0,
+          "description": "This monster will only receive half att/def bonuses from The monster incorporates any swallowed creatures as a part of weapons."
+        },
+        {
+          "name": "bodyguard",
+          "display": "Bodyguard",
+          "type": "int",
+          "default": 1,
+          "description": "This monster has an innate ability to command 50 undead The monster's morale is increased by <bonus> when its orders beings."
+        },
+        {
+          "name": "warning",
+          "display": "Warning",
+          "type": "int",
+          "default": 1,
+          "description": "#sleepres MAGIC ABILITIES NON-COMBAT ABILITIES #douse."
+        },
+        {
+          "name": "standard",
+          "display": "Standard",
+          "type": "int",
+          "default": 1,
+          "description": "This monster has an innate ability to command 150 undead The monster increases the morale of units in the same squad by beings."
+        },
+        {
+          "name": "formationfighter",
+          "display": "Formation",
+          "type": "int",
+          "default": 1,
+          "description": "#allrange"
+        },
+        {
+          "name": "patience",
+          "display": "Patience",
+          "type": "int",
+          "default": 1,
+          "description": "Of moving each month as long as it is owned by independents."
+        },
+        {
+          "name": "quickness",
+          "display": "Quickness",
+          "type": "flag",
+          "description": "The item grants Quickness (double movement, +2 attack & Defines what kind of a weapon, if any, the unit gets when it defense, attacks twice as often)."
+        },
+        {
+          "name": "scalewalls",
+          "display": "Scale Walls",
+          "type": "flag",
+          "description": "COMBAT AURAS."
+        },
+        {
+          "name": "unsurr",
+          "display": "Unsurprisable",
+          "type": "flag",
+          "description": "#magicpower #spiritsight."
+        },
+        {
+          "name": "chaospower",
+          "display": "Chaos Power",
+          "type": "int",
+          "default": 1,
+          "description": "Under darkness."
+        },
+        {
+          "name": "magicpower",
+          "display": "Magic Power",
+          "type": "int",
+          "default": 1,
+          "description": "The monster automatically swallows the targets of a successful The monster will get stat increases or decreases depending on trampling attack."
+        },
+        {
+          "name": "coldpower",
+          "display": "Cold Power",
+          "type": "int",
+          "default": 0,
+          "description": "The true essence of beings."
+        },
+        {
+          "name": "firepower",
+          "display": "Fire Power",
+          "type": "int",
+          "default": 0,
+          "description": "True sight makes it possible to see through illusions and The monster will get stat increases or decreases depending on glamour."
+        },
+        {
+          "name": "growthpower",
+          "display": "Growth Power",
+          "type": "int",
+          "default": 0,
+          "description": "A unit with invisibility is sneaking, only patrolling units with The monster will get stat increases or decreases depending on spirit sight will be able to find it."
+        },
+        {
+          "name": "darkpower",
+          "display": "Dark Power",
+          "type": "flag",
+          "description": "#invisible"
+        },
+        {
+          "name": "deathpower",
+          "display": "Death Power",
+          "type": "flag",
+          "description": "#twistfate"
+        },
+        {
+          "name": "dompower",
+          "display": "Dom Power",
+          "type": "flag",
+          "description": "#fearofflood."
+        },
+        {
+          "name": "springpower",
+          "display": "Spring Power",
+          "type": "flag",
+          "description": "#blessfly"
+        },
+        {
+          "name": "summerpower",
+          "display": "Summer Power",
+          "type": "int",
+          "default": 0,
+          "description": "Next few rounds of battle."
+        },
+        {
+          "name": "fallpower",
+          "display": "Fall Power",
+          "type": "flag",
+          "description": "#trample"
+        },
+        {
+          "name": "winterpower",
+          "display": "Winter Power",
+          "type": "int",
+          "default": 0,
+          "description": "Suffer the damage itself instead of harming the target."
+        },
+        {
+          "name": "stormpower",
+          "display": "Storm Power",
+          "type": "flag",
+          "description": "Attribute, this command is redundant."
+        },
+        {
+          "name": "slothpower",
+          "display": "Sloth Power",
+          "type": "flag",
+          "description": "#unseen"
+        },
+        {
+          "name": "powerofdeath",
+          "display": "Power of Death",
+          "type": "flag",
+          "description": "#dompower #fearofflood."
+        },
+        {
+          "name": "ethereal",
+          "display": "Ethereal",
+          "type": "flag",
+          "description": "Possible and gain HP for it equal to the value in #deadhp."
+        },
+        {
+          "name": "glamour",
+          "display": "Glamour",
+          "type": "flag",
+          "description": "Aura is <value> + Fire magic squares in size."
+        },
+        {
+          "name": "spiritform",
+          "display": "Spirit Form",
+          "type": "flag",
+          "description": "The monster is a plant."
+        },
+        {
+          "name": "nospiritform",
+          "display": "No Spirit Form",
+          "type": "flag",
+          "description": "Monsters with this tag are used as lesser horrors."
+        },
+        {
+          "name": "twistfate",
+          "display": "Twist Fate",
+          "type": "flag",
+          "description": "Will start with a twist fate in combat."
+        },
+        {
+          "name": "heat",
+          "display": "Heat",
+          "type": "int",
+          "default": 1,
+          "description": "At the start of each new month."
+        },
+        {
+          "name": "cold",
+          "display": "Cold",
+          "type": "int",
+          "default": 1,
+          "description": "#inanimateimmune This weapon does cold damage."
+        },
+        {
+          "name": "uwheat",
+          "display": "UW Heat",
+          "type": "int",
+          "default": 0,
+          "description": "Does not grant stealth to monsters that have no stealth to Like #heat, but also works underwater."
+        },
+        {
+          "name": "fireshield",
+          "display": "Fire Shield",
+          "type": "int",
+          "default": 1,
+          "description": "Shuten-doji has this ability with area."
+        },
+        {
+          "name": "banefireshield",
+          "display": "Banefire Shield",
+          "type": "flag",
+          "description": "#acidshield HEALING & DISEASE #damagerev."
+        },
+        {
+          "name": "uwfireshield",
+          "display": "UW Fireshield",
+          "type": "int",
+          "default": 0,
+          "description": "This unit is covered in sharp spikes barbs."
+        },
+        {
+          "name": "poisoncloud",
+          "display": "Poison Cloud",
+          "type": "int",
+          "default": 1,
+          "description": "#poisonskin DAMAGE REDUCTION #poisonarmor."
+        },
+        {
+          "name": "diseasecloud",
+          "display": "Disease Cloud",
+          "type": "int",
+          "default": 1,
+          "description": "#corruptor #poisoncloud."
+        },
+        {
+          "name": "poisonskin",
+          "display": "Poison Skin",
+          "type": "int",
+          "default": 1,
+          "description": "This section covers different the different kinds of The monster has a skin that exudes a paralyzing poison, which immortality available for monsters."
+        },
+        {
+          "name": "poisonarmor",
+          "display": "Poison Armor",
+          "type": "int",
+          "default": 1,
+          "description": "Anyone striking this monster with short weapons will be Immortality poisoned."
+        },
+        {
+          "name": "acidshield",
+          "display": "Acid Shield",
+          "type": "int",
+          "default": 1,
+          "description": "The season of power the monster gets a percentage increase Anyone striking this monster will take <damage> points of to its maximum hit points."
+        },
+        {
+          "name": "overcharged",
+          "display": "Overcharged",
+          "type": "int",
+          "default": 0,
+          "description": "Squares around it."
+        },
+        {
+          "name": "nightmareaura",
+          "display": "Nightmare Aura",
+          "type": "int",
+          "default": 0,
+          "description": "Armor piercing fire damage."
+        },
+        {
+          "name": "mindslime",
+          "display": "Mind Slime",
+          "type": "flag",
+          "description": "#reinvigoration #heat."
+        },
+        {
+          "name": "spikes",
+          "display": "Spikes",
+          "type": "flag",
+          "description": "#doheal"
+        },
+        {
+          "name": "sleepaura",
+          "display": "Sleep Aura",
+          "type": "int",
+          "default": 1,
+          "description": "Like fear, but negated by true sight."
+        },
+        {
+          "name": "animalawe",
+          "display": "Animal Awe",
+          "type": "int",
+          "default": 1,
+          "description": "Immortal to reappear the next month."
+        },
+        {
+          "name": "sunawe",
+          "display": "Sun Awe",
+          "type": "int",
+          "default": 1,
+          "description": "#entangle Works like Awe, except that it doesn't work if there is no sun Anyone striking this monster may get entangled."
+        },
+        {
+          "name": "haltheretic",
+          "display": "Halt Heretic",
+          "type": "int",
+          "default": 1,
+          "description": "Anyone striking this monster may lose an eye."
+        },
+        {
+          "name": "deathcurse",
+          "display": "Death Curse",
+          "type": "flag",
+          "description": "#patrolbonus <value> When this monster dies, the unit that strikes the killing blow is A value of ten will make this monster count as ten extra cursed."
+        },
+        {
+          "name": "deathdisease",
+          "display": "Death Disease",
+          "type": "int",
+          "default": 0,
+          "description": "Pillage bonus of one which makes them count as one man extra The monster bursts in a cloud of disease ridden fumes when it when it comes to pillaging."
+        },
+        {
+          "name": "deathfire",
+          "display": "Death Fire",
+          "type": "int",
+          "default": 0,
+          "description": "A monster with this ability produces extra supplies."
+        },
+        {
+          "name": "deathgrab",
+          "display": "Death Grab",
+          "type": "int",
+          "default": 0,
+          "description": "If it was an enemy priest engaged in preaching."
+        },
+        {
+          "name": "deathparalyze",
+          "display": "Death Paralyze",
+          "type": "int",
+          "default": 0,
+          "description": "This monster has a bonus when preaching against enemy The monster erupts in a paralyzing explosion on death, forcing Dominion."
+        },
+        {
+          "name": "deathpoison",
+          "display": "Death Poison",
+          "type": "int",
+          "default": 0,
+          "description": "Negative for extra poor performance."
+        },
+        {
+          "name": "deathshock",
+          "display": "Death Shock",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "deathslime",
+          "display": "Death Slime",
+          "type": "int",
+          "default": 0,
+          "description": "Icon"
+        },
+        {
+          "name": "deathbanish",
+          "display": "Death Banish",
+          "type": "int",
+          "default": 0,
+          "description": "#grandcom <0 or 1> Whoever strikes the killing blow against this monster is This monster can participate in grand communions."
+        },
+        {
+          "name": "raiseonkill",
+          "display": "Raise on Kill",
+          "type": "int",
+          "default": 0,
+          "description": "The monster will get stat increases or decreases depending on Monster has a chance in percent to raise the people it kills as the Sloth scale."
+        },
+        {
+          "name": "slimer",
+          "display": "Slimer",
+          "type": "int",
+          "default": 0,
+          "description": "Bonus can be a value of one or more."
+        },
+        {
+          "name": "eyeloss",
+          "display": "Eye Loss",
+          "type": "flag",
+          "description": "#haltheretic <bonus> Anyone striking this monster may lose an eye."
+        },
+        {
+          "name": "entangle",
+          "display": "Entangle",
+          "type": "flag",
+          "description": "Works like Awe, except that it doesn't work if there is no sun Anyone striking this monster may get entangled."
+        },
+        {
+          "name": "horrormark",
+          "display": "Horror Mark",
+          "type": "flag",
+          "description": "#fear <value> Anyone striking this monster may be horror marked."
+        },
+        {
+          "name": "bloodvengeance",
+          "display": "Blood Vengeance",
+          "type": "int",
+          "default": 0,
+          "description": "The height of each season and will get increased Strength, The monster has the Blood Vengeance ability."
+        },
+        {
+          "name": "curseluckshield",
+          "display": "Curse Luck Shield",
+          "type": "int",
+          "default": 0,
+          "description": "The monster has increased hit points in spring and lowered hit Grants the Fateweaving ability."
+        },
+        {
+          "name": "damagerev",
+          "display": "Damage Rev",
+          "type": "int",
+          "default": 0,
+          "description": "The monster has increased hit points in autumn and lowered The monster has the Damage Reversal ability."
+        },
+        {
+          "name": "reform",
+          "display": "Reform",
+          "type": "int",
+          "default": 0,
+          "description": "To get a 50% chance."
+        },
+        {
+          "name": "domimmortal",
+          "display": "Dom Immortal",
+          "type": "flag",
+          "description": "Monster is surrounded by a poison cloud."
+        },
+        {
+          "name": "springimmortal",
+          "display": "Spring Immortal",
+          "type": "flag",
+          "description": "That animals with a morale of 11 have about 50% chance of The immortal will reform his body in the spring."
+        },
+        {
+          "name": "extralives",
+          "display": "Extra Lives",
+          "type": "int",
+          "default": 0,
+          "description": "Province"
+        },
+        {
+          "name": "falseregen",
+          "display": "False Regen",
+          "type": "int",
+          "default": 0,
+          "description": "The following 4 commands."
+        },
+        {
+          "name": "reconst",
+          "display": "Reconstruction",
+          "type": "int",
+          "default": 0,
+          "description": "#bugreform <nbr of bugs> Works like regeneration, but only affects inanimate beings."
+        },
+        {
+          "name": "bugreform",
+          "display": "Bug Reform",
+          "type": "int",
+          "default": 0,
+          "description": "Works like regeneration, but only affects inanimate beings."
+        },
+        {
+          "name": "undregen",
+          "display": "Undead Regen",
+          "type": "int",
+          "default": 0,
+          "description": "Example, all undead and inanimate creatures have poison Works like regeneration, but only affects undead beings."
+        },
+        {
+          "name": "uwregen",
+          "display": "UW Regen",
+          "type": "int",
+          "default": 0,
+          "description": "Myriad of bugs and reform a little while later."
+        },
+        {
+          "name": "reinvigoration",
+          "display": "Reinvigoration",
+          "type": "int",
+          "default": 0,
+          "description": "Main part of the swarm."
+        },
+        {
+          "name": "yearturn",
+          "display": "Year Turn",
+          "type": "int",
+          "default": 0,
+          "description": "With no penalty."
+        },
+        {
+          "name": "clumsy",
+          "display": "Clumsy",
+          "type": "flag",
+          "description": "#berserk SEASONAL POWERS #blessbers."
+        },
+        {
+          "name": "mobilearcher",
+          "display": "Mobile Archer",
+          "type": "flag",
+          "description": "#dancespr <flysprite nbr> #statstorm The look of the sprite circling the unit."
+        },
+        {
+          "name": "norange",
+          "display": "No Range",
+          "type": "int",
+          "default": 0,
+          "description": "Reduces the effectiveness of the assassin's Patience."
+        },
+        {
+          "name": "appetite",
+          "display": "Appetite",
+          "type": "int",
+          "default": 0,
+          "description": "The monster erupts in a shock explosion when it dies, inflicting A monster with this ability will eat supplies as if he was this capped 1 AN shock damage to everyone in the area of effect."
+        },
+        {
+          "name": "corruptor",
+          "display": "Corruptor",
+          "type": "int",
+          "default": 0,
+          "description": "Hinder movement."
+        },
+        {
+          "name": "adeptsacr",
+          "display": "Adept Sacr",
+          "type": "int",
+          "default": 0,
+          "description": "Upkeep will be calculated as if the unit cost this much more to Adept Sacrificer."
+        }
       ]
     },
     {
@@ -189,49 +1810,216 @@
       "renderer": "coloredBadge",
       "readOnly": false,
       "commands": [
-        { "name": "fireres", "display": "Fire", "type": "int", "default": 0, "color": "#8B4513", "borderColor": "#FF8C00" },
-        { "name": "coldres", "display": "Cold", "type": "int", "default": 0, "color": "#4682B4", "borderColor": "#87CEFA" },
-        { "name": "shockres", "display": "Shock", "type": "int", "default": 0, "color": "#FFD700", "borderColor": "#FFFF00" },
-        { "name": "poisonres", "display": "Poison", "type": "int", "default": 0, "color": "#228B22", "borderColor": "#32CD32" },
-        { "name": "regeneration", "display": "Regen", "type": "int", "default": 0, "color": "#008000", "borderColor": "#32CD32" },
-        { "name": "invulnerable", "display": "Invuln", "type": "int", "default": 0, "color": "#C0C0C0", "borderColor": "#FFFFFF" },
-        { "name": "airshield", "display": "Air Shield", "type": "int", "default": 0, "color": "#87CEEB", "borderColor": "#B0E0E6" },
-        { "name": "iceprot", "display": "Ice Prot", "type": "int", "default": 0, "color": "#ADD8E6", "borderColor": "#C8E6FA" },
-        { "name": "bluntres", "display": "Blunt Res", "type": "int", "default": 0, "color": "#696969", "borderColor": "#A9A9A9" },
-        { "name": "pierceres", "display": "Pierce Res", "type": "int", "default": 0, "color": "#696969", "borderColor": "#A9A9A9" },
-        { "name": "slashres", "display": "Slash Res", "type": "int", "default": 0, "color": "#696969", "borderColor": "#A9A9A9" },
-        { "name": "diseaseres", "display": "Disease Res", "type": "int", "default": 0, "color": "#556B2F", "borderColor": "#6B8E23" },
-        { "name": "acidres", "display": "Acid Res", "type": "int", "default": 0, "color": "#9ACD32", "borderColor": "#ADFF2F" },
-        { "name": "decayres", "display": "Decay Res", "type": "int", "default": 0, "color": "#8B4513", "borderColor": "#A0522D" },
-        { "name": "magicimmune", "display": "Magic Immune", "type": "int", "default": 0, "color": "#9932CC", "borderColor": "#DA70D6" },
-        { "name": "stormimmune", "display": "Storm Immune", "type": "int", "default": 0, "color": "#4169E1", "borderColor": "#6495ED" },
-        { "name": "stunimmunity", "display": "Stun Immune", "type": "int", "default": 0, "color": "#808080", "borderColor": "#A9A9A9" },
-        { "name": "polyimmune", "display": "Poly Immune", "type": "int", "default": 0, "color": "#FF69B4", "borderColor": "#FFB6C1" },
-        { "name": "ironvul", "display": "Iron Vuln", "type": "int", "default": 0, "color": "#B22222", "borderColor": "#DC143C" }
+        {
+          "name": "fireres",
+          "display": "Fire",
+          "type": "int",
+          "default": 0,
+          "color": "#8B4513",
+          "borderColor": "#FF8C00",
+          "description": "Item"
+        },
+        {
+          "name": "coldres",
+          "display": "Cold",
+          "type": "int",
+          "default": 0,
+          "color": "#4682B4",
+          "borderColor": "#87CEFA",
+          "description": "Magic & Spells The item grants a Cold Resistance bonus."
+        },
+        {
+          "name": "shockres",
+          "display": "Shock",
+          "type": "int",
+          "default": 0,
+          "color": "#FFD700",
+          "borderColor": "#FFFF00",
+          "description": "Enables user of item to cast this spell in battle or as a ritual The item grants a Shock Resistance bonus."
+        },
+        {
+          "name": "poisonres",
+          "display": "Poison",
+          "type": "int",
+          "default": 0,
+          "color": "#228B22",
+          "borderColor": "#32CD32",
+          "description": "Makes the item cast this spell automatically in battle."
+        },
+        {
+          "name": "regeneration",
+          "display": "Regen",
+          "type": "int",
+          "default": 0,
+          "color": "#008000",
+          "borderColor": "#32CD32",
+          "description": "Elemental resistances function like armor by lessening The monster regenerates like a troll and heals damage every damage from attacks of a particular type of element (fire, combat round."
+        },
+        {
+          "name": "invulnerable",
+          "display": "Invuln",
+          "type": "int",
+          "default": 0,
+          "color": "#C0C0C0",
+          "borderColor": "#FFFFFF",
+          "description": "The monster has invulnerability to non-magical weapons."
+        },
+        {
+          "name": "airshield",
+          "display": "Air Shield",
+          "type": "int",
+          "default": 0,
+          "color": "#87CEEB",
+          "borderColor": "#B0E0E6",
+          "description": "Combat Auras The monster gains the airshield special ability."
+        },
+        {
+          "name": "iceprot",
+          "display": "Ice Prot",
+          "type": "int",
+          "default": 0,
+          "color": "#ADD8E6",
+          "borderColor": "#C8E6FA",
+          "description": "The monster has a chance of starting with a heroic ability, like Armor protection varies with the temperature in the province."
+        },
+        {
+          "name": "bluntres",
+          "display": "Blunt Res",
+          "type": "int",
+          "default": 0,
+          "color": "#696969",
+          "borderColor": "#A9A9A9",
+          "description": "#corpseeater <value> The monster takes half damage from blunt weapons."
+        },
+        {
+          "name": "pierceres",
+          "display": "Pierce Res",
+          "type": "int",
+          "default": 0,
+          "color": "#696969",
+          "borderColor": "#A9A9A9",
+          "description": "The monster takes half damage from piercing weapons."
+        },
+        {
+          "name": "slashres",
+          "display": "Slash Res",
+          "type": "int",
+          "default": 0,
+          "color": "#696969",
+          "borderColor": "#A9A9A9",
+          "description": "The monster takes half damage from slashing weapons."
+        },
+        {
+          "name": "diseaseres",
+          "display": "Disease Res",
+          "type": "int",
+          "default": 0,
+          "color": "#556B2F",
+          "borderColor": "#6B8E23",
+          "description": "#deathfire"
+        },
+        {
+          "name": "acidres",
+          "display": "Acid Res",
+          "type": "int",
+          "default": 0,
+          "color": "#9ACD32",
+          "borderColor": "#ADFF2F"
+        },
+        {
+          "name": "decayres",
+          "display": "Decay Res",
+          "type": "int",
+          "default": 0,
+          "color": "#8B4513",
+          "borderColor": "#A0522D",
+          "description": "Priests of R'lyeh have a value of 50 in this attribute."
+        },
+        {
+          "name": "magicimmune",
+          "display": "Magic Immune",
+          "type": "int",
+          "default": 0,
+          "color": "#9932CC",
+          "borderColor": "#DA70D6",
+          "description": "The monster produces a number of glamour gems that can be The monster is immune to the research effects of Drain and used in combat."
+        },
+        {
+          "name": "stormimmune",
+          "display": "Storm Immune",
+          "type": "int",
+          "default": 0,
+          "color": "#4169E1",
+          "borderColor": "#6495ED",
+          "description": "This monster is a stone being and immune to petrification."
+        },
+        {
+          "name": "stunimmunity",
+          "display": "Stun Immune",
+          "type": "int",
+          "default": 0,
+          "color": "#808080",
+          "borderColor": "#A9A9A9"
+        },
+        {
+          "name": "polyimmune",
+          "display": "Poly Immune",
+          "type": "int",
+          "default": 0,
+          "color": "#FF69B4",
+          "borderColor": "#FFB6C1",
+          "description": "#islance This monster cannot be polymorphed in combat or by the use This item can only be used by mounted or flying units or of transformation rituals."
+        },
+        {
+          "name": "ironvul",
+          "display": "Iron Vuln",
+          "type": "int",
+          "default": 0,
+          "color": "#B22222",
+          "borderColor": "#DC143C",
+          "description": "Battlefield around it or enemies that attack it in some The monster will take points amount of extra damage when manner."
+        }
       ]
     }
   ],
   "layout": {
-    "monster": ["stats", "magicpaths", "types", "general", "combat", "resistances"]
+    "monster": [
+      "stats",
+      "magicpaths",
+      "types",
+      "general",
+      "combat",
+      "resistances"
+    ]
   },
   "renderers": {
     "badge": {
       "description": "Standard compact badge with optional value",
-      "supportedTypes": ["flag", "int"]
+      "supportedTypes": [
+        "flag",
+        "int"
+      ]
     },
     "coloredBadge": {
       "description": "Colored badge for resistances and special values",
-      "supportedTypes": ["int"],
+      "supportedTypes": [
+        "int"
+      ],
       "requiresColor": true
     },
     "statsGrid": {
       "description": "3-column grid layout for core stats",
-      "supportedTypes": ["int"],
+      "supportedTypes": [
+        "int"
+      ],
       "columns": 3
     },
     "magicPathEditor": {
       "description": "Custom magic path editor with colored level badges",
-      "supportedTypes": ["path", "randompaths"],
+      "supportedTypes": [
+        "path",
+        "randompaths"
+      ],
       "pathColors": {
         "F": "#FF4500",
         "A": "#87CEEB",

@@ -173,8 +173,14 @@ namespace Dom5Edit
             string dmPath = FindVanillaDmPath();
             if (string.IsNullOrEmpty(dmPath) || !File.Exists(dmPath))
             {
-                // Fall back to TSV if vanilla.dm not found
-                return LoadVanillaData();
+                // TSV fallback disabled - vanilla.dm is required for full data
+                // Log warning and return empty mod instead of falling back to TSV
+                System.Diagnostics.Debug.WriteLine("[VanillaLoader] WARNING: vanilla.dm not found! Magic skills and other data will be missing.");
+                System.Diagnostics.Debug.WriteLine($"[VanillaLoader] Searched paths: BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}");
+                System.Diagnostics.Debug.WriteLine($"[VanillaLoader] VanillaDmPath setting: {_vanillaDmPath ?? "(not set)"}");
+                // Uncomment below to restore TSV fallback:
+                // return LoadVanillaData();
+                return m; // Return empty mod
             }
 
             m.Parse(dmPath);

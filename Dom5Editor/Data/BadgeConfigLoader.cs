@@ -150,14 +150,25 @@ namespace Dom5Editor.Data
         {
             try
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                var assemblyLocation = Path.GetDirectoryName(assembly.Location);
-                var filePath = Path.Combine(assemblyLocation, "Data", $"{entityType}_badges.json");
-
-                if (File.Exists(filePath))
+                // Try multiple base paths since Assembly.Location can be empty in .NET 8+
+                var possibleBasePaths = new[]
                 {
-                    var json = File.ReadAllText(filePath);
-                    return JsonSerializer.Deserialize<BadgeConfig>(json, _jsonOptions);
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    Directory.GetCurrentDirectory()
+                };
+
+                foreach (var basePath in possibleBasePaths)
+                {
+                    if (string.IsNullOrEmpty(basePath))
+                        continue;
+
+                    var filePath = Path.Combine(basePath, "Data", $"{entityType}_badges.json");
+                    if (File.Exists(filePath))
+                    {
+                        var json = File.ReadAllText(filePath);
+                        return JsonSerializer.Deserialize<BadgeConfig>(json, _jsonOptions);
+                    }
                 }
             }
             catch (Exception ex)
@@ -199,26 +210,39 @@ namespace Dom5Editor.Data
         /// </summary>
         public static bool TryGetCommand(BadgeCommand badgeCommand, out Command command)
         {
-            return CommandsMap.TryGetCommand(badgeCommand.Name, out command);
+            // CommandsMap uses "#" prefix, but JSON file may omit it
+            var name = badgeCommand.Name;
+            if (!name.StartsWith("#"))
+            {
+                name = "#" + name;
+            }
+
+            return CommandsMap.TryGetCommand(name, out command);
         }
 
         /// <summary>
-        /// Creates a BadgeItem from a BadgeCommand definition and current value.
+        /// Creates a PropertyItem from a BadgeCommand definition and current value.
         /// </summary>
-        public static BadgeItem CreateBadgeItem(BadgeCommand cmdDef, int? value, bool isModified = false, bool isSessionEdit = false)
+        public static PropertyItem CreatePropertyItem(BadgeCommand cmdDef, int? value, bool isModified = false, bool isSessionEdit = false)
         {
-            CommandsMap.TryGetCommand(cmdDef.Name, out Command command);
+            // CommandsMap uses "#" prefix, but JSON file may omit it
+            var name = cmdDef.Name;
+            if (!name.StartsWith("#"))
+            {
+                name = "#" + name;
+            }
+            CommandsMap.TryGetCommand(name, out Command command);
 
-            BadgeItem badge;
+            PropertyItem property;
             if (cmdDef.IsFlag)
             {
-                badge = BadgeItem.CreateFlag(command, cmdDef.Display, isModified, isSessionEdit);
+                property = PropertyItem.CreateFlag(command, cmdDef.Display, isModified, isSessionEdit);
             }
             else if (cmdDef.HasColors)
             {
                 var bgColor = ParseColor(cmdDef.Color, Color.FromRgb(60, 60, 60));
                 var borderColor = ParseColor(cmdDef.BorderColor, Color.FromRgb(80, 80, 80));
-                badge = BadgeItem.CreateColoredValue(
+                property = PropertyItem.CreateColoredValue(
                     command,
                     cmdDef.Display,
                     value ?? cmdDef.Default ?? 0,
@@ -230,34 +254,40 @@ namespace Dom5Editor.Data
             }
             else
             {
-                badge = BadgeItem.CreateValue(command, cmdDef.Display, value ?? cmdDef.Default ?? 0, isModified, isSessionEdit);
+                property = PropertyItem.CreateValue(command, cmdDef.Display, value ?? cmdDef.Default ?? 0, isModified, isSessionEdit);
             }
 
-            // Set tooltip: prefer description from badge JSON, then from command reference, then fallback to command name
+            // Set tooltip: prefer description from property JSON, then from command reference, then fallback to command name
             if (!string.IsNullOrEmpty(cmdDef.Description))
             {
-                badge.Tooltip = cmdDef.Description;
+                property.Tooltip = cmdDef.Description;
             }
             else
             {
                 // Try to get description from command reference JSON
                 var refDescription = GetCommandDescription(cmdDef.Name);
-                badge.Tooltip = !string.IsNullOrEmpty(refDescription)
+                property.Tooltip = !string.IsNullOrEmpty(refDescription)
                     ? $"#{cmdDef.Name}: {refDescription}"
                     : $"#{cmdDef.Name}";
             }
 
-            return badge;
+            return property;
         }
 
         /// <summary>
-        /// Creates an AvailableBadgeItem from a BadgeCommand definition.
+        /// Creates an AvailablePropertyItem from a BadgeCommand definition.
         /// </summary>
-        public static AvailableBadgeItem CreateAvailableItem(BadgeCommand cmdDef)
+        public static AvailablePropertyItem CreateAvailableItem(BadgeCommand cmdDef)
         {
-            CommandsMap.TryGetCommand(cmdDef.Name, out Command command);
+            // CommandsMap uses "#" prefix, but JSON file may omit it
+            var name = cmdDef.Name;
+            if (!name.StartsWith("#"))
+            {
+                name = "#" + name;
+            }
+            CommandsMap.TryGetCommand(name, out Command command);
 
-            return new AvailableBadgeItem
+            return new AvailablePropertyItem
             {
                 Command = command,
                 DisplayName = cmdDef.Display,
