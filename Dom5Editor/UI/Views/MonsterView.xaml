@@ -141,6 +141,193 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
+            <!-- Equipment Section (Weapons & Armor) -->
+            <controls:PropertyGroupControl Header="Equipment" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Weapons Column (Left) -->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="WEAPONS" FontSize="8" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+
+                            <!-- Weapon List -->
+                            <ItemsControl ItemsSource="{Binding WeaponsList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{DynamicResource BackgroundDarkBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1" CornerRadius="3"
+                                                Padding="6,3" Margin="0,0,0,2">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <!-- Modified indicator -->
+                                                    <Border Width="4" Height="14" CornerRadius="2" Margin="0,0,6,0"
+                                                            Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="#FFD700"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSessionEdit}" Value="True">
+                                                                        <Setter Property="Background" Value="#00CED1"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+
+                                                    <!-- Inherited indicator -->
+                                                    <Border Background="#4A4A4A" CornerRadius="2" Padding="3,1" Margin="0,0,6,0"
+                                                            Visibility="{Binding IsInherited, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                        <TextBlock Text="inh" FontSize="8" Foreground="#888888"/>
+                                                    </Border>
+
+                                                    <!-- ID -->
+                                                    <TextBlock Text="{Binding ID, StringFormat='#{0}'}"
+                                                               Foreground="{DynamicResource TextSecondaryBrush}"
+                                                               FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
+
+                                                    <!-- Name (hyperlink style - for future navigation) -->
+                                                    <TextBlock Text="{Binding Name, TargetNullValue='(unknown)'}"
+                                                               Foreground="{DynamicResource AccentHighlightBrush}"
+                                                               FontSize="11" VerticalAlignment="Center"
+                                                               TextDecorations="Underline" Cursor="Hand"/>
+                                                </StackPanel>
+
+                                                <!-- Remove button -->
+                                                <Button Grid.Column="1" Content="×" Width="18" Height="18"
+                                                        FontSize="12" FontWeight="Bold" Padding="0"
+                                                        VerticalAlignment="Center"
+                                                        Command="{Binding DataContext.RemoveWeaponCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"
+                                                        Visibility="{Binding CanRemove, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                        ToolTip="Remove weapon"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Add Weapon ComboBox -->
+                            <Grid Margin="0,4,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          ItemsSource="{Binding AvailableWeapons}"
+                                          DisplayMemberPath="DisplayText"
+                                          SelectedItem="{Binding SelectedWeaponToAdd, Mode=TwoWay}"
+                                          IsEditable="True"
+                                          IsTextSearchEnabled="True"
+                                          TextSearch.TextPath="DisplayText"/>
+                                <Button Grid.Column="1" Content="+" Width="28" Margin="4,0,0,0"
+                                        Command="{Binding AddWeaponCommand}"
+                                        CommandParameter="{Binding SelectedWeaponToAdd}"
+                                        ToolTip="Add weapon"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Armor Column (Right) -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="ARMOR" FontSize="8" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+
+                            <!-- Armor List -->
+                            <ItemsControl ItemsSource="{Binding ArmorList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{DynamicResource BackgroundDarkBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1" CornerRadius="3"
+                                                Padding="6,3" Margin="0,0,0,2">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <!-- Modified indicator -->
+                                                    <Border Width="4" Height="14" CornerRadius="2" Margin="0,0,6,0"
+                                                            Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="#FFD700"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSessionEdit}" Value="True">
+                                                                        <Setter Property="Background" Value="#00CED1"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+
+                                                    <!-- Inherited indicator -->
+                                                    <Border Background="#4A4A4A" CornerRadius="2" Padding="3,1" Margin="0,0,6,0"
+                                                            Visibility="{Binding IsInherited, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                        <TextBlock Text="inh" FontSize="8" Foreground="#888888"/>
+                                                    </Border>
+
+                                                    <!-- ID -->
+                                                    <TextBlock Text="{Binding ID, StringFormat='#{0}'}"
+                                                               Foreground="{DynamicResource TextSecondaryBrush}"
+                                                               FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
+
+                                                    <!-- Name (hyperlink style - for future navigation) -->
+                                                    <TextBlock Text="{Binding Name, TargetNullValue='(unknown)'}"
+                                                               Foreground="{DynamicResource AccentHighlightBrush}"
+                                                               FontSize="11" VerticalAlignment="Center"
+                                                               TextDecorations="Underline" Cursor="Hand"/>
+                                                </StackPanel>
+
+                                                <!-- Remove button -->
+                                                <Button Grid.Column="1" Content="×" Width="18" Height="18"
+                                                        FontSize="12" FontWeight="Bold" Padding="0"
+                                                        VerticalAlignment="Center"
+                                                        Command="{Binding DataContext.RemoveArmorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"
+                                                        Visibility="{Binding CanRemove, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                        ToolTip="Remove armor"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Add Armor ComboBox -->
+                            <Grid Margin="0,4,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          ItemsSource="{Binding AvailableArmor}"
+                                          DisplayMemberPath="DisplayText"
+                                          SelectedItem="{Binding SelectedArmorToAdd, Mode=TwoWay}"
+                                          IsEditable="True"
+                                          IsTextSearchEnabled="True"
+                                          TextSearch.TextPath="DisplayText"/>
+                                <Button Grid.Column="1" Content="+" Width="28" Margin="4,0,0,0"
+                                        Command="{Binding AddArmorCommand}"
+                                        CommandParameter="{Binding SelectedArmorToAdd}"
+                                        ToolTip="Add armor"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
             <!-- Abilities - Compact Badge Layout -->
             <controls:PropertyGroupControl Header="Abilities" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>

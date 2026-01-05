@@ -1,17 +1,48 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
 using Dom5Editor.Data;
 using Dom5Editor.EditCommands;
 using Dom5Editor.UI.Controls;
+using Dom5Editor.VMs;
 using Paloma;
 
 namespace Dom5Editor.UI.Views
 {
+    /// <summary>
+    /// Represents an equipment item (weapon or armor) for display in the UI.
+    /// </summary>
+    public class EquipmentItem
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string DisplayText => string.IsNullOrEmpty(Name) ? $"#{ID}" : $"{Name} (#{ID})";
+        public bool IsModified { get; set; }
+        public bool IsSessionEdit { get; set; }
+        public bool IsInherited { get; set; }
+        public bool CanRemove => !IsInherited;
+        public Command SourceCommand { get; set; }
+    }
+
+    /// <summary>
+    /// Represents an available equipment item for selection.
+    /// </summary>
+    public class AvailableEquipmentItem
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string DisplayText => string.IsNullOrEmpty(Name) ? $"#{ID}" : $"{Name} (#{ID})";
+        public string Source { get; set; } // "Vanilla" or "Mod"
+    }
+
     /// <summary>
     /// ViewModel for Monster entities.
     /// </summary>
@@ -1673,6 +1704,450 @@ namespace Dom5Editor.UI.Views
                 Command.NOITEM => "No Items",
                 _ => base.GetCommandDisplayName(command)
             };
+        }
+
+        // ========================================
+        // Equipment (Weapons & Armor)
+        // ========================================
+
+        private ObservableCollection<EquipmentItem> _weaponsList;
+        public ObservableCollection<EquipmentItem> WeaponsList
+        {
+            get
+            {
+                if (_weaponsList == null)
+                    RefreshWeaponsList();
+                return _weaponsList;
+            }
+        }
+
+        private ObservableCollection<EquipmentItem> _armorList;
+        public ObservableCollection<EquipmentItem> ArmorList
+        {
+            get
+            {
+                if (_armorList == null)
+                    RefreshArmorList();
+                return _armorList;
+            }
+        }
+
+        private void RefreshWeaponsList()
+        {
+            _weaponsList = new ObservableCollection<EquipmentItem>();
+            var vanillaEntity = GetVanillaEntity();
+
+            // Get all weapon references from the entity (including copied)
+            var directWeapons = new HashSet<int>();
+            foreach (var prop in _entity.GetMultiple(Command.WEAPON))
+            {
+                if (prop is WeaponRef weaponRef && weaponRef.HasValue)
+                {
+                    directWeapons.Add(weaponRef.ID);
+                    var item = new EquipmentItem
+                    {
+                        ID = weaponRef.ID,
+                        Name = weaponRef.Entity?.Name,
+                        IsModified = IsWeaponModified(weaponRef.ID),
+                        IsSessionEdit = IsPropertyEditedInSession(Command.WEAPON),
+                        IsInherited = false,
+                        SourceCommand = Command.WEAPON
+                    };
+                    _weaponsList.Add(item);
+                }
+            }
+
+            // Add inherited weapons from copystats
+            if (_entity.TryGetCopyFrom(out var copyFrom) && copyFrom != null)
+            {
+                AddInheritedWeapons(copyFrom, directWeapons, new HashSet<IDEntity> { _entity });
+            }
+
+            OnPropertyChanged(nameof(WeaponsList));
+        }
+
+        private void AddInheritedWeapons(IDEntity source, HashSet<int> directWeapons, HashSet<IDEntity> visited)
+        {
+            if (visited.Contains(source))
+                return;
+            visited.Add(source);
+
+            foreach (var prop in source.GetMultiple(Command.WEAPON))
+            {
+                if (prop is WeaponRef weaponRef && weaponRef.HasValue)
+                {
+                    if (!directWeapons.Contains(weaponRef.ID))
+                    {
+                        directWeapons.Add(weaponRef.ID);
+                        var item = new EquipmentItem
+                        {
+                            ID = weaponRef.ID,
+                            Name = weaponRef.Entity?.Name,
+                            IsModified = false,
+                            IsSessionEdit = false,
+                            IsInherited = true,
+                            SourceCommand = Command.WEAPON
+                        };
+                        _weaponsList.Add(item);
+                    }
+                }
+            }
+
+            // Recurse through copystats chain
+            if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
+            {
+                AddInheritedWeapons(nextCopy, directWeapons, visited);
+            }
+        }
+
+        private bool IsWeaponModified(int weaponId)
+        {
+            var vanillaEntity = GetVanillaEntity();
+            if (vanillaEntity == null)
+                return true; // New entity, so it's modified
+
+            // Check if vanilla has this weapon
+            var vanillaWeapons = vanillaEntity.GetMultiple(Command.WEAPON)
+                .OfType<WeaponRef>()
+                .Where(w => w.HasValue)
+                .Select(w => w.ID)
+                .ToHashSet();
+
+            return !vanillaWeapons.Contains(weaponId);
+        }
+
+        private void RefreshArmorList()
+        {
+            _armorList = new ObservableCollection<EquipmentItem>();
+            var vanillaEntity = GetVanillaEntity();
+
+            // Get all armor references from the entity (including copied)
+            var directArmor = new HashSet<int>();
+            foreach (var prop in _entity.GetMultiple(Command.ARMOR))
+            {
+                if (prop is ArmorRef armorRef && armorRef.HasValue)
+                {
+                    directArmor.Add(armorRef.ID);
+                    var item = new EquipmentItem
+                    {
+                        ID = armorRef.ID,
+                        Name = armorRef.Entity?.Name,
+                        IsModified = IsArmorModified(armorRef.ID),
+                        IsSessionEdit = IsPropertyEditedInSession(Command.ARMOR),
+                        IsInherited = false,
+                        SourceCommand = Command.ARMOR
+                    };
+                    _armorList.Add(item);
+                }
+            }
+
+            // Add inherited armor from copystats
+            if (_entity.TryGetCopyFrom(out var copyFrom) && copyFrom != null)
+            {
+                AddInheritedArmor(copyFrom, directArmor, new HashSet<IDEntity> { _entity });
+            }
+
+            OnPropertyChanged(nameof(ArmorList));
+        }
+
+        private void AddInheritedArmor(IDEntity source, HashSet<int> directArmor, HashSet<IDEntity> visited)
+        {
+            if (visited.Contains(source))
+                return;
+            visited.Add(source);
+
+            foreach (var prop in source.GetMultiple(Command.ARMOR))
+            {
+                if (prop is ArmorRef armorRef && armorRef.HasValue)
+                {
+                    if (!directArmor.Contains(armorRef.ID))
+                    {
+                        directArmor.Add(armorRef.ID);
+                        var item = new EquipmentItem
+                        {
+                            ID = armorRef.ID,
+                            Name = armorRef.Entity?.Name,
+                            IsModified = false,
+                            IsSessionEdit = false,
+                            IsInherited = true,
+                            SourceCommand = Command.ARMOR
+                        };
+                        _armorList.Add(item);
+                    }
+                }
+            }
+
+            // Recurse through copystats chain
+            if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
+            {
+                AddInheritedArmor(nextCopy, directArmor, visited);
+            }
+        }
+
+        private bool IsArmorModified(int armorId)
+        {
+            var vanillaEntity = GetVanillaEntity();
+            if (vanillaEntity == null)
+                return true; // New entity, so it's modified
+
+            // Check if vanilla has this armor
+            var vanillaArmor = vanillaEntity.GetMultiple(Command.ARMOR)
+                .OfType<ArmorRef>()
+                .Where(a => a.HasValue)
+                .Select(a => a.ID)
+                .ToHashSet();
+
+            return !vanillaArmor.Contains(armorId);
+        }
+
+        private List<AvailableEquipmentItem> _availableWeapons;
+        public List<AvailableEquipmentItem> AvailableWeapons
+        {
+            get
+            {
+                if (_availableWeapons == null)
+                    RefreshAvailableWeapons();
+                return _availableWeapons;
+            }
+        }
+
+        private List<AvailableEquipmentItem> _availableArmor;
+        public List<AvailableEquipmentItem> AvailableArmor
+        {
+            get
+            {
+                if (_availableArmor == null)
+                    RefreshAvailableArmor();
+                return _availableArmor;
+            }
+        }
+
+        private void RefreshAvailableWeapons()
+        {
+            _availableWeapons = new List<AvailableEquipmentItem>();
+
+            // Add vanilla weapons
+            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.WEAPON, out var vanillaSet) == true)
+            {
+                foreach (var entity in vanillaSet.GetFullList())
+                {
+                    if (entity is Weapon weapon)
+                    {
+                        _availableWeapons.Add(new AvailableEquipmentItem
+                        {
+                            ID = weapon.ID,
+                            Name = weapon.Name,
+                            Source = "Vanilla"
+                        });
+                    }
+                }
+            }
+
+            // Add mod weapons (if loaded)
+            var mod = _entity.ParentMod;
+            if (mod != null && mod.Database.TryGetValue(EntityType.WEAPON, out var modSet))
+            {
+                foreach (var entity in modSet.GetFullList())
+                {
+                    if (entity is Weapon weapon && !_availableWeapons.Any(w => w.ID == weapon.ID))
+                    {
+                        _availableWeapons.Add(new AvailableEquipmentItem
+                        {
+                            ID = weapon.ID,
+                            Name = weapon.Name,
+                            Source = "Mod"
+                        });
+                    }
+                }
+            }
+
+            _availableWeapons = _availableWeapons.OrderBy(w => w.ID).ToList();
+            OnPropertyChanged(nameof(AvailableWeapons));
+        }
+
+        private void RefreshAvailableArmor()
+        {
+            _availableArmor = new List<AvailableEquipmentItem>();
+
+            // Add vanilla armor
+            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.ARMOR, out var vanillaSet) == true)
+            {
+                foreach (var entity in vanillaSet.GetFullList())
+                {
+                    if (entity is Armor armor)
+                    {
+                        _availableArmor.Add(new AvailableEquipmentItem
+                        {
+                            ID = armor.ID,
+                            Name = armor.Name,
+                            Source = "Vanilla"
+                        });
+                    }
+                }
+            }
+
+            // Add mod armor (if loaded)
+            var mod = _entity.ParentMod;
+            if (mod != null && mod.Database.TryGetValue(EntityType.ARMOR, out var modSet))
+            {
+                foreach (var entity in modSet.GetFullList())
+                {
+                    if (entity is Armor armor && !_availableArmor.Any(a => a.ID == armor.ID))
+                    {
+                        _availableArmor.Add(new AvailableEquipmentItem
+                        {
+                            ID = armor.ID,
+                            Name = armor.Name,
+                            Source = "Mod"
+                        });
+                    }
+                }
+            }
+
+            _availableArmor = _availableArmor.OrderBy(a => a.ID).ToList();
+            OnPropertyChanged(nameof(AvailableArmor));
+        }
+
+        // Selected items for adding
+        private AvailableEquipmentItem _selectedWeaponToAdd;
+        public AvailableEquipmentItem SelectedWeaponToAdd
+        {
+            get => _selectedWeaponToAdd;
+            set
+            {
+                _selectedWeaponToAdd = value;
+                OnPropertyChanged(nameof(SelectedWeaponToAdd));
+            }
+        }
+
+        private AvailableEquipmentItem _selectedArmorToAdd;
+        public AvailableEquipmentItem SelectedArmorToAdd
+        {
+            get => _selectedArmorToAdd;
+            set
+            {
+                _selectedArmorToAdd = value;
+                OnPropertyChanged(nameof(SelectedArmorToAdd));
+            }
+        }
+
+        // Equipment Commands
+        private ICommand _addWeaponCommand;
+        public ICommand AddWeaponCommand => _addWeaponCommand ??= new RelayCommand<AvailableEquipmentItem>(AddWeapon);
+
+        private ICommand _removeWeaponCommand;
+        public ICommand RemoveWeaponCommand => _removeWeaponCommand ??= new RelayCommand<EquipmentItem>(RemoveWeapon);
+
+        private ICommand _addArmorCommand;
+        public ICommand AddArmorCommand => _addArmorCommand ??= new RelayCommand<AvailableEquipmentItem>(AddArmor);
+
+        private ICommand _removeArmorCommand;
+        public ICommand RemoveArmorCommand => _removeArmorCommand ??= new RelayCommand<EquipmentItem>(RemoveArmor);
+
+        private void AddWeapon(AvailableEquipmentItem weapon)
+        {
+            if (weapon == null) return;
+
+            var newProp = new WeaponRef { Parent = _entity, Command = Command.WEAPON };
+            newProp.ID = weapon.ID;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Weapon #{weapon.ID}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            RefreshWeaponsList();
+        }
+
+        private void RemoveWeapon(EquipmentItem weapon)
+        {
+            if (weapon == null || weapon.IsInherited) return;
+
+            var props = _entity.GetMultiple(Command.WEAPON).ToList();
+            var toRemove = props.FirstOrDefault(p => p is WeaponRef wr && wr.ID == weapon.ID);
+
+            if (toRemove != null)
+            {
+                if (_history != null)
+                {
+                    var cmd = new RemovePropertyCommand(_entity, toRemove, $"Remove Weapon #{weapon.ID}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    _entity.RemoveProperty(toRemove);
+                }
+
+                HasSessionChanges = true;
+                RefreshWeaponsList();
+            }
+        }
+
+        private void AddArmor(AvailableEquipmentItem armor)
+        {
+            if (armor == null) return;
+
+            var newProp = new ArmorRef { Parent = _entity, Command = Command.ARMOR };
+            newProp.ID = armor.ID;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Armor #{armor.ID}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            RefreshArmorList();
+        }
+
+        private void RemoveArmor(EquipmentItem armor)
+        {
+            if (armor == null || armor.IsInherited) return;
+
+            var props = _entity.GetMultiple(Command.ARMOR).ToList();
+            var toRemove = props.FirstOrDefault(p => p is ArmorRef ar && ar.ID == armor.ID);
+
+            if (toRemove != null)
+            {
+                if (_history != null)
+                {
+                    var cmd = new RemovePropertyCommand(_entity, toRemove, $"Remove Armor #{armor.ID}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    _entity.RemoveProperty(toRemove);
+                }
+
+                HasSessionChanges = true;
+                RefreshArmorList();
+            }
+        }
+
+        // Navigation events for hyperlink-style buttons (to be implemented)
+        public event EventHandler<int> WeaponNavigationRequested;
+        public event EventHandler<int> ArmorNavigationRequested;
+
+        public void NavigateToWeapon(int weaponId)
+        {
+            WeaponNavigationRequested?.Invoke(this, weaponId);
+        }
+
+        public void NavigateToArmor(int armorId)
+        {
+            ArmorNavigationRequested?.Invoke(this, armorId);
         }
     }
 
