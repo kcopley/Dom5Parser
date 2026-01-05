@@ -67,6 +67,32 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
+            <!-- Copy From Section (shown when monster has copystats/copyspr) -->
+            <Border Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12"
+                    Visibility="{Binding HasCopyCommands, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel>
+                    <TextBlock Text="COPY FROM" FontSize="9" FontWeight="Bold" Foreground="White" Opacity="0.7" Margin="0,0,0,4"/>
+                    <WrapPanel>
+                        <!-- CopyStats badge -->
+                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0"
+                                Visibility="{Binding HasCopyStats, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="copystats:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopyStatsDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <!-- CopySpr badge -->
+                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0"
+                                Visibility="{Binding HasCopySpr, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="copyspr:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopySprDisplay}" Foreground="#87CEEB" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
             <!-- Stats Section (3 columns, compact) -->
             <controls:PropertyGroupControl Header="Stats" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>

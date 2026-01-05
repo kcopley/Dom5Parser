@@ -240,6 +240,25 @@ namespace Dom5Tests
                 {
                     Console.WriteLine($"  [{m.ID}] {m.DisplayName}");
                 }
+
+                // Find monsters with magic skills
+                var mages = monsters.Cast<Monster>()
+                    .Where(m => m.MagicSkills.Any())
+                    .Take(5)
+                    .ToList();
+                if (mages.Count > 0)
+                {
+                    Console.WriteLine($"\nFirst 5 mages (with magic skills):");
+                    foreach (var m in mages)
+                    {
+                        var skills = string.Join(", ", m.MagicSkills.Select(s => $"{s.Path}:{s.Level}"));
+                        Console.WriteLine($"  [{m.ID}] {m.DisplayName} - {skills}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\nNo monsters with magic skills found!");
+                }
             }
 
             var weapons = mod.Database[EntityType.WEAPON].GetFullList();

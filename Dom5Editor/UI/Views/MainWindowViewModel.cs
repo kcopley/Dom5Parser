@@ -1,7 +1,9 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Dom5Edit;
+using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Validation;
 using Dom5Editor.EditCommands;

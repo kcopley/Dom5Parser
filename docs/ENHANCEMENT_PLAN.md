@@ -16,8 +16,8 @@ Create a UI-based editor that:
 
 ### Work Priorities
 
-1. **JSON-Driven UI** - Replace hardcoded command arrays with JSON configuration
-2. **Remove Legacy Code** - Clean up fallback arrays and deprecated ViewModels
+1. ~~**JSON-Driven UI** - Replace hardcoded command arrays with JSON configuration~~ (COMPLETE)
+2. ~~**Remove Legacy Code** - Clean up fallback arrays and deprecated ViewModels~~ (COMPLETE)
 3. **Feature Expansion** - Reference editors, CUSTOMMAGIC, sprite preview
 
 ### Command Coverage
@@ -147,21 +147,20 @@ public class PropertyDefinition
 - `ReferencePropertyEditor`, `CommandListEditor`, `IntPropertyListEditor`
 - `MagicPathEditor` - Color-coded badges with inline editing
 
-### 6.3: Badge-Based UI (IN PROGRESS)
+### 6.3: Badge-Based UI (COMPLETE)
 
 See `BADGE_UI_REDESIGN.md` for full details.
 
 **Completed:**
 - `CompactBadge` control - Horizontal badge for all property types
 - `BadgeWrapPanel` container with add dropdown
-- `BadgeItem` data model with ValueChanged event
+- `PropertyItem` / `AvailablePropertyItem` data models with ValueChanged event
 - JSON configuration (`monster_badges.json`) with renderer hints
-- `BadgeConfigLoader` - Loads badge config from JSON
-- Integration with EntityViewModels (JSON with fallback)
-
-**In Progress:**
-- Remove hardcoded Command arrays (use JSON exclusively)
-- Remove fallback methods from refresh code
+- `BadgeConfigLoader` - Loads property config from JSON (with `#` prefix handling for CommandsMap)
+- Integration with EntityViewModels (JSON-only, no fallback)
+- Removed all hardcoded Command arrays
+- Removed all fallback methods
+- Fixed JSON loading path resolution for .NET 8
 
 ### 6.4: Entity View Architecture
 

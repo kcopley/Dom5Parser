@@ -7,10 +7,10 @@ using Dom5Edit.Commands;
 namespace Dom5Editor.UI.Controls
 {
     /// <summary>
-    /// Data item for CompactBadge and BadgeWrapPanel.
-    /// Supports flag badges (no value) and value badges (with editable int).
+    /// Data item for property display controls (CompactBadge, BadgeWrapPanel).
+    /// Supports flag properties (no value) and value properties (with editable int).
     /// </summary>
-    public class BadgeItem : INotifyPropertyChanged
+    public class PropertyItem : INotifyPropertyChanged
     {
         private string _displayName;
         private string _value;
@@ -140,11 +140,11 @@ namespace Dom5Editor.UI.Controls
         #region Factory Methods
 
         /// <summary>
-        /// Creates a flag badge (no value, just presence indicator).
+        /// Creates a flag property (no value, just presence indicator).
         /// </summary>
-        public static BadgeItem CreateFlag(Command command, string displayName, bool isModified = false, bool isSessionEdit = false)
+        public static PropertyItem CreateFlag(Command command, string displayName, bool isModified = false, bool isSessionEdit = false)
         {
-            return new BadgeItem
+            return new PropertyItem
             {
                 Command = command,
                 DisplayName = displayName,
@@ -155,11 +155,11 @@ namespace Dom5Editor.UI.Controls
         }
 
         /// <summary>
-        /// Creates a value badge (with editable int value).
+        /// Creates a value property (with editable int value).
         /// </summary>
-        public static BadgeItem CreateValue(Command command, string displayName, int value, bool isModified = false, bool isSessionEdit = false)
+        public static PropertyItem CreateValue(Command command, string displayName, int value, bool isModified = false, bool isSessionEdit = false)
         {
-            return new BadgeItem
+            return new PropertyItem
             {
                 Command = command,
                 DisplayName = displayName,
@@ -171,13 +171,13 @@ namespace Dom5Editor.UI.Controls
         }
 
         /// <summary>
-        /// Creates a colored value badge (e.g., for resistances).
+        /// Creates a colored value property (e.g., for resistances).
         /// </summary>
-        public static BadgeItem CreateColoredValue(Command command, string displayName, int value,
+        public static PropertyItem CreateColoredValue(Command command, string displayName, int value,
             Color backgroundColor, Color borderColor, Color foregroundColor,
             bool isModified = false, bool isSessionEdit = false)
         {
-            return new BadgeItem
+            return new PropertyItem
             {
                 Command = command,
                 DisplayName = displayName,
@@ -197,7 +197,7 @@ namespace Dom5Editor.UI.Controls
     /// <summary>
     /// Item representing an available option in the Add dropdown.
     /// </summary>
-    public class AvailableBadgeItem
+    public class AvailablePropertyItem
     {
         /// <summary>
         /// The command this item represents.

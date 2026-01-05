@@ -61,6 +61,83 @@ namespace Dom5Editor.UI.Views
         public bool IsSprite2SessionEdit => IsPropertyEditedInSession(Command.SPR2);
 
         // ========================================
+        // Copy Commands (fundamental for inheritance)
+        // ========================================
+
+        /// <summary>
+        /// Display text for the copystats reference (monster name or ID).
+        /// </summary>
+        public string CopyStatsDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    // Show the resolved monster name if available, otherwise the raw value
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    // Fall back to raw value if not resolved
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Whether the entity has a copystats reference.
+        /// </summary>
+        public bool HasCopyStats
+        {
+            get
+            {
+                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        /// <summary>
+        /// Display text for the copyspr reference (monster name or ID).
+        /// </summary>
+        public string CopySprDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Whether the entity has a copyspr reference.
+        /// </summary>
+        public bool HasCopySpr
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        /// <summary>
+        /// Whether to show the copy from section (has any copy command).
+        /// </summary>
+        public bool HasCopyCommands => HasCopyStats || HasCopySpr;
+
+        // ========================================
         // Sprite Images
         // ========================================
 
@@ -952,14 +1029,14 @@ namespace Dom5Editor.UI.Views
 
         /// <summary>
         /// Builds badges for a section using JSON configuration.
-        /// Falls back to hardcoded arrays if JSON section not found.
+        /// Uses layered property access: vanilla -> mod -> session changes.
         /// </summary>
-        private (System.Collections.ObjectModel.ObservableCollection<BadgeItem> active,
-                 System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> available)
+        private (System.Collections.ObjectModel.ObservableCollection<PropertyItem> active,
+                 System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> available)
             BuildBadgesFromSection(string sectionId, EventHandler<int>? valueChangedHandler = null)
         {
-            var active = new System.Collections.ObjectModel.ObservableCollection<BadgeItem>();
-            var available = new System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem>();
+            var active = new System.Collections.ObjectModel.ObservableCollection<PropertyItem>();
+            var available = new System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem>();
             var usedCommands = new HashSet<Command>();
 
             var section = BadgeConfig.GetSection(sectionId);
@@ -968,29 +1045,99 @@ namespace Dom5Editor.UI.Views
                 return (active, available);
             }
 
+            // Get vanilla entity for layered comparison
+            var vanillaEntity = GetVanillaEntity();
+
             foreach (var cmdDef in section.Commands)
             {
                 if (!BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
                     continue;
 
-                bool hasValue = false;
-                int? value = null;
+                // Layer 1: Get vanilla value (base layer, includes vanilla copystats)
+                bool vanillaHasValue = false;
+                bool vanillaIsCopied = false;
+                int? vanillaValue = null;
+                bool vanillaFlagValue = false;
+
+                if (vanillaEntity != null)
+                {
+                    if (cmdDef.IsFlag)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<CommandProperty>(command, out _);
+                        vanillaFlagValue = vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED;
+                        vanillaHasValue = vanillaFlagValue;
+                        vanillaIsCopied = vanillaResult == ReturnType.COPIED;
+                    }
+                    else if (cmdDef.IsInt)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<IntProperty>(command, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                        {
+                            vanillaValue = vanillaProp?.Value;
+                            vanillaHasValue = true;
+                            vanillaIsCopied = vanillaResult == ReturnType.COPIED;
+                        }
+                    }
+                }
+
+                // Layer 2: Get current entity value (mod + session, includes mod copystats)
+                bool entityHasValue = false;
+                bool entityIsCopied = false;
+                bool entityHasDirect = false; // Has the property directly (not from copystats)
+                int? entityValue = null;
+                bool entityFlagValue = false;
 
                 if (cmdDef.IsFlag)
                 {
-                    hasValue = GetCommandProperty(command);
+                    var entityResult = _entity.TryGet<CommandProperty>(command, out _);
+                    entityFlagValue = entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED;
+                    entityHasValue = entityFlagValue;
+                    entityIsCopied = entityResult == ReturnType.COPIED;
+                    entityHasDirect = entityResult == ReturnType.TRUE;
                 }
                 else if (cmdDef.IsInt)
                 {
-                    value = GetIntProperty(command);
-                    hasValue = value.HasValue;
+                    var entityResult = _entity.TryGet<IntProperty>(command, out var entityProp);
+                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                    {
+                        entityValue = entityProp?.Value;
+                        entityHasValue = true;
+                        entityIsCopied = entityResult == ReturnType.COPIED;
+                        entityHasDirect = entityResult == ReturnType.TRUE;
+                    }
                 }
 
-                if (hasValue)
+                // Determine effective value (entity overrides vanilla)
+                bool hasValue = entityHasValue || vanillaHasValue;
+                int? effectiveValue = entityHasValue ? entityValue : vanillaValue;
+                bool effectiveFlagValue = entityHasValue ? entityFlagValue : vanillaFlagValue;
+
+                // Determine modification and inheritance status
+                bool isModified = false;
+                bool isInherited = false;
+                bool isSessionEdit = IsPropertyEditedInSession(command);
+
+                if (cmdDef.IsFlag)
                 {
-                    var badge = BadgeConfigLoader.CreateBadgeItem(cmdDef, value, false, false);
-                    badge.CanRemove = !section.ReadOnly;
-                    badge.IsInherited = section.ReadOnly;
+                    // Modified if entity has direct value different from vanilla
+                    isModified = entityHasDirect && (entityFlagValue != vanillaFlagValue);
+                    // Inherited if value comes from copystats or vanilla (not directly on entity)
+                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                }
+                else if (cmdDef.IsInt)
+                {
+                    // Modified if entity has direct value different from vanilla
+                    isModified = entityHasDirect && (!vanillaHasValue || entityValue != vanillaValue);
+                    // Inherited if value comes from copystats or vanilla (not directly on entity)
+                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                }
+
+                if (hasValue && (cmdDef.IsFlag ? effectiveFlagValue : true))
+                {
+                    var badge = BadgeConfigLoader.CreatePropertyItem(cmdDef, effectiveValue, isModified, isSessionEdit);
+                    // Can only remove if property is directly on the entity (not inherited/copied)
+                    badge.CanRemove = !section.ReadOnly && entityHasDirect;
+                    badge.IsInherited = section.ReadOnly || isInherited;
 
                     if (valueChangedHandler != null && cmdDef.IsInt)
                     {
@@ -1017,81 +1164,81 @@ namespace Dom5Editor.UI.Views
             return (active, available);
         }
 
-        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _typeBadges;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableTypeBadges;
-        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _generalBadges;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableGeneralBadges;
-        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _combatBadges;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableCombatBadges;
-        private System.Collections.ObjectModel.ObservableCollection<BadgeItem> _resistanceBadges;
-        private System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> _availableResistanceBadges;
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _typeBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableTypeBadges;
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _generalBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableGeneralBadges;
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _combatBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableCombatBadges;
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _resistanceBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableResistanceBadges;
 
-        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> TypeBadges
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> TypeBadges
         {
             get { if (_typeBadges == null) RefreshTypeBadges(); return _typeBadges; }
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableTypeBadges
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableTypeBadges
         {
             get { if (_availableTypeBadges == null) RefreshTypeBadges(); return _availableTypeBadges; }
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> GeneralBadges
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> GeneralBadges
         {
             get { if (_generalBadges == null) RefreshGeneralBadges(); return _generalBadges; }
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableGeneralBadges
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableGeneralBadges
         {
             get { if (_availableGeneralBadges == null) RefreshGeneralBadges(); return _availableGeneralBadges; }
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> CombatBadges
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> CombatBadges
         {
             get { if (_combatBadges == null) RefreshCombatBadges(); return _combatBadges; }
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableCombatBadges
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableCombatBadges
         {
             get { if (_availableCombatBadges == null) RefreshCombatBadges(); return _availableCombatBadges; }
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<BadgeItem> ResistanceBadges
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> ResistanceBadges
         {
             get { if (_resistanceBadges == null) RefreshResistanceBadges(); return _resistanceBadges; }
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<AvailableBadgeItem> AvailableResistanceBadges
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableResistanceBadges
         {
             get { if (_availableResistanceBadges == null) RefreshResistanceBadges(); return _availableResistanceBadges; }
         }
 
         // Commands for badge operations
-        private RelayCommand<BadgeItem> _removeGeneralBadgeCommand;
-        private RelayCommand<AvailableBadgeItem> _addGeneralBadgeCommand;
-        private RelayCommand<BadgeItem> _removeCombatBadgeCommand;
-        private RelayCommand<AvailableBadgeItem> _addCombatBadgeCommand;
-        private RelayCommand<BadgeItem> _removeResistanceBadgeCommand;
-        private RelayCommand<AvailableBadgeItem> _addResistanceBadgeCommand;
+        private RelayCommand<PropertyItem> _removeGeneralBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addGeneralBadgeCommand;
+        private RelayCommand<PropertyItem> _removeCombatBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addCombatBadgeCommand;
+        private RelayCommand<PropertyItem> _removeResistanceBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addResistanceBadgeCommand;
 
-        public RelayCommand<BadgeItem> RemoveGeneralBadgeCommand => _removeGeneralBadgeCommand ??= new RelayCommand<BadgeItem>(b =>
+        public RelayCommand<PropertyItem> RemoveGeneralBadgeCommand => _removeGeneralBadgeCommand ??= new RelayCommand<PropertyItem>(b =>
         {
             if (b.HasValue) SetIntProperty(b.Command, null);
             else SetCommandProperty(b.Command, false);
             RefreshGeneralBadges();
         });
 
-        public RelayCommand<AvailableBadgeItem> AddGeneralBadgeCommand => _addGeneralBadgeCommand ??= new RelayCommand<AvailableBadgeItem>(b =>
+        public RelayCommand<AvailablePropertyItem> AddGeneralBadgeCommand => _addGeneralBadgeCommand ??= new RelayCommand<AvailablePropertyItem>(b =>
         {
             if (b.DefaultValue.HasValue) SetIntProperty(b.Command, b.DefaultValue.Value);
             else SetCommandProperty(b.Command, true);
             RefreshGeneralBadges();
         });
 
-        public RelayCommand<BadgeItem> RemoveCombatBadgeCommand => _removeCombatBadgeCommand ??= new RelayCommand<BadgeItem>(b => { SetIntProperty(b.Command, null); RefreshCombatBadges(); });
-        public RelayCommand<AvailableBadgeItem> AddCombatBadgeCommand => _addCombatBadgeCommand ??= new RelayCommand<AvailableBadgeItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 1); RefreshCombatBadges(); });
-        public RelayCommand<BadgeItem> RemoveResistanceBadgeCommand => _removeResistanceBadgeCommand ??= new RelayCommand<BadgeItem>(b => { SetIntProperty(b.Command, null); RefreshResistanceBadges(); });
-        public RelayCommand<AvailableBadgeItem> AddResistanceBadgeCommand => _addResistanceBadgeCommand ??= new RelayCommand<AvailableBadgeItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 0); RefreshResistanceBadges(); });
+        public RelayCommand<PropertyItem> RemoveCombatBadgeCommand => _removeCombatBadgeCommand ??= new RelayCommand<PropertyItem>(b => { SetIntProperty(b.Command, null); RefreshCombatBadges(); });
+        public RelayCommand<AvailablePropertyItem> AddCombatBadgeCommand => _addCombatBadgeCommand ??= new RelayCommand<AvailablePropertyItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 1); RefreshCombatBadges(); });
+        public RelayCommand<PropertyItem> RemoveResistanceBadgeCommand => _removeResistanceBadgeCommand ??= new RelayCommand<PropertyItem>(b => { SetIntProperty(b.Command, null); RefreshResistanceBadges(); });
+        public RelayCommand<AvailablePropertyItem> AddResistanceBadgeCommand => _addResistanceBadgeCommand ??= new RelayCommand<AvailablePropertyItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 0); RefreshResistanceBadges(); });
 
         private void RefreshTypeBadges()
         {
@@ -1113,7 +1260,7 @@ namespace Dom5Editor.UI.Views
 
         private void OnGeneralBadgeValueChanged(object sender, int newValue)
         {
-            if (sender is BadgeItem badge)
+            if (sender is PropertyItem badge)
             {
                 SetIntProperty(badge.Command, newValue);
             }
@@ -1130,7 +1277,7 @@ namespace Dom5Editor.UI.Views
 
         private void OnCombatBadgeValueChanged(object sender, int newValue)
         {
-            if (sender is BadgeItem badge)
+            if (sender is PropertyItem badge)
             {
                 SetIntProperty(badge.Command, newValue);
             }
@@ -1147,7 +1294,7 @@ namespace Dom5Editor.UI.Views
 
         private void OnResistanceBadgeValueChanged(object sender, int newValue)
         {
-            if (sender is BadgeItem badge)
+            if (sender is PropertyItem badge)
             {
                 SetIntProperty(badge.Command, newValue);
             }
@@ -1159,7 +1306,11 @@ namespace Dom5Editor.UI.Views
 
         public System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem> MagicPathsList
         {
-            get { if (_magicPathsList == null) RefreshMagicPaths(); return _magicPathsList; }
+            get
+            {
+                if (_magicPathsList == null) RefreshMagicPaths();
+                return _magicPathsList;
+            }
         }
 
         public System.Collections.ObjectModel.ObservableCollection<UI.Controls.AvailableMagicPath> AvailableMagicPaths
@@ -1172,14 +1323,44 @@ namespace Dom5Editor.UI.Views
             var activePaths = new System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem>();
             var availablePaths = new System.Collections.ObjectModel.ObservableCollection<UI.Controls.AvailableMagicPath>();
 
-            // Get all active magic skills from the entity
+            // Get magic skills by layering: vanilla -> mod -> session changes
             var monster = _entity as Monster;
             if (monster != null)
             {
                 var usedPathIds = new HashSet<int>();
-                foreach (var skill in monster.MagicSkills)
+
+                // Dictionary to collect all magic skills: pathId -> (level, isFromMod, isSessionEdit)
+                var allSkills = new Dictionary<int, (int Level, bool IsModified, bool IsSessionEdit)>();
+
+                // First, get vanilla magic skills as base
+                var vanillaMonster = GetVanillaEntity() as Monster;
+                if (vanillaMonster != null)
                 {
-                    int pathId = (int)skill.Path;
+                    foreach (var skill in vanillaMonster.MagicSkills)
+                    {
+                        int pathId = (int)skill.Path;
+                        allSkills[pathId] = (skill.Level, false, false);
+                    }
+                }
+
+                // Then overlay with mod/current entity skills (if different from vanilla entity)
+                if (monster != vanillaMonster)
+                {
+                    foreach (var skill in monster.MagicSkills)
+                    {
+                        int pathId = (int)skill.Path;
+                        // Check if this is a session edit or mod change
+                        bool isSessionEdit = IsPropertyEditedInSession(Command.MAGICSKILL);
+                        bool isModified = !allSkills.ContainsKey(pathId) || allSkills[pathId].Level != skill.Level;
+                        allSkills[pathId] = (skill.Level, isModified, isSessionEdit);
+                    }
+                }
+
+                // Build UI items from collected skills
+                foreach (var kvp in allSkills.OrderBy(k => k.Key))
+                {
+                    int pathId = kvp.Key;
+                    var (level, isModified, isSessionEdit) = kvp.Value;
                     var pathInfo = UI.Controls.MagicPathDefinitions.GetPathInfo(pathId);
                     var item = new UI.Controls.MagicPathItem
                     {
@@ -1189,18 +1370,15 @@ namespace Dom5Editor.UI.Views
                         PathColor = pathInfo.Color,
                         TextColor = pathInfo.TextColor,
                         BorderColor = pathInfo.BorderColor,
-                        Level = skill.Level,
+                        Level = level,
                         IsInherited = false, // TODO: check from copystats
-                        IsModified = IsIntIntPropertyModifiedFromVanilla(Command.MAGICSKILL, pathId),
-                        IsSessionEdit = false // TODO: track per-path session edits
+                        IsModified = isModified,
+                        IsSessionEdit = isSessionEdit
                     };
                     item.LevelChanged += (s, newLevel) => OnMagicPathLevelChanged(pathId, newLevel);
                     activePaths.Add(item);
                     usedPathIds.Add(pathId);
                 }
-                // Sort by path ID
-                activePaths = new System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem>(
-                    activePaths.OrderBy(p => p.PathId));
 
                 // Build available paths (exclude already used ones)
                 foreach (var def in UI.Controls.MagicPathDefinitions.PathDefs)

@@ -158,14 +158,16 @@ Colored value badges for protections:
 - [x] Removed old vertical list sections from MonsterView
 
 ### Completed Recently
-- [x] JSON loader for badge categories (`BadgeConfigLoader.cs`)
-- [x] Badge model classes (`BadgeConfig.cs`)
+- [x] JSON loader for property categories (`BadgeConfigLoader.cs`)
+- [x] Property model classes (`BadgeConfig.cs`, `PropertyItem`, `AvailablePropertyItem`)
 - [x] Integration with EntityViewModels (JSON-only, no fallback)
 - [x] Tooltip descriptions from command reference JSON
 - [x] Removed all hardcoded Command arrays (GeneralFlagCommands, GeneralIntCommands, BadgeCombatCommands, BadgeResistanceCommands)
 - [x] Removed fallback methods (RefreshTypeBadgesFallback, etc.)
-- [x] Removed duplicate View sections (Recruitment, Age, Stealth, Province Effects) - now covered by badges
+- [x] Removed duplicate View sections (Recruitment, Age, Stealth, Province Effects) - now covered by properties
 - [x] Removed resistance display helper methods (colors now in JSON)
+- [x] Renamed `BadgeItem` to `PropertyItem`, `AvailableBadgeItem` to `AvailablePropertyItem`
+- [x] Fixed JSON command lookup (added `#` prefix handling for CommandsMap)
 
 ### Future
 - [ ] Weapon/Armor/Spell badge definitions (create JSON files)
@@ -183,17 +185,28 @@ Colored value badges for protections:
 ## Files Changed
 
 ### New Files
-- `Dom5Editor/UI/Controls/CompactBadge.xaml(.cs)` - Individual badge control
+- `Dom5Editor/UI/Controls/CompactBadge.xaml(.cs)` - Individual badge control (visual rendering)
 - `Dom5Editor/UI/Controls/BadgeWrapPanel.xaml(.cs)` - Container with add dropdown
-- `Dom5Editor/UI/Controls/BadgeItem.cs` - Data model for badges
+- `Dom5Editor/UI/Controls/BadgeItem.cs` - Data model for properties (`PropertyItem`, `AvailablePropertyItem`)
 - `Dom5Editor/Data/monster_badges.json` - Monster category definitions with renderer config
 - `Dom5Editor/Data/BadgeConfig.cs` - Model classes for JSON deserialization
-- `Dom5Editor/Data/BadgeConfigLoader.cs` - Loads badge config from JSON, provides command descriptions for tooltips
+- `Dom5Editor/Data/BadgeConfigLoader.cs` - Loads property config from JSON, provides command descriptions for tooltips
 
 ### Modified Files
-- `Dom5Editor/UI/Views/MonsterView.xaml` - Simplified to 4 badge sections (Types, General, Combat, Resistances)
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Badge collection properties, refresh methods, JSON integration with fallback
-- `Dom5Editor/Dom5Editor.csproj` - Added Content item for `*_badges.json` files
+- `Dom5Editor/UI/Views/MonsterView.xaml` - Simplified to 4 property sections (Types, General, Combat, Resistances)
+- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Property collections, refresh methods, JSON-only integration
+- `Dom5Editor/Dom5Editor.csproj` - Added Content item for `*_badges.json` files (copied to output directory)
+
+## Technical Notes
+
+### Command Name Prefix
+The `CommandsMap` in `Dom5Edit/Commands/Command.cs` uses `#` prefixed command names (e.g., `#flying`, `#aquatic`). The JSON configuration files omit this prefix for readability. The `BadgeConfigLoader.TryGetCommand()` method automatically adds the `#` prefix when looking up commands.
+
+### JSON File Location
+The JSON configuration files are stored in `Dom5Editor/Data/` and copied to the output directory at build time. The `BadgeConfigLoader` searches multiple paths to find the files:
+1. Assembly location + `/Data/`
+2. AppDomain.BaseDirectory + `/Data/`
+3. Current working directory + `/Data/`
 
 ## Verification
 
