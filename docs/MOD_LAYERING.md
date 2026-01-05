@@ -128,6 +128,73 @@ private void RefreshMagicPaths()
 }
 ```
 
+### Method 4: Equipment Layering (WEAPON, ARMOR)
+
+Equipment references use recursive copystats chain traversal:
+
+```csharp
+private void RefreshWeaponsList()
+{
+    _weaponsList = new ObservableCollection<EquipmentItem>();
+
+    // Get all weapon references directly on the entity
+    var directWeapons = new HashSet<int>();
+    foreach (var prop in _entity.GetMultiple(Command.WEAPON))
+    {
+        if (prop is WeaponRef weaponRef && weaponRef.HasValue)
+        {
+            directWeapons.Add(weaponRef.ID);
+            _weaponsList.Add(new EquipmentItem
+            {
+                ID = weaponRef.ID,
+                Name = weaponRef.Entity?.Name,
+                IsModified = IsWeaponModified(weaponRef.ID),
+                IsInherited = false  // Direct property
+            });
+        }
+    }
+
+    // Add inherited weapons from copystats chain
+    if (_entity.TryGetCopyFrom(out var copyFrom) && copyFrom != null)
+    {
+        AddInheritedWeapons(copyFrom, directWeapons, new HashSet<IDEntity> { _entity });
+    }
+}
+
+private void AddInheritedWeapons(IDEntity source, HashSet<int> directWeapons, HashSet<IDEntity> visited)
+{
+    if (visited.Contains(source)) return;
+    visited.Add(source);
+
+    foreach (var prop in source.GetMultiple(Command.WEAPON))
+    {
+        if (prop is WeaponRef weaponRef && !directWeapons.Contains(weaponRef.ID))
+        {
+            directWeapons.Add(weaponRef.ID);
+            _weaponsList.Add(new EquipmentItem
+            {
+                ID = weaponRef.ID,
+                Name = weaponRef.Entity?.Name,
+                IsInherited = true,  // From copystats
+                CanRemove = false    // Cannot remove inherited
+            });
+        }
+    }
+
+    // Recurse through copystats chain
+    if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
+    {
+        AddInheritedWeapons(nextCopy, directWeapons, visited);
+    }
+}
+```
+
+Key points:
+- Direct properties can be removed; inherited cannot
+- Recursively follows copystats chain to find all inherited equipment
+- Avoids infinite loops via visited set
+- Same pattern used for ARMOR
+
 ## Entity Sources in ViewModels
 
 The `EntitySource` enum tracks where an entity came from:
@@ -158,12 +225,14 @@ The `EntitySource` enum tracks where an entity came from:
 Layered access is implemented for all property types:
 
 - [x] Magic Paths (MAGICSKILL) - Custom layering in `RefreshMagicPaths()`
-- [x] Type Badges (flags like UNDEAD, DEMON, etc.) - Via `BuildBadgesFromSection()`
-- [x] General Properties (movement, leadership, etc.) - Via `BuildBadgesFromSection()`
-- [x] Combat Properties (auras, abilities, etc.) - Via `BuildBadgesFromSection()`
-- [x] Resistance Properties (elemental resists, etc.) - Via `BuildBadgesFromSection()`
-- [x] Core Stats (HP, STR, ATT, DEF, etc.) - Via `GetIntProperty()` with fallback
-- [ ] Equipment References (WEAPON, ARMOR) - TODO
+- [x] Type Badges (31 commands) - Via `BuildBadgesFromSection()`
+- [x] General Properties (345 commands) - Via `BuildBadgesFromSection()`
+- [x] Combat Properties (163 commands) - Via `BuildBadgesFromSection()`
+- [x] Resistance Properties (19 commands) - Via `BuildBadgesFromSection()`
+- [x] Core Stats (12 commands) - Via `GetIntProperty()` with fallback
+- [x] Equipment References (WEAPON, ARMOR) - Recursive copystats chain in `RefreshWeaponsList()` / `RefreshArmorList()`
+
+**Total: 572 commands covered (102% of reference)**
 
 ## Modification Indicators
 
@@ -176,7 +245,13 @@ The UI should distinguish between property sources:
 ## Files Reference
 
 - `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Base class with `GetVanillaEntity()`
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - MonsterViewModel with layered `RefreshMagicPaths()`
+- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - MonsterViewModel with:
+  - `RefreshMagicPaths()` - Magic path layering
+  - `RefreshWeaponsList()` / `RefreshArmorList()` - Equipment layering with copystats inheritance
+  - `BuildBadgesFromSection()` - JSON-driven badge layering
+  - `EquipmentItem` / `AvailableEquipmentItem` - Data classes for equipment display
+- `Dom5Editor/UI/Views/MonsterView.xaml` - Equipment section with horizontal layout
+- `Dom5Editor/Data/monster_badges.json` - 572 commands with descriptions and tooltips
 - `Dom5Edit/VanillaLoader.cs` - Vanilla data loading
 - `Dom5Edit/Mod/ChangesMod.cs` - Session change tracking
 - `Dom5Editor/App.xaml.cs` - VanillaLoader initialization at startup

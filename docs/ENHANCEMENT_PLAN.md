@@ -22,15 +22,18 @@ Create a UI-based editor that:
 
 ### Command Coverage
 
-**MonsterView:** 161 / 570 commands (28%)
+**MonsterView:** 572 / 560 commands (102% - all reference commands + extras)
 
-| Category | Status |
-|----------|--------|
-| Identity, Core Stats, Leadership | Complete |
-| Type, Movement, Resistances, Combat, Auras | Complete (badge-based) |
-| Magic (MAGICSKILL only, no CUSTOMMAGIC) | Partial |
-| Equipment (WEAPON, ARMOR) | Not started |
-| Shapechange, Summoning, Recruitment | Not started |
+| Category | Commands | Status |
+|----------|----------|--------|
+| Stats | 12 | Complete |
+| Magic Paths | 2 | Complete |
+| Types | 31 | Complete |
+| General | 345 | Complete (movement, recruitment, shapechange, summoning, etc.) |
+| Combat | 163 | Complete (abilities, auras, powers) |
+| Resistances | 19 | Complete |
+| Equipment (WEAPON, ARMOR) | N/A | Complete (with copystats inheritance) |
+| Magic (CUSTOMMAGIC) | 0 | Not started (complex bitmask editor needed) |
 
 ---
 
@@ -166,14 +169,18 @@ See `BADGE_UI_REDESIGN.md` for full details.
 
 **MonsterView Sections:**
 1. Identity - Name, ID, Sprites, Description
-2. Core Stats - HP, STR, ATT, DEF, etc.
-3. Magic Paths - MagicPathEditor control
-4. Abilities (badge-based):
-   - Types (read-only, inherited)
-   - General (movement, leadership, special)
-   - Combat (abilities + auras)
-   - Resistances (colored badges)
-5. Equipment - Weapon/Armor references (TODO)
+2. Copy From - Displays copystats/copyspr references when present
+3. Core Stats - HP, STR, ATT, DEF, etc. (12 commands)
+4. Magic Paths - MagicPathEditor control (2 commands)
+5. Equipment - Horizontal layout with weapons (left) and armor (right)
+   - ID-based selection from vanilla + mod entities
+   - Copystats inheritance support with "inh" badge
+   - Hyperlink-style names (prepared for navigation)
+6. Abilities (badge-based):
+   - Types (31 commands - read-only, inherited)
+   - General (345 commands - movement, recruitment, shapechange, summoning, special)
+   - Combat (163 commands - abilities, auras, powers, battle effects)
+   - Resistances (19 commands - colored badges)
 
 ### 6.5: Legacy ViewModel Deprecation
 
@@ -245,17 +252,18 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 
 ### HIGH Priority
 - CUSTOMMAGIC editor (complex bitmask)
-- Reference editors (WEAPON, ARMOR, COPYSTATS, STARTITEM)
+- ~~Reference editors (WEAPON, ARMOR, COPYSTATS, STARTITEM)~~ WEAPON/ARMOR complete
 - Reset to original buttons
+- Navigation between entity views (weapon/armor hyperlinks)
 
 ### MEDIUM Priority
-- Shapechange commands
-- Summoning commands
-- Property tooltips from metadata
+- ~~Shapechange commands~~ Complete (29 commands in general section)
+- ~~Summoning commands~~ Complete (16 commands in general section)
+- ~~Property tooltips from metadata~~ Complete (all commands have descriptions)
 - Sprite preview
 
 ### LOW Priority
-- Recruitment commands
+- ~~Recruitment commands~~ Complete (in general section)
 - NAMETYPE, MONTAG editors
 - Keyboard shortcuts within views
 - Copy/paste properties
