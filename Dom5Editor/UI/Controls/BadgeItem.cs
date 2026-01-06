@@ -1,7 +1,10 @@
 using System;
 using System.ComponentModel;
+using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Dom5Edit.Commands;
 
 namespace Dom5Editor.UI.Controls
@@ -126,6 +129,87 @@ namespace Dom5Editor.UI.Controls
         /// Tooltip text.
         /// </summary>
         public string Tooltip { get; set; }
+
+        private string _iconPath;
+        /// <summary>
+        /// Optional icon path (relative to icons folder, e.g., "magicicons/Path_F.png").
+        /// </summary>
+        public string IconPath
+        {
+            get => _iconPath;
+            set
+            {
+                if (_iconPath != value)
+                {
+                    _iconPath = value;
+                    _iconSource = null; // Reset cached icon
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(HasIcon));
+                    OnPropertyChanged(nameof(IconSource));
+                }
+            }
+        }
+
+        /// <summary>
+        /// True if this badge has an icon to display.
+        /// </summary>
+        public bool HasIcon => !string.IsNullOrEmpty(IconPath);
+
+        private ImageSource _iconSource;
+        /// <summary>
+        /// Gets the icon image source, loading it lazily from IconPath.
+        /// </summary>
+        public ImageSource IconSource
+        {
+            get
+            {
+                if (_iconSource == null && HasIcon)
+                {
+                    _iconSource = LoadIcon(IconPath);
+                }
+                return _iconSource;
+            }
+        }
+
+        private static ImageSource LoadIcon(string relativePath)
+        {
+            if (string.IsNullOrEmpty(relativePath))
+                return null;
+
+            try
+            {
+                var possibleBasePaths = new[]
+                {
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    Directory.GetCurrentDirectory()
+                };
+
+                foreach (var basePath in possibleBasePaths)
+                {
+                    if (string.IsNullOrEmpty(basePath))
+                        continue;
+
+                    var fullPath = Path.Combine(basePath, "icons", relativePath);
+                    if (File.Exists(fullPath))
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        bitmap.Freeze();
+                        return bitmap;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading icon: {ex.Message}");
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Optional tag for additional data.

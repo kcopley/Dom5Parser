@@ -40,7 +40,9 @@
                             CanRemove="{Binding CanRemove}"
                             RemoveCommand="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=local:BadgeWrapPanel}}"
                             CommandParameter="{Binding}"
-                            Tooltip="{Binding Tooltip}"/>
+                            Tooltip="{Binding Tooltip}"
+                            HasIcon="{Binding HasIcon}"
+                            IconSource="{Binding IconSource}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

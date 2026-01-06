@@ -1532,10 +1532,11 @@
         },
         {
           "name": "elementrange",
-          "display": "Elementrange",
+          "display": "Element Range",
           "type": "int",
           "default": 0,
-          "description": "They are of a single random type of elemental gem."
+          "icon": "magicicons/Path_E.png",
+          "description": "Elemental magic cast by the monster has increased range."
         },
         {
           "name": "enchrebate10",
@@ -1646,10 +1647,11 @@
         },
         {
           "name": "firerange",
-          "display": "Firerange",
+          "display": "Fire Range",
           "type": "int",
           "default": 0,
-          "description": "Increases the selected scale by one point per turn to a All Fire rituals cast in this province have their range increased maximum of -3 /."
+          "icon": "magicicons/Path_F.png",
+          "description": "Fire magic cast by the monster has increased range."
         },
         {
           "name": "firstshape",
@@ -2301,10 +2303,11 @@
         },
         {
           "name": "sorceryrange",
-          "display": "Sorceryrange",
+          "display": "Sorcery Range",
           "type": "int",
           "default": 0,
-          "description": "They are of a single random type of sorcery gem."
+          "icon": "magicicons/Path_S.png",
+          "description": "Sorcery magic cast by the monster has increased range."
         },
         {
           "name": "speciallook",
@@ -3266,10 +3269,11 @@
         },
         {
           "name": "astralrange",
-          "display": "Astralrange",
+          "display": "Astral Range",
           "type": "int",
           "default": 0,
-          "description": "Chance should be a number from 1 to."
+          "icon": "magicicons/Path_S.png",
+          "description": "Astral magic cast by the monster has increased range."
         },
         {
           "name": "autocorpsehealer",
@@ -3319,10 +3323,11 @@
         },
         {
           "name": "bloodrange",
-          "display": "Bloodrange",
+          "display": "Blood Range",
           "type": "int",
           "default": 0,
-          "description": "The type ranges from 0 (fire gems) to 8 (blood slaves)."
+          "icon": "magicicons/Path_B.png",
+          "description": "Blood magic cast by the monster has increased range."
         },
         {
           "name": "caveres",
@@ -3471,9 +3476,10 @@
         },
         {
           "name": "glamourrange",
-          "display": "Glamourrange",
+          "display": "Glamour Range",
           "type": "flag",
-          "description": "#inspirational #bloodrange."
+          "icon": "magicicons/Path_G.png",
+          "description": "Glamour magic cast by the monster has increased range."
         },
         {
           "name": "holycost",
@@ -3484,9 +3490,10 @@
         },
         {
           "name": "holyrange",
-          "display": "Holyrange",
+          "display": "Holy Range",
           "type": "flag",
-          "description": "#taskmaster #elementrange."
+          "icon": "magicicons/Path_H.png",
+          "description": "Holy magic cast by the monster has increased range."
         },
         {
           "name": "horrordeserter",
@@ -3646,10 +3653,11 @@
         },
         {
           "name": "waterrange",
-          "display": "Waterrange",
+          "display": "Water Range",
           "type": "int",
           "default": 0,
-          "description": "Gives a chance for another magic skill to the active monster."
+          "icon": "magicicons/Path_W.png",
+          "description": "Water magic cast by the monster has increased range."
         },
         {
           "name": "watershape",
@@ -3691,169 +3699,171 @@
           "display": "Fire",
           "type": "int",
           "default": 0,
-          "color": "#8B4513",
-          "borderColor": "#FF8C00",
-          "description": "Item"
+          "color": "#322D2A",
+          "borderColor": "#6B4030",
+          "description": "Fire resistance bonus."
         },
         {
           "name": "coldres",
           "display": "Cold",
           "type": "int",
           "default": 0,
-          "color": "#4682B4",
-          "borderColor": "#87CEFA",
-          "description": "Magic & Spells The item grants a Cold Resistance bonus."
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A",
+          "description": "Cold resistance bonus."
         },
         {
           "name": "shockres",
           "display": "Shock",
           "type": "int",
           "default": 0,
-          "color": "#FFD700",
-          "borderColor": "#FFFF00",
-          "description": "Enables user of item to cast this spell in battle or as a ritual The item grants a Shock Resistance bonus."
+          "color": "#32302A",
+          "borderColor": "#5A5540",
+          "description": "Shock resistance bonus."
         },
         {
           "name": "poisonres",
           "display": "Poison",
           "type": "int",
           "default": 0,
-          "color": "#228B22",
-          "borderColor": "#32CD32",
-          "description": "Makes the item cast this spell automatically in battle."
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A",
+          "description": "Poison resistance bonus."
         },
         {
           "name": "regeneration",
           "display": "Regen",
           "type": "int",
           "default": 0,
-          "color": "#008000",
-          "borderColor": "#32CD32",
-          "description": "Elemental resistances function like armor by lessening The monster regenerates like a troll and heals damage every damage from attacks of a particular type of element (fire, combat round."
+          "color": "#2A302A",
+          "borderColor": "#3A503A",
+          "description": "Regenerates health each combat round."
         },
         {
           "name": "invulnerable",
           "display": "Invuln",
           "type": "int",
           "default": 0,
-          "color": "#C0C0C0",
-          "borderColor": "#FFFFFF",
-          "description": "The monster has invulnerability to non-magical weapons."
+          "color": "#303035",
+          "borderColor": "#505060",
+          "description": "Invulnerability to non-magical weapons."
         },
         {
           "name": "airshield",
           "display": "Air Shield",
           "type": "int",
           "default": 0,
-          "color": "#87CEEB",
-          "borderColor": "#B0E0E6",
-          "description": "Combat Auras The monster gains the airshield special ability."
+          "color": "#2A2D35",
+          "borderColor": "#4A5570",
+          "description": "Deflects projectiles with a shield of air."
         },
         {
           "name": "iceprot",
           "display": "Ice Prot",
           "type": "int",
           "default": 0,
-          "color": "#ADD8E6",
-          "borderColor": "#C8E6FA",
-          "description": "The monster has a chance of starting with a heroic ability, like Armor protection varies with the temperature in the province."
+          "color": "#2A3035",
+          "borderColor": "#405060",
+          "description": "Armor protection varies with cold temperature."
         },
         {
           "name": "bluntres",
           "display": "Blunt Res",
           "type": "int",
           "default": 0,
-          "color": "#696969",
-          "borderColor": "#A9A9A9",
-          "description": "#corpseeater <value> The monster takes half damage from blunt weapons."
+          "color": "#303033",
+          "borderColor": "#505055",
+          "description": "Half damage from blunt weapons."
         },
         {
           "name": "pierceres",
           "display": "Pierce Res",
           "type": "int",
           "default": 0,
-          "color": "#696969",
-          "borderColor": "#A9A9A9",
-          "description": "The monster takes half damage from piercing weapons."
+          "color": "#303033",
+          "borderColor": "#505055",
+          "description": "Half damage from piercing weapons."
         },
         {
           "name": "slashres",
           "display": "Slash Res",
           "type": "int",
           "default": 0,
-          "color": "#696969",
-          "borderColor": "#A9A9A9",
-          "description": "The monster takes half damage from slashing weapons."
+          "color": "#303033",
+          "borderColor": "#505055",
+          "description": "Half damage from slashing weapons."
         },
         {
           "name": "diseaseres",
           "display": "Disease Res",
           "type": "int",
           "default": 0,
-          "color": "#556B2F",
-          "borderColor": "#6B8E23",
-          "description": "#deathfire"
+          "color": "#2E302A",
+          "borderColor": "#404530",
+          "description": "Disease resistance bonus."
         },
         {
           "name": "acidres",
           "display": "Acid Res",
           "type": "int",
           "default": 0,
-          "color": "#9ACD32",
-          "borderColor": "#ADFF2F"
+          "color": "#2E322A",
+          "borderColor": "#455030",
+          "description": "Acid resistance bonus."
         },
         {
           "name": "decayres",
           "display": "Decay Res",
           "type": "int",
           "default": 0,
-          "color": "#8B4513",
-          "borderColor": "#A0522D",
-          "description": "Priests of R'lyeh have a value of 50 in this attribute."
+          "color": "#302D2A",
+          "borderColor": "#504540",
+          "description": "Decay resistance bonus."
         },
         {
           "name": "magicimmune",
           "display": "Magic Immune",
           "type": "int",
           "default": 0,
-          "color": "#9932CC",
-          "borderColor": "#DA70D6",
-          "description": "The monster produces a number of glamour gems that can be The monster is immune to the research effects of Drain and used in combat."
+          "color": "#302A32",
+          "borderColor": "#504560",
+          "description": "Immune to magic effects."
         },
         {
           "name": "stormimmune",
           "display": "Storm Immune",
           "type": "int",
           "default": 0,
-          "color": "#4169E1",
-          "borderColor": "#6495ED",
-          "description": "This monster is a stone being and immune to petrification."
+          "color": "#2A2D35",
+          "borderColor": "#4A5570",
+          "description": "Immune to storm effects."
         },
         {
           "name": "stunimmunity",
           "display": "Stun Immune",
           "type": "int",
           "default": 0,
-          "color": "#808080",
-          "borderColor": "#A9A9A9"
+          "color": "#303033",
+          "borderColor": "#505055",
+          "description": "Immune to stun effects."
         },
         {
           "name": "polyimmune",
           "display": "Poly Immune",
           "type": "int",
           "default": 0,
-          "color": "#FF69B4",
-          "borderColor": "#FFB6C1",
-          "description": "#islance This monster cannot be polymorphed in combat or by the use This item can only be used by mounted or flying units or of transformation rituals."
+          "color": "#322A30",
+          "borderColor": "#504050",
+          "description": "Cannot be polymorphed."
         },
         {
           "name": "ironvul",
           "display": "Iron Vuln",
           "type": "int",
           "default": 0,
-          "color": "#B22222",
-          "borderColor": "#DC143C",
-          "description": "Battlefield around it or enemies that attack it in some The monster will take points amount of extra damage when manner."
+          "color": "#352A2A",
+          "borderColor": "#6A4040",
+          "description": "Takes extra damage from iron weapons."
         }
       ]
     }

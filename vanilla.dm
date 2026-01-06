@@ -1,5 +1,5 @@
 -- Dominions 6 Full Data Export --
--- Generated: 2025-12-13T21:34:15.281Z --
+-- Generated: 2026-01-05T23:55:02.432Z --
 
 
 -- ======================================== --
@@ -16,8 +16,6 @@
 #len 3
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 2
@@ -31,8 +29,6 @@
 #twohanded
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 3
@@ -46,8 +42,6 @@
 #twohanded
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 4
@@ -62,8 +56,7 @@
 #bonus
 #charge
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
+#notdismounted
 #end
 
 #selectweapon 5
@@ -78,8 +71,6 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 6
@@ -93,8 +84,6 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 7
@@ -107,8 +96,7 @@
 #len 3
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 8
@@ -121,8 +109,6 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 9
@@ -135,8 +121,6 @@
 #len 0
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 10
@@ -149,8 +133,6 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 11
@@ -164,8 +146,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 12
@@ -177,8 +157,6 @@
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 13
@@ -191,8 +169,6 @@
 #len 1
 #pierce
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 14
@@ -205,8 +181,6 @@
 #len 2
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 15
@@ -219,9 +193,8 @@
 #len 1
 #pierce
 #blunt
+#flail
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 16
@@ -234,9 +207,8 @@
 #len 2
 #twohanded
 #blunt
+#flail
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 17
@@ -249,8 +221,6 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 18
@@ -264,8 +234,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 19
@@ -278,8 +246,6 @@
 #len -1
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 20
@@ -292,8 +258,6 @@
 #len -1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 21
@@ -306,8 +270,7 @@
 #range -1
 #ammo 2
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 22
@@ -321,8 +284,6 @@
 #ammo 15
 #blunt
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 23
@@ -337,8 +298,7 @@
 #twohanded
 #pierce
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 24
@@ -353,8 +313,7 @@
 #twohanded
 #pierce
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 25
@@ -370,8 +329,6 @@
 #armorpiercing
 #pierce
 #bowstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 26
@@ -387,8 +344,6 @@
 #armorpiercing
 #pierce
 #bowstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 27
@@ -402,8 +357,6 @@
 #ammo 2
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 28
@@ -416,8 +369,6 @@
 #len 4
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 29
@@ -429,8 +380,6 @@
 #att 0
 #len -1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 30
@@ -444,7 +393,6 @@
 #pierce
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 31
@@ -457,7 +405,6 @@
 #len 3
 #pierce
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 32
@@ -470,7 +417,6 @@
 #len 0
 #pierce
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 33
@@ -482,21 +428,20 @@
 #att 0
 #len -1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 34
 #name "Blow Pipe"
 #def 0
 #rcost 1
+#dmg "cappeddamage"
 #nratt 1
 #len 0
 #range 8
 #ammo 15
 #pierce
+#flammable
 #secondaryeffect 54
-#secondaryeffectalways 0
 #end
 
 #selectweapon 35
@@ -509,8 +454,7 @@
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 36
@@ -524,8 +468,7 @@
 #magic
 #pierce
 #charge
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 37
@@ -538,8 +481,7 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 38
@@ -554,7 +496,6 @@
 #pierce
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 39
@@ -567,20 +508,17 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 40
 #name "Whip"
 #def 0
 #rcost 1
+#dmg "-1cappeddamage"
 #nratt 1
 #att -1
 #len 4
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 41
@@ -595,7 +533,6 @@
 #magic
 #slash
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 42
@@ -609,7 +546,6 @@
 #magic
 #slash
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 43
@@ -622,7 +558,6 @@
 #len -1
 #slash
 #secondaryeffect 54
-#secondaryeffectalways 0
 #end
 
 #selectweapon 44
@@ -635,8 +570,7 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 45
@@ -649,7 +583,6 @@
 #len 1
 #blunt
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 46
@@ -664,7 +597,6 @@
 #slash
 #pierce
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 47
@@ -678,8 +610,6 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 48
@@ -698,8 +628,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 49
@@ -712,14 +640,13 @@
 #len 2
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 50
 #name "Weak Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -727,14 +654,13 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 51
 #name "Strong Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -742,14 +668,13 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 52
 #name "Death Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -757,14 +682,13 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 53
 #name "Debilitative Poison"
 #def 0
 #rcost 0
+#dmg "poison(stun)"
 #nratt 1
 #att 0
 #len 0
@@ -772,14 +696,13 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 54
 #name "Paralyzing Poison"
 #def 0
 #rcost 0
+#dmg "poison(stun)"
 #nratt 1
 #att 0
 #len 0
@@ -788,8 +711,6 @@
 #poison
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 55
@@ -802,8 +723,6 @@
 #len -1
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 56
@@ -817,8 +736,6 @@
 #blunt
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 57
@@ -831,8 +748,6 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 58
@@ -851,7 +766,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
 #secondaryeffectalways 60
 #end
 
@@ -868,14 +782,13 @@
 #blunt
 #nostr
 #internal
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 60
 #name "Fear"
 #def 0
 #rcost 0
+#dmg "causefear(typei)"
 #nratt 1
 #att 0
 #len 0
@@ -883,14 +796,13 @@
 #magic
 #friendlyimmune
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 61
 #name "Dancing Shard"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att -2
 #len 2
@@ -899,14 +811,13 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 62
 #name "Bile"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #len 0
 #range -2
@@ -916,36 +827,32 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 63
 #name "Life Drain"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
 #armorpiercing
 #magic
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 64
 #name "Decay"
 #def 0
 #rcost 0
+#dmg "decay"
 #nratt 1
 #att 0
 #len 0
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 65
@@ -959,7 +866,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 66
@@ -972,8 +878,6 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 67
@@ -988,8 +892,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 68
@@ -1004,7 +906,6 @@
 #pierce
 #bonus
 #secondaryeffect 54
-#secondaryeffectalways 0
 #end
 
 #selectweapon 69
@@ -1019,7 +920,6 @@
 #pierce
 #bonus
 #secondaryeffect 222
-#secondaryeffectalways 0
 #end
 
 #selectweapon 70
@@ -1035,13 +935,13 @@
 #slash
 #bonus
 #secondaryeffect 367
-#secondaryeffectalways 0
 #end
 
 #selectweapon 71
 #name "Sleep Vines"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 3
 #att -1
 #len 3
@@ -1050,8 +950,7 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 72
@@ -1065,7 +964,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 73
 #end
 
@@ -1083,8 +981,6 @@
 #undeadimmune
 #nostr
 #internal
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 74
@@ -1098,8 +994,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 75
@@ -1112,8 +1006,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 76
@@ -1126,8 +1018,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 77
@@ -1140,8 +1030,7 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 78
@@ -1155,8 +1044,6 @@
 #armorpiercing
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 79
@@ -1170,7 +1057,6 @@
 #magic
 #pierce
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 80
@@ -1184,7 +1070,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -1200,7 +1085,6 @@
 #magic
 #blunt
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 82
@@ -1213,7 +1097,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 765
 #end
 
@@ -1228,8 +1111,6 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 84
@@ -1243,7 +1124,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 525
 #end
 
@@ -1257,14 +1137,13 @@
 #len 0
 #armorpiercing
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 86
 #name "Mind Blast"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #len 0
 #range 100
@@ -1278,7 +1157,6 @@
 #natural
 #uwok
 #secondaryeffect 293
-#secondaryeffectalways 0
 #end
 
 #selectweapon 87
@@ -1292,13 +1170,13 @@
 #magic
 #slash
 #secondaryeffect 88
-#secondaryeffectalways 0
 #end
 
 #selectweapon 88
 #name "Unconsciousness"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -1306,7 +1184,6 @@
 #magic
 #nostr
 #secondaryeffect 247
-#secondaryeffectalways 0
 #end
 
 #selectweapon 89
@@ -1322,7 +1199,6 @@
 #pierce
 #blunt
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 90
@@ -1336,21 +1212,18 @@
 #armorpiercing
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 91
 #name "Fatigue"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
 #armorpiercing
 #magic
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 92
@@ -1362,8 +1235,6 @@
 #att -1
 #len -1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 93
@@ -1376,8 +1247,6 @@
 #len -1
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 94
@@ -1392,8 +1261,6 @@
 #bonus
 #nostr
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 95
@@ -1408,7 +1275,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 405
 #end
 
@@ -1424,8 +1290,6 @@
 #bonus
 #nostr
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 97
@@ -1440,21 +1304,19 @@
 #slash
 #pierce
 #secondaryeffect 98
-#secondaryeffectalways 0
 #end
 
 #selectweapon 98
 #name "Plague"
 #def 0
 #rcost 0
+#dmg "carryplague"
 #nratt 1
 #att 0
 #len 0
 #magic
 #undeadimmune
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 99
@@ -1467,8 +1329,6 @@
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 100
@@ -1481,21 +1341,19 @@
 #len 4
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 101
 #name "Athame"
 #def 0
 #rcost 0
+#dmg "partiallifedrain"
 #nratt 1
 #att 2
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 102
@@ -1509,8 +1367,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 103
@@ -1524,7 +1380,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 104
 #end
 
@@ -1532,6 +1387,7 @@
 #name "Area Petrification"
 #def 0
 #rcost 0
+#dmg "petrify"
 #nratt 1
 #att 0
 #len 0
@@ -1540,8 +1396,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 105
@@ -1555,8 +1409,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 106
@@ -1569,8 +1421,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 107
@@ -1585,8 +1435,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 108
@@ -1601,8 +1449,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 109
@@ -1615,22 +1461,20 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#holyifhit 10
 #end
 
 #selectweapon 110
 #name "Wraith Sword"
 #def 3
 #rcost 0
+#dmg "partiallifedrain"
 #nratt 1
 #att 2
 #len 2
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 111
@@ -1644,7 +1488,6 @@
 #magic
 #slash
 #secondaryeffect 112
-#secondaryeffectalways 0
 #end
 
 #selectweapon 112
@@ -1661,8 +1504,6 @@
 #mrnegates
 #nostr
 #internal
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 113
@@ -1676,7 +1517,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 114
 #end
 
@@ -1684,6 +1524,7 @@
 #name "Chain Lightning"
 #def 0
 #rcost 0
+#dmg "chainingdamage"
 #nratt 1
 #att 0
 #len 0
@@ -1692,8 +1533,7 @@
 #magic
 #shock
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#usedinmelee
 #end
 
 #selectweapon 115
@@ -1706,8 +1546,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 116
@@ -1721,7 +1559,6 @@
 #armorpiercing
 #blunt
 #secondaryeffect 91
-#secondaryeffectalways 0
 #end
 
 #selectweapon 117
@@ -1736,20 +1573,18 @@
 #magic
 #pierce
 #secondaryeffect 694
-#secondaryeffectalways 0
 #end
 
 #selectweapon 118
 #name "Curse"
 #def 0
 #rcost 0
+#dmg "curse"
 #nratt 1
 #att 0
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 119
@@ -1763,8 +1598,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 120
@@ -1777,8 +1610,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 121
@@ -1794,8 +1625,6 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 122
@@ -1810,7 +1639,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 125
 #end
 
@@ -1825,8 +1653,6 @@
 #ammo 30
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 124
@@ -1840,8 +1666,7 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 125
@@ -1855,8 +1680,6 @@
 #aoe 1
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 126
@@ -1870,7 +1693,6 @@
 #pierce
 #ironweapon
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 127
@@ -1885,7 +1707,6 @@
 #pierce
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 128
@@ -1899,8 +1720,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 129
@@ -1915,7 +1734,6 @@
 #magic
 #pierce
 #secondaryeffect 690
-#secondaryeffectalways 0
 #end
 
 #selectweapon 130
@@ -1929,7 +1747,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 699
 #end
 
@@ -1947,42 +1764,39 @@
 #magic
 #cold
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 132
 #name "Shortsword"
 #def 4
 #rcost 0
+#dmg "damage(x3vslargecreatures)"
 #nratt 1
 #att 3
 #len 1
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 133
 #name "Midget Masher"
 #def 1
 #rcost 0
+#dmg "damage(x2vssmallcreatures)"
 #nratt 1
 #att 3
 #len 2
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 134
 #name "Chain Shock"
 #def 0
 #rcost 0
+#dmg "chainingdamage"
 #nratt 1
 #att 0
 #len 0
@@ -1991,8 +1805,6 @@
 #magic
 #shock
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 135
@@ -2006,20 +1818,18 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 136
 #name "Vine Whip"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 3
 #len 4
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 137
 #end
 
@@ -2027,25 +1837,24 @@
 #name "Entanglement"
 #def 0
 #rcost 0
+#dmg "entangle"
 #nratt 1
 #att 0
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 138
 #name "Rat Tail"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 2
 #len 4
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 139
 #end
 
@@ -2053,33 +1862,32 @@
 #name "Greater Fear"
 #def 0
 #rcost 0
+#dmg "causefear(typei)"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 140
 #name "Whip of Command"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 3
 #len 4
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 141
 #name "Poison Spit"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #len 0
 #range 10
@@ -2088,8 +1896,6 @@
 #poison
 #bonus
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 142
@@ -2102,21 +1908,19 @@
 #len 0
 #bonus
 #secondaryeffect 143
-#secondaryeffectalways 0
 #end
 
 #selectweapon 143
 #name "Disease"
 #def 0
 #rcost 0
+#dmg "disease"
 #nratt 1
 #att 0
 #len 0
 #magic
 #inanimateimmune
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 144
@@ -2130,13 +1934,13 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 145
 #name "Heavenly Horn"
 #def 0
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #len 0
 #range 27
@@ -2145,8 +1949,6 @@
 #armorpiercing
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 146
@@ -2159,13 +1961,13 @@
 #len -1
 #slash
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 147
 #name "Spray Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #len 0
 #range -2
@@ -2175,8 +1977,6 @@
 #magic
 #poison
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 148
@@ -2188,8 +1988,6 @@
 #att 0
 #len -1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 149
@@ -2203,7 +2001,6 @@
 #magic
 #slash
 #secondaryeffect 150
-#secondaryeffectalways 0
 #end
 
 #selectweapon 150
@@ -2216,8 +2013,6 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 151
@@ -2230,8 +2025,6 @@
 #len 0
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 152
@@ -2247,8 +2040,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 153
@@ -2261,8 +2052,7 @@
 #len 1
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 154
@@ -2277,8 +2067,6 @@
 #twohanded
 #pierce
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 155
@@ -2295,7 +2083,6 @@
 #pierce
 #halfstr
 #secondaryeffect 156
-#secondaryeffectalways 0
 #end
 
 #selectweapon 156
@@ -2309,8 +2096,6 @@
 #magic
 #mind
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 157
@@ -2325,7 +2110,6 @@
 #magic
 #blunt
 #secondaryeffect 156
-#secondaryeffectalways 0
 #end
 
 #selectweapon 158
@@ -2339,7 +2123,7 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
+#flail
 #secondaryeffectalways 159
 #end
 
@@ -2347,6 +2131,7 @@
 #name "Fear and Cold"
 #def 0
 #rcost 0
+#dmg "causefear(typei)"
 #nratt 1
 #att 0
 #len 0
@@ -2354,13 +2139,13 @@
 #magic
 #nostr
 #secondaryeffect 160
-#secondaryeffectalways 0
 #end
 
 #selectweapon 160
 #name "Cold"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -2370,8 +2155,6 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 161
@@ -2388,8 +2171,7 @@
 #magic
 #pierce
 #bowstr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#holyifhit 20
 #end
 
 #selectweapon 162
@@ -2402,8 +2184,6 @@
 #len 1
 #armorpiercing
 #magic
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 163
@@ -2417,7 +2197,6 @@
 #magic
 #blunt
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 164
@@ -2430,8 +2209,6 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 165
@@ -2444,8 +2221,7 @@
 #len 2
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 166
@@ -2458,14 +2234,13 @@
 #len -1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 167
 #name "Poison Sling"
 #def 0
 #rcost 5
+#dmg "cloud"
 #nratt 1
 #len 0
 #range 15
@@ -2474,8 +2249,6 @@
 #armornegating
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 168
@@ -2493,8 +2266,6 @@
 #pierce
 #nostr
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 169
@@ -2509,8 +2280,6 @@
 #armornegating
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 170
@@ -2524,7 +2293,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 405
 #end
 
@@ -2541,8 +2309,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 172
@@ -2555,8 +2321,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 173
@@ -2570,22 +2334,21 @@
 #magic
 #pierce
 #blunt
+#flail
 #secondaryeffect 174
-#secondaryeffectalways 0
 #end
 
 #selectweapon 174
 #name "Break Armor"
 #def 0
 #rcost 0
+#dmg "unknown"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 175
@@ -2599,8 +2362,6 @@
 #magic
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 176
@@ -2616,8 +2377,7 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
+#hithead
 #end
 
 #selectweapon 177
@@ -2636,7 +2396,6 @@
 #norepel
 #unrepel
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 178
@@ -2649,8 +2408,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 179
@@ -2664,7 +2421,6 @@
 #magic
 #slash
 #secondaryeffect 694
-#secondaryeffectalways 0
 #end
 
 #selectweapon 180
@@ -2683,9 +2439,8 @@
 #mind
 #mrnegates
 #nostr
+#soulslaying
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 181
@@ -2700,8 +2455,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 182
@@ -2714,14 +2467,13 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 183
 #name "Snake Bladder Stick"
 #def 1
 #rcost 0
+#dmg "cloud"
 #nratt 1
 #att 0
 #len 2
@@ -2730,8 +2482,6 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 184
@@ -2745,7 +2495,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -2762,8 +2511,7 @@
 #shock
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#usedinmelee
 #end
 
 #selectweapon 186
@@ -2778,7 +2526,6 @@
 #magic
 #slash
 #secondaryeffect 694
-#secondaryeffectalways 0
 #end
 
 #selectweapon 187
@@ -2793,7 +2540,6 @@
 #magic
 #slash
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 188
@@ -2806,7 +2552,7 @@
 #len 2
 #magic
 #blunt
-#secondaryeffect 0
+#flail
 #secondaryeffectalways 189
 #end
 
@@ -2814,6 +2560,7 @@
 #name "Enslavement"
 #def 0
 #rcost 0
+#dmg "enslave"
 #nratt 1
 #att 0
 #len 0
@@ -2821,8 +2568,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 190
@@ -2838,8 +2583,6 @@
 #slash
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 191
@@ -2852,7 +2595,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 192
 #end
 
@@ -2869,7 +2611,6 @@
 #magic
 #cold
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -2885,7 +2626,6 @@
 #magic
 #pierce
 #secondaryeffect 194
-#secondaryeffectalways 0
 #end
 
 #selectweapon 194
@@ -2901,8 +2641,7 @@
 #mind
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#soulslaying
 #end
 
 #selectweapon 195
@@ -2916,7 +2655,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 196
 #end
 
@@ -2935,8 +2673,6 @@
 #mrnegates
 #nostr
 #internal
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 197
@@ -2958,8 +2694,6 @@
 #natural
 #internal
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 198
@@ -2975,8 +2709,6 @@
 #fire
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 199
@@ -2993,13 +2725,13 @@
 #pierce
 #halfstr
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 200
 #name "Bane Burst"
 #def 0
 #rcost 0
+#dmg "decay"
 #nratt 1
 #att 0
 #len 1
@@ -3007,8 +2739,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 201
@@ -3021,8 +2751,6 @@
 #len 4
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 202
@@ -3035,8 +2763,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 203
@@ -3051,7 +2777,6 @@
 #pierce
 #bonus
 #secondaryeffect 54
-#secondaryeffectalways 0
 #end
 
 #selectweapon 204
@@ -3066,7 +2791,6 @@
 #slash
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 205
@@ -3079,7 +2803,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 774
 #end
 
@@ -3096,8 +2819,6 @@
 #armorpiercing
 #pierce
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 207
@@ -3111,19 +2832,18 @@
 #magic
 #slash
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 208
 #name "Thunder Whip"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len 4
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 134
 #end
 
@@ -3138,7 +2858,6 @@
 #ammo 2
 #magic
 #pierce
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -3154,7 +2873,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -3171,7 +2889,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -3188,7 +2905,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -3206,7 +2922,6 @@
 #magic
 #pierce
 #bowstr
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -3224,7 +2939,6 @@
 #magic
 #pierce
 #bowstr
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -3240,7 +2954,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -3256,8 +2969,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 217
@@ -3273,7 +2984,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -3287,7 +2997,7 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
+#flail
 #secondaryeffectalways 219
 #end
 
@@ -3303,8 +3013,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 220
@@ -3318,8 +3026,6 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 221
@@ -3336,14 +3042,13 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 222
 #name "Cold"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -3353,8 +3058,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 223
@@ -3368,13 +3071,13 @@
 #slash
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 224
 #name "Poison Spit"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #len 0
 #range -1
@@ -3384,8 +3087,6 @@
 #poison
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 225
@@ -3399,7 +3100,6 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
 #secondaryeffectalways 226
 #end
 
@@ -3407,6 +3107,7 @@
 #name "Basilisk Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -3414,14 +3115,13 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 227
 #name "Divine Armament"
 #def 0
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 0
 #len 0
@@ -3429,14 +3129,13 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 228
 #name "Elf Shot"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #len 0
 #range 35
@@ -3447,8 +3146,6 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 229
@@ -3465,8 +3162,6 @@
 #fire
 #bonus
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 230
@@ -3480,8 +3175,6 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 231
@@ -3494,8 +3187,6 @@
 #len -1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 232
@@ -3510,8 +3201,6 @@
 #magic
 #shock
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 233
@@ -3524,8 +3213,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 234
@@ -3538,8 +3225,6 @@
 #len 3
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 235
@@ -3551,8 +3236,6 @@
 #att 0
 #len 0
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 236
@@ -3565,8 +3248,6 @@
 #len -1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 237
@@ -3580,8 +3261,7 @@
 #aoe 1
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#defnegate
 #end
 
 #selectweapon 238
@@ -3595,8 +3275,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 239
@@ -3610,7 +3288,6 @@
 #pierce
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 240
@@ -3623,22 +3300,19 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 241
 #name "Hell Sword"
 #def 1
 #rcost 0
+#dmg "partiallifedrain"
 #nratt 1
 #att 5
 #len 2
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 242
@@ -3652,8 +3326,6 @@
 #armorpiercing
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 243
@@ -3668,8 +3340,8 @@
 #armornegating
 #magic
 #shock
+#usedinmelee
 #uwok
-#secondaryeffect 0
 #secondaryeffectalways 704
 #end
 
@@ -3685,7 +3357,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 221
 #end
 
@@ -3700,8 +3371,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 246
@@ -3716,7 +3385,6 @@
 #magic
 #slash
 #secondaryeffect 247
-#secondaryeffectalways 0
 #end
 
 #selectweapon 247
@@ -3732,8 +3400,7 @@
 #mrnegates
 #nostr
 #internal
-#secondaryeffect 0
-#secondaryeffectalways 0
+#magiconly
 #end
 
 #selectweapon 248
@@ -3746,7 +3413,6 @@
 #len -1
 #slash
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 249
@@ -3759,7 +3425,6 @@
 #len -1
 #slash
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 250
@@ -3772,7 +3437,6 @@
 #len -1
 #slash
 #secondaryeffect 53
-#secondaryeffectalways 0
 #end
 
 #selectweapon 251
@@ -3786,7 +3450,6 @@
 #pierce
 #bonus
 #secondaryeffect 54
-#secondaryeffectalways 0
 #end
 
 #selectweapon 252
@@ -3798,8 +3461,7 @@
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 253
@@ -3812,14 +3474,13 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 254
 #name "Plague Breath"
 #def 0
 #rcost 0
+#dmg "disease"
 #nratt 1
 #len 0
 #range -2
@@ -3830,7 +3491,6 @@
 #mrnegates
 #nostr
 #natural
-#secondaryeffect 0
 #secondaryeffectalways 255
 #end
 
@@ -3838,6 +3498,7 @@
 #name "Area Fear"
 #def 0
 #rcost 0
+#dmg "causefear(typei)"
 #nratt 1
 #att 0
 #len 0
@@ -3845,8 +3506,6 @@
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 256
@@ -3858,8 +3517,6 @@
 #att 0
 #len 1
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 257
@@ -3873,8 +3530,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 258
@@ -3888,8 +3543,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 259
@@ -3903,8 +3556,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 260
@@ -3918,8 +3569,6 @@
 #ammo 2
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 261
@@ -3934,8 +3583,6 @@
 #bonus
 #nostr
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 262
@@ -3952,8 +3599,6 @@
 #bonus
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 263
@@ -3968,8 +3613,6 @@
 #bonus
 #nostr
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 264
@@ -3984,8 +3627,6 @@
 #twohanded
 #pierce
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 265
@@ -3998,8 +3639,7 @@
 #len 1
 #pierce
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 266
@@ -4014,8 +3654,7 @@
 #twohanded
 #pierce
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 267
@@ -4029,8 +3668,6 @@
 #twohanded
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 268
@@ -4043,14 +3680,13 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 269
 #name "Soul Leech"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -4062,14 +3698,13 @@
 #bonus
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 270
 #name "Consume Soul"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -4081,14 +3716,14 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
+#soulslaying
 #end
 
 #selectweapon 271
 #name "Life Drain Tentacle"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -4097,8 +3732,6 @@
 #bonus
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 272
@@ -4113,8 +3746,6 @@
 #magic
 #slash
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 273
@@ -4127,14 +3758,13 @@
 #len 0
 #armorpiercing
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 274
 #name "Enslave Mind"
 #def 0
 #rcost 0
+#dmg "enslave"
 #nratt 1
 #len 0
 #range 25
@@ -4146,20 +3776,18 @@
 #nostr
 #natural
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 275
 #name "Sun Sword"
 #def 3
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 3
 #len 1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 276
 #end
 
@@ -4167,6 +3795,7 @@
 #name "Small Area Holyfire"
 #def 0
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 0
 #len 0
@@ -4175,20 +3804,18 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 277
 #name "Demon Whip"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 4
 #len 4
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 237
 #end
 
@@ -4202,8 +3829,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 279
@@ -4217,9 +3842,8 @@
 #ammo 2
 #magic
 #pierce
+#mrcheckhalfdmg
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 280
@@ -4232,8 +3856,7 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 281
@@ -4246,14 +3869,14 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 282
 #name "Paralyze"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 0
@@ -4262,14 +3885,13 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 283
 #name "Paralyze"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 0
@@ -4278,8 +3900,6 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 284
@@ -4294,13 +3914,13 @@
 #magic
 #mrnegates
 #secondaryeffect 285
-#secondaryeffectalways 0
 #end
 
 #selectweapon 285
 #name "Additional Weakness"
 #def 0
 #rcost 0
+#dmg "weaken"
 #nratt 1
 #att 0
 #len 0
@@ -4309,8 +3929,6 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 286
@@ -4323,7 +3941,6 @@
 #len 0
 #magic
 #secondaryeffect 143
-#secondaryeffectalways 0
 #end
 
 #selectweapon 287
@@ -4341,8 +3958,6 @@
 #pierce
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 288
@@ -4356,8 +3971,6 @@
 #twohanded
 #slash
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 289
@@ -4371,8 +3984,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 290
@@ -4385,8 +3996,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 291
@@ -4401,8 +4010,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 292
@@ -4418,8 +4025,6 @@
 #fire
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 293
@@ -4435,14 +4040,13 @@
 #mind
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 294
 #name "Weakness"
 #def 0
 #rcost 0
+#dmg "weaken"
 #nratt 1
 #len 0
 #range 30
@@ -4452,8 +4056,6 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 295
@@ -4467,22 +4069,19 @@
 #armorpiercing
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 296
 #name "Twin Spear"
 #def 2
 #rcost 0
+#dmg "unlifedamage"
 #nratt 1
 #att 2
 #len 3
 #armorpiercing
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 297
@@ -4497,7 +4096,6 @@
 #magic
 #pierce
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 298
@@ -4510,8 +4108,7 @@
 #len 4
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flail
 #end
 
 #selectweapon 299
@@ -4524,8 +4121,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 300
@@ -4538,8 +4133,6 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 301
@@ -4553,7 +4146,6 @@
 #ammo 50
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 302
 #end
 
@@ -4567,8 +4159,6 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 303
@@ -4584,7 +4174,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 137
 #end
 
@@ -4599,7 +4188,7 @@
 #magic
 #pierce
 #blunt
-#secondaryeffect 0
+#flail
 #secondaryeffectalways 305
 #end
 
@@ -4616,7 +4205,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 306
 #end
 
@@ -4624,6 +4212,7 @@
 #name "Weakness"
 #def 0
 #rcost 0
+#dmg "weaken"
 #nratt 1
 #att 0
 #len 0
@@ -4632,8 +4221,6 @@
 #magic
 #inanimateimmune
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 307
@@ -4647,8 +4234,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 308
@@ -4663,8 +4248,6 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 309
@@ -4677,8 +4260,6 @@
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 310
@@ -4692,13 +4273,13 @@
 #magic
 #slash
 #secondaryeffect 441
-#secondaryeffectalways 0
 #end
 
 #selectweapon 311
 #name "Mind Blast"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #len 0
 #range 100
@@ -4712,7 +4293,6 @@
 #natural
 #uwok
 #secondaryeffect 293
-#secondaryeffectalways 0
 #end
 
 #selectweapon 312
@@ -4726,7 +4306,6 @@
 #magic
 #pierce
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 313
@@ -4741,7 +4320,6 @@
 #bonus
 #nostr
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 314
@@ -4756,7 +4334,6 @@
 #bonus
 #nostr
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 315
@@ -4769,21 +4346,19 @@
 #len 4
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 316
 #name "Obsolete --- Death Poison and Web"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
 #poison
 #nostr
 #secondaryeffect 261
-#secondaryeffectalways 0
 #end
 
 #selectweapon 317
@@ -4795,8 +4370,7 @@
 #att -1
 #len 4
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 318
@@ -4811,8 +4385,8 @@
 #magic
 #pierce
 #blunt
+#flammable
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 319
@@ -4827,8 +4401,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 320
@@ -4841,7 +4413,6 @@
 #len -1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 221
 #end
 
@@ -4857,8 +4428,6 @@
 #armorpiercing
 #magic
 #fire
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 322
@@ -4871,8 +4440,6 @@
 #len -1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 323
@@ -4886,13 +4453,13 @@
 #slash
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 324
 #name "Poison Spit"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #len 0
 #range -1
@@ -4902,8 +4469,6 @@
 #poison
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 325
@@ -4917,7 +4482,6 @@
 #pierce
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 326
@@ -4930,8 +4494,6 @@
 #len 2
 #blunt
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 327
@@ -4944,7 +4506,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 328
 #end
 
@@ -4952,14 +4513,13 @@
 #name "Shatter"
 #def 0
 #rcost 0
+#dmg "shatter"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 329
@@ -4975,8 +4535,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 330
@@ -4990,8 +4548,6 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 331
@@ -5004,8 +4560,6 @@
 #len 0
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 332
@@ -5022,7 +4576,6 @@
 #magic
 #pierce
 #bowstr
-#secondaryeffect 0
 #secondaryeffectalways 333
 #end
 
@@ -5036,8 +4589,6 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 334
@@ -5051,8 +4602,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 335
@@ -5065,8 +4614,6 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 336
@@ -5081,13 +4628,13 @@
 #magic
 #pierce
 #secondaryeffect 337
-#secondaryeffectalways 0
 #end
 
 #selectweapon 337
 #name "The Deadliest Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -5095,8 +4642,6 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 338
@@ -5110,8 +4655,6 @@
 #blunt
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 339
@@ -5125,8 +4668,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 340
@@ -5139,7 +4680,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 335
 #end
 
@@ -5153,7 +4693,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 335
 #end
 
@@ -5161,6 +4700,7 @@
 #name "Poison Ink"
 #def 1
 #rcost 0
+#dmg "unknown"
 #nratt 1
 #att 0
 #len 0
@@ -5172,8 +4712,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 343
@@ -5187,33 +4725,30 @@
 #slash
 #bonus
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 344
 #name "Demon-Slayer"
 #def 2
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 2
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 345
 #name "Fly Whisk"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 1
 #magic
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 346
@@ -5225,8 +4760,6 @@
 #att -4
 #len -1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 347
@@ -5238,9 +4771,8 @@
 #att 1
 #len 2
 #blunt
+#flail
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 348
@@ -5257,7 +4789,6 @@
 #bonus
 #norepel
 #unrepel
-#secondaryeffect 0
 #secondaryeffectalways 349
 #end
 
@@ -5265,6 +4796,7 @@
 #name "Powerful Decay"
 #def 0
 #rcost 0
+#dmg "decay"
 #nratt 1
 #att 0
 #len 0
@@ -5273,8 +4805,6 @@
 #undeadimmune
 #hardmrneg
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 350
@@ -5291,8 +4821,6 @@
 #fire
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 351
@@ -5306,8 +4834,6 @@
 #twohanded
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 352
@@ -5321,8 +4847,6 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 353
@@ -5336,8 +4860,6 @@
 #blunt
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 354
@@ -5351,8 +4873,6 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 355
@@ -5368,7 +4888,6 @@
 #bonus
 #unrepel
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 356
@@ -5384,7 +4903,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -5399,8 +4917,6 @@
 #pierce
 #charge
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 358
@@ -5414,7 +4930,6 @@
 #pierce
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 359
@@ -5428,7 +4943,6 @@
 #pierce
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 360
@@ -5441,8 +4955,6 @@
 #range -1
 #ammo 30
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 361
@@ -5460,8 +4972,6 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 362
@@ -5475,8 +4985,6 @@
 #ammo 2
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 363
@@ -5490,14 +4998,13 @@
 #twohanded
 #blunt
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 364
 #name "Curse Luck"
 #def 0
 #rcost 0
+#dmg "seteffectvalue(5)iflower:cursedluck"
 #nratt 1
 #att 0
 #len 0
@@ -5508,8 +5015,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 365
@@ -5523,7 +5028,7 @@
 #magic
 #pierce
 #blunt
-#secondaryeffect 0
+#flail
 #secondaryeffectalways 366
 #end
 
@@ -5531,6 +5036,7 @@
 #name "Curse Luck"
 #def 0
 #rcost 0
+#dmg "seteffectvalue(5)iflower:cursedluck"
 #nratt 1
 #att 0
 #len 4
@@ -5540,27 +5046,25 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 367
 #name "Horror Mark"
 #def 0
 #rcost 0
+#dmg "addtoeffectvalue(1):horrormark"
 #nratt 1
 #att 0
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 368
 #name "Horror Mark"
 #def 0
 #rcost 0
+#dmg "addtoeffectvalue(2):horrormark"
 #nratt 1
 #len 0
 #range 50
@@ -5569,14 +5073,13 @@
 #bonus
 #nostr
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 369
 #name "Curse"
 #def 0
 #rcost 0
+#dmg "curse"
 #nratt 1
 #len 0
 #range 50
@@ -5585,8 +5088,6 @@
 #bonus
 #nostr
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 370
@@ -5603,14 +5104,13 @@
 #bonus
 #nostr
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 371
 #name "Theft of Life"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #len 0
 #range 50
@@ -5623,8 +5123,6 @@
 #bonus
 #natural
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 372
@@ -5639,8 +5137,8 @@
 #twohanded
 #pierce
 #halfstr
+#flammable
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 373
@@ -5652,8 +5150,7 @@
 #att 0
 #len 3
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 374
@@ -5666,8 +5163,6 @@
 #len 3
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 375
@@ -5682,8 +5177,6 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 376
@@ -5697,8 +5190,6 @@
 #twohanded
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 377
@@ -5712,8 +5203,6 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 378
@@ -5728,8 +5217,6 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 379
@@ -5743,8 +5230,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 380
@@ -5758,8 +5243,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 381
@@ -5772,8 +5255,6 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 382
@@ -5788,7 +5269,6 @@
 #pierce
 #ironweapon
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 383
@@ -5804,14 +5284,13 @@
 #magic
 #fire
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 384
 #name "Minor Life Drain"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -5819,14 +5298,13 @@
 #magic
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 385
 #name "Major Life Drain"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -5834,8 +5312,6 @@
 #magic
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 386
@@ -5850,21 +5326,19 @@
 #magic
 #blunt
 #secondaryeffect 385
-#secondaryeffectalways 0
 #end
 
 #selectweapon 387
 #name "Sleep Touch"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 388
@@ -5877,8 +5351,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 389
@@ -5891,8 +5363,6 @@
 #len 4
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 390
@@ -5905,8 +5375,8 @@
 #len 1
 #magic
 #blunt
+#flail
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 391
@@ -5920,9 +5390,9 @@
 #armorpiercing
 #magic
 #pierce
+#flail
 #nostr
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 392
@@ -5936,7 +5406,6 @@
 #magic
 #blunt
 #secondaryeffect 622
-#secondaryeffectalways 0
 #end
 
 #selectweapon 393
@@ -5951,7 +5420,6 @@
 #magic
 #nostr
 #secondaryeffect 394
-#secondaryeffectalways 0
 #end
 
 #selectweapon 394
@@ -5964,8 +5432,6 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 395
@@ -5979,7 +5445,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 396
 #end
 
@@ -5997,8 +5462,6 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 397
@@ -6011,8 +5474,6 @@
 #len -1
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 398
@@ -6026,7 +5487,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 399
@@ -6039,8 +5499,6 @@
 #len 0
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 400
@@ -6055,7 +5513,6 @@
 #bonus
 #internal
 #secondaryeffect 401
-#secondaryeffectalways 0
 #end
 
 #selectweapon 401
@@ -6070,8 +5527,7 @@
 #magic
 #mind
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#soulslaying
 #end
 
 #selectweapon 402
@@ -6085,14 +5541,15 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flail
+#holyifhit 7
 #end
 
 #selectweapon 403
 #name "Mesmerize"
 #def 0
 #rcost 0
+#dmg "enrage(dominions3:causeconfusion)"
 #nratt 1
 #len 0
 #range 25
@@ -6104,8 +5561,6 @@
 #nostr
 #natural
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 404
@@ -6118,14 +5573,13 @@
 #len -1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 405
 #name "Holy Fire"
 #def 0
 #rcost 0
+#dmg "damage(x3vsundead/demon)"
 #nratt 1
 #att 0
 #len 0
@@ -6136,8 +5590,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 406
@@ -6152,7 +5604,6 @@
 #magic
 #slash
 #ironweapon
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -6168,7 +5619,6 @@
 #magic
 #pierce
 #ironweapon
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -6182,8 +5632,6 @@
 #len -1
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 409
@@ -6196,8 +5644,7 @@
 #range -1
 #ammo 1
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 410
@@ -6210,7 +5657,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 411
 #end
 
@@ -6218,6 +5664,7 @@
 #name "Small Area Fatigue"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -6225,8 +5672,6 @@
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 412
@@ -6240,13 +5685,13 @@
 #magic
 #slash
 #secondaryeffect 413
-#secondaryeffectalways 0
 #end
 
 #selectweapon 413
 #name "Fatigue and Disease"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 1
@@ -6254,13 +5699,13 @@
 #magic
 #nostr
 #secondaryeffect 414
-#secondaryeffectalways 0
 #end
 
 #selectweapon 414
 #name "Disease"
 #def 0
 #rcost 0
+#dmg "disease"
 #nratt 1
 #att 0
 #len 1
@@ -6268,8 +5713,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 415
@@ -6284,7 +5727,6 @@
 #slash
 #bonus
 #secondaryeffect 367
-#secondaryeffectalways 0
 #end
 
 #selectweapon 416
@@ -6300,8 +5742,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 417
@@ -6314,8 +5754,6 @@
 #len -1
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 418
@@ -6332,8 +5770,6 @@
 #slash
 #bonus
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 419
@@ -6348,7 +5784,7 @@
 #armornegating
 #magic
 #shock
-#secondaryeffect 0
+#usedinmelee
 #secondaryeffectalways 704
 #end
 
@@ -6363,7 +5799,6 @@
 #armorpiercing
 #blunt
 #secondaryeffect 421
-#secondaryeffectalways 0
 #end
 
 #selectweapon 421
@@ -6376,8 +5811,6 @@
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 422
@@ -6391,8 +5824,7 @@
 #ammo 1005
 #armornegating
 #magic
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 423
@@ -6406,7 +5838,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 424
@@ -6419,8 +5850,6 @@
 #range -3
 #ammo 5
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 425
@@ -6435,7 +5864,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -6451,8 +5879,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 427
@@ -6465,8 +5891,6 @@
 #len 3
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 428
@@ -6478,8 +5902,6 @@
 #att -1
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 429
@@ -6492,8 +5914,7 @@
 #len 2
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 430
@@ -6508,7 +5929,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
 #secondaryeffectalways 431
 #end
 
@@ -6516,13 +5936,13 @@
 #name "Small Area Curse and Decay"
 #def 0
 #rcost 0
+#dmg "curse"
 #nratt 1
 #att 0
 #len 0
 #aoe 1
 #magic
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 432
 #end
 
@@ -6530,6 +5950,7 @@
 #name "Small Area Decay"
 #def 0
 #rcost 0
+#dmg "decay"
 #nratt 1
 #att 0
 #len 0
@@ -6537,8 +5958,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 433
@@ -6551,8 +5970,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 434
@@ -6569,7 +5986,6 @@
 #magic
 #pierce
 #bowstr
-#secondaryeffect 0
 #secondaryeffectalways 435
 #end
 
@@ -6577,6 +5993,7 @@
 #name "Area Decay"
 #def 0
 #rcost 0
+#dmg "decay"
 #nratt 1
 #att 0
 #len 0
@@ -6584,8 +6001,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 436
@@ -6599,8 +6014,6 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 437
@@ -6615,8 +6028,6 @@
 #bonus
 #nostr
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 438
@@ -6633,7 +6044,6 @@
 #pierce
 #halfstr
 #secondaryeffect 143
-#secondaryeffectalways 0
 #end
 
 #selectweapon 439
@@ -6650,49 +6060,45 @@
 #pierce
 #halfstr
 #secondaryeffect 440
-#secondaryeffectalways 0
 #end
 
 #selectweapon 440
 #name "Lesser Fear"
 #def 0
 #rcost 0
+#dmg "causefear(typeii)"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 441
 #name "Banish to Inferno"
 #def 0
 #rcost 0
+#dmg "inferno"
 #nratt 1
 #att 0
 #len 0
 #magic
 #hardmrneg
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 442
 #name "Dimensional Shift"
 #def 0
 #rcost 0
+#dmg "thevoid"
 #nratt 1
 #att 0
 #len 0
 #magic
 #hardmrneg
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 443
@@ -6705,7 +6111,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 442
 #end
 
@@ -6722,7 +6127,6 @@
 #magic
 #slash
 #secondaryeffect 441
-#secondaryeffectalways 0
 #end
 
 #selectweapon 445
@@ -6736,8 +6140,6 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 446
@@ -6749,8 +6151,6 @@
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 447
@@ -6764,8 +6164,6 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 448
@@ -6781,13 +6179,13 @@
 #mrnegates
 #nostr
 #secondaryeffect 143
-#secondaryeffectalways 0
 #end
 
 #selectweapon 449
 #name "Life Drain"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 5
 #len 0
@@ -6796,14 +6194,13 @@
 #bonus
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 450
 #name "Tiny Bite"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len -1
@@ -6812,8 +6209,6 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 451
@@ -6826,8 +6221,6 @@
 #len 1
 #slash
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 452
@@ -6840,8 +6233,8 @@
 #range -1
 #ammo 1
 #pierce
+#flammable
 #secondaryeffect 453
-#secondaryeffectalways 0
 #end
 
 #selectweapon 453
@@ -6855,8 +6248,6 @@
 #sizeresist
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 454
@@ -6871,8 +6262,7 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 455
@@ -6888,13 +6278,13 @@
 #slash
 #pierce
 #secondaryeffect 285
-#secondaryeffectalways 0
 #end
 
 #selectweapon 456
 #name "Gaze of Fear"
 #def 0
 #rcost 0
+#dmg "causefear(typei)"
 #nratt 1
 #len 0
 #range 40
@@ -6905,8 +6295,6 @@
 #bonus
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 457
@@ -6920,8 +6308,8 @@
 #twohanded
 #magic
 #slash
+#mrcheckhalfdmg
 #secondaryeffect 458
-#secondaryeffectalways 0
 #end
 
 #selectweapon 458
@@ -6936,14 +6324,13 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 459
 #name "Thrown Sutra"
 #def 0
 #rcost 0
+#dmg "damage(x3vsundead/demon)"
 #nratt 1
 #len 0
 #range 15
@@ -6953,13 +6340,13 @@
 #bonus
 #nostr
 #secondaryeffect 460
-#secondaryeffectalways 0
 #end
 
 #selectweapon 460
 #name "Stop the Dead"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 0
@@ -6968,21 +6355,19 @@
 #demonundead
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#demonimmune
 #end
 
 #selectweapon 461
 #name "Swallow"
 #def -2
 #rcost 0
+#dmg "-5swallowifsmaller,elsedamage"
 #nratt 1
 #att 0
 #len 0
 #aoe 1
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 462
@@ -6997,7 +6382,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 463
@@ -7014,8 +6398,6 @@
 #pierce
 #bowstr
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 464
@@ -7028,8 +6410,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 465
@@ -7043,21 +6423,19 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 466
 #name "Apotropaic Sword"
 #def 1
 #rcost 0
+#dmg "damage(x2vsdemon)"
 #nratt 1
 #att 1
 #len 2
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 467
@@ -7071,13 +6449,13 @@
 #magic
 #pierce
 #secondaryeffect 468
-#secondaryeffectalways 0
 #end
 
 #selectweapon 468
 #name "Halt Demon"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 0
@@ -7087,8 +6465,6 @@
 #undeadimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 469
@@ -7103,7 +6479,6 @@
 #magic
 #slash
 #secondaryeffect 440
-#secondaryeffectalways 0
 #end
 
 #selectweapon 470
@@ -7116,8 +6491,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 471
@@ -7131,8 +6504,6 @@
 #ammo 5
 #blunt
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 472
@@ -7145,7 +6516,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -7159,8 +6529,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 474
@@ -7173,8 +6541,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 475
@@ -7188,8 +6554,6 @@
 #magic
 #pierce
 #charge
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 476
@@ -7202,8 +6566,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 477
@@ -7217,7 +6579,6 @@
 #magic
 #slash
 #secondaryeffect 480
-#secondaryeffectalways 0
 #end
 
 #selectweapon 478
@@ -7231,7 +6592,6 @@
 #magic
 #pierce
 #secondaryeffect 480
-#secondaryeffectalways 0
 #end
 
 #selectweapon 479
@@ -7245,13 +6605,13 @@
 #magic
 #slash
 #secondaryeffect 480
-#secondaryeffectalways 0
 #end
 
 #selectweapon 480
 #name "Halt Sacred"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 0
@@ -7260,8 +6620,6 @@
 #sacredonly
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 481
@@ -7275,7 +6633,6 @@
 #magic
 #mrnegates
 #secondaryeffect 156
-#secondaryeffectalways 0
 #end
 
 #selectweapon 482
@@ -7288,8 +6645,7 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 483
@@ -7304,13 +6660,13 @@
 #magic
 #pierce
 #secondaryeffect 453
-#secondaryeffectalways 0
 #end
 
 #selectweapon 484
 #name "Wail of Doom"
 #def 0
 #rcost 0
+#dmg "curse"
 #nratt 1
 #len 0
 #range 50
@@ -7318,8 +6674,6 @@
 #magic
 #nostr
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 485
@@ -7331,8 +6685,6 @@
 #att 0
 #len 3
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 486
@@ -7347,7 +6699,6 @@
 #pierce
 #bonus
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -7355,13 +6706,13 @@
 #name "Spear of the Morrigan"
 #def 2
 #rcost 5
+#dmg "partiallifedrain"
 #nratt 1
 #att 3
 #len 3
 #magic
 #pierce
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 488
@@ -7375,7 +6726,6 @@
 #pierce
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 489
@@ -7389,7 +6739,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 490
@@ -7403,7 +6752,6 @@
 #pierce
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 491
@@ -7417,7 +6765,6 @@
 #pierce
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 492
@@ -7433,7 +6780,6 @@
 #magic
 #blunt
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 333
 #end
 
@@ -7448,8 +6794,6 @@
 #twohanded
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 494
@@ -7464,8 +6808,8 @@
 #armornegating
 #magic
 #shock
+#usedinmelee
 #uwok
-#secondaryeffect 0
 #secondaryeffectalways 704
 #end
 
@@ -7480,18 +6824,17 @@
 #slash
 #bonus
 #secondaryeffect 53
-#secondaryeffectalways 0
 #end
 
 #selectweapon 496
 #name "Sacred Pitcher"
 #def 0
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 0
 #len 1
 #magic
-#secondaryeffect 0
 #secondaryeffectalways 497
 #end
 
@@ -7499,6 +6842,7 @@
 #name "Sacred Water"
 #def 0
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 0
 #len 0
@@ -7507,20 +6851,18 @@
 #magic
 #demonundead
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 498
 #name "Twig"
 #def 0
 #rcost 0
+#dmg "-3cappeddamage"
 #nratt 1
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 499
@@ -7532,21 +6874,19 @@
 #att -1
 #len 0
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 500
 #name "Poison Darts"
 #def 0
 #rcost 1
+#dmg "cappeddamage"
 #nratt 2
 #len 0
 #range -1
 #ammo 6
 #pierce
 #secondaryeffect 54
-#secondaryeffectalways 0
 #end
 
 #selectweapon 501
@@ -7558,20 +6898,18 @@
 #att 1
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 502
 #name "Yak Tail Fly Whisk"
 #def 0
 #rcost 1
+#dmg "-2cappeddamage"
 #nratt 1
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 503
@@ -7589,7 +6927,6 @@
 #mrnegates
 #bonus
 #uwok
-#secondaryeffect 0
 #secondaryeffectalways 285
 #end
 
@@ -7606,14 +6943,13 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 505
 #name "Devour"
 #def 0
 #rcost 0
+#dmg "unleashimprisonedones"
 #nratt 1
 #att 0
 #len 0
@@ -7621,8 +6957,6 @@
 #magic
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 506
@@ -7637,7 +6971,6 @@
 #magic
 #slash
 #secondaryeffect 143
-#secondaryeffectalways 0
 #end
 
 #selectweapon 507
@@ -7650,8 +6983,6 @@
 #len 0
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 508
@@ -7666,7 +6997,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
 #secondaryeffectalways 509
 #end
 
@@ -7674,6 +7004,7 @@
 #name "Bane of Heresy"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -7682,19 +7013,17 @@
 #magic
 #sacredonly
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 510
 #name "Divine Grasp"
 #def 0
 #rcost 0
+#dmg "-2damage(x2vsmagicbeings)"
 #nratt 1
 #att 0
 #len 0
 #magic
-#secondaryeffect 0
 #secondaryeffectalways 509
 #end
 
@@ -7708,8 +7037,6 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 512
@@ -7721,8 +7048,6 @@
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 513
@@ -7734,8 +7059,6 @@
 #att 0
 #len 1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 514
@@ -7753,8 +7076,6 @@
 #acid
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 515
@@ -7769,8 +7090,6 @@
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 516
@@ -7782,7 +7101,7 @@
 #att -1
 #len 1
 #blunt
-#secondaryeffect 0
+#flail
 #secondaryeffectalways 517
 #end
 
@@ -7790,6 +7109,7 @@
 #name "Incense"
 #def 0
 #rcost 0
+#dmg "unknown"
 #nratt 1
 #att 0
 #len 0
@@ -7798,8 +7118,6 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 518
@@ -7812,8 +7130,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 519
@@ -7827,7 +7143,6 @@
 #pierce
 #ironweapon
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 520
@@ -7840,8 +7155,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 521
@@ -7856,8 +7169,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 522
@@ -7872,8 +7183,6 @@
 #slash
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 523
@@ -7886,8 +7195,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 524
@@ -7901,7 +7208,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 411
 #end
 
@@ -7918,8 +7224,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 526
@@ -7933,7 +7237,6 @@
 #twohanded
 #magic
 #secondaryeffect 528
-#secondaryeffectalways 0
 #end
 
 #selectweapon 527
@@ -7948,8 +7251,6 @@
 #magic
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 528
@@ -7964,8 +7265,6 @@
 #mind
 #hardmrneg
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 529
@@ -7979,7 +7278,6 @@
 #magic
 #slash
 #secondaryeffect 460
-#secondaryeffectalways 0
 #end
 
 #selectweapon 530
@@ -7995,8 +7293,6 @@
 #bonus
 #nostr
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 531
@@ -8010,8 +7306,6 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 532
@@ -8025,8 +7319,7 @@
 #aoe 1
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
+#defnegate
 #end
 
 #selectweapon 533
@@ -8044,8 +7337,6 @@
 #fire
 #halfstr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 534
@@ -8063,14 +7354,13 @@
 #cold
 #halfstr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 535
 #name "Dragon Gas"
 #def 0
 #rcost 0
+#dmg "unknown"
 #nratt 1
 #len 0
 #range -3
@@ -8081,14 +7371,13 @@
 #poison
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 536
 #name "Mind Blast"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #len 0
 #range 100
@@ -8102,7 +7391,6 @@
 #natural
 #uwok
 #secondaryeffect 293
-#secondaryeffectalways 0
 #end
 
 #selectweapon 537
@@ -8117,7 +7405,6 @@
 #pierce
 #halfstr
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 538
@@ -8129,8 +7416,6 @@
 #att -4
 #len 0
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 539
@@ -8146,8 +7431,6 @@
 #bonus
 #nostr
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 540
@@ -8161,7 +7444,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 541
 #end
 
@@ -8178,8 +7460,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 542
@@ -8194,15 +7474,15 @@
 #magic
 #acid
 #bonus
+#flail
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 543
 #name "Slap"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len -1
@@ -8210,7 +7490,6 @@
 #magic
 #nostr
 #secondaryeffect 544
-#secondaryeffectalways 0
 #end
 
 #selectweapon 544
@@ -8226,14 +7505,13 @@
 #mrnegates
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 545
 #name "Slap"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len -1
@@ -8242,7 +7520,6 @@
 #bonus
 #nostr
 #secondaryeffect 544
-#secondaryeffectalways 0
 #end
 
 #selectweapon 546
@@ -8256,8 +7533,6 @@
 #ammo 15
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 547
@@ -8270,8 +7545,6 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 548
@@ -8286,7 +7559,6 @@
 #magic
 #pierce
 #secondaryeffect 333
-#secondaryeffectalways 0
 #end
 
 #selectweapon 549
@@ -8300,8 +7572,6 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 550
@@ -8316,7 +7586,6 @@
 #magic
 #bonus
 #secondaryeffect 285
-#secondaryeffectalways 0
 #end
 
 #selectweapon 551
@@ -8329,7 +7598,6 @@
 #len -1
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 552
 #end
 
@@ -8345,7 +7613,6 @@
 #magic
 #mind
 #secondaryeffect 367
-#secondaryeffectalways 0
 #end
 
 #selectweapon 553
@@ -8357,8 +7624,6 @@
 #att -1
 #len 0
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 554
@@ -8373,34 +7638,31 @@
 #magic
 #slash
 #secondaryeffect 460
-#secondaryeffectalways 0
 #end
 
 #selectweapon 555
 #name "Dawn Fang"
 #def 3
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 3
 #len 2
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 556
 #name "Belly Maw"
 #def 0
 #rcost 0
+#dmg "unknown"
 #nratt 1
 #att 0
 #len 0
 #magic
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 557
@@ -8416,7 +7678,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 558
@@ -8431,8 +7692,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 559
@@ -8446,8 +7705,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 560
@@ -8462,7 +7719,6 @@
 #slash
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 561
@@ -8479,8 +7735,6 @@
 #mrnegates
 #bonus
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 562
@@ -8492,8 +7746,6 @@
 #att -1
 #len -1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 563
@@ -8508,20 +7760,18 @@
 #magic
 #blunt
 #secondaryeffect 564
-#secondaryeffectalways 0
 #end
 
 #selectweapon 564
 #name "Spirit Strike"
 #def 0
 #rcost 0
+#dmg "poison(stun)"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #magic
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 565
@@ -8538,14 +7788,13 @@
 #magic
 #pierce
 #bowstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 566
 #name "Ivory Bow"
 #def 0
 #rcost 0
+#dmg "unlifedamage"
 #nratt 3
 #len 0
 #range 50
@@ -8556,7 +7805,6 @@
 #pierce
 #halfstr
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 567
@@ -8573,8 +7821,6 @@
 #magic
 #fire
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 568
@@ -8591,14 +7837,13 @@
 #magic
 #cold
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 569
 #name "Drake Gas"
 #def 0
 #rcost 0
+#dmg "cloud"
 #nratt 1
 #len 0
 #range 6
@@ -8608,8 +7853,6 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 570
@@ -8625,7 +7868,6 @@
 #magic
 #slash
 #secondaryeffect 571
-#secondaryeffectalways 0
 #end
 
 #selectweapon 571
@@ -8640,8 +7882,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 572
@@ -8654,8 +7894,7 @@
 #len 4
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 573
@@ -8669,7 +7908,6 @@
 #slash
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 574
@@ -8683,7 +7921,6 @@
 #magic
 #blunt
 #bonus
-#secondaryeffect 0
 #secondaryeffectalways 328
 #end
 
@@ -8691,27 +7928,25 @@
 #name "Tiny Slap"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len 0
 #blunt
 #bonus
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 576
 #name "Weak Bite"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len -1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 577
@@ -8725,13 +7960,13 @@
 #pierce
 #charge
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 578
 #name "Sting"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len 0
@@ -8741,7 +7976,6 @@
 #nostr
 #unrepel
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 579
@@ -8754,8 +7988,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 580
@@ -8768,7 +8000,6 @@
 #len 4
 #pierce
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 581
@@ -8782,8 +8013,6 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 582
@@ -8798,7 +8027,6 @@
 #pierce
 #bonus
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 583
@@ -8812,8 +8040,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 584
@@ -8828,8 +8054,8 @@
 #armornegating
 #magic
 #shock
+#usedinmelee
 #uwok
-#secondaryeffect 0
 #secondaryeffectalways 704
 #end
 
@@ -8845,21 +8071,19 @@
 #pierce
 #blunt
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 586
 #name "Reanimating Bite"
 #def -1
 #rcost 0
+#dmg "unlifedamage"
 #nratt 1
 #att 0
 #len -1
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 587
@@ -8872,8 +8096,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 588
@@ -8887,8 +8109,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 589
@@ -8901,8 +8121,6 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 590
@@ -8916,20 +8134,17 @@
 #twohanded
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 591
 #name "Cod"
 #def 0
 #rcost 0
+#dmg "-3cappeddamage"
 #nratt 1
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 592
@@ -8943,7 +8158,6 @@
 #pierce
 #bonus
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 593
@@ -8956,8 +8170,7 @@
 #len 1
 #pierce
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 594
@@ -8972,14 +8185,15 @@
 #twohanded
 #pierce
 #halfstr
+#flammable
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 595
 #name "Hypnotize"
 #def 0
 #rcost 0
+#dmg "stun/fascinate"
 #nratt 1
 #att 100
 #len 5
@@ -8992,8 +8206,6 @@
 #unrepel
 #natural
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 596
@@ -9009,14 +8221,13 @@
 #charge
 #norepel
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 597
 #name "Life Drain"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 2
 #len 0
@@ -9025,8 +8236,6 @@
 #bonus
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 598
@@ -9042,7 +8251,6 @@
 #slash
 #pierce
 #secondaryeffect 118
-#secondaryeffectalways 0
 #end
 
 #selectweapon 599
@@ -9058,7 +8266,6 @@
 #acid
 #bonus
 #natural
-#secondaryeffect 0
 #secondaryeffectalways 515
 #end
 
@@ -9072,8 +8279,6 @@
 #len -1
 #armorpiercing
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 601
@@ -9090,8 +8295,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 602
@@ -9103,8 +8306,6 @@
 #att 1
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 603
@@ -9118,7 +8319,6 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
 #secondaryeffectalways 604
 #end
 
@@ -9134,8 +8334,6 @@
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 605
@@ -9148,8 +8346,6 @@
 #range -1
 #ammo 2
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 606
@@ -9165,14 +8361,15 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 607
+#nofirebless
 #end
 
 #selectweapon 607
 #name "Freeze"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -9180,34 +8377,30 @@
 #magic
 #cold
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 608
 #name "Sword of Oaths"
 #def 1
 #rcost 0
+#dmg "damage(x2vsdemon)"
 #nratt 1
 #att 1
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 609
 #name "Grab and Swallow"
 #def -1
 #rcost 0
+#dmg "swallowifnotgreaterthansize/2"
 #nratt 1
 #att -1
 #len 0
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 610
@@ -9220,8 +8413,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 611
@@ -9234,8 +8425,7 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 612
@@ -9248,8 +8438,7 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 613
@@ -9265,8 +8454,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 614
@@ -9279,8 +8466,6 @@
 #len 0
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 615
@@ -9294,8 +8479,6 @@
 #blunt
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 616
@@ -9311,7 +8494,6 @@
 #magic
 #slash
 #secondaryeffect 564
-#secondaryeffectalways 0
 #end
 
 #selectweapon 617
@@ -9324,8 +8506,7 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#holyifhit 10
 #end
 
 #selectweapon 618
@@ -9340,8 +8521,7 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
+#holyifhit 10
 #end
 
 #selectweapon 619
@@ -9354,8 +8534,6 @@
 #range -1
 #ammo 4
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 620
@@ -9369,7 +8547,6 @@
 #ammo 4
 #pierce
 #secondaryeffect 624
-#secondaryeffectalways 0
 #end
 
 #selectweapon 621
@@ -9383,21 +8560,18 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 622
 #name "Maddening Rage"
 #def 0
 #rcost 0
+#dmg "enrage(dominions3:causeconfusion)"
 #nratt 1
 #att 0
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 623
@@ -9411,21 +8585,19 @@
 #magic
 #slash
 #secondaryeffect 624
-#secondaryeffectalways 0
 #end
 
 #selectweapon 624
 #name "Paralyzing Poison"
 #def 0
 #rcost 0
+#dmg "poison(stun)"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 625
@@ -9438,8 +8610,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 626
@@ -9452,14 +8622,13 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 627
 #name "Death Blessing Disease"
 #def 0
 #rcost 0
+#dmg "disease"
 #nratt 1
 #att 0
 #len 5
@@ -9468,8 +8637,6 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 628
@@ -9481,8 +8648,6 @@
 #att 0
 #len 0
 #armorpiercing
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 629
@@ -9498,7 +8663,6 @@
 #pierce
 #bonus
 #secondaryeffect 834
-#secondaryeffectalways 0
 #end
 
 #selectweapon 630
@@ -9513,7 +8677,6 @@
 #slash
 #bonus
 #secondaryeffect 460
-#secondaryeffectalways 0
 #end
 
 #selectweapon 631
@@ -9529,7 +8692,6 @@
 #bonus
 #nostr
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 632
@@ -9545,7 +8707,6 @@
 #bonus
 #nostr
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 633
@@ -9559,8 +8720,6 @@
 #ammo 4
 #pierce
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 634
@@ -9573,8 +8732,6 @@
 #len 1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 635
@@ -9589,14 +8746,13 @@
 #pierce
 #charge
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 636
 #name "Life Drain Tentacle"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -9604,8 +8760,6 @@
 #magic
 #bonus
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 637
@@ -9619,8 +8773,6 @@
 #pierce
 #blunt
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 638
@@ -9633,8 +8785,6 @@
 #len 1
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 639
@@ -9648,8 +8798,6 @@
 #twohanded
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 640
@@ -9662,8 +8810,8 @@
 #range -1
 #ammo 2
 #pierce
+#flammable
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 641
@@ -9676,8 +8824,6 @@
 #len 3
 #twohanded
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 642
@@ -9691,8 +8837,6 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 643
@@ -9704,8 +8848,6 @@
 #att 0
 #len 3
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 644
@@ -9717,8 +8859,6 @@
 #att 0
 #len 4
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 645
@@ -9731,8 +8871,6 @@
 #len 1
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 646
@@ -9744,8 +8882,6 @@
 #att 1
 #len 1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 647
@@ -9761,9 +8897,8 @@
 #magic
 #pierce
 #halfstr
+#mrcheckhalfdmg
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 648
@@ -9777,8 +8912,6 @@
 #magic
 #pierce
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 649
@@ -9792,8 +8925,6 @@
 #armorpiercing
 #magic
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 650
@@ -9806,7 +8937,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 171
 #end
 
@@ -9820,14 +8950,13 @@
 #len 3
 #pierce
 #charge
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 652
 #name "Flame Sting Tentacles"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -9839,8 +8968,6 @@
 #bonus
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 653
@@ -9853,7 +8980,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 654
 #end
 
@@ -9861,6 +8987,7 @@
 #name "Anemone Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 1
@@ -9869,13 +8996,13 @@
 #poison
 #nostr
 #secondaryeffect 655
-#secondaryeffectalways 0
 #end
 
 #selectweapon 655
 #name "Anemone Paralyze"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 1
@@ -9883,8 +9010,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 656
@@ -9898,7 +9023,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 657
 #end
 
@@ -9906,6 +9030,7 @@
 #name "Jellyberd Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 1
@@ -9914,7 +9039,6 @@
 #magic
 #poison
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 658
 #end
 
@@ -9922,6 +9046,7 @@
 #name "Jellyberd Paralyze"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 1
@@ -9930,8 +9055,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 659
@@ -9944,22 +9067,21 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 660
+#holyifhit 10
 #end
 
 #selectweapon 660
 #name "Cockerel Blindness"
 #def 0
 #rcost 0
+#dmg "blind"
 #nratt 1
 #att 0
 #len 1
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 661
@@ -9973,13 +9095,13 @@
 #magic
 #blunt
 #secondaryeffect 662
-#secondaryeffectalways 0
 #end
 
 #selectweapon 662
 #name "Flames of Mercy"
 #def 1
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 1
 #len 1
@@ -9987,8 +9109,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 663
@@ -10001,8 +9121,7 @@
 #len 3
 #twohanded
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 664
@@ -10014,8 +9133,6 @@
 #att 1
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 665
@@ -10029,8 +9146,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 666
@@ -10042,7 +9157,6 @@
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 216
 #end
 
@@ -10055,8 +9169,6 @@
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 668
@@ -10070,8 +9182,6 @@
 #twohanded
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 669
@@ -10084,8 +9194,6 @@
 #len 4
 #twohanded
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 670
@@ -10098,8 +9206,6 @@
 #len 3
 #twohanded
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 671
@@ -10111,14 +9217,13 @@
 #att 1
 #len 0
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 672
 #name "Tiny Tentacle"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len 0
@@ -10126,8 +9231,6 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 673
@@ -10141,8 +9244,6 @@
 #twohanded
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 674
@@ -10154,8 +9255,6 @@
 #att 1
 #len 0
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 675
@@ -10167,8 +9266,6 @@
 #att 0
 #len 1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 676
@@ -10188,8 +9285,6 @@
 #norepel
 #unrepel
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 677
@@ -10202,8 +9297,6 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 678
@@ -10219,8 +9312,6 @@
 #armorpiercing
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 679
@@ -10233,8 +9324,6 @@
 #len 3
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 680
@@ -10246,8 +9335,6 @@
 #att -1
 #len 3
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 681
@@ -10260,8 +9347,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 682
@@ -10275,7 +9360,6 @@
 #magic
 #blunt
 #secondaryeffect 683
-#secondaryeffectalways 0
 #end
 
 #selectweapon 683
@@ -10291,8 +9375,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 684
@@ -10307,8 +9389,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 685
@@ -10321,21 +9401,19 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 686
 #name "Master's Athame"
 #def 0
 #rcost 0
+#dmg "partiallifedrain"
 #nratt 1
 #att 0
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 687
@@ -10349,21 +9427,19 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 688
 #name "Blood Thorn"
 #def 0
 #rcost 0
+#dmg "partiallifedrain"
 #nratt 1
 #att 2
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 689
@@ -10377,13 +9453,13 @@
 #magic
 #slash
 #secondaryeffect 690
-#secondaryeffectalways 0
 #end
 
 #selectweapon 690
 #name "Draw Blood"
 #def 0
 #rcost 0
+#dmg "bleed"
 #nratt 1
 #att 0
 #len 0
@@ -10391,8 +9467,6 @@
 #magic
 #sizeresist
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 691
@@ -10405,8 +9479,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 692
@@ -10419,8 +9491,7 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 693
@@ -10434,21 +9505,19 @@
 #magic
 #pierce
 #charge
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 694
 #name "Curse"
 #def 0
 #rcost 0
+#dmg "curse"
 #nratt 1
 #att 0
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 695
@@ -10468,14 +9537,13 @@
 #norepel
 #unrepel
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 696
 #name "Petrifying Gas"
 #def 0
 #rcost 0
+#dmg "petrify"
 #nratt 1
 #len 0
 #range 6
@@ -10485,8 +9553,6 @@
 #magic
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 697
@@ -10501,8 +9567,6 @@
 #magic
 #blunt
 #halfstr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 698
@@ -10515,14 +9579,13 @@
 #len 2
 #twohanded
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 699
 #name "Small Area Stun"
 #def 0
 #rcost 0
+#dmg "stun/fascinate"
 #nratt 1
 #att 0
 #len 0
@@ -10530,8 +9593,6 @@
 #magic
 #sizeresist
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 700
@@ -10544,8 +9605,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 701
@@ -10558,8 +9617,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 702
@@ -10573,8 +9630,6 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 703
@@ -10588,14 +9643,13 @@
 #slash
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 704
 #name "Small Area Shock"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len 0
@@ -10604,8 +9658,6 @@
 #magic
 #shock
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 705
@@ -10618,8 +9670,6 @@
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 706
@@ -10636,8 +9686,6 @@
 #pierce
 #bowstr
 #uwok
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 707
@@ -10650,8 +9698,6 @@
 #len 0
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 708
@@ -10664,8 +9710,6 @@
 #len 3
 #pierce
 #charge
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 709
@@ -10682,7 +9726,6 @@
 #magic
 #halfstr
 #natural
-#secondaryeffect 0
 #secondaryeffectalways 699
 #end
 
@@ -10700,8 +9743,6 @@
 #magic
 #fire
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 711
@@ -10715,8 +9756,7 @@
 #twohanded
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 712
@@ -10730,7 +9770,6 @@
 #magic
 #pierce
 #secondaryeffect 468
-#secondaryeffectalways 0
 #end
 
 #selectweapon 713
@@ -10743,8 +9782,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 714
@@ -10762,7 +9799,7 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
+#defnegate
 #secondaryeffectalways 715
 #end
 
@@ -10770,6 +9807,7 @@
 #name "Tremor Stun"
 #def 0
 #rcost 0
+#dmg "stun/fascinate"
 #nratt 1
 #att 0
 #len 0
@@ -10777,27 +9815,26 @@
 #flyingimmune
 #sizeresist
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#defnegate
 #end
 
 #selectweapon 716
 #name "Apotropaic Dagger"
 #def 0
 #rcost 0
+#dmg "damage(x2vsdemon)"
 #nratt 1
 #att 2
 #len 0
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 717
 #name "Shatter Souls"
 #def 0
 #rcost 0
+#dmg "damage(x2vsmagicbeings)"
 #nratt 1
 #len 0
 #range 10
@@ -10813,7 +9850,6 @@
 #internal
 #uwok
 #secondaryeffect 367
-#secondaryeffectalways 0
 #end
 
 #selectweapon 718
@@ -10827,13 +9863,13 @@
 #magic
 #blunt
 #secondaryeffect 468
-#secondaryeffectalways 0
 #end
 
 #selectweapon 719
 #name "Life Drain"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -10841,8 +9877,6 @@
 #magic
 #bonus
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 720
@@ -10854,8 +9888,7 @@
 #att 0
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 721
@@ -10870,8 +9903,7 @@
 #pierce
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flammable
 #end
 
 #selectweapon 722
@@ -10884,7 +9916,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
 #secondaryeffectalways 509
 #end
 
@@ -10898,8 +9929,6 @@
 #range -1
 #ammo 4
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 724
@@ -10913,8 +9942,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 725
@@ -10928,8 +9955,6 @@
 #magic
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 726
@@ -10944,8 +9969,6 @@
 #slash
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 727
@@ -10963,8 +9986,6 @@
 #fire
 #halfstr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 728
@@ -10977,8 +9998,6 @@
 #len 2
 #twohanded
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 729
@@ -10991,7 +10010,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 730
 #end
 
@@ -11007,7 +10025,6 @@
 #armorpiercing
 #magic
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 64
 #end
 
@@ -11021,8 +10038,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 732
@@ -11036,8 +10051,6 @@
 #blunt
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 733
@@ -11050,8 +10063,6 @@
 #len 3
 #magic
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 734
@@ -11064,8 +10075,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 735
@@ -11081,7 +10090,6 @@
 #bonus
 #halfstr
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 736
@@ -11097,7 +10105,6 @@
 #bonus
 #halfstr
 #secondaryeffect 50
-#secondaryeffectalways 0
 #end
 
 #selectweapon 737
@@ -11111,7 +10118,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
 #secondaryeffectalways 738
 #end
 
@@ -11127,14 +10133,13 @@
 #magic
 #shock
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 739
 #name "Tiny Sting"
 #def 0
 #rcost 0
+#dmg "cappedpoisondamage"
 #nratt 1
 #att 0
 #len 0
@@ -11144,14 +10149,13 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 740
 #name "Tiny Bite"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len -1
@@ -11160,8 +10164,6 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 741
@@ -11174,7 +10176,6 @@
 #len 3
 #pierce
 #secondaryeffect 624
-#secondaryeffectalways 0
 #end
 
 #selectweapon 742
@@ -11187,8 +10188,6 @@
 #len -1
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 743
@@ -11201,8 +10200,6 @@
 #len -1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 744
@@ -11217,8 +10214,6 @@
 #magic
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 745
@@ -11232,7 +10227,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 509
 #end
 
@@ -11246,8 +10240,6 @@
 #len 1
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 747
@@ -11260,7 +10252,6 @@
 #len -1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 748
 #end
 
@@ -11268,6 +10259,7 @@
 #name "Petrify"
 #def 0
 #rcost 0
+#dmg "petrify"
 #nratt 1
 #att 0
 #len 0
@@ -11275,8 +10267,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 749
@@ -11289,8 +10279,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 750
@@ -11302,8 +10290,6 @@
 #att 0
 #len 1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 751
@@ -11316,8 +10302,6 @@
 #len 1
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 752
@@ -11337,8 +10321,6 @@
 #norepel
 #unrepel
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 753
@@ -11352,8 +10334,6 @@
 #slash
 #bonus
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 754
@@ -11366,8 +10346,6 @@
 #len 0
 #aoe 1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 755
@@ -11381,8 +10359,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 756
@@ -11396,8 +10372,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 757
@@ -11409,8 +10383,6 @@
 #att 1
 #len 1
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 758
@@ -11425,8 +10397,6 @@
 #slash
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 759
@@ -11442,8 +10412,6 @@
 #pierce
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 760
@@ -11456,14 +10424,14 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#flail
 #end
 
 #selectweapon 761
 #name "Throw Salt"
 #def 0
 #rcost 1
+#dmg "saltdamage"
 #nratt 1
 #att 0
 #len 5
@@ -11474,8 +10442,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 762
@@ -11492,14 +10458,13 @@
 #fire
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 763
 #name "Life Draining Flare"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -11509,8 +10474,6 @@
 #norepel
 #unrepel
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 764
@@ -11523,8 +10486,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 765
@@ -11540,8 +10501,6 @@
 #magic
 #cold
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 766
@@ -11557,8 +10516,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 767
@@ -11574,8 +10531,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 768
@@ -11591,8 +10546,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 769
@@ -11610,8 +10563,6 @@
 #charge
 #nostr
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 770
@@ -11626,8 +10577,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 771
@@ -11642,8 +10591,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 772
@@ -11661,14 +10608,13 @@
 #bonus
 #nostr
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 773
 #name "Tainted Soul"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 5
 #len 0
@@ -11679,8 +10625,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 774
@@ -11695,7 +10639,6 @@
 #armorpiercing
 #magic
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 349
 #end
 
@@ -11709,8 +10652,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 776
@@ -11728,8 +10669,6 @@
 #acid
 #halfstr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 777
@@ -11741,8 +10680,6 @@
 #att -1
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 778
@@ -11755,8 +10692,6 @@
 #len 0
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 779
@@ -11773,14 +10708,13 @@
 #bonus
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 780
 #name "Asp Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -11789,27 +10723,26 @@
 #poison
 #nostr
 #secondaryeffect 781
-#secondaryeffectalways 0
 #end
 
 #selectweapon 781
 #name "Poison Decay"
 #def 0
 #rcost 0
+#dmg "decay"
 #nratt 1
 #att 0
 #len 0
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 782
 #name "Flame Poison"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 0
@@ -11818,14 +10751,13 @@
 #fire
 #poison
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 783
 #name "Asp Bite"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len -1
@@ -11834,13 +10766,13 @@
 #bonus
 #unrepel
 #secondaryeffect 780
-#secondaryeffectalways 0
 #end
 
 #selectweapon 784
 #name "Flame Poison Bite"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len -1
@@ -11849,7 +10781,6 @@
 #bonus
 #unrepel
 #secondaryeffect 782
-#secondaryeffectalways 0
 #end
 
 #selectweapon 785
@@ -11863,8 +10794,6 @@
 #slash
 #bonus
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 786
@@ -11878,7 +10807,6 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
 #secondaryeffectalways 134
 #end
 
@@ -11894,21 +10822,19 @@
 #pierce
 #blunt
 #secondaryeffect 788
-#secondaryeffectalways 0
 #end
 
 #selectweapon 788
 #name "Cause Fatigue"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 789
@@ -11922,13 +10848,13 @@
 #magic
 #pierce
 #secondaryeffect 790
-#secondaryeffectalways 0
 #end
 
 #selectweapon 790
 #name "Pixie Fatigue"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -11936,8 +10862,6 @@
 #magic
 #hardmrneg
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 791
@@ -11952,7 +10876,6 @@
 #magic
 #slash
 #pierce
-#secondaryeffect 0
 #secondaryeffectalways 792
 #end
 
@@ -11960,6 +10883,7 @@
 #name "Twilight Fatigue"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -11969,20 +10893,18 @@
 #mind
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 793
 #name "Toy Sword"
 #def 2
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 2
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 794
 #end
 
@@ -11997,8 +10919,6 @@
 #armornegating
 #magic
 #mrnegates
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 795
@@ -12012,20 +10932,17 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 796
 #name "Gobble"
 #def -1
 #rcost 0
+#dmg "-2damagearmor(candestroymagicitems)"
 #nratt 1
 #att -1
 #len 0
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 797
@@ -12038,27 +10955,26 @@
 #len 3
 #twohanded
 #secondaryeffect 798
-#secondaryeffectalways 0
 #end
 
 #selectweapon 798
 #name "Grab"
 #def 0
 #rcost 0
+#dmg "stun/fascinate"
 #nratt 1
 #att 0
 #len 0
 #magic
 #sizeresist
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 799
 #name "Dragon Lightning"
 #def 0
 #rcost 0
+#dmg "chainingdamage"
 #nratt 1
 #len 0
 #range -3
@@ -12068,8 +10984,7 @@
 #shock
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
+#usedinmelee
 #end
 
 #selectweapon 800
@@ -12084,8 +10999,6 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 801
@@ -12103,8 +11016,6 @@
 #fire
 #halfstr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 802
@@ -12122,7 +11033,6 @@
 #pierce
 #bowstr
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 803
@@ -12137,14 +11047,13 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 804
 #name "Shock Explosion"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 1
 #att 0
 #len 0
@@ -12153,8 +11062,6 @@
 #magic
 #shock
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 805
@@ -12169,14 +11076,14 @@
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
+#aironly
 #end
 
 #selectweapon 806
 #name "Earth Grip Explosion"
 #def 0
 #rcost 0
+#dmg "earthgrip"
 #nratt 1
 #att 0
 #len 0
@@ -12185,8 +11092,6 @@
 #magic
 #flyingimmune
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 807
@@ -12200,14 +11105,15 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 808
+#holyifhit 7
 #end
 
 #selectweapon 808
 #name "Holy Fire"
 #def 0
 #rcost 0
+#dmg "damage(x2vsundead/demon)"
 #nratt 1
 #att 0
 #len 0
@@ -12218,8 +11124,6 @@
 #nostr
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 809
@@ -12233,7 +11137,6 @@
 #ammo 50
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 810
 #end
 
@@ -12248,8 +11151,6 @@
 #magic
 #hardmrneg
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 811
@@ -12265,7 +11166,6 @@
 #mrnegates
 #bonus
 #secondaryeffect 285
-#secondaryeffectalways 0
 #end
 
 #selectweapon 812
@@ -12280,8 +11180,6 @@
 #magic
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 813
@@ -12298,14 +11196,13 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 814
 #name "Sling of Crystal Shards"
 #def 0
 #rcost 0
+#dmg "cappeddamage"
 #nratt 6
 #len 0
 #range 30
@@ -12316,20 +11213,18 @@
 #mind
 #halfstr
 #secondaryeffect 815
-#secondaryeffectalways 0
 #end
 
 #selectweapon 815
 #name "Shard Illusion"
 #def 0
 #rcost 0
+#dmg "summonunits"
 #nratt 1
 #att 0
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 816
@@ -12344,7 +11239,6 @@
 #magic
 #slash
 #secondaryeffect 690
-#secondaryeffectalways 0
 #end
 
 #selectweapon 817
@@ -12357,8 +11251,6 @@
 #len 1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 818
@@ -12374,8 +11266,7 @@
 #bonus
 #charge
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
+#notdismounted
 #end
 
 #selectweapon 819
@@ -12387,8 +11278,6 @@
 #att 0
 #len 0
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 820
@@ -12401,8 +11290,6 @@
 #len 1
 #slash
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 821
@@ -12416,8 +11303,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 822
@@ -12431,8 +11316,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 823
@@ -12446,8 +11329,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 824
@@ -12460,8 +11341,6 @@
 #len -1
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 825
@@ -12475,8 +11354,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 826
@@ -12490,8 +11367,6 @@
 #magic
 #pierce
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 827
@@ -12506,7 +11381,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 828
@@ -12520,8 +11394,6 @@
 #magic
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 829
@@ -12535,8 +11407,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 830
@@ -12550,8 +11420,6 @@
 #magic
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 831
@@ -12565,8 +11433,6 @@
 #magic
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 832
@@ -12581,7 +11447,6 @@
 #pierce
 #bonus
 #secondaryeffect 52
-#secondaryeffectalways 0
 #end
 
 #selectweapon 833
@@ -12597,7 +11462,6 @@
 #pierce
 #halfstr
 #secondaryeffect 51
-#secondaryeffectalways 0
 #end
 
 #selectweapon 834
@@ -12612,8 +11476,6 @@
 #magic
 #acid
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 835
@@ -12626,8 +11488,6 @@
 #len 0
 #armorpiercing
 #magic
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 836
@@ -12642,14 +11502,14 @@
 #magic
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
+#defnegate
 #end
 
 #selectweapon 837
 #name "Paralyze"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 0
@@ -12659,8 +11519,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 838
@@ -12674,14 +11532,13 @@
 #armorpiercing
 #magic
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 839
 #name "Mind Blast"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #len 0
 #range 100
@@ -12695,7 +11552,6 @@
 #natural
 #uwok
 #secondaryeffect 293
-#secondaryeffectalways 0
 #end
 
 #selectweapon 840
@@ -12709,7 +11565,6 @@
 #armorpiercing
 #magic
 #slash
-#secondaryeffect 0
 #secondaryeffectalways 841
 #end
 
@@ -12726,8 +11581,6 @@
 #magic
 #fire
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 842
@@ -12742,7 +11595,6 @@
 #pierce
 #bonus
 #secondaryeffect 64
-#secondaryeffectalways 0
 #end
 
 #selectweapon 843
@@ -12755,7 +11607,6 @@
 #len 1
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 64
 #end
 
@@ -12769,8 +11620,6 @@
 #len 0
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 845
@@ -12786,8 +11635,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 846
@@ -12803,8 +11650,6 @@
 #mrnegates
 #bonus
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 847
@@ -12818,14 +11663,13 @@
 #armorpiercing
 #blunt
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 848
 #name "Void Lightning"
 #def 0
 #rcost 0
+#dmg "chainingdamage"
 #nratt 1
 #att 0
 #len 0
@@ -12836,7 +11680,7 @@
 #bonus
 #nostr
 #natural
-#secondaryeffect 0
+#usedinmelee
 #secondaryeffectalways 64
 #end
 
@@ -12844,6 +11688,7 @@
 #name "Consume Souls"
 #def 0
 #rcost 0
+#dmg "drainlife"
 #nratt 1
 #att 0
 #len 0
@@ -12857,14 +11702,14 @@
 #norepel
 #unrepel
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
+#soulslaying
 #end
 
 #selectweapon 850
 #name "Drake Lightning"
 #def 0
 #rcost 0
+#dmg "chainingdamage"
 #nratt 1
 #len 0
 #range -2
@@ -12874,8 +11719,7 @@
 #shock
 #nostr
 #natural
-#secondaryeffect 0
-#secondaryeffectalways 0
+#usedinmelee
 #end
 
 #selectweapon 851
@@ -12889,8 +11733,6 @@
 #magic
 #slash
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 852
@@ -12905,8 +11747,6 @@
 #bonus
 #charge
 #norepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 853
@@ -12920,7 +11760,6 @@
 #twohanded
 #magic
 #pierce
-#secondaryeffect 0
 #secondaryeffectalways 854
 #end
 
@@ -12928,6 +11767,7 @@
 #name "Chain Shock"
 #def 0
 #rcost 0
+#dmg "chainingdamage"
 #nratt 1
 #att 0
 #len 0
@@ -12936,8 +11776,6 @@
 #magic
 #shock
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 855
@@ -12955,8 +11793,6 @@
 #bonus
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 856
@@ -12974,8 +11810,6 @@
 #bonus
 #norepel
 #unrepel
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 857
@@ -12989,8 +11823,7 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
+#notdismounted
 #end
 
 #selectweapon 858
@@ -13005,8 +11838,7 @@
 #slash
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
+#dismounted
 #end
 
 #selectweapon 859
@@ -13020,13 +11852,13 @@
 #slash
 #bonus
 #secondaryeffect 860
-#secondaryeffectalways 0
 #end
 
 #selectweapon 860
 #name "Disease"
 #def 0
 #rcost 0
+#dmg "disease"
 #nratt 1
 #att 0
 #len 1
@@ -13034,8 +11866,6 @@
 #magic
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 861
@@ -13049,8 +11879,7 @@
 #magic
 #pierce
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#nofirebless
 #end
 
 #selectweapon 862
@@ -13063,8 +11892,7 @@
 #len 2
 #magic
 #slash
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 863
@@ -13077,41 +11905,40 @@
 #len 2
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
+#mrcheckhalfdmg
 #end
 
 #selectweapon 864
 #name "Stunning Strike"
 #def 0
 #rcost 0
+#dmg "-2cappeddamage"
 #nratt 1
 #att 0
 #len -1
 #blunt
 #bonus
 #secondaryeffect 865
-#secondaryeffectalways 0
 #end
 
 #selectweapon 865
 #name "Stun"
 #def 0
 #rcost 0
+#dmg "stun/fascinate"
 #nratt 1
 #att 0
 #len 0
 #magic
 #sizeresist
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 866
 #name "Spirit Strike"
 #def 0
 #rcost 0
+#dmg "-2cappeddamage"
 #nratt 1
 #att 0
 #len -1
@@ -13120,7 +11947,6 @@
 #blunt
 #bonus
 #secondaryeffect 865
-#secondaryeffectalways 0
 #end
 
 #selectweapon 867
@@ -13135,21 +11961,19 @@
 #magic
 #blunt
 #secondaryeffect 868
-#secondaryeffectalways 0
 #end
 
 #selectweapon 868
 #name "Dark Slumber"
 #def 0
 #rcost 0
+#dmg "poison(stun)"
 #nratt 1
 #att 0
 #len 0
 #armornegating
 #magic
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 869
@@ -13165,7 +11989,6 @@
 #magic
 #pierce
 #halfstr
-#secondaryeffect 0
 #secondaryeffectalways 870
 #end
 
@@ -13173,12 +11996,12 @@
 #name "Entanglement"
 #def 0
 #rcost 0
+#dmg "entangle"
 #nratt 1
 #att 0
 #len 0
 #magic
 #nostr
-#secondaryeffect 0
 #secondaryeffectalways 871
 #end
 
@@ -13194,8 +12017,6 @@
 #inanimateimmune
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 872
@@ -13209,14 +12030,13 @@
 #magic
 #pierce
 #ironweapon
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 873
 #name "Carrion Vine"
 #def 0
 #rcost 0
+#dmg "poison(hpdamage)"
 #nratt 1
 #att 0
 #len 3
@@ -13226,7 +12046,7 @@
 #inanimateimmune
 #bonus
 #halfstr
-#secondaryeffect 0
+#flammable
 #secondaryeffectalways 871
 #end
 
@@ -13241,7 +12061,6 @@
 #twohanded
 #magic
 #blunt
-#secondaryeffect 0
 #secondaryeffectalways 875
 #end
 
@@ -13249,6 +12068,7 @@
 #name "Truths"
 #def 0
 #rcost 0
+#dmg "paralyze"
 #nratt 1
 #att 0
 #len 0
@@ -13257,8 +12077,6 @@
 #magic
 #hardmrneg
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 876
@@ -13271,8 +12089,7 @@
 #len 1
 #slash
 #bonus
-#secondaryeffect 0
-#secondaryeffectalways 0
+#dismounted
 #end
 
 #selectweapon 877
@@ -13285,8 +12102,6 @@
 #len 3
 #twohanded
 #pierce
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 878
@@ -13298,8 +12113,6 @@
 #att -1
 #len 1
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 879
@@ -13313,7 +12126,7 @@
 #magic
 #pierce
 #blunt
-#secondaryeffect 0
+#flail
 #secondaryeffectalways 880
 #end
 
@@ -13321,6 +12134,7 @@
 #name "Dreams"
 #def 0
 #rcost 0
+#dmg "fatigue"
 #nratt 1
 #att 0
 #len 0
@@ -13328,8 +12142,6 @@
 #mind
 #mrnegates
 #nostr
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 881
@@ -13342,8 +12154,6 @@
 #len -1
 #magic
 #blunt
-#secondaryeffect 0
-#secondaryeffectalways 0
 #end
 
 #selectweapon 882
@@ -13358,7 +12168,6 @@
 #pierce
 #bonus
 #secondaryeffect 54
-#secondaryeffectalways 0
 #end
 
 
@@ -13380,6 +12189,7 @@
 #def -1
 #rcost 2
 #enc 1
+#woodenarmor
 #end
 
 #selectarmor 3
@@ -13388,6 +12198,7 @@
 #def -2
 #rcost 4
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 4
@@ -13396,6 +12207,7 @@
 #def -2
 #rcost 3
 #enc 2
+#woodenarmor
 #end
 
 #selectarmor 5
@@ -13420,6 +12232,7 @@
 #def -1
 #rcost 6
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 8
@@ -13428,6 +12241,7 @@
 #def -1
 #rcost 9
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 9
@@ -13436,6 +12250,7 @@
 #def -1
 #rcost 15
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 10
@@ -13460,6 +12275,7 @@
 #def -1
 #rcost 9
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 13
@@ -13468,6 +12284,7 @@
 #def -2
 #rcost 13
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 14
@@ -13476,6 +12293,7 @@
 #def -2
 #rcost 20
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 15
@@ -13500,6 +12318,7 @@
 #def -2
 #rcost 12
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 18
@@ -13508,6 +12327,7 @@
 #def -3
 #rcost 17
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 19
@@ -13516,6 +12336,7 @@
 #def -3
 #rcost 25
 #enc 5
+#ironarmor
 #end
 
 #selectarmor 20
@@ -13524,6 +12345,7 @@
 #def 0
 #rcost 2
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 21
@@ -13532,6 +12354,7 @@
 #def -1
 #rcost 5
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 22
@@ -13828,6 +12651,7 @@
 #def -2
 #rcost 26
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 59
@@ -14092,6 +12916,7 @@
 #def -3
 #rcost 25
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 92
@@ -14156,6 +12981,7 @@
 #def -1
 #rcost 11
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 100
@@ -14196,6 +13022,7 @@
 #def -1
 #rcost 4
 #enc 2
+#woodenarmor
 #end
 
 #selectarmor 105
@@ -14252,6 +13079,7 @@
 #def -3
 #rcost 26
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 112
@@ -14284,6 +13112,7 @@
 #def -3
 #rcost 10
 #enc 3
+#woodenarmor
 #end
 
 #selectarmor 116
@@ -14292,6 +13121,7 @@
 #def -1
 #rcost 5
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 117
@@ -14300,6 +13130,7 @@
 #def -1
 #rcost 7
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 118
@@ -14308,6 +13139,7 @@
 #def 0
 #rcost 3
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 119
@@ -14372,6 +13204,7 @@
 #def 0
 #rcost 3
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 127
@@ -14388,6 +13221,7 @@
 #def -1
 #rcost 7
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 129
@@ -14396,6 +13230,7 @@
 #def -2
 #rcost 10
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 130
@@ -14404,6 +13239,7 @@
 #def -3
 #rcost 14
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 131
@@ -14412,6 +13248,7 @@
 #def 0
 #rcost 2
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 132
@@ -14420,6 +13257,7 @@
 #def 0
 #rcost 4
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 133
@@ -14492,6 +13330,7 @@
 #def 0
 #rcost 5
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 142
@@ -14516,6 +13355,7 @@
 #def 0
 #rcost 10
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 145
@@ -14532,6 +13372,7 @@
 #def -3
 #rcost 15
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 147
@@ -14596,6 +13437,7 @@
 #def -1
 #rcost 10
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 155
@@ -14628,6 +13470,7 @@
 #def 0
 #rcost 1
 #enc 0
+#woodenarmor
 #end
 
 #selectarmor 159
@@ -14636,6 +13479,7 @@
 #def 0
 #rcost 3
 #enc 0
+#woodenarmor
 #end
 
 #selectarmor 160
@@ -14708,6 +13552,7 @@
 #def -1
 #rcost 1
 #enc 1
+#woodenarmor
 #end
 
 #selectarmor 169
@@ -14724,6 +13569,7 @@
 #def -2
 #rcost 2
 #enc 2
+#woodenarmor
 #end
 
 #selectarmor 171
@@ -14732,6 +13578,7 @@
 #def -4
 #rcost 15
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 172
@@ -14740,6 +13587,7 @@
 #def -2
 #rcost 13
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 173
@@ -14860,6 +13708,7 @@
 #def -1
 #rcost 0
 #enc 0
+#woodenarmor
 #end
 
 #selectarmor 188
@@ -14948,6 +13797,7 @@
 #def -1
 #rcost 17
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 199
@@ -14956,6 +13806,7 @@
 #def -3
 #rcost 17
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 200
@@ -14988,6 +13839,7 @@
 #def 0
 #rcost 4
 #enc 1
+#woodenarmor
 #end
 
 #selectarmor 204
@@ -15020,6 +13872,7 @@
 #def -1
 #rcost 1
 #enc 1
+#woodenarmor
 #end
 
 #selectarmor 208
@@ -15028,6 +13881,7 @@
 #def -1
 #rcost 3
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 209
@@ -15084,6 +13938,7 @@
 #def -3
 #rcost 30
 #enc 4
+#ironarmor
 #end
 
 #selectarmor 216
@@ -15092,6 +13947,7 @@
 #def -3
 #rcost 21
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 217
@@ -15100,6 +13956,7 @@
 #def -1
 #rcost 19
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 218
@@ -15108,6 +13965,7 @@
 #def -1
 #rcost 6
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 219
@@ -15116,6 +13974,7 @@
 #def 0
 #rcost 4
 #enc 0
+#ironarmor
 #end
 
 #selectarmor 220
@@ -15124,6 +13983,7 @@
 #def -2
 #rcost 4
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 221
@@ -15132,6 +13992,7 @@
 #def -2
 #rcost 5
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 222
@@ -15204,6 +14065,7 @@
 #def 0
 #rcost 1
 #enc 0
+#woodenarmor
 #end
 
 #selectarmor 231
@@ -15212,6 +14074,7 @@
 #def 0
 #rcost 1
 #enc 0
+#woodenarmor
 #end
 
 #selectarmor 232
@@ -15316,6 +14179,7 @@
 #def 0
 #rcost 0
 #enc 0
+#woodenarmor
 #end
 
 #selectarmor 245
@@ -15380,6 +14244,7 @@
 #def 0
 #rcost 6
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 253
@@ -15388,6 +14253,7 @@
 #def -1
 #rcost 10
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 254
@@ -15396,6 +14262,7 @@
 #def -2
 #rcost 15
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 255
@@ -15412,6 +14279,7 @@
 #def 0
 #rcost 0
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 257
@@ -15420,6 +14288,7 @@
 #def -1
 #rcost 0
 #enc 2
+#ironarmor
 #end
 
 #selectarmor 258
@@ -15604,6 +14473,7 @@
 #def -2
 #rcost 15
 #enc 3
+#ironarmor
 #end
 
 #selectarmor 281
@@ -15660,6 +14530,7 @@
 #def -1
 #rcost 10
 #enc 1
+#ironarmor
 #end
 
 #selectarmor 288
@@ -15732,6 +14603,7 @@
 #def 0
 #rcost 1
 #enc 0
+#woodenarmor
 #end
 
 
@@ -152937,6 +151809,7 @@
 #nreff 40
 #precision 0
 #spec 8388608
+#farsumcom 3637
 #end
 
 #selectspell 31
@@ -153026,6 +151899,7 @@
 #precision 0
 #spec 0
 #nextspell 124
+#coldsummon 3998
 #end
 
 #selectspell 39
@@ -153119,6 +151993,7 @@
 #nreff 150
 #precision 0
 #spec 0
+#farsumcom 190
 #end
 
 #selectspell 47
@@ -153247,6 +152122,7 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
 #end
 
 #selectspell 58
@@ -154026,6 +152902,7 @@
 #precision 0
 #spec 0
 #nextspell 126
+#coldsummon 3906
 #end
 
 #selectspell 126
@@ -154036,6 +152913,7 @@
 #nreff 2
 #precision 0
 #spec 0
+#coldsummon 3907
 #end
 
 #selectspell 127
@@ -154931,6 +153809,7 @@
 #precision 100
 #spec 12632064
 #casttime 100
+#aibadlvl 3
 #end
 
 #selectspell 201
@@ -154945,6 +153824,7 @@
 #precision 0
 #spec 276828296
 #casttime 100
+#godpathspell 8
 #end
 
 #selectspell 202
@@ -154960,6 +153840,7 @@
 #spec 1152921504883675272
 #nextspell 203
 #casttime 100
+#godpathspell 0
 #end
 
 #selectspell 203
@@ -154987,6 +153868,7 @@
 #spec 1152921504883675272
 #nextspell 205
 #casttime 100
+#godpathspell 2
 #end
 
 #selectspell 205
@@ -155014,6 +153896,7 @@
 #spec 1152921504883675272
 #nextspell 207
 #casttime 100
+#godpathspell 3
 #end
 
 #selectspell 207
@@ -155040,6 +153923,7 @@
 #precision 0
 #spec 276828296
 #casttime 100
+#godpathspell 1
 #end
 
 #selectspell 209
@@ -155054,6 +153938,7 @@
 #precision 0
 #spec 293601416
 #casttime 100
+#godpathspell 6
 #end
 
 #selectspell 210
@@ -155069,6 +153954,7 @@
 #spec 1152921504883675272
 #nextspell 211
 #casttime 100
+#godpathspell 5
 #end
 
 #selectspell 211
@@ -155096,6 +153982,7 @@
 #spec 1152921504883675272
 #nextspell 213
 #casttime 100
+#godpathspell 4
 #end
 
 #selectspell 213
@@ -155123,6 +154010,7 @@
 #spec 1152921504883675272
 #nextspell 215
 #casttime 100
+#godpathspell 7
 #end
 
 #selectspell 215
@@ -155149,6 +154037,7 @@
 #precision 100
 #spec 12583040
 #casttime 100
+#aibadlvl 4
 #end
 
 #selectspell 217
@@ -155219,6 +154108,7 @@
 #precision 100
 #spec 8409216
 #casttime 100
+#godpathspell -1
 #end
 
 #selectspell 222
@@ -155234,6 +154124,7 @@
 #spec 1152921504615256192
 #nextspell 223
 #casttime 100
+#godpathspell 0
 #end
 
 #selectspell 223
@@ -155261,6 +154152,7 @@
 #spec 1152921504615256192
 #nextspell 225
 #casttime 100
+#godpathspell 2
 #end
 
 #selectspell 225
@@ -155288,6 +154180,7 @@
 #spec 1152921504615256192
 #nextspell 227
 #casttime 100
+#godpathspell 3
 #end
 
 #selectspell 227
@@ -155315,6 +154208,7 @@
 #spec 1152921504615256192
 #nextspell 229
 #casttime 100
+#godpathspell 1
 #end
 
 #selectspell 229
@@ -155342,6 +154236,7 @@
 #spec 1152921504615256192
 #nextspell 231
 #casttime 100
+#godpathspell 4
 #end
 
 #selectspell 231
@@ -155369,6 +154264,7 @@
 #spec 1152921504615256192
 #nextspell 233
 #casttime 100
+#godpathspell 5
 #end
 
 #selectspell 233
@@ -155409,6 +154305,7 @@
 #spec 1152921504615256192
 #nextspell 236
 #casttime 100
+#godpathspell 6
 #end
 
 #selectspell 236
@@ -155449,6 +154346,7 @@
 #spec 1152921505152651392
 #nextspell 239
 #casttime 100
+#godpathspell 7
 #end
 
 #selectspell 239
@@ -155476,6 +154374,7 @@
 #spec 1152921505152651392
 #nextspell 241
 #casttime 100
+#godpathspell 8
 #end
 
 #selectspell 241
@@ -155655,6 +154554,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
 #end
 
 #selectspell 254
@@ -155763,6 +154663,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#onlymnr 3200
 #end
 
 #selectspell 262
@@ -155940,6 +154842,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 275
@@ -155966,6 +154869,8 @@
 #nreff 1
 #precision 0
 #spec 805830656
+#onlymnr 1878
+#sethome
 #end
 
 #selectspell 277
@@ -155978,6 +154883,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#onlymnr 1875
 #end
 
 #selectspell 278
@@ -155992,6 +154899,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlymnr 1873
 #end
 
 #selectspell 279
@@ -156065,6 +154973,7 @@
 #nreff 10
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 284
@@ -156158,6 +155067,8 @@
 #nreff 1
 #precision 0
 #spec 545783808
+#onlymnr 3069
+#polygetmagic
 #end
 
 #selectspell 291
@@ -156170,6 +155081,8 @@
 #nreff 1
 #precision 0
 #spec 545783808
+#onlymnr 3070
+#polygetmagic
 #end
 
 #selectspell 292
@@ -156350,6 +155263,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 305
@@ -156479,6 +155393,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 8388624
 #end
 
 #selectspell 315
@@ -156616,6 +155531,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
 #end
 
 #selectspell 325
@@ -156641,6 +155557,7 @@
 #precision 0
 #spec 8388608
 #provrange 4
+#onlygeodst 4
 #end
 
 #selectspell 327
@@ -156704,6 +155621,7 @@
 #precision 0
 #spec 8388608
 #provrange 4
+#onlygeodst 4
 #end
 
 #selectspell 332
@@ -156742,6 +155660,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 8388624
 #end
 
 #selectspell 335
@@ -156754,6 +155673,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 8388624
 #end
 
 #selectspell 336
@@ -156766,6 +155686,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 337
@@ -156778,6 +155699,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#onlygeosrc 132
+#nogeosrc 2048
 #end
 
 #selectspell 338
@@ -156790,6 +155713,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#onlygeosrc 132
+#nogeosrc 2048
 #end
 
 #selectspell 339
@@ -156856,6 +155781,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 344
@@ -156900,6 +155826,7 @@
 #nreff 505
 #precision 0
 #spec 8388608
+#onlygeosrc 64
 #end
 
 #selectspell 347
@@ -156941,6 +155868,7 @@
 #nreff 2
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 350
@@ -156953,6 +155881,7 @@
 #nreff 5
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 351
@@ -156967,6 +155896,7 @@
 #nreff 3
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 352
@@ -158078,6 +157008,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#onlygeodst 128
 #end
 
 #selectspell 436
@@ -158220,6 +157151,7 @@
 #nreff 10
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 446
@@ -158234,6 +157166,7 @@
 #nreff 10
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 447
@@ -158275,6 +157208,7 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
 #end
 
 #selectspell 450
@@ -158565,6 +157499,7 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
 #end
 
 #selectspell 471
@@ -158593,6 +157528,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 473
@@ -158606,6 +157542,8 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
+#hiddenench
 #end
 
 #selectspell 474
@@ -158691,6 +157629,8 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
+#farsumcom 465
 #end
 
 #selectspell 481
@@ -158772,6 +157712,7 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlymnr 3861
 #end
 
 #selectspell 487
@@ -158786,6 +157727,7 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlymnr 3861
 #end
 
 #selectspell 488
@@ -158800,6 +157742,7 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlymnr 3861
 #end
 
 #selectspell 489
@@ -158814,6 +157757,7 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlymnr 3861
 #end
 
 #selectspell 490
@@ -158948,6 +157892,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#requiresench 44
 #end
 
 #selectspell 500
@@ -159185,6 +158130,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 518
@@ -159531,6 +158478,7 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 543
@@ -159658,6 +158606,7 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 552
@@ -159670,6 +158619,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 553
@@ -159684,6 +158634,7 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 554
@@ -159696,6 +158647,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 555
@@ -160231,6 +159183,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 32
 #end
 
 #selectspell 596
@@ -160342,6 +159295,7 @@
 #precision 0
 #spec 8388608
 #nextspell 110
+#onlygeosrc 4096
 #end
 
 #selectspell 604
@@ -160437,6 +159391,8 @@
 #precision 0
 #spec 8388608
 #provrange 10
+#onlygeodst 4096
+#onlyowndst 1
 #end
 
 #selectspell 611
@@ -160890,6 +159846,7 @@
 #precision 0
 #spec 8388608
 #provrange 7
+#hiddenench
 #end
 
 #selectspell 644
@@ -161150,6 +160107,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 4096
 #casttime 200
 #end
 
@@ -161214,6 +160172,7 @@
 #precision 0
 #spec 8388608
 #provrange 4
+#onlyowndst 1
 #end
 
 #selectspell 666
@@ -161379,6 +160338,8 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
+#uniquetarget
 #end
 
 #selectspell 677
@@ -161407,6 +160368,8 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4100
+#uniquetarget
 #end
 
 #selectspell 679
@@ -161555,6 +160518,7 @@
 #precision 0
 #spec 96
 #provrange 3
+#nogeodst 4100
 #end
 
 #selectspell 689
@@ -161656,6 +160620,7 @@
 #precision 0
 #spec 8598325376
 #casttime 100
+#maxbounces 7
 #end
 
 #selectspell 696
@@ -161671,6 +160636,7 @@
 #spec 70368747323456
 #nextspell 697
 #casttime 200
+#extraeffectgeo 4096
 #end
 
 #selectspell 697
@@ -161700,6 +160666,7 @@
 #precision -3
 #spec 549755813888
 #nextspell 107
+#nogeosrc 4096
 #casttime 125
 #end
 
@@ -162016,6 +160983,7 @@
 #precision 0
 #spec 2176
 #provrange 3
+#nogeodst 4100
 #end
 
 #selectspell 721
@@ -162070,6 +161038,8 @@
 #precision 0
 #spec 8405632
 #provrange 4
+#nogeodst 4
+#uniquetarget
 #end
 
 #selectspell 725
@@ -162236,6 +161206,7 @@
 #precision 0
 #spec 8396928
 #provrange 4
+#onlygeodst 32
 #end
 
 #selectspell 736
@@ -162264,6 +161235,7 @@
 #spec 8388608
 #nextspell 30
 #provrange 4
+#farsumcom 3637
 #end
 
 #selectspell 738
@@ -162320,6 +161292,7 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#nogeosrc 34359744512
 #end
 
 #selectspell 742
@@ -162332,6 +161305,8 @@
 #nreff 1
 #precision 0
 #spec 41943040
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 743
@@ -162346,6 +161321,7 @@
 #precision 0
 #spec 8598325376
 #casttime 100
+#maxbounces 20
 #end
 
 #selectspell 744
@@ -162361,6 +161337,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 4096
 #casttime 250
 #end
 
@@ -162405,6 +161382,7 @@
 #nreff 1
 #precision -1
 #spec 0
+#nogeosrc 6144
 #casttime 225
 #end
 
@@ -162419,6 +161397,7 @@
 #precision 0
 #spec 16480
 #provrange 4
+#nogeodst 4100
 #end
 
 #selectspell 749
@@ -162477,6 +161456,7 @@
 #precision 0
 #spec 8598325376
 #casttime 125
+#maxbounces 8
 #end
 
 #selectspell 753
@@ -162519,6 +161499,7 @@
 #precision 0
 #spec 0
 #provrange 3
+#nogeodst 34368126992
 #end
 
 #selectspell 756
@@ -162546,6 +161527,7 @@
 #precision 0
 #spec 549764202496
 #provrange 5
+#nogeodst 4100
 #end
 
 #selectspell 758
@@ -163288,6 +162270,8 @@
 #precision 0
 #spec 8388608
 #provrange 5
+#nogeodst 4
+#uniquetarget
 #end
 
 #selectspell 811
@@ -163373,6 +162357,8 @@
 #precision 0
 #spec 8388608
 #provrange 5
+#nogeodst 4
+#uniquetarget
 #end
 
 #selectspell 817
@@ -163386,6 +162372,7 @@
 #precision 0
 #spec 0
 #provrange 3
+#nogeodst 4
 #end
 
 #selectspell 818
@@ -163569,6 +162556,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 4096
 #casttime 200
 #end
 
@@ -163713,6 +162701,7 @@
 #precision 0
 #spec 0
 #provrange 7
+#uniquetarget
 #end
 
 #selectspell 841
@@ -163795,6 +162784,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 847
@@ -163850,6 +162841,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
 #end
 
 #selectspell 851
@@ -163881,6 +162873,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 4096
 #casttime 200
 #end
 
@@ -164161,6 +163154,8 @@
 #precision 0
 #spec 0
 #provrange 4
+#onlyowndst 1
+#hiddenench
 #end
 
 #selectspell 873
@@ -164257,6 +163252,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 880
@@ -164295,6 +163292,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 883
@@ -164335,6 +163334,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 886
@@ -164418,6 +163419,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 892
@@ -164558,6 +163561,7 @@
 #precision 0
 #spec 8388608
 #provrange 4
+#onlyowndst 1
 #end
 
 #selectspell 902
@@ -164803,6 +163807,7 @@
 #nreff 510
 #precision 0
 #spec 0
+#onlygeosrc 4096
 #end
 
 #selectspell 920
@@ -164910,6 +163915,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 4096
 #casttime 100
 #end
 
@@ -165023,6 +164029,7 @@
 #nreff 510
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 937
@@ -165036,6 +164043,7 @@
 #precision 0
 #spec 8388608
 #provrange 4
+#hiddenench
 #end
 
 #selectspell 938
@@ -165106,6 +164114,9 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
+#nowatertrace 1
+#farsumcom 1380
 #end
 
 #selectspell 943
@@ -165174,6 +164185,7 @@
 #nreff 510
 #precision 0
 #spec 0
+#onlygeosrc 4096
 #end
 
 #selectspell 948
@@ -165216,6 +164228,7 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#onlygeosrc 4096
 #end
 
 #selectspell 951
@@ -165243,6 +164256,7 @@
 #precision 0
 #spec 8388608
 #provrange 3
+#onlyowndst 1
 #end
 
 #selectspell 953
@@ -165328,6 +164342,9 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
+#nowatertrace 1
+#farsumcom 633
 #end
 
 #selectspell 960
@@ -165370,6 +164387,7 @@
 #nreff 10
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 963
@@ -165384,6 +164402,7 @@
 #precision 0
 #spec 8388608
 #casttime 125
+#uwsummon 3983
 #end
 
 #selectspell 964
@@ -165485,6 +164504,7 @@
 #precision 0
 #spec 8388608
 #provrange 3
+#nogeodst 4
 #end
 
 #selectspell 972
@@ -165627,6 +164647,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 32
 #end
 
 #selectspell 983
@@ -165687,6 +164708,9 @@
 #precision 0
 #spec 0
 #provrange 3
+#nogeodst 4
+#onlyowndst 1
+#nowatertrace 1
 #end
 
 #selectspell 987
@@ -165701,6 +164725,7 @@
 #precision 0
 #spec 8388608
 #casttime 125
+#uwsummon 3984
 #end
 
 #selectspell 988
@@ -165743,6 +164768,8 @@
 #nreff 505
 #precision 0
 #spec 0
+#onlygeosrc 128
+#coldsummon 3906
 #end
 
 #selectspell 991
@@ -165822,6 +164849,7 @@
 #precision 0
 #spec 0
 #provrange 3
+#nogeodst 4
 #end
 
 #selectspell 997
@@ -165835,6 +164863,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
 #end
 
 #selectspell 998
@@ -165861,6 +164890,9 @@
 #precision 0
 #spec 41943040
 #provrange 4
+#onlygeodst 4
+#onlyowndst 1
+#nolandtrace 1
 #end
 
 #selectspell 1000
@@ -166099,6 +165131,8 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
+#nowatertrace 1
 #end
 
 #selectspell 1018
@@ -166181,6 +165215,8 @@
 #nreff 3
 #precision 0
 #spec 0
+#onlygeosrc 128
+#coldsummon 3907
 #end
 
 #selectspell 1024
@@ -166320,6 +165356,7 @@
 #precision 0
 #spec 8388608
 #provrange 10
+#onlyowndst 1
 #end
 
 #selectspell 1035
@@ -166425,6 +165462,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 1
 #end
 
 #selectspell 1043
@@ -166453,6 +165491,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 128
+#coldsummon 3909
 #end
 
 #selectspell 1045
@@ -166650,6 +165690,7 @@
 #precision 0
 #spec 41943040
 #provrange 4
+#onlyowndst 1
 #end
 
 #selectspell 1060
@@ -166664,6 +165705,7 @@
 #precision 0
 #spec 8388608
 #casttime 125
+#uwsummon 3985
 #end
 
 #selectspell 1061
@@ -166788,6 +165830,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1071
@@ -166857,6 +165901,8 @@
 #precision 0
 #spec 0
 #nextspell 38
+#onlygeosrc 128
+#coldsummon 3997
 #end
 
 #selectspell 1076
@@ -166871,6 +165917,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 32
 #end
 
 #selectspell 1077
@@ -166898,6 +165945,7 @@
 #precision 0
 #spec 8388608
 #provrange 4
+#farsumcom 182
 #end
 
 #selectspell 1079
@@ -166960,6 +166008,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 4096
 #end
 
 #selectspell 1084
@@ -168004,6 +167053,8 @@
 #nreff 1
 #precision 0
 #spec 814219268
+#sethome
+#preventcast 500
 #end
 
 #selectspell 1160
@@ -168084,6 +167135,7 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#sethome
 #end
 
 #selectspell 1166
@@ -168182,6 +167234,9 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlycoastsrc 1
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1173
@@ -168373,6 +167428,8 @@
 #precision 0
 #spec 8388608
 #provrange 10
+#onlygeosrc 128
+#onlygeodst 128
 #end
 
 #selectspell 1187
@@ -168385,6 +167442,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1188
@@ -168397,6 +167456,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1189
@@ -168423,6 +167484,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1191
@@ -168463,6 +167526,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1194
@@ -168503,6 +167568,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1197
@@ -168517,6 +167584,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 8388624
 #end
 
 #selectspell 1198
@@ -168569,6 +167637,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 64
 #end
 
 #selectspell 1202
@@ -168583,6 +167652,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 4096
 #end
 
 #selectspell 1203
@@ -168610,6 +167680,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1205
@@ -168692,6 +167764,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1211
@@ -168750,6 +167824,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1215
@@ -168776,6 +167852,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1217
@@ -168842,6 +167920,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1222
@@ -168854,6 +167934,9 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 34359738368
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1223
@@ -168894,6 +167977,9 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 34359742464
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1226
@@ -169000,6 +168086,8 @@
 #precision 0
 #spec 0
 #provrange 4
+#onlygeodst 128
+#nogeodst 4
 #end
 
 #selectspell 1234
@@ -169038,6 +168126,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1237
@@ -169084,6 +168174,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1240
@@ -169164,6 +168256,8 @@
 #nreff 1
 #precision 0
 #spec 814219268
+#sethome
+#preventcast 500
 #end
 
 #selectspell 1246
@@ -169194,6 +168288,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1248
@@ -169307,6 +168403,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1256
@@ -169333,6 +168431,7 @@
 #spec 8388608
 #nextspell 46
 #provrange 5
+#farsumcom 190
 #end
 
 #selectspell 1258
@@ -169620,6 +168719,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#hiddenench
 #end
 
 #selectspell 1278
@@ -169703,6 +168803,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#onlyowndst 1
 #end
 
 #selectspell 1284
@@ -169716,6 +168817,8 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
+#onlyowndst 1
 #end
 
 #selectspell 1285
@@ -169729,6 +168832,8 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
+#onlyowndst 1
 #end
 
 #selectspell 1286
@@ -169770,6 +168875,7 @@
 #precision 0
 #spec 8388608
 #provrange 6
+#onlyowndst 1
 #end
 
 #selectspell 1289
@@ -169783,6 +168889,7 @@
 #precision 0
 #spec 8388608
 #provrange 3
+#onlyowndst 1
 #end
 
 #selectspell 1290
@@ -169810,6 +168917,8 @@
 #precision 0
 #spec 8388608
 #provrange 4
+#onlygeodst 128
+#hiddenench
 #end
 
 #selectspell 1292
@@ -169893,6 +169002,9 @@
 #precision 0
 #spec 0
 #provrange 2
+#nogeodst 4
+#onlyowndst 1
+#nowatertrace 1
 #end
 
 #selectspell 1298
@@ -169920,6 +169032,7 @@
 #precision 0
 #spec 8388608
 #provrange 3
+#onlyowndst 1
 #end
 
 #selectspell 1300
@@ -169959,6 +169072,7 @@
 #precision 0
 #spec 8388608
 #provrange 6
+#hiddenench
 #end
 
 #selectspell 1303
@@ -170202,6 +169316,7 @@
 #precision 0
 #spec 8388608
 #provrange 6
+#onlyowndst 1
 #end
 
 #selectspell 1321
@@ -170520,6 +169635,8 @@
 #precision 0
 #spec 8392704
 #provrange 4
+#onlygeodst 128
+#nogeodst 4
 #end
 
 #selectspell 1344
@@ -170547,6 +169664,8 @@
 #precision 0
 #spec 0
 #provrange 3
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1346
@@ -170689,6 +169808,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1357
@@ -170729,6 +169850,9 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 34359742464
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1360
@@ -170852,6 +169976,9 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 34359738368
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1369
@@ -171125,6 +170252,8 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
+#onlyowndst 1
 #end
 
 #selectspell 1389
@@ -171247,6 +170376,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1398
@@ -171400,6 +170531,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
 #end
 
 #selectspell 1409
@@ -171427,6 +170559,8 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
+#farsumcom 304
 #end
 
 #selectspell 1411
@@ -171470,6 +170604,7 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
 #end
 
 #selectspell 1414
@@ -171544,6 +170679,8 @@
 #precision 0
 #spec 0
 #provrange 5
+#nogeodst 4
+#uniquetarget
 #end
 
 #selectspell 1419
@@ -171682,6 +170819,7 @@
 #precision 0
 #spec 0
 #provrange 4
+#nogeodst 4
 #end
 
 #selectspell 1429
@@ -171739,6 +170877,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
 #end
 
 #selectspell 1433
@@ -171753,6 +170892,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#nogeosrc 4096
 #end
 
 #selectspell 1434
@@ -171848,6 +170988,8 @@
 #nreff 1
 #precision 0
 #spec 0
+#hiddenench
+#friendlyench
 #end
 
 #selectspell 1441
@@ -171938,6 +171080,7 @@
 #precision 0
 #spec 96
 #provrange 4
+#onlygeodst 4
 #end
 
 #selectspell 1447
@@ -172105,6 +171248,8 @@
 #nreff 1
 #precision 0
 #spec 8388608
+#onlygeosrc 132
+#nogeosrc 2048
 #end
 
 #selectspell 1459
@@ -172190,6 +171335,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 1465
@@ -172204,6 +171350,7 @@
 #nreff 1
 #precision 0
 #spec 0
+#onlygeosrc 128
 #end
 
 #selectspell 1466
@@ -191322,7 +190469,6 @@
 #name "Dagan, the Renegade Sage"
 #bossname "Dagan"
 #com 478
-#unit 0
 #nrunits 0
 #level 0
 #minmen 0
@@ -191337,7 +190483,6 @@
 #name "Obscuro, the Hidden Master"
 #bossname "Obscuro"
 #com 341
-#unit 0
 #nrunits 0
 #level 0
 #minmen 0
@@ -191547,7 +190692,6 @@
 #name "The Master Assassin"
 #bossname "Terminus"
 #com 428
-#unit 0
 #nrunits 0
 #level 1
 #minmen 0
@@ -191682,7 +190826,6 @@
 #name "Mighty Pak-ur"
 #bossname "Pak-ur"
 #com 488
-#unit 0
 #nrunits 0
 #level 1
 #minmen 0

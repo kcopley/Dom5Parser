@@ -17,38 +17,14 @@
         <views:MonsterView/>
     </DataTemplate>
 
+    <!-- Weapon view using the full WeaponView control -->
     <DataTemplate DataType="{x:Type views:WeaponViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Weapon view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:WeaponView/>
     </DataTemplate>
 
+    <!-- Armor view using the full ArmorView control -->
     <DataTemplate DataType="{x:Type views:ArmorViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Armor view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:ArmorView/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type views:SpellViewModel}">
@@ -68,21 +44,9 @@
         </Border>
     </DataTemplate>
 
+    <!-- Item view using the full ItemView control -->
     <DataTemplate DataType="{x:Type views:ItemViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Item view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:ItemView/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type views:SiteViewModel}">

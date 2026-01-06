@@ -1,11 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Editor.Data;
 using Dom5Editor.EditCommands;
 using Dom5Editor.UI.Controls;
+using Dom5Editor.VMs;
 
 namespace Dom5Editor.UI.Views
 {
@@ -101,6 +106,465 @@ namespace Dom5Editor.UI.Views
         /// The underlying entity.
         /// </summary>
         public IDEntity Entity => _entity;
+
+        // ========================================
+        // Badge Configuration Infrastructure
+        // ========================================
+
+        /// <summary>
+        /// Gets the entity type name for loading badge configuration.
+        /// Override in derived classes to return "monster", "weapon", "armor", etc.
+        /// Returns null if the entity type doesn't support badge configuration.
+        /// </summary>
+        protected virtual string EntityTypeName => null;
+
+        /// <summary>
+        /// Cache for badge configurations per entity type.
+        /// </summary>
+        private static readonly Dictionary<string, BadgeConfig> _badgeConfigCache = new();
+
+        /// <summary>
+        /// Gets the badge configuration for this entity type.
+        /// Returns null if EntityTypeName is null or config doesn't exist.
+        /// </summary>
+        protected BadgeConfig GetBadgeConfig()
+        {
+            var typeName = EntityTypeName;
+            if (string.IsNullOrEmpty(typeName))
+                return null;
+
+            if (!_badgeConfigCache.TryGetValue(typeName, out var config))
+            {
+                config = BadgeConfigLoader.LoadConfig(typeName);
+                if (config != null)
+                {
+                    _badgeConfigCache[typeName] = config;
+                }
+            }
+            return config;
+        }
+
+        /// <summary>
+        /// Clears the badge configuration cache (useful for reloading during development).
+        /// </summary>
+        public static void ClearBadgeConfigCache()
+        {
+            _badgeConfigCache.Clear();
+            BadgeConfigLoader.ClearCache();
+        }
+
+        /// <summary>
+        /// Builds badges for a section using JSON configuration.
+        /// Uses layered property access: vanilla -> mod -> session changes.
+        /// This is the core method for populating badge collections from JSON config.
+        /// </summary>
+        /// <param name="sectionId">The section ID from the JSON config (e.g., "types", "general", "combat")</param>
+        /// <param name="valueChangedHandler">Optional handler called when a badge value changes</param>
+        /// <returns>Tuple of (active badges, available badges for adding)</returns>
+        protected (ObservableCollection<PropertyItem> active, ObservableCollection<AvailablePropertyItem> available)
+            BuildBadgesFromSection(string sectionId, EventHandler<int> valueChangedHandler = null)
+        {
+            var active = new ObservableCollection<PropertyItem>();
+            var available = new ObservableCollection<AvailablePropertyItem>();
+            var usedCommands = new HashSet<Command>();
+
+            var badgeConfig = GetBadgeConfig();
+            if (badgeConfig == null)
+                return (active, available);
+
+            var section = badgeConfig.GetSection(sectionId);
+            if (section == null)
+                return (active, available);
+
+            // Get vanilla entity for layered comparison
+            var vanillaEntity = GetVanillaEntity();
+
+            foreach (var cmdDef in section.Commands)
+            {
+                if (!BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
+                    continue;
+
+                // Layer 1: Get vanilla value (base layer, includes vanilla copystats)
+                bool vanillaHasValue = false;
+                bool vanillaIsCopied = false;
+                int? vanillaValue = null;
+                bool vanillaFlagValue = false;
+
+                if (vanillaEntity != null)
+                {
+                    if (cmdDef.IsFlag)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<CommandProperty>(command, out _);
+                        vanillaFlagValue = vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED;
+                        vanillaHasValue = vanillaFlagValue;
+                        vanillaIsCopied = vanillaResult == ReturnType.COPIED;
+                    }
+                    else if (cmdDef.IsInt)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<IntProperty>(command, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                        {
+                            vanillaValue = vanillaProp?.Value;
+                            vanillaHasValue = true;
+                            vanillaIsCopied = vanillaResult == ReturnType.COPIED;
+                        }
+                    }
+                }
+
+                // Layer 2: Get current entity value (mod + session, includes mod copystats)
+                bool entityHasValue = false;
+                bool entityIsCopied = false;
+                bool entityHasDirect = false; // Has the property directly (not from copystats)
+                int? entityValue = null;
+                bool entityFlagValue = false;
+
+                if (cmdDef.IsFlag)
+                {
+                    var entityResult = _entity.TryGet<CommandProperty>(command, out _);
+                    entityFlagValue = entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED;
+                    entityHasValue = entityFlagValue;
+                    entityIsCopied = entityResult == ReturnType.COPIED;
+                    entityHasDirect = entityResult == ReturnType.TRUE;
+                }
+                else if (cmdDef.IsInt)
+                {
+                    var entityResult = _entity.TryGet<IntProperty>(command, out var entityProp);
+                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                    {
+                        entityValue = entityProp?.Value;
+                        entityHasValue = true;
+                        entityIsCopied = entityResult == ReturnType.COPIED;
+                        entityHasDirect = entityResult == ReturnType.TRUE;
+                    }
+                }
+
+                // Determine effective value (entity overrides vanilla)
+                bool hasValue = entityHasValue || vanillaHasValue;
+                int? effectiveValue = entityHasValue ? entityValue : vanillaValue;
+                bool effectiveFlagValue = entityHasValue ? entityFlagValue : vanillaFlagValue;
+
+                // Determine modification and inheritance status
+                bool isModified = false;
+                bool isInherited = false;
+                bool isSessionEdit = IsPropertyEditedInSession(command);
+
+                if (cmdDef.IsFlag)
+                {
+                    // Modified if entity has direct value different from vanilla
+                    isModified = entityHasDirect && (entityFlagValue != vanillaFlagValue);
+                    // Inherited if value comes from copystats or vanilla (not directly on entity)
+                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                }
+                else if (cmdDef.IsInt)
+                {
+                    // Modified if entity has direct value different from vanilla
+                    isModified = entityHasDirect && (!vanillaHasValue || entityValue != vanillaValue);
+                    // Inherited if value comes from copystats or vanilla (not directly on entity)
+                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                }
+
+                if (hasValue && (cmdDef.IsFlag ? effectiveFlagValue : true))
+                {
+                    var badge = BadgeConfigLoader.CreatePropertyItem(cmdDef, effectiveValue, isModified, isSessionEdit);
+                    // Can only remove if:
+                    // 1. Section is not read-only (from JSON config)
+                    // 2. Property is directly on the entity (not inherited from copystats)
+                    // 3. Either entity source allows removal OR the property is a session edit
+                    bool canRemoveBasedOnSource = _source == EntitySource.FromMod
+                                                  || _source == EntitySource.VanillaModified
+                                                  || _source == EntitySource.New;
+                    // Also allow removal if it's a session edit (user added it this session)
+                    badge.CanRemove = !section.ReadOnly && entityHasDirect && (canRemoveBasedOnSource || isSessionEdit);
+                    badge.IsInherited = section.ReadOnly || isInherited;
+
+                    if (valueChangedHandler != null && cmdDef.IsInt)
+                    {
+                        badge.ValueChanged += valueChangedHandler;
+                    }
+
+                    active.Add(badge);
+                    usedCommands.Add(command);
+                }
+            }
+
+            // Build available list (excluding already used commands)
+            if (!section.ReadOnly)
+            {
+                foreach (var cmdDef in section.Commands)
+                {
+                    if (BadgeConfigLoader.TryGetCommand(cmdDef, out var command) && !usedCommands.Contains(command))
+                    {
+                        available.Add(BadgeConfigLoader.CreateAvailableItem(cmdDef));
+                    }
+                }
+            }
+
+            return (active, available);
+        }
+
+        /// <summary>
+        /// Helper method to add a badge (property) to the entity.
+        /// Handles both flag and int property types.
+        /// </summary>
+        protected void AddBadgeProperty(AvailablePropertyItem badge)
+        {
+            if (badge.DefaultValue.HasValue)
+            {
+                SetIntProperty(badge.Command, badge.DefaultValue.Value);
+            }
+            else
+            {
+                SetCommandProperty(badge.Command, true);
+            }
+        }
+
+        /// <summary>
+        /// Helper method to remove a badge (property) from the entity.
+        /// Handles both flag and int property types.
+        /// </summary>
+        protected void RemoveBadgeProperty(PropertyItem badge)
+        {
+            if (badge.HasValue)
+            {
+                SetIntProperty(badge.Command, null);
+            }
+            else
+            {
+                SetCommandProperty(badge.Command, false);
+            }
+        }
+
+        /// <summary>
+        /// Creates a standard badge value changed handler that updates the property.
+        /// Use this when wiring up badge collections.
+        /// </summary>
+        protected EventHandler<int> CreateBadgeValueChangedHandler()
+        {
+            return (sender, newValue) =>
+            {
+                if (sender is PropertyItem badge)
+                {
+                    SetIntProperty(badge.Command, newValue);
+                    // Update the badge's session edit indicator
+                    badge.IsSessionEdit = IsPropertyEditedInSession(badge.Command);
+                    badge.IsModified = true;
+                }
+            };
+        }
+
+        /// <summary>
+        /// Creates a RelayCommand for removing badges from a section.
+        /// </summary>
+        protected RelayCommand<PropertyItem> CreateRemoveBadgeCommand(Action refreshAction)
+        {
+            return new RelayCommand<PropertyItem>(badge =>
+            {
+                RemoveBadgeProperty(badge);
+                refreshAction?.Invoke();
+            });
+        }
+
+        /// <summary>
+        /// Creates a RelayCommand for adding badges to a section.
+        /// </summary>
+        protected RelayCommand<AvailablePropertyItem> CreateAddBadgeCommand(Action refreshAction)
+        {
+            return new RelayCommand<AvailablePropertyItem>(badge =>
+            {
+                AddBadgeProperty(badge);
+                refreshAction?.Invoke();
+            });
+        }
+
+        // ========================================
+        // Generic Entity Resolution (Layered Lookup)
+        // ========================================
+
+        /// <summary>
+        /// Resolves an entity reference by type and ID, cascading through layers:
+        /// 1. Current mod's database
+        /// 2. Vanilla database
+        /// Returns null if not found in any layer.
+        /// </summary>
+        protected IDEntity ResolveEntityReference(EntityType type, int id)
+        {
+            // Layer 1: Try current mod
+            var mod = _entity.ParentMod;
+            if (mod?.Database.TryGetValue(type, out var modSet) == true)
+            {
+                if (modSet.TryGetValue(id, out var entity))
+                    return entity;
+            }
+
+            // Layer 2: Fall back to vanilla
+            if (VanillaLoader.Vanilla?.Database.TryGetValue(type, out var vanillaSet) == true)
+            {
+                if (vanillaSet.TryGetValue(id, out var entity))
+                    return entity;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets an entity's name by type and ID, using layered resolution.
+        /// Returns null if entity not found.
+        /// </summary>
+        protected string GetEntityName(EntityType type, int id)
+        {
+            return ResolveEntityReference(type, id)?.Name;
+        }
+
+        /// <summary>
+        /// Gets a reference property's resolved name, with fallback to layered lookup if unresolved.
+        /// </summary>
+        protected string GetReferenceName(StringOrIDRef reference, EntityType entityType)
+        {
+            if (reference == null || !reference.HasValue)
+                return null;
+
+            // Try the resolved entity first
+            if (reference.Entity != null)
+                return reference.Entity.Name;
+
+            // Fall back to layered lookup
+            return GetEntityName(entityType, reference.ID);
+        }
+
+        /// <summary>
+        /// Gets all multi-value properties of a given type with layered access.
+        /// Returns properties from vanilla first (marked as inherited), then from mod (marked as direct).
+        /// </summary>
+        /// <typeparam name="TRef">The reference property type (e.g., WeaponRef, ArmorRef)</typeparam>
+        /// <param name="command">The command to look for (e.g., Command.WEAPON)</param>
+        /// <param name="entityType">The entity type for name resolution fallback</param>
+        /// <param name="getId">Function to extract ID from the reference</param>
+        /// <returns>List of tuples: (ID, Name, IsInherited from vanilla, IsModified from mod)</returns>
+        protected List<(int Id, string Name, bool IsInherited, bool IsModified, bool IsSessionEdit)>
+            GetLayeredReferenceList<TRef>(Command command, EntityType entityType, Func<TRef, int> getId)
+            where TRef : StringOrIDRef
+        {
+            var results = new List<(int Id, string Name, bool IsInherited, bool IsModified, bool IsSessionEdit)>();
+            var knownIds = new HashSet<int>();
+            var vanillaEntity = GetVanillaEntity();
+            var vanillaIds = new HashSet<int>();
+
+            // Layer 1: Get IDs from vanilla entity (base layer)
+            if (vanillaEntity != null)
+            {
+                foreach (var prop in vanillaEntity.GetMultiple(command))
+                {
+                    if (prop is TRef refProp && refProp.HasValue)
+                    {
+                        var id = getId(refProp);
+                        vanillaIds.Add(id);
+
+                        // Only add if not also directly on current entity (will handle in Layer 2)
+                        if (vanillaEntity == _entity || !HasDirectProperty<TRef>(command, id, getId))
+                        {
+                            knownIds.Add(id);
+                            var name = GetReferenceName(refProp, entityType);
+                            results.Add((id, name, IsInherited: vanillaEntity != _entity, IsModified: false, IsSessionEdit: false));
+                        }
+                    }
+                }
+
+                // Also check vanilla's copystats chain
+                if (vanillaEntity.TryGetCopyFrom(out var vanillaCopy) && vanillaCopy != null)
+                {
+                    AddFromCopystatsChain(vanillaCopy, command, entityType, getId, results, knownIds, new HashSet<IDEntity> { vanillaEntity });
+                }
+            }
+
+            // Layer 2: Get from current entity (mod layer) - only if different from vanilla
+            if (_entity != vanillaEntity)
+            {
+                foreach (var prop in _entity.GetMultiple(command))
+                {
+                    if (prop is TRef refProp && refProp.HasValue)
+                    {
+                        var id = getId(refProp);
+                        var name = GetReferenceName(refProp, entityType);
+                        bool isSessionEdit = IsPropertyEditedInSession(command);
+
+                        if (knownIds.Contains(id))
+                        {
+                            // Update existing entry to mark as modified (exists in both vanilla and mod)
+                            var index = results.FindIndex(r => r.Id == id);
+                            if (index >= 0)
+                            {
+                                results[index] = (id, name, IsInherited: false, IsModified: true, isSessionEdit);
+                            }
+                        }
+                        else
+                        {
+                            // New in mod (not in vanilla)
+                            knownIds.Add(id);
+                            bool isModified = !vanillaIds.Contains(id);
+                            results.Add((id, name, IsInherited: false, IsModified: isModified, isSessionEdit));
+                        }
+                    }
+                }
+
+                // Check mod entity's copystats chain
+                if (_entity.TryGetCopyFrom(out var modCopy) && modCopy != null)
+                {
+                    AddFromCopystatsChain(modCopy, command, entityType, getId, results, knownIds, new HashSet<IDEntity> { _entity, vanillaEntity });
+                }
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Helper to check if entity has a direct property (not from copystats) with given ID.
+        /// </summary>
+        private bool HasDirectProperty<TRef>(Command command, int targetId, Func<TRef, int> getId) where TRef : StringOrIDRef
+        {
+            foreach (var prop in _entity.GetMultiple(command))
+            {
+                if (prop is TRef refProp && refProp.HasValue && getId(refProp) == targetId)
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Helper to add references from a copystats chain.
+        /// </summary>
+        private void AddFromCopystatsChain<TRef>(
+            IDEntity source,
+            Command command,
+            EntityType entityType,
+            Func<TRef, int> getId,
+            List<(int Id, string Name, bool IsInherited, bool IsModified, bool IsSessionEdit)> results,
+            HashSet<int> knownIds,
+            HashSet<IDEntity> visited) where TRef : StringOrIDRef
+        {
+            if (source == null || visited.Contains(source))
+                return;
+            visited.Add(source);
+
+            foreach (var prop in source.GetMultiple(command))
+            {
+                if (prop is TRef refProp && refProp.HasValue)
+                {
+                    var id = getId(refProp);
+                    if (!knownIds.Contains(id))
+                    {
+                        knownIds.Add(id);
+                        var name = GetReferenceName(refProp, entityType);
+                        results.Add((id, name, IsInherited: true, IsModified: false, IsSessionEdit: false));
+                    }
+                }
+            }
+
+            // Recurse through copystats chain
+            if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
+            {
+                AddFromCopystatsChain(nextCopy, command, entityType, getId, results, knownIds, visited);
+            }
+        }
 
         /// <summary>
         /// Entity ID.
@@ -313,6 +777,43 @@ namespace Dom5Editor.UI.Views
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets a reference property with VanillaModified fallback support.
+        /// Returns the property from the current entity, or falls back to vanilla for VanillaModified entities.
+        /// </summary>
+        protected T GetReferenceProperty<T>(Command command) where T : Property, new()
+        {
+            var result = _entity.TryGet<T>(command, out var prop);
+            if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+            {
+                return prop;
+            }
+
+            // For VanillaModified entities, fall back to vanilla value if not in mod
+            if (_source == EntitySource.VanillaModified)
+            {
+                var vanillaEntity = GetVanillaEntity();
+                if (vanillaEntity != null)
+                {
+                    var vanillaResult = vanillaEntity.TryGet<T>(command, out var vanillaProp);
+                    if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                    {
+                        return vanillaProp;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks if a reference property exists, with VanillaModified fallback support.
+        /// </summary>
+        protected bool HasReferenceProperty<T>(Command command) where T : Property, new()
+        {
+            return GetReferenceProperty<T>(command) != null;
         }
 
         protected void SetIntProperty(Command command, int? value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

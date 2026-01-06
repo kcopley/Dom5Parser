@@ -169,5 +169,29 @@ namespace Dom5Editor.UI.Controls
         }
 
         #endregion
+
+        #region Icon
+
+        public static readonly DependencyProperty IconSourceProperty =
+            DependencyProperty.Register(nameof(IconSource), typeof(ImageSource), typeof(CompactBadge),
+                new PropertyMetadata(null));
+
+        public ImageSource IconSource
+        {
+            get => (ImageSource)GetValue(IconSourceProperty);
+            set => SetValue(IconSourceProperty, value);
+        }
+
+        public static readonly DependencyProperty HasIconProperty =
+            DependencyProperty.Register(nameof(HasIcon), typeof(bool), typeof(CompactBadge),
+                new PropertyMetadata(false));
+
+        public bool HasIcon
+        {
+            get => (bool)GetValue(HasIconProperty);
+            set => SetValue(HasIconProperty, value);
+        }
+
+        #endregion
     }
 }

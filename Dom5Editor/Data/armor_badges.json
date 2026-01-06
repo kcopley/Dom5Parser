@@ -1,0 +1,87 @@
+{
+  "sections": [
+    {
+      "id": "stats",
+      "displayName": "STATS",
+      "description": "Core armor statistics",
+      "renderer": "statsGrid",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "prot",
+          "display": "PROT",
+          "type": "int",
+          "default": 0,
+          "description": "Sets armor protection value."
+        },
+        {
+          "name": "def",
+          "display": "DEF",
+          "type": "int",
+          "default": 0,
+          "description": "Sets defense penalty (negative values reduce defense)."
+        },
+        {
+          "name": "enc",
+          "display": "ENC",
+          "type": "int",
+          "default": 0,
+          "description": "Sets encumbrance value."
+        },
+        {
+          "name": "rcost",
+          "display": "RCOST",
+          "type": "int",
+          "default": 0,
+          "description": "Sets resource cost."
+        },
+        {
+          "name": "type",
+          "display": "TYPE",
+          "type": "int",
+          "default": 0,
+          "description": "Sets armor slot type (1=helmet, 4=body, 5=shield, 6=misc body)."
+        }
+      ]
+    },
+    {
+      "id": "properties",
+      "displayName": "PROPERTIES",
+      "description": "All armor properties and modifiers",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "magicarmor",
+          "display": "Magic",
+          "type": "flag",
+          "description": "Armor is magical.",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "ironarmor",
+          "display": "Iron",
+          "type": "flag",
+          "description": "Armor is made of iron.",
+          "color": "#303033",
+          "borderColor": "#505560"
+        },
+        {
+          "name": "woodenarmor",
+          "display": "Wooden",
+          "type": "flag",
+          "description": "Armor is made of wood.",
+          "color": "#302D2A",
+          "borderColor": "#504540"
+        },
+        {
+          "name": "protinspector",
+          "display": "Prot Inspector",
+          "type": "int",
+          "description": "Override protection display value."
+        }
+      ]
+    }
+  ]
+}

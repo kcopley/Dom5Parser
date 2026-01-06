@@ -24,6 +24,12 @@
                      Margin="0,0,3,0" VerticalAlignment="Center"
                      Visibility="{Binding IsSessionEdit, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
+            <!-- Icon (optional) -->
+            <Image Width="12" Height="12" Margin="0,0,3,0" VerticalAlignment="Center"
+                   Source="{Binding IconSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   Visibility="{Binding HasIcon, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+
             <!-- Label -->
             <TextBlock Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        FontSize="9" VerticalAlignment="Center"

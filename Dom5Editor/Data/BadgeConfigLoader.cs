@@ -271,6 +271,12 @@ namespace Dom5Editor.Data
                     : $"#{cmdDef.Name}";
             }
 
+            // Set icon if defined
+            if (cmdDef.HasIcon)
+            {
+                property.IconPath = cmdDef.Icon;
+            }
+
             return property;
         }
 

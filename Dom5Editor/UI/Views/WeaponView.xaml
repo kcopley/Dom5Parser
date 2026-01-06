@@ -1,0 +1,119 @@
+<UserControl x:Class="Dom5Editor.UI.Views.WeaponView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="600"
+             Background="{DynamicResource BackgroundMediumBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="12">
+            <!-- Header with ID and source indicator -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource HeaderText}" FontSize="18" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                        <TextBlock Text="{Binding ID, StringFormat='Weapon #{0}'}" Style="{DynamicResource MutedText}" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <Border Grid.Column="1" Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="3" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SourceLabel}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Copy From Section (shown when weapon has copyweapon) -->
+            <Border Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12"
+                    Visibility="{Binding HasCopyWeapon, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel>
+                    <TextBlock Text="COPY FROM" FontSize="9" FontWeight="Bold" Foreground="White" Opacity="0.7" Margin="0,0,0,4"/>
+                    <WrapPanel>
+                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="copyweapon:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopyWeaponDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Basic Info Section -->
+            <controls:PropertyGroupControl Header="Basic Info" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,4"/>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Core Stats Section -->
+            <controls:PropertyGroupControl Header="Stats" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <controls:IntPropertyEditor Grid.Row="0" Grid.Column="0" Label="{Binding DamageLabel}" Value="{Binding Damage, Mode=TwoWay}" IsModified="{Binding IsDamageModified}" IsSessionEdit="{Binding IsDamageSessionEdit}" IsInherited="{Binding IsDamageInherited}" IsEnabled="{Binding CanEditDamage}" ToolTip="{Binding DamageDisplayString}" Margin="0,0,4,4"/>
+                            <controls:IntPropertyEditor Grid.Row="0" Grid.Column="1" Label="ATT" Value="{Binding Attack, Mode=TwoWay}" IsModified="{Binding IsAttackModified}" IsSessionEdit="{Binding IsAttackSessionEdit}" IsInherited="{Binding IsAttackInherited}" Margin="4,0,4,4"/>
+                            <controls:IntPropertyEditor Grid.Row="0" Grid.Column="2" Label="DEF" Value="{Binding Defense, Mode=TwoWay}" IsModified="{Binding IsDefenseModified}" IsSessionEdit="{Binding IsDefenseSessionEdit}" IsInherited="{Binding IsDefenseInherited}" Margin="4,0,0,4"/>
+
+                            <controls:IntPropertyEditor Grid.Row="1" Grid.Column="0" Label="LEN" Value="{Binding Length, Mode=TwoWay}" IsModified="{Binding IsLengthModified}" IsSessionEdit="{Binding IsLengthSessionEdit}" IsInherited="{Binding IsLengthInherited}" Margin="0,0,4,4"/>
+                            <controls:IntPropertyEditor Grid.Row="1" Grid.Column="1" Label="NRATT" Value="{Binding NumberOfAttacks, Mode=TwoWay}" IsModified="{Binding IsNumberOfAttacksModified}" IsSessionEdit="{Binding IsNumberOfAttacksSessionEdit}" IsInherited="{Binding IsNumberOfAttacksInherited}" Margin="4,0,4,4"/>
+                            <controls:IntPropertyEditor Grid.Row="1" Grid.Column="2" Label="AOE" Value="{Binding AreaOfEffect, Mode=TwoWay}" IsModified="{Binding IsAreaOfEffectModified}" IsSessionEdit="{Binding IsAreaOfEffectSessionEdit}" IsInherited="{Binding IsAreaOfEffectInherited}" Margin="4,0,0,4"/>
+
+                            <controls:IntPropertyEditor Grid.Row="2" Grid.Column="0" Label="RCOST" Value="{Binding ResourceCost, Mode=TwoWay}" IsModified="{Binding IsResourceCostModified}" IsSessionEdit="{Binding IsResourceCostSessionEdit}" IsInherited="{Binding IsResourceCostInherited}" Margin="0,0,4,0"/>
+                        </Grid>
+
+                        <!-- Damage Types -->
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Visibility="{Binding DamageTypes, Converter={StaticResource NullToVisibilityConverter}}">
+                            <TextBlock Text="Damage Type: " FontSize="11" Foreground="#888888" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding DamageTypes}" FontSize="11" Foreground="#9370DB" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Special Properties -->
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0" Visibility="{Binding SpecialProperties, Converter={StaticResource NullToVisibilityConverter}}">
+                            <TextBlock Text="Properties: " FontSize="11" Foreground="#888888" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding SpecialProperties}" FontSize="11" Foreground="#FFD700" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Secondary Effect -->
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0" Visibility="{Binding HasSecondaryEffect, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="Secondary Effect: " FontSize="11" Foreground="#888888" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding SecondaryEffectDisplay}" FontSize="11" Foreground="#00BFFF" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Properties - Single Unified Badge Panel -->
+            <controls:PropertyGroupControl Header="Properties" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding PropertyBadges}"
+                        AvailableItems="{Binding AvailablePropertyBadges}"
+                        RemoveCommand="{Binding RemovePropertyBadgeCommand}"
+                        AddCommand="{Binding AddPropertyBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

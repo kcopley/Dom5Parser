@@ -8,6 +8,22 @@ Potential bugs and critical problems identified during code review.
 
 ## Current Priority Issues
 
+### ~~0. Weapon/Armor Not Displaying for Mod-Edited Entities~~ FIXED (2026-01-05)
+
+**Root Cause:** For `VanillaModified` entities (vanilla entities edited by a mod), the ViewModel was using the mod's entity which only contains the **changes** made by the mod - not the full entity data. Weapons/armor remained on the vanilla entity but weren't being fetched.
+
+**Fix:** Added generic layered resolution methods to `EntityViewModel` base class:
+- `ResolveEntityReference(type, id)` - Cascades: mod → vanilla
+- `GetEntityName(type, id)` - Name lookup with fallback
+- `GetReferenceName(reference, entityType)` - Reference name with fallback
+- `GetLayeredReferenceList<TRef>()` - Multi-value properties with full layering
+
+The weapon/armor lists now use `GetLayeredReferenceList<WeaponRef>()` and `GetLayeredReferenceList<ArmorRef>()`, reducing ~200 lines of duplicated code to ~50 lines.
+
+**Files Changed:**
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added generic resolution methods
+- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Simplified to use base class methods
+
 ### 1. Two Parallel ViewModel Systems (Migration Needed)
 
 **Files:** `Dom5Editor/VMs/` vs `Dom5Editor/UI/ViewModels/`
@@ -39,16 +55,18 @@ The new UI system is working properly. Legacy VMs should be deprecated once all 
 
 ### 2. Entity Views Not Implemented
 
-**Status:** Only MonsterView is implemented in the new UI system.
+**Status:** MonsterView, WeaponView, ArmorView, and ItemView are implemented in the new UI system.
+
+**Recent Improvements (2026-01-05):**
+- ItemView: Equipment display shows referenced weapon/armor stats, damage types, special properties, and secondary effects
+- WeaponView: Added damage types, special properties, and secondary effect display
+- Both views support VanillaModified fallback for reference properties
 
 Missing entity views:
-- WeaponView
-- ArmorView
-- SpellView
-- ItemView
+- SpellView (high complexity - path requirements, effect types, gem/fatigue costs)
 - SiteView
-- NationView
-- EventView
+- NationView (high complexity - many reference properties)
+- EventView (high complexity - event codes, conditions)
 
 ---
 
