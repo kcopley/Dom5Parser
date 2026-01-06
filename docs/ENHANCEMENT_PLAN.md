@@ -2,7 +2,7 @@
 
 This document outlines the planned enhancements to build out Dom5Parser into a full UI-based .dm file editor.
 
-**Last Updated:** 2026-01-05
+**Last Updated:** 2026-01-06
 
 ## Goal
 
@@ -354,15 +354,40 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 
 ## Feature Backlog (Post-Redesign)
 
+### EXTREMELY HIGH Priority (Blocking)
+
+- ~~**Reference Type Badge Support**~~ **DONE (2026-01-06)** - `BuildBadgesFromSection()` now handles `type: "ref"` badges:
+  - Added `BuildReferenceBadges()` method for multi-value ref property handling
+  - References display with entity names resolved via `GetEntityName()`
+  - Supports vanilla + mod layering with proper IsModified/IsInherited flags
+  - Copystats chain traversal for inherited references
+  - `PropertyItem` extended with `IsReference`, `ReferenceId`, `ReferenceName`, `ReferenceType`, `ReferenceDisplay`
+  - `BadgeConfigLoader.CreateReferencePropertyItem()` factory method
+  - `CompactBadge` updated to display reference badges with entity names
+  - Reference commands always available in Add dropdown (can have multiple instances)
+
 ### HIGH Priority
-- **Other Entity Views** - Spell, Site, Nation, Event views (Weapon, Armor, Item complete)
+- **All Entity Views Complete** - Monster, Weapon, Armor, Item, Site, Spell, Nation, Event, Mercenary, Poptype, Nametype
+- **Remaining**: Enchantment, Montag, RestrictedItem are ID-only containers and may not need views
+
+  **NationView Data Limitations:**
+  - Vanilla nation data is **incomplete** - no full nation dump exists like for monsters/weapons/armor
+  - Only partial information is available from vanilla sources (some recruitment, some pretender chassis)
+  - The UI must clearly distinguish between:
+    - **Partial vanilla data** - Display with "incomplete" indicator, read-only where data is missing
+    - **Mod-defined nations** - Full data available, fully editable
+    - **Mod modifications to vanilla** - Show what's being changed, note base data may be incomplete
+  - Consider a visual indicator (e.g., warning banner, muted styling) for nations with partial data
+  - Reference properties (recruitment lists, pretenders, sites) may show "[Unknown]" for unresolvable vanilla refs
 
   **View Complexity Pattern Guidelines:**
-  - **Simple entities (Weapon, Armor, Item):** Use a single unified badge panel for all boolean/flag properties. Don't split into multiple categorized sections (Elements, Materials, Damage Types, etc.) - this adds UI complexity without benefit. One flat badge collection with a single "Add" dropdown showing all available properties.
+  - **Simple entities (Weapon, Armor, Item, Site):** Use a single unified badge panel for all boolean/flag properties. Don't split into multiple categorized sections (Elements, Materials, Damage Types, etc.) - this adds UI complexity without benefit. One flat badge collection with a single "Add" dropdown showing all available properties.
   - **Complex entities (Monster, Nation, Spell):** Use categorized sections where logical groupings help navigation (e.g., Monster has Combat, General, Resistances, Types as distinct concepts). Categories should reflect how users think about the entity, not just how commands are organized in the manual.
-  - **Reference properties:** Group equipment/reference slots together (weapons, armor, spells) with navigation links to referenced entities.
+  - **Reference properties:** Group equipment/reference slots together (weapons, armor, spells) with navigation links to referenced entities. For sites, monster/nation references are handled as badge properties with `type: "ref"` and `refType: "monster"` or `refType: "nation"`.
   - **Stats:** Always use grid layout for numeric stats at the top of the view.
 
+  **DONE (2026-01-06):** SpellView implemented with path requirements display, combat stats (range/precision/aoe/damage/effect/nreff), next spell chain display, fatigue cost with gem breakdown, and unified property badge panel with 40+ spell properties including restrictions, AI hints, and enchantment settings. Uses `spell_badges.json` configuration.
+  **DONE (2026-01-06):** SiteView implemented with core stats (path/level/rarity), gems display with icons, copy-from reference, and unified property badge panel with 90+ properties including monster/nation references.
   **DONE (2026-01-05):** WeaponView and ArmorView refactored to use single unified badge panel.
   **DONE (2026-01-05):** ItemView implemented with construction stats, path requirements, and badge panel.
   **DONE (2026-01-05):** ItemView equipment section shows weapon/armor damage types, special properties, and secondary effects.
@@ -479,9 +504,10 @@ Dom5Editor/UI/
     WeaponView.xaml(.cs)
     ArmorView.xaml(.cs)
     ItemView.xaml(.cs)
+    SiteView.xaml(.cs)
   ViewModels/
     EntityViewModel.cs      - Base class with layered resolution, badge infrastructure
-    EntityViewModels.cs     - MonsterViewModel, WeaponViewModel, ArmorViewModel, ItemViewModel, etc.
+    EntityViewModels.cs     - MonsterViewModel, WeaponViewModel, ArmorViewModel, ItemViewModel, SiteViewModel, etc.
   Theme/
     AppTheme.xaml
     AppResources.xaml
@@ -491,6 +517,7 @@ Dom5Editor/Data/
   weapon_badges.json      - Weapon property definitions
   armor_badges.json       - Armor property definitions
   item_badges.json        - Item property definitions
+  site_badges.json        - Site property definitions (90+ commands, monster/nation refs)
   BadgeConfig.cs
   BadgeConfigLoader.cs
 

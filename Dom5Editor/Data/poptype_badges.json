@@ -1,0 +1,94 @@
+{
+  "sections": [
+    {
+      "id": "recruitment",
+      "displayName": "RECRUITMENT",
+      "description": "Population recruitment settings",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "clearrec",
+          "display": "Clear Rec",
+          "type": "flag",
+          "description": "Clears all recruitment units for this population type."
+        },
+        {
+          "name": "addrecunit",
+          "display": "Add Rec Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Adds a recruitable unit to this population type."
+        },
+        {
+          "name": "addreccom",
+          "display": "Add Rec Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Adds a recruitable commander to this population type."
+        }
+      ]
+    },
+    {
+      "id": "defense",
+      "displayName": "PROVINCE DEFENSE",
+      "description": "Province defense settings",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "cleardef",
+          "display": "Clear Def",
+          "type": "flag",
+          "description": "Clears all defense units for this population type."
+        },
+        {
+          "name": "defcom1",
+          "display": "Def Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sets the defense commander for this population type."
+        },
+        {
+          "name": "defunit1",
+          "display": "Def Unit 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sets the primary defense unit."
+        },
+        {
+          "name": "defunit1b",
+          "display": "Def Unit 1B",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sets the secondary defense unit."
+        },
+        {
+          "name": "defunit1c",
+          "display": "Def Unit 1C",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sets the tertiary defense unit."
+        },
+        {
+          "name": "defmult1",
+          "display": "Def Mult 1",
+          "type": "int",
+          "description": "Multiplier for primary defense unit count."
+        },
+        {
+          "name": "defmult1b",
+          "display": "Def Mult 1B",
+          "type": "int",
+          "description": "Multiplier for secondary defense unit count."
+        },
+        {
+          "name": "defmult1c",
+          "display": "Def Mult 1C",
+          "type": "int",
+          "description": "Multiplier for tertiary defense unit count."
+        }
+      ]
+    }
+  ]
+}

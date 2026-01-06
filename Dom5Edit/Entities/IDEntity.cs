@@ -132,6 +132,14 @@ namespace Dom5Edit.Entities
             }
         }
 
+        /// <summary>
+        /// Override GetName to return the entity's Name property for DisplayName.
+        /// </summary>
+        public override string GetName()
+        {
+            return Name;
+        }
+
         internal virtual Command GetNewCommand() { throw new NotImplementedException(); }
         internal virtual Command GetSelectCommand() { throw new NotImplementedException(); }
         internal virtual EntityType GetEntityType()

@@ -167,6 +167,8 @@ namespace Dom5Editor.UI.Views
             var active = new ObservableCollection<PropertyItem>();
             var available = new ObservableCollection<AvailablePropertyItem>();
             var usedCommands = new HashSet<Command>();
+            // Track ref commands that have at least one instance (for "available" dropdown logic)
+            var refCommandsWithValues = new HashSet<Command>();
 
             var badgeConfig = GetBadgeConfig();
             if (badgeConfig == null)
@@ -183,6 +185,23 @@ namespace Dom5Editor.UI.Views
             {
                 if (!BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
                     continue;
+
+                // Handle reference properties (multi-value, needs special layered logic)
+                if (cmdDef.IsRef)
+                {
+                    var refBadges = BuildReferenceBadges(cmdDef, command, section.ReadOnly, vanillaEntity);
+                    foreach (var badge in refBadges)
+                    {
+                        active.Add(badge);
+                    }
+                    if (refBadges.Count > 0)
+                    {
+                        refCommandsWithValues.Add(command);
+                    }
+                    // Reference commands can have multiple values, so they're always "available" for adding more
+                    // (don't add to usedCommands to exclude from available list)
+                    continue;
+                }
 
                 // Layer 1: Get vanilla value (base layer, includes vanilla copystats)
                 bool vanillaHasValue = false;
@@ -287,19 +306,213 @@ namespace Dom5Editor.UI.Views
                 }
             }
 
-            // Build available list (excluding already used commands)
+            // Build available list (excluding already used commands for non-ref types)
+            // Ref types are always available for adding more instances
             if (!section.ReadOnly)
             {
                 foreach (var cmdDef in section.Commands)
                 {
-                    if (BadgeConfigLoader.TryGetCommand(cmdDef, out var command) && !usedCommands.Contains(command))
+                    if (BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
                     {
-                        available.Add(BadgeConfigLoader.CreateAvailableItem(cmdDef));
+                        // For ref types: always show in available list (can add multiple)
+                        // For flag/int types: only show if not already used
+                        if (cmdDef.IsRef || !usedCommands.Contains(command))
+                        {
+                            available.Add(BadgeConfigLoader.CreateAvailableItem(cmdDef));
+                        }
                     }
                 }
             }
 
             return (active, available);
+        }
+
+        /// <summary>
+        /// Builds reference badges for a command that references other entities.
+        /// Handles multi-value refs with layered access (vanilla -> mod -> session).
+        /// </summary>
+        private List<PropertyItem> BuildReferenceBadges(BadgeCommand cmdDef, Command command, bool sectionReadOnly, IDEntity vanillaEntity)
+        {
+            var badges = new List<PropertyItem>();
+            var seenIds = new HashSet<int>();
+            var vanillaIds = new HashSet<int>();
+
+            // Get the entity type for name resolution
+            var entityType = BadgeConfigLoader.GetEntityTypeFromRefType(cmdDef.RefType);
+
+            bool canRemoveBasedOnSource = _source == EntitySource.FromMod
+                                          || _source == EntitySource.VanillaModified
+                                          || _source == EntitySource.New;
+
+            // Layer 1: Get references from vanilla entity (inherited)
+            if (vanillaEntity != null)
+            {
+                foreach (var prop in vanillaEntity.GetMultiple(command))
+                {
+                    if (prop is StringOrIDRef refProp && refProp.HasValue)
+                    {
+                        var refId = refProp.ID;
+                        vanillaIds.Add(refId);
+
+                        // Skip if we're also looking at the current entity and it's the same ref
+                        // (will be handled in Layer 2 as direct)
+                        if (vanillaEntity != _entity && HasDirectRefProperty(command, refId))
+                            continue;
+
+                        seenIds.Add(refId);
+
+                        // Resolve name
+                        string refName = null;
+                        if (entityType.HasValue)
+                        {
+                            refName = GetEntityName(entityType.Value, refId);
+                        }
+                        refName ??= refProp.Name;
+
+                        bool isInherited = vanillaEntity != _entity;
+                        var badge = BadgeConfigLoader.CreateReferencePropertyItem(
+                            cmdDef,
+                            refId,
+                            refName,
+                            isModified: false,
+                            isSessionEdit: false);
+
+                        badge.IsInherited = sectionReadOnly || isInherited;
+                        badge.CanRemove = !sectionReadOnly && !isInherited && canRemoveBasedOnSource;
+
+                        badges.Add(badge);
+                    }
+                }
+
+                // Also check vanilla's copystats chain
+                AddRefsFromCopystatsChain(vanillaEntity, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, new HashSet<IDEntity> { vanillaEntity });
+            }
+
+            // Layer 2: Get references from current entity (direct mod properties)
+            if (_entity != vanillaEntity)
+            {
+                foreach (var prop in _entity.GetMultiple(command))
+                {
+                    if (prop is StringOrIDRef refProp && refProp.HasValue)
+                    {
+                        var refId = refProp.ID;
+                        bool isSessionEdit = IsPropertyEditedInSession(command);
+                        bool isModified = !vanillaIds.Contains(refId);
+
+                        // Resolve name
+                        string refName = null;
+                        if (entityType.HasValue)
+                        {
+                            refName = GetEntityName(entityType.Value, refId);
+                        }
+                        refName ??= refProp.Name;
+
+                        if (seenIds.Contains(refId))
+                        {
+                            // Update existing badge to mark as modified
+                            var existingBadge = badges.Find(b => b.ReferenceId == refId);
+                            if (existingBadge != null)
+                            {
+                                existingBadge.IsModified = true;
+                                existingBadge.IsInherited = false;
+                                existingBadge.IsSessionEdit = isSessionEdit;
+                                existingBadge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
+                            }
+                        }
+                        else
+                        {
+                            seenIds.Add(refId);
+
+                            var badge = BadgeConfigLoader.CreateReferencePropertyItem(
+                                cmdDef,
+                                refId,
+                                refName,
+                                isModified: isModified,
+                                isSessionEdit: isSessionEdit);
+
+                            badge.IsInherited = false;
+                            badge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
+
+                            badges.Add(badge);
+                        }
+                    }
+                }
+
+                // Also check mod entity's copystats chain
+                AddRefsFromCopystatsChain(_entity, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, new HashSet<IDEntity> { _entity, vanillaEntity });
+            }
+
+            return badges;
+        }
+
+        /// <summary>
+        /// Helper to check if the current entity has a direct reference property with the given ID.
+        /// </summary>
+        private bool HasDirectRefProperty(Command command, int targetId)
+        {
+            foreach (var prop in _entity.GetMultiple(command))
+            {
+                if (prop is StringOrIDRef refProp && refProp.HasValue && refProp.ID == targetId)
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Helper to add refs from a copystats chain.
+        /// </summary>
+        private void AddRefsFromCopystatsChain(
+            IDEntity source,
+            BadgeCommand cmdDef,
+            Command command,
+            EntityType? entityType,
+            bool sectionReadOnly,
+            List<PropertyItem> badges,
+            HashSet<int> seenIds,
+            HashSet<IDEntity> visited)
+        {
+            if (source == null)
+                return;
+
+            if (!source.TryGetCopyFrom(out var copyFrom) || copyFrom == null || visited.Contains(copyFrom))
+                return;
+
+            visited.Add(copyFrom);
+
+            foreach (var prop in copyFrom.GetMultiple(command))
+            {
+                if (prop is StringOrIDRef refProp && refProp.HasValue)
+                {
+                    var refId = refProp.ID;
+                    if (!seenIds.Contains(refId))
+                    {
+                        seenIds.Add(refId);
+
+                        // Resolve name
+                        string refName = null;
+                        if (entityType.HasValue)
+                        {
+                            refName = GetEntityName(entityType.Value, refId);
+                        }
+                        refName ??= refProp.Name;
+
+                        var badge = BadgeConfigLoader.CreateReferencePropertyItem(
+                            cmdDef,
+                            refId,
+                            refName,
+                            isModified: false,
+                            isSessionEdit: false);
+
+                        badge.IsInherited = true;
+                        badge.CanRemove = false; // Inherited from copystats, can't remove
+
+                        badges.Add(badge);
+                    }
+                }
+            }
+
+            // Recurse through copystats chain
+            AddRefsFromCopystatsChain(copyFrom, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, visited);
         }
 
         /// <summary>

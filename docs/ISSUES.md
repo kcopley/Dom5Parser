@@ -57,16 +57,23 @@ The new UI system is working properly. Legacy VMs should be deprecated once all 
 
 **Status:** MonsterView, WeaponView, ArmorView, and ItemView are implemented in the new UI system.
 
+**Recent Improvements (2026-01-06):**
+- SpellView: Path requirements display, combat stats, next spell chains, fatigue/gem cost breakdown, 63 badge properties
+- SiteView: Core stats, gems display with icons, copy-from reference, 90+ badge properties
+
 **Recent Improvements (2026-01-05):**
 - ItemView: Equipment display shows referenced weapon/armor stats, damage types, special properties, and secondary effects
 - WeaponView: Added damage types, special properties, and secondary effect display
 - Both views support VanillaModified fallback for reference properties
 
 Missing entity views:
-- SpellView (high complexity - path requirements, effect types, gem/fatigue costs)
-- SiteView
-- NationView (high complexity - many reference properties)
-- EventView (high complexity - event codes, conditions)
+- Other potential views to check: Enchantment, Montag, RestrictedItem (ID-only containers, may not need views)
+
+Completed entity views:
+- EventView - Completed with 21 badge sections covering ~160 commands
+- MercenaryView - Completed with 4 badge sections covering 13 commands
+- PoptypeView - Completed with 2 badge sections covering 11 commands
+- NametypeView - Completed with 1 badge section covering 2 commands
 
 ---
 
@@ -105,6 +112,8 @@ The project has no test project or test framework configured. This makes it risk
 **Size:** ~45000 tokens
 
 The Spell entity has so many property mappings that it exceeds reasonable file size. This indicates the need for the data-driven approach described in ENHANCEMENT_PLAN.md.
+
+**Mitigation (2026-01-06):** SpellView UI now uses `spell_badges.json` for property definitions (63 commands verified). The property map in Spell.cs remains for parsing/export but UI is data-driven.
 
 ---
 

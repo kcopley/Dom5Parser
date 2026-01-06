@@ -18,7 +18,11 @@ This document outlines the significant change from manually-defined code section
 Located in `Dom5Editor/Data/`:
 
 - `monster_badges.json` - Badge categories for monsters
-- (Future) `weapon_badges.json`, `armor_badges.json`, `spell_badges.json`, etc.
+- `weapon_badges.json` - Badge properties for weapons
+- `armor_badges.json` - Badge properties for armor
+- `item_badges.json` - Badge properties for items
+- `site_badges.json` - Badge properties for sites
+- `spell_badges.json` - Badge properties for spells
 
 ### JSON Structure
 

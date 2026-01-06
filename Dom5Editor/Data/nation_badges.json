@@ -1,0 +1,2147 @@
+{
+  "sections": [
+    {
+      "id": "identity",
+      "displayName": "IDENTITY",
+      "description": "Basic nation identity properties",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "era",
+          "display": "Era",
+          "type": "int",
+          "description": "Nation era (1=EA, 2=MA, 3=LA)."
+        },
+        {
+          "name": "epithet",
+          "display": "Epithet",
+          "type": "string",
+          "description": "Nation subtitle/epithet."
+        },
+        {
+          "name": "descr",
+          "display": "Description",
+          "type": "string",
+          "description": "Full nation description text."
+        },
+        {
+          "name": "summary",
+          "display": "Summary",
+          "type": "string",
+          "description": "Nation summary text."
+        },
+        {
+          "name": "brief",
+          "display": "Brief",
+          "type": "string",
+          "description": "Brief nation description."
+        },
+        {
+          "name": "flag",
+          "display": "Flag",
+          "type": "string",
+          "description": "Path to nation flag image file."
+        },
+        {
+          "name": "templepic",
+          "display": "Temple Pic",
+          "type": "int",
+          "description": "Temple picture number."
+        }
+      ]
+    },
+    {
+      "id": "recruitment",
+      "displayName": "FORT RECRUITMENT",
+      "description": "Fort recruitable units and commanders",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "addrecunit",
+          "display": "Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Add recruitable unit at forts.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "addreccom",
+          "display": "Fort Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Add recruitable commander at forts.",
+          "color": "#2A2A32",
+          "borderColor": "#506080"
+        },
+        {
+          "name": "landrec",
+          "display": "Land Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Land recruitable unit.",
+          "color": "#2A322A",
+          "borderColor": "#506050"
+        },
+        {
+          "name": "landcom",
+          "display": "Land Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Land recruitable commander.",
+          "color": "#2A322A",
+          "borderColor": "#506050"
+        },
+        {
+          "name": "addforeignunit",
+          "display": "Foreign Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Add recruitable foreign unit.",
+          "color": "#322A2A",
+          "borderColor": "#605050"
+        },
+        {
+          "name": "addforeigncom",
+          "display": "Foreign Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Add recruitable foreign commander.",
+          "color": "#322A2A",
+          "borderColor": "#605050"
+        },
+        {
+          "name": "noforeignrec",
+          "display": "No Foreign Rec",
+          "type": "flag",
+          "description": "Disable foreign recruitment."
+        },
+        {
+          "name": "clearrec",
+          "display": "Clear Rec",
+          "type": "flag",
+          "description": "Clear all recruitment lists."
+        }
+      ]
+    },
+    {
+      "id": "terrain_recruitment",
+      "displayName": "TERRAIN RECRUITMENT",
+      "description": "Terrain-specific recruitment",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "forestrec",
+          "display": "Forest Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Forest recruitable unit.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "forestcom",
+          "display": "Forest Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Forest recruitable commander.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "forestfortrec",
+          "display": "Forest Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Forest fort recruitable unit.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "forestfortcom",
+          "display": "Forest Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Forest fort recruitable commander.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "mountainrec",
+          "display": "Mountain Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Mountain recruitable unit.",
+          "color": "#303030",
+          "borderColor": "#505050"
+        },
+        {
+          "name": "mountaincom",
+          "display": "Mountain Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Mountain recruitable commander.",
+          "color": "#303030",
+          "borderColor": "#505050"
+        },
+        {
+          "name": "mountainfortrec",
+          "display": "Mountain Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Mountain fort recruitable unit.",
+          "color": "#303030",
+          "borderColor": "#505050"
+        },
+        {
+          "name": "mountainfortcom",
+          "display": "Mountain Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Mountain fort recruitable commander.",
+          "color": "#303030",
+          "borderColor": "#505050"
+        },
+        {
+          "name": "swamprec",
+          "display": "Swamp Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Swamp recruitable unit.",
+          "color": "#2A2D2A",
+          "borderColor": "#405040"
+        },
+        {
+          "name": "swampcom",
+          "display": "Swamp Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Swamp recruitable commander.",
+          "color": "#2A2D2A",
+          "borderColor": "#405040"
+        },
+        {
+          "name": "swampfortrec",
+          "display": "Swamp Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Swamp fort recruitable unit.",
+          "color": "#2A2D2A",
+          "borderColor": "#405040"
+        },
+        {
+          "name": "swampfortcom",
+          "display": "Swamp Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Swamp fort recruitable commander.",
+          "color": "#2A2D2A",
+          "borderColor": "#405040"
+        },
+        {
+          "name": "wasterec",
+          "display": "Waste Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Waste recruitable unit.",
+          "color": "#32302A",
+          "borderColor": "#605040"
+        },
+        {
+          "name": "wastecom",
+          "display": "Waste Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Waste recruitable commander.",
+          "color": "#32302A",
+          "borderColor": "#605040"
+        },
+        {
+          "name": "wastefortrec",
+          "display": "Waste Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Waste fort recruitable unit.",
+          "color": "#32302A",
+          "borderColor": "#605040"
+        },
+        {
+          "name": "wastefortcom",
+          "display": "Waste Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Waste fort recruitable commander.",
+          "color": "#32302A",
+          "borderColor": "#605040"
+        },
+        {
+          "name": "caverec",
+          "display": "Cave Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Cave recruitable unit.",
+          "color": "#2A2A30",
+          "borderColor": "#404050"
+        },
+        {
+          "name": "cavecom",
+          "display": "Cave Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Cave recruitable commander.",
+          "color": "#2A2A30",
+          "borderColor": "#404050"
+        },
+        {
+          "name": "cavefortrec",
+          "display": "Cave Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Cave fort recruitable unit.",
+          "color": "#2A2A30",
+          "borderColor": "#404050"
+        },
+        {
+          "name": "cavefortcom",
+          "display": "Cave Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Cave fort recruitable commander.",
+          "color": "#2A2A30",
+          "borderColor": "#404050"
+        },
+        {
+          "name": "plainrec",
+          "display": "Plains Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Plains recruitable unit.",
+          "color": "#32322A",
+          "borderColor": "#505040"
+        },
+        {
+          "name": "plainfortrec",
+          "display": "Plains Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Plains fort recruitable unit.",
+          "color": "#32322A",
+          "borderColor": "#505040"
+        },
+        {
+          "name": "plainfortcom",
+          "display": "Plains Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Plains fort recruitable commander.",
+          "color": "#32322A",
+          "borderColor": "#505040"
+        },
+        {
+          "name": "farmrec",
+          "display": "Farm Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Farm recruitable unit.",
+          "color": "#32322A",
+          "borderColor": "#606040"
+        },
+        {
+          "name": "farmcom",
+          "display": "Farm Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Farm recruitable commander.",
+          "color": "#32322A",
+          "borderColor": "#606040"
+        },
+        {
+          "name": "farmfortrec",
+          "display": "Farm Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Farm fort recruitable unit.",
+          "color": "#32322A",
+          "borderColor": "#606040"
+        },
+        {
+          "name": "farmfortcom",
+          "display": "Farm Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Farm fort recruitable commander.",
+          "color": "#32322A",
+          "borderColor": "#606040"
+        },
+        {
+          "name": "driprec",
+          "display": "Drip Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Drip cave recruitable unit.",
+          "color": "#2A2D30",
+          "borderColor": "#405060"
+        },
+        {
+          "name": "dripcom",
+          "display": "Drip Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Drip cave recruitable commander.",
+          "color": "#2A2D30",
+          "borderColor": "#405060"
+        },
+        {
+          "name": "dripfortrec",
+          "display": "Drip Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Drip cave fort recruitable unit.",
+          "color": "#2A2D30",
+          "borderColor": "#405060"
+        },
+        {
+          "name": "dripfortcom",
+          "display": "Drip Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Drip cave fort recruitable commander.",
+          "color": "#2A2D30",
+          "borderColor": "#405060"
+        },
+        {
+          "name": "foreignfortrec",
+          "display": "Foreign Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Foreign fort recruitable unit.",
+          "color": "#322A2A",
+          "borderColor": "#605050"
+        },
+        {
+          "name": "foreignfortcom",
+          "display": "Foreign Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Foreign fort recruitable commander.",
+          "color": "#322A2A",
+          "borderColor": "#605050"
+        }
+      ]
+    },
+    {
+      "id": "coastal_uw",
+      "displayName": "COASTAL & UNDERWATER",
+      "description": "Coastal and underwater recruitment",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "coastrec",
+          "display": "Coast Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Coastal recruitable unit.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastcom",
+          "display": "Coast Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Coastal recruitable commander.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastunit1",
+          "display": "Coast Unit 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "First coastal unit slot.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastunit2",
+          "display": "Coast Unit 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Second coastal unit slot.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastunit3",
+          "display": "Coast Unit 3",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Third coastal unit slot.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastcom1",
+          "display": "Coast Com 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "First coastal commander slot.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastcom2",
+          "display": "Coast Com 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Second coastal commander slot.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastfortrec",
+          "display": "Coast Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Coastal fort recruitable unit.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "coastfortcom",
+          "display": "Coast Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Coastal fort recruitable commander.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "uwrec",
+          "display": "UW Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater recruitable unit.",
+          "color": "#2A2A32",
+          "borderColor": "#404080"
+        },
+        {
+          "name": "uwcom",
+          "display": "UW Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater recruitable commander.",
+          "color": "#2A2A32",
+          "borderColor": "#404080"
+        },
+        {
+          "name": "searec",
+          "display": "Sea Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sea recruitable unit.",
+          "color": "#2A2A32",
+          "borderColor": "#405090"
+        },
+        {
+          "name": "seacom",
+          "display": "Sea Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sea recruitable commander.",
+          "color": "#2A2A32",
+          "borderColor": "#405090"
+        },
+        {
+          "name": "seafortrec",
+          "display": "Sea Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sea fort recruitable unit.",
+          "color": "#2A2A32",
+          "borderColor": "#405090"
+        },
+        {
+          "name": "seafortcom",
+          "display": "Sea Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sea fort recruitable commander.",
+          "color": "#2A2A32",
+          "borderColor": "#405090"
+        },
+        {
+          "name": "deeprec",
+          "display": "Deep Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Deep sea recruitable unit.",
+          "color": "#2A2A35",
+          "borderColor": "#3040A0"
+        },
+        {
+          "name": "deepcom",
+          "display": "Deep Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Deep sea recruitable commander.",
+          "color": "#2A2A35",
+          "borderColor": "#3040A0"
+        },
+        {
+          "name": "deepfortrec",
+          "display": "Deep Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Deep sea fort recruitable unit.",
+          "color": "#2A2A35",
+          "borderColor": "#3040A0"
+        },
+        {
+          "name": "deepfortcom",
+          "display": "Deep Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Deep sea fort recruitable commander.",
+          "color": "#2A2A35",
+          "borderColor": "#3040A0"
+        },
+        {
+          "name": "kelprec",
+          "display": "Kelp Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Kelp forest recruitable unit.",
+          "color": "#2A322A",
+          "borderColor": "#305030"
+        },
+        {
+          "name": "kelpcom",
+          "display": "Kelp Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Kelp forest recruitable commander.",
+          "color": "#2A322A",
+          "borderColor": "#305030"
+        },
+        {
+          "name": "kelpfortrec",
+          "display": "Kelp Fort Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Kelp forest fort recruitable unit.",
+          "color": "#2A322A",
+          "borderColor": "#305030"
+        },
+        {
+          "name": "kelpfortcom",
+          "display": "Kelp Fort Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Kelp forest fort recruitable commander.",
+          "color": "#2A322A",
+          "borderColor": "#305030"
+        },
+        {
+          "name": "uwnation",
+          "display": "UW Nation",
+          "type": "flag",
+          "description": "Nation is underwater."
+        },
+        {
+          "name": "coastnation",
+          "display": "Coast Nation",
+          "type": "flag",
+          "description": "Nation prefers coastal provinces."
+        },
+        {
+          "name": "seatrace",
+          "display": "Sea Race",
+          "type": "flag",
+          "description": "Nation is a sea race."
+        }
+      ]
+    },
+    {
+      "id": "heroes",
+      "displayName": "HEROES",
+      "description": "National heroes and multi-heroes",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "hero1",
+          "display": "Hero 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "First hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero2",
+          "display": "Hero 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Second hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero3",
+          "display": "Hero 3",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Third hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero4",
+          "display": "Hero 4",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Fourth hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero5",
+          "display": "Hero 5",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Fifth hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero6",
+          "display": "Hero 6",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sixth hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero7",
+          "display": "Hero 7",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Seventh hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero8",
+          "display": "Hero 8",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Eighth hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero9",
+          "display": "Hero 9",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Ninth hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "hero10",
+          "display": "Hero 10",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Tenth hero slot.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "multihero1",
+          "display": "Multi Hero 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "First multi-hero slot (can appear multiple times).",
+          "color": "#302A32",
+          "borderColor": "#603080"
+        },
+        {
+          "name": "multihero2",
+          "display": "Multi Hero 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Second multi-hero slot.",
+          "color": "#302A32",
+          "borderColor": "#603080"
+        },
+        {
+          "name": "multihero3",
+          "display": "Multi Hero 3",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Third multi-hero slot.",
+          "color": "#302A32",
+          "borderColor": "#603080"
+        },
+        {
+          "name": "multihero4",
+          "display": "Multi Hero 4",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Fourth multi-hero slot.",
+          "color": "#302A32",
+          "borderColor": "#603080"
+        },
+        {
+          "name": "multihero5",
+          "display": "Multi Hero 5",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Fifth multi-hero slot.",
+          "color": "#302A32",
+          "borderColor": "#603080"
+        },
+        {
+          "name": "multihero6",
+          "display": "Multi Hero 6",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Sixth multi-hero slot.",
+          "color": "#302A32",
+          "borderColor": "#603080"
+        },
+        {
+          "name": "multihero7",
+          "display": "Multi Hero 7",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Seventh multi-hero slot.",
+          "color": "#302A32",
+          "borderColor": "#603080"
+        }
+      ]
+    },
+    {
+      "id": "starting",
+      "displayName": "STARTING UNITS",
+      "description": "Initial units when game starts",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "startcom",
+          "display": "Start Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Starting commander.",
+          "color": "#2A2A32",
+          "borderColor": "#506080"
+        },
+        {
+          "name": "startscout",
+          "display": "Start Scout",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Starting scout.",
+          "color": "#2A322A",
+          "borderColor": "#506050"
+        },
+        {
+          "name": "startunittype1",
+          "display": "Start Unit 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "First starting unit type.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "startunitnbrs1",
+          "display": "Start Unit 1 Count",
+          "type": "int",
+          "description": "Number of first starting unit."
+        },
+        {
+          "name": "startunittype2",
+          "display": "Start Unit 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Second starting unit type.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "startunitnbrs2",
+          "display": "Start Unit 2 Count",
+          "type": "int",
+          "description": "Number of second starting unit."
+        },
+        {
+          "name": "startsite",
+          "display": "Start Site",
+          "type": "ref",
+          "refType": "site",
+          "description": "Starting magic site.",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "islandsite",
+          "display": "Island Site",
+          "type": "ref",
+          "refType": "site",
+          "description": "Starting site for island nations.",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "futuresite",
+          "display": "Future Site",
+          "type": "ref",
+          "refType": "site",
+          "description": "Site that appears in later eras.",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "clearsites",
+          "display": "Clear Sites",
+          "type": "flag",
+          "description": "Clear all starting sites."
+        }
+      ]
+    },
+    {
+      "id": "province_defense",
+      "displayName": "PROVINCE DEFENSE",
+      "description": "Province defense (PD) units",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "defcom1",
+          "display": "PD Commander 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Primary province defense commander.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defcom2",
+          "display": "PD Commander 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Secondary province defense commander.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defunit1",
+          "display": "PD Unit 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Primary defense unit type.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defunit1b",
+          "display": "PD Unit 1B",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Alternative primary defense unit.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defunit1c",
+          "display": "PD Unit 1C",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Third primary defense unit variant.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defunit1d",
+          "display": "PD Unit 1D",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Fourth primary defense unit variant.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defunit2",
+          "display": "PD Unit 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Secondary defense unit type.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defunit2b",
+          "display": "PD Unit 2B",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Alternative secondary defense unit.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defmult1",
+          "display": "PD Mult 1",
+          "type": "int",
+          "description": "Multiplier for primary defense units."
+        },
+        {
+          "name": "defmult1b",
+          "display": "PD Mult 1B",
+          "type": "int",
+          "description": "Multiplier for 1B defense units."
+        },
+        {
+          "name": "defmult1c",
+          "display": "PD Mult 1C",
+          "type": "int",
+          "description": "Multiplier for 1C defense units."
+        },
+        {
+          "name": "defmult1d",
+          "display": "PD Mult 1D",
+          "type": "int",
+          "description": "Multiplier for 1D defense units."
+        },
+        {
+          "name": "defmult2",
+          "display": "PD Mult 2",
+          "type": "int",
+          "description": "Multiplier for secondary defense units."
+        },
+        {
+          "name": "defmult2b",
+          "display": "PD Mult 2B",
+          "type": "int",
+          "description": "Multiplier for 2B defense units."
+        },
+        {
+          "name": "badindpd",
+          "display": "Bad Ind PD",
+          "type": "int",
+          "description": "Bad independent province defense."
+        },
+        {
+          "name": "wallcom",
+          "display": "Wall Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander defending walls.",
+          "color": "#303033",
+          "borderColor": "#505560"
+        },
+        {
+          "name": "wallunit",
+          "display": "Wall Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Unit defending walls.",
+          "color": "#303033",
+          "borderColor": "#505560"
+        },
+        {
+          "name": "wallmult",
+          "display": "Wall Mult",
+          "type": "int",
+          "description": "Wall unit multiplier."
+        },
+        {
+          "name": "guardcom",
+          "display": "Guard Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Province guard commander.",
+          "color": "#2A322A",
+          "borderColor": "#405040"
+        },
+        {
+          "name": "guardunit",
+          "display": "Guard Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Province guard unit.",
+          "color": "#2A322A",
+          "borderColor": "#405040"
+        },
+        {
+          "name": "guardmult",
+          "display": "Guard Mult",
+          "type": "int",
+          "description": "Guard unit multiplier."
+        },
+        {
+          "name": "guardspirit",
+          "display": "Guard Spirit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Spirit guardian for province.",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        }
+      ]
+    },
+    {
+      "id": "uw_defense",
+      "displayName": "UW DEFENSE",
+      "description": "Underwater province defense",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "uwdefcom1",
+          "display": "UW PD Com 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater primary defense commander.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefcom2",
+          "display": "UW PD Com 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater secondary defense commander.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefunit1",
+          "display": "UW PD Unit 1",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater primary defense unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefunit1b",
+          "display": "UW PD Unit 1B",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater alt primary defense unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefunit1c",
+          "display": "UW PD Unit 1C",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater third primary defense unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefunit1d",
+          "display": "UW PD Unit 1D",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater fourth primary defense unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefunit2",
+          "display": "UW PD Unit 2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater secondary defense unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefunit2b",
+          "display": "UW PD Unit 2B",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater alt secondary defense unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwdefmult1",
+          "display": "UW PD Mult 1",
+          "type": "int",
+          "description": "Underwater primary defense multiplier."
+        },
+        {
+          "name": "uwdefmult1b",
+          "display": "UW PD Mult 1B",
+          "type": "int",
+          "description": "Underwater 1B defense multiplier."
+        },
+        {
+          "name": "uwdefmult1c",
+          "display": "UW PD Mult 1C",
+          "type": "int",
+          "description": "Underwater 1C defense multiplier."
+        },
+        {
+          "name": "uwdefmult1d",
+          "display": "UW PD Mult 1D",
+          "type": "int",
+          "description": "Underwater 1D defense multiplier."
+        },
+        {
+          "name": "uwdefmult2",
+          "display": "UW PD Mult 2",
+          "type": "int",
+          "description": "Underwater secondary defense multiplier."
+        },
+        {
+          "name": "uwdefmult2b",
+          "display": "UW PD Mult 2B",
+          "type": "int",
+          "description": "Underwater 2B defense multiplier."
+        },
+        {
+          "name": "uwwallcom",
+          "display": "UW Wall Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater wall commander.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwwallunit",
+          "display": "UW Wall Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater wall unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwwallmult",
+          "display": "UW Wall Mult",
+          "type": "int",
+          "description": "Underwater wall multiplier."
+        },
+        {
+          "name": "uwguardcom",
+          "display": "UW Guard Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater guard commander.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwguardunit",
+          "display": "UW Guard Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Underwater guard unit.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwguardmult",
+          "display": "UW Guard Mult",
+          "type": "int",
+          "description": "Underwater guard multiplier."
+        }
+      ]
+    },
+    {
+      "id": "pretenders",
+      "displayName": "PRETENDERS",
+      "description": "Pretender god configuration",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "addgod",
+          "display": "Add God",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Add available pretender chassis.",
+          "color": "#32302A",
+          "borderColor": "#806030"
+        },
+        {
+          "name": "delgod",
+          "display": "Del God",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Remove pretender chassis.",
+          "color": "#322A2A",
+          "borderColor": "#604030"
+        },
+        {
+          "name": "cheapgod20",
+          "display": "Cheap God 20%",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Pretender 20% cheaper for this nation.",
+          "color": "#2A322A",
+          "borderColor": "#406040"
+        },
+        {
+          "name": "cheapgod40",
+          "display": "Cheap God 40%",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Pretender 40% cheaper for this nation.",
+          "color": "#2A322A",
+          "borderColor": "#507050"
+        },
+        {
+          "name": "cleargods",
+          "display": "Clear Gods",
+          "type": "flag",
+          "description": "Clear all pretender options."
+        },
+        {
+          "name": "noundeadgods",
+          "display": "No Undead Gods",
+          "type": "flag",
+          "description": "Remove undead pretenders."
+        },
+        {
+          "name": "homerealm",
+          "display": "Home Realm",
+          "type": "int",
+          "description": "Home realm for pretender selection."
+        },
+        {
+          "name": "godrebirth",
+          "display": "God Rebirth",
+          "type": "flag",
+          "description": "Enable god rebirth mechanic."
+        }
+      ]
+    },
+    {
+      "id": "buildings",
+      "displayName": "BUILDINGS",
+      "description": "Building costs and fort types",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "labcost",
+          "display": "Lab Cost",
+          "type": "int",
+          "description": "Laboratory construction cost modifier."
+        },
+        {
+          "name": "templecost",
+          "display": "Temple Cost",
+          "type": "int",
+          "description": "Temple construction cost modifier."
+        },
+        {
+          "name": "fortcost",
+          "display": "Fort Cost",
+          "type": "int",
+          "description": "Fortress construction cost modifier."
+        },
+        {
+          "name": "fortera",
+          "display": "Fort Era",
+          "type": "int",
+          "description": "Fortress era/style."
+        },
+        {
+          "name": "homefort",
+          "display": "Home Fort",
+          "type": "int",
+          "description": "Home fortress type."
+        },
+        {
+          "name": "buildfort",
+          "display": "Build Fort",
+          "type": "int",
+          "description": "Buildable fort type."
+        },
+        {
+          "name": "builduwfort",
+          "display": "Build UW Fort",
+          "type": "int",
+          "description": "Underwater buildable fort type."
+        },
+        {
+          "name": "buildcoastfort",
+          "display": "Build Coast Fort",
+          "type": "int",
+          "description": "Coastal buildable fort type."
+        },
+        {
+          "name": "uwbuild",
+          "display": "UW Build",
+          "type": "int",
+          "description": "Underwater construction ability."
+        },
+        {
+          "name": "forestlabcost",
+          "display": "Forest Lab Cost",
+          "type": "int",
+          "description": "Forest laboratory cost modifier."
+        },
+        {
+          "name": "foresttemplecost",
+          "display": "Forest Temple Cost",
+          "type": "int",
+          "description": "Forest temple cost modifier."
+        },
+        {
+          "name": "cavelabcost",
+          "display": "Cave Lab Cost",
+          "type": "int",
+          "description": "Cave laboratory cost modifier."
+        },
+        {
+          "name": "cavetemplecost",
+          "display": "Cave Temple Cost",
+          "type": "int",
+          "description": "Cave temple cost modifier."
+        },
+        {
+          "name": "swamplabcost",
+          "display": "Swamp Lab Cost",
+          "type": "int",
+          "description": "Swamp laboratory cost modifier."
+        },
+        {
+          "name": "swamptemplecost",
+          "display": "Swamp Temple Cost",
+          "type": "int",
+          "description": "Swamp temple cost modifier."
+        },
+        {
+          "name": "mountlabcost",
+          "display": "Mountain Lab Cost",
+          "type": "int",
+          "description": "Mountain laboratory cost modifier."
+        },
+        {
+          "name": "mounttemplecost",
+          "display": "Mountain Temple Cost",
+          "type": "int",
+          "description": "Mountain temple cost modifier."
+        },
+        {
+          "name": "wastelabcost",
+          "display": "Waste Lab Cost",
+          "type": "int",
+          "description": "Waste laboratory cost modifier."
+        },
+        {
+          "name": "wastetemplecost",
+          "display": "Waste Temple Cost",
+          "type": "int",
+          "description": "Waste temple cost modifier."
+        },
+        {
+          "name": "templegems",
+          "display": "Temple Gems",
+          "type": "int",
+          "description": "Gems produced by temples."
+        },
+        {
+          "name": "templeholypoints",
+          "display": "Temple Holy Pts",
+          "type": "int",
+          "description": "Holy points from temples."
+        }
+      ]
+    },
+    {
+      "id": "scales",
+      "displayName": "SCALES & TERRAIN",
+      "description": "Scale preferences and terrain modifiers",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "idealcold",
+          "display": "Ideal Cold",
+          "type": "int",
+          "description": "Ideal temperature scale (-3 to +3).",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "likesterr",
+          "display": "Likes Terrain",
+          "type": "int",
+          "description": "Preferred terrain bitmask."
+        },
+        {
+          "name": "hatesterr",
+          "display": "Hates Terrain",
+          "type": "int",
+          "description": "Disliked terrain bitmask."
+        },
+        {
+          "name": "likespop",
+          "display": "Likes Pop",
+          "type": "ref",
+          "refType": "poptype",
+          "description": "Preferred population type."
+        },
+        {
+          "name": "spreadcold",
+          "display": "Spread Cold",
+          "type": "int",
+          "description": "Cold scale spreading rate.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "spreadheat",
+          "display": "Spread Heat",
+          "type": "int",
+          "description": "Heat scale spreading rate.",
+          "color": "#322D2A",
+          "borderColor": "#6B4030"
+        },
+        {
+          "name": "spreadchaos",
+          "display": "Spread Chaos",
+          "type": "int",
+          "description": "Chaos scale spreading rate."
+        },
+        {
+          "name": "spreadlazy",
+          "display": "Spread Sloth",
+          "type": "int",
+          "description": "Sloth scale spreading rate."
+        },
+        {
+          "name": "spreaddeath",
+          "display": "Spread Death",
+          "type": "int",
+          "description": "Death scale spreading rate.",
+          "color": "#302A2A",
+          "borderColor": "#504040"
+        },
+        {
+          "name": "moreorder",
+          "display": "More Order",
+          "type": "int",
+          "description": "Bonus to order scale (-5 to +5)."
+        },
+        {
+          "name": "moreprod",
+          "display": "More Prod",
+          "type": "int",
+          "description": "Bonus to productivity scale (-5 to +5)."
+        },
+        {
+          "name": "moreheat",
+          "display": "More Heat",
+          "type": "int",
+          "description": "Bonus to heat scale (-5 to +5).",
+          "color": "#322D2A",
+          "borderColor": "#6B4030"
+        },
+        {
+          "name": "moregrowth",
+          "display": "More Growth",
+          "type": "int",
+          "description": "Bonus to growth scale (-5 to +5).",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "moreluck",
+          "display": "More Luck",
+          "type": "int",
+          "description": "Bonus to luck scale (-5 to +5).",
+          "color": "#32302A",
+          "borderColor": "#605030"
+        },
+        {
+          "name": "moremagic",
+          "display": "More Magic",
+          "type": "int",
+          "description": "Bonus to magic scale (-5 to +5).",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "defchaos",
+          "display": "Def Chaos",
+          "type": "int",
+          "description": "Default chaos scale."
+        },
+        {
+          "name": "defsloth",
+          "display": "Def Sloth",
+          "type": "int",
+          "description": "Default sloth scale."
+        },
+        {
+          "name": "defdeath",
+          "display": "Def Death",
+          "type": "int",
+          "description": "Default death scale."
+        },
+        {
+          "name": "defmisfortune",
+          "display": "Def Misfortune",
+          "type": "int",
+          "description": "Default misfortune scale."
+        },
+        {
+          "name": "defdrain",
+          "display": "Def Drain",
+          "type": "int",
+          "description": "Default drain scale."
+        },
+        {
+          "name": "castleprod",
+          "display": "Castle Prod",
+          "type": "int",
+          "description": "Castle production bonus."
+        },
+        {
+          "name": "tradecoast",
+          "display": "Trade Coast",
+          "type": "int",
+          "description": "Coastal trade bonus."
+        },
+        {
+          "name": "nationinc",
+          "display": "Nation Income",
+          "type": "int",
+          "description": "National income modifier."
+        },
+        {
+          "name": "fortunrest",
+          "display": "Fortune Unrest",
+          "type": "int",
+          "description": "Unrest from fortune scale."
+        },
+        {
+          "name": "fortheatscaleres",
+          "display": "Fort Heat Res",
+          "type": "int",
+          "description": "Fort heat scale resistance."
+        },
+        {
+          "name": "fortcoldscaleres",
+          "display": "Fort Cold Res",
+          "type": "int",
+          "description": "Fort cold scale resistance."
+        },
+        {
+          "name": "homeheatscaleres",
+          "display": "Home Heat Res",
+          "type": "int",
+          "description": "Home province heat scale resistance."
+        },
+        {
+          "name": "caveinc",
+          "display": "Cave Income",
+          "type": "int",
+          "description": "Cave province income modifier."
+        },
+        {
+          "name": "caveres",
+          "display": "Cave Resources",
+          "type": "int",
+          "description": "Cave province resources modifier."
+        },
+        {
+          "name": "caverecpt",
+          "display": "Cave Rec Point",
+          "type": "int",
+          "description": "Cave recruitment points modifier."
+        }
+      ]
+    },
+    {
+      "id": "special_mechanics",
+      "displayName": "SPECIAL MECHANICS",
+      "description": "Unique national abilities",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "nopreach",
+          "display": "No Preach",
+          "type": "flag",
+          "description": "Priests cannot preach."
+        },
+        {
+          "name": "dyingdom",
+          "display": "Dying Dom",
+          "type": "flag",
+          "description": "Dominion kills population."
+        },
+        {
+          "name": "sacrificedom",
+          "display": "Sacrifice Dom",
+          "type": "flag",
+          "description": "Blood sacrifice spreads dominion."
+        },
+        {
+          "name": "nodeathsupply",
+          "display": "No Death Supply",
+          "type": "flag",
+          "description": "No supply penalty from death scale."
+        },
+        {
+          "name": "halfdeathinc",
+          "display": "Half Death Inc",
+          "type": "flag",
+          "description": "Halved death scale income penalty."
+        },
+        {
+          "name": "halfdeathpop",
+          "display": "Half Death Pop",
+          "type": "flag",
+          "description": "Halved death scale population loss."
+        },
+        {
+          "name": "domdeathsense",
+          "display": "Dom Death Sense",
+          "type": "flag",
+          "description": "Sense deaths in dominion."
+        },
+        {
+          "name": "domkill",
+          "display": "Dom Kill",
+          "type": "int",
+          "description": "Dominion kills enemy population."
+        },
+        {
+          "name": "domunrest",
+          "display": "Dom Unrest",
+          "type": "int",
+          "description": "Dominion causes unrest."
+        },
+        {
+          "name": "domwar",
+          "display": "Dom War",
+          "type": "int",
+          "description": "Dominion warfare bonus."
+        },
+        {
+          "name": "autoundead",
+          "display": "Auto Undead",
+          "type": "flag",
+          "description": "Automatic undead reanimation."
+        },
+        {
+          "name": "priestreanim",
+          "display": "Priest Reanim",
+          "type": "flag",
+          "description": "Priests can reanimate."
+        },
+        {
+          "name": "undeadreanim",
+          "display": "Undead Reanim",
+          "type": "flag",
+          "description": "Undead reanimation ability."
+        },
+        {
+          "name": "horsereanim",
+          "display": "Horse Reanim",
+          "type": "flag",
+          "description": "Priests reanimate undead horses."
+        },
+        {
+          "name": "wightreanim",
+          "display": "Wight Reanim",
+          "type": "flag",
+          "description": "Priests reanimate wights."
+        },
+        {
+          "name": "tombwyrmreanim",
+          "display": "Tomb Wyrm Reanim",
+          "type": "flag",
+          "description": "Priests reanimate C'tis undead."
+        },
+        {
+          "name": "manikinreanim",
+          "display": "Manikin Reanim",
+          "type": "flag",
+          "description": "Priests reanimate manikins."
+        },
+        {
+          "name": "supayareanim",
+          "display": "Supaya Reanim",
+          "type": "flag",
+          "description": "Priests reanimate Nazcan undead."
+        },
+        {
+          "name": "greekreanim",
+          "display": "Greek Reanim",
+          "type": "flag",
+          "description": "Priests reanimate Greek undead."
+        },
+        {
+          "name": "ghostreanim",
+          "display": "Ghost Reanim",
+          "type": "flag",
+          "description": "Priests reanimate ghosts."
+        },
+        {
+          "name": "domsail",
+          "display": "Dom Sail",
+          "type": "flag",
+          "description": "Units can sail in dominion."
+        },
+        {
+          "name": "syncretism",
+          "display": "Syncretism",
+          "type": "int",
+          "description": "Syncretism level (foreign god tolerance)."
+        },
+        {
+          "name": "recallgod",
+          "display": "Recall God",
+          "type": "int",
+          "description": "God recall cost modifier."
+        },
+        {
+          "name": "killcappop",
+          "display": "Kill Cap Pop",
+          "type": "int",
+          "description": "Capital population kill rate."
+        },
+        {
+          "name": "golemhp",
+          "display": "Golem HP",
+          "type": "int",
+          "description": "Golem HP modifier."
+        },
+        {
+          "name": "merccost",
+          "display": "Merc Cost",
+          "type": "int",
+          "description": "Mercenary hiring cost modifier."
+        },
+        {
+          "name": "hidedom",
+          "display": "Hide Dom",
+          "type": "int",
+          "description": "Hide dominion strength."
+        },
+        {
+          "name": "viewallprov",
+          "display": "View All Prov",
+          "type": "flag",
+          "description": "Can view all provinces."
+        },
+        {
+          "name": "viewallbat",
+          "display": "View All Bat",
+          "type": "flag",
+          "description": "Can view all battles."
+        },
+        {
+          "name": "cavenation",
+          "display": "Cave Nation",
+          "type": "int",
+          "description": "Cave nation level."
+        },
+        {
+          "name": "islandnation",
+          "display": "Island Nation",
+          "type": "flag",
+          "description": "Nation starts on island."
+        },
+        {
+          "name": "riverstart",
+          "display": "River Start",
+          "type": "flag",
+          "description": "Nation starts on river."
+        }
+      ]
+    },
+    {
+      "id": "bless_bonuses",
+      "displayName": "BLESS BONUSES",
+      "description": "Path-specific bless bonuses",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "fireblessbonus",
+          "display": "Fire Bless",
+          "type": "int",
+          "description": "Fire bless bonus.",
+          "color": "#322D2A",
+          "borderColor": "#6B4030",
+          "icon": "magicicons/Path_F.png"
+        },
+        {
+          "name": "airblessbonus",
+          "display": "Air Bless",
+          "type": "int",
+          "description": "Air bless bonus.",
+          "color": "#32302A",
+          "borderColor": "#5A5540",
+          "icon": "magicicons/Path_A.png"
+        },
+        {
+          "name": "waterblessbonus",
+          "display": "Water Bless",
+          "type": "int",
+          "description": "Water bless bonus.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A",
+          "icon": "magicicons/Path_W.png"
+        },
+        {
+          "name": "earthblessbonus",
+          "display": "Earth Bless",
+          "type": "int",
+          "description": "Earth bless bonus.",
+          "color": "#32302A",
+          "borderColor": "#605040",
+          "icon": "magicicons/Path_E.png"
+        },
+        {
+          "name": "astralblessbonus",
+          "display": "Astral Bless",
+          "type": "int",
+          "description": "Astral bless bonus.",
+          "color": "#302A32",
+          "borderColor": "#605060",
+          "icon": "magicicons/Path_S.png"
+        },
+        {
+          "name": "deathblessbonus",
+          "display": "Death Bless",
+          "type": "int",
+          "description": "Death bless bonus.",
+          "color": "#302A2A",
+          "borderColor": "#504040",
+          "icon": "magicicons/Path_D.png"
+        },
+        {
+          "name": "natureblessbonus",
+          "display": "Nature Bless",
+          "type": "int",
+          "description": "Nature bless bonus.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A",
+          "icon": "magicicons/Path_N.png"
+        },
+        {
+          "name": "bloodblessbonus",
+          "display": "Blood Bless",
+          "type": "int",
+          "description": "Blood bless bonus.",
+          "color": "#322A2A",
+          "borderColor": "#6A3030",
+          "icon": "magicicons/Path_B.png"
+        },
+        {
+          "name": "minprison",
+          "display": "Min Prison",
+          "type": "int",
+          "description": "Minimum imprison points."
+        },
+        {
+          "name": "maxprison",
+          "display": "Max Prison",
+          "type": "int",
+          "description": "Maximum imprison points."
+        },
+        {
+          "name": "aigoodbless",
+          "display": "AI Good Bless",
+          "type": "int",
+          "description": "AI bless priority hint."
+        },
+        {
+          "name": "disbless",
+          "display": "Dis Bless",
+          "type": "string",
+          "description": "Disabled bless effect."
+        }
+      ]
+    },
+    {
+      "id": "ai_hints",
+      "displayName": "AI HINTS",
+      "description": "AI behavior configuration",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "aiholdgod",
+          "display": "AI Hold God",
+          "type": "flag",
+          "description": "AI keeps god in capital."
+        },
+        {
+          "name": "aiawake",
+          "display": "AI Awake",
+          "type": "int",
+          "description": "AI preference for awake god."
+        },
+        {
+          "name": "aimusthavemag",
+          "display": "AI Must Have Magic",
+          "type": "int",
+          "description": "AI required magic paths."
+        },
+        {
+          "name": "aicheapholy",
+          "display": "AI Cheap Holy",
+          "type": "flag",
+          "description": "AI prefers cheap holy units."
+        },
+        {
+          "name": "aiholyranged",
+          "display": "AI Holy Ranged",
+          "type": "flag",
+          "description": "AI prefers holy ranged units."
+        },
+        {
+          "name": "aiheavyrec",
+          "display": "AI Heavy Rec",
+          "type": "int",
+          "description": "AI heavy recruitment priority."
+        },
+        {
+          "name": "aimagerec",
+          "display": "AI Mage Rec",
+          "type": "int",
+          "description": "AI mage recruitment priority."
+        },
+        {
+          "name": "aifirenation",
+          "display": "AI Fire Nation",
+          "type": "flag",
+          "description": "AI fire magic preference.",
+          "color": "#322D2A",
+          "borderColor": "#6B4030"
+        },
+        {
+          "name": "aiairnation",
+          "display": "AI Air Nation",
+          "type": "flag",
+          "description": "AI air magic preference.",
+          "color": "#32302A",
+          "borderColor": "#5A5540"
+        },
+        {
+          "name": "aiwaternation",
+          "display": "AI Water Nation",
+          "type": "flag",
+          "description": "AI water magic preference.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "aiearthnation",
+          "display": "AI Earth Nation",
+          "type": "flag",
+          "description": "AI earth magic preference.",
+          "color": "#32302A",
+          "borderColor": "#605040"
+        },
+        {
+          "name": "aiastralnation",
+          "display": "AI Astral Nation",
+          "type": "flag",
+          "description": "AI astral magic preference.",
+          "color": "#302A32",
+          "borderColor": "#605060"
+        },
+        {
+          "name": "aideathnation",
+          "display": "AI Death Nation",
+          "type": "flag",
+          "description": "AI death magic preference.",
+          "color": "#302A2A",
+          "borderColor": "#504040"
+        },
+        {
+          "name": "ainaturenation",
+          "display": "AI Nature Nation",
+          "type": "flag",
+          "description": "AI nature magic preference.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "aibloodnation",
+          "display": "AI Blood Nation",
+          "type": "flag",
+          "description": "AI blood magic preference.",
+          "color": "#322A2A",
+          "borderColor": "#6A3030"
+        },
+        {
+          "name": "aiglamournation",
+          "display": "AI Glamour Nation",
+          "type": "flag",
+          "description": "AI glamour magic preference.",
+          "color": "#302A30",
+          "borderColor": "#605050"
+        },
+        {
+          "name": "bloodnation",
+          "display": "Blood Nation",
+          "type": "flag",
+          "description": "Nation uses blood magic.",
+          "color": "#322A2A",
+          "borderColor": "#6A3030"
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "displayName": "ADMINISTRATION",
+      "description": "Administrative commands",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "clearnation",
+          "display": "Clear Nation",
+          "type": "flag",
+          "description": "Clear all nation data."
+        },
+        {
+          "name": "disableoldnations",
+          "display": "Disable Old Nations",
+          "type": "flag",
+          "description": "Disable old era nations."
+        },
+        {
+          "name": "clear",
+          "display": "Clear",
+          "type": "flag",
+          "description": "General clear command."
+        },
+        {
+          "name": "indepflag",
+          "display": "Indep Flag",
+          "type": "string",
+          "description": "Independent flag file path."
+        }
+      ]
+    }
+  ]
+}

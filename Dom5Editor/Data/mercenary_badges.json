@@ -1,0 +1,115 @@
+{
+  "sections": [
+    {
+      "id": "identity",
+      "displayName": "IDENTITY",
+      "description": "Mercenary band identification",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "level",
+          "display": "Level",
+          "type": "int",
+          "description": "Mercenary band level (affects availability and power)."
+        },
+        {
+          "name": "bossname",
+          "display": "Boss Name",
+          "type": "string",
+          "description": "Name of the mercenary band leader."
+        },
+        {
+          "name": "eramask",
+          "display": "Era Mask",
+          "type": "int",
+          "description": "Bitmask for eras (1=EA, 2=MA, 4=LA). Combine for multiple eras."
+        }
+      ]
+    },
+    {
+      "id": "units",
+      "displayName": "UNITS",
+      "description": "Mercenary band composition",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "com",
+          "display": "Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander unit for the mercenary band."
+        },
+        {
+          "name": "unit",
+          "display": "Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Troop unit type for the mercenary band."
+        },
+        {
+          "name": "nrunits",
+          "display": "Nr Units",
+          "type": "int",
+          "description": "Number of units in the mercenary band."
+        },
+        {
+          "name": "minmen",
+          "display": "Min Men",
+          "type": "int",
+          "description": "Minimum number of men required."
+        }
+      ]
+    },
+    {
+      "id": "economics",
+      "displayName": "ECONOMICS",
+      "description": "Payment and recruitment",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "minpay",
+          "display": "Min Pay",
+          "type": "int",
+          "description": "Minimum payment required to hire."
+        },
+        {
+          "name": "recrate",
+          "display": "Rec Rate",
+          "type": "int",
+          "description": "Recruitment rate (how often band becomes available)."
+        }
+      ]
+    },
+    {
+      "id": "equipment",
+      "displayName": "EQUIPMENT",
+      "description": "Equipment and experience",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "xp",
+          "display": "XP",
+          "type": "int",
+          "description": "Starting experience points for units."
+        },
+        {
+          "name": "randequip",
+          "display": "Rand Equip",
+          "type": "int",
+          "description": "Random equipment value."
+        },
+        {
+          "name": "item",
+          "display": "Item",
+          "type": "ref",
+          "refType": "item",
+          "description": "Item given to the commander."
+        }
+      ]
+    }
+  ]
+}

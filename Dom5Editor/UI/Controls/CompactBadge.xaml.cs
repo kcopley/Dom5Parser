@@ -193,5 +193,49 @@ namespace Dom5Editor.UI.Controls
         }
 
         #endregion
+
+        #region Reference Support
+
+        public static readonly DependencyProperty IsReferenceProperty =
+            DependencyProperty.Register(nameof(IsReference), typeof(bool), typeof(CompactBadge),
+                new PropertyMetadata(false));
+
+        public bool IsReference
+        {
+            get => (bool)GetValue(IsReferenceProperty);
+            set => SetValue(IsReferenceProperty, value);
+        }
+
+        public static readonly DependencyProperty ReferenceDisplayProperty =
+            DependencyProperty.Register(nameof(ReferenceDisplay), typeof(string), typeof(CompactBadge),
+                new PropertyMetadata(null));
+
+        public string ReferenceDisplay
+        {
+            get => (string)GetValue(ReferenceDisplayProperty);
+            set => SetValue(ReferenceDisplayProperty, value);
+        }
+
+        public static readonly DependencyProperty ReferenceTypeProperty =
+            DependencyProperty.Register(nameof(ReferenceType), typeof(string), typeof(CompactBadge),
+                new PropertyMetadata(null));
+
+        public string ReferenceType
+        {
+            get => (string)GetValue(ReferenceTypeProperty);
+            set => SetValue(ReferenceTypeProperty, value);
+        }
+
+        public static readonly DependencyProperty ReferenceIdProperty =
+            DependencyProperty.Register(nameof(ReferenceId), typeof(int), typeof(CompactBadge),
+                new PropertyMetadata(0));
+
+        public int ReferenceId
+        {
+            get => (int)GetValue(ReferenceIdProperty);
+            set => SetValue(ReferenceIdProperty, value);
+        }
+
+        #endregion
     }
 }

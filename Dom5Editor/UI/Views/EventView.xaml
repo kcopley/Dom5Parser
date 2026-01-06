@@ -1,0 +1,294 @@
+<UserControl x:Class="Dom5Editor.UI.Views.EventView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="700"
+             Background="{DynamicResource BackgroundMediumBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="12">
+            <!-- Header with ID and source indicator -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Event icon placeholder -->
+                    <Border Grid.Column="0" Background="{DynamicResource BackgroundDarkBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1" CornerRadius="3" Padding="8" Width="64" Height="64" Margin="0,0,12,0">
+                        <TextBlock Text="Event" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource HeaderText}" FontSize="18" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="{Binding ID, StringFormat='Event #{0}'}" Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text=" - " Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text="{Binding RarityDisplay}" Style="{DynamicResource MutedText}" FontSize="11" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border Grid.Column="2" Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="3" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SourceLabel}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Requirements Section Header -->
+            <TextBlock Text="REQUIREMENTS" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                       Margin="0,0,0,8"/>
+
+            <!-- General Requirements -->
+            <controls:PropertyGroupControl Header="General" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding GeneralRequirementsBadges}"
+                        AvailableItems="{Binding AvailableGeneralRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveGeneralRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddGeneralRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Nation Requirements -->
+            <controls:PropertyGroupControl Header="Nation" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding NationRequirementsBadges}"
+                        AvailableItems="{Binding AvailableNationRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveNationRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddNationRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Location Requirements -->
+            <controls:PropertyGroupControl Header="Location" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding LocationRequirementsBadges}"
+                        AvailableItems="{Binding AvailableLocationRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveLocationRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddLocationRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Province Requirements -->
+            <controls:PropertyGroupControl Header="Province" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ProvinceRequirementsBadges}"
+                        AvailableItems="{Binding AvailableProvinceRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveProvinceRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddProvinceRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Site Requirements -->
+            <controls:PropertyGroupControl Header="Sites" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding SiteRequirementsBadges}"
+                        AvailableItems="{Binding AvailableSiteRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveSiteRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddSiteRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Dominion Requirements -->
+            <controls:PropertyGroupControl Header="Dominion" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding DominionRequirementsBadges}"
+                        AvailableItems="{Binding AvailableDominionRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveDominionRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddDominionRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Path Requirements -->
+            <controls:PropertyGroupControl Header="Magic Paths" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding PathRequirementsBadges}"
+                        AvailableItems="{Binding AvailablePathRequirementsBadges}"
+                        RemoveCommand="{Binding RemovePathRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddPathRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Commander Requirements -->
+            <controls:PropertyGroupControl Header="Commander/Unit" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding CommanderRequirementsBadges}"
+                        AvailableItems="{Binding AvailableCommanderRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveCommanderRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddCommanderRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Target Requirements -->
+            <controls:PropertyGroupControl Header="Target" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding TargetRequirementsBadges}"
+                        AvailableItems="{Binding AvailableTargetRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveTargetRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddTargetRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Code Requirements -->
+            <controls:PropertyGroupControl Header="Event Codes" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding CodeRequirementsBadges}"
+                        AvailableItems="{Binding AvailableCodeRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveCodeRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddCodeRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Enchantment Requirements -->
+            <controls:PropertyGroupControl Header="Enchantments" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding EnchantmentRequirementsBadges}"
+                        AvailableItems="{Binding AvailableEnchantmentRequirementsBadges}"
+                        RemoveCommand="{Binding RemoveEnchantmentRequirementsBadgeCommand}"
+                        AddCommand="{Binding AddEnchantmentRequirementsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Effects Section Header -->
+            <TextBlock Text="EFFECTS" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                       Margin="0,16,0,8"/>
+
+            <!-- Message -->
+            <controls:PropertyGroupControl Header="Message" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding MessageBadges}"
+                        AvailableItems="{Binding AvailableMessageBadges}"
+                        RemoveCommand="{Binding RemoveMessageBadgeCommand}"
+                        AddCommand="{Binding AddMessageBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Resource Effects -->
+            <controls:PropertyGroupControl Header="Resources" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ResourceEffectsBadges}"
+                        AvailableItems="{Binding AvailableResourceEffectsBadges}"
+                        RemoveCommand="{Binding RemoveResourceEffectsBadgeCommand}"
+                        AddCommand="{Binding AddResourceEffectsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Province Effects -->
+            <controls:PropertyGroupControl Header="Province Effects" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ProvinceEffectsBadges}"
+                        AvailableItems="{Binding AvailableProvinceEffectsBadges}"
+                        RemoveCommand="{Binding RemoveProvinceEffectsBadgeCommand}"
+                        AddCommand="{Binding AddProvinceEffectsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Scale Effects -->
+            <controls:PropertyGroupControl Header="Scale Effects" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ScaleEffectsBadges}"
+                        AvailableItems="{Binding AvailableScaleEffectsBadges}"
+                        RemoveCommand="{Binding RemoveScaleEffectsBadgeCommand}"
+                        AddCommand="{Binding AddScaleEffectsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Unit Spawn -->
+            <controls:PropertyGroupControl Header="Unit Spawn" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding UnitSpawnBadges}"
+                        AvailableItems="{Binding AvailableUnitSpawnBadges}"
+                        RemoveCommand="{Binding RemoveUnitSpawnBadgeCommand}"
+                        AddCommand="{Binding AddUnitSpawnBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Unit Effects -->
+            <controls:PropertyGroupControl Header="Unit Effects" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding UnitEffectsBadges}"
+                        AvailableItems="{Binding AvailableUnitEffectsBadges}"
+                        RemoveCommand="{Binding RemoveUnitEffectsBadgeCommand}"
+                        AddCommand="{Binding AddUnitEffectsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Path Boost -->
+            <controls:PropertyGroupControl Header="Path Boosts" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding PathBoostBadges}"
+                        AvailableItems="{Binding AvailablePathBoostBadges}"
+                        RemoveCommand="{Binding RemovePathBoostBadgeCommand}"
+                        AddCommand="{Binding AddPathBoostBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- World Effects -->
+            <controls:PropertyGroupControl Header="World Effects" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding WorldEffectsBadges}"
+                        AvailableItems="{Binding AvailableWorldEffectsBadges}"
+                        RemoveCommand="{Binding RemoveWorldEffectsBadgeCommand}"
+                        AddCommand="{Binding AddWorldEffectsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Event Control -->
+            <controls:PropertyGroupControl Header="Event Control" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding EventControlBadges}"
+                        AvailableItems="{Binding AvailableEventControlBadges}"
+                        RemoveCommand="{Binding RemoveEventControlBadgeCommand}"
+                        AddCommand="{Binding AddEventControlBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

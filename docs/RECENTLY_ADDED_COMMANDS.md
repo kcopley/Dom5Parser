@@ -45,6 +45,28 @@ These commands are used in mods like DomEnhanced2_13.dm but are not yet implemen
 - [ ] Verify #incunrest against mod manual
 - [ ] Investigate Dom6 blessing system (#selectbless, #path1)
 
+## Spell Entity Commands Added (2026-01-06)
+
+Added missing spell commands to Spell.cs property map:
+
+| Command | Property Type | Notes |
+|---------|--------------|-------|
+| #dispimmune | IntProperty | Enchantment dispel immunity (0-2) |
+| #napbreakrit | IntProperty | NAP break ritual flag |
+| #sumhealaffs | IntProperty | Afflictions healed on summon |
+| #localglobal | IntProperty | Localized global enchantment (0-1) |
+| #worldvisible | IntProperty | Enchantment visible worldwide (0-1) |
+| #globallook | IntProperty | Global visual appearance (1-9) |
+| #speedmult | IntProperty | Speed multiplier (1-3) |
+
+Bug fix:
+| Fix | Description |
+|-----|-------------|
+| #nextingeo type | Changed from SpellRef to BitmaskProperty (it's a terrain mask, not spell ref) |
+
+Verification completed: 63 spell commands in spell_badges.json match Spell.cs types exactly.
+
 ## Date Added
 
 2026-01-03 - During Phase 2 testing of vanilla.dm and DomEnhanced2_13.dm loading
+2026-01-06 - Spell entity command verification and additions

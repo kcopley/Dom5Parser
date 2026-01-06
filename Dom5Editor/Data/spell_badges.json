@@ -1,0 +1,418 @@
+{
+  "sections": [
+    {
+      "id": "properties",
+      "displayName": "PROPERTIES",
+      "description": "All spell properties and effects",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "range",
+          "display": "Range",
+          "type": "int",
+          "description": "Sets the battlefield range for this spell."
+        },
+        {
+          "name": "provrange",
+          "display": "Prov Range",
+          "type": "int",
+          "description": "Sets the range of a ritual in provinces."
+        },
+        {
+          "name": "precision",
+          "display": "Precision",
+          "type": "int",
+          "description": "Set the precision for this spell."
+        },
+        {
+          "name": "prec",
+          "display": "Prec",
+          "type": "int",
+          "description": "Alternative precision setting."
+        },
+        {
+          "name": "aoe",
+          "display": "AOE",
+          "type": "int",
+          "description": "Area of effect in squares."
+        },
+        {
+          "name": "aoeinspector",
+          "display": "AOE Inspector",
+          "type": "int",
+          "description": "AOE value shown in inspector."
+        },
+        {
+          "name": "damage",
+          "display": "Damage",
+          "type": "int",
+          "description": "Set the damage for this spell."
+        },
+        {
+          "name": "damagemon",
+          "display": "Damage Mon",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Set a spell's damage to a monster (for summons).",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "effect",
+          "display": "Effect",
+          "type": "int",
+          "description": "Set the effect of the spell."
+        },
+        {
+          "name": "nreff",
+          "display": "Nr Effects",
+          "type": "int",
+          "description": "Sets the number of effects for this spell."
+        },
+        {
+          "name": "casttime",
+          "display": "Cast Time",
+          "type": "int",
+          "description": "Set the casting time. 100 is standard."
+        },
+        {
+          "name": "speedmult",
+          "display": "Speed Mult",
+          "type": "int",
+          "description": "Speed multiplier for the spell (1-3)."
+        },
+        {
+          "name": "maxbounces",
+          "display": "Max Bounces",
+          "type": "int",
+          "description": "Maximum bounces for chain lightning type effects."
+        },
+        {
+          "name": "nextspell",
+          "display": "Next Spell",
+          "type": "ref",
+          "refType": "spell",
+          "description": "Chain to another spell effect.",
+          "color": "#302A32",
+          "borderColor": "#604080"
+        },
+        {
+          "name": "nextingeo",
+          "display": "Next In Geo",
+          "type": "bitmask",
+          "description": "Chain spell takes effect if cast in this terrain (bitmask)."
+        },
+        {
+          "name": "flightspr",
+          "display": "Flight Sprite",
+          "type": "int",
+          "description": "Sprite or particle effect for spell flight."
+        },
+        {
+          "name": "explspr",
+          "display": "Explosion Sprite",
+          "type": "int",
+          "description": "Sprite or particle effect for explosion."
+        },
+        {
+          "name": "sound",
+          "display": "Sound",
+          "type": "int",
+          "description": "Sound effect for the spell."
+        },
+        {
+          "name": "strikesound",
+          "display": "Strike Sound",
+          "type": "int",
+          "description": "Sound when spell strikes target."
+        },
+        {
+          "name": "sample",
+          "display": "Sample",
+          "type": "string",
+          "description": "Custom sound sample file."
+        },
+        {
+          "name": "spec",
+          "display": "Special",
+          "type": "bitmask",
+          "description": "Special spell flags bitmask."
+        },
+        {
+          "name": "farsumcom",
+          "display": "Far Sum Com",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander for farsummoned units.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "restricted",
+          "display": "Restricted",
+          "type": "ref",
+          "refType": "nation",
+          "description": "Spell only available for this nation.",
+          "color": "#322A2A",
+          "borderColor": "#605050"
+        },
+        {
+          "name": "notfornation",
+          "display": "Not For Nation",
+          "type": "ref",
+          "refType": "nation",
+          "description": "Spell cannot be used by this nation.",
+          "color": "#322A2A",
+          "borderColor": "#604040"
+        },
+        {
+          "name": "onlymnr",
+          "display": "Only Monster",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Only this monster can cast this spell.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "notmnr",
+          "display": "Not Monster",
+          "type": "ref",
+          "refType": "monster",
+          "description": "This monster cannot cast this spell.",
+          "color": "#2A2A32",
+          "borderColor": "#504050"
+        },
+        {
+          "name": "onlyatsite",
+          "display": "Only At Site",
+          "type": "ref",
+          "refType": "site",
+          "description": "Spell can only be cast at this site.",
+          "color": "#2A322A",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "onlysitedst",
+          "display": "Only Site Dst",
+          "type": "ref",
+          "refType": "site",
+          "description": "Spell can only target this site.",
+          "color": "#2A322A",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "onlygeosrc",
+          "display": "Only Geo Src",
+          "type": "bitmask",
+          "description": "Spell can only be cast from these terrains."
+        },
+        {
+          "name": "nogeosrc",
+          "display": "No Geo Src",
+          "type": "bitmask",
+          "description": "Spell cannot be cast from these terrains."
+        },
+        {
+          "name": "onlygeodst",
+          "display": "Only Geo Dst",
+          "type": "bitmask",
+          "description": "Spell can only target these terrains."
+        },
+        {
+          "name": "nogeodst",
+          "display": "No Geo Dst",
+          "type": "bitmask",
+          "description": "Spell cannot target these terrains."
+        },
+        {
+          "name": "onlycoastsrc",
+          "display": "Only Coast Src",
+          "type": "int",
+          "description": "Spell must be cast from coast (0-1)."
+        },
+        {
+          "name": "onlyfriendlydst",
+          "display": "Only Friendly",
+          "type": "int",
+          "description": "Target restriction: 0=any, 1=friendly only, 2=own only."
+        },
+        {
+          "name": "onlyowndst",
+          "display": "Only Own Dst",
+          "type": "int",
+          "description": "Spell can only target own provinces (0-1)."
+        },
+        {
+          "name": "nowatertrace",
+          "display": "No Water Trace",
+          "type": "int",
+          "description": "Ritual range cannot trace through water."
+        },
+        {
+          "name": "nolandtrace",
+          "display": "No Land Trace",
+          "type": "int",
+          "description": "Ritual range cannot trace over land."
+        },
+        {
+          "name": "walkable",
+          "display": "Walkable",
+          "type": "int",
+          "description": "Range must be walkable (0-1)."
+        },
+        {
+          "name": "godpathspell",
+          "display": "God Path Spell",
+          "type": "int",
+          "description": "Divine spell for God's best path (-1 to 7)."
+        },
+        {
+          "name": "friendlyench",
+          "display": "Friendly Ench",
+          "type": "int",
+          "description": "Enchantment is friendly (0-1)."
+        },
+        {
+          "name": "hiddenench",
+          "display": "Hidden Ench",
+          "type": "int",
+          "description": "Enchantment not visible during battle (0-1)."
+        },
+        {
+          "name": "nocastmindless",
+          "display": "No Mindless",
+          "type": "int",
+          "description": "Mindless units cannot cast this spell."
+        },
+        {
+          "name": "spellreqfly",
+          "display": "Requires Fly",
+          "type": "int",
+          "description": "Only flying units can cast this ritual."
+        },
+        {
+          "name": "polygetmagic",
+          "display": "Poly Get Magic",
+          "type": "int",
+          "description": "Polymorphed unit gets target's magic."
+        },
+        {
+          "name": "reqspellsinger",
+          "display": "Req Spellsinger",
+          "type": "flag",
+          "description": "Requires Spellsinger ability to cast."
+        },
+        {
+          "name": "reqtaskmaster",
+          "display": "Req Taskmaster",
+          "type": "flag",
+          "description": "Only units with Task Master can cast."
+        },
+        {
+          "name": "reqseduce",
+          "display": "Req Seduce",
+          "type": "flag",
+          "description": "Requires Seduce ability to cast."
+        },
+        {
+          "name": "reqsun",
+          "display": "Req Sun",
+          "type": "int",
+          "description": "Cannot be cast when no sun present."
+        },
+        {
+          "name": "reqplant",
+          "display": "Req Plant",
+          "type": "flag",
+          "description": "Requires plant/tree to cast."
+        },
+        {
+          "name": "reqnoplant",
+          "display": "Req No Plant",
+          "type": "flag",
+          "description": "Trees and plants cannot cast."
+        },
+        {
+          "name": "sethome",
+          "display": "Set Home",
+          "type": "flag",
+          "description": "Sets caster's home province to current."
+        },
+        {
+          "name": "dispimmune",
+          "display": "Dispel Immune",
+          "type": "int",
+          "description": "Enchantment immune to dispels (0-2)."
+        },
+        {
+          "name": "portent",
+          "display": "Portent",
+          "type": "int",
+          "description": "Portent message value."
+        },
+        {
+          "name": "localglobal",
+          "display": "Local Global",
+          "type": "int",
+          "description": "Localized global enchantment (0-1)."
+        },
+        {
+          "name": "worldvisible",
+          "display": "World Visible",
+          "type": "int",
+          "description": "Enchantment visible worldwide (0-1)."
+        },
+        {
+          "name": "globallook",
+          "display": "Global Look",
+          "type": "int",
+          "description": "Visual appearance of global (1-9)."
+        },
+        {
+          "name": "napbreakrit",
+          "display": "NAP Break Rit",
+          "type": "int",
+          "description": "Ritual breaks non-aggression pact."
+        },
+        {
+          "name": "sumhealaffs",
+          "display": "Sum Heal Affs",
+          "type": "int",
+          "description": "Number of afflictions healed by summoning."
+        },
+        {
+          "name": "ainocast",
+          "display": "AI No Cast",
+          "type": "int",
+          "description": "AI will never cast this spell (0-1)."
+        },
+        {
+          "name": "aibadlvl",
+          "display": "AI Bad Level",
+          "type": "int",
+          "description": "AI rating of how bad this spell is."
+        },
+        {
+          "name": "aispellmod",
+          "display": "AI Spell Mod",
+          "type": "int",
+          "description": "AI spell preference modifier."
+        },
+        {
+          "name": "fatiguecostinspector",
+          "display": "Fat Cost Inspector",
+          "type": "int",
+          "description": "Fatigue cost shown in inspector."
+        },
+        {
+          "name": "clear",
+          "display": "Clear",
+          "type": "flag",
+          "description": "Clears the current spell."
+        }
+      ]
+    }
+  ]
+}

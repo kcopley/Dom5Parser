@@ -1,0 +1,255 @@
+<UserControl x:Class="Dom5Editor.UI.Views.NationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="600"
+             Background="{DynamicResource BackgroundMediumBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="12">
+            <!-- Header with ID, flag placeholder, and source indicator -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Flag placeholder -->
+                    <Border Grid.Column="0" Background="{DynamicResource BackgroundDarkBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1" CornerRadius="3" Padding="2" Width="64" Height="64" Margin="0,0,12,0">
+                        <Grid>
+                            <!-- Flag image when available -->
+                            <Image Source="{Binding FlagImage}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Visibility="{Binding FlagImage, Converter={StaticResource NullToVisibilityConverter}}"/>
+                            <!-- Placeholder when no flag -->
+                            <TextBlock Text="Flag" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding FlagImage, Converter={StaticResource NullToVisibilityInverseConverter}}"/>
+                        </Grid>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource HeaderText}" FontSize="18" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <TextBlock Text="{Binding Epithet}" Style="{DynamicResource MutedText}" FontSize="12" FontStyle="Italic"
+                                       Visibility="{Binding Epithet, Converter={StaticResource NullToVisibilityConverter}}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="{Binding ID, StringFormat='Nation #{0}'}" Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text=" - " Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text="{Binding EraDisplay}" Style="{DynamicResource MutedText}" FontSize="11" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border Grid.Column="2" Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="3" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SourceLabel}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Data Availability Warning Banner for Vanilla Nations -->
+            <Border Background="#3D2F1F" BorderBrush="#6B4030" BorderThickness="1" CornerRadius="4" Padding="10,8" Margin="0,0,0,12"
+                    Visibility="{Binding ShowDataWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="!" FontSize="16" FontWeight="Bold" Foreground="#FFA000" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding DataAvailabilityMessage}" Foreground="#FFD080" FontSize="11" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Basic Info Section -->
+            <controls:PropertyGroupControl Header="Basic Info" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,8"/>
+                        <controls:StringPropertyEditor Label="Epithet" Value="{Binding Epithet, Mode=TwoWay}"
+                                                        IsModified="{Binding IsEpithetModified}" IsSessionEdit="{Binding IsEpithetSessionEdit}" Margin="0,0,0,8"/>
+                        <controls:IntPropertyEditor Label="Era (1=EA, 2=MA, 3=LA)" Value="{Binding Era, Mode=TwoWay}"
+                                                    IsModified="{Binding IsEraModified}" IsSessionEdit="{Binding IsEraSessionEdit}" Margin="0,0,0,8"/>
+
+                        <!-- Identity Badges (flag, templepic, etc.) -->
+                        <controls:BadgeWrapPanel
+                            ItemsSource="{Binding IdentityBadges}"
+                            AvailableItems="{Binding AvailableIdentityBadges}"
+                            RemoveCommand="{Binding RemoveIdentityBadgeCommand}"
+                            AddCommand="{Binding AddIdentityBadgeCommand}"
+                            ShowAddButton="True"/>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Fort Recruitment -->
+            <controls:PropertyGroupControl Header="Fort Recruitment" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding RecruitmentBadges}"
+                        AvailableItems="{Binding AvailableRecruitmentBadges}"
+                        RemoveCommand="{Binding RemoveRecruitmentBadgeCommand}"
+                        AddCommand="{Binding AddRecruitmentBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Terrain Recruitment -->
+            <controls:PropertyGroupControl Header="Terrain Recruitment" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding TerrainRecruitmentBadges}"
+                        AvailableItems="{Binding AvailableTerrainRecruitmentBadges}"
+                        RemoveCommand="{Binding RemoveTerrainRecruitmentBadgeCommand}"
+                        AddCommand="{Binding AddTerrainRecruitmentBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Coastal & Underwater -->
+            <controls:PropertyGroupControl Header="Coastal &amp; Underwater" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding CoastalUwBadges}"
+                        AvailableItems="{Binding AvailableCoastalUwBadges}"
+                        RemoveCommand="{Binding RemoveCoastalUwBadgeCommand}"
+                        AddCommand="{Binding AddCoastalUwBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Heroes -->
+            <controls:PropertyGroupControl Header="Heroes" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding HeroesBadges}"
+                        AvailableItems="{Binding AvailableHeroesBadges}"
+                        RemoveCommand="{Binding RemoveHeroesBadgeCommand}"
+                        AddCommand="{Binding AddHeroesBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Starting Units -->
+            <controls:PropertyGroupControl Header="Starting Units &amp; Sites" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding StartingBadges}"
+                        AvailableItems="{Binding AvailableStartingBadges}"
+                        RemoveCommand="{Binding RemoveStartingBadgeCommand}"
+                        AddCommand="{Binding AddStartingBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Province Defense -->
+            <controls:PropertyGroupControl Header="Province Defense" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ProvinceDefenseBadges}"
+                        AvailableItems="{Binding AvailableProvinceDefenseBadges}"
+                        RemoveCommand="{Binding RemoveProvinceDefenseBadgeCommand}"
+                        AddCommand="{Binding AddProvinceDefenseBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- UW Defense -->
+            <controls:PropertyGroupControl Header="Underwater Defense" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding UwDefenseBadges}"
+                        AvailableItems="{Binding AvailableUwDefenseBadges}"
+                        RemoveCommand="{Binding RemoveUwDefenseBadgeCommand}"
+                        AddCommand="{Binding AddUwDefenseBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Pretenders -->
+            <controls:PropertyGroupControl Header="Pretenders" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding PretendersBadges}"
+                        AvailableItems="{Binding AvailablePretendersBadges}"
+                        RemoveCommand="{Binding RemovePretendersBadgeCommand}"
+                        AddCommand="{Binding AddPretendersBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Buildings -->
+            <controls:PropertyGroupControl Header="Buildings" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding BuildingsBadges}"
+                        AvailableItems="{Binding AvailableBuildingsBadges}"
+                        RemoveCommand="{Binding RemoveBuildingsBadgeCommand}"
+                        AddCommand="{Binding AddBuildingsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Scales & Terrain -->
+            <controls:PropertyGroupControl Header="Scales &amp; Terrain" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ScalesBadges}"
+                        AvailableItems="{Binding AvailableScalesBadges}"
+                        RemoveCommand="{Binding RemoveScalesBadgeCommand}"
+                        AddCommand="{Binding AddScalesBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Special Mechanics -->
+            <controls:PropertyGroupControl Header="Special Mechanics" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding SpecialMechanicsBadges}"
+                        AvailableItems="{Binding AvailableSpecialMechanicsBadges}"
+                        RemoveCommand="{Binding RemoveSpecialMechanicsBadgeCommand}"
+                        AddCommand="{Binding AddSpecialMechanicsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Bless Bonuses -->
+            <controls:PropertyGroupControl Header="Bless Bonuses" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding BlessBonusesBadges}"
+                        AvailableItems="{Binding AvailableBlessBonusesBadges}"
+                        RemoveCommand="{Binding RemoveBlessBonusesBadgeCommand}"
+                        AddCommand="{Binding AddBlessBonusesBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- AI Hints -->
+            <controls:PropertyGroupControl Header="AI Hints" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding AiHintsBadges}"
+                        AvailableItems="{Binding AvailableAiHintsBadges}"
+                        RemoveCommand="{Binding RemoveAiHintsBadgeCommand}"
+                        AddCommand="{Binding AddAiHintsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Administration -->
+            <controls:PropertyGroupControl Header="Administration" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding AdminBadges}"
+                        AvailableItems="{Binding AvailableAdminBadges}"
+                        RemoveCommand="{Binding RemoveAdminBadgeCommand}"
+                        AddCommand="{Binding AddAdminBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

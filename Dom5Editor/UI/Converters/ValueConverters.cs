@@ -175,6 +175,26 @@ namespace Dom5Editor.UI.Converters
     }
 
     /// <summary>
+    /// Converts positive int to Visible, zero or null to Collapsed.
+    /// </summary>
+    public class PositiveIntToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is int i)
+            {
+                return i > 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
     /// Converts a path letter (F, A, W, etc.) to a gem icon path.
     /// </summary>
     public class PathLetterToGemIconConverter : IValueConverter

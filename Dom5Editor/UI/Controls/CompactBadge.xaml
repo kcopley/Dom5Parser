@@ -50,6 +50,17 @@
                      Visibility="{Binding HasValue, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
                      behaviors:DebouncedTextBoxBehavior.IsEnabled="True"/>
 
+            <!-- Reference display (for ref badges) - only visible when IsReference is true -->
+            <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
+                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Visibility="{Binding IsReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <TextBlock Text="{Binding ReferenceDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       FontSize="9" VerticalAlignment="Center" FontWeight="SemiBold"
+                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Visibility="{Binding IsReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
+                       Cursor="Hand"/>
+
             <!-- Inherited badge -->
             <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"
                     Padding="2,0" Margin="3,0,0,0" VerticalAlignment="Center"

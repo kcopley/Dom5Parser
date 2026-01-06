@@ -2708,6 +2708,440 @@ namespace Dom5Editor.UI.Views
         }
 
         public Spell Spell => (Spell)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from spell_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "spell";
+
+        // ========================================
+        // Copy Spell Support (#copyspell)
+        // ========================================
+
+        /// <summary>
+        /// Gets the CopySpell reference display text.
+        /// </summary>
+        public string CopySpellDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<CopySpellRef>(Command.COPYSPELL, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopySpell
+        {
+            get
+            {
+                var result = _entity.TryGet<CopySpellRef>(Command.COPYSPELL, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        // ========================================
+        // Core Stats (School, Research Level, Path)
+        // ========================================
+
+        /// <summary>
+        /// Magic school: 0=Conj, 1=Alt, 2=Evo, 3=Const, 4=Ench, 5=Thau, 6=Blood, -1=not researchable
+        /// </summary>
+        public int? School
+        {
+            get => GetIntProperty(Command.SCHOOL);
+            set => SetIntProperty(Command.SCHOOL, value);
+        }
+        public bool IsSchoolModified => IsIntPropertyModifiedFromVanilla(Command.SCHOOL);
+        public bool IsSchoolSessionEdit => IsPropertyEditedInSession(Command.SCHOOL);
+        public bool IsSchoolInherited => IsIntPropertyInherited(Command.SCHOOL);
+
+        /// <summary>
+        /// Gets the school display name.
+        /// </summary>
+        public string SchoolDisplay
+        {
+            get
+            {
+                return School switch
+                {
+                    -1 => "Not Researchable",
+                    0 => "Conjuration",
+                    1 => "Alteration",
+                    2 => "Evocation",
+                    3 => "Construction",
+                    4 => "Enchantment",
+                    5 => "Thaumaturgy",
+                    6 => "Blood",
+                    _ => School?.ToString() ?? "-"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Research level required to learn this spell.
+        /// </summary>
+        public int? ResearchLevel
+        {
+            get => GetIntProperty(Command.RESEARCHLEVEL);
+            set => SetIntProperty(Command.RESEARCHLEVEL, value);
+        }
+        public bool IsResearchLevelModified => IsIntPropertyModifiedFromVanilla(Command.RESEARCHLEVEL);
+        public bool IsResearchLevelSessionEdit => IsPropertyEditedInSession(Command.RESEARCHLEVEL);
+        public bool IsResearchLevelInherited => IsIntPropertyInherited(Command.RESEARCHLEVEL);
+
+        // ========================================
+        // Path Requirements (IntIntProperty: path slot, path type)
+        // ========================================
+
+        /// <summary>
+        /// Gets the primary path requirement display.
+        /// #path takes two parameters: requirement slot (0 or 1) and path number.
+        /// </summary>
+        public string PrimaryPathDisplay
+        {
+            get
+            {
+                var allPaths = Spell.Properties.Where(p => p.Command == Command.PATH)
+                    .Cast<IntIntProperty>().ToList();
+                var primaryPath = allPaths.FirstOrDefault(p => p.Value1 == 0);
+                if (primaryPath != null)
+                {
+                    return GetPathDisplayName(primaryPath.Value2);
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the primary path level requirement.
+        /// #pathlevel takes two parameters: requirement slot (0 or 1) and level.
+        /// </summary>
+        public int? PrimaryPathLevel
+        {
+            get
+            {
+                var allLevels = Spell.Properties.Where(p => p.Command == Command.PATHLEVEL)
+                    .Cast<IntIntProperty>().ToList();
+                var primaryLevel = allLevels.FirstOrDefault(p => p.Value1 == 0);
+                return primaryLevel?.Value2;
+            }
+        }
+
+        /// <summary>
+        /// Gets the secondary path requirement display.
+        /// </summary>
+        public string SecondaryPathDisplay
+        {
+            get
+            {
+                var allPaths = Spell.Properties.Where(p => p.Command == Command.PATH)
+                    .Cast<IntIntProperty>().ToList();
+                var secondaryPath = allPaths.FirstOrDefault(p => p.Value1 == 1);
+                if (secondaryPath != null)
+                {
+                    return GetPathDisplayName(secondaryPath.Value2);
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the secondary path level requirement.
+        /// </summary>
+        public int? SecondaryPathLevel
+        {
+            get
+            {
+                var allLevels = Spell.Properties.Where(p => p.Command == Command.PATHLEVEL)
+                    .Cast<IntIntProperty>().ToList();
+                var secondaryLevel = allLevels.FirstOrDefault(p => p.Value1 == 1);
+                return secondaryLevel?.Value2;
+            }
+        }
+
+        /// <summary>
+        /// Whether the spell has path requirements.
+        /// </summary>
+        public bool HasPathRequirements => PrimaryPathDisplay != null || SecondaryPathDisplay != null;
+
+        /// <summary>
+        /// Gets the path letter for icon lookup (F, A, W, E, S, D, N, G, B).
+        /// </summary>
+        public string PrimaryPathLetter
+        {
+            get
+            {
+                var allPaths = Spell.Properties.Where(p => p.Command == Command.PATH)
+                    .Cast<IntIntProperty>().ToList();
+                var primaryPath = allPaths.FirstOrDefault(p => p.Value1 == 0);
+                if (primaryPath != null)
+                {
+                    return GetPathLetter(primaryPath.Value2);
+                }
+                return null;
+            }
+        }
+
+        public string SecondaryPathLetter
+        {
+            get
+            {
+                var allPaths = Spell.Properties.Where(p => p.Command == Command.PATH)
+                    .Cast<IntIntProperty>().ToList();
+                var secondaryPath = allPaths.FirstOrDefault(p => p.Value1 == 1);
+                if (secondaryPath != null)
+                {
+                    return GetPathLetter(secondaryPath.Value2);
+                }
+                return null;
+            }
+        }
+
+        private static string GetPathDisplayName(int pathId)
+        {
+            return pathId switch
+            {
+                0 => "Fire",
+                1 => "Air",
+                2 => "Water",
+                3 => "Earth",
+                4 => "Astral",
+                5 => "Death",
+                6 => "Nature",
+                7 => "Blood",
+                8 => "Holy",
+                _ => pathId.ToString()
+            };
+        }
+
+        private static string GetPathLetter(int pathId)
+        {
+            return pathId switch
+            {
+                0 => "F",
+                1 => "A",
+                2 => "W",
+                3 => "E",
+                4 => "S",
+                5 => "D",
+                6 => "N",
+                7 => "B",
+                8 => "H",
+                _ => null
+            };
+        }
+
+        // ========================================
+        // Fatigue/Gem Cost
+        // ========================================
+
+        /// <summary>
+        /// Fatigue cost for this spell.
+        /// Encoded as gems*1000 + fatigue (e.g., 2050 = 2 gems + 50 fatigue).
+        /// </summary>
+        public int? FatigueCost
+        {
+            get => GetIntProperty(Command.FATIGUECOST);
+            set => SetIntProperty(Command.FATIGUECOST, value);
+        }
+        public bool IsFatigueCostModified => IsIntPropertyModifiedFromVanilla(Command.FATIGUECOST);
+        public bool IsFatigueCostSessionEdit => IsPropertyEditedInSession(Command.FATIGUECOST);
+        public bool IsFatigueCostInherited => IsIntPropertyInherited(Command.FATIGUECOST);
+
+        /// <summary>
+        /// Gets the decoded gem cost (fatigueCost / 1000).
+        /// </summary>
+        public int GemCost => (FatigueCost ?? 0) / 1000;
+
+        /// <summary>
+        /// Gets the decoded fatigue only (fatigueCost % 1000).
+        /// </summary>
+        public int FatigueOnly => (FatigueCost ?? 0) % 1000;
+
+        /// <summary>
+        /// Gets a display string for the fatigue cost.
+        /// </summary>
+        public string FatigueCostDisplay
+        {
+            get
+            {
+                var cost = FatigueCost ?? 0;
+                if (cost == 0) return "-";
+                var gems = cost / 1000;
+                var fatigue = cost % 1000;
+                if (gems > 0 && fatigue > 0)
+                    return $"{gems}G + {fatigue}F";
+                if (gems > 0)
+                    return $"{gems}G";
+                return $"{fatigue}F";
+            }
+        }
+
+        // ========================================
+        // Battle Stats
+        // ========================================
+
+        public int? Range
+        {
+            get => GetIntProperty(Command.RANGE);
+            set => SetIntProperty(Command.RANGE, value);
+        }
+        public bool IsRangeModified => IsIntPropertyModifiedFromVanilla(Command.RANGE);
+        public bool IsRangeSessionEdit => IsPropertyEditedInSession(Command.RANGE);
+        public bool IsRangeInherited => IsIntPropertyInherited(Command.RANGE);
+
+        public int? Precision
+        {
+            get => GetIntProperty(Command.PRECISION);
+            set => SetIntProperty(Command.PRECISION, value);
+        }
+        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PRECISION);
+        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PRECISION);
+        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PRECISION);
+
+        public int? AOE
+        {
+            get => GetIntProperty(Command.AOE);
+            set => SetIntProperty(Command.AOE, value);
+        }
+        public bool IsAOEModified => IsIntPropertyModifiedFromVanilla(Command.AOE);
+        public bool IsAOESessionEdit => IsPropertyEditedInSession(Command.AOE);
+        public bool IsAOEInherited => IsIntPropertyInherited(Command.AOE);
+
+        public int? Damage
+        {
+            get => GetIntProperty(Command.DAMAGE);
+            set => SetIntProperty(Command.DAMAGE, value);
+        }
+        public bool IsDamageModified => IsIntPropertyModifiedFromVanilla(Command.DAMAGE);
+        public bool IsDamageSessionEdit => IsPropertyEditedInSession(Command.DAMAGE);
+        public bool IsDamageInherited => IsIntPropertyInherited(Command.DAMAGE);
+
+        public int? Effect
+        {
+            get => GetIntProperty(Command.EFFECT);
+            set => SetIntProperty(Command.EFFECT, value);
+        }
+        public bool IsEffectModified => IsIntPropertyModifiedFromVanilla(Command.EFFECT);
+        public bool IsEffectSessionEdit => IsPropertyEditedInSession(Command.EFFECT);
+        public bool IsEffectInherited => IsIntPropertyInherited(Command.EFFECT);
+
+        public int? NrEff
+        {
+            get => GetIntProperty(Command.NREFF);
+            set => SetIntProperty(Command.NREFF, value);
+        }
+        public bool IsNrEffModified => IsIntPropertyModifiedFromVanilla(Command.NREFF);
+        public bool IsNrEffSessionEdit => IsPropertyEditedInSession(Command.NREFF);
+        public bool IsNrEffInherited => IsIntPropertyInherited(Command.NREFF);
+
+        // ========================================
+        // Next Spell Chain
+        // ========================================
+
+        /// <summary>
+        /// Gets the NextSpell reference display text.
+        /// </summary>
+        public string NextSpellDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<SpellRef>(Command.NEXTSPELL, out var prop);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        public bool HasNextSpell
+        {
+            get
+            {
+                var result = _entity.TryGet<SpellRef>(Command.NEXTSPELL, out _);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        // ========================================
+        // Badge Collections
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _propertyBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
+
+        public ObservableCollection<PropertyItem> PropertyBadges
+        {
+            get { if (_propertyBadges == null) RefreshPropertyBadges(); return _propertyBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePropertyBadges
+        {
+            get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
+        public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshPropertyBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("properties", BadgeValueChangedHandler);
+            _propertyBadges = active;
+            _availablePropertyBadges = available;
+            OnPropertyChanged(nameof(PropertyBadges));
+            OnPropertyChanged(nameof(AvailablePropertyBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged($"Is{propertyName}Inherited");
+            }
+        }
+
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.SCHOOL => "School",
+                Command.RESEARCHLEVEL => "ResearchLevel",
+                Command.FATIGUECOST => "FatigueCost",
+                Command.RANGE => "Range",
+                Command.PRECISION => "Precision",
+                Command.AOE => "AOE",
+                Command.DAMAGE => "Damage",
+                Command.EFFECT => "Effect",
+                Command.NREFF => "NrEff",
+                _ => null
+            };
+        }
     }
 
     /// <summary>
@@ -3761,6 +4195,356 @@ namespace Dom5Editor.UI.Views
         }
 
         public Site Site => (Site)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from site_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "site";
+
+        // ========================================
+        // Copy From Support (#copysite)
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets the CopySite reference ID.
+        /// </summary>
+        public int? CopySiteId
+        {
+            get
+            {
+                var result = _entity.TryGet<SiteRef>(Command.COPYSITE, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                    return prop.ID;
+                return null;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    // Remove the copysite reference
+                    _entity.RemoveProperty(Command.COPYSITE);
+                }
+                else
+                {
+                    // Set the copysite reference using the Set<T> method
+                    _entity.Set<SiteRef>(Command.COPYSITE, p => p.Parse(Command.COPYSITE, value.Value.ToString(), ""));
+                }
+                OnPropertyChanged(nameof(CopySiteId));
+                OnPropertyChanged(nameof(CopySiteName));
+            }
+        }
+
+        /// <summary>
+        /// Gets the CopySite reference name for display.
+        /// </summary>
+        public string CopySiteName
+        {
+            get
+            {
+                var result = _entity.TryGet<SiteRef>(Command.COPYSITE, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.Name ?? $"Site #{idEntity.ID}";
+                    return prop.Name ?? $"Site #{prop.ID}";
+                }
+                return null;
+            }
+        }
+
+        // ========================================
+        // Sprite Support (#look command)
+        // ========================================
+
+        public int? LookSprite
+        {
+            get => GetIntProperty(Command.LOOK);
+            set => SetIntProperty(Command.LOOK, value);
+        }
+        public bool IsLookSpriteModified => IsIntPropertyModifiedFromVanilla(Command.LOOK);
+        public bool IsLookSpriteSessionEdit => IsPropertyEditedInSession(Command.LOOK);
+
+        /// <summary>
+        /// Gets the site sprite image if available.
+        /// Sites use #look to reference a sprite number.
+        /// </summary>
+        public System.Windows.Media.ImageSource SpriteImage
+        {
+            get
+            {
+                // Site sprites would need to be loaded from game data
+                // For now, return null - can be implemented when sprite loading is added
+                return null;
+            }
+        }
+
+        // ========================================
+        // Core Stats
+        // ========================================
+
+        public int? Path
+        {
+            get => GetIntProperty(Command.PATH);
+            set => SetIntProperty(Command.PATH, value);
+        }
+        public bool IsPathModified => IsIntPropertyModifiedFromVanilla(Command.PATH);
+        public bool IsPathSessionEdit => IsPropertyEditedInSession(Command.PATH);
+        public bool IsPathInherited => IsIntPropertyInherited(Command.PATH);
+
+        /// <summary>
+        /// Gets the path display name.
+        /// </summary>
+        public string PathDisplay
+        {
+            get
+            {
+                return Path switch
+                {
+                    0 => "Fire",
+                    1 => "Air",
+                    2 => "Water",
+                    3 => "Earth",
+                    4 => "Astral",
+                    5 => "Death",
+                    6 => "Nature",
+                    7 => "Blood",
+                    8 => "Holy",
+                    _ => Path?.ToString() ?? "-"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Gets the path letter for icon lookup (F, A, W, E, S, D, N, B, H).
+        /// </summary>
+        public string PathLetter
+        {
+            get
+            {
+                return Path switch
+                {
+                    0 => "F",
+                    1 => "A",
+                    2 => "W",
+                    3 => "E",
+                    4 => "S",
+                    5 => "D",
+                    6 => "N",
+                    7 => "B",
+                    8 => "H",
+                    _ => null
+                };
+            }
+        }
+
+        public int? Level
+        {
+            get => GetIntProperty(Command.LEVEL);
+            set => SetIntProperty(Command.LEVEL, value);
+        }
+        public bool IsLevelModified => IsIntPropertyModifiedFromVanilla(Command.LEVEL);
+        public bool IsLevelSessionEdit => IsPropertyEditedInSession(Command.LEVEL);
+        public bool IsLevelInherited => IsIntPropertyInherited(Command.LEVEL);
+
+        public int? Rarity
+        {
+            get => GetIntProperty(Command.RARITY);
+            set => SetIntProperty(Command.RARITY, value);
+        }
+        public bool IsRarityModified => IsIntPropertyModifiedFromVanilla(Command.RARITY);
+        public bool IsRaritySessionEdit => IsPropertyEditedInSession(Command.RARITY);
+        public bool IsRarityInherited => IsIntPropertyInherited(Command.RARITY);
+
+        /// <summary>
+        /// Gets the rarity display name.
+        /// </summary>
+        public string RarityDisplay
+        {
+            get
+            {
+                return Rarity switch
+                {
+                    0 => "Common",
+                    1 => "Uncommon",
+                    2 => "Rare",
+                    5 => "Never Random",
+                    _ => Rarity?.ToString() ?? "-"
+                };
+            }
+        }
+
+        // ========================================
+        // Gems (IntIntProperty)
+        // ========================================
+
+        /// <summary>
+        /// Gets the gem income display text.
+        /// #gems takes two parameters: gem type and amount.
+        /// </summary>
+        public string GemsDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<IntIntProperty>(Command.GEMS, out var prop);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    var gemType = prop.Value1 switch
+                    {
+                        0 => "Fire",
+                        1 => "Air",
+                        2 => "Water",
+                        3 => "Earth",
+                        4 => "Astral",
+                        5 => "Death",
+                        6 => "Nature",
+                        7 => "Blood",
+                        _ => $"Type {prop.Value1}"
+                    };
+                    return $"{prop.Value2} {gemType}";
+                }
+                return null;
+            }
+        }
+
+        public bool HasGems
+        {
+            get
+            {
+                var result = _entity.TryGet<IntIntProperty>(Command.GEMS, out _);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        /// <summary>
+        /// Gets the gem type letter for icon lookup (F, A, W, E, S, D, N, B).
+        /// Returns null if no gems defined.
+        /// </summary>
+        public string GemLetter
+        {
+            get
+            {
+                var result = _entity.TryGet<IntIntProperty>(Command.GEMS, out var prop);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return prop.Value1 switch
+                    {
+                        0 => "F",
+                        1 => "A",
+                        2 => "W",
+                        3 => "E",
+                        4 => "S",
+                        5 => "D",
+                        6 => "N",
+                        7 => "B",
+                        _ => null
+                    };
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the gem amount.
+        /// </summary>
+        public int? GemAmount
+        {
+            get
+            {
+                var result = _entity.TryGet<IntIntProperty>(Command.GEMS, out var prop);
+                if (result == ReturnType.TRUE && prop != null)
+                    return prop.Value2;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the gem type display name (Fire, Air, etc.).
+        /// </summary>
+        public string GemPathDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<IntIntProperty>(Command.GEMS, out var prop);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return prop.Value1 switch
+                    {
+                        0 => "Fire",
+                        1 => "Air",
+                        2 => "Water",
+                        3 => "Earth",
+                        4 => "Astral",
+                        5 => "Death",
+                        6 => "Nature",
+                        7 => "Blood",
+                        _ => $"Type {prop.Value1}"
+                    };
+                }
+                return null;
+            }
+        }
+
+        // ========================================
+        // Single Unified Badge Collection
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _propertyBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
+
+        public ObservableCollection<PropertyItem> PropertyBadges
+        {
+            get { if (_propertyBadges == null) RefreshPropertyBadges(); return _propertyBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePropertyBadges
+        {
+            get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
+        public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
+        public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshPropertyBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("properties", BadgeValueChangedHandler);
+            _propertyBadges = active;
+            _availablePropertyBadges = available;
+            OnPropertyChanged(nameof(PropertyBadges));
+            OnPropertyChanged(nameof(AvailablePropertyBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged($"Is{propertyName}Inherited");
+            }
+        }
+
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.PATH => "Path",
+                Command.LEVEL => "Level",
+                Command.RARITY => "Rarity",
+                Command.GOLD => "Gold",
+                Command.RES => "Research",
+                Command.SUPPLY => "Supply",
+                Command.LOOK => "LookSprite",
+                Command.COPYSITE => "CopySite",
+                _ => null
+            };
+        }
     }
 
     /// <summary>
@@ -3774,6 +4558,591 @@ namespace Dom5Editor.UI.Views
         }
 
         public Nation Nation => (Nation)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from nation_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "nation";
+
+        // ========================================
+        // Core Identity Properties
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets the nation era (1=EA, 2=MA, 3=LA).
+        /// </summary>
+        public int? Era
+        {
+            get => GetIntProperty(Command.ERA);
+            set => SetIntProperty(Command.ERA, value);
+        }
+        public bool IsEraModified => IsIntPropertyModifiedFromVanilla(Command.ERA);
+        public bool IsEraSessionEdit => IsPropertyEditedInSession(Command.ERA);
+
+        /// <summary>
+        /// Gets the era display name.
+        /// </summary>
+        public string EraDisplay
+        {
+            get
+            {
+                return Era switch
+                {
+                    1 => "Early Age",
+                    2 => "Middle Age",
+                    3 => "Late Age",
+                    _ => Era?.ToString() ?? "-"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the nation epithet (subtitle).
+        /// </summary>
+        public string Epithet
+        {
+            get => GetStringProperty(Command.EPITHET);
+            set => SetStringProperty(Command.EPITHET, value);
+        }
+        public bool IsEpithetModified => IsStringPropertyModifiedFromVanilla(Command.EPITHET);
+        public bool IsEpithetSessionEdit => IsPropertyEditedInSession(Command.EPITHET);
+
+        /// <summary>
+        /// Gets or sets the nation description.
+        /// </summary>
+        public string Description
+        {
+            get => GetStringProperty(Command.DESCR);
+            set => SetStringProperty(Command.DESCR, value);
+        }
+        public bool IsDescriptionModified => IsStringPropertyModifiedFromVanilla(Command.DESCR);
+        public bool IsDescriptionSessionEdit => IsPropertyEditedInSession(Command.DESCR);
+
+        /// <summary>
+        /// Gets or sets the flag file path.
+        /// </summary>
+        public string FlagPath
+        {
+            get
+            {
+                var result = _entity.TryGet<FilePathProperty>(Command.FLAG, out var prop);
+                if (result == ReturnType.TRUE && prop != null)
+                    return prop.Value;
+                return null;
+            }
+        }
+
+        // ========================================
+        // Data Availability Indicators
+        // ========================================
+
+        /// <summary>
+        /// Returns true if this is a vanilla nation (may have incomplete data).
+        /// </summary>
+        public bool IsVanillaNation => Source == EntitySource.Vanilla;
+
+        /// <summary>
+        /// Returns true if this is a mod-defined nation (complete data available).
+        /// </summary>
+        public bool IsModNation => Source == EntitySource.FromMod || Source == EntitySource.VanillaModified;
+
+        /// <summary>
+        /// Gets a message about data availability for vanilla nations.
+        /// </summary>
+        public string DataAvailabilityMessage
+        {
+            get
+            {
+                if (IsVanillaNation)
+                    return "Some data may not be displayed. Vanilla nation data is incomplete - only mod-defined properties can be shown.";
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the data availability warning should be shown.
+        /// </summary>
+        public bool ShowDataWarning => IsVanillaNation;
+
+        // ========================================
+        // Badge Collections - Identity
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _identityBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableIdentityBadges;
+
+        public ObservableCollection<PropertyItem> IdentityBadges
+        {
+            get { if (_identityBadges == null) RefreshIdentityBadges(); return _identityBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableIdentityBadges
+        {
+            get { if (_availableIdentityBadges == null) RefreshIdentityBadges(); return _availableIdentityBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeIdentityBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addIdentityBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveIdentityBadgeCommand => _removeIdentityBadgeCommand ??= CreateRemoveBadgeCommand(RefreshIdentityBadges);
+        public RelayCommand<AvailablePropertyItem> AddIdentityBadgeCommand => _addIdentityBadgeCommand ??= CreateAddBadgeCommand(RefreshIdentityBadges);
+
+        private void RefreshIdentityBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("identity", BadgeValueChangedHandler);
+            _identityBadges = active;
+            _availableIdentityBadges = available;
+            OnPropertyChanged(nameof(IdentityBadges));
+            OnPropertyChanged(nameof(AvailableIdentityBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Recruitment
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _recruitmentBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableRecruitmentBadges;
+
+        public ObservableCollection<PropertyItem> RecruitmentBadges
+        {
+            get { if (_recruitmentBadges == null) RefreshRecruitmentBadges(); return _recruitmentBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableRecruitmentBadges
+        {
+            get { if (_availableRecruitmentBadges == null) RefreshRecruitmentBadges(); return _availableRecruitmentBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeRecruitmentBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addRecruitmentBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveRecruitmentBadgeCommand => _removeRecruitmentBadgeCommand ??= CreateRemoveBadgeCommand(RefreshRecruitmentBadges);
+        public RelayCommand<AvailablePropertyItem> AddRecruitmentBadgeCommand => _addRecruitmentBadgeCommand ??= CreateAddBadgeCommand(RefreshRecruitmentBadges);
+
+        private void RefreshRecruitmentBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("recruitment", BadgeValueChangedHandler);
+            _recruitmentBadges = active;
+            _availableRecruitmentBadges = available;
+            OnPropertyChanged(nameof(RecruitmentBadges));
+            OnPropertyChanged(nameof(AvailableRecruitmentBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Terrain Recruitment
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _terrainRecruitmentBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableTerrainRecruitmentBadges;
+
+        public ObservableCollection<PropertyItem> TerrainRecruitmentBadges
+        {
+            get { if (_terrainRecruitmentBadges == null) RefreshTerrainRecruitmentBadges(); return _terrainRecruitmentBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableTerrainRecruitmentBadges
+        {
+            get { if (_availableTerrainRecruitmentBadges == null) RefreshTerrainRecruitmentBadges(); return _availableTerrainRecruitmentBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeTerrainRecruitmentBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addTerrainRecruitmentBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveTerrainRecruitmentBadgeCommand => _removeTerrainRecruitmentBadgeCommand ??= CreateRemoveBadgeCommand(RefreshTerrainRecruitmentBadges);
+        public RelayCommand<AvailablePropertyItem> AddTerrainRecruitmentBadgeCommand => _addTerrainRecruitmentBadgeCommand ??= CreateAddBadgeCommand(RefreshTerrainRecruitmentBadges);
+
+        private void RefreshTerrainRecruitmentBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("terrain_recruitment", BadgeValueChangedHandler);
+            _terrainRecruitmentBadges = active;
+            _availableTerrainRecruitmentBadges = available;
+            OnPropertyChanged(nameof(TerrainRecruitmentBadges));
+            OnPropertyChanged(nameof(AvailableTerrainRecruitmentBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Coastal/UW
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _coastalUwBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableCoastalUwBadges;
+
+        public ObservableCollection<PropertyItem> CoastalUwBadges
+        {
+            get { if (_coastalUwBadges == null) RefreshCoastalUwBadges(); return _coastalUwBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableCoastalUwBadges
+        {
+            get { if (_availableCoastalUwBadges == null) RefreshCoastalUwBadges(); return _availableCoastalUwBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeCoastalUwBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addCoastalUwBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveCoastalUwBadgeCommand => _removeCoastalUwBadgeCommand ??= CreateRemoveBadgeCommand(RefreshCoastalUwBadges);
+        public RelayCommand<AvailablePropertyItem> AddCoastalUwBadgeCommand => _addCoastalUwBadgeCommand ??= CreateAddBadgeCommand(RefreshCoastalUwBadges);
+
+        private void RefreshCoastalUwBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("coastal_uw", BadgeValueChangedHandler);
+            _coastalUwBadges = active;
+            _availableCoastalUwBadges = available;
+            OnPropertyChanged(nameof(CoastalUwBadges));
+            OnPropertyChanged(nameof(AvailableCoastalUwBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Heroes
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _heroesBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableHeroesBadges;
+
+        public ObservableCollection<PropertyItem> HeroesBadges
+        {
+            get { if (_heroesBadges == null) RefreshHeroesBadges(); return _heroesBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableHeroesBadges
+        {
+            get { if (_availableHeroesBadges == null) RefreshHeroesBadges(); return _availableHeroesBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeHeroesBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addHeroesBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveHeroesBadgeCommand => _removeHeroesBadgeCommand ??= CreateRemoveBadgeCommand(RefreshHeroesBadges);
+        public RelayCommand<AvailablePropertyItem> AddHeroesBadgeCommand => _addHeroesBadgeCommand ??= CreateAddBadgeCommand(RefreshHeroesBadges);
+
+        private void RefreshHeroesBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("heroes", BadgeValueChangedHandler);
+            _heroesBadges = active;
+            _availableHeroesBadges = available;
+            OnPropertyChanged(nameof(HeroesBadges));
+            OnPropertyChanged(nameof(AvailableHeroesBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Starting Units
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _startingBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableStartingBadges;
+
+        public ObservableCollection<PropertyItem> StartingBadges
+        {
+            get { if (_startingBadges == null) RefreshStartingBadges(); return _startingBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableStartingBadges
+        {
+            get { if (_availableStartingBadges == null) RefreshStartingBadges(); return _availableStartingBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeStartingBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addStartingBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveStartingBadgeCommand => _removeStartingBadgeCommand ??= CreateRemoveBadgeCommand(RefreshStartingBadges);
+        public RelayCommand<AvailablePropertyItem> AddStartingBadgeCommand => _addStartingBadgeCommand ??= CreateAddBadgeCommand(RefreshStartingBadges);
+
+        private void RefreshStartingBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("starting", BadgeValueChangedHandler);
+            _startingBadges = active;
+            _availableStartingBadges = available;
+            OnPropertyChanged(nameof(StartingBadges));
+            OnPropertyChanged(nameof(AvailableStartingBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Province Defense
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _provinceDefenseBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableProvinceDefenseBadges;
+
+        public ObservableCollection<PropertyItem> ProvinceDefenseBadges
+        {
+            get { if (_provinceDefenseBadges == null) RefreshProvinceDefenseBadges(); return _provinceDefenseBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableProvinceDefenseBadges
+        {
+            get { if (_availableProvinceDefenseBadges == null) RefreshProvinceDefenseBadges(); return _availableProvinceDefenseBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeProvinceDefenseBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addProvinceDefenseBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveProvinceDefenseBadgeCommand => _removeProvinceDefenseBadgeCommand ??= CreateRemoveBadgeCommand(RefreshProvinceDefenseBadges);
+        public RelayCommand<AvailablePropertyItem> AddProvinceDefenseBadgeCommand => _addProvinceDefenseBadgeCommand ??= CreateAddBadgeCommand(RefreshProvinceDefenseBadges);
+
+        private void RefreshProvinceDefenseBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("province_defense", BadgeValueChangedHandler);
+            _provinceDefenseBadges = active;
+            _availableProvinceDefenseBadges = available;
+            OnPropertyChanged(nameof(ProvinceDefenseBadges));
+            OnPropertyChanged(nameof(AvailableProvinceDefenseBadges));
+        }
+
+        // ========================================
+        // Badge Collections - UW Defense
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _uwDefenseBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableUwDefenseBadges;
+
+        public ObservableCollection<PropertyItem> UwDefenseBadges
+        {
+            get { if (_uwDefenseBadges == null) RefreshUwDefenseBadges(); return _uwDefenseBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableUwDefenseBadges
+        {
+            get { if (_availableUwDefenseBadges == null) RefreshUwDefenseBadges(); return _availableUwDefenseBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeUwDefenseBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addUwDefenseBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveUwDefenseBadgeCommand => _removeUwDefenseBadgeCommand ??= CreateRemoveBadgeCommand(RefreshUwDefenseBadges);
+        public RelayCommand<AvailablePropertyItem> AddUwDefenseBadgeCommand => _addUwDefenseBadgeCommand ??= CreateAddBadgeCommand(RefreshUwDefenseBadges);
+
+        private void RefreshUwDefenseBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("uw_defense", BadgeValueChangedHandler);
+            _uwDefenseBadges = active;
+            _availableUwDefenseBadges = available;
+            OnPropertyChanged(nameof(UwDefenseBadges));
+            OnPropertyChanged(nameof(AvailableUwDefenseBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Pretenders
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _pretendersBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePretendersBadges;
+
+        public ObservableCollection<PropertyItem> PretendersBadges
+        {
+            get { if (_pretendersBadges == null) RefreshPretendersBadges(); return _pretendersBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePretendersBadges
+        {
+            get { if (_availablePretendersBadges == null) RefreshPretendersBadges(); return _availablePretendersBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removePretendersBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPretendersBadgeCommand;
+        public RelayCommand<PropertyItem> RemovePretendersBadgeCommand => _removePretendersBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPretendersBadges);
+        public RelayCommand<AvailablePropertyItem> AddPretendersBadgeCommand => _addPretendersBadgeCommand ??= CreateAddBadgeCommand(RefreshPretendersBadges);
+
+        private void RefreshPretendersBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("pretenders", BadgeValueChangedHandler);
+            _pretendersBadges = active;
+            _availablePretendersBadges = available;
+            OnPropertyChanged(nameof(PretendersBadges));
+            OnPropertyChanged(nameof(AvailablePretendersBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Buildings
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _buildingsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableBuildingsBadges;
+
+        public ObservableCollection<PropertyItem> BuildingsBadges
+        {
+            get { if (_buildingsBadges == null) RefreshBuildingsBadges(); return _buildingsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableBuildingsBadges
+        {
+            get { if (_availableBuildingsBadges == null) RefreshBuildingsBadges(); return _availableBuildingsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeBuildingsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addBuildingsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveBuildingsBadgeCommand => _removeBuildingsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshBuildingsBadges);
+        public RelayCommand<AvailablePropertyItem> AddBuildingsBadgeCommand => _addBuildingsBadgeCommand ??= CreateAddBadgeCommand(RefreshBuildingsBadges);
+
+        private void RefreshBuildingsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("buildings", BadgeValueChangedHandler);
+            _buildingsBadges = active;
+            _availableBuildingsBadges = available;
+            OnPropertyChanged(nameof(BuildingsBadges));
+            OnPropertyChanged(nameof(AvailableBuildingsBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Scales
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _scalesBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableScalesBadges;
+
+        public ObservableCollection<PropertyItem> ScalesBadges
+        {
+            get { if (_scalesBadges == null) RefreshScalesBadges(); return _scalesBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableScalesBadges
+        {
+            get { if (_availableScalesBadges == null) RefreshScalesBadges(); return _availableScalesBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeScalesBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addScalesBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveScalesBadgeCommand => _removeScalesBadgeCommand ??= CreateRemoveBadgeCommand(RefreshScalesBadges);
+        public RelayCommand<AvailablePropertyItem> AddScalesBadgeCommand => _addScalesBadgeCommand ??= CreateAddBadgeCommand(RefreshScalesBadges);
+
+        private void RefreshScalesBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("scales", BadgeValueChangedHandler);
+            _scalesBadges = active;
+            _availableScalesBadges = available;
+            OnPropertyChanged(nameof(ScalesBadges));
+            OnPropertyChanged(nameof(AvailableScalesBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Special Mechanics
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _specialMechanicsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableSpecialMechanicsBadges;
+
+        public ObservableCollection<PropertyItem> SpecialMechanicsBadges
+        {
+            get { if (_specialMechanicsBadges == null) RefreshSpecialMechanicsBadges(); return _specialMechanicsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableSpecialMechanicsBadges
+        {
+            get { if (_availableSpecialMechanicsBadges == null) RefreshSpecialMechanicsBadges(); return _availableSpecialMechanicsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeSpecialMechanicsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addSpecialMechanicsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveSpecialMechanicsBadgeCommand => _removeSpecialMechanicsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshSpecialMechanicsBadges);
+        public RelayCommand<AvailablePropertyItem> AddSpecialMechanicsBadgeCommand => _addSpecialMechanicsBadgeCommand ??= CreateAddBadgeCommand(RefreshSpecialMechanicsBadges);
+
+        private void RefreshSpecialMechanicsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("special_mechanics", BadgeValueChangedHandler);
+            _specialMechanicsBadges = active;
+            _availableSpecialMechanicsBadges = available;
+            OnPropertyChanged(nameof(SpecialMechanicsBadges));
+            OnPropertyChanged(nameof(AvailableSpecialMechanicsBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Bless Bonuses
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _blessBonusesBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableBlessBonusesBadges;
+
+        public ObservableCollection<PropertyItem> BlessBonusesBadges
+        {
+            get { if (_blessBonusesBadges == null) RefreshBlessBonusesBadges(); return _blessBonusesBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableBlessBonusesBadges
+        {
+            get { if (_availableBlessBonusesBadges == null) RefreshBlessBonusesBadges(); return _availableBlessBonusesBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeBlessBonusesBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addBlessBonusesBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveBlessBonusesBadgeCommand => _removeBlessBonusesBadgeCommand ??= CreateRemoveBadgeCommand(RefreshBlessBonusesBadges);
+        public RelayCommand<AvailablePropertyItem> AddBlessBonusesBadgeCommand => _addBlessBonusesBadgeCommand ??= CreateAddBadgeCommand(RefreshBlessBonusesBadges);
+
+        private void RefreshBlessBonusesBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("bless_bonuses", BadgeValueChangedHandler);
+            _blessBonusesBadges = active;
+            _availableBlessBonusesBadges = available;
+            OnPropertyChanged(nameof(BlessBonusesBadges));
+            OnPropertyChanged(nameof(AvailableBlessBonusesBadges));
+        }
+
+        // ========================================
+        // Badge Collections - AI Hints
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _aiHintsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableAiHintsBadges;
+
+        public ObservableCollection<PropertyItem> AiHintsBadges
+        {
+            get { if (_aiHintsBadges == null) RefreshAiHintsBadges(); return _aiHintsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableAiHintsBadges
+        {
+            get { if (_availableAiHintsBadges == null) RefreshAiHintsBadges(); return _availableAiHintsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeAiHintsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addAiHintsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveAiHintsBadgeCommand => _removeAiHintsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshAiHintsBadges);
+        public RelayCommand<AvailablePropertyItem> AddAiHintsBadgeCommand => _addAiHintsBadgeCommand ??= CreateAddBadgeCommand(RefreshAiHintsBadges);
+
+        private void RefreshAiHintsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("ai_hints", BadgeValueChangedHandler);
+            _aiHintsBadges = active;
+            _availableAiHintsBadges = available;
+            OnPropertyChanged(nameof(AiHintsBadges));
+            OnPropertyChanged(nameof(AvailableAiHintsBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Admin
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _adminBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableAdminBadges;
+
+        public ObservableCollection<PropertyItem> AdminBadges
+        {
+            get { if (_adminBadges == null) RefreshAdminBadges(); return _adminBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableAdminBadges
+        {
+            get { if (_availableAdminBadges == null) RefreshAdminBadges(); return _availableAdminBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeAdminBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addAdminBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveAdminBadgeCommand => _removeAdminBadgeCommand ??= CreateRemoveBadgeCommand(RefreshAdminBadges);
+        public RelayCommand<AvailablePropertyItem> AddAdminBadgeCommand => _addAdminBadgeCommand ??= CreateAddBadgeCommand(RefreshAdminBadges);
+
+        private void RefreshAdminBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("admin", BadgeValueChangedHandler);
+            _adminBadges = active;
+            _availableAdminBadges = available;
+            OnPropertyChanged(nameof(AdminBadges));
+            OnPropertyChanged(nameof(AvailableAdminBadges));
+        }
+
+        // ========================================
+        // Shared Badge Value Changed Handler
+        // ========================================
+
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+            }
+        }
+
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.ERA => "Era",
+                Command.EPITHET => "Epithet",
+                Command.DESCR => "Description",
+                Command.FLAG => "FlagPath",
+                _ => null
+            };
+        }
     }
 
     /// <summary>
@@ -3787,6 +5156,618 @@ namespace Dom5Editor.UI.Views
         }
 
         public Event Event => (Event)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from event_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "event";
+
+        // ========================================
+        // Core Properties
+        // ========================================
+
+        /// <summary>
+        /// Gets the event rarity display.
+        /// </summary>
+        public string RarityDisplay
+        {
+            get
+            {
+                var rarity = GetIntProperty(Command.RARITY);
+                return rarity switch
+                {
+                    0 => "Common",
+                    1 => "Uncommon",
+                    2 => "Rare",
+                    _ => rarity?.ToString() ?? "-"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Gets the event message text.
+        /// </summary>
+        public string Message
+        {
+            get => GetStringProperty(Command.MSG);
+            set => SetStringProperty(Command.MSG, value);
+        }
+
+        // ========================================
+        // Badge Collections - Requirements
+        // ========================================
+
+        // General Requirements
+        private ObservableCollection<PropertyItem> _generalRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableGeneralRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> GeneralRequirementsBadges
+        {
+            get { if (_generalRequirementsBadges == null) RefreshGeneralRequirementsBadges(); return _generalRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableGeneralRequirementsBadges
+        {
+            get { if (_availableGeneralRequirementsBadges == null) RefreshGeneralRequirementsBadges(); return _availableGeneralRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeGeneralRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addGeneralRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveGeneralRequirementsBadgeCommand => _removeGeneralRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshGeneralRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddGeneralRequirementsBadgeCommand => _addGeneralRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshGeneralRequirementsBadges);
+
+        private void RefreshGeneralRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("general_requirements", BadgeValueChangedHandler);
+            _generalRequirementsBadges = active;
+            _availableGeneralRequirementsBadges = available;
+            OnPropertyChanged(nameof(GeneralRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableGeneralRequirementsBadges));
+        }
+
+        // Nation Requirements
+        private ObservableCollection<PropertyItem> _nationRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableNationRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> NationRequirementsBadges
+        {
+            get { if (_nationRequirementsBadges == null) RefreshNationRequirementsBadges(); return _nationRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableNationRequirementsBadges
+        {
+            get { if (_availableNationRequirementsBadges == null) RefreshNationRequirementsBadges(); return _availableNationRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeNationRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addNationRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveNationRequirementsBadgeCommand => _removeNationRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshNationRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddNationRequirementsBadgeCommand => _addNationRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshNationRequirementsBadges);
+
+        private void RefreshNationRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("nation_requirements", BadgeValueChangedHandler);
+            _nationRequirementsBadges = active;
+            _availableNationRequirementsBadges = available;
+            OnPropertyChanged(nameof(NationRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableNationRequirementsBadges));
+        }
+
+        // Location Requirements
+        private ObservableCollection<PropertyItem> _locationRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableLocationRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> LocationRequirementsBadges
+        {
+            get { if (_locationRequirementsBadges == null) RefreshLocationRequirementsBadges(); return _locationRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableLocationRequirementsBadges
+        {
+            get { if (_availableLocationRequirementsBadges == null) RefreshLocationRequirementsBadges(); return _availableLocationRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeLocationRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addLocationRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveLocationRequirementsBadgeCommand => _removeLocationRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshLocationRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddLocationRequirementsBadgeCommand => _addLocationRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshLocationRequirementsBadges);
+
+        private void RefreshLocationRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("location_requirements", BadgeValueChangedHandler);
+            _locationRequirementsBadges = active;
+            _availableLocationRequirementsBadges = available;
+            OnPropertyChanged(nameof(LocationRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableLocationRequirementsBadges));
+        }
+
+        // Province Requirements
+        private ObservableCollection<PropertyItem> _provinceRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableProvinceRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> ProvinceRequirementsBadges
+        {
+            get { if (_provinceRequirementsBadges == null) RefreshProvinceRequirementsBadges(); return _provinceRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableProvinceRequirementsBadges
+        {
+            get { if (_availableProvinceRequirementsBadges == null) RefreshProvinceRequirementsBadges(); return _availableProvinceRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeProvinceRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addProvinceRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveProvinceRequirementsBadgeCommand => _removeProvinceRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshProvinceRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddProvinceRequirementsBadgeCommand => _addProvinceRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshProvinceRequirementsBadges);
+
+        private void RefreshProvinceRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("province_requirements", BadgeValueChangedHandler);
+            _provinceRequirementsBadges = active;
+            _availableProvinceRequirementsBadges = available;
+            OnPropertyChanged(nameof(ProvinceRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableProvinceRequirementsBadges));
+        }
+
+        // Site Requirements
+        private ObservableCollection<PropertyItem> _siteRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableSiteRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> SiteRequirementsBadges
+        {
+            get { if (_siteRequirementsBadges == null) RefreshSiteRequirementsBadges(); return _siteRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableSiteRequirementsBadges
+        {
+            get { if (_availableSiteRequirementsBadges == null) RefreshSiteRequirementsBadges(); return _availableSiteRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeSiteRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addSiteRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveSiteRequirementsBadgeCommand => _removeSiteRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshSiteRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddSiteRequirementsBadgeCommand => _addSiteRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshSiteRequirementsBadges);
+
+        private void RefreshSiteRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("site_requirements", BadgeValueChangedHandler);
+            _siteRequirementsBadges = active;
+            _availableSiteRequirementsBadges = available;
+            OnPropertyChanged(nameof(SiteRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableSiteRequirementsBadges));
+        }
+
+        // Dominion Requirements
+        private ObservableCollection<PropertyItem> _dominionRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableDominionRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> DominionRequirementsBadges
+        {
+            get { if (_dominionRequirementsBadges == null) RefreshDominionRequirementsBadges(); return _dominionRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableDominionRequirementsBadges
+        {
+            get { if (_availableDominionRequirementsBadges == null) RefreshDominionRequirementsBadges(); return _availableDominionRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeDominionRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addDominionRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveDominionRequirementsBadgeCommand => _removeDominionRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshDominionRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddDominionRequirementsBadgeCommand => _addDominionRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshDominionRequirementsBadges);
+
+        private void RefreshDominionRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("dominion_requirements", BadgeValueChangedHandler);
+            _dominionRequirementsBadges = active;
+            _availableDominionRequirementsBadges = available;
+            OnPropertyChanged(nameof(DominionRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableDominionRequirementsBadges));
+        }
+
+        // Path Requirements
+        private ObservableCollection<PropertyItem> _pathRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePathRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> PathRequirementsBadges
+        {
+            get { if (_pathRequirementsBadges == null) RefreshPathRequirementsBadges(); return _pathRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePathRequirementsBadges
+        {
+            get { if (_availablePathRequirementsBadges == null) RefreshPathRequirementsBadges(); return _availablePathRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removePathRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPathRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemovePathRequirementsBadgeCommand => _removePathRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPathRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddPathRequirementsBadgeCommand => _addPathRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshPathRequirementsBadges);
+
+        private void RefreshPathRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("path_requirements", BadgeValueChangedHandler);
+            _pathRequirementsBadges = active;
+            _availablePathRequirementsBadges = available;
+            OnPropertyChanged(nameof(PathRequirementsBadges));
+            OnPropertyChanged(nameof(AvailablePathRequirementsBadges));
+        }
+
+        // Commander Requirements
+        private ObservableCollection<PropertyItem> _commanderRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableCommanderRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> CommanderRequirementsBadges
+        {
+            get { if (_commanderRequirementsBadges == null) RefreshCommanderRequirementsBadges(); return _commanderRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableCommanderRequirementsBadges
+        {
+            get { if (_availableCommanderRequirementsBadges == null) RefreshCommanderRequirementsBadges(); return _availableCommanderRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeCommanderRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addCommanderRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveCommanderRequirementsBadgeCommand => _removeCommanderRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshCommanderRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddCommanderRequirementsBadgeCommand => _addCommanderRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshCommanderRequirementsBadges);
+
+        private void RefreshCommanderRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("commander_requirements", BadgeValueChangedHandler);
+            _commanderRequirementsBadges = active;
+            _availableCommanderRequirementsBadges = available;
+            OnPropertyChanged(nameof(CommanderRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableCommanderRequirementsBadges));
+        }
+
+        // Target Requirements
+        private ObservableCollection<PropertyItem> _targetRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableTargetRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> TargetRequirementsBadges
+        {
+            get { if (_targetRequirementsBadges == null) RefreshTargetRequirementsBadges(); return _targetRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableTargetRequirementsBadges
+        {
+            get { if (_availableTargetRequirementsBadges == null) RefreshTargetRequirementsBadges(); return _availableTargetRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeTargetRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addTargetRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveTargetRequirementsBadgeCommand => _removeTargetRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshTargetRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddTargetRequirementsBadgeCommand => _addTargetRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshTargetRequirementsBadges);
+
+        private void RefreshTargetRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("target_requirements", BadgeValueChangedHandler);
+            _targetRequirementsBadges = active;
+            _availableTargetRequirementsBadges = available;
+            OnPropertyChanged(nameof(TargetRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableTargetRequirementsBadges));
+        }
+
+        // Code Requirements
+        private ObservableCollection<PropertyItem> _codeRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableCodeRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> CodeRequirementsBadges
+        {
+            get { if (_codeRequirementsBadges == null) RefreshCodeRequirementsBadges(); return _codeRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableCodeRequirementsBadges
+        {
+            get { if (_availableCodeRequirementsBadges == null) RefreshCodeRequirementsBadges(); return _availableCodeRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeCodeRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addCodeRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveCodeRequirementsBadgeCommand => _removeCodeRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshCodeRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddCodeRequirementsBadgeCommand => _addCodeRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshCodeRequirementsBadges);
+
+        private void RefreshCodeRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("code_requirements", BadgeValueChangedHandler);
+            _codeRequirementsBadges = active;
+            _availableCodeRequirementsBadges = available;
+            OnPropertyChanged(nameof(CodeRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableCodeRequirementsBadges));
+        }
+
+        // Enchantment Requirements
+        private ObservableCollection<PropertyItem> _enchantmentRequirementsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableEnchantmentRequirementsBadges;
+
+        public ObservableCollection<PropertyItem> EnchantmentRequirementsBadges
+        {
+            get { if (_enchantmentRequirementsBadges == null) RefreshEnchantmentRequirementsBadges(); return _enchantmentRequirementsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableEnchantmentRequirementsBadges
+        {
+            get { if (_availableEnchantmentRequirementsBadges == null) RefreshEnchantmentRequirementsBadges(); return _availableEnchantmentRequirementsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeEnchantmentRequirementsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addEnchantmentRequirementsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveEnchantmentRequirementsBadgeCommand => _removeEnchantmentRequirementsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshEnchantmentRequirementsBadges);
+        public RelayCommand<AvailablePropertyItem> AddEnchantmentRequirementsBadgeCommand => _addEnchantmentRequirementsBadgeCommand ??= CreateAddBadgeCommand(RefreshEnchantmentRequirementsBadges);
+
+        private void RefreshEnchantmentRequirementsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("enchantment_requirements", BadgeValueChangedHandler);
+            _enchantmentRequirementsBadges = active;
+            _availableEnchantmentRequirementsBadges = available;
+            OnPropertyChanged(nameof(EnchantmentRequirementsBadges));
+            OnPropertyChanged(nameof(AvailableEnchantmentRequirementsBadges));
+        }
+
+        // ========================================
+        // Badge Collections - Effects
+        // ========================================
+
+        // Message
+        private ObservableCollection<PropertyItem> _messageBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableMessageBadges;
+
+        public ObservableCollection<PropertyItem> MessageBadges
+        {
+            get { if (_messageBadges == null) RefreshMessageBadges(); return _messageBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableMessageBadges
+        {
+            get { if (_availableMessageBadges == null) RefreshMessageBadges(); return _availableMessageBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeMessageBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addMessageBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveMessageBadgeCommand => _removeMessageBadgeCommand ??= CreateRemoveBadgeCommand(RefreshMessageBadges);
+        public RelayCommand<AvailablePropertyItem> AddMessageBadgeCommand => _addMessageBadgeCommand ??= CreateAddBadgeCommand(RefreshMessageBadges);
+
+        private void RefreshMessageBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("message", BadgeValueChangedHandler);
+            _messageBadges = active;
+            _availableMessageBadges = available;
+            OnPropertyChanged(nameof(MessageBadges));
+            OnPropertyChanged(nameof(AvailableMessageBadges));
+        }
+
+        // Resource Effects
+        private ObservableCollection<PropertyItem> _resourceEffectsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableResourceEffectsBadges;
+
+        public ObservableCollection<PropertyItem> ResourceEffectsBadges
+        {
+            get { if (_resourceEffectsBadges == null) RefreshResourceEffectsBadges(); return _resourceEffectsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableResourceEffectsBadges
+        {
+            get { if (_availableResourceEffectsBadges == null) RefreshResourceEffectsBadges(); return _availableResourceEffectsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeResourceEffectsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addResourceEffectsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveResourceEffectsBadgeCommand => _removeResourceEffectsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshResourceEffectsBadges);
+        public RelayCommand<AvailablePropertyItem> AddResourceEffectsBadgeCommand => _addResourceEffectsBadgeCommand ??= CreateAddBadgeCommand(RefreshResourceEffectsBadges);
+
+        private void RefreshResourceEffectsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("resource_effects", BadgeValueChangedHandler);
+            _resourceEffectsBadges = active;
+            _availableResourceEffectsBadges = available;
+            OnPropertyChanged(nameof(ResourceEffectsBadges));
+            OnPropertyChanged(nameof(AvailableResourceEffectsBadges));
+        }
+
+        // Province Effects
+        private ObservableCollection<PropertyItem> _provinceEffectsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableProvinceEffectsBadges;
+
+        public ObservableCollection<PropertyItem> ProvinceEffectsBadges
+        {
+            get { if (_provinceEffectsBadges == null) RefreshProvinceEffectsBadges(); return _provinceEffectsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableProvinceEffectsBadges
+        {
+            get { if (_availableProvinceEffectsBadges == null) RefreshProvinceEffectsBadges(); return _availableProvinceEffectsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeProvinceEffectsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addProvinceEffectsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveProvinceEffectsBadgeCommand => _removeProvinceEffectsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshProvinceEffectsBadges);
+        public RelayCommand<AvailablePropertyItem> AddProvinceEffectsBadgeCommand => _addProvinceEffectsBadgeCommand ??= CreateAddBadgeCommand(RefreshProvinceEffectsBadges);
+
+        private void RefreshProvinceEffectsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("province_effects", BadgeValueChangedHandler);
+            _provinceEffectsBadges = active;
+            _availableProvinceEffectsBadges = available;
+            OnPropertyChanged(nameof(ProvinceEffectsBadges));
+            OnPropertyChanged(nameof(AvailableProvinceEffectsBadges));
+        }
+
+        // Scale Effects
+        private ObservableCollection<PropertyItem> _scaleEffectsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableScaleEffectsBadges;
+
+        public ObservableCollection<PropertyItem> ScaleEffectsBadges
+        {
+            get { if (_scaleEffectsBadges == null) RefreshScaleEffectsBadges(); return _scaleEffectsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableScaleEffectsBadges
+        {
+            get { if (_availableScaleEffectsBadges == null) RefreshScaleEffectsBadges(); return _availableScaleEffectsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeScaleEffectsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addScaleEffectsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveScaleEffectsBadgeCommand => _removeScaleEffectsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshScaleEffectsBadges);
+        public RelayCommand<AvailablePropertyItem> AddScaleEffectsBadgeCommand => _addScaleEffectsBadgeCommand ??= CreateAddBadgeCommand(RefreshScaleEffectsBadges);
+
+        private void RefreshScaleEffectsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("scale_effects", BadgeValueChangedHandler);
+            _scaleEffectsBadges = active;
+            _availableScaleEffectsBadges = available;
+            OnPropertyChanged(nameof(ScaleEffectsBadges));
+            OnPropertyChanged(nameof(AvailableScaleEffectsBadges));
+        }
+
+        // Unit Spawn
+        private ObservableCollection<PropertyItem> _unitSpawnBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableUnitSpawnBadges;
+
+        public ObservableCollection<PropertyItem> UnitSpawnBadges
+        {
+            get { if (_unitSpawnBadges == null) RefreshUnitSpawnBadges(); return _unitSpawnBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableUnitSpawnBadges
+        {
+            get { if (_availableUnitSpawnBadges == null) RefreshUnitSpawnBadges(); return _availableUnitSpawnBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeUnitSpawnBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addUnitSpawnBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveUnitSpawnBadgeCommand => _removeUnitSpawnBadgeCommand ??= CreateRemoveBadgeCommand(RefreshUnitSpawnBadges);
+        public RelayCommand<AvailablePropertyItem> AddUnitSpawnBadgeCommand => _addUnitSpawnBadgeCommand ??= CreateAddBadgeCommand(RefreshUnitSpawnBadges);
+
+        private void RefreshUnitSpawnBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("unit_spawn", BadgeValueChangedHandler);
+            _unitSpawnBadges = active;
+            _availableUnitSpawnBadges = available;
+            OnPropertyChanged(nameof(UnitSpawnBadges));
+            OnPropertyChanged(nameof(AvailableUnitSpawnBadges));
+        }
+
+        // Unit Effects
+        private ObservableCollection<PropertyItem> _unitEffectsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableUnitEffectsBadges;
+
+        public ObservableCollection<PropertyItem> UnitEffectsBadges
+        {
+            get { if (_unitEffectsBadges == null) RefreshUnitEffectsBadges(); return _unitEffectsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableUnitEffectsBadges
+        {
+            get { if (_availableUnitEffectsBadges == null) RefreshUnitEffectsBadges(); return _availableUnitEffectsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeUnitEffectsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addUnitEffectsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveUnitEffectsBadgeCommand => _removeUnitEffectsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshUnitEffectsBadges);
+        public RelayCommand<AvailablePropertyItem> AddUnitEffectsBadgeCommand => _addUnitEffectsBadgeCommand ??= CreateAddBadgeCommand(RefreshUnitEffectsBadges);
+
+        private void RefreshUnitEffectsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("unit_effects", BadgeValueChangedHandler);
+            _unitEffectsBadges = active;
+            _availableUnitEffectsBadges = available;
+            OnPropertyChanged(nameof(UnitEffectsBadges));
+            OnPropertyChanged(nameof(AvailableUnitEffectsBadges));
+        }
+
+        // Path Boost
+        private ObservableCollection<PropertyItem> _pathBoostBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePathBoostBadges;
+
+        public ObservableCollection<PropertyItem> PathBoostBadges
+        {
+            get { if (_pathBoostBadges == null) RefreshPathBoostBadges(); return _pathBoostBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePathBoostBadges
+        {
+            get { if (_availablePathBoostBadges == null) RefreshPathBoostBadges(); return _availablePathBoostBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removePathBoostBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPathBoostBadgeCommand;
+        public RelayCommand<PropertyItem> RemovePathBoostBadgeCommand => _removePathBoostBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPathBoostBadges);
+        public RelayCommand<AvailablePropertyItem> AddPathBoostBadgeCommand => _addPathBoostBadgeCommand ??= CreateAddBadgeCommand(RefreshPathBoostBadges);
+
+        private void RefreshPathBoostBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("path_boost", BadgeValueChangedHandler);
+            _pathBoostBadges = active;
+            _availablePathBoostBadges = available;
+            OnPropertyChanged(nameof(PathBoostBadges));
+            OnPropertyChanged(nameof(AvailablePathBoostBadges));
+        }
+
+        // World Effects
+        private ObservableCollection<PropertyItem> _worldEffectsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableWorldEffectsBadges;
+
+        public ObservableCollection<PropertyItem> WorldEffectsBadges
+        {
+            get { if (_worldEffectsBadges == null) RefreshWorldEffectsBadges(); return _worldEffectsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableWorldEffectsBadges
+        {
+            get { if (_availableWorldEffectsBadges == null) RefreshWorldEffectsBadges(); return _availableWorldEffectsBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeWorldEffectsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addWorldEffectsBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveWorldEffectsBadgeCommand => _removeWorldEffectsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshWorldEffectsBadges);
+        public RelayCommand<AvailablePropertyItem> AddWorldEffectsBadgeCommand => _addWorldEffectsBadgeCommand ??= CreateAddBadgeCommand(RefreshWorldEffectsBadges);
+
+        private void RefreshWorldEffectsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("world_effects", BadgeValueChangedHandler);
+            _worldEffectsBadges = active;
+            _availableWorldEffectsBadges = available;
+            OnPropertyChanged(nameof(WorldEffectsBadges));
+            OnPropertyChanged(nameof(AvailableWorldEffectsBadges));
+        }
+
+        // Event Control
+        private ObservableCollection<PropertyItem> _eventControlBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableEventControlBadges;
+
+        public ObservableCollection<PropertyItem> EventControlBadges
+        {
+            get { if (_eventControlBadges == null) RefreshEventControlBadges(); return _eventControlBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableEventControlBadges
+        {
+            get { if (_availableEventControlBadges == null) RefreshEventControlBadges(); return _availableEventControlBadges; }
+        }
+
+        private RelayCommand<PropertyItem> _removeEventControlBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addEventControlBadgeCommand;
+        public RelayCommand<PropertyItem> RemoveEventControlBadgeCommand => _removeEventControlBadgeCommand ??= CreateRemoveBadgeCommand(RefreshEventControlBadges);
+        public RelayCommand<AvailablePropertyItem> AddEventControlBadgeCommand => _addEventControlBadgeCommand ??= CreateAddBadgeCommand(RefreshEventControlBadges);
+
+        private void RefreshEventControlBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("event_control", BadgeValueChangedHandler);
+            _eventControlBadges = active;
+            _availableEventControlBadges = available;
+            OnPropertyChanged(nameof(EventControlBadges));
+            OnPropertyChanged(nameof(AvailableEventControlBadges));
+        }
+
+        // ========================================
+        // Shared Badge Value Changed Handler
+        // ========================================
+
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+            }
+        }
+
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.RARITY => "Rarity",
+                Command.MSG => "Message",
+                _ => null
+            };
+        }
     }
 
     /// <summary>
@@ -3800,6 +5781,364 @@ namespace Dom5Editor.UI.Views
         }
 
         public Mercenary Mercenary => (Mercenary)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from mercenary_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "mercenary";
+
+        // ========================================
+        // Core Properties
+        // ========================================
+
+        public int? Level
+        {
+            get => GetIntProperty(Command.LEVEL);
+            set => SetIntProperty(Command.LEVEL, value);
+        }
+        public bool IsLevelModified => IsIntPropertyModifiedFromVanilla(Command.LEVEL);
+        public bool IsLevelSessionEdit => IsPropertyEditedInSession(Command.LEVEL);
+
+        public string BossName
+        {
+            get => GetStringProperty(Command.BOSSNAME);
+            set => SetStringProperty(Command.BOSSNAME, value);
+        }
+        public bool IsBossNameModified => IsStringPropertyModifiedFromVanilla(Command.BOSSNAME);
+        public bool IsBossNameSessionEdit => IsPropertyEditedInSession(Command.BOSSNAME);
+
+        public int? EraMask
+        {
+            get => GetIntProperty(Command.ERAMASK);
+            set => SetIntProperty(Command.ERAMASK, value);
+        }
+        public bool IsEraMaskModified => IsIntPropertyModifiedFromVanilla(Command.ERAMASK);
+        public bool IsEraMaskSessionEdit => IsPropertyEditedInSession(Command.ERAMASK);
+
+        /// <summary>
+        /// Gets the era display string from the era bitmask.
+        /// </summary>
+        public string EraDisplay
+        {
+            get
+            {
+                var mask = EraMask ?? 0;
+                if (mask == 0) return "None";
+                var eras = new List<string>();
+                if ((mask & 1) != 0) eras.Add("EA");
+                if ((mask & 2) != 0) eras.Add("MA");
+                if ((mask & 4) != 0) eras.Add("LA");
+                return string.Join("/", eras);
+            }
+        }
+
+        // ========================================
+        // Unit References
+        // ========================================
+
+        public string CommanderDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterOrMontagRef>(Command.COM, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return GetMonsterOrMontagName(prop);
+                }
+
+                // VanillaModified fallback
+                if (_source == EntitySource.VanillaModified)
+                {
+                    var vanillaEntity = GetVanillaEntity();
+                    if (vanillaEntity != null)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<MonsterOrMontagRef>(Command.COM, out var vanillaProp);
+                        if ((vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED) && vanillaProp != null)
+                        {
+                            return GetMonsterOrMontagName(vanillaProp);
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        public string UnitDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterOrMontagRef>(Command.UNIT, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return GetMonsterOrMontagName(prop);
+                }
+
+                // VanillaModified fallback
+                if (_source == EntitySource.VanillaModified)
+                {
+                    var vanillaEntity = GetVanillaEntity();
+                    if (vanillaEntity != null)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<MonsterOrMontagRef>(Command.UNIT, out var vanillaProp);
+                        if ((vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED) && vanillaProp != null)
+                        {
+                            return GetMonsterOrMontagName(vanillaProp);
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        private string GetMonsterOrMontagName(MonsterOrMontagRef prop)
+        {
+            // Try to get the resolved entity
+            if (prop.TryGetEntity(out var entity) && entity != null)
+            {
+                var name = entity.Name;
+                if (!string.IsNullOrEmpty(name))
+                    return $"{name} (#{entity.ID})";
+                return $"#{entity.ID}";
+            }
+
+            // Fallback to export string if entity not resolved
+            var exportStr = prop.ToExportString();
+            if (!string.IsNullOrEmpty(exportStr))
+            {
+                // Check if it's a negative ID (montag)
+                if (int.TryParse(exportStr, out var id) && id < 0)
+                {
+                    return $"Montag #{id}";
+                }
+                return exportStr;
+            }
+            return null;
+        }
+
+        public int? NrUnits
+        {
+            get => GetIntProperty(Command.NRUNITS);
+            set => SetIntProperty(Command.NRUNITS, value);
+        }
+        public bool IsNrUnitsModified => IsIntPropertyModifiedFromVanilla(Command.NRUNITS);
+        public bool IsNrUnitsSessionEdit => IsPropertyEditedInSession(Command.NRUNITS);
+
+        public int? MinMen
+        {
+            get => GetIntProperty(Command.MINMEN);
+            set => SetIntProperty(Command.MINMEN, value);
+        }
+        public bool IsMinMenModified => IsIntPropertyModifiedFromVanilla(Command.MINMEN);
+        public bool IsMinMenSessionEdit => IsPropertyEditedInSession(Command.MINMEN);
+
+        // ========================================
+        // Economics
+        // ========================================
+
+        public int? MinPay
+        {
+            get => GetIntProperty(Command.MINPAY);
+            set => SetIntProperty(Command.MINPAY, value);
+        }
+        public bool IsMinPayModified => IsIntPropertyModifiedFromVanilla(Command.MINPAY);
+        public bool IsMinPaySessionEdit => IsPropertyEditedInSession(Command.MINPAY);
+
+        public int? RecRate
+        {
+            get => GetIntProperty(Command.RECRATE);
+            set => SetIntProperty(Command.RECRATE, value);
+        }
+        public bool IsRecRateModified => IsIntPropertyModifiedFromVanilla(Command.RECRATE);
+        public bool IsRecRateSessionEdit => IsPropertyEditedInSession(Command.RECRATE);
+
+        // ========================================
+        // Equipment
+        // ========================================
+
+        public int? XP
+        {
+            get => GetIntProperty(Command.XP);
+            set => SetIntProperty(Command.XP, value);
+        }
+        public bool IsXPModified => IsIntPropertyModifiedFromVanilla(Command.XP);
+        public bool IsXPSessionEdit => IsPropertyEditedInSession(Command.XP);
+
+        public int? RandEquip
+        {
+            get => GetIntProperty(Command.RANDEQUIP);
+            set => SetIntProperty(Command.RANDEQUIP, value);
+        }
+        public bool IsRandEquipModified => IsIntPropertyModifiedFromVanilla(Command.RANDEQUIP);
+        public bool IsRandEquipSessionEdit => IsPropertyEditedInSession(Command.RANDEQUIP);
+
+        public string ItemDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<ItemRef>(Command.ITEM, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return GetReferenceName(prop, EntityType.ITEM) ?? $"#{prop.ID}";
+                }
+
+                // VanillaModified fallback
+                if (_source == EntitySource.VanillaModified)
+                {
+                    var vanillaEntity = GetVanillaEntity();
+                    if (vanillaEntity != null)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<ItemRef>(Command.ITEM, out var vanillaProp);
+                        if ((vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED) && vanillaProp != null)
+                        {
+                            return GetReferenceName(vanillaProp, EntityType.ITEM) ?? $"#{vanillaProp.ID}";
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        // ========================================
+        // Badge Collections
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _identityBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableIdentityBadges;
+        private ObservableCollection<PropertyItem> _unitsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableUnitsBadges;
+        private ObservableCollection<PropertyItem> _economicsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableEconomicsBadges;
+        private ObservableCollection<PropertyItem> _equipmentBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableEquipmentBadges;
+
+        public ObservableCollection<PropertyItem> IdentityBadges
+        {
+            get { if (_identityBadges == null) RefreshIdentityBadges(); return _identityBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableIdentityBadges
+        {
+            get { if (_availableIdentityBadges == null) RefreshIdentityBadges(); return _availableIdentityBadges; }
+        }
+
+        public ObservableCollection<PropertyItem> UnitsBadges
+        {
+            get { if (_unitsBadges == null) RefreshUnitsBadges(); return _unitsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableUnitsBadges
+        {
+            get { if (_availableUnitsBadges == null) RefreshUnitsBadges(); return _availableUnitsBadges; }
+        }
+
+        public ObservableCollection<PropertyItem> EconomicsBadges
+        {
+            get { if (_economicsBadges == null) RefreshEconomicsBadges(); return _economicsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableEconomicsBadges
+        {
+            get { if (_availableEconomicsBadges == null) RefreshEconomicsBadges(); return _availableEconomicsBadges; }
+        }
+
+        public ObservableCollection<PropertyItem> EquipmentBadges
+        {
+            get { if (_equipmentBadges == null) RefreshEquipmentBadges(); return _equipmentBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableEquipmentBadges
+        {
+            get { if (_availableEquipmentBadges == null) RefreshEquipmentBadges(); return _availableEquipmentBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removeIdentityBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addIdentityBadgeCommand;
+        private RelayCommand<PropertyItem> _removeUnitsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addUnitsBadgeCommand;
+        private RelayCommand<PropertyItem> _removeEconomicsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addEconomicsBadgeCommand;
+        private RelayCommand<PropertyItem> _removeEquipmentBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addEquipmentBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveIdentityBadgeCommand => _removeIdentityBadgeCommand ??= CreateRemoveBadgeCommand(RefreshIdentityBadges);
+        public RelayCommand<AvailablePropertyItem> AddIdentityBadgeCommand => _addIdentityBadgeCommand ??= CreateAddBadgeCommand(RefreshIdentityBadges);
+        public RelayCommand<PropertyItem> RemoveUnitsBadgeCommand => _removeUnitsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshUnitsBadges);
+        public RelayCommand<AvailablePropertyItem> AddUnitsBadgeCommand => _addUnitsBadgeCommand ??= CreateAddBadgeCommand(RefreshUnitsBadges);
+        public RelayCommand<PropertyItem> RemoveEconomicsBadgeCommand => _removeEconomicsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshEconomicsBadges);
+        public RelayCommand<AvailablePropertyItem> AddEconomicsBadgeCommand => _addEconomicsBadgeCommand ??= CreateAddBadgeCommand(RefreshEconomicsBadges);
+        public RelayCommand<PropertyItem> RemoveEquipmentBadgeCommand => _removeEquipmentBadgeCommand ??= CreateRemoveBadgeCommand(RefreshEquipmentBadges);
+        public RelayCommand<AvailablePropertyItem> AddEquipmentBadgeCommand => _addEquipmentBadgeCommand ??= CreateAddBadgeCommand(RefreshEquipmentBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshIdentityBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("identity", BadgeValueChangedHandler);
+            _identityBadges = active;
+            _availableIdentityBadges = available;
+            OnPropertyChanged(nameof(IdentityBadges));
+            OnPropertyChanged(nameof(AvailableIdentityBadges));
+        }
+
+        private void RefreshUnitsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("units", BadgeValueChangedHandler);
+            _unitsBadges = active;
+            _availableUnitsBadges = available;
+            OnPropertyChanged(nameof(UnitsBadges));
+            OnPropertyChanged(nameof(AvailableUnitsBadges));
+        }
+
+        private void RefreshEconomicsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("economics", BadgeValueChangedHandler);
+            _economicsBadges = active;
+            _availableEconomicsBadges = available;
+            OnPropertyChanged(nameof(EconomicsBadges));
+            OnPropertyChanged(nameof(AvailableEconomicsBadges));
+        }
+
+        private void RefreshEquipmentBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("equipment", BadgeValueChangedHandler);
+            _equipmentBadges = active;
+            _availableEquipmentBadges = available;
+            OnPropertyChanged(nameof(EquipmentBadges));
+            OnPropertyChanged(nameof(AvailableEquipmentBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged(propertyName + "Modified");
+                OnPropertyChanged(propertyName + "SessionEdit");
+            }
+
+            // Refresh relevant badge collection
+            RefreshIdentityBadges();
+            RefreshUnitsBadges();
+            RefreshEconomicsBadges();
+            RefreshEquipmentBadges();
+        }
+
+        private string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.LEVEL => nameof(Level),
+                Command.BOSSNAME => nameof(BossName),
+                Command.ERAMASK => nameof(EraMask),
+                Command.NRUNITS => nameof(NrUnits),
+                Command.MINMEN => nameof(MinMen),
+                Command.MINPAY => nameof(MinPay),
+                Command.RECRATE => nameof(RecRate),
+                Command.XP => nameof(XP),
+                Command.RANDEQUIP => nameof(RandEquip),
+                _ => null
+            };
+        }
     }
 
     /// <summary>
@@ -3813,6 +6152,77 @@ namespace Dom5Editor.UI.Views
         }
 
         public Poptype Poptype => (Poptype)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from poptype_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "poptype";
+
+        // ========================================
+        // Badge Collections
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _recruitmentBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableRecruitmentBadges;
+        private ObservableCollection<PropertyItem> _defenseBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableDefenseBadges;
+
+        public ObservableCollection<PropertyItem> RecruitmentBadges
+        {
+            get { if (_recruitmentBadges == null) RefreshRecruitmentBadges(); return _recruitmentBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableRecruitmentBadges
+        {
+            get { if (_availableRecruitmentBadges == null) RefreshRecruitmentBadges(); return _availableRecruitmentBadges; }
+        }
+
+        public ObservableCollection<PropertyItem> DefenseBadges
+        {
+            get { if (_defenseBadges == null) RefreshDefenseBadges(); return _defenseBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableDefenseBadges
+        {
+            get { if (_availableDefenseBadges == null) RefreshDefenseBadges(); return _availableDefenseBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removeRecruitmentBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addRecruitmentBadgeCommand;
+        private RelayCommand<PropertyItem> _removeDefenseBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addDefenseBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveRecruitmentBadgeCommand => _removeRecruitmentBadgeCommand ??= CreateRemoveBadgeCommand(RefreshRecruitmentBadges);
+        public RelayCommand<AvailablePropertyItem> AddRecruitmentBadgeCommand => _addRecruitmentBadgeCommand ??= CreateAddBadgeCommand(RefreshRecruitmentBadges);
+        public RelayCommand<PropertyItem> RemoveDefenseBadgeCommand => _removeDefenseBadgeCommand ??= CreateRemoveBadgeCommand(RefreshDefenseBadges);
+        public RelayCommand<AvailablePropertyItem> AddDefenseBadgeCommand => _addDefenseBadgeCommand ??= CreateAddBadgeCommand(RefreshDefenseBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshRecruitmentBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("recruitment", BadgeValueChangedHandler);
+            _recruitmentBadges = active;
+            _availableRecruitmentBadges = available;
+            OnPropertyChanged(nameof(RecruitmentBadges));
+            OnPropertyChanged(nameof(AvailableRecruitmentBadges));
+        }
+
+        private void RefreshDefenseBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("defense", BadgeValueChangedHandler);
+            _defenseBadges = active;
+            _availableDefenseBadges = available;
+            OnPropertyChanged(nameof(DefenseBadges));
+            OnPropertyChanged(nameof(AvailableDefenseBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            RefreshRecruitmentBadges();
+            RefreshDefenseBadges();
+        }
     }
 
     /// <summary>
@@ -3826,5 +6236,51 @@ namespace Dom5Editor.UI.Views
         }
 
         public Nametype Nametype => (Nametype)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from nametype_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "nametype";
+
+        // ========================================
+        // Badge Collections
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _namesBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableNamesBadges;
+
+        public ObservableCollection<PropertyItem> NamesBadges
+        {
+            get { if (_namesBadges == null) RefreshNamesBadges(); return _namesBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableNamesBadges
+        {
+            get { if (_availableNamesBadges == null) RefreshNamesBadges(); return _availableNamesBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removeNamesBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addNamesBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveNamesBadgeCommand => _removeNamesBadgeCommand ??= CreateRemoveBadgeCommand(RefreshNamesBadges);
+        public RelayCommand<AvailablePropertyItem> AddNamesBadgeCommand => _addNamesBadgeCommand ??= CreateAddBadgeCommand(RefreshNamesBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshNamesBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("names", BadgeValueChangedHandler);
+            _namesBadges = active;
+            _availableNamesBadges = available;
+            OnPropertyChanged(nameof(NamesBadges));
+            OnPropertyChanged(nameof(AvailableNamesBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            RefreshNamesBadges();
+        }
     }
 }

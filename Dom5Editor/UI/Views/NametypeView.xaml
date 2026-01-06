@@ -1,0 +1,52 @@
+<UserControl x:Class="Dom5Editor.UI.Views.NametypeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="500"
+             Background="{DynamicResource BackgroundMediumBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="12">
+            <!-- Header with ID and source indicator -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource HeaderText}" FontSize="18" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                        <TextBlock Text="{Binding ID, StringFormat='Name Type #{0}'}" Style="{DynamicResource MutedText}" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <Border Grid.Column="1" Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="3" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SourceLabel}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Description -->
+            <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="10" Margin="0,0,0,12">
+                <TextBlock Text="Name types define lists of names that can be assigned to units, commanders, or other entities."
+                           Style="{DynamicResource MutedText}" FontSize="11" TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Names Section -->
+            <controls:PropertyGroupControl Header="Names" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding NamesBadges}"
+                        AvailableItems="{Binding AvailableNamesBadges}"
+                        RemoveCommand="{Binding RemoveNamesBadgeCommand}"
+                        AddCommand="{Binding AddNamesBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

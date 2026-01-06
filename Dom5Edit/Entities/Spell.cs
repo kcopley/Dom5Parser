@@ -23,7 +23,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.DAMAGE, SpellDamage.Create);
             _propertyMap.Add(Command.DAMAGEMON, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.NEXTSPELL, SpellRef.Create);
-            _propertyMap.Add(Command.NEXTINGEO, SpellRef.Create);
+            _propertyMap.Add(Command.NEXTINGEO, BitmaskProperty.Create); // terrain mask for when next spell triggers
             _propertyMap.Add(Command.EFFECT, SpellEffect.Create);
             _propertyMap.Add(Command.NREFF, IntProperty.Create);
             _propertyMap.Add(Command.RANGE, IntProperty.Create);
@@ -75,6 +75,14 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.ONLYSITEDST, SiteRef.Create); //#onlysitedst <site name> | <site nbr>
             _propertyMap.Add(Command.AOEINSPECTOR, IntProperty.Create); //#aoeinspector <value>
             _propertyMap.Add(Command.FATIGUECOSTINSPECTOR, IntProperty.Create); //#fatiguecostinspector <value>
+            // Global enchantment settings
+            _propertyMap.Add(Command.DISPIMMUNE, IntProperty.Create); //#dispimmune <0-2>
+            _propertyMap.Add(Command.NAPBREAKRIT, IntProperty.Create); //#napbreakrit <value>
+            _propertyMap.Add(Command.SUMHEALAFFS, IntProperty.Create); //#sumhealaffs <value>
+            _propertyMap.Add(Command.LOCALGLOBAL, IntProperty.Create); //#localglobal <0|1>
+            _propertyMap.Add(Command.WORLDVISIBLE, IntProperty.Create); //#worldvisible <0|1>
+            _propertyMap.Add(Command.GLOBALLOOK, IntProperty.Create); //#globallook <1-9>
+            _propertyMap.Add(Command.SPEEDMULT, IntProperty.Create); //#speedmult <1-3>
         }
 
         public override void Export(StreamWriter writer)

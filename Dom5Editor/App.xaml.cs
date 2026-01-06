@@ -15,6 +15,36 @@ namespace Dom5Editor
 
             // Configure VanillaLoader before any UI loads
             ConfigureVanillaLoader();
+
+            // Force load vanilla data immediately on startup
+            // This ensures vanilla.dm is parsed before any mod is loaded
+            LoadVanillaData();
+        }
+
+        private void LoadVanillaData()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("[App] Loading vanilla data on startup...");
+                var vanilla = VanillaLoader.Vanilla;
+                if (vanilla != null)
+                {
+                    int monsterCount = vanilla.Database[Dom5Edit.Entities.EntityType.MONSTER].GetFullList().Count;
+                    int siteCount = vanilla.Database[Dom5Edit.Entities.EntityType.SITE].GetFullList().Count;
+                    int nationCount = vanilla.Database[Dom5Edit.Entities.EntityType.NATION].GetFullList().Count;
+                    System.Diagnostics.Debug.WriteLine($"[App] Vanilla data loaded: {monsterCount} monsters, {siteCount} sites, {nationCount} nations");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("[App] WARNING: VanillaLoader.Vanilla returned null!");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[App] ERROR loading vanilla data: {ex.Message}");
+                MessageBox.Show($"Failed to load vanilla.dm:\n{ex.Message}\n\nThe application may not function correctly.",
+                    "Vanilla Data Load Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ConfigureVanillaLoader()

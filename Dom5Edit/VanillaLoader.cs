@@ -184,6 +184,7 @@ namespace Dom5Edit
             }
 
             m.Parse(dmPath);
+
             MarkAllEntitiesAsVanilla(m);
             return m;
         }
