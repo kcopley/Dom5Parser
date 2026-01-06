@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -106,6 +107,101 @@ namespace Dom5Editor.UI.Views
         /// The underlying entity.
         /// </summary>
         public IDEntity Entity => _entity;
+
+        // ========================================
+        // Entity Navigation
+        // ========================================
+
+        /// <summary>
+        /// Static reference to MainWindowViewModel for navigation.
+        /// Must be set during application startup.
+        /// </summary>
+        private static MainWindowViewModel _mainViewModel;
+
+        /// <summary>
+        /// Sets the MainWindowViewModel reference for navigation.
+        /// Call this during application initialization.
+        /// </summary>
+        public static void SetMainViewModel(MainWindowViewModel vm)
+        {
+            _mainViewModel = vm;
+        }
+
+        /// <summary>
+        /// Gets the MainWindowViewModel for navigation.
+        /// </summary>
+        public static MainWindowViewModel MainViewModel => _mainViewModel;
+
+        // ========================================
+        // Cached Entity Lists (from MainWindowViewModel)
+        // ========================================
+
+        /// <summary>
+        /// Gets the cached list of all available weapons for dropdowns.
+        /// </summary>
+        protected static IReadOnlyList<AvailableEquipmentItem> CachedWeapons =>
+            _mainViewModel?.CachedWeapons ?? Array.Empty<AvailableEquipmentItem>();
+
+        /// <summary>
+        /// Gets the cached list of all available armor for dropdowns.
+        /// </summary>
+        protected static IReadOnlyList<AvailableEquipmentItem> CachedArmors =>
+            _mainViewModel?.CachedArmors ?? Array.Empty<AvailableEquipmentItem>();
+
+        /// <summary>
+        /// Gets the cached list of all available monsters for dropdowns.
+        /// </summary>
+        protected static IReadOnlyList<AvailableEquipmentItem> CachedMonsters =>
+            _mainViewModel?.CachedMonsters ?? Array.Empty<AvailableEquipmentItem>();
+
+        /// <summary>
+        /// Gets the cached list of all available items for dropdowns.
+        /// </summary>
+        protected static IReadOnlyList<AvailableEquipmentItem> CachedItems =>
+            _mainViewModel?.CachedItems ?? Array.Empty<AvailableEquipmentItem>();
+
+        /// <summary>
+        /// Gets the cached list of all available spells for dropdowns.
+        /// </summary>
+        protected static IReadOnlyList<AvailableEquipmentItem> CachedSpells =>
+            _mainViewModel?.CachedSpells ?? Array.Empty<AvailableEquipmentItem>();
+
+        /// <summary>
+        /// Gets the cached list of all available sites for dropdowns.
+        /// </summary>
+        protected static IReadOnlyList<AvailableEquipmentItem> CachedSites =>
+            _mainViewModel?.CachedSites ?? Array.Empty<AvailableEquipmentItem>();
+
+        /// <summary>
+        /// Gets the cached list of all available nations for dropdowns.
+        /// </summary>
+        protected static IReadOnlyList<AvailableEquipmentItem> CachedNations =>
+            _mainViewModel?.CachedNations ?? Array.Empty<AvailableEquipmentItem>();
+
+        /// <summary>
+        /// Generic navigation command that works for any reference type.
+        /// Accepts PropertyItem (for badge clicks) or ValueTuple&lt;string, int&gt; (refType, id).
+        /// </summary>
+        public ICommand NavigateToReferenceCommand => new RelayCommand<object>(param =>
+        {
+            if (_mainViewModel == null)
+                return;
+
+            if (param is PropertyItem badge && badge.IsReference)
+            {
+                // Navigation from badge click
+                var entityType = BadgeConfigLoader.GetEntityTypeFromRefType(badge.ReferenceType);
+                if (entityType.HasValue)
+                    _mainViewModel.NavigateToEntity(entityType.Value, badge.ReferenceId);
+            }
+            else if (param is ValueTuple<string, int> tuple)
+            {
+                // Navigation from equipment/reference click with (refType, id)
+                var entityType = BadgeConfigLoader.GetEntityTypeFromRefType(tuple.Item1);
+                if (entityType.HasValue)
+                    _mainViewModel.NavigateToEntity(entityType.Value, tuple.Item2);
+            }
+        });
 
         // ========================================
         // Badge Configuration Infrastructure
@@ -330,6 +426,7 @@ namespace Dom5Editor.UI.Views
         /// <summary>
         /// Builds reference badges for a command that references other entities.
         /// Handles multi-value refs with layered access (vanilla -> mod -> session).
+        /// Supports both StringOrIDRef and other Reference types (MonsterOrMontagRef, etc.)
         /// </summary>
         private List<PropertyItem> BuildReferenceBadges(BadgeCommand cmdDef, Command command, bool sectionReadOnly, IDEntity vanillaEntity)
         {
@@ -349,39 +446,30 @@ namespace Dom5Editor.UI.Views
             {
                 foreach (var prop in vanillaEntity.GetMultiple(command))
                 {
-                    if (prop is StringOrIDRef refProp && refProp.HasValue)
-                    {
-                        var refId = refProp.ID;
-                        vanillaIds.Add(refId);
+                    if (!TryExtractRefInfo(prop, entityType, out int refId, out string refName))
+                        continue;
 
-                        // Skip if we're also looking at the current entity and it's the same ref
-                        // (will be handled in Layer 2 as direct)
-                        if (vanillaEntity != _entity && HasDirectRefProperty(command, refId))
-                            continue;
+                    vanillaIds.Add(refId);
 
-                        seenIds.Add(refId);
+                    // Skip if we're also looking at the current entity and it's the same ref
+                    // (will be handled in Layer 2 as direct)
+                    if (vanillaEntity != _entity && HasDirectRefProperty(command, refId))
+                        continue;
 
-                        // Resolve name
-                        string refName = null;
-                        if (entityType.HasValue)
-                        {
-                            refName = GetEntityName(entityType.Value, refId);
-                        }
-                        refName ??= refProp.Name;
+                    seenIds.Add(refId);
 
-                        bool isInherited = vanillaEntity != _entity;
-                        var badge = BadgeConfigLoader.CreateReferencePropertyItem(
-                            cmdDef,
-                            refId,
-                            refName,
-                            isModified: false,
-                            isSessionEdit: false);
+                    bool isInherited = vanillaEntity != _entity;
+                    var badge = BadgeConfigLoader.CreateReferencePropertyItem(
+                        cmdDef,
+                        refId,
+                        refName,
+                        isModified: false,
+                        isSessionEdit: false);
 
-                        badge.IsInherited = sectionReadOnly || isInherited;
-                        badge.CanRemove = !sectionReadOnly && !isInherited && canRemoveBasedOnSource;
+                    badge.IsInherited = sectionReadOnly || isInherited;
+                    badge.CanRemove = !sectionReadOnly && !isInherited && canRemoveBasedOnSource;
 
-                        badges.Add(badge);
-                    }
+                    badges.Add(badge);
                 }
 
                 // Also check vanilla's copystats chain
@@ -393,48 +481,39 @@ namespace Dom5Editor.UI.Views
             {
                 foreach (var prop in _entity.GetMultiple(command))
                 {
-                    if (prop is StringOrIDRef refProp && refProp.HasValue)
+                    if (!TryExtractRefInfo(prop, entityType, out int refId, out string refName))
+                        continue;
+
+                    bool isSessionEdit = IsPropertyEditedInSession(command);
+                    bool isModified = !vanillaIds.Contains(refId);
+
+                    if (seenIds.Contains(refId))
                     {
-                        var refId = refProp.ID;
-                        bool isSessionEdit = IsPropertyEditedInSession(command);
-                        bool isModified = !vanillaIds.Contains(refId);
-
-                        // Resolve name
-                        string refName = null;
-                        if (entityType.HasValue)
+                        // Update existing badge to mark as modified
+                        var existingBadge = badges.Find(b => b.ReferenceId == refId);
+                        if (existingBadge != null)
                         {
-                            refName = GetEntityName(entityType.Value, refId);
+                            existingBadge.IsModified = true;
+                            existingBadge.IsInherited = false;
+                            existingBadge.IsSessionEdit = isSessionEdit;
+                            existingBadge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
                         }
-                        refName ??= refProp.Name;
+                    }
+                    else
+                    {
+                        seenIds.Add(refId);
 
-                        if (seenIds.Contains(refId))
-                        {
-                            // Update existing badge to mark as modified
-                            var existingBadge = badges.Find(b => b.ReferenceId == refId);
-                            if (existingBadge != null)
-                            {
-                                existingBadge.IsModified = true;
-                                existingBadge.IsInherited = false;
-                                existingBadge.IsSessionEdit = isSessionEdit;
-                                existingBadge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
-                            }
-                        }
-                        else
-                        {
-                            seenIds.Add(refId);
+                        var badge = BadgeConfigLoader.CreateReferencePropertyItem(
+                            cmdDef,
+                            refId,
+                            refName,
+                            isModified: isModified,
+                            isSessionEdit: isSessionEdit);
 
-                            var badge = BadgeConfigLoader.CreateReferencePropertyItem(
-                                cmdDef,
-                                refId,
-                                refName,
-                                isModified: isModified,
-                                isSessionEdit: isSessionEdit);
+                        badge.IsInherited = false;
+                        badge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
 
-                            badge.IsInherited = false;
-                            badge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
-
-                            badges.Add(badge);
-                        }
+                        badges.Add(badge);
                     }
                 }
 
@@ -446,13 +525,69 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
+        /// Extracts reference ID and name from a property.
+        /// Handles StringOrIDRef, MonsterOrMontagRef, and other Reference types.
+        /// </summary>
+        private bool TryExtractRefInfo(Property prop, EntityType? entityType, out int refId, out string refName)
+        {
+            refId = 0;
+            refName = null;
+
+            // Try StringOrIDRef first (has direct ID/Name access)
+            if (prop is StringOrIDRef stringOrIdRef && stringOrIdRef.HasValue)
+            {
+                refId = stringOrIdRef.ID;
+                if (entityType.HasValue)
+                {
+                    refName = GetEntityName(entityType.Value, refId);
+                }
+                refName ??= stringOrIdRef.Name;
+                return true;
+            }
+
+            // Handle MonsterOrMontagRef specifically (wraps MonsterRef or MontagIDRef)
+            if (prop is MonsterOrMontagRef monsterOrMontagRef)
+            {
+                // Try to get the wrapped MonsterRef
+                if (monsterOrMontagRef.MonsterRef != null && monsterOrMontagRef.MonsterRef.HasValue)
+                {
+                    refId = monsterOrMontagRef.MonsterRef.ID;
+                    if (entityType.HasValue)
+                    {
+                        refName = GetEntityName(entityType.Value, refId);
+                    }
+                    refName ??= monsterOrMontagRef.MonsterRef.Name;
+                    return true;
+                }
+                // Try to get the wrapped MontagIDRef (negative IDs = montag)
+                if (monsterOrMontagRef.MontagRef != null && monsterOrMontagRef.MontagRef.HasValue)
+                {
+                    refId = monsterOrMontagRef.MontagRef.ID;
+                    // Montags are negative IDs, display as "Montag #X"
+                    refName = $"Montag #{Math.Abs(refId)}";
+                    return true;
+                }
+            }
+
+            // Try any Reference type via TryGetEntity (requires resolution)
+            if (prop is Reference reference && reference.TryGetEntity(out IDEntity referencedEntity) && referencedEntity != null)
+            {
+                refId = referencedEntity.ID;
+                refName = referencedEntity.Name;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Helper to check if the current entity has a direct reference property with the given ID.
         /// </summary>
         private bool HasDirectRefProperty(Command command, int targetId)
         {
             foreach (var prop in _entity.GetMultiple(command))
             {
-                if (prop is StringOrIDRef refProp && refProp.HasValue && refProp.ID == targetId)
+                if (TryExtractRefInfo(prop, null, out int refId, out _) && refId == targetId)
                     return true;
             }
             return false;
@@ -481,33 +616,24 @@ namespace Dom5Editor.UI.Views
 
             foreach (var prop in copyFrom.GetMultiple(command))
             {
-                if (prop is StringOrIDRef refProp && refProp.HasValue)
+                if (!TryExtractRefInfo(prop, entityType, out int refId, out string refName))
+                    continue;
+
+                if (!seenIds.Contains(refId))
                 {
-                    var refId = refProp.ID;
-                    if (!seenIds.Contains(refId))
-                    {
-                        seenIds.Add(refId);
+                    seenIds.Add(refId);
 
-                        // Resolve name
-                        string refName = null;
-                        if (entityType.HasValue)
-                        {
-                            refName = GetEntityName(entityType.Value, refId);
-                        }
-                        refName ??= refProp.Name;
+                    var badge = BadgeConfigLoader.CreateReferencePropertyItem(
+                        cmdDef,
+                        refId,
+                        refName,
+                        isModified: false,
+                        isSessionEdit: false);
 
-                        var badge = BadgeConfigLoader.CreateReferencePropertyItem(
-                            cmdDef,
-                            refId,
-                            refName,
-                            isModified: false,
-                            isSessionEdit: false);
+                    badge.IsInherited = true;
+                    badge.CanRemove = false; // Inherited from copystats, can't remove
 
-                        badge.IsInherited = true;
-                        badge.CanRemove = false; // Inherited from copystats, can't remove
-
-                        badges.Add(badge);
-                    }
+                    badges.Add(badge);
                 }
             }
 

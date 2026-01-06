@@ -43,6 +43,7 @@
                         AvailableItems="{Binding AvailableRecruitmentBadges}"
                         RemoveCommand="{Binding RemoveRecruitmentBadgeCommand}"
                         AddCommand="{Binding AddRecruitmentBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -55,6 +56,7 @@
                         AvailableItems="{Binding AvailableDefenseBadges}"
                         RemoveCommand="{Binding RemoveDefenseBadgeCommand}"
                         AddCommand="{Binding AddDefenseBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

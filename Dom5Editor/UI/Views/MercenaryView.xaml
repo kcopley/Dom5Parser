@@ -126,6 +126,7 @@
                         AvailableItems="{Binding AvailableIdentityBadges}"
                         RemoveCommand="{Binding RemoveIdentityBadgeCommand}"
                         AddCommand="{Binding AddIdentityBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -138,6 +139,7 @@
                         AvailableItems="{Binding AvailableUnitsBadges}"
                         RemoveCommand="{Binding RemoveUnitsBadgeCommand}"
                         AddCommand="{Binding AddUnitsBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -150,6 +152,7 @@
                         AvailableItems="{Binding AvailableEconomicsBadges}"
                         RemoveCommand="{Binding RemoveEconomicsBadgeCommand}"
                         AddCommand="{Binding AddEconomicsBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -162,6 +165,7 @@
                         AvailableItems="{Binding AvailableEquipmentBadges}"
                         RemoveCommand="{Binding RemoveEquipmentBadgeCommand}"
                         AddCommand="{Binding AddEquipmentBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

@@ -5,8 +5,8 @@ namespace Dom5Edit.Props
 {
     public class MonsterOrMontagRef : Reference
     {
-        internal MontagIDRef _montagRef;
-        internal MonsterRef _monsterRef;
+        public MontagIDRef MontagRef;
+        public MonsterRef MonsterRef;
 
 
         public static Property Create()
@@ -16,21 +16,21 @@ namespace Dom5Edit.Props
 
         public override void Resolve()
         {
-            if (_montagRef != null)
+            if (MontagRef != null)
             {
-                _montagRef.Resolve();
+                MontagRef.Resolve();
             }
-            else if (_monsterRef != null)
+            else if (MonsterRef != null)
             {
-                _monsterRef.Resolve();
+                MonsterRef.Resolve();
             }
 
             if (this.Command == Command.DAMAGEMON)
             {
-                if (_monsterRef.Entity != null && _monsterRef.Entity.ID != -1)
+                if (MonsterRef.Entity != null && MonsterRef.Entity.ID != -1)
                 {
                     this.Command = Command.DAMAGE;
-                    _monsterRef.Command = Command.DAMAGE;
+                    MonsterRef.Command = Command.DAMAGE;
                 }
             }
         }
@@ -38,21 +38,21 @@ namespace Dom5Edit.Props
         public override bool TryGetEntity(out IDEntity e)
         {
             e = null;
-            if (_montagRef != null)
+            if (MontagRef != null)
             {
-                return _montagRef.TryGetEntity(out e);
+                return MontagRef.TryGetEntity(out e);
             }
-            else if (_monsterRef != null)
+            else if (MonsterRef != null)
             {
-                return _monsterRef.TryGetEntity(out e);
+                return MonsterRef.TryGetEntity(out e);
             }
             return false;
         }
 
         public bool TrySetEntity(IDEntity e)
         {
-            _montagRef = null;
-            _monsterRef.Entity = e;
+            MontagRef = null;
+            MonsterRef.Entity = e;
             return true;
         }
 
@@ -63,40 +63,40 @@ namespace Dom5Edit.Props
             this.Command = c;
             if (hasvalue && i < 0)
             {
-                _montagRef = new MontagIDRef();
-                _montagRef.Parent = this.Parent;
-                _montagRef.Parse(c, v, comment);
+                MontagRef = new MontagIDRef();
+                MontagRef.Parent = this.Parent;
+                MontagRef.Parse(c, v, comment);
             }
             else //monster, possibly by name
             {
-                _monsterRef = new MonsterRef();
-                _monsterRef.Parent = this.Parent;
-                _monsterRef.Parse(c, v, comment);
+                MonsterRef = new MonsterRef();
+                MonsterRef.Parent = this.Parent;
+                MonsterRef.Parse(c, v, comment);
             }
         }
 
         public override string ToExportString()
         {
-            if (_montagRef != null)
+            if (MontagRef != null)
             {
-                return _montagRef.ToExportString();
+                return MontagRef.ToExportString();
             }
-            else if (_monsterRef != null)
+            else if (MonsterRef != null)
             {
-                return _monsterRef.ToExportString();
+                return MonsterRef.ToExportString();
             }
             return "";
         }
 
         internal override EntityType GetEntityType()
         {
-            if (_montagRef != null)
+            if (MontagRef != null)
             {
-                return _montagRef.GetEntityType();
+                return MontagRef.GetEntityType();
             }
-            else if (_monsterRef != null)
+            else if (MonsterRef != null)
             {
-                return _monsterRef.GetEntityType();
+                return MonsterRef.GetEntityType();
             }
             return EntityType.MONSTER;
         }
@@ -106,7 +106,7 @@ namespace Dom5Edit.Props
             if (copyFrom is MonsterOrMontagRef)
             {
                 var compare = copyFrom as MonsterOrMontagRef;
-                if (this.Command == compare.Command && (this._monsterRef.EqualsProperty<MonsterRef>(compare._monsterRef) || this._montagRef.EqualsProperty<MontagIDRef>(compare._montagRef))) return true;
+                if (this.Command == compare.Command && (this.MonsterRef.EqualsProperty<MonsterRef>(compare.MonsterRef) || this.MontagRef.EqualsProperty<MontagIDRef>(compare.MontagRef))) return true;
             }
             return false;
         }

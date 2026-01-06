@@ -78,7 +78,9 @@
                                 Visibility="{Binding HasCopyStats, Converter={StaticResource BoolToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="copystats:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopyStatsDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopyStatsDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"
+                                           Cursor="Hand" TextDecorations="Underline"
+                                           MouseLeftButtonDown="OnCopyStatsClick"/>
                             </StackPanel>
                         </Border>
                         <!-- CopySpr badge -->
@@ -86,7 +88,9 @@
                                 Visibility="{Binding HasCopySpr, Converter={StaticResource BoolToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="copyspr:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopySprDisplay}" Foreground="#87CEEB" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopySprDisplay}" Foreground="#87CEEB" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"
+                                           Cursor="Hand" TextDecorations="Underline"
+                                           MouseLeftButtonDown="OnCopySprClick"/>
                             </StackPanel>
                         </Border>
                     </WrapPanel>
@@ -197,11 +201,12 @@
                                                                Foreground="{DynamicResource TextSecondaryBrush}"
                                                                FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
 
-                                                    <!-- Name (hyperlink style - for future navigation) -->
+                                                    <!-- Name (hyperlink style - click to navigate) -->
                                                     <TextBlock Text="{Binding Name, TargetNullValue='(unknown)'}"
                                                                Foreground="{DynamicResource AccentHighlightBrush}"
                                                                FontSize="11" VerticalAlignment="Center"
-                                                               TextDecorations="Underline" Cursor="Hand"/>
+                                                               TextDecorations="Underline" Cursor="Hand"
+                                                               MouseLeftButtonDown="OnEquipmentClick"/>
                                                 </StackPanel>
 
                                                 <!-- Remove button -->
@@ -284,11 +289,12 @@
                                                                Foreground="{DynamicResource TextSecondaryBrush}"
                                                                FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
 
-                                                    <!-- Name (hyperlink style - for future navigation) -->
+                                                    <!-- Name (hyperlink style - click to navigate) -->
                                                     <TextBlock Text="{Binding Name, TargetNullValue='(unknown)'}"
                                                                Foreground="{DynamicResource AccentHighlightBrush}"
                                                                FontSize="11" VerticalAlignment="Center"
-                                                               TextDecorations="Underline" Cursor="Hand"/>
+                                                               TextDecorations="Underline" Cursor="Hand"
+                                                               MouseLeftButtonDown="OnEquipmentClick"/>
                                                 </StackPanel>
 
                                                 <!-- Remove button -->
@@ -338,7 +344,8 @@
                         <controls:BadgeWrapPanel
                             ItemsSource="{Binding TypeBadges}"
                             AvailableItems="{Binding AvailableTypeBadges}"
-                            ShowAddButton="False"/>
+                            ShowAddButton="False"
+                            NavigateCommand="{Binding NavigateToReferenceCommand}"/>
 
                         <!-- General (movement, leadership, special, province, stealth, recruitment) -->
                         <TextBlock Text="GENERAL" FontSize="8" FontWeight="Bold"
@@ -348,7 +355,8 @@
                             AvailableItems="{Binding AvailableGeneralBadges}"
                             RemoveCommand="{Binding RemoveGeneralBadgeCommand}"
                             AddCommand="{Binding AddGeneralBadgeCommand}"
-                            ShowAddButton="True"/>
+                            ShowAddButton="True"
+                            NavigateCommand="{Binding NavigateToReferenceCommand}"/>
 
                         <!-- Combat (combat abilities + auras) -->
                         <TextBlock Text="COMBAT" FontSize="8" FontWeight="Bold"
@@ -358,7 +366,8 @@
                             AvailableItems="{Binding AvailableCombatBadges}"
                             RemoveCommand="{Binding RemoveCombatBadgeCommand}"
                             AddCommand="{Binding AddCombatBadgeCommand}"
-                            ShowAddButton="True"/>
+                            ShowAddButton="True"
+                            NavigateCommand="{Binding NavigateToReferenceCommand}"/>
 
                         <!-- Resistances (colored value badges) -->
                         <TextBlock Text="RESISTANCES" FontSize="8" FontWeight="Bold"
@@ -368,7 +377,8 @@
                             AvailableItems="{Binding AvailableResistanceBadges}"
                             RemoveCommand="{Binding RemoveResistanceBadgeCommand}"
                             AddCommand="{Binding AddResistanceBadgeCommand}"
-                            ShowAddButton="True"/>
+                            ShowAddButton="True"
+                            NavigateCommand="{Binding NavigateToReferenceCommand}"/>
                     </StackPanel>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

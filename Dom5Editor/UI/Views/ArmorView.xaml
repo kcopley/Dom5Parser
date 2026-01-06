@@ -90,6 +90,7 @@
                         AvailableItems="{Binding AvailablePropertyBadges}"
                         RemoveCommand="{Binding RemovePropertyBadgeCommand}"
                         AddCommand="{Binding AddPropertyBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

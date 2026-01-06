@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -272,6 +273,229 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
+        // Entity Reference Caches (for dropdown performance)
+        // ========================================
+
+        /// <summary>
+        /// Cached list of all available weapons (vanilla + mod) for dropdown binding.
+        /// Built once when mod loads, shared across all ViewModels.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> CachedWeapons { get; private set; }
+
+        /// <summary>
+        /// Cached list of all available armor (vanilla + mod) for dropdown binding.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> CachedArmors { get; private set; }
+
+        /// <summary>
+        /// Cached list of all available monsters (vanilla + mod) for dropdown binding.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> CachedMonsters { get; private set; }
+
+        /// <summary>
+        /// Cached list of all available items (vanilla + mod) for dropdown binding.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> CachedItems { get; private set; }
+
+        /// <summary>
+        /// Cached list of all available spells (vanilla + mod) for dropdown binding.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> CachedSpells { get; private set; }
+
+        /// <summary>
+        /// Cached list of all available sites (vanilla + mod) for dropdown binding.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> CachedSites { get; private set; }
+
+        /// <summary>
+        /// Cached list of all available nations (vanilla + mod) for dropdown binding.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> CachedNations { get; private set; }
+
+        // ========================================
+        // Entity Navigation
+        // ========================================
+
+        private EntityType _selectedEntityType = EntityType.MONSTER;
+        public EntityType SelectedEntityType
+        {
+            get => _selectedEntityType;
+            set
+            {
+                if (_selectedEntityType != value)
+                {
+                    _selectedEntityType = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedEntityTypeIndex));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tab index for XAML binding. Maps to/from EntityType.
+        /// </summary>
+        public int SelectedEntityTypeIndex
+        {
+            get => EntityTypeToTabIndex(_selectedEntityType);
+            set
+            {
+                var newType = TabIndexToEntityType(value);
+                if (newType.HasValue && newType.Value != _selectedEntityType)
+                {
+                    _selectedEntityType = newType.Value;
+                    OnPropertyChanged(nameof(SelectedEntityType));
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Navigate to a specific entity by type and ID.
+        /// </summary>
+        public void NavigateToEntity(EntityType entityType, int id)
+        {
+            // Check if entity type has a tab (skip dependent entities)
+            if (!HasTabForEntityType(entityType))
+                return; // Silent no-op for Montag, Enchantment, etc.
+
+            SelectedEntityType = entityType;
+            bool found = SelectEntityById(entityType, id);
+
+            if (!found)
+            {
+                StatusMessage = $"Entity #{id} not found";
+            }
+        }
+
+        /// <summary>
+        /// Select entity in the appropriate collection by ID.
+        /// Returns true if entity was found and selected.
+        /// </summary>
+        private bool SelectEntityById(EntityType entityType, int id)
+        {
+            switch (entityType)
+            {
+                case EntityType.MONSTER:
+                    var monster = Monsters?.FirstOrDefault(m => m.ID == id);
+                    if (monster != null) { SelectedMonster = monster; return true; }
+                    return false;
+                case EntityType.WEAPON:
+                    var weapon = Weapons?.FirstOrDefault(w => w.ID == id);
+                    if (weapon != null) { SelectedWeapon = weapon; return true; }
+                    return false;
+                case EntityType.ARMOR:
+                    var armor = Armors?.FirstOrDefault(a => a.ID == id);
+                    if (armor != null) { SelectedArmor = armor; return true; }
+                    return false;
+                case EntityType.SPELL:
+                    var spell = Spells?.FirstOrDefault(s => s.ID == id);
+                    if (spell != null) { SelectedSpell = spell; return true; }
+                    return false;
+                case EntityType.ITEM:
+                    var item = Items?.FirstOrDefault(i => i.ID == id);
+                    if (item != null) { SelectedItem = item; return true; }
+                    return false;
+                case EntityType.SITE:
+                    var site = Sites?.FirstOrDefault(s => s.ID == id);
+                    if (site != null) { SelectedSite = site; return true; }
+                    return false;
+                case EntityType.NATION:
+                    var nation = Nations?.FirstOrDefault(n => n.ID == id);
+                    if (nation != null) { SelectedNation = nation; return true; }
+                    return false;
+                case EntityType.EVENT:
+                    var evt = Events?.FirstOrDefault(e => e.ID == id);
+                    if (evt != null) { SelectedEvent = evt; return true; }
+                    return false;
+                case EntityType.MERCENARY:
+                    var merc = Mercenaries?.FirstOrDefault(m => m.ID == id);
+                    if (merc != null) { SelectedMercenary = merc; return true; }
+                    return false;
+                case EntityType.POPTYPE:
+                    var poptype = Poptypes?.FirstOrDefault(p => p.ID == id);
+                    if (poptype != null) { SelectedPoptype = poptype; return true; }
+                    return false;
+                case EntityType.NAMETYPE:
+                    var nametype = Nametypes?.FirstOrDefault(n => n.ID == id);
+                    if (nametype != null) { SelectedNametype = nametype; return true; }
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Check if entity type has a corresponding tab in the UI.
+        /// </summary>
+        private static bool HasTabForEntityType(EntityType type)
+        {
+            return type switch
+            {
+                EntityType.MONSTER => true,
+                EntityType.WEAPON => true,
+                EntityType.ARMOR => true,
+                EntityType.SPELL => true,
+                EntityType.ITEM => true,
+                EntityType.SITE => true,
+                EntityType.NATION => true,
+                EntityType.EVENT => true,
+                EntityType.MERCENARY => true,
+                EntityType.POPTYPE => true,
+                EntityType.NAMETYPE => true,
+                // Dependent entities without tabs
+                EntityType.MONTAG => false,
+                EntityType.ENCHANTMENT => false,
+                EntityType.RESTRICTED_ITEM => false,
+                EntityType.EVENT_CODE => false,
+                _ => false
+            };
+        }
+
+        /// <summary>
+        /// Map EntityType to tab index (matches TabControl order in MainWindow.xaml).
+        /// </summary>
+        private static int EntityTypeToTabIndex(EntityType type)
+        {
+            return type switch
+            {
+                EntityType.MONSTER => 0,
+                EntityType.WEAPON => 1,
+                EntityType.ARMOR => 2,
+                EntityType.SPELL => 3,
+                EntityType.ITEM => 4,
+                EntityType.SITE => 5,
+                EntityType.NATION => 6,
+                EntityType.EVENT => 7,
+                EntityType.MERCENARY => 8,
+                EntityType.POPTYPE => 9,
+                EntityType.NAMETYPE => 10,
+                _ => 0
+            };
+        }
+
+        /// <summary>
+        /// Map tab index to EntityType.
+        /// </summary>
+        private static EntityType? TabIndexToEntityType(int index)
+        {
+            return index switch
+            {
+                0 => EntityType.MONSTER,
+                1 => EntityType.WEAPON,
+                2 => EntityType.ARMOR,
+                3 => EntityType.SPELL,
+                4 => EntityType.ITEM,
+                5 => EntityType.SITE,
+                6 => EntityType.NATION,
+                7 => EntityType.EVENT,
+                8 => EntityType.MERCENARY,
+                9 => EntityType.POPTYPE,
+                10 => EntityType.NAMETYPE,
+                _ => null
+            };
+        }
+
+        // ========================================
         // Mod Operations
         // ========================================
 
@@ -337,6 +561,10 @@ namespace Dom5Editor.UI.Views
             SelectedMercenary = null;
             SelectedPoptype = null;
             SelectedNametype = null;
+
+            // Build entity caches FIRST, before creating ViewModels
+            // This ensures dropdowns are pre-populated when VMs are constructed
+            BuildEntityCaches();
 
             // Initialize entity collections from mod + vanilla
             Monsters = LoadEntities<Monster, MonsterViewModel>(EntityType.MONSTER,
@@ -437,6 +665,95 @@ namespace Dom5Editor.UI.Views
             History.Clear();
             Changes = new ChangesMod { LoadedMod = _mod };
             History.ChangesMod = Changes;
+        }
+
+        /// <summary>
+        /// Builds all entity reference caches for dropdown performance.
+        /// Uses O(1) HashSet-based deduplication instead of O(n) List.Any().
+        /// </summary>
+        private void BuildEntityCaches()
+        {
+            CachedWeapons = BuildEntityCache<Weapon>(EntityType.WEAPON);
+            CachedArmors = BuildEntityCache<Armor>(EntityType.ARMOR);
+            CachedMonsters = BuildEntityCache<Monster>(EntityType.MONSTER);
+            CachedItems = BuildEntityCache<Item>(EntityType.ITEM);
+            CachedSpells = BuildEntityCache<Spell>(EntityType.SPELL);
+            CachedSites = BuildEntityCache<Site>(EntityType.SITE);
+            CachedNations = BuildEntityCache<Nation>(EntityType.NATION);
+
+            // Notify UI that caches have been rebuilt
+            OnPropertyChanged(nameof(CachedWeapons));
+            OnPropertyChanged(nameof(CachedArmors));
+            OnPropertyChanged(nameof(CachedMonsters));
+            OnPropertyChanged(nameof(CachedItems));
+            OnPropertyChanged(nameof(CachedSpells));
+            OnPropertyChanged(nameof(CachedSites));
+            OnPropertyChanged(nameof(CachedNations));
+        }
+
+        /// <summary>
+        /// Builds a cached list of available entities for dropdown binding.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type (Weapon, Armor, Monster, etc.)</typeparam>
+        /// <param name="type">The entity type enum value</param>
+        /// <returns>Sorted read-only list of available equipment items</returns>
+        private IReadOnlyList<AvailableEquipmentItem> BuildEntityCache<TEntity>(EntityType type)
+            where TEntity : IDEntity
+        {
+            var result = new List<AvailableEquipmentItem>();
+            var seenIds = new HashSet<int>(); // O(1) deduplication
+
+            // Add vanilla entities first
+            if (VanillaLoader.Vanilla?.Database.TryGetValue(type, out var vanillaSet) == true)
+            {
+                foreach (var entity in vanillaSet.GetFullList())
+                {
+                    if (entity is TEntity typedEntity && seenIds.Add(typedEntity.ID))
+                    {
+                        result.Add(new AvailableEquipmentItem
+                        {
+                            ID = typedEntity.ID,
+                            Name = typedEntity.Name,
+                            Source = "Vanilla"
+                        });
+                    }
+                }
+            }
+
+            // Add mod entities (new ones only, updates use vanilla entry)
+            if (_mod?.Database.TryGetValue(type, out var modSet) == true)
+            {
+                foreach (var entity in modSet.GetFullList())
+                {
+                    if (entity is TEntity typedEntity)
+                    {
+                        if (seenIds.Add(typedEntity.ID))
+                        {
+                            // New mod entity
+                            result.Add(new AvailableEquipmentItem
+                            {
+                                ID = typedEntity.ID,
+                                Name = typedEntity.Name,
+                                Source = "Mod"
+                            });
+                        }
+                        else
+                        {
+                            // Mod override of vanilla - update the name if different
+                            var existing = result.FirstOrDefault(r => r.ID == typedEntity.ID);
+                            if (existing != null && !string.IsNullOrEmpty(typedEntity.Name))
+                            {
+                                existing.Name = typedEntity.Name;
+                                existing.Source = "Mod"; // Mark as modified by mod
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Sort by ID for consistent display
+            result.Sort((a, b) => a.ID.CompareTo(b.ID));
+            return result.AsReadOnly();
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

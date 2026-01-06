@@ -44,13 +44,16 @@
                            Margin="0,0,8,0"
                            Visibility="{Binding ReferenceId, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}"/>
 
-                <!-- Name display -->
+                <!-- Name display (clickable for navigation) -->
                 <TextBlock Grid.Column="1"
                            Text="{Binding ReferenceName, RelativeSource={RelativeSource AncestorType=UserControl}, TargetNullValue='(none)'}"
-                           Foreground="{DynamicResource TextPrimaryBrush}"
+                           Foreground="{DynamicResource AccentBrush}"
                            FontSize="12"
                            VerticalAlignment="Center"
-                           TextTrimming="CharacterEllipsis"/>
+                           TextTrimming="CharacterEllipsis"
+                           Cursor="Hand"
+                           TextDecorations="Underline"
+                           MouseLeftButtonDown="OnNameClick"/>
             </Grid>
         </Border>
 

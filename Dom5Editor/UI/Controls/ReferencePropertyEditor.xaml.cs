@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Dom5Editor.UI.Controls
 {
@@ -119,6 +120,49 @@ namespace Dom5Editor.UI.Controls
             ReferenceId = null;
             ReferenceName = null;
             RaiseEvent(new RoutedEventArgs(ClearRequestedEvent, this));
+        }
+
+        /// <summary>
+        /// Event raised when navigation to the referenced entity is requested.
+        /// </summary>
+        public static readonly RoutedEvent NavigateRequestedEvent =
+            EventManager.RegisterRoutedEvent(
+                nameof(NavigateRequested),
+                RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler),
+                typeof(ReferencePropertyEditor));
+
+        public event RoutedEventHandler NavigateRequested
+        {
+            add => AddHandler(NavigateRequestedEvent, value);
+            remove => RemoveHandler(NavigateRequestedEvent, value);
+        }
+
+        private void OnNameClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ReferenceId.HasValue && ReferenceId.Value != 0)
+            {
+                RaiseEvent(new ReferenceNavigationEventArgs(NavigateRequestedEvent, this)
+                {
+                    ReferenceType = ReferenceType,
+                    ReferenceId = ReferenceId.Value
+                });
+                e.Handled = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Event args for reference navigation events.
+    /// </summary>
+    public class ReferenceNavigationEventArgs : RoutedEventArgs
+    {
+        public string ReferenceType { get; set; }
+        public int ReferenceId { get; set; }
+
+        public ReferenceNavigationEventArgs(RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
+        {
         }
     }
 }
