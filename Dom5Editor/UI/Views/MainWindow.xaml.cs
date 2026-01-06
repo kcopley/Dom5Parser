@@ -15,6 +15,9 @@ namespace Dom5Editor.UI.Views
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
 
+            // Set up entity navigation
+            EntityViewModel.SetMainViewModel(_viewModel);
+
             // Set up keyboard shortcuts
             SetupKeyboardShortcuts();
         }

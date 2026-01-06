@@ -43,6 +43,7 @@
                         AvailableItems="{Binding AvailableNamesBadges}"
                         RemoveCommand="{Binding RemoveNamesBadgeCommand}"
                         AddCommand="{Binding AddNamesBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

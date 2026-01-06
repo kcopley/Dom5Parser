@@ -1,4 +1,6 @@
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Dom5Editor.UI.Views
 {
@@ -17,5 +19,34 @@ namespace Dom5Editor.UI.Views
         // Magic paths
         private void OnMagicPathAdded(object sender, (int PathId, int Level) e) => ViewModel?.AddMagicPath(e.PathId, e.Level);
         private void OnMagicPathRemoved(object sender, int pathId) => ViewModel?.RemoveMagicPath(pathId);
+
+        // Equipment navigation - click weapon/armor name to navigate
+        private void OnEquipmentClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is FrameworkElement fe && fe.DataContext is EquipmentItem item)
+            {
+                ViewModel?.NavigateToReferenceCommand.Execute((item.EntityType, item.ID));
+            }
+        }
+
+        // CopyStats navigation - click to navigate to source monster
+        private void OnCopyStatsClick(object sender, MouseButtonEventArgs e)
+        {
+            var id = ViewModel?.CopyStatsId ?? 0;
+            if (id != 0)
+            {
+                ViewModel?.NavigateToReferenceCommand.Execute(("monster", id));
+            }
+        }
+
+        // CopySpr navigation - click to navigate to source monster
+        private void OnCopySprClick(object sender, MouseButtonEventArgs e)
+        {
+            var id = ViewModel?.CopySprId ?? 0;
+            if (id != 0)
+            {
+                ViewModel?.NavigateToReferenceCommand.Execute(("monster", id));
+            }
+        }
     }
 }

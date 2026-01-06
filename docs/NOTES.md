@@ -19,6 +19,7 @@ Quick reference notes for development context. See related documents for full de
 - ChangesMod session tracking
 - Layered property access (vanilla → mod → session) for all properties including equipment
 - Equipment display with full layered fallback (vanilla → mod → copystats) with name resolution fallback
+- **Centralized entity caches** for dropdown performance (weapons, armors, monsters, items, spells, sites, nations)
 - **MonsterView** - Stats grid, magic paths, equipment, and badge sections (572 commands)
 - **WeaponView** - Stats, damage types, special properties, secondary effects, badge panel
 - **ArmorView** - Stats and badge panel
@@ -43,12 +44,22 @@ Quick reference notes for development context. See related documents for full de
   - Inline display: "Requires 5N to forge (N1)"
 
 ### Recently Completed (2026-01-06)
+- **Performance: Centralized Entity Caches** - Dropdown lists pre-built at mod load:
+  - 7 cached lists: CachedWeapons, CachedArmors, CachedMonsters, CachedItems, CachedSpells, CachedSites, CachedNations
+  - Built BEFORE ViewModels are created for instant availability
+  - O(1) HashSet deduplication (was O(n²) with List.Any())
+  - All ViewModels share cached lists instead of rebuilding per-VM
+  - Eliminates lag when switching between entities
+
 - **Reference Type Badge Support** - `BuildBadgesFromSection()` now handles `type: "ref"` badges:
   - Multi-value ref property handling via `BuildReferenceBadges()` method
+  - `TryExtractRefInfo()` helper handles both `StringOrIDRef` and `MonsterOrMontagRef` types
+  - `MonsterOrMontagRef.MonsterRef`/`.MontagRef` fields made public for cross-assembly access
   - Entity name resolution for display (monster ID → monster name)
   - Vanilla + mod layering with proper IsModified/IsInherited flags
   - Copystats chain traversal for inherited references
   - Reference commands always available in Add dropdown (can have multiple instances)
+  - Montag references (negative IDs) display as "Montag #X"
 
 - **NationView** - Complete nation editor with:
   - Header with era display, epithet, vanilla data warning banner
@@ -109,6 +120,39 @@ Quick reference notes for development context. See related documents for full de
 | **Legacy VMs** | `Dom5Editor/VMs/EntityVMs/` | DEPRECATED - Will be removed |
 
 **Keep from Legacy:** `ModViewModel.cs`, `RelayCommand.cs`, `ViewModelBase.cs`
+
+### Centralized Entity Caches (Performance)
+
+Entity dropdown lists are pre-built at mod load for instant availability:
+
+```
+MainWindowViewModel.InitializeCollections()
+├── BuildEntityCaches()              ← FIRST: Build all cached lists
+│   ├── CachedWeapons   (IReadOnlyList<AvailableEquipmentItem>)
+│   ├── CachedArmors
+│   ├── CachedMonsters
+│   ├── CachedItems
+│   ├── CachedSpells
+│   ├── CachedSites
+│   └── CachedNations
+└── LoadEntities<T>()                ← ViewModels created after caches ready
+```
+
+**Access from ViewModels:**
+```csharp
+// EntityViewModel base class exposes cached lists:
+protected static IReadOnlyList<AvailableEquipmentItem> CachedWeapons => ...
+protected static IReadOnlyList<AvailableEquipmentItem> CachedArmors => ...
+// etc.
+
+// ViewModels use them directly:
+public IReadOnlyList<AvailableEquipmentItem> AvailableWeapons => CachedWeapons;
+```
+
+**Key points:**
+- O(1) HashSet deduplication (was O(n²) with List.Any())
+- Shared readonly lists across all ViewModels (no per-VM copies)
+- Caches built before any ViewModel construction
 
 ### Key Files for Entity Editing
 

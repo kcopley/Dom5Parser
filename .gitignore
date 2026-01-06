@@ -275,3 +275,9 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 CLAUDE.md
+Dom5Editor/Data/itemdescr/
+Dom5Editor/Data/spelldescr/
+Dom5Editor/Data/unitdescr/
+Dom5Editor/icons/items/
+Dom5Editor/icons/sprites/
+Dom5Editor/icons/sites/

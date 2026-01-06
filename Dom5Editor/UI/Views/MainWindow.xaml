@@ -102,7 +102,8 @@
         <TabControl x:Name="EntityTabs"
                     Grid.Row="1"
                     Style="{StaticResource TabControlBase}"
-                    IsEnabled="{Binding HasMod}">
+                    IsEnabled="{Binding HasMod}"
+                    SelectedIndex="{Binding SelectedEntityTypeIndex, Mode=TwoWay}">
 
             <!-- Monsters Tab -->
             <TabItem Header="Monsters" Style="{StaticResource TabItemBase}">
@@ -352,6 +353,62 @@
                             Background="{StaticResource BackgroundDarkBrush}"
                             Padding="16">
                         <ContentControl Content="{Binding SelectedMercenary}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Poptypes Tab -->
+            <TabItem Header="Poptypes" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="PoptypeList"
+                                                 Grid.Column="0"
+                                                 EntityType="Poptype"
+                                                 Entities="{Binding Poptypes}"
+                                                 SelectedEntity="{Binding SelectedPoptype, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedPoptype}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Nametypes Tab -->
+            <TabItem Header="Nametypes" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="NametypeList"
+                                                 Grid.Column="0"
+                                                 EntityType="Nametype"
+                                                 Entities="{Binding Nametypes}"
+                                                 SelectedEntity="{Binding SelectedNametype, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedNametype}"/>
                     </Border>
                 </Grid>
             </TabItem>

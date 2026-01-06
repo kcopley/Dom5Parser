@@ -12,9 +12,9 @@ namespace Dom5Edit.Props
         public override void Resolve()
         {
             base.Resolve();
-            if (_monsterRef != null)
+            if (MonsterRef != null)
             {
-                _monsterRef.IsStringRef = false;
+                MonsterRef.IsStringRef = false;
             }
         }
 
@@ -25,13 +25,13 @@ namespace Dom5Edit.Props
 
         public override string ToExportString()
         {
-            if (_montagRef != null)
+            if (MontagRef != null)
             {
-                return _montagRef.ToExportString();
+                return MontagRef.ToExportString();
             }
-            else if (_monsterRef != null)
+            else if (MonsterRef != null)
             {
-                return _monsterRef.ToExportString();
+                return MonsterRef.ToExportString();
             }
             return "";
         }

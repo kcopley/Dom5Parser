@@ -77,7 +77,8 @@
                             AvailableItems="{Binding AvailableIdentityBadges}"
                             RemoveCommand="{Binding RemoveIdentityBadgeCommand}"
                             AddCommand="{Binding AddIdentityBadgeCommand}"
-                            ShowAddButton="True"/>
+                            NavigateCommand="{Binding NavigateToReferenceCommand}"
+                        ShowAddButton="True"/>
                     </StackPanel>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -90,6 +91,7 @@
                         AvailableItems="{Binding AvailableRecruitmentBadges}"
                         RemoveCommand="{Binding RemoveRecruitmentBadgeCommand}"
                         AddCommand="{Binding AddRecruitmentBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -102,6 +104,7 @@
                         AvailableItems="{Binding AvailableTerrainRecruitmentBadges}"
                         RemoveCommand="{Binding RemoveTerrainRecruitmentBadgeCommand}"
                         AddCommand="{Binding AddTerrainRecruitmentBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -114,6 +117,7 @@
                         AvailableItems="{Binding AvailableCoastalUwBadges}"
                         RemoveCommand="{Binding RemoveCoastalUwBadgeCommand}"
                         AddCommand="{Binding AddCoastalUwBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -126,6 +130,7 @@
                         AvailableItems="{Binding AvailableHeroesBadges}"
                         RemoveCommand="{Binding RemoveHeroesBadgeCommand}"
                         AddCommand="{Binding AddHeroesBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -138,6 +143,7 @@
                         AvailableItems="{Binding AvailableStartingBadges}"
                         RemoveCommand="{Binding RemoveStartingBadgeCommand}"
                         AddCommand="{Binding AddStartingBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -150,6 +156,7 @@
                         AvailableItems="{Binding AvailableProvinceDefenseBadges}"
                         RemoveCommand="{Binding RemoveProvinceDefenseBadgeCommand}"
                         AddCommand="{Binding AddProvinceDefenseBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -162,6 +169,7 @@
                         AvailableItems="{Binding AvailableUwDefenseBadges}"
                         RemoveCommand="{Binding RemoveUwDefenseBadgeCommand}"
                         AddCommand="{Binding AddUwDefenseBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -174,6 +182,7 @@
                         AvailableItems="{Binding AvailablePretendersBadges}"
                         RemoveCommand="{Binding RemovePretendersBadgeCommand}"
                         AddCommand="{Binding AddPretendersBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -186,6 +195,7 @@
                         AvailableItems="{Binding AvailableBuildingsBadges}"
                         RemoveCommand="{Binding RemoveBuildingsBadgeCommand}"
                         AddCommand="{Binding AddBuildingsBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -198,6 +208,7 @@
                         AvailableItems="{Binding AvailableScalesBadges}"
                         RemoveCommand="{Binding RemoveScalesBadgeCommand}"
                         AddCommand="{Binding AddScalesBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -210,6 +221,7 @@
                         AvailableItems="{Binding AvailableSpecialMechanicsBadges}"
                         RemoveCommand="{Binding RemoveSpecialMechanicsBadgeCommand}"
                         AddCommand="{Binding AddSpecialMechanicsBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -222,6 +234,7 @@
                         AvailableItems="{Binding AvailableBlessBonusesBadges}"
                         RemoveCommand="{Binding RemoveBlessBonusesBadgeCommand}"
                         AddCommand="{Binding AddBlessBonusesBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -234,6 +247,7 @@
                         AvailableItems="{Binding AvailableAiHintsBadges}"
                         RemoveCommand="{Binding RemoveAiHintsBadgeCommand}"
                         AddCommand="{Binding AddAiHintsBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
@@ -246,6 +260,7 @@
                         AvailableItems="{Binding AvailableAdminBadges}"
                         RemoveCommand="{Binding RemoveAdminBadgeCommand}"
                         AddCommand="{Binding AddAdminBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

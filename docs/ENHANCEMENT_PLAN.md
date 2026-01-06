@@ -358,6 +358,8 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 
 - ~~**Reference Type Badge Support**~~ **DONE (2026-01-06)** - `BuildBadgesFromSection()` now handles `type: "ref"` badges:
   - Added `BuildReferenceBadges()` method for multi-value ref property handling
+  - Added `TryExtractRefInfo()` helper that handles both `StringOrIDRef` and `MonsterOrMontagRef` types
+  - `MonsterOrMontagRef.MonsterRef` and `.MontagRef` fields made public for cross-assembly access
   - References display with entity names resolved via `GetEntityName()`
   - Supports vanilla + mod layering with proper IsModified/IsInherited flags
   - Copystats chain traversal for inherited references
@@ -365,6 +367,7 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
   - `BadgeConfigLoader.CreateReferencePropertyItem()` factory method
   - `CompactBadge` updated to display reference badges with entity names
   - Reference commands always available in Add dropdown (can have multiple instances)
+  - Montag references (negative IDs) display as "Montag #X"
 
 ### HIGH Priority
 - **All Entity Views Complete** - Monster, Weapon, Armor, Item, Site, Spell, Nation, Event, Mercenary, Poptype, Nametype
@@ -414,10 +417,10 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
   - Weapon/Armor selectors in MonsterView equipment section
   - Ability dropdowns in badge panels (Add dropdown)
   - Any other entity reference selectors
-- **Pre-cache Dropdown Data** - Load all dropdown options at startup or mod load, not on dropdown open:
-  - Weapon/Armor lists from vanilla + mod
-  - Available abilities per section
-  - Prevents lag when opening dropdowns with many options (500+ abilities)
+- ~~**Pre-cache Dropdown Data**~~ **DONE (2026-01-06)** - Centralized entity caches in MainWindowViewModel:
+  - 7 cached lists: CachedWeapons, CachedArmors, CachedMonsters, CachedItems, CachedSpells, CachedSites, CachedNations
+  - Built at mod load via `BuildEntityCaches()`, before ViewModels are created
+  - O(1) HashSet deduplication, shared readonly lists across all ViewModels
 - **#clear Commands Support** - Commands like #clearweapons, #cleararmor, #clearmagic, etc.:
   - Must track presence of clear commands on entities
   - Affects fallback logic: if #clearweapons is present, don't inherit weapons from vanilla/copystats

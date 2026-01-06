@@ -59,7 +59,9 @@
                        FontSize="9" VerticalAlignment="Center" FontWeight="SemiBold"
                        Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        Visibility="{Binding IsReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
-                       Cursor="Hand"/>
+                       Cursor="Hand"
+                       TextDecorations="Underline"
+                       MouseLeftButtonDown="OnReferenceClick"/>
 
             <!-- Inherited badge -->
             <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"

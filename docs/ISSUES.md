@@ -179,6 +179,45 @@ Removed `DataContext = this` from constructor. Changed command bindings to `Elem
 
 ---
 
+## Enhancement Notes
+
+### ~~Performance - Cache Entity Reference Lists~~ FIXED (2026-01-06)
+
+**Symptom:** Noticeable hitching/lag when switching between entities (e.g., selecting different monsters in the list).
+
+**Root Cause:** Each ViewModel was independently building lists of available entities (weapons, armors, monsters, etc.) using O(n²) deduplication with `List.Any()`.
+
+**Solution Implemented:**
+- Added centralized cached lists at MainWindowViewModel level:
+  - `CachedWeapons`, `CachedArmors`, `CachedMonsters`, `CachedItems`, `CachedSpells`, `CachedSites`, `CachedNations`
+- `BuildEntityCaches()` runs FIRST in `InitializeCollections()`, before any ViewModels are created
+- Uses O(1) HashSet-based deduplication instead of O(n²) List.Any()
+- EntityViewModel exposes cached lists via protected static properties
+- ViewModels now return cached lists directly instead of rebuilding
+
+**Files Changed:**
+- `Dom5Editor/UI/Views/MainWindowViewModel.cs` - Cache fields, BuildEntityCaches(), BuildEntityCache<T>()
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Protected cache accessor properties
+- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Updated AvailableWeapons/Armor/Monsters/Items/Nations to use caches
+
+---
+
+### Entity Navigation - Custom Render Panels
+
+**Added:** 2026-01-06
+
+Entity navigation was implemented for all badge-based reference displays. However, custom render panels (inline TextBlocks showing "Copy From" references) don't yet support click-to-navigate:
+
+- **WeaponView** - `CopyWeaponDisplay` TextBlock (line ~41)
+- **ArmorView** - `CopyArmorDisplay` TextBlock (line ~45)
+- **ItemView** - `CopyItemDisplay` TextBlock (line ~45)
+- **SpellView** - `CopySpellDisplay` TextBlock (line ~68), `NextSpellDisplay` (line ~208)
+- **MercenaryView** - `CommanderDisplay`, `UnitDisplay`, `ItemDisplay` TextBlocks
+
+**To implement:** Add `MouseLeftButtonDown` handlers and wire up navigation similar to MonsterView's `OnCopyStatsClick` pattern. Each view would need a code-behind handler that extracts the ID and calls `NavigateToReferenceCommand.Execute()`.
+
+---
+
 ## Questions to Investigate
 
 1. **Event.Assign calls base.Assign then repeats work** - Lines 382-389 call `base.Assign` but then re-do SetID, ParentMod, and Selected assignments. Is this intentional?

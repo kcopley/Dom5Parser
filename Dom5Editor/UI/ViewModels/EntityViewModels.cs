@@ -30,6 +30,10 @@ namespace Dom5Editor.UI.Views
         public bool IsInherited { get; set; }
         public bool CanRemove => !IsInherited;
         public Command SourceCommand { get; set; }
+        /// <summary>
+        /// Entity type for navigation ("weapon" or "armor").
+        /// </summary>
+        public string EntityType { get; set; }
     }
 
     /// <summary>
@@ -189,6 +193,38 @@ namespace Dom5Editor.UI.Views
         /// Whether to show the copy from section (has any copy command).
         /// </summary>
         public bool HasCopyCommands => HasCopyStats || HasCopySpr;
+
+        /// <summary>
+        /// Gets the copystats reference ID for navigation.
+        /// </summary>
+        public int CopyStatsId
+        {
+            get
+            {
+                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the copyspr reference ID for navigation.
+        /// </summary>
+        public int CopySprId
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
 
         // ========================================
         // Sprite Images
@@ -1349,7 +1385,8 @@ namespace Dom5Editor.UI.Views
                     IsInherited = isInherited,
                     IsModified = isModified,
                     IsSessionEdit = isSessionEdit,
-                    SourceCommand = Command.WEAPON
+                    SourceCommand = Command.WEAPON,
+                    EntityType = "weapon"
                 });
             }
 
@@ -1375,120 +1412,25 @@ namespace Dom5Editor.UI.Views
                     IsInherited = isInherited,
                     IsModified = isModified,
                     IsSessionEdit = isSessionEdit,
-                    SourceCommand = Command.ARMOR
+                    SourceCommand = Command.ARMOR,
+                    EntityType = "armor"
                 });
             }
 
             OnPropertyChanged(nameof(ArmorList));
         }
 
-        private List<AvailableEquipmentItem> _availableWeapons;
-        public List<AvailableEquipmentItem> AvailableWeapons
-        {
-            get
-            {
-                if (_availableWeapons == null)
-                    RefreshAvailableWeapons();
-                return _availableWeapons;
-            }
-        }
+        /// <summary>
+        /// Gets the cached list of available weapons for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableWeapons => CachedWeapons;
 
-        private List<AvailableEquipmentItem> _availableArmor;
-        public List<AvailableEquipmentItem> AvailableArmor
-        {
-            get
-            {
-                if (_availableArmor == null)
-                    RefreshAvailableArmor();
-                return _availableArmor;
-            }
-        }
-
-        private void RefreshAvailableWeapons()
-        {
-            _availableWeapons = new List<AvailableEquipmentItem>();
-
-            // Add vanilla weapons
-            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.WEAPON, out var vanillaSet) == true)
-            {
-                foreach (var entity in vanillaSet.GetFullList())
-                {
-                    if (entity is Weapon weapon)
-                    {
-                        _availableWeapons.Add(new AvailableEquipmentItem
-                        {
-                            ID = weapon.ID,
-                            Name = weapon.Name,
-                            Source = "Vanilla"
-                        });
-                    }
-                }
-            }
-
-            // Add mod weapons (if loaded)
-            var mod = _entity.ParentMod;
-            if (mod != null && mod.Database.TryGetValue(EntityType.WEAPON, out var modSet))
-            {
-                foreach (var entity in modSet.GetFullList())
-                {
-                    if (entity is Weapon weapon && !_availableWeapons.Any(w => w.ID == weapon.ID))
-                    {
-                        _availableWeapons.Add(new AvailableEquipmentItem
-                        {
-                            ID = weapon.ID,
-                            Name = weapon.Name,
-                            Source = "Mod"
-                        });
-                    }
-                }
-            }
-
-            _availableWeapons = _availableWeapons.OrderBy(w => w.ID).ToList();
-            OnPropertyChanged(nameof(AvailableWeapons));
-        }
-
-        private void RefreshAvailableArmor()
-        {
-            _availableArmor = new List<AvailableEquipmentItem>();
-
-            // Add vanilla armor
-            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.ARMOR, out var vanillaSet) == true)
-            {
-                foreach (var entity in vanillaSet.GetFullList())
-                {
-                    if (entity is Armor armor)
-                    {
-                        _availableArmor.Add(new AvailableEquipmentItem
-                        {
-                            ID = armor.ID,
-                            Name = armor.Name,
-                            Source = "Vanilla"
-                        });
-                    }
-                }
-            }
-
-            // Add mod armor (if loaded)
-            var mod = _entity.ParentMod;
-            if (mod != null && mod.Database.TryGetValue(EntityType.ARMOR, out var modSet))
-            {
-                foreach (var entity in modSet.GetFullList())
-                {
-                    if (entity is Armor armor && !_availableArmor.Any(a => a.ID == armor.ID))
-                    {
-                        _availableArmor.Add(new AvailableEquipmentItem
-                        {
-                            ID = armor.ID,
-                            Name = armor.Name,
-                            Source = "Mod"
-                        });
-                    }
-                }
-            }
-
-            _availableArmor = _availableArmor.OrderBy(a => a.ID).ToList();
-            OnPropertyChanged(nameof(AvailableArmor));
-        }
+        /// <summary>
+        /// Gets the cached list of available armor for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableArmor => CachedArmors;
 
         // Selected items for adding
         private AvailableEquipmentItem _selectedWeaponToAdd;
@@ -1636,164 +1578,23 @@ namespace Dom5Editor.UI.Views
         // Available Entities for Reference Selection
         // ========================================
 
-        private List<AvailableEquipmentItem> _availableMonsters;
-        public List<AvailableEquipmentItem> AvailableMonsters
-        {
-            get
-            {
-                if (_availableMonsters == null)
-                    RefreshAvailableMonsters();
-                return _availableMonsters;
-            }
-        }
+        /// <summary>
+        /// Gets the cached list of available monsters for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableMonsters => CachedMonsters;
 
-        private void RefreshAvailableMonsters()
-        {
-            _availableMonsters = new List<AvailableEquipmentItem>();
+        /// <summary>
+        /// Gets the cached list of available items for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableItems => CachedItems;
 
-            // Add vanilla monsters
-            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.MONSTER, out var vanillaSet) == true)
-            {
-                foreach (var entity in vanillaSet.GetFullList())
-                {
-                    if (entity is Monster monster)
-                    {
-                        _availableMonsters.Add(new AvailableEquipmentItem
-                        {
-                            ID = monster.ID,
-                            Name = monster.Name,
-                            Source = "Vanilla"
-                        });
-                    }
-                }
-            }
-
-            // Add mod monsters
-            var mod = _entity.ParentMod;
-            if (mod != null && mod.Database.TryGetValue(EntityType.MONSTER, out var modSet))
-            {
-                foreach (var entity in modSet.GetFullList())
-                {
-                    if (entity is Monster monster && !_availableMonsters.Any(m => m.ID == monster.ID))
-                    {
-                        _availableMonsters.Add(new AvailableEquipmentItem
-                        {
-                            ID = monster.ID,
-                            Name = monster.Name,
-                            Source = "Mod"
-                        });
-                    }
-                }
-            }
-
-            _availableMonsters = _availableMonsters.OrderBy(m => m.ID).ToList();
-        }
-
-        private List<AvailableEquipmentItem> _availableItems;
-        public List<AvailableEquipmentItem> AvailableItems
-        {
-            get
-            {
-                if (_availableItems == null)
-                    RefreshAvailableItems();
-                return _availableItems;
-            }
-        }
-
-        private void RefreshAvailableItems()
-        {
-            _availableItems = new List<AvailableEquipmentItem>();
-
-            // Add vanilla items
-            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.ITEM, out var vanillaSet) == true)
-            {
-                foreach (var entity in vanillaSet.GetFullList())
-                {
-                    if (entity is Item item)
-                    {
-                        _availableItems.Add(new AvailableEquipmentItem
-                        {
-                            ID = item.ID,
-                            Name = item.Name,
-                            Source = "Vanilla"
-                        });
-                    }
-                }
-            }
-
-            // Add mod items
-            var mod = _entity.ParentMod;
-            if (mod != null && mod.Database.TryGetValue(EntityType.ITEM, out var modSet))
-            {
-                foreach (var entity in modSet.GetFullList())
-                {
-                    if (entity is Item item && !_availableItems.Any(i => i.ID == item.ID))
-                    {
-                        _availableItems.Add(new AvailableEquipmentItem
-                        {
-                            ID = item.ID,
-                            Name = item.Name,
-                            Source = "Mod"
-                        });
-                    }
-                }
-            }
-
-            _availableItems = _availableItems.OrderBy(i => i.ID).ToList();
-        }
-
-        private List<AvailableEquipmentItem> _availableNations;
-        public List<AvailableEquipmentItem> AvailableNations
-        {
-            get
-            {
-                if (_availableNations == null)
-                    RefreshAvailableNations();
-                return _availableNations;
-            }
-        }
-
-        private void RefreshAvailableNations()
-        {
-            _availableNations = new List<AvailableEquipmentItem>();
-
-            // Add vanilla nations
-            if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.NATION, out var vanillaSet) == true)
-            {
-                foreach (var entity in vanillaSet.GetFullList())
-                {
-                    if (entity is Nation nation)
-                    {
-                        _availableNations.Add(new AvailableEquipmentItem
-                        {
-                            ID = nation.ID,
-                            Name = nation.Name,
-                            Source = "Vanilla"
-                        });
-                    }
-                }
-            }
-
-            // Add mod nations
-            var mod = _entity.ParentMod;
-            if (mod != null && mod.Database.TryGetValue(EntityType.NATION, out var modSet))
-            {
-                foreach (var entity in modSet.GetFullList())
-                {
-                    if (entity is Nation nation && !_availableNations.Any(n => n.ID == nation.ID))
-                    {
-                        _availableNations.Add(new AvailableEquipmentItem
-                        {
-                            ID = nation.ID,
-                            Name = nation.Name,
-                            Source = "Mod"
-                        });
-                    }
-                }
-            }
-
-            _availableNations = _availableNations.OrderBy(n => n.ID).ToList();
-        }
+        /// <summary>
+        /// Gets the cached list of available nations for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableNations => CachedNations;
 
         // ========================================
         // Reference Properties (Read current values)
@@ -3674,6 +3475,7 @@ namespace Dom5Editor.UI.Views
 
         /// <summary>
         /// Available equipment items based on slot type.
+        /// Uses centralized caches with filtering for weapon/armor based on slot.
         /// </summary>
         private List<AvailableEquipmentItem> _availableEquipment;
         public List<AvailableEquipmentItem> AvailableEquipment
@@ -3690,49 +3492,13 @@ namespace Dom5Editor.UI.Views
         {
             _availableEquipment = new List<AvailableEquipmentItem>();
 
-            // Add "None" option
+            // Add "None" option first
             _availableEquipment.Add(new AvailableEquipmentItem { ID = 0, Name = "(None)", Source = "" });
 
-            if (UsesArmorEquipment)
-            {
-                // Add vanilla armor
-                if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.ARMOR, out var vanillaSet) == true)
-                {
-                    foreach (var entity in vanillaSet.GetFullList())
-                    {
-                        if (entity is Armor armor)
-                        {
-                            _availableEquipment.Add(new AvailableEquipmentItem
-                            {
-                                ID = armor.ID,
-                                Name = armor.Name,
-                                Source = "Vanilla"
-                            });
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // Add vanilla weapons
-                if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.WEAPON, out var vanillaSet) == true)
-                {
-                    foreach (var entity in vanillaSet.GetFullList())
-                    {
-                        if (entity is Weapon weapon)
-                        {
-                            _availableEquipment.Add(new AvailableEquipmentItem
-                            {
-                                ID = weapon.ID,
-                                Name = weapon.Name,
-                                Source = "Vanilla"
-                            });
-                        }
-                    }
-                }
-            }
+            // Use cached lists from MainWindowViewModel for performance
+            var sourceList = UsesArmorEquipment ? CachedArmors : CachedWeapons;
+            _availableEquipment.AddRange(sourceList);
 
-            _availableEquipment = _availableEquipment.OrderBy(e => e.ID).ToList();
             OnPropertyChanged(nameof(AvailableEquipment));
         }
 

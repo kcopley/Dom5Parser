@@ -16,6 +16,25 @@ namespace Dom5Editor.UI.Controls
         public BadgeWrapPanel()
         {
             InitializeComponent();
+
+            // Subscribe to ReferenceClicked events bubbling up from CompactBadge controls
+            AddHandler(CompactBadge.ReferenceClickedEvent, new RoutedEventHandler(OnReferenceClicked));
+        }
+
+        /// <summary>
+        /// Handles ReferenceClicked events from child CompactBadge controls.
+        /// </summary>
+        private void OnReferenceClicked(object sender, RoutedEventArgs e)
+        {
+            if (e is ReferenceClickedEventArgs args && NavigateCommand != null)
+            {
+                // Execute navigation command with (refType, id) tuple
+                var param = (args.ReferenceType, args.ReferenceId);
+                if (NavigateCommand.CanExecute(param))
+                {
+                    NavigateCommand.Execute(param);
+                }
+            }
         }
 
         #region Header
@@ -76,6 +95,20 @@ namespace Dom5Editor.UI.Controls
         {
             get => (ICommand)GetValue(AddCommandProperty);
             set => SetValue(AddCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty NavigateCommandProperty =
+            DependencyProperty.Register(nameof(NavigateCommand), typeof(ICommand), typeof(BadgeWrapPanel),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Command to execute when a reference badge is clicked for navigation.
+        /// The command parameter is a ValueTuple&lt;string, int&gt; containing (ReferenceType, ReferenceId).
+        /// </summary>
+        public ICommand NavigateCommand
+        {
+            get => (ICommand)GetValue(NavigateCommandProperty);
+            set => SetValue(NavigateCommandProperty, value);
         }
 
         #endregion

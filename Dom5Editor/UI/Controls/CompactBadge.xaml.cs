@@ -236,6 +236,55 @@ namespace Dom5Editor.UI.Controls
             set => SetValue(ReferenceIdProperty, value);
         }
 
+        /// <summary>
+        /// Routed event for when a reference is clicked for navigation.
+        /// </summary>
+        public static readonly RoutedEvent ReferenceClickedEvent =
+            EventManager.RegisterRoutedEvent(
+                "ReferenceClicked",
+                RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler),
+                typeof(CompactBadge));
+
+        /// <summary>
+        /// Occurs when a reference badge is clicked for navigation.
+        /// </summary>
+        public event RoutedEventHandler ReferenceClicked
+        {
+            add => AddHandler(ReferenceClickedEvent, value);
+            remove => RemoveHandler(ReferenceClickedEvent, value);
+        }
+
+        /// <summary>
+        /// Handles click on the reference display text.
+        /// </summary>
+        private void OnReferenceClick(object sender, MouseButtonEventArgs e)
+        {
+            if (IsReference && ReferenceId != 0)
+            {
+                RaiseEvent(new ReferenceClickedEventArgs(ReferenceClickedEvent, this)
+                {
+                    ReferenceType = ReferenceType,
+                    ReferenceId = ReferenceId
+                });
+                e.Handled = true;
+            }
+        }
+
         #endregion
+    }
+
+    /// <summary>
+    /// Event args for reference clicked events, carrying the reference type and ID.
+    /// </summary>
+    public class ReferenceClickedEventArgs : RoutedEventArgs
+    {
+        public string ReferenceType { get; set; }
+        public int ReferenceId { get; set; }
+
+        public ReferenceClickedEventArgs(RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
+        {
+        }
     }
 }

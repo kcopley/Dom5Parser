@@ -359,7 +359,7 @@ namespace Dom5Edit.Entities
                             p.Command == Command.KELPFORTCOM).Cast<MonsterOrMontagRef>();
                 foreach (var property in list)
                 {
-                    var ret = property?._monsterRef?.Entity as Monster;
+                    var ret = property?.MonsterRef?.Entity as Monster;
                     if (ret != null) yield return ret;
                 }
             }
