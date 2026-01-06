@@ -15,7 +15,7 @@ namespace Dom5Edit.Props
 
         public List<IDEntity> GetConnectedEntities()
         {
-            return _item.ReferencedEntities;
+            return _item?.ReferencedEntities ?? new List<IDEntity>();
         }
 
         public override void Connect(IDEntity original)
@@ -36,8 +36,11 @@ namespace Dom5Edit.Props
         {
             base.Parse(c, s, comment);
             _item = this.Parent.ParentMod.AddDependent(EntityType.EVENT_CODE, ID);
-            _item.ReferencedEntities.Add(this.Parent as IDEntity);
             HasEventCodeRef = _item != null;
+            if (_item != null)
+            {
+                _item.ReferencedEntities.Add(this.Parent as IDEntity);
+            }
         }
 
         public override string ToExportString()

@@ -243,6 +243,34 @@ namespace Dom5Editor.UI.Views
             set { _selectedMercenary = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<PoptypeViewModel> _poptypes;
+        public ObservableCollection<PoptypeViewModel> Poptypes
+        {
+            get => _poptypes;
+            private set { _poptypes = value; OnPropertyChanged(); }
+        }
+
+        private PoptypeViewModel _selectedPoptype;
+        public PoptypeViewModel SelectedPoptype
+        {
+            get => _selectedPoptype;
+            set { _selectedPoptype = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<NametypeViewModel> _nametypes;
+        public ObservableCollection<NametypeViewModel> Nametypes
+        {
+            get => _nametypes;
+            private set { _nametypes = value; OnPropertyChanged(); }
+        }
+
+        private NametypeViewModel _selectedNametype;
+        public NametypeViewModel SelectedNametype
+        {
+            get => _selectedNametype;
+            set { _selectedNametype = value; OnPropertyChanged(); }
+        }
+
         // ========================================
         // Mod Operations
         // ========================================
@@ -307,6 +335,8 @@ namespace Dom5Editor.UI.Views
             SelectedNation = null;
             SelectedEvent = null;
             SelectedMercenary = null;
+            SelectedPoptype = null;
+            SelectedNametype = null;
 
             // Initialize entity collections from mod + vanilla
             Monsters = LoadEntities<Monster, MonsterViewModel>(EntityType.MONSTER,
@@ -327,6 +357,10 @@ namespace Dom5Editor.UI.Views
                 (e, h, s) => new EventViewModel(e, h, s));
             Mercenaries = LoadEntities<Mercenary, MercenaryViewModel>(EntityType.MERCENARY,
                 (e, h, s) => new MercenaryViewModel(e, h, s));
+            Poptypes = LoadEntities<Poptype, PoptypeViewModel>(EntityType.POPTYPE,
+                (e, h, s) => new PoptypeViewModel(e, h, s));
+            Nametypes = LoadEntities<Nametype, NametypeViewModel>(EntityType.NAMETYPE,
+                (e, h, s) => new NametypeViewModel(e, h, s));
 
             OnPropertyChanged(nameof(HasMod));
             OnPropertyChanged(nameof(EntityCount));

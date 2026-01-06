@@ -1,0 +1,25 @@
+{
+  "sections": [
+    {
+      "id": "names",
+      "displayName": "NAMES",
+      "description": "Name list management",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "clear",
+          "display": "Clear",
+          "type": "flag",
+          "description": "Clears all names from this name type."
+        },
+        {
+          "name": "addname",
+          "display": "Add Name",
+          "type": "string",
+          "description": "Adds a name to this name type list."
+        }
+      ]
+    }
+  ]
+}

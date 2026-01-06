@@ -1,0 +1,171 @@
+<UserControl x:Class="Dom5Editor.UI.Views.MercenaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="600"
+             Background="{DynamicResource BackgroundMediumBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="12">
+            <!-- Header with ID and source indicator -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource HeaderText}" FontSize="18" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <TextBlock Text="{Binding ID, StringFormat='Mercenary #{0}'}" Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text=" - " Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text="{Binding EraDisplay}" Style="{DynamicResource MutedText}" FontSize="11" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border Grid.Column="1" Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="3" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SourceLabel}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Basic Info Section -->
+            <controls:PropertyGroupControl Header="Basic Info" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,4"/>
+                        <controls:StringPropertyEditor Label="Boss Name" Value="{Binding BossName, Mode=TwoWay}" IsModified="{Binding IsBossNameModified}" IsSessionEdit="{Binding IsBossNameSessionEdit}" Margin="0,0,0,4"/>
+                        <controls:IntPropertyEditor Label="Level" Value="{Binding Level, Mode=TwoWay}" IsModified="{Binding IsLevelModified}" IsSessionEdit="{Binding IsLevelSessionEdit}"/>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Unit Composition Section -->
+            <controls:PropertyGroupControl Header="Unit Composition" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <!-- Commander display -->
+                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8" Margin="0,0,0,8"
+                                Visibility="{Binding CommanderDisplay, Converter={StaticResource NullToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Commander:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CommanderDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="SemiBold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Unit display -->
+                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8" Margin="0,0,0,8"
+                                Visibility="{Binding UnitDisplay, Converter={StaticResource NullToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Unit:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding UnitDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="SemiBold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Unit stats -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:IntPropertyEditor Grid.Column="0" Label="Nr Units" Value="{Binding NrUnits, Mode=TwoWay}" IsModified="{Binding IsNrUnitsModified}" IsSessionEdit="{Binding IsNrUnitsSessionEdit}" Margin="0,0,4,0"/>
+                            <controls:IntPropertyEditor Grid.Column="1" Label="Min Men" Value="{Binding MinMen, Mode=TwoWay}" IsModified="{Binding IsMinMenModified}" IsSessionEdit="{Binding IsMinMenSessionEdit}" Margin="4,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Economics Section -->
+            <controls:PropertyGroupControl Header="Economics" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <controls:IntPropertyEditor Grid.Column="0" Label="Min Pay" Value="{Binding MinPay, Mode=TwoWay}" IsModified="{Binding IsMinPayModified}" IsSessionEdit="{Binding IsMinPaySessionEdit}" Margin="0,0,4,0"/>
+                        <controls:IntPropertyEditor Grid.Column="1" Label="Rec Rate" Value="{Binding RecRate, Mode=TwoWay}" IsModified="{Binding IsRecRateModified}" IsSessionEdit="{Binding IsRecRateSessionEdit}" Margin="4,0,0,0"/>
+                    </Grid>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Equipment & Experience Section -->
+            <controls:PropertyGroupControl Header="Equipment &amp; Experience" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <!-- Item display -->
+                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8" Margin="0,0,0,8"
+                                Visibility="{Binding ItemDisplay, Converter={StaticResource NullToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Item:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding ItemDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="SemiBold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:IntPropertyEditor Grid.Column="0" Label="XP" Value="{Binding XP, Mode=TwoWay}" IsModified="{Binding IsXPModified}" IsSessionEdit="{Binding IsXPSessionEdit}" Margin="0,0,4,0"/>
+                            <controls:IntPropertyEditor Grid.Column="1" Label="Rand Equip" Value="{Binding RandEquip, Mode=TwoWay}" IsModified="{Binding IsRandEquipModified}" IsSessionEdit="{Binding IsRandEquipSessionEdit}" Margin="4,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Identity Badges Section -->
+            <controls:PropertyGroupControl Header="Identity" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding IdentityBadges}"
+                        AvailableItems="{Binding AvailableIdentityBadges}"
+                        RemoveCommand="{Binding RemoveIdentityBadgeCommand}"
+                        AddCommand="{Binding AddIdentityBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Units Badges Section -->
+            <controls:PropertyGroupControl Header="Units" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding UnitsBadges}"
+                        AvailableItems="{Binding AvailableUnitsBadges}"
+                        RemoveCommand="{Binding RemoveUnitsBadgeCommand}"
+                        AddCommand="{Binding AddUnitsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Economics Badges Section -->
+            <controls:PropertyGroupControl Header="Economics" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding EconomicsBadges}"
+                        AvailableItems="{Binding AvailableEconomicsBadges}"
+                        RemoveCommand="{Binding RemoveEconomicsBadgeCommand}"
+                        AddCommand="{Binding AddEconomicsBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Equipment Badges Section -->
+            <controls:PropertyGroupControl Header="Equipment" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding EquipmentBadges}"
+                        AvailableItems="{Binding AvailableEquipmentBadges}"
+                        RemoveCommand="{Binding RemoveEquipmentBadgeCommand}"
+                        AddCommand="{Binding AddEquipmentBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

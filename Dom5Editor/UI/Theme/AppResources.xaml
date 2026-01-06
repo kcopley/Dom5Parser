@@ -27,21 +27,9 @@
         <views:ArmorView/>
     </DataTemplate>
 
+    <!-- Spell view using the full SpellView control -->
     <DataTemplate DataType="{x:Type views:SpellViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Spell view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:SpellView/>
     </DataTemplate>
 
     <!-- Item view using the full ItemView control -->
@@ -49,72 +37,34 @@
         <views:ItemView/>
     </DataTemplate>
 
+    <!-- Site view using the full SiteView control -->
     <DataTemplate DataType="{x:Type views:SiteViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Site view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:SiteView/>
     </DataTemplate>
 
+    <!-- Nation view using the full NationView control -->
     <DataTemplate DataType="{x:Type views:NationViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Nation view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:NationView/>
     </DataTemplate>
 
+    <!-- Event view using the full EventView control -->
     <DataTemplate DataType="{x:Type views:EventViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Event view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:EventView/>
     </DataTemplate>
 
+    <!-- Mercenary view using the full MercenaryView control -->
     <DataTemplate DataType="{x:Type views:MercenaryViewModel}">
-        <Border Background="{StaticResource BackgroundLightBrush}"
-                Padding="20"
-                CornerRadius="8">
-            <StackPanel>
-                <TextBlock Text="{Binding DisplayName}"
-                           Style="{StaticResource HeaderText}"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="{Binding ID, StringFormat='ID: {0}'}"
-                           Style="{StaticResource SubHeaderText}"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Mercenary view coming soon..."
-                           Style="{StaticResource MutedText}"/>
-            </StackPanel>
-        </Border>
+        <views:MercenaryView/>
+    </DataTemplate>
+
+    <!-- Poptype view using the full PoptypeView control -->
+    <DataTemplate DataType="{x:Type views:PoptypeViewModel}">
+        <views:PoptypeView/>
+    </DataTemplate>
+
+    <!-- Nametype view using the full NametypeView control -->
+    <DataTemplate DataType="{x:Type views:NametypeViewModel}">
+        <views:NametypeView/>
     </DataTemplate>
 
 </ResourceDictionary>

@@ -26,8 +26,11 @@ namespace Dom5Edit.Props
         {
             base.Parse(c, s, comment);
             _item = this.Parent.ParentMod.AddDependent(EntityType.EVENT_VAR, ID);
-            _item.ReferencedEntities.Add(this.Parent as IDEntity);
             HasEventVarRef = _item != null;
+            if (_item != null)
+            {
+                _item.ReferencedEntities.Add(this.Parent as IDEntity);
+            }
         }
 
         public override string ToString()

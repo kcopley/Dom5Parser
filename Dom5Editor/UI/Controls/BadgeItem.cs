@@ -11,7 +11,8 @@ namespace Dom5Editor.UI.Controls
 {
     /// <summary>
     /// Data item for property display controls (CompactBadge, BadgeWrapPanel).
-    /// Supports flag properties (no value) and value properties (with editable int).
+    /// Supports flag properties (no value), value properties (with editable int),
+    /// and reference properties (linking to other entities).
     /// </summary>
     public class PropertyItem : INotifyPropertyChanged
     {
@@ -22,6 +23,10 @@ namespace Dom5Editor.UI.Controls
         private bool _isSessionEdit;
         private bool _isInherited;
         private bool _canRemove = true;
+        private bool _isReference;
+        private int _referenceId;
+        private string _referenceName;
+        private string _referenceType;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -109,6 +114,49 @@ namespace Dom5Editor.UI.Controls
             get => _canRemove;
             set { _canRemove = value; OnPropertyChanged(); }
         }
+
+        /// <summary>
+        /// True if this badge represents a reference to another entity.
+        /// </summary>
+        public bool IsReference
+        {
+            get => _isReference;
+            set { _isReference = value; OnPropertyChanged(); }
+        }
+
+        /// <summary>
+        /// The ID of the referenced entity (for reference badges).
+        /// </summary>
+        public int ReferenceId
+        {
+            get => _referenceId;
+            set { _referenceId = value; OnPropertyChanged(); OnPropertyChanged(nameof(ReferenceDisplay)); }
+        }
+
+        /// <summary>
+        /// The name of the referenced entity (for display).
+        /// </summary>
+        public string ReferenceName
+        {
+            get => _referenceName;
+            set { _referenceName = value; OnPropertyChanged(); OnPropertyChanged(nameof(ReferenceDisplay)); }
+        }
+
+        /// <summary>
+        /// The type of entity being referenced (e.g., "monster", "nation", "site").
+        /// </summary>
+        public string ReferenceType
+        {
+            get => _referenceType;
+            set { _referenceType = value; OnPropertyChanged(); }
+        }
+
+        /// <summary>
+        /// Display string for reference badges showing name or ID.
+        /// </summary>
+        public string ReferenceDisplay => !string.IsNullOrEmpty(ReferenceName)
+            ? ReferenceName
+            : $"#{ReferenceId}";
 
         /// <summary>
         /// Background brush for the badge.
@@ -275,6 +323,52 @@ namespace Dom5Editor.UI.Controls
             };
         }
 
+        /// <summary>
+        /// Creates a reference property (linking to another entity).
+        /// </summary>
+        public static PropertyItem CreateReference(Command command, string displayName, int referenceId,
+            string referenceName, string referenceType,
+            bool isModified = false, bool isSessionEdit = false)
+        {
+            return new PropertyItem
+            {
+                Command = command,
+                DisplayName = displayName,
+                HasValue = false, // References don't use the Value field for editing
+                IsReference = true,
+                ReferenceId = referenceId,
+                ReferenceName = referenceName,
+                ReferenceType = referenceType,
+                IsModified = isModified,
+                IsSessionEdit = isSessionEdit
+            };
+        }
+
+        /// <summary>
+        /// Creates a colored reference property (for visually distinct entity types).
+        /// </summary>
+        public static PropertyItem CreateColoredReference(Command command, string displayName, int referenceId,
+            string referenceName, string referenceType,
+            Color backgroundColor, Color borderColor, Color foregroundColor,
+            bool isModified = false, bool isSessionEdit = false)
+        {
+            return new PropertyItem
+            {
+                Command = command,
+                DisplayName = displayName,
+                HasValue = false,
+                IsReference = true,
+                ReferenceId = referenceId,
+                ReferenceName = referenceName,
+                ReferenceType = referenceType,
+                Background = new SolidColorBrush(backgroundColor),
+                BorderBrush = new SolidColorBrush(borderColor),
+                Foreground = new SolidColorBrush(foregroundColor),
+                IsModified = isModified,
+                IsSessionEdit = isSessionEdit
+            };
+        }
+
         #endregion
     }
 
@@ -297,6 +391,16 @@ namespace Dom5Editor.UI.Controls
         /// Default value when added (for value badges).
         /// </summary>
         public int? DefaultValue { get; set; }
+
+        /// <summary>
+        /// True if this is a reference property.
+        /// </summary>
+        public bool IsReference { get; set; }
+
+        /// <summary>
+        /// The type of entity being referenced (e.g., "monster", "nation", "site").
+        /// </summary>
+        public string ReferenceType { get; set; }
 
         /// <summary>
         /// Optional tag for additional data.

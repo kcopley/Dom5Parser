@@ -10,7 +10,7 @@ Quick reference notes for development context. See related documents for full de
 
 ## Current Development Status
 
-**Last Updated:** 2026-01-05
+**Last Updated:** 2026-01-06
 
 ### Working Features
 - JSON-driven badge UI system for all entity properties
@@ -23,6 +23,11 @@ Quick reference notes for development context. See related documents for full de
 - **WeaponView** - Stats, damage types, special properties, secondary effects, badge panel
 - **ArmorView** - Stats and badge panel
 - **ItemView** - Construction stats, slot type selector, equipment display with weapon/armor stats
+- **SiteView** - Core stats (path/level/rarity), gems display with icons, copy-from reference, unified property badges with monster/nation references
+- **NationView** - Identity/Era, 13 badge sections for recruitment, terrain, heroes, PD, pretenders, buildings, scales, mechanics
+- **MercenaryView** - Band info, unit composition, economics, equipment (13 commands)
+- **PoptypeView** - Recruitment, province defense (11 commands)
+- **NametypeView** - Name list management (2 commands)
 
 ### In Progress
 - **CUSTOMMAGIC Editor** - Complex bitmask (not started)
@@ -37,17 +42,58 @@ Quick reference notes for development context. See related documents for full de
   - Gem cost calculation (5 × level, adjusted by itemcost percentage)
   - Inline display: "Requires 5N to forge (N1)"
 
-### Recently Completed (2026-01-05)
+### Recently Completed (2026-01-06)
+- **Reference Type Badge Support** - `BuildBadgesFromSection()` now handles `type: "ref"` badges:
+  - Multi-value ref property handling via `BuildReferenceBadges()` method
+  - Entity name resolution for display (monster ID → monster name)
+  - Vanilla + mod layering with proper IsModified/IsInherited flags
+  - Copystats chain traversal for inherited references
+  - Reference commands always available in Add dropdown (can have multiple instances)
+
+- **NationView** - Complete nation editor with:
+  - Header with era display, epithet, vanilla data warning banner
+  - 13 collapsible badge sections: Identity, Fort Recruitment, Terrain Recruitment, Coastal/UW, Heroes, Starting Units, Province Defense, UW Defense, Pretenders, Buildings, Scales, Special Mechanics, Bless Bonuses, AI Hints, Admin
+  - 200+ nation commands in `nation_badges.json`
+  - Vanilla data incomplete warning for vanilla nations (shows banner with explanation)
+  - Monster/Site references for recruitment, heroes, PD, pretenders
+
+- **SiteView** - Complete site editor with:
+  - Core fields: Name, Copy From Site, Path/Level/Rarity, Sprite (#look)
+  - Gems display with path icons (PathLetterToGemIconConverter)
+  - Single unified property badge panel with 90+ properties
+  - Monster references for summons, recruitment, walls, defense (type: "ref", refType: "monster")
+  - Nation reference support (refType: "nation")
+
+### Previously Completed (2026-01-05)
 - **PathSelector with icons** - Icon-based magic path selection with gem cost display
 - **ItemView equipment display** - Shows weapon/armor damage types, special properties, secondary effects
 - **WeaponView improvements** - Damage types, special properties, secondary effect display with chance %
 - **Slot type selector** - Editable dropdown with clear slot names, auto-clears incompatible equipment
 
+### Recently Completed
+- **EventView** - Event requirements (general, nation, location, province, site, dominion, path, commander, target, code, enchantment) and effects (message, resource, province, scale, unit spawn, unit effects, path boost, world, event control). Uses `event_badges.json` configuration with ~160 commands across 21 badge sections.
+- **SpellView** - Path requirements, effect types, combat stats, next spell chains, and badge panel for 40+ spell properties. Uses `spell_badges.json` configuration.
+
+### Recently Completed (2026-01-06)
+- **MercenaryView** - Mercenary band editor with:
+  - Header with era display (EA/MA/LA bitmask)
+  - Basic info section: Name, Boss Name, Level
+  - Unit composition: Commander, Unit references with monster name resolution, Nr Units, Min Men
+  - Economics: Min Pay, Rec Rate
+  - Equipment & Experience: Item reference, XP, Rand Equip
+  - 4 badge sections with JSON configuration (`mercenary_badges.json`)
+
+- **PoptypeView** - Population type editor with:
+  - Recruitment section: Clear Rec, Add Rec Unit, Add Rec Com
+  - Province Defense section: Clear Def, Def Com, Def Units 1/1B/1C, Def Mult 1/1B/1C
+  - 2 badge sections with JSON configuration (`poptype_badges.json`)
+
+- **NametypeView** - Name type editor with:
+  - Names section: Clear, Add Name
+  - 1 badge section with JSON configuration (`nametype_badges.json`)
+
 ### Not Started
-- **SpellView** - Path requirements, effect types, gem/fatigue cost editor
-- **SiteView** - Site abilities, summons, gem income
-- **NationView** - Many reference properties, recruitment lists
-- **EventView** - Event codes, conditions, effects
+- **Other Entity Views** - Check for: Enchantment, Montag, RestrictedItem (ID-only containers, may not need views)
 - Sprite preview
 - Validation report panel
 
@@ -73,11 +119,16 @@ Dom5Editor/UI/
     WeaponView.xaml(.cs)      - Weapon editor with damage types, secondary effects
     ArmorView.xaml(.cs)       - Armor editor
     ItemView.xaml(.cs)        - Item editor with equipment display
+    SiteView.xaml(.cs)        - Site editor with gems, summons, recruitment
+    NationView.xaml(.cs)      - Nation editor with 13 badge sections, vanilla data warning
+    MercenaryView.xaml(.cs)   - Mercenary band editor (13 commands)
+    PoptypeView.xaml(.cs)     - Population type editor (11 commands)
+    NametypeView.xaml(.cs)    - Name type editor (2 commands)
     MainWindow.xaml(.cs)      - App shell
     MainWindowViewModel.cs    - Mod/entity management
   ViewModels/
     EntityViewModel.cs        - Base class with badge infrastructure & property helpers
-    EntityViewModels.cs       - MonsterViewModel, WeaponViewModel, ArmorViewModel, ItemViewModel
+    EntityViewModels.cs       - MonsterViewModel, WeaponViewModel, ArmorViewModel, ItemViewModel, SiteViewModel, NationViewModel
   Controls/
     CompactBadge.xaml(.cs)    - Individual badge control
     BadgeWrapPanel.xaml(.cs)  - Badge container with add dropdown
@@ -90,6 +141,11 @@ Dom5Editor/Data/
   weapon_badges.json          - Weapon property definitions
   armor_badges.json           - Armor property definitions
   item_badges.json            - Item property definitions
+  site_badges.json            - Site property definitions (90+ commands, includes monster/nation refs)
+  nation_badges.json          - Nation property definitions (200+ commands, 13 sections)
+  mercenary_badges.json       - Mercenary property definitions (13 commands, 4 sections)
+  poptype_badges.json         - Poptype property definitions (11 commands, 2 sections)
+  nametype_badges.json        - Nametype property definitions (2 commands, 1 section)
   BadgeConfig.cs              - JSON deserialization models
   BadgeConfigLoader.cs        - Loads JSON, provides command lookup
 ```
@@ -114,7 +170,7 @@ Dom5Editor/Data/
    - Add initialization in `InitializeCollections()`
 
 **Base class methods available for ViewModels:**
-- `BuildBadgesFromSection(sectionId, valueChangedHandler)` - Builds badges from JSON
+- `BuildBadgesFromSection(sectionId, valueChangedHandler)` - Builds badges from JSON with full layering
 - `CreateBadgeValueChangedHandler()` - Standard handler for value edits
 - `CreateRemoveBadgeCommand(refreshAction)` - Command for removing badges
 - `CreateAddBadgeCommand(refreshAction)` - Command for adding badges
@@ -123,6 +179,76 @@ Dom5Editor/Data/
 - `GetEntityName(type, id)` - Get entity name with layered fallback
 - `GetReferenceName(reference, entityType)` - Get reference name with fallback
 - `GetLayeredReferenceList<TRef>(command, entityType, getId)` - Get multi-value refs with full layering
+
+**IMPORTANT: Property Access with VanillaModified Fallback**
+
+When adding explicit properties to ViewModels (not using badge system), ALWAYS use the base class helper methods that include VanillaModified fallback:
+
+```csharp
+// ✓ CORRECT - Uses base class with fallback
+public int? Level
+{
+    get => GetIntProperty(Command.LEVEL);        // Has VanillaModified fallback
+    set => SetIntProperty(Command.LEVEL, value); // With undo/redo support
+}
+
+public string BossName
+{
+    get => GetStringProperty(Command.BOSSNAME);
+    set => SetStringProperty(Command.BOSSNAME, value);
+}
+
+public bool IsSomeFlag => GetCommandProperty(Command.SOMEFLAG);
+
+// ✓ CORRECT - For reference properties that work with GetReferenceProperty<T>
+var prop = GetReferenceProperty<ItemRef>(Command.ITEM);
+
+// ✗ WRONG - Direct entity access without fallback
+var result = _entity.TryGet<IntProperty>(command, out var prop);  // Missing fallback!
+```
+
+For reference display properties that can't use `GetReferenceProperty<T>` (e.g., `MonsterOrMontagRef`), implement fallback manually:
+
+```csharp
+public string CommanderDisplay
+{
+    get
+    {
+        var result = _entity.TryGet<MonsterOrMontagRef>(Command.COM, out var prop, checkCopy: false);
+        if (result == ReturnType.TRUE && prop != null)
+            return GetDisplayName(prop);
+
+        // VanillaModified fallback - REQUIRED for proper layering
+        if (_source == EntitySource.VanillaModified)
+        {
+            var vanillaEntity = GetVanillaEntity();
+            if (vanillaEntity != null)
+            {
+                var vanillaResult = vanillaEntity.TryGet<MonsterOrMontagRef>(Command.COM, out var vanillaProp);
+                if ((vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED) && vanillaProp != null)
+                    return GetDisplayName(vanillaProp);
+            }
+        }
+        return null;
+    }
+}
+```
+
+**Available base class property helpers:**
+| Method | Purpose |
+|--------|---------|
+| `GetIntProperty(cmd)` | Get int with VanillaModified fallback |
+| `SetIntProperty(cmd, val)` | Set int with undo/redo support |
+| `GetStringProperty(cmd)` | Get string with VanillaModified fallback |
+| `SetStringProperty(cmd, val)` | Set string with undo/redo support |
+| `GetCommandProperty(cmd)` | Get flag with VanillaModified fallback |
+| `SetCommandProperty(cmd, val)` | Set flag with undo/redo support |
+| `GetReferenceProperty<T>(cmd)` | Get reference with VanillaModified fallback |
+| `HasReferenceProperty<T>(cmd)` | Check if reference exists with fallback |
+| `IsIntPropertyModifiedFromVanilla(cmd)` | Check if int differs from vanilla |
+| `IsStringPropertyModifiedFromVanilla(cmd)` | Check if string differs from vanilla |
+| `IsPropertyEditedInSession(cmd)` | Check if edited in current session |
+| `GetVanillaEntity()` | Get vanilla version for manual fallback |
 
 ### Property Layering (for #selectmonster)
 

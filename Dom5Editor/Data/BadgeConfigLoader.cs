@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Windows.Media;
 using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 using Dom5Editor.UI.Controls;
 
 namespace Dom5Editor.Data
@@ -297,7 +298,98 @@ namespace Dom5Editor.Data
             {
                 Command = command,
                 DisplayName = cmdDef.Display,
-                DefaultValue = cmdDef.IsInt ? (cmdDef.Default ?? 0) : null
+                DefaultValue = cmdDef.IsInt ? (cmdDef.Default ?? 0) : null,
+                IsReference = cmdDef.IsRef,
+                ReferenceType = cmdDef.RefType
+            };
+        }
+
+        /// <summary>
+        /// Creates a PropertyItem for a reference property from a BadgeCommand definition.
+        /// </summary>
+        public static PropertyItem CreateReferencePropertyItem(BadgeCommand cmdDef, int referenceId, string referenceName,
+            bool isModified = false, bool isSessionEdit = false)
+        {
+            // CommandsMap uses "#" prefix, but JSON file may omit it
+            var name = cmdDef.Name;
+            if (!name.StartsWith("#"))
+            {
+                name = "#" + name;
+            }
+            CommandsMap.TryGetCommand(name, out Command command);
+
+            PropertyItem property;
+            if (cmdDef.HasColors)
+            {
+                var bgColor = ParseColor(cmdDef.Color, Color.FromRgb(60, 60, 60));
+                var borderColor = ParseColor(cmdDef.BorderColor, Color.FromRgb(80, 80, 80));
+                property = PropertyItem.CreateColoredReference(
+                    command,
+                    cmdDef.Display,
+                    referenceId,
+                    referenceName,
+                    cmdDef.RefType,
+                    bgColor,
+                    borderColor,
+                    Colors.White,
+                    isModified,
+                    isSessionEdit);
+            }
+            else
+            {
+                property = PropertyItem.CreateReference(
+                    command,
+                    cmdDef.Display,
+                    referenceId,
+                    referenceName,
+                    cmdDef.RefType,
+                    isModified,
+                    isSessionEdit);
+            }
+
+            // Set tooltip
+            if (!string.IsNullOrEmpty(cmdDef.Description))
+            {
+                property.Tooltip = cmdDef.Description;
+            }
+            else
+            {
+                var refDescription = GetCommandDescription(cmdDef.Name);
+                property.Tooltip = !string.IsNullOrEmpty(refDescription)
+                    ? $"#{cmdDef.Name}: {refDescription}"
+                    : $"#{cmdDef.Name}";
+            }
+
+            // Set icon if defined
+            if (cmdDef.HasIcon)
+            {
+                property.IconPath = cmdDef.Icon;
+            }
+
+            return property;
+        }
+
+        /// <summary>
+        /// Maps a refType string (from JSON config) to an EntityType enum value.
+        /// </summary>
+        public static EntityType? GetEntityTypeFromRefType(string refType)
+        {
+            return refType?.ToLowerInvariant() switch
+            {
+                "monster" => EntityType.MONSTER,
+                "weapon" => EntityType.WEAPON,
+                "armor" => EntityType.ARMOR,
+                "item" => EntityType.ITEM,
+                "spell" => EntityType.SPELL,
+                "site" => EntityType.SITE,
+                "nation" => EntityType.NATION,
+                "event" => EntityType.EVENT,
+                "mercenary" => EntityType.MERCENARY,
+                "nametype" => EntityType.NAMETYPE,
+                "poptype" => EntityType.POPTYPE,
+                "montag" => EntityType.MONTAG,
+                "enchantment" => EntityType.ENCHANTMENT,
+                _ => null
             };
         }
 

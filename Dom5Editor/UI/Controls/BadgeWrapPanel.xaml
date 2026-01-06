@@ -42,7 +42,11 @@
                             CommandParameter="{Binding}"
                             Tooltip="{Binding Tooltip}"
                             HasIcon="{Binding HasIcon}"
-                            IconSource="{Binding IconSource}"/>
+                            IconSource="{Binding IconSource}"
+                            IsReference="{Binding IsReference}"
+                            ReferenceDisplay="{Binding ReferenceDisplay}"
+                            ReferenceType="{Binding ReferenceType}"
+                            ReferenceId="{Binding ReferenceId}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

@@ -1,0 +1,652 @@
+{
+  "sections": [
+    {
+      "id": "properties",
+      "displayName": "PROPERTIES",
+      "description": "All site properties and effects",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "gold",
+          "display": "Gold",
+          "type": "int",
+          "description": "Gold income per turn.",
+          "color": "#32302A",
+          "borderColor": "#6B5B30"
+        },
+        {
+          "name": "res",
+          "display": "Research",
+          "type": "int",
+          "description": "Research points per turn.",
+          "color": "#2A2D32",
+          "borderColor": "#4050A0"
+        },
+        {
+          "name": "supply",
+          "display": "Supply",
+          "type": "int",
+          "description": "Supply bonus.",
+          "color": "#2A322A",
+          "borderColor": "#406040"
+        },
+        {
+          "name": "lab",
+          "display": "Lab",
+          "type": "flag",
+          "description": "Site provides a laboratory.",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "temple",
+          "display": "Temple",
+          "type": "flag",
+          "description": "Site provides a temple.",
+          "color": "#32302A",
+          "borderColor": "#605040"
+        },
+        {
+          "name": "fort",
+          "display": "Fort",
+          "type": "int",
+          "description": "Site provides fortification level.",
+          "color": "#303033",
+          "borderColor": "#505560"
+        },
+        {
+          "name": "claim",
+          "display": "Claim",
+          "type": "flag",
+          "description": "Site must be claimed to use."
+        },
+        {
+          "name": "evil",
+          "display": "Evil",
+          "type": "flag",
+          "description": "Site is evil-aligned.",
+          "color": "#322A2A",
+          "borderColor": "#604040"
+        },
+        {
+          "name": "wild",
+          "display": "Wild",
+          "type": "flag",
+          "description": "Site is wild/untamed.",
+          "color": "#2A322A",
+          "borderColor": "#405040"
+        },
+        {
+          "name": "loc",
+          "display": "Location",
+          "type": "bitmask",
+          "description": "Valid terrain types for the site."
+        },
+        {
+          "name": "unrest",
+          "display": "Unrest",
+          "type": "int",
+          "description": "Direct unrest value."
+        },
+        {
+          "name": "incunrest",
+          "display": "Inc Unrest",
+          "type": "int",
+          "description": "Increases unrest each turn."
+        },
+        {
+          "name": "decunrest",
+          "display": "Dec Unrest",
+          "type": "int",
+          "description": "Decreases unrest each turn."
+        },
+        {
+          "name": "dominion",
+          "display": "Dominion",
+          "type": "int",
+          "description": "Dominion spread from this site."
+        },
+        {
+          "name": "goddomchaos",
+          "display": "God Chaos",
+          "type": "int",
+          "description": "Affects dominion chaos scale."
+        },
+        {
+          "name": "goddomlazy",
+          "display": "God Lazy",
+          "type": "int",
+          "description": "Affects dominion sloth scale."
+        },
+        {
+          "name": "goddomcold",
+          "display": "God Cold",
+          "type": "int",
+          "description": "Affects dominion cold scale."
+        },
+        {
+          "name": "goddomdeath",
+          "display": "God Death",
+          "type": "int",
+          "description": "Affects dominion death scale."
+        },
+        {
+          "name": "goddommisfortune",
+          "display": "God Misfortune",
+          "type": "int",
+          "description": "Affects dominion misfortune scale."
+        },
+        {
+          "name": "goddomdrain",
+          "display": "God Drain",
+          "type": "int",
+          "description": "Affects dominion drain scale."
+        },
+        {
+          "name": "incscale",
+          "display": "Inc Scale",
+          "type": "int",
+          "description": "Increases province scale."
+        },
+        {
+          "name": "decscale",
+          "display": "Dec Scale",
+          "type": "int",
+          "description": "Decreases province scale."
+        },
+        {
+          "name": "minegold",
+          "display": "Mine Gold",
+          "type": "int",
+          "description": "Gold mining production."
+        },
+        {
+          "name": "popgrowth",
+          "display": "Pop Growth",
+          "type": "int",
+          "description": "Population growth modifier (per mille)."
+        },
+        {
+          "name": "heal",
+          "display": "Heal",
+          "type": "int",
+          "description": "Healing effect on units."
+        },
+        {
+          "name": "curse",
+          "display": "Curse",
+          "type": "int",
+          "description": "Curse effect on units."
+        },
+        {
+          "name": "disease",
+          "display": "Disease",
+          "type": "int",
+          "description": "Disease effect on units."
+        },
+        {
+          "name": "horrormark",
+          "display": "Horror Mark",
+          "type": "int",
+          "description": "Horror marking effect."
+        },
+        {
+          "name": "holyfire",
+          "display": "Holy Fire",
+          "type": "int",
+          "description": "Holy fire damage."
+        },
+        {
+          "name": "holypower",
+          "display": "Holy Power",
+          "type": "int",
+          "description": "Holy power bonus."
+        },
+        {
+          "name": "xp",
+          "display": "XP",
+          "type": "int",
+          "description": "Experience bonus for units."
+        },
+        {
+          "name": "voidgate",
+          "display": "Void Gate",
+          "type": "int",
+          "description": "Void gate effect."
+        },
+        {
+          "name": "recallgod",
+          "display": "Recall God",
+          "type": "int",
+          "description": "God recall ability."
+        },
+        {
+          "name": "domwar",
+          "display": "Dom War",
+          "type": "int",
+          "description": "Dominion war modifier."
+        },
+        {
+          "name": "adventureruin",
+          "display": "Adv Ruin",
+          "type": "int",
+          "description": "Adventurer ruin chance."
+        },
+        {
+          "name": "cluster",
+          "display": "Cluster",
+          "type": "int",
+          "description": "Site clustering behavior."
+        },
+        {
+          "name": "scry",
+          "display": "Scry",
+          "type": "int",
+          "description": "Scrying ability."
+        },
+        {
+          "name": "scryrange",
+          "display": "Scry Range",
+          "type": "int",
+          "description": "Scrying range bonus."
+        },
+        {
+          "name": "conjcost",
+          "display": "Conj Cost",
+          "type": "int",
+          "description": "Conjuration cost modifier."
+        },
+        {
+          "name": "altcost",
+          "display": "Alt Cost",
+          "type": "int",
+          "description": "Alteration cost modifier."
+        },
+        {
+          "name": "evocost",
+          "display": "Evo Cost",
+          "type": "int",
+          "description": "Evocation cost modifier."
+        },
+        {
+          "name": "constcost",
+          "display": "Const Cost",
+          "type": "int",
+          "description": "Construction cost modifier."
+        },
+        {
+          "name": "enchcost",
+          "display": "Ench Cost",
+          "type": "int",
+          "description": "Enchantment cost modifier."
+        },
+        {
+          "name": "thaucost",
+          "display": "Thau Cost",
+          "type": "int",
+          "description": "Thaumaturgy cost modifier."
+        },
+        {
+          "name": "bloodcost",
+          "display": "Blood Cost",
+          "type": "int",
+          "description": "Blood magic cost modifier."
+        },
+        {
+          "name": "firerange",
+          "display": "Fire Range",
+          "type": "int",
+          "description": "Fire spell range bonus."
+        },
+        {
+          "name": "airrange",
+          "display": "Air Range",
+          "type": "int",
+          "description": "Air spell range bonus."
+        },
+        {
+          "name": "waterrange",
+          "display": "Water Range",
+          "type": "int",
+          "description": "Water spell range bonus."
+        },
+        {
+          "name": "earthrange",
+          "display": "Earth Range",
+          "type": "int",
+          "description": "Earth spell range bonus."
+        },
+        {
+          "name": "astralrange",
+          "display": "Astral Range",
+          "type": "int",
+          "description": "Astral spell range bonus."
+        },
+        {
+          "name": "deathrange",
+          "display": "Death Range",
+          "type": "int",
+          "description": "Death spell range bonus."
+        },
+        {
+          "name": "naturerange",
+          "display": "Nature Range",
+          "type": "int",
+          "description": "Nature spell range bonus."
+        },
+        {
+          "name": "bloodrange",
+          "display": "Blood Range",
+          "type": "int",
+          "description": "Blood spell range bonus."
+        },
+        {
+          "name": "glamourrange",
+          "display": "Glamour Range",
+          "type": "int",
+          "description": "Glamour spell range bonus."
+        },
+        {
+          "name": "elementrange",
+          "display": "Element Range",
+          "type": "int",
+          "description": "Elemental spell range bonus."
+        },
+        {
+          "name": "sorceryrange",
+          "display": "Sorcery Range",
+          "type": "int",
+          "description": "Sorcery spell range bonus."
+        },
+        {
+          "name": "allrange",
+          "display": "All Range",
+          "type": "int",
+          "description": "All spell range bonus."
+        },
+        {
+          "name": "blesshp",
+          "display": "Bless HP",
+          "type": "int",
+          "description": "HP bonus when blessed."
+        },
+        {
+          "name": "blessstr",
+          "display": "Bless STR",
+          "type": "int",
+          "description": "Strength bonus when blessed."
+        },
+        {
+          "name": "blessatt",
+          "display": "Bless ATT",
+          "type": "int",
+          "description": "Attack bonus when blessed."
+        },
+        {
+          "name": "blessdef",
+          "display": "Bless DEF",
+          "type": "int",
+          "description": "Defense bonus when blessed."
+        },
+        {
+          "name": "blessprec",
+          "display": "Bless PREC",
+          "type": "int",
+          "description": "Precision bonus when blessed."
+        },
+        {
+          "name": "blessmr",
+          "display": "Bless MR",
+          "type": "int",
+          "description": "Magic resistance bonus when blessed."
+        },
+        {
+          "name": "blessmor",
+          "display": "Bless MOR",
+          "type": "int",
+          "description": "Morale bonus when blessed."
+        },
+        {
+          "name": "blessawe",
+          "display": "Bless Awe",
+          "type": "int",
+          "description": "Awe bonus when blessed."
+        },
+        {
+          "name": "blessanimawe",
+          "display": "Bless Anim Awe",
+          "type": "int",
+          "description": "Animal awe bonus when blessed."
+        },
+        {
+          "name": "blessdarkvis",
+          "display": "Bless Darkvision",
+          "type": "int",
+          "description": "Darkvision bonus when blessed."
+        },
+        {
+          "name": "blessdtv",
+          "display": "Bless DTV",
+          "type": "int",
+          "description": "Disease/toxin vulnerability when blessed."
+        },
+        {
+          "name": "blessfireres",
+          "display": "Bless Fire Res",
+          "type": "int",
+          "description": "Fire resistance when blessed.",
+          "color": "#322D2A",
+          "borderColor": "#6B4030"
+        },
+        {
+          "name": "blesscoldres",
+          "display": "Bless Cold Res",
+          "type": "int",
+          "description": "Cold resistance when blessed.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A"
+        },
+        {
+          "name": "blessshockres",
+          "display": "Bless Shock Res",
+          "type": "int",
+          "description": "Shock resistance when blessed.",
+          "color": "#32302A",
+          "borderColor": "#5A5540"
+        },
+        {
+          "name": "blesspoisres",
+          "display": "Bless Pois Res",
+          "type": "int",
+          "description": "Poison resistance when blessed.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "blessairshld",
+          "display": "Bless Air Shld",
+          "type": "int",
+          "description": "Air shield when blessed."
+        },
+        {
+          "name": "blessreinvig",
+          "display": "Bless Reinvig",
+          "type": "int",
+          "description": "Reinvigoration when blessed."
+        },
+        {
+          "name": "wallmult",
+          "display": "Wall Mult",
+          "type": "int",
+          "description": "Wall unit multiplier."
+        },
+        {
+          "name": "uwwallmult",
+          "display": "UW Wall Mult",
+          "type": "int",
+          "description": "Underwater wall unit multiplier."
+        },
+        {
+          "name": "defmult",
+          "display": "Def Mult",
+          "type": "int",
+          "description": "Defense unit multiplier."
+        },
+        {
+          "name": "homemon",
+          "display": "Home Monster",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Monster available for recruitment at home.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "homecom",
+          "display": "Home Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander available for recruitment at home.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "mon",
+          "display": "Recruit Monster",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Monster available for recruitment.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "com",
+          "display": "Recruit Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander available for recruitment.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "nat",
+          "display": "Nation",
+          "type": "ref",
+          "refType": "nation",
+          "description": "Nation restriction for the site.",
+          "color": "#322A2A",
+          "borderColor": "#605050"
+        },
+        {
+          "name": "natmon",
+          "display": "Nation Monster",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Monster available for national recruitment.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "natcom",
+          "display": "Nation Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander available for national recruitment.",
+          "color": "#2A2A32",
+          "borderColor": "#505080"
+        },
+        {
+          "name": "summon",
+          "display": "Summon",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Monster summoned by the site.",
+          "color": "#302A32",
+          "borderColor": "#604080"
+        },
+        {
+          "name": "summonlvl2",
+          "display": "Summon L2",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Monster summoned at dominion level 2+.",
+          "color": "#302A32",
+          "borderColor": "#604080"
+        },
+        {
+          "name": "summonlvl3",
+          "display": "Summon L3",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Monster summoned at dominion level 3+.",
+          "color": "#302A32",
+          "borderColor": "#604080"
+        },
+        {
+          "name": "summonlvl4",
+          "display": "Summon L4",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Monster summoned at dominion level 4+.",
+          "color": "#302A32",
+          "borderColor": "#604080"
+        },
+        {
+          "name": "wallcom",
+          "display": "Wall Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander defending walls.",
+          "color": "#303033",
+          "borderColor": "#505580"
+        },
+        {
+          "name": "wallunit",
+          "display": "Wall Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Unit defending walls.",
+          "color": "#303033",
+          "borderColor": "#505580"
+        },
+        {
+          "name": "uwwallunit",
+          "display": "UW Wall Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Unit defending underwater walls.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "uwwallcom",
+          "display": "UW Wall Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander defending underwater walls.",
+          "color": "#2A2D32",
+          "borderColor": "#405580"
+        },
+        {
+          "name": "defcom",
+          "display": "Defense Commander",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Commander for province defense.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        },
+        {
+          "name": "defunit",
+          "display": "Defense Unit",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Unit for province defense.",
+          "color": "#2A3230",
+          "borderColor": "#406050"
+        }
+      ]
+    }
+  ]
+}
