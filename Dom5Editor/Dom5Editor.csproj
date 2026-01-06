@@ -25,4 +25,11 @@
       </Content>
     </ItemGroup>
 
+    <!-- Magic path and gem icons -->
+    <ItemGroup>
+      <Content Include="icons\magicicons\*.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

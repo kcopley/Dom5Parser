@@ -149,4 +149,70 @@ namespace Dom5Editor.UI.Converters
             return null;
         }
     }
+
+    /// <summary>
+    /// Inverts a boolean value.
+    /// </summary>
+    public class InverseBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool b)
+            {
+                return !b;
+            }
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool b)
+            {
+                return !b;
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Converts a path letter (F, A, W, etc.) to a gem icon path.
+    /// </summary>
+    public class PathLetterToGemIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string letter && !string.IsNullOrEmpty(letter))
+            {
+                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                return System.IO.Path.Combine(baseDir, "icons", "magicicons", $"Gem_{letter}.png");
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// Converts a path letter (F, A, W, etc.) to a path icon path.
+    /// </summary>
+    public class PathLetterToPathIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string letter && !string.IsNullOrEmpty(letter))
+            {
+                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                return System.IO.Path.Combine(baseDir, "icons", "magicicons", $"Path_{letter}.png");
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -114,6 +114,17 @@ namespace Dom5Editor.Data
         public string RefType { get; set; }
 
         /// <summary>
+        /// Optional icon path relative to icons folder (e.g., "magicicons/Path_F.png").
+        /// </summary>
+        [JsonPropertyName("icon")]
+        public string Icon { get; set; }
+
+        /// <summary>
+        /// Returns true if this command has an icon defined.
+        /// </summary>
+        public bool HasIcon => !string.IsNullOrEmpty(Icon);
+
+        /// <summary>
         /// Returns true if this is a flag (boolean) command.
         /// </summary>
         public bool IsFlag => Type == "flag";

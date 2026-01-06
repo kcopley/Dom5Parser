@@ -44,6 +44,23 @@ namespace Dom5Editor.UI.Views
     }
 
     /// <summary>
+    /// Represents an item slot type option for ComboBox binding.
+    /// </summary>
+    public class SlotTypeOption
+    {
+        public int Value { get; }
+        public string DisplayName { get; }
+
+        public SlotTypeOption(int value, string displayName)
+        {
+            Value = value;
+            DisplayName = displayName;
+        }
+
+        public override string ToString() => DisplayName;
+    }
+
+    /// <summary>
     /// ViewModel for Monster entities.
     /// </summary>
     public class MonsterViewModel : EntityViewModel
@@ -54,6 +71,11 @@ namespace Dom5Editor.UI.Views
         }
 
         public Monster Monster => (Monster)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from monster_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "monster";
 
         // ========================================
         // Basic Info
@@ -830,154 +852,8 @@ namespace Dom5Editor.UI.Views
         public bool IsSeduceInherited => IsIntPropertyInherited(Command.SEDUCE);
 
         // ===== BADGE-BASED COLLECTIONS (Compact UI) =====
-        // Three main sections: Types (read-only), General (non-combat), Combat, Resistances
-
-        // Lazy-loaded badge configuration from JSON
-        private static BadgeConfig? _badgeConfig;
-        private static BadgeConfig BadgeConfig => _badgeConfig ??= BadgeConfigLoader.LoadConfig("monster") ?? new BadgeConfig();
-
-        /// <summary>
-        /// Builds badges for a section using JSON configuration.
-        /// Uses layered property access: vanilla -> mod -> session changes.
-        /// </summary>
-        private (System.Collections.ObjectModel.ObservableCollection<PropertyItem> active,
-                 System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> available)
-            BuildBadgesFromSection(string sectionId, EventHandler<int>? valueChangedHandler = null)
-        {
-            var active = new System.Collections.ObjectModel.ObservableCollection<PropertyItem>();
-            var available = new System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem>();
-            var usedCommands = new HashSet<Command>();
-
-            var section = BadgeConfig.GetSection(sectionId);
-            if (section == null)
-            {
-                return (active, available);
-            }
-
-            // Get vanilla entity for layered comparison
-            var vanillaEntity = GetVanillaEntity();
-
-            foreach (var cmdDef in section.Commands)
-            {
-                if (!BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
-                    continue;
-
-                // Layer 1: Get vanilla value (base layer, includes vanilla copystats)
-                bool vanillaHasValue = false;
-                bool vanillaIsCopied = false;
-                int? vanillaValue = null;
-                bool vanillaFlagValue = false;
-
-                if (vanillaEntity != null)
-                {
-                    if (cmdDef.IsFlag)
-                    {
-                        var vanillaResult = vanillaEntity.TryGet<CommandProperty>(command, out _);
-                        vanillaFlagValue = vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED;
-                        vanillaHasValue = vanillaFlagValue;
-                        vanillaIsCopied = vanillaResult == ReturnType.COPIED;
-                    }
-                    else if (cmdDef.IsInt)
-                    {
-                        var vanillaResult = vanillaEntity.TryGet<IntProperty>(command, out var vanillaProp);
-                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
-                        {
-                            vanillaValue = vanillaProp?.Value;
-                            vanillaHasValue = true;
-                            vanillaIsCopied = vanillaResult == ReturnType.COPIED;
-                        }
-                    }
-                }
-
-                // Layer 2: Get current entity value (mod + session, includes mod copystats)
-                bool entityHasValue = false;
-                bool entityIsCopied = false;
-                bool entityHasDirect = false; // Has the property directly (not from copystats)
-                int? entityValue = null;
-                bool entityFlagValue = false;
-
-                if (cmdDef.IsFlag)
-                {
-                    var entityResult = _entity.TryGet<CommandProperty>(command, out _);
-                    entityFlagValue = entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED;
-                    entityHasValue = entityFlagValue;
-                    entityIsCopied = entityResult == ReturnType.COPIED;
-                    entityHasDirect = entityResult == ReturnType.TRUE;
-                }
-                else if (cmdDef.IsInt)
-                {
-                    var entityResult = _entity.TryGet<IntProperty>(command, out var entityProp);
-                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
-                    {
-                        entityValue = entityProp?.Value;
-                        entityHasValue = true;
-                        entityIsCopied = entityResult == ReturnType.COPIED;
-                        entityHasDirect = entityResult == ReturnType.TRUE;
-                    }
-                }
-
-                // Determine effective value (entity overrides vanilla)
-                bool hasValue = entityHasValue || vanillaHasValue;
-                int? effectiveValue = entityHasValue ? entityValue : vanillaValue;
-                bool effectiveFlagValue = entityHasValue ? entityFlagValue : vanillaFlagValue;
-
-                // Determine modification and inheritance status
-                bool isModified = false;
-                bool isInherited = false;
-                bool isSessionEdit = IsPropertyEditedInSession(command);
-
-                if (cmdDef.IsFlag)
-                {
-                    // Modified if entity has direct value different from vanilla
-                    isModified = entityHasDirect && (entityFlagValue != vanillaFlagValue);
-                    // Inherited if value comes from copystats or vanilla (not directly on entity)
-                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
-                }
-                else if (cmdDef.IsInt)
-                {
-                    // Modified if entity has direct value different from vanilla
-                    isModified = entityHasDirect && (!vanillaHasValue || entityValue != vanillaValue);
-                    // Inherited if value comes from copystats or vanilla (not directly on entity)
-                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
-                }
-
-                if (hasValue && (cmdDef.IsFlag ? effectiveFlagValue : true))
-                {
-                    var badge = BadgeConfigLoader.CreatePropertyItem(cmdDef, effectiveValue, isModified, isSessionEdit);
-                    // Can only remove if:
-                    // 1. Section is not read-only (from JSON config)
-                    // 2. Property is directly on the entity (not inherited from copystats)
-                    // 3. Entity source allows removal (not pure vanilla - can only remove from mod or session edits)
-                    bool canRemoveBasedOnSource = _source == EntitySource.FromMod
-                                                  || _source == EntitySource.VanillaModified
-                                                  || _source == EntitySource.New;
-                    badge.CanRemove = !section.ReadOnly && entityHasDirect && canRemoveBasedOnSource;
-                    badge.IsInherited = section.ReadOnly || isInherited;
-
-                    if (valueChangedHandler != null && cmdDef.IsInt)
-                    {
-                        badge.ValueChanged += valueChangedHandler;
-                    }
-
-                    active.Add(badge);
-                    usedCommands.Add(command);
-                }
-            }
-
-            // Build available list (excluding already used commands)
-            if (!section.ReadOnly)
-            {
-                foreach (var cmdDef in section.Commands)
-                {
-                    if (BadgeConfigLoader.TryGetCommand(cmdDef, out var command) && !usedCommands.Contains(command))
-                    {
-                        available.Add(BadgeConfigLoader.CreateAvailableItem(cmdDef));
-                    }
-                }
-            }
-
-            return (active, available);
-        }
+        // Sections defined in monster_badges.json: types (read-only), general, combat, resistances
+        // Uses base class BuildBadgesFromSection() method
 
         private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _typeBadges;
         private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableTypeBadges;
@@ -1028,7 +904,7 @@ namespace Dom5Editor.UI.Views
             get { if (_availableResistanceBadges == null) RefreshResistanceBadges(); return _availableResistanceBadges; }
         }
 
-        // Commands for badge operations
+        // Commands for badge operations - using base class helpers
         private RelayCommand<PropertyItem> _removeGeneralBadgeCommand;
         private RelayCommand<AvailablePropertyItem> _addGeneralBadgeCommand;
         private RelayCommand<PropertyItem> _removeCombatBadgeCommand;
@@ -1036,24 +912,16 @@ namespace Dom5Editor.UI.Views
         private RelayCommand<PropertyItem> _removeResistanceBadgeCommand;
         private RelayCommand<AvailablePropertyItem> _addResistanceBadgeCommand;
 
-        public RelayCommand<PropertyItem> RemoveGeneralBadgeCommand => _removeGeneralBadgeCommand ??= new RelayCommand<PropertyItem>(b =>
-        {
-            if (b.HasValue) SetIntProperty(b.Command, null);
-            else SetCommandProperty(b.Command, false);
-            RefreshGeneralBadges();
-        });
+        public RelayCommand<PropertyItem> RemoveGeneralBadgeCommand => _removeGeneralBadgeCommand ??= CreateRemoveBadgeCommand(RefreshGeneralBadges);
+        public RelayCommand<AvailablePropertyItem> AddGeneralBadgeCommand => _addGeneralBadgeCommand ??= CreateAddBadgeCommand(RefreshGeneralBadges);
+        public RelayCommand<PropertyItem> RemoveCombatBadgeCommand => _removeCombatBadgeCommand ??= CreateRemoveBadgeCommand(RefreshCombatBadges);
+        public RelayCommand<AvailablePropertyItem> AddCombatBadgeCommand => _addCombatBadgeCommand ??= CreateAddBadgeCommand(RefreshCombatBadges);
+        public RelayCommand<PropertyItem> RemoveResistanceBadgeCommand => _removeResistanceBadgeCommand ??= CreateRemoveBadgeCommand(RefreshResistanceBadges);
+        public RelayCommand<AvailablePropertyItem> AddResistanceBadgeCommand => _addResistanceBadgeCommand ??= CreateAddBadgeCommand(RefreshResistanceBadges);
 
-        public RelayCommand<AvailablePropertyItem> AddGeneralBadgeCommand => _addGeneralBadgeCommand ??= new RelayCommand<AvailablePropertyItem>(b =>
-        {
-            if (b.DefaultValue.HasValue) SetIntProperty(b.Command, b.DefaultValue.Value);
-            else SetCommandProperty(b.Command, true);
-            RefreshGeneralBadges();
-        });
-
-        public RelayCommand<PropertyItem> RemoveCombatBadgeCommand => _removeCombatBadgeCommand ??= new RelayCommand<PropertyItem>(b => { SetIntProperty(b.Command, null); RefreshCombatBadges(); });
-        public RelayCommand<AvailablePropertyItem> AddCombatBadgeCommand => _addCombatBadgeCommand ??= new RelayCommand<AvailablePropertyItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 1); RefreshCombatBadges(); });
-        public RelayCommand<PropertyItem> RemoveResistanceBadgeCommand => _removeResistanceBadgeCommand ??= new RelayCommand<PropertyItem>(b => { SetIntProperty(b.Command, null); RefreshResistanceBadges(); });
-        public RelayCommand<AvailablePropertyItem> AddResistanceBadgeCommand => _addResistanceBadgeCommand ??= new RelayCommand<AvailablePropertyItem>(b => { SetIntProperty(b.Command, b.DefaultValue ?? 0); RefreshResistanceBadges(); });
+        // Shared value changed handler for all badge sections (uses base class helper)
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
 
         private void RefreshTypeBadges()
         {
@@ -1066,62 +934,29 @@ namespace Dom5Editor.UI.Views
 
         private void RefreshGeneralBadges()
         {
-            var (active, available) = BuildBadgesFromSection("general", OnGeneralBadgeValueChanged);
+            var (active, available) = BuildBadgesFromSection("general", BadgeValueChangedHandler);
             _generalBadges = active;
             _availableGeneralBadges = available;
             OnPropertyChanged(nameof(GeneralBadges));
             OnPropertyChanged(nameof(AvailableGeneralBadges));
         }
 
-        private void OnGeneralBadgeValueChanged(object sender, int newValue)
-        {
-            if (sender is PropertyItem badge)
-            {
-                SetIntProperty(badge.Command, newValue);
-                // Update the badge's session edit indicator
-                badge.IsSessionEdit = IsPropertyEditedInSession(badge.Command);
-                badge.IsModified = true;
-            }
-        }
-
         private void RefreshCombatBadges()
         {
-            var (active, available) = BuildBadgesFromSection("combat", OnCombatBadgeValueChanged);
+            var (active, available) = BuildBadgesFromSection("combat", BadgeValueChangedHandler);
             _combatBadges = active;
             _availableCombatBadges = available;
             OnPropertyChanged(nameof(CombatBadges));
             OnPropertyChanged(nameof(AvailableCombatBadges));
         }
 
-        private void OnCombatBadgeValueChanged(object sender, int newValue)
-        {
-            if (sender is PropertyItem badge)
-            {
-                SetIntProperty(badge.Command, newValue);
-                // Update the badge's session edit indicator
-                badge.IsSessionEdit = IsPropertyEditedInSession(badge.Command);
-                badge.IsModified = true;
-            }
-        }
-
         private void RefreshResistanceBadges()
         {
-            var (active, available) = BuildBadgesFromSection("resistances", OnResistanceBadgeValueChanged);
+            var (active, available) = BuildBadgesFromSection("resistances", BadgeValueChangedHandler);
             _resistanceBadges = active;
             _availableResistanceBadges = available;
             OnPropertyChanged(nameof(ResistanceBadges));
             OnPropertyChanged(nameof(AvailableResistanceBadges));
-        }
-
-        private void OnResistanceBadgeValueChanged(object sender, int newValue)
-        {
-            if (sender is PropertyItem badge)
-            {
-                SetIntProperty(badge.Command, newValue);
-                // Update the badge's session edit indicator
-                badge.IsSessionEdit = IsPropertyEditedInSession(badge.Command);
-                badge.IsModified = true;
-            }
         }
 
         // ===== Magic Paths =====
@@ -1495,172 +1330,56 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        /// <summary>
+        /// Refresh weapons list using generic layered reference lookup.
+        /// </summary>
         private void RefreshWeaponsList()
         {
             _weaponsList = new ObservableCollection<EquipmentItem>();
-            var vanillaEntity = GetVanillaEntity();
 
-            // Get all weapon references from the entity (including copied)
-            var directWeapons = new HashSet<int>();
-            foreach (var prop in _entity.GetMultiple(Command.WEAPON))
+            // Use base class generic method for layered lookup
+            var weapons = GetLayeredReferenceList<WeaponRef>(Command.WEAPON, EntityType.WEAPON, r => r.ID);
+
+            foreach (var (id, name, isInherited, isModified, isSessionEdit) in weapons)
             {
-                if (prop is WeaponRef weaponRef && weaponRef.HasValue)
+                _weaponsList.Add(new EquipmentItem
                 {
-                    directWeapons.Add(weaponRef.ID);
-                    var item = new EquipmentItem
-                    {
-                        ID = weaponRef.ID,
-                        Name = weaponRef.Entity?.Name,
-                        IsModified = IsWeaponModified(weaponRef.ID),
-                        IsSessionEdit = IsPropertyEditedInSession(Command.WEAPON),
-                        IsInherited = false,
-                        SourceCommand = Command.WEAPON
-                    };
-                    _weaponsList.Add(item);
-                }
-            }
-
-            // Add inherited weapons from copystats
-            if (_entity.TryGetCopyFrom(out var copyFrom) && copyFrom != null)
-            {
-                AddInheritedWeapons(copyFrom, directWeapons, new HashSet<IDEntity> { _entity });
+                    ID = id,
+                    Name = name,
+                    IsInherited = isInherited,
+                    IsModified = isModified,
+                    IsSessionEdit = isSessionEdit,
+                    SourceCommand = Command.WEAPON
+                });
             }
 
             OnPropertyChanged(nameof(WeaponsList));
         }
 
-        private void AddInheritedWeapons(IDEntity source, HashSet<int> directWeapons, HashSet<IDEntity> visited)
-        {
-            if (visited.Contains(source))
-                return;
-            visited.Add(source);
-
-            foreach (var prop in source.GetMultiple(Command.WEAPON))
-            {
-                if (prop is WeaponRef weaponRef && weaponRef.HasValue)
-                {
-                    if (!directWeapons.Contains(weaponRef.ID))
-                    {
-                        directWeapons.Add(weaponRef.ID);
-                        var item = new EquipmentItem
-                        {
-                            ID = weaponRef.ID,
-                            Name = weaponRef.Entity?.Name,
-                            IsModified = false,
-                            IsSessionEdit = false,
-                            IsInherited = true,
-                            SourceCommand = Command.WEAPON
-                        };
-                        _weaponsList.Add(item);
-                    }
-                }
-            }
-
-            // Recurse through copystats chain
-            if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
-            {
-                AddInheritedWeapons(nextCopy, directWeapons, visited);
-            }
-        }
-
-        private bool IsWeaponModified(int weaponId)
-        {
-            var vanillaEntity = GetVanillaEntity();
-            if (vanillaEntity == null)
-                return true; // New entity, so it's modified
-
-            // Check if vanilla has this weapon
-            var vanillaWeapons = vanillaEntity.GetMultiple(Command.WEAPON)
-                .OfType<WeaponRef>()
-                .Where(w => w.HasValue)
-                .Select(w => w.ID)
-                .ToHashSet();
-
-            return !vanillaWeapons.Contains(weaponId);
-        }
-
+        /// <summary>
+        /// Refresh armor list using generic layered reference lookup.
+        /// </summary>
         private void RefreshArmorList()
         {
             _armorList = new ObservableCollection<EquipmentItem>();
-            var vanillaEntity = GetVanillaEntity();
 
-            // Get all armor references from the entity (including copied)
-            var directArmor = new HashSet<int>();
-            foreach (var prop in _entity.GetMultiple(Command.ARMOR))
+            // Use base class generic method for layered lookup
+            var armors = GetLayeredReferenceList<ArmorRef>(Command.ARMOR, EntityType.ARMOR, r => r.ID);
+
+            foreach (var (id, name, isInherited, isModified, isSessionEdit) in armors)
             {
-                if (prop is ArmorRef armorRef && armorRef.HasValue)
+                _armorList.Add(new EquipmentItem
                 {
-                    directArmor.Add(armorRef.ID);
-                    var item = new EquipmentItem
-                    {
-                        ID = armorRef.ID,
-                        Name = armorRef.Entity?.Name,
-                        IsModified = IsArmorModified(armorRef.ID),
-                        IsSessionEdit = IsPropertyEditedInSession(Command.ARMOR),
-                        IsInherited = false,
-                        SourceCommand = Command.ARMOR
-                    };
-                    _armorList.Add(item);
-                }
-            }
-
-            // Add inherited armor from copystats
-            if (_entity.TryGetCopyFrom(out var copyFrom) && copyFrom != null)
-            {
-                AddInheritedArmor(copyFrom, directArmor, new HashSet<IDEntity> { _entity });
+                    ID = id,
+                    Name = name,
+                    IsInherited = isInherited,
+                    IsModified = isModified,
+                    IsSessionEdit = isSessionEdit,
+                    SourceCommand = Command.ARMOR
+                });
             }
 
             OnPropertyChanged(nameof(ArmorList));
-        }
-
-        private void AddInheritedArmor(IDEntity source, HashSet<int> directArmor, HashSet<IDEntity> visited)
-        {
-            if (visited.Contains(source))
-                return;
-            visited.Add(source);
-
-            foreach (var prop in source.GetMultiple(Command.ARMOR))
-            {
-                if (prop is ArmorRef armorRef && armorRef.HasValue)
-                {
-                    if (!directArmor.Contains(armorRef.ID))
-                    {
-                        directArmor.Add(armorRef.ID);
-                        var item = new EquipmentItem
-                        {
-                            ID = armorRef.ID,
-                            Name = armorRef.Entity?.Name,
-                            IsModified = false,
-                            IsSessionEdit = false,
-                            IsInherited = true,
-                            SourceCommand = Command.ARMOR
-                        };
-                        _armorList.Add(item);
-                    }
-                }
-            }
-
-            // Recurse through copystats chain
-            if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
-            {
-                AddInheritedArmor(nextCopy, directArmor, visited);
-            }
-        }
-
-        private bool IsArmorModified(int armorId)
-        {
-            var vanillaEntity = GetVanillaEntity();
-            if (vanillaEntity == null)
-                return true; // New entity, so it's modified
-
-            // Check if vanilla has this armor
-            var vanillaArmor = vanillaEntity.GetMultiple(Command.ARMOR)
-                .OfType<ArmorRef>()
-                .Where(a => a.HasValue)
-                .Select(a => a.ID)
-                .ToHashSet();
-
-            return !vanillaArmor.Contains(armorId);
         }
 
         private List<AvailableEquipmentItem> _availableWeapons;
@@ -2309,6 +2028,496 @@ namespace Dom5Editor.UI.Views
         }
 
         public Weapon Weapon => (Weapon)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from weapon_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "weapon";
+
+        // ========================================
+        // Copy From Support
+        // ========================================
+
+        public string CopyWeaponDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<WeaponRef>(Command.COPYWEAPON, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopyWeapon
+        {
+            get
+            {
+                var result = _entity.TryGet<WeaponRef>(Command.COPYWEAPON, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        // ========================================
+        // Core Stats
+        // ========================================
+
+        // Special damage type constants
+        private const string DamageTypeSummon = "summonunits";
+        private const string DamageTypeCloud = "cloud";
+        private const int DefaultSummonMonsterId = 297;
+
+        /// <summary>
+        /// Gets the raw damage string value (could be a number, "summonunits", "cloud", etc.)
+        /// </summary>
+        public string DamageRawValue
+        {
+            get
+            {
+                var result = _entity.TryGet<StringProperty>(Command.DMG, out var prop);
+                if ((result == ReturnType.TRUE || result == ReturnType.COPIED) && prop != null)
+                    return prop.Value;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the effective damage type by checking current value and inherited value.
+        /// Returns "summonunits", "cloud", or null for normal/numeric damage.
+        /// </summary>
+        public string EffectiveDamageType
+        {
+            get
+            {
+                // First check direct value
+                var rawValue = DamageRawValue;
+                if (rawValue == DamageTypeSummon || rawValue == DamageTypeCloud)
+                    return rawValue;
+
+                // Check if inherited from copyweapon source
+                var copyResult = _entity.TryGet<WeaponRef>(Command.COPYWEAPON, out var copyRef);
+                if (copyResult == ReturnType.TRUE && copyRef?.Entity is Weapon sourceWeapon)
+                {
+                    var sourceResult = sourceWeapon.TryGet<StringProperty>(Command.DMG, out var sourceProp);
+                    if ((sourceResult == ReturnType.TRUE || sourceResult == ReturnType.COPIED) && sourceProp != null)
+                    {
+                        if (sourceProp.Value == DamageTypeSummon || sourceProp.Value == DamageTypeCloud)
+                            return sourceProp.Value;
+                    }
+                }
+
+                return null; // Normal numeric damage
+            }
+        }
+
+        /// <summary>
+        /// Returns true if this weapon summons units (damage value is monster ID).
+        /// </summary>
+        public bool IsSummonWeapon => EffectiveDamageType == DamageTypeSummon;
+
+        /// <summary>
+        /// Returns true if this weapon creates a cloud (damage is read-only).
+        /// </summary>
+        public bool IsCloudWeapon => EffectiveDamageType == DamageTypeCloud;
+
+        /// <summary>
+        /// Gets the label for the damage field based on weapon type.
+        /// </summary>
+        public string DamageLabel => IsSummonWeapon ? "Summon ID" : (IsCloudWeapon ? "Effect" : "DMG");
+
+        /// <summary>
+        /// Gets or sets weapon damage value. For summon weapons, this is the monster ID.
+        /// For cloud weapons, this is read-only. For normal weapons, this is damage.
+        /// </summary>
+        public int? Damage
+        {
+            get
+            {
+                var rawValue = DamageRawValue;
+                if (rawValue == null)
+                    return null;
+
+                // If it's a special type string, return the default or null
+                if (rawValue == DamageTypeSummon)
+                    return DefaultSummonMonsterId;
+                if (rawValue == DamageTypeCloud)
+                    return null; // Cloud has no numeric value
+
+                // Try to parse as integer
+                if (int.TryParse(rawValue, out int val))
+                    return val;
+
+                return null;
+            }
+            set
+            {
+                // Don't allow editing cloud weapons
+                if (IsCloudWeapon && EffectiveDamageType == DamageTypeCloud)
+                    return;
+
+                if (value.HasValue)
+                {
+                    var result = _entity.TryGet<StringProperty>(Command.DMG, out var prop, checkCopy: false);
+                    if (result == ReturnType.TRUE && prop != null)
+                    {
+                        prop.Value = value.Value.ToString();
+                    }
+                    else
+                    {
+                        // Create new property
+                        SetIntProperty(Command.DMG, value);
+                    }
+                }
+                else
+                {
+                    _entity.RemoveProperty(Command.DMG);
+                }
+                OnPropertyChanged(nameof(Damage));
+                OnPropertyChanged(nameof(DamageRawValue));
+                OnPropertyChanged(nameof(IsDamageModified));
+            }
+        }
+
+        /// <summary>
+        /// Gets a display string for damage that includes context for special types.
+        /// </summary>
+        public string DamageDisplayString
+        {
+            get
+            {
+                if (IsCloudWeapon)
+                    return "Cloud";
+                if (IsSummonWeapon)
+                {
+                    var monsterId = Damage ?? DefaultSummonMonsterId;
+                    // Try to get monster name
+                    if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.MONSTER, out var monsterSet) == true &&
+                        monsterSet.TryGetValue(monsterId, out var monster))
+                    {
+                        return $"Summons: {monster.Name ?? $"#{monsterId}"}";
+                    }
+                    return $"Summons: #{monsterId}";
+                }
+                return Damage?.ToString() ?? "";
+            }
+        }
+
+        public bool IsDamageModified
+        {
+            get
+            {
+                var currentResult = _entity.TryGet<StringProperty>(Command.DMG, out var currentProp, checkCopy: false);
+                var hasCurrent = currentResult == ReturnType.TRUE;
+
+                if (_entity is IDEntity idEntity &&
+                    VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.WEAPON, out var vanillaSet) == true)
+                {
+                    if (vanillaSet.TryGetValue(idEntity.ID, out var vanillaEntity) && vanillaEntity != null)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<StringProperty>(Command.DMG, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                        {
+                            return hasCurrent && currentProp?.Value != vanillaProp?.Value;
+                        }
+                    }
+                }
+                return hasCurrent;
+            }
+        }
+        public bool IsDamageSessionEdit => IsPropertyEditedInSession(Command.DMG);
+        public bool IsDamageInherited
+        {
+            get
+            {
+                var result = _entity.TryGet<StringProperty>(Command.DMG, out _, checkCopy: false);
+                return result == ReturnType.COPIED;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if damage can be edited (not a cloud weapon with no override).
+        /// </summary>
+        public bool CanEditDamage => !IsCloudWeapon;
+
+        public int? NumberOfAttacks
+        {
+            get => GetIntProperty(Command.NRATT);
+            set => SetIntProperty(Command.NRATT, value);
+        }
+        public bool IsNumberOfAttacksModified => IsIntPropertyModifiedFromVanilla(Command.NRATT);
+        public bool IsNumberOfAttacksSessionEdit => IsPropertyEditedInSession(Command.NRATT);
+        public bool IsNumberOfAttacksInherited => IsIntPropertyInherited(Command.NRATT);
+
+        public int? Attack
+        {
+            get => GetIntProperty(Command.ATT);
+            set => SetIntProperty(Command.ATT, value);
+        }
+        public bool IsAttackModified => IsIntPropertyModifiedFromVanilla(Command.ATT);
+        public bool IsAttackSessionEdit => IsPropertyEditedInSession(Command.ATT);
+        public bool IsAttackInherited => IsIntPropertyInherited(Command.ATT);
+
+        public int? Defense
+        {
+            get => GetIntProperty(Command.DEF);
+            set => SetIntProperty(Command.DEF, value);
+        }
+        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
+        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
+        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
+
+        public int? Length
+        {
+            get => GetIntProperty(Command.LEN);
+            set => SetIntProperty(Command.LEN, value);
+        }
+        public bool IsLengthModified => IsIntPropertyModifiedFromVanilla(Command.LEN);
+        public bool IsLengthSessionEdit => IsPropertyEditedInSession(Command.LEN);
+        public bool IsLengthInherited => IsIntPropertyInherited(Command.LEN);
+
+        public int? ResourceCost
+        {
+            get => GetIntProperty(Command.RCOST);
+            set => SetIntProperty(Command.RCOST, value);
+        }
+        public bool IsResourceCostModified => IsIntPropertyModifiedFromVanilla(Command.RCOST);
+        public bool IsResourceCostSessionEdit => IsPropertyEditedInSession(Command.RCOST);
+        public bool IsResourceCostInherited => IsIntPropertyInherited(Command.RCOST);
+
+        public int? AreaOfEffect
+        {
+            get => GetIntProperty(Command.AOE);
+            set => SetIntProperty(Command.AOE, value);
+        }
+        public bool IsAreaOfEffectModified => IsIntPropertyModifiedFromVanilla(Command.AOE);
+        public bool IsAreaOfEffectSessionEdit => IsPropertyEditedInSession(Command.AOE);
+        public bool IsAreaOfEffectInherited => IsIntPropertyInherited(Command.AOE);
+
+        // ========================================
+        // Ranged Stats
+        // ========================================
+
+        public int? Range
+        {
+            get => GetIntProperty(Command.RANGE);
+            set => SetIntProperty(Command.RANGE, value);
+        }
+        public bool IsRangeModified => IsIntPropertyModifiedFromVanilla(Command.RANGE);
+        public bool IsRangeSessionEdit => IsPropertyEditedInSession(Command.RANGE);
+        public bool IsRangeInherited => IsIntPropertyInherited(Command.RANGE);
+
+        public int? Precision
+        {
+            get => GetIntProperty(Command.PREC);
+            set => SetIntProperty(Command.PREC, value);
+        }
+        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PREC);
+        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PREC);
+        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PREC);
+
+        public int? Ammo
+        {
+            get => GetIntProperty(Command.AMMO);
+            set => SetIntProperty(Command.AMMO, value);
+        }
+        public bool IsAmmoModified => IsIntPropertyModifiedFromVanilla(Command.AMMO);
+        public bool IsAmmoSessionEdit => IsPropertyEditedInSession(Command.AMMO);
+        public bool IsAmmoInherited => IsIntPropertyInherited(Command.AMMO);
+
+        // ========================================
+        // Badge Collection (Unified)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _propertyBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
+
+        public ObservableCollection<PropertyItem> PropertyBadges
+        {
+            get { if (_propertyBadges == null) RefreshPropertyBadges(); return _propertyBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePropertyBadges
+        {
+            get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
+        public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshPropertyBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("properties", BadgeValueChangedHandler);
+            _propertyBadges = active;
+            _availablePropertyBadges = available;
+            OnPropertyChanged(nameof(PropertyBadges));
+            OnPropertyChanged(nameof(AvailablePropertyBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged($"Is{propertyName}Inherited");
+            }
+        }
+
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.DMG => "Damage",
+                Command.DAMAGE => "Damage",
+                Command.NRATT => "NumberOfAttacks",
+                Command.ATT => "Attack",
+                Command.DEF => "Defense",
+                Command.LEN => "Length",
+                Command.RCOST => "ResourceCost",
+                Command.AOE => "AreaOfEffect",
+                Command.RANGE => "Range",
+                Command.PREC => "Precision",
+                Command.AMMO => "Ammo",
+                _ => null
+            };
+        }
+
+        // ========================================
+        // Secondary Effect Support
+        // ========================================
+
+        /// <summary>
+        /// Returns true if this weapon has a secondary effect (either 25% or 100% chance).
+        /// </summary>
+        public bool HasSecondaryEffect
+        {
+            get
+            {
+                var alwaysResult = _entity.TryGet<WeaponRef>(Command.SECONDARYEFFECTALWAYS, out _);
+                if (alwaysResult == ReturnType.TRUE || alwaysResult == ReturnType.COPIED)
+                    return true;
+
+                var result = _entity.TryGet<WeaponRef>(Command.SECONDARYEFFECT, out _);
+                return result == ReturnType.TRUE || result == ReturnType.COPIED;
+            }
+        }
+
+        /// <summary>
+        /// Gets the display string for the secondary effect, showing name and chance.
+        /// </summary>
+        public string SecondaryEffectDisplay
+        {
+            get
+            {
+                // Check for secondaryeffectalways first (100% chance)
+                var alwaysResult = _entity.TryGet<WeaponRef>(Command.SECONDARYEFFECTALWAYS, out var alwaysProp);
+                if ((alwaysResult == ReturnType.TRUE || alwaysResult == ReturnType.COPIED) && alwaysProp != null)
+                {
+                    var name = alwaysProp.Entity?.Name ?? $"#{alwaysProp.ID}";
+                    return $"{name} (100%)";
+                }
+
+                // Check for secondaryeffect (25% chance)
+                var result = _entity.TryGet<WeaponRef>(Command.SECONDARYEFFECT, out var prop);
+                if ((result == ReturnType.TRUE || result == ReturnType.COPIED) && prop != null)
+                {
+                    var name = prop.Entity?.Name ?? $"#{prop.ID}";
+                    return $"{name} (25%)";
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the referenced secondary effect weapon entity, if any.
+        /// </summary>
+        public Weapon SecondaryEffectWeapon
+        {
+            get
+            {
+                var alwaysResult = _entity.TryGet<WeaponRef>(Command.SECONDARYEFFECTALWAYS, out var alwaysProp);
+                if ((alwaysResult == ReturnType.TRUE || alwaysResult == ReturnType.COPIED) && alwaysProp?.Entity is Weapon w1)
+                    return w1;
+
+                var result = _entity.TryGet<WeaponRef>(Command.SECONDARYEFFECT, out var prop);
+                if ((result == ReturnType.TRUE || result == ReturnType.COPIED) && prop?.Entity is Weapon w2)
+                    return w2;
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the damage type string for display (Pierce, Slash, Blunt, Fire, etc.).
+        /// </summary>
+        public string DamageTypes
+        {
+            get
+            {
+                var types = new List<string>();
+                if (GetWeaponFlag(Command.PIERCE)) types.Add("Pierce");
+                if (GetWeaponFlag(Command.SLASH)) types.Add("Slash");
+                if (GetWeaponFlag(Command.BLUNT)) types.Add("Blunt");
+                if (GetWeaponFlag(Command.FIRE)) types.Add("Fire");
+                if (GetWeaponFlag(Command.COLD)) types.Add("Cold");
+                if (GetWeaponFlag(Command.SHOCK)) types.Add("Shock");
+                if (GetWeaponFlag(Command.POISON)) types.Add("Poison");
+                if (GetWeaponFlag(Command.ACID)) types.Add("Acid");
+                if (GetWeaponFlag(Command.MAGIC)) types.Add("Magic");
+                if (GetWeaponFlag(Command.HOLY)) types.Add("Holy");
+                if (GetWeaponFlag(Command.DEMON)) types.Add("Demon");
+                return types.Count > 0 ? string.Join(", ", types) : null;
+            }
+        }
+
+        /// <summary>
+        /// Gets special properties string for display (Armor Negating, Armor Piercing, etc.).
+        /// </summary>
+        public string SpecialProperties
+        {
+            get
+            {
+                var props = new List<string>();
+                if (GetWeaponFlag(Command.ARMORNEGATING)) props.Add("Armor Negating");
+                if (GetWeaponFlag(Command.ARMORPIERCING)) props.Add("Armor Piercing");
+                if (GetWeaponFlag(Command.HARDMRNEG)) props.Add("Hard MR Negating");
+                if (GetWeaponFlag(Command.MRNEGATES)) props.Add("MR Negates");
+                if (GetWeaponFlag(Command.MIND)) props.Add("Mind");
+                if (GetWeaponFlag(Command.UNDEADIMMUNE)) props.Add("Undead Immune");
+                if (GetWeaponFlag(Command.INANIMATEIMMUNE)) props.Add("Inanimate Immune");
+                if (GetWeaponFlag(Command.FLYSPR)) props.Add("Flying Projectile");
+                if (GetWeaponFlag(Command.TWOHANDED)) props.Add("Two-Handed");
+                if (GetWeaponFlag(Command.NATURAL)) props.Add("Natural");
+                if (GetWeaponFlag(Command.CHARGE)) props.Add("Charge");
+                if (GetWeaponFlag(Command.FLAIL)) props.Add("Flail");
+                if (GetWeaponFlag(Command.BONUS)) props.Add("Bonus");
+                if (GetWeaponFlag(Command.NOSTR)) props.Add("No Strength");
+                return props.Count > 0 ? string.Join(", ", props) : null;
+            }
+        }
+
+        private bool GetWeaponFlag(Command command)
+        {
+            var result = _entity.TryGet<IntProperty>(command, out var prop);
+            return (result == ReturnType.TRUE || result == ReturnType.COPIED) && prop != null && prop.Value != 0;
+        }
     }
 
     /// <summary>
@@ -2322,6 +2531,170 @@ namespace Dom5Editor.UI.Views
         }
 
         public Armor Armor => (Armor)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from armor_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "armor";
+
+        // ========================================
+        // Copy From Support
+        // ========================================
+
+        public string CopyArmorDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<ArmorRef>(Command.COPYARMOR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopyArmor
+        {
+            get
+            {
+                var result = _entity.TryGet<ArmorRef>(Command.COPYARMOR, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        // ========================================
+        // Core Stats
+        // ========================================
+
+        public int? Protection
+        {
+            get => GetIntProperty(Command.PROT);
+            set => SetIntProperty(Command.PROT, value);
+        }
+        public bool IsProtectionModified => IsIntPropertyModifiedFromVanilla(Command.PROT);
+        public bool IsProtectionSessionEdit => IsPropertyEditedInSession(Command.PROT);
+        public bool IsProtectionInherited => IsIntPropertyInherited(Command.PROT);
+
+        public int? Defense
+        {
+            get => GetIntProperty(Command.DEF);
+            set => SetIntProperty(Command.DEF, value);
+        }
+        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
+        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
+        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
+
+        public int? Encumbrance
+        {
+            get => GetIntProperty(Command.ENC);
+            set => SetIntProperty(Command.ENC, value);
+        }
+        public bool IsEncumbranceModified => IsIntPropertyModifiedFromVanilla(Command.ENC);
+        public bool IsEncumbranceSessionEdit => IsPropertyEditedInSession(Command.ENC);
+        public bool IsEncumbranceInherited => IsIntPropertyInherited(Command.ENC);
+
+        public int? ResourceCost
+        {
+            get => GetIntProperty(Command.RCOST);
+            set => SetIntProperty(Command.RCOST, value);
+        }
+        public bool IsResourceCostModified => IsIntPropertyModifiedFromVanilla(Command.RCOST);
+        public bool IsResourceCostSessionEdit => IsPropertyEditedInSession(Command.RCOST);
+        public bool IsResourceCostInherited => IsIntPropertyInherited(Command.RCOST);
+
+        public int? ArmorType
+        {
+            get => GetIntProperty(Command.TYPE);
+            set => SetIntProperty(Command.TYPE, value);
+        }
+        public bool IsArmorTypeModified => IsIntPropertyModifiedFromVanilla(Command.TYPE);
+        public bool IsArmorTypeSessionEdit => IsPropertyEditedInSession(Command.TYPE);
+        public bool IsArmorTypeInherited => IsIntPropertyInherited(Command.TYPE);
+
+        /// <summary>
+        /// Gets the armor type display name.
+        /// </summary>
+        public string ArmorTypeDisplay
+        {
+            get
+            {
+                return ArmorType switch
+                {
+                    1 => "Helmet",
+                    4 => "Body Armor",
+                    5 => "Shield",
+                    6 => "Misc Body",
+                    _ => ArmorType?.ToString() ?? "Unknown"
+                };
+            }
+        }
+
+        // ========================================
+        // Badge Collection (Unified)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _propertyBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
+
+        public ObservableCollection<PropertyItem> PropertyBadges
+        {
+            get { if (_propertyBadges == null) RefreshPropertyBadges(); return _propertyBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePropertyBadges
+        {
+            get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
+        public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshPropertyBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("properties", BadgeValueChangedHandler);
+            _propertyBadges = active;
+            _availablePropertyBadges = available;
+            OnPropertyChanged(nameof(PropertyBadges));
+            OnPropertyChanged(nameof(AvailablePropertyBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged($"Is{propertyName}Inherited");
+            }
+        }
+
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.PROT => "Protection",
+                Command.DEF => "Defense",
+                Command.ENC => "Encumbrance",
+                Command.RCOST => "ResourceCost",
+                Command.TYPE => "ArmorType",
+                _ => null
+            };
+        }
     }
 
     /// <summary>
@@ -2348,6 +2721,1033 @@ namespace Dom5Editor.UI.Views
         }
 
         public Item Item => (Item)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from item_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "item";
+
+        // ========================================
+        // Copy From Support
+        // ========================================
+
+        public string CopyItemDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<ItemRef>(Command.COPYITEM, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopyItem
+        {
+            get
+            {
+                var result = _entity.TryGet<ItemRef>(Command.COPYITEM, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        // ========================================
+        // Core Stats
+        // ========================================
+
+        public int? ConstLevel
+        {
+            get => GetIntProperty(Command.CONSTLEVEL);
+            set => SetIntProperty(Command.CONSTLEVEL, value);
+        }
+        public bool IsConstLevelModified => IsIntPropertyModifiedFromVanilla(Command.CONSTLEVEL);
+        public bool IsConstLevelSessionEdit => IsPropertyEditedInSession(Command.CONSTLEVEL);
+        public bool IsConstLevelInherited => IsIntPropertyInherited(Command.CONSTLEVEL);
+
+        public int? ItemType
+        {
+            get => GetIntProperty(Command.TYPE);
+            set => SetIntProperty(Command.TYPE, value);
+        }
+        public bool IsItemTypeModified => IsIntPropertyModifiedFromVanilla(Command.TYPE);
+        public bool IsItemTypeSessionEdit => IsPropertyEditedInSession(Command.TYPE);
+        public bool IsItemTypeInherited => IsIntPropertyInherited(Command.TYPE);
+
+        /// <summary>
+        /// Gets the item slot type display name.
+        /// Item types: 1=1-H Weapon, 2=2-H Weapon, 3=Missile Weapon, 4=Shield,
+        /// 5=Body Armor, 6=Helmet, 7=Boots, 8=Misc, 9=Crown, 10=Barding
+        /// </summary>
+        public string ItemTypeDisplay
+        {
+            get
+            {
+                return ItemType switch
+                {
+                    1 => "1-H Weapon",
+                    2 => "2-H Weapon",
+                    3 => "Missile Weapon",
+                    4 => "Shield",
+                    5 => "Body Armor",
+                    6 => "Helmet",
+                    7 => "Boots",
+                    8 => "Misc",
+                    9 => "Crown",
+                    10 => "Barding",
+                    _ => ItemType?.ToString() ?? "Unknown"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Available slot types for ComboBox binding.
+        /// Item types: 1=1-H Weapon, 2=2-H Weapon, 3=Missile Weapon, 4=Shield,
+        /// 5=Body Armor, 6=Helmet, 7=Boots, 8=Misc, 9=Crown, 10=Barding
+        /// </summary>
+        public static List<SlotTypeOption> SlotTypes { get; } = new List<SlotTypeOption>
+        {
+            new SlotTypeOption(1, "1-H Weapon"),
+            new SlotTypeOption(2, "2-H Weapon"),
+            new SlotTypeOption(3, "Missile Weapon"),
+            new SlotTypeOption(4, "Shield"),
+            new SlotTypeOption(5, "Body Armor"),
+            new SlotTypeOption(6, "Helmet"),
+            new SlotTypeOption(7, "Boots"),
+            new SlotTypeOption(8, "Misc"),
+            new SlotTypeOption(9, "Crown"),
+            new SlotTypeOption(10, "Barding"),
+        };
+
+        /// <summary>
+        /// Gets or sets the selected slot type for ComboBox binding.
+        /// </summary>
+        public SlotTypeOption SelectedSlotType
+        {
+            get => SlotTypes.FirstOrDefault(s => s.Value == ItemType) ?? SlotTypes[7]; // Default to Misc (index 7, value 8)
+            set
+            {
+                if (value != null)
+                {
+                    ItemType = value.Value;
+                    OnPropertyChanged(nameof(SelectedSlotType));
+                    OnPropertyChanged(nameof(ItemTypeDisplay));
+                    OnSlotTypeChanged(); // Refresh equipment options
+                }
+            }
+        }
+
+        public int? MainPath
+        {
+            get => GetIntProperty(Command.MAINPATH);
+            set
+            {
+                SetIntProperty(Command.MAINPATH, value);
+                OnPropertyChanged(nameof(MainPathDisplay));
+                OnPropertyChanged(nameof(PrimaryPathLetter));
+                OnPropertyChanged(nameof(PrimaryGemCost));
+                OnPropertyChanged(nameof(HasGemCost));
+            }
+        }
+        public bool IsMainPathModified => IsIntPropertyModifiedFromVanilla(Command.MAINPATH);
+        public bool IsMainPathSessionEdit => IsPropertyEditedInSession(Command.MAINPATH);
+        public bool IsMainPathInherited => IsIntPropertyInherited(Command.MAINPATH);
+
+        /// <summary>
+        /// Gets the main path display name.
+        /// </summary>
+        public string MainPathDisplay
+        {
+            get
+            {
+                return MainPath switch
+                {
+                    0 => "Fire",
+                    1 => "Air",
+                    2 => "Water",
+                    3 => "Earth",
+                    4 => "Astral",
+                    5 => "Death",
+                    6 => "Nature",
+                    7 => "Glamour",
+                    8 => "Blood",
+                    _ => MainPath?.ToString() ?? "-"
+                };
+            }
+        }
+
+        public int? MainLevel
+        {
+            get => GetIntProperty(Command.MAINLEVEL);
+            set
+            {
+                SetIntProperty(Command.MAINLEVEL, value);
+                OnPropertyChanged(nameof(PrimaryGemCost));
+                OnPropertyChanged(nameof(HasGemCost));
+            }
+        }
+        public bool IsMainLevelModified => IsIntPropertyModifiedFromVanilla(Command.MAINLEVEL);
+        public bool IsMainLevelSessionEdit => IsPropertyEditedInSession(Command.MAINLEVEL);
+        public bool IsMainLevelInherited => IsIntPropertyInherited(Command.MAINLEVEL);
+
+        public int? SecondaryPath
+        {
+            get => GetIntProperty(Command.SECONDARYPATH);
+            set
+            {
+                SetIntProperty(Command.SECONDARYPATH, value);
+                OnPropertyChanged(nameof(SecondaryPathDisplay));
+                OnPropertyChanged(nameof(SecondaryPathLetter));
+                OnPropertyChanged(nameof(SecondaryGemCost));
+                OnPropertyChanged(nameof(HasGemCost));
+            }
+        }
+        public bool IsSecondaryPathModified => IsIntPropertyModifiedFromVanilla(Command.SECONDARYPATH);
+        public bool IsSecondaryPathSessionEdit => IsPropertyEditedInSession(Command.SECONDARYPATH);
+        public bool IsSecondaryPathInherited => IsIntPropertyInherited(Command.SECONDARYPATH);
+
+        /// <summary>
+        /// Gets the secondary path display name.
+        /// </summary>
+        public string SecondaryPathDisplay
+        {
+            get
+            {
+                if (SecondaryPath == null || SecondaryPath < 0)
+                    return "-";
+                return SecondaryPath switch
+                {
+                    0 => "Fire",
+                    1 => "Air",
+                    2 => "Water",
+                    3 => "Earth",
+                    4 => "Astral",
+                    5 => "Death",
+                    6 => "Nature",
+                    7 => "Glamour",
+                    8 => "Blood",
+                    _ => SecondaryPath?.ToString() ?? "-"
+                };
+            }
+        }
+
+        public int? SecondaryLevel
+        {
+            get => GetIntProperty(Command.SECONDARYLEVEL);
+            set
+            {
+                SetIntProperty(Command.SECONDARYLEVEL, value);
+                OnPropertyChanged(nameof(SecondaryGemCost));
+                OnPropertyChanged(nameof(HasGemCost));
+            }
+        }
+        public bool IsSecondaryLevelModified => IsIntPropertyModifiedFromVanilla(Command.SECONDARYLEVEL);
+        public bool IsSecondaryLevelSessionEdit => IsPropertyEditedInSession(Command.SECONDARYLEVEL);
+        public bool IsSecondaryLevelInherited => IsIntPropertyInherited(Command.SECONDARYLEVEL);
+
+        /// <summary>
+        /// Refreshes the path display properties after path selection changes.
+        /// </summary>
+        public void RefreshPathDisplay()
+        {
+            OnPropertyChanged(nameof(MainPathDisplay));
+            OnPropertyChanged(nameof(SecondaryPathDisplay));
+            OnPropertyChanged(nameof(PrimaryGemCost));
+            OnPropertyChanged(nameof(SecondaryGemCost));
+            OnPropertyChanged(nameof(HasGemCost));
+        }
+
+        // ========================================
+        // Item Cost Modifiers
+        // ========================================
+
+        public int? ItemCost1
+        {
+            get => GetIntProperty(Command.ITEMCOST1);
+            set
+            {
+                SetIntProperty(Command.ITEMCOST1, value);
+                OnPropertyChanged(nameof(PrimaryGemCost));
+            }
+        }
+
+        public int? ItemCost2
+        {
+            get => GetIntProperty(Command.ITEMCOST2);
+            set
+            {
+                SetIntProperty(Command.ITEMCOST2, value);
+                OnPropertyChanged(nameof(SecondaryGemCost));
+            }
+        }
+
+        // ========================================
+        // Gem Cost Calculation
+        // ========================================
+
+        /// <summary>
+        /// Calculates gem cost: 5 * level, reduced by itemcost percentage, rounded up.
+        /// itemcost values are negative (e.g., -60 means 60% off).
+        /// </summary>
+        private int CalculateGemCost(int level, int? itemCost)
+        {
+            if (level <= 0) return 0;
+            int baseCost = 5 * level;
+            // itemcost is negative (e.g., -60 = 60% reduction), so we use absolute value
+            int reductionPercent = Math.Abs(itemCost ?? 0);
+            // Apply percentage reduction and round up
+            double adjustedCost = baseCost * (100.0 - reductionPercent) / 100.0;
+            return (int)Math.Ceiling(adjustedCost);
+        }
+
+        /// <summary>
+        /// Gets the primary path gem cost.
+        /// </summary>
+        public int PrimaryGemCost => CalculateGemCost(MainLevel ?? 0, ItemCost1);
+
+        /// <summary>
+        /// Gets the secondary path gem cost.
+        /// </summary>
+        public int SecondaryGemCost => CalculateGemCost(SecondaryLevel ?? 0, ItemCost2);
+
+        /// <summary>
+        /// Whether this item has any gem cost to display.
+        /// </summary>
+        public bool HasGemCost => (MainPath >= 0 && (MainLevel ?? 0) > 0) ||
+                                   (SecondaryPath >= 0 && (SecondaryLevel ?? 0) > 0);
+
+        /// <summary>
+        /// Gets the primary path letter for icon lookup (F, A, W, E, S, D, N, G, B).
+        /// Returns null if no path selected or level is 0.
+        /// </summary>
+        public string PrimaryPathLetter =>
+            (MainPath >= 0 && (MainLevel ?? 0) > 0) ? GetPathLetter(MainPath ?? -1) : null;
+
+        /// <summary>
+        /// Gets the secondary path letter for icon lookup.
+        /// Returns null if no path selected or level is 0.
+        /// </summary>
+        public string SecondaryPathLetter =>
+            (SecondaryPath >= 0 && (SecondaryLevel ?? 0) > 0) ? GetPathLetter(SecondaryPath ?? -1) : null;
+
+        private static string GetPathLetter(int pathId)
+        {
+            return pathId switch
+            {
+                0 => "F",
+                1 => "A",
+                2 => "W",
+                3 => "E",
+                4 => "S",
+                5 => "D",
+                6 => "N",
+                7 => "G",
+                8 => "B",
+                _ => null
+            };
+        }
+
+        // ========================================
+        // Combat Stat Bonuses
+        // ========================================
+
+        public int? HP
+        {
+            get => GetIntProperty(Command.HP);
+            set => SetIntProperty(Command.HP, value);
+        }
+        public bool IsHPModified => IsIntPropertyModifiedFromVanilla(Command.HP);
+        public bool IsHPSessionEdit => IsPropertyEditedInSession(Command.HP);
+        public bool IsHPInherited => IsIntPropertyInherited(Command.HP);
+
+        public int? Strength
+        {
+            get => GetIntProperty(Command.STR);
+            set => SetIntProperty(Command.STR, value);
+        }
+        public bool IsStrengthModified => IsIntPropertyModifiedFromVanilla(Command.STR);
+        public bool IsStrengthSessionEdit => IsPropertyEditedInSession(Command.STR);
+        public bool IsStrengthInherited => IsIntPropertyInherited(Command.STR);
+
+        public int? Attack
+        {
+            get => GetIntProperty(Command.ATT);
+            set => SetIntProperty(Command.ATT, value);
+        }
+        public bool IsAttackModified => IsIntPropertyModifiedFromVanilla(Command.ATT);
+        public bool IsAttackSessionEdit => IsPropertyEditedInSession(Command.ATT);
+        public bool IsAttackInherited => IsIntPropertyInherited(Command.ATT);
+
+        public int? Defense
+        {
+            get => GetIntProperty(Command.DEF);
+            set => SetIntProperty(Command.DEF, value);
+        }
+        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
+        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
+        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
+
+        public int? Precision
+        {
+            get => GetIntProperty(Command.PREC);
+            set => SetIntProperty(Command.PREC, value);
+        }
+        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PREC);
+        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PREC);
+        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PREC);
+
+        public int? MagicResistance
+        {
+            get => GetIntProperty(Command.MR);
+            set => SetIntProperty(Command.MR, value);
+        }
+        public bool IsMagicResistanceModified => IsIntPropertyModifiedFromVanilla(Command.MR);
+        public bool IsMagicResistanceSessionEdit => IsPropertyEditedInSession(Command.MR);
+        public bool IsMagicResistanceInherited => IsIntPropertyInherited(Command.MR);
+
+        public int? Morale
+        {
+            get => GetIntProperty(Command.MORALE);
+            set => SetIntProperty(Command.MORALE, value);
+        }
+        public bool IsMoraleModified => IsIntPropertyModifiedFromVanilla(Command.MORALE);
+        public bool IsMoraleSessionEdit => IsPropertyEditedInSession(Command.MORALE);
+        public bool IsMoraleInherited => IsIntPropertyInherited(Command.MORALE);
+
+        /// <summary>
+        /// Returns true if any combat stat bonus is present.
+        /// </summary>
+        public bool HasCombatStats =>
+            HP != null || Strength != null || Attack != null ||
+            Defense != null || Precision != null || MagicResistance != null || Morale != null;
+
+        // ========================================
+        // Equipment References (Weapon/Armor the item provides)
+        // ========================================
+
+        /// <summary>
+        /// Gets the weapon reference display string.
+        /// Uses generic fallback for VanillaModified entities.
+        /// </summary>
+        public string WeaponDisplay
+        {
+            get
+            {
+                var prop = GetReferenceProperty<WeaponRef>(Command.WEAPON);
+                if (prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? $"#{prop.ID}";
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if item provides a weapon.
+        /// Uses generic fallback for VanillaModified entities.
+        /// </summary>
+        public bool HasWeapon => HasReferenceProperty<WeaponRef>(Command.WEAPON);
+
+        /// <summary>
+        /// Gets the armor reference display string.
+        /// Uses generic fallback for VanillaModified entities.
+        /// </summary>
+        public string ArmorDisplay
+        {
+            get
+            {
+                var prop = GetReferenceProperty<ArmorRef>(Command.ARMOR);
+                if (prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? $"#{prop.ID}";
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if item provides armor.
+        /// Uses generic fallback for VanillaModified entities.
+        /// </summary>
+        public bool HasArmor => HasReferenceProperty<ArmorRef>(Command.ARMOR);
+
+        /// <summary>
+        /// Returns true if item provides any equipment (weapon or armor).
+        /// </summary>
+        public bool HasEquipment => HasWeapon || HasArmor;
+
+        // ========================================
+        // Equipment Type Based on Slot
+        // ========================================
+
+        /// <summary>
+        /// Returns true if this slot type uses weapon equipment.
+        /// Weapon slots: 1-H Weapon (1), 2-H Weapon (2), Missile Weapon (3), Boots (7), Misc (8)
+        /// </summary>
+        public bool UsesWeaponEquipment => ItemType == 1 || ItemType == 2 || ItemType == 3 || ItemType == 7 || ItemType == 8;
+
+        /// <summary>
+        /// Returns true if this slot type uses armor equipment.
+        /// Armor slots: Shield (4), Body Armor (5), Helmet (6), Crown (9), Barding (10)
+        /// </summary>
+        public bool UsesArmorEquipment => ItemType == 4 || ItemType == 5 || ItemType == 6 || ItemType == 9 || ItemType == 10;
+
+        /// <summary>
+        /// Gets the equipment type label based on slot type.
+        /// </summary>
+        public string EquipmentTypeLabel => UsesArmorEquipment ? "ARMOR" : "WEAPON";
+
+        /// <summary>
+        /// Gets the display string for the current equipment (weapon or armor).
+        /// </summary>
+        public string EquipmentDisplay => UsesArmorEquipment ? ArmorDisplay : WeaponDisplay;
+
+        /// <summary>
+        /// Gets the ID of the current equipment (weapon or armor).
+        /// </summary>
+        public int? EquipmentId
+        {
+            get
+            {
+                if (UsesArmorEquipment)
+                {
+                    var prop = GetReferenceProperty<ArmorRef>(Command.ARMOR);
+                    return prop?.ID;
+                }
+                else
+                {
+                    var prop = GetReferenceProperty<WeaponRef>(Command.WEAPON);
+                    return prop?.ID;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Available equipment items based on slot type.
+        /// </summary>
+        private List<AvailableEquipmentItem> _availableEquipment;
+        public List<AvailableEquipmentItem> AvailableEquipment
+        {
+            get
+            {
+                if (_availableEquipment == null)
+                    RefreshAvailableEquipment();
+                return _availableEquipment;
+            }
+        }
+
+        private void RefreshAvailableEquipment()
+        {
+            _availableEquipment = new List<AvailableEquipmentItem>();
+
+            // Add "None" option
+            _availableEquipment.Add(new AvailableEquipmentItem { ID = 0, Name = "(None)", Source = "" });
+
+            if (UsesArmorEquipment)
+            {
+                // Add vanilla armor
+                if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.ARMOR, out var vanillaSet) == true)
+                {
+                    foreach (var entity in vanillaSet.GetFullList())
+                    {
+                        if (entity is Armor armor)
+                        {
+                            _availableEquipment.Add(new AvailableEquipmentItem
+                            {
+                                ID = armor.ID,
+                                Name = armor.Name,
+                                Source = "Vanilla"
+                            });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Add vanilla weapons
+                if (VanillaLoader.Vanilla?.Database.TryGetValue(EntityType.WEAPON, out var vanillaSet) == true)
+                {
+                    foreach (var entity in vanillaSet.GetFullList())
+                    {
+                        if (entity is Weapon weapon)
+                        {
+                            _availableEquipment.Add(new AvailableEquipmentItem
+                            {
+                                ID = weapon.ID,
+                                Name = weapon.Name,
+                                Source = "Vanilla"
+                            });
+                        }
+                    }
+                }
+            }
+
+            _availableEquipment = _availableEquipment.OrderBy(e => e.ID).ToList();
+            OnPropertyChanged(nameof(AvailableEquipment));
+        }
+
+        /// <summary>
+        /// Gets or sets the selected equipment from the dropdown.
+        /// </summary>
+        public AvailableEquipmentItem SelectedEquipment
+        {
+            get
+            {
+                var id = EquipmentId;
+                if (id == null || id == 0)
+                    return AvailableEquipment.FirstOrDefault(e => e.ID == 0);
+                return AvailableEquipment.FirstOrDefault(e => e.ID == id) ?? AvailableEquipment.FirstOrDefault();
+            }
+            set
+            {
+                if (value == null) return;
+
+                if (UsesArmorEquipment)
+                {
+                    ArmorId = value.ID == 0 ? "" : value.ID.ToString();
+                }
+                else
+                {
+                    WeaponId = value.ID == 0 ? "" : value.ID.ToString();
+                }
+
+                OnPropertyChanged(nameof(SelectedEquipment));
+                OnPropertyChanged(nameof(EquipmentDisplay));
+                OnPropertyChanged(nameof(EquipmentId));
+            }
+        }
+
+        /// <summary>
+        /// Called when slot type changes - clear incompatible equipment and refresh list.
+        /// </summary>
+        private void OnSlotTypeChanged()
+        {
+            // Clear incompatible equipment when slot type changes
+            if (UsesArmorEquipment && HasWeapon)
+            {
+                // Switching to armor slot - clear weapon
+                WeaponId = "";
+            }
+            else if (UsesWeaponEquipment && HasArmor)
+            {
+                // Switching to weapon slot - clear armor
+                ArmorId = "";
+            }
+
+            _availableEquipment = null; // Force refresh
+            OnPropertyChanged(nameof(UsesWeaponEquipment));
+            OnPropertyChanged(nameof(UsesArmorEquipment));
+            OnPropertyChanged(nameof(EquipmentTypeLabel));
+            OnPropertyChanged(nameof(AvailableEquipment));
+            OnPropertyChanged(nameof(SelectedEquipment));
+            OnPropertyChanged(nameof(EquipmentDisplay));
+            OnPropertyChanged(nameof(EquipmentId));
+            OnPropertyChanged(nameof(HasWeapon));
+            OnPropertyChanged(nameof(HasArmor));
+            OnPropertyChanged(nameof(HasEquipment));
+        }
+
+        // ========================================
+        // Equipment ID Setters (for changing references)
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets the weapon ID as a string for TextBox binding.
+        /// Setting to empty/null removes the weapon reference.
+        /// </summary>
+        public string WeaponId
+        {
+            get
+            {
+                var prop = GetReferenceProperty<WeaponRef>(Command.WEAPON);
+                return prop?.ID.ToString();
+            }
+            set
+            {
+                // Empty/null or "0" clears the weapon reference (#weapon 0 clears)
+                if (string.IsNullOrWhiteSpace(value) || value == "0")
+                {
+                    // Remove the weapon reference
+                    var result = _entity.TryGet<WeaponRef>(Command.WEAPON, out var existingProp, checkCopy: false);
+                    if (result == ReturnType.TRUE && existingProp != null && _history != null)
+                    {
+                        var cmd = new RemovePropertyCommand(_entity, existingProp, "Remove weapon");
+                        _history.Execute(cmd);
+                    }
+                }
+                else if (int.TryParse(value, out int id) && id > 0)
+                {
+                    // Remove existing if present first
+                    var result = _entity.TryGet<WeaponRef>(Command.WEAPON, out var existingProp, checkCopy: false);
+                    if (result == ReturnType.TRUE && existingProp != null && _history != null)
+                    {
+                        var removeCmd = new RemovePropertyCommand(_entity, existingProp, "Remove weapon");
+                        _history.Execute(removeCmd);
+                    }
+
+                    // Create a new WeaponRef with the given ID (Parent must be set first)
+                    var newRef = new WeaponRef { Parent = _entity, Command = Command.WEAPON };
+                    newRef.ID = id;
+                    newRef.Resolve();
+
+                    if (_history != null)
+                    {
+                        var addCmd = new AddPropertyCommand(_entity, newRef, $"Set weapon #{id}");
+                        _history.Execute(addCmd);
+                    }
+                }
+                OnPropertyChanged(nameof(WeaponId));
+                OnPropertyChanged(nameof(WeaponDisplay));
+                OnPropertyChanged(nameof(HasWeapon));
+                OnPropertyChanged(nameof(HasEquipment));
+                OnPropertyChanged(nameof(WeaponDamage));
+                OnPropertyChanged(nameof(WeaponAttack));
+                OnPropertyChanged(nameof(WeaponDefense));
+                OnPropertyChanged(nameof(WeaponLength));
+                OnPropertyChanged(nameof(WeaponNrAtt));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the armor ID as a string for TextBox binding.
+        /// Setting to empty/null or 0 removes the armor reference.
+        /// </summary>
+        public string ArmorId
+        {
+            get
+            {
+                var prop = GetReferenceProperty<ArmorRef>(Command.ARMOR);
+                return prop?.ID.ToString();
+            }
+            set
+            {
+                // Empty/null or "0" clears the armor reference (#armor 0 clears)
+                if (string.IsNullOrWhiteSpace(value) || value == "0")
+                {
+                    // Remove the armor reference
+                    var result = _entity.TryGet<ArmorRef>(Command.ARMOR, out var existingProp, checkCopy: false);
+                    if (result == ReturnType.TRUE && existingProp != null && _history != null)
+                    {
+                        var cmd = new RemovePropertyCommand(_entity, existingProp, "Remove armor");
+                        _history.Execute(cmd);
+                    }
+                }
+                else if (int.TryParse(value, out int id) && id > 0)
+                {
+                    // Remove existing if present first
+                    var result = _entity.TryGet<ArmorRef>(Command.ARMOR, out var existingProp, checkCopy: false);
+                    if (result == ReturnType.TRUE && existingProp != null && _history != null)
+                    {
+                        var removeCmd = new RemovePropertyCommand(_entity, existingProp, "Remove armor");
+                        _history.Execute(removeCmd);
+                    }
+
+                    // Create a new ArmorRef with the given ID (Parent must be set first)
+                    var newRef = new ArmorRef { Parent = _entity, Command = Command.ARMOR };
+                    newRef.ID = id;
+                    newRef.Resolve();
+
+                    if (_history != null)
+                    {
+                        var addCmd = new AddPropertyCommand(_entity, newRef, $"Set armor #{id}");
+                        _history.Execute(addCmd);
+                    }
+                }
+                OnPropertyChanged(nameof(ArmorId));
+                OnPropertyChanged(nameof(ArmorDisplay));
+                OnPropertyChanged(nameof(HasArmor));
+                OnPropertyChanged(nameof(HasEquipment));
+                OnPropertyChanged(nameof(ArmorProtection));
+                OnPropertyChanged(nameof(ArmorDefense));
+                OnPropertyChanged(nameof(ArmorEncumbrance));
+            }
+        }
+
+        // ========================================
+        // Referenced Weapon Stats (Read-Only)
+        // ========================================
+
+        /// <summary>
+        /// Gets the referenced weapon entity (if any).
+        /// Uses generic fallback for VanillaModified entities.
+        /// </summary>
+        private Weapon ReferencedWeapon
+        {
+            get
+            {
+                var prop = GetReferenceProperty<WeaponRef>(Command.WEAPON);
+                if (prop?.Entity is Weapon weapon)
+                    return weapon;
+                return null;
+            }
+        }
+
+        public int? WeaponDamage => GetWeaponIntProperty(Command.DMG);
+        public int? WeaponAttack => GetWeaponIntProperty(Command.ATT);
+        public int? WeaponDefense => GetWeaponIntProperty(Command.DEF);
+        public int? WeaponLength => GetWeaponIntProperty(Command.LEN);
+        public int? WeaponNrAtt => GetWeaponIntProperty(Command.NRATT);
+
+        // Weapon Damage Types (flags)
+        public bool WeaponIsPierce => GetWeaponFlag(Command.PIERCE);
+        public bool WeaponIsSlash => GetWeaponFlag(Command.SLASH);
+        public bool WeaponIsBlunt => GetWeaponFlag(Command.BLUNT);
+        public bool WeaponIsFire => GetWeaponFlag(Command.FIRE);
+        public bool WeaponIsCold => GetWeaponFlag(Command.COLD);
+        public bool WeaponIsShock => GetWeaponFlag(Command.SHOCK);
+        public bool WeaponIsPoison => GetWeaponFlag(Command.POISON);
+        public bool WeaponIsAcid => GetWeaponFlag(Command.ACID);
+        public bool WeaponIsMagic => GetWeaponFlag(Command.MAGIC);
+
+        // Weapon Special Properties
+        public bool WeaponIsArmorNegating => GetWeaponFlag(Command.ARMORNEGATING);
+        public bool WeaponIsArmorPiercing => GetWeaponFlag(Command.ARMORPIERCING);
+        public bool WeaponIsTwoHanded => GetWeaponFlag(Command.TWOHANDED);
+        public bool WeaponIsFlail => GetWeaponFlag(Command.FLAIL);
+        public bool WeaponIsNatural => GetWeaponFlag(Command.NATURAL);
+
+        /// <summary>
+        /// Gets a formatted string of weapon damage types.
+        /// </summary>
+        public string WeaponDamageTypes
+        {
+            get
+            {
+                var types = new List<string>();
+                if (WeaponIsPierce) types.Add("Pierce");
+                if (WeaponIsSlash) types.Add("Slash");
+                if (WeaponIsBlunt) types.Add("Blunt");
+                if (WeaponIsFire) types.Add("Fire");
+                if (WeaponIsCold) types.Add("Cold");
+                if (WeaponIsShock) types.Add("Shock");
+                if (WeaponIsPoison) types.Add("Poison");
+                if (WeaponIsAcid) types.Add("Acid");
+                if (WeaponIsMagic) types.Add("Magic");
+                return types.Count > 0 ? string.Join(", ", types) : null;
+            }
+        }
+
+        /// <summary>
+        /// Gets a formatted string of weapon special properties.
+        /// </summary>
+        public string WeaponSpecialProperties
+        {
+            get
+            {
+                var props = new List<string>();
+                if (WeaponIsArmorNegating) props.Add("Armor Negating");
+                if (WeaponIsArmorPiercing) props.Add("Armor Piercing");
+                if (WeaponIsTwoHanded) props.Add("Two-Handed");
+                if (WeaponIsFlail) props.Add("Flail");
+                if (WeaponIsNatural) props.Add("Natural");
+                return props.Count > 0 ? string.Join(", ", props) : null;
+            }
+        }
+
+        // Secondary Effect
+        public bool HasWeaponSecondaryEffect => GetWeaponSecondaryEffectId() != null;
+
+        public string WeaponSecondaryEffectDisplay
+        {
+            get
+            {
+                var weapon = ReferencedWeapon;
+                if (weapon == null) return null;
+
+                // Check secondaryeffectalways first (100% chance)
+                var alwaysResult = weapon.TryGet<WeaponRef>(Command.SECONDARYEFFECTALWAYS, out var alwaysProp);
+                if ((alwaysResult == ReturnType.TRUE || alwaysResult == ReturnType.COPIED) && alwaysProp != null)
+                {
+                    var name = alwaysProp.Entity?.Name ?? $"#{alwaysProp.ID}";
+                    return $"{name} (100%)";
+                }
+
+                // Check secondaryeffect (25% chance)
+                var result = weapon.TryGet<WeaponRef>(Command.SECONDARYEFFECT, out var prop);
+                if ((result == ReturnType.TRUE || result == ReturnType.COPIED) && prop != null)
+                {
+                    var name = prop.Entity?.Name ?? $"#{prop.ID}";
+                    return $"{name} (25%)";
+                }
+
+                return null;
+            }
+        }
+
+        private int? GetWeaponSecondaryEffectId()
+        {
+            var weapon = ReferencedWeapon;
+            if (weapon == null) return null;
+
+            var alwaysResult = weapon.TryGet<WeaponRef>(Command.SECONDARYEFFECTALWAYS, out var alwaysProp);
+            if ((alwaysResult == ReturnType.TRUE || alwaysResult == ReturnType.COPIED) && alwaysProp != null)
+                return alwaysProp.ID;
+
+            var result = weapon.TryGet<WeaponRef>(Command.SECONDARYEFFECT, out var prop);
+            if ((result == ReturnType.TRUE || result == ReturnType.COPIED) && prop != null)
+                return prop.ID;
+
+            return null;
+        }
+
+        private bool GetWeaponFlag(Command command)
+        {
+            var weapon = ReferencedWeapon;
+            if (weapon == null) return false;
+
+            // Flags are stored as CommandProperty (no value) or IntProperty with value
+            var cmdResult = weapon.TryGet<CommandProperty>(command, out _);
+            if (cmdResult == ReturnType.TRUE || cmdResult == ReturnType.COPIED)
+                return true;
+
+            var intResult = weapon.TryGet<IntProperty>(command, out var intProp);
+            if ((intResult == ReturnType.TRUE || intResult == ReturnType.COPIED) && intProp?.Value != 0)
+                return true;
+
+            return false;
+        }
+
+        private int? GetWeaponIntProperty(Command command)
+        {
+            var weapon = ReferencedWeapon;
+            if (weapon == null) return null;
+
+            // Special handling for DMG which is stored as StringProperty
+            if (command == Command.DMG)
+            {
+                var result = weapon.TryGet<StringProperty>(command, out var prop);
+                if ((result == ReturnType.TRUE || result == ReturnType.COPIED) && prop != null)
+                {
+                    if (int.TryParse(prop.Value, out int val))
+                        return val;
+                }
+                return null;
+            }
+
+            var intResult = weapon.TryGet<IntProperty>(command, out var intProp);
+            if (intResult == ReturnType.TRUE || intResult == ReturnType.COPIED)
+                return intProp?.Value;
+            return null;
+        }
+
+        // ========================================
+        // Referenced Armor Stats (Read-Only)
+        // ========================================
+
+        /// <summary>
+        /// Gets the referenced armor entity (if any).
+        /// Uses generic fallback for VanillaModified entities.
+        /// </summary>
+        private Armor ReferencedArmor
+        {
+            get
+            {
+                var prop = GetReferenceProperty<ArmorRef>(Command.ARMOR);
+                if (prop?.Entity is Armor armor)
+                    return armor;
+                return null;
+            }
+        }
+
+        public int? ArmorProtection => GetArmorIntProperty(Command.PROT);
+        public int? ArmorDefense => GetArmorIntProperty(Command.DEF);
+        public int? ArmorEncumbrance => GetArmorIntProperty(Command.ENC);
+
+        private int? GetArmorIntProperty(Command command)
+        {
+            var armor = ReferencedArmor;
+            if (armor == null) return null;
+
+            var result = armor.TryGet<IntProperty>(command, out var prop);
+            if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+                return prop?.Value;
+            return null;
+        }
+
+        // ========================================
+        // Badge Collection (Unified)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _propertyBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
+
+        public ObservableCollection<PropertyItem> PropertyBadges
+        {
+            get { if (_propertyBadges == null) RefreshPropertyBadges(); return _propertyBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePropertyBadges
+        {
+            get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
+        }
+
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
+        public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
+
+        // Shared value changed handler
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshPropertyBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("properties", BadgeValueChangedHandler);
+            _propertyBadges = active;
+            _availablePropertyBadges = available;
+            OnPropertyChanged(nameof(PropertyBadges));
+            OnPropertyChanged(nameof(AvailablePropertyBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged($"Is{propertyName}Inherited");
+            }
+        }
+
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                Command.CONSTLEVEL => "ConstLevel",
+                Command.TYPE => "ItemType",
+                Command.MAINPATH => "MainPath",
+                Command.MAINLEVEL => "MainLevel",
+                Command.SECONDARYPATH => "SecondaryPath",
+                Command.SECONDARYLEVEL => "SecondaryLevel",
+                Command.HP => "HP",
+                Command.STR => "Strength",
+                Command.ATT => "Attack",
+                Command.DEF => "Defense",
+                Command.PREC => "Precision",
+                Command.MR => "MagicResistance",
+                Command.MORALE => "Morale",
+                _ => null
+            };
+        }
     }
 
     /// <summary>

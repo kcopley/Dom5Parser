@@ -1,0 +1,189 @@
+<UserControl x:Class="Dom5Editor.UI.Controls.PathSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="Root"
+             d:DesignHeight="32" d:DesignWidth="320">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Label -->
+        <TextBlock Grid.Column="0"
+                   Text="{Binding Label, ElementName=Root}"
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource TextSecondaryBrush}"
+                   FontSize="11"
+                   Margin="0,0,8,0"
+                   Visibility="{Binding HasLabel, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+        <!-- Path Icons Row -->
+        <ItemsControl Grid.Column="1"
+                      ItemsSource="{Binding PathOptions, ElementName=Root}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Width="24" Height="24"
+                            Margin="1,0"
+                            Padding="2"
+                            Command="{Binding SelectPathCommand, ElementName=Root}"
+                            CommandParameter="{Binding PathId}"
+                            ToolTip="{Binding DisplayName}"
+                            Cursor="Hand"
+                            IsEnabled="{Binding IsExcluded, Converter={StaticResource InverseBoolConverter}}">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="Opacity" Value="1"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="3"
+                                                    Opacity="{TemplateBinding Opacity}"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#40FFFFFF"/>
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.3"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BorderBrush" Value="#FFD700"/>
+                                        <Setter Property="Background" Value="#30FFD700"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsExcluded}" Value="True">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Image Source="{Binding IconPath}"
+                               Width="18" Height="18"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Level Input with Up/Down arrows (shown when path selected) -->
+        <Border Grid.Column="2"
+                CornerRadius="3"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource BorderBrush}"
+                Background="{DynamicResource BackgroundDarkBrush}"
+                Visibility="{Binding ShowLevel, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                Margin="6,0,0,0"
+                Height="24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Down arrow -->
+                <Button Grid.Column="0" Width="16"
+                        Command="{Binding DecrementLevelCommand, ElementName=Root}"
+                        Background="Transparent" BorderThickness="0"
+                        Cursor="Hand" Padding="0"
+                        ToolTip="Decrease level">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                <TextBlock Text="▼" FontSize="8" Foreground="{DynamicResource TextMutedBrush}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#30FFFFFF"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- Level text -->
+                <TextBox Grid.Column="1"
+                         x:Name="LevelTextBox"
+                         Text="{Binding LevelText, ElementName=Root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Foreground="{DynamicResource TextPrimaryBrush}"
+                         FontSize="12"
+                         FontWeight="SemiBold"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         Padding="0"
+                         MaxLength="2"
+                         PreviewTextInput="LevelTextBox_PreviewTextInput"
+                         TextChanged="LevelTextBox_TextChanged"/>
+
+                <!-- Up arrow -->
+                <Button Grid.Column="2" Width="16"
+                        Command="{Binding IncrementLevelCommand, ElementName=Root}"
+                        Background="Transparent" BorderThickness="0"
+                        Cursor="Hand" Padding="0"
+                        ToolTip="Increase level">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                <TextBlock Text="▲" FontSize="8" Foreground="{DynamicResource TextMutedBrush}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#30FFFFFF"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Modification indicators -->
+        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="6,0,0,0">
+            <Border Width="3" Height="14" CornerRadius="1" Margin="0,0,2,0"
+                    Background="{DynamicResource AccentHighlightBrush}"
+                    Visibility="{Binding IsModified, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Ellipse Width="6" Height="6" Margin="0,0,2,0"
+                     Fill="{DynamicResource SessionEditBrush}"
+                     Visibility="{Binding IsSessionEdit, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Border CornerRadius="2" Padding="2,0" Margin="0,0,2,0"
+                    Background="{DynamicResource BackgroundMediumBrush}"
+                    Visibility="{Binding IsInherited, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="inh" FontSize="9" Foreground="{DynamicResource TextMutedBrush}"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,698 @@
+{
+  "sections": [
+    {
+      "id": "stats",
+      "displayName": "STATS",
+      "description": "Core weapon statistics",
+      "renderer": "statsGrid",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "dmg",
+          "display": "DMG",
+          "type": "int",
+          "default": 0,
+          "description": "Sets weapon damage."
+        },
+        {
+          "name": "nratt",
+          "display": "NRATT",
+          "type": "int",
+          "default": 1,
+          "description": "Sets number of attacks per round."
+        },
+        {
+          "name": "att",
+          "display": "ATT",
+          "type": "int",
+          "default": 0,
+          "description": "Sets attack bonus."
+        },
+        {
+          "name": "def",
+          "display": "DEF",
+          "type": "int",
+          "default": 0,
+          "description": "Sets defense bonus."
+        },
+        {
+          "name": "len",
+          "display": "LEN",
+          "type": "int",
+          "default": 0,
+          "description": "Sets weapon length for repel attacks."
+        },
+        {
+          "name": "rcost",
+          "display": "RCOST",
+          "type": "int",
+          "default": 0,
+          "description": "Sets resource cost."
+        },
+        {
+          "name": "aoe",
+          "display": "AOE",
+          "type": "int",
+          "default": 0,
+          "description": "Sets area of effect."
+        }
+      ]
+    },
+    {
+      "id": "properties",
+      "displayName": "PROPERTIES",
+      "description": "All weapon properties and modifiers",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "range",
+          "display": "Range",
+          "type": "int",
+          "description": "Sets weapon range for ranged weapons."
+        },
+        {
+          "name": "prec",
+          "display": "Precision",
+          "type": "int",
+          "description": "Sets precision modifier for ranged weapons."
+        },
+        {
+          "name": "ammo",
+          "display": "Ammo",
+          "type": "int",
+          "description": "Sets ammunition count for ranged weapons."
+        },
+        {
+          "name": "beam",
+          "display": "Beam",
+          "type": "flag",
+          "description": "Weapon fires a beam that can hit multiple targets."
+        },
+        {
+          "name": "range050",
+          "display": "Range 0-50",
+          "type": "flag",
+          "description": "Range varies from 0 to 50% of normal."
+        },
+        {
+          "name": "range0",
+          "display": "Range 0",
+          "type": "flag",
+          "description": "Can be used at range 0."
+        },
+        {
+          "name": "melee50",
+          "display": "Melee 50%",
+          "type": "flag",
+          "description": "50% chance to be used in melee."
+        },
+        {
+          "name": "nreff",
+          "display": "Effects Count",
+          "type": "int",
+          "description": "Number of effects when used."
+        },
+        {
+          "name": "slash",
+          "display": "Slash",
+          "type": "flag",
+          "description": "Slashing damage.",
+          "color": "#303033",
+          "borderColor": "#505055"
+        },
+        {
+          "name": "pierce",
+          "display": "Pierce",
+          "type": "flag",
+          "description": "Piercing damage.",
+          "color": "#303033",
+          "borderColor": "#505055"
+        },
+        {
+          "name": "blunt",
+          "display": "Blunt",
+          "type": "flag",
+          "description": "Blunt damage.",
+          "color": "#303033",
+          "borderColor": "#505055"
+        },
+        {
+          "name": "fire",
+          "display": "Fire",
+          "type": "flag",
+          "description": "Fire damage.",
+          "color": "#322D2A",
+          "borderColor": "#6B4030",
+          "icon": "magicicons/Path_F.png"
+        },
+        {
+          "name": "cold",
+          "display": "Cold",
+          "type": "flag",
+          "description": "Cold damage.",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A",
+          "icon": "magicicons/Path_W.png"
+        },
+        {
+          "name": "shock",
+          "display": "Shock",
+          "type": "flag",
+          "description": "Shock/lightning damage.",
+          "color": "#32302A",
+          "borderColor": "#5A5540",
+          "icon": "magicicons/Path_A.png"
+        },
+        {
+          "name": "poison",
+          "display": "Poison",
+          "type": "flag",
+          "description": "Poison damage.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "acid",
+          "display": "Acid",
+          "type": "flag",
+          "description": "Acid damage.",
+          "color": "#2E322A",
+          "borderColor": "#455030"
+        },
+        {
+          "name": "magic",
+          "display": "Magic",
+          "type": "flag",
+          "description": "Magic damage.",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "dt_normal",
+          "display": "Normal",
+          "type": "flag",
+          "description": "Normal damage type."
+        },
+        {
+          "name": "dt_stun",
+          "display": "Stun",
+          "type": "flag",
+          "description": "Causes stun damage."
+        },
+        {
+          "name": "dt_realstun",
+          "display": "Real Stun",
+          "type": "flag",
+          "description": "Causes real stunning damage."
+        },
+        {
+          "name": "dt_paralyze",
+          "display": "Paralyze",
+          "type": "flag",
+          "description": "Causes paralysis."
+        },
+        {
+          "name": "dt_poison",
+          "display": "Poison Dmg",
+          "type": "flag",
+          "description": "Causes poison damage."
+        },
+        {
+          "name": "dt_cap",
+          "display": "Capture",
+          "type": "flag",
+          "description": "Can capture targets."
+        },
+        {
+          "name": "dt_demon",
+          "display": "Demon Bane",
+          "type": "flag",
+          "description": "Extra damage to demons."
+        },
+        {
+          "name": "dt_holy",
+          "display": "Holy",
+          "type": "flag",
+          "description": "Holy damage, extra damage to undead/demons."
+        },
+        {
+          "name": "dt_magic",
+          "display": "Magic Dmg",
+          "type": "flag",
+          "description": "Magic damage type."
+        },
+        {
+          "name": "dt_small",
+          "display": "Small",
+          "type": "flag",
+          "description": "Deals reduced damage to large targets."
+        },
+        {
+          "name": "dt_large",
+          "display": "Large",
+          "type": "flag",
+          "description": "Deals reduced damage to small targets."
+        },
+        {
+          "name": "dt_constructonly",
+          "display": "Construct Only",
+          "type": "flag",
+          "description": "Only affects constructs."
+        },
+        {
+          "name": "dt_raise",
+          "display": "Raise",
+          "type": "flag",
+          "description": "Can raise killed targets."
+        },
+        {
+          "name": "dt_weakness",
+          "display": "Weakness",
+          "type": "flag",
+          "description": "Causes weakness."
+        },
+        {
+          "name": "dt_drain",
+          "display": "Drain",
+          "type": "flag",
+          "description": "Drains life from target."
+        },
+        {
+          "name": "dt_weapondrain",
+          "display": "Weapon Drain",
+          "type": "flag",
+          "description": "Drains weapons."
+        },
+        {
+          "name": "dt_sizestun",
+          "display": "Size Stun",
+          "type": "flag",
+          "description": "Stuns based on size."
+        },
+        {
+          "name": "dt_interrupt",
+          "display": "Interrupt",
+          "type": "flag",
+          "description": "Interrupts spellcasting."
+        },
+        {
+          "name": "dt_bouncekill",
+          "display": "Bounce Kill",
+          "type": "flag",
+          "description": "Kills bounce to nearby targets."
+        },
+        {
+          "name": "dt_aff",
+          "display": "Affliction",
+          "type": "flag",
+          "description": "Causes afflictions."
+        },
+        {
+          "name": "nostr",
+          "display": "No Str",
+          "type": "flag",
+          "description": "Weapon does not add strength to damage."
+        },
+        {
+          "name": "halfstr",
+          "display": "Half Str",
+          "type": "flag",
+          "description": "Weapon adds half strength to damage."
+        },
+        {
+          "name": "thirdstr",
+          "display": "Third Str",
+          "type": "flag",
+          "description": "Weapon adds one third strength to damage."
+        },
+        {
+          "name": "fullstr",
+          "display": "Full Str",
+          "type": "flag",
+          "description": "Weapon adds full strength to damage."
+        },
+        {
+          "name": "bowstr",
+          "display": "Bow Str",
+          "type": "flag",
+          "description": "Weapon uses bow strength calculation."
+        },
+        {
+          "name": "armorpiercing",
+          "display": "Armor Piercing",
+          "type": "flag",
+          "description": "Armor is halved against this weapon."
+        },
+        {
+          "name": "armornegating",
+          "display": "Armor Negating",
+          "type": "flag",
+          "description": "Armor is ignored by this weapon."
+        },
+        {
+          "name": "mrnegates",
+          "display": "MR Negates",
+          "type": "flag",
+          "description": "Magic resistance can negate the effect."
+        },
+        {
+          "name": "mrnegateseasily",
+          "display": "MR Negates Easy",
+          "type": "flag",
+          "description": "Magic resistance easily negates the effect."
+        },
+        {
+          "name": "hardmrneg",
+          "display": "Hard MR Neg",
+          "type": "flag",
+          "description": "Hard to resist with magic resistance."
+        },
+        {
+          "name": "sizeresist",
+          "display": "Size Resist",
+          "type": "flag",
+          "description": "Larger creatures resist more easily."
+        },
+        {
+          "name": "mind",
+          "display": "Mind",
+          "type": "flag",
+          "description": "Mind-affecting effect."
+        },
+        {
+          "name": "undeadimmune",
+          "display": "Undead Immune",
+          "type": "flag",
+          "description": "Does not affect undead."
+        },
+        {
+          "name": "inanimateimmune",
+          "display": "Inanimate Immune",
+          "type": "flag",
+          "description": "Does not affect inanimate creatures."
+        },
+        {
+          "name": "flyingimmune",
+          "display": "Flying Immune",
+          "type": "flag",
+          "description": "Does not affect flying creatures."
+        },
+        {
+          "name": "spiritformimmune",
+          "display": "Spirit Immune",
+          "type": "flag",
+          "description": "Does not affect spirit form creatures."
+        },
+        {
+          "name": "illusionsimmune",
+          "display": "Illusions Immune",
+          "type": "flag",
+          "description": "Does not affect illusions."
+        },
+        {
+          "name": "enemyimmune",
+          "display": "Enemy Immune",
+          "type": "flag",
+          "description": "Does not affect enemies."
+        },
+        {
+          "name": "friendlyimmune",
+          "display": "Friendly Immune",
+          "type": "flag",
+          "description": "Does not affect friendlies."
+        },
+        {
+          "name": "undeadonly",
+          "display": "Undead Only",
+          "type": "flag",
+          "description": "Only affects undead."
+        },
+        {
+          "name": "sacredonly",
+          "display": "Sacred Only",
+          "type": "flag",
+          "description": "Only affects sacred units."
+        },
+        {
+          "name": "demononly",
+          "display": "Demon Only",
+          "type": "flag",
+          "description": "Only affects demons."
+        },
+        {
+          "name": "demonundead",
+          "display": "Demon/Undead",
+          "type": "flag",
+          "description": "Only affects demons and undead."
+        },
+        {
+          "name": "ironweapon",
+          "display": "Iron",
+          "type": "flag",
+          "description": "Weapon is made of iron.",
+          "color": "#303033",
+          "borderColor": "#505560"
+        },
+        {
+          "name": "woodenweapon",
+          "display": "Wooden",
+          "type": "flag",
+          "description": "Weapon is made of wood.",
+          "color": "#302D2A",
+          "borderColor": "#504540"
+        },
+        {
+          "name": "iceweapon",
+          "display": "Ice",
+          "type": "flag",
+          "description": "Weapon is made of ice.",
+          "color": "#2A3035",
+          "borderColor": "#405060"
+        },
+        {
+          "name": "twohanded",
+          "display": "Two-Handed",
+          "type": "flag",
+          "description": "Weapon requires two hands."
+        },
+        {
+          "name": "natural",
+          "display": "Natural",
+          "type": "flag",
+          "description": "Natural weapon (claw, bite, etc)."
+        },
+        {
+          "name": "internal",
+          "display": "Internal",
+          "type": "flag",
+          "description": "Internal weapon, not shown in UI."
+        },
+        {
+          "name": "bonus",
+          "display": "Bonus",
+          "type": "flag",
+          "description": "Bonus attack weapon."
+        },
+        {
+          "name": "charge",
+          "display": "Charge",
+          "type": "flag",
+          "description": "Weapon is used during charges."
+        },
+        {
+          "name": "flail",
+          "display": "Flail",
+          "type": "flag",
+          "description": "Weapon is a flail, ignores shields."
+        },
+        {
+          "name": "norepel",
+          "display": "No Repel",
+          "type": "flag",
+          "description": "Cannot be used to repel."
+        },
+        {
+          "name": "unrepel",
+          "display": "Unrepel",
+          "type": "flag",
+          "description": "Cannot be repelled."
+        },
+        {
+          "name": "skip",
+          "display": "Skip",
+          "type": "flag",
+          "description": "Skip first round of combat."
+        },
+        {
+          "name": "skip2",
+          "display": "Skip 2",
+          "type": "flag",
+          "description": "Skip first two rounds of combat."
+        },
+        {
+          "name": "uwok",
+          "display": "UW OK",
+          "type": "flag",
+          "description": "Weapon works underwater."
+        },
+        {
+          "name": "nouw",
+          "display": "No UW",
+          "type": "flag",
+          "description": "Weapon does not work underwater."
+        },
+        {
+          "name": "soulslaying",
+          "display": "Soul Slaying",
+          "type": "flag",
+          "description": "Soul slaying weapon."
+        },
+        {
+          "name": "false",
+          "display": "False",
+          "type": "flag",
+          "description": "False/illusory weapon."
+        },
+        {
+          "name": "notmounted",
+          "display": "Not Mounted",
+          "type": "int",
+          "description": "Cannot be used while mounted (1=never, 2=dismount)."
+        },
+        {
+          "name": "notdismounted",
+          "display": "Not Dismounted",
+          "type": "flag",
+          "description": "Cannot be used while dismounted."
+        },
+        {
+          "name": "speedmult",
+          "display": "Speed Mult",
+          "type": "int",
+          "description": "Attack speed multiplier (1-3)."
+        },
+        {
+          "name": "defroll",
+          "display": "Def Roll",
+          "type": "int",
+          "description": "Defense roll modifier."
+        },
+        {
+          "name": "morroll",
+          "display": "Mor Roll",
+          "type": "int",
+          "description": "Morale roll modifier."
+        },
+        {
+          "name": "dmginspector",
+          "display": "Dmg Inspector",
+          "type": "int",
+          "description": "Damage display value override."
+        },
+        {
+          "name": "secondaryeffect",
+          "display": "Secondary Effect",
+          "type": "weaponRef",
+          "description": "Secondary weapon effect (25% chance)."
+        },
+        {
+          "name": "secondaryeffectalways",
+          "display": "Secondary Always",
+          "type": "weaponRef",
+          "description": "Secondary weapon effect (100% chance)."
+        },
+        {
+          "name": "holyifhit",
+          "display": "Holy if Hit",
+          "type": "int",
+          "description": "Holy damage if hit."
+        },
+        {
+          "name": "killmagicifhit",
+          "display": "Kill Magic if Hit",
+          "type": "int",
+          "description": "Dispel magic if hit."
+        },
+        {
+          "name": "killdemonifhit",
+          "display": "Kill Demon if Hit",
+          "type": "int",
+          "description": "Extra damage to demons if hit."
+        },
+        {
+          "name": "holystunifhit",
+          "display": "Holy Stun if Hit",
+          "type": "int",
+          "description": "Holy stun damage if hit."
+        },
+        {
+          "name": "petrifyifhit",
+          "display": "Petrify if Hit",
+          "type": "int",
+          "description": "Petrification chance if hit."
+        },
+        {
+          "name": "fireifhit",
+          "display": "Fire if Hit",
+          "type": "int",
+          "description": "Fire damage if hit."
+        },
+        {
+          "name": "coldifhit",
+          "display": "Cold if Hit",
+          "type": "int",
+          "description": "Cold damage if hit."
+        },
+        {
+          "name": "shockifhit",
+          "display": "Shock if Hit",
+          "type": "int",
+          "description": "Shock damage if hit."
+        },
+        {
+          "name": "poisonifdmg",
+          "display": "Poison if Dmg",
+          "type": "int",
+          "description": "Poison if damage dealt."
+        },
+        {
+          "name": "aftercloud",
+          "display": "After Cloud",
+          "type": "intInt",
+          "description": "Creates cloud after attack (strength, type)."
+        },
+        {
+          "name": "aftercloudarea",
+          "display": "After Cloud Area",
+          "type": "int",
+          "description": "Area of effect for after cloud."
+        },
+        {
+          "name": "explspr",
+          "display": "Explosion Sprite",
+          "type": "int",
+          "description": "Sprite for explosion effect."
+        },
+        {
+          "name": "flyspr",
+          "display": "Flying Sprite",
+          "type": "intInt",
+          "description": "Sprite and animation for projectile."
+        },
+        {
+          "name": "sound",
+          "display": "Sound",
+          "type": "int",
+          "description": "Sound effect ID."
+        },
+        {
+          "name": "sample",
+          "display": "Sample",
+          "type": "string",
+          "description": "Custom sound file path."
+        }
+      ]
+    }
+  ]
+}

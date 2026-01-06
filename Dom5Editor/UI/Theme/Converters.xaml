@@ -8,5 +8,8 @@
     <converters:NullToVisibilityInverseConverter x:Key="NullToVisibilityInverseConverter"/>
     <converters:BoolToTextWrappingConverter x:Key="BoolToTextWrappingConverter"/>
     <converters:NullableIntToStringConverter x:Key="NullableIntToStringConverter"/>
+    <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+    <converters:PathLetterToGemIconConverter x:Key="PathLetterToGemIconConverter"/>
+    <converters:PathLetterToPathIconConverter x:Key="PathLetterToPathIconConverter"/>
 
 </ResourceDictionary>

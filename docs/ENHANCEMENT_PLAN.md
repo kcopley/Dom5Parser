@@ -195,6 +195,107 @@ See `BADGE_UI_REDESIGN.md` for full details.
 **Keep:** `ModViewModel.cs`, `RelayCommand.cs`, `ViewModelBase.cs`
 **Remove after migration:** All other legacy VMs and views
 
+### 6.6: Badge Infrastructure Generalization (COMPLETE)
+
+**Completed 2026-01-05:** Refactored badge system to enable reuse across entity types.
+
+**Changes:**
+- Moved `BuildBadgesFromSection()` from MonsterViewModel to EntityViewModel base class
+- Added `EntityTypeName` virtual property (override to specify JSON config file)
+- Added helper methods for creating badge commands and value handlers
+- Simplified MonsterViewModel badge code using base class helpers
+
+**Base class methods (EntityViewModel.cs):**
+```csharp
+// Override this to enable badge support
+protected virtual string EntityTypeName => null;  // "monster", "weapon", etc.
+
+// Build badges from JSON config section
+protected (ObservableCollection<PropertyItem> active, ObservableCollection<AvailablePropertyItem> available)
+    BuildBadgesFromSection(string sectionId, EventHandler<int> valueChangedHandler = null)
+
+// Helper methods for derived classes
+protected void AddBadgeProperty(AvailablePropertyItem badge)
+protected void RemoveBadgeProperty(PropertyItem badge)
+protected EventHandler<int> CreateBadgeValueChangedHandler()
+protected RelayCommand<PropertyItem> CreateRemoveBadgeCommand(Action refreshAction)
+protected RelayCommand<AvailablePropertyItem> CreateAddBadgeCommand(Action refreshAction)
+```
+
+**Impact:** New entity views can now add badge support by:
+1. Creating `{entity}_badges.json` in `Dom5Editor/Data/`
+2. Adding `protected override string EntityTypeName => "{entity}";`
+3. Defining badge collections using `BuildBadgesFromSection()`
+
+### 6.7: Generic Layered Entity Resolution (COMPLETE)
+
+**Completed 2026-01-05:** Added generic methods for layered entity/reference resolution.
+
+**Problem:** Weapon/armor lists weren't displaying for mod-edited entities because the code only looked at the mod entity (which only has changes), not falling back to vanilla data. Each reference type needed its own fallback method.
+
+**Solution:** Added generic resolution methods to `EntityViewModel` base class that automatically cascade through layers: mod → vanilla → copystats chain.
+
+**Base class methods (EntityViewModel.cs):**
+```csharp
+// Resolve any entity by type and ID (mod → vanilla fallback)
+protected IDEntity ResolveEntityReference(EntityType type, int id)
+
+// Get entity name with fallback
+protected string GetEntityName(EntityType type, int id)
+
+// Get reference name (tries resolved entity, then layered lookup)
+protected string GetReferenceName(StringOrIDRef reference, EntityType entityType)
+
+// Get multi-value references with full layering (vanilla → mod → copystats)
+protected List<(int Id, string Name, bool IsInherited, bool IsModified, bool IsSessionEdit)>
+    GetLayeredReferenceList<TRef>(Command command, EntityType entityType, Func<TRef, int> getId)
+```
+
+**Impact:**
+- Weapon/armor code reduced from ~200 lines to ~50 lines
+- Any new reference lists (spells, items, etc.) can use `GetLayeredReferenceList<T>()`
+- Single place to maintain layering logic
+- Consistent behavior across all entity types
+
+---
+
+## Clear Commands Architecture (Future)
+
+The game supports various #clear commands that reset inherited values when modifying vanilla entities. These affect how fallback/inheritance works in the editor.
+
+### Known Clear Commands
+- `#clearweapons` - Removes all inherited weapons
+- `#cleararmor` - Removes all inherited armor
+- `#clearmagic` - Removes all inherited magic paths
+- `#clearspec` - Removes special abilities
+- Others TBD (need to catalog from manual)
+
+### Implementation Considerations
+
+**Fallback Logic Changes:**
+When determining effective property values (vanilla → mod → session), must check for clear commands:
+```
+if entity has #clearweapons:
+    don't inherit weapons from vanilla or copystats
+    only show weapons explicitly added after the clear
+```
+
+**UI Requirements:**
+- Show clear commands as special badges or toggles in relevant sections
+- Visual indicator when inheritance is blocked (e.g., "Cleared" badge)
+- Ability to add/remove clear commands
+- When clear is active, "inherited" items should not display
+
+**Data Model:**
+- Clear commands are CommandProperty types (flag, no value)
+- Need to check for clear commands BEFORE walking copystats chain
+- May need to track clear commands separately for quick lookup
+
+**Order of Operations:**
+1. Check if entity has relevant clear command
+2. If cleared: only show properties directly on entity (no inheritance)
+3. If not cleared: normal layered fallback (vanilla → copystats → mod → session)
+
 ---
 
 ## Long-Term Vision
@@ -254,17 +355,95 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 ## Feature Backlog (Post-Redesign)
 
 ### HIGH Priority
-- **Other Entity Views** - Weapon, Armor, Spell, Item, Site, Nation, Event views
-- CUSTOMMAGIC editor (complex bitmask)
+- **Other Entity Views** - Spell, Site, Nation, Event views (Weapon, Armor, Item complete)
+
+  **View Complexity Pattern Guidelines:**
+  - **Simple entities (Weapon, Armor, Item):** Use a single unified badge panel for all boolean/flag properties. Don't split into multiple categorized sections (Elements, Materials, Damage Types, etc.) - this adds UI complexity without benefit. One flat badge collection with a single "Add" dropdown showing all available properties.
+  - **Complex entities (Monster, Nation, Spell):** Use categorized sections where logical groupings help navigation (e.g., Monster has Combat, General, Resistances, Types as distinct concepts). Categories should reflect how users think about the entity, not just how commands are organized in the manual.
+  - **Reference properties:** Group equipment/reference slots together (weapons, armor, spells) with navigation links to referenced entities.
+  - **Stats:** Always use grid layout for numeric stats at the top of the view.
+
+  **DONE (2026-01-05):** WeaponView and ArmorView refactored to use single unified badge panel.
+  **DONE (2026-01-05):** ItemView implemented with construction stats, path requirements, and badge panel.
+  **DONE (2026-01-05):** ItemView equipment section shows weapon/armor damage types, special properties, and secondary effects.
+  **DONE (2026-01-05):** WeaponView displays damage types, special properties, and secondary effect with weapon name and chance.
+
+- ~~**Path Selector (Spells/Items)**~~ DONE - PathSelector control in Controls/:
+  - Dropdown for path (None, Fire, Air, Water, Earth, Astral, Death, Nature, Glamour, Blood)
+  - Level input (0-9) shown when path selected
+  - Color-coded badges matching game path colors
+  - Integrated in ItemView for mainpath/secondarypath selection
+- **MagicPathEditor Improvements** - Already functional in MonsterView, potential polish:
+  - Full path names on hover/expanded view
+  - Better visual feedback
+- **CUSTOMMAGIC Editor** - Complex bitmask for unit magic capabilities:
+  - Bitmask-based path combinations
+  - Random path selection rules
+  - Separate from simple path selection (not started)
 - Navigation between entity views (clicking weapon/armor to view that entity)
 - Reset to original buttons (per-property revert)
+- **Secondary Effect Chain Display** - When a weapon has a secondary effect that itself has a secondary effect, show the full chain
+- **WeaponDamage Monster ID Selector** - When editing summon weapons (dmg="summonunits" or inherited from such), show a monster ID selector instead of integer input. The WeaponDamage.cs class has infrastructure for detecting summon type; needs UI integration for proper monster selection.
+- **ChangesMod Identity Check on Value Reset** - When a property is edited back to its original value (matching base mod or vanilla data), automatically remove it from the ChangesMod session tracking. The generic fallback resolution code should include identity checks, and resetting a property should un-mark it as modified.
+- **Searchable Dropdowns** - All entity/ability dropdowns should be searchable text boxes, not just type-to-match:
+  - Weapon/Armor selectors in MonsterView equipment section
+  - Ability dropdowns in badge panels (Add dropdown)
+  - Any other entity reference selectors
+- **Pre-cache Dropdown Data** - Load all dropdown options at startup or mod load, not on dropdown open:
+  - Weapon/Armor lists from vanilla + mod
+  - Available abilities per section
+  - Prevents lag when opening dropdowns with many options (500+ abilities)
+- **#clear Commands Support** - Commands like #clearweapons, #cleararmor, #clearmagic, etc.:
+  - Must track presence of clear commands on entities
+  - Affects fallback logic: if #clearweapons is present, don't inherit weapons from vanilla/copystats
+  - UI support for adding/removing clear commands
+  - Display indicator when clear command is active (shows inheritance is blocked)
+  - See "Clear Commands Architecture" section below for implementation notes
+- **Read-Only Flags in Badge Configs** - Some vanilla properties have no corresponding mod commands (see `docs/DATA_ODDITIES.md`):
+  - Weapon flags: `soulslaying`, `ignoreshield`, `defnegate`, `uwonly`, `noillusion`, `magiconly`, etc.
+  - Weapon attributes: `flammable`, `nofirebless`
+  - Spell attributes: `preventcast`, `requiresench`, `uwsummon`, `coldsummon`
+  - Nation attributes: `plainsrec`, `plainscom`, `futuresites`
+  - These should be marked `"readOnly": true` in badge JSON configs so they display but cannot be edited
+- **Negative Unit IDs as Montag References** - Negative unit IDs in spell/weapon data represent montag groups:
+  - -16 = Yazads, -17 = Yatas, -21 = Dwarfs (Four Directions)
+  - UI should display montag group name and use montag selector for editing
+  - Affects spell summon targets and weapon summon effects
+- **Spell Fatigue/Gem Cost Editor** - Costs are encoded as `gems*1000 + fatigue`:
+  - Provide separate inputs for gem cost and fatigue cost
+  - Auto-encode/decode the combined value
+  - Example: 2050 = 2 gems + 50 fatigue
+- **Spell Path Editor** - Path requirements for spells:
+  - Primary path dropdown (F/A/W/E/S/D/N/G/B) with level input
+  - Optional secondary path with level
+  - Map to `#school`, `#path`, `#pathlevel`, `#path2`, `#pathlevel2` commands
 
 ### MEDIUM Priority
-- Typable combobox for ability dropdowns (like weapon/armor selectors) - improves discoverability
 - Weapon/Armor list with stat columns (header row with ID, Name, Atk, Dmg, etc. for weapons; ID, Name, Prot, Def, Enc for armor)
 - Sprite preview (TGA loading infrastructure exists)
 - NAMETYPE, MONTAG editors
 - Validation report panel
+- **ItemSlots Bitmask Editor** - Visual editor for monster/commander item slot configuration:
+  - Checkboxes/spinners for slot categories (hands 1-6, heads 1-3, body, feet, misc 1-6)
+  - Auto-calculate bitmask value from selections
+  - Show standard patterns (human mage: 15494, commander: 213046)
+  - See `docs/DATA_TRANSFORMATIONS.md` for bitmask values
+- **Leadership Selector** - Mutually exclusive dropdown for leader/magicleader/undeadleader:
+  - Options: noleader, poorleader, okleader, goodleader, expertleader, superiorleader
+  - Only one can be active at a time per leadership type (selecting one removes the previous)
+  - Note: There is no `#leader N` command - only the named tier commands are valid
+- **Calculated Values Display (Read-Only)** - Show derived values for reference:
+  - Total protection (natural + armor with diminishing returns formula)
+  - Total encumbrance (base + armor enc adjusted for size)
+  - Total resource cost (base + weapon/armor costs scaled by ressize)
+  - Commander gold cost breakdown (base + leadership + magic + holy costs)
+  - Mark clearly as "calculated" and non-editable
+- **Age Value Transforms** - Handle special startage values in UI:
+  - Display `startage = -1` as "0" (game interprets -1 as "start at age 0")
+  - `startage = 0` means "no start age" - may need special handling or omission
+- **Filter Hidden Entities** - Skip display of special entities in entity lists:
+  - Entities named "Empty" (placeholder entries)
+  - Decimal ID entities (e.g., 100.01) - these are virtual shapechange form displays
 
 ### LOW Priority
 - Keyboard shortcuts within views
@@ -297,15 +476,21 @@ Dom5Editor/UI/
   Views/
     MainWindow.xaml(.cs)
     MonsterView.xaml(.cs)
+    WeaponView.xaml(.cs)
+    ArmorView.xaml(.cs)
+    ItemView.xaml(.cs)
   ViewModels/
-    EntityViewModel.cs
-    EntityViewModels.cs
+    EntityViewModel.cs      - Base class with layered resolution, badge infrastructure
+    EntityViewModels.cs     - MonsterViewModel, WeaponViewModel, ArmorViewModel, ItemViewModel, etc.
   Theme/
     AppTheme.xaml
     AppResources.xaml
 
 Dom5Editor/Data/
-  monster_badges.json
+  monster_badges.json     - Monster property definitions (572 commands)
+  weapon_badges.json      - Weapon property definitions
+  armor_badges.json       - Armor property definitions
+  item_badges.json        - Item property definitions
   BadgeConfig.cs
   BadgeConfigLoader.cs
 

@@ -1,0 +1,343 @@
+<UserControl x:Class="Dom5Editor.UI.Views.ItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="600"
+             Background="{DynamicResource BackgroundMediumBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="12">
+            <!-- Header with ID and source indicator -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource HeaderText}" FontSize="18" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <TextBlock Text="{Binding ID, StringFormat='Item #{0}'}" Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text=" - " Style="{DynamicResource MutedText}" FontSize="11"/>
+                            <TextBlock Text="{Binding ItemTypeDisplay}" Style="{DynamicResource MutedText}" FontSize="11" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border Grid.Column="1" Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="3" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SourceLabel}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Copy From Section (shown when item has copyitem) -->
+            <Border Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12"
+                    Visibility="{Binding HasCopyItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel>
+                    <TextBlock Text="COPY FROM" FontSize="9" FontWeight="Bold" Foreground="White" Opacity="0.7" Margin="0,0,0,4"/>
+                    <WrapPanel>
+                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="copyitem:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopyItemDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Basic Info Section -->
+            <controls:PropertyGroupControl Header="Basic Info" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,8"/>
+
+                        <!-- Item Slot Type -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" MinWidth="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Slot Type" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="12" VerticalAlignment="Center" Margin="0,0,12,0"/>
+
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding SlotTypes}"
+                                      SelectedItem="{Binding SelectedSlotType, Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      Background="{DynamicResource BackgroundDarkBrush}"
+                                      Foreground="{DynamicResource TextPrimaryBrush}"
+                                      BorderBrush="{DynamicResource BorderBrush}"
+                                      Padding="8,6"
+                                      FontSize="12">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="ComboBoxItem">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                        <Setter Property="Background" Value="{DynamicResource BackgroundMediumBrush}"/>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+                        </Grid>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Equipment Section - Single dropdown based on slot type -->
+            <controls:PropertyGroupControl Header="Equipment" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="6" Padding="12">
+                        <StackPanel>
+                            <!-- Equipment Header with dropdown selector -->
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="{Binding EquipmentTypeLabel}" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource AccentHighlightBrush}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+
+                                <!-- Equipment dropdown -->
+                                <ComboBox Grid.Column="1"
+                                          ItemsSource="{Binding AvailableEquipment}"
+                                          SelectedItem="{Binding SelectedEquipment, Mode=TwoWay}"
+                                          DisplayMemberPath="DisplayText"
+                                          Background="{DynamicResource BackgroundMediumBrush}"
+                                          Foreground="{DynamicResource TextPrimaryBrush}"
+                                          BorderBrush="{DynamicResource BorderBrush}"
+                                          Padding="8,6"
+                                          FontSize="12">
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="ComboBoxItem">
+                                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                            <Setter Property="Background" Value="{DynamicResource BackgroundMediumBrush}"/>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                </ComboBox>
+                            </Grid>
+
+                            <!-- Weapon Stats Grid (shown when slot uses weapons and weapon is set) -->
+                            <StackPanel Visibility="{Binding HasWeapon, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <!-- Core Stats Row -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Damage -->
+                                    <Border Grid.Column="0" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="0,0,4,0">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="Damage" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding WeaponDamage, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Attack -->
+                                    <Border Grid.Column="1" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="2,0">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="Attack" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding WeaponAttack, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Defense -->
+                                    <Border Grid.Column="2" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="2,0">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="Defense" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding WeaponDefense, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Length -->
+                                    <Border Grid.Column="3" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="2,0">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="Length" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding WeaponLength, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Attacks -->
+                                    <Border Grid.Column="4" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="4,0,0,0">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="Attacks" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding WeaponNrAtt, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Damage Types Row -->
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Visibility="{Binding WeaponDamageTypes, Converter={StaticResource NullToVisibilityConverter}}">
+                                    <TextBlock Text="Damage Type:" FontSize="10" Foreground="#888" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="{Binding WeaponDamageTypes}" FontSize="10" Foreground="#9370DB" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- Special Properties Row -->
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0" Visibility="{Binding WeaponSpecialProperties, Converter={StaticResource NullToVisibilityConverter}}">
+                                    <TextBlock Text="Properties:" FontSize="10" Foreground="#888" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="{Binding WeaponSpecialProperties}" FontSize="10" Foreground="#FFD700" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- Secondary Effect Row -->
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0" Visibility="{Binding HasWeaponSecondaryEffect, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <TextBlock Text="Secondary Effect:" FontSize="10" Foreground="#888" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="{Binding WeaponSecondaryEffectDisplay}" FontSize="10" Foreground="#00BFFF" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Armor Stats Grid (shown when slot uses armor and armor is set) -->
+                            <Grid Visibility="{Binding HasArmor, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Protection -->
+                                <Border Grid.Column="0" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="0,0,4,0">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="Protection" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding ArmorProtection, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Defense -->
+                                <Border Grid.Column="1" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="2,0">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="Defense" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding ArmorDefense, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Encumbrance -->
+                                <Border Grid.Column="2" Background="#2A2A2A" CornerRadius="4" Padding="8,8" Margin="4,0,0,0">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="Encumbrance" FontSize="10" Foreground="#888" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding ArmorEncumbrance, TargetNullValue='-'}" FontSize="18" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!-- Read-only indicator (shown when equipment is selected) -->
+                            <TextBlock Text="Stats inherited from equipment - edit on Weapons/Armor tab" FontSize="9" Foreground="#666" Margin="0,10,0,0" FontStyle="Italic"
+                                       Visibility="{Binding HasEquipment, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        </StackPanel>
+                    </Border>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Construction Requirements Section -->
+            <controls:PropertyGroupControl Header="Construction Requirements" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <!-- Construction Level -->
+                        <controls:IntPropertyEditor Label="Const Level" Value="{Binding ConstLevel, Mode=TwoWay}"
+                                                    IsModified="{Binding IsConstLevelModified}"
+                                                    IsSessionEdit="{Binding IsConstLevelSessionEdit}"
+                                                    IsInherited="{Binding IsConstLevelInherited}"
+                                                    ToolTip="Construction level required to forge this item"
+                                                    Margin="0,0,0,8"/>
+
+                        <!-- Primary Path -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock Text="Primary:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center" Width="70"/>
+                            <controls:PathSelector PathId="{Binding MainPath, Mode=TwoWay}"
+                                                   Level="{Binding MainLevel, Mode=TwoWay}"
+                                                   ExcludedPathId="{Binding SecondaryPath}"
+                                                   IsModified="{Binding IsMainPathModified}"
+                                                   IsSessionEdit="{Binding IsMainPathSessionEdit}"
+                                                   IsInherited="{Binding IsMainPathInherited}"
+                                                   PathChanged="PrimaryPath_Changed"
+                                                   LevelChanged="PrimaryLevel_Changed"
+                                                   ToolTip="Primary magic path required to forge"/>
+                        </StackPanel>
+
+                        <!-- Secondary Path -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="Secondary:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center" Width="70"/>
+                            <controls:PathSelector PathId="{Binding SecondaryPath, Mode=TwoWay}"
+                                                   Level="{Binding SecondaryLevel, Mode=TwoWay}"
+                                                   ExcludedPathId="{Binding MainPath}"
+                                                   IsModified="{Binding IsSecondaryPathModified}"
+                                                   IsSessionEdit="{Binding IsSecondaryPathSessionEdit}"
+                                                   IsInherited="{Binding IsSecondaryPathInherited}"
+                                                   PathChanged="SecondaryPath_Changed"
+                                                   LevelChanged="SecondaryLevel_Changed"
+                                                   ToolTip="Secondary magic path required (optional)"/>
+                        </StackPanel>
+
+                        <!-- Gem Cost Display - inline format like "Requires 5N to forge (N1)" -->
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0"
+                                    Visibility="{Binding HasGemCost, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="Requires " FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+
+                            <!-- Primary gem cost: "5N" -->
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                        Visibility="{Binding PrimaryPathLetter, Converter={StaticResource NullToVisibilityConverter}}">
+                                <TextBlock Text="{Binding PrimaryGemCost}" FontSize="12" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                <Image Width="16" Height="16" Margin="1,0,0,0" VerticalAlignment="Center"
+                                       Source="{Binding PrimaryPathLetter, Converter={StaticResource PathLetterToGemIconConverter}}"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                            </StackPanel>
+
+                            <!-- Secondary gem cost: " + 5W" (if present) -->
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                        Visibility="{Binding SecondaryPathLetter, Converter={StaticResource NullToVisibilityConverter}}">
+                                <TextBlock Text=" + " FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding SecondaryGemCost}" FontSize="12" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                <Image Width="16" Height="16" Margin="1,0,0,0" VerticalAlignment="Center"
+                                       Source="{Binding SecondaryPathLetter, Converter={StaticResource PathLetterToGemIconConverter}}"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                            </StackPanel>
+
+                            <!-- Path requirement: " to forge (N1)" or " to forge (N1W2)" -->
+                            <TextBlock Text=" to forge (" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+
+                            <!-- Primary path icon + level -->
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                        Visibility="{Binding PrimaryPathLetter, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Image Width="14" Height="14" VerticalAlignment="Center"
+                                       Source="{Binding PrimaryPathLetter, Converter={StaticResource PathLetterToPathIconConverter}}"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <TextBlock Text="{Binding MainLevel}" FontSize="11" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Secondary path icon + level -->
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                        Visibility="{Binding SecondaryPathLetter, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Image Width="14" Height="14" VerticalAlignment="Center"
+                                       Source="{Binding SecondaryPathLetter, Converter={StaticResource PathLetterToPathIconConverter}}"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <TextBlock Text="{Binding SecondaryLevel}" FontSize="11" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <TextBlock Text=")" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Properties - Single Unified Badge Panel -->
+            <controls:PropertyGroupControl Header="Properties" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding PropertyBadges}"
+                        AvailableItems="{Binding AvailablePropertyBadges}"
+                        RemoveCommand="{Binding RemovePropertyBadgeCommand}"
+                        AddCommand="{Binding AddPropertyBadgeCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
