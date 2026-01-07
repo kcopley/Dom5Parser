@@ -124,7 +124,7 @@ namespace Dom5Edit.Entities
             return Command.SELECTSITE;
         }
 
-        internal override Dictionary<Command, Func<Property>> GetPropertyMap()
+        public override Dictionary<Command, Func<Property>> GetPropertyMap()
         {
             return _propertyMap;
         }

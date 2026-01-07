@@ -87,15 +87,37 @@ The JSON uses a `sections` array with each section having a renderer type:
 - **int**: Integer value command (e.g., `#hp 50`, `#fireres 5`)
 - **path**: Magic path level command (for magicPathEditor)
 - **randompaths**: Random magic configuration (for magicPathEditor)
+- **ref**: Entity reference command (e.g., `#addrecunit`, `#startsite`) - displays as searchable selector for editable badges
 
 ### Renderers
 
 | Renderer | Description | Supported Types |
 |----------|-------------|-----------------|
-| `badge` | Standard compact badge with optional value | flag, int |
+| `badge` | Standard compact badge with optional value | flag, int, ref |
 | `coloredBadge` | Colored badge for resistances/special values | int (requires color/borderColor) |
 | `statsGrid` | 3-column grid layout for core stats | int |
 | `magicPathEditor` | Custom magic path editor with colored level badges | path, randompaths |
+
+### Reference Badge Behavior
+
+Reference badges (`type: "ref"`) support entity references with the following features:
+
+**Display Format:**
+- Name displayed prominently, ID shown separately as `#123` in muted text
+- Navigate button (→) to jump to the referenced entity
+
+**Editable vs Read-Only:**
+| State | Appearance |
+|-------|------------|
+| Inherited (vanilla/copystats) | Read-only text: `Name #123 [inh] [→]` |
+| Editable (mod/session) | Searchable dropdown: `[Name] #123 [▼] [→] [×]` |
+
+**Searchable Selector (`SearchableReferenceComboBox`):**
+- Click to focus and select all text
+- Type to filter by name OR ID
+- Dropdown shows `Name  #123` format with styled ID
+- Keyboard navigation: Up/Down arrows, Enter to select, Escape to cancel
+- Tab commits selection and moves focus
 
 ### Magic Path Colors
 
@@ -190,7 +212,8 @@ Colored value badges for protections:
 ### New Files
 - `Dom5Editor/UI/Controls/CompactBadge.xaml(.cs)` - Individual badge control (visual rendering)
 - `Dom5Editor/UI/Controls/BadgeWrapPanel.xaml(.cs)` - Container with add dropdown
-- `Dom5Editor/UI/Controls/BadgeItem.cs` - Data model for properties (`PropertyItem`, `AvailablePropertyItem`)
+- `Dom5Editor/UI/Controls/BadgeItem.cs` - Data model for properties (`PropertyItem`, `AvailablePropertyItem`, `ReferenceChangedEventArgs`)
+- `Dom5Editor/UI/Controls/SearchableReferenceComboBox.xaml(.cs)` - Searchable dropdown for entity references (`ReferenceItem`, `ReferenceSelectionChangedEventArgs`)
 - `Dom5Editor/Data/monster_badges.json` - Monster category definitions with renderer config
 - `Dom5Editor/Data/BadgeConfig.cs` - Model classes for JSON deserialization
 - `Dom5Editor/Data/BadgeConfigLoader.cs` - Loads property config from JSON, provides command descriptions for tooltips

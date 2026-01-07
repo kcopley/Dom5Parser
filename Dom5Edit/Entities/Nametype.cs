@@ -19,7 +19,7 @@ namespace Dom5Edit.Entities
             throw new NotImplementedException();
         }
 
-        internal override Dictionary<Command, Func<Property>> GetPropertyMap()
+        public override Dictionary<Command, Func<Property>> GetPropertyMap()
         {
             return _propertyMap;
         }

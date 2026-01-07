@@ -73,9 +73,42 @@ namespace Dom5Editor.Data
         public List<BadgeCommand> Commands { get; set; } = new();
 
         /// <summary>
+        /// Layout mode: "wrap" (default) or "grid".
+        /// </summary>
+        [JsonPropertyName("layout")]
+        public string Layout { get; set; } = "wrap";
+
+        /// <summary>
+        /// Number of columns for grid layout. Default is 3.
+        /// </summary>
+        [JsonPropertyName("columns")]
+        public int Columns { get; set; } = 3;
+
+        /// <summary>
+        /// When true, shows all commands in this section using default values
+        /// even when the entity doesn't have the property set.
+        /// Useful for stats sections where you always want to see all values.
+        /// </summary>
+        [JsonPropertyName("showDefaults")]
+        public bool ShowDefaults { get; set; } = false;
+
+        /// <summary>
+        /// When false, hides the "Add" dropdown for this section.
+        /// Defaults to true. Set to false for sections where all properties
+        /// are always shown (e.g., stats with showDefaults=true).
+        /// </summary>
+        [JsonPropertyName("showAddButton")]
+        public bool ShowAddButton { get; set; } = true;
+
+        /// <summary>
         /// Returns true if this section uses a custom renderer (not standard badge).
         /// </summary>
         public bool HasCustomRenderer => Renderer != "badge" && Renderer != "coloredBadge";
+
+        /// <summary>
+        /// Returns true if this section uses grid layout.
+        /// </summary>
+        public bool IsGridLayout => Layout == "grid" || Renderer == "statsGrid";
     }
 
     /// <summary>
@@ -118,6 +151,13 @@ namespace Dom5Editor.Data
         /// </summary>
         [JsonPropertyName("icon")]
         public string Icon { get; set; }
+
+        /// <summary>
+        /// Whether this command can appear multiple times on an entity.
+        /// Defaults to true to allow adding multiple instances.
+        /// </summary>
+        [JsonPropertyName("allowMultiple")]
+        public bool AllowMultiple { get; set; } = true;
 
         /// <summary>
         /// Returns true if this command has an icon defined.

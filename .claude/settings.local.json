@@ -24,7 +24,8 @@
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"Dom5Edit.sln\")",
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"/mnt/d/Projects/Dom5Parser/Dom5Editor/Dom5Editor.csproj\")",
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"Dom5Editor/Dom5Editor.csproj\")",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(grep:*)"
     ]
   }
 }

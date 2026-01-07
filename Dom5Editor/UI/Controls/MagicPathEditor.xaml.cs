@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Dom5Editor.UI;
 
 namespace Dom5Editor.UI.Controls
 {

@@ -58,27 +58,14 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
-            <!-- Core Stats Section -->
+            <!-- Core Stats Section (JSON-driven via BadgeGridPanel) -->
             <controls:PropertyGroupControl Header="Stats" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="0" Label="PROT" Value="{Binding Protection, Mode=TwoWay}" IsModified="{Binding IsProtectionModified}" IsSessionEdit="{Binding IsProtectionSessionEdit}" IsInherited="{Binding IsProtectionInherited}" Margin="0,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="1" Label="DEF" Value="{Binding Defense, Mode=TwoWay}" IsModified="{Binding IsDefenseModified}" IsSessionEdit="{Binding IsDefenseSessionEdit}" IsInherited="{Binding IsDefenseInherited}" Margin="4,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="2" Label="ENC" Value="{Binding Encumbrance, Mode=TwoWay}" IsModified="{Binding IsEncumbranceModified}" IsSessionEdit="{Binding IsEncumbranceSessionEdit}" IsInherited="{Binding IsEncumbranceInherited}" Margin="4,0,0,4"/>
-
-                        <controls:IntPropertyEditor Grid.Row="1" Grid.Column="0" Label="RCOST" Value="{Binding ResourceCost, Mode=TwoWay}" IsModified="{Binding IsResourceCostModified}" IsSessionEdit="{Binding IsResourceCostSessionEdit}" IsInherited="{Binding IsResourceCostInherited}" Margin="0,0,4,0"/>
-                        <controls:IntPropertyEditor Grid.Row="1" Grid.Column="1" Label="TYPE" Value="{Binding ArmorType, Mode=TwoWay}" IsModified="{Binding IsArmorTypeModified}" IsSessionEdit="{Binding IsArmorTypeSessionEdit}" IsInherited="{Binding IsArmorTypeInherited}" Margin="4,0,4,0"/>
-                    </Grid>
+                    <controls:BadgeGridPanel
+                        ItemsSource="{Binding StatsBadges}"
+                        RemoveCommand="{Binding RemoveStatsBadgeCommand}"
+                        Columns="3"
+                        ShowAddButton="False"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 

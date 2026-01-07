@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
 using Dom5Edit;
+using Dom5Editor.UI;
 
 namespace Dom5Editor.UI.Views
 {

@@ -11,7 +11,7 @@ using Dom5Edit.Props;
 using Dom5Editor.Data;
 using Dom5Editor.EditCommands;
 using Dom5Editor.UI.Controls;
-using Dom5Editor.VMs;
+using Dom5Editor.UI;
 
 namespace Dom5Editor.UI.Views
 {
@@ -177,6 +177,80 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         protected static IReadOnlyList<AvailableEquipmentItem> CachedNations =>
             _mainViewModel?.CachedNations ?? Array.Empty<AvailableEquipmentItem>();
+
+        // Cached ReferenceItem lists (lazily converted from AvailableEquipmentItem)
+        private static IReadOnlyList<ReferenceItem> _cachedMonsterRefs;
+        private static IReadOnlyList<ReferenceItem> _cachedWeaponRefs;
+        private static IReadOnlyList<ReferenceItem> _cachedArmorRefs;
+        private static IReadOnlyList<ReferenceItem> _cachedItemRefs;
+        private static IReadOnlyList<ReferenceItem> _cachedSpellRefs;
+        private static IReadOnlyList<ReferenceItem> _cachedSiteRefs;
+        private static IReadOnlyList<ReferenceItem> _cachedNationRefs;
+
+        /// <summary>
+        /// Gets available ReferenceItems for a given reference type (monster, weapon, etc.).
+        /// Used for searchable dropdowns in editable reference badges.
+        /// </summary>
+        protected static IEnumerable<ReferenceItem> GetAvailableReferencesForType(string refType)
+        {
+            if (string.IsNullOrEmpty(refType))
+                return null;
+
+            switch (refType.ToLowerInvariant())
+            {
+                case "monster":
+                    return _cachedMonsterRefs ??= ConvertToReferenceItems(CachedMonsters);
+                case "weapon":
+                    return _cachedWeaponRefs ??= ConvertToReferenceItems(CachedWeapons);
+                case "armor":
+                    return _cachedArmorRefs ??= ConvertToReferenceItems(CachedArmors);
+                case "item":
+                    return _cachedItemRefs ??= ConvertToReferenceItems(CachedItems);
+                case "spell":
+                    return _cachedSpellRefs ??= ConvertToReferenceItems(CachedSpells);
+                case "site":
+                    return _cachedSiteRefs ??= ConvertToReferenceItems(CachedSites);
+                case "nation":
+                    return _cachedNationRefs ??= ConvertToReferenceItems(CachedNations);
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts AvailableEquipmentItem list to ReferenceItem list.
+        /// </summary>
+        private static IReadOnlyList<ReferenceItem> ConvertToReferenceItems(IReadOnlyList<AvailableEquipmentItem> items)
+        {
+            if (items == null || items.Count == 0)
+                return Array.Empty<ReferenceItem>();
+
+            var result = new List<ReferenceItem>(items.Count);
+            foreach (var item in items)
+            {
+                result.Add(new ReferenceItem
+                {
+                    ID = item.ID,
+                    DisplayName = item.Name,
+                    Tag = item
+                });
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Clears the cached ReferenceItem lists. Call when the mod changes.
+        /// </summary>
+        public static void ClearReferenceItemCaches()
+        {
+            _cachedMonsterRefs = null;
+            _cachedWeaponRefs = null;
+            _cachedArmorRefs = null;
+            _cachedItemRefs = null;
+            _cachedSpellRefs = null;
+            _cachedSiteRefs = null;
+            _cachedNationRefs = null;
+        }
 
         /// <summary>
         /// Generic navigation command that works for any reference type.
@@ -358,6 +432,15 @@ namespace Dom5Editor.UI.Views
                 int? effectiveValue = entityHasValue ? entityValue : vanillaValue;
                 bool effectiveFlagValue = entityHasValue ? entityFlagValue : vanillaFlagValue;
 
+                // When showDefaults is true and no value exists, use the default from JSON
+                bool usingDefault = false;
+                if (!hasValue && section.ShowDefaults && cmdDef.IsInt && cmdDef.Default.HasValue)
+                {
+                    effectiveValue = cmdDef.Default.Value;
+                    hasValue = true;
+                    usingDefault = true;
+                }
+
                 // Determine modification and inheritance status
                 bool isModified = false;
                 bool isInherited = false;
@@ -375,7 +458,8 @@ namespace Dom5Editor.UI.Views
                     // Modified if entity has direct value different from vanilla
                     isModified = entityHasDirect && (!vanillaHasValue || entityValue != vanillaValue);
                     // Inherited if value comes from copystats or vanilla (not directly on entity)
-                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                    // Also inherited if using default value (no actual property set)
+                    isInherited = usingDefault || (!entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue)));
                 }
 
                 if (hasValue && (cmdDef.IsFlag ? effectiveFlagValue : true))
@@ -385,11 +469,12 @@ namespace Dom5Editor.UI.Views
                     // 1. Section is not read-only (from JSON config)
                     // 2. Property is directly on the entity (not inherited from copystats)
                     // 3. Either entity source allows removal OR the property is a session edit
+                    // 4. Not using a default value (nothing to remove)
                     bool canRemoveBasedOnSource = _source == EntitySource.FromMod
                                                   || _source == EntitySource.VanillaModified
                                                   || _source == EntitySource.New;
                     // Also allow removal if it's a session edit (user added it this session)
-                    badge.CanRemove = !section.ReadOnly && entityHasDirect && (canRemoveBasedOnSource || isSessionEdit);
+                    badge.CanRemove = !section.ReadOnly && entityHasDirect && !usingDefault && (canRemoveBasedOnSource || isSessionEdit);
                     badge.IsInherited = section.ReadOnly || isInherited;
 
                     if (valueChangedHandler != null && cmdDef.IsInt)
@@ -402,17 +487,17 @@ namespace Dom5Editor.UI.Views
                 }
             }
 
-            // Build available list (excluding already used commands for non-ref types)
-            // Ref types are always available for adding more instances
+            // Build available list (excluding already used commands unless multiples allowed)
+            // Ref types and commands with AllowMultiple=true are always available for adding more
             if (!section.ReadOnly)
             {
                 foreach (var cmdDef in section.Commands)
                 {
                     if (BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
                     {
-                        // For ref types: always show in available list (can add multiple)
-                        // For flag/int types: only show if not already used
-                        if (cmdDef.IsRef || !usedCommands.Contains(command))
+                        // For ref types or AllowMultiple: always show in available list (can add multiple)
+                        // For other types: only show if not already used
+                        if (cmdDef.IsRef || cmdDef.AllowMultiple || !usedCommands.Contains(command))
                         {
                             available.Add(BadgeConfigLoader.CreateAvailableItem(cmdDef));
                         }
@@ -436,6 +521,9 @@ namespace Dom5Editor.UI.Views
 
             // Get the entity type for name resolution
             var entityType = BadgeConfigLoader.GetEntityTypeFromRefType(cmdDef.RefType);
+
+            // Get available references for the dropdown (used for editable badges)
+            var availableRefs = GetAvailableReferencesForType(cmdDef.RefType);
 
             bool canRemoveBasedOnSource = _source == EntitySource.FromMod
                                           || _source == EntitySource.VanillaModified
@@ -469,11 +557,17 @@ namespace Dom5Editor.UI.Views
                     badge.IsInherited = sectionReadOnly || isInherited;
                     badge.CanRemove = !sectionReadOnly && !isInherited && canRemoveBasedOnSource;
 
+                    // Set available references for editable badges
+                    if (!badge.IsInherited && badge.CanRemove && availableRefs != null)
+                    {
+                        badge.AvailableReferences = availableRefs;
+                    }
+
                     badges.Add(badge);
                 }
 
                 // Also check vanilla's copystats chain
-                AddRefsFromCopystatsChain(vanillaEntity, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, new HashSet<IDEntity> { vanillaEntity });
+                AddRefsFromCopystatsChain(vanillaEntity, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, new HashSet<IDEntity> { vanillaEntity }, availableRefs);
             }
 
             // Layer 2: Get references from current entity (direct mod properties)
@@ -497,6 +591,12 @@ namespace Dom5Editor.UI.Views
                             existingBadge.IsInherited = false;
                             existingBadge.IsSessionEdit = isSessionEdit;
                             existingBadge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
+
+                            // Set available references for editable badges
+                            if (existingBadge.CanRemove && availableRefs != null)
+                            {
+                                existingBadge.AvailableReferences = availableRefs;
+                            }
                         }
                     }
                     else
@@ -513,12 +613,18 @@ namespace Dom5Editor.UI.Views
                         badge.IsInherited = false;
                         badge.CanRemove = !sectionReadOnly && (canRemoveBasedOnSource || isSessionEdit);
 
+                        // Set available references for editable badges
+                        if (badge.CanRemove && availableRefs != null)
+                        {
+                            badge.AvailableReferences = availableRefs;
+                        }
+
                         badges.Add(badge);
                     }
                 }
 
                 // Also check mod entity's copystats chain
-                AddRefsFromCopystatsChain(_entity, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, new HashSet<IDEntity> { _entity, vanillaEntity });
+                AddRefsFromCopystatsChain(_entity, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, new HashSet<IDEntity> { _entity, vanillaEntity }, availableRefs);
             }
 
             return badges;
@@ -604,7 +710,8 @@ namespace Dom5Editor.UI.Views
             bool sectionReadOnly,
             List<PropertyItem> badges,
             HashSet<int> seenIds,
-            HashSet<IDEntity> visited)
+            HashSet<IDEntity> visited,
+            IEnumerable<ReferenceItem> availableRefs = null)
         {
             if (source == null)
                 return;
@@ -632,22 +739,29 @@ namespace Dom5Editor.UI.Views
 
                     badge.IsInherited = true;
                     badge.CanRemove = false; // Inherited from copystats, can't remove
+                    // Note: Inherited badges don't get AvailableReferences since they can't be edited
 
                     badges.Add(badge);
                 }
             }
 
             // Recurse through copystats chain
-            AddRefsFromCopystatsChain(copyFrom, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, visited);
+            AddRefsFromCopystatsChain(copyFrom, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, visited, availableRefs);
         }
 
         /// <summary>
         /// Helper method to add a badge (property) to the entity.
-        /// Handles both flag and int property types.
+        /// Handles flag, int, and reference property types.
+        /// For reference types (multi-value), this adds a new property instance.
         /// </summary>
         protected void AddBadgeProperty(AvailablePropertyItem badge)
         {
-            if (badge.DefaultValue.HasValue)
+            if (badge.IsReference)
+            {
+                // Reference types are multi-value - use entity's property map for correct type
+                AddPropertyFromMap(badge.Command, badge.DefaultValue ?? 0);
+            }
+            else if (badge.DefaultValue.HasValue)
             {
                 SetIntProperty(badge.Command, badge.DefaultValue.Value);
             }
@@ -658,12 +772,81 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
+        /// Adds a property using the entity's property map to get the correct type.
+        /// This ensures reference properties (MonsterRef, WeaponRef, etc.) are created
+        /// with the correct type rather than as IntProperty.
+        /// </summary>
+        protected void AddPropertyFromMap(Command command, int value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var propertyMap = _entity.GetPropertyMap();
+
+            Property property;
+            if (propertyMap.TryGetValue(command, out var factory))
+            {
+                // Use the entity's factory to create the correct property type
+                property = factory();
+                property.Parent = _entity;
+                property.Parse(command, value.ToString(), "");
+            }
+            else
+            {
+                // Fallback to IntProperty for commands not in the property map
+                property = IntProperty.Create(command, _entity, value);
+            }
+
+            // Use CommandHistory for undo/redo support
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, property, $"Add {command}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                // Fallback: direct modification (no undo support)
+                _entity.AddProperty(property);
+            }
+
+            HasSessionChanges = true;
+            OnPropertyChanged(propertyName);
+        }
+
+        /// <summary>
+        /// Adds a new int property to the entity (for multi-value commands).
+        /// Unlike SetIntProperty which replaces, this always adds a new instance.
+        /// </summary>
+        protected void AddIntProperty(Command command, int value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var property = IntProperty.Create(command, _entity, value);
+
+            // Use CommandHistory for undo/redo support
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, property, $"Add {command}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                // Fallback: direct modification (no undo support)
+                _entity.AddProperty(property);
+            }
+
+            HasSessionChanges = true;
+            OnPropertyChanged(propertyName);
+        }
+
+        /// <summary>
         /// Helper method to remove a badge (property) from the entity.
-        /// Handles both flag and int property types.
+        /// Handles flag, int, and reference property types.
+        /// For reference types (multi-value), removes the specific instance matching the reference ID.
         /// </summary>
         protected void RemoveBadgeProperty(PropertyItem badge)
         {
-            if (badge.HasValue)
+            if (badge.IsReference)
+            {
+                // Reference types are multi-value - find and remove the specific instance
+                RemoveIntPropertyByValue(badge.Command, badge.ReferenceId);
+            }
+            else if (badge.HasValue)
             {
                 SetIntProperty(badge.Command, null);
             }
@@ -671,6 +854,70 @@ namespace Dom5Editor.UI.Views
             {
                 SetCommandProperty(badge.Command, false);
             }
+        }
+
+        /// <summary>
+        /// Removes a specific property instance by matching command and value.
+        /// Used for multi-value commands where we need to remove a specific entry.
+        /// Handles both IntProperty and Reference types (StringOrIDRef, MonsterOrMontagRef, etc.).
+        /// </summary>
+        protected void RemoveIntPropertyByValue(Command command, int value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            // Find the specific property with matching command and value
+            Property propertyToRemove = null;
+            foreach (var prop in _entity.GetMultiple(command))
+            {
+                // Check IntProperty first
+                if (prop is IntProperty intProp && intProp.Value == value)
+                {
+                    propertyToRemove = prop;
+                    break;
+                }
+
+                // Check StringOrIDRef (base class for most single-entity references)
+                if (prop is StringOrIDRef stringOrIdRef && stringOrIdRef.HasValue && stringOrIdRef.ID == value)
+                {
+                    propertyToRemove = prop;
+                    break;
+                }
+
+                // Check MonsterOrMontagRef (wrapper for monster or montag references)
+                if (prop is MonsterOrMontagRef monsterOrMontagRef)
+                {
+                    if (monsterOrMontagRef.MonsterRef != null &&
+                        monsterOrMontagRef.MonsterRef.HasValue &&
+                        monsterOrMontagRef.MonsterRef.ID == value)
+                    {
+                        propertyToRemove = prop;
+                        break;
+                    }
+                    if (monsterOrMontagRef.MontagRef != null &&
+                        monsterOrMontagRef.MontagRef.HasValue &&
+                        monsterOrMontagRef.MontagRef.ID == value)
+                    {
+                        propertyToRemove = prop;
+                        break;
+                    }
+                }
+            }
+
+            if (propertyToRemove == null)
+                return;
+
+            // Use CommandHistory for undo/redo support
+            if (_history != null)
+            {
+                var cmd = new RemovePropertyCommand(_entity, propertyToRemove, $"Remove {command}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                // Fallback: direct modification (no undo support)
+                _entity.RemoveProperty(propertyToRemove);
+            }
+
+            HasSessionChanges = true;
+            OnPropertyChanged(propertyName);
         }
 
         /// <summary>

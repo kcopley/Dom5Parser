@@ -10,7 +10,7 @@ Quick reference notes for development context. See related documents for full de
 
 ## Current Development Status
 
-**Last Updated:** 2026-01-06
+**Last Updated:** 2026-01-07
 
 ### Working Features
 - JSON-driven badge UI system for all entity properties
@@ -32,7 +32,24 @@ Quick reference notes for development context. See related documents for full de
 
 ### In Progress
 - **CUSTOMMAGIC Editor** - Complex bitmask (not started)
-- Entity navigation (clicking weapon/armor to view that entity)
+
+### Recently Completed (2026-01-07)
+- **Reference Property Creation Fix** - Fixed critical bug where adding reference-type badges (e.g., `#addrecunit` on Nations) used wrong property type:
+  - Added `AddPropertyFromMap()` method that uses entity's `GetPropertyMap()` to get correct factory
+  - Updated `RemoveIntPropertyByValue()` to handle Reference types (`StringOrIDRef`, `MonsterOrMontagRef`)
+  - Changed `GetPropertyMap()` from `internal` to `public` for cross-assembly access
+  - Impact: 116+ reference commands on Nations and other entities now work correctly
+
+### Recently Completed (2026-01-06)
+- **Searchable Reference Selectors** - Reference badges now use `SearchableReferenceComboBox`:
+  - Editable badges show searchable dropdown with text filter
+  - Filter searches by name OR ID (e.g., type "42" or "archer")
+  - Click opens dropdown and selects all text for easy replacement
+  - Name in editable area, ID displayed separately as `#123`
+  - Dropdown items show `Name  #123` with styled muted ID
+  - Navigate button (→) on all reference badges to jump to entity
+  - Read-only badges (inherited/vanilla) show same format without dropdown
+  - Keyboard: Up/Down to navigate, Enter to select, Escape to cancel, Tab to commit
 
 ### Already Working
 - **MagicPathEditor** - Commander magic paths in MonsterView (may need polish)
@@ -112,14 +129,15 @@ Quick reference notes for development context. See related documents for full de
 
 ## Architecture Quick Reference
 
-### Two ViewModel Systems (Migration In Progress)
+### ViewModel System
 
-| System | Location | Status |
-|--------|----------|--------|
-| **New UI VMs** | `Dom5Editor/UI/ViewModels/` | ACTIVE - Use for new work |
-| **Legacy VMs** | `Dom5Editor/VMs/EntityVMs/` | DEPRECATED - Will be removed |
+All ViewModels are in `Dom5Editor/UI/ViewModels/`:
+- `EntityViewModel.cs` - Base class with badge infrastructure & property helpers
+- `EntityViewModels.cs` - All entity ViewModels (Monster, Weapon, Armor, Item, Site, Nation, Spell, Event, Mercenary, Poptype, Nametype)
+- `MainWindowViewModel.cs` - Application state, mod loading, entity caches
 
-**Keep from Legacy:** `ModViewModel.cs`, `RelayCommand.cs`, `ViewModelBase.cs`
+Supporting infrastructure in `Dom5Editor/UI/`:
+- `RelayCommand.cs` - ICommand implementation for MVVM
 
 ### Centralized Entity Caches (Performance)
 
@@ -158,6 +176,7 @@ public IReadOnlyList<AvailableEquipmentItem> AvailableWeapons => CachedWeapons;
 
 ```
 Dom5Editor/UI/
+  RelayCommand.cs             - ICommand implementation for MVVM
   Views/
     MonsterView.xaml(.cs)     - Monster editor UI (572 commands)
     WeaponView.xaml(.cs)      - Weapon editor with damage types, secondary effects
@@ -165,6 +184,8 @@ Dom5Editor/UI/
     ItemView.xaml(.cs)        - Item editor with equipment display
     SiteView.xaml(.cs)        - Site editor with gems, summons, recruitment
     NationView.xaml(.cs)      - Nation editor with 13 badge sections, vanilla data warning
+    SpellView.xaml(.cs)       - Spell editor with path requirements
+    EventView.xaml(.cs)       - Event editor (~160 commands)
     MercenaryView.xaml(.cs)   - Mercenary band editor (13 commands)
     PoptypeView.xaml(.cs)     - Population type editor (11 commands)
     NametypeView.xaml(.cs)    - Name type editor (2 commands)
@@ -172,10 +193,11 @@ Dom5Editor/UI/
     MainWindowViewModel.cs    - Mod/entity management
   ViewModels/
     EntityViewModel.cs        - Base class with badge infrastructure & property helpers
-    EntityViewModels.cs       - MonsterViewModel, WeaponViewModel, ArmorViewModel, ItemViewModel, SiteViewModel, NationViewModel
+    EntityViewModels.cs       - All entity ViewModels
   Controls/
     CompactBadge.xaml(.cs)    - Individual badge control
     BadgeWrapPanel.xaml(.cs)  - Badge container with add dropdown
+    SearchableReferenceComboBox.xaml(.cs) - Searchable dropdown for entity references
     IntPropertyEditor.xaml    - Number input with modification indicators
     MagicPathEditor.xaml      - Magic path level editor (multi-path, for commanders)
     PathSelector.xaml(.cs)    - Single path + level selector (for item/spell requirements)
@@ -379,8 +401,14 @@ If new extraction is needed, update and run `tools/pdf_extractor.py`.
 }
 ```
 
-Command types: `flag` (boolean), `int` (number value)
+Command types: `flag` (boolean), `int` (number value), `ref` (entity reference with `refType`)
 Renderers: `badge`, `coloredBadge`, `statsGrid`, `magicPathEditor`
+
+Reference badge format:
+```json
+{ "name": "addrecunit", "display": "Rec Unit", "type": "ref", "refType": "monster" }
+```
+Valid refTypes: `monster`, `weapon`, `armor`, `item`, `spell`, `site`, `nation`
 
 ---
 
@@ -468,3 +496,48 @@ For elemental properties with available icons (magic paths, gem types), prefer i
 | Items | 700-1999 |
 | Sites | 1700-3999 |
 | Nations | 150-499 |
+
+---
+
+## Archived: Mod Merger Functionality
+
+**Status:** Legacy UI removed (2026-01-07). Core merging logic preserved in Dom5Edit library.
+
+The original application included a "Merger Menu" for combining multiple nation mods. This functionality has been archived but the core logic remains available.
+
+### How Mod Merging Works
+
+1. **Scan for mods** - `ModSet.Import(folderPath, fileList)` loads selected .dm files from the Dominions mods folder
+2. **Disable vanilla nations** - Each mod can call `mod.DisableMages(nationList)` to disable mages from specific vanilla nations (prevents conflicts)
+3. **Merge mods** - `modSet.MergeAll(outputName)` combines all loaded mods with ID remapping to avoid conflicts
+
+### Using the Core Merge API
+
+```csharp
+// Import mods from folder
+var mods = ModSet.Import(@"C:\Users\...\Dominions5\mods", new List<string> { "mod1.dm", "mod2.dm" });
+
+// Optional: disable vanilla nations' mages
+List<string> disabledNations = new List<string> { "EA Ermor", "MA Ermor" };
+foreach (var mod in mods)
+{
+    mod.DisableMages(disabledNations);
+}
+
+// Merge all mods into one
+Mod mergedMod = mods.MergeAll("merged-mod");
+// This creates merged-mod.dm in the mods folder
+```
+
+### Default Mods Folder
+```csharp
+Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Dominions5\mods")
+```
+
+### Vanilla Nations by Era
+
+**EA (32 nations):** Arcosephale, Ermor, Ulm, Marverni, Sauromatia, T'ien Ch'i, Machaka, Mictlan, Abysia, Caelum, C'tis, Pangaea, Agartha, Tir na n'Og, Fomoria, Vanheim, Helheim, Niefelheim, Rus, Kailasa, Lanka, Yomi, Hinnom, Ur, Berytos, Xibalba, Mekone, Ubar, Atlantis, R'lyeh, Pelagia, Oceania, Therodos
+
+**MA (34 nations):** Arcosephale, Ermor, Sceleria, Pythium, Man, Eriu, Ulm, Marignon, Mictlan, T'ien Ch'i, Machaka, Agartha, Abysia, Caelum, C'tis, Pangaea, Asphodel, Vanheim, Jotunheim, Vanarus, Bandar Log, Shinuyama, Ashdod, Uruk, Nazca, Xibalba, Phlegra, Phaecia, Ind, Na'Ba, Atlantis, R'lyeh, Pelagia, Oceania, Ys
+
+**LA (26 nations):** Arcosephale, Pythium, Lemuria, Man, Ulm, Marignon, Mictlan, T'ien Ch'i, Jomon, Agartha, Abysia, Caelum, C'tis, Pangaea, Midgard, Utgard, Bogarus, Patala, Gath, Ragha, Xibalba, Phlegra, Vaettiheim, Atlantis, R'lyeh, Erytheia

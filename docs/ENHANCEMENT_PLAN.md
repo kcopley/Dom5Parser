@@ -195,7 +195,123 @@ See `BADGE_UI_REDESIGN.md` for full details.
 **Keep:** `ModViewModel.cs`, `RelayCommand.cs`, `ViewModelBase.cs`
 **Remove after migration:** All other legacy VMs and views
 
-### 6.6: Badge Infrastructure Generalization (COMPLETE)
+### 6.6: JSON-Driven ViewModel Property Migration (IN PROGRESS)
+
+**Goal:** Remove hardcoded public properties from ViewModels in `UI/ViewModels/EntityViewModels.cs` and replace them with fully JSON-driven badge rendering.
+
+**Problem:** EntityViewModels.cs contains 722 public properties across 11 ViewModels, with each stat/flag requiring 4 properties:
+```csharp
+// OLD: 4 properties per stat = massive boilerplate
+public int? Protection { get => GetIntProperty(Command.PROT); set => ... }
+public bool IsProtectionModified => IsIntPropertyModifiedFromVanilla(Command.PROT);
+public bool IsProtectionSessionEdit => IsPropertyEditedInSession(Command.PROT);
+public bool IsProtectionInherited => IsIntPropertyInherited(Command.PROT);
+```
+
+**Solution:** Define properties in JSON and render dynamically via badge panels:
+```json
+{
+  "id": "stats",
+  "layout": "grid",
+  "columns": 3,
+  "showDefaults": true,
+  "showAddButton": false,
+  "commands": [
+    { "name": "prot", "display": "PROT", "type": "int", "default": 0, "allowMultiple": false }
+  ]
+}
+```
+
+#### ArmorViewModel Migration (Proof-of-Concept) - COMPLETE
+
+**Completed 2026-01-06:** Migrated ArmorViewModel from hardcoded properties to JSON-driven badges.
+
+**New Control Created:**
+- `BadgeGridPanel.xaml(.cs)` - Grid-based badge panel with configurable columns
+  - Uses `UniformGrid` for fixed-column layout
+  - Badges render in JSON order (left-to-right, top-to-bottom)
+  - Same features as `BadgeWrapPanel` (add/remove commands, reference support)
+
+**New JSON Section Options:**
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `layout` | string | "wrap" | "wrap" or "grid" layout mode |
+| `columns` | int | 3 | Number of columns for grid layout |
+| `showDefaults` | bool | false | Show all commands using default values even when entity doesn't have the property |
+| `showAddButton` | bool | true | Show/hide the add dropdown for this section |
+
+**Armor Stats Section Config:**
+```json
+{
+  "id": "stats",
+  "layout": "grid",
+  "columns": 3,
+  "showDefaults": true,
+  "showAddButton": false,
+  "commands": [
+    { "name": "prot", "display": "PROT", "type": "int", "default": 0, "allowMultiple": false },
+    { "name": "def", "display": "DEF", "type": "int", "default": 0, "allowMultiple": false },
+    { "name": "enc", "display": "ENC", "type": "int", "default": 0, "allowMultiple": false },
+    { "name": "rcost", "display": "RCOST", "type": "int", "default": 0, "allowMultiple": false },
+    { "name": "type", "display": "TYPE", "type": "int", "default": 0, "allowMultiple": false }
+  ]
+}
+```
+
+**Properties Removed from ArmorViewModel:**
+- `Protection`, `IsProtectionModified`, `IsProtectionSessionEdit`, `IsProtectionInherited`
+- `Defense`, `IsDefenseModified`, `IsDefenseSessionEdit`, `IsDefenseInherited`
+- `Encumbrance`, `IsEncumbranceModified`, `IsEncumbranceSessionEdit`, `IsEncumbranceInherited`
+- `ResourceCost`, `IsResourceCostModified`, `IsResourceCostSessionEdit`, `IsResourceCostInherited`
+- `ArmorType`, `IsArmorTypeModified`, `IsArmorTypeSessionEdit`, `IsArmorTypeInherited`
+
+**Properties Retained (Essential):**
+- `ArmorTypeDisplay` - Derived property mapping type ID to display name
+- `CopyArmorDisplay`, `HasCopyArmor` - Copy reference navigation
+- `PropertyBadges`, `AvailablePropertyBadges` - Existing properties section
+
+**UI Improvements:**
+1. **Editable TextBox Styling** - Value textboxes now have:
+   - Subtle background tint and underline border
+   - Highlight on hover (accent color)
+   - Highlight on focus (gold border)
+2. **Inherited Status Clearing** - When editing a default value:
+   - `IsInherited` automatically set to `false`
+   - `IsSessionEdit` automatically set to `true`
+   - "inh" badge disappears, cyan session indicator appears
+
+**View Update (ArmorView.xaml):**
+```xml
+<!-- OLD: Manual Grid with IntPropertyEditors -->
+<Grid>
+  <controls:IntPropertyEditor Label="PROT" Value="{Binding Protection}" .../>
+  <!-- 5 more editors with 4 bindings each -->
+</Grid>
+
+<!-- NEW: JSON-driven BadgeGridPanel -->
+<controls:BadgeGridPanel
+    ItemsSource="{Binding StatsBadges}"
+    RemoveCommand="{Binding RemoveStatsBadgeCommand}"
+    Columns="3"
+    ShowAddButton="False"/>
+```
+
+#### Migration Priority (Remaining ViewModels)
+
+| Priority | ViewModel | Removable Props | Effort |
+|----------|-----------|-----------------|--------|
+| 1 | MercenaryViewModel | 28 | Low |
+| 2 | SiteViewModel | 28 | Low |
+| 3 | WeaponViewModel | 34 | Medium |
+| 4 | SpellViewModel | 30 | Medium |
+| 5 | NationViewModel | 78 | Medium |
+| 6 | EventViewModel | 84 | Medium |
+| 7 | ItemViewModel | 110 | High |
+| 8 | MonsterViewModel | 126 | High |
+
+**Total: 538 properties to remove (75% of all ViewModel properties)**
+
+### 6.7: Badge Infrastructure Generalization (COMPLETE)
 
 **Completed 2026-01-05:** Refactored badge system to enable reuse across entity types.
 
@@ -227,7 +343,7 @@ protected RelayCommand<AvailablePropertyItem> CreateAddBadgeCommand(Action refre
 2. Adding `protected override string EntityTypeName => "{entity}";`
 3. Defining badge collections using `BuildBadgesFromSection()`
 
-### 6.7: Generic Layered Entity Resolution (COMPLETE)
+### 6.8: Generic Layered Entity Resolution (COMPLETE)
 
 **Completed 2026-01-05:** Added generic methods for layered entity/reference resolution.
 
@@ -356,6 +472,12 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 
 ### EXTREMELY HIGH Priority (Blocking)
 
+- ~~**Reference Property Creation Fix**~~ **DONE (2026-01-07)** - See `docs/REFERENCE_PROPERTY_HANDLING.md`:
+  - Fixed: Adding multi-value reference properties now uses correct property type
+  - Added `AddPropertyFromMap()` method that uses entity's `GetPropertyMap()` to get correct factory
+  - Updated `RemoveIntPropertyByValue()` to handle Reference types
+  - Changed `GetPropertyMap()` from `internal` to `public` for cross-assembly access
+
 - ~~**Reference Type Badge Support**~~ **DONE (2026-01-06)** - `BuildBadgesFromSection()` now handles `type: "ref"` badges:
   - Added `BuildReferenceBadges()` method for multi-value ref property handling
   - Added `TryExtractRefInfo()` helper that handles both `StringOrIDRef` and `MonsterOrMontagRef` types
@@ -413,10 +535,20 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 - **Secondary Effect Chain Display** - When a weapon has a secondary effect that itself has a secondary effect, show the full chain
 - **WeaponDamage Monster ID Selector** - When editing summon weapons (dmg="summonunits" or inherited from such), show a monster ID selector instead of integer input. The WeaponDamage.cs class has infrastructure for detecting summon type; needs UI integration for proper monster selection.
 - **ChangesMod Identity Check on Value Reset** - When a property is edited back to its original value (matching base mod or vanilla data), automatically remove it from the ChangesMod session tracking. The generic fallback resolution code should include identity checks, and resetting a property should un-mark it as modified.
-- **Searchable Dropdowns** - All entity/ability dropdowns should be searchable text boxes, not just type-to-match:
-  - Weapon/Armor selectors in MonsterView equipment section
-  - Ability dropdowns in badge panels (Add dropdown)
-  - Any other entity reference selectors
+- ~~**Searchable Dropdowns**~~ **DONE (2026-01-06)** - Reference badge selectors now use SearchableReferenceComboBox:
+  - Text filter searches by name or ID
+  - Click opens dropdown and selects all text for easy replacement
+  - Name displayed in editable area, ID shown separately as `#123`
+  - Dropdown items show `Name  #123` with styled ID
+  - Navigation arrow (→) to jump to referenced entity
+  - Applied to editable reference badges (mod/session properties)
+  - Inherited/vanilla references remain read-only with same display format
+- **Badge Size Scaling** - Consider upscaling badge sizes throughout the UI:
+  - Current badge sizing (9pt text, tight padding) can feel cramped
+  - Larger touch targets would improve usability
+  - Consider scaling factors: 1.25x for comfortable desktop, 1.5x for touch-friendly
+  - Affects: CompactBadge padding/margins, font sizes, button sizes, dropdown heights
+  - Could be a user preference setting (compact/comfortable/large)
 - ~~**Pre-cache Dropdown Data**~~ **DONE (2026-01-06)** - Centralized entity caches in MainWindowViewModel:
   - 7 cached lists: CachedWeapons, CachedArmors, CachedMonsters, CachedItems, CachedSpells, CachedSites, CachedNations
   - Built at mod load via `BuildEntityCaches()`, before ViewModels are created
@@ -495,6 +627,7 @@ Dom5Editor/UI/
   Controls/
     CompactBadge.xaml(.cs)
     BadgeWrapPanel.xaml(.cs)
+    BadgeGridPanel.xaml(.cs)    - Grid-based badge panel (for stats sections)
     BadgeItem.cs
     IntPropertyEditor.xaml(.cs)
     StringPropertyEditor.xaml(.cs)

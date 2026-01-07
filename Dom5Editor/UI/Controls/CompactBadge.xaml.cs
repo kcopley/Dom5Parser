@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ namespace Dom5Editor.UI.Controls
     /// <summary>
     /// Compact badge control for displaying properties in horizontal layouts.
     /// Supports flag badges (no value), int-value badges, and reference badges.
+    /// Reference badges can be editable (with searchable dropdown) or read-only.
     /// </summary>
     public partial class CompactBadge : UserControl
     {
@@ -146,7 +148,7 @@ namespace Dom5Editor.UI.Controls
 
         public static readonly DependencyProperty CanRemoveProperty =
             DependencyProperty.Register(nameof(CanRemove), typeof(bool), typeof(CompactBadge),
-                new PropertyMetadata(true));
+                new PropertyMetadata(true, OnReferenceStateChanged));
 
         public bool CanRemove
         {
@@ -198,7 +200,7 @@ namespace Dom5Editor.UI.Controls
 
         public static readonly DependencyProperty IsReferenceProperty =
             DependencyProperty.Register(nameof(IsReference), typeof(bool), typeof(CompactBadge),
-                new PropertyMetadata(false));
+                new PropertyMetadata(false, OnReferenceStateChanged));
 
         public bool IsReference
         {
@@ -228,12 +230,104 @@ namespace Dom5Editor.UI.Controls
 
         public static readonly DependencyProperty ReferenceIdProperty =
             DependencyProperty.Register(nameof(ReferenceId), typeof(int), typeof(CompactBadge),
-                new PropertyMetadata(0));
+                new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnReferenceIdChanged));
 
         public int ReferenceId
         {
             get => (int)GetValue(ReferenceIdProperty);
             set => SetValue(ReferenceIdProperty, value);
+        }
+
+        /// <summary>
+        /// Display string for the reference ID (e.g., "#123").
+        /// </summary>
+        public static readonly DependencyProperty ReferenceIdDisplayProperty =
+            DependencyProperty.Register(nameof(ReferenceIdDisplay), typeof(string), typeof(CompactBadge),
+                new PropertyMetadata(""));
+
+        public string ReferenceIdDisplay
+        {
+            get => (string)GetValue(ReferenceIdDisplayProperty);
+            set => SetValue(ReferenceIdDisplayProperty, value);
+        }
+
+        /// <summary>
+        /// Available references for the searchable dropdown.
+        /// </summary>
+        public static readonly DependencyProperty AvailableReferencesProperty =
+            DependencyProperty.Register(nameof(AvailableReferences), typeof(IEnumerable<ReferenceItem>), typeof(CompactBadge),
+                new PropertyMetadata(null, OnReferenceStateChanged));
+
+        public IEnumerable<ReferenceItem> AvailableReferences
+        {
+            get => (IEnumerable<ReferenceItem>)GetValue(AvailableReferencesProperty);
+            set => SetValue(AvailableReferencesProperty, value);
+        }
+
+        /// <summary>
+        /// True if reference is editable (has available refs, not inherited, can remove).
+        /// </summary>
+        public static readonly DependencyProperty IsReferenceEditableProperty =
+            DependencyProperty.Register(nameof(IsReferenceEditable), typeof(bool), typeof(CompactBadge),
+                new PropertyMetadata(false, OnReferenceStateChanged));
+
+        public bool IsReferenceEditable
+        {
+            get => (bool)GetValue(IsReferenceEditableProperty);
+            set => SetValue(IsReferenceEditableProperty, value);
+        }
+
+        /// <summary>
+        /// Computed property: show read-only reference display (IsReference && !IsReferenceEditable)
+        /// </summary>
+        public static readonly DependencyProperty ShowReadOnlyReferenceProperty =
+            DependencyProperty.Register(nameof(ShowReadOnlyReference), typeof(bool), typeof(CompactBadge),
+                new PropertyMetadata(false));
+
+        public bool ShowReadOnlyReference
+        {
+            get => (bool)GetValue(ShowReadOnlyReferenceProperty);
+            set => SetValue(ShowReadOnlyReferenceProperty, value);
+        }
+
+        /// <summary>
+        /// Computed property: show navigate button (IsReference && ReferenceId != 0)
+        /// </summary>
+        public static readonly DependencyProperty ShowNavigateButtonProperty =
+            DependencyProperty.Register(nameof(ShowNavigateButton), typeof(bool), typeof(CompactBadge),
+                new PropertyMetadata(false));
+
+        public bool ShowNavigateButton
+        {
+            get => (bool)GetValue(ShowNavigateButtonProperty);
+            set => SetValue(ShowNavigateButtonProperty, value);
+        }
+
+        private static void OnReferenceStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var badge = (CompactBadge)d;
+            badge.UpdateComputedProperties();
+        }
+
+        private static void OnReferenceIdChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var badge = (CompactBadge)d;
+            badge.UpdateComputedProperties();
+            badge.UpdateReferenceIdDisplay();
+        }
+
+        private void UpdateReferenceIdDisplay()
+        {
+            ReferenceIdDisplay = ReferenceId != 0 ? $"#{ReferenceId}" : "";
+        }
+
+        private void UpdateComputedProperties()
+        {
+            // ShowReadOnlyReference: IsReference but NOT editable
+            ShowReadOnlyReference = IsReference && !IsReferenceEditable;
+
+            // ShowNavigateButton: IsReference and has a valid ID
+            ShowNavigateButton = IsReference && ReferenceId != 0;
         }
 
         /// <summary>
@@ -256,9 +350,28 @@ namespace Dom5Editor.UI.Controls
         }
 
         /// <summary>
-        /// Handles click on the reference display text.
+        /// Routed event for when a reference selection changes.
         /// </summary>
-        private void OnReferenceClick(object sender, MouseButtonEventArgs e)
+        public static readonly RoutedEvent ReferenceChangedEvent =
+            EventManager.RegisterRoutedEvent(
+                "ReferenceChanged",
+                RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler),
+                typeof(CompactBadge));
+
+        /// <summary>
+        /// Occurs when the reference selection changes via the dropdown.
+        /// </summary>
+        public event RoutedEventHandler ReferenceChanged
+        {
+            add => AddHandler(ReferenceChangedEvent, value);
+            remove => RemoveHandler(ReferenceChangedEvent, value);
+        }
+
+        /// <summary>
+        /// Handles click on the navigate button.
+        /// </summary>
+        private void OnNavigateClick(object sender, RoutedEventArgs e)
         {
             if (IsReference && ReferenceId != 0)
             {
@@ -269,6 +382,20 @@ namespace Dom5Editor.UI.Controls
                 });
                 e.Handled = true;
             }
+        }
+
+        /// <summary>
+        /// Handles selection change from the SearchableReferenceComboBox.
+        /// </summary>
+        private void OnReferenceSelectionChanged(object sender, ReferenceSelectionChangedEventArgs e)
+        {
+            // Raise the ReferenceChanged routed event
+            RaiseEvent(new ReferenceChangedRoutedEventArgs(ReferenceChangedEvent, this)
+            {
+                OldId = e.OldId ?? 0,
+                NewId = e.NewId,
+                NewName = e.NewItem?.DisplayName
+            });
         }
 
         #endregion
@@ -283,6 +410,21 @@ namespace Dom5Editor.UI.Controls
         public int ReferenceId { get; set; }
 
         public ReferenceClickedEventArgs(RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Event args for reference changed events, carrying old and new IDs.
+    /// </summary>
+    public class ReferenceChangedRoutedEventArgs : RoutedEventArgs
+    {
+        public int OldId { get; set; }
+        public int NewId { get; set; }
+        public string NewName { get; set; }
+
+        public ReferenceChangedRoutedEventArgs(RoutedEvent routedEvent, object source)
             : base(routedEvent, source)
         {
         }
