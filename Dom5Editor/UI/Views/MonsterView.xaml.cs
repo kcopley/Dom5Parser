@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +20,10 @@ namespace Dom5Editor.UI.Views
         // Magic paths
         private void OnMagicPathAdded(object sender, (int PathId, int Level) e) => ViewModel?.AddMagicPath(e.PathId, e.Level);
         private void OnMagicPathRemoved(object sender, int pathId) => ViewModel?.RemoveMagicPath(pathId);
+
+        // Custom magic (random paths)
+        private void OnCustomMagicAddRequested(object sender, EventArgs e) => ViewModel?.AddCustomMagicCommand?.Execute(null);
+        private void OnCustomMagicRemoveRequested(object sender, CustomMagicItem item) => ViewModel?.RemoveCustomMagicCommand?.Execute(item);
 
         // Equipment navigation - click weapon/armor name to navigate
         private void OnEquipmentClick(object sender, MouseButtonEventArgs e)

@@ -195,6 +195,72 @@ Key points:
 - Avoids infinite loops via visited set
 - Same pattern used for ARMOR
 
+### Method 5: Multi-Value Properties (CUSTOMMAGIC)
+
+For properties that can appear multiple times on an entity (like CUSTOMMAGIC), a merge strategy is needed:
+
+```csharp
+private void RefreshCustomMagic()
+{
+    var items = new ObservableCollection<CustomMagicItem>();
+    var knownEntries = new HashSet<(ulong, int)>(); // Track (Bitmask, Chance) pairs
+    var vanillaEntity = GetVanillaEntity();
+
+    // Layer 1: Vanilla entries (base layer)
+    if (vanillaEntity != null)
+    {
+        foreach (var prop in vanillaEntity.GetMultiple(Command.CUSTOMMAGIC))
+        {
+            if (prop is BitmaskChanceProperty bcp && bcp.HasValue)
+            {
+                var key = (bcp.Bitmask, bcp.Chance);
+                if (!knownEntries.Contains(key))
+                {
+                    knownEntries.Add(key);
+                    items.Add(new CustomMagicItem
+                    {
+                        Bitmask = bcp.Bitmask,
+                        Chance = bcp.Chance,
+                        Property = null,        // Vanilla props not directly editable
+                        IsInherited = true,
+                        IsModified = false
+                    });
+                }
+            }
+        }
+    }
+
+    // Layer 2: Mod entries (override or extend vanilla)
+    foreach (var prop in _entity.GetMultiple(Command.CUSTOMMAGIC))
+    {
+        if (prop is BitmaskChanceProperty bcp && bcp.HasValue)
+        {
+            var existingItem = items.FirstOrDefault(i => i.Bitmask == bcp.Bitmask && i.Chance == bcp.Chance);
+            if (existingItem != null)
+            {
+                // Mod has same entry - make it editable
+                existingItem.Property = bcp;
+                existingItem.IsInherited = false;
+                existingItem.IsModified = true;
+            }
+            else
+            {
+                // New entry from mod
+                items.Add(new CustomMagicItem { ... IsModified = true });
+            }
+        }
+    }
+}
+```
+
+**Key points:**
+- Use a HashSet or similar to track unique entries
+- Vanilla entries are read-only (`Property = null`) unless also in mod
+- When mod has same entry, mark as editable and modified
+- Same pattern applies to other multi-value properties like STARTITEM
+
+**CRITICAL REMINDER:** When implementing ANY property that uses `GetMultiple()`, ALWAYS check both vanilla AND mod entity. The mod entity may be sparse (empty) if the mod only uses `#selectmonster` without adding that specific property.
+
 ## Entity Sources in ViewModels
 
 The `EntitySource` enum tracks where an entity came from:
@@ -231,8 +297,9 @@ Layered access is implemented for all property types:
 - [x] Resistance Properties (19 commands) - Via `BuildBadgesFromSection()`
 - [x] Core Stats (12 commands) - Via `GetIntProperty()` with fallback
 - [x] Equipment References (WEAPON, ARMOR) - Recursive copystats chain in `RefreshWeaponsList()` / `RefreshArmorList()`
+- [x] Random Magic (CUSTOMMAGIC) - Vanilla+mod merge in `RefreshCustomMagic()`
 
-**Total: 572 commands covered (102% of reference)**
+**Total: 573 commands covered**
 
 ## Modification Indicators
 
@@ -248,9 +315,13 @@ The UI should distinguish between property sources:
 - `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - MonsterViewModel with:
   - `RefreshMagicPaths()` - Magic path layering
   - `RefreshWeaponsList()` / `RefreshArmorList()` - Equipment layering with copystats inheritance
+  - `RefreshCustomMagic()` - CUSTOMMAGIC vanilla+mod merge
   - `BuildBadgesFromSection()` - JSON-driven badge layering
   - `EquipmentItem` / `AvailableEquipmentItem` - Data classes for equipment display
-- `Dom5Editor/UI/Views/MonsterView.xaml` - Equipment section with horizontal layout
+  - `CustomMagicItem` - Data class for random magic display with path toggles
+- `Dom5Editor/UI/Views/MonsterView.xaml` - Equipment and Random Magic sections
+- `Dom5Editor/UI/Controls/CustomMagicEditor.xaml(.cs)` - Multi-entry editor for CUSTOMMAGIC
+- `Dom5Editor/UI/Controls/PathToggleButton.xaml(.cs)` - Toggle buttons for magic path selection
 - `Dom5Editor/Data/monster_badges.json` - 572 commands with descriptions and tooltips
 - `Dom5Edit/VanillaLoader.cs` - Vanilla data loading
 - `Dom5Edit/Mod/ChangesMod.cs` - Session change tracking

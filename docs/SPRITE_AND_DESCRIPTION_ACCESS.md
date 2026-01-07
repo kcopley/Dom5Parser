@@ -1,10 +1,69 @@
 # Sprite and Description Access Patterns
 
-This document outlines how to resolve sprites and description files for each entity type in Dominions 6. Designed for porting to other platforms (e.g., WPF).
+This document outlines how to resolve sprites and description files for each entity type in Dominions 6.
 
 ---
 
-## Directory Structure
+## Project File Locations (Dom5Editor)
+
+**Status:** Assets are bundled with the editor. Ready for implementation.
+
+```
+Dom5Editor/
+├── icons/                        # All sprite assets
+│   ├── sprites/                  # Unit sprites (PNG)
+│   │   ├── 0001_1.png           # Unit ID 1, pose 1 (idle)
+│   │   ├── 0001_2.png           # Unit ID 1, pose 2 (attack)
+│   │   ├── 0003_rider_1.png     # Mounted unit - rider only
+│   │   └── ...
+│   ├── items/                    # Item sprites (PNG)
+│   │   ├── item1.png
+│   │   ├── item2.png
+│   │   └── ...
+│   ├── sites/                    # Site sprites (PNG)
+│   │   ├── sites_0000.png
+│   │   └── ...
+│   ├── magicicons/               # Magic path icons
+│   │   ├── Path_F.png, Gem_F.png (Fire)
+│   │   ├── Path_A.png, Gem_A.png (Air)
+│   │   └── ... (W/E/S/D/N/B/G/H)
+│   └── abilityicons/             # Ability/effect icons
+│
+└── Data/                         # Description text files
+    ├── unitdescr/                # Unit descriptions (by ID)
+    │   ├── 0001.txt
+    │   ├── 0002.txt
+    │   └── ...
+    ├── spelldescr/               # Spell descriptions (by name)
+    │   ├── Fireball.txt
+    │   ├── detailsFireball.txt
+    │   └── ...
+    └── itemdescr/                # Item descriptions (by name)
+        ├── SwordofHeroes.txt
+        └── ...
+```
+
+### C# Path Resolution (for WPF)
+
+```csharp
+// Base paths relative to application directory
+const string IconsPath = "icons";
+const string DataPath = "Data";
+
+// Sprite paths
+string GetUnitSprite(int id, int pose = 1) => $"{IconsPath}/sprites/{id:D4}_{pose}.png";
+string GetItemSprite(int id) => $"{IconsPath}/items/item{id}.png";
+string GetSiteSprite(int spriteNum) => $"{IconsPath}/sites/sites_{spriteNum:D4}.png";
+
+// Description paths
+string GetUnitDescription(int id) => $"{DataPath}/unitdescr/{id:D4}.txt";
+string GetItemDescription(string name) => $"{DataPath}/itemdescr/{SanitizeName(name)}.txt";
+string GetSpellDescription(string name) => $"{DataPath}/spelldescr/{SanitizeName(name)}.txt";
+```
+
+---
+
+## Original Game Directory Structure (Reference)
 
 ```
 gamedata/

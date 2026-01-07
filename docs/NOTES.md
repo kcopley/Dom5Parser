@@ -5,6 +5,8 @@ Quick reference notes for development context. See related documents for full de
 - `ISSUES.md` - Known bugs and technical debt
 - `MOD_LAYERING.md` - Architecture for property inheritance
 - `BADGE_UI_REDESIGN.md` - Badge system specification
+- `REFERENCE_PROPERTY_HANDLING.md` - How reference properties (monster/weapon/armor refs) are created and managed
+- `SPRITE_AND_DESCRIPTION_ACCESS.md` - File paths and formats for game sprites and descriptions
 
 ---
 
@@ -31,9 +33,21 @@ Quick reference notes for development context. See related documents for full de
 - **NametypeView** - Name list management (2 commands)
 
 ### In Progress
-- **CUSTOMMAGIC Editor** - Complex bitmask (not started)
+- None currently
 
 ### Recently Completed (2026-01-07)
+- **CUSTOMMAGIC Editor** - Random magic path editor for mages:
+  - Fixed bitmask values (F=128, A=256, W=512, E=1024, S=2048, D=4096, N=8192, G=16384, B=32768, H=65536)
+  - All 10 paths supported including Glamour (G) and Holy (H)
+  - `PathToggleButton` control - color-coded toggle buttons for path selection
+  - `CustomMagicEditor` control - list-based editor with add/remove functionality
+  - CustomMagicItem class with INotifyPropertyChanged for reactive UI
+  - Integrated into MonsterView "Random Magic" section
+  - Chance value explanation: 100 = 1 level, 200 = 2 levels, 150 = 1 level + 50% for 2nd
+  - **Layered data support**: Properly merges vanilla + mod entries (see MOD_LAYERING.md Method 5)
+  - **Fix**: Add button uses Click handler instead of Command binding (WPF binding to CLR properties on UserControls can fail)
+
+
 - **Reference Property Creation Fix** - Fixed critical bug where adding reference-type badges (e.g., `#addrecunit` on Nations) used wrong property type:
   - Added `AddPropertyFromMap()` method that uses entity's `GetPropertyMap()` to get correct factory
   - Updated `RemoveIntPropertyByValue()` to handle Reference types (`StringOrIDRef`, `MonsterOrMontagRef`)
@@ -122,7 +136,7 @@ Quick reference notes for development context. See related documents for full de
 
 ### Not Started
 - **Other Entity Views** - Check for: Enchantment, Montag, RestrictedItem (ID-only containers, may not need views)
-- Sprite preview
+- **Sprite & Description Preview** - Assets ready in `icons/` and `Data/` folders (see `SPRITE_AND_DESCRIPTION_ACCESS.md`)
 - Validation report panel
 
 ---

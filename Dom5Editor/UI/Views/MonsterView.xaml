@@ -145,6 +145,21 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
+            <!-- Random Magic (CUSTOMMAGIC) Section -->
+            <controls:PropertyGroupControl Header="Random Magic" IsExpanded="False">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <TextBlock Text="Configure random magic path picks for mages. Each entry defines which paths can be picked and the chance value (100 = 1 guaranteed level, 50 = 50% for 1 level, etc.)"
+                                   TextWrapping="Wrap" FontSize="10"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,8"/>
+                        <controls:CustomMagicEditor
+                            CustomMagicItems="{Binding CustomMagicList}"
+                            AddRequested="OnCustomMagicAddRequested"
+                            RemoveRequested="OnCustomMagicRemoveRequested"/>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
             <!-- Equipment Section (Weapons & Armor) -->
             <controls:PropertyGroupControl Header="Equipment" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
