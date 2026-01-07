@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -27,6 +28,7 @@ namespace Dom5Editor.UI.Controls
         private int _referenceId;
         private string _referenceName;
         private string _referenceType;
+        private IEnumerable<ReferenceItem> _availableReferences;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -34,6 +36,12 @@ namespace Dom5Editor.UI.Controls
         /// Raised when the Value property changes due to user editing.
         /// </summary>
         public event EventHandler<int> ValueChanged;
+
+        /// <summary>
+        /// Raised when the reference selection changes due to user editing.
+        /// Args: (oldId, newId)
+        /// </summary>
+        public event EventHandler<ReferenceChangedEventArgs> ReferenceSelectionChanged;
 
         /// <summary>
         /// The command this badge represents.
@@ -64,6 +72,17 @@ namespace Dom5Editor.UI.Controls
                     // Fire ValueChanged if we can parse it as int
                     if (int.TryParse(value, out var intVal))
                     {
+                        // Clear inherited status when user edits the value
+                        // (the value is now explicitly set, not inherited)
+                        if (IsInherited)
+                        {
+                            IsInherited = false;
+                        }
+                        // Mark as session edit since user changed it
+                        if (!IsSessionEdit)
+                        {
+                            IsSessionEdit = true;
+                        }
                         ValueChanged?.Invoke(this, intVal);
                     }
                 }
@@ -103,7 +122,7 @@ namespace Dom5Editor.UI.Controls
         public bool IsInherited
         {
             get => _isInherited;
-            set { _isInherited = value; OnPropertyChanged(); }
+            set { _isInherited = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsReferenceEditable)); }
         }
 
         /// <summary>
@@ -112,7 +131,7 @@ namespace Dom5Editor.UI.Controls
         public bool CanRemove
         {
             get => _canRemove;
-            set { _canRemove = value; OnPropertyChanged(); }
+            set { _canRemove = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsReferenceEditable)); }
         }
 
         /// <summary>
@@ -152,11 +171,50 @@ namespace Dom5Editor.UI.Controls
         }
 
         /// <summary>
+        /// Available reference items for the searchable dropdown.
+        /// Set this to enable reference selection.
+        /// </summary>
+        public IEnumerable<ReferenceItem> AvailableReferences
+        {
+            get => _availableReferences;
+            set
+            {
+                _availableReferences = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsReferenceEditable));
+            }
+        }
+
+        /// <summary>
+        /// True if this reference badge can be edited (has available references and is not inherited).
+        /// </summary>
+        public bool IsReferenceEditable => IsReference && CanRemove && !IsInherited && AvailableReferences != null;
+
+        /// <summary>
         /// Display string for reference badges showing name or ID.
         /// </summary>
         public string ReferenceDisplay => !string.IsNullOrEmpty(ReferenceName)
             ? ReferenceName
             : $"#{ReferenceId}";
+
+        /// <summary>
+        /// Called when user selects a different reference from the dropdown.
+        /// </summary>
+        public void OnReferenceChanged(int oldId, int newId, string newName)
+        {
+            if (oldId == newId) return;
+
+            var oldIdCopy = ReferenceId;
+            ReferenceId = newId;
+            ReferenceName = newName;
+
+            ReferenceSelectionChanged?.Invoke(this, new ReferenceChangedEventArgs
+            {
+                OldId = oldIdCopy,
+                NewId = newId,
+                NewName = newName
+            });
+        }
 
         /// <summary>
         /// Background brush for the badge.
@@ -406,5 +464,40 @@ namespace Dom5Editor.UI.Controls
         /// Optional tag for additional data.
         /// </summary>
         public object Tag { get; set; }
+
+        /// <summary>
+        /// Converts this item to a ReferenceItem for use in searchable dropdowns.
+        /// The original AvailablePropertyItem is stored in the Tag property.
+        /// </summary>
+        public ReferenceItem ToReferenceItem()
+        {
+            return new ReferenceItem
+            {
+                ID = (int)Command,
+                DisplayName = DisplayName,
+                Tag = this
+            };
+        }
+    }
+
+    /// <summary>
+    /// Event args for reference selection changes.
+    /// </summary>
+    public class ReferenceChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The previous reference ID.
+        /// </summary>
+        public int OldId { get; set; }
+
+        /// <summary>
+        /// The new reference ID.
+        /// </summary>
+        public int NewId { get; set; }
+
+        /// <summary>
+        /// The new reference name (display name of the entity).
+        /// </summary>
+        public string NewName { get; set; }
     }
 }

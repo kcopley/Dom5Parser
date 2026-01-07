@@ -9,13 +9,12 @@ using System.Windows.Threading;
 namespace Dom5Editor.UI.Controls
 {
     /// <summary>
-    /// Container control that displays badges in a horizontal wrapping layout
-    /// with an "Add" combobox at the end for adding new items.
-    /// Supports both simple dropdown and searchable dropdown for adding references.
+    /// Container control that displays badges in a fixed-column grid layout.
+    /// Badges are rendered in JSON order, left-to-right, top-to-bottom.
     /// </summary>
-    public partial class BadgeWrapPanel : UserControl
+    public partial class BadgeGridPanel : UserControl
     {
-        public BadgeWrapPanel()
+        public BadgeGridPanel()
         {
             InitializeComponent();
 
@@ -33,7 +32,6 @@ namespace Dom5Editor.UI.Controls
         {
             if (e is ReferenceClickedEventArgs args && NavigateCommand != null)
             {
-                // Execute navigation command with (refType, id) tuple
                 var param = (args.ReferenceType, args.ReferenceId);
                 if (NavigateCommand.CanExecute(param))
                 {
@@ -49,7 +47,6 @@ namespace Dom5Editor.UI.Controls
         {
             if (e is ReferenceChangedRoutedEventArgs args && ReferenceChangedCommand != null)
             {
-                // Find the PropertyItem from the original source
                 if (e.OriginalSource is CompactBadge badge && badge.CommandParameter is PropertyItem item)
                 {
                     var param = (item, args.OldId, args.NewId, args.NewName);
@@ -61,10 +58,27 @@ namespace Dom5Editor.UI.Controls
             }
         }
 
+        #region Columns
+
+        public static readonly DependencyProperty ColumnsProperty =
+            DependencyProperty.Register(nameof(Columns), typeof(int), typeof(BadgeGridPanel),
+                new PropertyMetadata(3));
+
+        /// <summary>
+        /// Number of columns in the grid. Default is 3.
+        /// </summary>
+        public int Columns
+        {
+            get => (int)GetValue(ColumnsProperty);
+            set => SetValue(ColumnsProperty, value);
+        }
+
+        #endregion
+
         #region Header
 
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register(nameof(Header), typeof(string), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(Header), typeof(string), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public string Header
@@ -78,7 +92,7 @@ namespace Dom5Editor.UI.Controls
         #region Items
 
         public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register(nameof(ItemsSource), typeof(IEnumerable), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(ItemsSource), typeof(IEnumerable), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public IEnumerable ItemsSource
@@ -88,7 +102,7 @@ namespace Dom5Editor.UI.Controls
         }
 
         public static readonly DependencyProperty AvailableItemsProperty =
-            DependencyProperty.Register(nameof(AvailableItems), typeof(IEnumerable), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(AvailableItems), typeof(IEnumerable), typeof(BadgeGridPanel),
                 new PropertyMetadata(null, OnAvailableItemsChanged));
 
         public IEnumerable AvailableItems
@@ -99,7 +113,7 @@ namespace Dom5Editor.UI.Controls
 
         private static void OnAvailableItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var panel = (BadgeWrapPanel)d;
+            var panel = (BadgeGridPanel)d;
             panel.UpdateSearchablePropertyItems();
         }
 
@@ -126,7 +140,7 @@ namespace Dom5Editor.UI.Controls
         /// Converted available items for the searchable property dropdown.
         /// </summary>
         public static readonly DependencyProperty SearchablePropertyItemsProperty =
-            DependencyProperty.Register(nameof(SearchablePropertyItems), typeof(IEnumerable<ReferenceItem>), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(SearchablePropertyItems), typeof(IEnumerable<ReferenceItem>), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public IEnumerable<ReferenceItem> SearchablePropertyItems
@@ -137,10 +151,9 @@ namespace Dom5Editor.UI.Controls
 
         /// <summary>
         /// Searchable available items for reference-type add dropdown.
-        /// Should be IEnumerable&lt;ReferenceItem&gt;.
         /// </summary>
         public static readonly DependencyProperty SearchableAvailableItemsProperty =
-            DependencyProperty.Register(nameof(SearchableAvailableItems), typeof(IEnumerable<ReferenceItem>), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(SearchableAvailableItems), typeof(IEnumerable<ReferenceItem>), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public IEnumerable<ReferenceItem> SearchableAvailableItems
@@ -154,7 +167,7 @@ namespace Dom5Editor.UI.Controls
         #region Commands
 
         public static readonly DependencyProperty RemoveCommandProperty =
-            DependencyProperty.Register(nameof(RemoveCommand), typeof(ICommand), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(RemoveCommand), typeof(ICommand), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public ICommand RemoveCommand
@@ -164,7 +177,7 @@ namespace Dom5Editor.UI.Controls
         }
 
         public static readonly DependencyProperty AddCommandProperty =
-            DependencyProperty.Register(nameof(AddCommand), typeof(ICommand), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(AddCommand), typeof(ICommand), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public ICommand AddCommand
@@ -175,10 +188,9 @@ namespace Dom5Editor.UI.Controls
 
         /// <summary>
         /// Command for adding a reference item via the searchable dropdown.
-        /// Parameter is a ReferenceItem.
         /// </summary>
         public static readonly DependencyProperty AddReferenceCommandProperty =
-            DependencyProperty.Register(nameof(AddReferenceCommand), typeof(ICommand), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(AddReferenceCommand), typeof(ICommand), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public ICommand AddReferenceCommand
@@ -188,12 +200,11 @@ namespace Dom5Editor.UI.Controls
         }
 
         public static readonly DependencyProperty NavigateCommandProperty =
-            DependencyProperty.Register(nameof(NavigateCommand), typeof(ICommand), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(NavigateCommand), typeof(ICommand), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         /// <summary>
         /// Command to execute when a reference badge is clicked for navigation.
-        /// The command parameter is a ValueTuple&lt;string, int&gt; containing (ReferenceType, ReferenceId).
         /// </summary>
         public ICommand NavigateCommand
         {
@@ -203,10 +214,9 @@ namespace Dom5Editor.UI.Controls
 
         /// <summary>
         /// Command executed when a reference selection changes in an editable badge.
-        /// Parameter is a ValueTuple&lt;PropertyItem, int, int, string&gt; containing (item, oldId, newId, newName).
         /// </summary>
         public static readonly DependencyProperty ReferenceChangedCommandProperty =
-            DependencyProperty.Register(nameof(ReferenceChangedCommand), typeof(ICommand), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(ReferenceChangedCommand), typeof(ICommand), typeof(BadgeGridPanel),
                 new PropertyMetadata(null));
 
         public ICommand ReferenceChangedCommand
@@ -220,8 +230,8 @@ namespace Dom5Editor.UI.Controls
         #region Show/Hide Add Buttons
 
         public static readonly DependencyProperty ShowAddButtonProperty =
-            DependencyProperty.Register(nameof(ShowAddButton), typeof(bool), typeof(BadgeWrapPanel),
-                new PropertyMetadata(true, OnShowAddButtonChanged));
+            DependencyProperty.Register(nameof(ShowAddButton), typeof(bool), typeof(BadgeGridPanel),
+                new PropertyMetadata(false, OnShowAddButtonChanged));
 
         public bool ShowAddButton
         {
@@ -233,7 +243,7 @@ namespace Dom5Editor.UI.Controls
         /// When true, shows the searchable reference dropdown instead of the simple dropdown.
         /// </summary>
         public static readonly DependencyProperty UseSearchableAddProperty =
-            DependencyProperty.Register(nameof(UseSearchableAdd), typeof(bool), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(UseSearchableAdd), typeof(bool), typeof(BadgeGridPanel),
                 new PropertyMetadata(false, OnShowAddButtonChanged));
 
         public bool UseSearchableAdd
@@ -246,8 +256,8 @@ namespace Dom5Editor.UI.Controls
         /// Computed: Show simple add button (ShowAddButton && !UseSearchableAdd)
         /// </summary>
         public static readonly DependencyProperty ShowSimpleAddButtonProperty =
-            DependencyProperty.Register(nameof(ShowSimpleAddButton), typeof(bool), typeof(BadgeWrapPanel),
-                new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(ShowSimpleAddButton), typeof(bool), typeof(BadgeGridPanel),
+                new PropertyMetadata(false));
 
         public bool ShowSimpleAddButton
         {
@@ -259,7 +269,7 @@ namespace Dom5Editor.UI.Controls
         /// Computed: Show searchable add button (ShowAddButton && UseSearchableAdd)
         /// </summary>
         public static readonly DependencyProperty ShowSearchableAddButtonProperty =
-            DependencyProperty.Register(nameof(ShowSearchableAddButton), typeof(bool), typeof(BadgeWrapPanel),
+            DependencyProperty.Register(nameof(ShowSearchableAddButton), typeof(bool), typeof(BadgeGridPanel),
                 new PropertyMetadata(false));
 
         public bool ShowSearchableAddButton
@@ -270,7 +280,7 @@ namespace Dom5Editor.UI.Controls
 
         private static void OnShowAddButtonChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var panel = (BadgeWrapPanel)d;
+            var panel = (BadgeGridPanel)d;
             panel.UpdateAddButtonVisibility();
         }
 
@@ -296,16 +306,13 @@ namespace Dom5Editor.UI.Controls
             if (selectedItem == null)
                 return;
 
-            // Execute add command if available
             if (AddCommand?.CanExecute(selectedItem) == true)
             {
                 AddCommand.Execute(selectedItem);
             }
 
-            // Raise event
             ItemAdded?.Invoke(this, selectedItem);
 
-            // Clear selection after a short delay
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 PropertyAddComboBox.SetSelectedIdSilent(null);
@@ -317,22 +324,18 @@ namespace Dom5Editor.UI.Controls
             if (e.NewItem == null)
                 return;
 
-            // Execute add reference command if available
             if (AddReferenceCommand?.CanExecute(e.NewItem) == true)
             {
                 AddReferenceCommand.Execute(e.NewItem);
             }
 
-            // Also try regular add command with ReferenceItem
             if (AddCommand?.CanExecute(e.NewItem) == true)
             {
                 AddCommand.Execute(e.NewItem);
             }
 
-            // Raise event
             ItemAdded?.Invoke(this, e.NewItem);
 
-            // Clear selection after a short delay
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 SearchableAddComboBox.SetSelectedIdSilent(null);

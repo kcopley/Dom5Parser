@@ -8,7 +8,26 @@ Potential bugs and critical problems identified during code review.
 
 ## Current Priority Issues
 
-### ~~0. Weapon/Armor Not Displaying for Mod-Edited Entities~~ FIXED (2026-01-05)
+### ~~0. AddBadgeProperty Does Not Support Reference Types~~ FIXED (2026-01-07)
+
+**Status:** FIXED
+
+**Problem:** When using the badge dropdown to add a reference-type property (e.g., `#addrecunit` on Nations), nothing happened because the code was using `IntProperty.Create()` instead of the correct reference property type from the entity's property map.
+
+**Solution Implemented:**
+1. Added `AddPropertyFromMap()` method that uses the entity's `GetPropertyMap()` to get the correct property factory
+2. Updated `AddBadgeProperty()` to call `AddPropertyFromMap()` for reference types
+3. Updated `RemoveIntPropertyByValue()` to handle both `IntProperty` and Reference types (`StringOrIDRef`, `MonsterOrMontagRef`)
+4. Changed `GetPropertyMap()` from `internal` to `public` in `IDEntity.cs` and all entity subclasses
+
+**Files Modified:**
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added `AddPropertyFromMap()`, updated `RemoveIntPropertyByValue()`
+- `Dom5Edit/Entities/IDEntity.cs` - Changed `GetPropertyMap()` to `public virtual`
+- `Dom5Edit/Entities/*.cs` (11 files) - Changed `GetPropertyMap()` overrides to `public override`
+
+---
+
+### ~~1. Weapon/Armor Not Displaying for Mod-Edited Entities~~ FIXED (2026-01-05)
 
 **Root Cause:** For `VanillaModified` entities (vanilla entities edited by a mod), the ViewModel was using the mod's entity which only contains the **changes** made by the mod - not the full entity data. Weapons/armor remained on the vanilla entity but weren't being fetched.
 
@@ -24,32 +43,17 @@ The weapon/armor lists now use `GetLayeredReferenceList<WeaponRef>()` and `GetLa
 - `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added generic resolution methods
 - `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Simplified to use base class methods
 
-### 1. Two Parallel ViewModel Systems (Migration Needed)
+### ~~1. Two Parallel ViewModel Systems~~ COMPLETE (2026-01-07)
 
-**Files:** `Dom5Editor/VMs/` vs `Dom5Editor/UI/ViewModels/`
+**Status:** COMPLETE - Legacy VMs removed.
 
-The codebase has two separate ViewModel systems:
-- **Legacy VMs** (`Dom5Editor/VMs/`) - DEPRECATED, to be removed
-- **New UI VMs** (`Dom5Editor/UI/ViewModels/`) - Active development
+The legacy ViewModel system has been fully removed:
+- Deleted `Dom5Editor/VMs/` folder (all legacy VMs)
+- Deleted `Dom5Editor/ViewModelBase/` folder
+- Deleted `Dom5Editor/Menus/` folder (legacy views)
+- Moved `RelayCommand.cs` to `Dom5Editor/UI/RelayCommand.cs`
 
-**Migration Status:**
-The new UI system is working properly. Legacy VMs should be deprecated once all functionality is migrated.
-
-**Files to deprecate after migration:**
-- `Dom5Editor/VMs/IntPropertyViewModel.cs`
-- `Dom5Editor/VMs/StringViewModel.cs`
-- `Dom5Editor/VMs/CommandViewModel.cs`
-- `Dom5Editor/VMs/DescriptionViewModel.cs`
-- `Dom5Editor/VMs/NameViewModel.cs`
-- `Dom5Editor/VMs/IntIntPropertyViewModel.cs`
-- `Dom5Editor/VMs/StringOrIDRefViewModel.cs`
-- `Dom5Editor/VMs/RefVMs/*` (weapon, armor, monster, etc.)
-- `Dom5Editor/VMs/EntityVMs/*`
-
-**Files to keep (infrastructure):**
-- `Dom5Editor/VMs/ModViewModel.cs` - Mod-level state, history management
-- `Dom5Editor/VMs/RelayCommand.cs` - Command implementation
-- `Dom5Editor/ViewModelBase/ViewModelBase.cs` - Base class
+The new UI system (`Dom5Editor/UI/`) is now the only ViewModel system.
 
 ---
 

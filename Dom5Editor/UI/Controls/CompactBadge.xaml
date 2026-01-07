@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:behaviors="clr-namespace:Dom5Editor.UI.Behaviors"
+             xmlns:local="clr-namespace:Dom5Editor.UI.Controls"
              mc:Ignorable="d"
              d:DesignHeight="20" d:DesignWidth="100"
              x:Name="Root">
 
     <Border Background="{Binding BadgeBackground, RelativeSource={RelativeSource AncestorType=UserControl}}"
             BorderBrush="{Binding BadgeBorder, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            BorderThickness="1" CornerRadius="3" Padding="4,1" Margin="0,0,3,3"
+            BorderThickness="1" CornerRadius="3" Padding="5,2" Margin="0,0,4,4"
             ToolTip="{Binding Tooltip, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <StackPanel Orientation="Horizontal">
 
@@ -42,26 +43,90 @@
 
             <TextBox x:Name="ValueTextBox"
                      Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
-                     FontSize="9" MinWidth="20" Padding="1,0" Margin="0,0,0,0"
+                     FontSize="9" MinWidth="24" Padding="3,1" Margin="0,0,0,0"
                      HorizontalContentAlignment="Center" VerticalAlignment="Center"
-                     Background="Transparent"
                      Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                     BorderThickness="0"
                      Visibility="{Binding HasValue, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
-                     behaviors:DebouncedTextBoxBehavior.IsEnabled="True"/>
+                     behaviors:DebouncedTextBoxBehavior.IsEnabled="True">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Background" Value="#1AFFFFFF"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+                        <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#33FFFFFF"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="Background" Value="#44FFFFFF"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
 
-            <!-- Reference display (for ref badges) - only visible when IsReference is true -->
+            <!-- Reference display section - only visible when IsReference is true -->
+            <!-- For read-only references: show name + ID -->
             <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
                        Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Visibility="{Binding IsReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                       Visibility="{Binding ShowReadOnlyReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
             <TextBlock Text="{Binding ReferenceDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        FontSize="9" VerticalAlignment="Center" FontWeight="SemiBold"
                        Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Visibility="{Binding IsReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
-                       Cursor="Hand"
-                       TextDecorations="Underline"
-                       MouseLeftButtonDown="OnReferenceClick"/>
+                       Visibility="{Binding ShowReadOnlyReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <!-- ID display for read-only references -->
+            <TextBlock Text="{Binding ReferenceIdDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       FontSize="8" VerticalAlignment="Center"
+                       Foreground="{DynamicResource TextSecondaryBrush}"
+                       Margin="4,0,0,0"
+                       Visibility="{Binding ShowReadOnlyReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <!-- For editable references: show searchable combo box -->
+            <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
+                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Visibility="{Binding IsReferenceEditable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <local:SearchableReferenceComboBox
+                x:Name="ReferenceComboBox"
+                MinWidth="150"
+                MaxWidth="250"
+                Height="20"
+                VerticalAlignment="Center"
+                ItemsSource="{Binding AvailableReferences, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                SelectedId="{Binding ReferenceId, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
+                Placeholder="Select..."
+                Visibility="{Binding IsReferenceEditable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
+                SelectionChanged="OnReferenceSelectionChanged"/>
+
+            <!-- Navigate button (arrow) - shown for all references when ID is valid -->
+            <Button x:Name="NavigateButton"
+                    Content="&#x2192;"
+                    FontSize="11" FontWeight="Bold"
+                    Padding="3,0" Margin="4,0,0,0" MinWidth="20" Height="18"
+                    VerticalAlignment="Center"
+                    ToolTip="Go to entity"
+                    Click="OnNavigateClick"
+                    Visibility="{Binding ShowNavigateButton, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource AccentPrimaryBrush}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource AccentHighlightBrush}"/>
+                                <Setter Property="Background" Value="{DynamicResource BackgroundMediumBrush}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
 
             <!-- Inherited badge -->
             <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"
@@ -71,7 +136,7 @@
             </Border>
 
             <!-- Remove button -->
-            <Button Content="×" FontSize="8" Padding="1,0" Margin="3,0,0,0" MinWidth="12" Height="12"
+            <Button Content="&#x00D7;" FontSize="8" Padding="1,0" Margin="3,0,0,0" MinWidth="12" Height="12"
                     VerticalAlignment="Center"
                     Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                     CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"

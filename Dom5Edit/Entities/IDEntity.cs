@@ -148,7 +148,7 @@ namespace Dom5Edit.Entities
         }
 
 
-        internal virtual Dictionary<Command, Func<Property>> GetPropertyMap() { throw new NotImplementedException(); }
+        public virtual Dictionary<Command, Func<Property>> GetPropertyMap() { throw new NotImplementedException(); }
 
         public override void Export(StreamWriter writer)
         {

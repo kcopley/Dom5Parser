@@ -46,26 +46,32 @@
                             IsReference="{Binding IsReference}"
                             ReferenceDisplay="{Binding ReferenceDisplay}"
                             ReferenceType="{Binding ReferenceType}"
-                            ReferenceId="{Binding ReferenceId}"/>
+                            ReferenceId="{Binding ReferenceId, Mode=TwoWay}"
+                            AvailableReferences="{Binding AvailableReferences}"
+                            IsReferenceEditable="{Binding IsReferenceEditable}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <!-- Add ComboBox -->
-            <ComboBox x:Name="AddComboBox"
-                      ItemsSource="{Binding AvailableItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                      DisplayMemberPath="DisplayName"
-                      Width="70" Height="18" FontSize="9"
-                      Margin="0,0,0,3"
-                      Visibility="{Binding ShowAddButton, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
-                      SelectionChanged="OnAddSelectionChanged"
-                      PreviewMouseWheel="OnComboBoxPreviewMouseWheel">
-                <ComboBox.Style>
-                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-                        <Setter Property="Background" Value="{DynamicResource BackgroundDarkBrush}"/>
-                    </Style>
-                </ComboBox.Style>
-            </ComboBox>
+            <!-- Searchable Add ComboBox for properties -->
+            <local:SearchableReferenceComboBox
+                x:Name="PropertyAddComboBox"
+                Width="140" Height="20"
+                Margin="0,0,0,3"
+                ItemsSource="{Binding SearchablePropertyItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Placeholder="+ Add property..."
+                Visibility="{Binding ShowSimpleAddButton, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
+                SelectionChanged="OnPropertyAddSelectionChanged"/>
+
+            <!-- Searchable Add ComboBox (for reference items - entity references) -->
+            <local:SearchableReferenceComboBox
+                x:Name="SearchableAddComboBox"
+                Width="150" Height="20"
+                Margin="0,0,0,3"
+                ItemsSource="{Binding SearchableAvailableItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Placeholder="+ Add reference..."
+                Visibility="{Binding ShowSearchableAddButton, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
+                SelectionChanged="OnSearchableAddSelectionChanged"/>
         </WrapPanel>
     </StackPanel>
 </UserControl>

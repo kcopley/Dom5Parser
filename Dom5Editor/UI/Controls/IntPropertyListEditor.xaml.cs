@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Dom5Edit.Commands;
+using Dom5Editor.UI;
 
 namespace Dom5Editor.UI.Controls
 {

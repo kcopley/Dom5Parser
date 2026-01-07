@@ -5,6 +5,10 @@
       "displayName": "STATS",
       "description": "Core armor statistics",
       "renderer": "statsGrid",
+      "layout": "grid",
+      "columns": 3,
+      "showDefaults": true,
+      "showAddButton": false,
       "readOnly": false,
       "commands": [
         {
@@ -12,6 +16,7 @@
           "display": "PROT",
           "type": "int",
           "default": 0,
+          "allowMultiple": false,
           "description": "Sets armor protection value."
         },
         {
@@ -19,6 +24,7 @@
           "display": "DEF",
           "type": "int",
           "default": 0,
+          "allowMultiple": false,
           "description": "Sets defense penalty (negative values reduce defense)."
         },
         {
@@ -26,6 +32,7 @@
           "display": "ENC",
           "type": "int",
           "default": 0,
+          "allowMultiple": false,
           "description": "Sets encumbrance value."
         },
         {
@@ -33,6 +40,7 @@
           "display": "RCOST",
           "type": "int",
           "default": 0,
+          "allowMultiple": false,
           "description": "Sets resource cost."
         },
         {
@@ -40,6 +48,7 @@
           "display": "TYPE",
           "type": "int",
           "default": 0,
+          "allowMultiple": false,
           "description": "Sets armor slot type (1=helmet, 4=body, 5=shield, 6=misc body)."
         }
       ]

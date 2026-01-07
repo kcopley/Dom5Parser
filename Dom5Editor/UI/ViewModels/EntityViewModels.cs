@@ -12,7 +12,7 @@ using Dom5Edit.Props;
 using Dom5Editor.Data;
 using Dom5Editor.EditCommands;
 using Dom5Editor.UI.Controls;
-using Dom5Editor.VMs;
+using Dom5Editor.UI;
 using Paloma;
 
 namespace Dom5Editor.UI.Views
@@ -2370,74 +2370,64 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Core Stats
+        // Armor Type Display (derived from stats badge data)
         // ========================================
-
-        public int? Protection
-        {
-            get => GetIntProperty(Command.PROT);
-            set => SetIntProperty(Command.PROT, value);
-        }
-        public bool IsProtectionModified => IsIntPropertyModifiedFromVanilla(Command.PROT);
-        public bool IsProtectionSessionEdit => IsPropertyEditedInSession(Command.PROT);
-        public bool IsProtectionInherited => IsIntPropertyInherited(Command.PROT);
-
-        public int? Defense
-        {
-            get => GetIntProperty(Command.DEF);
-            set => SetIntProperty(Command.DEF, value);
-        }
-        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
-        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
-        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
-
-        public int? Encumbrance
-        {
-            get => GetIntProperty(Command.ENC);
-            set => SetIntProperty(Command.ENC, value);
-        }
-        public bool IsEncumbranceModified => IsIntPropertyModifiedFromVanilla(Command.ENC);
-        public bool IsEncumbranceSessionEdit => IsPropertyEditedInSession(Command.ENC);
-        public bool IsEncumbranceInherited => IsIntPropertyInherited(Command.ENC);
-
-        public int? ResourceCost
-        {
-            get => GetIntProperty(Command.RCOST);
-            set => SetIntProperty(Command.RCOST, value);
-        }
-        public bool IsResourceCostModified => IsIntPropertyModifiedFromVanilla(Command.RCOST);
-        public bool IsResourceCostSessionEdit => IsPropertyEditedInSession(Command.RCOST);
-        public bool IsResourceCostInherited => IsIntPropertyInherited(Command.RCOST);
-
-        public int? ArmorType
-        {
-            get => GetIntProperty(Command.TYPE);
-            set => SetIntProperty(Command.TYPE, value);
-        }
-        public bool IsArmorTypeModified => IsIntPropertyModifiedFromVanilla(Command.TYPE);
-        public bool IsArmorTypeSessionEdit => IsPropertyEditedInSession(Command.TYPE);
-        public bool IsArmorTypeInherited => IsIntPropertyInherited(Command.TYPE);
 
         /// <summary>
         /// Gets the armor type display name.
+        /// Uses layered property access like the badge system.
         /// </summary>
         public string ArmorTypeDisplay
         {
             get
             {
-                return ArmorType switch
+                var armorType = GetIntProperty(Command.TYPE);
+                return armorType switch
                 {
                     1 => "Helmet",
                     4 => "Body Armor",
                     5 => "Shield",
                     6 => "Misc Body",
-                    _ => ArmorType?.ToString() ?? "Unknown"
+                    _ => armorType?.ToString() ?? "Unknown"
                 };
             }
         }
 
         // ========================================
-        // Badge Collection (Unified)
+        // Stats Badge Collection (JSON-driven)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _statsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableStatsBadges;
+
+        public ObservableCollection<PropertyItem> StatsBadges
+        {
+            get { if (_statsBadges == null) RefreshStatsBadges(); return _statsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableStatsBadges
+        {
+            get { if (_availableStatsBadges == null) RefreshStatsBadges(); return _availableStatsBadges; }
+        }
+
+        // Commands for stats badge operations
+        private RelayCommand<PropertyItem> _removeStatsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addStatsBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveStatsBadgeCommand => _removeStatsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshStatsBadges);
+        public RelayCommand<AvailablePropertyItem> AddStatsBadgeCommand => _addStatsBadgeCommand ??= CreateAddBadgeCommand(RefreshStatsBadges);
+
+        private void RefreshStatsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("stats", BadgeValueChangedHandler);
+            _statsBadges = active;
+            _availableStatsBadges = available;
+            OnPropertyChanged(nameof(StatsBadges));
+            OnPropertyChanged(nameof(AvailableStatsBadges));
+            OnPropertyChanged(nameof(ArmorTypeDisplay)); // Update derived property
+        }
+
+        // ========================================
+        // Properties Badge Collection (JSON-driven)
         // ========================================
 
         private ObservableCollection<PropertyItem> _propertyBadges;
@@ -2452,14 +2442,14 @@ namespace Dom5Editor.UI.Views
             get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
         }
 
-        // Commands for badge operations
+        // Commands for property badge operations
         private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
         private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
 
         public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
         public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
 
-        // Shared value changed handler
+        // Shared value changed handler for all badge sections
         private EventHandler<int> _badgeValueChangedHandler;
         private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
 
@@ -2474,27 +2464,9 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
-            var propertyName = GetPropertyNameForCommand(command);
-            if (propertyName != null)
-            {
-                OnPropertyChanged(propertyName);
-                OnPropertyChanged($"Is{propertyName}Modified");
-                OnPropertyChanged($"Is{propertyName}SessionEdit");
-                OnPropertyChanged($"Is{propertyName}Inherited");
-            }
-        }
-
-        private static string GetPropertyNameForCommand(Command command)
-        {
-            return command switch
-            {
-                Command.PROT => "Protection",
-                Command.DEF => "Defense",
-                Command.ENC => "Encumbrance",
-                Command.RCOST => "ResourceCost",
-                Command.TYPE => "ArmorType",
-                _ => null
-            };
+            // Refresh the appropriate badge collection when undo/redo affects this entity
+            RefreshStatsBadges();
+            RefreshPropertyBadges();
         }
     }
 
