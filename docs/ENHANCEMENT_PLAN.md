@@ -2,7 +2,7 @@
 
 This document outlines the planned enhancements to build out Dom5Parser into a full UI-based .dm file editor.
 
-**Last Updated:** 2026-01-06
+**Last Updated:** 2026-01-07
 
 ## Goal
 
@@ -22,7 +22,7 @@ Create a UI-based editor that:
 2. ~~**Undo/Redo Infrastructure** - CommandHistory integration~~ (COMPLETE)
 3. ~~**ChangesMod Session Tracking** - Track edits for export~~ (COMPLETE)
 4. **Other Entity Views** - WeaponView, ArmorView, SpellView, etc.
-5. **Feature Expansion** - CUSTOMMAGIC editor, entity navigation, sprite preview
+5. **Feature Expansion** - Entity navigation, sprite preview, validation report panel
 
 ### Command Coverage
 
@@ -37,7 +37,7 @@ Create a UI-based editor that:
 | Combat | 163 | Complete (abilities, auras, powers) |
 | Resistances | 19 | Complete |
 | Equipment (WEAPON, ARMOR) | N/A | Complete (with copystats inheritance) |
-| Magic (CUSTOMMAGIC) | 0 | Not started (complex bitmask editor needed) |
+| Magic (CUSTOMMAGIC) | 1 | Complete (PathToggleButton + CustomMagicEditor controls) |
 
 ---
 
@@ -526,10 +526,10 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 - **MagicPathEditor Improvements** - Already functional in MonsterView, potential polish:
   - Full path names on hover/expanded view
   - Better visual feedback
-- **CUSTOMMAGIC Editor** - Complex bitmask for unit magic capabilities:
-  - Bitmask-based path combinations
-  - Random path selection rules
-  - Separate from simple path selection (not started)
+- ~~**CUSTOMMAGIC Editor**~~ **DONE (2026-01-07)** - Random magic path editor for mages:
+  - PathToggleButton + CustomMagicEditor controls with add/remove functionality
+  - All 10 paths supported (F/A/W/E/S/D/N/G/B/H) with correct bitmask values
+  - Layered data support (vanilla + mod merge)
 - Navigation between entity views (clicking weapon/armor to view that entity)
 - Reset to original buttons (per-property revert)
 - **Secondary Effect Chain Display** - When a weapon has a secondary effect that itself has a secondary effect, show the full chain
@@ -580,7 +580,11 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 
 ### MEDIUM Priority
 - Weapon/Armor list with stat columns (header row with ID, Name, Atk, Dmg, etc. for weapons; ID, Name, Prot, Def, Enc for armor)
-- Sprite preview (TGA loading infrastructure exists)
+- **Sprite & Description Preview** - Assets bundled in project, ready for implementation:
+  - Sprites: `Dom5Editor/icons/` (sprites/, items/, sites/, magicicons/, abilityicons/)
+  - Descriptions: `Dom5Editor/Data/` (unitdescr/, itemdescr/, spelldescr/)
+  - TGA loading: `Utility/TargaImage.cs` (for mod-provided TGA sprites)
+  - See `docs/SPRITE_AND_DESCRIPTION_ACCESS.md` for path formats and resolution logic
 - NAMETYPE, MONTAG editors
 - Validation report panel
 - **ItemSlots Bitmask Editor** - Visual editor for monster/commander item slot configuration:
@@ -609,6 +613,13 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 - Keyboard shortcuts within views
 - Copy/paste properties
 - Mod comparison/diff tool
+
+### Event Command Extraction
+- **Parse Event Mod Manual** - Extract event-specific commands from the modding manual PDF
+  - Use `tools/pdf_extractor.py` or similar to extract event command definitions
+  - Build comprehensive `event_commands.json` with all event requirements and effects
+  - Cross-reference with existing `event_badges.json` to identify missing commands
+  - Goal: Complete coverage of all event scripting commands
 
 ### Completed
 - ~~Reference editors (WEAPON, ARMOR, COPYSTATS)~~ - Equipment section complete

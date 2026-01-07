@@ -175,6 +175,30 @@ namespace Dom5Editor.UI.Converters
     }
 
     /// <summary>
+    /// Converts false to Visible, true to Collapsed (inverse of BoolToVisibilityConverter).
+    /// </summary>
+    public class InverseBoolToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool b)
+            {
+                return b ? Visibility.Collapsed : Visibility.Visible;
+            }
+            return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Visibility v)
+            {
+                return v != Visibility.Visible;
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
     /// Converts positive int to Visible, zero or null to Collapsed.
     /// </summary>
     public class PositiveIntToVisibilityConverter : IValueConverter
