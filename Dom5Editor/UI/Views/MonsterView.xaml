@@ -138,14 +138,31 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="16"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- Weapons Column (Left) -->
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="WEAPONS" FontSize="8" FontWeight="Bold"
-                                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                            <!-- Weapons Header Row -->
+                            <Grid Margin="0,0,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="18"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="36"/>
+                                    <ColumnDefinition Width="36"/>
+                                    <ColumnDefinition Width="36"/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="1" Text="WEAPON" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock Grid.Column="2" Text="LEN" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" TextAlignment="Center"/>
+                                <TextBlock Grid.Column="3" Text="ATT" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" TextAlignment="Center"/>
+                                <TextBlock Grid.Column="4" Text="DMG" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" TextAlignment="Center"/>
+                            </Grid>
 
                             <!-- Weapon List -->
                             <ItemsControl ItemsSource="{Binding WeaponsList}">
@@ -154,16 +171,21 @@
                                         <Border Background="{DynamicResource BackgroundDarkBrush}"
                                                 BorderBrush="{DynamicResource BorderBrush}"
                                                 BorderThickness="1" CornerRadius="3"
-                                                Padding="6,3" Margin="0,0,0,2">
+                                                Padding="4,3" Margin="0,0,0,2"
+                                                ToolTip="{Binding WeaponTooltip}">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="18"/>
                                                     <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="36"/>
+                                                    <ColumnDefinition Width="36"/>
+                                                    <ColumnDefinition Width="36"/>
+                                                    <ColumnDefinition Width="24"/>
                                                 </Grid.ColumnDefinitions>
 
+                                                <!-- Status indicator -->
                                                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <!-- Modified indicator -->
-                                                    <Border Width="4" Height="14" CornerRadius="2" Margin="0,0,6,0"
+                                                    <Border Width="3" Height="14" CornerRadius="1" Margin="0,0,2,0"
                                                             Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityConverter}}">
                                                         <Border.Style>
                                                             <Style TargetType="Border">
@@ -176,30 +198,46 @@
                                                             </Style>
                                                         </Border.Style>
                                                     </Border>
-
-                                                    <!-- Inherited indicator -->
-                                                    <Border Background="#4A4A4A" CornerRadius="2" Padding="3,1" Margin="0,0,6,0"
-                                                            Visibility="{Binding IsInherited, Converter={StaticResource BoolToVisibilityConverter}}">
-                                                        <TextBlock Text="inh" FontSize="8" Foreground="#888888"/>
-                                                    </Border>
-
-                                                    <!-- ID -->
-                                                    <TextBlock Text="{Binding ID, StringFormat='#{0}'}"
-                                                               Foreground="{DynamicResource TextSecondaryBrush}"
-                                                               FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
-
-                                                    <!-- Name (hyperlink style - click to navigate) -->
-                                                    <TextBlock Text="{Binding Name, TargetNullValue='(unknown)'}"
-                                                               Foreground="{DynamicResource AccentHighlightBrush}"
-                                                               FontSize="11" VerticalAlignment="Center"
-                                                               TextDecorations="Underline" Cursor="Hand"
-                                                               MouseLeftButtonDown="OnEquipmentClick"/>
+                                                    <TextBlock Text="i" FontSize="8" Foreground="#666666"
+                                                               Visibility="{Binding IsInherited, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                               VerticalAlignment="Center" ToolTip="Inherited"/>
                                                 </StackPanel>
 
+                                                <!-- Name (clickable) -->
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding Name, TargetNullValue='(unknown)'}"
+                                                           Foreground="{DynamicResource AccentHighlightBrush}"
+                                                           FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           TextDecorations="Underline" Cursor="Hand"
+                                                           VerticalAlignment="Center"
+                                                           MouseLeftButtonDown="OnEquipmentClick"/>
+
+                                                <!-- LEN -->
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{Binding LengthDisplay}"
+                                                           FontFamily="Consolas" FontSize="10"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                                           TextAlignment="Center" VerticalAlignment="Center"/>
+
+                                                <!-- ATT -->
+                                                <TextBlock Grid.Column="3"
+                                                           Text="{Binding AttackDisplay}"
+                                                           FontFamily="Consolas" FontSize="10"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                                           TextAlignment="Center" VerticalAlignment="Center"/>
+
+                                                <!-- DMG -->
+                                                <TextBlock Grid.Column="4"
+                                                           Text="{Binding DamageDisplay}"
+                                                           FontFamily="Consolas" FontSize="10"
+                                                           Foreground="{DynamicResource TextBrush}"
+                                                           FontWeight="SemiBold"
+                                                           TextAlignment="Center" VerticalAlignment="Center"/>
+
                                                 <!-- Remove button -->
-                                                <Button Grid.Column="1" Content="×" Width="18" Height="18"
+                                                <Button Grid.Column="5" Content="×" Width="18" Height="18"
                                                         FontSize="12" FontWeight="Bold" Padding="0"
-                                                        VerticalAlignment="Center"
                                                         Command="{Binding DataContext.RemoveWeaponCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                         CommandParameter="{Binding}"
                                                         Visibility="{Binding CanRemove, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -210,30 +248,35 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <!-- Add Weapon ComboBox -->
-                            <Grid Margin="0,4,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0"
-                                          ItemsSource="{Binding AvailableWeapons}"
-                                          DisplayMemberPath="DisplayText"
-                                          SelectedItem="{Binding SelectedWeaponToAdd, Mode=TwoWay}"
-                                          IsEditable="True"
-                                          IsTextSearchEnabled="True"
-                                          TextSearch.TextPath="DisplayText"/>
-                                <Button Grid.Column="1" Content="+" Width="28" Margin="4,0,0,0"
-                                        Command="{Binding AddWeaponCommand}"
-                                        CommandParameter="{Binding SelectedWeaponToAdd}"
-                                        ToolTip="Add weapon"/>
-                            </Grid>
+                            <!-- Add Weapon -->
+                            <controls:SearchableReferenceComboBox
+                                Margin="0,6,0,0"
+                                ItemsSource="{Binding AvailableWeaponsForSearch}"
+                                Placeholder="Search and select to add..."
+                                SelectionChanged="OnWeaponSelectionChanged"/>
                         </StackPanel>
 
                         <!-- Armor Column (Right) -->
                         <StackPanel Grid.Column="2">
-                            <TextBlock Text="ARMOR" FontSize="8" FontWeight="Bold"
-                                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                            <!-- Armor Header Row -->
+                            <Grid Margin="0,0,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="18"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="36"/>
+                                    <ColumnDefinition Width="36"/>
+                                    <ColumnDefinition Width="36"/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="1" Text="ARMOR" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock Grid.Column="2" Text="PROT" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" TextAlignment="Center"/>
+                                <TextBlock Grid.Column="3" Text="DEF" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" TextAlignment="Center"/>
+                                <TextBlock Grid.Column="4" Text="ENC" FontSize="9" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" TextAlignment="Center"/>
+                            </Grid>
 
                             <!-- Armor List -->
                             <ItemsControl ItemsSource="{Binding ArmorList}">
@@ -242,16 +285,21 @@
                                         <Border Background="{DynamicResource BackgroundDarkBrush}"
                                                 BorderBrush="{DynamicResource BorderBrush}"
                                                 BorderThickness="1" CornerRadius="3"
-                                                Padding="6,3" Margin="0,0,0,2">
+                                                Padding="4,3" Margin="0,0,0,2"
+                                                ToolTip="{Binding ArmorTooltip}">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="18"/>
                                                     <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="36"/>
+                                                    <ColumnDefinition Width="36"/>
+                                                    <ColumnDefinition Width="36"/>
+                                                    <ColumnDefinition Width="24"/>
                                                 </Grid.ColumnDefinitions>
 
+                                                <!-- Status indicator -->
                                                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <!-- Modified indicator -->
-                                                    <Border Width="4" Height="14" CornerRadius="2" Margin="0,0,6,0"
+                                                    <Border Width="3" Height="14" CornerRadius="1" Margin="0,0,2,0"
                                                             Visibility="{Binding IsModified, Converter={StaticResource BoolToVisibilityConverter}}">
                                                         <Border.Style>
                                                             <Style TargetType="Border">
@@ -264,30 +312,46 @@
                                                             </Style>
                                                         </Border.Style>
                                                     </Border>
-
-                                                    <!-- Inherited indicator -->
-                                                    <Border Background="#4A4A4A" CornerRadius="2" Padding="3,1" Margin="0,0,6,0"
-                                                            Visibility="{Binding IsInherited, Converter={StaticResource BoolToVisibilityConverter}}">
-                                                        <TextBlock Text="inh" FontSize="8" Foreground="#888888"/>
-                                                    </Border>
-
-                                                    <!-- ID -->
-                                                    <TextBlock Text="{Binding ID, StringFormat='#{0}'}"
-                                                               Foreground="{DynamicResource TextSecondaryBrush}"
-                                                               FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
-
-                                                    <!-- Name (hyperlink style - click to navigate) -->
-                                                    <TextBlock Text="{Binding Name, TargetNullValue='(unknown)'}"
-                                                               Foreground="{DynamicResource AccentHighlightBrush}"
-                                                               FontSize="11" VerticalAlignment="Center"
-                                                               TextDecorations="Underline" Cursor="Hand"
-                                                               MouseLeftButtonDown="OnEquipmentClick"/>
+                                                    <TextBlock Text="i" FontSize="8" Foreground="#666666"
+                                                               Visibility="{Binding IsInherited, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                               VerticalAlignment="Center" ToolTip="Inherited"/>
                                                 </StackPanel>
 
+                                                <!-- Name (clickable) -->
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding Name, TargetNullValue='(unknown)'}"
+                                                           Foreground="{DynamicResource AccentHighlightBrush}"
+                                                           FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           TextDecorations="Underline" Cursor="Hand"
+                                                           VerticalAlignment="Center"
+                                                           MouseLeftButtonDown="OnEquipmentClick"/>
+
+                                                <!-- PROT -->
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{Binding ProtectionDisplay}"
+                                                           FontFamily="Consolas" FontSize="10"
+                                                           Foreground="{DynamicResource TextBrush}"
+                                                           FontWeight="SemiBold"
+                                                           TextAlignment="Center" VerticalAlignment="Center"/>
+
+                                                <!-- DEF -->
+                                                <TextBlock Grid.Column="3"
+                                                           Text="{Binding DefenseDisplay}"
+                                                           FontFamily="Consolas" FontSize="10"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                                           TextAlignment="Center" VerticalAlignment="Center"/>
+
+                                                <!-- ENC -->
+                                                <TextBlock Grid.Column="4"
+                                                           Text="{Binding EncumbranceDisplay}"
+                                                           FontFamily="Consolas" FontSize="10"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                                           TextAlignment="Center" VerticalAlignment="Center"/>
+
                                                 <!-- Remove button -->
-                                                <Button Grid.Column="1" Content="×" Width="18" Height="18"
+                                                <Button Grid.Column="5" Content="×" Width="18" Height="18"
                                                         FontSize="12" FontWeight="Bold" Padding="0"
-                                                        VerticalAlignment="Center"
                                                         Command="{Binding DataContext.RemoveArmorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                         CommandParameter="{Binding}"
                                                         Visibility="{Binding CanRemove, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -298,24 +362,12 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <!-- Add Armor ComboBox -->
-                            <Grid Margin="0,4,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0"
-                                          ItemsSource="{Binding AvailableArmor}"
-                                          DisplayMemberPath="DisplayText"
-                                          SelectedItem="{Binding SelectedArmorToAdd, Mode=TwoWay}"
-                                          IsEditable="True"
-                                          IsTextSearchEnabled="True"
-                                          TextSearch.TextPath="DisplayText"/>
-                                <Button Grid.Column="1" Content="+" Width="28" Margin="4,0,0,0"
-                                        Command="{Binding AddArmorCommand}"
-                                        CommandParameter="{Binding SelectedArmorToAdd}"
-                                        ToolTip="Add armor"/>
-                            </Grid>
+                            <!-- Add Armor -->
+                            <controls:SearchableReferenceComboBox
+                                Margin="0,6,0,0"
+                                ItemsSource="{Binding AvailableArmorForSearch}"
+                                Placeholder="Search and select to add..."
+                                SelectionChanged="OnArmorSelectionChanged"/>
                         </StackPanel>
                     </Grid>
                 </controls:PropertyGroupControl.GroupContent>

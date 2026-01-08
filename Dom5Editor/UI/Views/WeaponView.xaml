@@ -38,7 +38,9 @@
                         <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="copyweapon:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopyWeaponDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopyWeaponDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"
+                                           Cursor="Hand" MouseLeftButtonDown="OnCopyWeaponClick"
+                                           ToolTip="Click to navigate to source weapon"/>
                             </StackPanel>
                         </Border>
                     </WrapPanel>

@@ -58,6 +58,24 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        /// <summary>
+        /// Gets the CopyArmor reference ID for navigation.
+        /// </summary>
+        public int CopyArmorId
+        {
+            get
+            {
+                var result = _entity.TryGet<ArmorRef>(Command.COPYARMOR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.ID;
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
+
         // ========================================
         // Armor Type Display (derived from stats badge data)
         // ========================================

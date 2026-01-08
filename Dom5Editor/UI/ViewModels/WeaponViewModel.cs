@@ -59,6 +59,24 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        /// <summary>
+        /// Gets the CopyWeapon reference ID for navigation.
+        /// </summary>
+        public int CopyWeaponId
+        {
+            get
+            {
+                var result = _entity.TryGet<WeaponRef>(Command.COPYWEAPON, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.ID;
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
+
         // ========================================
         // Damage - Special Handling for Summon/Cloud Weapons
         // ========================================

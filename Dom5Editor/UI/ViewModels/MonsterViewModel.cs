@@ -865,7 +865,7 @@ namespace Dom5Editor.UI.Views
 
             foreach (var (id, name, isInherited, isModified, isSessionEdit) in weapons)
             {
-                _weaponsList.Add(new EquipmentItem
+                var item = new EquipmentItem
                 {
                     ID = id,
                     Name = name,
@@ -874,11 +874,91 @@ namespace Dom5Editor.UI.Views
                     IsSessionEdit = isSessionEdit,
                     SourceCommand = Command.WEAPON,
                     EntityType = "weapon"
-                });
+                };
+
+                // Populate stats from resolved weapon entity
+                var weaponEntity = ResolveEntityReference(EntityType.WEAPON, id) as Weapon;
+                if (weaponEntity != null)
+                {
+                    PopulateWeaponStats(item, weaponEntity);
+                }
+
+                _weaponsList.Add(item);
             }
 
             OnPropertyChanged(nameof(WeaponsList));
         }
+
+        private void PopulateWeaponStats(EquipmentItem item, Weapon weapon)
+        {
+            item.Damage = GetWeaponIntStat(weapon, Command.DMG);
+            item.Attack = GetWeaponIntStat(weapon, Command.ATT);
+            item.Defense = GetWeaponIntStat(weapon, Command.DEF);
+            item.Length = GetWeaponIntStat(weapon, Command.LEN);
+            item.NumAttacks = GetWeaponIntStat(weapon, Command.NRATT);
+            item.Range = GetWeaponIntStat(weapon, Command.RANGE);
+            item.Aoe = GetWeaponIntStat(weapon, Command.AOE);
+            item.Precision = GetWeaponIntStat(weapon, Command.PREC);
+            item.DamageTypes = BuildWeaponDamageTypesString(weapon);
+        }
+
+        private int? GetWeaponIntStat(Weapon weapon, Command cmd)
+        {
+            // Handle #dmg specially - it's a WeaponDamage (StringProperty subclass)
+            if (cmd == Command.DMG)
+            {
+                var result = weapon.TryGet<WeaponDamage>(cmd, out var dmgProp);
+                if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+                {
+                    if (int.TryParse(dmgProp?.Value, out var dmgVal))
+                        return dmgVal;
+                }
+                return null;
+            }
+
+            // Standard IntProperty lookup
+            var intResult = weapon.TryGet<IntProperty>(cmd, out var prop);
+            if (intResult == ReturnType.TRUE || intResult == ReturnType.COPIED)
+                return prop?.Value;
+            return null;
+        }
+
+        private string BuildWeaponDamageTypesString(Weapon weapon)
+        {
+            var types = new List<string>();
+
+            // Physical damage types
+            if (HasWeaponFlag(weapon, Command.PIERCE)) types.Add("Pierce");
+            if (HasWeaponFlag(weapon, Command.SLASH)) types.Add("Slash");
+            if (HasWeaponFlag(weapon, Command.BLUNT)) types.Add("Blunt");
+
+            // Elemental damage types
+            if (HasWeaponFlag(weapon, Command.FIRE)) types.Add("Fire");
+            if (HasWeaponFlag(weapon, Command.COLD)) types.Add("Cold");
+            if (HasWeaponFlag(weapon, Command.SHOCK)) types.Add("Shock");
+            if (HasWeaponFlag(weapon, Command.POISON)) types.Add("Poison");
+            if (HasWeaponFlag(weapon, Command.ACID)) types.Add("Acid");
+            if (HasWeaponFlag(weapon, Command.MAGIC)) types.Add("Magic");
+
+            // Special modifiers
+            if (HasWeaponFlag(weapon, Command.ARMORPIERCING)) types.Add("AP");
+            if (HasWeaponFlag(weapon, Command.ARMORNEGATING)) types.Add("AN");
+
+            return string.Join(", ", types);
+        }
+
+        private bool HasWeaponFlag(Weapon weapon, Command cmd)
+        {
+            var result = weapon.TryGet<CommandProperty>(cmd, out _);
+            return result == ReturnType.TRUE || result == ReturnType.COPIED;
+        }
+
+        // Armor type mapping
+        private static readonly Dictionary<int, string> ArmorTypeNames = new()
+        {
+            {4, "Shield"}, {5, "Body Armor"}, {6, "Helmet"},
+            {9, "Crown"}, {10, "Barding"}
+        };
 
         /// <summary>
         /// Refresh armor list using generic layered reference lookup.
@@ -892,7 +972,7 @@ namespace Dom5Editor.UI.Views
 
             foreach (var (id, name, isInherited, isModified, isSessionEdit) in armors)
             {
-                _armorList.Add(new EquipmentItem
+                var item = new EquipmentItem
                 {
                     ID = id,
                     Name = name,
@@ -901,10 +981,39 @@ namespace Dom5Editor.UI.Views
                     IsSessionEdit = isSessionEdit,
                     SourceCommand = Command.ARMOR,
                     EntityType = "armor"
-                });
+                };
+
+                // Populate stats from resolved armor entity
+                var armorEntity = ResolveEntityReference(EntityType.ARMOR, id) as Armor;
+                if (armorEntity != null)
+                {
+                    PopulateArmorStats(item, armorEntity);
+                }
+
+                _armorList.Add(item);
             }
 
             OnPropertyChanged(nameof(ArmorList));
+        }
+
+        private void PopulateArmorStats(EquipmentItem item, Armor armor)
+        {
+            item.Protection = GetArmorIntStat(armor, Command.PROT);
+            item.Defense = GetArmorIntStat(armor, Command.DEF);
+            item.Encumbrance = GetArmorIntStat(armor, Command.ENC);
+
+            var typeVal = GetArmorIntStat(armor, Command.TYPE);
+            item.ArmorTypeName = typeVal.HasValue && ArmorTypeNames.TryGetValue(typeVal.Value, out var typeName)
+                ? typeName
+                : "Unknown";
+        }
+
+        private int? GetArmorIntStat(Armor armor, Command cmd)
+        {
+            var result = armor.TryGet<IntProperty>(cmd, out var prop);
+            if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+                return prop?.Value;
+            return null;
         }
 
         /// <summary>
@@ -942,6 +1051,59 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        // SearchableReferenceComboBox support - cached lists for stable references
+        private List<ReferenceItem> _availableWeaponsForSearch;
+        public IEnumerable<ReferenceItem> AvailableWeaponsForSearch
+        {
+            get
+            {
+                if (_availableWeaponsForSearch == null)
+                {
+                    _availableWeaponsForSearch = CachedWeapons
+                        .Select(w => new ReferenceItem { ID = w.ID, DisplayName = w.Name, Tag = w })
+                        .ToList();
+                }
+                return _availableWeaponsForSearch;
+            }
+        }
+
+        private List<ReferenceItem> _availableArmorForSearch;
+        public IEnumerable<ReferenceItem> AvailableArmorForSearch
+        {
+            get
+            {
+                if (_availableArmorForSearch == null)
+                {
+                    _availableArmorForSearch = CachedArmors
+                        .Select(a => new ReferenceItem { ID = a.ID, DisplayName = a.Name, Tag = a })
+                        .ToList();
+                }
+                return _availableArmorForSearch;
+            }
+        }
+
+        private int? _selectedWeaponIdToAdd;
+        public int? SelectedWeaponIdToAdd
+        {
+            get => _selectedWeaponIdToAdd;
+            set
+            {
+                _selectedWeaponIdToAdd = value;
+                OnPropertyChanged(nameof(SelectedWeaponIdToAdd));
+            }
+        }
+
+        private int? _selectedArmorIdToAdd;
+        public int? SelectedArmorIdToAdd
+        {
+            get => _selectedArmorIdToAdd;
+            set
+            {
+                _selectedArmorIdToAdd = value;
+                OnPropertyChanged(nameof(SelectedArmorIdToAdd));
+            }
+        }
+
         // Equipment Commands
         private ICommand _addWeaponCommand;
         public ICommand AddWeaponCommand => _addWeaponCommand ??= new RelayCommand<AvailableEquipmentItem>(AddWeapon);
@@ -954,6 +1116,65 @@ namespace Dom5Editor.UI.Views
 
         private ICommand _removeArmorCommand;
         public ICommand RemoveArmorCommand => _removeArmorCommand ??= new RelayCommand<EquipmentItem>(RemoveArmor);
+
+        // Commands for SearchableReferenceComboBox (ID-based selection)
+        private ICommand _addWeaponByIdCommand;
+        public ICommand AddWeaponByIdCommand => _addWeaponByIdCommand ??= new RelayCommand<int>(AddWeaponById);
+
+        private ICommand _addArmorByIdCommand;
+        public ICommand AddArmorByIdCommand => _addArmorByIdCommand ??= new RelayCommand<int>(AddArmorById);
+
+        /// <summary>
+        /// Adds a weapon to the monster by ID.
+        /// </summary>
+        public void AddWeaponById(int id)
+        {
+            if (id <= 0) return;
+
+            var newProp = new WeaponRef { Parent = _entity, Command = Command.WEAPON };
+            newProp.ID = id;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Weapon #{id}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            RecordPropertyChangeInSession(newProp);
+            HasSessionChanges = true;
+            RefreshWeaponsList();
+        }
+
+        /// <summary>
+        /// Adds armor to the monster by ID. Called directly from view event handlers.
+        /// </summary>
+        public void AddArmorById(int id)
+        {
+            if (id <= 0) return;
+
+            var newProp = new ArmorRef { Parent = _entity, Command = Command.ARMOR };
+            newProp.ID = id;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Armor #{id}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            RecordPropertyChangeInSession(newProp);
+            HasSessionChanges = true;
+            RefreshArmorList();
+        }
 
         private void AddWeapon(AvailableEquipmentItem weapon)
         {
@@ -973,6 +1194,7 @@ namespace Dom5Editor.UI.Views
                 _entity.AddProperty(newProp);
             }
 
+            RecordPropertyChangeInSession(newProp);
             HasSessionChanges = true;
             RefreshWeaponsList();
         }
@@ -1019,6 +1241,7 @@ namespace Dom5Editor.UI.Views
                 _entity.AddProperty(newProp);
             }
 
+            RecordPropertyChangeInSession(newProp);
             HasSessionChanges = true;
             RefreshArmorList();
         }

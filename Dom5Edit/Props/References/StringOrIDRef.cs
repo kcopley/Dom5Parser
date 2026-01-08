@@ -21,7 +21,13 @@ namespace Dom5Edit.Props
             set
             {
                 _id = value;
-                if (Parent.ParentMod.IsLoaded)
+                // Setting an ID means we have a value
+                if (value != 0)
+                {
+                    HasValue = true;
+                    IsStringRef = false;
+                }
+                if (Parent?.ParentMod?.IsLoaded == true)
                 {
                     Resolve();
                 }

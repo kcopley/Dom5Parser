@@ -62,6 +62,24 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        /// <summary>
+        /// Gets the CopyItem reference ID for navigation.
+        /// </summary>
+        public int CopyItemId
+        {
+            get
+            {
+                var result = _entity.TryGet<ItemRef>(Command.COPYITEM, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.ID;
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
+
         // ========================================
         // Slot Type Display (for header and equipment logic)
         // ========================================
