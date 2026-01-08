@@ -19,7 +19,9 @@ namespace Dom5Editor.UI.Controls
     {
         private string _displayName;
         private string _value;
+        private string _value2;
         private bool _hasValue;
+        private bool _hasSecondValue;
         private bool _isModified;
         private bool _isSessionEdit;
         private bool _isInherited;
@@ -36,6 +38,17 @@ namespace Dom5Editor.UI.Controls
         /// Raised when the Value property changes due to user editing.
         /// </summary>
         public event EventHandler<int> ValueChanged;
+
+        /// <summary>
+        /// Raised when the Value2 property changes due to user editing (for IntIntProperty badges).
+        /// </summary>
+        public event EventHandler<int> Value2Changed;
+
+        /// <summary>
+        /// Raised when either Value or Value2 changes for IntIntProperty badges.
+        /// Args: (value1, value2)
+        /// </summary>
+        public event EventHandler<(int, int)> IntIntValueChanged;
 
         /// <summary>
         /// Raised when the reference selection changes due to user editing.
@@ -84,6 +97,45 @@ namespace Dom5Editor.UI.Controls
                             IsSessionEdit = true;
                         }
                         ValueChanged?.Invoke(this, intVal);
+                        // Also fire IntIntValueChanged if this is a two-value badge
+                        if (HasSecondValue && int.TryParse(_value2, out var val2))
+                        {
+                            IntIntValueChanged?.Invoke(this, (intVal, val2));
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Second value string (for IntIntProperty badges). Null for single-value badges.
+        /// </summary>
+        public string Value2
+        {
+            get => _value2;
+            set
+            {
+                if (_value2 != value)
+                {
+                    _value2 = value;
+                    OnPropertyChanged();
+                    // Fire Value2Changed if we can parse it as int
+                    if (int.TryParse(value, out var intVal))
+                    {
+                        if (IsInherited)
+                        {
+                            IsInherited = false;
+                        }
+                        if (!IsSessionEdit)
+                        {
+                            IsSessionEdit = true;
+                        }
+                        Value2Changed?.Invoke(this, intVal);
+                        // Also fire IntIntValueChanged if both values are valid
+                        if (int.TryParse(_value, out var val1))
+                        {
+                            IntIntValueChanged?.Invoke(this, (val1, intVal));
+                        }
                     }
                 }
             }
@@ -96,6 +148,15 @@ namespace Dom5Editor.UI.Controls
         {
             get => _hasValue;
             set { _hasValue = value; OnPropertyChanged(); }
+        }
+
+        /// <summary>
+        /// True if this badge has a second editable value (for IntIntProperty).
+        /// </summary>
+        public bool HasSecondValue
+        {
+            get => _hasSecondValue;
+            set { _hasSecondValue = value; OnPropertyChanged(); }
         }
 
         /// <summary>
@@ -376,6 +437,83 @@ namespace Dom5Editor.UI.Controls
                 Background = new SolidColorBrush(backgroundColor),
                 BorderBrush = new SolidColorBrush(borderColor),
                 Foreground = new SolidColorBrush(foregroundColor),
+                IsModified = isModified,
+                IsSessionEdit = isSessionEdit
+            };
+        }
+
+        /// <summary>
+        /// Creates a two-value property (for IntIntProperty, e.g., #gems, #magicskill).
+        /// </summary>
+        public static PropertyItem CreateIntIntValue(Command command, string displayName, int value1, int value2,
+            bool isModified = false, bool isSessionEdit = false)
+        {
+            return new PropertyItem
+            {
+                Command = command,
+                DisplayName = displayName,
+                Value = value1.ToString(),
+                Value2 = value2.ToString(),
+                HasValue = true,
+                HasSecondValue = true,
+                IsModified = isModified,
+                IsSessionEdit = isSessionEdit
+            };
+        }
+
+        /// <summary>
+        /// Creates a colored two-value property.
+        /// </summary>
+        public static PropertyItem CreateColoredIntIntValue(Command command, string displayName, int value1, int value2,
+            Color backgroundColor, Color borderColor, Color foregroundColor,
+            bool isModified = false, bool isSessionEdit = false)
+        {
+            return new PropertyItem
+            {
+                Command = command,
+                DisplayName = displayName,
+                Value = value1.ToString(),
+                Value2 = value2.ToString(),
+                HasValue = true,
+                HasSecondValue = true,
+                Background = new SolidColorBrush(backgroundColor),
+                BorderBrush = new SolidColorBrush(borderColor),
+                Foreground = new SolidColorBrush(foregroundColor),
+                IsModified = isModified,
+                IsSessionEdit = isSessionEdit
+            };
+        }
+
+        /// <summary>
+        /// Creates a string value property (for StringProperty, e.g., #descr).
+        /// </summary>
+        public static PropertyItem CreateStringValue(Command command, string displayName, string value,
+            bool isModified = false, bool isSessionEdit = false)
+        {
+            return new PropertyItem
+            {
+                Command = command,
+                DisplayName = displayName,
+                Value = value ?? string.Empty,
+                HasValue = true,
+                IsModified = isModified,
+                IsSessionEdit = isSessionEdit
+            };
+        }
+
+        /// <summary>
+        /// Creates a bitmask value property (for BitmaskProperty, e.g., #itemslots).
+        /// Value is stored as a string representation of the ulong bitmask.
+        /// </summary>
+        public static PropertyItem CreateBitmaskValue(Command command, string displayName, ulong value,
+            bool isModified = false, bool isSessionEdit = false)
+        {
+            return new PropertyItem
+            {
+                Command = command,
+                DisplayName = displayName,
+                Value = value.ToString(),
+                HasValue = true,
                 IsModified = isModified,
                 IsSessionEdit = isSessionEdit
             };

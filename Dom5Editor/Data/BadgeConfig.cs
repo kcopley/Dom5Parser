@@ -185,6 +185,21 @@ namespace Dom5Editor.Data
         public bool IsBitmaskChance => Type == "bitmaskChance";
 
         /// <summary>
+        /// Returns true if this is a two-integer value command (e.g., #gems, #magicskill).
+        /// </summary>
+        public bool IsIntInt => Type == "intint";
+
+        /// <summary>
+        /// Returns true if this is a string value command (e.g., #descr).
+        /// </summary>
+        public bool IsString => Type == "string";
+
+        /// <summary>
+        /// Returns true if this is a bitmask value command (e.g., #itemslots).
+        /// </summary>
+        public bool IsBitmask => Type == "bitmask";
+
+        /// <summary>
         /// Returns true if this command has custom colors.
         /// </summary>
         public bool HasColors => !string.IsNullOrEmpty(Color);

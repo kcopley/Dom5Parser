@@ -67,16 +67,36 @@ The JSON uses a `sections` array with each section having a renderer type:
       "commands": [
         { "name": "fireres", "display": "Fire", "type": "int", "default": 0, "color": "#8B4513", "borderColor": "#FF8C00" }
       ]
+    },
+    {
+      "id": "equipment",
+      "displayName": "EQUIPMENT",
+      "renderer": "badge",
+      "commands": [
+        { "name": "weapon", "display": "Weapon", "type": "ref", "refType": "weapon" },
+        { "name": "armor", "display": "Armor", "type": "ref", "refType": "armor" }
+      ]
+    },
+    {
+      "id": "resources",
+      "displayName": "RESOURCES",
+      "renderer": "badge",
+      "commands": [
+        { "name": "gems", "display": "Gems", "type": "intint", "description": "Path index and gem count" },
+        { "name": "itemslots", "display": "Item Slots", "type": "bitmask" },
+        { "name": "descr", "display": "Description", "type": "string" }
+      ]
     }
   ],
   "layout": {
-    "monster": ["stats", "magicpaths", "types", "general", "combat", "resistances"]
+    "monster": ["stats", "magicpaths", "types", "general", "combat", "resistances", "equipment", "resources"]
   },
   "renderers": {
-    "badge": { "description": "Standard compact badge", "supportedTypes": ["flag", "int"] },
-    "coloredBadge": { "description": "Colored badge for resistances", "supportedTypes": ["int"], "requiresColor": true },
+    "badge": { "description": "Standard compact badge", "supportedTypes": ["flag", "int", "intint", "string", "bitmask", "ref"] },
+    "coloredBadge": { "description": "Colored badge for resistances", "supportedTypes": ["int", "intint"], "requiresColor": true },
     "statsGrid": { "description": "3-column grid layout", "supportedTypes": ["int"], "columns": 3 },
-    "magicPathEditor": { "description": "Magic path editor with colored levels", "supportedTypes": ["path", "randompaths"] }
+    "magicPathEditor": { "description": "Magic path editor with colored levels", "supportedTypes": ["path", "randompaths"] },
+    "customMagicEditor": { "description": "Custom magic editor with path selection", "supportedTypes": ["bitmaskChance"] }
   }
 }
 ```
@@ -85,18 +105,23 @@ The JSON uses a `sections` array with each section having a renderer type:
 
 - **flag**: Boolean command (e.g., `#flying`, `#undead`)
 - **int**: Integer value command (e.g., `#hp 50`, `#fireres 5`)
+- **intint**: Two integer values command (e.g., `#gems 2 5`, `#magicskill 1 3`)
+- **string**: String value command (e.g., `#descr "Description text"`)
+- **bitmask**: Bitmask value command (e.g., `#itemslots 28672`)
 - **path**: Magic path level command (for magicPathEditor)
 - **randompaths**: Random magic configuration (for magicPathEditor)
 - **ref**: Entity reference command (e.g., `#addrecunit`, `#startsite`) - displays as searchable selector for editable badges
+- **bitmaskChance**: Special bitmask+chance command (for customMagicEditor, e.g., `#custommagic`)
 
 ### Renderers
 
 | Renderer | Description | Supported Types |
 |----------|-------------|-----------------|
-| `badge` | Standard compact badge with optional value | flag, int, ref |
-| `coloredBadge` | Colored badge for resistances/special values | int (requires color/borderColor) |
+| `badge` | Standard compact badge with optional value | flag, int, intint, string, bitmask, ref |
+| `coloredBadge` | Colored badge for resistances/special values | int, intint (requires color/borderColor) |
 | `statsGrid` | 3-column grid layout for core stats | int |
 | `magicPathEditor` | Custom magic path editor with colored level badges | path, randompaths |
+| `customMagicEditor` | Custom magic editor with path selection | bitmaskChance |
 
 ### Reference Badge Behavior
 

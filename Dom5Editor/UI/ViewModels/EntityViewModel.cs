@@ -179,13 +179,7 @@ namespace Dom5Editor.UI.Views
             _mainViewModel?.CachedNations ?? Array.Empty<AvailableEquipmentItem>();
 
         // Cached ReferenceItem lists (lazily converted from AvailableEquipmentItem)
-        private static IReadOnlyList<ReferenceItem> _cachedMonsterRefs;
-        private static IReadOnlyList<ReferenceItem> _cachedWeaponRefs;
-        private static IReadOnlyList<ReferenceItem> _cachedArmorRefs;
-        private static IReadOnlyList<ReferenceItem> _cachedItemRefs;
-        private static IReadOnlyList<ReferenceItem> _cachedSpellRefs;
-        private static IReadOnlyList<ReferenceItem> _cachedSiteRefs;
-        private static IReadOnlyList<ReferenceItem> _cachedNationRefs;
+        private static readonly Dictionary<string, IReadOnlyList<ReferenceItem>> _referenceItemCaches = new();
 
         /// <summary>
         /// Gets available ReferenceItems for a given reference type (monster, weapon, etc.).
@@ -196,25 +190,35 @@ namespace Dom5Editor.UI.Views
             if (string.IsNullOrEmpty(refType))
                 return null;
 
-            switch (refType.ToLowerInvariant())
+            var key = refType.ToLowerInvariant();
+            if (_referenceItemCaches.TryGetValue(key, out var cached))
+                return cached;
+
+            var source = GetCachedListForType(key);
+            if (source == null)
+                return null;
+
+            var converted = ConvertToReferenceItems(source);
+            _referenceItemCaches[key] = converted;
+            return converted;
+        }
+
+        /// <summary>
+        /// Gets the cached AvailableEquipmentItem list for a reference type.
+        /// </summary>
+        private static IReadOnlyList<AvailableEquipmentItem> GetCachedListForType(string refType)
+        {
+            return refType switch
             {
-                case "monster":
-                    return _cachedMonsterRefs ??= ConvertToReferenceItems(CachedMonsters);
-                case "weapon":
-                    return _cachedWeaponRefs ??= ConvertToReferenceItems(CachedWeapons);
-                case "armor":
-                    return _cachedArmorRefs ??= ConvertToReferenceItems(CachedArmors);
-                case "item":
-                    return _cachedItemRefs ??= ConvertToReferenceItems(CachedItems);
-                case "spell":
-                    return _cachedSpellRefs ??= ConvertToReferenceItems(CachedSpells);
-                case "site":
-                    return _cachedSiteRefs ??= ConvertToReferenceItems(CachedSites);
-                case "nation":
-                    return _cachedNationRefs ??= ConvertToReferenceItems(CachedNations);
-                default:
-                    return null;
-            }
+                "monster" => CachedMonsters,
+                "weapon" => CachedWeapons,
+                "armor" => CachedArmors,
+                "item" => CachedItems,
+                "spell" => CachedSpells,
+                "site" => CachedSites,
+                "nation" => CachedNations,
+                _ => null
+            };
         }
 
         /// <summary>
@@ -243,13 +247,7 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         public static void ClearReferenceItemCaches()
         {
-            _cachedMonsterRefs = null;
-            _cachedWeaponRefs = null;
-            _cachedArmorRefs = null;
-            _cachedItemRefs = null;
-            _cachedSpellRefs = null;
-            _cachedSiteRefs = null;
-            _cachedNationRefs = null;
+            _referenceItemCaches.Clear();
         }
 
         /// <summary>
@@ -378,6 +376,13 @@ namespace Dom5Editor.UI.Views
                 bool vanillaIsCopied = false;
                 int? vanillaValue = null;
                 bool vanillaFlagValue = false;
+                // For IntIntProperty
+                int? vanillaValue1 = null;
+                int? vanillaValue2 = null;
+                // For StringProperty
+                string vanillaStringValue = null;
+                // For BitmaskProperty
+                ulong? vanillaBitmaskValue = null;
 
                 if (vanillaEntity != null)
                 {
@@ -398,6 +403,37 @@ namespace Dom5Editor.UI.Views
                             vanillaIsCopied = vanillaResult == ReturnType.COPIED;
                         }
                     }
+                    else if (cmdDef.IsIntInt)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<IntIntProperty>(command, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                        {
+                            vanillaValue1 = vanillaProp?.Value1;
+                            vanillaValue2 = vanillaProp?.Value2;
+                            vanillaHasValue = true;
+                            vanillaIsCopied = vanillaResult == ReturnType.COPIED;
+                        }
+                    }
+                    else if (cmdDef.IsString)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<StringProperty>(command, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                        {
+                            vanillaStringValue = vanillaProp?.Value;
+                            vanillaHasValue = true;
+                            vanillaIsCopied = vanillaResult == ReturnType.COPIED;
+                        }
+                    }
+                    else if (cmdDef.IsBitmask)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<BitmaskProperty>(command, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                        {
+                            vanillaBitmaskValue = vanillaProp?.Value;
+                            vanillaHasValue = true;
+                            vanillaIsCopied = vanillaResult == ReturnType.COPIED;
+                        }
+                    }
                 }
 
                 // Layer 2: Get current entity value (mod + session, includes mod copystats)
@@ -406,6 +442,13 @@ namespace Dom5Editor.UI.Views
                 bool entityHasDirect = false; // Has the property directly (not from copystats)
                 int? entityValue = null;
                 bool entityFlagValue = false;
+                // For IntIntProperty
+                int? entityValue1 = null;
+                int? entityValue2 = null;
+                // For StringProperty
+                string entityStringValue = null;
+                // For BitmaskProperty
+                ulong? entityBitmaskValue = null;
 
                 if (cmdDef.IsFlag)
                 {
@@ -426,11 +469,52 @@ namespace Dom5Editor.UI.Views
                         entityHasDirect = entityResult == ReturnType.TRUE;
                     }
                 }
+                else if (cmdDef.IsIntInt)
+                {
+                    var entityResult = _entity.TryGet<IntIntProperty>(command, out var entityProp);
+                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                    {
+                        entityValue1 = entityProp?.Value1;
+                        entityValue2 = entityProp?.Value2;
+                        entityHasValue = true;
+                        entityIsCopied = entityResult == ReturnType.COPIED;
+                        entityHasDirect = entityResult == ReturnType.TRUE;
+                    }
+                }
+                else if (cmdDef.IsString)
+                {
+                    var entityResult = _entity.TryGet<StringProperty>(command, out var entityProp);
+                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                    {
+                        entityStringValue = entityProp?.Value;
+                        entityHasValue = true;
+                        entityIsCopied = entityResult == ReturnType.COPIED;
+                        entityHasDirect = entityResult == ReturnType.TRUE;
+                    }
+                }
+                else if (cmdDef.IsBitmask)
+                {
+                    var entityResult = _entity.TryGet<BitmaskProperty>(command, out var entityProp);
+                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                    {
+                        entityBitmaskValue = entityProp?.Value;
+                        entityHasValue = true;
+                        entityIsCopied = entityResult == ReturnType.COPIED;
+                        entityHasDirect = entityResult == ReturnType.TRUE;
+                    }
+                }
 
                 // Determine effective value (entity overrides vanilla)
                 bool hasValue = entityHasValue || vanillaHasValue;
                 int? effectiveValue = entityHasValue ? entityValue : vanillaValue;
                 bool effectiveFlagValue = entityHasValue ? entityFlagValue : vanillaFlagValue;
+                // For IntIntProperty
+                int effectiveValue1 = entityHasValue ? (entityValue1 ?? 0) : (vanillaValue1 ?? 0);
+                int effectiveValue2 = entityHasValue ? (entityValue2 ?? 0) : (vanillaValue2 ?? 0);
+                // For StringProperty
+                string effectiveStringValue = entityHasValue ? entityStringValue : vanillaStringValue;
+                // For BitmaskProperty
+                ulong effectiveBitmaskValue = entityHasValue ? (entityBitmaskValue ?? 0) : (vanillaBitmaskValue ?? 0);
 
                 // When showDefaults is true and no value exists, use the default from JSON
                 bool usingDefault = false;
@@ -461,10 +545,45 @@ namespace Dom5Editor.UI.Views
                     // Also inherited if using default value (no actual property set)
                     isInherited = usingDefault || (!entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue)));
                 }
+                else if (cmdDef.IsIntInt)
+                {
+                    // Modified if entity has direct value different from vanilla
+                    isModified = entityHasDirect && (!vanillaHasValue || entityValue1 != vanillaValue1 || entityValue2 != vanillaValue2);
+                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                }
+                else if (cmdDef.IsString)
+                {
+                    // Modified if entity has direct value different from vanilla
+                    isModified = entityHasDirect && (!vanillaHasValue || entityStringValue != vanillaStringValue);
+                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                }
+                else if (cmdDef.IsBitmask)
+                {
+                    // Modified if entity has direct value different from vanilla
+                    isModified = entityHasDirect && (!vanillaHasValue || entityBitmaskValue != vanillaBitmaskValue);
+                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                }
 
                 if (hasValue && (cmdDef.IsFlag ? effectiveFlagValue : true))
                 {
-                    var badge = BadgeConfigLoader.CreatePropertyItem(cmdDef, effectiveValue, isModified, isSessionEdit);
+                    PropertyItem badge;
+                    if (cmdDef.IsIntInt)
+                    {
+                        badge = BadgeConfigLoader.CreateIntIntPropertyItem(cmdDef, effectiveValue1, effectiveValue2, isModified, isSessionEdit);
+                    }
+                    else if (cmdDef.IsString)
+                    {
+                        badge = BadgeConfigLoader.CreateStringPropertyItem(cmdDef, effectiveStringValue, isModified, isSessionEdit);
+                    }
+                    else if (cmdDef.IsBitmask)
+                    {
+                        badge = BadgeConfigLoader.CreateBitmaskPropertyItem(cmdDef, effectiveBitmaskValue, isModified, isSessionEdit);
+                    }
+                    else
+                    {
+                        badge = BadgeConfigLoader.CreatePropertyItem(cmdDef, effectiveValue, isModified, isSessionEdit);
+                    }
+
                     // Can only remove if:
                     // 1. Section is not read-only (from JSON config)
                     // 2. Property is directly on the entity (not inherited from copystats)
@@ -1291,12 +1410,17 @@ namespace Dom5Editor.UI.Views
         // Property Access Helpers
         // ========================================
 
-        protected string GetStringProperty(Command command)
+        /// <summary>
+        /// Generic property getter with VanillaModified fallback support.
+        /// Returns the property from the current entity, or falls back to vanilla for VanillaModified entities.
+        /// This is the base method for all property access with layered fallback.
+        /// </summary>
+        protected T GetProperty<T>(Command command) where T : Property, new()
         {
-            var result = _entity.TryGet<StringProperty>(command, out var prop);
+            var result = _entity.TryGet<T>(command, out var prop);
             if (result == ReturnType.TRUE || result == ReturnType.COPIED)
             {
-                return prop?.Value ?? string.Empty;
+                return prop;
             }
 
             // For VanillaModified entities, fall back to vanilla value if not in mod
@@ -1305,15 +1429,28 @@ namespace Dom5Editor.UI.Views
                 var vanillaEntity = GetVanillaEntity();
                 if (vanillaEntity != null)
                 {
-                    var vanillaResult = vanillaEntity.TryGet<StringProperty>(command, out var vanillaProp);
+                    var vanillaResult = vanillaEntity.TryGet<T>(command, out var vanillaProp);
                     if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
                     {
-                        return vanillaProp?.Value ?? string.Empty;
+                        return vanillaProp;
                     }
                 }
             }
 
-            return string.Empty;
+            return null;
+        }
+
+        /// <summary>
+        /// Checks if a property exists, with VanillaModified fallback support.
+        /// </summary>
+        protected bool HasProperty<T>(Command command) where T : Property, new()
+        {
+            return GetProperty<T>(command) != null;
+        }
+
+        protected string GetStringProperty(Command command)
+        {
+            return GetProperty<StringProperty>(command)?.Value ?? string.Empty;
         }
 
         protected void SetStringProperty(Command command, string value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
@@ -1342,64 +1479,25 @@ namespace Dom5Editor.UI.Views
 
         protected int? GetIntProperty(Command command)
         {
-            var result = _entity.TryGet<IntProperty>(command, out var prop);
-            if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-            {
-                return prop?.Value;
-            }
-
-            // For VanillaModified entities, fall back to vanilla value if not in mod
-            if (_source == EntitySource.VanillaModified)
-            {
-                var vanillaEntity = GetVanillaEntity();
-                if (vanillaEntity != null)
-                {
-                    var vanillaResult = vanillaEntity.TryGet<IntProperty>(command, out var vanillaProp);
-                    if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
-                    {
-                        return vanillaProp?.Value;
-                    }
-                }
-            }
-
-            return null;
+            return GetProperty<IntProperty>(command)?.Value;
         }
 
         /// <summary>
         /// Gets a reference property with VanillaModified fallback support.
-        /// Returns the property from the current entity, or falls back to vanilla for VanillaModified entities.
+        /// Alias for GetProperty&lt;T&gt; for backwards compatibility.
         /// </summary>
         protected T GetReferenceProperty<T>(Command command) where T : Property, new()
         {
-            var result = _entity.TryGet<T>(command, out var prop);
-            if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-            {
-                return prop;
-            }
-
-            // For VanillaModified entities, fall back to vanilla value if not in mod
-            if (_source == EntitySource.VanillaModified)
-            {
-                var vanillaEntity = GetVanillaEntity();
-                if (vanillaEntity != null)
-                {
-                    var vanillaResult = vanillaEntity.TryGet<T>(command, out var vanillaProp);
-                    if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
-                    {
-                        return vanillaProp;
-                    }
-                }
-            }
-
-            return null;
+            return GetProperty<T>(command);
         }
 
         /// <summary>
         /// Checks if a reference property exists, with VanillaModified fallback support.
+        /// Alias for HasProperty&lt;T&gt; for backwards compatibility.
         /// </summary>
         protected bool HasReferenceProperty<T>(Command command) where T : Property, new()
         {
-            return GetReferenceProperty<T>(command) != null;
+            return HasProperty<T>(command);
         }
 
         protected void SetIntProperty(Command command, int? value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
@@ -1449,24 +1547,7 @@ namespace Dom5Editor.UI.Views
 
         protected bool GetCommandProperty(Command command)
         {
-            var result = _entity.TryGet<CommandProperty>(command, out var prop);
-            if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-            {
-                return true;
-            }
-
-            // For VanillaModified entities, fall back to vanilla value if not in mod
-            if (_source == EntitySource.VanillaModified)
-            {
-                var vanillaEntity = GetVanillaEntity();
-                if (vanillaEntity != null)
-                {
-                    var vanillaResult = vanillaEntity.TryGet<CommandProperty>(command, out _);
-                    return vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED;
-                }
-            }
-
-            return false;
+            return HasProperty<CommandProperty>(command);
         }
 
         protected void SetCommandProperty(Command command, bool value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
@@ -1500,9 +1581,13 @@ namespace Dom5Editor.UI.Views
             }
         }
 
-        protected bool IsIntPropertyInherited(Command command)
+        /// <summary>
+        /// Generic method to check if a property is inherited (from copystats).
+        /// Returns true if the property comes from a copystats chain rather than being set directly.
+        /// </summary>
+        protected bool IsPropertyInherited<T>(Command command) where T : Property, new()
         {
-            var result = _entity.TryGet<IntProperty>(command, out _);
+            var result = _entity.TryGet<T>(command, out _);
             if (result == ReturnType.COPIED)
                 return true;
 
@@ -1512,52 +1597,27 @@ namespace Dom5Editor.UI.Views
                 var vanillaEntity = GetVanillaEntity();
                 if (vanillaEntity != null)
                 {
-                    var vanillaResult = vanillaEntity.TryGet<IntProperty>(command, out _);
+                    var vanillaResult = vanillaEntity.TryGet<T>(command, out _);
                     return vanillaResult == ReturnType.COPIED;
                 }
             }
 
             return false;
+        }
+
+        protected bool IsIntPropertyInherited(Command command)
+        {
+            return IsPropertyInherited<IntProperty>(command);
         }
 
         protected bool IsStringPropertyInherited(Command command)
         {
-            var result = _entity.TryGet<StringProperty>(command, out _);
-            if (result == ReturnType.COPIED)
-                return true;
-
-            // For VanillaModified entities, check if vanilla value is inherited
-            if (result == ReturnType.FALSE && _source == EntitySource.VanillaModified)
-            {
-                var vanillaEntity = GetVanillaEntity();
-                if (vanillaEntity != null)
-                {
-                    var vanillaResult = vanillaEntity.TryGet<StringProperty>(command, out _);
-                    return vanillaResult == ReturnType.COPIED;
-                }
-            }
-
-            return false;
+            return IsPropertyInherited<StringProperty>(command);
         }
 
         protected bool IsCommandPropertyInherited(Command command)
         {
-            var result = _entity.TryGet<CommandProperty>(command, out _);
-            if (result == ReturnType.COPIED)
-                return true;
-
-            // For VanillaModified entities, check if vanilla value is inherited
-            if (result == ReturnType.FALSE && _source == EntitySource.VanillaModified)
-            {
-                var vanillaEntity = GetVanillaEntity();
-                if (vanillaEntity != null)
-                {
-                    var vanillaResult = vanillaEntity.TryGet<CommandProperty>(command, out _);
-                    return vanillaResult == ReturnType.COPIED;
-                }
-            }
-
-            return false;
+            return IsPropertyInherited<CommandProperty>(command);
         }
 
         // ========================================
@@ -1577,18 +1637,18 @@ namespace Dom5Editor.UI.Views
         // ========================================
 
         /// <summary>
-        /// Gets the original int value (from mod or vanilla, before any session edits).
+        /// Generic method to get the original property (from mod or vanilla, before any session edits).
         /// Used to detect when a value is reset to its original state.
         /// </summary>
-        protected int? GetOriginalIntValue(Command command)
+        protected T GetOriginalProperty<T>(Command command) where T : Property, new()
         {
             // For vanilla entities, the original is the vanilla value
             var vanillaEntity = GetVanillaEntity();
             if (vanillaEntity != null)
             {
-                var result = vanillaEntity.TryGet<IntProperty>(command, out var prop);
+                var result = vanillaEntity.TryGet<T>(command, out var prop);
                 if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-                    return prop?.Value;
+                    return prop;
             }
 
             // For mod entities (FromMod), check if there's a value in the loaded mod
@@ -1599,9 +1659,9 @@ namespace Dom5Editor.UI.Views
                     _changesMod.LoadedMod.Database.TryGetValue(entityType.Value, out var modSet) &&
                     modSet.TryGetValue(_entity.ID, out var modEntity))
                 {
-                    var result = modEntity.TryGet<IntProperty>(command, out var prop);
+                    var result = modEntity.TryGet<T>(command, out var prop);
                     if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-                        return prop?.Value;
+                        return prop;
                 }
             }
 
@@ -1609,61 +1669,26 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
-        /// Gets the original string value (from mod or vanilla, before any session edits).
+        /// Checks if an original property exists (from mod or vanilla).
         /// </summary>
-        protected string GetOriginalStringValue(Command command)
+        protected bool HasOriginalProperty<T>(Command command) where T : Property, new()
         {
-            var vanillaEntity = GetVanillaEntity();
-            if (vanillaEntity != null)
-            {
-                var result = vanillaEntity.TryGet<StringProperty>(command, out var prop);
-                if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-                    return prop?.Value ?? string.Empty;
-            }
-
-            if (_source == EntitySource.FromMod && _changesMod?.LoadedMod != null)
-            {
-                var entityType = GetEntityTypeFromEntity(_entity);
-                if (entityType.HasValue &&
-                    _changesMod.LoadedMod.Database.TryGetValue(entityType.Value, out var modSet) &&
-                    modSet.TryGetValue(_entity.ID, out var modEntity))
-                {
-                    var result = modEntity.TryGet<StringProperty>(command, out var prop);
-                    if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-                        return prop?.Value ?? string.Empty;
-                }
-            }
-
-            return string.Empty;
+            return GetOriginalProperty<T>(command) != null;
         }
 
-        /// <summary>
-        /// Gets the original command (boolean) value (from mod or vanilla, before any session edits).
-        /// </summary>
+        protected int? GetOriginalIntValue(Command command)
+        {
+            return GetOriginalProperty<IntProperty>(command)?.Value;
+        }
+
+        protected string GetOriginalStringValue(Command command)
+        {
+            return GetOriginalProperty<StringProperty>(command)?.Value ?? string.Empty;
+        }
+
         protected bool GetOriginalCommandValue(Command command)
         {
-            var vanillaEntity = GetVanillaEntity();
-            if (vanillaEntity != null)
-            {
-                var result = vanillaEntity.TryGet<CommandProperty>(command, out _);
-                if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-                    return true;
-            }
-
-            if (_source == EntitySource.FromMod && _changesMod?.LoadedMod != null)
-            {
-                var entityType = GetEntityTypeFromEntity(_entity);
-                if (entityType.HasValue &&
-                    _changesMod.LoadedMod.Database.TryGetValue(entityType.Value, out var modSet) &&
-                    modSet.TryGetValue(_entity.ID, out var modEntity))
-                {
-                    var result = modEntity.TryGet<CommandProperty>(command, out _);
-                    if (result == ReturnType.TRUE || result == ReturnType.COPIED)
-                        return true;
-                }
-            }
-
-            return false;
+            return HasOriginalProperty<CommandProperty>(command);
         }
 
         /// <summary>
@@ -1727,28 +1752,18 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
-        /// Checks if an int property has a session edit that can be reset.
+        /// Checks if a property has a session edit that can be reset.
+        /// Works for any property type (int, string, command).
         /// </summary>
-        public bool CanResetIntProperty(Command command)
+        public bool CanResetProperty(Command command)
         {
             return _changesMod?.IsPropertyChanged(_entity, command) == true;
         }
 
-        /// <summary>
-        /// Checks if a string property has a session edit that can be reset.
-        /// </summary>
-        public bool CanResetStringProperty(Command command)
-        {
-            return _changesMod?.IsPropertyChanged(_entity, command) == true;
-        }
-
-        /// <summary>
-        /// Checks if a command property has a session edit that can be reset.
-        /// </summary>
-        public bool CanResetCommandProperty(Command command)
-        {
-            return _changesMod?.IsPropertyChanged(_entity, command) == true;
-        }
+        // Type-specific aliases for backwards compatibility
+        public bool CanResetIntProperty(Command command) => CanResetProperty(command);
+        public bool CanResetStringProperty(Command command) => CanResetProperty(command);
+        public bool CanResetCommandProperty(Command command) => CanResetProperty(command);
 
         /// <summary>
         /// Gets the vanilla version of this entity for comparison.
@@ -1802,22 +1817,24 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
-        /// Checks if an int property differs from vanilla value.
+        /// Generic method to check if a property differs from vanilla value.
         /// Returns true if the value is different from vanilla (mod change).
         /// </summary>
-        protected bool IsIntPropertyModifiedFromVanilla(Command command)
+        /// <param name="command">The command to check</param>
+        /// <param name="valuesEqual">Optional function to compare property values. If null, only presence is checked.</param>
+        protected bool IsPropertyModifiedFromVanilla<T>(Command command, Func<T, T, bool> valuesEqual = null) where T : Property, new()
         {
             var vanillaEntity = GetVanillaEntity();
             if (vanillaEntity == null)
             {
                 // No vanilla entity - if property exists, it's "modified" (new)
-                var result = _entity.TryGet<IntProperty>(command, out _);
+                var result = _entity.TryGet<T>(command, out _);
                 return result == ReturnType.TRUE;
             }
 
             // Get current value from mod entity
-            var currentResult = _entity.TryGet<IntProperty>(command, out var currentProp);
-            var vanillaResult = vanillaEntity.TryGet<IntProperty>(command, out var vanillaProp);
+            var currentResult = _entity.TryGet<T>(command, out var currentProp);
+            var vanillaResult = vanillaEntity.TryGet<T>(command, out var vanillaProp);
 
             bool currentHasValue = currentResult == ReturnType.TRUE || currentResult == ReturnType.COPIED;
             bool vanillaHasValue = vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED;
@@ -1833,65 +1850,27 @@ namespace Dom5Editor.UI.Views
             if (!currentHasValue && !vanillaHasValue)
                 return false;
 
-            return currentProp?.Value != vanillaProp?.Value;
+            // If no value comparator provided, presence check is sufficient (for CommandProperty)
+            if (valuesEqual == null)
+                return false;
+
+            // Values differ if they're NOT equal
+            return !valuesEqual(currentProp, vanillaProp);
         }
 
-        /// <summary>
-        /// Checks if a string property differs from vanilla value.
-        /// </summary>
+        protected bool IsIntPropertyModifiedFromVanilla(Command command)
+        {
+            return IsPropertyModifiedFromVanilla<IntProperty>(command, (a, b) => a?.Value == b?.Value);
+        }
+
         protected bool IsStringPropertyModifiedFromVanilla(Command command)
         {
-            var vanillaEntity = GetVanillaEntity();
-            if (vanillaEntity == null)
-            {
-                var result = _entity.TryGet<StringProperty>(command, out _);
-                return result == ReturnType.TRUE;
-            }
-
-            var currentResult = _entity.TryGet<StringProperty>(command, out var currentProp);
-            var vanillaResult = vanillaEntity.TryGet<StringProperty>(command, out var vanillaProp);
-
-            bool currentHasValue = currentResult == ReturnType.TRUE || currentResult == ReturnType.COPIED;
-            bool vanillaHasValue = vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED;
-
-            // For VanillaModified entities: if mod doesn't have the property,
-            // the effective value is vanilla, so it's NOT modified
-            if (_source == EntitySource.VanillaModified && !currentHasValue)
-                return false;
-
-            if (currentHasValue != vanillaHasValue)
-                return true;
-
-            if (!currentHasValue && !vanillaHasValue)
-                return false;
-
-            return currentProp?.Value != vanillaProp?.Value;
+            return IsPropertyModifiedFromVanilla<StringProperty>(command, (a, b) => a?.Value == b?.Value);
         }
 
-        /// <summary>
-        /// Checks if a command (boolean) property differs from vanilla.
-        /// </summary>
         protected bool IsCommandPropertyModifiedFromVanilla(Command command)
         {
-            var vanillaEntity = GetVanillaEntity();
-            if (vanillaEntity == null)
-            {
-                var result = _entity.TryGet<CommandProperty>(command, out _);
-                return result == ReturnType.TRUE;
-            }
-
-            var currentResult = _entity.TryGet<CommandProperty>(command, out _);
-            var vanillaResult = vanillaEntity.TryGet<CommandProperty>(command, out _);
-
-            bool currentHasValue = currentResult == ReturnType.TRUE || currentResult == ReturnType.COPIED;
-            bool vanillaHasValue = vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED;
-
-            // For VanillaModified entities: if mod doesn't have the property,
-            // the effective value is vanilla, so it's NOT modified
-            if (_source == EntitySource.VanillaModified && !currentHasValue)
-                return false;
-
-            return currentHasValue != vanillaHasValue;
+            return IsPropertyModifiedFromVanilla<CommandProperty>(command);
         }
 
         /// <summary>
@@ -1910,36 +1889,6 @@ namespace Dom5Editor.UI.Views
                 return false;
 
             return changes.ChangedProperties.ContainsKey(command);
-        }
-
-        /// <summary>
-        /// Checks if a property is modified from vanilla OR edited in session.
-        /// This is the general "is modified" check for UI highlighting.
-        /// </summary>
-        protected bool IsPropertyModified(Command command, PropertyType propertyType)
-        {
-            // Check session edits first (more recent changes)
-            if (IsPropertyEditedInSession(command))
-                return true;
-
-            // Check mod vs vanilla
-            return propertyType switch
-            {
-                PropertyType.Int => IsIntPropertyModifiedFromVanilla(command),
-                PropertyType.String => IsStringPropertyModifiedFromVanilla(command),
-                PropertyType.Command => IsCommandPropertyModifiedFromVanilla(command),
-                _ => false
-            };
-        }
-
-        /// <summary>
-        /// Property types for modification checking.
-        /// </summary>
-        protected enum PropertyType
-        {
-            Int,
-            String,
-            Command
         }
 
         /// <summary>
