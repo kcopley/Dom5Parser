@@ -6,6 +6,7 @@
       "description": "Core item statistics and requirements",
       "renderer": "statsGrid",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "constlevel",

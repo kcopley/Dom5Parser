@@ -54,46 +54,69 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
-            <!-- Core Stats Section -->
+            <!-- Stats Section - JSON-driven badge panel -->
             <controls:PropertyGroupControl Header="Stats" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
                     <StackPanel>
-                        <Grid>
+                        <!-- Damage with special handling for summon/cloud weapons -->
+                        <Grid Margin="0,0,0,8">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <controls:IntPropertyEditor Grid.Row="0" Grid.Column="0" Label="{Binding DamageLabel}" Value="{Binding Damage, Mode=TwoWay}" IsModified="{Binding IsDamageModified}" IsSessionEdit="{Binding IsDamageSessionEdit}" IsInherited="{Binding IsDamageInherited}" IsEnabled="{Binding CanEditDamage}" ToolTip="{Binding DamageDisplayString}" Margin="0,0,4,4"/>
-                            <controls:IntPropertyEditor Grid.Row="0" Grid.Column="1" Label="ATT" Value="{Binding Attack, Mode=TwoWay}" IsModified="{Binding IsAttackModified}" IsSessionEdit="{Binding IsAttackSessionEdit}" IsInherited="{Binding IsAttackInherited}" Margin="4,0,4,4"/>
-                            <controls:IntPropertyEditor Grid.Row="0" Grid.Column="2" Label="DEF" Value="{Binding Defense, Mode=TwoWay}" IsModified="{Binding IsDefenseModified}" IsSessionEdit="{Binding IsDefenseSessionEdit}" IsInherited="{Binding IsDefenseInherited}" Margin="4,0,0,4"/>
+                            <controls:IntPropertyEditor
+                                Grid.Row="0" Grid.ColumnSpan="2"
+                                Label="{Binding DamageLabel}"
+                                Value="{Binding Damage, Mode=TwoWay}"
+                                IsModified="{Binding IsDamageModified}"
+                                IsSessionEdit="{Binding IsDamageSessionEdit}"
+                                IsEnabled="{Binding CanEditDamage}"
+                                Margin="0,0,0,4"/>
 
-                            <controls:IntPropertyEditor Grid.Row="1" Grid.Column="0" Label="LEN" Value="{Binding Length, Mode=TwoWay}" IsModified="{Binding IsLengthModified}" IsSessionEdit="{Binding IsLengthSessionEdit}" IsInherited="{Binding IsLengthInherited}" Margin="0,0,4,4"/>
-                            <controls:IntPropertyEditor Grid.Row="1" Grid.Column="1" Label="NRATT" Value="{Binding NumberOfAttacks, Mode=TwoWay}" IsModified="{Binding IsNumberOfAttacksModified}" IsSessionEdit="{Binding IsNumberOfAttacksSessionEdit}" IsInherited="{Binding IsNumberOfAttacksInherited}" Margin="4,0,4,4"/>
-                            <controls:IntPropertyEditor Grid.Row="1" Grid.Column="2" Label="AOE" Value="{Binding AreaOfEffect, Mode=TwoWay}" IsModified="{Binding IsAreaOfEffectModified}" IsSessionEdit="{Binding IsAreaOfEffectSessionEdit}" IsInherited="{Binding IsAreaOfEffectInherited}" Margin="4,0,0,4"/>
+                            <!-- Show monster name for summon weapons -->
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                                       Text="{Binding DamageDisplayString}"
+                                       FontSize="11"
+                                       Foreground="#00BFFF"
+                                       FontWeight="SemiBold"
+                                       Visibility="{Binding IsSummonWeapon, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Margin="4,0,0,4"/>
 
-                            <controls:IntPropertyEditor Grid.Row="2" Grid.Column="0" Label="RCOST" Value="{Binding ResourceCost, Mode=TwoWay}" IsModified="{Binding IsResourceCostModified}" IsSessionEdit="{Binding IsResourceCostSessionEdit}" IsInherited="{Binding IsResourceCostInherited}" Margin="0,0,4,0"/>
+                            <!-- Show "Cloud" indicator for cloud weapons -->
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                                       Text="Read-only cloud effect"
+                                       FontSize="10"
+                                       Foreground="#888888"
+                                       FontStyle="Italic"
+                                       Visibility="{Binding IsCloudWeapon, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Margin="4,0,0,4"/>
                         </Grid>
 
-                        <!-- Damage Types -->
+                        <controls:BadgeGridPanel
+                            ItemsSource="{Binding StatsBadges}"
+                            AvailableItems="{Binding AvailableStatsBadges}"
+                            RemoveCommand="{Binding RemoveStatsBadgeCommand}"
+                            AddCommand="{Binding AddStatsBadgeCommand}"
+                            Columns="4"/>
+
+                        <!-- Damage Types (derived summary) -->
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Visibility="{Binding DamageTypes, Converter={StaticResource NullToVisibilityConverter}}">
                             <TextBlock Text="Damage Type: " FontSize="11" Foreground="#888888" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding DamageTypes}" FontSize="11" Foreground="#9370DB" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
 
-                        <!-- Special Properties -->
+                        <!-- Special Properties (derived summary) -->
                         <StackPanel Orientation="Horizontal" Margin="0,4,0,0" Visibility="{Binding SpecialProperties, Converter={StaticResource NullToVisibilityConverter}}">
                             <TextBlock Text="Properties: " FontSize="11" Foreground="#888888" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding SpecialProperties}" FontSize="11" Foreground="#FFD700" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
 
-                        <!-- Secondary Effect -->
+                        <!-- Secondary Effect (derived summary) -->
                         <StackPanel Orientation="Horizontal" Margin="0,4,0,0" Visibility="{Binding HasSecondaryEffect, Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock Text="Secondary Effect: " FontSize="11" Foreground="#888888" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding SecondaryEffectDisplay}" FontSize="11" Foreground="#00BFFF" FontWeight="SemiBold" VerticalAlignment="Center"/>

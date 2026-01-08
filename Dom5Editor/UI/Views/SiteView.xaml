@@ -70,30 +70,6 @@
                             ReferenceType="Site"
                             Margin="0,0,0,8"/>
 
-                        <!-- Core Stats Grid -->
-                        <Grid Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <controls:IntPropertyEditor Grid.Column="0" Label="Path" Value="{Binding Path, Mode=TwoWay}"
-                                                        IsModified="{Binding IsPathModified}" IsSessionEdit="{Binding IsPathSessionEdit}"
-                                                        IsInherited="{Binding IsPathInherited}" Margin="0,0,4,0"/>
-                            <controls:IntPropertyEditor Grid.Column="1" Label="Level" Value="{Binding Level, Mode=TwoWay}"
-                                                        IsModified="{Binding IsLevelModified}" IsSessionEdit="{Binding IsLevelSessionEdit}"
-                                                        IsInherited="{Binding IsLevelInherited}" Margin="4,0,4,0"/>
-                            <controls:IntPropertyEditor Grid.Column="2" Label="Rarity" Value="{Binding Rarity, Mode=TwoWay}"
-                                                        IsModified="{Binding IsRarityModified}" IsSessionEdit="{Binding IsRaritySessionEdit}"
-                                                        IsInherited="{Binding IsRarityInherited}" Margin="4,0,0,0"/>
-                        </Grid>
-
-                        <!-- Sprite Reference -->
-                        <controls:IntPropertyEditor Label="Sprite (#look)" Value="{Binding LookSprite, Mode=TwoWay}"
-                                                    IsModified="{Binding IsLookSpriteModified}" IsSessionEdit="{Binding IsLookSpriteSessionEdit}"
-                                                    Margin="0,0,0,8"/>
-
                         <!-- Gems Display (read-only for now) -->
                         <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6"
                                 Visibility="{Binding HasGems, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -110,7 +86,20 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
-            <!-- Properties - Single Unified Badge Panel -->
+            <!-- Identity - Core Site Stats Badge Panel -->
+            <controls:PropertyGroupControl Header="Identity" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding IdentityBadges}"
+                        AvailableItems="{Binding AvailableIdentityBadges}"
+                        RemoveCommand="{Binding RemoveIdentityBadgeCommand}"
+                        AddCommand="{Binding AddIdentityBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Properties - Site Effects Badge Panel -->
             <controls:PropertyGroupControl Header="Properties" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
                     <controls:BadgeWrapPanel

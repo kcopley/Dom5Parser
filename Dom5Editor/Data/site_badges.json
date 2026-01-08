@@ -1,11 +1,54 @@
 {
   "sections": [
     {
-      "id": "properties",
-      "displayName": "PROPERTIES",
-      "description": "All site properties and effects",
+      "id": "identity",
+      "displayName": "IDENTITY",
+      "description": "Core site identification and type",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
+      "commands": [
+        {
+          "name": "path",
+          "display": "Path",
+          "type": "int",
+          "description": "Magic path required to find the site (0=Fire, 1=Air, 2=Water, 3=Earth, 4=Astral, 5=Death, 6=Nature, 7=Blood, 8=Holy).",
+          "color": "#302A32",
+          "borderColor": "#504560"
+        },
+        {
+          "name": "level",
+          "display": "Level",
+          "type": "int",
+          "description": "Path level required to find the site.",
+          "color": "#2A2D32",
+          "borderColor": "#4050A0"
+        },
+        {
+          "name": "rarity",
+          "display": "Rarity",
+          "type": "int",
+          "description": "How rare the site is (0=Common, 1=Uncommon, 2=Rare, 5=Never Random).",
+          "color": "#322D2A",
+          "borderColor": "#5A4A40"
+        },
+        {
+          "name": "look",
+          "display": "Sprite",
+          "type": "int",
+          "description": "Sprite number for site display.",
+          "color": "#2A322A",
+          "borderColor": "#405040"
+        }
+      ]
+    },
+    {
+      "id": "properties",
+      "displayName": "PROPERTIES",
+      "description": "Site properties and effects",
+      "renderer": "badge",
+      "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "gold",

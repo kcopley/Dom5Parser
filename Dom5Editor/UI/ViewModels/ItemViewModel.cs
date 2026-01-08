@@ -14,6 +14,8 @@ namespace Dom5Editor.UI.Views
 {
     /// <summary>
     /// ViewModel for Item entities.
+    /// Uses JSON-driven badge panels for most properties.
+    /// Specialized sections remain for equipment display and path requirements.
     /// </summary>
     public class ItemViewModel : EntityViewModel
     {
@@ -61,26 +63,33 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Core Stats
+        // Slot Type Display (for header and equipment logic)
         // ========================================
 
-        public int? ConstLevel
+        /// <summary>
+        /// Gets the item type value for slot logic.
+        /// </summary>
+        private int? ItemType
         {
-            get => GetIntProperty(Command.CONSTLEVEL);
-            set => SetIntProperty(Command.CONSTLEVEL, value);
-        }
-        public bool IsConstLevelModified => IsIntPropertyModifiedFromVanilla(Command.CONSTLEVEL);
-        public bool IsConstLevelSessionEdit => IsPropertyEditedInSession(Command.CONSTLEVEL);
-        public bool IsConstLevelInherited => IsIntPropertyInherited(Command.CONSTLEVEL);
+            get
+            {
+                var result = _entity.TryGet<IntProperty>(Command.TYPE, out var prop);
+                if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+                    return prop?.Value;
 
-        public int? ItemType
-        {
-            get => GetIntProperty(Command.TYPE);
-            set => SetIntProperty(Command.TYPE, value);
+                if (_source == EntitySource.VanillaModified)
+                {
+                    var vanillaEntity = GetVanillaEntity();
+                    if (vanillaEntity != null)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<IntProperty>(Command.TYPE, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                            return vanillaProp?.Value;
+                    }
+                }
+                return null;
+            }
         }
-        public bool IsItemTypeModified => IsIntPropertyModifiedFromVanilla(Command.TYPE);
-        public bool IsItemTypeSessionEdit => IsPropertyEditedInSession(Command.TYPE);
-        public bool IsItemTypeInherited => IsIntPropertyInherited(Command.TYPE);
 
         /// <summary>
         /// Gets the item slot type display name.
@@ -137,7 +146,7 @@ namespace Dom5Editor.UI.Views
             {
                 if (value != null)
                 {
-                    ItemType = value.Value;
+                    SetIntProperty(Command.TYPE, value.Value);
                     OnPropertyChanged(nameof(SelectedSlotType));
                     OnPropertyChanged(nameof(ItemTypeDisplay));
                     OnSlotTypeChanged(); // Refresh equipment options
@@ -145,44 +154,31 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        // ========================================
+        // Construction Requirements (PathSelector bindings)
+        // ========================================
+
+        public int? ConstLevel
+        {
+            get => GetIntProperty(Command.CONSTLEVEL);
+            set => SetIntProperty(Command.CONSTLEVEL, value);
+        }
+        public bool IsConstLevelModified => IsIntPropertyModifiedFromVanilla(Command.CONSTLEVEL);
+        public bool IsConstLevelSessionEdit => IsPropertyEditedInSession(Command.CONSTLEVEL);
+        public bool IsConstLevelInherited => IsIntPropertyInherited(Command.CONSTLEVEL);
+
         public int? MainPath
         {
             get => GetIntProperty(Command.MAINPATH);
             set
             {
                 SetIntProperty(Command.MAINPATH, value);
-                OnPropertyChanged(nameof(MainPathDisplay));
-                OnPropertyChanged(nameof(PrimaryPathLetter));
-                OnPropertyChanged(nameof(PrimaryGemCost));
-                OnPropertyChanged(nameof(HasGemCost));
+                RefreshPathDisplay();
             }
         }
         public bool IsMainPathModified => IsIntPropertyModifiedFromVanilla(Command.MAINPATH);
         public bool IsMainPathSessionEdit => IsPropertyEditedInSession(Command.MAINPATH);
         public bool IsMainPathInherited => IsIntPropertyInherited(Command.MAINPATH);
-
-        /// <summary>
-        /// Gets the main path display name.
-        /// </summary>
-        public string MainPathDisplay
-        {
-            get
-            {
-                return MainPath switch
-                {
-                    0 => "Fire",
-                    1 => "Air",
-                    2 => "Water",
-                    3 => "Earth",
-                    4 => "Astral",
-                    5 => "Death",
-                    6 => "Nature",
-                    7 => "Glamour",
-                    8 => "Blood",
-                    _ => MainPath?.ToString() ?? "-"
-                };
-            }
-        }
 
         public int? MainLevel
         {
@@ -190,8 +186,7 @@ namespace Dom5Editor.UI.Views
             set
             {
                 SetIntProperty(Command.MAINLEVEL, value);
-                OnPropertyChanged(nameof(PrimaryGemCost));
-                OnPropertyChanged(nameof(HasGemCost));
+                RefreshPathDisplay();
             }
         }
         public bool IsMainLevelModified => IsIntPropertyModifiedFromVanilla(Command.MAINLEVEL);
@@ -204,40 +199,12 @@ namespace Dom5Editor.UI.Views
             set
             {
                 SetIntProperty(Command.SECONDARYPATH, value);
-                OnPropertyChanged(nameof(SecondaryPathDisplay));
-                OnPropertyChanged(nameof(SecondaryPathLetter));
-                OnPropertyChanged(nameof(SecondaryGemCost));
-                OnPropertyChanged(nameof(HasGemCost));
+                RefreshPathDisplay();
             }
         }
         public bool IsSecondaryPathModified => IsIntPropertyModifiedFromVanilla(Command.SECONDARYPATH);
         public bool IsSecondaryPathSessionEdit => IsPropertyEditedInSession(Command.SECONDARYPATH);
         public bool IsSecondaryPathInherited => IsIntPropertyInherited(Command.SECONDARYPATH);
-
-        /// <summary>
-        /// Gets the secondary path display name.
-        /// </summary>
-        public string SecondaryPathDisplay
-        {
-            get
-            {
-                if (SecondaryPath == null || SecondaryPath < 0)
-                    return "-";
-                return SecondaryPath switch
-                {
-                    0 => "Fire",
-                    1 => "Air",
-                    2 => "Water",
-                    3 => "Earth",
-                    4 => "Astral",
-                    5 => "Death",
-                    6 => "Nature",
-                    7 => "Glamour",
-                    8 => "Blood",
-                    _ => SecondaryPath?.ToString() ?? "-"
-                };
-            }
-        }
 
         public int? SecondaryLevel
         {
@@ -245,8 +212,7 @@ namespace Dom5Editor.UI.Views
             set
             {
                 SetIntProperty(Command.SECONDARYLEVEL, value);
-                OnPropertyChanged(nameof(SecondaryGemCost));
-                OnPropertyChanged(nameof(HasGemCost));
+                RefreshPathDisplay();
             }
         }
         public bool IsSecondaryLevelModified => IsIntPropertyModifiedFromVanilla(Command.SECONDARYLEVEL);
@@ -254,38 +220,63 @@ namespace Dom5Editor.UI.Views
         public bool IsSecondaryLevelInherited => IsIntPropertyInherited(Command.SECONDARYLEVEL);
 
         /// <summary>
-        /// Refreshes the path display properties after path selection changes.
+        /// Refreshes the gem cost display properties after path selection changes.
+        /// Called by PathSelector change events in the view.
         /// </summary>
         public void RefreshPathDisplay()
         {
-            OnPropertyChanged(nameof(MainPathDisplay));
-            OnPropertyChanged(nameof(SecondaryPathDisplay));
             OnPropertyChanged(nameof(PrimaryGemCost));
             OnPropertyChanged(nameof(SecondaryGemCost));
             OnPropertyChanged(nameof(HasGemCost));
+            OnPropertyChanged(nameof(PrimaryPathLetter));
+            OnPropertyChanged(nameof(SecondaryPathLetter));
         }
 
         // ========================================
-        // Item Cost Modifiers
+        // Item Cost Modifiers (for gem cost calculations)
         // ========================================
 
-        public int? ItemCost1
+        private int? ItemCost1
         {
-            get => GetIntProperty(Command.ITEMCOST1);
-            set
+            get
             {
-                SetIntProperty(Command.ITEMCOST1, value);
-                OnPropertyChanged(nameof(PrimaryGemCost));
+                var result = _entity.TryGet<IntProperty>(Command.ITEMCOST1, out var prop);
+                if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+                    return prop?.Value;
+
+                if (_source == EntitySource.VanillaModified)
+                {
+                    var vanillaEntity = GetVanillaEntity();
+                    if (vanillaEntity != null)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<IntProperty>(Command.ITEMCOST1, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                            return vanillaProp?.Value;
+                    }
+                }
+                return null;
             }
         }
 
-        public int? ItemCost2
+        private int? ItemCost2
         {
-            get => GetIntProperty(Command.ITEMCOST2);
-            set
+            get
             {
-                SetIntProperty(Command.ITEMCOST2, value);
-                OnPropertyChanged(nameof(SecondaryGemCost));
+                var result = _entity.TryGet<IntProperty>(Command.ITEMCOST2, out var prop);
+                if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+                    return prop?.Value;
+
+                if (_source == EntitySource.VanillaModified)
+                {
+                    var vanillaEntity = GetVanillaEntity();
+                    if (vanillaEntity != null)
+                    {
+                        var vanillaResult = vanillaEntity.TryGet<IntProperty>(Command.ITEMCOST2, out var vanillaProp);
+                        if (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                            return vanillaProp?.Value;
+                    }
+                }
+                return null;
             }
         }
 
@@ -354,80 +345,6 @@ namespace Dom5Editor.UI.Views
                 _ => null
             };
         }
-
-        // ========================================
-        // Combat Stat Bonuses
-        // ========================================
-
-        public int? HP
-        {
-            get => GetIntProperty(Command.HP);
-            set => SetIntProperty(Command.HP, value);
-        }
-        public bool IsHPModified => IsIntPropertyModifiedFromVanilla(Command.HP);
-        public bool IsHPSessionEdit => IsPropertyEditedInSession(Command.HP);
-        public bool IsHPInherited => IsIntPropertyInherited(Command.HP);
-
-        public int? Strength
-        {
-            get => GetIntProperty(Command.STR);
-            set => SetIntProperty(Command.STR, value);
-        }
-        public bool IsStrengthModified => IsIntPropertyModifiedFromVanilla(Command.STR);
-        public bool IsStrengthSessionEdit => IsPropertyEditedInSession(Command.STR);
-        public bool IsStrengthInherited => IsIntPropertyInherited(Command.STR);
-
-        public int? Attack
-        {
-            get => GetIntProperty(Command.ATT);
-            set => SetIntProperty(Command.ATT, value);
-        }
-        public bool IsAttackModified => IsIntPropertyModifiedFromVanilla(Command.ATT);
-        public bool IsAttackSessionEdit => IsPropertyEditedInSession(Command.ATT);
-        public bool IsAttackInherited => IsIntPropertyInherited(Command.ATT);
-
-        public int? Defense
-        {
-            get => GetIntProperty(Command.DEF);
-            set => SetIntProperty(Command.DEF, value);
-        }
-        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
-        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
-        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
-
-        public int? Precision
-        {
-            get => GetIntProperty(Command.PREC);
-            set => SetIntProperty(Command.PREC, value);
-        }
-        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PREC);
-        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PREC);
-        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PREC);
-
-        public int? MagicResistance
-        {
-            get => GetIntProperty(Command.MR);
-            set => SetIntProperty(Command.MR, value);
-        }
-        public bool IsMagicResistanceModified => IsIntPropertyModifiedFromVanilla(Command.MR);
-        public bool IsMagicResistanceSessionEdit => IsPropertyEditedInSession(Command.MR);
-        public bool IsMagicResistanceInherited => IsIntPropertyInherited(Command.MR);
-
-        public int? Morale
-        {
-            get => GetIntProperty(Command.MORALE);
-            set => SetIntProperty(Command.MORALE, value);
-        }
-        public bool IsMoraleModified => IsIntPropertyModifiedFromVanilla(Command.MORALE);
-        public bool IsMoraleSessionEdit => IsPropertyEditedInSession(Command.MORALE);
-        public bool IsMoraleInherited => IsIntPropertyInherited(Command.MORALE);
-
-        /// <summary>
-        /// Returns true if any combat stat bonus is present.
-        /// </summary>
-        public bool HasCombatStats =>
-            HP != null || Strength != null || Attack != null ||
-            Defense != null || Precision != null || MagicResistance != null || Morale != null;
 
         // ========================================
         // Equipment References (Weapon/Armor the item provides)
@@ -985,35 +902,15 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
-            var propertyName = GetPropertyNameForCommand(command);
-            if (propertyName != null)
-            {
-                OnPropertyChanged(propertyName);
-                OnPropertyChanged($"Is{propertyName}Modified");
-                OnPropertyChanged($"Is{propertyName}SessionEdit");
-                OnPropertyChanged($"Is{propertyName}Inherited");
-            }
-        }
+            // Refresh badge collection when undo/redo affects this entity
+            RefreshPropertyBadges();
 
-        private static string GetPropertyNameForCommand(Command command)
-        {
-            return command switch
-            {
-                Command.CONSTLEVEL => "ConstLevel",
-                Command.TYPE => "ItemType",
-                Command.MAINPATH => "MainPath",
-                Command.MAINLEVEL => "MainLevel",
-                Command.SECONDARYPATH => "SecondaryPath",
-                Command.SECONDARYLEVEL => "SecondaryLevel",
-                Command.HP => "HP",
-                Command.STR => "Strength",
-                Command.ATT => "Attack",
-                Command.DEF => "Defense",
-                Command.PREC => "Precision",
-                Command.MR => "MagicResistance",
-                Command.MORALE => "Morale",
-                _ => null
-            };
+            // Refresh derived display properties that may have changed
+            OnPropertyChanged(nameof(ItemTypeDisplay));
+            RefreshPathDisplay();
+            OnPropertyChanged(nameof(HasEquipment));
+            OnPropertyChanged(nameof(WeaponDisplay));
+            OnPropertyChanged(nameof(ArmorDisplay));
         }
     }
 }

@@ -6,6 +6,7 @@
       "description": "Core monster statistics",
       "renderer": "statsGrid",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "hp",

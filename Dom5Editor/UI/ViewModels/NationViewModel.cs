@@ -1,9 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
-using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
-using Dom5Edit.Props;
 using Dom5Editor.Data;
 using Dom5Editor.EditCommands;
 using Dom5Editor.UI.Controls;
@@ -12,6 +10,7 @@ namespace Dom5Editor.UI.Views
 {
     /// <summary>
     /// ViewModel for Nation entities.
+    /// Uses JSON-driven badge panels for property editing.
     /// </summary>
     public class NationViewModel : EntityViewModel
     {
@@ -28,72 +27,32 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "nation";
 
         // ========================================
-        // Core Identity Properties
+        // Computed Display Properties
         // ========================================
 
         /// <summary>
-        /// Gets or sets the nation era (1=EA, 2=MA, 3=LA).
-        /// </summary>
-        public int? Era
-        {
-            get => GetIntProperty(Command.ERA);
-            set => SetIntProperty(Command.ERA, value);
-        }
-        public bool IsEraModified => IsIntPropertyModifiedFromVanilla(Command.ERA);
-        public bool IsEraSessionEdit => IsPropertyEditedInSession(Command.ERA);
-
-        /// <summary>
-        /// Gets the era display name.
+        /// Gets the era display name for header display.
+        /// Derived from the era property value.
         /// </summary>
         public string EraDisplay
         {
             get
             {
-                return Era switch
+                var era = GetIntProperty(Command.ERA);
+                return era switch
                 {
                     1 => "Early Age",
                     2 => "Middle Age",
                     3 => "Late Age",
-                    _ => Era?.ToString() ?? "-"
+                    _ => era?.ToString() ?? "-"
                 };
             }
         }
 
         /// <summary>
-        /// Gets or sets the nation epithet (subtitle).
+        /// Gets the nation epithet for header display.
         /// </summary>
-        public string Epithet
-        {
-            get => GetStringProperty(Command.EPITHET);
-            set => SetStringProperty(Command.EPITHET, value);
-        }
-        public bool IsEpithetModified => IsStringPropertyModifiedFromVanilla(Command.EPITHET);
-        public bool IsEpithetSessionEdit => IsPropertyEditedInSession(Command.EPITHET);
-
-        /// <summary>
-        /// Gets or sets the nation description.
-        /// </summary>
-        public string Description
-        {
-            get => GetStringProperty(Command.DESCR);
-            set => SetStringProperty(Command.DESCR, value);
-        }
-        public bool IsDescriptionModified => IsStringPropertyModifiedFromVanilla(Command.DESCR);
-        public bool IsDescriptionSessionEdit => IsPropertyEditedInSession(Command.DESCR);
-
-        /// <summary>
-        /// Gets or sets the flag file path.
-        /// </summary>
-        public string FlagPath
-        {
-            get
-            {
-                var result = _entity.TryGet<FilePathProperty>(Command.FLAG, out var prop);
-                if (result == ReturnType.TRUE && prop != null)
-                    return prop.Value;
-                return null;
-            }
-        }
+        public string Epithet => GetStringProperty(Command.EPITHET);
 
         // ========================================
         // Data Availability Indicators
@@ -584,27 +543,46 @@ namespace Dom5Editor.UI.Views
         private EventHandler<int> _badgeValueChangedHandler;
         private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
 
+        /// <summary>
+        /// Refreshes badge collections when properties are changed via undo/redo.
+        /// Also updates computed display properties that depend on entity values.
+        /// </summary>
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
-            var propertyName = GetPropertyNameForCommand(command);
-            if (propertyName != null)
+            // Refresh computed display properties
+            if (command == Command.ERA)
             {
-                OnPropertyChanged(propertyName);
-                OnPropertyChanged($"Is{propertyName}Modified");
-                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged(nameof(EraDisplay));
             }
+            else if (command == Command.EPITHET)
+            {
+                OnPropertyChanged(nameof(Epithet));
+            }
+
+            // Refresh all badge collections since any property change could affect them
+            RefreshAllBadges();
         }
 
-        private static string GetPropertyNameForCommand(Command command)
+        /// <summary>
+        /// Refreshes all badge collections. Called after undo/redo operations.
+        /// </summary>
+        private void RefreshAllBadges()
         {
-            return command switch
-            {
-                Command.ERA => "Era",
-                Command.EPITHET => "Epithet",
-                Command.DESCR => "Description",
-                Command.FLAG => "FlagPath",
-                _ => null
-            };
+            RefreshIdentityBadges();
+            RefreshRecruitmentBadges();
+            RefreshTerrainRecruitmentBadges();
+            RefreshCoastalUwBadges();
+            RefreshHeroesBadges();
+            RefreshStartingBadges();
+            RefreshProvinceDefenseBadges();
+            RefreshUwDefenseBadges();
+            RefreshPretendersBadges();
+            RefreshBuildingsBadges();
+            RefreshScalesBadges();
+            RefreshSpecialMechanicsBadges();
+            RefreshBlessBonusesBadges();
+            RefreshAiHintsBadges();
+            RefreshAdminBadges();
         }
     }
 }

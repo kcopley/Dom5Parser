@@ -26,11 +26,11 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "event";
 
         // ========================================
-        // Core Properties
+        // Header Display Properties
         // ========================================
 
         /// <summary>
-        /// Gets the event rarity display.
+        /// Gets the event rarity display for the header.
         /// </summary>
         public string RarityDisplay
         {
@@ -45,15 +45,6 @@ namespace Dom5Editor.UI.Views
                     _ => rarity?.ToString() ?? "-"
                 };
             }
-        }
-
-        /// <summary>
-        /// Gets the event message text.
-        /// </summary>
-        public string Message
-        {
-            get => GetStringProperty(Command.MSG);
-            set => SetStringProperty(Command.MSG, value);
         }
 
         // ========================================
@@ -613,23 +604,45 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
-            var propertyName = GetPropertyNameForCommand(command);
-            if (propertyName != null)
+            // Refresh all badge collections on any property change
+            // This ensures undo/redo properly updates the UI
+            RefreshAllBadgeCollections();
+
+            // Update header display if rarity changes
+            if (command == Command.RARITY)
             {
-                OnPropertyChanged(propertyName);
-                OnPropertyChanged($"Is{propertyName}Modified");
-                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged(nameof(RarityDisplay));
             }
         }
 
-        private static string GetPropertyNameForCommand(Command command)
+        /// <summary>
+        /// Refreshes all badge collections. Called on undo/redo operations.
+        /// </summary>
+        private void RefreshAllBadgeCollections()
         {
-            return command switch
-            {
-                Command.RARITY => "Rarity",
-                Command.MSG => "Message",
-                _ => null
-            };
+            // Requirements
+            RefreshGeneralRequirementsBadges();
+            RefreshNationRequirementsBadges();
+            RefreshLocationRequirementsBadges();
+            RefreshProvinceRequirementsBadges();
+            RefreshSiteRequirementsBadges();
+            RefreshDominionRequirementsBadges();
+            RefreshPathRequirementsBadges();
+            RefreshCommanderRequirementsBadges();
+            RefreshTargetRequirementsBadges();
+            RefreshCodeRequirementsBadges();
+            RefreshEnchantmentRequirementsBadges();
+
+            // Effects
+            RefreshMessageBadges();
+            RefreshResourceEffectsBadges();
+            RefreshProvinceEffectsBadges();
+            RefreshScaleEffectsBadges();
+            RefreshUnitSpawnBadges();
+            RefreshUnitEffectsBadges();
+            RefreshPathBoostBadges();
+            RefreshWorldEffectsBadges();
+            RefreshEventControlBadges();
         }
     }
 }

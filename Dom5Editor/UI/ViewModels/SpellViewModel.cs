@@ -63,29 +63,19 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Core Stats (School, Research Level, Path)
+        // Derived Display Properties (used in header/special displays)
         // ========================================
 
         /// <summary>
-        /// Magic school: 0=Conj, 1=Alt, 2=Evo, 3=Const, 4=Ench, 5=Thau, 6=Blood, -1=not researchable
-        /// </summary>
-        public int? School
-        {
-            get => GetIntProperty(Command.SCHOOL);
-            set => SetIntProperty(Command.SCHOOL, value);
-        }
-        public bool IsSchoolModified => IsIntPropertyModifiedFromVanilla(Command.SCHOOL);
-        public bool IsSchoolSessionEdit => IsPropertyEditedInSession(Command.SCHOOL);
-        public bool IsSchoolInherited => IsIntPropertyInherited(Command.SCHOOL);
-
-        /// <summary>
-        /// Gets the school display name.
+        /// Gets the school display name for header display.
+        /// Uses layered property access via badge system.
         /// </summary>
         public string SchoolDisplay
         {
             get
             {
-                return School switch
+                var school = GetIntProperty(Command.SCHOOL);
+                return school switch
                 {
                     -1 => "Not Researchable",
                     0 => "Conjuration",
@@ -95,22 +85,15 @@ namespace Dom5Editor.UI.Views
                     4 => "Enchantment",
                     5 => "Thaumaturgy",
                     6 => "Blood",
-                    _ => School?.ToString() ?? "-"
+                    _ => school?.ToString() ?? "-"
                 };
             }
         }
 
         /// <summary>
-        /// Research level required to learn this spell.
+        /// Research level for header display.
         /// </summary>
-        public int? ResearchLevel
-        {
-            get => GetIntProperty(Command.RESEARCHLEVEL);
-            set => SetIntProperty(Command.RESEARCHLEVEL, value);
-        }
-        public bool IsResearchLevelModified => IsIntPropertyModifiedFromVanilla(Command.RESEARCHLEVEL);
-        public bool IsResearchLevelSessionEdit => IsPropertyEditedInSession(Command.RESEARCHLEVEL);
-        public bool IsResearchLevelInherited => IsIntPropertyInherited(Command.RESEARCHLEVEL);
+        public int? ResearchLevel => GetIntProperty(Command.RESEARCHLEVEL);
 
         // ========================================
         // Path Requirements (IntIntProperty: path slot, path type)
@@ -255,31 +238,18 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Fatigue/Gem Cost
+        // Fatigue/Gem Cost Display (derived from fatiguecost property)
         // ========================================
-
-        /// <summary>
-        /// Fatigue cost for this spell.
-        /// Encoded as gems*1000 + fatigue (e.g., 2050 = 2 gems + 50 fatigue).
-        /// </summary>
-        public int? FatigueCost
-        {
-            get => GetIntProperty(Command.FATIGUECOST);
-            set => SetIntProperty(Command.FATIGUECOST, value);
-        }
-        public bool IsFatigueCostModified => IsIntPropertyModifiedFromVanilla(Command.FATIGUECOST);
-        public bool IsFatigueCostSessionEdit => IsPropertyEditedInSession(Command.FATIGUECOST);
-        public bool IsFatigueCostInherited => IsIntPropertyInherited(Command.FATIGUECOST);
 
         /// <summary>
         /// Gets the decoded gem cost (fatigueCost / 1000).
         /// </summary>
-        public int GemCost => (FatigueCost ?? 0) / 1000;
+        public int GemCost => (GetIntProperty(Command.FATIGUECOST) ?? 0) / 1000;
 
         /// <summary>
         /// Gets the decoded fatigue only (fatigueCost % 1000).
         /// </summary>
-        public int FatigueOnly => (FatigueCost ?? 0) % 1000;
+        public int FatigueOnly => (GetIntProperty(Command.FATIGUECOST) ?? 0) % 1000;
 
         /// <summary>
         /// Gets a display string for the fatigue cost.
@@ -288,7 +258,7 @@ namespace Dom5Editor.UI.Views
         {
             get
             {
-                var cost = FatigueCost ?? 0;
+                var cost = GetIntProperty(Command.FATIGUECOST) ?? 0;
                 if (cost == 0) return "-";
                 var gems = cost / 1000;
                 var fatigue = cost % 1000;
@@ -299,64 +269,6 @@ namespace Dom5Editor.UI.Views
                 return $"{fatigue}F";
             }
         }
-
-        // ========================================
-        // Battle Stats
-        // ========================================
-
-        public int? Range
-        {
-            get => GetIntProperty(Command.RANGE);
-            set => SetIntProperty(Command.RANGE, value);
-        }
-        public bool IsRangeModified => IsIntPropertyModifiedFromVanilla(Command.RANGE);
-        public bool IsRangeSessionEdit => IsPropertyEditedInSession(Command.RANGE);
-        public bool IsRangeInherited => IsIntPropertyInherited(Command.RANGE);
-
-        public int? Precision
-        {
-            get => GetIntProperty(Command.PRECISION);
-            set => SetIntProperty(Command.PRECISION, value);
-        }
-        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PRECISION);
-        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PRECISION);
-        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PRECISION);
-
-        public int? AOE
-        {
-            get => GetIntProperty(Command.AOE);
-            set => SetIntProperty(Command.AOE, value);
-        }
-        public bool IsAOEModified => IsIntPropertyModifiedFromVanilla(Command.AOE);
-        public bool IsAOESessionEdit => IsPropertyEditedInSession(Command.AOE);
-        public bool IsAOEInherited => IsIntPropertyInherited(Command.AOE);
-
-        public int? Damage
-        {
-            get => GetIntProperty(Command.DAMAGE);
-            set => SetIntProperty(Command.DAMAGE, value);
-        }
-        public bool IsDamageModified => IsIntPropertyModifiedFromVanilla(Command.DAMAGE);
-        public bool IsDamageSessionEdit => IsPropertyEditedInSession(Command.DAMAGE);
-        public bool IsDamageInherited => IsIntPropertyInherited(Command.DAMAGE);
-
-        public int? Effect
-        {
-            get => GetIntProperty(Command.EFFECT);
-            set => SetIntProperty(Command.EFFECT, value);
-        }
-        public bool IsEffectModified => IsIntPropertyModifiedFromVanilla(Command.EFFECT);
-        public bool IsEffectSessionEdit => IsPropertyEditedInSession(Command.EFFECT);
-        public bool IsEffectInherited => IsIntPropertyInherited(Command.EFFECT);
-
-        public int? NrEff
-        {
-            get => GetIntProperty(Command.NREFF);
-            set => SetIntProperty(Command.NREFF, value);
-        }
-        public bool IsNrEffModified => IsIntPropertyModifiedFromVanilla(Command.NREFF);
-        public bool IsNrEffSessionEdit => IsPropertyEditedInSession(Command.NREFF);
-        public bool IsNrEffInherited => IsIntPropertyInherited(Command.NREFF);
 
         // ========================================
         // Next Spell Chain
@@ -393,7 +305,77 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Badge Collections
+        // Research Badge Collection (JSON-driven)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _researchBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableResearchBadges;
+
+        public ObservableCollection<PropertyItem> ResearchBadges
+        {
+            get { if (_researchBadges == null) RefreshResearchBadges(); return _researchBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableResearchBadges
+        {
+            get { if (_availableResearchBadges == null) RefreshResearchBadges(); return _availableResearchBadges; }
+        }
+
+        // Commands for research badge operations
+        private RelayCommand<PropertyItem> _removeResearchBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addResearchBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveResearchBadgeCommand => _removeResearchBadgeCommand ??= CreateRemoveBadgeCommand(RefreshResearchBadges);
+        public RelayCommand<AvailablePropertyItem> AddResearchBadgeCommand => _addResearchBadgeCommand ??= CreateAddBadgeCommand(RefreshResearchBadges);
+
+        private void RefreshResearchBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("research", BadgeValueChangedHandler);
+            _researchBadges = active;
+            _availableResearchBadges = available;
+            OnPropertyChanged(nameof(ResearchBadges));
+            OnPropertyChanged(nameof(AvailableResearchBadges));
+            // Update derived properties that depend on research stats
+            OnPropertyChanged(nameof(SchoolDisplay));
+            OnPropertyChanged(nameof(ResearchLevel));
+            OnPropertyChanged(nameof(FatigueCostDisplay));
+            OnPropertyChanged(nameof(GemCost));
+            OnPropertyChanged(nameof(FatigueOnly));
+        }
+
+        // ========================================
+        // Combat Stats Badge Collection (JSON-driven)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _combatBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableCombatBadges;
+
+        public ObservableCollection<PropertyItem> CombatBadges
+        {
+            get { if (_combatBadges == null) RefreshCombatBadges(); return _combatBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableCombatBadges
+        {
+            get { if (_availableCombatBadges == null) RefreshCombatBadges(); return _availableCombatBadges; }
+        }
+
+        // Commands for combat badge operations
+        private RelayCommand<PropertyItem> _removeCombatBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addCombatBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveCombatBadgeCommand => _removeCombatBadgeCommand ??= CreateRemoveBadgeCommand(RefreshCombatBadges);
+        public RelayCommand<AvailablePropertyItem> AddCombatBadgeCommand => _addCombatBadgeCommand ??= CreateAddBadgeCommand(RefreshCombatBadges);
+
+        private void RefreshCombatBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("combat", BadgeValueChangedHandler);
+            _combatBadges = active;
+            _availableCombatBadges = available;
+            OnPropertyChanged(nameof(CombatBadges));
+            OnPropertyChanged(nameof(AvailableCombatBadges));
+        }
+
+        // ========================================
+        // Properties Badge Collection (JSON-driven)
         // ========================================
 
         private ObservableCollection<PropertyItem> _propertyBadges;
@@ -408,14 +390,14 @@ namespace Dom5Editor.UI.Views
             get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
         }
 
-        // Commands for badge operations
+        // Commands for property badge operations
         private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
         private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
 
         public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
         public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
 
-        // Shared value changed handler
+        // Shared value changed handler for all badge sections
         private EventHandler<int> _badgeValueChangedHandler;
         private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
 
@@ -430,31 +412,10 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
-            var propertyName = GetPropertyNameForCommand(command);
-            if (propertyName != null)
-            {
-                OnPropertyChanged(propertyName);
-                OnPropertyChanged($"Is{propertyName}Modified");
-                OnPropertyChanged($"Is{propertyName}SessionEdit");
-                OnPropertyChanged($"Is{propertyName}Inherited");
-            }
-        }
-
-        private static string GetPropertyNameForCommand(Command command)
-        {
-            return command switch
-            {
-                Command.SCHOOL => "School",
-                Command.RESEARCHLEVEL => "ResearchLevel",
-                Command.FATIGUECOST => "FatigueCost",
-                Command.RANGE => "Range",
-                Command.PRECISION => "Precision",
-                Command.AOE => "AOE",
-                Command.DAMAGE => "Damage",
-                Command.EFFECT => "Effect",
-                Command.NREFF => "NrEff",
-                _ => null
-            };
+            // Refresh the appropriate badge collections when undo/redo affects this entity
+            RefreshResearchBadges();
+            RefreshCombatBadges();
+            RefreshPropertyBadges();
         }
     }
 }

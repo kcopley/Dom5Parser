@@ -227,3 +227,53 @@ Entity navigation was implemented for all badge-based reference displays. Howeve
 1. **Event.Assign calls base.Assign then repeats work** - Lines 382-389 call `base.Assign` but then re-do SetID, ParentMod, and Selected assignments. Is this intentional?
 
 2. **IntProperty default value of 10** - Line 69 returns 10 as default. Is this meaningful or arbitrary?
+
+---
+
+## Development Guidelines
+
+### Badge Migration - Properties That Need Special Handling
+
+**Added:** 2026-01-07
+
+When migrating ViewModel properties to the JSON-driven badge system, certain properties require special handling and should **NOT** be moved to badges:
+
+#### 1. Properties Using Non-Standard Property Types
+
+The badge system assumes `IntProperty` for `type: "int"`. Properties using subclasses need special handling:
+
+| Command | Property Class | Reason |
+|---------|---------------|--------|
+| `#dmg` (weapon) | `WeaponDamage` (extends StringProperty) | Can be "summonunits", "cloud", or numeric |
+| `#effect` (spell) | `SpellEffect` (extends StringProperty) | Effect type codes |
+
+**Example:** WeaponViewModel's `Damage` property was incorrectly removed during migration. The badge system couldn't handle it because:
+- `WeaponDamage` extends `StringProperty`, not `IntProperty`
+- Value can be `"summonunits"` (monster ID), `"cloud"` (read-only), or numeric
+- Needed: `DamageLabel` (dynamic), `CanEditDamage`, `IsSummonWeapon`, `IsCloudWeapon`, `DamageDisplayString`
+
+#### 2. Properties With Complex Getter/Setter Logic
+
+Keep properties in ViewModel when they:
+- Have validation logic in setters
+- Trigger cascading property changes
+- Need to check inherited values from `copyX` commands
+- Transform values (e.g., decode bitmasks to display strings)
+
+#### 3. Properties Displayed in Headers/Special Sections
+
+Keep read-only computed properties like:
+- `EraDisplay` - derived from era bitmask
+- `SchoolDisplay` - school code to name
+- `PathDisplay` - magic path code to name
+- `DamageTypes`, `SpecialProperties` - aggregated flag displays
+
+#### 4. Verification Checklist for Migrations
+
+Before removing a property, verify:
+1. Check the entity's `_propertyMap` - what type is the property?
+2. Is it `IntProperty`, `StringProperty`, or a subclass?
+3. Does the getter have special logic beyond `GetIntProperty()`?
+4. Does the setter have validation or side effects?
+5. Is the property bound in the View's header or special sections?
+6. Compare against previous commit to catch complex logic

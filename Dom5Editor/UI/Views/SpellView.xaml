@@ -68,25 +68,23 @@
                                 <TextBlock Text="{Binding CopySpellDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
 
-                        <!-- School and Research Level -->
-                        <Grid Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <controls:IntPropertyEditor Grid.Column="0" Label="School" Value="{Binding School, Mode=TwoWay}"
-                                                        IsModified="{Binding IsSchoolModified}" IsSessionEdit="{Binding IsSchoolSessionEdit}"
-                                                        IsInherited="{Binding IsSchoolInherited}" Margin="0,0,4,0"/>
-                            <controls:IntPropertyEditor Grid.Column="1" Label="Research Level" Value="{Binding ResearchLevel, Mode=TwoWay}"
-                                                        IsModified="{Binding IsResearchLevelModified}" IsSessionEdit="{Binding IsResearchLevelSessionEdit}"
-                                                        IsInherited="{Binding IsResearchLevelInherited}" Margin="4,0,0,0"/>
-                        </Grid>
+            <!-- Research Section (JSON-driven via BadgeGridPanel) -->
+            <controls:PropertyGroupControl Header="Research" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <controls:BadgeGridPanel
+                            ItemsSource="{Binding ResearchBadges}"
+                            RemoveCommand="{Binding RemoveResearchBadgeCommand}"
+                            Columns="3"
+                            ShowAddButton="False"/>
 
                         <!-- School Display Info -->
-                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,8"
-                                Visibility="{Binding School, Converter={StaticResource NullToVisibilityConverter}}">
+                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6" Margin="0,8,0,0"
+                                Visibility="{Binding SchoolDisplay, Converter={StaticResource NullToVisibilityConverter}}">
                             <TextBlock>
                                 <Run Text="School:" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                 <Run Text="{Binding SchoolDisplay, Mode=OneWay}" Foreground="{DynamicResource TextPrimaryBrush}" FontWeight="SemiBold"/>
@@ -133,75 +131,32 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
-            <!-- Cost Section -->
-            <controls:PropertyGroupControl Header="Cost" IsExpanded="True">
-                <controls:PropertyGroupControl.GroupContent>
-                    <StackPanel>
-                        <controls:IntPropertyEditor Label="Fatigue Cost" Value="{Binding FatigueCost, Mode=TwoWay}"
-                                                    IsModified="{Binding IsFatigueCostModified}" IsSessionEdit="{Binding IsFatigueCostSessionEdit}"
-                                                    IsInherited="{Binding IsFatigueCostInherited}" Margin="0,0,0,8"/>
+            <!-- Fatigue Cost Display (value edited via Research section) -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12"
+                    Visibility="{Binding FatigueCostDisplay, Converter={StaticResource NullToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Cost:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding FatigueCostDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="13" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                    <!-- Path gem icon if applicable -->
+                    <Image Width="16" Height="16" Margin="4,0,0,0" VerticalAlignment="Center"
+                           Source="{Binding PrimaryPathLetter, Converter={StaticResource PathLetterToGemIconConverter}}"
+                           Visibility="{Binding GemCost, Converter={StaticResource PositiveIntToVisibilityConverter}}"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </StackPanel>
+            </Border>
 
-                        <!-- Decoded Cost Display -->
-                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6"
-                                Visibility="{Binding FatigueCost, Converter={StaticResource NullToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Cost:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding FatigueCostDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="13" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
-                                <!-- Path gem icon if applicable -->
-                                <Image Width="16" Height="16" Margin="4,0,0,0" VerticalAlignment="Center"
-                                       Source="{Binding PrimaryPathLetter, Converter={StaticResource PathLetterToGemIconConverter}}"
-                                       Visibility="{Binding GemCost, Converter={StaticResource PositiveIntToVisibilityConverter}}"
-                                       RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </controls:PropertyGroupControl.GroupContent>
-            </controls:PropertyGroupControl>
-
-            <!-- Combat Stats Section -->
+            <!-- Combat Stats Section (JSON-driven via BadgeGridPanel) -->
             <controls:PropertyGroupControl Header="Combat Stats" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
                     <StackPanel>
-                        <!-- Range, Precision, AOE -->
-                        <Grid Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <controls:IntPropertyEditor Grid.Column="0" Label="Range" Value="{Binding Range, Mode=TwoWay}"
-                                                        IsModified="{Binding IsRangeModified}" IsSessionEdit="{Binding IsRangeSessionEdit}"
-                                                        IsInherited="{Binding IsRangeInherited}" Margin="0,0,4,0"/>
-                            <controls:IntPropertyEditor Grid.Column="1" Label="Precision" Value="{Binding Precision, Mode=TwoWay}"
-                                                        IsModified="{Binding IsPrecisionModified}" IsSessionEdit="{Binding IsPrecisionSessionEdit}"
-                                                        IsInherited="{Binding IsPrecisionInherited}" Margin="4,0,4,0"/>
-                            <controls:IntPropertyEditor Grid.Column="2" Label="AOE" Value="{Binding AOE, Mode=TwoWay}"
-                                                        IsModified="{Binding IsAOEModified}" IsSessionEdit="{Binding IsAOESessionEdit}"
-                                                        IsInherited="{Binding IsAOEInherited}" Margin="4,0,0,0"/>
-                        </Grid>
-
-                        <!-- Damage, Effect, NrEff -->
-                        <Grid Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <controls:IntPropertyEditor Grid.Column="0" Label="Damage" Value="{Binding Damage, Mode=TwoWay}"
-                                                        IsModified="{Binding IsDamageModified}" IsSessionEdit="{Binding IsDamageSessionEdit}"
-                                                        IsInherited="{Binding IsDamageInherited}" Margin="0,0,4,0"/>
-                            <controls:IntPropertyEditor Grid.Column="1" Label="Effect" Value="{Binding Effect, Mode=TwoWay}"
-                                                        IsModified="{Binding IsEffectModified}" IsSessionEdit="{Binding IsEffectSessionEdit}"
-                                                        IsInherited="{Binding IsEffectInherited}" Margin="4,0,4,0"/>
-                            <controls:IntPropertyEditor Grid.Column="2" Label="Nr Effects" Value="{Binding NrEff, Mode=TwoWay}"
-                                                        IsModified="{Binding IsNrEffModified}" IsSessionEdit="{Binding IsNrEffSessionEdit}"
-                                                        IsInherited="{Binding IsNrEffInherited}" Margin="4,0,0,0"/>
-                        </Grid>
+                        <controls:BadgeGridPanel
+                            ItemsSource="{Binding CombatBadges}"
+                            RemoveCommand="{Binding RemoveCombatBadgeCommand}"
+                            Columns="3"
+                            ShowAddButton="False"/>
 
                         <!-- Next Spell Chain -->
-                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6"
+                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6" Margin="0,8,0,0"
                                 Visibility="{Binding HasNextSpell, Converter={StaticResource BoolToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Next Spell:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
