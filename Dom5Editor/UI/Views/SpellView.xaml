@@ -65,7 +65,9 @@
                                 Visibility="{Binding HasCopySpell, Converter={StaticResource BoolToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Copy From:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopySpellDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CopySpellDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"
+                                           Cursor="Hand" MouseLeftButtonDown="OnCopySpellClick"
+                                           ToolTip="Click to navigate to source spell"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -160,7 +162,9 @@
                                 Visibility="{Binding HasNextSpell, Converter={StaticResource BoolToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Next Spell:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding NextSpellDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding NextSpellDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"
+                                           Cursor="Hand" MouseLeftButtonDown="OnNextSpellClick"
+                                           ToolTip="Click to navigate to next spell in chain"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>

@@ -123,6 +123,31 @@ The Spell entity has so many property mappings that it exceeds reasonable file s
 
 ## Fixed Issues
 
+### ~~Equipment Add Not Working via UI~~ FIXED (2026-01-07)
+
+**Status:** FIXED
+
+**Problem:** Adding weapons or armor to monsters via the SearchableReferenceComboBox dropdown wasn't working. The equipment would not appear in the list after selection.
+
+**Root Causes:**
+1. **HasValue not set:** When programmatically creating `WeaponRef` or `ArmorRef` and setting the `ID` property, `HasValue` remained `false`. The `GetLayeredReferenceList<T>()` method filters references by `refProp.HasValue`, so new refs were silently ignored.
+2. **Session tracking missing:** Added equipment wasn't being recorded in `ChangesMod`, so `IsSessionEdit` was false.
+
+**Solution Implemented:**
+1. Modified `ID` setter in both `StringOrIDRef.cs` and `IDRef.cs` to automatically set `HasValue = true` when a non-zero ID is assigned
+2. Added `RecordPropertyChangeInSession(Property)` helper method in `EntityViewModel` that calls `_changesMod?.RecordPropertyChange(_entity, property)`
+3. Updated `AddWeaponById`, `AddArmorById`, `AddWeapon`, `AddArmor` in `MonsterViewModel` to call `RecordPropertyChangeInSession()` after adding equipment
+4. Improved `RelayCommand<T>.Execute()` to use pattern matching instead of direct casting for safer WPF command execution
+
+**Files Modified:**
+- `Dom5Edit/Props/References/StringOrIDRef.cs` - ID setter now sets HasValue
+- `Dom5Edit/Props/References/IDRef.cs` - ID setter now sets HasValue
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added `RecordPropertyChangeInSession()` helper
+- `Dom5Editor/UI/ViewModels/MonsterViewModel.cs` - All add methods now call session tracking
+- `Dom5Editor/UI/RelayCommand.cs` - Pattern matching in Execute()
+
+---
+
 ### ~~Undo Support Not Implemented~~ FIXED (2026-01)
 
 **Files:** `Dom5Editor/UI/ViewModels/EntityViewModel.cs`
@@ -206,19 +231,27 @@ Removed `DataContext = this` from constructor. Changed command bindings to `Elem
 
 ---
 
-### Entity Navigation - Custom Render Panels
+### ~~Entity Navigation - Custom Render Panels~~ FIXED (2026-01-07)
 
 **Added:** 2026-01-06
+**Fixed:** 2026-01-07
 
-Entity navigation was implemented for all badge-based reference displays. However, custom render panels (inline TextBlocks showing "Copy From" references) don't yet support click-to-navigate:
+Entity navigation has been implemented for custom render panels (inline TextBlocks showing "Copy From" references):
 
-- **WeaponView** - `CopyWeaponDisplay` TextBlock (line ~41)
-- **ArmorView** - `CopyArmorDisplay` TextBlock (line ~45)
-- **ItemView** - `CopyItemDisplay` TextBlock (line ~45)
-- **SpellView** - `CopySpellDisplay` TextBlock (line ~68), `NextSpellDisplay` (line ~208)
-- **MercenaryView** - `CommanderDisplay`, `UnitDisplay`, `ItemDisplay` TextBlocks
+- **WeaponView** - `CopyWeaponDisplay` - click to navigate to source weapon
+- **ArmorView** - `CopyArmorDisplay` - click to navigate to source armor
+- **ItemView** - `CopyItemDisplay` - click to navigate to source item
+- **SpellView** - `CopySpellDisplay` - click to navigate to source spell; `NextSpellDisplay` - click to navigate to next spell in chain
 
-**To implement:** Add `MouseLeftButtonDown` handlers and wire up navigation similar to MonsterView's `OnCopyStatsClick` pattern. Each view would need a code-behind handler that extracts the ID and calls `NavigateToReferenceCommand.Execute()`.
+**Files Changed:**
+- `WeaponViewModel.cs` - Added `CopyWeaponId` property
+- `ArmorViewModel.cs` - Added `CopyArmorId` property
+- `ItemViewModel.cs` - Added `CopyItemId` property
+- `SpellViewModel.cs` - Added `CopySpellId` and `NextSpellId` properties
+- `WeaponView.xaml.cs`, `ArmorView.xaml.cs`, `ItemView.xaml.cs`, `SpellView.xaml.cs` - Added click handlers
+- `WeaponView.xaml`, `ArmorView.xaml`, `ItemView.xaml`, `SpellView.xaml` - Added `Cursor="Hand"`, `MouseLeftButtonDown`, and tooltips
+
+**Note:** MercenaryView references (`CommanderDisplay`, `UnitDisplay`, `ItemDisplay`) are handled via badge system with `NavigateToReferenceCommand`.
 
 ---
 

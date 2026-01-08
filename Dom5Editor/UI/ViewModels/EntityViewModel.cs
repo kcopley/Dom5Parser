@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Dom5Edit;
@@ -1630,6 +1631,15 @@ namespace Dom5Editor.UI.Views
         public void SetChangesMod(ChangesMod changesMod)
         {
             _changesMod = changesMod;
+        }
+
+        /// <summary>
+        /// Records a property change in the session tracking system.
+        /// Call this after adding or modifying a property to mark it as a session edit.
+        /// </summary>
+        protected void RecordPropertyChangeInSession(Property property)
+        {
+            _changesMod?.RecordPropertyChange(_entity, property);
         }
 
         // ========================================

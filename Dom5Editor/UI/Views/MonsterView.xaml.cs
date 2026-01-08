@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Dom5Editor.UI.Controls;
 
 namespace Dom5Editor.UI.Views
 {
@@ -51,6 +52,33 @@ namespace Dom5Editor.UI.Views
             if (id != 0)
             {
                 ViewModel?.NavigateToReferenceCommand.Execute(("monster", id));
+            }
+        }
+
+        // Equipment add - auto-add when selection is made
+        private void OnWeaponSelectionChanged(object sender, ReferenceSelectionChangedEventArgs e)
+        {
+            if (e.NewId > 0)
+            {
+                ViewModel?.AddWeaponByIdCommand?.Execute(e.NewId);
+                // Clear the selection so user can add another
+                if (sender is SearchableReferenceComboBox combo)
+                {
+                    combo.SetSelectedIdSilent(null);
+                }
+            }
+        }
+
+        private void OnArmorSelectionChanged(object sender, ReferenceSelectionChangedEventArgs e)
+        {
+            if (e.NewId > 0)
+            {
+                ViewModel?.AddArmorByIdCommand?.Execute(e.NewId);
+                // Clear the selection so user can add another
+                if (sender is SearchableReferenceComboBox combo)
+                {
+                    combo.SetSelectedIdSilent(null);
+                }
             }
         }
     }

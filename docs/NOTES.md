@@ -37,6 +37,21 @@ Quick reference notes for development context. See related documents for full de
 - None currently
 
 ### Recently Completed (2026-01-07)
+- **Equipment Add Bug Fix** - Fixed critical bug where adding equipment via UI wasn't working:
+  - **Root cause:** `HasValue` property on `StringOrIDRef` and `IDRef` wasn't being set when programmatically assigning IDs
+  - **Fix:** Modified ID setters to automatically set `HasValue = true` when a non-zero ID is assigned
+  - **Session tracking:** Added `RecordPropertyChangeInSession(Property)` helper in EntityViewModel to properly track equipment adds
+  - **RelayCommand<T> improvement:** Updated `Execute()` to use pattern matching instead of direct casting for safer type handling
+  - Files: `StringOrIDRef.cs`, `IDRef.cs`, `EntityViewModel.cs`, `MonsterViewModel.cs`, `RelayCommand.cs`
+
+- **Entity Navigation for Copy References** - Click-to-navigate for "Copy From" references in custom panels:
+  - WeaponView: `CopyWeaponDisplay` → navigate to source weapon
+  - ArmorView: `CopyArmorDisplay` → navigate to source armor
+  - ItemView: `CopyItemDisplay` → navigate to source item
+  - SpellView: `CopySpellDisplay` → source spell, `NextSpellDisplay` → next spell in chain
+  - Added ID properties to ViewModels, click handlers in code-behind, cursor/tooltip in XAML
+
+### Recently Completed (2026-01-07)
 - **JSON-Driven ViewModel Property Migration** - Removed ~700+ redundant properties across 8 ViewModels:
   - MercenaryViewModel: 27 props removed, simplified to badge-only
   - SiteViewModel: 16 props removed, added identity badges section

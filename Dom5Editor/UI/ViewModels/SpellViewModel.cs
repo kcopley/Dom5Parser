@@ -62,6 +62,24 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        /// <summary>
+        /// Gets the CopySpell reference ID for navigation.
+        /// </summary>
+        public int CopySpellId
+        {
+            get
+            {
+                var result = _entity.TryGet<CopySpellRef>(Command.COPYSPELL, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.ID;
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
+
         // ========================================
         // Derived Display Properties (used in header/special displays)
         // ========================================
@@ -301,6 +319,24 @@ namespace Dom5Editor.UI.Views
             {
                 var result = _entity.TryGet<SpellRef>(Command.NEXTSPELL, out _);
                 return result == ReturnType.TRUE;
+            }
+        }
+
+        /// <summary>
+        /// Gets the NextSpell reference ID for navigation.
+        /// </summary>
+        public int NextSpellId
+        {
+            get
+            {
+                var result = _entity.TryGet<SpellRef>(Command.NEXTSPELL, out var prop);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.ID;
+                    return prop.ID;
+                }
+                return 0;
             }
         }
 

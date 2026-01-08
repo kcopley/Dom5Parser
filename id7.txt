@@ -1,0 +1,38 @@
+[MonsterViewModel] RefreshWeaponsList called, entity=7 (hash=63681652)
+[MonsterViewModel] Direct entity weapons count: 0
+[GetLayeredReferenceList] Layer 2: _entity=7, vanillaEntity=7, same=False
+[GetLayeredReferenceList] Layer 2: _entity.GetMultiple(WEAPON) returned 0 props
+[MonsterViewModel] GetLayeredReferenceList returned 1 weapons
+[MonsterViewModel]   Adding weapon to list: ID=8, Name=Broad Sword, IsInherited=True
+[MonsterViewModel] WeaponsList now has 1 items
+'Dom5Editor.exe' (CoreCLR: clrhost): Loaded 'C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.22\System.Runtime.Serialization.Formatters.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'Dom5Editor.exe' (CoreCLR: clrhost): Loaded 'C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.22\Accessibility.dll'. Module was built without symbols.
+[SearchableReferenceComboBox] CommitSelection called with item: Halberd (ID=5)
+[SearchableReferenceComboBox] oldId=, newId=5
+[SearchableReferenceComboBox] Raising SelectionChanged event, handler count=1
+[MonsterView] OnWeaponSelectionChanged fired: NewId=5, ViewModel=True
+[MonsterView] AddWeaponByIdCommand: True, CanExecute=True
+[RelayCommand<Int32>] Execute called with parameter: 5 (type: Int32)
+[RelayCommand<Int32>] Pattern match succeeded, calling _execute
+[MonsterViewModel] AddWeaponById called with id=5, entity=7 (hash=63681652)
+[MonsterViewModel] Creating WeaponRef for id=5
+[MonsterViewModel] Using CommandHistory to add weapon
+[AddPropertyCommand] Execute: Adding WEAPON to entity 7 (hash=63681652)
+[IDEntity.AddProperty] Entity ID=7: Before add _properties.Count=1, adding WEAPON
+[IDEntity.AddProperty] Entity ID=7: After add _properties.Count=2
+[IDEntity.AddProperty] Entity ID=7: After sort _properties.Count=2
+[AddPropertyCommand] Execute: Property added
+[MonsterViewModel] Refreshing weapons list
+[MonsterViewModel] RefreshWeaponsList called, entity=7 (hash=63681652)
+[MonsterViewModel] Direct entity weapons count: 1
+[MonsterViewModel]   Direct weapon: WeaponRef, ID=5
+[GetLayeredReferenceList] Layer 2: _entity=7, vanillaEntity=7, same=False
+[GetLayeredReferenceList] Layer 2: _entity.GetMultiple(WEAPON) returned 1 props
+[GetLayeredReferenceList] Layer 2: prop type=WeaponRef, is TRef=True, HasValue=False
+[MonsterViewModel] GetLayeredReferenceList returned 1 weapons
+[MonsterViewModel]   Adding weapon to list: ID=8, Name=Broad Sword, IsInherited=True
+[MonsterViewModel] WeaponsList now has 1 items
+[MonsterViewModel] AddWeaponById completed
+[RelayCommand<Int32>] _execute completed
+[MonsterView] Execute called with 5
+[SearchableReferenceComboBox] SelectionChanged event raised

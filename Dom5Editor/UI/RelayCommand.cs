@@ -62,12 +62,37 @@ namespace Dom5Editor.UI
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null || _canExecute((T)parameter);
+            if (_canExecute == null)
+                return true;
+
+            // Use pattern matching for safer type checking
+            if (parameter is T typedParam)
+                return _canExecute(typedParam);
+
+            // Handle null for reference types
+            if (parameter == null && !typeof(T).IsValueType)
+                return _canExecute(default);
+
+            return true; // No canExecute constraint if type doesn't match
         }
 
         public void Execute(object parameter)
         {
-            _execute((T)parameter);
+            // Use pattern matching instead of direct cast for safer execution
+            if (parameter is T typedParam)
+            {
+                _execute(typedParam);
+            }
+            else if (parameter != null && typeof(T) == typeof(int) && int.TryParse(parameter.ToString(), out int intVal))
+            {
+                // Special handling for int parameters that might come as strings
+                _execute((T)(object)intVal);
+            }
+            else if (parameter == null && !typeof(T).IsValueType)
+            {
+                // Handle null for reference types
+                _execute(default);
+            }
         }
     }
 }

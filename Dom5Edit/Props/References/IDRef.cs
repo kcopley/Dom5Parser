@@ -5,7 +5,20 @@ namespace Dom5Edit.Props
 {
     public class IDRef : Reference
     {
-        public int ID { get; set; }
+        private int _id;
+        public int ID
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                // Setting an ID means we have a value
+                if (value != 0)
+                {
+                    HasValue = true;
+                }
+            }
+        }
         public bool HasValue { get; set; }
 
         public IDEntity Entity { get; set; }
