@@ -243,606 +243,28 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Stats
+        // Stats - Now driven by JSON via StatsBadges collection
+        // Individual stat properties removed - use StatsBadges for display/edit
         // ========================================
-
-        public int? Hp
-        {
-            get => GetIntProperty(Command.HP);
-            set => SetIntProperty(Command.HP, value);
-        }
-        public bool IsHpModified => IsIntPropertyModifiedFromVanilla(Command.HP);
-        public bool IsHpSessionEdit => IsPropertyEditedInSession(Command.HP);
-        public bool IsHpInherited => IsIntPropertyInherited(Command.HP);
-
-        public int? Size
-        {
-            get => GetIntProperty(Command.SIZE);
-            set => SetIntProperty(Command.SIZE, value);
-        }
-        public bool IsSizeModified => IsIntPropertyModifiedFromVanilla(Command.SIZE);
-        public bool IsSizeSessionEdit => IsPropertyEditedInSession(Command.SIZE);
-        public bool IsSizeInherited => IsIntPropertyInherited(Command.SIZE);
-
-        public int? Strength
-        {
-            get => GetIntProperty(Command.STR);
-            set => SetIntProperty(Command.STR, value);
-        }
-        public bool IsStrengthModified => IsIntPropertyModifiedFromVanilla(Command.STR);
-        public bool IsStrengthSessionEdit => IsPropertyEditedInSession(Command.STR);
-        public bool IsStrengthInherited => IsIntPropertyInherited(Command.STR);
-
-        public int? Protection
-        {
-            get => GetIntProperty(Command.PROT);
-            set => SetIntProperty(Command.PROT, value);
-        }
-        public bool IsProtectionModified => IsIntPropertyModifiedFromVanilla(Command.PROT);
-        public bool IsProtectionSessionEdit => IsPropertyEditedInSession(Command.PROT);
-        public bool IsProtectionInherited => IsIntPropertyInherited(Command.PROT);
-
-        public int? Attack
-        {
-            get => GetIntProperty(Command.ATT);
-            set => SetIntProperty(Command.ATT, value);
-        }
-        public bool IsAttackModified => IsIntPropertyModifiedFromVanilla(Command.ATT);
-        public bool IsAttackSessionEdit => IsPropertyEditedInSession(Command.ATT);
-        public bool IsAttackInherited => IsIntPropertyInherited(Command.ATT);
-
-        public int? Defense
-        {
-            get => GetIntProperty(Command.DEF);
-            set => SetIntProperty(Command.DEF, value);
-        }
-        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
-        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
-        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
-
-        public int? Precision
-        {
-            get => GetIntProperty(Command.PREC);
-            set => SetIntProperty(Command.PREC, value);
-        }
-        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PREC);
-        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PREC);
-        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PREC);
-
-        public int? Encumbrance
-        {
-            get => GetIntProperty(Command.ENC);
-            set => SetIntProperty(Command.ENC, value);
-        }
-        public bool IsEncumbranceModified => IsIntPropertyModifiedFromVanilla(Command.ENC);
-        public bool IsEncumbranceSessionEdit => IsPropertyEditedInSession(Command.ENC);
-        public bool IsEncumbranceInherited => IsIntPropertyInherited(Command.ENC);
-
-        public int? MagicResistance
-        {
-            get => GetIntProperty(Command.MR);
-            set => SetIntProperty(Command.MR, value);
-        }
-        public bool IsMagicResistanceModified => IsIntPropertyModifiedFromVanilla(Command.MR);
-        public bool IsMagicResistanceSessionEdit => IsPropertyEditedInSession(Command.MR);
-        public bool IsMagicResistanceInherited => IsIntPropertyInherited(Command.MR);
-
-        public int? Morale
-        {
-            get => GetIntProperty(Command.MOR);
-            set => SetIntProperty(Command.MOR, value);
-        }
-        public bool IsMoraleModified => IsIntPropertyModifiedFromVanilla(Command.MOR);
-        public bool IsMoraleSessionEdit => IsPropertyEditedInSession(Command.MOR);
-        public bool IsMoraleInherited => IsIntPropertyInherited(Command.MOR);
-
-        public int? ActionPoints
-        {
-            get => GetIntProperty(Command.AP);
-            set => SetIntProperty(Command.AP, value);
-        }
-        public bool IsActionPointsModified => IsIntPropertyModifiedFromVanilla(Command.AP);
-        public bool IsActionPointsSessionEdit => IsPropertyEditedInSession(Command.AP);
-        public bool IsActionPointsInherited => IsIntPropertyInherited(Command.AP);
-
-        public int? MapMove
-        {
-            get => GetIntProperty(Command.MAPMOVE);
-            set => SetIntProperty(Command.MAPMOVE, value);
-        }
-        public bool IsMapMoveModified => IsIntPropertyModifiedFromVanilla(Command.MAPMOVE);
-        public bool IsMapMoveSessionEdit => IsPropertyEditedInSession(Command.MAPMOVE);
-        public bool IsMapMoveInherited => IsIntPropertyInherited(Command.MAPMOVE);
-
-        public int? Eyes
-        {
-            get => GetIntProperty(Command.EYES);
-            set => SetIntProperty(Command.EYES, value);
-        }
-        public bool IsEyesModified => IsIntPropertyModifiedFromVanilla(Command.EYES);
-        public bool IsEyesSessionEdit => IsPropertyEditedInSession(Command.EYES);
-        public bool IsEyesInherited => IsIntPropertyInherited(Command.EYES);
-
-        // ========================================
-        // Recruitment
-        // ========================================
-
-        public int? GoldCost
-        {
-            get => GetIntProperty(Command.GCOST);
-            set => SetIntProperty(Command.GCOST, value);
-        }
-        public bool IsGoldCostModified => IsIntPropertyModifiedFromVanilla(Command.GCOST);
-        public bool IsGoldCostSessionEdit => IsPropertyEditedInSession(Command.GCOST);
-        public bool IsGoldCostInherited => IsIntPropertyInherited(Command.GCOST);
-
-        public int? ResourceCost
-        {
-            get => GetIntProperty(Command.RCOST);
-            set => SetIntProperty(Command.RCOST, value);
-        }
-        public bool IsResourceCostModified => IsIntPropertyModifiedFromVanilla(Command.RCOST);
-        public bool IsResourceCostSessionEdit => IsPropertyEditedInSession(Command.RCOST);
-        public bool IsResourceCostInherited => IsIntPropertyInherited(Command.RCOST);
-
-        public int? ResourceSize
-        {
-            get => GetIntProperty(Command.RESSIZE);
-            set => SetIntProperty(Command.RESSIZE, value);
-        }
-        public bool IsResourceSizeModified => IsIntPropertyModifiedFromVanilla(Command.RESSIZE);
-        public bool IsResourceSizeSessionEdit => IsPropertyEditedInSession(Command.RESSIZE);
-        public bool IsResourceSizeInherited => IsIntPropertyInherited(Command.RESSIZE);
-
-        public bool RequiresLab
-        {
-            get => GetCommandProperty(Command.REQLAB);
-            set => SetCommandProperty(Command.REQLAB, value);
-        }
-        public bool IsRequiresLabModified => IsCommandPropertyModifiedFromVanilla(Command.REQLAB);
-        public bool IsRequiresLabSessionEdit => IsPropertyEditedInSession(Command.REQLAB);
-        public bool IsRequiresLabInherited => IsCommandPropertyInherited(Command.REQLAB);
-
-        public bool RequiresTemple
-        {
-            get => GetCommandProperty(Command.REQTEMPLE);
-            set => SetCommandProperty(Command.REQTEMPLE, value);
-        }
-        public bool IsRequiresTempleModified => IsCommandPropertyModifiedFromVanilla(Command.REQTEMPLE);
-        public bool IsRequiresTempleSessionEdit => IsPropertyEditedInSession(Command.REQTEMPLE);
-        public bool IsRequiresTempleInherited => IsCommandPropertyInherited(Command.REQTEMPLE);
-
-        // ========================================
-        // Type
-        // ========================================
-
-        public bool IsHumanoid
-        {
-            get => GetCommandProperty(Command.HUMANOID);
-            set => SetCommandProperty(Command.HUMANOID, value);
-        }
-        public bool IsHumanoidModified => IsCommandPropertyModifiedFromVanilla(Command.HUMANOID);
-        public bool IsHumanoidSessionEdit => IsPropertyEditedInSession(Command.HUMANOID);
-        public bool IsHumanoidInherited => IsCommandPropertyInherited(Command.HUMANOID);
-
-        public bool IsMounted
-        {
-            get => GetCommandProperty(Command.MOUNTED);
-            set => SetCommandProperty(Command.MOUNTED, value);
-        }
-        public bool IsMountedModified => IsCommandPropertyModifiedFromVanilla(Command.MOUNTED);
-        public bool IsMountedSessionEdit => IsPropertyEditedInSession(Command.MOUNTED);
-        public bool IsMountedInherited => IsCommandPropertyInherited(Command.MOUNTED);
-
-        public bool IsUndead
-        {
-            get => GetCommandProperty(Command.UNDEAD);
-            set => SetCommandProperty(Command.UNDEAD, value);
-        }
-        public bool IsUndeadModified => IsCommandPropertyModifiedFromVanilla(Command.UNDEAD);
-        public bool IsUndeadSessionEdit => IsPropertyEditedInSession(Command.UNDEAD);
-        public bool IsUndeadInherited => IsCommandPropertyInherited(Command.UNDEAD);
-
-        public bool IsDemon
-        {
-            get => GetCommandProperty(Command.DEMON);
-            set => SetCommandProperty(Command.DEMON, value);
-        }
-        public bool IsDemonModified => IsCommandPropertyModifiedFromVanilla(Command.DEMON);
-        public bool IsDemonSessionEdit => IsPropertyEditedInSession(Command.DEMON);
-        public bool IsDemonInherited => IsCommandPropertyInherited(Command.DEMON);
-
-        public bool IsMagicBeing
-        {
-            get => GetCommandProperty(Command.MAGICBEING);
-            set => SetCommandProperty(Command.MAGICBEING, value);
-        }
-        public bool IsMagicBeingModified => IsCommandPropertyModifiedFromVanilla(Command.MAGICBEING);
-        public bool IsMagicBeingSessionEdit => IsPropertyEditedInSession(Command.MAGICBEING);
-        public bool IsMagicBeingInherited => IsCommandPropertyInherited(Command.MAGICBEING);
-
-        public bool IsHoly
-        {
-            get => GetCommandProperty(Command.HOLY);
-            set => SetCommandProperty(Command.HOLY, value);
-        }
-        public bool IsHolyModified => IsCommandPropertyModifiedFromVanilla(Command.HOLY);
-        public bool IsHolySessionEdit => IsPropertyEditedInSession(Command.HOLY);
-        public bool IsHolyInherited => IsCommandPropertyInherited(Command.HOLY);
-
-        public bool IsAnimal
-        {
-            get => GetCommandProperty(Command.ANIMAL);
-            set => SetCommandProperty(Command.ANIMAL, value);
-        }
-        public bool IsAnimalModified => IsCommandPropertyModifiedFromVanilla(Command.ANIMAL);
-        public bool IsAnimalSessionEdit => IsPropertyEditedInSession(Command.ANIMAL);
-        public bool IsAnimalInherited => IsCommandPropertyInherited(Command.ANIMAL);
-
-        public bool IsUnique
-        {
-            get => GetCommandProperty(Command.UNIQUE);
-            set => SetCommandProperty(Command.UNIQUE, value);
-        }
-        public bool IsUniqueModified => IsCommandPropertyModifiedFromVanilla(Command.UNIQUE);
-        public bool IsUniqueSessionEdit => IsPropertyEditedInSession(Command.UNIQUE);
-        public bool IsUniqueInherited => IsCommandPropertyInherited(Command.UNIQUE);
-
-        public bool IsInanimate
-        {
-            get => GetCommandProperty(Command.INANIMATE);
-            set => SetCommandProperty(Command.INANIMATE, value);
-        }
-        public bool IsInanimateModified => IsCommandPropertyModifiedFromVanilla(Command.INANIMATE);
-        public bool IsInanimateSessionEdit => IsPropertyEditedInSession(Command.INANIMATE);
-        public bool IsInanimateInherited => IsCommandPropertyInherited(Command.INANIMATE);
-
-        public bool IsMindless
-        {
-            get => GetCommandProperty(Command.MINDLESS);
-            set => SetCommandProperty(Command.MINDLESS, value);
-        }
-        public bool IsMindlessModified => IsCommandPropertyModifiedFromVanilla(Command.MINDLESS);
-        public bool IsMindlessSessionEdit => IsPropertyEditedInSession(Command.MINDLESS);
-        public bool IsMindlessInherited => IsCommandPropertyInherited(Command.MINDLESS);
-
-        // ========================================
-        // Movement
-        // ========================================
-
-        public bool IsFlying
-        {
-            get => GetCommandProperty(Command.FLYING);
-            set => SetCommandProperty(Command.FLYING, value);
-        }
-        public bool IsFlyingModified => IsCommandPropertyModifiedFromVanilla(Command.FLYING);
-        public bool IsFlyingSessionEdit => IsPropertyEditedInSession(Command.FLYING);
-        public bool IsFlyingInherited => IsCommandPropertyInherited(Command.FLYING);
-
-        public bool IsAquatic
-        {
-            get => GetCommandProperty(Command.AQUATIC);
-            set => SetCommandProperty(Command.AQUATIC, value);
-        }
-        public bool IsAquaticModified => IsCommandPropertyModifiedFromVanilla(Command.AQUATIC);
-        public bool IsAquaticSessionEdit => IsPropertyEditedInSession(Command.AQUATIC);
-        public bool IsAquaticInherited => IsCommandPropertyInherited(Command.AQUATIC);
-
-        public bool IsAmphibian
-        {
-            get => GetCommandProperty(Command.AMPHIBIAN);
-            set => SetCommandProperty(Command.AMPHIBIAN, value);
-        }
-        public bool IsAmphibianModified => IsCommandPropertyModifiedFromVanilla(Command.AMPHIBIAN);
-        public bool IsAmphibianSessionEdit => IsPropertyEditedInSession(Command.AMPHIBIAN);
-        public bool IsAmphibianInherited => IsCommandPropertyInherited(Command.AMPHIBIAN);
-
-        public bool IsFloating
-        {
-            get => GetCommandProperty(Command.FLOAT);
-            set => SetCommandProperty(Command.FLOAT, value);
-        }
-        public bool IsFloatingModified => IsCommandPropertyModifiedFromVanilla(Command.FLOAT);
-        public bool IsFloatingSessionEdit => IsPropertyEditedInSession(Command.FLOAT);
-        public bool IsFloatingInherited => IsCommandPropertyInherited(Command.FLOAT);
-
-        public bool CanTeleport
-        {
-            get => GetCommandProperty(Command.TELEPORT);
-            set => SetCommandProperty(Command.TELEPORT, value);
-        }
-        public bool IsCanTeleportModified => IsCommandPropertyModifiedFromVanilla(Command.TELEPORT);
-        public bool IsCanTeleportSessionEdit => IsPropertyEditedInSession(Command.TELEPORT);
-        public bool IsCanTeleportInherited => IsCommandPropertyInherited(Command.TELEPORT);
-
-        public int? Stealthy
-        {
-            get => GetIntProperty(Command.STEALTHY);
-            set => SetIntProperty(Command.STEALTHY, value);
-        }
-        public bool IsStealthyModified => IsIntPropertyModifiedFromVanilla(Command.STEALTHY);
-        public bool IsStealthySessionEdit => IsPropertyEditedInSession(Command.STEALTHY);
-        public bool IsStealthyInherited => IsIntPropertyInherited(Command.STEALTHY);
-
-        // ========================================
-        // Resistances
-        // ========================================
-
-        public int? FireResistance
-        {
-            get => GetIntProperty(Command.FIRERES);
-            set => SetIntProperty(Command.FIRERES, value);
-        }
-        public bool IsFireResistanceModified => IsIntPropertyModifiedFromVanilla(Command.FIRERES);
-        public bool IsFireResistanceSessionEdit => IsPropertyEditedInSession(Command.FIRERES);
-        public bool IsFireResistanceInherited => IsIntPropertyInherited(Command.FIRERES);
-
-        public int? ColdResistance
-        {
-            get => GetIntProperty(Command.COLDRES);
-            set => SetIntProperty(Command.COLDRES, value);
-        }
-        public bool IsColdResistanceModified => IsIntPropertyModifiedFromVanilla(Command.COLDRES);
-        public bool IsColdResistanceSessionEdit => IsPropertyEditedInSession(Command.COLDRES);
-        public bool IsColdResistanceInherited => IsIntPropertyInherited(Command.COLDRES);
-
-        public int? ShockResistance
-        {
-            get => GetIntProperty(Command.SHOCKRES);
-            set => SetIntProperty(Command.SHOCKRES, value);
-        }
-        public bool IsShockResistanceModified => IsIntPropertyModifiedFromVanilla(Command.SHOCKRES);
-        public bool IsShockResistanceSessionEdit => IsPropertyEditedInSession(Command.SHOCKRES);
-        public bool IsShockResistanceInherited => IsIntPropertyInherited(Command.SHOCKRES);
-
-        public int? PoisonResistance
-        {
-            get => GetIntProperty(Command.POISONRES);
-            set => SetIntProperty(Command.POISONRES, value);
-        }
-        public bool IsPoisonResistanceModified => IsIntPropertyModifiedFromVanilla(Command.POISONRES);
-        public bool IsPoisonResistanceSessionEdit => IsPropertyEditedInSession(Command.POISONRES);
-        public bool IsPoisonResistanceInherited => IsIntPropertyInherited(Command.POISONRES);
-
-        public bool IsEthereal
-        {
-            get => GetCommandProperty(Command.ETHEREAL);
-            set => SetCommandProperty(Command.ETHEREAL, value);
-        }
-        public bool IsEtherealModified => IsCommandPropertyModifiedFromVanilla(Command.ETHEREAL);
-        public bool IsEtherealSessionEdit => IsPropertyEditedInSession(Command.ETHEREAL);
-        public bool IsEtherealInherited => IsCommandPropertyInherited(Command.ETHEREAL);
-
-        public int? Regeneration
-        {
-            get => GetIntProperty(Command.REGENERATION);
-            set => SetIntProperty(Command.REGENERATION, value);
-        }
-        public bool IsRegenerationModified => IsIntPropertyModifiedFromVanilla(Command.REGENERATION);
-        public bool IsRegenerationSessionEdit => IsPropertyEditedInSession(Command.REGENERATION);
-        public bool IsRegenerationInherited => IsIntPropertyInherited(Command.REGENERATION);
-
-        public int? Invulnerable
-        {
-            get => GetIntProperty(Command.INVULNERABLE);
-            set => SetIntProperty(Command.INVULNERABLE, value);
-        }
-        public bool IsInvulnerableModified => IsIntPropertyModifiedFromVanilla(Command.INVULNERABLE);
-        public bool IsInvulnerableSessionEdit => IsPropertyEditedInSession(Command.INVULNERABLE);
-        public bool IsInvulnerableInherited => IsIntPropertyInherited(Command.INVULNERABLE);
-
-        // ========================================
-        // Combat Abilities
-        // ========================================
-
-        public int? Awe
-        {
-            get => GetIntProperty(Command.AWE);
-            set => SetIntProperty(Command.AWE, value);
-        }
-        public bool IsAweModified => IsIntPropertyModifiedFromVanilla(Command.AWE);
-        public bool IsAweSessionEdit => IsPropertyEditedInSession(Command.AWE);
-        public bool IsAweInherited => IsIntPropertyInherited(Command.AWE);
-
-        public int? Fear
-        {
-            get => GetIntProperty(Command.FEAR);
-            set => SetIntProperty(Command.FEAR, value);
-        }
-        public bool IsFearModified => IsIntPropertyModifiedFromVanilla(Command.FEAR);
-        public bool IsFearSessionEdit => IsPropertyEditedInSession(Command.FEAR);
-        public bool IsFearInherited => IsIntPropertyInherited(Command.FEAR);
-
-        public int? Berserk
-        {
-            get => GetIntProperty(Command.BERSERK);
-            set => SetIntProperty(Command.BERSERK, value);
-        }
-        public bool IsBerserkModified => IsIntPropertyModifiedFromVanilla(Command.BERSERK);
-        public bool IsBerserkSessionEdit => IsPropertyEditedInSession(Command.BERSERK);
-        public bool IsBerserkInherited => IsIntPropertyInherited(Command.BERSERK);
-
-        public int? Ambidextrous
-        {
-            get => GetIntProperty(Command.AMBIDEXTROUS);
-            set => SetIntProperty(Command.AMBIDEXTROUS, value);
-        }
-        public bool IsAmbidextrousModified => IsIntPropertyModifiedFromVanilla(Command.AMBIDEXTROUS);
-        public bool IsAmbidextrousSessionEdit => IsPropertyEditedInSession(Command.AMBIDEXTROUS);
-        public bool IsAmbidextrousInherited => IsIntPropertyInherited(Command.AMBIDEXTROUS);
-
-        public int? DarkVision
-        {
-            get => GetIntProperty(Command.DARKVISION);
-            set => SetIntProperty(Command.DARKVISION, value);
-        }
-        public bool IsDarkVisionModified => IsIntPropertyModifiedFromVanilla(Command.DARKVISION);
-        public bool IsDarkVisionSessionEdit => IsPropertyEditedInSession(Command.DARKVISION);
-        public bool IsDarkVisionInherited => IsIntPropertyInherited(Command.DARKVISION);
-
-        // ========================================
-        // Aura Effects
-        // ========================================
-
-        public int? Heat
-        {
-            get => GetIntProperty(Command.HEAT);
-            set => SetIntProperty(Command.HEAT, value);
-        }
-        public bool IsHeatModified => IsIntPropertyModifiedFromVanilla(Command.HEAT);
-        public bool IsHeatSessionEdit => IsPropertyEditedInSession(Command.HEAT);
-        public bool IsHeatInherited => IsIntPropertyInherited(Command.HEAT);
-
-        public int? Cold
-        {
-            get => GetIntProperty(Command.COLD);
-            set => SetIntProperty(Command.COLD, value);
-        }
-        public bool IsColdModified => IsIntPropertyModifiedFromVanilla(Command.COLD);
-        public bool IsColdSessionEdit => IsPropertyEditedInSession(Command.COLD);
-        public bool IsColdInherited => IsIntPropertyInherited(Command.COLD);
-
-        public int? FireShield
-        {
-            get => GetIntProperty(Command.FIRESHIELD);
-            set => SetIntProperty(Command.FIRESHIELD, value);
-        }
-        public bool IsFireShieldModified => IsIntPropertyModifiedFromVanilla(Command.FIRESHIELD);
-        public bool IsFireShieldSessionEdit => IsPropertyEditedInSession(Command.FIRESHIELD);
-        public bool IsFireShieldInherited => IsIntPropertyInherited(Command.FIRESHIELD);
-
-        public int? AirShield
-        {
-            get => GetIntProperty(Command.AIRSHIELD);
-            set => SetIntProperty(Command.AIRSHIELD, value);
-        }
-        public bool IsAirShieldModified => IsIntPropertyModifiedFromVanilla(Command.AIRSHIELD);
-        public bool IsAirShieldSessionEdit => IsPropertyEditedInSession(Command.AIRSHIELD);
-        public bool IsAirShieldInherited => IsIntPropertyInherited(Command.AIRSHIELD);
-
-        public int? PoisonCloud
-        {
-            get => GetIntProperty(Command.POISONCLOUD);
-            set => SetIntProperty(Command.POISONCLOUD, value);
-        }
-        public bool IsPoisonCloudModified => IsIntPropertyModifiedFromVanilla(Command.POISONCLOUD);
-        public bool IsPoisonCloudSessionEdit => IsPropertyEditedInSession(Command.POISONCLOUD);
-        public bool IsPoisonCloudInherited => IsIntPropertyInherited(Command.POISONCLOUD);
-
-        public int? DiseaseCloud
-        {
-            get => GetIntProperty(Command.DISEASECLOUD);
-            set => SetIntProperty(Command.DISEASECLOUD, value);
-        }
-        public bool IsDiseaseCloudModified => IsIntPropertyModifiedFromVanilla(Command.DISEASECLOUD);
-        public bool IsDiseaseCloudSessionEdit => IsPropertyEditedInSession(Command.DISEASECLOUD);
-        public bool IsDiseaseCloudInherited => IsIntPropertyInherited(Command.DISEASECLOUD);
-
-        // ========================================
-        // Age Properties
-        // ========================================
-
-        public int? StartAge
-        {
-            get => GetIntProperty(Command.STARTAGE);
-            set => SetIntProperty(Command.STARTAGE, value);
-        }
-        public bool IsStartAgeModified => IsIntPropertyModifiedFromVanilla(Command.STARTAGE);
-        public bool IsStartAgeSessionEdit => IsPropertyEditedInSession(Command.STARTAGE);
-        public bool IsStartAgeInherited => IsIntPropertyInherited(Command.STARTAGE);
-
-        public int? MaxAge
-        {
-            get => GetIntProperty(Command.MAXAGE);
-            set => SetIntProperty(Command.MAXAGE, value);
-        }
-        public bool IsMaxAgeModified => IsIntPropertyModifiedFromVanilla(Command.MAXAGE);
-        public bool IsMaxAgeSessionEdit => IsPropertyEditedInSession(Command.MAXAGE);
-        public bool IsMaxAgeInherited => IsIntPropertyInherited(Command.MAXAGE);
-
-        // ========================================
-        // Province Effects
-        // ========================================
-
-        public int? PopKill
-        {
-            get => GetIntProperty(Command.POPKILL);
-            set => SetIntProperty(Command.POPKILL, value);
-        }
-        public bool IsPopKillModified => IsIntPropertyModifiedFromVanilla(Command.POPKILL);
-        public bool IsPopKillSessionEdit => IsPropertyEditedInSession(Command.POPKILL);
-        public bool IsPopKillInherited => IsIntPropertyInherited(Command.POPKILL);
-
-        public int? IncUnrest
-        {
-            get => GetIntProperty(Command.INCUNREST);
-            set => SetIntProperty(Command.INCUNREST, value);
-        }
-        public bool IsIncUnrestModified => IsIntPropertyModifiedFromVanilla(Command.INCUNREST);
-        public bool IsIncUnrestSessionEdit => IsPropertyEditedInSession(Command.INCUNREST);
-        public bool IsIncUnrestInherited => IsIntPropertyInherited(Command.INCUNREST);
-
-        public int? SpreadDom
-        {
-            get => GetIntProperty(Command.SPREADDOM);
-            set => SetIntProperty(Command.SPREADDOM, value);
-        }
-        public bool IsSpreadDomModified => IsIntPropertyModifiedFromVanilla(Command.SPREADDOM);
-        public bool IsSpreadDomSessionEdit => IsPropertyEditedInSession(Command.SPREADDOM);
-        public bool IsSpreadDomInherited => IsIntPropertyInherited(Command.SPREADDOM);
-
-        public int? PatrolBonus
-        {
-            get => GetIntProperty(Command.PATROLBONUS);
-            set => SetIntProperty(Command.PATROLBONUS, value);
-        }
-        public bool IsPatrolBonusModified => IsIntPropertyModifiedFromVanilla(Command.PATROLBONUS);
-        public bool IsPatrolBonusSessionEdit => IsPropertyEditedInSession(Command.PATROLBONUS);
-        public bool IsPatrolBonusInherited => IsIntPropertyInherited(Command.PATROLBONUS);
-
-        public int? SupplyBonus
-        {
-            get => GetIntProperty(Command.SUPPLYBONUS);
-            set => SetIntProperty(Command.SUPPLYBONUS, value);
-        }
-        public bool IsSupplyBonusModified => IsIntPropertyModifiedFromVanilla(Command.SUPPLYBONUS);
-        public bool IsSupplyBonusSessionEdit => IsPropertyEditedInSession(Command.SUPPLYBONUS);
-        public bool IsSupplyBonusInherited => IsIntPropertyInherited(Command.SUPPLYBONUS);
-
-        // ========================================
-        // Stealth/Assassin
-        // ========================================
-
-        public bool IsSpy
-        {
-            get => GetCommandProperty(Command.SPY);
-            set => SetCommandProperty(Command.SPY, value);
-        }
-        public bool IsSpyModified => IsCommandPropertyModifiedFromVanilla(Command.SPY);
-        public bool IsSpySessionEdit => IsPropertyEditedInSession(Command.SPY);
-        public bool IsSpyInherited => IsCommandPropertyInherited(Command.SPY);
-
-        public bool IsAssassin
-        {
-            get => GetCommandProperty(Command.ASSASSIN);
-            set => SetCommandProperty(Command.ASSASSIN, value);
-        }
-        public bool IsAssassinModified => IsCommandPropertyModifiedFromVanilla(Command.ASSASSIN);
-        public bool IsAssassinSessionEdit => IsPropertyEditedInSession(Command.ASSASSIN);
-        public bool IsAssassinInherited => IsCommandPropertyInherited(Command.ASSASSIN);
-
-        public int? Seduce
-        {
-            get => GetIntProperty(Command.SEDUCE);
-            set => SetIntProperty(Command.SEDUCE, value);
-        }
-        public bool IsSeduceModified => IsIntPropertyModifiedFromVanilla(Command.SEDUCE);
-        public bool IsSeduceSessionEdit => IsPropertyEditedInSession(Command.SEDUCE);
-        public bool IsSeduceInherited => IsIntPropertyInherited(Command.SEDUCE);
 
         // ===== BADGE-BASED COLLECTIONS (Compact UI) =====
-        // Sections defined in monster_badges.json: types (read-only), general, combat, resistances
+        // Sections defined in monster_badges.json: stats, types (read-only), general, combat, resistances
         // Uses base class BuildBadgesFromSection() method
+
+        // Stats badges (grid layout with showDefaults for consistent display)
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _statsBadges;
+
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> StatsBadges
+        {
+            get { if (_statsBadges == null) RefreshStatsBadges(); return _statsBadges; }
+        }
+
+        private void RefreshStatsBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("stats", BadgeValueChangedHandler);
+            _statsBadges = active;
+            OnPropertyChanged(nameof(StatsBadges));
+        }
 
         private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _typeBadges;
         private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableTypeBadges;
@@ -1171,9 +593,45 @@ namespace Dom5Editor.UI.Views
             if (command == Command.MAGICSKILL)
             {
                 RefreshMagicPaths();
+                return;
             }
 
-            // Map Command enum to actual property names (they don't always match)
+            // Check if this is a stat command (refresh StatsBadges)
+            if (IsStatCommand(command))
+            {
+                RefreshStatsBadges();
+                return;
+            }
+
+            // Check if this is a general badge command
+            if (IsGeneralBadgeCommand(command))
+            {
+                RefreshGeneralBadges();
+                return;
+            }
+
+            // Check if this is a combat badge command
+            if (IsCombatBadgeCommand(command))
+            {
+                RefreshCombatBadges();
+                return;
+            }
+
+            // Check if this is a resistance badge command
+            if (IsResistanceBadgeCommand(command))
+            {
+                RefreshResistanceBadges();
+                return;
+            }
+
+            // Check if this is a type badge command
+            if (IsTypeBadgeCommand(command))
+            {
+                RefreshTypeBadges();
+                return;
+            }
+
+            // Map Command enum to actual property names (remaining properties)
             var propertyName = GetPropertyNameForCommand(command);
             if (propertyName != null)
             {
@@ -1185,40 +643,116 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
+        /// Checks if the command is a core stat (HP, STR, ATT, etc.) handled by StatsBadges.
+        /// </summary>
+        private static bool IsStatCommand(Command command)
+        {
+            return command switch
+            {
+                Command.HP or Command.STR or Command.ATT or Command.DEF or
+                Command.PREC or Command.MR or Command.MOR or Command.ENC or
+                Command.PROT or Command.AP or Command.MAPMOVE or Command.SIZE => true,
+                _ => false
+            };
+        }
+
+        /// <summary>
+        /// Checks if the command is handled by general badges section.
+        /// </summary>
+        private static bool IsGeneralBadgeCommand(Command command)
+        {
+            // General section includes: movement, leadership, special abilities, province effects, stealth, recruitment
+            return command switch
+            {
+                Command.FLYING or Command.AQUATIC or Command.AMPHIBIAN or Command.POORAMPHIBIAN or
+                Command.FLOAT or Command.SWIMMING or Command.TELEPORT or Command.MAPTELEPORT or
+                Command.BLINK or Command.FORESTSURVIVAL or Command.MOUNTAINSURVIVAL or
+                Command.SWAMPSURVIVAL or Command.WASTESURVIVAL or Command.SNOW or
+                Command.NOLEADER or Command.POORLEADER or Command.OKLEADER or Command.GOODLEADER or
+                Command.EXPERTLEADER or Command.SUPERIORLEADER or Command.NOMAGICLEADER or
+                Command.POORMAGICLEADER or Command.OKMAGICLEADER or Command.GOODMAGICLEADER or
+                Command.EXPERTMAGICLEADER or Command.SUPERIORMAGICLEADER or Command.NOUNDEADLEADER or
+                Command.POORUNDEADLEADER or Command.OKUNDEADLEADER or Command.GOODUNDEADLEADER or
+                Command.EXPERTUNDEADLEADER or Command.SUPERIORUNDEADLEADER or
+                Command.HEAL or Command.NOHEAL or Command.HEALER or Command.AUTOHEALER or
+                Command.NEEDNOTEAT or Command.TAXCOLLECTOR or Command.INQUISITOR or Command.MASON or
+                Command.LOCALSUN or Command.COMMASTER or Command.COMSLAVE or Command.SPELLSINGER or
+                Command.COMBATCASTER or Command.DRAINIMMUNE or Command.DIVINEINS or Command.NOITEM or
+                Command.SPY or Command.ASSASSIN or Command.STEALTHY or Command.SEDUCE or
+                Command.POPKILL or Command.INCUNREST or Command.SPREADDOM or Command.PATROLBONUS or
+                Command.SUPPLYBONUS or Command.GCOST or Command.RCOST or Command.REQLAB or
+                Command.REQTEMPLE or Command.STARTAGE or Command.MAXAGE => true,
+                _ => false
+            };
+        }
+
+        /// <summary>
+        /// Checks if the command is handled by combat badges section.
+        /// </summary>
+        private static bool IsCombatBadgeCommand(Command command)
+        {
+            return command switch
+            {
+                Command.AWE or Command.FEAR or Command.BERSERK or Command.AMBIDEXTROUS or
+                Command.DARKVISION or Command.TRAMPLE or Command.DEATHCURSE or Command.BODYGUARD or
+                Command.WARNING or Command.STANDARD or Command.FORMATIONFIGHTER or Command.PATIENCE or
+                Command.CHAOSPOWER or Command.MAGICPOWER or Command.ETHEREAL or Command.GLAMOUR or
+                Command.HEAT or Command.COLD or Command.FIRESHIELD or Command.POISONCLOUD or
+                Command.DISEASECLOUD or Command.POISONSKIN or Command.ACIDSHIELD or Command.SLEEPAURA or
+                Command.ANIMALAWE or Command.SUNAWE => true,
+                _ => false
+            };
+        }
+
+        /// <summary>
+        /// Checks if the command is handled by resistance badges section.
+        /// </summary>
+        private static bool IsResistanceBadgeCommand(Command command)
+        {
+            return command switch
+            {
+                Command.FIRERES or Command.COLDRES or Command.SHOCKRES or Command.POISONRES or
+                Command.REGENERATION or Command.INVULNERABLE or Command.AIRSHIELD or Command.ICEPROT or
+                Command.REINVIGORATION or Command.BLUNTRES or Command.PIERCERES or Command.SLASHRES or
+                Command.DISEASERES or Command.MAGICIMMUNE or Command.STORMIMMUNE or Command.ACIDRES => true,
+                _ => false
+            };
+        }
+
+        /// <summary>
+        /// Checks if the command is handled by type badges section.
+        /// </summary>
+        private static bool IsTypeBadgeCommand(Command command)
+        {
+            return command switch
+            {
+                Command.HUMANOID or Command.MOUNTEDHUMANOID or Command.QUADRUPED or Command.LIZARD or
+                Command.NAGA or Command.SNAKE or Command.BIRD or Command.DJINN or Command.TROGLODYTE or
+                Command.MISCSHAPE or Command.MOUNTED or Command.UNDEAD or Command.DEMON or
+                Command.MAGICBEING or Command.HOLY or Command.ANIMAL or Command.UNIQUE or
+                Command.INANIMATE or Command.MINDLESS or Command.BLIND or Command.COLDBLOOD or
+                Command.IMMORTAL or Command.FEMALE or Command.IMMOBILE or Command.STONEBEING or
+                Command.PLANT or Command.DRAKE or Command.BUG or Command.LESSERHORROR or
+                Command.GREATERHORROR or Command.DOOMHORROR => true,
+                _ => false
+            };
+        }
+
+        /// <summary>
         /// Maps Command enum values to ViewModel property names.
-        /// Returns null if no mapping exists (base class handles it).
+        /// Returns null if no mapping exists (badge sections handle most properties now).
         /// </summary>
         private static string GetPropertyNameForCommand(Command command)
         {
             return command switch
             {
-                // Core stats with different names
-                Command.HP => "Hp",
-                Command.STR => "Strength",
-                Command.ATT => "Attack",
-                Command.DEF => "Defense",
-                Command.PREC => "Precision",
-                Command.MR => "MagicResistance",
-                Command.MOR => "Morale",
-                Command.ENC => "Encumbrance",
-                Command.PROT => "Protection",
-                Command.AP => "ActionPoints",
-                Command.MAPMOVE => "MapMove",
-                Command.SIZE => "Size",
-                Command.RESSIZE => "ResearchSize",
-                Command.EYES => "Eyes",
-
-                // Cost
-                Command.GCOST => "GoldCost",
-                Command.RCOST => "ResourceCost",
-
-                // Identity
+                // Identity properties still have individual bindings
                 Command.FIXEDNAME => "FixedName",
                 Command.DESCR => "Description",
                 Command.SPR1 => "Sprite1",
                 Command.SPR2 => "Sprite2",
 
-                _ => null  // Let base class handle or it matches Command name
+                _ => null  // Most properties are now handled by badge collections
             };
         }
 

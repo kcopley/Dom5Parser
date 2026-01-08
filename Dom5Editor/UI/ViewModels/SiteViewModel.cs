@@ -12,6 +12,7 @@ namespace Dom5Editor.UI.Views
 {
     /// <summary>
     /// ViewModel for Site entities.
+    /// All properties are now JSON-driven via badge panels.
     /// </summary>
     public class SiteViewModel : EntityViewModel
     {
@@ -79,16 +80,8 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Sprite Support (#look command)
+        // Sprite Support (derived from badge data)
         // ========================================
-
-        public int? LookSprite
-        {
-            get => GetIntProperty(Command.LOOK);
-            set => SetIntProperty(Command.LOOK, value);
-        }
-        public bool IsLookSpriteModified => IsIntPropertyModifiedFromVanilla(Command.LOOK);
-        public bool IsLookSpriteSessionEdit => IsPropertyEditedInSession(Command.LOOK);
 
         /// <summary>
         /// Gets the site sprite image if available.
@@ -105,17 +98,13 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Core Stats
+        // Derived Display Properties (kept for header)
         // ========================================
 
-        public int? Path
-        {
-            get => GetIntProperty(Command.PATH);
-            set => SetIntProperty(Command.PATH, value);
-        }
-        public bool IsPathModified => IsIntPropertyModifiedFromVanilla(Command.PATH);
-        public bool IsPathSessionEdit => IsPropertyEditedInSession(Command.PATH);
-        public bool IsPathInherited => IsIntPropertyInherited(Command.PATH);
+        /// <summary>
+        /// Gets the path value for display.
+        /// </summary>
+        private int? Path => GetIntProperty(Command.PATH);
 
         /// <summary>
         /// Gets the path display name.
@@ -163,23 +152,15 @@ namespace Dom5Editor.UI.Views
             }
         }
 
-        public int? Level
-        {
-            get => GetIntProperty(Command.LEVEL);
-            set => SetIntProperty(Command.LEVEL, value);
-        }
-        public bool IsLevelModified => IsIntPropertyModifiedFromVanilla(Command.LEVEL);
-        public bool IsLevelSessionEdit => IsPropertyEditedInSession(Command.LEVEL);
-        public bool IsLevelInherited => IsIntPropertyInherited(Command.LEVEL);
+        /// <summary>
+        /// Gets the level value for display in header.
+        /// </summary>
+        public int? Level => GetIntProperty(Command.LEVEL);
 
-        public int? Rarity
-        {
-            get => GetIntProperty(Command.RARITY);
-            set => SetIntProperty(Command.RARITY, value);
-        }
-        public bool IsRarityModified => IsIntPropertyModifiedFromVanilla(Command.RARITY);
-        public bool IsRaritySessionEdit => IsPropertyEditedInSession(Command.RARITY);
-        public bool IsRarityInherited => IsIntPropertyInherited(Command.RARITY);
+        /// <summary>
+        /// Gets the rarity value for display.
+        /// </summary>
+        private int? Rarity => GetIntProperty(Command.RARITY);
 
         /// <summary>
         /// Gets the rarity display name.
@@ -200,7 +181,7 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Gems (IntIntProperty)
+        // Gems (IntIntProperty) - Computed Display
         // ========================================
 
         /// <summary>
@@ -311,11 +292,22 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Single Unified Badge Collection
+        // Badge Collections
         // ========================================
 
+        private ObservableCollection<PropertyItem> _identityBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableIdentityBadges;
         private ObservableCollection<PropertyItem> _propertyBadges;
         private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
+
+        public ObservableCollection<PropertyItem> IdentityBadges
+        {
+            get { if (_identityBadges == null) RefreshIdentityBadges(); return _identityBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableIdentityBadges
+        {
+            get { if (_availableIdentityBadges == null) RefreshIdentityBadges(); return _availableIdentityBadges; }
+        }
 
         public ObservableCollection<PropertyItem> PropertyBadges
         {
@@ -326,14 +318,34 @@ namespace Dom5Editor.UI.Views
             get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
         }
 
+        // Commands for badge operations
+        private RelayCommand<PropertyItem> _removeIdentityBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addIdentityBadgeCommand;
         private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
         private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveIdentityBadgeCommand => _removeIdentityBadgeCommand ??= CreateRemoveBadgeCommand(RefreshIdentityBadges);
+        public RelayCommand<AvailablePropertyItem> AddIdentityBadgeCommand => _addIdentityBadgeCommand ??= CreateAddBadgeCommand(RefreshIdentityBadges);
         public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
         public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
 
         // Shared value changed handler
         private EventHandler<int> _badgeValueChangedHandler;
         private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshIdentityBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("identity", BadgeValueChangedHandler);
+            _identityBadges = active;
+            _availableIdentityBadges = available;
+            OnPropertyChanged(nameof(IdentityBadges));
+            OnPropertyChanged(nameof(AvailableIdentityBadges));
+            // Header display depends on identity badges
+            OnPropertyChanged(nameof(PathDisplay));
+            OnPropertyChanged(nameof(PathLetter));
+            OnPropertyChanged(nameof(Level));
+            OnPropertyChanged(nameof(RarityDisplay));
+        }
 
         private void RefreshPropertyBadges()
         {
@@ -346,30 +358,9 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
-            var propertyName = GetPropertyNameForCommand(command);
-            if (propertyName != null)
-            {
-                OnPropertyChanged(propertyName);
-                OnPropertyChanged($"Is{propertyName}Modified");
-                OnPropertyChanged($"Is{propertyName}SessionEdit");
-                OnPropertyChanged($"Is{propertyName}Inherited");
-            }
-        }
-
-        private static string GetPropertyNameForCommand(Command command)
-        {
-            return command switch
-            {
-                Command.PATH => "Path",
-                Command.LEVEL => "Level",
-                Command.RARITY => "Rarity",
-                Command.GOLD => "Gold",
-                Command.RES => "Research",
-                Command.SUPPLY => "Supply",
-                Command.LOOK => "LookSprite",
-                Command.COPYSITE => "CopySite",
-                _ => null
-            };
+            // Refresh all badge collections on undo/redo
+            RefreshIdentityBadges();
+            RefreshPropertyBadges();
         }
     }
 }

@@ -61,25 +61,16 @@
                 </StackPanel>
             </Border>
 
-            <!-- Basic Info Section -->
-            <controls:PropertyGroupControl Header="Basic Info" IsExpanded="True">
+            <!-- Identity Section (era, epithet, descr, flag, etc.) -->
+            <controls:PropertyGroupControl Header="Identity" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
-                    <StackPanel>
-                        <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,8"/>
-                        <controls:StringPropertyEditor Label="Epithet" Value="{Binding Epithet, Mode=TwoWay}"
-                                                        IsModified="{Binding IsEpithetModified}" IsSessionEdit="{Binding IsEpithetSessionEdit}" Margin="0,0,0,8"/>
-                        <controls:IntPropertyEditor Label="Era (1=EA, 2=MA, 3=LA)" Value="{Binding Era, Mode=TwoWay}"
-                                                    IsModified="{Binding IsEraModified}" IsSessionEdit="{Binding IsEraSessionEdit}" Margin="0,0,0,8"/>
-
-                        <!-- Identity Badges (flag, templepic, etc.) -->
-                        <controls:BadgeWrapPanel
-                            ItemsSource="{Binding IdentityBadges}"
-                            AvailableItems="{Binding AvailableIdentityBadges}"
-                            RemoveCommand="{Binding RemoveIdentityBadgeCommand}"
-                            AddCommand="{Binding AddIdentityBadgeCommand}"
-                            NavigateCommand="{Binding NavigateToReferenceCommand}"
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding IdentityBadges}"
+                        AvailableItems="{Binding AvailableIdentityBadges}"
+                        RemoveCommand="{Binding RemoveIdentityBadgeCommand}"
+                        AddCommand="{Binding AddIdentityBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
                         ShowAddButton="True"/>
-                    </StackPanel>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 

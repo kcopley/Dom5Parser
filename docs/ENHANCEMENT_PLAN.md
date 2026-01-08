@@ -195,9 +195,9 @@ See `BADGE_UI_REDESIGN.md` for full details.
 **Keep:** `ModViewModel.cs`, `RelayCommand.cs`, `ViewModelBase.cs`
 **Remove after migration:** All other legacy VMs and views
 
-### 6.6: JSON-Driven ViewModel Property Migration (IN PROGRESS)
+### 6.6: JSON-Driven ViewModel Property Migration (COMPLETE)
 
-**Goal:** Remove hardcoded public properties from ViewModels in `UI/ViewModels/EntityViewModels.cs` and replace them with fully JSON-driven badge rendering.
+**Completed 2026-01-07:** Removed hardcoded public properties from all ViewModels and replaced them with fully JSON-driven badge rendering.
 
 **Problem:** EntityViewModels.cs contains 722 public properties across 11 ViewModels, with each stat/flag requiring 4 properties:
 ```csharp
@@ -296,20 +296,20 @@ public bool IsProtectionInherited => IsIntPropertyInherited(Command.PROT);
     ShowAddButton="False"/>
 ```
 
-#### Migration Priority (Remaining ViewModels)
+#### Migration Status (All Complete - 2026-01-07)
 
-| Priority | ViewModel | Removable Props | Effort |
-|----------|-----------|-----------------|--------|
-| 1 | MercenaryViewModel | 28 | Low |
-| 2 | SiteViewModel | 28 | Low |
-| 3 | WeaponViewModel | 34 | Medium |
-| 4 | SpellViewModel | 30 | Medium |
-| 5 | NationViewModel | 78 | Medium |
-| 6 | EventViewModel | 84 | Medium |
-| 7 | ItemViewModel | 110 | High |
-| 8 | MonsterViewModel | 126 | High |
+| Priority | ViewModel | Props Removed | Status |
+|----------|-----------|---------------|--------|
+| 1 | MercenaryViewModel | 27 | ✓ Complete |
+| 2 | SiteViewModel | 16 | ✓ Complete |
+| 3 | WeaponViewModel | 44 | ✓ Complete |
+| 4 | SpellViewModel | 36 | ✓ Complete |
+| 5 | NationViewModel | 12 | ✓ Complete |
+| 6 | EventViewModel | 4 | ✓ Complete |
+| 7 | ItemViewModel | 28 | ✓ Complete |
+| 8 | MonsterViewModel | ~550 | ✓ Complete |
 
-**Total: 538 properties to remove (75% of all ViewModel properties)**
+**Total: ~700+ properties removed, now JSON-driven via badge system**
 
 ### 6.7: Badge Infrastructure Generalization (COMPLETE)
 
@@ -557,7 +557,7 @@ See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
 - Navigation between entity views (clicking weapon/armor to view that entity)
 - Reset to original buttons (per-property revert)
 - **Secondary Effect Chain Display** - When a weapon has a secondary effect that itself has a secondary effect, show the full chain
-- **WeaponDamage Monster ID Selector** - When editing summon weapons (dmg="summonunits" or inherited from such), show a monster ID selector instead of integer input. The WeaponDamage.cs class has infrastructure for detecting summon type; needs UI integration for proper monster selection.
+- **WeaponDamage Monster ID Selector** - When editing summon weapons (dmg="summonunits" or inherited from such), show a monster ID selector instead of integer input. *Partial progress (2026-01-07):* WeaponViewModel now has `IsSummonWeapon`, `DamageDisplayString` (shows monster name), and `DamageLabel` (shows "Summon ID"). Remaining: Replace IntPropertyEditor with SearchableReferenceComboBox for monster selection when `IsSummonWeapon` is true.
 - **ChangesMod Identity Check on Value Reset** - When a property is edited back to its original value (matching base mod or vanilla data), automatically remove it from the ChangesMod session tracking. The generic fallback resolution code should include identity checks, and resetting a property should un-mark it as modified.
 - ~~**Searchable Dropdowns**~~ **DONE (2026-01-06)** - Reference badge selectors now use SearchableReferenceComboBox:
   - Text filter searches by name or ID

@@ -6,14 +6,8 @@
       "description": "Core weapon statistics",
       "renderer": "statsGrid",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
-        {
-          "name": "dmg",
-          "display": "DMG",
-          "type": "int",
-          "default": 0,
-          "description": "Sets weapon damage."
-        },
         {
           "name": "nratt",
           "display": "NRATT",

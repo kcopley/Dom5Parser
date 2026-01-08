@@ -97,41 +97,13 @@
                 </StackPanel>
             </Border>
 
-            <!-- Stats Section (3 columns, compact) -->
+            <!-- Stats Section (3-column grid, driven by JSON) -->
             <controls:PropertyGroupControl Header="Stats" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="0" Label="HP" Value="{Binding Hp, Mode=TwoWay}" IsModified="{Binding IsHpModified}" IsSessionEdit="{Binding IsHpSessionEdit}" IsInherited="{Binding IsHpInherited}" Margin="0,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="1" Label="Size" Value="{Binding Size, Mode=TwoWay}" IsModified="{Binding IsSizeModified}" IsSessionEdit="{Binding IsSizeSessionEdit}" IsInherited="{Binding IsSizeInherited}" Margin="4,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="0" Grid.Column="2" Label="Prot" Value="{Binding Protection, Mode=TwoWay}" IsModified="{Binding IsProtectionModified}" IsSessionEdit="{Binding IsProtectionSessionEdit}" IsInherited="{Binding IsProtectionInherited}" Margin="4,0,0,4"/>
-
-                        <controls:IntPropertyEditor Grid.Row="1" Grid.Column="0" Label="Str" Value="{Binding Strength, Mode=TwoWay}" IsModified="{Binding IsStrengthModified}" IsSessionEdit="{Binding IsStrengthSessionEdit}" IsInherited="{Binding IsStrengthInherited}" Margin="0,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="1" Grid.Column="1" Label="Att" Value="{Binding Attack, Mode=TwoWay}" IsModified="{Binding IsAttackModified}" IsSessionEdit="{Binding IsAttackSessionEdit}" IsInherited="{Binding IsAttackInherited}" Margin="4,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="1" Grid.Column="2" Label="Def" Value="{Binding Defense, Mode=TwoWay}" IsModified="{Binding IsDefenseModified}" IsSessionEdit="{Binding IsDefenseSessionEdit}" IsInherited="{Binding IsDefenseInherited}" Margin="4,0,0,4"/>
-
-                        <controls:IntPropertyEditor Grid.Row="2" Grid.Column="0" Label="Prec" Value="{Binding Precision, Mode=TwoWay}" IsModified="{Binding IsPrecisionModified}" IsSessionEdit="{Binding IsPrecisionSessionEdit}" IsInherited="{Binding IsPrecisionInherited}" Margin="0,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="2" Grid.Column="1" Label="Enc" Value="{Binding Encumbrance, Mode=TwoWay}" IsModified="{Binding IsEncumbranceModified}" IsSessionEdit="{Binding IsEncumbranceSessionEdit}" IsInherited="{Binding IsEncumbranceInherited}" Margin="4,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="2" Grid.Column="2" Label="MR" Value="{Binding MagicResistance, Mode=TwoWay}" IsModified="{Binding IsMagicResistanceModified}" IsSessionEdit="{Binding IsMagicResistanceSessionEdit}" IsInherited="{Binding IsMagicResistanceInherited}" Margin="4,0,0,4"/>
-
-                        <controls:IntPropertyEditor Grid.Row="3" Grid.Column="0" Label="Mor" Value="{Binding Morale, Mode=TwoWay}" IsModified="{Binding IsMoraleModified}" IsSessionEdit="{Binding IsMoraleSessionEdit}" IsInherited="{Binding IsMoraleInherited}" Margin="0,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="3" Grid.Column="1" Label="AP" Value="{Binding ActionPoints, Mode=TwoWay}" IsModified="{Binding IsActionPointsModified}" IsSessionEdit="{Binding IsActionPointsSessionEdit}" IsInherited="{Binding IsActionPointsInherited}" Margin="4,0,4,4"/>
-                        <controls:IntPropertyEditor Grid.Row="3" Grid.Column="2" Label="Move" Value="{Binding MapMove, Mode=TwoWay}" IsModified="{Binding IsMapMoveModified}" IsSessionEdit="{Binding IsMapMoveSessionEdit}" IsInherited="{Binding IsMapMoveInherited}" Margin="4,0,0,4"/>
-
-                        <controls:IntPropertyEditor Grid.Row="4" Grid.Column="0" Label="Eyes" Value="{Binding Eyes, Mode=TwoWay}" IsModified="{Binding IsEyesModified}" IsSessionEdit="{Binding IsEyesSessionEdit}" IsInherited="{Binding IsEyesInherited}" Margin="0,0,4,0"/>
-                    </Grid>
+                    <controls:BadgeGridPanel
+                        Columns="3"
+                        ItemsSource="{Binding StatsBadges}"
+                        ShowAddButton="False"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 

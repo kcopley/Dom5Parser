@@ -6,6 +6,7 @@
       "description": "Basic nation identity properties",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "era",

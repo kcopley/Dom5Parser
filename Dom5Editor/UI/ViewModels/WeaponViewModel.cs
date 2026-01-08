@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -61,7 +60,7 @@ namespace Dom5Editor.UI.Views
         }
 
         // ========================================
-        // Core Stats
+        // Damage - Special Handling for Summon/Cloud Weapons
         // ========================================
 
         // Special damage type constants
@@ -241,160 +240,84 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         public bool CanEditDamage => !IsCloudWeapon;
 
-        public int? NumberOfAttacks
-        {
-            get => GetIntProperty(Command.NRATT);
-            set => SetIntProperty(Command.NRATT, value);
-        }
-        public bool IsNumberOfAttacksModified => IsIntPropertyModifiedFromVanilla(Command.NRATT);
-        public bool IsNumberOfAttacksSessionEdit => IsPropertyEditedInSession(Command.NRATT);
-        public bool IsNumberOfAttacksInherited => IsIntPropertyInherited(Command.NRATT);
-
-        public int? Attack
-        {
-            get => GetIntProperty(Command.ATT);
-            set => SetIntProperty(Command.ATT, value);
-        }
-        public bool IsAttackModified => IsIntPropertyModifiedFromVanilla(Command.ATT);
-        public bool IsAttackSessionEdit => IsPropertyEditedInSession(Command.ATT);
-        public bool IsAttackInherited => IsIntPropertyInherited(Command.ATT);
-
-        public int? Defense
-        {
-            get => GetIntProperty(Command.DEF);
-            set => SetIntProperty(Command.DEF, value);
-        }
-        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
-        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
-        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
-
-        public int? Length
-        {
-            get => GetIntProperty(Command.LEN);
-            set => SetIntProperty(Command.LEN, value);
-        }
-        public bool IsLengthModified => IsIntPropertyModifiedFromVanilla(Command.LEN);
-        public bool IsLengthSessionEdit => IsPropertyEditedInSession(Command.LEN);
-        public bool IsLengthInherited => IsIntPropertyInherited(Command.LEN);
-
-        public int? ResourceCost
-        {
-            get => GetIntProperty(Command.RCOST);
-            set => SetIntProperty(Command.RCOST, value);
-        }
-        public bool IsResourceCostModified => IsIntPropertyModifiedFromVanilla(Command.RCOST);
-        public bool IsResourceCostSessionEdit => IsPropertyEditedInSession(Command.RCOST);
-        public bool IsResourceCostInherited => IsIntPropertyInherited(Command.RCOST);
-
-        public int? AreaOfEffect
-        {
-            get => GetIntProperty(Command.AOE);
-            set => SetIntProperty(Command.AOE, value);
-        }
-        public bool IsAreaOfEffectModified => IsIntPropertyModifiedFromVanilla(Command.AOE);
-        public bool IsAreaOfEffectSessionEdit => IsPropertyEditedInSession(Command.AOE);
-        public bool IsAreaOfEffectInherited => IsIntPropertyInherited(Command.AOE);
-
         // ========================================
-        // Ranged Stats
+        // Derived Display Properties (used in header/summary)
         // ========================================
 
-        public int? Range
+        /// <summary>
+        /// Gets the damage type string for display (Pierce, Slash, Blunt, Fire, etc.).
+        /// Used in the Stats summary section.
+        /// </summary>
+        public string DamageTypes
         {
-            get => GetIntProperty(Command.RANGE);
-            set => SetIntProperty(Command.RANGE, value);
-        }
-        public bool IsRangeModified => IsIntPropertyModifiedFromVanilla(Command.RANGE);
-        public bool IsRangeSessionEdit => IsPropertyEditedInSession(Command.RANGE);
-        public bool IsRangeInherited => IsIntPropertyInherited(Command.RANGE);
-
-        public int? Precision
-        {
-            get => GetIntProperty(Command.PREC);
-            set => SetIntProperty(Command.PREC, value);
-        }
-        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PREC);
-        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PREC);
-        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PREC);
-
-        public int? Ammo
-        {
-            get => GetIntProperty(Command.AMMO);
-            set => SetIntProperty(Command.AMMO, value);
-        }
-        public bool IsAmmoModified => IsIntPropertyModifiedFromVanilla(Command.AMMO);
-        public bool IsAmmoSessionEdit => IsPropertyEditedInSession(Command.AMMO);
-        public bool IsAmmoInherited => IsIntPropertyInherited(Command.AMMO);
-
-        // ========================================
-        // Badge Collection (Unified)
-        // ========================================
-
-        private ObservableCollection<PropertyItem> _propertyBadges;
-        private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
-
-        public ObservableCollection<PropertyItem> PropertyBadges
-        {
-            get { if (_propertyBadges == null) RefreshPropertyBadges(); return _propertyBadges; }
-        }
-        public ObservableCollection<AvailablePropertyItem> AvailablePropertyBadges
-        {
-            get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
-        }
-
-        // Commands for badge operations
-        private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
-        private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
-
-        public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
-        public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
-
-        // Shared value changed handler
-        private EventHandler<int> _badgeValueChangedHandler;
-        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
-
-        private void RefreshPropertyBadges()
-        {
-            var (active, available) = BuildBadgesFromSection("properties", BadgeValueChangedHandler);
-            _propertyBadges = active;
-            _availablePropertyBadges = available;
-            OnPropertyChanged(nameof(PropertyBadges));
-            OnPropertyChanged(nameof(AvailablePropertyBadges));
-        }
-
-        protected override void OnPropertyRefreshedByHistory(Command command)
-        {
-            var propertyName = GetPropertyNameForCommand(command);
-            if (propertyName != null)
+            get
             {
-                OnPropertyChanged(propertyName);
-                OnPropertyChanged($"Is{propertyName}Modified");
-                OnPropertyChanged($"Is{propertyName}SessionEdit");
-                OnPropertyChanged($"Is{propertyName}Inherited");
+                var types = new List<string>();
+                if (GetWeaponFlag(Command.PIERCE)) types.Add("Pierce");
+                if (GetWeaponFlag(Command.SLASH)) types.Add("Slash");
+                if (GetWeaponFlag(Command.BLUNT)) types.Add("Blunt");
+                if (GetWeaponFlag(Command.FIRE)) types.Add("Fire");
+                if (GetWeaponFlag(Command.COLD)) types.Add("Cold");
+                if (GetWeaponFlag(Command.SHOCK)) types.Add("Shock");
+                if (GetWeaponFlag(Command.POISON)) types.Add("Poison");
+                if (GetWeaponFlag(Command.ACID)) types.Add("Acid");
+                if (GetWeaponFlag(Command.MAGIC)) types.Add("Magic");
+                if (GetWeaponFlag(Command.HOLY)) types.Add("Holy");
+                if (GetWeaponFlag(Command.DEMON)) types.Add("Demon");
+                return types.Count > 0 ? string.Join(", ", types) : null;
             }
         }
 
-        private static string GetPropertyNameForCommand(Command command)
+        /// <summary>
+        /// Gets special properties string for display (Armor Negating, Armor Piercing, etc.).
+        /// Used in the Stats summary section.
+        /// </summary>
+        public string SpecialProperties
         {
-            return command switch
+            get
             {
-                Command.DMG => "Damage",
-                Command.DAMAGE => "Damage",
-                Command.NRATT => "NumberOfAttacks",
-                Command.ATT => "Attack",
-                Command.DEF => "Defense",
-                Command.LEN => "Length",
-                Command.RCOST => "ResourceCost",
-                Command.AOE => "AreaOfEffect",
-                Command.RANGE => "Range",
-                Command.PREC => "Precision",
-                Command.AMMO => "Ammo",
-                _ => null
-            };
+                var props = new List<string>();
+                if (GetWeaponFlag(Command.ARMORNEGATING)) props.Add("Armor Negating");
+                if (GetWeaponFlag(Command.ARMORPIERCING)) props.Add("Armor Piercing");
+                if (GetWeaponFlag(Command.HARDMRNEG)) props.Add("Hard MR Negating");
+                if (GetWeaponFlag(Command.MRNEGATES)) props.Add("MR Negates");
+                if (GetWeaponFlag(Command.MIND)) props.Add("Mind");
+                if (GetWeaponFlag(Command.UNDEADIMMUNE)) props.Add("Undead Immune");
+                if (GetWeaponFlag(Command.INANIMATEIMMUNE)) props.Add("Inanimate Immune");
+                if (GetWeaponFlag(Command.FLYSPR)) props.Add("Flying Projectile");
+                if (GetWeaponFlag(Command.TWOHANDED)) props.Add("Two-Handed");
+                if (GetWeaponFlag(Command.NATURAL)) props.Add("Natural");
+                if (GetWeaponFlag(Command.CHARGE)) props.Add("Charge");
+                if (GetWeaponFlag(Command.FLAIL)) props.Add("Flail");
+                if (GetWeaponFlag(Command.BONUS)) props.Add("Bonus");
+                if (GetWeaponFlag(Command.NOSTR)) props.Add("No Strength");
+                return props.Count > 0 ? string.Join(", ", props) : null;
+            }
+        }
+
+        private bool GetWeaponFlag(Command command)
+        {
+            var result = _entity.TryGet<IntProperty>(command, out var prop);
+            if (result == ReturnType.TRUE || result == ReturnType.COPIED)
+                return prop != null && prop.Value != 0;
+
+            // Check vanilla for VanillaModified entities
+            if (_source == EntitySource.VanillaModified)
+            {
+                var vanillaEntity = GetVanillaEntity();
+                if (vanillaEntity != null)
+                {
+                    var vanillaResult = vanillaEntity.TryGet<IntProperty>(command, out var vanillaProp);
+                    return (vanillaResult == ReturnType.TRUE || vanillaResult == ReturnType.COPIED)
+                           && vanillaProp != null && vanillaProp.Value != 0;
+                }
+            }
+
+            return false;
         }
 
         // ========================================
-        // Secondary Effect Support
+        // Secondary Effect Support (derived display)
         // ========================================
 
         /// <summary>
@@ -459,59 +382,100 @@ namespace Dom5Editor.UI.Views
             }
         }
 
-        /// <summary>
-        /// Gets the damage type string for display (Pierce, Slash, Blunt, Fire, etc.).
-        /// </summary>
-        public string DamageTypes
+        // ========================================
+        // Stats Badge Collection (JSON-driven, excludes DMG)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _statsBadges;
+        private ObservableCollection<AvailablePropertyItem> _availableStatsBadges;
+
+        public ObservableCollection<PropertyItem> StatsBadges
         {
-            get
-            {
-                var types = new List<string>();
-                if (GetWeaponFlag(Command.PIERCE)) types.Add("Pierce");
-                if (GetWeaponFlag(Command.SLASH)) types.Add("Slash");
-                if (GetWeaponFlag(Command.BLUNT)) types.Add("Blunt");
-                if (GetWeaponFlag(Command.FIRE)) types.Add("Fire");
-                if (GetWeaponFlag(Command.COLD)) types.Add("Cold");
-                if (GetWeaponFlag(Command.SHOCK)) types.Add("Shock");
-                if (GetWeaponFlag(Command.POISON)) types.Add("Poison");
-                if (GetWeaponFlag(Command.ACID)) types.Add("Acid");
-                if (GetWeaponFlag(Command.MAGIC)) types.Add("Magic");
-                if (GetWeaponFlag(Command.HOLY)) types.Add("Holy");
-                if (GetWeaponFlag(Command.DEMON)) types.Add("Demon");
-                return types.Count > 0 ? string.Join(", ", types) : null;
-            }
+            get { if (_statsBadges == null) RefreshStatsBadges(); return _statsBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailableStatsBadges
+        {
+            get { if (_availableStatsBadges == null) RefreshStatsBadges(); return _availableStatsBadges; }
         }
 
-        /// <summary>
-        /// Gets special properties string for display (Armor Negating, Armor Piercing, etc.).
-        /// </summary>
-        public string SpecialProperties
+        // Commands for stats badge operations
+        private RelayCommand<PropertyItem> _removeStatsBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addStatsBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveStatsBadgeCommand => _removeStatsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshStatsBadges);
+        public RelayCommand<AvailablePropertyItem> AddStatsBadgeCommand => _addStatsBadgeCommand ??= CreateAddBadgeCommand(RefreshStatsBadges);
+
+        private void RefreshStatsBadges()
         {
-            get
-            {
-                var props = new List<string>();
-                if (GetWeaponFlag(Command.ARMORNEGATING)) props.Add("Armor Negating");
-                if (GetWeaponFlag(Command.ARMORPIERCING)) props.Add("Armor Piercing");
-                if (GetWeaponFlag(Command.HARDMRNEG)) props.Add("Hard MR Negating");
-                if (GetWeaponFlag(Command.MRNEGATES)) props.Add("MR Negates");
-                if (GetWeaponFlag(Command.MIND)) props.Add("Mind");
-                if (GetWeaponFlag(Command.UNDEADIMMUNE)) props.Add("Undead Immune");
-                if (GetWeaponFlag(Command.INANIMATEIMMUNE)) props.Add("Inanimate Immune");
-                if (GetWeaponFlag(Command.FLYSPR)) props.Add("Flying Projectile");
-                if (GetWeaponFlag(Command.TWOHANDED)) props.Add("Two-Handed");
-                if (GetWeaponFlag(Command.NATURAL)) props.Add("Natural");
-                if (GetWeaponFlag(Command.CHARGE)) props.Add("Charge");
-                if (GetWeaponFlag(Command.FLAIL)) props.Add("Flail");
-                if (GetWeaponFlag(Command.BONUS)) props.Add("Bonus");
-                if (GetWeaponFlag(Command.NOSTR)) props.Add("No Strength");
-                return props.Count > 0 ? string.Join(", ", props) : null;
-            }
+            var (active, available) = BuildBadgesFromSection("stats", BadgeValueChangedHandler);
+            _statsBadges = active;
+            _availableStatsBadges = available;
+            OnPropertyChanged(nameof(StatsBadges));
+            OnPropertyChanged(nameof(AvailableStatsBadges));
         }
 
-        private bool GetWeaponFlag(Command command)
+        // ========================================
+        // Properties Badge Collection (JSON-driven)
+        // ========================================
+
+        private ObservableCollection<PropertyItem> _propertyBadges;
+        private ObservableCollection<AvailablePropertyItem> _availablePropertyBadges;
+
+        public ObservableCollection<PropertyItem> PropertyBadges
         {
-            var result = _entity.TryGet<IntProperty>(command, out var prop);
-            return (result == ReturnType.TRUE || result == ReturnType.COPIED) && prop != null && prop.Value != 0;
+            get { if (_propertyBadges == null) RefreshPropertyBadges(); return _propertyBadges; }
+        }
+        public ObservableCollection<AvailablePropertyItem> AvailablePropertyBadges
+        {
+            get { if (_availablePropertyBadges == null) RefreshPropertyBadges(); return _availablePropertyBadges; }
+        }
+
+        // Commands for property badge operations
+        private RelayCommand<PropertyItem> _removePropertyBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addPropertyBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemovePropertyBadgeCommand => _removePropertyBadgeCommand ??= CreateRemoveBadgeCommand(RefreshPropertyBadges);
+        public RelayCommand<AvailablePropertyItem> AddPropertyBadgeCommand => _addPropertyBadgeCommand ??= CreateAddBadgeCommand(RefreshPropertyBadges);
+
+        // Shared value changed handler for all badge sections
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshPropertyBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("properties", BadgeValueChangedHandler);
+            _propertyBadges = active;
+            _availablePropertyBadges = available;
+            OnPropertyChanged(nameof(PropertyBadges));
+            OnPropertyChanged(nameof(AvailablePropertyBadges));
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            // Handle damage specially
+            if (command == Command.DMG || command == Command.DAMAGE)
+            {
+                OnPropertyChanged(nameof(Damage));
+                OnPropertyChanged(nameof(DamageRawValue));
+                OnPropertyChanged(nameof(DamageDisplayString));
+                OnPropertyChanged(nameof(IsDamageModified));
+                OnPropertyChanged(nameof(IsDamageSessionEdit));
+                OnPropertyChanged(nameof(IsDamageInherited));
+                OnPropertyChanged(nameof(IsSummonWeapon));
+                OnPropertyChanged(nameof(IsCloudWeapon));
+                OnPropertyChanged(nameof(DamageLabel));
+                OnPropertyChanged(nameof(CanEditDamage));
+            }
+
+            // Refresh badge collections
+            RefreshStatsBadges();
+            RefreshPropertyBadges();
+
+            // Refresh derived display properties that may have changed
+            OnPropertyChanged(nameof(DamageTypes));
+            OnPropertyChanged(nameof(SpecialProperties));
+            OnPropertyChanged(nameof(HasSecondaryEffect));
+            OnPropertyChanged(nameof(SecondaryEffectDisplay));
         }
     }
 }

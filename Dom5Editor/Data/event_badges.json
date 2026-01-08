@@ -6,6 +6,7 @@
       "description": "Basic event trigger conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "rarity", "display": "Rarity", "type": "int", "description": "Event rarity (0=common, 1=uncommon, 2=rare)." },
         { "name": "req_rare", "display": "Req Rare", "type": "int", "description": "Requires rare events enabled at this level." },
@@ -31,6 +32,7 @@
       "description": "Nation-based trigger conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_nation", "display": "Req Nation", "type": "ref", "refType": "nation", "description": "Required nation.", "color": "#322A2A", "borderColor": "#605050" },
         { "name": "req_nonation", "display": "Req No Nation", "type": "ref", "refType": "nation", "description": "Cannot be this nation.", "color": "#322A2A", "borderColor": "#605050" },
@@ -50,6 +52,7 @@
       "description": "Terrain and location conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_capital", "display": "Req Capital", "type": "int", "description": "Must be in capital province." },
         { "name": "req_owncapital", "display": "Req Own Capital", "type": "int", "description": "Must be in own capital." },
@@ -81,6 +84,7 @@
       "description": "Province state conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_poptype", "display": "Req Poptype", "type": "int", "description": "Required population type." },
         { "name": "req_notpoptype", "display": "Req Not Poptype", "type": "int", "description": "Excluded population type." },
@@ -109,6 +113,7 @@
       "description": "Site and throne conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_freesites", "display": "Req Free Sites", "type": "int", "description": "Required number of free site slots." },
         { "name": "req_nositenbr", "display": "Req No Site Nbr", "type": "ref", "refType": "site", "description": "Site must not exist.", "color": "#2A2D32", "borderColor": "#505060" },
@@ -128,6 +133,7 @@
       "description": "Dominion and scale conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_mydominion", "display": "Req My Dominion", "type": "int", "description": "Required own dominion level." },
         { "name": "req_dominion", "display": "Req Dominion", "type": "int", "description": "Required dominion level." },
@@ -153,6 +159,7 @@
       "description": "Magic path conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_pathfire", "display": "Req Fire", "type": "int", "description": "Required Fire magic level.", "icon": "magicicons/Path_F.png", "color": "#322D2A", "borderColor": "#6B4030" },
         { "name": "req_pathair", "display": "Req Air", "type": "int", "description": "Required Air magic level.", "icon": "magicicons/Path_A.png", "color": "#32302A", "borderColor": "#5A5540" },
@@ -183,6 +190,7 @@
       "description": "Commander and unit conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_commander", "display": "Req Commander", "type": "int", "description": "Requires commander in province." },
         { "name": "req_monster", "display": "Req Monster", "type": "ref", "refType": "monster", "description": "Required monster type.", "color": "#2A2A32", "borderColor": "#505080" },
@@ -208,6 +216,7 @@
       "description": "Target unit conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_targmnr", "display": "Req Targ Mnr", "type": "ref", "refType": "monster", "description": "Target must be this monster.", "color": "#2A2A32", "borderColor": "#505080" },
         { "name": "req_targnomnr", "display": "Req Targ No Mnr", "type": "ref", "refType": "monster", "description": "Target cannot be this monster.", "color": "#2A2A32", "borderColor": "#505080" },
@@ -261,6 +270,7 @@
       "description": "Event code and variable conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_code", "display": "Req Code", "type": "ref", "refType": "eventcode", "description": "Required event code set.", "color": "#302A32", "borderColor": "#605080" },
         { "name": "req_anycode", "display": "Req Any Code", "type": "ref", "refType": "eventcode", "description": "Any province has code.", "color": "#302A32", "borderColor": "#605080" },
@@ -280,6 +290,7 @@
       "description": "Global enchantment conditions",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "req_noench", "display": "Req No Ench", "type": "ref", "refType": "enchantment", "description": "Enchantment must not be active.", "color": "#302A32", "borderColor": "#504560" },
         { "name": "req_ench", "display": "Req Ench", "type": "ref", "refType": "enchantment", "description": "Enchantment must be active.", "color": "#302A32", "borderColor": "#504560" },
@@ -302,6 +313,7 @@
       "description": "Event message and display",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "msg", "display": "Message", "type": "string", "description": "Event message text." },
         { "name": "extramsg", "display": "Extra Msg", "type": "ref", "refType": "nation", "description": "Extra message for nation." },
@@ -316,6 +328,7 @@
       "description": "Gold and gem effects",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "gold", "display": "Gold", "type": "int", "description": "Gold gain/loss.", "color": "#32302A", "borderColor": "#6B5B30" },
         { "name": "exactgold", "display": "Exact Gold", "type": "int", "description": "Exact gold amount.", "color": "#32302A", "borderColor": "#6B5B30" },
@@ -348,6 +361,7 @@
       "description": "Province modification effects",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "defence", "display": "Defence", "type": "int", "description": "Province defense modifier." },
         { "name": "kill", "display": "Kill", "type": "int", "description": "Kill population." },
@@ -381,6 +395,7 @@
       "description": "Dominion scale modifications",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "incscale", "display": "Inc Scale", "type": "int", "description": "Increase scale." },
         { "name": "incscale2", "display": "Inc Scale 2", "type": "int", "description": "Increase scale 2." },
@@ -396,6 +411,7 @@
       "description": "Spawn units and commanders",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "com", "display": "Commander", "type": "ref", "refType": "monster", "description": "Spawn commander.", "color": "#2A2A32", "borderColor": "#505080" },
         { "name": "zz2com", "display": "2 Commanders", "type": "ref", "refType": "monster", "description": "Spawn 2 commanders.", "color": "#2A2A32", "borderColor": "#505080" },
@@ -440,6 +456,7 @@
       "description": "Effects on existing units",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "killmon", "display": "Kill Mon", "type": "ref", "refType": "monster", "description": "Kill monster type.", "color": "#322A2A", "borderColor": "#604040" },
         { "name": "kill2d6mon", "display": "Kill 2d6 Mon", "type": "ref", "refType": "monster", "description": "Kill 2d6 of monster type.", "color": "#322A2A", "borderColor": "#604040" },
@@ -470,6 +487,7 @@
       "description": "Magic path boost effects",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "fireboost", "display": "Fire Boost", "type": "ref", "refType": "monster", "description": "Boost Fire magic for monster.", "icon": "magicicons/Path_F.png", "color": "#322D2A", "borderColor": "#6B4030" },
         { "name": "airboost", "display": "Air Boost", "type": "ref", "refType": "monster", "description": "Boost Air magic for monster.", "icon": "magicicons/Path_A.png", "color": "#32302A", "borderColor": "#5A5540" },
@@ -490,6 +508,7 @@
       "description": "Global world effects",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "worldincscale", "display": "World Inc Scale", "type": "int", "description": "Increase world scale." },
         { "name": "worldincscale2", "display": "World Inc Scale 2", "type": "int", "description": "Increase world scale 2." },
@@ -515,6 +534,7 @@
       "description": "Event timing and code control",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         { "name": "linger", "display": "Linger", "type": "int", "description": "Event lingers for turns." },
         { "name": "delay", "display": "Delay", "type": "int", "description": "Delay event by turns." },

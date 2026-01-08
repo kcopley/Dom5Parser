@@ -1,6 +1,104 @@
 {
   "sections": [
     {
+      "id": "research",
+      "displayName": "RESEARCH",
+      "description": "School and research level settings",
+      "renderer": "statsGrid",
+      "layout": "grid",
+      "columns": 2,
+      "showDefaults": true,
+      "showAddButton": false,
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "school",
+          "display": "School",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Magic school: 0=Conj, 1=Alt, 2=Evo, 3=Const, 4=Ench, 5=Thau, 6=Blood, -1=not researchable."
+        },
+        {
+          "name": "researchlevel",
+          "display": "Res Level",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Research level required to learn this spell."
+        },
+        {
+          "name": "fatiguecost",
+          "display": "Fatigue Cost",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Fatigue cost encoded as gems*1000 + fatigue (e.g., 2050 = 2 gems + 50 fatigue)."
+        }
+      ]
+    },
+    {
+      "id": "combat",
+      "displayName": "COMBAT STATS",
+      "description": "Combat-related spell statistics",
+      "renderer": "statsGrid",
+      "layout": "grid",
+      "columns": 3,
+      "showDefaults": true,
+      "showAddButton": false,
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "range",
+          "display": "Range",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Sets the battlefield range for this spell."
+        },
+        {
+          "name": "precision",
+          "display": "Precision",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Set the precision for this spell."
+        },
+        {
+          "name": "aoe",
+          "display": "AOE",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Area of effect in squares."
+        },
+        {
+          "name": "damage",
+          "display": "Damage",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Set the damage for this spell."
+        },
+        {
+          "name": "effect",
+          "display": "Effect",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Set the effect of the spell."
+        },
+        {
+          "name": "nreff",
+          "display": "Nr Effects",
+          "type": "int",
+          "default": 0,
+          "allowMultiple": false,
+          "description": "Sets the number of effects for this spell."
+        }
+      ]
+    },
+    {
       "id": "properties",
       "displayName": "PROPERTIES",
       "description": "All spell properties and effects",
@@ -8,22 +106,10 @@
       "readOnly": false,
       "commands": [
         {
-          "name": "range",
-          "display": "Range",
-          "type": "int",
-          "description": "Sets the battlefield range for this spell."
-        },
-        {
           "name": "provrange",
           "display": "Prov Range",
           "type": "int",
           "description": "Sets the range of a ritual in provinces."
-        },
-        {
-          "name": "precision",
-          "display": "Precision",
-          "type": "int",
-          "description": "Set the precision for this spell."
         },
         {
           "name": "prec",
@@ -32,22 +118,10 @@
           "description": "Alternative precision setting."
         },
         {
-          "name": "aoe",
-          "display": "AOE",
-          "type": "int",
-          "description": "Area of effect in squares."
-        },
-        {
           "name": "aoeinspector",
           "display": "AOE Inspector",
           "type": "int",
           "description": "AOE value shown in inspector."
-        },
-        {
-          "name": "damage",
-          "display": "Damage",
-          "type": "int",
-          "description": "Set the damage for this spell."
         },
         {
           "name": "damagemon",
@@ -57,18 +131,6 @@
           "description": "Set a spell's damage to a monster (for summons).",
           "color": "#2A2A32",
           "borderColor": "#505080"
-        },
-        {
-          "name": "effect",
-          "display": "Effect",
-          "type": "int",
-          "description": "Set the effect of the spell."
-        },
-        {
-          "name": "nreff",
-          "display": "Nr Effects",
-          "type": "int",
-          "description": "Sets the number of effects for this spell."
         },
         {
           "name": "casttime",

@@ -6,6 +6,7 @@
       "description": "Mercenary band identification",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "level",
@@ -33,6 +34,7 @@
       "description": "Mercenary band composition",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "com",
@@ -68,6 +70,7 @@
       "description": "Payment and recruitment",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "minpay",
@@ -89,6 +92,7 @@
       "description": "Equipment and experience",
       "renderer": "badge",
       "readOnly": false,
+      "showDefaults": true,
       "commands": [
         {
           "name": "xp",

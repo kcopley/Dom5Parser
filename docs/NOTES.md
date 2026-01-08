@@ -37,6 +37,36 @@ Quick reference notes for development context. See related documents for full de
 - None currently
 
 ### Recently Completed (2026-01-07)
+- **JSON-Driven ViewModel Property Migration** - Removed ~700+ redundant properties across 8 ViewModels:
+  - MercenaryViewModel: 27 props removed, simplified to badge-only
+  - SiteViewModel: 16 props removed, added identity badges section
+  - WeaponViewModel: 44 props removed, stats now use BadgeGridPanel (DMG excluded - see below)
+  - SpellViewModel: 36 props removed, added research/combat badge sections
+  - NationViewModel: 12 props removed, simplified era/epithet handling
+  - EventViewModel: 4 props removed, all 21 sections now badge-driven
+  - ItemViewModel: 28 props removed, kept specialized equipment display
+  - MonsterViewModel: ~550 props removed (largest), stats now BadgeGridPanel
+  - All JSON configs updated with `showDefaults: true` for consistent display
+  - Build succeeds with 0 errors
+
+- **WeaponViewModel Summon/Cloud Fix** - Restored special damage handling that was incorrectly removed:
+  - `#dmg` uses `WeaponDamage` (StringProperty subclass), not IntProperty
+  - Summon weapons (`dmg="summonunits"`) need monster ID selector
+  - Cloud weapons (`dmg="cloud"`) are read-only
+  - Restored: `DamageRawValue`, `EffectiveDamageType`, `IsSummonWeapon`, `IsCloudWeapon`, `DamageLabel`, `Damage`, `DamageDisplayString`, `CanEditDamage`
+  - Removed `dmg` from weapon_badges.json stats section (handled specially)
+  - WeaponView.xaml updated with dedicated damage editor showing monster name for summons
+
+- **ViewModel Refactor Verification** - Verified all 8 migrated ViewModels against original commit (3cbc383):
+  - SiteViewModel: ✓ Correct (gems, paths, copy site preserved)
+  - SpellViewModel: ✓ Correct (path requirements, gem costs, school display preserved)
+  - NationViewModel: ✓ Correct (view uses badges, removed props not bound)
+  - EventViewModel: ✓ Correct (message via MessageBadges)
+  - ItemViewModel: ✓ Correct (slot type, construction, equipment preserved)
+  - MonsterViewModel: ✓ Correct (equipment layering, magic paths, sprites, custom magic preserved)
+  - MercenaryViewModel: ✓ Correct (references via badge system with name resolution)
+
+### Previously Completed (2026-01-07)
 - **EntityViewModel Refactoring Phase 1, 2 & 3** - Generic property access and badge extensions:
   - Phase 1:
     - Consolidated 7 reference cache fields into single dictionary (`_referenceItemCaches`)
