@@ -7,6 +7,7 @@ Quick reference notes for development context. See related documents for full de
 - `BADGE_UI_REDESIGN.md` - Badge system specification
 - `REFERENCE_PROPERTY_HANDLING.md` - How reference properties (monster/weapon/armor refs) are created and managed
 - `SPRITE_AND_DESCRIPTION_ACCESS.md` - File paths and formats for game sprites and descriptions
+- `ENTITYVIEWMODEL_REFACTORING.md` - Planned refactoring for EntityViewModel generics and badge system
 
 ---
 
@@ -36,6 +37,34 @@ Quick reference notes for development context. See related documents for full de
 - None currently
 
 ### Recently Completed (2026-01-07)
+- **EntityViewModel Refactoring Phase 1, 2 & 3** - Generic property access and badge extensions:
+  - Phase 1:
+    - Consolidated 7 reference cache fields into single dictionary (`_referenceItemCaches`)
+    - Added generic `GetProperty<T>()` and `HasProperty<T>()` base methods
+    - Added generic `IsPropertyInherited<T>()` method
+    - Simplified type-specific Get and Inherited methods to thin wrappers
+  - Phase 2:
+    - Added generic `IsPropertyModifiedFromVanilla<T>()` with optional value comparator
+    - Consolidated `CanResetIntProperty/String/Command` into single `CanResetProperty()`
+    - Removed unused `PropertyType` enum and `IsPropertyModified()` method
+  - Phase 3 - Badge System Extensions:
+    - Added `IntIntProperty` badge support (`type: "intint"` in JSON)
+    - Added `StringProperty` badge support (`type: "string"` in JSON)
+    - Added `BitmaskProperty` badge support (`type: "bitmask"` in JSON)
+    - PropertyItem now supports `Value2`, `HasSecondValue` for IntInt
+    - New factory methods: `CreateIntIntValue`, `CreateStringValue`, `CreateBitmaskValue`
+    - BadgeConfigLoader: `CreateIntIntPropertyItem`, `CreateStringPropertyItem`, `CreateBitmaskPropertyItem`
+  - Additional:
+    - Added generic `GetOriginalProperty<T>()` and `HasOriginalProperty<T>()` methods
+    - Simplified `GetOriginalIntValue`, `GetOriginalStringValue`, `GetOriginalCommandValue` to thin wrappers
+  - Total savings: ~150 lines, improved maintainability, expanded JSON-driven badge capabilities
+
+### Previously Completed (2026-01-07)
+- **ViewModel File Extraction** - Split EntityViewModels.cs (6266 lines, 15+ classes) into 14 individual files:
+  - Each ViewModel now in its own file for maintainability
+  - Helper classes (EquipmentItem, CustomMagicItem, etc.) extracted to separate files
+  - Created `ENTITYVIEWMODEL_REFACTORING.md` documenting planned improvements to EntityViewModel base class
+
 - **CUSTOMMAGIC Editor** - Random magic path editor for mages:
   - Fixed bitmask values (F=128, A=256, W=512, E=1024, S=2048, D=4096, N=8192, G=16384, B=32768, H=65536)
   - All 10 paths supported including Glamour (G) and Holy (H)
@@ -145,13 +174,31 @@ Quick reference notes for development context. See related documents for full de
 
 ### ViewModel System
 
-All ViewModels are in `Dom5Editor/UI/ViewModels/`:
-- `EntityViewModel.cs` - Base class with badge infrastructure & property helpers
-- `EntityViewModels.cs` - All entity ViewModels (Monster, Weapon, Armor, Item, Site, Nation, Spell, Event, Mercenary, Poptype, Nametype)
+All ViewModels are in `Dom5Editor/UI/ViewModels/` (extracted to individual files 2026-01-07):
+
+| File | Lines | Description |
+|------|-------|-------------|
+| `EntityViewModel.cs` | 1960 | Base class with badge infrastructure & property helpers |
+| `MonsterViewModel.cs` | ~1800 | Largest - stats, equipment, magic paths, badges |
+| `ItemViewModel.cs` | ~1000 | Item editing with equipment display |
+| `EventViewModel.cs` | ~900 | Event requirements and effects |
+| `NationViewModel.cs` | ~750 | Nation editing with 13 badge sections |
+| `WeaponViewModel.cs` | ~550 | Weapon stats and damage types |
+| `SpellViewModel.cs` | ~430 | Spell paths, costs, effects |
+| `MercenaryViewModel.cs` | ~400 | Mercenary bands |
+| `SiteViewModel.cs` | ~375 | Sites with gems and summons |
+| `ArmorViewModel.cs` | ~160 | Armor stats |
+| `PoptypeViewModel.cs` | ~100 | Population types |
+| `NametypeViewModel.cs` | ~65 | Name lists |
+| `CustomMagicItem.cs` | ~200 | Magic path bitmask handling |
+| `EntityHelperModels.cs` | ~50 | EquipmentItem, AvailableEquipmentItem, SlotTypeOption |
+
 - `MainWindowViewModel.cs` - Application state, mod loading, entity caches
 
 Supporting infrastructure in `Dom5Editor/UI/`:
 - `RelayCommand.cs` - ICommand implementation for MVVM
+
+**See `ENTITYVIEWMODEL_REFACTORING.md` for planned improvements to EntityViewModel.**
 
 ### Centralized Entity Caches (Performance)
 

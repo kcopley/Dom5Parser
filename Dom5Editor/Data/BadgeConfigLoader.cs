@@ -223,6 +223,7 @@ namespace Dom5Editor.Data
 
         /// <summary>
         /// Creates a PropertyItem from a BadgeCommand definition and current value.
+        /// For int properties, use value parameter. For intint, use value1/value2. For string, use stringValue.
         /// </summary>
         public static PropertyItem CreatePropertyItem(BadgeCommand cmdDef, int? value, bool isModified = false, bool isSessionEdit = false)
         {
@@ -258,6 +259,88 @@ namespace Dom5Editor.Data
                 property = PropertyItem.CreateValue(command, cmdDef.Display, value ?? cmdDef.Default ?? 0, isModified, isSessionEdit);
             }
 
+            SetPropertyTooltipAndIcon(property, cmdDef);
+            return property;
+        }
+
+        /// <summary>
+        /// Creates a PropertyItem from a BadgeCommand definition for IntIntProperty (two int values).
+        /// </summary>
+        public static PropertyItem CreateIntIntPropertyItem(BadgeCommand cmdDef, int value1, int value2, bool isModified = false, bool isSessionEdit = false)
+        {
+            var name = cmdDef.Name;
+            if (!name.StartsWith("#"))
+            {
+                name = "#" + name;
+            }
+            CommandsMap.TryGetCommand(name, out Command command);
+
+            PropertyItem property;
+            if (cmdDef.HasColors)
+            {
+                var bgColor = ParseColor(cmdDef.Color, Color.FromRgb(60, 60, 60));
+                var borderColor = ParseColor(cmdDef.BorderColor, Color.FromRgb(80, 80, 80));
+                property = PropertyItem.CreateColoredIntIntValue(
+                    command,
+                    cmdDef.Display,
+                    value1,
+                    value2,
+                    bgColor,
+                    borderColor,
+                    Colors.White,
+                    isModified,
+                    isSessionEdit);
+            }
+            else
+            {
+                property = PropertyItem.CreateIntIntValue(command, cmdDef.Display, value1, value2, isModified, isSessionEdit);
+            }
+
+            SetPropertyTooltipAndIcon(property, cmdDef);
+            return property;
+        }
+
+        /// <summary>
+        /// Creates a PropertyItem from a BadgeCommand definition for StringProperty.
+        /// </summary>
+        public static PropertyItem CreateStringPropertyItem(BadgeCommand cmdDef, string value, bool isModified = false, bool isSessionEdit = false)
+        {
+            var name = cmdDef.Name;
+            if (!name.StartsWith("#"))
+            {
+                name = "#" + name;
+            }
+            CommandsMap.TryGetCommand(name, out Command command);
+
+            var property = PropertyItem.CreateStringValue(command, cmdDef.Display, value, isModified, isSessionEdit);
+
+            SetPropertyTooltipAndIcon(property, cmdDef);
+            return property;
+        }
+
+        /// <summary>
+        /// Creates a PropertyItem from a BadgeCommand definition for BitmaskProperty.
+        /// </summary>
+        public static PropertyItem CreateBitmaskPropertyItem(BadgeCommand cmdDef, ulong value, bool isModified = false, bool isSessionEdit = false)
+        {
+            var name = cmdDef.Name;
+            if (!name.StartsWith("#"))
+            {
+                name = "#" + name;
+            }
+            CommandsMap.TryGetCommand(name, out Command command);
+
+            var property = PropertyItem.CreateBitmaskValue(command, cmdDef.Display, value, isModified, isSessionEdit);
+
+            SetPropertyTooltipAndIcon(property, cmdDef);
+            return property;
+        }
+
+        /// <summary>
+        /// Sets tooltip and icon on a PropertyItem from a BadgeCommand definition.
+        /// </summary>
+        private static void SetPropertyTooltipAndIcon(PropertyItem property, BadgeCommand cmdDef)
+        {
             // Set tooltip: prefer description from property JSON, then from command reference, then fallback to command name
             if (!string.IsNullOrEmpty(cmdDef.Description))
             {
@@ -277,8 +360,6 @@ namespace Dom5Editor.Data
             {
                 property.IconPath = cmdDef.Icon;
             }
-
-            return property;
         }
 
         /// <summary>

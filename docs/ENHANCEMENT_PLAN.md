@@ -453,6 +453,7 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 4. ~~Fix HasFlag usage in IDEntity.cs~~ (done)
 5. Make throwing methods abstract in IDEntity.cs (would require making class abstract)
 6. ~~Remove unnecessary re-sort in IDEntity.RemoveProperty()~~ (done)
+7. ~~Extract ViewModels to individual files~~ (done 2026-01-07) - EntityViewModels.cs split into 14 files
 
 ### Medium Effort
 
@@ -465,6 +466,29 @@ Currently the `Command` enum in `Dom5Edit/Commands/Command.cs` is deeply integra
 1. Data-driven entity property maps (replace static constructors)
 2. Configuration-based ID ranges (Dom5 vs Dom6)
 3. Extract ModMerger class from ModSet
+
+### EntityViewModel Refactoring (Pre-UI Polish Priority)
+
+See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
+
+**Phase 1: Low Risk, High Impact** ✓ COMPLETE (2026-01-07)
+- [x] Consolidate reference caches into dictionary (~35 lines saved)
+- [x] Extract generic `GetProperty<T>()` base method
+- [x] Add `IsPropertyInherited<T>()` generic method
+
+**Phase 2: Medium Risk** ✓ COMPLETE (2026-01-07)
+- [x] Genericize `IsPropertyModifiedFromVanilla<T>()` with value comparator
+- [x] Consolidate CanReset methods into single CanResetProperty()
+- [x] Eliminate PropertyType enum (was unused)
+- [ ] Add `SetProperty<T>()` generic with undo/redo - Deferred (Set methods differ significantly)
+
+**Phase 3: Extend Badge System (Larger Scope)** ✓ COMPLETE (2026-01-07)
+- [x] Add `IntIntProperty` badge support (e.g., #gems, #path)
+- [x] Add `StringProperty` badge support (e.g., #descr)
+- [x] Add `BitmaskProperty` badge support (e.g., #itemslots)
+- [ ] Unify reference handling in main badge loop - Deferred (works but could be cleaner)
+
+**Savings achieved:** ~130 lines in EntityViewModel. Badge JSON configs can now use `type: "intint"`, `type: "string"`, and `type: "bitmask"` for these property types.
 
 ---
 
@@ -645,6 +669,10 @@ Dom5Editor/UI/
     CommandPropertyEditor.xaml(.cs)
     ReferencePropertyEditor.xaml(.cs)
     MagicPathEditor.xaml(.cs)
+    PathSelector.xaml(.cs)
+    PathToggleButton.xaml(.cs)
+    CustomMagicEditor.xaml(.cs)
+    SearchableReferenceComboBox.xaml(.cs)
   Views/
     MainWindow.xaml(.cs)
     MonsterView.xaml(.cs)
@@ -652,9 +680,27 @@ Dom5Editor/UI/
     ArmorView.xaml(.cs)
     ItemView.xaml(.cs)
     SiteView.xaml(.cs)
-  ViewModels/
-    EntityViewModel.cs      - Base class with layered resolution, badge infrastructure
-    EntityViewModels.cs     - MonsterViewModel, WeaponViewModel, ArmorViewModel, ItemViewModel, SiteViewModel, etc.
+    SpellView.xaml(.cs)
+    NationView.xaml(.cs)
+    EventView.xaml(.cs)
+    MercenaryView.xaml(.cs)
+    PoptypeView.xaml(.cs)
+    NametypeView.xaml(.cs)
+  ViewModels/                  - Extracted to individual files (2026-01-07)
+    EntityViewModel.cs         - Base class (1960 lines) - see ENTITYVIEWMODEL_REFACTORING.md
+    MonsterViewModel.cs        - Monster editing (~1800 lines)
+    ItemViewModel.cs           - Item editing
+    EventViewModel.cs          - Event editing
+    NationViewModel.cs         - Nation editing
+    WeaponViewModel.cs         - Weapon editing
+    SpellViewModel.cs          - Spell editing
+    MercenaryViewModel.cs      - Mercenary editing
+    SiteViewModel.cs           - Site editing
+    ArmorViewModel.cs          - Armor editing
+    PoptypeViewModel.cs        - Poptype editing
+    NametypeViewModel.cs       - Nametype editing
+    CustomMagicItem.cs         - CUSTOMMAGIC bitmask handling
+    EntityHelperModels.cs      - EquipmentItem, AvailableEquipmentItem, SlotTypeOption
   Theme/
     AppTheme.xaml
     AppResources.xaml
