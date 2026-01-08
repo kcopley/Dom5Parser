@@ -1,0 +1,1812 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using Dom5Edit;
+using Dom5Edit.Commands;
+using Dom5Edit.Entities;
+using Dom5Edit.Props;
+using Dom5Editor.Data;
+using Dom5Editor.EditCommands;
+using Dom5Editor.UI.Controls;
+using Paloma;
+
+namespace Dom5Editor.UI.Views
+{
+    /// <summary>
+    /// ViewModel for Monster entities.
+    /// </summary>
+    public class MonsterViewModel : EntityViewModel
+    {
+        public MonsterViewModel(Monster entity, CommandHistory history, EntitySource source = EntitySource.Vanilla)
+            : base(entity, history, source)
+        {
+        }
+
+        public Monster Monster => (Monster)_entity;
+
+        /// <summary>
+        /// Entity type name for loading badge configuration from monster_badges.json.
+        /// </summary>
+        protected override string EntityTypeName => "monster";
+
+        // ========================================
+        // Basic Info
+        // ========================================
+
+        public string FixedName
+        {
+            get => GetStringProperty(Command.FIXEDNAME);
+            set => SetStringProperty(Command.FIXEDNAME, value);
+        }
+        public bool IsFixedNameModified => IsStringPropertyModifiedFromVanilla(Command.FIXEDNAME);
+        public bool IsFixedNameSessionEdit => IsPropertyEditedInSession(Command.FIXEDNAME);
+
+        public string Description
+        {
+            get => GetStringProperty(Command.DESCR);
+            set => SetStringProperty(Command.DESCR, value);
+        }
+        public bool IsDescriptionModified => IsStringPropertyModifiedFromVanilla(Command.DESCR);
+        public bool IsDescriptionSessionEdit => IsPropertyEditedInSession(Command.DESCR);
+
+        public string Sprite1
+        {
+            get => GetStringProperty(Command.SPR1);
+            set => SetStringProperty(Command.SPR1, value);
+        }
+        public bool IsSprite1Modified => IsStringPropertyModifiedFromVanilla(Command.SPR1);
+        public bool IsSprite1SessionEdit => IsPropertyEditedInSession(Command.SPR1);
+
+        public string Sprite2
+        {
+            get => GetStringProperty(Command.SPR2);
+            set => SetStringProperty(Command.SPR2, value);
+        }
+        public bool IsSprite2Modified => IsStringPropertyModifiedFromVanilla(Command.SPR2);
+        public bool IsSprite2SessionEdit => IsPropertyEditedInSession(Command.SPR2);
+
+        // ========================================
+        // Copy Commands (fundamental for inheritance)
+        // ========================================
+
+        /// <summary>
+        /// Display text for the copystats reference (monster name or ID).
+        /// </summary>
+        public string CopyStatsDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    // Show the resolved monster name if available, otherwise the raw value
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    // Fall back to raw value if not resolved
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Whether the entity has a copystats reference.
+        /// </summary>
+        public bool HasCopyStats
+        {
+            get
+            {
+                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        /// <summary>
+        /// Display text for the copyspr reference (monster name or ID).
+        /// </summary>
+        public string CopySprDisplay
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                    {
+                        var name = idEntity.Name ?? idEntity.ID.ToString();
+                        return $"{name} (#{idEntity.ID})";
+                    }
+                    return prop.Name ?? prop.ID.ToString();
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Whether the entity has a copyspr reference.
+        /// </summary>
+        public bool HasCopySpr
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out _, checkCopy: false);
+                return result == ReturnType.TRUE;
+            }
+        }
+
+        /// <summary>
+        /// Whether to show the copy from section (has any copy command).
+        /// </summary>
+        public bool HasCopyCommands => HasCopyStats || HasCopySpr;
+
+        /// <summary>
+        /// Gets the copystats reference ID for navigation.
+        /// </summary>
+        public int CopyStatsId
+        {
+            get
+            {
+                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the copyspr reference ID for navigation.
+        /// </summary>
+        public int CopySprId
+        {
+            get
+            {
+                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return prop.ID;
+                }
+                return 0;
+            }
+        }
+
+        // ========================================
+        // Sprite Images
+        // ========================================
+
+        /// <summary>
+        /// Loads and returns the sprite 1 image (TGA file).
+        /// </summary>
+        public BitmapSource SpriteImage => LoadSpriteImage(Command.SPR1);
+
+        /// <summary>
+        /// Loads and returns the sprite 2 image (TGA file).
+        /// </summary>
+        public BitmapSource Sprite2Image => LoadSpriteImage(Command.SPR2);
+
+        private BitmapSource LoadSpriteImage(Command spriteCommand)
+        {
+            // Try to get sprite path from entity
+            var exists = _entity.TryGet<FilePathProperty>(spriteCommand, out var property);
+
+            // Fall back to vanilla for VanillaModified entities
+            if (exists != ReturnType.TRUE && exists != ReturnType.COPIED && _source == EntitySource.VanillaModified)
+            {
+                var vanillaEntity = GetVanillaEntity();
+                if (vanillaEntity != null)
+                {
+                    exists = vanillaEntity.TryGet<FilePathProperty>(spriteCommand, out property);
+                }
+            }
+
+            if (exists == ReturnType.TRUE || exists == ReturnType.COPIED)
+            {
+                try
+                {
+                    var spritePath = property.Value;
+                    if (string.IsNullOrEmpty(spritePath))
+                        return null;
+
+                    // Adjust path separators
+                    var spriteAdjusted = spritePath.Trim('.').Trim('/').Replace("/", "\\");
+
+                    // Get mod directory
+                    var modPath = _entity.ParentMod?.FullFilePath;
+                    if (string.IsNullOrEmpty(modPath))
+                        return null;
+
+                    var dir = Path.GetDirectoryName(modPath);
+                    var filePath = Path.Combine(dir, spriteAdjusted);
+
+                    if (!File.Exists(filePath))
+                        return null;
+
+                    var targa = TargaImage.LoadTargaImage(filePath);
+                    return targa.ConvertToImage();
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        // ========================================
+        // Stats
+        // ========================================
+
+        public int? Hp
+        {
+            get => GetIntProperty(Command.HP);
+            set => SetIntProperty(Command.HP, value);
+        }
+        public bool IsHpModified => IsIntPropertyModifiedFromVanilla(Command.HP);
+        public bool IsHpSessionEdit => IsPropertyEditedInSession(Command.HP);
+        public bool IsHpInherited => IsIntPropertyInherited(Command.HP);
+
+        public int? Size
+        {
+            get => GetIntProperty(Command.SIZE);
+            set => SetIntProperty(Command.SIZE, value);
+        }
+        public bool IsSizeModified => IsIntPropertyModifiedFromVanilla(Command.SIZE);
+        public bool IsSizeSessionEdit => IsPropertyEditedInSession(Command.SIZE);
+        public bool IsSizeInherited => IsIntPropertyInherited(Command.SIZE);
+
+        public int? Strength
+        {
+            get => GetIntProperty(Command.STR);
+            set => SetIntProperty(Command.STR, value);
+        }
+        public bool IsStrengthModified => IsIntPropertyModifiedFromVanilla(Command.STR);
+        public bool IsStrengthSessionEdit => IsPropertyEditedInSession(Command.STR);
+        public bool IsStrengthInherited => IsIntPropertyInherited(Command.STR);
+
+        public int? Protection
+        {
+            get => GetIntProperty(Command.PROT);
+            set => SetIntProperty(Command.PROT, value);
+        }
+        public bool IsProtectionModified => IsIntPropertyModifiedFromVanilla(Command.PROT);
+        public bool IsProtectionSessionEdit => IsPropertyEditedInSession(Command.PROT);
+        public bool IsProtectionInherited => IsIntPropertyInherited(Command.PROT);
+
+        public int? Attack
+        {
+            get => GetIntProperty(Command.ATT);
+            set => SetIntProperty(Command.ATT, value);
+        }
+        public bool IsAttackModified => IsIntPropertyModifiedFromVanilla(Command.ATT);
+        public bool IsAttackSessionEdit => IsPropertyEditedInSession(Command.ATT);
+        public bool IsAttackInherited => IsIntPropertyInherited(Command.ATT);
+
+        public int? Defense
+        {
+            get => GetIntProperty(Command.DEF);
+            set => SetIntProperty(Command.DEF, value);
+        }
+        public bool IsDefenseModified => IsIntPropertyModifiedFromVanilla(Command.DEF);
+        public bool IsDefenseSessionEdit => IsPropertyEditedInSession(Command.DEF);
+        public bool IsDefenseInherited => IsIntPropertyInherited(Command.DEF);
+
+        public int? Precision
+        {
+            get => GetIntProperty(Command.PREC);
+            set => SetIntProperty(Command.PREC, value);
+        }
+        public bool IsPrecisionModified => IsIntPropertyModifiedFromVanilla(Command.PREC);
+        public bool IsPrecisionSessionEdit => IsPropertyEditedInSession(Command.PREC);
+        public bool IsPrecisionInherited => IsIntPropertyInherited(Command.PREC);
+
+        public int? Encumbrance
+        {
+            get => GetIntProperty(Command.ENC);
+            set => SetIntProperty(Command.ENC, value);
+        }
+        public bool IsEncumbranceModified => IsIntPropertyModifiedFromVanilla(Command.ENC);
+        public bool IsEncumbranceSessionEdit => IsPropertyEditedInSession(Command.ENC);
+        public bool IsEncumbranceInherited => IsIntPropertyInherited(Command.ENC);
+
+        public int? MagicResistance
+        {
+            get => GetIntProperty(Command.MR);
+            set => SetIntProperty(Command.MR, value);
+        }
+        public bool IsMagicResistanceModified => IsIntPropertyModifiedFromVanilla(Command.MR);
+        public bool IsMagicResistanceSessionEdit => IsPropertyEditedInSession(Command.MR);
+        public bool IsMagicResistanceInherited => IsIntPropertyInherited(Command.MR);
+
+        public int? Morale
+        {
+            get => GetIntProperty(Command.MOR);
+            set => SetIntProperty(Command.MOR, value);
+        }
+        public bool IsMoraleModified => IsIntPropertyModifiedFromVanilla(Command.MOR);
+        public bool IsMoraleSessionEdit => IsPropertyEditedInSession(Command.MOR);
+        public bool IsMoraleInherited => IsIntPropertyInherited(Command.MOR);
+
+        public int? ActionPoints
+        {
+            get => GetIntProperty(Command.AP);
+            set => SetIntProperty(Command.AP, value);
+        }
+        public bool IsActionPointsModified => IsIntPropertyModifiedFromVanilla(Command.AP);
+        public bool IsActionPointsSessionEdit => IsPropertyEditedInSession(Command.AP);
+        public bool IsActionPointsInherited => IsIntPropertyInherited(Command.AP);
+
+        public int? MapMove
+        {
+            get => GetIntProperty(Command.MAPMOVE);
+            set => SetIntProperty(Command.MAPMOVE, value);
+        }
+        public bool IsMapMoveModified => IsIntPropertyModifiedFromVanilla(Command.MAPMOVE);
+        public bool IsMapMoveSessionEdit => IsPropertyEditedInSession(Command.MAPMOVE);
+        public bool IsMapMoveInherited => IsIntPropertyInherited(Command.MAPMOVE);
+
+        public int? Eyes
+        {
+            get => GetIntProperty(Command.EYES);
+            set => SetIntProperty(Command.EYES, value);
+        }
+        public bool IsEyesModified => IsIntPropertyModifiedFromVanilla(Command.EYES);
+        public bool IsEyesSessionEdit => IsPropertyEditedInSession(Command.EYES);
+        public bool IsEyesInherited => IsIntPropertyInherited(Command.EYES);
+
+        // ========================================
+        // Recruitment
+        // ========================================
+
+        public int? GoldCost
+        {
+            get => GetIntProperty(Command.GCOST);
+            set => SetIntProperty(Command.GCOST, value);
+        }
+        public bool IsGoldCostModified => IsIntPropertyModifiedFromVanilla(Command.GCOST);
+        public bool IsGoldCostSessionEdit => IsPropertyEditedInSession(Command.GCOST);
+        public bool IsGoldCostInherited => IsIntPropertyInherited(Command.GCOST);
+
+        public int? ResourceCost
+        {
+            get => GetIntProperty(Command.RCOST);
+            set => SetIntProperty(Command.RCOST, value);
+        }
+        public bool IsResourceCostModified => IsIntPropertyModifiedFromVanilla(Command.RCOST);
+        public bool IsResourceCostSessionEdit => IsPropertyEditedInSession(Command.RCOST);
+        public bool IsResourceCostInherited => IsIntPropertyInherited(Command.RCOST);
+
+        public int? ResourceSize
+        {
+            get => GetIntProperty(Command.RESSIZE);
+            set => SetIntProperty(Command.RESSIZE, value);
+        }
+        public bool IsResourceSizeModified => IsIntPropertyModifiedFromVanilla(Command.RESSIZE);
+        public bool IsResourceSizeSessionEdit => IsPropertyEditedInSession(Command.RESSIZE);
+        public bool IsResourceSizeInherited => IsIntPropertyInherited(Command.RESSIZE);
+
+        public bool RequiresLab
+        {
+            get => GetCommandProperty(Command.REQLAB);
+            set => SetCommandProperty(Command.REQLAB, value);
+        }
+        public bool IsRequiresLabModified => IsCommandPropertyModifiedFromVanilla(Command.REQLAB);
+        public bool IsRequiresLabSessionEdit => IsPropertyEditedInSession(Command.REQLAB);
+        public bool IsRequiresLabInherited => IsCommandPropertyInherited(Command.REQLAB);
+
+        public bool RequiresTemple
+        {
+            get => GetCommandProperty(Command.REQTEMPLE);
+            set => SetCommandProperty(Command.REQTEMPLE, value);
+        }
+        public bool IsRequiresTempleModified => IsCommandPropertyModifiedFromVanilla(Command.REQTEMPLE);
+        public bool IsRequiresTempleSessionEdit => IsPropertyEditedInSession(Command.REQTEMPLE);
+        public bool IsRequiresTempleInherited => IsCommandPropertyInherited(Command.REQTEMPLE);
+
+        // ========================================
+        // Type
+        // ========================================
+
+        public bool IsHumanoid
+        {
+            get => GetCommandProperty(Command.HUMANOID);
+            set => SetCommandProperty(Command.HUMANOID, value);
+        }
+        public bool IsHumanoidModified => IsCommandPropertyModifiedFromVanilla(Command.HUMANOID);
+        public bool IsHumanoidSessionEdit => IsPropertyEditedInSession(Command.HUMANOID);
+        public bool IsHumanoidInherited => IsCommandPropertyInherited(Command.HUMANOID);
+
+        public bool IsMounted
+        {
+            get => GetCommandProperty(Command.MOUNTED);
+            set => SetCommandProperty(Command.MOUNTED, value);
+        }
+        public bool IsMountedModified => IsCommandPropertyModifiedFromVanilla(Command.MOUNTED);
+        public bool IsMountedSessionEdit => IsPropertyEditedInSession(Command.MOUNTED);
+        public bool IsMountedInherited => IsCommandPropertyInherited(Command.MOUNTED);
+
+        public bool IsUndead
+        {
+            get => GetCommandProperty(Command.UNDEAD);
+            set => SetCommandProperty(Command.UNDEAD, value);
+        }
+        public bool IsUndeadModified => IsCommandPropertyModifiedFromVanilla(Command.UNDEAD);
+        public bool IsUndeadSessionEdit => IsPropertyEditedInSession(Command.UNDEAD);
+        public bool IsUndeadInherited => IsCommandPropertyInherited(Command.UNDEAD);
+
+        public bool IsDemon
+        {
+            get => GetCommandProperty(Command.DEMON);
+            set => SetCommandProperty(Command.DEMON, value);
+        }
+        public bool IsDemonModified => IsCommandPropertyModifiedFromVanilla(Command.DEMON);
+        public bool IsDemonSessionEdit => IsPropertyEditedInSession(Command.DEMON);
+        public bool IsDemonInherited => IsCommandPropertyInherited(Command.DEMON);
+
+        public bool IsMagicBeing
+        {
+            get => GetCommandProperty(Command.MAGICBEING);
+            set => SetCommandProperty(Command.MAGICBEING, value);
+        }
+        public bool IsMagicBeingModified => IsCommandPropertyModifiedFromVanilla(Command.MAGICBEING);
+        public bool IsMagicBeingSessionEdit => IsPropertyEditedInSession(Command.MAGICBEING);
+        public bool IsMagicBeingInherited => IsCommandPropertyInherited(Command.MAGICBEING);
+
+        public bool IsHoly
+        {
+            get => GetCommandProperty(Command.HOLY);
+            set => SetCommandProperty(Command.HOLY, value);
+        }
+        public bool IsHolyModified => IsCommandPropertyModifiedFromVanilla(Command.HOLY);
+        public bool IsHolySessionEdit => IsPropertyEditedInSession(Command.HOLY);
+        public bool IsHolyInherited => IsCommandPropertyInherited(Command.HOLY);
+
+        public bool IsAnimal
+        {
+            get => GetCommandProperty(Command.ANIMAL);
+            set => SetCommandProperty(Command.ANIMAL, value);
+        }
+        public bool IsAnimalModified => IsCommandPropertyModifiedFromVanilla(Command.ANIMAL);
+        public bool IsAnimalSessionEdit => IsPropertyEditedInSession(Command.ANIMAL);
+        public bool IsAnimalInherited => IsCommandPropertyInherited(Command.ANIMAL);
+
+        public bool IsUnique
+        {
+            get => GetCommandProperty(Command.UNIQUE);
+            set => SetCommandProperty(Command.UNIQUE, value);
+        }
+        public bool IsUniqueModified => IsCommandPropertyModifiedFromVanilla(Command.UNIQUE);
+        public bool IsUniqueSessionEdit => IsPropertyEditedInSession(Command.UNIQUE);
+        public bool IsUniqueInherited => IsCommandPropertyInherited(Command.UNIQUE);
+
+        public bool IsInanimate
+        {
+            get => GetCommandProperty(Command.INANIMATE);
+            set => SetCommandProperty(Command.INANIMATE, value);
+        }
+        public bool IsInanimateModified => IsCommandPropertyModifiedFromVanilla(Command.INANIMATE);
+        public bool IsInanimateSessionEdit => IsPropertyEditedInSession(Command.INANIMATE);
+        public bool IsInanimateInherited => IsCommandPropertyInherited(Command.INANIMATE);
+
+        public bool IsMindless
+        {
+            get => GetCommandProperty(Command.MINDLESS);
+            set => SetCommandProperty(Command.MINDLESS, value);
+        }
+        public bool IsMindlessModified => IsCommandPropertyModifiedFromVanilla(Command.MINDLESS);
+        public bool IsMindlessSessionEdit => IsPropertyEditedInSession(Command.MINDLESS);
+        public bool IsMindlessInherited => IsCommandPropertyInherited(Command.MINDLESS);
+
+        // ========================================
+        // Movement
+        // ========================================
+
+        public bool IsFlying
+        {
+            get => GetCommandProperty(Command.FLYING);
+            set => SetCommandProperty(Command.FLYING, value);
+        }
+        public bool IsFlyingModified => IsCommandPropertyModifiedFromVanilla(Command.FLYING);
+        public bool IsFlyingSessionEdit => IsPropertyEditedInSession(Command.FLYING);
+        public bool IsFlyingInherited => IsCommandPropertyInherited(Command.FLYING);
+
+        public bool IsAquatic
+        {
+            get => GetCommandProperty(Command.AQUATIC);
+            set => SetCommandProperty(Command.AQUATIC, value);
+        }
+        public bool IsAquaticModified => IsCommandPropertyModifiedFromVanilla(Command.AQUATIC);
+        public bool IsAquaticSessionEdit => IsPropertyEditedInSession(Command.AQUATIC);
+        public bool IsAquaticInherited => IsCommandPropertyInherited(Command.AQUATIC);
+
+        public bool IsAmphibian
+        {
+            get => GetCommandProperty(Command.AMPHIBIAN);
+            set => SetCommandProperty(Command.AMPHIBIAN, value);
+        }
+        public bool IsAmphibianModified => IsCommandPropertyModifiedFromVanilla(Command.AMPHIBIAN);
+        public bool IsAmphibianSessionEdit => IsPropertyEditedInSession(Command.AMPHIBIAN);
+        public bool IsAmphibianInherited => IsCommandPropertyInherited(Command.AMPHIBIAN);
+
+        public bool IsFloating
+        {
+            get => GetCommandProperty(Command.FLOAT);
+            set => SetCommandProperty(Command.FLOAT, value);
+        }
+        public bool IsFloatingModified => IsCommandPropertyModifiedFromVanilla(Command.FLOAT);
+        public bool IsFloatingSessionEdit => IsPropertyEditedInSession(Command.FLOAT);
+        public bool IsFloatingInherited => IsCommandPropertyInherited(Command.FLOAT);
+
+        public bool CanTeleport
+        {
+            get => GetCommandProperty(Command.TELEPORT);
+            set => SetCommandProperty(Command.TELEPORT, value);
+        }
+        public bool IsCanTeleportModified => IsCommandPropertyModifiedFromVanilla(Command.TELEPORT);
+        public bool IsCanTeleportSessionEdit => IsPropertyEditedInSession(Command.TELEPORT);
+        public bool IsCanTeleportInherited => IsCommandPropertyInherited(Command.TELEPORT);
+
+        public int? Stealthy
+        {
+            get => GetIntProperty(Command.STEALTHY);
+            set => SetIntProperty(Command.STEALTHY, value);
+        }
+        public bool IsStealthyModified => IsIntPropertyModifiedFromVanilla(Command.STEALTHY);
+        public bool IsStealthySessionEdit => IsPropertyEditedInSession(Command.STEALTHY);
+        public bool IsStealthyInherited => IsIntPropertyInherited(Command.STEALTHY);
+
+        // ========================================
+        // Resistances
+        // ========================================
+
+        public int? FireResistance
+        {
+            get => GetIntProperty(Command.FIRERES);
+            set => SetIntProperty(Command.FIRERES, value);
+        }
+        public bool IsFireResistanceModified => IsIntPropertyModifiedFromVanilla(Command.FIRERES);
+        public bool IsFireResistanceSessionEdit => IsPropertyEditedInSession(Command.FIRERES);
+        public bool IsFireResistanceInherited => IsIntPropertyInherited(Command.FIRERES);
+
+        public int? ColdResistance
+        {
+            get => GetIntProperty(Command.COLDRES);
+            set => SetIntProperty(Command.COLDRES, value);
+        }
+        public bool IsColdResistanceModified => IsIntPropertyModifiedFromVanilla(Command.COLDRES);
+        public bool IsColdResistanceSessionEdit => IsPropertyEditedInSession(Command.COLDRES);
+        public bool IsColdResistanceInherited => IsIntPropertyInherited(Command.COLDRES);
+
+        public int? ShockResistance
+        {
+            get => GetIntProperty(Command.SHOCKRES);
+            set => SetIntProperty(Command.SHOCKRES, value);
+        }
+        public bool IsShockResistanceModified => IsIntPropertyModifiedFromVanilla(Command.SHOCKRES);
+        public bool IsShockResistanceSessionEdit => IsPropertyEditedInSession(Command.SHOCKRES);
+        public bool IsShockResistanceInherited => IsIntPropertyInherited(Command.SHOCKRES);
+
+        public int? PoisonResistance
+        {
+            get => GetIntProperty(Command.POISONRES);
+            set => SetIntProperty(Command.POISONRES, value);
+        }
+        public bool IsPoisonResistanceModified => IsIntPropertyModifiedFromVanilla(Command.POISONRES);
+        public bool IsPoisonResistanceSessionEdit => IsPropertyEditedInSession(Command.POISONRES);
+        public bool IsPoisonResistanceInherited => IsIntPropertyInherited(Command.POISONRES);
+
+        public bool IsEthereal
+        {
+            get => GetCommandProperty(Command.ETHEREAL);
+            set => SetCommandProperty(Command.ETHEREAL, value);
+        }
+        public bool IsEtherealModified => IsCommandPropertyModifiedFromVanilla(Command.ETHEREAL);
+        public bool IsEtherealSessionEdit => IsPropertyEditedInSession(Command.ETHEREAL);
+        public bool IsEtherealInherited => IsCommandPropertyInherited(Command.ETHEREAL);
+
+        public int? Regeneration
+        {
+            get => GetIntProperty(Command.REGENERATION);
+            set => SetIntProperty(Command.REGENERATION, value);
+        }
+        public bool IsRegenerationModified => IsIntPropertyModifiedFromVanilla(Command.REGENERATION);
+        public bool IsRegenerationSessionEdit => IsPropertyEditedInSession(Command.REGENERATION);
+        public bool IsRegenerationInherited => IsIntPropertyInherited(Command.REGENERATION);
+
+        public int? Invulnerable
+        {
+            get => GetIntProperty(Command.INVULNERABLE);
+            set => SetIntProperty(Command.INVULNERABLE, value);
+        }
+        public bool IsInvulnerableModified => IsIntPropertyModifiedFromVanilla(Command.INVULNERABLE);
+        public bool IsInvulnerableSessionEdit => IsPropertyEditedInSession(Command.INVULNERABLE);
+        public bool IsInvulnerableInherited => IsIntPropertyInherited(Command.INVULNERABLE);
+
+        // ========================================
+        // Combat Abilities
+        // ========================================
+
+        public int? Awe
+        {
+            get => GetIntProperty(Command.AWE);
+            set => SetIntProperty(Command.AWE, value);
+        }
+        public bool IsAweModified => IsIntPropertyModifiedFromVanilla(Command.AWE);
+        public bool IsAweSessionEdit => IsPropertyEditedInSession(Command.AWE);
+        public bool IsAweInherited => IsIntPropertyInherited(Command.AWE);
+
+        public int? Fear
+        {
+            get => GetIntProperty(Command.FEAR);
+            set => SetIntProperty(Command.FEAR, value);
+        }
+        public bool IsFearModified => IsIntPropertyModifiedFromVanilla(Command.FEAR);
+        public bool IsFearSessionEdit => IsPropertyEditedInSession(Command.FEAR);
+        public bool IsFearInherited => IsIntPropertyInherited(Command.FEAR);
+
+        public int? Berserk
+        {
+            get => GetIntProperty(Command.BERSERK);
+            set => SetIntProperty(Command.BERSERK, value);
+        }
+        public bool IsBerserkModified => IsIntPropertyModifiedFromVanilla(Command.BERSERK);
+        public bool IsBerserkSessionEdit => IsPropertyEditedInSession(Command.BERSERK);
+        public bool IsBerserkInherited => IsIntPropertyInherited(Command.BERSERK);
+
+        public int? Ambidextrous
+        {
+            get => GetIntProperty(Command.AMBIDEXTROUS);
+            set => SetIntProperty(Command.AMBIDEXTROUS, value);
+        }
+        public bool IsAmbidextrousModified => IsIntPropertyModifiedFromVanilla(Command.AMBIDEXTROUS);
+        public bool IsAmbidextrousSessionEdit => IsPropertyEditedInSession(Command.AMBIDEXTROUS);
+        public bool IsAmbidextrousInherited => IsIntPropertyInherited(Command.AMBIDEXTROUS);
+
+        public int? DarkVision
+        {
+            get => GetIntProperty(Command.DARKVISION);
+            set => SetIntProperty(Command.DARKVISION, value);
+        }
+        public bool IsDarkVisionModified => IsIntPropertyModifiedFromVanilla(Command.DARKVISION);
+        public bool IsDarkVisionSessionEdit => IsPropertyEditedInSession(Command.DARKVISION);
+        public bool IsDarkVisionInherited => IsIntPropertyInherited(Command.DARKVISION);
+
+        // ========================================
+        // Aura Effects
+        // ========================================
+
+        public int? Heat
+        {
+            get => GetIntProperty(Command.HEAT);
+            set => SetIntProperty(Command.HEAT, value);
+        }
+        public bool IsHeatModified => IsIntPropertyModifiedFromVanilla(Command.HEAT);
+        public bool IsHeatSessionEdit => IsPropertyEditedInSession(Command.HEAT);
+        public bool IsHeatInherited => IsIntPropertyInherited(Command.HEAT);
+
+        public int? Cold
+        {
+            get => GetIntProperty(Command.COLD);
+            set => SetIntProperty(Command.COLD, value);
+        }
+        public bool IsColdModified => IsIntPropertyModifiedFromVanilla(Command.COLD);
+        public bool IsColdSessionEdit => IsPropertyEditedInSession(Command.COLD);
+        public bool IsColdInherited => IsIntPropertyInherited(Command.COLD);
+
+        public int? FireShield
+        {
+            get => GetIntProperty(Command.FIRESHIELD);
+            set => SetIntProperty(Command.FIRESHIELD, value);
+        }
+        public bool IsFireShieldModified => IsIntPropertyModifiedFromVanilla(Command.FIRESHIELD);
+        public bool IsFireShieldSessionEdit => IsPropertyEditedInSession(Command.FIRESHIELD);
+        public bool IsFireShieldInherited => IsIntPropertyInherited(Command.FIRESHIELD);
+
+        public int? AirShield
+        {
+            get => GetIntProperty(Command.AIRSHIELD);
+            set => SetIntProperty(Command.AIRSHIELD, value);
+        }
+        public bool IsAirShieldModified => IsIntPropertyModifiedFromVanilla(Command.AIRSHIELD);
+        public bool IsAirShieldSessionEdit => IsPropertyEditedInSession(Command.AIRSHIELD);
+        public bool IsAirShieldInherited => IsIntPropertyInherited(Command.AIRSHIELD);
+
+        public int? PoisonCloud
+        {
+            get => GetIntProperty(Command.POISONCLOUD);
+            set => SetIntProperty(Command.POISONCLOUD, value);
+        }
+        public bool IsPoisonCloudModified => IsIntPropertyModifiedFromVanilla(Command.POISONCLOUD);
+        public bool IsPoisonCloudSessionEdit => IsPropertyEditedInSession(Command.POISONCLOUD);
+        public bool IsPoisonCloudInherited => IsIntPropertyInherited(Command.POISONCLOUD);
+
+        public int? DiseaseCloud
+        {
+            get => GetIntProperty(Command.DISEASECLOUD);
+            set => SetIntProperty(Command.DISEASECLOUD, value);
+        }
+        public bool IsDiseaseCloudModified => IsIntPropertyModifiedFromVanilla(Command.DISEASECLOUD);
+        public bool IsDiseaseCloudSessionEdit => IsPropertyEditedInSession(Command.DISEASECLOUD);
+        public bool IsDiseaseCloudInherited => IsIntPropertyInherited(Command.DISEASECLOUD);
+
+        // ========================================
+        // Age Properties
+        // ========================================
+
+        public int? StartAge
+        {
+            get => GetIntProperty(Command.STARTAGE);
+            set => SetIntProperty(Command.STARTAGE, value);
+        }
+        public bool IsStartAgeModified => IsIntPropertyModifiedFromVanilla(Command.STARTAGE);
+        public bool IsStartAgeSessionEdit => IsPropertyEditedInSession(Command.STARTAGE);
+        public bool IsStartAgeInherited => IsIntPropertyInherited(Command.STARTAGE);
+
+        public int? MaxAge
+        {
+            get => GetIntProperty(Command.MAXAGE);
+            set => SetIntProperty(Command.MAXAGE, value);
+        }
+        public bool IsMaxAgeModified => IsIntPropertyModifiedFromVanilla(Command.MAXAGE);
+        public bool IsMaxAgeSessionEdit => IsPropertyEditedInSession(Command.MAXAGE);
+        public bool IsMaxAgeInherited => IsIntPropertyInherited(Command.MAXAGE);
+
+        // ========================================
+        // Province Effects
+        // ========================================
+
+        public int? PopKill
+        {
+            get => GetIntProperty(Command.POPKILL);
+            set => SetIntProperty(Command.POPKILL, value);
+        }
+        public bool IsPopKillModified => IsIntPropertyModifiedFromVanilla(Command.POPKILL);
+        public bool IsPopKillSessionEdit => IsPropertyEditedInSession(Command.POPKILL);
+        public bool IsPopKillInherited => IsIntPropertyInherited(Command.POPKILL);
+
+        public int? IncUnrest
+        {
+            get => GetIntProperty(Command.INCUNREST);
+            set => SetIntProperty(Command.INCUNREST, value);
+        }
+        public bool IsIncUnrestModified => IsIntPropertyModifiedFromVanilla(Command.INCUNREST);
+        public bool IsIncUnrestSessionEdit => IsPropertyEditedInSession(Command.INCUNREST);
+        public bool IsIncUnrestInherited => IsIntPropertyInherited(Command.INCUNREST);
+
+        public int? SpreadDom
+        {
+            get => GetIntProperty(Command.SPREADDOM);
+            set => SetIntProperty(Command.SPREADDOM, value);
+        }
+        public bool IsSpreadDomModified => IsIntPropertyModifiedFromVanilla(Command.SPREADDOM);
+        public bool IsSpreadDomSessionEdit => IsPropertyEditedInSession(Command.SPREADDOM);
+        public bool IsSpreadDomInherited => IsIntPropertyInherited(Command.SPREADDOM);
+
+        public int? PatrolBonus
+        {
+            get => GetIntProperty(Command.PATROLBONUS);
+            set => SetIntProperty(Command.PATROLBONUS, value);
+        }
+        public bool IsPatrolBonusModified => IsIntPropertyModifiedFromVanilla(Command.PATROLBONUS);
+        public bool IsPatrolBonusSessionEdit => IsPropertyEditedInSession(Command.PATROLBONUS);
+        public bool IsPatrolBonusInherited => IsIntPropertyInherited(Command.PATROLBONUS);
+
+        public int? SupplyBonus
+        {
+            get => GetIntProperty(Command.SUPPLYBONUS);
+            set => SetIntProperty(Command.SUPPLYBONUS, value);
+        }
+        public bool IsSupplyBonusModified => IsIntPropertyModifiedFromVanilla(Command.SUPPLYBONUS);
+        public bool IsSupplyBonusSessionEdit => IsPropertyEditedInSession(Command.SUPPLYBONUS);
+        public bool IsSupplyBonusInherited => IsIntPropertyInherited(Command.SUPPLYBONUS);
+
+        // ========================================
+        // Stealth/Assassin
+        // ========================================
+
+        public bool IsSpy
+        {
+            get => GetCommandProperty(Command.SPY);
+            set => SetCommandProperty(Command.SPY, value);
+        }
+        public bool IsSpyModified => IsCommandPropertyModifiedFromVanilla(Command.SPY);
+        public bool IsSpySessionEdit => IsPropertyEditedInSession(Command.SPY);
+        public bool IsSpyInherited => IsCommandPropertyInherited(Command.SPY);
+
+        public bool IsAssassin
+        {
+            get => GetCommandProperty(Command.ASSASSIN);
+            set => SetCommandProperty(Command.ASSASSIN, value);
+        }
+        public bool IsAssassinModified => IsCommandPropertyModifiedFromVanilla(Command.ASSASSIN);
+        public bool IsAssassinSessionEdit => IsPropertyEditedInSession(Command.ASSASSIN);
+        public bool IsAssassinInherited => IsCommandPropertyInherited(Command.ASSASSIN);
+
+        public int? Seduce
+        {
+            get => GetIntProperty(Command.SEDUCE);
+            set => SetIntProperty(Command.SEDUCE, value);
+        }
+        public bool IsSeduceModified => IsIntPropertyModifiedFromVanilla(Command.SEDUCE);
+        public bool IsSeduceSessionEdit => IsPropertyEditedInSession(Command.SEDUCE);
+        public bool IsSeduceInherited => IsIntPropertyInherited(Command.SEDUCE);
+
+        // ===== BADGE-BASED COLLECTIONS (Compact UI) =====
+        // Sections defined in monster_badges.json: types (read-only), general, combat, resistances
+        // Uses base class BuildBadgesFromSection() method
+
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _typeBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableTypeBadges;
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _generalBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableGeneralBadges;
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _combatBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableCombatBadges;
+        private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _resistanceBadges;
+        private System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> _availableResistanceBadges;
+
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> TypeBadges
+        {
+            get { if (_typeBadges == null) RefreshTypeBadges(); return _typeBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableTypeBadges
+        {
+            get { if (_availableTypeBadges == null) RefreshTypeBadges(); return _availableTypeBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> GeneralBadges
+        {
+            get { if (_generalBadges == null) RefreshGeneralBadges(); return _generalBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableGeneralBadges
+        {
+            get { if (_availableGeneralBadges == null) RefreshGeneralBadges(); return _availableGeneralBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> CombatBadges
+        {
+            get { if (_combatBadges == null) RefreshCombatBadges(); return _combatBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableCombatBadges
+        {
+            get { if (_availableCombatBadges == null) RefreshCombatBadges(); return _availableCombatBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<PropertyItem> ResistanceBadges
+        {
+            get { if (_resistanceBadges == null) RefreshResistanceBadges(); return _resistanceBadges; }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<AvailablePropertyItem> AvailableResistanceBadges
+        {
+            get { if (_availableResistanceBadges == null) RefreshResistanceBadges(); return _availableResistanceBadges; }
+        }
+
+        // Commands for badge operations - using base class helpers
+        private RelayCommand<PropertyItem> _removeGeneralBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addGeneralBadgeCommand;
+        private RelayCommand<PropertyItem> _removeCombatBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addCombatBadgeCommand;
+        private RelayCommand<PropertyItem> _removeResistanceBadgeCommand;
+        private RelayCommand<AvailablePropertyItem> _addResistanceBadgeCommand;
+
+        public RelayCommand<PropertyItem> RemoveGeneralBadgeCommand => _removeGeneralBadgeCommand ??= CreateRemoveBadgeCommand(RefreshGeneralBadges);
+        public RelayCommand<AvailablePropertyItem> AddGeneralBadgeCommand => _addGeneralBadgeCommand ??= CreateAddBadgeCommand(RefreshGeneralBadges);
+        public RelayCommand<PropertyItem> RemoveCombatBadgeCommand => _removeCombatBadgeCommand ??= CreateRemoveBadgeCommand(RefreshCombatBadges);
+        public RelayCommand<AvailablePropertyItem> AddCombatBadgeCommand => _addCombatBadgeCommand ??= CreateAddBadgeCommand(RefreshCombatBadges);
+        public RelayCommand<PropertyItem> RemoveResistanceBadgeCommand => _removeResistanceBadgeCommand ??= CreateRemoveBadgeCommand(RefreshResistanceBadges);
+        public RelayCommand<AvailablePropertyItem> AddResistanceBadgeCommand => _addResistanceBadgeCommand ??= CreateAddBadgeCommand(RefreshResistanceBadges);
+
+        // Shared value changed handler for all badge sections (uses base class helper)
+        private EventHandler<int> _badgeValueChangedHandler;
+        private EventHandler<int> BadgeValueChangedHandler => _badgeValueChangedHandler ??= CreateBadgeValueChangedHandler();
+
+        private void RefreshTypeBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("types", null);
+            _typeBadges = active;
+            _availableTypeBadges = available;
+            OnPropertyChanged(nameof(TypeBadges));
+            OnPropertyChanged(nameof(AvailableTypeBadges));
+        }
+
+        private void RefreshGeneralBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("general", BadgeValueChangedHandler);
+            _generalBadges = active;
+            _availableGeneralBadges = available;
+            OnPropertyChanged(nameof(GeneralBadges));
+            OnPropertyChanged(nameof(AvailableGeneralBadges));
+        }
+
+        private void RefreshCombatBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("combat", BadgeValueChangedHandler);
+            _combatBadges = active;
+            _availableCombatBadges = available;
+            OnPropertyChanged(nameof(CombatBadges));
+            OnPropertyChanged(nameof(AvailableCombatBadges));
+        }
+
+        private void RefreshResistanceBadges()
+        {
+            var (active, available) = BuildBadgesFromSection("resistances", BadgeValueChangedHandler);
+            _resistanceBadges = active;
+            _availableResistanceBadges = available;
+            OnPropertyChanged(nameof(ResistanceBadges));
+            OnPropertyChanged(nameof(AvailableResistanceBadges));
+        }
+
+        // ===== Magic Paths =====
+        private System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem> _magicPathsList;
+        private System.Collections.ObjectModel.ObservableCollection<UI.Controls.AvailableMagicPath> _availableMagicPaths;
+
+        public System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem> MagicPathsList
+        {
+            get
+            {
+                if (_magicPathsList == null) RefreshMagicPaths();
+                return _magicPathsList;
+            }
+        }
+
+        public System.Collections.ObjectModel.ObservableCollection<UI.Controls.AvailableMagicPath> AvailableMagicPaths
+        {
+            get { if (_availableMagicPaths == null) RefreshMagicPaths(); return _availableMagicPaths; }
+        }
+
+        private void RefreshMagicPaths()
+        {
+            var activePaths = new System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem>();
+            var availablePaths = new System.Collections.ObjectModel.ObservableCollection<UI.Controls.AvailableMagicPath>();
+
+            // Get magic skills by layering: vanilla -> mod -> session changes
+            var monster = _entity as Monster;
+            if (monster != null)
+            {
+                var usedPathIds = new HashSet<int>();
+
+                // Dictionary to collect all magic skills: pathId -> (level, isFromMod, isSessionEdit)
+                var allSkills = new Dictionary<int, (int Level, bool IsModified, bool IsSessionEdit)>();
+
+                // First, get vanilla magic skills as base
+                var vanillaMonster = GetVanillaEntity() as Monster;
+                if (vanillaMonster != null)
+                {
+                    foreach (var skill in vanillaMonster.MagicSkills)
+                    {
+                        int pathId = (int)skill.Path;
+                        allSkills[pathId] = (skill.Level, false, false);
+                    }
+                }
+
+                // Then overlay with mod/current entity skills (if different from vanilla entity)
+                if (monster != vanillaMonster)
+                {
+                    foreach (var skill in monster.MagicSkills)
+                    {
+                        int pathId = (int)skill.Path;
+                        // Check if this is a session edit or mod change
+                        bool isSessionEdit = IsPropertyEditedInSession(Command.MAGICSKILL);
+                        bool isModified = !allSkills.ContainsKey(pathId) || allSkills[pathId].Level != skill.Level;
+                        allSkills[pathId] = (skill.Level, isModified, isSessionEdit);
+                    }
+                }
+
+                // Build UI items from collected skills
+                foreach (var kvp in allSkills.OrderBy(k => k.Key))
+                {
+                    int pathId = kvp.Key;
+                    var (level, isModified, isSessionEdit) = kvp.Value;
+                    var pathInfo = UI.Controls.MagicPathDefinitions.GetPathInfo(pathId);
+                    var item = new UI.Controls.MagicPathItem
+                    {
+                        PathId = pathId,
+                        PathLetter = pathInfo.Letter,
+                        PathName = pathInfo.Name,
+                        PathColor = pathInfo.Color,
+                        TextColor = pathInfo.TextColor,
+                        BorderColor = pathInfo.BorderColor,
+                        Level = level,
+                        IsInherited = false, // TODO: check from copystats
+                        IsModified = isModified,
+                        IsSessionEdit = isSessionEdit
+                    };
+                    item.LevelChanged += (s, newLevel) => OnMagicPathLevelChanged(pathId, newLevel);
+                    activePaths.Add(item);
+                    usedPathIds.Add(pathId);
+                }
+
+                // Build available paths (exclude already used ones)
+                foreach (var def in UI.Controls.MagicPathDefinitions.PathDefs)
+                {
+                    if (!usedPathIds.Contains(def.Id))
+                    {
+                        var pathInfo = UI.Controls.MagicPathDefinitions.GetPathInfo(def.Id);
+                        availablePaths.Add(new UI.Controls.AvailableMagicPath
+                        {
+                            PathId = def.Id,
+                            PathLetter = pathInfo.Letter,
+                            PathName = pathInfo.Name,
+                            PathColor = pathInfo.Color,
+                            TextColor = pathInfo.TextColor,
+                            BorderColor = pathInfo.BorderColor
+                        });
+                    }
+                }
+            }
+
+            _magicPathsList = activePaths;
+            _availableMagicPaths = availablePaths;
+            OnPropertyChanged(nameof(MagicPathsList));
+            OnPropertyChanged(nameof(AvailableMagicPaths));
+        }
+
+        private bool IsIntIntPropertyModifiedFromVanilla(Command command, int value1)
+        {
+            // Check if a specific IntIntProperty with given Value1 is modified from vanilla
+            if (_source == EntitySource.Vanilla) return false;
+            var vanillaEntity = GetVanillaEntity();
+            if (vanillaEntity == null) return true;
+            // Check if vanilla has this specific path
+            var vanillaMonster = vanillaEntity as Monster;
+            if (vanillaMonster == null) return true;
+            foreach (var skill in vanillaMonster.MagicSkills)
+            {
+                if ((int)skill.Path == value1) return false;
+            }
+            return true;
+        }
+
+        private void OnMagicPathLevelChanged(int pathId, int newLevel)
+        {
+            // Find and update the magic skill property
+            var monster = _entity as Monster;
+            if (monster != null)
+            {
+                // Remove old and add new
+                var props = monster.Properties.Where(p => p.Command == Command.MAGICSKILL)
+                    .Cast<Dom5Edit.Props.IntIntProperty>().ToList();
+                var existing = props.FirstOrDefault(p => p.Value1 == pathId);
+
+                var newProp = new Dom5Edit.Props.IntIntProperty
+                {
+                    Command = Command.MAGICSKILL,
+                    Value1 = pathId,
+                    Value2 = newLevel,
+                    HasValue = true
+                };
+
+                // Use CommandHistory for undo/redo support
+                if (_history != null && existing != null)
+                {
+                    // Use SetIntIntPropertyCommand for changing level
+                    var cmd = new SetIntIntPropertyCommand(_entity, Command.MAGICSKILL, pathId, newLevel);
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    // Fallback: direct modification
+                    if (existing != null)
+                    {
+                        monster.RemoveProperty(existing);
+                    }
+                    monster.AddProperty(newProp);
+                }
+
+                HasSessionChanges = true;
+            }
+        }
+
+        public void AddMagicPath(int pathId, int level)
+        {
+            var monster = _entity as Monster;
+            if (monster != null)
+            {
+                var newProp = new Dom5Edit.Props.IntIntProperty
+                {
+                    Command = Command.MAGICSKILL,
+                    Value1 = pathId,
+                    Value2 = level,
+                    HasValue = true
+                };
+
+                // Use CommandHistory for undo/redo support
+                if (_history != null)
+                {
+                    var cmd = new AddPropertyCommand(_entity, newProp, $"Add Magic Path {pathId}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    monster.AddProperty(newProp);
+                }
+
+                HasSessionChanges = true;
+                RefreshMagicPaths();
+            }
+        }
+
+        public void RemoveMagicPath(int pathId)
+        {
+            var monster = _entity as Monster;
+            if (monster != null)
+            {
+                var props = monster.Properties.Where(p => p.Command == Command.MAGICSKILL)
+                    .Cast<Dom5Edit.Props.IntIntProperty>().ToList();
+                var existing = props.FirstOrDefault(p => p.Value1 == pathId);
+                if (existing != null)
+                {
+                    // Use CommandHistory for undo/redo support
+                    if (_history != null)
+                    {
+                        var cmd = new RemovePropertyCommand(_entity, existing, $"Remove Magic Path {pathId}");
+                        _history.Execute(cmd);
+                    }
+                    else
+                    {
+                        monster.RemoveProperty(existing);
+                    }
+
+                    HasSessionChanges = true;
+                    RefreshMagicPaths();
+                }
+            }
+        }
+
+        protected override void OnPropertyRefreshedByHistory(Command command)
+        {
+            // Refresh magic paths list when MAGICSKILL changes
+            if (command == Command.MAGICSKILL)
+            {
+                RefreshMagicPaths();
+            }
+
+            // Map Command enum to actual property names (they don't always match)
+            var propertyName = GetPropertyNameForCommand(command);
+            if (propertyName != null)
+            {
+                OnPropertyChanged(propertyName);
+                OnPropertyChanged($"Is{propertyName}Modified");
+                OnPropertyChanged($"Is{propertyName}SessionEdit");
+                OnPropertyChanged($"Is{propertyName}Inherited");
+            }
+        }
+
+        /// <summary>
+        /// Maps Command enum values to ViewModel property names.
+        /// Returns null if no mapping exists (base class handles it).
+        /// </summary>
+        private static string GetPropertyNameForCommand(Command command)
+        {
+            return command switch
+            {
+                // Core stats with different names
+                Command.HP => "Hp",
+                Command.STR => "Strength",
+                Command.ATT => "Attack",
+                Command.DEF => "Defense",
+                Command.PREC => "Precision",
+                Command.MR => "MagicResistance",
+                Command.MOR => "Morale",
+                Command.ENC => "Encumbrance",
+                Command.PROT => "Protection",
+                Command.AP => "ActionPoints",
+                Command.MAPMOVE => "MapMove",
+                Command.SIZE => "Size",
+                Command.RESSIZE => "ResearchSize",
+                Command.EYES => "Eyes",
+
+                // Cost
+                Command.GCOST => "GoldCost",
+                Command.RCOST => "ResourceCost",
+
+                // Identity
+                Command.FIXEDNAME => "FixedName",
+                Command.DESCR => "Description",
+                Command.SPR1 => "Sprite1",
+                Command.SPR2 => "Sprite2",
+
+                _ => null  // Let base class handle or it matches Command name
+            };
+        }
+
+        protected override string GetCommandDisplayName(Command command)
+        {
+            return command switch
+            {
+                // Type
+                Command.HUMANOID => "Humanoid", Command.MOUNTEDHUMANOID => "Mounted Humanoid",
+                Command.QUADRUPED => "Quadruped", Command.LIZARD => "Lizard", Command.NAGA => "Naga",
+                Command.SNAKE => "Snake", Command.BIRD => "Bird", Command.DJINN => "Djinn",
+                Command.TROGLODYTE => "Troglodyte", Command.MISCSHAPE => "Misc Shape",
+                Command.MOUNTED => "Mounted", Command.UNDEAD => "Undead", Command.DEMON => "Demon",
+                Command.MAGICBEING => "Magic Being", Command.HOLY => "Holy", Command.ANIMAL => "Animal",
+                Command.UNIQUE => "Unique", Command.INANIMATE => "Inanimate", Command.MINDLESS => "Mindless",
+                Command.BLIND => "Blind", Command.COLDBLOOD => "Cold Blooded", Command.IMMORTAL => "Immortal",
+                Command.FEMALE => "Female", Command.IMMOBILE => "Immobile", Command.STONEBEING => "Stone Being",
+                Command.PLANT => "Plant", Command.DRAKE => "Drake", Command.BUG => "Bug",
+                Command.LESSERHORROR => "Lesser Horror", Command.GREATERHORROR => "Greater Horror",
+                Command.DOOMHORROR => "Doom Horror",
+                // Leadership
+                Command.NOLEADER => "No Leader", Command.POORLEADER => "Poor Leader",
+                Command.OKLEADER => "OK Leader", Command.GOODLEADER => "Good Leader",
+                Command.EXPERTLEADER => "Expert Leader", Command.SUPERIORLEADER => "Superior Leader",
+                Command.NOMAGICLEADER => "No Magic Leader", Command.POORMAGICLEADER => "Poor Magic Leader",
+                Command.OKMAGICLEADER => "OK Magic Leader", Command.GOODMAGICLEADER => "Good Magic Leader",
+                Command.EXPERTMAGICLEADER => "Expert Magic Leader", Command.SUPERIORMAGICLEADER => "Superior Magic Leader",
+                Command.NOUNDEADLEADER => "No Undead Leader", Command.POORUNDEADLEADER => "Poor Undead Leader",
+                Command.OKUNDEADLEADER => "OK Undead Leader", Command.GOODUNDEADLEADER => "Good Undead Leader",
+                Command.EXPERTUNDEADLEADER => "Expert Undead Leader", Command.SUPERIORUNDEADLEADER => "Superior Undead Leader",
+                // Movement
+                Command.FLYING => "Flying", Command.AQUATIC => "Aquatic", Command.AMPHIBIAN => "Amphibian",
+                Command.POORAMPHIBIAN => "Poor Amphibian", Command.FLOAT => "Float", Command.SWIMMING => "Swimming",
+                Command.TELEPORT => "Teleport", Command.MAPTELEPORT => "Map Teleport", Command.BLINK => "Blink",
+                Command.FORESTSURVIVAL => "Forest Survival", Command.MOUNTAINSURVIVAL => "Mountain Survival",
+                Command.SWAMPSURVIVAL => "Swamp Survival", Command.WASTESURVIVAL => "Waste Survival",
+                Command.SNOW => "Snow Movement",
+                // Resistances
+                Command.FIRERES => "Fire Res", Command.COLDRES => "Cold Res",
+                Command.SHOCKRES => "Shock Res", Command.POISONRES => "Poison Res",
+                Command.REGENERATION => "Regeneration", Command.INVULNERABLE => "Invulnerability",
+                Command.AIRSHIELD => "Air Shield", Command.ICEPROT => "Ice Protection",
+                Command.REINVIGORATION => "Reinvigoration", Command.IRONVUL => "Iron Vulnerability",
+                Command.BLUNTRES => "Blunt Res", Command.PIERCERES => "Pierce Res", Command.SLASHRES => "Slash Res",
+                Command.DISEASERES => "Disease Res", Command.MAGICIMMUNE => "Magic Immune",
+                Command.STORMIMMUNE => "Storm Immune", Command.STUNIMMUNITY => "Stun Immune",
+                Command.POLYIMMUNE => "Polymorph Immune", Command.ACIDRES => "Acid Res", Command.DECAYRES => "Decay Res",
+                // Combat
+                Command.AWE => "Awe", Command.FEAR => "Fear", Command.BERSERK => "Berserk",
+                Command.AMBIDEXTROUS => "Ambidextrous", Command.DARKVISION => "Dark Vision",
+                Command.TRAMPLE => "Trample", Command.DEATHCURSE => "Death Curse",
+                Command.BODYGUARD => "Bodyguard", Command.WARNING => "Warning", Command.STANDARD => "Standard",
+                Command.FORMATIONFIGHTER => "Formation", Command.PATIENCE => "Patience",
+                Command.CHAOSPOWER => "Chaos Power", Command.MAGICPOWER => "Magic Power",
+                Command.ETHEREAL => "Ethereal", Command.GLAMOUR => "Glamour",
+                // Auras
+                Command.HEAT => "Heat Aura", Command.COLD => "Cold Aura", Command.FIRESHIELD => "Fire Shield",
+                Command.POISONCLOUD => "Poison Cloud", Command.DISEASECLOUD => "Disease Cloud",
+                Command.POISONSKIN => "Poison Skin", Command.POISONARMOR => "Poison Armor",
+                Command.ACIDSHIELD => "Acid Shield", Command.SLEEPAURA => "Sleep Aura",
+                Command.ANIMALAWE => "Animal Awe", Command.SUNAWE => "Sun Awe", Command.HALTHERETIC => "Halt Heretic",
+                // Special
+                Command.HEAL => "Heal", Command.NOHEAL => "No Heal", Command.HEALER => "Healer",
+                Command.AUTOHEALER => "Auto Healer", Command.NEEDNOTEAT => "Need Not Eat",
+                Command.TAXCOLLECTOR => "Tax Collector", Command.INQUISITOR => "Inquisitor",
+                Command.MASON => "Mason", Command.LOCALSUN => "Local Sun",
+                Command.COMMASTER => "Communion Master", Command.COMSLAVE => "Communion Slave",
+                Command.SPELLSINGER => "Spell Singer", Command.COMBATCASTER => "Combat Caster",
+                Command.DRAINIMMUNE => "Drain Immune", Command.DIVINEINS => "Divine Inspiration",
+                Command.NOITEM => "No Items",
+                _ => base.GetCommandDisplayName(command)
+            };
+        }
+
+        // ========================================
+        // Equipment (Weapons & Armor)
+        // ========================================
+
+        private ObservableCollection<EquipmentItem> _weaponsList;
+        public ObservableCollection<EquipmentItem> WeaponsList
+        {
+            get
+            {
+                if (_weaponsList == null)
+                    RefreshWeaponsList();
+                return _weaponsList;
+            }
+        }
+
+        private ObservableCollection<EquipmentItem> _armorList;
+        public ObservableCollection<EquipmentItem> ArmorList
+        {
+            get
+            {
+                if (_armorList == null)
+                    RefreshArmorList();
+                return _armorList;
+            }
+        }
+
+        /// <summary>
+        /// Refresh weapons list using generic layered reference lookup.
+        /// </summary>
+        private void RefreshWeaponsList()
+        {
+            _weaponsList = new ObservableCollection<EquipmentItem>();
+
+            // Use base class generic method for layered lookup
+            var weapons = GetLayeredReferenceList<WeaponRef>(Command.WEAPON, EntityType.WEAPON, r => r.ID);
+
+            foreach (var (id, name, isInherited, isModified, isSessionEdit) in weapons)
+            {
+                _weaponsList.Add(new EquipmentItem
+                {
+                    ID = id,
+                    Name = name,
+                    IsInherited = isInherited,
+                    IsModified = isModified,
+                    IsSessionEdit = isSessionEdit,
+                    SourceCommand = Command.WEAPON,
+                    EntityType = "weapon"
+                });
+            }
+
+            OnPropertyChanged(nameof(WeaponsList));
+        }
+
+        /// <summary>
+        /// Refresh armor list using generic layered reference lookup.
+        /// </summary>
+        private void RefreshArmorList()
+        {
+            _armorList = new ObservableCollection<EquipmentItem>();
+
+            // Use base class generic method for layered lookup
+            var armors = GetLayeredReferenceList<ArmorRef>(Command.ARMOR, EntityType.ARMOR, r => r.ID);
+
+            foreach (var (id, name, isInherited, isModified, isSessionEdit) in armors)
+            {
+                _armorList.Add(new EquipmentItem
+                {
+                    ID = id,
+                    Name = name,
+                    IsInherited = isInherited,
+                    IsModified = isModified,
+                    IsSessionEdit = isSessionEdit,
+                    SourceCommand = Command.ARMOR,
+                    EntityType = "armor"
+                });
+            }
+
+            OnPropertyChanged(nameof(ArmorList));
+        }
+
+        /// <summary>
+        /// Gets the cached list of available weapons for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableWeapons => CachedWeapons;
+
+        /// <summary>
+        /// Gets the cached list of available armor for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableArmor => CachedArmors;
+
+        // Selected items for adding
+        private AvailableEquipmentItem _selectedWeaponToAdd;
+        public AvailableEquipmentItem SelectedWeaponToAdd
+        {
+            get => _selectedWeaponToAdd;
+            set
+            {
+                _selectedWeaponToAdd = value;
+                OnPropertyChanged(nameof(SelectedWeaponToAdd));
+            }
+        }
+
+        private AvailableEquipmentItem _selectedArmorToAdd;
+        public AvailableEquipmentItem SelectedArmorToAdd
+        {
+            get => _selectedArmorToAdd;
+            set
+            {
+                _selectedArmorToAdd = value;
+                OnPropertyChanged(nameof(SelectedArmorToAdd));
+            }
+        }
+
+        // Equipment Commands
+        private ICommand _addWeaponCommand;
+        public ICommand AddWeaponCommand => _addWeaponCommand ??= new RelayCommand<AvailableEquipmentItem>(AddWeapon);
+
+        private ICommand _removeWeaponCommand;
+        public ICommand RemoveWeaponCommand => _removeWeaponCommand ??= new RelayCommand<EquipmentItem>(RemoveWeapon);
+
+        private ICommand _addArmorCommand;
+        public ICommand AddArmorCommand => _addArmorCommand ??= new RelayCommand<AvailableEquipmentItem>(AddArmor);
+
+        private ICommand _removeArmorCommand;
+        public ICommand RemoveArmorCommand => _removeArmorCommand ??= new RelayCommand<EquipmentItem>(RemoveArmor);
+
+        private void AddWeapon(AvailableEquipmentItem weapon)
+        {
+            if (weapon == null) return;
+
+            var newProp = new WeaponRef { Parent = _entity, Command = Command.WEAPON };
+            newProp.ID = weapon.ID;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Weapon #{weapon.ID}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            RefreshWeaponsList();
+        }
+
+        private void RemoveWeapon(EquipmentItem weapon)
+        {
+            if (weapon == null || weapon.IsInherited) return;
+
+            var props = _entity.GetMultiple(Command.WEAPON).ToList();
+            var toRemove = props.FirstOrDefault(p => p is WeaponRef wr && wr.ID == weapon.ID);
+
+            if (toRemove != null)
+            {
+                if (_history != null)
+                {
+                    var cmd = new RemovePropertyCommand(_entity, toRemove, $"Remove Weapon #{weapon.ID}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    _entity.RemoveProperty(toRemove);
+                }
+
+                HasSessionChanges = true;
+                RefreshWeaponsList();
+            }
+        }
+
+        private void AddArmor(AvailableEquipmentItem armor)
+        {
+            if (armor == null) return;
+
+            var newProp = new ArmorRef { Parent = _entity, Command = Command.ARMOR };
+            newProp.ID = armor.ID;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Armor #{armor.ID}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            RefreshArmorList();
+        }
+
+        private void RemoveArmor(EquipmentItem armor)
+        {
+            if (armor == null || armor.IsInherited) return;
+
+            var props = _entity.GetMultiple(Command.ARMOR).ToList();
+            var toRemove = props.FirstOrDefault(p => p is ArmorRef ar && ar.ID == armor.ID);
+
+            if (toRemove != null)
+            {
+                if (_history != null)
+                {
+                    var cmd = new RemovePropertyCommand(_entity, toRemove, $"Remove Armor #{armor.ID}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    _entity.RemoveProperty(toRemove);
+                }
+
+                HasSessionChanges = true;
+                RefreshArmorList();
+            }
+        }
+
+        // Navigation events for hyperlink-style buttons (to be implemented)
+        public event EventHandler<int> WeaponNavigationRequested;
+        public event EventHandler<int> ArmorNavigationRequested;
+
+        public void NavigateToWeapon(int weaponId)
+        {
+            WeaponNavigationRequested?.Invoke(this, weaponId);
+        }
+
+        public void NavigateToArmor(int armorId)
+        {
+            ArmorNavigationRequested?.Invoke(this, armorId);
+        }
+
+        // ========================================
+        // Available Entities for Reference Selection
+        // ========================================
+
+        /// <summary>
+        /// Gets the cached list of available monsters for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableMonsters => CachedMonsters;
+
+        /// <summary>
+        /// Gets the cached list of available items for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableItems => CachedItems;
+
+        /// <summary>
+        /// Gets the cached list of available nations for dropdown binding.
+        /// Uses centralized cache from MainWindowViewModel for performance.
+        /// </summary>
+        public IReadOnlyList<AvailableEquipmentItem> AvailableNations => CachedNations;
+
+        // ========================================
+        // Reference Properties (Read current values)
+        // ========================================
+
+        /// <summary>
+        /// Gets the list of start items on this monster.
+        /// </summary>
+        public ObservableCollection<EquipmentItem> StartItemsList
+        {
+            get
+            {
+                var items = new ObservableCollection<EquipmentItem>();
+                foreach (var prop in _entity.GetMultiple(Command.STARTITEM))
+                {
+                    if (prop is ItemRef itemRef && itemRef.HasValue)
+                    {
+                        items.Add(new EquipmentItem
+                        {
+                            ID = itemRef.ID,
+                            Name = itemRef.Entity?.Name,
+                            IsModified = true,
+                            SourceCommand = Command.STARTITEM
+                        });
+                    }
+                }
+                return items;
+            }
+        }
+
+        private AvailableEquipmentItem _selectedItemToAdd;
+        public AvailableEquipmentItem SelectedItemToAdd
+        {
+            get => _selectedItemToAdd;
+            set
+            {
+                _selectedItemToAdd = value;
+                OnPropertyChanged(nameof(SelectedItemToAdd));
+            }
+        }
+
+        private ICommand _addStartItemCommand;
+        public ICommand AddStartItemCommand => _addStartItemCommand ??= new RelayCommand<AvailableEquipmentItem>(AddStartItem);
+
+        private ICommand _removeStartItemCommand;
+        public ICommand RemoveStartItemCommand => _removeStartItemCommand ??= new RelayCommand<EquipmentItem>(RemoveStartItem);
+
+        private void AddStartItem(AvailableEquipmentItem item)
+        {
+            if (item == null) return;
+
+            var newProp = new ItemRef { Parent = _entity, Command = Command.STARTITEM };
+            newProp.ID = item.ID;
+            newProp.Resolve();
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, $"Add Start Item #{item.ID}");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            OnPropertyChanged(nameof(StartItemsList));
+        }
+
+        private void RemoveStartItem(EquipmentItem item)
+        {
+            if (item == null) return;
+
+            var props = _entity.GetMultiple(Command.STARTITEM).ToList();
+            var toRemove = props.FirstOrDefault(p => p is ItemRef ir && ir.ID == item.ID);
+
+            if (toRemove != null)
+            {
+                if (_history != null)
+                {
+                    var cmd = new RemovePropertyCommand(_entity, toRemove, $"Remove Start Item #{item.ID}");
+                    _history.Execute(cmd);
+                }
+                else
+                {
+                    _entity.RemoveProperty(toRemove);
+                }
+
+                HasSessionChanges = true;
+                OnPropertyChanged(nameof(StartItemsList));
+            }
+        }
+
+        // ========================================
+        // CUSTOMMAGIC Support
+        // ========================================
+
+        private ObservableCollection<CustomMagicItem> _customMagicList;
+
+        /// <summary>
+        /// Gets the list of custom magic configurations on this monster.
+        /// Uses layered access: vanilla entries first, then mod entries overlay.
+        /// </summary>
+        public ObservableCollection<CustomMagicItem> CustomMagicList
+        {
+            get
+            {
+                if (_customMagicList == null) RefreshCustomMagic();
+                return _customMagicList;
+            }
+        }
+
+        private void RefreshCustomMagic()
+        {
+            var items = new ObservableCollection<CustomMagicItem>();
+            var knownEntries = new HashSet<(ulong, int)>(); // Track (Bitmask, Chance) pairs
+            var vanillaEntity = GetVanillaEntity();
+
+            // Layer 1: Vanilla entries (base layer)
+            if (vanillaEntity != null)
+            {
+                foreach (var prop in vanillaEntity.GetMultiple(Command.CUSTOMMAGIC))
+                {
+                    if (prop is BitmaskChanceProperty bcp && bcp.HasValue)
+                    {
+                        var key = (bcp.Bitmask, bcp.Chance);
+                        if (!knownEntries.Contains(key))
+                        {
+                            knownEntries.Add(key);
+                            var item = new CustomMagicItem
+                            {
+                                Bitmask = bcp.Bitmask,
+                                Chance = bcp.Chance,
+                                Property = null, // Vanilla properties shouldn't be edited directly
+                                IsInherited = true,
+                                IsModified = false,
+                                IsSessionEdit = false
+                            };
+                            items.Add(item);
+                        }
+                    }
+                }
+            }
+
+            // Layer 2: Mod entries (override or extend vanilla)
+            foreach (var prop in _entity.GetMultiple(Command.CUSTOMMAGIC))
+            {
+                if (prop is BitmaskChanceProperty bcp && bcp.HasValue)
+                {
+                    var key = (bcp.Bitmask, bcp.Chance);
+
+                    // Check if this exact entry already exists from vanilla
+                    var existingItem = items.FirstOrDefault(i => i.Bitmask == bcp.Bitmask && i.Chance == bcp.Chance);
+                    if (existingItem != null)
+                    {
+                        // Mark as having a mod property (editable)
+                        existingItem.Property = bcp;
+                        existingItem.IsInherited = false;
+                        existingItem.IsModified = true;
+                        existingItem.PropertyChanged += OnCustomMagicItemPropertyChanged;
+                    }
+                    else if (!knownEntries.Contains(key))
+                    {
+                        // New entry from mod (not in vanilla)
+                        knownEntries.Add(key);
+                        var item = new CustomMagicItem
+                        {
+                            Bitmask = bcp.Bitmask,
+                            Chance = bcp.Chance,
+                            Property = bcp,
+                            IsInherited = false,
+                            IsModified = true,
+                            IsSessionEdit = false
+                        };
+                        item.PropertyChanged += OnCustomMagicItemPropertyChanged;
+                        items.Add(item);
+                    }
+                }
+            }
+
+            _customMagicList = items;
+            OnPropertyChanged(nameof(CustomMagicList));
+        }
+
+        private void OnCustomMagicItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is CustomMagicItem item && item.Property != null)
+            {
+                // Sync changes back to the underlying BitmaskChanceProperty
+                if (e.PropertyName == nameof(CustomMagicItem.Bitmask) || e.PropertyName == nameof(CustomMagicItem.Chance))
+                {
+                    item.Property.Bitmask = item.Bitmask;
+                    item.Property.Chance = item.Chance;
+                    item.IsSessionEdit = true;
+                    HasSessionChanges = true;
+                }
+            }
+        }
+
+        private ICommand _addCustomMagicCommand;
+        public ICommand AddCustomMagicCommand => _addCustomMagicCommand ??= new RelayCommand(AddCustomMagic);
+
+        private ICommand _removeCustomMagicCommand;
+        public ICommand RemoveCustomMagicCommand => _removeCustomMagicCommand ??= new RelayCommand<CustomMagicItem>(RemoveCustomMagic);
+
+        private void AddCustomMagic()
+        {
+            var newProp = new BitmaskChanceProperty
+            {
+                Parent = _entity,
+                Command = Command.CUSTOMMAGIC,
+                Bitmask = 0,
+                Chance = 100,
+                HasValue = true
+            };
+
+            if (_history != null)
+            {
+                var cmd = new AddPropertyCommand(_entity, newProp, "Add Custom Magic");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.AddProperty(newProp);
+            }
+
+            HasSessionChanges = true;
+            RefreshCustomMagic();
+        }
+
+        private void RemoveCustomMagic(CustomMagicItem item)
+        {
+            if (item?.Property == null) return;
+
+            if (_history != null)
+            {
+                var cmd = new RemovePropertyCommand(_entity, item.Property, "Remove Custom Magic");
+                _history.Execute(cmd);
+            }
+            else
+            {
+                _entity.RemoveProperty(item.Property);
+            }
+
+            HasSessionChanges = true;
+            RefreshCustomMagic();
+        }
+
+        public void UpdateCustomMagic(CustomMagicItem item, ulong newBitmask, int newChance)
+        {
+            if (item?.Property == null) return;
+
+            item.Property.Bitmask = newBitmask;
+            item.Property.Chance = newChance;
+            item.Bitmask = newBitmask;
+            item.Chance = newChance;
+            item.IsSessionEdit = true;
+
+            HasSessionChanges = true;
+        }
+    }
+}
