@@ -14,36 +14,178 @@ Potential bugs and critical problems identified during code review.
 
 **Problem:** When changing a copy reference (e.g., `#copystats` on a monster), the UI stats/badges didn't update to reflect the new inherited values from the copy source. The copy selector worked (value was set), but the dependent properties didn't refresh.
 
-**Root Cause:** Badge collections (StatsBadges, TypeBadges, CombatBadges, etc.) are lazily initialized and cached. When a copy reference changed, the setter only notified a few properties but didn't invalidate/rebuild the cached badge collections. The `BuildBadgesFromSection()` method correctly resolves through the copy chain via `TryGet(checkCopy: true)`, but since collections were cached after first build, they showed stale data.
+**Root Causes (Two Issues Found):**
 
-**Solution Implemented:**
-Added `RefreshAllCopyDependentProperties()` method to each ViewModel with copy commands. This method is called in the copy ID setter after the value is set, and refreshes all badge collections and dependent properties.
+1. **Badge Collections Not Refreshed:** Badge collections (StatsBadges, TypeBadges, etc.) are lazily initialized and cached. When a copy reference changed, the setter only notified a few properties but didn't invalidate/rebuild the cached badge collections.
+
+2. **Reference Resolution Used Stale Entity:** In `StringOrIDRef.Resolve()`, the code used `ID` and `Name` property getters which return `Entity.ID`/`Entity.Name` if Entity is not null. When re-resolving after an ID change, this caused the lookup to use the OLD entity's ID instead of the new `_id` backing field value.
+
+**Solutions Implemented:**
+
+**Part 1 - ViewModel Badge Refresh:**
+Added `RefreshAllCopyDependentProperties()` method to each ViewModel with copy commands. Called in the copy ID setter after the value is set.
 
 **ViewModels Fixed:**
-- `MonsterViewModel.cs` - `CopyStatsId` and `CopySprId` setters now call `RefreshAllCopyDependentProperties()`
+- `MonsterViewModel.cs` - `CopyStatsId` and `CopySprId` setters
 - `WeaponViewModel.cs` - `CopyWeaponId` setter
 - `ArmorViewModel.cs` - `CopyArmorId` setter
 - `ItemViewModel.cs` - `CopyItemId` setter
 - `SpellViewModel.cs` - `CopySpellId` setter
 - `SiteViewModel.cs` - `CopySiteId` setter
 
-**Example Fix (MonsterViewModel):**
+**Part 2 - Reference Resolution Fix:**
+Fixed `StringOrIDRef.Resolve()` and `IDRef.Resolve()` to:
+1. Clear `Entity = null` and `Resolved = false` before resolving
+2. Use backing fields `_id` and `_name` directly instead of property getters
+
 ```csharp
-private void RefreshAllCopyDependentProperties()
+// StringOrIDRef.cs - Fixed Resolve()
+public override void Resolve()
 {
-    RefreshStatsBadges();
-    RefreshTypeBadges();
-    RefreshGeneralBadges();
-    RefreshCombatBadges();
-    RefreshResistanceBadges();
-    RefreshWeaponsList();
-    RefreshArmorList();
-    RefreshMagicPaths();
-    RefreshCustomMagic();
-    OnPropertyChanged(nameof(SpriteImage));
-    OnPropertyChanged(nameof(Sprite2Image));
+    // Clear existing entity before resolving to ensure we look up the new ID
+    Entity = null;
+    Resolved = false;
+
+    if (Parent.ParentMod.TryGet(GetEntityType(), _id, _name, out IDEntity e))
+    //                                           ^^^  ^^^^^
+    //                               Uses backing fields, not getters
+    {
+        Entity = e;
+        Resolved = true;
+    }
+    ...
 }
 ```
+
+**Files Modified:**
+- `Dom5Edit/Props/References/StringOrIDRef.cs` - Fixed `Resolve()` to use `_id`/`_name`
+- `Dom5Edit/Props/References/IDRef.cs` - Fixed `Resolve()` to clear state first
+- `Dom5Editor/UI/ViewModels/*ViewModel.cs` - Added `RefreshAllCopyDependentProperties()`
+
+**Note:** This fix enables the copy reference UI to work correctly, but does not yet implement the "clear" semantics where properties before a copy command are reset. See Issue #1 for that work.
+
+---
+
+### 1. Copy Commands Need Clear/Reset Mechanism
+
+**Status:** OPEN - Design Required
+
+**Added:** 2026-01-08
+
+**Discovery:** Copy commands (`#copystats`, `#copyweapon`, `#copyarmor`, etc.) function as implicit clears. They reset all inherited data and replace it with data from the copy source.
+
+**Simplified Design Assumptions:**
+
+1. **Not fully order-aware** - We assume copy commands are always placed BEFORE any property edits. No need to track property positions.
+
+2. **Copy OR Vanilla, not both** - An entity either inherits from vanilla OR from a copy source, never both. Copy commands completely replace vanilla as the inheritance base.
+
+3. **Clear commands come after copy** - The narrow clear commands (`#clearweapons`, `#cleararmor`, `#clearmagic`, `#clearspec`) always come after any copy command. They remove specific property groups from whatever the current inheritance base is (copy source or vanilla).
+
+**Command Order Model:**
+```
+#selectmonster 1        -- Select vanilla monster
+#copystats 100          -- (Optional) Replace vanilla base with Monster #100
+#clearweapons           -- (Optional) Block weapon inheritance from copy source
+#clearmagic             -- (Optional) Block magic path inheritance from copy source
+#hp 50                  -- Override: explicit property edits
+#att 18
+#weapon 123             -- Can still add weapons explicitly after clearing
+#end
+```
+
+**Clear Commands are Narrowly Scoped:**
+When `#clearweapons` follows `#copystats 100`, it ONLY blocks weapon inheritance from Monster #100. All other stats (hp, att, def, armor, magic, etc.) still inherit from the copy source. The clear command acts as a selective filter on one property group.
+
+**Cascading Copies:**
+Copy sources can themselves have copy commands. The existing `TryGet(checkCopy: true)` already handles this recursively - it follows the copy chain until it finds the property or reaches the end.
+
+```
+Monster A (#copystats B) → Monster B (#copystats C) → Monster C (has #hp 100)
+Result: Monster A's HP resolves to 100 through the chain
+```
+
+**Behavior by Entity Source:**
+
+1. **New Mod Entity (e.g., `#newmonster 5000`)**
+   - No vanilla data exists
+   - `#copystats X` makes entity inherit from X
+   - Clear commands remove specific groups from X
+   - Explicit properties override
+   - Standard behavior, already works
+
+2. **Vanilla-Modified Entity (e.g., `#selectmonster 1` on vanilla Monster #1)**
+   - WITHOUT `#copystats`: Mod properties override vanilla, unset properties fall back to vanilla
+   - WITH `#copystats X`: Vanilla data is **suppressed**, entity inherits from X instead
+   - Clear commands then remove specific groups from X (not from vanilla)
+
+**Key Insight:** When a copy command is present, vanilla data is completely bypassed. The copy source becomes the sole inheritance base. Clear commands then filter that base.
+
+**Implementation Approach:**
+
+1. **Layered Property Resolution Changes**
+   - Current: `Mod Entity → Vanilla Entity`
+   - New: `Mod Entity → Copy Source (if exists, skip vanilla) → Vanilla (only if NO copy)`
+
+   ```
+   GetProperty(command):
+     if entity.HasProperty(command): return entity's value
+     if entity.HasCopyFrom():
+       return copySource.GetProperty(command)  // Recurse into copy chain
+       // NOTE: Do NOT fall back to vanilla - copy replaces it entirely
+     if source == VanillaModified && !entity.HasCopyFrom():
+       return vanillaEntity.GetProperty(command)
+     return null
+   ```
+
+2. **Clear Command Handling**
+   - Track clear flags: `HasClearWeapons`, `HasClearArmor`, `HasClearMagic`, `HasClearSpec`
+   - When resolving properties in those groups, check clear flag first
+   - If cleared: don't inherit from copy source OR vanilla for that group
+
+   ```
+   GetWeapons():
+     if entity.HasClearWeapons: return only entity's explicit weapons
+     if entity.HasCopyFrom(): return copySource.GetWeapons()
+     if source == VanillaModified: return vanillaEntity.GetWeapons()
+     return empty
+   ```
+
+3. **UI/Badge Display**
+   - If copy command exists: show copy source values as inherited
+   - If clear command exists for a group: show nothing inherited for that group
+   - Badge `IsInherited` should reflect actual inheritance source
+
+**Design Notes:**
+- Vanilla data is never modified or deleted - just bypassed when copy exists
+- Copy command = "use this as my base instead of vanilla"
+- Clear command = "remove this group from my base (copy or vanilla)"
+- Cascading copies are handled by recursive resolution (already implemented)
+
+**Related Files:**
+- `Dom5Edit/Entities/IDEntity.cs` - `TryGetCopyFrom()`, property resolution
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Layered property access (`GetIntProperty`, `BuildBadgesFromSection`)
+- `Dom5Editor/UI/ViewModels/*ViewModel.cs` - Badge inheritance display
+
+---
+
+### Copy Command Reference
+
+**Key Rule:** `#copystats` copies everything EXCEPT sprites. Use `#copyspr` separately for sprites.
+
+| Command | Entity | Copies |
+|---------|--------|--------|
+| `#copystats` | Monster | Everything except sprites |
+| `#copyspr` | Monster | Sprites only (`#spr1`, `#spr2`) |
+| `#copyweapon` | Weapon | All weapon properties |
+| `#copyarmor` | Armor | All armor properties |
+| `#copyitem` | Item | All item properties |
+| `#copyspell` | Spell | All spell properties |
+| `#copysite` | Site | All site properties |
+
+**Clear Commands (Monster):** `#clearweapons`, `#cleararmor`, `#clearmagic`, `#clearspec`
+
+Details on clear commands and their exact scope will be documented during feature planning/implementation.
 
 ---
 
