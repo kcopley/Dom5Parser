@@ -26,6 +26,24 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "poptype";
 
         // ========================================
+        // Clear Command
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets whether #cleardef is active.
+        /// </summary>
+        public bool HasClearDef
+        {
+            get => _entity.HasClearCommand(Command.CLEARDEF);
+            set
+            {
+                SetCommandProperty(Command.CLEARDEF, value, nameof(HasClearDef));
+                RefreshRecruitmentBadges();
+                RefreshDefenseBadges();
+            }
+        }
+
+        // ========================================
         // Badge Collections
         // ========================================
 
@@ -87,6 +105,12 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
+            // Handle clear command
+            if (command == Command.CLEARDEF)
+            {
+                OnPropertyChanged(nameof(HasClearDef));
+            }
+
             RefreshRecruitmentBadges();
             RefreshDefenseBadges();
         }

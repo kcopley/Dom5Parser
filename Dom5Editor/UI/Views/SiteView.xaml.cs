@@ -26,5 +26,16 @@ namespace Dom5Editor.UI.Views
                 ViewModel?.NavigateToReferenceCommand.Execute(("site", id.Value));
             }
         }
+
+        /// <summary>
+        /// Clear the copy site reference.
+        /// </summary>
+        private void OnClearCopySiteClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.CopySiteId = null;
+            }
+        }
     }
 }

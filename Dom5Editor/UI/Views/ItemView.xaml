@@ -35,25 +35,45 @@
 
             <!-- Copy From Section (editable) -->
             <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Copy From:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
-                               VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <controls:SearchableReferenceComboBox
-                        Grid.Column="1"
-                        ItemsSource="{Binding AvailableItemsForCopy}"
-                        SelectedId="{Binding CopyItemId, Mode=TwoWay}"
-                        Placeholder="Select item to copy from..."
-                        ToolTip="Select an item to copy properties from"/>
-                    <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
-                            ToolTip="Navigate to source item"
-                            Visibility="{Binding HasCopyItem, Converter={StaticResource BoolToVisibilityConverter}}"
-                            Click="OnCopyItemClick"/>
-                </Grid>
+                <StackPanel>
+                    <!-- Copy Item selector -->
+                    <Grid Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Copy From:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <controls:SearchableReferenceComboBox
+                            Grid.Column="1"
+                            ItemsSource="{Binding AvailableItemsForCopy}"
+                            SelectedId="{Binding CopyItemId, Mode=TwoWay}"
+                            Placeholder="Select item to copy from..."
+                            ToolTip="Select an item to copy properties from"/>
+                        <Button Grid.Column="2" Content="✕" Width="24" Height="24" Margin="4,0,0,0"
+                                ToolTip="Clear copy item"
+                                Visibility="{Binding HasCopyItem, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Click="OnClearCopyItemClick"/>
+                        <Button Grid.Column="3" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                                ToolTip="Navigate to source item"
+                                Visibility="{Binding HasCopyItem, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Click="OnCopyItemClick"/>
+                    </Grid>
+                    <!-- Clear Command -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Clear:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <CheckBox Grid.Column="1" Content="Clear All" IsChecked="{Binding HasClear, Mode=TwoWay}"
+                                  ToolTip="Clear all inherited properties"
+                                  Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                    </Grid>
+                </StackPanel>
             </Border>
 
             <!-- Basic Info Section -->

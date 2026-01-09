@@ -95,6 +95,55 @@
       ]
     },
     {
+      "id": "clear",
+      "displayName": "INHERITANCE",
+      "description": "Clear commands to block inheritance from vanilla or copy sources",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "clear",
+          "display": "Clear All",
+          "type": "flag",
+          "color": "#3A2020",
+          "borderColor": "#8A4040",
+          "description": "Clears ALL inherited properties. Use with caution - blocks all stats, weapons, armor, magic, and special abilities."
+        },
+        {
+          "name": "clearweapons",
+          "display": "Clear Weapons",
+          "type": "flag",
+          "color": "#322D2A",
+          "borderColor": "#6A5040",
+          "description": "Removes all inherited weapons. Only weapons added after this command will remain."
+        },
+        {
+          "name": "cleararmor",
+          "display": "Clear Armor",
+          "type": "flag",
+          "color": "#2A2D32",
+          "borderColor": "#4A5A6A",
+          "description": "Removes all inherited armor. Only armor added after this command will remain."
+        },
+        {
+          "name": "clearmagic",
+          "display": "Clear Magic",
+          "type": "flag",
+          "color": "#2A2A32",
+          "borderColor": "#5A5A8A",
+          "description": "Removes all inherited magic paths. Only magic paths added after this command will remain."
+        },
+        {
+          "name": "clearspec",
+          "display": "Clear Abilities",
+          "type": "flag",
+          "color": "#322A2A",
+          "borderColor": "#6A4A4A",
+          "description": "Removes all inherited special abilities. Only abilities added after this command will remain."
+        }
+      ]
+    },
+    {
       "id": "magicpaths",
       "displayName": "MAGIC PATHS",
       "description": "Magic path levels for mages",
@@ -1323,44 +1372,6 @@
           "display": "Cleanshape",
           "type": "ref",
           "description": "Home province.",
-          "refType": "monster"
-        },
-        {
-          "name": "clear",
-          "display": "Clear",
-          "type": "flag",
-          "description": "Clears all properties from the selected entity."
-        },
-        {
-          "name": "clearmagic",
-          "display": "Clearmagic",
-          "type": "flag",
-          "description": "Coded numbers later in the mod may overwrite the number Removes all magic skills from the active monster."
-        },
-        {
-          "name": "clearrec",
-          "display": "Clearrec",
-          "type": "flag",
-          "description": "#startunittype1 \"<monster name>\" Clears the list of recruitable units and commanders (but not The commander will have units of this type."
-        },
-        {
-          "name": "clearspec",
-          "display": "Clearspec",
-          "type": "flag",
-          "description": "Removes all special abilities from the active monster."
-        },
-        {
-          "name": "copyspr",
-          "display": "Copyspr",
-          "type": "ref",
-          "description": "Likable for the spell AI.",
-          "refType": "monster"
-        },
-        {
-          "name": "copystats",
-          "display": "Copystats",
-          "type": "ref",
-          "description": "Copies all stats from another monster.",
           "refType": "monster"
         },
         {
@@ -3336,18 +3347,6 @@
           "type": "int",
           "default": 0,
           "description": "The Sun Below 4 fire gems Bonus in percent to resources for all cave forts."
-        },
-        {
-          "name": "cleararmor",
-          "display": "Cleararmor",
-          "type": "flag",
-          "description": "Monster number is not used, Dominions will automatically use Removes all armor from the active monster."
-        },
-        {
-          "name": "clearweapons",
-          "display": "Clearweapons",
-          "type": "flag",
-          "description": "Command to remove the existing weapons Enkidu 16 first."
         },
         {
           "name": "coldincome",

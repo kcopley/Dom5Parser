@@ -1,0 +1,718 @@
+[App] Assets path configured: D:\Projects\Dom5Parser\Dom5Editor
+[App] Loading vanilla data on startup...
+[ID SETTER DEBUG] ARMOR on entity 1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 6: Setting ID=8, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 6: Setting ID=126, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 6: Setting ID=14, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 6: Setting ID=4, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 26: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 26: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 28: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 28: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 29: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 29: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 32: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 32: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 33: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 33: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 33: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 33: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 37: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 37: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 46: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 46: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 47: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 47: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 48: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 48: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 49: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 49: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 55: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 55: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 59: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 59: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 61: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 61: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 200: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 200: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 218: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 218: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 232: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 232: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 233: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 233: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 271: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 271: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 272: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 272: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 283: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 283: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 290: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 290: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 290: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 290: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 291: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 291: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 365: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 365: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 372: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 372: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 417: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 417: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 428: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 428: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 548: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 548: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 629: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 629: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 664: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 664: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 665: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 665: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 668: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 668: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 671: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 671: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 678: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 678: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 679: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 679: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 683: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 683: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 686: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 686: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 687: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 687: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 689: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 689: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 707: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 707: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 726: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 726: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 737: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 737: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 746: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 746: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 769: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 769: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 787: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 787: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 797: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 797: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 801: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 801: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 802: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 802: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 870: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 870: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 871: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 871: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 895: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 895: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 914: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 914: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 918: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 918: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 949: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 949: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 951: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 951: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 954: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 954: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 983: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 983: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 984: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 984: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 985: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 985: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 993: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 993: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1003: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1003: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1059: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1059: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1060: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1060: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1061: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1061: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1074: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1074: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1075: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1075: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1079: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1079: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1080: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1080: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1090: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1090: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1103: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1103: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1104: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1104: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1106: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1106: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1106: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1106: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1162: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1162: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1163: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1163: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1164: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1164: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1164: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1164: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1165: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1165: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1188: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1188: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1197: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1197: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1280: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1280: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1352: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1352: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1353: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1353: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1354: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1354: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1355: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1355: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1385: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1385: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1386: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1386: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1389: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1389: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1408: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1408: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1409: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1409: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1437: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1437: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1439: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1439: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1439: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1439: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1440: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1440: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1440: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1440: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1441: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1441: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1441: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1441: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1444: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1444: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1445: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1445: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1446: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1446: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1447: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1447: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1508: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1508: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1544: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1544: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1544: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1544: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1658: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1658: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1663: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1663: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1675: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1675: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1675: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1675: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1676: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1676: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1677: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1677: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1704: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1704: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 1707: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 1707: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1780: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1780: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 1993: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 1993: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2010: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2010: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2021: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2021: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2024: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2024: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2024: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2024: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2036: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2036: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2059: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2059: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2061: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2061: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2108: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2108: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2109: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2109: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2116: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2116: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2140: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2140: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2197: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2197: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2253: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2253: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2257: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2257: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2259: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2259: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2262: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2262: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2310: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2310: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2313: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2313: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2323: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2323: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2374: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2374: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2375: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2375: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2399: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2399: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2400: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2400: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2401: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2401: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2402: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2402: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2454: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2454: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2455: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2455: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2455: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2455: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2483: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2483: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2507: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2507: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2559: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2559: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2561: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2561: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2577: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2577: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2579: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2579: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2582: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2582: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2649: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2649: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2667: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2667: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2811: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2811: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2812: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2812: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2837: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2837: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 2860: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 2860: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2863: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2863: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2864: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2864: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2869: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2869: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2870: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2870: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2910: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2910: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2911: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2911: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2931: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2931: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2932: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2932: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2941: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2941: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2942: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2942: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2943: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2943: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2956: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2956: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2957: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2957: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 3006: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 3006: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3024: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3024: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3025: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3025: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 3133: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 3133: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3146: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3146: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3147: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3147: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3148: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3148: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3154: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3154: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3156: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3156: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3187: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3187: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3212: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3212: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3251: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3251: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3254: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3254: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3287: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3287: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3288: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3288: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3290: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3290: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3295: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3295: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3305: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3305: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3306: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3306: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3336: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3336: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3362: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3362: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3393: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3393: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3410: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3410: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3411: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3411: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3435: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3435: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3593: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3593: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3595: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3595: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 3607: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 3607: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3638: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3638: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3673: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3673: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3678: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3678: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3678: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3678: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3787: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3787: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3788: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3788: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3789: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3789: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3794: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3794: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3795: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3795: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3802: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3802: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3835: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3835: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 3841: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 3841: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3842: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3842: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3862: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3862: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 3865: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 3865: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 3868: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 3868: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4013: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4013: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 4013: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 4013: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4014: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4014: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 4014: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 4014: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 4034: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 4034: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 4062: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 4062: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4065: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4065: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4074: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4074: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4077: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4077: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4077: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4077: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4095: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4095: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 4097: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 4097: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 6: Setting ID=120, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 133: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 133: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] NATIONREBATE on entity 172: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] NATIONREBATE on entity 172: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] NATIONREBATE on entity 249: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] NATIONREBATE on entity 249: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] HOMECOM on entity 6: Setting ID=153, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] HOMECOM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: Setting ID=3100, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: Setting ID=3101, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: Setting ID=3103, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: Setting ID=3105, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: Setting ID=3109, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: Setting ID=3110, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: Setting ID=3120, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECUNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECCOM on entity 6: Setting ID=3107, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECCOM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECCOM on entity 6: Setting ID=3108, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECCOM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECCOM on entity 6: Setting ID=3111, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECCOM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECCOM on entity 6: Setting ID=3114, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECCOM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECCOM on entity 6: Setting ID=3115, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECCOM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECCOM on entity 6: Setting ID=3116, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECCOM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] STARTSITE on entity 6: Setting ID=194, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] STARTSITE on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] STARTSITE on entity 6: Setting ID=195, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] STARTSITE on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: Setting ID=3121, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: Setting ID=2463, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: Setting ID=3124, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: Setting ID=3368, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] CHEAPGOD20 on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDRECCOM on entity 56: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDRECCOM on entity 56: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] STARTSITE on entity 57: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] STARTSITE on entity 57: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] COM on entity 6: Setting ID=291, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COM on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] UNIT on entity 6: Setting ID=287, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] UNIT on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_MONSTER on entity 1396: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_MONSTER on entity 1396: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity 3189: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity 3189: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] NATION on entity 3191: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] NATION on entity 3191: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] NATION on entity 3193: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] NATION on entity 3193: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity 3194: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity 3194: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] DAMAGE on entity 1065: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] DAMAGE on entity 1065: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] DAMAGE on entity 1065: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] DAMAGE on entity 1065: SKIPPED Resolve() - mod not loaded
+[App] Vanilla data loaded: 4068 monsters, 1252 sites, 135 nations
+[ID SETTER DEBUG] COPYWEAPON on entity 708: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COPYWEAPON on entity 708: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 787: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 787: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2399: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2399: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2400: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2400: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2401: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2401: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2402: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2402: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 6714: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 6714: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 6719: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 6719: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 6724: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 6724: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 6743: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 6743: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 6743: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 6743: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 6750: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 6750: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 6913: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 6913: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 47: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 47: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 17: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 17: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7010: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7010: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7012: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7012: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7017: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7017: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7033: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7033: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7034: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7034: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7195: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7195: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7195: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7195: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7482: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7482: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7484: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7484: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7578: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7578: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7578: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7578: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] COPYSTATS on entity 7752: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COPYSTATS on entity 7752: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] COPYSTATS on entity 7753: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COPYSTATS on entity 7753: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] COPYSTATS on entity 7756: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COPYSTATS on entity 7756: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] COPYSTATS on entity 3832: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COPYSTATS on entity 3832: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 7911: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 7911: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 7916: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 7916: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ARMOR on entity 7917: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ARMOR on entity 7917: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 8032: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 8032: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 8078: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 8078: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 8086: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 8086: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 8091: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 8091: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 8185: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 8185: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2399: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2399: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2399: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2399: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2401: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2401: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 2401: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 2401: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 8884: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 8884: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 9282: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 9282: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 9283: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 9283: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 9288: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 9288: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] WEAPON on entity 9612: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] WEAPON on entity 9612: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] HERO1 on entity 6: Setting ID=3122, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] HERO1 on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] HERO2 on entity 6: Setting ID=7930, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] HERO2 on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] HERO3 on entity 6: Setting ID=7932, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] HERO3 on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] DELGOD on entity 6: Setting ID=8406, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] DELGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] DELGOD on entity 6: Setting ID=8407, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] DELGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] DELGOD on entity 6: Setting ID=8435, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] DELGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDGOD on entity 6: Setting ID=8369, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDGOD on entity 6: Setting ID=8409, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDGOD on entity 6: Setting ID=8453, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDGOD on entity 6: Setting ID=8454, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ADDGOD on entity 6: Setting ID=8458, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ADDGOD on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] FUTURESITE on entity 6: Setting ID=2139, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] FUTURESITE on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] FUTURESITE on entity 6: Setting ID=2405, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] FUTURESITE on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] FUTURESITE on entity 6: Setting ID=2406, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] FUTURESITE on entity 6: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] COPYSPELL on entity 2116: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COPYSPELL on entity 2116: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2386: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2386: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2423: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2423: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] COPYSPELL on entity 2660: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] COPYSPELL on entity 2660: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2966: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2966: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2967: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2967: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2968: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2968: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2969: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2969: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2971: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2971: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2973: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2973: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2976: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2976: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2977: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2977: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2978: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2978: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 2979: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 2979: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ONLYATSITE on entity 3200: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ONLYATSITE on entity 3200: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ONLYATSITE on entity 3201: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ONLYATSITE on entity 3201: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] ONLYATSITE on entity 3209: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] ONLYATSITE on entity 3209: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] RESTRICTED on entity 711: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] RESTRICTED on entity 711: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_TARGITEM on entity -1: Setting ID=651, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_TARGITEM on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_NOTNATION on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_NOTNATION on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REQ_FORNATION on entity -1: SKIPPED Resolve() - mod not loaded
+[ID SETTER DEBUG] REMOVESITE on entity -1: Setting ID=6, ParentMod.IsLoaded=False
+[ID SETTER DEBUG] REMOVESITE on entity -1: SKIPPED Resolve() - mod not loaded
+[TRYGET DEBUG] Monster 6 (Mod=): Found direct HP = 15
+[TRYGET DEBUG] Monster 6 (Mod=): Found direct HP = 15
+[ID SETTER DEBUG] COPYSTATS on entity 6: Setting ID=651, ParentMod.IsLoaded=True
+[RESOLVE DEBUG] COPYSTATS on Monster 6: Resolving ID=651, Mod=NULL_MOD, Dependencies=0
+[RESOLVE DEBUG] COPYSTATS on Monster 6: SUCCESS - Found entity 651 in Mod=
+[TRYGET DEBUG] Monster 6 (Mod=): Found direct HP = 15
+[TRYGET DEBUG] Monster 6 (Mod=): Found direct HP = 15

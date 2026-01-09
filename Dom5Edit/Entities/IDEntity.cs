@@ -340,11 +340,21 @@ namespace Dom5Edit.Entities
 
         public ReturnType TryGet<T>(Command c, out T ret, bool checkCopy = true) where T : Property, new()
         {
+            // Step 1: Check direct property on entity (ALWAYS returned if present)
             ret = Get<T>(c);
             if (ret != null)
             {
                 return ReturnType.TRUE;
             }
+
+            // Step 2: Check if property group is cleared (blocks inheritance)
+            if (checkCopy && IsPropertyGroupCleared(c))
+            {
+                ret = null;
+                return ReturnType.FALSE;
+            }
+
+            // Step 3: Check copy chain
             if (checkCopy)
             {
                 var copyExists = TryGetCopyFrom(out var copy);
@@ -455,6 +465,41 @@ namespace Dom5Edit.Entities
         public virtual bool TryGetCopySpr(out IDEntity copySpr)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Checks if this entity has a specific clear command.
+        /// </summary>
+        public bool HasClearCommand(Command clearCommand)
+        {
+            return Properties.Any(p => p.Command == clearCommand);
+        }
+
+        /// <summary>
+        /// Gets the property group for a command. Override in derived classes for entity-specific groupings.
+        /// Default returns None (not clearable by specific clear commands).
+        /// </summary>
+        public virtual PropertyGroup GetPropertyGroup(Command command)
+        {
+            return PropertyGroup.None;
+        }
+
+        /// <summary>
+        /// Checks if a property's group is cleared on this entity.
+        /// Returns true if the property should NOT be inherited (blocked by a clear command).
+        /// </summary>
+        public bool IsPropertyGroupCleared(Command command)
+        {
+            // Total clear (#clear) blocks everything
+            if (HasClearCommand(Command.CLEAR))
+                return true;
+
+            var group = GetPropertyGroup(command);
+            if (group == PropertyGroup.None || group == PropertyGroup.Sprites)
+                return false; // Stats and sprites not affected by specific clears
+
+            var clearCommand = PropertyGroupMap.GetClearCommand(group);
+            return clearCommand.HasValue && HasClearCommand(clearCommand.Value);
         }
 
         public int sort_properties(Property p)

@@ -61,6 +61,32 @@
                 </StackPanel>
             </Border>
 
+            <!-- Clear Commands Section -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Clear:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <WrapPanel Grid.Column="1" Orientation="Horizontal">
+                        <CheckBox Content="Nation Settings" IsChecked="{Binding HasClearNation, Mode=TwoWay}" Margin="0,0,12,0"
+                                  ToolTip="Clear inherited nation settings (flags, culture, etc.)"
+                                  Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                        <CheckBox Content="Recruitment" IsChecked="{Binding HasClearRec, Mode=TwoWay}" Margin="0,0,12,0"
+                                  ToolTip="Clear inherited recruitment units"
+                                  Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                        <CheckBox Content="Sites" IsChecked="{Binding HasClearSites, Mode=TwoWay}" Margin="0,0,12,0"
+                                  ToolTip="Clear inherited starting sites"
+                                  Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                        <CheckBox Content="Gods" IsChecked="{Binding HasClearGods, Mode=TwoWay}" Margin="0,0,12,0"
+                                  ToolTip="Clear inherited pretender options"
+                                  Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+
             <!-- Identity Section (era, epithet, descr, flag, etc.) -->
             <controls:PropertyGroupControl Header="Identity" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>

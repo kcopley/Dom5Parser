@@ -76,6 +76,7 @@
                             <ColumnDefinition Width="Auto" MinWidth="80"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Copy Stats:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
                                    VerticalAlignment="Center" Margin="0,0,8,0"/>
@@ -85,16 +86,21 @@
                             SelectedId="{Binding CopyStatsId, Mode=TwoWay}"
                             Placeholder="Select monster to copy stats from..."
                             ToolTip="Copy all stats from another monster"/>
-                        <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                        <Button Grid.Column="2" Content="✕" Width="24" Height="24" Margin="4,0,0,0"
+                                ToolTip="Clear copy stats"
+                                Visibility="{Binding HasCopyStats, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Click="OnClearCopyStatsClick"/>
+                        <Button Grid.Column="3" Content="→" Width="24" Height="24" Margin="4,0,0,0"
                                 ToolTip="Navigate to source monster"
                                 Visibility="{Binding HasCopyStats, Converter={StaticResource BoolToVisibilityConverter}}"
                                 Click="OnCopyStatsClick"/>
                     </Grid>
                     <!-- CopySpr selector -->
-                    <Grid>
+                    <Grid Margin="0,0,0,6">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" MinWidth="80"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Copy Sprite:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
@@ -105,10 +111,40 @@
                             SelectedId="{Binding CopySprId, Mode=TwoWay}"
                             Placeholder="Select monster to copy sprite from..."
                             ToolTip="Copy sprite from another monster"/>
-                        <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                        <Button Grid.Column="2" Content="✕" Width="24" Height="24" Margin="4,0,0,0"
+                                ToolTip="Clear copy sprite"
+                                Visibility="{Binding HasCopySpr, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Click="OnClearCopySprClick"/>
+                        <Button Grid.Column="3" Content="→" Width="24" Height="24" Margin="4,0,0,0"
                                 ToolTip="Navigate to source monster"
                                 Visibility="{Binding HasCopySpr, Converter={StaticResource BoolToVisibilityConverter}}"
                                 Click="OnCopySprClick"/>
+                    </Grid>
+                    <!-- Clear Commands -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Clear:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <WrapPanel Grid.Column="1" Orientation="Horizontal">
+                            <CheckBox Content="All" IsChecked="{Binding HasClearAll, Mode=TwoWay}" Margin="0,0,12,0"
+                                      ToolTip="Clear ALL inherited properties (stats, equipment, magic, abilities)"
+                                      Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                            <CheckBox Content="Weapons" IsChecked="{Binding HasClearWeapons, Mode=TwoWay}" Margin="0,0,12,0"
+                                      ToolTip="Clear inherited weapons"
+                                      Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                            <CheckBox Content="Armor" IsChecked="{Binding HasClearArmor, Mode=TwoWay}" Margin="0,0,12,0"
+                                      ToolTip="Clear inherited armor"
+                                      Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                            <CheckBox Content="Magic" IsChecked="{Binding HasClearMagic, Mode=TwoWay}" Margin="0,0,12,0"
+                                      ToolTip="Clear inherited magic paths"
+                                      Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                            <CheckBox Content="Abilities" IsChecked="{Binding HasClearSpec, Mode=TwoWay}" Margin="0,0,0,0"
+                                      ToolTip="Clear inherited special abilities"
+                                      Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                        </WrapPanel>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -119,6 +155,7 @@
                     <controls:BadgeGridPanel
                         Columns="3"
                         ItemsSource="{Binding StatsBadges}"
+                        RemoveCommand="{Binding RemoveStatsBadgeCommand}"
                         ShowAddButton="False"/>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

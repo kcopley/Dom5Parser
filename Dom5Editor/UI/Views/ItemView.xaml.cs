@@ -28,6 +28,17 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        /// <summary>
+        /// Clear the copy item reference.
+        /// </summary>
+        private void OnClearCopyItemClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.CopyItemId = null;
+            }
+        }
+
         private void PrimaryPath_Changed(object sender, int pathId)
         {
             // Path binding handles the update; refresh display property

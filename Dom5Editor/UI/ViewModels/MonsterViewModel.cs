@@ -194,6 +194,63 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         public bool HasCopyCommands => HasCopyStats || HasCopySpr;
 
+        // ===== Clear Commands =====
+
+        /// <summary>
+        /// Gets or sets whether #clear (clear all) is active.
+        /// </summary>
+        public bool HasClearAll
+        {
+            get => _entity.HasClearCommand(Command.CLEAR);
+            set => SetClearCommand(Command.CLEAR, value, nameof(HasClearAll));
+        }
+
+        /// <summary>
+        /// Gets or sets whether #clearweapons is active.
+        /// </summary>
+        public bool HasClearWeapons
+        {
+            get => _entity.HasClearCommand(Command.CLEARWEAPONS);
+            set => SetClearCommand(Command.CLEARWEAPONS, value, nameof(HasClearWeapons));
+        }
+
+        /// <summary>
+        /// Gets or sets whether #cleararmor is active.
+        /// </summary>
+        public bool HasClearArmor
+        {
+            get => _entity.HasClearCommand(Command.CLEARARMOR);
+            set => SetClearCommand(Command.CLEARARMOR, value, nameof(HasClearArmor));
+        }
+
+        /// <summary>
+        /// Gets or sets whether #clearmagic is active.
+        /// </summary>
+        public bool HasClearMagic
+        {
+            get => _entity.HasClearCommand(Command.CLEARMAGIC);
+            set => SetClearCommand(Command.CLEARMAGIC, value, nameof(HasClearMagic));
+        }
+
+        /// <summary>
+        /// Gets or sets whether #clearspec is active.
+        /// </summary>
+        public bool HasClearSpec
+        {
+            get => _entity.HasClearCommand(Command.CLEARSPEC);
+            set => SetClearCommand(Command.CLEARSPEC, value, nameof(HasClearSpec));
+        }
+
+        /// <summary>
+        /// Helper to set a clear command and refresh dependent properties.
+        /// </summary>
+        private void SetClearCommand(Command command, bool value, string propertyName)
+        {
+            SetCommandProperty(command, value, propertyName);
+            // Refresh all properties since clear affects inheritance
+            RefreshAllCopyDependentProperties();
+        }
+
         // Cached reference items for copy monster selectors
         private List<ReferenceItem> _availableMonstersForCopy;
 
@@ -321,11 +378,14 @@ namespace Dom5Editor.UI.Views
 
         // Stats badges (grid layout with showDefaults for consistent display)
         private System.Collections.ObjectModel.ObservableCollection<PropertyItem> _statsBadges;
+        private RelayCommand<PropertyItem> _removeStatsBadgeCommand;
 
         public System.Collections.ObjectModel.ObservableCollection<PropertyItem> StatsBadges
         {
             get { if (_statsBadges == null) RefreshStatsBadges(); return _statsBadges; }
         }
+
+        public RelayCommand<PropertyItem> RemoveStatsBadgeCommand => _removeStatsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshStatsBadges);
 
         private void RefreshStatsBadges()
         {
@@ -439,8 +499,8 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
-        /// Refreshes all properties and collections that depend on copystats inheritance.
-        /// Called when CopyStatsId changes to ensure UI reflects the new inherited values.
+        /// Refreshes all properties and collections that depend on copystats/clear inheritance.
+        /// Called when CopyStatsId or clear commands change to ensure UI reflects the new inherited values.
         /// </summary>
         private void RefreshAllCopyDependentProperties()
         {
@@ -464,6 +524,13 @@ namespace Dom5Editor.UI.Views
             // Notify sprite properties may have changed (if copyspr is affected)
             OnPropertyChanged(nameof(SpriteImage));
             OnPropertyChanged(nameof(Sprite2Image));
+
+            // Notify clear command checkbox properties (they read from entity)
+            OnPropertyChanged(nameof(HasClearAll));
+            OnPropertyChanged(nameof(HasClearWeapons));
+            OnPropertyChanged(nameof(HasClearArmor));
+            OnPropertyChanged(nameof(HasClearMagic));
+            OnPropertyChanged(nameof(HasClearSpec));
         }
 
         // ===== Magic Paths =====
@@ -489,23 +556,63 @@ namespace Dom5Editor.UI.Views
             var activePaths = new System.Collections.ObjectModel.ObservableCollection<UI.Controls.MagicPathItem>();
             var availablePaths = new System.Collections.ObjectModel.ObservableCollection<UI.Controls.AvailableMagicPath>();
 
-            // Get magic skills by layering: vanilla -> mod -> session changes
+            // Get magic skills by layering: vanilla -> copystats source -> mod -> session changes
             var monster = _entity as Monster;
             if (monster != null)
             {
                 var usedPathIds = new HashSet<int>();
 
-                // Dictionary to collect all magic skills: pathId -> (level, isFromMod, isSessionEdit)
-                var allSkills = new Dictionary<int, (int Level, bool IsModified, bool IsSessionEdit)>();
+                // Dictionary to collect all magic skills: pathId -> (level, isFromMod, isSessionEdit, isFromCopy)
+                var allSkills = new Dictionary<int, (int Level, bool IsModified, bool IsSessionEdit, bool IsFromCopy)>();
 
-                // First, get vanilla magic skills as base
+                // First, get vanilla magic skills as base (if no copystats)
                 var vanillaMonster = GetVanillaEntity() as Monster;
-                if (vanillaMonster != null)
+
+                // Check for copystats source - this takes precedence over vanilla
+                Monster copySourceMonster = null;
+                if (monster.TryGetCopyFrom(out var copyEntity) && copyEntity is Monster copyMon)
+                {
+                    copySourceMonster = copyMon;
+                }
+
+                // If we have a copystats source, check for CLEARMAGIC first
+                bool hasClearMagic = monster.TryGet<CommandProperty>(Command.CLEARMAGIC, out _, false) == ReturnType.TRUE;
+
+                // Base layer: vanilla (only if no copystats, or as ultimate fallback)
+                if (copySourceMonster == null && vanillaMonster != null)
                 {
                     foreach (var skill in vanillaMonster.MagicSkills)
                     {
                         int pathId = (int)skill.Path;
-                        allSkills[pathId] = (skill.Level, false, false);
+                        allSkills[pathId] = (skill.Level, false, false, false);
+                    }
+                }
+
+                // Copy source layer: if copystats is set and no CLEARMAGIC, get magic from copy source
+                if (copySourceMonster != null && !hasClearMagic)
+                {
+                    // Get magic skills from copy source entity
+                    foreach (var skill in copySourceMonster.MagicSkills)
+                    {
+                        int pathId = (int)skill.Path;
+                        allSkills[pathId] = (skill.Level, false, false, true);
+                    }
+
+                    // Also check the copy source's vanilla version if the copy source doesn't have magic skills directly
+                    if (!allSkills.Any())
+                    {
+                        // Try to get magic skills from the copy source's vanilla entity
+                        if (VanillaLoader.Vanilla?.TryGet(EntityType.MONSTER, copySourceMonster.ID, null, out var vanillaCopySource) == true)
+                        {
+                            if (vanillaCopySource is Monster vanillaCopyMon)
+                            {
+                                foreach (var skill in vanillaCopyMon.MagicSkills)
+                                {
+                                    int pathId = (int)skill.Path;
+                                    allSkills[pathId] = (skill.Level, false, false, true);
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -518,7 +625,7 @@ namespace Dom5Editor.UI.Views
                         // Check if this is a session edit or mod change
                         bool isSessionEdit = IsPropertyEditedInSession(Command.MAGICSKILL);
                         bool isModified = !allSkills.ContainsKey(pathId) || allSkills[pathId].Level != skill.Level;
-                        allSkills[pathId] = (skill.Level, isModified, isSessionEdit);
+                        allSkills[pathId] = (skill.Level, isModified, isSessionEdit, false);
                     }
                 }
 
@@ -526,7 +633,7 @@ namespace Dom5Editor.UI.Views
                 foreach (var kvp in allSkills.OrderBy(k => k.Key))
                 {
                     int pathId = kvp.Key;
-                    var (level, isModified, isSessionEdit) = kvp.Value;
+                    var (level, isModified, isSessionEdit, isFromCopy) = kvp.Value;
                     var pathInfo = UI.Controls.MagicPathDefinitions.GetPathInfo(pathId);
                     var item = new UI.Controls.MagicPathItem
                     {
@@ -537,7 +644,7 @@ namespace Dom5Editor.UI.Views
                         TextColor = pathInfo.TextColor,
                         BorderColor = pathInfo.BorderColor,
                         Level = level,
-                        IsInherited = false, // TODO: check from copystats
+                        IsInherited = isFromCopy,
                         IsModified = isModified,
                         IsSessionEdit = isSessionEdit
                     };
@@ -685,6 +792,38 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
+            // Handle copy and clear commands - these affect all inherited properties
+            if (command == Command.COPYSTATS || command == Command.COPYSPR ||
+                command == Command.CLEAR || command == Command.CLEARWEAPONS ||
+                command == Command.CLEARARMOR || command == Command.CLEARMAGIC ||
+                command == Command.CLEARSPEC)
+            {
+                RefreshAllCopyDependentProperties();
+                // Also notify the checkbox properties
+                OnPropertyChanged(nameof(CopyStatsId));
+                OnPropertyChanged(nameof(CopyStatsName));
+                OnPropertyChanged(nameof(HasCopyStats));
+                OnPropertyChanged(nameof(CopySprId));
+                OnPropertyChanged(nameof(CopySprName));
+                OnPropertyChanged(nameof(HasCopySpr));
+                OnPropertyChanged(nameof(HasCopyCommands));
+                return;
+            }
+
+            // Handle weapon changes
+            if (command == Command.WEAPON)
+            {
+                RefreshWeaponsList();
+                return;
+            }
+
+            // Handle armor changes
+            if (command == Command.ARMOR)
+            {
+                RefreshArmorList();
+                return;
+            }
+
             // Refresh magic paths list when MAGICSKILL changes
             if (command == Command.MAGICSKILL)
             {

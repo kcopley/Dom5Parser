@@ -61,10 +61,11 @@
                         <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,8"/>
 
                         <!-- Copy From Reference (editable) -->
-                        <Grid Margin="0,0,0,8">
+                        <Grid Margin="0,0,0,6">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto" MinWidth="80"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="Copy From:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
@@ -75,10 +76,26 @@
                                 SelectedId="{Binding CopySpellId, Mode=TwoWay}"
                                 Placeholder="Select spell to copy from..."
                                 ToolTip="Select a spell to copy properties from"/>
-                            <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                            <Button Grid.Column="2" Content="✕" Width="24" Height="24" Margin="4,0,0,0"
+                                    ToolTip="Clear copy spell"
+                                    Visibility="{Binding HasCopySpell, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Click="OnClearCopySpellClick"/>
+                            <Button Grid.Column="3" Content="→" Width="24" Height="24" Margin="4,0,0,0"
                                     ToolTip="Navigate to source spell"
                                     Visibility="{Binding HasCopySpell, Converter={StaticResource BoolToVisibilityConverter}}"
                                     Click="OnCopySpellClick"/>
+                        </Grid>
+                        <!-- Clear Command -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" MinWidth="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Clear:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <CheckBox Grid.Column="1" Content="Clear All" IsChecked="{Binding HasClear, Mode=TwoWay}"
+                                      ToolTip="Clear all inherited properties"
+                                      Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
                         </Grid>
                     </StackPanel>
                 </controls:PropertyGroupControl.GroupContent>

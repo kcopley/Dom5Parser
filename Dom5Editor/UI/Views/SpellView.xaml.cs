@@ -29,6 +29,17 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>
+        /// Clear the copy spell reference.
+        /// </summary>
+        private void OnClearCopySpellClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.CopySpellId = null;
+            }
+        }
+
+        /// <summary>
         /// Navigate to the next spell in chain when NextSpell reference is clicked.
         /// </summary>
         private void OnNextSpellClick(object sender, MouseButtonEventArgs e)

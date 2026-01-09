@@ -603,6 +603,11 @@ namespace Dom5Edit.Entities
             return EntityType.MONSTER;
         }
 
+        public override PropertyGroup GetPropertyGroup(Command command)
+        {
+            return PropertyGroupMap.GetMonsterGroup(command);
+        }
+
         public IEnumerable<MagicSkill> MagicSkills
         {
             get

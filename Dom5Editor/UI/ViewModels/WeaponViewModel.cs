@@ -109,6 +109,23 @@ namespace Dom5Editor.UI.Views
 
         public bool HasCopyWeapon => CopyWeaponId.HasValue;
 
+        // ========================================
+        // Clear Command
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets whether #clear is active.
+        /// </summary>
+        public bool HasClear
+        {
+            get => _entity.HasClearCommand(Command.CLEAR);
+            set
+            {
+                SetCommandProperty(Command.CLEAR, value, nameof(HasClear));
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
         // Cached reference items for copy weapon selector
         private List<ReferenceItem> _availableWeaponsForCopy;
 
@@ -600,6 +617,17 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
+            // Handle clear and copy commands
+            if (command == Command.CLEAR || command == Command.COPYWEAPON)
+            {
+                RefreshAllCopyDependentProperties();
+                OnPropertyChanged(nameof(HasClear));
+                OnPropertyChanged(nameof(CopyWeaponId));
+                OnPropertyChanged(nameof(CopyWeaponName));
+                OnPropertyChanged(nameof(HasCopyWeapon));
+                return;
+            }
+
             // Handle damage specially
             if (command == Command.DMG || command == Command.DAMAGE)
             {

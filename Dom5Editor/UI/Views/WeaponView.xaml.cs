@@ -26,5 +26,16 @@ namespace Dom5Editor.UI.Views
                 ViewModel?.NavigateToReferenceCommand.Execute(("weapon", id.Value));
             }
         }
+
+        /// <summary>
+        /// Clear the copy weapon reference.
+        /// </summary>
+        private void OnClearCopyWeaponClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.CopyWeaponId = null;
+            }
+        }
     }
 }
