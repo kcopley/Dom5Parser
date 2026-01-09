@@ -66,7 +66,68 @@ public override void Resolve()
 
 ---
 
-### 1. Copy Commands Need Clear/Reset Mechanism
+### ~~1. CopyStats Reference Resolution Inconsistent~~ FIXED (2026-01-09)
+
+**Status:** FIXED
+
+**Added:** 2026-01-09
+
+**Symptoms:**
+- When setting `#copystats` on a vanilla monster (e.g., ID 6) to copy from another (e.g., ID 651), the stats didn't display
+- Worked correctly for mod-defined entities, but not for unmodified vanilla entities
+
+**Root Cause:**
+
+For `VanillaModified` entities (vanilla entities being edited in a session), the `_entity` object IS the vanilla entity with all its vanilla properties loaded directly. When `TryGet(HP)` was called, it found the vanilla HP directly on the entity and returned it - never checking the copystats chain.
+
+The semantic distinction:
+- **FromMod entities**: Direct properties are intentional overrides → copystats is fallback (correct)
+- **VanillaModified entities with session-added copystats**: Direct properties are vanilla base data → should be REPLACED by copystats
+
+**Solution:**
+
+Modified `EntityViewModel.BuildBadgesFromSection()` to detect this case and get values from the copy source instead of the entity when:
+1. Source is `VanillaModified`
+2. Entity has copystats
+3. The specific property was NOT edited in the current session
+
+```csharp
+// Special handling for VanillaModified entities with copystats
+bool useOnlyCopySource = false;
+IDEntity copySourceForVanilla = null;
+if (_source == EntitySource.VanillaModified &&
+    _entity.TryGetCopyFrom(out copySourceForVanilla) &&
+    copySourceForVanilla != null &&
+    !IsPropertyEditedInSession(command))
+{
+    useOnlyCopySource = true;
+}
+
+if (useOnlyCopySource && copySourceForVanilla != null)
+{
+    // Get from copy source for VanillaModified (bypasses vanilla properties on entity)
+    var copyResult = copySourceForVanilla.TryGet<IntProperty>(command, out var copyProp);
+    // ... use copy source value
+}
+else
+{
+    // Normal path: Get from entity (for FromMod, or session-edited properties)
+    var entityResult = _entity.TryGet<IntProperty>(command, out var entityProp);
+    // ... use entity value
+}
+```
+
+**Files Modified:**
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added VanillaModified + copystats detection in `BuildBadgesFromSection()`
+
+**Priority Rules (now working correctly):**
+1. Session-edited properties take highest priority (user explicitly set a value)
+2. For VanillaModified with copystats, copy source values are used (vanilla base is bypassed)
+3. For FromMod, entity properties override copystats (mod-defined properties are intentional overrides)
+
+---
+
+### 2. Copy Commands Need Clear/Reset Mechanism
 
 **Status:** OPEN - Design Required
 

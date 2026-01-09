@@ -87,6 +87,61 @@ namespace Dom5Editor.UI.Views
         public bool ShowDataWarning => IsVanillaNation;
 
         // ========================================
+        // Clear Commands
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets whether #clearnation is active.
+        /// </summary>
+        public bool HasClearNation
+        {
+            get => _entity.HasClearCommand(Command.CLEARNATION);
+            set => SetClearCommand(Command.CLEARNATION, value, nameof(HasClearNation));
+        }
+
+        /// <summary>
+        /// Gets or sets whether #clearrec is active.
+        /// </summary>
+        public bool HasClearRec
+        {
+            get => _entity.HasClearCommand(Command.CLEARREC);
+            set => SetClearCommand(Command.CLEARREC, value, nameof(HasClearRec));
+        }
+
+        /// <summary>
+        /// Gets or sets whether #clearsites is active.
+        /// </summary>
+        public bool HasClearSites
+        {
+            get => _entity.HasClearCommand(Command.CLEARSITES);
+            set => SetClearCommand(Command.CLEARSITES, value, nameof(HasClearSites));
+        }
+
+        /// <summary>
+        /// Gets or sets whether #cleargods is active.
+        /// </summary>
+        public bool HasClearGods
+        {
+            get => _entity.HasClearCommand(Command.CLEARGODS);
+            set => SetClearCommand(Command.CLEARGODS, value, nameof(HasClearGods));
+        }
+
+        /// <summary>
+        /// Helper to set a clear command and refresh dependent properties.
+        /// </summary>
+        private void SetClearCommand(Command command, bool value, string propertyName)
+        {
+            SetCommandProperty(command, value, propertyName);
+            // Refresh all badges since clear affects inheritance
+            RefreshAllBadges();
+            // Notify clear checkbox properties
+            OnPropertyChanged(nameof(HasClearNation));
+            OnPropertyChanged(nameof(HasClearRec));
+            OnPropertyChanged(nameof(HasClearSites));
+            OnPropertyChanged(nameof(HasClearGods));
+        }
+
+        // ========================================
         // Badge Collections - Identity
         // ========================================
 
@@ -549,6 +604,18 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
+            // Handle clear commands - refresh all and update checkbox state
+            if (command == Command.CLEARNATION || command == Command.CLEARREC ||
+                command == Command.CLEARSITES || command == Command.CLEARGODS)
+            {
+                RefreshAllBadges();
+                OnPropertyChanged(nameof(HasClearNation));
+                OnPropertyChanged(nameof(HasClearRec));
+                OnPropertyChanged(nameof(HasClearSites));
+                OnPropertyChanged(nameof(HasClearGods));
+                return;
+            }
+
             // Refresh computed display properties
             if (command == Command.ERA)
             {

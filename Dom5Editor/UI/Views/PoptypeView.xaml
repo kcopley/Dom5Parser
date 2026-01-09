@@ -35,6 +35,21 @@
                            Style="{DynamicResource MutedText}" FontSize="11" TextWrapping="Wrap"/>
             </Border>
 
+            <!-- Clear Command -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Clear:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <CheckBox Grid.Column="1" Content="Clear Defense" IsChecked="{Binding HasClearDef, Mode=TwoWay}"
+                              ToolTip="Clear inherited defense units"
+                              Foreground="{DynamicResource TextPrimaryBrush}" FontSize="11"/>
+                </Grid>
+            </Border>
+
             <!-- Recruitment Section -->
             <controls:PropertyGroupControl Header="Recruitment" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>

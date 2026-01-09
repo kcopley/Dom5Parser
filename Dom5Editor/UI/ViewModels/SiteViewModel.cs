@@ -96,6 +96,23 @@ namespace Dom5Editor.UI.Views
 
         public bool HasCopySite => CopySiteId.HasValue;
 
+        // ========================================
+        // Clear Command
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets whether #clear is active.
+        /// </summary>
+        public bool HasClear
+        {
+            get => _entity.HasClearCommand(Command.CLEAR);
+            set
+            {
+                SetCommandProperty(Command.CLEAR, value, nameof(HasClear));
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
         // Cached reference items for copy site selector
         private List<ReferenceItem> _availableSitesForCopy;
 
@@ -396,6 +413,17 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
+            // Handle clear and copy commands
+            if (command == Command.CLEAR || command == Command.COPYSITE)
+            {
+                RefreshAllCopyDependentProperties();
+                OnPropertyChanged(nameof(HasClear));
+                OnPropertyChanged(nameof(CopySiteId));
+                OnPropertyChanged(nameof(CopySiteName));
+                OnPropertyChanged(nameof(HasCopySite));
+                return;
+            }
+
             // Refresh all badge collections on undo/redo
             RefreshIdentityBadges();
             RefreshPropertyBadges();

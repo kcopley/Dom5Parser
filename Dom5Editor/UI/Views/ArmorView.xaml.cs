@@ -26,5 +26,16 @@ namespace Dom5Editor.UI.Views
                 ViewModel?.NavigateToReferenceCommand.Execute(("armor", id.Value));
             }
         }
+
+        /// <summary>
+        /// Clear the copy armor reference.
+        /// </summary>
+        private void OnClearCopyArmorClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.CopyArmorId = null;
+            }
+        }
     }
 }

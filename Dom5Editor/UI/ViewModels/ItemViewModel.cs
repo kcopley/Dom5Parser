@@ -100,6 +100,23 @@ namespace Dom5Editor.UI.Views
 
         public bool HasCopyItem => CopyItemId.HasValue;
 
+        // ========================================
+        // Clear Command
+        // ========================================
+
+        /// <summary>
+        /// Gets or sets whether #clear is active.
+        /// </summary>
+        public bool HasClear
+        {
+            get => _entity.HasClearCommand(Command.CLEAR);
+            set
+            {
+                SetCommandProperty(Command.CLEAR, value, nameof(HasClear));
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
         // Cached reference items for copy item selector
         private List<ReferenceItem> _availableItemsForCopy;
 
@@ -961,6 +978,17 @@ namespace Dom5Editor.UI.Views
 
         protected override void OnPropertyRefreshedByHistory(Command command)
         {
+            // Handle clear and copy commands
+            if (command == Command.CLEAR || command == Command.COPYITEM)
+            {
+                RefreshAllCopyDependentProperties();
+                OnPropertyChanged(nameof(HasClear));
+                OnPropertyChanged(nameof(CopyItemId));
+                OnPropertyChanged(nameof(CopyItemName));
+                OnPropertyChanged(nameof(HasCopyItem));
+                return;
+            }
+
             // Refresh badge collection when undo/redo affects this entity
             RefreshPropertyBadges();
 

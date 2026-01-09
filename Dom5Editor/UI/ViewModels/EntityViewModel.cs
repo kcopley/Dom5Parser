@@ -451,58 +451,153 @@ namespace Dom5Editor.UI.Views
                 // For BitmaskProperty
                 ulong? entityBitmaskValue = null;
 
-                if (cmdDef.IsFlag)
+                // Special handling for vanilla-based entities with copystats:
+                // For FromVanilla/VanillaModified, _entity IS the vanilla entity with all its vanilla properties.
+                // When copystats is added as a session edit, those vanilla properties should be
+                // bypassed in favor of the copy source - only session-edited properties override.
+                // For FromMod entities, mod-defined properties intentionally override copystats.
+                bool useOnlyCopySource = false;
+                IDEntity copySourceForVanilla = null;
+
+                if (_source != EntitySource.FromMod &&
+                    _entity.TryGetCopyFrom(out copySourceForVanilla) &&
+                    copySourceForVanilla != null &&
+                    !IsPropertyEditedInSession(command))
                 {
-                    var entityResult = _entity.TryGet<CommandProperty>(command, out _);
-                    entityFlagValue = entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED;
-                    entityHasValue = entityFlagValue;
-                    entityIsCopied = entityResult == ReturnType.COPIED;
-                    entityHasDirect = entityResult == ReturnType.TRUE;
+                    // Vanilla-based entity with copystats, and this property wasn't session-edited
+                    // Use copy source instead of entity's vanilla properties
+                    useOnlyCopySource = true;
                 }
-                else if (cmdDef.IsInt)
+
+                if (useOnlyCopySource && copySourceForVanilla != null)
                 {
-                    var entityResult = _entity.TryGet<IntProperty>(command, out var entityProp);
-                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                    // Get from copy source for VanillaModified (bypasses vanilla properties on entity)
+                    if (cmdDef.IsFlag)
                     {
-                        entityValue = entityProp?.Value;
-                        entityHasValue = true;
+                        var copyResult = copySourceForVanilla.TryGet<CommandProperty>(command, out _);
+                        entityFlagValue = copyResult == ReturnType.TRUE || copyResult == ReturnType.COPIED;
+                        entityHasValue = entityFlagValue;
+                        entityIsCopied = true;
+                        entityHasDirect = false;
+                    }
+                    else if (cmdDef.IsInt)
+                    {
+                        var copyResult = copySourceForVanilla.TryGet<IntProperty>(command, out var copyProp);
+                        if (copyResult == ReturnType.TRUE || copyResult == ReturnType.COPIED)
+                        {
+                            entityValue = copyProp?.Value;
+                            entityHasValue = true;
+                            entityIsCopied = true;
+                            entityHasDirect = false;
+                        }
+                    }
+                    else if (cmdDef.IsIntInt)
+                    {
+                        var copyResult = copySourceForVanilla.TryGet<IntIntProperty>(command, out var copyProp);
+                        if (copyResult == ReturnType.TRUE || copyResult == ReturnType.COPIED)
+                        {
+                            entityValue1 = copyProp?.Value1;
+                            entityValue2 = copyProp?.Value2;
+                            entityHasValue = true;
+                            entityIsCopied = true;
+                            entityHasDirect = false;
+                        }
+                    }
+                    else if (cmdDef.IsString)
+                    {
+                        var copyResult = copySourceForVanilla.TryGet<StringProperty>(command, out var copyProp);
+                        if (copyResult == ReturnType.TRUE || copyResult == ReturnType.COPIED)
+                        {
+                            entityStringValue = copyProp?.Value;
+                            entityHasValue = true;
+                            entityIsCopied = true;
+                            entityHasDirect = false;
+                        }
+                    }
+                    else if (cmdDef.IsBitmask)
+                    {
+                        var copyResult = copySourceForVanilla.TryGet<BitmaskProperty>(command, out var copyProp);
+                        if (copyResult == ReturnType.TRUE || copyResult == ReturnType.COPIED)
+                        {
+                            entityBitmaskValue = copyProp?.Value;
+                            entityHasValue = true;
+                            entityIsCopied = true;
+                            entityHasDirect = false;
+                        }
+                    }
+                }
+                else
+                {
+                    // Normal path: Get from entity (for FromMod, or session-edited properties)
+                    if (cmdDef.IsFlag)
+                    {
+                        var entityResult = _entity.TryGet<CommandProperty>(command, out _);
+                        entityFlagValue = entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED;
+                        entityHasValue = entityFlagValue;
                         entityIsCopied = entityResult == ReturnType.COPIED;
                         entityHasDirect = entityResult == ReturnType.TRUE;
                     }
-                }
-                else if (cmdDef.IsIntInt)
-                {
-                    var entityResult = _entity.TryGet<IntIntProperty>(command, out var entityProp);
-                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                    else if (cmdDef.IsInt)
                     {
-                        entityValue1 = entityProp?.Value1;
-                        entityValue2 = entityProp?.Value2;
-                        entityHasValue = true;
-                        entityIsCopied = entityResult == ReturnType.COPIED;
-                        entityHasDirect = entityResult == ReturnType.TRUE;
+                        var entityResult = _entity.TryGet<IntProperty>(command, out var entityProp);
+                        if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                        {
+                            entityValue = entityProp?.Value;
+                            entityHasValue = true;
+                            entityIsCopied = entityResult == ReturnType.COPIED;
+                            entityHasDirect = entityResult == ReturnType.TRUE;
+                        }
+                    }
+                    else if (cmdDef.IsIntInt)
+                    {
+                        var entityResult = _entity.TryGet<IntIntProperty>(command, out var entityProp);
+                        if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                        {
+                            entityValue1 = entityProp?.Value1;
+                            entityValue2 = entityProp?.Value2;
+                            entityHasValue = true;
+                            entityIsCopied = entityResult == ReturnType.COPIED;
+                            entityHasDirect = entityResult == ReturnType.TRUE;
+                        }
+                    }
+                    else if (cmdDef.IsString)
+                    {
+                        var entityResult = _entity.TryGet<StringProperty>(command, out var entityProp);
+                        if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                        {
+                            entityStringValue = entityProp?.Value;
+                            entityHasValue = true;
+                            entityIsCopied = entityResult == ReturnType.COPIED;
+                            entityHasDirect = entityResult == ReturnType.TRUE;
+                        }
+                    }
+                    else if (cmdDef.IsBitmask)
+                    {
+                        var entityResult = _entity.TryGet<BitmaskProperty>(command, out var entityProp);
+                        if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
+                        {
+                            entityBitmaskValue = entityProp?.Value;
+                            entityHasValue = true;
+                            entityIsCopied = entityResult == ReturnType.COPIED;
+                            entityHasDirect = entityResult == ReturnType.TRUE;
+                        }
                     }
                 }
-                else if (cmdDef.IsString)
+
+                // Suppress vanilla fallback if:
+                // 1. Mod entity has a copy command (copy source replaces vanilla entirely)
+                // 2. Mod entity has a clear command for this property group
+                // When copystats exists, vanilla is replaced - missing values use defaults, not vanilla
+                bool suppressVanilla = _entity.TryGetCopyFrom(out _) || _entity.IsPropertyGroupCleared(command);
+                if (suppressVanilla)
                 {
-                    var entityResult = _entity.TryGet<StringProperty>(command, out var entityProp);
-                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
-                    {
-                        entityStringValue = entityProp?.Value;
-                        entityHasValue = true;
-                        entityIsCopied = entityResult == ReturnType.COPIED;
-                        entityHasDirect = entityResult == ReturnType.TRUE;
-                    }
-                }
-                else if (cmdDef.IsBitmask)
-                {
-                    var entityResult = _entity.TryGet<BitmaskProperty>(command, out var entityProp);
-                    if (entityResult == ReturnType.TRUE || entityResult == ReturnType.COPIED)
-                    {
-                        entityBitmaskValue = entityProp?.Value;
-                        entityHasValue = true;
-                        entityIsCopied = entityResult == ReturnType.COPIED;
-                        entityHasDirect = entityResult == ReturnType.TRUE;
-                    }
+                    vanillaHasValue = false;
+                    vanillaValue = null;
+                    vanillaFlagValue = false;
+                    vanillaValue1 = null;
+                    vanillaValue2 = null;
+                    vanillaStringValue = null;
+                    vanillaBitmaskValue = null;
                 }
 
                 // Determine effective value (entity overrides vanilla)
@@ -1155,8 +1250,13 @@ namespace Dom5Editor.UI.Views
             var vanillaEntity = GetVanillaEntity();
             var vanillaIds = new HashSet<int>();
 
+            // Check if mod entity has copystats (replaces vanilla) or clear (blocks inheritance)
+            bool hasCopyCommand = _entity.TryGetCopyFrom(out var modCopy);
+            bool isCleared = _entity.IsPropertyGroupCleared(command);
+
             // Layer 1: Get IDs from vanilla entity (base layer)
-            if (vanillaEntity != null)
+            // Skip if: (a) mod has copystats (copy replaces vanilla), or (b) property group is cleared
+            if (vanillaEntity != null && !hasCopyCommand && !isCleared)
             {
                 foreach (var prop in vanillaEntity.GetMultiple(command))
                 {
@@ -1175,7 +1275,7 @@ namespace Dom5Editor.UI.Views
                     }
                 }
 
-                // Also check vanilla's copystats chain
+                // Also check vanilla's copystats chain (if vanilla has copystats)
                 if (vanillaEntity.TryGetCopyFrom(out var vanillaCopy) && vanillaCopy != null)
                 {
                     AddFromCopystatsChain(vanillaCopy, command, entityType, getId, results, knownIds, new HashSet<IDEntity> { vanillaEntity });
@@ -1185,6 +1285,7 @@ namespace Dom5Editor.UI.Views
             // Layer 2: Get from current entity (mod layer) - only if different from vanilla
             if (_entity != vanillaEntity)
             {
+                // Add mod entity's direct properties (ALWAYS included - they come after clear commands)
                 foreach (var prop in _entity.GetMultiple(command))
                 {
                     if (prop is TRef refProp && refProp.HasValue)
@@ -1212,8 +1313,8 @@ namespace Dom5Editor.UI.Views
                     }
                 }
 
-                // Check mod entity's copystats chain
-                if (_entity.TryGetCopyFrom(out var modCopy) && modCopy != null)
+                // Check mod entity's copystats chain (only if NOT cleared - clear blocks copystats inheritance too)
+                if (hasCopyCommand && modCopy != null && !isCleared)
                 {
                     AddFromCopystatsChain(modCopy, command, entityType, getId, results, knownIds, new HashSet<IDEntity> { _entity, vanillaEntity });
                 }
@@ -1237,6 +1338,7 @@ namespace Dom5Editor.UI.Views
 
         /// <summary>
         /// Helper to add references from a copystats chain.
+        /// Respects clear commands on each entity in the chain.
         /// </summary>
         private void AddFromCopystatsChain<TRef>(
             IDEntity source,
@@ -1251,6 +1353,7 @@ namespace Dom5Editor.UI.Views
                 return;
             visited.Add(source);
 
+            // Add source's direct properties (these are AFTER any clear commands on source)
             foreach (var prop in source.GetMultiple(command))
             {
                 if (prop is TRef refProp && refProp.HasValue)
@@ -1265,10 +1368,14 @@ namespace Dom5Editor.UI.Views
                 }
             }
 
-            // Recurse through copystats chain
-            if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
+            // Recurse through copystats chain ONLY if source doesn't have a clear for this property group
+            // (clear on source blocks its inheritance, but doesn't block its direct properties)
+            if (!source.IsPropertyGroupCleared(command))
             {
-                AddFromCopystatsChain(nextCopy, command, entityType, getId, results, knownIds, visited);
+                if (source.TryGetCopyFrom(out var nextCopy) && nextCopy != null)
+                {
+                    AddFromCopystatsChain(nextCopy, command, entityType, getId, results, knownIds, visited);
+                }
             }
         }
 
@@ -1427,6 +1534,19 @@ namespace Dom5Editor.UI.Views
             // For VanillaModified entities, fall back to vanilla value if not in mod
             if (_source == EntitySource.VanillaModified)
             {
+                // If entity has a copy command, copy source replaces vanilla entirely
+                // (the copy chain was already checked by TryGet above)
+                if (_entity.TryGetCopyFrom(out _))
+                {
+                    return null;
+                }
+
+                // If property group is cleared, don't fall back to vanilla for that group
+                if (_entity.IsPropertyGroupCleared(command))
+                {
+                    return null;
+                }
+
                 var vanillaEntity = GetVanillaEntity();
                 if (vanillaEntity != null)
                 {

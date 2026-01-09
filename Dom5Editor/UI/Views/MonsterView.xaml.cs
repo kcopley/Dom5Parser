@@ -55,6 +55,24 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        // Clear CopyStats - remove the copystats reference
+        private void OnClearCopyStatsClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.CopyStatsId = null;
+            }
+        }
+
+        // Clear CopySpr - remove the copyspr reference
+        private void OnClearCopySprClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.CopySprId = null;
+            }
+        }
+
         // Equipment add - auto-add when selection is made
         private void OnWeaponSelectionChanged(object sender, ReferenceSelectionChangedEventArgs e)
         {

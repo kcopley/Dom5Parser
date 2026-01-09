@@ -312,6 +312,11 @@ namespace Dom5Edit.Entities
             return EntityType.NATION;
         }
 
+        public override PropertyGroup GetPropertyGroup(Command command)
+        {
+            return PropertyGroupMap.GetNationGroup(command);
+        }
+
         public IEnumerable<Site> Sites
         {
             get
