@@ -8,6 +8,8 @@ When adding new reference properties via the badge system (e.g., adding a fort c
 
 **SOLUTION IMPLEMENTED:** Added `AddPropertyFromMap()` method that uses the entity's `GetPropertyMap()` to get the correct property factory. See `EntityViewModel.cs`.
 
+**Note:** A related bug where `HasValue` wasn't being set on programmatic ID assignment was fixed 2026-01-07. See ISSUES.md for details.
+
 ## Current (Incorrect) Implementation
 
 ```csharp

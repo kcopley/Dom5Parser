@@ -2,7 +2,7 @@
 
 This document outlines the planned enhancements to build out Dom5Parser into a full UI-based .dm file editor.
 
-**Last Updated:** 2026-01-07
+**Last Updated:** 2026-01-08
 
 ## Goal
 
@@ -135,7 +135,7 @@ public class PropertyDefinition
 
 ## Phase 5: Advanced Features (FUTURE)
 
-- Sprite Preview - Display monster/item sprites
+- ~~Sprite Preview - Display monster/item sprites~~ DONE 2026-01-08 (data loading + multi-format display)
 - Mod Comparison - Diff two mods to see changes
 - Validation Report - Generate report of all issues
 - Export Options - Export single nation with dependencies
@@ -557,7 +557,11 @@ See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
 - Navigation between entity views (clicking weapon/armor to view that entity)
 - Reset to original buttons (per-property revert)
 - **Secondary Effect Chain Display** - When a weapon has a secondary effect that itself has a secondary effect, show the full chain
-- **WeaponDamage Monster ID Selector** - When editing summon weapons (dmg="summonunits" or inherited from such), show a monster ID selector instead of integer input. *Partial progress (2026-01-07):* WeaponViewModel now has `IsSummonWeapon`, `DamageDisplayString` (shows monster name), and `DamageLabel` (shows "Summon ID"). Remaining: Replace IntPropertyEditor with SearchableReferenceComboBox for monster selection when `IsSummonWeapon` is true.
+- ~~**WeaponDamage Monster ID Selector**~~ **DONE (2026-01-08)** - DynamicPropertyEditor now handles mode switching:
+  - Normal weapons: integer input for damage value
+  - Summon weapons (dmg="summonunits"): SearchableReferenceComboBox for monster selection
+  - Cloud weapons (dmg="cloud"): read-only text display
+  - Control is generic and reusable for other conditional editors
 - **ChangesMod Identity Check on Value Reset** - When a property is edited back to its original value (matching base mod or vanilla data), automatically remove it from the ChangesMod session tracking. The generic fallback resolution code should include identity checks, and resetting a property should un-mark it as modified.
 - ~~**Searchable Dropdowns**~~ **DONE (2026-01-06)** - Reference badge selectors now use SearchableReferenceComboBox:
   - Text filter searches by name or ID
@@ -604,11 +608,10 @@ See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
 
 ### MEDIUM Priority
 - Weapon/Armor list with stat columns (header row with ID, Name, Atk, Dmg, etc. for weapons; ID, Name, Prot, Def, Enc for armor)
-- **Sprite & Description Preview** - Assets bundled in project, ready for implementation:
-  - Sprites: `Dom5Editor/icons/` (sprites/, items/, sites/, magicicons/, abilityicons/)
-  - Descriptions: `Dom5Editor/Data/` (unitdescr/, itemdescr/, spelldescr/)
-  - TGA loading: `Utility/TargaImage.cs` (for mod-provided TGA sprites)
-  - See `docs/SPRITE_AND_DESCRIPTION_ACCESS.md` for path formats and resolution logic
+- ~~**Sprite & Description Preview**~~ DONE 2026-01-08:
+  - Vanilla assets loaded as properties via `VanillaAssetLoader`
+  - Multi-format support: PNG/JPG/BMP via `BitmapImage`, TGA via `TargaImage`
+  - Absolute paths (vanilla) and relative paths (mods) both supported
 - NAMETYPE, MONTAG editors
 - Validation report panel
 - **ItemSlots Bitmask Editor** - Visual editor for monster/commander item slot configuration:

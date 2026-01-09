@@ -71,6 +71,18 @@ namespace Dom5Editor
             {
                 VanillaLoader.SpellEffectTypesPath = spellTypesPath;
             }
+
+            // Configure assets path for sprite/description loading
+            string assetsPath = FindAssetsPath();
+            if (!string.IsNullOrEmpty(assetsPath))
+            {
+                VanillaAssetLoader.AssetsBasePath = assetsPath;
+                System.Diagnostics.Debug.WriteLine($"[App] Assets path configured: {assetsPath}");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("[App] WARNING: Assets path not found - sprites and descriptions will not be loaded");
+            }
         }
 
         private string FindVanillaDm()
@@ -135,6 +147,50 @@ namespace Dom5Editor
                 {
                     string fullPath = Path.GetFullPath(path);
                     if (File.Exists(fullPath))
+                    {
+                        return fullPath;
+                    }
+                }
+                catch
+                {
+                    // Ignore path resolution errors
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Finds the base path for sprite/description assets.
+        /// Assets are expected to be in icons/ and Data/ subdirectories.
+        /// </summary>
+        private string FindAssetsPath()
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+
+            // Search paths where assets might be located
+            var searchPaths = new[]
+            {
+                // Direct locations (e.g., deployed with output)
+                baseDir,
+                Path.Combine(baseDir, ".."),
+
+                // Navigate up from bin/Debug/net8.0-windows to Dom5Editor project
+                Path.Combine(baseDir, "..", "..", ".."),
+                Path.Combine(baseDir, "..", "..", "..", ".."),
+
+                // Current working directory
+                Directory.GetCurrentDirectory(),
+            };
+
+            foreach (var path in searchPaths)
+            {
+                try
+                {
+                    string fullPath = Path.GetFullPath(path);
+                    // Check if this directory contains the expected asset folders
+                    if (Directory.Exists(Path.Combine(fullPath, "icons", "sprites")) &&
+                        Directory.Exists(Path.Combine(fullPath, "Data", "unitdescr")))
                     {
                         return fullPath;
                     }

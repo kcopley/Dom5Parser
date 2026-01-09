@@ -36,22 +36,22 @@ namespace Dom5Editor.UI.Views
         }
 
         // CopyStats navigation - click to navigate to source monster
-        private void OnCopyStatsClick(object sender, MouseButtonEventArgs e)
+        private void OnCopyStatsClick(object sender, RoutedEventArgs e)
         {
-            var id = ViewModel?.CopyStatsId ?? 0;
-            if (id != 0)
+            var id = ViewModel?.CopyStatsId;
+            if (id.HasValue && id.Value != 0)
             {
-                ViewModel?.NavigateToReferenceCommand.Execute(("monster", id));
+                ViewModel?.NavigateToReferenceCommand.Execute(("monster", id.Value));
             }
         }
 
         // CopySpr navigation - click to navigate to source monster
-        private void OnCopySprClick(object sender, MouseButtonEventArgs e)
+        private void OnCopySprClick(object sender, RoutedEventArgs e)
         {
-            var id = ViewModel?.CopySprId ?? 0;
-            if (id != 0)
+            var id = ViewModel?.CopySprId;
+            if (id.HasValue && id.Value != 0)
             {
-                ViewModel?.NavigateToReferenceCommand.Execute(("monster", id));
+                ViewModel?.NavigateToReferenceCommand.Execute(("monster", id.Value));
             }
         }
 

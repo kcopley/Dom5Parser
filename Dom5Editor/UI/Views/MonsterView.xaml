@@ -67,33 +67,49 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
-            <!-- Copy From Section (shown when monster has copystats/copyspr) -->
-            <Border Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12"
-                    Visibility="{Binding HasCopyCommands, Converter={StaticResource BoolToVisibilityConverter}}">
+            <!-- Copy From Section (editable) -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12">
                 <StackPanel>
-                    <TextBlock Text="COPY FROM" FontSize="9" FontWeight="Bold" Foreground="White" Opacity="0.7" Margin="0,0,0,4"/>
-                    <WrapPanel>
-                        <!-- CopyStats badge -->
-                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0"
-                                Visibility="{Binding HasCopyStats, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="copystats:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopyStatsDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"
-                                           Cursor="Hand" TextDecorations="Underline"
-                                           MouseLeftButtonDown="OnCopyStatsClick"/>
-                            </StackPanel>
-                        </Border>
-                        <!-- CopySpr badge -->
-                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0"
-                                Visibility="{Binding HasCopySpr, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="copyspr:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopySprDisplay}" Foreground="#87CEEB" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"
-                                           Cursor="Hand" TextDecorations="Underline"
-                                           MouseLeftButtonDown="OnCopySprClick"/>
-                            </StackPanel>
-                        </Border>
-                    </WrapPanel>
+                    <!-- CopyStats selector -->
+                    <Grid Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Copy Stats:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <controls:SearchableReferenceComboBox
+                            Grid.Column="1"
+                            ItemsSource="{Binding AvailableMonstersForCopy}"
+                            SelectedId="{Binding CopyStatsId, Mode=TwoWay}"
+                            Placeholder="Select monster to copy stats from..."
+                            ToolTip="Copy all stats from another monster"/>
+                        <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                                ToolTip="Navigate to source monster"
+                                Visibility="{Binding HasCopyStats, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Click="OnCopyStatsClick"/>
+                    </Grid>
+                    <!-- CopySpr selector -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Copy Sprite:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <controls:SearchableReferenceComboBox
+                            Grid.Column="1"
+                            ItemsSource="{Binding AvailableMonstersForCopy}"
+                            SelectedId="{Binding CopySprId, Mode=TwoWay}"
+                            Placeholder="Select monster to copy sprite from..."
+                            ToolTip="Copy sprite from another monster"/>
+                        <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                                ToolTip="Navigate to source monster"
+                                Visibility="{Binding HasCopySpr, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Click="OnCopySprClick"/>
+                    </Grid>
                 </StackPanel>
             </Border>
 

@@ -71,48 +71,108 @@ namespace Dom5Editor.UI.Views
         public bool IsSprite2SessionEdit => IsPropertyEditedInSession(Command.SPR2);
 
         // ========================================
-        // Copy Commands (fundamental for inheritance)
+        // Copy Commands (fundamental for inheritance) - editable
         // ========================================
 
         /// <summary>
-        /// Display text for the copystats reference (monster name or ID).
+        /// Gets or sets the CopyStats reference ID.
         /// </summary>
-        public string CopyStatsDisplay
+        public int? CopyStatsId
         {
             get
             {
                 var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop, checkCopy: false);
                 if (result == ReturnType.TRUE && prop != null)
                 {
-                    // Show the resolved monster name if available, otherwise the raw value
+                    return prop.ID;
+                }
+                return null;
+            }
+            set
+            {
+                if (value == null || value == 0)
+                {
+                    _entity.RemoveProperty(Command.COPYSTATS);
+                }
+                else
+                {
+                    _entity.Set<CopyStatsRef>(Command.COPYSTATS, p => p.Parse(Command.COPYSTATS, value.Value.ToString(), ""));
+                    if (_entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop) == ReturnType.TRUE)
+                        RecordPropertyChangeInSession(prop);
+                }
+                OnPropertyChanged(nameof(CopyStatsId));
+                OnPropertyChanged(nameof(CopyStatsName));
+                OnPropertyChanged(nameof(HasCopyStats));
+                OnPropertyChanged(nameof(HasCopyCommands));
+
+                // Refresh all properties that inherit from copystats
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
+        /// <summary>
+        /// Gets the CopyStats reference name for display.
+        /// </summary>
+        public string CopyStatsName
+        {
+            get
+            {
+                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
                     if (prop.Entity != null && prop.Entity is IDEntity idEntity)
-                    {
-                        var name = idEntity.Name ?? idEntity.ID.ToString();
-                        return $"{name} (#{idEntity.ID})";
-                    }
-                    // Fall back to raw value if not resolved
-                    return prop.Name ?? prop.ID.ToString();
+                        return idEntity.Name ?? $"#{idEntity.ID}";
+                    return prop.Name ?? $"#{prop.ID}";
                 }
                 return null;
             }
         }
 
+        public bool HasCopyStats => CopyStatsId.HasValue;
+
         /// <summary>
-        /// Whether the entity has a copystats reference.
+        /// Gets or sets the CopySpr reference ID.
         /// </summary>
-        public bool HasCopyStats
+        public int? CopySprId
         {
             get
             {
-                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out _, checkCopy: false);
-                return result == ReturnType.TRUE;
+                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    return prop.ID;
+                }
+                return null;
+            }
+            set
+            {
+                if (value == null || value == 0)
+                {
+                    _entity.RemoveProperty(Command.COPYSPR);
+                }
+                else
+                {
+                    _entity.Set<MonsterRef>(Command.COPYSPR, p => p.Parse(Command.COPYSPR, value.Value.ToString(), ""));
+                    if (_entity.TryGet<MonsterRef>(Command.COPYSPR, out var prop) == ReturnType.TRUE)
+                        RecordPropertyChangeInSession(prop);
+                }
+                OnPropertyChanged(nameof(CopySprId));
+                OnPropertyChanged(nameof(CopySprName));
+                OnPropertyChanged(nameof(HasCopySpr));
+                OnPropertyChanged(nameof(HasCopyCommands));
+
+                // Refresh sprite properties that inherit from copyspr
+                OnPropertyChanged(nameof(Sprite1));
+                OnPropertyChanged(nameof(Sprite2));
+                OnPropertyChanged(nameof(SpriteImage));
+                OnPropertyChanged(nameof(Sprite2Image));
             }
         }
 
         /// <summary>
-        /// Display text for the copyspr reference (monster name or ID).
+        /// Gets the CopySpr reference name for display.
         /// </summary>
-        public string CopySprDisplay
+        public string CopySprName
         {
             get
             {
@@ -120,62 +180,38 @@ namespace Dom5Editor.UI.Views
                 if (result == ReturnType.TRUE && prop != null)
                 {
                     if (prop.Entity != null && prop.Entity is IDEntity idEntity)
-                    {
-                        var name = idEntity.Name ?? idEntity.ID.ToString();
-                        return $"{name} (#{idEntity.ID})";
-                    }
-                    return prop.Name ?? prop.ID.ToString();
+                        return idEntity.Name ?? $"#{idEntity.ID}";
+                    return prop.Name ?? $"#{prop.ID}";
                 }
                 return null;
             }
         }
 
-        /// <summary>
-        /// Whether the entity has a copyspr reference.
-        /// </summary>
-        public bool HasCopySpr
-        {
-            get
-            {
-                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out _, checkCopy: false);
-                return result == ReturnType.TRUE;
-            }
-        }
+        public bool HasCopySpr => CopySprId.HasValue;
 
         /// <summary>
         /// Whether to show the copy from section (has any copy command).
         /// </summary>
         public bool HasCopyCommands => HasCopyStats || HasCopySpr;
 
-        /// <summary>
-        /// Gets the copystats reference ID for navigation.
-        /// </summary>
-        public int CopyStatsId
-        {
-            get
-            {
-                var result = _entity.TryGet<CopyStatsRef>(Command.COPYSTATS, out var prop, checkCopy: false);
-                if (result == ReturnType.TRUE && prop != null)
-                {
-                    return prop.ID;
-                }
-                return 0;
-            }
-        }
+        // Cached reference items for copy monster selectors
+        private List<ReferenceItem> _availableMonstersForCopy;
 
         /// <summary>
-        /// Gets the copyspr reference ID for navigation.
+        /// Gets the available monsters as ReferenceItems for the copy selectors.
         /// </summary>
-        public int CopySprId
+        public IEnumerable<ReferenceItem> AvailableMonstersForCopy
         {
             get
             {
-                var result = _entity.TryGet<MonsterRef>(Command.COPYSPR, out var prop, checkCopy: false);
-                if (result == ReturnType.TRUE && prop != null)
+                if (_availableMonstersForCopy == null)
                 {
-                    return prop.ID;
+                    _availableMonstersForCopy = CachedMonsters
+                        .Where(m => m.ID != ID) // Exclude self
+                        .Select(m => new ReferenceItem { ID = m.ID, DisplayName = m.Name, Tag = m })
+                        .ToList();
                 }
-                return 0;
+                return _availableMonstersForCopy;
             }
         }
 
@@ -216,22 +252,54 @@ namespace Dom5Editor.UI.Views
                     if (string.IsNullOrEmpty(spritePath))
                         return null;
 
-                    // Adjust path separators
-                    var spriteAdjusted = spritePath.Trim('.').Trim('/').Replace("/", "\\");
+                    string filePath;
 
-                    // Get mod directory
-                    var modPath = _entity.ParentMod?.FullFilePath;
-                    if (string.IsNullOrEmpty(modPath))
-                        return null;
+                    // Check if this is an absolute path (e.g., from VanillaAssetLoader)
+                    if (Path.IsPathRooted(spritePath))
+                    {
+                        filePath = spritePath;
+                    }
+                    else
+                    {
+                        // Relative path - resolve against mod directory
+                        var spriteAdjusted = spritePath.Trim('.').Trim('/').Replace("/", "\\");
 
-                    var dir = Path.GetDirectoryName(modPath);
-                    var filePath = Path.Combine(dir, spriteAdjusted);
+                        var modPath = _entity.ParentMod?.FullFilePath;
+                        if (string.IsNullOrEmpty(modPath))
+                            return null;
+
+                        var dir = Path.GetDirectoryName(modPath);
+                        filePath = Path.Combine(dir, spriteAdjusted);
+                    }
 
                     if (!File.Exists(filePath))
                         return null;
 
-                    var targa = TargaImage.LoadTargaImage(filePath);
-                    return targa.ConvertToImage();
+                    // Load based on file extension
+                    var extension = Path.GetExtension(filePath).ToLowerInvariant();
+                    if (extension == ".png" || extension == ".jpg" || extension == ".jpeg" || extension == ".bmp")
+                    {
+                        // Load standard image formats using BitmapImage
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        bitmap.Freeze();
+                        return bitmap;
+                    }
+                    else if (extension == ".tga")
+                    {
+                        // Load TGA using TargaImage
+                        var targa = TargaImage.LoadTargaImage(filePath);
+                        return targa.ConvertToImage();
+                    }
+                    else
+                    {
+                        // Unknown format, try TGA loader as fallback
+                        var targa = TargaImage.LoadTargaImage(filePath);
+                        return targa.ConvertToImage();
+                    }
                 }
                 catch (Exception)
                 {
@@ -368,6 +436,34 @@ namespace Dom5Editor.UI.Views
             _availableResistanceBadges = available;
             OnPropertyChanged(nameof(ResistanceBadges));
             OnPropertyChanged(nameof(AvailableResistanceBadges));
+        }
+
+        /// <summary>
+        /// Refreshes all properties and collections that depend on copystats inheritance.
+        /// Called when CopyStatsId changes to ensure UI reflects the new inherited values.
+        /// </summary>
+        private void RefreshAllCopyDependentProperties()
+        {
+            // Refresh all badge collections that may inherit from copystats
+            RefreshStatsBadges();
+            RefreshTypeBadges();
+            RefreshGeneralBadges();
+            RefreshCombatBadges();
+            RefreshResistanceBadges();
+
+            // Refresh equipment lists (weapons and armor can inherit from copystats)
+            RefreshWeaponsList();
+            RefreshArmorList();
+
+            // Refresh magic paths (inherit from copystats)
+            RefreshMagicPaths();
+
+            // Refresh custom magic (inherit from copystats)
+            RefreshCustomMagic();
+
+            // Notify sprite properties may have changed (if copyspr is affected)
+            OnPropertyChanged(nameof(SpriteImage));
+            OnPropertyChanged(nameof(Sprite2Image));
         }
 
         // ===== Magic Paths =====

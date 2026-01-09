@@ -29,22 +29,27 @@
                 </Grid>
             </Border>
 
-            <!-- Copy From Section (shown when weapon has copyweapon) -->
-            <Border Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12"
-                    Visibility="{Binding HasCopyWeapon, Converter={StaticResource BoolToVisibilityConverter}}">
-                <StackPanel>
-                    <TextBlock Text="COPY FROM" FontSize="9" FontWeight="Bold" Foreground="White" Opacity="0.7" Margin="0,0,0,4"/>
-                    <WrapPanel>
-                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="copyweapon:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopyWeaponDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"
-                                           Cursor="Hand" MouseLeftButtonDown="OnCopyWeaponClick"
-                                           ToolTip="Click to navigate to source weapon"/>
-                            </StackPanel>
-                        </Border>
-                    </WrapPanel>
-                </StackPanel>
+            <!-- Copy From Section (editable) -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Copy From:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <controls:SearchableReferenceComboBox
+                        Grid.Column="1"
+                        ItemsSource="{Binding AvailableWeaponsForCopy}"
+                        SelectedId="{Binding CopyWeaponId, Mode=TwoWay}"
+                        Placeholder="Select weapon to copy from..."
+                        ToolTip="Select a weapon to copy properties from"/>
+                    <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                            ToolTip="Navigate to source weapon"
+                            Visibility="{Binding HasCopyWeapon, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Click="OnCopyWeaponClick"/>
+                </Grid>
             </Border>
 
             <!-- Basic Info Section -->
@@ -60,44 +65,20 @@
             <controls:PropertyGroupControl Header="Stats" IsExpanded="True">
                 <controls:PropertyGroupControl.GroupContent>
                     <StackPanel>
-                        <!-- Damage with special handling for summon/cloud weapons -->
-                        <Grid Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <controls:IntPropertyEditor
-                                Grid.Row="0" Grid.ColumnSpan="2"
-                                Label="{Binding DamageLabel}"
-                                Value="{Binding Damage, Mode=TwoWay}"
-                                IsModified="{Binding IsDamageModified}"
-                                IsSessionEdit="{Binding IsDamageSessionEdit}"
-                                IsEnabled="{Binding CanEditDamage}"
-                                Margin="0,0,0,4"/>
-
-                            <!-- Show monster name for summon weapons -->
-                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
-                                       Text="{Binding DamageDisplayString}"
-                                       FontSize="11"
-                                       Foreground="#00BFFF"
-                                       FontWeight="SemiBold"
-                                       Visibility="{Binding IsSummonWeapon, Converter={StaticResource BoolToVisibilityConverter}}"
-                                       Margin="4,0,0,4"/>
-
-                            <!-- Show "Cloud" indicator for cloud weapons -->
-                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
-                                       Text="Read-only cloud effect"
-                                       FontSize="10"
-                                       Foreground="#888888"
-                                       FontStyle="Italic"
-                                       Visibility="{Binding IsCloudWeapon, Converter={StaticResource BoolToVisibilityConverter}}"
-                                       Margin="4,0,0,4"/>
-                        </Grid>
+                        <!-- Damage with dynamic editor: int for normal, ref for summon, readonly for cloud -->
+                        <controls:DynamicPropertyEditor
+                            Margin="0,0,0,8"
+                            Label="{Binding DamageLabel}"
+                            EditorMode="{Binding DamageEditorMode}"
+                            IntValue="{Binding Damage, Mode=TwoWay}"
+                            RefSelectedId="{Binding DamageMonsterId, Mode=TwoWay}"
+                            RefItemsSource="{Binding AvailableMonstersForDamage}"
+                            ReadOnlyText="{Binding DamageReadOnlyText}"
+                            SecondaryDisplayText="{Binding DamageSecondaryText}"
+                            SecondaryDisplayColor="#00BFFF"
+                            IsModified="{Binding IsDamageModified}"
+                            IsSessionEdit="{Binding IsDamageSessionEdit}"
+                            IsInherited="{Binding IsDamageInherited}"/>
 
                         <controls:BadgeGridPanel
                             ItemsSource="{Binding StatsBadges}"

@@ -60,16 +60,26 @@
                     <StackPanel>
                         <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,8"/>
 
-                        <!-- Copy From Reference -->
-                        <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,8"
-                                Visibility="{Binding HasCopySpell, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Copy From:" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopySpellDisplay}" Foreground="{DynamicResource AccentHighlightBrush}" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"
-                                           Cursor="Hand" MouseLeftButtonDown="OnCopySpellClick"
-                                           ToolTip="Click to navigate to source spell"/>
-                            </StackPanel>
-                        </Border>
+                        <!-- Copy From Reference (editable) -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Copy From:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <controls:SearchableReferenceComboBox
+                                Grid.Column="1"
+                                ItemsSource="{Binding AvailableSpellsForCopy}"
+                                SelectedId="{Binding CopySpellId, Mode=TwoWay}"
+                                Placeholder="Select spell to copy from..."
+                                ToolTip="Select a spell to copy properties from"/>
+                            <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                                    ToolTip="Navigate to source spell"
+                                    Visibility="{Binding HasCopySpell, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Click="OnCopySpellClick"/>
+                        </Grid>
                     </StackPanel>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>

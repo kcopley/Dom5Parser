@@ -2,11 +2,58 @@
 
 Potential bugs and critical problems identified during code review.
 
-**Last Updated:** 2026-01-07
+**Last Updated:** 2026-01-08
 
 ---
 
 ## Current Priority Issues
+
+### 0. Copy Reference Changes Don't Refresh Inherited Properties
+
+**Status:** OPEN - Needs Investigation
+
+**Problem:** When changing a copy reference (e.g., `#copystats` on a monster), the UI stats/badges don't update to reflect the new inherited values from the copy source. The copy selector works (value is set), but the dependent properties don't refresh.
+
+**Expected Behavior:** When `#copystats` is changed from Monster A to Monster B, all stat badges should update to show Monster B's values (unless overridden locally).
+
+**Investigation Areas:**
+
+1. **Property Change Notifications** - The copy ID setters notify their own properties but may not trigger badge refreshes:
+   ```csharp
+   // MonsterViewModel.cs - CopyStatsId setter
+   OnPropertyChanged(nameof(CopyStatsId));
+   OnPropertyChanged(nameof(CopyStatsName));
+   OnPropertyChanged(nameof(HasCopyStats));
+   // Missing: RefreshStatsBadges() or similar?
+   ```
+
+2. **Entity.TryGet() with checkCopy** - Badge system uses `TryGet(command, out prop, checkCopy: true)` which should resolve through copy chains. The issue may be:
+   - Entity's internal copy reference cache not updated when property changes
+   - Badge collections built once and cached, not rebuilt when copy changes
+
+3. **Layered Property Resolution** - `EntityViewModel.BuildBadgesFromSection()` uses `TryGet()` which calls into the entity's copy resolution. Check if:
+   - `Entity.cs` caches the copy source entity
+   - Copy resolution happens at parse time vs. access time
+
+4. **Badge Refresh Trigger** - May need to call `RefreshStatsBadges()` (and similar) when copy reference changes:
+   ```csharp
+   // In CopyStatsId setter, after setting value:
+   RefreshStatsBadges();
+   RefreshCombatBadges();
+   RefreshMiscBadges();
+   // ... all badge sections that could inherit from copy source
+   ```
+
+**Related Files:**
+- `Dom5Editor/UI/ViewModels/MonsterViewModel.cs` - Copy property setters, badge refresh methods
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - `BuildBadgesFromSection()`, `TryGet()` wrappers
+- `Dom5Edit/Entities/Entity.cs` - `TryGet()` with `checkCopy` parameter
+- `Dom5Edit/Entities/IDEntity.cs` - Copy chain resolution logic
+
+**Related Documentation:**
+- `docs/MOD_LAYERING.md` - Explains layered property access pattern
+
+---
 
 ### ~~0. AddBadgeProperty Does Not Support Reference Types~~ FIXED (2026-01-07)
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Dom5Edit;
@@ -29,43 +30,13 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "spell";
 
         // ========================================
-        // Copy Spell Support (#copyspell)
+        // Copy Spell Support (#copyspell) - editable
         // ========================================
 
         /// <summary>
-        /// Gets the CopySpell reference display text.
+        /// Gets or sets the CopySpell reference ID.
         /// </summary>
-        public string CopySpellDisplay
-        {
-            get
-            {
-                var result = _entity.TryGet<CopySpellRef>(Command.COPYSPELL, out var prop, checkCopy: false);
-                if (result == ReturnType.TRUE && prop != null)
-                {
-                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
-                    {
-                        var name = idEntity.Name ?? idEntity.ID.ToString();
-                        return $"{name} (#{idEntity.ID})";
-                    }
-                    return prop.Name ?? prop.ID.ToString();
-                }
-                return null;
-            }
-        }
-
-        public bool HasCopySpell
-        {
-            get
-            {
-                var result = _entity.TryGet<CopySpellRef>(Command.COPYSPELL, out _, checkCopy: false);
-                return result == ReturnType.TRUE;
-            }
-        }
-
-        /// <summary>
-        /// Gets the CopySpell reference ID for navigation.
-        /// </summary>
-        public int CopySpellId
+        public int? CopySpellId
         {
             get
             {
@@ -76,7 +47,77 @@ namespace Dom5Editor.UI.Views
                         return idEntity.ID;
                     return prop.ID;
                 }
-                return 0;
+                return null;
+            }
+            set
+            {
+                if (value == null || value == 0)
+                {
+                    _entity.RemoveProperty(Command.COPYSPELL);
+                }
+                else
+                {
+                    _entity.Set<CopySpellRef>(Command.COPYSPELL, p => p.Parse(Command.COPYSPELL, value.Value.ToString(), ""));
+                    if (_entity.TryGet<CopySpellRef>(Command.COPYSPELL, out var prop) == ReturnType.TRUE)
+                        RecordPropertyChangeInSession(prop);
+                }
+                OnPropertyChanged(nameof(CopySpellId));
+                OnPropertyChanged(nameof(CopySpellName));
+                OnPropertyChanged(nameof(HasCopySpell));
+
+                // Refresh all properties that inherit from copyspell
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
+        /// <summary>
+        /// Refreshes all properties and collections that depend on copyspell inheritance.
+        /// </summary>
+        private void RefreshAllCopyDependentProperties()
+        {
+            RefreshResearchBadges();
+            RefreshCombatBadges();
+            RefreshPropertyBadges();
+        }
+
+        /// <summary>
+        /// Gets the CopySpell reference name for display.
+        /// </summary>
+        public string CopySpellName
+        {
+            get
+            {
+                var result = _entity.TryGet<CopySpellRef>(Command.COPYSPELL, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.Name ?? $"#{idEntity.ID}";
+                    return prop.Name ?? $"#{prop.ID}";
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopySpell => CopySpellId.HasValue;
+
+        // Cached reference items for copy spell selector
+        private List<ReferenceItem> _availableSpellsForCopy;
+
+        /// <summary>
+        /// Gets the available spells as ReferenceItems for the copy spell selector.
+        /// </summary>
+        public IEnumerable<ReferenceItem> AvailableSpellsForCopy
+        {
+            get
+            {
+                if (_availableSpellsForCopy == null)
+                {
+                    _availableSpellsForCopy = CachedSpells
+                        .Where(s => s.ID != ID) // Exclude self
+                        .Select(s => new ReferenceItem { ID = s.ID, DisplayName = s.Name, Tag = s })
+                        .ToList();
+                }
+                return _availableSpellsForCopy;
             }
         }
 

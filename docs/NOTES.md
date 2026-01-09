@@ -13,7 +13,7 @@ Quick reference notes for development context. See related documents for full de
 
 ## Current Development Status
 
-**Last Updated:** 2026-01-07
+**Last Updated:** 2026-01-08
 
 ### Working Features
 - JSON-driven badge UI system for all entity properties
@@ -35,6 +35,44 @@ Quick reference notes for development context. See related documents for full de
 
 ### In Progress
 - None currently
+
+### Recently Completed (2026-01-08)
+- **Editable Copy Reference Selectors** - All copy commands now have searchable dropdown selectors:
+  - WeaponView: #copyweapon
+  - ArmorView: #copyarmor
+  - ItemView: #copyitem
+  - SpellView: #copyspell
+  - MonsterView: #copystats, #copyspr
+  - SiteView: #copysite
+  - Each selector has: SearchableReferenceComboBox, navigation button (→), session tracking
+  - Previous display-only text replaced with functional editable controls
+
+- **DynamicPropertyEditor Control** - Generic control that switches between editor types based on conditions:
+  - `EditorMode` property: "int" (integer input), "ref" (entity reference selector), "readonly" (display only), "string" (text input)
+  - Common properties: Label, IsModified, IsSessionEdit, IsInherited, ResetCommand
+  - Int mode: IntValue binding with debounced updates
+  - Ref mode: RefSelectedId binding, RefItemsSource for dropdown, SelectionChanged event
+  - Readonly mode: ReadOnlyText display
+  - String mode: StringValue binding with debounced updates
+  - SecondaryDisplayText: Optional text line below editor (e.g., "Summons: MonsterName")
+  - **Applied to WeaponView damage field**: Shows integer input for normal weapons, monster selector for summon weapons, read-only text for cloud weapons
+  - Files: `Dom5Editor/UI/Controls/DynamicPropertyEditor.xaml(.cs)`, `Dom5Editor/UI/ViewModels/WeaponViewModel.cs`, `Dom5Editor/UI/Views/WeaponView.xaml`
+
+### Previously Completed (2026-01-08)
+- **Vanilla Asset Loading & Sprite Display** - Full sprite and description support:
+  - `VanillaAssetLoader` class loads from bundled asset files (icons/, Data/ folders)
+  - Monster sprites: `icons/sprites/{id:D4}_1.png`, `icons/sprites/{id:D4}_2.png` → `#spr1`, `#spr2`
+  - Monster descriptions: `Data/unitdescr/{id:D4}.txt` → `#descr`
+  - Item sprites: `icons/items/item{id}.png` → `#spr`
+  - Item descriptions: `Data/itemdescr/{SanitizedName}.txt` → `#descr`
+  - Spell descriptions: `Data/spelldescr/{SanitizedName}.txt` → `#descr`, `#details`
+  - Integrated with existing property layering system (vanilla → mod → session)
+  - Assets path auto-discovered from application directory
+  - **Multi-format sprite loading** in `MonsterViewModel.LoadSpriteImage()`:
+    - PNG, JPG, JPEG, BMP loaded via `BitmapImage`
+    - TGA loaded via `TargaImage` (for mod-provided sprites)
+    - Absolute paths (vanilla) and relative paths (mods) both supported
+  - Files: `Dom5Edit/VanillaAssetLoader.cs`, `Dom5Edit/VanillaLoader.cs`, `Dom5Editor/App.xaml.cs`, `Dom5Editor/UI/ViewModels/MonsterViewModel.cs`
 
 ### Recently Completed (2026-01-07)
 - **Equipment Add Bug Fix** - Fixed critical bug where adding equipment via UI wasn't working:
@@ -210,7 +248,6 @@ Quick reference notes for development context. See related documents for full de
 
 ### Not Started
 - **Other Entity Views** - Check for: Enchantment, Montag, RestrictedItem (ID-only containers, may not need views)
-- **Sprite & Description Preview** - Assets ready in `icons/` and `Data/` folders (see `SPRITE_AND_DESCRIPTION_ACCESS.md`)
 - Validation report panel
 
 ---
@@ -304,6 +341,7 @@ Dom5Editor/UI/
     CompactBadge.xaml(.cs)    - Individual badge control
     BadgeWrapPanel.xaml(.cs)  - Badge container with add dropdown
     SearchableReferenceComboBox.xaml(.cs) - Searchable dropdown for entity references
+    DynamicPropertyEditor.xaml(.cs) - Mode-switching editor (int/ref/readonly/string)
     IntPropertyEditor.xaml    - Number input with modification indicators
     MagicPathEditor.xaml      - Magic path level editor (multi-path, for commanders)
     PathSelector.xaml(.cs)    - Single path + level selector (for item/spell requirements)

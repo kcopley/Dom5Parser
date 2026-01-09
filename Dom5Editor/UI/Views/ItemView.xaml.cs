@@ -1,6 +1,6 @@
 using System;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Dom5Editor.UI.Views
 {
@@ -17,14 +17,14 @@ namespace Dom5Editor.UI.Views
         private ItemViewModel ViewModel => DataContext as ItemViewModel;
 
         /// <summary>
-        /// Navigate to the source item when CopyItem reference is clicked.
+        /// Navigate to the source item when CopyItem navigate button is clicked.
         /// </summary>
-        private void OnCopyItemClick(object sender, MouseButtonEventArgs e)
+        private void OnCopyItemClick(object sender, RoutedEventArgs e)
         {
-            var id = ViewModel?.CopyItemId ?? 0;
-            if (id != 0)
+            var id = ViewModel?.CopyItemId;
+            if (id.HasValue && id.Value != 0)
             {
-                ViewModel?.NavigateToReferenceCommand.Execute(("item", id));
+                ViewModel?.NavigateToReferenceCommand.Execute(("item", id.Value));
             }
         }
 
