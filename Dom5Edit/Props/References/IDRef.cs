@@ -60,6 +60,10 @@ namespace Dom5Edit.Props
 
         public override void Resolve()
         {
+            // Clear existing entity before resolving to ensure we look up the new ID
+            Entity = null;
+            Resolved = false;
+
             if (Parent.ParentMod.TryGet(GetEntityType(), ID, null, out IDEntity e))
             {
                 Entity = e;

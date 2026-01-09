@@ -66,16 +66,21 @@ namespace Dom5Edit.Props
 
         public override void Resolve()
         {
-            if (Parent.ParentMod.TryGet(GetEntityType(), ID, Name, out IDEntity e))
+            // Clear existing entity before resolving to ensure we look up the new ID
+            // This is critical when re-resolving after an ID change via the UI
+            Entity = null;
+            Resolved = false;
+
+            if (Parent.ParentMod.TryGet(GetEntityType(), _id, _name, out IDEntity e))
             {
                 Entity = e;
                 Resolved = true;
             }
             //move start ID to be in an entitytype set
             //handle non-resolved separately... these are ones in a dependency?
-            if (!Resolved && !IsStringRef && ID > Parent.ParentMod.GetStartID(GetEntityType()))
+            if (!Resolved && !IsStringRef && _id > Parent.ParentMod.GetStartID(GetEntityType()))
             {
-                Parent.ParentMod.Log(GetEntityType() + " not resolved for: " + this.ID);
+                Parent.ParentMod.Log(GetEntityType() + " not resolved for: " + this._id);
             }
         }
 
