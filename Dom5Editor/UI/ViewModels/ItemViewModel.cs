@@ -32,40 +32,13 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "item";
 
         // ========================================
-        // Copy From Support
+        // Copy From Support (editable)
         // ========================================
 
-        public string CopyItemDisplay
-        {
-            get
-            {
-                var result = _entity.TryGet<ItemRef>(Command.COPYITEM, out var prop, checkCopy: false);
-                if (result == ReturnType.TRUE && prop != null)
-                {
-                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
-                    {
-                        var name = idEntity.Name ?? idEntity.ID.ToString();
-                        return $"{name} (#{idEntity.ID})";
-                    }
-                    return prop.Name ?? prop.ID.ToString();
-                }
-                return null;
-            }
-        }
-
-        public bool HasCopyItem
-        {
-            get
-            {
-                var result = _entity.TryGet<ItemRef>(Command.COPYITEM, out _, checkCopy: false);
-                return result == ReturnType.TRUE;
-            }
-        }
-
         /// <summary>
-        /// Gets the CopyItem reference ID for navigation.
+        /// Gets or sets the CopyItem reference ID.
         /// </summary>
-        public int CopyItemId
+        public int? CopyItemId
         {
             get
             {
@@ -76,7 +49,75 @@ namespace Dom5Editor.UI.Views
                         return idEntity.ID;
                     return prop.ID;
                 }
-                return 0;
+                return null;
+            }
+            set
+            {
+                if (value == null || value == 0)
+                {
+                    _entity.RemoveProperty(Command.COPYITEM);
+                }
+                else
+                {
+                    _entity.Set<ItemRef>(Command.COPYITEM, p => p.Parse(Command.COPYITEM, value.Value.ToString(), ""));
+                    if (_entity.TryGet<ItemRef>(Command.COPYITEM, out var prop) == ReturnType.TRUE)
+                        RecordPropertyChangeInSession(prop);
+                }
+                OnPropertyChanged(nameof(CopyItemId));
+                OnPropertyChanged(nameof(CopyItemName));
+                OnPropertyChanged(nameof(HasCopyItem));
+
+                // Refresh all properties that inherit from copyitem
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
+        /// <summary>
+        /// Refreshes all properties and collections that depend on copyitem inheritance.
+        /// </summary>
+        private void RefreshAllCopyDependentProperties()
+        {
+            RefreshPropertyBadges();
+        }
+
+        /// <summary>
+        /// Gets the CopyItem reference name for display.
+        /// </summary>
+        public string CopyItemName
+        {
+            get
+            {
+                var result = _entity.TryGet<ItemRef>(Command.COPYITEM, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.Name ?? $"#{idEntity.ID}";
+                    return prop.Name ?? $"#{prop.ID}";
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopyItem => CopyItemId.HasValue;
+
+        // Cached reference items for copy item selector
+        private List<ReferenceItem> _availableItemsForCopy;
+
+        /// <summary>
+        /// Gets the available items as ReferenceItems for the copy item selector.
+        /// </summary>
+        public IEnumerable<ReferenceItem> AvailableItemsForCopy
+        {
+            get
+            {
+                if (_availableItemsForCopy == null)
+                {
+                    _availableItemsForCopy = CachedItems
+                        .Where(i => i.ID != ID) // Exclude self
+                        .Select(i => new ReferenceItem { ID = i.ID, DisplayName = i.Name, Tag = i })
+                        .ToList();
+                }
+                return _availableItemsForCopy;
             }
         }
 

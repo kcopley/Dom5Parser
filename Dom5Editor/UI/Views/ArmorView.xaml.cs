@@ -1,5 +1,5 @@
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Dom5Editor.UI.Views
 {
@@ -16,14 +16,14 @@ namespace Dom5Editor.UI.Views
         private ArmorViewModel ViewModel => DataContext as ArmorViewModel;
 
         /// <summary>
-        /// Navigate to the source armor when CopyArmor reference is clicked.
+        /// Navigate to the source armor when CopyArmor navigate button is clicked.
         /// </summary>
-        private void OnCopyArmorClick(object sender, MouseButtonEventArgs e)
+        private void OnCopyArmorClick(object sender, RoutedEventArgs e)
         {
-            var id = ViewModel?.CopyArmorId ?? 0;
-            if (id != 0)
+            var id = ViewModel?.CopyArmorId;
+            if (id.HasValue && id.Value != 0)
             {
-                ViewModel?.NavigateToReferenceCommand.Execute(("armor", id));
+                ViewModel?.NavigateToReferenceCommand.Execute(("armor", id.Value));
             }
         }
     }

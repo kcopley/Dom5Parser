@@ -33,22 +33,27 @@
                 </Grid>
             </Border>
 
-            <!-- Copy From Section (shown when armor has copyarmor) -->
-            <Border Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12"
-                    Visibility="{Binding HasCopyArmor, Converter={StaticResource BoolToVisibilityConverter}}">
-                <StackPanel>
-                    <TextBlock Text="COPY FROM" FontSize="9" FontWeight="Bold" Foreground="White" Opacity="0.7" Margin="0,0,0,4"/>
-                    <WrapPanel>
-                        <Border Background="#2A2A2A" CornerRadius="3" Padding="6,3" Margin="0,0,6,0">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="copyarmor:" Foreground="#888888" FontSize="10" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CopyArmorDisplay}" Foreground="#FFD700" FontSize="10" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center"
-                                           Cursor="Hand" MouseLeftButtonDown="OnCopyArmorClick"
-                                           ToolTip="Click to navigate to source armor"/>
-                            </StackPanel>
-                        </Border>
-                    </WrapPanel>
-                </StackPanel>
+            <!-- Copy From Section (editable) -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="8,6" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Copy From:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <controls:SearchableReferenceComboBox
+                        Grid.Column="1"
+                        ItemsSource="{Binding AvailableArmorsForCopy}"
+                        SelectedId="{Binding CopyArmorId, Mode=TwoWay}"
+                        Placeholder="Select armor to copy from..."
+                        ToolTip="Select an armor to copy properties from"/>
+                    <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                            ToolTip="Navigate to source armor"
+                            Visibility="{Binding HasCopyArmor, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Click="OnCopyArmorClick"/>
+                </Grid>
             </Border>
 
             <!-- Basic Info Section -->

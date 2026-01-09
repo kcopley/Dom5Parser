@@ -2,6 +2,25 @@
 
 This document outlines how to resolve sprites and description files for each entity type in Dominions 6.
 
+## Implementation Status
+
+**Completed 2026-01-08:** Full sprite and description support implemented.
+
+### Data Loading (`VanillaAssetLoader`)
+- Sprites and descriptions are loaded as standard entity properties (`#spr1`, `#spr2`, `#descr`, etc.)
+- This integrates with the existing property layering system (vanilla → mod → session)
+- ViewModels can access sprite/description data using the same property access methods as any other property
+- See `Dom5Edit/VanillaAssetLoader.cs` for the loading implementation
+
+### Sprite Display (`MonsterViewModel.LoadSpriteImage`)
+- **Multi-format support:**
+  - PNG, JPG, JPEG, BMP → loaded via `BitmapImage`
+  - TGA → loaded via `TargaImage` (for mod-provided sprites)
+- **Path handling:**
+  - Absolute paths (vanilla assets from VanillaAssetLoader)
+  - Relative paths (mod sprites, resolved against mod directory)
+- See `Dom5Editor/UI/ViewModels/MonsterViewModel.cs`
+
 ---
 
 ## Project File Locations (Dom5Editor)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -29,40 +30,13 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "weapon";
 
         // ========================================
-        // Copy From Support
+        // Copy From Support (editable)
         // ========================================
 
-        public string CopyWeaponDisplay
-        {
-            get
-            {
-                var result = _entity.TryGet<WeaponRef>(Command.COPYWEAPON, out var prop, checkCopy: false);
-                if (result == ReturnType.TRUE && prop != null)
-                {
-                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
-                    {
-                        var name = idEntity.Name ?? idEntity.ID.ToString();
-                        return $"{name} (#{idEntity.ID})";
-                    }
-                    return prop.Name ?? prop.ID.ToString();
-                }
-                return null;
-            }
-        }
-
-        public bool HasCopyWeapon
-        {
-            get
-            {
-                var result = _entity.TryGet<WeaponRef>(Command.COPYWEAPON, out _, checkCopy: false);
-                return result == ReturnType.TRUE;
-            }
-        }
-
         /// <summary>
-        /// Gets the CopyWeapon reference ID for navigation.
+        /// Gets or sets the CopyWeapon reference ID.
         /// </summary>
-        public int CopyWeaponId
+        public int? CopyWeaponId
         {
             get
             {
@@ -73,7 +47,86 @@ namespace Dom5Editor.UI.Views
                         return idEntity.ID;
                     return prop.ID;
                 }
-                return 0;
+                return null;
+            }
+            set
+            {
+                if (value == null || value == 0)
+                {
+                    _entity.RemoveProperty(Command.COPYWEAPON);
+                }
+                else
+                {
+                    _entity.Set<WeaponRef>(Command.COPYWEAPON, p => p.Parse(Command.COPYWEAPON, value.Value.ToString(), ""));
+                    if (_entity.TryGet<WeaponRef>(Command.COPYWEAPON, out var prop) == ReturnType.TRUE)
+                        RecordPropertyChangeInSession(prop);
+                }
+                OnPropertyChanged(nameof(CopyWeaponId));
+                OnPropertyChanged(nameof(CopyWeaponName));
+                OnPropertyChanged(nameof(HasCopyWeapon));
+
+                // Refresh all properties that inherit from copyweapon
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
+        /// <summary>
+        /// Refreshes all properties and collections that depend on copyweapon inheritance.
+        /// </summary>
+        private void RefreshAllCopyDependentProperties()
+        {
+            RefreshStatsBadges();
+            RefreshPropertyBadges();
+
+            // Notify damage properties may have changed
+            OnPropertyChanged(nameof(DamageRawValue));
+            OnPropertyChanged(nameof(EffectiveDamageType));
+            OnPropertyChanged(nameof(IsSummonWeapon));
+            OnPropertyChanged(nameof(IsCloudWeapon));
+            OnPropertyChanged(nameof(DamageLabel));
+            OnPropertyChanged(nameof(Damage));
+            OnPropertyChanged(nameof(DamageDisplayString));
+            OnPropertyChanged(nameof(CanEditDamage));
+        }
+
+        /// <summary>
+        /// Gets the CopyWeapon reference name for display.
+        /// </summary>
+        public string CopyWeaponName
+        {
+            get
+            {
+                var result = _entity.TryGet<WeaponRef>(Command.COPYWEAPON, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.Name ?? $"#{idEntity.ID}";
+                    return prop.Name ?? $"#{prop.ID}";
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopyWeapon => CopyWeaponId.HasValue;
+
+        // Cached reference items for copy weapon selector
+        private List<ReferenceItem> _availableWeaponsForCopy;
+
+        /// <summary>
+        /// Gets the available weapons as ReferenceItems for the copy weapon selector.
+        /// </summary>
+        public IEnumerable<ReferenceItem> AvailableWeaponsForCopy
+        {
+            get
+            {
+                if (_availableWeaponsForCopy == null)
+                {
+                    _availableWeaponsForCopy = CachedWeapons
+                        .Where(w => w.ID != ID) // Exclude self
+                        .Select(w => new ReferenceItem { ID = w.ID, DisplayName = w.Name, Tag = w })
+                        .ToList();
+                }
+                return _availableWeaponsForCopy;
             }
         }
 
@@ -257,6 +310,83 @@ namespace Dom5Editor.UI.Views
         /// Returns true if damage can be edited (not a cloud weapon with no override).
         /// </summary>
         public bool CanEditDamage => !IsCloudWeapon;
+
+        // ========================================
+        // DynamicPropertyEditor Support for Damage
+        // ========================================
+
+        /// <summary>
+        /// Gets the editor mode for the damage property.
+        /// Returns "ref" for summon weapons (monster selector), "readonly" for cloud, "int" for normal.
+        /// </summary>
+        public string DamageEditorMode
+        {
+            get
+            {
+                if (IsCloudWeapon) return "readonly";
+                if (IsSummonWeapon) return "ref";
+                return "int";
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the monster ID for summon weapons.
+        /// Used in ref mode for the monster selector.
+        /// </summary>
+        public int? DamageMonsterId
+        {
+            get => Damage;
+            set
+            {
+                if (IsSummonWeapon)
+                {
+                    Damage = value;
+                    OnPropertyChanged(nameof(DamageMonsterId));
+                    OnPropertyChanged(nameof(DamageSecondaryText));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the secondary display text for the damage field.
+        /// Shows the summoned monster name for summon weapons.
+        /// </summary>
+        public string DamageSecondaryText
+        {
+            get
+            {
+                if (IsSummonWeapon)
+                {
+                    return DamageDisplayString; // "Summons: MonsterName"
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the readonly display text for cloud weapons.
+        /// </summary>
+        public string DamageReadOnlyText => IsCloudWeapon ? "Read-only cloud effect" : "";
+
+        // Cached reference items for monster selector
+        private List<ReferenceItem> _availableMonstersForDamage;
+
+        /// <summary>
+        /// Gets the available monsters as ReferenceItems for the damage monster selector.
+        /// </summary>
+        public IEnumerable<ReferenceItem> AvailableMonstersForDamage
+        {
+            get
+            {
+                if (_availableMonstersForDamage == null)
+                {
+                    _availableMonstersForDamage = CachedMonsters
+                        .Select(m => new ReferenceItem { ID = m.ID, DisplayName = m.Name, Tag = m })
+                        .ToList();
+                }
+                return _availableMonstersForDamage;
+            }
+        }
 
         // ========================================
         // Derived Display Properties (used in header/summary)
@@ -483,6 +613,11 @@ namespace Dom5Editor.UI.Views
                 OnPropertyChanged(nameof(IsCloudWeapon));
                 OnPropertyChanged(nameof(DamageLabel));
                 OnPropertyChanged(nameof(CanEditDamage));
+                // DynamicPropertyEditor support
+                OnPropertyChanged(nameof(DamageEditorMode));
+                OnPropertyChanged(nameof(DamageMonsterId));
+                OnPropertyChanged(nameof(DamageSecondaryText));
+                OnPropertyChanged(nameof(DamageReadOnlyText));
             }
 
             // Refresh badge collections

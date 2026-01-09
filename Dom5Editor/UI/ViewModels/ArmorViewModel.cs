@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -28,40 +30,13 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "armor";
 
         // ========================================
-        // Copy From Support
+        // Copy From Support (editable)
         // ========================================
 
-        public string CopyArmorDisplay
-        {
-            get
-            {
-                var result = _entity.TryGet<ArmorRef>(Command.COPYARMOR, out var prop, checkCopy: false);
-                if (result == ReturnType.TRUE && prop != null)
-                {
-                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
-                    {
-                        var name = idEntity.Name ?? idEntity.ID.ToString();
-                        return $"{name} (#{idEntity.ID})";
-                    }
-                    return prop.Name ?? prop.ID.ToString();
-                }
-                return null;
-            }
-        }
-
-        public bool HasCopyArmor
-        {
-            get
-            {
-                var result = _entity.TryGet<ArmorRef>(Command.COPYARMOR, out _, checkCopy: false);
-                return result == ReturnType.TRUE;
-            }
-        }
-
         /// <summary>
-        /// Gets the CopyArmor reference ID for navigation.
+        /// Gets or sets the CopyArmor reference ID.
         /// </summary>
-        public int CopyArmorId
+        public int? CopyArmorId
         {
             get
             {
@@ -72,7 +47,76 @@ namespace Dom5Editor.UI.Views
                         return idEntity.ID;
                     return prop.ID;
                 }
-                return 0;
+                return null;
+            }
+            set
+            {
+                if (value == null || value == 0)
+                {
+                    _entity.RemoveProperty(Command.COPYARMOR);
+                }
+                else
+                {
+                    _entity.Set<ArmorRef>(Command.COPYARMOR, p => p.Parse(Command.COPYARMOR, value.Value.ToString(), ""));
+                    if (_entity.TryGet<ArmorRef>(Command.COPYARMOR, out var prop) == ReturnType.TRUE)
+                        RecordPropertyChangeInSession(prop);
+                }
+                OnPropertyChanged(nameof(CopyArmorId));
+                OnPropertyChanged(nameof(CopyArmorName));
+                OnPropertyChanged(nameof(HasCopyArmor));
+
+                // Refresh all properties that inherit from copyarmor
+                RefreshAllCopyDependentProperties();
+            }
+        }
+
+        /// <summary>
+        /// Refreshes all properties and collections that depend on copyarmor inheritance.
+        /// </summary>
+        private void RefreshAllCopyDependentProperties()
+        {
+            RefreshStatsBadges();
+            RefreshPropertyBadges();
+        }
+
+        /// <summary>
+        /// Gets the CopyArmor reference name for display.
+        /// </summary>
+        public string CopyArmorName
+        {
+            get
+            {
+                var result = _entity.TryGet<ArmorRef>(Command.COPYARMOR, out var prop, checkCopy: false);
+                if (result == ReturnType.TRUE && prop != null)
+                {
+                    if (prop.Entity != null && prop.Entity is IDEntity idEntity)
+                        return idEntity.Name ?? $"#{idEntity.ID}";
+                    return prop.Name ?? $"#{prop.ID}";
+                }
+                return null;
+            }
+        }
+
+        public bool HasCopyArmor => CopyArmorId.HasValue;
+
+        // Cached reference items for copy armor selector
+        private List<ReferenceItem> _availableArmorsForCopy;
+
+        /// <summary>
+        /// Gets the available armors as ReferenceItems for the copy armor selector.
+        /// </summary>
+        public IEnumerable<ReferenceItem> AvailableArmorsForCopy
+        {
+            get
+            {
+                if (_availableArmorsForCopy == null)
+                {
+                    _availableArmorsForCopy = CachedArmors
+                        .Where(a => a.ID != ID) // Exclude self
+                        .Select(a => new ReferenceItem { ID = a.ID, DisplayName = a.Name, Tag = a })
+                        .ToList();
+                }
+                return _availableArmorsForCopy;
             }
         }
 

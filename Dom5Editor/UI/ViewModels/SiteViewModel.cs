@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -29,7 +31,7 @@ namespace Dom5Editor.UI.Views
         protected override string EntityTypeName => "site";
 
         // ========================================
-        // Copy From Support (#copysite)
+        // Copy From Support (#copysite) - editable
         // ========================================
 
         /// <summary>
@@ -46,19 +48,32 @@ namespace Dom5Editor.UI.Views
             }
             set
             {
-                if (value == null)
+                if (value == null || value == 0)
                 {
-                    // Remove the copysite reference
                     _entity.RemoveProperty(Command.COPYSITE);
                 }
                 else
                 {
-                    // Set the copysite reference using the Set<T> method
                     _entity.Set<SiteRef>(Command.COPYSITE, p => p.Parse(Command.COPYSITE, value.Value.ToString(), ""));
+                    if (_entity.TryGet<SiteRef>(Command.COPYSITE, out var prop) == ReturnType.TRUE)
+                        RecordPropertyChangeInSession(prop);
                 }
                 OnPropertyChanged(nameof(CopySiteId));
                 OnPropertyChanged(nameof(CopySiteName));
+                OnPropertyChanged(nameof(HasCopySite));
+
+                // Refresh all properties that inherit from copysite
+                RefreshAllCopyDependentProperties();
             }
+        }
+
+        /// <summary>
+        /// Refreshes all properties and collections that depend on copysite inheritance.
+        /// </summary>
+        private void RefreshAllCopyDependentProperties()
+        {
+            RefreshIdentityBadges();
+            RefreshPropertyBadges();
         }
 
         /// <summary>
@@ -72,10 +87,33 @@ namespace Dom5Editor.UI.Views
                 if (result == ReturnType.TRUE && prop != null)
                 {
                     if (prop.Entity != null && prop.Entity is IDEntity idEntity)
-                        return idEntity.Name ?? $"Site #{idEntity.ID}";
-                    return prop.Name ?? $"Site #{prop.ID}";
+                        return idEntity.Name ?? $"#{idEntity.ID}";
+                    return prop.Name ?? $"#{prop.ID}";
                 }
                 return null;
+            }
+        }
+
+        public bool HasCopySite => CopySiteId.HasValue;
+
+        // Cached reference items for copy site selector
+        private List<ReferenceItem> _availableSitesForCopy;
+
+        /// <summary>
+        /// Gets the available sites as ReferenceItems for the copy site selector.
+        /// </summary>
+        public IEnumerable<ReferenceItem> AvailableSitesForCopy
+        {
+            get
+            {
+                if (_availableSitesForCopy == null)
+                {
+                    _availableSitesForCopy = CachedSites
+                        .Where(s => s.ID != ID) // Exclude self
+                        .Select(s => new ReferenceItem { ID = s.ID, DisplayName = s.Name, Tag = s })
+                        .ToList();
+                }
+                return _availableSitesForCopy;
             }
         }
 

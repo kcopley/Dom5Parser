@@ -62,13 +62,26 @@
                     <StackPanel>
                         <controls:StringPropertyEditor Label="Name" Value="{Binding Name, Mode=TwoWay}" Margin="0,0,0,8"/>
 
-                        <!-- Copy From Reference -->
-                        <controls:ReferencePropertyEditor
-                            Label="Copy From Site"
-                            ReferenceId="{Binding CopySiteId, Mode=TwoWay}"
-                            ReferenceName="{Binding CopySiteName}"
-                            ReferenceType="Site"
-                            Margin="0,0,0,8"/>
+                        <!-- Copy From Reference (editable) -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Copy From:" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <controls:SearchableReferenceComboBox
+                                Grid.Column="1"
+                                ItemsSource="{Binding AvailableSitesForCopy}"
+                                SelectedId="{Binding CopySiteId, Mode=TwoWay}"
+                                Placeholder="Select site to copy from..."
+                                ToolTip="Select a site to copy properties from"/>
+                            <Button Grid.Column="2" Content="→" Width="24" Height="24" Margin="4,0,0,0"
+                                    ToolTip="Navigate to source site"
+                                    Visibility="{Binding HasCopySite, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Click="OnCopySiteClick"/>
+                        </Grid>
 
                         <!-- Gems Display (read-only for now) -->
                         <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="8,6"

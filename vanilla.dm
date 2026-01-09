@@ -1,5 +1,5 @@
 -- Dominions 6 Full Data Export --
--- Generated: 2026-01-06T19:49:42.908Z --
+-- Generated: 2026-01-08T17:58:51.111Z --
 
 
 -- ======================================== --
@@ -12181,6 +12181,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 14
 #end
 
 #selectarmor 2
@@ -12190,6 +12191,7 @@
 #rcost 2
 #enc 1
 #woodenarmor
+#prot 16
 #end
 
 #selectarmor 3
@@ -12199,6 +12201,7 @@
 #rcost 4
 #enc 2
 #ironarmor
+#prot 19
 #end
 
 #selectarmor 4
@@ -12208,6 +12211,7 @@
 #rcost 3
 #enc 2
 #woodenarmor
+#prot 16
 #end
 
 #selectarmor 5
@@ -12216,6 +12220,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 5
 #end
 
 #selectarmor 6
@@ -12224,6 +12229,7 @@
 #def 0
 #rcost 3
 #enc 0
+#prot 8
 #end
 
 #selectarmor 7
@@ -12233,6 +12239,7 @@
 #rcost 6
 #enc 1
 #ironarmor
+#prot 10
 #end
 
 #selectarmor 8
@@ -12242,6 +12249,7 @@
 #rcost 9
 #enc 1
 #ironarmor
+#prot 12
 #end
 
 #selectarmor 9
@@ -12251,6 +12259,7 @@
 #rcost 15
 #enc 2
 #ironarmor
+#prot 14
 #end
 
 #selectarmor 10
@@ -12259,6 +12268,7 @@
 #def 0
 #rcost 2
 #enc 0
+#prot 8
 #end
 
 #selectarmor 11
@@ -12267,6 +12277,7 @@
 #def -1
 #rcost 5
 #enc 1
+#prot 10
 #end
 
 #selectarmor 12
@@ -12276,6 +12287,7 @@
 #rcost 9
 #enc 2
 #ironarmor
+#prot 13
 #end
 
 #selectarmor 13
@@ -12285,6 +12297,7 @@
 #rcost 13
 #enc 2
 #ironarmor
+#prot 15
 #end
 
 #selectarmor 14
@@ -12294,6 +12307,7 @@
 #rcost 20
 #enc 4
 #ironarmor
+#prot 18
 #end
 
 #selectarmor 15
@@ -12302,6 +12316,7 @@
 #def -1
 #rcost 3
 #enc 1
+#prot 9
 #end
 
 #selectarmor 16
@@ -12310,6 +12325,7 @@
 #def -2
 #rcost 7
 #enc 2
+#prot 12
 #end
 
 #selectarmor 17
@@ -12319,6 +12335,7 @@
 #rcost 12
 #enc 3
 #ironarmor
+#prot 15
 #end
 
 #selectarmor 18
@@ -12328,6 +12345,7 @@
 #rcost 17
 #enc 3
 #ironarmor
+#prot 18
 #end
 
 #selectarmor 19
@@ -12337,6 +12355,7 @@
 #rcost 25
 #enc 5
 #ironarmor
+#prot 21
 #end
 
 #selectarmor 20
@@ -12346,6 +12365,7 @@
 #rcost 2
 #enc 0
 #ironarmor
+#prot 16
 #end
 
 #selectarmor 21
@@ -12355,6 +12375,7 @@
 #rcost 5
 #enc 0
 #ironarmor
+#prot 21
 #end
 
 #selectarmor 22
@@ -12363,6 +12384,7 @@
 #def -1
 #rcost 7
 #enc 2
+#prot 10
 #end
 
 #selectarmor 23
@@ -12371,6 +12393,7 @@
 #def -2
 #rcost 10
 #enc 3
+#prot 12
 #end
 
 #selectarmor 24
@@ -12379,6 +12402,7 @@
 #def 0
 #rcost 2
 #enc 0
+#prot 14
 #end
 
 #selectarmor 25
@@ -12387,6 +12411,7 @@
 #def -1
 #rcost 1
 #enc 1
+#prot 15
 #end
 
 #selectarmor 26
@@ -12395,6 +12420,7 @@
 #def -1
 #rcost 16
 #enc 1
+#prot 14
 #end
 
 #selectarmor 27
@@ -12403,6 +12429,7 @@
 #def -2
 #rcost 22
 #enc 2
+#prot 17
 #end
 
 #selectarmor 28
@@ -12411,6 +12438,7 @@
 #def -1
 #rcost 9
 #enc 1
+#prot 18
 #end
 
 #selectarmor 29
@@ -12419,6 +12447,7 @@
 #def 0
 #rcost 3
 #enc 0
+#prot 15
 #end
 
 #selectarmor 30
@@ -12427,6 +12456,7 @@
 #def -2
 #rcost 0
 #enc 4
+#prot 16
 #end
 
 #selectarmor 31
@@ -12435,6 +12465,7 @@
 #def -1
 #rcost 0
 #enc 2
+#prot 11
 #end
 
 #selectarmor 32
@@ -12443,6 +12474,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 8
 #end
 
 #selectarmor 33
@@ -12451,6 +12483,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 13
 #end
 
 #selectarmor 34
@@ -12459,6 +12492,7 @@
 #def -1
 #rcost 0
 #enc 5
+#protparts 13 13
 #end
 
 #selectarmor 35
@@ -12467,6 +12501,7 @@
 #def -3
 #rcost 0
 #enc 4
+#prot 30
 #end
 
 #selectarmor 36
@@ -12475,6 +12510,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 16
 #end
 
 #selectarmor 37
@@ -12483,6 +12519,7 @@
 #def 0
 #rcost 0
 #enc 1
+#prot 9
 #end
 
 #selectarmor 38
@@ -12491,6 +12528,7 @@
 #def -3
 #rcost 0
 #enc 4
+#prot 24
 #end
 
 #selectarmor 39
@@ -12499,6 +12537,7 @@
 #def -1
 #rcost 0
 #enc 2
+#prot 17
 #end
 
 #selectarmor 40
@@ -12507,6 +12546,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 24
 #end
 
 #selectarmor 41
@@ -12515,6 +12555,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 23
 #end
 
 #selectarmor 42
@@ -12523,6 +12564,7 @@
 #def -3
 #rcost 0
 #enc 3
+#prot 23
 #end
 
 #selectarmor 43
@@ -12531,6 +12573,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 12
 #end
 
 #selectarmor 44
@@ -12539,6 +12582,7 @@
 #def -1
 #rcost 1
 #enc 1
+#prot 7
 #end
 
 #selectarmor 45
@@ -12547,6 +12591,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 20
 #end
 
 #selectarmor 46
@@ -12555,6 +12600,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 16
 #end
 
 #selectarmor 47
@@ -12563,6 +12609,7 @@
 #def -8
 #rcost 0
 #enc 10
+#prot 34
 #end
 
 #selectarmor 48
@@ -12571,6 +12618,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 17
 #end
 
 #selectarmor 49
@@ -12579,6 +12627,7 @@
 #def 0
 #rcost 12
 #enc 1
+#prot 12
 #end
 
 #selectarmor 50
@@ -12587,6 +12636,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 12
 #end
 
 #selectarmor 51
@@ -12595,6 +12645,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot NaN
 #end
 
 #selectarmor 52
@@ -12603,6 +12654,7 @@
 #def -1
 #rcost 6
 #enc 0
+#prot 10
 #end
 
 #selectarmor 53
@@ -12611,6 +12663,7 @@
 #def -2
 #rcost 25
 #enc 4
+#prot 18
 #end
 
 #selectarmor 54
@@ -12619,6 +12672,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 9
 #end
 
 #selectarmor 55
@@ -12627,6 +12681,7 @@
 #def -3
 #rcost 0
 #enc 2
+#prot 21
 #end
 
 #selectarmor 56
@@ -12635,6 +12690,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 16
 #end
 
 #selectarmor 57
@@ -12643,6 +12699,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 21
 #end
 
 #selectarmor 58
@@ -12652,6 +12709,7 @@
 #rcost 26
 #enc 3
 #ironarmor
+#prot 17
 #end
 
 #selectarmor 59
@@ -12660,6 +12718,7 @@
 #def -3
 #rcost 0
 #enc 4
+#prot 20
 #end
 
 #selectarmor 60
@@ -12668,6 +12727,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 26
 #end
 
 #selectarmor 61
@@ -12676,6 +12736,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 16
 #end
 
 #selectarmor 62
@@ -12684,6 +12745,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 21
 #end
 
 #selectarmor 63
@@ -12692,6 +12754,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 13
 #end
 
 #selectarmor 64
@@ -12700,6 +12763,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 25
 #end
 
 #selectarmor 65
@@ -12708,6 +12772,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 16
 #end
 
 #selectarmor 66
@@ -12716,6 +12781,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 21
 #end
 
 #selectarmor 67
@@ -12724,6 +12790,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 19
 #end
 
 #selectarmor 68
@@ -12732,6 +12799,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 40
 #end
 
 #selectarmor 69
@@ -12740,6 +12808,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 29
 #end
 
 #selectarmor 70
@@ -12748,6 +12817,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 11
 #end
 
 #selectarmor 71
@@ -12756,6 +12826,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 23
 #end
 
 #selectarmor 72
@@ -12764,6 +12835,7 @@
 #def 0
 #rcost 0
 #enc 1
+#prot 16
 #end
 
 #selectarmor 73
@@ -12772,6 +12844,7 @@
 #def -4
 #rcost 0
 #enc 4
+#prot 30
 #end
 
 #selectarmor 74
@@ -12780,6 +12853,7 @@
 #def -4
 #rcost 0
 #enc 3
+#prot 18
 #end
 
 #selectarmor 75
@@ -12788,6 +12862,7 @@
 #def -1
 #rcost 20
 #enc 2
+#prot 16
 #end
 
 #selectarmor 76
@@ -12796,6 +12871,7 @@
 #def 2
 #rcost 0
 #enc 0
+#protparts 2 2
 #end
 
 #selectarmor 77
@@ -12812,6 +12888,7 @@
 #def 4
 #rcost 0
 #enc 0
+#protparts 4 4
 #end
 
 #selectarmor 79
@@ -12820,6 +12897,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 20
 #end
 
 #selectarmor 80
@@ -12828,6 +12906,7 @@
 #def 0
 #rcost 0
 #enc 0
+#protparts 26 5
 #end
 
 #selectarmor 81
@@ -12836,6 +12915,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 19
 #end
 
 #selectarmor 82
@@ -12844,6 +12924,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot NaN
 #end
 
 #selectarmor 83
@@ -12852,6 +12933,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 8
 #end
 
 #selectarmor 84
@@ -12860,6 +12942,7 @@
 #def -2
 #rcost 20
 #enc 3
+#prot 16
 #end
 
 #selectarmor 85
@@ -12868,6 +12951,7 @@
 #def -1
 #rcost 8
 #enc 1
+#prot 16
 #end
 
 #selectarmor 86
@@ -12876,6 +12960,7 @@
 #def 0
 #rcost 3
 #enc 0
+#prot 16
 #end
 
 #selectarmor 87
@@ -12884,6 +12969,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 21
 #end
 
 #selectarmor 88
@@ -12892,6 +12978,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 23
 #end
 
 #selectarmor 89
@@ -12900,6 +12987,7 @@
 #def -1
 #rcost 0
 #enc 2
+#prot 13
 #end
 
 #selectarmor 90
@@ -12908,6 +12996,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 11
 #end
 
 #selectarmor 91
@@ -12917,6 +13006,7 @@
 #rcost 25
 #enc 4
 #ironarmor
+#prot 22
 #end
 
 #selectarmor 92
@@ -12925,6 +13015,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 17
 #end
 
 #selectarmor 93
@@ -12933,6 +13024,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 9
 #end
 
 #selectarmor 94
@@ -12949,6 +13041,7 @@
 #def -3
 #rcost 0
 #enc 4
+#prot 25
 #end
 
 #selectarmor 96
@@ -12957,6 +13050,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 25
 #end
 
 #selectarmor 97
@@ -12965,6 +13059,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 25
 #end
 
 #selectarmor 98
@@ -12973,6 +13068,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 16
 #end
 
 #selectarmor 99
@@ -12982,6 +13078,7 @@
 #rcost 11
 #enc 2
 #ironarmor
+#prot 13
 #end
 
 #selectarmor 100
@@ -12990,6 +13087,7 @@
 #def -1
 #rcost 14
 #enc 3
+#prot 13
 #end
 
 #selectarmor 101
@@ -12998,6 +13096,7 @@
 #def -2
 #rcost 18
 #enc 5
+#prot 17
 #end
 
 #selectarmor 102
@@ -13006,6 +13105,7 @@
 #def -2
 #rcost 23
 #enc 4
+#prot 16
 #end
 
 #selectarmor 103
@@ -13014,6 +13114,7 @@
 #def 0
 #rcost 6
 #enc 0
+#prot 7
 #end
 
 #selectarmor 104
@@ -13023,6 +13124,7 @@
 #rcost 4
 #enc 2
 #woodenarmor
+#prot 11
 #end
 
 #selectarmor 105
@@ -13031,6 +13133,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 11
 #end
 
 #selectarmor 106
@@ -13039,6 +13142,7 @@
 #def -1
 #rcost 10
 #enc 3
+#prot 13
 #end
 
 #selectarmor 107
@@ -13047,6 +13151,7 @@
 #def -1
 #rcost 0
 #enc 4
+#prot 16
 #end
 
 #selectarmor 108
@@ -13055,6 +13160,7 @@
 #def -3
 #rcost 0
 #enc 6
+#prot 20
 #end
 
 #selectarmor 109
@@ -13063,6 +13169,7 @@
 #def -1
 #rcost 0
 #enc 3
+#prot 16
 #end
 
 #selectarmor 110
@@ -13071,6 +13178,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 16
 #end
 
 #selectarmor 111
@@ -13080,6 +13188,7 @@
 #rcost 26
 #enc 4
 #ironarmor
+#prot 19
 #end
 
 #selectarmor 112
@@ -13088,6 +13197,7 @@
 #def -1
 #rcost 1
 #enc 1
+#prot 11
 #end
 
 #selectarmor 113
@@ -13096,6 +13206,7 @@
 #def 0
 #rcost 0
 #enc 0
+#protparts 11 11
 #end
 
 #selectarmor 114
@@ -13104,6 +13215,7 @@
 #def -2
 #rcost 4
 #enc 1
+#prot 9
 #end
 
 #selectarmor 115
@@ -13113,6 +13225,7 @@
 #rcost 10
 #enc 3
 #woodenarmor
+#prot 8
 #end
 
 #selectarmor 116
@@ -13122,6 +13235,7 @@
 #rcost 5
 #enc 1
 #ironarmor
+#prot 10
 #end
 
 #selectarmor 117
@@ -13131,6 +13245,7 @@
 #rcost 7
 #enc 2
 #ironarmor
+#prot 12
 #end
 
 #selectarmor 118
@@ -13140,6 +13255,7 @@
 #rcost 3
 #enc 0
 #ironarmor
+#prot 18
 #end
 
 #selectarmor 119
@@ -13148,6 +13264,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 9
 #end
 
 #selectarmor 120
@@ -13156,6 +13273,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 7
 #end
 
 #selectarmor 121
@@ -13164,6 +13282,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 6
 #end
 
 #selectarmor 122
@@ -13172,6 +13291,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 11
 #end
 
 #selectarmor 123
@@ -13180,6 +13300,7 @@
 #def -1
 #rcost 5
 #enc 0
+#prot 21
 #end
 
 #selectarmor 124
@@ -13188,6 +13309,7 @@
 #def 0
 #rcost 6
 #enc 0
+#prot 19
 #end
 
 #selectarmor 125
@@ -13196,6 +13318,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 11
 #end
 
 #selectarmor 126
@@ -13205,6 +13328,7 @@
 #rcost 3
 #enc 0
 #ironarmor
+#prot 19
 #end
 
 #selectarmor 127
@@ -13213,6 +13337,7 @@
 #def 0
 #rcost 2
 #enc 0
+#prot 18
 #end
 
 #selectarmor 128
@@ -13222,6 +13347,7 @@
 #rcost 7
 #enc 2
 #ironarmor
+#prot 12
 #end
 
 #selectarmor 129
@@ -13231,6 +13357,7 @@
 #rcost 10
 #enc 3
 #ironarmor
+#prot 15
 #end
 
 #selectarmor 130
@@ -13240,6 +13367,7 @@
 #rcost 14
 #enc 4
 #ironarmor
+#prot 18
 #end
 
 #selectarmor 131
@@ -13249,6 +13377,7 @@
 #rcost 2
 #enc 0
 #ironarmor
+#prot 13
 #end
 
 #selectarmor 132
@@ -13258,6 +13387,7 @@
 #rcost 4
 #enc 0
 #ironarmor
+#prot 17
 #end
 
 #selectarmor 133
@@ -13266,6 +13396,7 @@
 #def -1
 #rcost 13
 #enc 2
+#prot 12
 #end
 
 #selectarmor 134
@@ -13274,6 +13405,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 10
 #end
 
 #selectarmor 135
@@ -13282,6 +13414,7 @@
 #def 0
 #rcost 2
 #enc 0
+#prot 15
 #end
 
 #selectarmor 136
@@ -13290,6 +13423,7 @@
 #def -1
 #rcost 8
 #enc 2
+#prot 12
 #end
 
 #selectarmor 137
@@ -13298,6 +13432,7 @@
 #def 0
 #rcost 4
 #enc 0
+#prot 9
 #end
 
 #selectarmor 138
@@ -13306,6 +13441,7 @@
 #def 0
 #rcost 4
 #enc 0
+#prot 7
 #end
 
 #selectarmor 139
@@ -13314,6 +13450,7 @@
 #def -2
 #rcost 20
 #enc 4
+#prot 16
 #end
 
 #selectarmor 140
@@ -13322,6 +13459,7 @@
 #def -1
 #rcost 8
 #enc 1
+#prot 10
 #end
 
 #selectarmor 141
@@ -13331,6 +13469,7 @@
 #rcost 5
 #enc 0
 #ironarmor
+#prot 23
 #end
 
 #selectarmor 142
@@ -13339,6 +13478,7 @@
 #def -1
 #rcost 5
 #enc 1
+#prot 9
 #end
 
 #selectarmor 143
@@ -13347,6 +13487,7 @@
 #def -4
 #rcost 0
 #enc 4
+#prot 26
 #end
 
 #selectarmor 144
@@ -13356,6 +13497,7 @@
 #rcost 10
 #enc 2
 #ironarmor
+#protparts 9 9
 #end
 
 #selectarmor 145
@@ -13364,6 +13506,7 @@
 #def -1
 #rcost 0
 #enc 0
+#prot 7
 #end
 
 #selectarmor 146
@@ -13373,6 +13516,7 @@
 #rcost 15
 #enc 3
 #ironarmor
+#prot 17
 #end
 
 #selectarmor 147
@@ -13381,6 +13525,7 @@
 #def -2
 #rcost 1
 #enc 3
+#prot 19
 #end
 
 #selectarmor 148
@@ -13389,6 +13534,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 5
 #end
 
 #selectarmor 149
@@ -13397,6 +13543,7 @@
 #def -1
 #rcost 3
 #enc 1
+#prot 11
 #end
 
 #selectarmor 150
@@ -13405,6 +13552,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 14
 #end
 
 #selectarmor 151
@@ -13413,6 +13561,7 @@
 #def -1
 #rcost 3
 #enc 1
+#prot 8
 #end
 
 #selectarmor 152
@@ -13421,6 +13570,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 10
 #end
 
 #selectarmor 153
@@ -13429,6 +13579,7 @@
 #def -4
 #rcost 30
 #enc 6
+#prot 19
 #end
 
 #selectarmor 154
@@ -13438,6 +13589,7 @@
 #rcost 10
 #enc 2
 #ironarmor
+#prot 14
 #end
 
 #selectarmor 155
@@ -13446,6 +13598,7 @@
 #def -1
 #rcost 8
 #enc 1
+#prot 23
 #end
 
 #selectarmor 156
@@ -13454,6 +13607,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 15
 #end
 
 #selectarmor 157
@@ -13462,6 +13616,7 @@
 #def 0
 #rcost 10
 #enc 0
+#prot 19
 #end
 
 #selectarmor 158
@@ -13471,6 +13626,7 @@
 #rcost 1
 #enc 0
 #woodenarmor
+#prot 3
 #end
 
 #selectarmor 159
@@ -13480,6 +13636,7 @@
 #rcost 3
 #enc 0
 #woodenarmor
+#prot 4
 #end
 
 #selectarmor 160
@@ -13488,6 +13645,7 @@
 #def -2
 #rcost 0
 #enc 4
+#prot 14
 #end
 
 #selectarmor 161
@@ -13496,6 +13654,7 @@
 #def 0
 #rcost 10
 #enc 0
+#prot 7
 #end
 
 #selectarmor 162
@@ -13504,6 +13663,7 @@
 #def 0
 #rcost 3
 #enc 0
+#prot 14
 #end
 
 #selectarmor 163
@@ -13512,6 +13672,7 @@
 #def -1
 #rcost 20
 #enc 2
+#prot 17
 #end
 
 #selectarmor 164
@@ -13520,6 +13681,7 @@
 #def -1
 #rcost 8
 #enc 1
+#prot 20
 #end
 
 #selectarmor 165
@@ -13528,6 +13690,7 @@
 #def -1
 #rcost 25
 #enc 2
+#prot 18
 #end
 
 #selectarmor 166
@@ -13536,6 +13699,7 @@
 #def -1
 #rcost 7
 #enc 1
+#prot 19
 #end
 
 #selectarmor 167
@@ -13544,6 +13708,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 9
 #end
 
 #selectarmor 168
@@ -13553,6 +13718,7 @@
 #rcost 1
 #enc 1
 #woodenarmor
+#prot 12
 #end
 
 #selectarmor 169
@@ -13561,6 +13727,7 @@
 #def -2
 #rcost 2
 #enc 2
+#prot 15
 #end
 
 #selectarmor 170
@@ -13570,6 +13737,7 @@
 #rcost 2
 #enc 2
 #woodenarmor
+#prot 12
 #end
 
 #selectarmor 171
@@ -13579,6 +13747,7 @@
 #rcost 15
 #enc 4
 #ironarmor
+#prot 17
 #end
 
 #selectarmor 172
@@ -13588,6 +13757,7 @@
 #rcost 13
 #enc 4
 #ironarmor
+#protparts 14 14
 #end
 
 #selectarmor 173
@@ -13596,6 +13766,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 23
 #end
 
 #selectarmor 174
@@ -13604,6 +13775,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 19
 #end
 
 #selectarmor 175
@@ -13612,6 +13784,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 25
 #end
 
 #selectarmor 176
@@ -13620,6 +13793,7 @@
 #def 0
 #rcost 10
 #enc 1
+#prot 8
 #end
 
 #selectarmor 177
@@ -13628,6 +13802,7 @@
 #def -1
 #rcost 20
 #enc 1
+#prot 13
 #end
 
 #selectarmor 178
@@ -13636,6 +13811,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 35
 #end
 
 #selectarmor 179
@@ -13644,6 +13820,7 @@
 #def -1
 #rcost 0
 #enc 2
+#prot 20
 #end
 
 #selectarmor 180
@@ -13652,6 +13829,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 23
 #end
 
 #selectarmor 181
@@ -13660,6 +13838,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 23
 #end
 
 #selectarmor 182
@@ -13668,6 +13847,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 30
 #end
 
 #selectarmor 183
@@ -13676,6 +13856,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 8
 #end
 
 #selectarmor 184
@@ -13684,6 +13865,7 @@
 #def -1
 #rcost 15
 #enc 1
+#protparts 6 6
 #end
 
 #selectarmor 185
@@ -13692,6 +13874,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 13
 #end
 
 #selectarmor 186
@@ -13700,6 +13883,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 13
 #end
 
 #selectarmor 187
@@ -13709,6 +13893,7 @@
 #rcost 0
 #enc 0
 #woodenarmor
+#prot 10
 #end
 
 #selectarmor 188
@@ -13717,6 +13902,7 @@
 #def 0
 #rcost 2
 #enc 1
+#prot 7
 #end
 
 #selectarmor 189
@@ -13725,6 +13911,7 @@
 #def -1
 #rcost 8
 #enc 1
+#prot 16
 #end
 
 #selectarmor 190
@@ -13733,6 +13920,7 @@
 #def -2
 #rcost 12
 #enc 4
+#prot 11
 #end
 
 #selectarmor 191
@@ -13741,6 +13929,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 23
 #end
 
 #selectarmor 192
@@ -13749,6 +13938,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 9
 #end
 
 #selectarmor 193
@@ -13757,6 +13947,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 24
 #end
 
 #selectarmor 194
@@ -13765,6 +13956,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 13
 #end
 
 #selectarmor 195
@@ -13773,6 +13965,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 5
 #end
 
 #selectarmor 196
@@ -13781,6 +13974,7 @@
 #def -2
 #rcost 25
 #enc 2
+#prot 17
 #end
 
 #selectarmor 197
@@ -13789,6 +13983,7 @@
 #def 0
 #rcost 2
 #enc 0
+#prot 17
 #end
 
 #selectarmor 198
@@ -13798,6 +13993,7 @@
 #rcost 17
 #enc 1
 #ironarmor
+#prot 13
 #end
 
 #selectarmor 199
@@ -13807,6 +14003,7 @@
 #rcost 17
 #enc 4
 #ironarmor
+#prot 20
 #end
 
 #selectarmor 200
@@ -13815,6 +14012,7 @@
 #def -1
 #rcost 20
 #enc 3
+#prot 18
 #end
 
 #selectarmor 201
@@ -13823,6 +14021,7 @@
 #def -2
 #rcost 20
 #enc 3
+#prot 20
 #end
 
 #selectarmor 202
@@ -13831,6 +14030,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 6
 #end
 
 #selectarmor 203
@@ -13840,6 +14040,7 @@
 #rcost 4
 #enc 1
 #woodenarmor
+#prot 8
 #end
 
 #selectarmor 204
@@ -13848,6 +14049,7 @@
 #def -2
 #rcost 20
 #enc 3
+#prot 16
 #end
 
 #selectarmor 205
@@ -13856,6 +14058,7 @@
 #def -1
 #rcost 14
 #enc 2
+#prot 13
 #end
 
 #selectarmor 206
@@ -13864,6 +14067,7 @@
 #def -1
 #rcost 18
 #enc 2
+#prot 15
 #end
 
 #selectarmor 207
@@ -13873,6 +14077,7 @@
 #rcost 1
 #enc 1
 #woodenarmor
+#prot 13
 #end
 
 #selectarmor 208
@@ -13882,6 +14087,7 @@
 #rcost 3
 #enc 1
 #ironarmor
+#prot 19
 #end
 
 #selectarmor 209
@@ -13890,6 +14096,7 @@
 #def -1
 #rcost 3
 #enc 1
+#prot 19
 #end
 
 #selectarmor 210
@@ -13898,6 +14105,7 @@
 #def -1
 #rcost 18
 #enc 2
+#prot 14
 #end
 
 #selectarmor 211
@@ -13906,6 +14114,7 @@
 #def 0
 #rcost 2
 #enc 0
+#prot 16
 #end
 
 #selectarmor 212
@@ -13914,6 +14123,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 9
 #end
 
 #selectarmor 213
@@ -13922,6 +14132,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 20
 #end
 
 #selectarmor 214
@@ -13930,6 +14141,7 @@
 #def -2
 #rcost 0
 #enc 4
+#prot 18
 #end
 
 #selectarmor 215
@@ -13939,6 +14151,7 @@
 #rcost 30
 #enc 4
 #ironarmor
+#prot 23
 #end
 
 #selectarmor 216
@@ -13948,6 +14161,7 @@
 #rcost 21
 #enc 3
 #ironarmor
+#prot 19
 #end
 
 #selectarmor 217
@@ -13957,6 +14171,7 @@
 #rcost 19
 #enc 2
 #ironarmor
+#prot 16
 #end
 
 #selectarmor 218
@@ -13966,6 +14181,7 @@
 #rcost 6
 #enc 0
 #ironarmor
+#prot 23
 #end
 
 #selectarmor 219
@@ -13975,6 +14191,7 @@
 #rcost 4
 #enc 0
 #ironarmor
+#prot 19
 #end
 
 #selectarmor 220
@@ -13984,6 +14201,7 @@
 #rcost 4
 #enc 2
 #ironarmor
+#prot 19
 #end
 
 #selectarmor 221
@@ -13993,6 +14211,7 @@
 #rcost 5
 #enc 2
 #ironarmor
+#prot 22
 #end
 
 #selectarmor 222
@@ -14001,6 +14220,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 4
 #end
 
 #selectarmor 223
@@ -14009,6 +14229,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 15
 #end
 
 #selectarmor 224
@@ -14017,6 +14238,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 10
 #end
 
 #selectarmor 225
@@ -14025,6 +14247,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 21
 #end
 
 #selectarmor 226
@@ -14033,6 +14256,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 18
 #end
 
 #selectarmor 227
@@ -14041,6 +14265,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 22
 #end
 
 #selectarmor 228
@@ -14049,6 +14274,7 @@
 #def -1
 #rcost 0
 #enc 0
+#prot 18
 #end
 
 #selectarmor 229
@@ -14057,6 +14283,7 @@
 #def -2
 #rcost 14
 #enc 3
+#prot 15
 #end
 
 #selectarmor 230
@@ -14066,6 +14293,7 @@
 #rcost 1
 #enc 0
 #woodenarmor
+#prot 3
 #end
 
 #selectarmor 231
@@ -14075,6 +14303,7 @@
 #rcost 1
 #enc 0
 #woodenarmor
+#prot 4
 #end
 
 #selectarmor 232
@@ -14083,6 +14312,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 5
 #end
 
 #selectarmor 233
@@ -14091,6 +14321,7 @@
 #def -1
 #rcost 0
 #enc 2
+#prot 17
 #end
 
 #selectarmor 234
@@ -14099,6 +14330,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 8
 #end
 
 #selectarmor 235
@@ -14107,6 +14339,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 13
 #end
 
 #selectarmor 236
@@ -14115,6 +14348,7 @@
 #def -1
 #rcost 9
 #enc 1
+#prot 12
 #end
 
 #selectarmor 237
@@ -14123,6 +14357,7 @@
 #def -2
 #rcost 21
 #enc 4
+#prot 18
 #end
 
 #selectarmor 238
@@ -14131,6 +14366,7 @@
 #def -1
 #rcost 5
 #enc 1
+#prot 22
 #end
 
 #selectarmor 239
@@ -14139,6 +14375,7 @@
 #def -1
 #rcost 6
 #enc 0
+#prot 23
 #end
 
 #selectarmor 240
@@ -14147,6 +14384,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 10
 #end
 
 #selectarmor 241
@@ -14155,6 +14393,7 @@
 #def -1
 #rcost 20
 #enc 2
+#prot 15
 #end
 
 #selectarmor 242
@@ -14163,6 +14402,7 @@
 #def -1
 #rcost 6
 #enc 1
+#prot 22
 #end
 
 #selectarmor 243
@@ -14171,6 +14411,7 @@
 #def -1
 #rcost 7
 #enc 0
+#prot 23
 #end
 
 #selectarmor 244
@@ -14180,6 +14421,7 @@
 #rcost 0
 #enc 0
 #woodenarmor
+#prot 8
 #end
 
 #selectarmor 245
@@ -14188,6 +14430,7 @@
 #def -1
 #rcost 17
 #enc 2
+#prot 15
 #end
 
 #selectarmor 246
@@ -14196,6 +14439,7 @@
 #def -2
 #rcost 23
 #enc 4
+#prot 19
 #end
 
 #selectarmor 247
@@ -14204,6 +14448,7 @@
 #def -1
 #rcost 5
 #enc 1
+#prot 22
 #end
 
 #selectarmor 248
@@ -14212,6 +14457,7 @@
 #def 0
 #rcost 6
 #enc 0
+#prot 22
 #end
 
 #selectarmor 249
@@ -14220,6 +14466,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 3
 #end
 
 #selectarmor 250
@@ -14228,6 +14475,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 19
 #end
 
 #selectarmor 251
@@ -14236,6 +14484,7 @@
 #def 0
 #rcost 3
 #enc 0
+#prot 5
 #end
 
 #selectarmor 252
@@ -14245,6 +14494,7 @@
 #rcost 6
 #enc 1
 #ironarmor
+#prot 10
 #end
 
 #selectarmor 253
@@ -14254,6 +14504,7 @@
 #rcost 10
 #enc 2
 #ironarmor
+#protparts 21 13
 #end
 
 #selectarmor 254
@@ -14263,6 +14514,7 @@
 #rcost 15
 #enc 3
 #ironarmor
+#protparts 21 18
 #end
 
 #selectarmor 255
@@ -14271,6 +14523,7 @@
 #def -1
 #rcost 20
 #enc 2
+#protparts 22 19
 #end
 
 #selectarmor 256
@@ -14280,6 +14533,7 @@
 #rcost 0
 #enc 1
 #ironarmor
+#prot 8
 #end
 
 #selectarmor 257
@@ -14289,6 +14543,7 @@
 #rcost 0
 #enc 2
 #ironarmor
+#protparts 19 11
 #end
 
 #selectarmor 258
@@ -14297,6 +14552,7 @@
 #def -3
 #rcost 0
 #enc 6
+#prot 20
 #end
 
 #selectarmor 259
@@ -14305,6 +14561,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 9
 #end
 
 #selectarmor 260
@@ -14313,6 +14570,7 @@
 #def -1
 #rcost 0
 #enc 1
+#prot 14
 #end
 
 #selectarmor 261
@@ -14321,6 +14579,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 12
 #end
 
 #selectarmor 262
@@ -14329,6 +14588,7 @@
 #def -2
 #rcost 0
 #enc 2
+#prot 22
 #end
 
 #selectarmor 263
@@ -14337,6 +14597,7 @@
 #def -2
 #rcost 14
 #enc 3
+#protparts 20 17
 #end
 
 #selectarmor 264
@@ -14345,6 +14606,7 @@
 #def 0
 #rcost 8
 #enc 1
+#prot 9
 #end
 
 #selectarmor 265
@@ -14353,6 +14615,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 17
 #end
 
 #selectarmor 266
@@ -14361,6 +14624,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 14
 #end
 
 #selectarmor 267
@@ -14369,6 +14633,7 @@
 #def -1
 #rcost 8
 #enc 1
+#prot 23
 #end
 
 #selectarmor 268
@@ -14377,6 +14642,7 @@
 #def -2
 #rcost 25
 #enc 3
+#prot 23
 #end
 
 #selectarmor 269
@@ -14385,6 +14651,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 5
 #end
 
 #selectarmor 270
@@ -14393,6 +14660,7 @@
 #def 0
 #rcost 3
 #enc 0
+#protparts 10 8
 #end
 
 #selectarmor 271
@@ -14401,6 +14669,7 @@
 #def 0
 #rcost 3
 #enc 0
+#protparts 15 11
 #end
 
 #selectarmor 272
@@ -14409,6 +14678,7 @@
 #def -1
 #rcost 15
 #enc 2
+#protparts 23 20
 #end
 
 #selectarmor 273
@@ -14417,6 +14687,7 @@
 #def -2
 #rcost 15
 #enc 3
+#protparts 24 21
 #end
 
 #selectarmor 274
@@ -14425,6 +14696,7 @@
 #def 0
 #rcost 3
 #enc 0
+#protparts 13 10
 #end
 
 #selectarmor 275
@@ -14433,6 +14705,7 @@
 #def -1
 #rcost 15
 #enc 2
+#protparts 21 18
 #end
 
 #selectarmor 276
@@ -14441,6 +14714,7 @@
 #def 0
 #rcost 10
 #enc 1
+#protparts 22 14
 #end
 
 #selectarmor 277
@@ -14449,6 +14723,7 @@
 #def -2
 #rcost 15
 #enc 3
+#protparts 23 20
 #end
 
 #selectarmor 278
@@ -14457,6 +14732,7 @@
 #def 0
 #rcost 0
 #enc 0
+#prot 6
 #end
 
 #selectarmor 279
@@ -14465,6 +14741,7 @@
 #def -3
 #rcost 0
 #enc 5
+#prot 23
 #end
 
 #selectarmor 280
@@ -14474,6 +14751,7 @@
 #rcost 15
 #enc 3
 #ironarmor
+#protparts 23 20
 #end
 
 #selectarmor 281
@@ -14482,6 +14760,7 @@
 #def -1
 #rcost 13
 #enc 1
+#prot 15
 #end
 
 #selectarmor 282
@@ -14490,6 +14769,7 @@
 #def -2
 #rcost 25
 #enc 3
+#prot 21
 #end
 
 #selectarmor 283
@@ -14498,6 +14778,7 @@
 #def 0
 #rcost 2
 #enc 0
+#prot 16
 #end
 
 #selectarmor 284
@@ -14506,6 +14787,7 @@
 #def -1
 #rcost 5
 #enc 0
+#prot 21
 #end
 
 #selectarmor 285
@@ -14514,6 +14796,7 @@
 #def 0
 #rcost 6
 #enc 0
+#prot 15
 #end
 
 #selectarmor 286
@@ -14522,6 +14805,7 @@
 #def -1
 #rcost 0
 #enc 0
+#prot 9
 #end
 
 #selectarmor 287
@@ -14531,6 +14815,7 @@
 #rcost 10
 #enc 1
 #ironarmor
+#protparts 19 12
 #end
 
 #selectarmor 288
@@ -14539,6 +14824,7 @@
 #def -1
 #rcost 7
 #enc 1
+#prot 22
 #end
 
 #selectarmor 289
@@ -14547,6 +14833,7 @@
 #def -1
 #rcost 12
 #enc 2
+#protparts 20 13
 #end
 
 #selectarmor 290
@@ -14555,6 +14842,7 @@
 #def 0
 #rcost 15
 #enc 1
+#protparts 23 21
 #end
 
 #selectarmor 291
@@ -14563,6 +14851,7 @@
 #def 0
 #rcost 1
 #enc 0
+#prot 5
 #end
 
 #selectarmor 292
@@ -14571,6 +14860,7 @@
 #def -2
 #rcost 0
 #enc 3
+#prot 22
 #end
 
 #selectarmor 293
@@ -14579,6 +14869,7 @@
 #def -1
 #rcost 1
 #enc 1
+#protparts 6 6
 #end
 
 #selectarmor 294
@@ -14587,6 +14878,7 @@
 #def -1
 #rcost 1
 #enc 1
+#prot 6
 #end
 
 #selectarmor 295
@@ -14604,6 +14896,7 @@
 #rcost 1
 #enc 0
 #woodenarmor
+#prot 3
 #end
 
 

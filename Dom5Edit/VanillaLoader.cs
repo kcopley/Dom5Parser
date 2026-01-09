@@ -186,6 +186,10 @@ namespace Dom5Edit
             m.Parse(dmPath);
 
             MarkAllEntitiesAsVanilla(m);
+
+            // Load sprite paths and descriptions from asset files
+            VanillaAssetLoader.LoadAssets(m);
+
             return m;
         }
 

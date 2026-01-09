@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -16,14 +17,14 @@ namespace Dom5Editor.UI.Views
         private SpellViewModel ViewModel => DataContext as SpellViewModel;
 
         /// <summary>
-        /// Navigate to the source spell when CopySpell reference is clicked.
+        /// Navigate to the source spell when CopySpell navigate button is clicked.
         /// </summary>
-        private void OnCopySpellClick(object sender, MouseButtonEventArgs e)
+        private void OnCopySpellClick(object sender, RoutedEventArgs e)
         {
-            var id = ViewModel?.CopySpellId ?? 0;
-            if (id != 0)
+            var id = ViewModel?.CopySpellId;
+            if (id.HasValue && id.Value != 0)
             {
-                ViewModel?.NavigateToReferenceCommand.Execute(("spell", id));
+                ViewModel?.NavigateToReferenceCommand.Execute(("spell", id.Value));
             }
         }
 
