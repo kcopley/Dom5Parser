@@ -1,0 +1,36 @@
+#newtemplate <nation nbr>
+Always start a new template with this command. It creates a
+new template for a specific nation.
+#end
+Always put this command last, after all commands belonging to
+the new template
+
+#form "monster name"
+The physical form of the pretender. Optionally the monster
+name can end with the monster number in parentesis, like
+"Dragon (265)" to distinguish between different monsters of
+the same name.
+#prison <nbr>
+0=awake, 1=dormant, 2=imprisoned.
+#magic <path> <level>
+Give start magic to pretender.
+#domstr <level>
+Set dominion strength 1-10.
+#scale <scale nbr> <value>
+Scales are numbered from 0-5 and they can have values of -5 to
+5.
+#bless "bless name"
+The bless effects for this pretender.
+
+#researchgoal "spell name" | "item name"
+This will make the AI research to get access to this spell or
+magic item. Many researchgoal can be set, in which case the AI
+will research to get them in that order. The AI's research might
+not be exactly like ordered, but it will mostly follow the plans.
+#favrit <disschool> <level> "ritual name" | "item name"
+Makes the AI prioritize casting this ritual or forging this magic
+item. Many favrit commands can be used to make the AI
+prioritize multiple things. Disschool and level can be set to -1,-1
+to never disable this favorite. Otherwise school should be a
+spell school and level a research level, when the AI reaches this
+the command will be disabled.

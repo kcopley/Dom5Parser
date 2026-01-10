@@ -21,7 +21,8 @@ namespace Dom5Edit.Entities
         EVENT_CODE,
         EVENT_VAR,
         EVENT_CODE_EFFECT,
-        BLESS
+        BLESS,
+        TEMPLATE
     }
 
     public enum ReturnType

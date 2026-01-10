@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+        xmlns:views="clr-namespace:Dom5Editor.UI.Views"
         mc:Ignorable="d"
         Title="Dom5 Editor"
         Height="900" Width="1400"
@@ -104,6 +105,13 @@
                     Style="{StaticResource TabControlBase}"
                     IsEnabled="{Binding HasMod}"
                     SelectedIndex="{Binding SelectedEntityTypeIndex, Mode=TwoWay}">
+
+            <!-- Mod Info Tab -->
+            <TabItem Header="Mod Info" Style="{StaticResource TabItemBase}">
+                <Border Background="{StaticResource BackgroundDarkBrush}" Padding="16">
+                    <views:ModInfoView DataContext="{Binding}"/>
+                </Border>
+            </TabItem>
 
             <!-- Monsters Tab -->
             <TabItem Header="Monsters" Style="{StaticResource TabItemBase}">
@@ -437,6 +445,34 @@
                             Background="{StaticResource BackgroundDarkBrush}"
                             Padding="16">
                         <ContentControl Content="{Binding SelectedBless}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Templates Tab -->
+            <TabItem Header="Templates" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="TemplateList"
+                                                 Grid.Column="0"
+                                                 EntityType="Template"
+                                                 Entities="{Binding Templates}"
+                                                 SelectedEntity="{Binding SelectedTemplate, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedTemplate}"/>
                     </Border>
                 </Grid>
             </TabItem>

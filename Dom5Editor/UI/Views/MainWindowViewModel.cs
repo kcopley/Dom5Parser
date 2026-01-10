@@ -62,6 +62,58 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        public string ModDescription
+        {
+            get => _mod?.Description;
+            set
+            {
+                if (_mod != null)
+                {
+                    _mod.Description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ModVersion
+        {
+            get => _mod?.Version;
+            set
+            {
+                if (_mod != null)
+                {
+                    _mod.Version = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ModDomVersion
+        {
+            get => _mod?.DomVersion;
+            set
+            {
+                if (_mod != null)
+                {
+                    _mod.DomVersion = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ModIcon
+        {
+            get => _mod?.Icon;
+            set
+            {
+                if (_mod != null)
+                {
+                    _mod.Icon = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string StatusMessage
         {
             get => _statusMessage;
@@ -286,6 +338,20 @@ namespace Dom5Editor.UI.Views
             set { _selectedBless = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<TemplateViewModel> _templates;
+        public ObservableCollection<TemplateViewModel> Templates
+        {
+            get => _templates;
+            private set { _templates = value; OnPropertyChanged(); }
+        }
+
+        private TemplateViewModel _selectedTemplate;
+        public TemplateViewModel SelectedTemplate
+        {
+            get => _selectedTemplate;
+            set { _selectedTemplate = value; OnPropertyChanged(); }
+        }
+
         // ========================================
         // Entity Reference Caches (for dropdown performance)
         // ========================================
@@ -437,6 +503,10 @@ namespace Dom5Editor.UI.Views
                     var bless = Blesses?.FirstOrDefault(b => b.ID == id);
                     if (bless != null) { SelectedBless = bless; return true; }
                     return false;
+                case EntityType.TEMPLATE:
+                    var template = Templates?.FirstOrDefault(t => t.ID == id);
+                    if (template != null) { SelectedTemplate = template; return true; }
+                    return false;
                 default:
                     return false;
             }
@@ -461,6 +531,7 @@ namespace Dom5Editor.UI.Views
                 EntityType.POPTYPE => true,
                 EntityType.NAMETYPE => true,
                 EntityType.BLESS => true,
+                EntityType.TEMPLATE => true,
                 // Dependent entities without tabs
                 EntityType.MONTAG => false,
                 EntityType.ENCHANTMENT => false,
@@ -475,21 +546,23 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         private static int EntityTypeToTabIndex(EntityType type)
         {
+            // Tab 0 is Mod Info (not an entity type)
             return type switch
             {
-                EntityType.MONSTER => 0,
-                EntityType.WEAPON => 1,
-                EntityType.ARMOR => 2,
-                EntityType.SPELL => 3,
-                EntityType.ITEM => 4,
-                EntityType.SITE => 5,
-                EntityType.NATION => 6,
-                EntityType.EVENT => 7,
-                EntityType.MERCENARY => 8,
-                EntityType.POPTYPE => 9,
-                EntityType.NAMETYPE => 10,
-                EntityType.BLESS => 11,
-                _ => 0
+                EntityType.MONSTER => 1,
+                EntityType.WEAPON => 2,
+                EntityType.ARMOR => 3,
+                EntityType.SPELL => 4,
+                EntityType.ITEM => 5,
+                EntityType.SITE => 6,
+                EntityType.NATION => 7,
+                EntityType.EVENT => 8,
+                EntityType.MERCENARY => 9,
+                EntityType.POPTYPE => 10,
+                EntityType.NAMETYPE => 11,
+                EntityType.BLESS => 12,
+                EntityType.TEMPLATE => 13,
+                _ => 1
             };
         }
 
@@ -498,20 +571,23 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         private static EntityType? TabIndexToEntityType(int index)
         {
+            // Tab 0 is Mod Info (not an entity type)
             return index switch
             {
-                0 => EntityType.MONSTER,
-                1 => EntityType.WEAPON,
-                2 => EntityType.ARMOR,
-                3 => EntityType.SPELL,
-                4 => EntityType.ITEM,
-                5 => EntityType.SITE,
-                6 => EntityType.NATION,
-                7 => EntityType.EVENT,
-                8 => EntityType.MERCENARY,
-                9 => EntityType.POPTYPE,
-                10 => EntityType.NAMETYPE,
-                11 => EntityType.BLESS,
+                0 => null, // Mod Info tab
+                1 => EntityType.MONSTER,
+                2 => EntityType.WEAPON,
+                3 => EntityType.ARMOR,
+                4 => EntityType.SPELL,
+                5 => EntityType.ITEM,
+                6 => EntityType.SITE,
+                7 => EntityType.NATION,
+                8 => EntityType.EVENT,
+                9 => EntityType.MERCENARY,
+                10 => EntityType.POPTYPE,
+                11 => EntityType.NAMETYPE,
+                12 => EntityType.BLESS,
+                13 => EntityType.TEMPLATE,
                 _ => null
             };
         }
@@ -583,6 +659,7 @@ namespace Dom5Editor.UI.Views
             SelectedPoptype = null;
             SelectedNametype = null;
             SelectedBless = null;
+            SelectedTemplate = null;
 
             // Build entity caches FIRST, before creating ViewModels
             // This ensures dropdowns are pre-populated when VMs are constructed
@@ -613,6 +690,8 @@ namespace Dom5Editor.UI.Views
                 (e, h, s) => new NametypeViewModel(e, h, s));
             Blesses = LoadEntities<Bless, BlessViewModel>(EntityType.BLESS,
                 (e, h, s) => new BlessViewModel(e, h, s));
+            Templates = LoadEntities<Template, TemplateViewModel>(EntityType.TEMPLATE,
+                (e, h, s) => new TemplateViewModel(e, h, s));
 
             OnPropertyChanged(nameof(HasMod));
             OnPropertyChanged(nameof(EntityCount));

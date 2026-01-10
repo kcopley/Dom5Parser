@@ -1,0 +1,79 @@
+{
+  "sections": [
+    {
+      "id": "pretender",
+      "displayName": "PRETENDER CONFIGURATION",
+      "description": "Configure the AI's pretender god form and starting attributes",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "form",
+          "display": "Form",
+          "type": "string",
+          "description": "Physical form of the pretender (monster name, optionally with ID in parentheses like 'Dragon (265)')."
+        },
+        {
+          "name": "prison",
+          "display": "Prison",
+          "type": "int",
+          "description": "Starting state: 0=Awake, 1=Dormant, 2=Imprisoned."
+        },
+        {
+          "name": "magic",
+          "display": "Magic",
+          "type": "intint",
+          "description": "Start magic for pretender: <path> <level>. Paths: 0=Fire, 1=Air, 2=Water, 3=Earth, 4=Astral, 5=Death, 6=Nature, 7=Blood, 8=Holy."
+        },
+        {
+          "name": "domstr",
+          "display": "Dominion",
+          "type": "int",
+          "description": "Dominion strength (1-10)."
+        },
+        {
+          "name": "bless",
+          "display": "Bless",
+          "type": "string",
+          "description": "Bless effect name to select for this pretender."
+        }
+      ]
+    },
+    {
+      "id": "scales",
+      "displayName": "DOMINION SCALES",
+      "description": "Configure the AI's preferred dominion scales",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "scale",
+          "display": "Scale",
+          "type": "intint",
+          "description": "Set scale value: <scale number> <value>. Scales: 0=Order/Turmoil, 1=Productivity/Sloth, 2=Heat/Cold, 3=Growth/Death, 4=Fortune/Misfortune, 5=Magic/Drain. Values range from -5 to 5."
+        }
+      ]
+    },
+    {
+      "id": "research",
+      "displayName": "AI RESEARCH PRIORITIES",
+      "description": "Configure AI research goals and favorite rituals/items",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "researchgoal",
+          "display": "Research Goal",
+          "type": "string",
+          "description": "Spell or item name for AI to research. Multiple goals can be set and will be researched in order."
+        },
+        {
+          "name": "favrit",
+          "display": "Favorite Ritual",
+          "type": "string",
+          "description": "AI favorite ritual/item: <disschool> <level> \"name\". Set disschool and level to -1,-1 to never disable. Otherwise specifies when to stop prioritizing."
+        }
+      ]
+    }
+  ]
+}
