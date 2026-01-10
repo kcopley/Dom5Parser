@@ -43,6 +43,7 @@ namespace Dom5Edit
             { Command.NEWSITE, EntityType.SITE },
             { Command.SELECTEVENT, EntityType.EVENT },
             { Command.SELECTBLESS, EntityType.BLESS },
+            { Command.NEWTEMPLATE, EntityType.TEMPLATE },
         };
         private Dictionary<Type, EntityType> TypeEntityMap { get; } = new Dictionary<Type, EntityType>()
         {
@@ -64,6 +65,7 @@ namespace Dom5Edit
             { typeof(EventVar), EntityType.EVENT_VAR },
             { typeof(EventCodeEffect), EntityType.EVENT_CODE_EFFECT },
             { typeof(Bless), EntityType.BLESS },
+            { typeof(Template), EntityType.TEMPLATE },
         };
 
         public Dictionary<EntityType, EntitySet<IDEntity>> Database { get; } = new Dictionary<EntityType, EntitySet<IDEntity>>()
@@ -81,6 +83,7 @@ namespace Dom5Edit
             { EntityType.EVENT, new EntitySet<IDEntity>() { START_ID = EVENT_START_ID } },
             { EntityType.EVENT_VAR, new EntitySet<IDEntity>() { START_ID = EVENT_VAR_START_ID } },
             { EntityType.BLESS, new EntitySet<IDEntity>() { } },
+            { EntityType.TEMPLATE, new EntitySet<IDEntity>() { } },
         };
         /// <summary>
         /// Try to get an Entity from the database.
@@ -355,6 +358,9 @@ namespace Dom5Edit
                     break;
                 case Command.SELECTBLESS:
                     _currentEntity = SelectEntity<Bless>(CommandEntityMap[c], val, comment);
+                    break;
+                case Command.NEWTEMPLATE:
+                    _currentEntity = NewEntity<Template>(val, comment);
                     break;
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);

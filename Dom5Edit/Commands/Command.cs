@@ -1637,6 +1637,14 @@
         MISFORTSCALE,
         DRAINSCALE,
         CLEARFX,
+        // Template entity commands (AI pretender design)
+        NEWTEMPLATE,
+        FORM,
+        PRISON,
+        DOMSTR,
+        SCALE,
+        RESEARCHGOAL,
+        FAVRIT,
     }
 
     public class CommandsMap
@@ -3337,6 +3345,15 @@
             _commandMap.Add("#misfortscale", Command.MISFORTSCALE);
             _commandMap.Add("#drainscale", Command.DRAINSCALE);
             _commandMap.Add("#clearfx", Command.CLEARFX);
+
+            // Template entity commands (AI pretender design)
+            _commandMap.Add("#newtemplate", Command.NEWTEMPLATE);
+            _commandMap.Add("#form", Command.FORM);
+            _commandMap.Add("#prison", Command.PRISON);
+            _commandMap.Add("#domstr", Command.DOMSTR);
+            _commandMap.Add("#scale", Command.SCALE);
+            _commandMap.Add("#researchgoal", Command.RESEARCHGOAL);
+            _commandMap.Add("#favrit", Command.FAVRIT);
 
             //Build an inverted map
             foreach (KeyValuePair<string, Command> kvp in _commandMap)

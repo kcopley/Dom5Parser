@@ -1,0 +1,79 @@
+<UserControl x:Class="Dom5Editor.UI.Views.TemplateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="600"
+             Background="{DynamicResource BackgroundMediumBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="12">
+            <!-- Header with ID and source indicator -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="6" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource HeaderText}" FontSize="18" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                        <TextBlock Text="{Binding NationId, StringFormat='AI Template for Nation #{0}'}" Style="{DynamicResource MutedText}" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <Border Grid.Column="1" Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="3" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SourceLabel}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Description -->
+            <Border Background="{DynamicResource BackgroundDarkBrush}" CornerRadius="4" Padding="10" Margin="0,0,0,12">
+                <TextBlock Text="Templates define how the AI designs its pretender god for a specific nation, including the physical form, magic paths, dominion strength, scales, bless effects, and research priorities."
+                           Style="{DynamicResource MutedText}" FontSize="11" TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Pretender Configuration Section -->
+            <controls:PropertyGroupControl Header="Pretender Configuration" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding PretenderBadges}"
+                        AvailableItems="{Binding AvailablePretenderBadges}"
+                        RemoveCommand="{Binding RemovePretenderBadgeCommand}"
+                        AddCommand="{Binding AddPretenderBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Scales Section -->
+            <controls:PropertyGroupControl Header="Dominion Scales" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ScaleBadges}"
+                        AvailableItems="{Binding AvailableScaleBadges}"
+                        RemoveCommand="{Binding RemoveScaleBadgeCommand}"
+                        AddCommand="{Binding AddScaleBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+            <!-- Research Priorities Section -->
+            <controls:PropertyGroupControl Header="AI Research Priorities" IsExpanded="True">
+                <controls:PropertyGroupControl.GroupContent>
+                    <controls:BadgeWrapPanel
+                        ItemsSource="{Binding ResearchBadges}"
+                        AvailableItems="{Binding AvailableResearchBadges}"
+                        RemoveCommand="{Binding RemoveResearchBadgeCommand}"
+                        AddCommand="{Binding AddResearchBadgeCommand}"
+                        NavigateCommand="{Binding NavigateToReferenceCommand}"
+                        ShowAddButton="True"/>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

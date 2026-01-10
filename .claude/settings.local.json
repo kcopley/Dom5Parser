@@ -26,7 +26,8 @@
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"Dom5Editor/Dom5Editor.csproj\")",
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Edit.sln\" --no-restore -v q)"
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"D:\\\\Projects\\\\Dom5Parser\\\\Dom5Edit.sln\" --no-restore -v q)",
+      "Bash(xxd:*)"
     ]
   }
 }
