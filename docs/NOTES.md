@@ -13,7 +13,7 @@ Quick reference notes for development context. See related documents for full de
 
 ## Current Development Status
 
-**Last Updated:** 2026-01-08
+**Last Updated:** 2026-01-09
 
 ### Working Features
 - JSON-driven badge UI system for all entity properties
@@ -35,6 +35,23 @@ Quick reference notes for development context. See related documents for full de
 
 ### In Progress
 - None currently
+
+### Recently Completed (2026-01-09)
+- **ChangesMod Identity Check on Value Reset** - Automatic removal from session tracking when property is reset to original:
+  - `EntityChanges` tracks original property values (before any session edits)
+  - `SetPropertyWithOriginal()` compares new values against session originals
+  - When values match the original, the change is automatically reverted
+  - All edit commands implement `GetOriginalProperty()` for identity checking
+  - Supports Int, String, Command, and IntInt property types
+
+- **Clear Commands Implementation** - Full support for clear commands that block inheritance:
+  - `PropertyGroupMap.cs` - Maps commands to property groups (Weapons, Armor, Magic, Special, etc.)
+  - `IDEntity.cs` - `HasClearCommand()`, `IsPropertyGroupCleared()` integrated into `TryGet<T>()`
+  - `Monster.cs` / `Nation.cs` - Override `GetPropertyGroup()` for entity-specific mappings
+  - `MonsterViewModel.cs` - `HasClearAll`, `HasClearWeapons`, `HasClearArmor`, `HasClearMagic`, `HasClearSpec` properties
+  - `MonsterView.xaml` - Checkbox row for all 5 clear commands with tooltips
+  - `EntityViewModel.cs` - Fallback logic blocks inheritance when property group is cleared
+  - Supports: `#clear`, `#clearweapons`, `#cleararmor`, `#clearmagic`, `#clearspec` (Monster), `#cleargods`, `#clearsites`, `#clearrec`, `#clearnation` (Nation), `#cleardef` (Poptype)
 
 ### Recently Completed (2026-01-08)
 - **Editable Copy Reference Selectors** - All copy commands now have searchable dropdown selectors:

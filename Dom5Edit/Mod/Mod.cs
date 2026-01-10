@@ -42,6 +42,7 @@ namespace Dom5Edit
             { Command.SELECTSITE, EntityType.SITE },
             { Command.NEWSITE, EntityType.SITE },
             { Command.SELECTEVENT, EntityType.EVENT },
+            { Command.SELECTBLESS, EntityType.BLESS },
         };
         private Dictionary<Type, EntityType> TypeEntityMap { get; } = new Dictionary<Type, EntityType>()
         {
@@ -62,6 +63,7 @@ namespace Dom5Edit
             { typeof(EventCode), EntityType.EVENT_CODE },
             { typeof(EventVar), EntityType.EVENT_VAR },
             { typeof(EventCodeEffect), EntityType.EVENT_CODE_EFFECT },
+            { typeof(Bless), EntityType.BLESS },
         };
 
         public Dictionary<EntityType, EntitySet<IDEntity>> Database { get; } = new Dictionary<EntityType, EntitySet<IDEntity>>()
@@ -78,6 +80,7 @@ namespace Dom5Edit
             { EntityType.MERCENARY, new EntitySet<IDEntity>() { } },
             { EntityType.EVENT, new EntitySet<IDEntity>() { START_ID = EVENT_START_ID } },
             { EntityType.EVENT_VAR, new EntitySet<IDEntity>() { START_ID = EVENT_VAR_START_ID } },
+            { EntityType.BLESS, new EntitySet<IDEntity>() { } },
         };
         /// <summary>
         /// Try to get an Entity from the database.
@@ -349,6 +352,9 @@ namespace Dom5Edit
                     break;
                 case Command.SELECTPOPTYPE:
                     _currentEntity = SelectEntity<Poptype>(CommandEntityMap[c], val, comment);
+                    break;
+                case Command.SELECTBLESS:
+                    _currentEntity = SelectEntity<Bless>(CommandEntityMap[c], val, comment);
                     break;
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);

@@ -18,6 +18,7 @@ namespace Dom5Editor.EditCommands
         private readonly int? _oldValue2;
         private readonly bool _propertyExisted;
         private readonly bool _isValue1Change;
+        private readonly IntIntProperty _originalProperty;
 
         public string Description { get; }
 
@@ -30,6 +31,11 @@ namespace Dom5Editor.EditCommands
         {
             _entity.TryGet<IntIntProperty>(_command, out var prop, checkCopy: false);
             return prop;
+        }
+
+        public Property GetOriginalProperty()
+        {
+            return _originalProperty;
         }
 
         /// <summary>
@@ -45,13 +51,15 @@ namespace Dom5Editor.EditCommands
 
             Description = $"Set {_command} to {_newValue1}, {_newValue2}";
 
-            // Capture current state for undo
+            // Capture current state for undo and identity checking
             var result = _entity.TryGet<IntIntProperty>(command, out var existingProp, checkCopy: false);
             _propertyExisted = result == ReturnType.TRUE;
             if (_propertyExisted)
             {
                 _oldValue1 = existingProp.Value1;
                 _oldValue2 = existingProp.Value2;
+                // Create a snapshot of the original property for identity checking
+                _originalProperty = new IntIntProperty { Command = command, Parent = entity, Value1 = existingProp.Value1, Value2 = existingProp.Value2 };
             }
         }
 
@@ -77,7 +85,7 @@ namespace Dom5Editor.EditCommands
             _command = command;
             _isValue1Change = isValue1;
 
-            // Capture current state for undo
+            // Capture current state for undo and identity checking
             var result = _entity.TryGet<IntIntProperty>(command, out var existingProp, checkCopy: false);
             _propertyExisted = result == ReturnType.TRUE;
 
@@ -85,6 +93,8 @@ namespace Dom5Editor.EditCommands
             {
                 _oldValue1 = existingProp.Value1;
                 _oldValue2 = existingProp.Value2;
+                // Create a snapshot of the original property for identity checking
+                _originalProperty = new IntIntProperty { Command = command, Parent = entity, Value1 = existingProp.Value1, Value2 = existingProp.Value2 };
             }
 
             if (isValue1)

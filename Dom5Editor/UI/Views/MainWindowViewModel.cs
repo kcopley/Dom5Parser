@@ -272,6 +272,20 @@ namespace Dom5Editor.UI.Views
             set { _selectedNametype = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<BlessViewModel> _blesses;
+        public ObservableCollection<BlessViewModel> Blesses
+        {
+            get => _blesses;
+            private set { _blesses = value; OnPropertyChanged(); }
+        }
+
+        private BlessViewModel _selectedBless;
+        public BlessViewModel SelectedBless
+        {
+            get => _selectedBless;
+            set { _selectedBless = value; OnPropertyChanged(); }
+        }
+
         // ========================================
         // Entity Reference Caches (for dropdown performance)
         // ========================================
@@ -419,6 +433,10 @@ namespace Dom5Editor.UI.Views
                     var nametype = Nametypes?.FirstOrDefault(n => n.ID == id);
                     if (nametype != null) { SelectedNametype = nametype; return true; }
                     return false;
+                case EntityType.BLESS:
+                    var bless = Blesses?.FirstOrDefault(b => b.ID == id);
+                    if (bless != null) { SelectedBless = bless; return true; }
+                    return false;
                 default:
                     return false;
             }
@@ -442,6 +460,7 @@ namespace Dom5Editor.UI.Views
                 EntityType.MERCENARY => true,
                 EntityType.POPTYPE => true,
                 EntityType.NAMETYPE => true,
+                EntityType.BLESS => true,
                 // Dependent entities without tabs
                 EntityType.MONTAG => false,
                 EntityType.ENCHANTMENT => false,
@@ -469,6 +488,7 @@ namespace Dom5Editor.UI.Views
                 EntityType.MERCENARY => 8,
                 EntityType.POPTYPE => 9,
                 EntityType.NAMETYPE => 10,
+                EntityType.BLESS => 11,
                 _ => 0
             };
         }
@@ -491,6 +511,7 @@ namespace Dom5Editor.UI.Views
                 8 => EntityType.MERCENARY,
                 9 => EntityType.POPTYPE,
                 10 => EntityType.NAMETYPE,
+                11 => EntityType.BLESS,
                 _ => null
             };
         }
@@ -561,6 +582,7 @@ namespace Dom5Editor.UI.Views
             SelectedMercenary = null;
             SelectedPoptype = null;
             SelectedNametype = null;
+            SelectedBless = null;
 
             // Build entity caches FIRST, before creating ViewModels
             // This ensures dropdowns are pre-populated when VMs are constructed
@@ -589,6 +611,8 @@ namespace Dom5Editor.UI.Views
                 (e, h, s) => new PoptypeViewModel(e, h, s));
             Nametypes = LoadEntities<Nametype, NametypeViewModel>(EntityType.NAMETYPE,
                 (e, h, s) => new NametypeViewModel(e, h, s));
+            Blesses = LoadEntities<Bless, BlessViewModel>(EntityType.BLESS,
+                (e, h, s) => new BlessViewModel(e, h, s));
 
             OnPropertyChanged(nameof(HasMod));
             OnPropertyChanged(nameof(EntityCount));

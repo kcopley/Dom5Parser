@@ -38,13 +38,89 @@ namespace Dom5Edit
         public HashSet<Command> RemovedProperties { get; } = new HashSet<Command>();
 
         /// <summary>
-        /// Adds or updates a changed property.
+        /// Original property values before any session edits.
+        /// Used for identity checking - if a value is edited back to its original,
+        /// the change is automatically removed from tracking.
+        /// </summary>
+        private readonly Dictionary<Command, Property> _originalValues = new Dictionary<Command, Property>();
+
+        /// <summary>
+        /// Original "property existed" state for commands that didn't have a value before session.
+        /// Used to detect when a property is removed back to its original non-existent state.
+        /// </summary>
+        private readonly HashSet<Command> _originallyMissing = new HashSet<Command>();
+
+        /// <summary>
+        /// Adds or updates a changed property (legacy method without identity check).
         /// </summary>
         public void SetProperty(Property property)
         {
             ChangedProperties[property.Command] = property;
             // If we're setting a property, it's no longer removed
             RemovedProperties.Remove(property.Command);
+        }
+
+        /// <summary>
+        /// Adds or updates a changed property with identity checking.
+        /// If the new value matches the original (pre-session) value, the change is removed.
+        /// </summary>
+        /// <param name="property">The new property value.</param>
+        /// <param name="originalBeforeCommand">The property value before the current edit command.
+        /// On the first edit of a property, this is the session original.</param>
+        /// <returns>True if the property was recorded as changed, false if it matched the original and was reverted.</returns>
+        public bool SetPropertyWithOriginal(Property property, Property originalBeforeCommand)
+        {
+            var command = property.Command;
+
+            // First time we touch this command in this session, record the original
+            if (!_originalValues.ContainsKey(command) && !_originallyMissing.Contains(command))
+            {
+                if (originalBeforeCommand != null)
+                {
+                    _originalValues[command] = originalBeforeCommand;
+                }
+                else
+                {
+                    _originallyMissing.Add(command);
+                }
+            }
+
+            // Get the session original (what was there before ANY session edits)
+            _originalValues.TryGetValue(command, out var sessionOriginal);
+
+            // Compare new value to session original
+            if (ArePropertiesEqual(property, sessionOriginal))
+            {
+                // Back to original - clear the change
+                ChangedProperties.Remove(command);
+                // Keep _originalValues entry so we remember the original for future edits
+                return false;
+            }
+
+            ChangedProperties[command] = property;
+            RemovedProperties.Remove(command);
+            return true;
+        }
+
+        /// <summary>
+        /// Compares two properties for value equality.
+        /// </summary>
+        private static bool ArePropertiesEqual(Property a, Property b)
+        {
+            if (a == null && b == null) return true;
+            if (a == null || b == null) return false;
+            if (a.Command != b.Command) return false;
+
+            // Compare by property type
+            return (a, b) switch
+            {
+                (IntProperty ia, IntProperty ib) => ia.Value == ib.Value,
+                (IntIntProperty iia, IntIntProperty iib) => iia.Value1 == iib.Value1 && iia.Value2 == iib.Value2,
+                (StringProperty sa, StringProperty sb) => sa.Value == sb.Value,
+                (CommandProperty, CommandProperty) => true, // Both exist = equal
+                // For other property types, compare by reference or consider them different
+                _ => ReferenceEquals(a, b)
+            };
         }
 
         /// <summary>

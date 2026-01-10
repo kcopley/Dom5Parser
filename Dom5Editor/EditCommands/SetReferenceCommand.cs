@@ -24,6 +24,16 @@ namespace Dom5Editor.EditCommands
 
         public Property GetResultingProperty() => _reference;
 
+        public Property GetOriginalProperty()
+        {
+            // For references, we return the reference itself which contains the old entity info
+            // The identity check should compare the referenced entity, not the reference object
+            // Since we're modifying the reference in place, we can't easily return the "original"
+            // For now, return null to indicate this is always a change
+            // TODO: Consider creating a snapshot reference for identity checking
+            return null;
+        }
+
         /// <summary>
         /// Creates a command to change the entity a reference points to.
         /// </summary>

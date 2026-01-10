@@ -189,6 +189,7 @@ namespace Dom5Editor.EditCommands
 
         /// <summary>
         /// Records a property change to ChangesMod if applicable.
+        /// Uses identity checking to automatically remove changes when a value is reset to its original.
         /// </summary>
         private void RecordPropertyChange(IEditCommand command)
         {
@@ -212,10 +213,28 @@ namespace Dom5Editor.EditCommands
                     var property = propCommand.GetResultingProperty();
                     if (property != null)
                     {
-                        ChangesMod.RecordPropertyChange(entity, property);
+                        // Get the original property for identity checking
+                        var originalProperty = propCommand.GetOriginalProperty();
+
+                        // Use the identity-checking version that automatically removes
+                        // the change if the new value matches the session original
+                        bool isVanilla = entity.IsVanilla || (ChangesMod.LoadedMod != null && !IsInLoadedMod(entity));
+                        var changes = ChangesMod.GetOrCreateChanges(GetEntityType(entity), entity.ID, isVanilla);
+                        changes.SetPropertyWithOriginal(property, originalProperty);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if an entity is in the loaded mod.
+        /// </summary>
+        private bool IsInLoadedMod(Dom5Edit.Entities.IDEntity entity)
+        {
+            if (ChangesMod?.LoadedMod == null) return false;
+            var entityType = GetEntityType(entity);
+            return ChangesMod.LoadedMod.Database.TryGetValue(entityType, out var set)
+                   && set.TryGetValue(entity.ID, out _);
         }
 
         /// <summary>

@@ -413,6 +413,34 @@
                 </Grid>
             </TabItem>
 
+            <!-- Blesses Tab -->
+            <TabItem Header="Blesses" Style="{StaticResource TabItemBase}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" MinWidth="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:EntityListControl x:Name="BlessList"
+                                                 Grid.Column="0"
+                                                 EntityType="Bless"
+                                                 Entities="{Binding Blesses}"
+                                                 SelectedEntity="{Binding SelectedBless, Mode=TwoWay}"/>
+
+                    <GridSplitter Grid.Column="1"
+                                  Width="4"
+                                  HorizontalAlignment="Center"
+                                  Background="{StaticResource BorderBrush}"/>
+
+                    <Border Grid.Column="2"
+                            Background="{StaticResource BackgroundDarkBrush}"
+                            Padding="16">
+                        <ContentControl Content="{Binding SelectedBless}"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
         </TabControl>
 
         <!-- ========================================

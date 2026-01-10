@@ -375,42 +375,42 @@ protected List<(int Id, string Name, bool IsInherited, bool IsModified, bool IsS
 
 ---
 
-## Clear Commands Architecture (Future)
+## Clear Commands Architecture (COMPLETE)
 
-The game supports various #clear commands that reset inherited values when modifying vanilla entities. These affect how fallback/inheritance works in the editor.
+**Implemented:** 2026-01-09
 
-### Known Clear Commands
-- `#clearweapons` - Removes all inherited weapons
-- `#cleararmor` - Removes all inherited armor
-- `#clearmagic` - Removes all inherited magic paths
-- `#clearspec` - Removes special abilities
-- Others TBD (need to catalog from manual)
+Clear commands (`#clear`, `#clearweapons`, `#cleararmor`, `#clearmagic`, `#clearspec`) block inheritance from vanilla and copystats sources.
 
-### Implementation Considerations
+### Supported Clear Commands
 
-**Fallback Logic Changes:**
-When determining effective property values (vanilla → mod → session), must check for clear commands:
-```
-if entity has #clearweapons:
-    don't inherit weapons from vanilla or copystats
-    only show weapons explicitly added after the clear
-```
+| Command | Entity | Clears |
+|---------|--------|--------|
+| `#clear` | Monster | Everything (all property groups) |
+| `#clearweapons` | Monster | Weapon slots |
+| `#cleararmor` | Monster | Armor slots |
+| `#clearmagic` | Monster | Magic paths (magicskill, custommagic, magicboost) |
+| `#clearspec` | Monster | Special abilities (everything not stats/identity/sprites) |
+| `#cleargods` | Nation | Pretender chassis |
+| `#clearsites` | Nation | Starting sites |
+| `#clearrec` | Nation | Recruitment lists |
+| `#clearnation` | Nation | Nation settings |
+| `#cleardef` | Poptype | Province defense |
 
-**UI Requirements:**
-- Show clear commands as special badges or toggles in relevant sections
-- Visual indicator when inheritance is blocked (e.g., "Cleared" badge)
-- Ability to add/remove clear commands
-- When clear is active, "inherited" items should not display
+### Implementation
 
-**Data Model:**
-- Clear commands are CommandProperty types (flag, no value)
-- Need to check for clear commands BEFORE walking copystats chain
-- May need to track clear commands separately for quick lookup
+1. **PropertyGroupMap.cs** - Maps commands to `PropertyGroup` enum values
+2. **IDEntity.cs** - `HasClearCommand()`, `IsPropertyGroupCleared()`, integrated into `TryGet<T>()`
+3. **Monster.cs / Nation.cs** - Override `GetPropertyGroup()` for entity-specific mappings
+4. **MonsterViewModel.cs** - Boolean properties with `SetClearCommand()` helper
+5. **MonsterView.xaml** - Checkbox row in Copy From section
+6. **EntityViewModel.cs** - Fallback logic checks `IsPropertyGroupCleared()` before inheritance
 
-**Order of Operations:**
-1. Check if entity has relevant clear command
-2. If cleared: only show properties directly on entity (no inheritance)
-3. If not cleared: normal layered fallback (vanilla → copystats → mod → session)
+### Behavior
+
+- Clear commands block inheritance for their property group from BOTH vanilla AND copystats
+- Properties explicitly set on the entity are still shown (clears only affect inheritance)
+- Cascading copies respect clear commands at each level of the chain
+- UI checkboxes toggle clear commands with immediate property refresh
 
 ---
 
@@ -562,7 +562,13 @@ See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
   - Summon weapons (dmg="summonunits"): SearchableReferenceComboBox for monster selection
   - Cloud weapons (dmg="cloud"): read-only text display
   - Control is generic and reusable for other conditional editors
-- **ChangesMod Identity Check on Value Reset** - When a property is edited back to its original value (matching base mod or vanilla data), automatically remove it from the ChangesMod session tracking. The generic fallback resolution code should include identity checks, and resetting a property should un-mark it as modified.
+- ~~**ChangesMod Identity Check on Value Reset**~~ **DONE (2026-01-09)** - Automatic removal from session tracking when property is reset to original:
+  - `EntityChanges` tracks original property values (before any session edits)
+  - `SetPropertyWithOriginal()` compares new values against session originals
+  - When values match the original, the change is automatically reverted (removed from tracking)
+  - `IPropertyEditCommand.GetOriginalProperty()` exposes the pre-edit property value
+  - All edit commands (SetInt, SetString, SetCommand, SetIntInt, Remove, Add) implement identity checking
+  - Works for Int, String, Command, and IntInt property types
 - ~~**Searchable Dropdowns**~~ **DONE (2026-01-06)** - Reference badge selectors now use SearchableReferenceComboBox:
   - Text filter searches by name or ID
   - Click opens dropdown and selects all text for easy replacement
@@ -581,12 +587,13 @@ See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
   - 7 cached lists: CachedWeapons, CachedArmors, CachedMonsters, CachedItems, CachedSpells, CachedSites, CachedNations
   - Built at mod load via `BuildEntityCaches()`, before ViewModels are created
   - O(1) HashSet deduplication, shared readonly lists across all ViewModels
-- **#clear Commands Support** - Commands like #clearweapons, #cleararmor, #clearmagic, etc.:
-  - Must track presence of clear commands on entities
-  - Affects fallback logic: if #clearweapons is present, don't inherit weapons from vanilla/copystats
-  - UI support for adding/removing clear commands
-  - Display indicator when clear command is active (shows inheritance is blocked)
-  - See "Clear Commands Architecture" section below for implementation notes
+- ~~**#clear Commands Support**~~ **DONE (2026-01-09)** - Full clear command implementation:
+  - `PropertyGroupMap.cs` maps commands to property groups (Weapons, Armor, Magic, Special, etc.)
+  - `IDEntity.HasClearCommand()` and `IsPropertyGroupCleared()` integrated into `TryGet<T>()`
+  - Monster/Nation entities override `GetPropertyGroup()` for entity-specific mappings
+  - MonsterViewModel: `HasClearAll`, `HasClearWeapons`, `HasClearArmor`, `HasClearMagic`, `HasClearSpec` properties
+  - MonsterView: Checkbox row for all 5 clear commands with tooltips
+  - EntityViewModel: Fallback logic blocks inheritance when property group is cleared
 - **Read-Only Flags in Badge Configs** - Some vanilla properties have no corresponding mod commands (see `docs/DATA_ODDITIES.md`):
   - Weapon flags: `soulslaying`, `ignoreshield`, `defnegate`, `uwonly`, `noillusion`, `magiconly`, etc.
   - Weapon attributes: `flammable`, `nofirebless`

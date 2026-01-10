@@ -22,6 +22,12 @@ namespace Dom5Editor.EditCommands
 
         public Property GetResultingProperty() => _property;
 
+        public Property GetOriginalProperty()
+        {
+            // When adding a new property, there was no original
+            return null;
+        }
+
         /// <summary>
         /// Creates a command to add a property to an entity.
         /// </summary>

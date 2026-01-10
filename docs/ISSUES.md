@@ -2,7 +2,7 @@
 
 Potential bugs and critical problems identified during code review.
 
-**Last Updated:** 2026-01-08
+**Last Updated:** 2026-01-09
 
 ---
 
@@ -78,24 +78,24 @@ public override void Resolve()
 
 **Root Cause:**
 
-For `VanillaModified` entities (vanilla entities being edited in a session), the `_entity` object IS the vanilla entity with all its vanilla properties loaded directly. When `TryGet(HP)` was called, it found the vanilla HP directly on the entity and returned it - never checking the copystats chain.
+For vanilla-based entities (`FromVanilla` or `VanillaModified`), the `_entity` object IS the vanilla entity with all its vanilla properties loaded directly. When `TryGet(HP)` was called, it found the vanilla HP directly on the entity and returned it - never checking the copystats chain.
 
 The semantic distinction:
 - **FromMod entities**: Direct properties are intentional overrides → copystats is fallback (correct)
-- **VanillaModified entities with session-added copystats**: Direct properties are vanilla base data → should be REPLACED by copystats
+- **Vanilla-based entities with session-added copystats**: Direct properties are vanilla base data → should be REPLACED by copystats
 
 **Solution:**
 
 Modified `EntityViewModel.BuildBadgesFromSection()` to detect this case and get values from the copy source instead of the entity when:
-1. Source is `VanillaModified`
+1. Source is NOT `FromMod` (i.e., `FromVanilla` or `VanillaModified`)
 2. Entity has copystats
 3. The specific property was NOT edited in the current session
 
 ```csharp
-// Special handling for VanillaModified entities with copystats
+// Special handling for vanilla-based entities with copystats
 bool useOnlyCopySource = false;
 IDEntity copySourceForVanilla = null;
-if (_source == EntitySource.VanillaModified &&
+if (_source != EntitySource.FromMod &&
     _entity.TryGetCopyFrom(out copySourceForVanilla) &&
     copySourceForVanilla != null &&
     !IsPropertyEditedInSession(command))
@@ -105,7 +105,7 @@ if (_source == EntitySource.VanillaModified &&
 
 if (useOnlyCopySource && copySourceForVanilla != null)
 {
-    // Get from copy source for VanillaModified (bypasses vanilla properties on entity)
+    // Get from copy source (bypasses vanilla properties on entity)
     var copyResult = copySourceForVanilla.TryGet<IntProperty>(command, out var copyProp);
     // ... use copy source value
 }
@@ -118,115 +118,111 @@ else
 ```
 
 **Files Modified:**
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added VanillaModified + copystats detection in `BuildBadgesFromSection()`
+- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added vanilla-based + copystats detection in `BuildBadgesFromSection()`
 
 **Priority Rules (now working correctly):**
 1. Session-edited properties take highest priority (user explicitly set a value)
-2. For VanillaModified with copystats, copy source values are used (vanilla base is bypassed)
+2. For vanilla-based entities with copystats, copy source values are used (vanilla base is bypassed)
 3. For FromMod, entity properties override copystats (mod-defined properties are intentional overrides)
 
 ---
 
-### 2. Copy Commands Need Clear/Reset Mechanism
+### ~~1b. Stats Badge Remove Button Not Working~~ FIXED (2026-01-09)
 
-**Status:** OPEN - Design Required
+**Status:** FIXED
 
-**Added:** 2026-01-08
+**Added:** 2026-01-09
 
-**Discovery:** Copy commands (`#copystats`, `#copyweapon`, `#copyarmor`, etc.) function as implicit clears. They reset all inherited data and replace it with data from the copy source.
+**Symptoms:**
+- On FromMod entities with stats defined, clicking the "x" button on stats badges did nothing
+- Other badge types (weapons, armor, etc.) could be removed successfully
+- The "x" button was visible and enabled (`CanRemove=True`), but clicking had no effect
 
-**Simplified Design Assumptions:**
+**Root Cause:**
 
-1. **Not fully order-aware** - We assume copy commands are always placed BEFORE any property edits. No need to track property positions.
+`MonsterView.xaml` was missing the `RemoveCommand` binding for the stats `BadgeGridPanel`, and `MonsterViewModel` was missing the `RemoveStatsBadgeCommand` property.
 
-2. **Copy OR Vanilla, not both** - An entity either inherits from vanilla OR from a copy source, never both. Copy commands completely replace vanilla as the inheritance base.
+Other entity views (ArmorView, WeaponView) had this wired up correctly:
+```xml
+<!-- ArmorView.xaml - Correct -->
+<controls:BadgeGridPanel
+    ItemsSource="{Binding StatsBadges}"
+    RemoveCommand="{Binding RemoveStatsBadgeCommand}"
+    ... />
 
-3. **Clear commands come after copy** - The narrow clear commands (`#clearweapons`, `#cleararmor`, `#clearmagic`, `#clearspec`) always come after any copy command. They remove specific property groups from whatever the current inheritance base is (copy source or vanilla).
-
-**Command Order Model:**
-```
-#selectmonster 1        -- Select vanilla monster
-#copystats 100          -- (Optional) Replace vanilla base with Monster #100
-#clearweapons           -- (Optional) Block weapon inheritance from copy source
-#clearmagic             -- (Optional) Block magic path inheritance from copy source
-#hp 50                  -- Override: explicit property edits
-#att 18
-#weapon 123             -- Can still add weapons explicitly after clearing
-#end
-```
-
-**Clear Commands are Narrowly Scoped:**
-When `#clearweapons` follows `#copystats 100`, it ONLY blocks weapon inheritance from Monster #100. All other stats (hp, att, def, armor, magic, etc.) still inherit from the copy source. The clear command acts as a selective filter on one property group.
-
-**Cascading Copies:**
-Copy sources can themselves have copy commands. The existing `TryGet(checkCopy: true)` already handles this recursively - it follows the copy chain until it finds the property or reaches the end.
-
-```
-Monster A (#copystats B) → Monster B (#copystats C) → Monster C (has #hp 100)
-Result: Monster A's HP resolves to 100 through the chain
+<!-- MonsterView.xaml - Was Missing RemoveCommand -->
+<controls:BadgeGridPanel
+    ItemsSource="{Binding StatsBadges}"
+    ShowAddButton="False"/>
 ```
 
-**Behavior by Entity Source:**
+**Solution:**
 
-1. **New Mod Entity (e.g., `#newmonster 5000`)**
-   - No vanilla data exists
-   - `#copystats X` makes entity inherit from X
-   - Clear commands remove specific groups from X
-   - Explicit properties override
-   - Standard behavior, already works
+1. Added `RemoveStatsBadgeCommand` property to `MonsterViewModel.cs`:
+```csharp
+private RelayCommand<PropertyItem> _removeStatsBadgeCommand;
+public RelayCommand<PropertyItem> RemoveStatsBadgeCommand =>
+    _removeStatsBadgeCommand ??= CreateRemoveBadgeCommand(RefreshStatsBadges);
+```
 
-2. **Vanilla-Modified Entity (e.g., `#selectmonster 1` on vanilla Monster #1)**
-   - WITHOUT `#copystats`: Mod properties override vanilla, unset properties fall back to vanilla
-   - WITH `#copystats X`: Vanilla data is **suppressed**, entity inherits from X instead
-   - Clear commands then remove specific groups from X (not from vanilla)
+2. Added `RemoveCommand` binding in `MonsterView.xaml`:
+```xml
+<controls:BadgeGridPanel
+    Columns="3"
+    ItemsSource="{Binding StatsBadges}"
+    RemoveCommand="{Binding RemoveStatsBadgeCommand}"
+    ShowAddButton="False"/>
+```
 
-**Key Insight:** When a copy command is present, vanilla data is completely bypassed. The copy source becomes the sole inheritance base. Clear commands then filter that base.
+**Files Modified:**
+- `Dom5Editor/UI/ViewModels/MonsterViewModel.cs` - Added `RemoveStatsBadgeCommand`
+- `Dom5Editor/UI/Views/MonsterView.xaml` - Added `RemoveCommand` binding
 
-**Implementation Approach:**
+**Behavior After Fix:**
+- Clicking "x" removes the property from the entity
+- Removal is recorded in ChangesMod (for export tracking)
+- Badge refreshes to show the fallback value (from copystats or default)
 
-1. **Layered Property Resolution Changes**
-   - Current: `Mod Entity → Vanilla Entity`
-   - New: `Mod Entity → Copy Source (if exists, skip vanilla) → Vanilla (only if NO copy)`
+---
 
-   ```
-   GetProperty(command):
-     if entity.HasProperty(command): return entity's value
-     if entity.HasCopyFrom():
-       return copySource.GetProperty(command)  // Recurse into copy chain
-       // NOTE: Do NOT fall back to vanilla - copy replaces it entirely
-     if source == VanillaModified && !entity.HasCopyFrom():
-       return vanillaEntity.GetProperty(command)
-     return null
-   ```
+### ~~2. Copy Commands Need Clear/Reset Mechanism~~ FIXED (2026-01-09)
 
-2. **Clear Command Handling**
-   - Track clear flags: `HasClearWeapons`, `HasClearArmor`, `HasClearMagic`, `HasClearSpec`
-   - When resolving properties in those groups, check clear flag first
-   - If cleared: don't inherit from copy source OR vanilla for that group
+**Status:** FIXED
 
-   ```
-   GetWeapons():
-     if entity.HasClearWeapons: return only entity's explicit weapons
-     if entity.HasCopyFrom(): return copySource.GetWeapons()
-     if source == VanillaModified: return vanillaEntity.GetWeapons()
-     return empty
-   ```
+**Implementation Summary:**
 
-3. **UI/Badge Display**
-   - If copy command exists: show copy source values as inherited
-   - If clear command exists for a group: show nothing inherited for that group
-   - Badge `IsInherited` should reflect actual inheritance source
+Clear commands (`#clearweapons`, `#cleararmor`, `#clearmagic`, `#clearspec`, `#clear`) are fully implemented with:
 
-**Design Notes:**
-- Vanilla data is never modified or deleted - just bypassed when copy exists
-- Copy command = "use this as my base instead of vanilla"
-- Clear command = "remove this group from my base (copy or vanilla)"
-- Cascading copies are handled by recursive resolution (already implemented)
+1. **PropertyGroupMap.cs** - Maps commands to property groups:
+   - `PropertyGroup` enum: None, Weapons, Armor, Magic, Special, Sprites, All, Gods, Sites, NationSettings, Recruitment, Defense
+   - `GetMonsterGroup(Command)` / `GetNationGroup(Command)` - Entity-specific mappings
+   - `GetClearCommand(PropertyGroup)` - Returns the clear command for a group
 
-**Related Files:**
-- `Dom5Edit/Entities/IDEntity.cs` - `TryGetCopyFrom()`, property resolution
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Layered property access (`GetIntProperty`, `BuildBadgesFromSection`)
-- `Dom5Editor/UI/ViewModels/*ViewModel.cs` - Badge inheritance display
+2. **IDEntity.cs** - Core clear command logic:
+   - `HasClearCommand(Command)` - Checks if entity has a specific clear command
+   - `IsPropertyGroupCleared(Command)` - Returns true if property should NOT be inherited
+   - `GetPropertyGroup(Command)` - Virtual method for entity-specific groupings
+   - Integrated into `TryGet<T>()` to block inheritance when cleared
+
+3. **Monster.cs / Nation.cs** - Override `GetPropertyGroup()` with entity-specific mappings
+
+4. **MonsterViewModel.cs** - ViewModel properties:
+   - `HasClearAll`, `HasClearWeapons`, `HasClearArmor`, `HasClearMagic`, `HasClearSpec`
+   - `SetClearCommand()` helper auto-refreshes dependent properties after changes
+
+5. **MonsterView.xaml** - UI checkbox row for all 5 clear commands with tooltips
+
+6. **EntityViewModel.cs** - Fallback logic integration:
+   - Badge building suppresses vanilla when cleared (line ~591)
+   - Multi-value reference lists check clear status (line ~1255)
+   - Copystats chain traversal respects clears (line ~1373)
+   - VanillaModified fallback blocked when cleared (line ~1545)
+
+**Behavior:**
+- Clear commands block inheritance for their property group from both vanilla AND copystats sources
+- `#clear` (all) blocks everything except identity commands
+- Cascading copies respect clear commands at each level of the chain
+- UI checkboxes toggle clear commands with immediate property refresh
 
 ---
 
