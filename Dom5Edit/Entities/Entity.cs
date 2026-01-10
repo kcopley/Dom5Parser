@@ -20,7 +20,8 @@ namespace Dom5Edit.Entities
         ENCHANTMENT,
         EVENT_CODE,
         EVENT_VAR,
-        EVENT_CODE_EFFECT
+        EVENT_CODE_EFFECT,
+        BLESS
     }
 
     public enum ReturnType

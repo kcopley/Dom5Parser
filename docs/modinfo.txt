@@ -1,0 +1,15 @@
+#modname "<name>"
+A short name for the mod. It will be displayed in the mod
+preferences screen.
+#description "<piece of text>"
+A description of what the mod does, who has created it and so
+forth.
+#icon "<image.tga>"
+A banner image for your mod. This image should be a 128x32
+or 256x64 pixels large TGA image.
+#version x.yy
+The version number of your mod. E.g. 1.00 or 1.10.
+#domversion x.yy
+The minimum required version of Dominions for the mod to
+work correctly. If not sure, then leave this command out. For
+example, 6.00, for Dominions version 6.00 required.

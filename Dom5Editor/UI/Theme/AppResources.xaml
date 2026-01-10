@@ -67,4 +67,9 @@
         <views:NametypeView/>
     </DataTemplate>
 
+    <!-- Bless view using the full BlessView control -->
+    <DataTemplate DataType="{x:Type views:BlessViewModel}">
+        <views:BlessView/>
+    </DataTemplate>
+
 </ResourceDictionary>

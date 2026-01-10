@@ -15,6 +15,7 @@ namespace Dom5Editor.EditCommands
         private readonly string _newValue;
         private readonly string _oldValue;
         private readonly bool _propertyExisted;
+        private readonly StringProperty _originalProperty;
 
         public string Description => $"Set {_command}";
 
@@ -29,6 +30,11 @@ namespace Dom5Editor.EditCommands
             return prop;
         }
 
+        public Property GetOriginalProperty()
+        {
+            return _originalProperty;
+        }
+
         /// <summary>
         /// Creates a command to set a string property value.
         /// </summary>
@@ -41,12 +47,14 @@ namespace Dom5Editor.EditCommands
             _command = command;
             _newValue = newValue;
 
-            // Capture current state for undo
+            // Capture current state for undo and identity checking
             var result = _entity.TryGet<StringProperty>(command, out var existingProp, checkCopy: false);
             _propertyExisted = result == ReturnType.TRUE;
             if (_propertyExisted)
             {
                 _oldValue = existingProp.Value;
+                // Create a snapshot of the original property for identity checking
+                _originalProperty = new StringProperty { Command = command, Parent = entity, Value = existingProp.Value };
             }
         }
 

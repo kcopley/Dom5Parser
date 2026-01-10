@@ -1,0 +1,118 @@
+{
+  "sections": [
+    {
+      "id": "paths",
+      "displayName": "PATH REQUIREMENTS",
+      "description": "Magic path requirements for this bless",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "path0",
+          "display": "Path 0",
+          "type": "int",
+          "description": "Primary magic path required (0=Fire, 1=Air, 2=Water, 3=Earth, 4=Astral, 5=Death, 6=Nature, 7=Blood, 8=Holy)."
+        },
+        {
+          "name": "cost0",
+          "display": "Cost 0",
+          "type": "int",
+          "description": "Minimum skill level in path0 required, also the bless point cost."
+        },
+        {
+          "name": "path1",
+          "display": "Path 1",
+          "type": "int",
+          "description": "Optional secondary magic path required (-1 to clear)."
+        },
+        {
+          "name": "cost1",
+          "display": "Cost 1",
+          "type": "int",
+          "description": "Minimum skill level in path1 required and additional bless point cost."
+        }
+      ]
+    },
+    {
+      "id": "scales",
+      "displayName": "SCALE REQUIREMENTS",
+      "description": "Dominion scale requirements for this bless (max 4)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "orderscale",
+          "display": "Order",
+          "type": "int",
+          "description": "Requires Order scale of this value or higher."
+        },
+        {
+          "name": "chaosscale",
+          "display": "Chaos",
+          "type": "int",
+          "description": "Requires Chaos (Turmoil) scale of this value or higher."
+        },
+        {
+          "name": "prodscale",
+          "display": "Productivity",
+          "type": "int",
+          "description": "Requires Productivity scale of this value or higher."
+        },
+        {
+          "name": "slothscale",
+          "display": "Sloth",
+          "type": "int",
+          "description": "Requires Sloth scale of this value or higher."
+        },
+        {
+          "name": "heatscale",
+          "display": "Heat",
+          "type": "int",
+          "description": "Requires Heat scale of this value or higher."
+        },
+        {
+          "name": "coldscale",
+          "display": "Cold",
+          "type": "int",
+          "description": "Requires Cold scale of this value or higher."
+        },
+        {
+          "name": "growthscale",
+          "display": "Growth",
+          "type": "int",
+          "description": "Requires Growth scale of this value or higher."
+        },
+        {
+          "name": "deathscale",
+          "display": "Death",
+          "type": "int",
+          "description": "Requires Death scale of this value or higher."
+        },
+        {
+          "name": "luckscale",
+          "display": "Luck",
+          "type": "int",
+          "description": "Requires Luck scale of this value or higher."
+        },
+        {
+          "name": "misfortscale",
+          "display": "Misfortune",
+          "type": "int",
+          "description": "Requires Misfortune scale of this value or higher."
+        },
+        {
+          "name": "magicscale",
+          "display": "Magic",
+          "type": "int",
+          "description": "Requires Magic scale of this value or higher."
+        },
+        {
+          "name": "drainscale",
+          "display": "Drain",
+          "type": "int",
+          "description": "Requires Drain scale of this value or higher."
+        }
+      ]
+    }
+  ]
+}

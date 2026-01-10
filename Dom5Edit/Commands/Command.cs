@@ -1617,6 +1617,26 @@
         TAINT,
         // Dom6 additions for event
         REQ_TARGREALMNR,
+        // Bless entity commands
+        SELECTBLESS,
+        PATH0,
+        COST0,
+        PATH1,
+        COST1,
+        CLEARSCALES,
+        ORDERSCALE,
+        PRODSCALE,
+        HEATSCALE,
+        GROWTHSCALE,
+        LUCKSCALE,
+        MAGICSCALE,
+        CHAOSSCALE,
+        SLOTHSCALE,
+        COLDSCALE,
+        DEATHSCALE,
+        MISFORTSCALE,
+        DRAINSCALE,
+        CLEARFX,
     }
 
     public class CommandsMap
@@ -3296,6 +3316,27 @@
             _nonEditable.Add(Command.AUTOBLESSED);
             _nonEditable.Add(Command.WINTERSUMMON1D3);
             _nonEditable.Add(Command.STYGIANGUIDE);
+
+            // Bless entity commands
+            _commandMap.Add("#selectbless", Command.SELECTBLESS);
+            _commandMap.Add("#path0", Command.PATH0);
+            _commandMap.Add("#cost0", Command.COST0);
+            _commandMap.Add("#path1", Command.PATH1);
+            _commandMap.Add("#cost1", Command.COST1);
+            _commandMap.Add("#clearscales", Command.CLEARSCALES);
+            _commandMap.Add("#orderscale", Command.ORDERSCALE);
+            _commandMap.Add("#prodscale", Command.PRODSCALE);
+            _commandMap.Add("#heatscale", Command.HEATSCALE);
+            _commandMap.Add("#growthscale", Command.GROWTHSCALE);
+            _commandMap.Add("#luckscale", Command.LUCKSCALE);
+            _commandMap.Add("#magicscale", Command.MAGICSCALE);
+            _commandMap.Add("#chaosscale", Command.CHAOSSCALE);
+            _commandMap.Add("#slothscale", Command.SLOTHSCALE);
+            _commandMap.Add("#coldscale", Command.COLDSCALE);
+            _commandMap.Add("#deathscale", Command.DEATHSCALE);
+            _commandMap.Add("#misfortscale", Command.MISFORTSCALE);
+            _commandMap.Add("#drainscale", Command.DRAINSCALE);
+            _commandMap.Add("#clearfx", Command.CLEARFX);
 
             //Build an inverted map
             foreach (KeyValuePair<string, Command> kvp in _commandMap)

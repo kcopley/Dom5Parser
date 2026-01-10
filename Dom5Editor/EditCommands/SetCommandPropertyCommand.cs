@@ -29,6 +29,17 @@ namespace Dom5Editor.EditCommands
             return prop;
         }
 
+        public Property GetOriginalProperty()
+        {
+            // For CommandProperty, the original is a flag that was present
+            // Return a CommandProperty if it was present, null if it wasn't
+            if (_wasPresent)
+            {
+                return CommandProperty.Create(_command, _entity);
+            }
+            return null;
+        }
+
         /// <summary>
         /// Creates a command to set or clear a CommandProperty flag.
         /// </summary>

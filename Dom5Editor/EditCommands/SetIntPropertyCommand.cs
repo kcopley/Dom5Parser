@@ -15,6 +15,7 @@ namespace Dom5Editor.EditCommands
         private readonly int _newValue;
         private readonly int? _oldValue;
         private readonly bool _propertyExisted;
+        private readonly IntProperty _originalProperty;
 
         public string Description => $"Set {_command} to {_newValue}";
 
@@ -29,6 +30,11 @@ namespace Dom5Editor.EditCommands
             return prop;
         }
 
+        public Property GetOriginalProperty()
+        {
+            return _originalProperty;
+        }
+
         /// <summary>
         /// Creates a command to set an integer property value.
         /// </summary>
@@ -41,12 +47,14 @@ namespace Dom5Editor.EditCommands
             _command = command;
             _newValue = newValue;
 
-            // Capture current state for undo
+            // Capture current state for undo and identity checking
             var result = _entity.TryGet<IntProperty>(command, out var existingProp, checkCopy: false);
             _propertyExisted = result == ReturnType.TRUE;
             if (_propertyExisted)
             {
                 _oldValue = existingProp.Value;
+                // Create a snapshot of the original property for identity checking
+                _originalProperty = IntProperty.Create(command, entity, existingProp.Value);
             }
         }
 

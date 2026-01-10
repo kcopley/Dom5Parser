@@ -22,6 +22,12 @@ namespace Dom5Editor.EditCommands
 
         public Property GetResultingProperty() => null;
 
+        public Property GetOriginalProperty()
+        {
+            // The property being removed IS the original
+            return _property;
+        }
+
         /// <summary>
         /// Creates a command to remove a property from an entity.
         /// </summary>

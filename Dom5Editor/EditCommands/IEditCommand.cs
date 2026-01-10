@@ -52,5 +52,13 @@ namespace Dom5Editor.EditCommands
         /// Call this after Execute() to get the resulting property for recording.
         /// </summary>
         Property GetResultingProperty();
+
+        /// <summary>
+        /// Gets the property value that existed before this command was executed.
+        /// Used for identity checking - if a value is edited back to its original,
+        /// the session change can be automatically removed.
+        /// Returns null if the property didn't exist before.
+        /// </summary>
+        Property GetOriginalProperty();
     }
 }
