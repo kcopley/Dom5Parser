@@ -2,7 +2,7 @@
 
 This document outlines the planned enhancements to build out Dom5Parser into a full UI-based .dm file editor.
 
-**Last Updated:** 2026-01-08
+**Last Updated:** 2026-01-10
 
 ## Goal
 
@@ -516,7 +516,8 @@ See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
   - Montag references (negative IDs) display as "Montag #X"
 
 ### HIGH Priority
-- **All Entity Views Complete** - Monster, Weapon, Armor, Item, Site, Spell, Nation, Event, Mercenary, Poptype, Nametype
+- **All Entity Views Complete** - Monster, Weapon, Armor, Item, Site, Spell, Nation, Event, Mercenary, Poptype, Nametype, Bless, Template
+- **Mod Info View** - Complete (editing mod name, description, version, dom version, icon)
 - **Remaining**: Enchantment, Montag, RestrictedItem are ID-only containers and may not need views
 
   **NationView Data Limitations:**
@@ -620,7 +621,11 @@ See `docs/ENTITYVIEWMODEL_REFACTORING.md` for full analysis.
   - Multi-format support: PNG/JPG/BMP via `BitmapImage`, TGA via `TargaImage`
   - Absolute paths (vanilla) and relative paths (mods) both supported
 - NAMETYPE, MONTAG editors
-- Validation report panel
+- ~~**Validation report panel**~~ DONE 2026-01-11:
+  - `ValidationReportWindow.xaml` - Modal dialog with severity filtering
+  - Summary header with error/warning/info counts
+  - Search box and severity filter checkboxes
+  - Issue list with click-to-navigate to entities
 - **ItemSlots Bitmask Editor** - Visual editor for monster/commander item slot configuration:
   - Checkboxes/spinners for slot categories (hands 1-6, heads 1-3, body, feet, misc 1-6)
   - Auto-calculate bitmask value from selections
@@ -696,6 +701,9 @@ Dom5Editor/UI/
     MercenaryView.xaml(.cs)
     PoptypeView.xaml(.cs)
     NametypeView.xaml(.cs)
+    BlessView.xaml(.cs)        - Bless path costs and scale requirements
+    TemplateView.xaml(.cs)     - AI pretender templates
+    ModInfoView.xaml(.cs)      - Mod metadata editing
   ViewModels/                  - Extracted to individual files (2026-01-07)
     EntityViewModel.cs         - Base class (1960 lines) - see ENTITYVIEWMODEL_REFACTORING.md
     MonsterViewModel.cs        - Monster editing (~1800 lines)
@@ -709,6 +717,8 @@ Dom5Editor/UI/
     ArmorViewModel.cs          - Armor editing
     PoptypeViewModel.cs        - Poptype editing
     NametypeViewModel.cs       - Nametype editing
+    BlessViewModel.cs          - Bless editing
+    TemplateViewModel.cs       - AI template editing
     CustomMagicItem.cs         - CUSTOMMAGIC bitmask handling
     EntityHelperModels.cs      - EquipmentItem, AvailableEquipmentItem, SlotTypeOption
   Theme/
@@ -721,6 +731,8 @@ Dom5Editor/Data/
   armor_badges.json       - Armor property definitions
   item_badges.json        - Item property definitions
   site_badges.json        - Site property definitions (90+ commands, monster/nation refs)
+  bless_badges.json       - Bless property definitions (19 commands)
+  template_badges.json    - Template property definitions (8 commands)
   BadgeConfig.cs
   BadgeConfigLoader.cs
 

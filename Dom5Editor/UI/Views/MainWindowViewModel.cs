@@ -628,16 +628,16 @@ namespace Dom5Editor.UI.Views
             OnPropertyChanged(nameof(IsDirty));
         }
 
-        public void Validate()
+        public ValidationResult Validate()
         {
-            if (_mod == null) return;
+            if (_mod == null) return null;
 
             var validator = new ModValidator();
             var results = validator.ValidateWithSummary(_mod);
 
             StatusMessage = $"Validation: {results.ErrorCount} errors, {results.WarningCount} warnings";
 
-            // TODO: Open validation panel with full results
+            return results;
         }
 
         // ========================================

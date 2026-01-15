@@ -22,6 +22,11 @@ namespace Dom5Edit.Props
         {
         }
 
+        internal override EntityType GetEntityType()
+        {
+            return EntityType.EVENT_VAR;
+        }
+
         public override void Parse(Command c, string s, string comment)
         {
             base.Parse(c, s, comment);

@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
 using Dom5Edit;
+using Dom5Edit.Validation;
 using Dom5Editor.UI;
 
 namespace Dom5Editor.UI.Views
@@ -88,7 +89,12 @@ namespace Dom5Editor.UI.Views
 
         private void ValidateButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Validate();
+            var results = _viewModel.Validate();
+            if (results == null) return;
+
+            var dialog = new ValidationReportWindow(results, _viewModel);
+            dialog.Owner = this;
+            dialog.ShowDialog();
         }
 
         private void NewMod()

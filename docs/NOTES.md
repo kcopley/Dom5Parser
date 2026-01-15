@@ -13,7 +13,7 @@ Quick reference notes for development context. See related documents for full de
 
 ## Current Development Status
 
-**Last Updated:** 2026-01-09
+**Last Updated:** 2026-01-11
 
 ### Working Features
 - JSON-driven badge UI system for all entity properties
@@ -23,6 +23,7 @@ Quick reference notes for development context. See related documents for full de
 - Layered property access (vanilla → mod → session) for all properties including equipment
 - Equipment display with full layered fallback (vanilla → mod → copystats) with name resolution fallback
 - **Centralized entity caches** for dropdown performance (weapons, armors, monsters, items, spells, sites, nations)
+- **Validation Report Dialog** - Popup dialog showing all validation issues with filtering and entity navigation
 - **MonsterView** - Stats grid, magic paths, equipment, and badge sections (572 commands)
 - **WeaponView** - Stats, damage types, special properties, secondary effects, badge panel
 - **ArmorView** - Stats and badge panel
@@ -32,9 +33,49 @@ Quick reference notes for development context. See related documents for full de
 - **MercenaryView** - Band info, unit composition, economics, equipment (13 commands)
 - **PoptypeView** - Recruitment, province defense (11 commands)
 - **NametypeView** - Name list management (2 commands)
+- **BlessView** - Path costs (path0/cost0, path1/cost1), scale requirements (12 scale commands), clear commands
+- **TemplateView** - AI pretender templates with form, prison, dominion, scales, research goals, favorite rituals
+- **ModInfoView** - Mod metadata editing (name, description, version, dom version, icon)
 
 ### In Progress
 - None currently
+
+### Recently Completed (2026-01-11)
+- **Validation Report Panel** - Popup dialog for viewing validation results:
+  - `ValidationReportWindow.xaml` - Modal dialog with dark theme styling
+  - Summary header showing error/warning/info counts with severity icons
+  - Filter checkboxes for Error/Warning/Info severity levels
+  - Search box to filter issues by message content
+  - Issue list with severity indicators, category badges, and entity info
+  - Click-to-navigate: double-click or "Go To" button navigates to the entity and closes dialog
+  - Uses existing `NavigateToEntity()` for seamless entity navigation
+  - Files: `ValidationReportWindow.xaml(.cs)`, updated `MainWindowViewModel.Validate()`, `MainWindow.xaml.cs`
+
+### Recently Completed (2026-01-10)
+- **Bless Entity Support** - New entity type for Dom6 bless modifications:
+  - `Bless.cs` entity class with select-only semantics (no #newbless, only #selectbless)
+  - Commands: path0, cost0, path1, cost1, clearscales, 12 scale requirements, clearfx
+  - `BlessViewModel.cs` with path badges and scale badges sections
+  - `BlessView.xaml` with header, clear command checkboxes, and badge panels
+  - `bless_badges.json` configuration with "paths" and "scales" sections
+
+- **Template Entity Support** - AI pretender design templates for nations:
+  - `Template.cs` entity class keyed by nation ID
+  - Commands: form, prison, magic, domstr, scale, bless, researchgoal, favrit
+  - `TemplateViewModel.cs` with pretender, scales, and research badge sections
+  - `TemplateView.xaml` with collapsible sections for each category
+  - `template_badges.json` configuration with 3 sections
+
+- **Mod Info View** - Editing mod-level metadata:
+  - `ModInfoView.xaml` with text editors for name, description, version, dom version, icon
+  - Properties added to MainWindowViewModel: ModDescription, ModVersion, ModDomVersion, ModIcon
+  - Now the first tab (index 0) in the main window
+
+- **Tab Reorganization** - Updated MainWindow tabs:
+  - Added Mod Info as tab 0
+  - Added Blesses as tab 12
+  - Added Templates as tab 13
+  - All existing tab indices shifted by +1
 
 ### Recently Completed (2026-01-09)
 - **ChangesMod Identity Check on Value Reset** - Automatic removal from session tracking when property is reset to original:
@@ -264,8 +305,8 @@ Quick reference notes for development context. See related documents for full de
   - 1 badge section with JSON configuration (`nametype_badges.json`)
 
 ### Not Started
-- **Other Entity Views** - Check for: Enchantment, Montag, RestrictedItem (ID-only containers, may not need views)
-- Validation report panel
+- **Other Entity Views** - Enchantment, Montag, RestrictedItem confirmed as not needing views (ID-only containers)
+- EventCode, EventCodeEffect views (if needed)
 
 ---
 
@@ -289,6 +330,8 @@ All ViewModels are in `Dom5Editor/UI/ViewModels/` (extracted to individual files
 | `ArmorViewModel.cs` | ~160 | Armor stats |
 | `PoptypeViewModel.cs` | ~100 | Population types |
 | `NametypeViewModel.cs` | ~65 | Name lists |
+| `BlessViewModel.cs` | ~300 | Bless editing |
+| `TemplateViewModel.cs` | ~350 | AI template editing |
 | `CustomMagicItem.cs` | ~200 | Magic path bitmask handling |
 | `EntityHelperModels.cs` | ~50 | EquipmentItem, AvailableEquipmentItem, SlotTypeOption |
 
@@ -349,6 +392,9 @@ Dom5Editor/UI/
     MercenaryView.xaml(.cs)   - Mercenary band editor (13 commands)
     PoptypeView.xaml(.cs)     - Population type editor (11 commands)
     NametypeView.xaml(.cs)    - Name type editor (2 commands)
+    BlessView.xaml(.cs)       - Bless editor (19 commands)
+    TemplateView.xaml(.cs)    - AI template editor (8 commands)
+    ModInfoView.xaml(.cs)     - Mod metadata editor
     MainWindow.xaml(.cs)      - App shell
     MainWindowViewModel.cs    - Mod/entity management
   ViewModels/
@@ -373,6 +419,8 @@ Dom5Editor/Data/
   mercenary_badges.json       - Mercenary property definitions (13 commands, 4 sections)
   poptype_badges.json         - Poptype property definitions (11 commands, 2 sections)
   nametype_badges.json        - Nametype property definitions (2 commands, 1 section)
+  bless_badges.json           - Bless property definitions (19 commands, 2 sections)
+  template_badges.json        - Template property definitions (8 commands, 3 sections)
   BadgeConfig.cs              - JSON deserialization models
   BadgeConfigLoader.cs        - Loads JSON, provides command lookup
 ```

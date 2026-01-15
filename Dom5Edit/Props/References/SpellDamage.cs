@@ -75,6 +75,19 @@ namespace Dom5Edit.Props
             return false;
         }
 
+        /// <summary>
+        /// Gets the raw ID value if this is an unresolved monster/montag reference.
+        /// Used by validation to detect missing references.
+        /// </summary>
+        public int GetUnresolvedId()
+        {
+            if (_monRef?.MonsterRef != null && !_monRef.MonsterRef.Resolved)
+            {
+                return _monRef.MonsterRef.ID;
+            }
+            return 0;
+        }
+
         void ResolveAsSummon()
         {
             _monRef = new MonsterOrMontagRef();
@@ -132,7 +145,21 @@ namespace Dom5Edit.Props
 
         internal override EntityType GetEntityType()
         {
-            throw new NotImplementedException();
+            // SpellDamage is polymorphic - return the type of the resolved reference
+            if (_monRef != null)
+            {
+                return _monRef.GetEntityType();
+            }
+            if (_enchRef != null)
+            {
+                return _enchRef.GetEntityType();
+            }
+            if (_eventEffectRef != null)
+            {
+                return _eventEffectRef.GetEntityType();
+            }
+            // Unresolved (bitmask value) - return SPELL as a fallback since it's spell damage
+            return EntityType.SPELL;
         }
 
         internal override bool EqualsProperty<T>(T copyFrom)
