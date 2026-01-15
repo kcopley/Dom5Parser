@@ -18,14 +18,14 @@ These commands were added during vanilla.dm parsing testing and should be verifi
 | #unseen | CommandProperty | Monster | Flag command (no args) |
 | #incunrest | IntProperty | Site | Takes int argument - was missing from Site._propertyMap |
 
-## Commands Found in Mods (Not Yet Implemented)
+## Commands Found in Mods (Previously Not Implemented)
 
-These commands are used in mods like DomEnhanced2_13.dm but are not yet implemented:
+These commands were used in mods like DomEnhanced2_13.dm and have now been implemented:
 
 | Command | Likely Type | Entity | Notes |
 |---------|------------|--------|-------|
-| #selectbless | Unknown | New entity type? | Dom6 blessing system - needs investigation |
-| #path1 | IntProperty? | Bless? | Part of blessing definition |
+| #selectbless | Entity selector | Bless | **IMPLEMENTED 2026-01-10** - Dom6 blessing system |
+| #path1 | IntProperty | Bless | **IMPLEMENTED 2026-01-10** - Secondary path for bless |
 
 ## Bug Fixes Applied
 
@@ -43,7 +43,7 @@ These commands are used in mods like DomEnhanced2_13.dm but are not yet implemen
 - [ ] Verify #stunimmunity against mod manual
 - [ ] Verify #unseen against mod manual
 - [ ] Verify #incunrest against mod manual
-- [ ] Investigate Dom6 blessing system (#selectbless, #path1)
+- [x] Investigate Dom6 blessing system (#selectbless, #path1) - **DONE 2026-01-10** - Full Bless entity implemented
 
 ## Spell Entity Commands Added (2026-01-06)
 
@@ -66,7 +66,50 @@ Bug fix:
 
 Verification completed: 63 spell commands in spell_badges.json match Spell.cs types exactly.
 
+## Bless Entity Commands Added (2026-01-10)
+
+New entity type for Dom6 bless modifications. Select-only entity (no #newbless command exists).
+
+| Command | Property Type | Notes |
+|---------|--------------|-------|
+| #selectbless | N/A | Entity selector command |
+| #path0 | IntProperty | Primary path type (0-8) |
+| #cost0 | IntProperty | Primary path cost |
+| #path1 | IntProperty | Secondary path type (0-8) |
+| #cost1 | IntProperty | Secondary path cost |
+| #clearscales | CommandProperty | Clear all scale requirements |
+| #orderscale | IntProperty | Order scale requirement |
+| #prodscale | IntProperty | Productivity scale requirement |
+| #heatscale | IntProperty | Heat scale requirement |
+| #growthscale | IntProperty | Growth scale requirement |
+| #luckscale | IntProperty | Luck scale requirement |
+| #magicscale | IntProperty | Magic scale requirement |
+| #chaosscale | IntProperty | Turmoil scale requirement |
+| #slothscale | IntProperty | Sloth scale requirement |
+| #coldscale | IntProperty | Cold scale requirement |
+| #deathscale | IntProperty | Death scale requirement |
+| #misfortscale | IntProperty | Misfortune scale requirement |
+| #drainscale | IntProperty | Drain scale requirement |
+| #clearfx | CommandProperty | Clear visual effects |
+
+## Template Entity Commands Added (2026-01-10)
+
+New entity type for AI pretender design templates. Keyed by nation ID.
+
+| Command | Property Type | Notes |
+|---------|--------------|-------|
+| #newtemplate | N/A | Entity creation (takes nation ID) |
+| #form | StringProperty | Pretender form (monster name with optional ID) |
+| #prison | IntProperty | Starting state: 0=Awake, 1=Dormant, 2=Imprisoned |
+| #magic | IntIntProperty | Magic path assignment: path level |
+| #domstr | IntProperty | Dominion strength (1-10) |
+| #scale | IntIntProperty | Scale preference: scale value |
+| #bless | StringProperty | Bless effect name to select |
+| #researchgoal | StringProperty | Spell/item name for AI research priority |
+| #favrit | StringProperty | Favorite ritual specification |
+
 ## Date Added
 
 2026-01-03 - During Phase 2 testing of vanilla.dm and DomEnhanced2_13.dm loading
 2026-01-06 - Spell entity command verification and additions
+2026-01-10 - Bless entity (19 commands) and Template entity (8 commands) for Dom6 support

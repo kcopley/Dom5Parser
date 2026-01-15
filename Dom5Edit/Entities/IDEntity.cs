@@ -62,13 +62,38 @@ namespace Dom5Edit.Entities
         public virtual void Resolve()
         {
             if (_resolved) return;
-            foreach (var m in ParentMod.Dependencies)
+
+            // Only link to vanilla/dependency entities for SELECTED entities (modifying existing)
+            // NEW entities should not inherit from vanilla just because they share a name
+            if (Selected)
             {
-                if (m.TryGet(this.GetEntityType(), ID, _name, out IDEntity entity))
+                foreach (var m in ParentMod.Dependencies)
                 {
-                    _dependent = entity;
+                    if (m.Database.TryGetValue(this.GetEntityType(), out var entitySet))
+                    {
+                        IDEntity entity = null;
+                        bool found = false;
+
+                        if (_id > 0)
+                        {
+                            // Selected by ID (e.g., #selectweapon 865) - look up by ID only
+                            found = entitySet.TryGetValue(_id, out entity);
+                        }
+                        else if (!string.IsNullOrEmpty(_name))
+                        {
+                            // Selected by name (e.g., #selectweapon "Stun") - look up by name only
+                            found = entitySet.TryGetValueNamed(_name, out entity);
+                        }
+
+                        if (found && entity != null)
+                        {
+                            _dependent = entity;
+                            break; // Found it, stop looking
+                        }
+                    }
                 }
             }
+
             foreach (Property prop in Properties)
             {
                 if (prop is Reference p)
