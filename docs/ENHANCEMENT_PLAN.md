@@ -2,7 +2,28 @@
 
 This document outlines the planned enhancements to build out Dom5Parser into a full UI-based .dm file editor.
 
-**Last Updated:** 2026-01-10
+**Last Updated:** 2026-05-31
+
+## Current Focus (2026-05-31)
+
+The original phase plan (below) largely **succeeded** — the editor, JSON badge
+system, validation, undo/redo, and all entity views are built. Re-framed to where
+things actually stand:
+
+- **Done:** the editor and its infrastructure (Phases 1–3, 6). Note Phase 1's
+  `Dom5Edit/Metadata/` subsystem is now **dead code** (superseded by the JSON
+  badge system) — slated for deletion; see `ISSUES.md`.
+- **Now (foundation):** round-trip testing harness (`ROUND_TRIP_TESTING.md`) as a
+  regression safety net; repo hygiene + trunk unification (done).
+- **Next:** the **copy/inheritance revision** — a major fix, to be done on top of
+  the round-trip safety net. (Early evidence already visible: a ~25-unit
+  all-stats divergence cluster in the round-trip run.)
+- **Someday:** the JSON-command-definitions north star (retire the `Command.cs` /
+  `Spell.cs` data-as-code), remaining UI polish, and deciding whether mod
+  **merging** is still a project goal (the merger UI was removed; core logic kept).
+
+Testing (round-trip + a real test project) is the elevated near-term priority,
+ahead of new UI features — especially before the copy/inheritance refactor.
 
 ## Goal
 
