@@ -1,0 +1,31 @@
+# Normalize line endings. Text is stored as LF in the repo (the index is
+# already all-LF); the working tree may be CRLF on Windows without churn.
+* text=auto
+
+# Source and config files
+*.cs      text
+*.xaml    text diff=html
+*.json    text
+*.md      text
+*.txt     text
+*.config  text
+*.dm      text
+*.tsv     text
+
+# Visual Studio files conventionally use CRLF in the working tree
+*.sln     text eol=crlf
+*.csproj  text eol=crlf
+*.props   text eol=crlf
+*.targets text eol=crlf
+*.resx    text eol=crlf
+
+# Binary assets — never normalize or diff
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.bmp  binary
+*.ico  binary
+*.tga  binary
+*.pdf  binary
+*.dll  binary
+*.exe  binary
