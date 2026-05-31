@@ -281,3 +281,10 @@ Dom5Editor/Data/unitdescr/
 Dom5Editor/icons/items/
 Dom5Editor/icons/sprites/
 Dom5Editor/icons/sites/
+
+# Round-trip / validation test artifacts (generated, not source)
+docs/de_new.dm
+docs/de_original.dm
+docs/validation_report.txt
+docs/testing_data.txt
+docs/*-log.txt
