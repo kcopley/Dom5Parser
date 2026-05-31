@@ -8,12 +8,13 @@ Quick reference notes for development context. See related documents for full de
 - `REFERENCE_PROPERTY_HANDLING.md` - How reference properties (monster/weapon/armor refs) are created and managed
 - `SPRITE_AND_DESCRIPTION_ACCESS.md` - File paths and formats for game sprites and descriptions
 - `ENTITYVIEWMODEL_REFACTORING.md` - Planned refactoring for EntityViewModel generics and badge system
+- `ROUND_TRIP_TESTING.md` - Headless oracle that verifies the editor preserves mod data on re-export
 
 ---
 
 ## Current Development Status
 
-**Last Updated:** 2026-01-14
+**Last Updated:** 2026-05-31
 
 ### Working Features
 - JSON-driven badge UI system for all entity properties
@@ -42,7 +43,34 @@ Quick reference notes for development context. See related documents for full de
 - **ModInfoView** - Mod metadata editing (name, description, version, dom version, icon)
 
 ### In Progress
-- None currently
+- **Round-trip testing harness** - headless oracle built and usable; reducing
+  representation noise and investigating real divergences. See `ROUND_TRIP_TESTING.md`.
+
+### Next Up
+- **Copy/inheritance revision** - a major fix to copy/inheritance semantics is
+  planned. Round-trip harness is being set up first as its regression safety net.
+  Strong early lead: a ~25-unit cluster differs on *all* core stats in the
+  current round-trip run (probable `#copystats` divergence).
+
+### Recently Completed (2026-05-31)
+- **Repo hygiene & trunk unification**:
+  - Added `.gitattributes` (`* text=auto`) to kill CRLF/LF line-ending churn (was
+    showing all 263 tracked files as modified; index was LF, working tree CRLF).
+  - Committed the validation-framework work (parse-issue tracking, line numbers,
+    copy/clear order validation).
+  - Unified the trunk: the active development was on `testing` while `main` was a
+    stale 2022 branch that had separately received BlueFeuer's "port to dom6"
+    PR #3. Verified `testing`'s command coverage is a strict superset of that PR
+    (0 missing, 114 extra) — confirming it was manually integrated long ago.
+    `main` now reflects `testing` (via an `ours` merge that preserves PR #3 in
+    history), and both are pushed. **`main` is now the canonical trunk.**
+- **Round-trip testing harness** (see `ROUND_TRIP_TESTING.md`): proved the local
+  `dom5inspectorkc` parser runs headless under Node and built a differential
+  comparator (`dom5inspectorkc/roundtrip_check.js`) that uses it as an oracle.
+- **Plan evaluation**: the `Dom5Edit/Metadata/` subsystem (PropertyDefinition /
+  PropertyMetadata / MetadataLoader / MetadataExtensions) is **dead code** —
+  referenced nowhere outside itself; superseded by the JSON badge system.
+  Candidate for deletion. See `ISSUES.md`.
 
 ### Recently Completed (2026-01-14)
 - **Validation Framework Enhancements**:

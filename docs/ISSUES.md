@@ -2,11 +2,40 @@
 
 Potential bugs and critical problems identified during code review.
 
-**Last Updated:** 2026-01-09
+**Last Updated:** 2026-05-31
 
 ---
 
 ## Current Priority Issues
+
+### Round-trip divergences (open, 2026-05-31)
+
+The new round-trip harness (`docs/ROUND_TRIP_TESTING.md`) compares the inspector's
+parse of a mod vs the editor's re-export. On `de_original.dm → de_new.dm` it
+reports **731 data diffs** that cluster into:
+
+- **~25-unit cluster differing on ALL core stats** — probable `#copystats`
+  resolution divergence. **Most likely tied to the planned copy/inheritance revision.**
+- `spell.notnations` (227) — systematic spell nation-list export difference.
+- Name→ID resolution disagreement (`unit.weapons`, `onebattlespell`) — editor vs
+  inspector pick different IDs for the same name (duplicate-name tie-breaking).
+- Description reformatting (`spell.details`, `unit.descr`) and spell encodings
+  (`school`/`precision`/`fatiguecost`).
+- `unit.xpshape` materialized in export (`undefined` → `-1085`).
+
+Some are representation-only (acceptable); the stat cluster and `xpshape` look real.
+Investigate alongside the copy/inheritance work.
+
+### Dead code: Metadata subsystem (tech debt, 2026-05-31)
+
+`Dom5Edit/Metadata/` (`PropertyDefinition`, `PropertyMetadata`, `MetadataLoader`,
+`MetadataExtensions`) is **referenced nowhere outside itself** — no `using
+Dom5Edit.Metadata` exists in the editor or core. It was the Phase-1
+"generate UI from C# metadata" approach, fully superseded by the JSON badge
+system (`Dom5Editor/Data/*_badges.json` + `BadgeConfigLoader`). It also duplicates
+the `docs/pdf_extracted/commands*.json` loading that the badge system already does.
+**Recommendation: delete the subsystem** (and reconcile to one command-metadata
+source) to remove confusion.
 
 ### ~~0. Copy Reference Changes Don't Refresh Inherited Properties~~ FIXED (2026-01-08)
 
