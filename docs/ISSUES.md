@@ -448,6 +448,36 @@ Removed `DataContext = this` from constructor. Changed command bindings to `Elem
 
 ## Enhancement Notes
 
+### ~~Planned: Copy/Clear Command Order Validation~~ IMPLEMENTED (2026-01-14)
+
+**Status:** IMPLEMENTED
+
+**Problem:** Mod authors sometimes place property commands before `#copy*` or `#clear*` commands, which means those properties get overwritten/cleared. This is usually unintentional.
+
+**Implementation:**
+
+1. **Properties before Clear** - When a clear command is parsed, all previously defined properties in the affected group are removed:
+   - Clear commands: `#clear`, `#clearweapons`, `#cleararmor`, `#clearmagic`, `#clearspec`, `#clearnation`, `#cleargods`, `#clearsites`, `#clearrec`, `#cleardef`
+   - Duplicate clear commands of the same type are also removed (only the last one is kept)
+   - Parse issue logged: `PropertiesClearedBySubsequentClear`
+
+2. **Properties before Copy** - When a full copy command is parsed, all previously defined properties that will be overwritten are removed:
+   - Full copy commands: `#copystats`, `#copyspr`, `#copyweapon`, `#copyarmor`, `#copyitem`, `#copyspell`, `#copysite`
+   - `#copystats` overwrites: Weapons, Armor, Magic, Special, Stats (NOT sprites)
+   - `#copyspr` overwrites: Sprites only
+   - Other copy commands overwrite all properties
+   - Parse issue logged: `PropertiesClearedBySubsequentClear`
+
+**Files Modified:**
+- `Dom5Edit/Commands/PropertyGroupMap.cs` - Added `GetGroupClearedBy()`, `IsClearCommand()`, `IsFullCopyCommand()`, `GetGroupsOverwrittenByCopy()`
+- `Dom5Edit/Entities/IDEntity.cs` - Added `ApplyClearCommand()`, `ApplyCopyCommand()`, modified `AddProperty()`
+- `Dom5Edit/Validation/ParseIssue.cs` - Added `PropertiesClearedBySubsequentClear` issue type
+- `Dom5Edit/Mod/Mod.cs` - Added overload for `AddParseIssue()` with line number parameter
+
+**Future Enhancement:** Flag when an entity has both a full clear AND a full copy command together (e.g., `#clear` + `#copystats`), except for valid combinations like partial monster clears with `#copystats`.
+
+---
+
 ### ~~Performance - Cache Entity Reference Lists~~ FIXED (2026-01-06)
 
 **Symptom:** Noticeable hitching/lag when switching between entities (e.g., selecting different monsters in the list).

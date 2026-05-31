@@ -197,6 +197,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.IRONVUL, IntProperty.Create);
             _propertyMap.Add(Command.IMMORTAL, CommandProperty.Create);
             _propertyMap.Add(Command.DOMIMMORTAL, CommandProperty.Create);
+            _propertyMap.Add(Command.FORCESS, CommandProperty.Create);
             _propertyMap.Add(Command.REFORMTIME, IntProperty.Create);
             _propertyMap.Add(Command.SPRINGIMMORTAL, CommandProperty.Create);
             _propertyMap.Add(Command.REFORM, IntProperty.Create);

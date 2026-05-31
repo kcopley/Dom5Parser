@@ -99,6 +99,7 @@ namespace Dom5Edit.Validation
                             Message = $"Unresolved reference to {spellEntityType} ID {unresolvedId}",
                             Entity = entity,
                             Property = prop,
+                            LineNumber = prop.LineNumber,
                             Category = "Reference"
                         };
                     }
@@ -124,6 +125,7 @@ namespace Dom5Edit.Validation
                             Message = $"Unresolved reference to {entityType} ID {stringOrIdRef.ID}",
                             Entity = entity,
                             Property = prop,
+                            LineNumber = prop.LineNumber,
                             Category = "Reference"
                         };
                     }
@@ -140,6 +142,7 @@ namespace Dom5Edit.Validation
                             Message = $"Unresolved reference to {entityType} ID {idRef.ID}",
                             Entity = entity,
                             Property = prop,
+                            LineNumber = prop.LineNumber,
                             Category = "Reference"
                         };
                     }

@@ -1,5 +1,6 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Props;
+using Dom5Edit.Validation;
 
 namespace Dom5Edit.Entities
 {
@@ -77,7 +78,10 @@ namespace Dom5Edit.Entities
                 }
                 else
                 {
-                    Parent.Log("Entity ID: " + id + " was already used inside mod - Type: " + t.GetType());
+                    var typeName = t.GetType().Name;
+                    var message = $"Duplicate {typeName} ID {id} - this ID was already defined earlier in the mod";
+                    Parent.Log(message);
+                    Parent.AddParseIssue(ParseIssueType.DuplicateId, message);
                 }
             }
             else
@@ -93,7 +97,10 @@ namespace Dom5Edit.Entities
                 }
                 else
                 {
-                    Parent.Log("Entity Name: " + name + " was already used inside mod - Type: " + t.GetType());
+                    var typeName = t.GetType().Name;
+                    var message = $"Duplicate {typeName} name \"{name}\" - this name was already defined earlier in the mod";
+                    Parent.Log(message);
+                    Parent.AddParseIssue(ParseIssueType.DuplicateName, message);
                 }
             }
             else
@@ -219,7 +226,10 @@ namespace Dom5Edit.Entities
             }
             if (END_ID != -1 && CURRENT_ID > END_ID)
             {
-                Parent.Log("Warning: Mod surpasses limitations on " + typeof(T).ToString() + " ID's!");
+                var typeName = typeof(T).Name;
+                var message = $"{typeName} ID {CURRENT_ID} exceeds maximum allowed ID ({END_ID})";
+                Parent.Log("Warning: " + message);
+                Parent.AddParseIssue(ParseIssueType.IdRangeExceeded, message);
             }
             return CURRENT_ID;
         }

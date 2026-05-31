@@ -16,6 +16,7 @@ namespace Dom5Edit.Validation
         {
             _validators = new List<IValidator>
             {
+                new ParseIssueValidator(),
                 new ReferenceValidator(),
                 new IdRangeValidator(),
                 new DuplicateIdValidator()
@@ -167,7 +168,8 @@ namespace Dom5Edit.Validation
                 }
             }
 
-            writer.WriteLine($"- {issue.Message}{entityInfo}");
+            var lineInfo = issue.LineNumber.HasValue ? $"Line {issue.LineNumber}: " : "";
+            writer.WriteLine($"- {lineInfo}{issue.Message}{entityInfo}");
         }
     }
 }

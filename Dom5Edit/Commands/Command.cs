@@ -284,6 +284,7 @@
         IRONVUL,
         IMMORTAL,
         DOMIMMORTAL,
+        FORCESS,
         REFORMTIME,
         SPRINGIMMORTAL,
         REFORM,
@@ -1942,6 +1943,7 @@
             _commandMap.Add("#ironvul", Command.IRONVUL);
             _commandMap.Add("#immortal", Command.IMMORTAL);
             _commandMap.Add("#domimmortal", Command.DOMIMMORTAL);
+            _commandMap.Add("#forcess", Command.FORCESS);
             _commandMap.Add("#reformtime", Command.REFORMTIME);
             _commandMap.Add("#springimmortal", Command.SPRINGIMMORTAL);
             _commandMap.Add("#reform", Command.REFORM);

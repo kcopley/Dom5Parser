@@ -1,5 +1,6 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Props;
+using Dom5Edit.Validation;
 
 namespace Dom5Edit.Entities
 {
@@ -240,8 +241,150 @@ namespace Dom5Edit.Entities
         public void AddProperty(Property property)
         {
             property.Parent = this;
+
+            // Check if this is a clear command - if so, remove affected properties
+            if (PropertyGroupMap.IsClearCommand(property.Command))
+            {
+                ApplyClearCommand(property);
+            }
+            // Check if this is a copy command - if so, remove properties that will be overwritten
+            else if (PropertyGroupMap.IsFullCopyCommand(property.Command))
+            {
+                ApplyCopyCommand(property);
+            }
+
             _properties.Add(property);
             _properties = _properties.OrderBy(sort_properties).ToList();
+        }
+
+        /// <summary>
+        /// Handles a clear command by removing all properties in the affected group.
+        /// This ensures that only properties added AFTER the clear command are retained.
+        /// Also removes any previous clear command of the same type.
+        /// </summary>
+        private void ApplyClearCommand(Property clearProperty)
+        {
+            var groupToClear = PropertyGroupMap.GetGroupClearedBy(clearProperty.Command);
+            if (!groupToClear.HasValue) return;
+
+            var group = groupToClear.Value;
+            var clearedProperties = new List<Property>();
+
+            // Find all properties that will be cleared
+            foreach (var prop in _properties.ToList())
+            {
+                // Remove previous clear command of the same type
+                if (prop.Command == clearProperty.Command)
+                {
+                    _properties.Remove(prop);
+                    continue;
+                }
+
+                // Check if this property belongs to the group being cleared
+                var propGroup = GetPropertyGroup(prop.Command);
+                bool shouldClear = false;
+
+                if (group == PropertyGroup.All)
+                {
+                    // #clear removes everything except identity/structural commands
+                    shouldClear = propGroup != PropertyGroup.None;
+                }
+                else
+                {
+                    // Specific clear - only remove matching group
+                    shouldClear = propGroup == group;
+                }
+
+                if (shouldClear)
+                {
+                    clearedProperties.Add(prop);
+                    _properties.Remove(prop);
+                }
+            }
+
+            // Log a parse issue if any properties were actually cleared
+            if (clearedProperties.Count > 0)
+            {
+                var clearedCommands = string.Join(", ", clearedProperties.Select(p =>
+                    CommandsMap.TryGetString(p.Command, out var s) ? s : p.Command.ToString()));
+                var clearCmdStr = CommandsMap.TryGetString(clearProperty.Command, out var cs) ? cs : clearProperty.Command.ToString();
+                var message = $"{clearCmdStr} at line {clearProperty.LineNumber} cleared {clearedProperties.Count} previously defined property(s): {clearedCommands}";
+                ParentMod?.AddParseIssue(ParseIssueType.PropertiesClearedBySubsequentClear, message, clearProperty.LineNumber);
+            }
+        }
+
+        /// <summary>
+        /// Handles a copy command by removing all properties that will be overwritten.
+        /// This ensures that only properties added AFTER the copy command are retained.
+        /// Also removes any previous copy command of the same type.
+        /// </summary>
+        private void ApplyCopyCommand(Property copyProperty)
+        {
+            var groupsToOverwrite = PropertyGroupMap.GetGroupsOverwrittenByCopy(copyProperty.Command);
+            if (groupsToOverwrite.Count == 0) return;
+
+            var overwrittenProperties = new List<Property>();
+            bool coversAll = groupsToOverwrite.Contains(PropertyGroup.All);
+
+            // Find all properties that will be overwritten
+            foreach (var prop in _properties.ToList())
+            {
+                // Remove previous copy command of the same type
+                if (prop.Command == copyProperty.Command)
+                {
+                    _properties.Remove(prop);
+                    continue;
+                }
+
+                // Skip other copy/clear commands - they're structural
+                if (PropertyGroupMap.IsClearCommand(prop.Command) || PropertyGroupMap.IsFullCopyCommand(prop.Command))
+                    continue;
+
+                // Check if this property belongs to a group being overwritten
+                var propGroup = GetPropertyGroup(prop.Command);
+                bool shouldOverwrite = false;
+
+                if (coversAll)
+                {
+                    // Full copy overwrites everything except identity commands
+                    shouldOverwrite = propGroup != PropertyGroup.None || !IsIdentityCommand(prop.Command);
+                }
+                else
+                {
+                    // Partial copy - only overwrite matching groups
+                    shouldOverwrite = groupsToOverwrite.Contains(propGroup);
+                }
+
+                if (shouldOverwrite)
+                {
+                    overwrittenProperties.Add(prop);
+                    _properties.Remove(prop);
+                }
+            }
+
+            // Log a parse issue if any properties were actually overwritten
+            if (overwrittenProperties.Count > 0)
+            {
+                var overwrittenCommands = string.Join(", ", overwrittenProperties.Select(p =>
+                    CommandsMap.TryGetString(p.Command, out var s) ? s : p.Command.ToString()));
+                var copyCmdStr = CommandsMap.TryGetString(copyProperty.Command, out var cs) ? cs : copyProperty.Command.ToString();
+                var message = $"{copyCmdStr} at line {copyProperty.LineNumber} overwrites {overwrittenProperties.Count} previously defined property(s): {overwrittenCommands}";
+                ParentMod?.AddParseIssue(ParseIssueType.PropertiesClearedBySubsequentClear, message, copyProperty.LineNumber);
+            }
+        }
+
+        /// <summary>
+        /// Checks if a command is an identity/structural command that should not be overwritten by copy.
+        /// </summary>
+        private static bool IsIdentityCommand(Command command)
+        {
+            return command switch
+            {
+                Command.NAME => true,
+                Command.FIXEDNAME => true,
+                Command.DESCR => true,
+                _ => false
+            };
         }
 
         public void AddProperties(List<Property> props)
@@ -270,12 +413,17 @@ namespace Dom5Edit.Entities
             {
                 Property prop = create.Invoke();
                 prop.Parent = this; //carry the mod assignation down
+                prop.LineNumber = ParentMod.LineNumber;
                 prop.Parse(command, value, comment);
                 AddProperty(prop);
             }
             else
             {
-                this.ParentMod.Log("Invalid, incorrectly spelled, or nonexistent command for " + this.GetType() + " for command: " + command);
+                var typeName = this.GetType().Name;
+                var commandStr = CommandsMap.TryGetString(command, out var cmdStr) ? cmdStr : command.ToString();
+                var message = $"Invalid or unknown command '{commandStr}' for {typeName}";
+                this.ParentMod.Log(message);
+                this.ParentMod.AddParseIssue(ParseIssueType.InvalidCommand, message);
             } // not recognized command, skip
             //build comment storage for in-between properties
         }
@@ -531,21 +679,43 @@ namespace Dom5Edit.Entities
         {
             switch (p.Command)
             {
+                // Select/New commands first
                 case Command.SELECTMONSTER:
                 case Command.NEWMONSTER:
+                case Command.SELECTWEAPON:
+                case Command.NEWWEAPON:
+                case Command.SELECTARMOR:
+                case Command.NEWARMOR:
+                case Command.SELECTITEM:
+                case Command.NEWITEM:
+                case Command.SELECTSPELL:
+                case Command.NEWSPELL:
+                case Command.SELECTSITE:
+                case Command.NEWSITE:
+                case Command.SELECTNATION:
+                case Command.NEWNATION:
                     return 1;
+                // Copy commands second (they overwrite everything)
                 case Command.COPYSTATS:
                 case Command.COPYSPR:
+                case Command.COPYWEAPON:
+                case Command.COPYARMOR:
+                case Command.COPYITEM:
+                case Command.COPYSPELL:
+                case Command.COPYSITE:
                     return 2;
+                // Clear commands third
                 case Command.CLEAR:
                 case Command.CLEARWEAPONS:
                 case Command.CLEARARMOR:
                 case Command.CLEARMAGIC:
                 case Command.CLEARSPEC:
                     return 3;
+                // Name commands fourth (after copy so they override copied name)
                 case Command.NAME:
                 case Command.FIXEDNAME:
                     return 4;
+                // Everything else
                 default:
                     return 5;
             }

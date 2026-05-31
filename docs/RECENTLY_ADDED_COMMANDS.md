@@ -108,8 +108,15 @@ New entity type for AI pretender design templates. Keyed by nation ID.
 | #researchgoal | StringProperty | Spell/item name for AI research priority |
 | #favrit | StringProperty | Favorite ritual specification |
 
+## Monster Commands Added (2026-01-14)
+
+| Command | Property Type | Notes |
+|---------|--------------|-------|
+| #forcess | CommandProperty | Force Soul Slay - multi-shape entities fully die when soul slayed |
+
 ## Date Added
 
 2026-01-03 - During Phase 2 testing of vanilla.dm and DomEnhanced2_13.dm loading
 2026-01-06 - Spell entity command verification and additions
 2026-01-10 - Bless entity (19 commands) and Template entity (8 commands) for Dom6 support
+2026-01-14 - #forcess command for Monster entities

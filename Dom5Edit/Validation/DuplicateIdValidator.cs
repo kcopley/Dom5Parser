@@ -26,14 +26,14 @@ namespace Dom5Edit.Validation
                     {
                         if (seenIds.TryGetValue(idEntity.ID, out var existingEntity))
                         {
-                            // Found a duplicate
-                            var existingName = existingEntity.Name ?? $"ID {existingEntity.ID}";
-                            var currentName = idEntity.Name ?? $"ID {idEntity.ID}";
+                            // Found a duplicate - describe how each was defined
+                            var existingDesc = DescribeEntity(existingEntity);
+                            var currentDesc = DescribeEntity(idEntity);
 
                             issues.Add(new ValidationIssue
                             {
                                 Severity = ValidationSeverity.Error,
-                                Message = $"Duplicate {entityType} ID {idEntity.ID}: '{currentName}' conflicts with '{existingName}'",
+                                Message = $"Duplicate {entityType} ID {idEntity.ID}: {currentDesc} conflicts with {existingDesc}",
                                 Entity = entity,
                                 Category = "Duplicate ID"
                             });
@@ -47,6 +47,28 @@ namespace Dom5Edit.Validation
             }
 
             return issues;
+        }
+
+        private static string DescribeEntity(IDEntity entity)
+        {
+            var action = entity.Selected ? "selected" : "created";
+
+            if (entity.Named)
+            {
+                // Selected/created by name - show the name used
+                return $"{action} by name \"{entity._name}\"";
+            }
+            else if (entity.ID > 0)
+            {
+                // Selected/created by ID
+                var displayName = !string.IsNullOrEmpty(entity.Name) ? $" ({entity.Name})" : "";
+                return $"{action} by ID {entity.ID}{displayName}";
+            }
+            else
+            {
+                // Auto-assigned ID
+                return $"{action} with auto-assigned ID";
+            }
         }
     }
 }

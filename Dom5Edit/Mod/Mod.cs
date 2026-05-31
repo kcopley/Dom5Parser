@@ -1,6 +1,7 @@
 ﻿using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Edit.Validation;
 
 namespace Dom5Edit
 {
@@ -20,6 +21,33 @@ namespace Dom5Edit
         private List<string> _dependencies = new List<string>();
         public List<Mod> Dependencies { get; set; } = new List<Mod>();
         public List<string> DisabledNations = new List<string>();
+
+        /// <summary>
+        /// Issues detected during parsing (duplicates, invalid commands, etc.)
+        /// </summary>
+        private List<ParseIssue> _parseIssues = new List<ParseIssue>();
+        public IReadOnlyList<ParseIssue> ParseIssues => _parseIssues.AsReadOnly();
+
+        /// <summary>
+        /// Adds a parse issue to the collection.
+        /// </summary>
+        public void AddParseIssue(ParseIssueType issueType, string message)
+        {
+            _parseIssues.Add(new ParseIssue(LineNumber, issueType, message));
+        }
+
+        public void AddParseIssue(ParseIssueType issueType, string message, int lineNumber)
+        {
+            _parseIssues.Add(new ParseIssue(lineNumber, issueType, message));
+        }
+
+        /// <summary>
+        /// Clears all parse issues (call before re-parsing).
+        /// </summary>
+        public void ClearParseIssues()
+        {
+            _parseIssues.Clear();
+        }
 
         public Dictionary<Command, EntityType> CommandEntityMap { get; } = new Dictionary<Command, EntityType>()
         {
@@ -188,10 +216,13 @@ namespace Dom5Edit
             _parser.OnLog = (line, msg) =>
             {
                 LineNumber = line;
+                string fullMsg;
                 if (_currentEntity != null)
-                    Log($"Invalid, incorrectly spelled, or nonexistent command for: {_currentEntity.GetType()} - {msg}");
+                    fullMsg = $"Invalid, incorrectly spelled, or nonexistent command for: {_currentEntity.GetType().Name} - {msg}";
                 else
-                    Log(msg);
+                    fullMsg = msg;
+                Log(fullMsg);
+                AddParseIssue(ParseIssueType.InvalidCommand, fullMsg);
             };
         }
 
@@ -524,6 +555,21 @@ namespace Dom5Edit
         #region NEW / SELECT COMMANDS
         public IDEntity NewEntity<T>(string val, string comment, bool selected = false) where T : IDEntity, new()
         {
+            // Check if entity already exists (e.g., from earlier #selectmonster before #newmonster)
+            // This handles mods that use #selectmonster to add properties before #newmonster defines the entity
+            if (int.TryParse(val, out int existingId) && existingId > 0)
+            {
+                EntityType et = GetEntityType(typeof(T));
+                if (this.TryGet(et, existingId, null, out IDEntity existing))
+                {
+                    // Entity already exists - use it instead of creating new
+                    // Update Selected flag: #newmonster means this is a new entity definition (Selected = false)
+                    existing.Selected = selected;
+                    return existing;
+                }
+            }
+
+            // Entity doesn't exist - create new
             IDEntity id = new T();
             id.Assign(val, comment, this, selected);
             return id;
