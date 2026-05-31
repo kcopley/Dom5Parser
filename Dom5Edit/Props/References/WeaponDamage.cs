@@ -32,7 +32,8 @@ namespace Dom5Edit.Props
                 if (string.IsNullOrEmpty(Value))
                     return false;
                 // If it parses as an integer, it's not a special type
-                return !int.TryParse(Value, out _);
+                // Use ulong.TryParse because damage bitmasks can exceed int.MaxValue
+                return !ulong.TryParse(Value, out _);
             }
         }
 
@@ -49,11 +50,12 @@ namespace Dom5Edit.Props
         /// <summary>
         /// Gets the numeric value if available, or default for summon weapons.
         /// </summary>
-        public int? NumericValue
+        public ulong? NumericValue
         {
             get
             {
-                if (int.TryParse(Value, out int val))
+                // Use ulong.TryParse because damage bitmasks can exceed int.MaxValue
+                if (ulong.TryParse(Value, out ulong val))
                     return val;
                 if (IsSummonType)
                     return DefaultSummonMonsterId;

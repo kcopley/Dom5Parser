@@ -7,6 +7,7 @@ namespace Dom5Edit.Props
     {
         public IDEntity Parent { get; set; }
         public string Comment { get; set; }
+        public int LineNumber { get; set; }
         public abstract void Parse(Command c, string v, string comment);
 
         public abstract string ToExportString();

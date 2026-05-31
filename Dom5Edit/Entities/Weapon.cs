@@ -119,7 +119,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.AFTERCLOUDAREA, IntProperty.Create); //#aftercloudarea <aoe>
             _propertyMap.Add(Command.NREFF, IntProperty.Create); //#nreff <number>
             _propertyMap.Add(Command.DEFROLL, IntProperty.Create); //#defroll <roll modifier>
-            _propertyMap.Add(Command.DMGINSPECTOR, IntProperty.Create); //#dmginspector <value>
+            _propertyMap.Add(Command.DMGINSPECTOR, BitmaskProperty.Create); //#dmginspector <bitmask> - can exceed int.MaxValue
             _propertyMap.Add(Command.MORROLL, IntProperty.Create); //#morroll <roll modifier>
         }
 

@@ -13,7 +13,7 @@ Quick reference notes for development context. See related documents for full de
 
 ## Current Development Status
 
-**Last Updated:** 2026-01-11
+**Last Updated:** 2026-01-14
 
 ### Working Features
 - JSON-driven badge UI system for all entity properties
@@ -23,7 +23,11 @@ Quick reference notes for development context. See related documents for full de
 - Layered property access (vanilla → mod → session) for all properties including equipment
 - Equipment display with full layered fallback (vanilla → mod → copystats) with name resolution fallback
 - **Centralized entity caches** for dropdown performance (weapons, armors, monsters, items, spells, sites, nations)
-- **Validation Report Dialog** - Popup dialog showing all validation issues with filtering and entity navigation
+- **Validation Framework** - Comprehensive mod validation with:
+  - Duplicate ID/name detection, invalid command warnings, reference validation
+  - Line numbers for all issues (tracked from source file)
+  - Export to text file with full issue details
+  - UI dialog with filtering, search, and click-to-navigate
 - **MonsterView** - Stats grid, magic paths, equipment, and badge sections (572 commands)
 - **WeaponView** - Stats, damage types, special properties, secondary effects, badge panel
 - **ArmorView** - Stats and badge panel
@@ -39,6 +43,17 @@ Quick reference notes for development context. See related documents for full de
 
 ### In Progress
 - None currently
+
+### Recently Completed (2026-01-14)
+- **Validation Framework Enhancements**:
+  - **Line numbers** on all validation issues - properties track source line during parsing
+  - **Parse issue surfacing** - duplicate IDs, duplicate names, invalid commands captured during parsing and surfaced in validation report
+  - **Improved duplicate ID messages** - now shows how entities were defined (e.g., "selected by name 'Fireball'" vs "created by ID 370")
+  - **Export with line numbers** - validation report export includes `Line X:` prefix for all issues
+  - **ReferenceValidator fixes** - handles MonsterOrMontagRef wrappers and SpellDamage references correctly
+  - Files: `Property.cs` (LineNumber), `IDEntity.cs`, `EntitySet.cs`, `ParseIssue.cs`, `ParseIssueValidator.cs`, `ReferenceValidator.cs`, `DuplicateIdValidator.cs`, `ModValidator.cs`
+
+- **New Command**: `#forcess` (Monster) - Force Soul Slay flag for multi-shape entities
 
 ### Recently Completed (2026-01-11)
 - **Validation Report Panel** - Popup dialog for viewing validation results:

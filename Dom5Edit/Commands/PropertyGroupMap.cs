@@ -116,6 +116,79 @@ namespace Dom5Edit.Commands
         }
 
         /// <summary>
+        /// Gets the property group that a clear command clears.
+        /// Returns null if the command is not a clear command.
+        /// </summary>
+        public static PropertyGroup? GetGroupClearedBy(Command command)
+        {
+            return command switch
+            {
+                Command.CLEARWEAPONS => PropertyGroup.Weapons,
+                Command.CLEARARMOR => PropertyGroup.Armor,
+                Command.CLEARMAGIC => PropertyGroup.Magic,
+                Command.CLEARSPEC => PropertyGroup.Special,
+                Command.CLEAR => PropertyGroup.All,
+                Command.CLEARGODS => PropertyGroup.Gods,
+                Command.CLEARSITES => PropertyGroup.Sites,
+                Command.CLEARNATION => PropertyGroup.NationSettings,
+                Command.CLEARREC => PropertyGroup.Recruitment,
+                Command.CLEARDEF => PropertyGroup.Defense,
+                _ => null
+            };
+        }
+
+        /// <summary>
+        /// Checks if a command is a clear command.
+        /// </summary>
+        public static bool IsClearCommand(Command command)
+        {
+            return GetGroupClearedBy(command).HasValue;
+        }
+
+        /// <summary>
+        /// Checks if a command is a full copy command that overwrites properties.
+        /// </summary>
+        public static bool IsFullCopyCommand(Command command)
+        {
+            return command switch
+            {
+                Command.COPYSTATS => true,  // Monster: copies all except sprites
+                Command.COPYSPR => true,    // Monster: copies sprites only
+                Command.COPYWEAPON => true, // Weapon: copies all
+                Command.COPYARMOR => true,  // Armor: copies all
+                Command.COPYITEM => true,   // Item: copies all
+                Command.COPYSPELL => true,  // Spell: copies all
+                Command.COPYSITE => true,   // Site: copies all
+                _ => false
+            };
+        }
+
+        /// <summary>
+        /// Gets the property groups that a copy command overwrites.
+        /// </summary>
+        public static List<PropertyGroup> GetGroupsOverwrittenByCopy(Command command)
+        {
+            return command switch
+            {
+                // Monster copystats copies everything except sprites
+                Command.COPYSTATS => new List<PropertyGroup>
+                {
+                    PropertyGroup.Weapons, PropertyGroup.Armor, PropertyGroup.Magic,
+                    PropertyGroup.Special, PropertyGroup.None // None = stats
+                },
+                // Monster copyspr copies only sprites
+                Command.COPYSPR => new List<PropertyGroup> { PropertyGroup.Sprites },
+                // Full entity copies - copy everything
+                Command.COPYWEAPON => new List<PropertyGroup> { PropertyGroup.All },
+                Command.COPYARMOR => new List<PropertyGroup> { PropertyGroup.All },
+                Command.COPYITEM => new List<PropertyGroup> { PropertyGroup.All },
+                Command.COPYSPELL => new List<PropertyGroup> { PropertyGroup.All },
+                Command.COPYSITE => new List<PropertyGroup> { PropertyGroup.All },
+                _ => new List<PropertyGroup>()
+            };
+        }
+
+        /// <summary>
         /// Checks if a command is a magic-related command (cleared by #clearmagic).
         /// </summary>
         private static bool IsMagicCommand(Command command)
