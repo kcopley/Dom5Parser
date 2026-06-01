@@ -22,6 +22,9 @@ namespace Dom5Tests
                 case "mod":
                     TestMod(basePath, args.Length > 1 ? args[1] : null);
                     break;
+                case "roundtrip":
+                    RoundTrip(basePath, args);
+                    break;
                 case "all":
                 default:
                     TestVanilla(basePath, null);
@@ -146,6 +149,62 @@ namespace Dom5Tests
             catch (Exception ex)
             {
                 Console.WriteLine($"\nERROR during loading: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Imports a .dm mod and re-exports it, so the round-trip harness can verify
+        /// the editor preserves mod data. Usage: Dom5Tests roundtrip &lt;input.dm&gt; &lt;output.dm&gt;
+        /// </summary>
+        static void RoundTrip(string basePath, string[] args)
+        {
+            string inputPath = args.Length > 1 ? args[1] : null;
+            string outputPath = args.Length > 2 ? args[2] : null;
+            if (string.IsNullOrEmpty(inputPath) || string.IsNullOrEmpty(outputPath))
+            {
+                Console.WriteLine("Usage: Dom5Tests roundtrip <input.dm> <output.dm>");
+                return;
+            }
+            if (!File.Exists(inputPath))
+            {
+                Console.WriteLine($"ERROR: input mod not found: {Path.GetFullPath(inputPath)}");
+                return;
+            }
+
+            // Load vanilla as the dependency base (so copies/inheritance resolve), if present.
+            string vanillaDmPath = Path.Combine(basePath, "vanilla.dm");
+            if (File.Exists(vanillaDmPath))
+            {
+                VanillaLoader.GameVersion = GameVersion.Dom6;
+                VanillaLoader.VanillaDmPath = vanillaDmPath;
+                string spellMappingPath = Path.Combine(basePath, "spell_effects_mapping.json");
+                string spellTypesPath = Path.Combine(basePath, "spell_effect_types.json");
+                if (File.Exists(spellMappingPath))
+                {
+                    VanillaLoader.SpellEffectMappingPath = spellMappingPath;
+                    VanillaLoader.SpellEffectTypesPath = spellTypesPath;
+                }
+                VanillaLoader.Reload();
+            }
+            else
+            {
+                Console.WriteLine("WARNING: vanilla.dm not found; round-tripping without vanilla base.");
+            }
+
+            try
+            {
+                Mod mod = new Mod();
+                mod.FullFilePath = inputPath;
+                mod.Parse(inputPath);
+                mod.ResolveDependencies();
+                mod.Resolve();
+                mod.Export(outputPath);
+                Console.WriteLine($"Round-tripped: {Path.GetFullPath(inputPath)} -> {Path.GetFullPath(outputPath)}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR during round-trip: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
             }
         }

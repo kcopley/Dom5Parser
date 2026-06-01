@@ -43,14 +43,12 @@ Quick reference notes for development context. See related documents for full de
 - **ModInfoView** - Mod metadata editing (name, description, version, dom version, icon)
 
 ### In Progress
-- **Round-trip testing harness** - headless oracle built and usable; reducing
-  representation noise and investigating real divergences. See `ROUND_TRIP_TESTING.md`.
-
-### Next Up
-- **Copy/inheritance revision** - a major fix to copy/inheritance semantics is
-  planned. Round-trip harness is being set up first as its regression safety net.
-  Strong early lead: a ~25-unit cluster differs on *all* core stats in the
-  current round-trip run (probable `#copystats` divergence).
+- **Copy/inheritance redesign** - **Phase 0 COMPLETE** (round-trip loop automated,
+  red baseline established); **Phase 1 (materialize) is next.** Full design and
+  resumable status in `COPY_INHERITANCE_REDESIGN.md`. Verification via
+  `ROUND_TRIP_TESTING.md` (harness in the separate `dom5inspectorkc` repo).
+  Loop: `Dom5Tests roundtrip <in> <out>` → `dom5inspectorkc/roundtrip_check.js`.
+  Red test: `Dom5Tests/fixtures/copy/order_dependent_copy.dm` (FAIL: 7001.att 10|99).
 
 ### Recently Completed (2026-05-31)
 - **Repo hygiene & trunk unification**:
