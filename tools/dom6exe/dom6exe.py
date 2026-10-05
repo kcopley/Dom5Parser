@@ -437,6 +437,76 @@ def flag_names(mons, inspector_dir, word, bits):
     return names
 
 
+# ---------------------------------------------------------------------------------------------
+# All vanilla tables. Each is found from a few vanilla names at consecutive ids; `count` is the
+# table's size (the game's id range for that type: the memory after it belongs to another table).
+
+TABLES = {
+    'monster': {'names': ['Logrian Slinger', 'Standard', 'Serpent Cataphract'], 'first': 1, 'count': 20000, 'csv': 'BaseU.csv'},
+    'weapon': {'names': ['Spear', 'Pike', 'Trident'], 'first': 1, 'count': 4000, 'csv': 'weapons.csv'},
+    'armor': {'names': ['Buckler', 'Shield', 'Kite Shield'], 'first': 1, 'count': 2000, 'csv': 'armors.csv'},
+    'item': {'names': ['Fire Sword', 'Ice Sword'], 'first': 1, 'count': 2000, 'csv': 'BaseI.csv'},
+    'spell': {'names': ['Minor Area Shock', 'Major Area Shock'], 'first': 1, 'count': 8000, 'csv': 'spells.csv'},
+    'site': {'names': ['The Smouldercone', 'The Coral Towers', 'Cathedral of the Spheres'], 'first': 1, 'count': 4000, 'csv': 'MagicSites.csv'},
+    'nation': {'names': ['Independents', 'Special Monsters'], 'first': 0, 'count': 500, 'csv': 'nations.csv'},
+}
+FIELD_FORMATS = {'i8': '<b', 'u8': '<B', 'i16': '<h', 'u16': '<H', 'i32': '<i', 'u32': '<I', 'i64': '<q'}
+
+
+def find_table(exe, spec):
+    """(file offset of id 0, record size): the names at consecutive ids, one record apart."""
+    d = exe.data
+    names = [n.encode() for n in spec['names']]
+    i = 0
+    while True:
+        i = d.find(b'\0' + names[0] + b'\0', i)
+        if i < 0:
+            raise SystemExit('table not found: %r' % spec['names'])
+        a = i + 1
+        j = d.find(b'\0' + names[1] + b'\0', a, a + 0x4000)
+        if j > 0:
+            size = j + 1 - a
+            if all(d[a + k * size:a + k * size + len(n)] == n and d[a + k * size + len(n)] == 0 for k, n in enumerate(names)):
+                return a - spec['first'] * size, size
+        i += 1
+
+
+def table_records(exe, spec):
+    start, size = find_table(exe, spec)
+    out = {}
+    for i in range(spec['count']):
+        r = exe.data[start + i * size:start + (i + 1) * size]
+        if r[:1] != b'\0' or any(r[:64]):
+            out[i] = r
+    return start, size, out
+
+
+def match_fields(records, csv_path):
+    """CSV column -> (offset, format) whose value agrees on every record (exact matches only)."""
+    rows = {int(r['id']): r for r in csv.DictReader(open(csv_path), delimiter='\t')}
+    ids = sorted(i for i in rows if i in records)
+    if not ids:
+        return {}
+    size = len(records[ids[0]])
+    vectors = collections.defaultdict(list)
+    for t, f in FIELD_FORMATS.items():
+        w = struct.calcsize(f)
+        for off in range(0, size - w + 1):
+            vec = tuple(struct.unpack_from(f, records[i], off)[0] for i in ids)
+            vectors[vec].append('0x%x/%s' % (off, t))
+    out = {}
+    for col in rows[ids[0]]:
+        if col in ('id', 'name', 'end'):
+            continue
+        vals = [(rows[i].get(col) or '0') for i in ids]
+        if not all(re.fullmatch(r'-?\d+', v) for v in vals) or len(set(vals)) < 2:
+            continue
+        hit = vectors.get(tuple(int(v) for v in vals))
+        if hit:
+            out[col] = hit
+    return out
+
+
 def ability_names(mons, inspector_dir):
     """Name ability keys after the dom6inspector unit CSV column whose values agree (hints only)."""
     path = os.path.join(inspector_dir, 'gamedata', 'BaseU.csv') if inspector_dir else None
@@ -499,6 +569,20 @@ def cmd_layout(exe, args):
     return out
 
 
+def cmd_tables(exe, args):
+    out = {'game_version': exe.version, 'exe_sha256_16': exe.sha}
+    for typ, spec in TABLES.items():
+        start, size, recs = table_records(exe, spec)
+        named = [i for i, r in recs.items() if r[:1] != b'\0']
+        entry = {'file_offset': hex(start), 'address': hex(exe.address(start) or 0), 'record_size': size,
+                 'count': spec['count'], 'vanilla_entries': len(named), 'last_vanilla_id': max(named) if named else None}
+        csv_path = os.path.join(args.inspector, 'gamedata', spec['csv']) if args.inspector else None
+        if csv_path and os.path.exists(csv_path):
+            entry['fields_matching_inspector_csv'] = match_fields({i: recs[i] for i in named}, csv_path)
+        out[typ] = entry
+    return out
+
+
 def cmd_monsters(exe, args):
     mons = monsters(exe)
     return {'game_version': exe.version, 'exe_sha256_16': exe.sha, 'count': len(mons), 'monsters': mons}
@@ -547,14 +631,15 @@ def cmd_readonly(exe, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['commands', 'layout', 'monsters', 'readonly'])
+    ap.add_argument('what', choices=['commands', 'layout', 'monsters', 'readonly', 'tables'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
     ap.add_argument('--out', help='write JSON here (default: stdout)')
     args = ap.parse_args()
     exe = Exe(args.exe)
-    res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly}[args.what](exe, args)
+    res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
+           'tables': cmd_tables}[args.what](exe, args)
     text = json.dumps(res, indent=1, default=str)
     if args.out:
         open(args.out, 'w').write(text + '\n')
