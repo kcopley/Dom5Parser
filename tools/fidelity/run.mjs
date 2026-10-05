@@ -179,7 +179,10 @@ if (opt.stages.includes(2) && !opt.only) {
 			if (f === 'type') s = { 4: 'shield', 5: 'armor', 6: 'helm', 8: 'misc' }[s] || s; // armor type spelling
 			return s;
 		};
-		const fieldCounts = {};
+		// Differences listed in suite.json "vanillaExpected" are representation or limits of the
+		// mod command language (documented there); anything else is a real discrepancy.
+		const expected = SUITE.vanillaExpected || {};
+		const fieldCounts = {}, expectedCounts = {};
 		let dataDiffs = 0;
 		for (const e of rep.entities) {
 			let differs = false;
@@ -187,12 +190,16 @@ if (opt.stages.includes(2) && !opt.only) {
 				if (f === '(entity)' || a == null || typeof a === 'object' || typeof b === 'object' || b == null) continue;
 				if (norm(f, a) === norm(f, b)) continue;
 				const k = e.type + '.' + f;
+				if (expected[k]) { expectedCounts[k] = (expectedCounts[k] || 0) + 1; continue; }
 				fieldCounts[k] = (fieldCounts[k] || 0) + 1;
 				differs = true;
 			}
 			if (differs) dataDiffs++;
 		}
-		judgeBaseline(2, 'vanilla-base-values', { dataDiffs, diagnosticDiffs: 0, fieldCounts });
+		const exp = Object.entries(expectedCounts).map(([k, n]) => k + ' ' + n).join(', ');
+		if (exp) console.log('      expected (suite.json vanillaExpected): ' + exp);
+		if (!dataDiffs) record(2, 'vanilla-base-values', 'PASS', 'only expected differences');
+		else judgeBaseline(2, 'vanilla-base-values', { dataDiffs, diagnosticDiffs: 0, fieldCounts });
 	});
 }
 

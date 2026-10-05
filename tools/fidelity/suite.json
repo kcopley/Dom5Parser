@@ -32,10 +32,7 @@
     {
       "name": "edits-base",
       "path": "Dom5Tests/fixtures/edits/base_edits.dm",
-      "expect": "pass",
-      "knownFailing": {
-        "1": "inspector exports the displayed mapmove/rcost of vanilla unit 3 instead of the base value (see stage 2 vanilla-base-values)"
-      }
+      "expect": "pass"
     },
     {
       "name": "domenhanced-2.13",
@@ -44,7 +41,15 @@
     }
   ],
   "edits": "Dom5Tests/fixtures/edits",
-  "vanillaKnownFailing": {
-    "merc": "4 mercs with unit \"0\" are not re-imported by the exporter round trip (pre-existing)"
+  "vanillaExpected": {
+    "spell.fatiguecost": "ritual gem cost is written as #fatiguecost gems x 100 (the command's encoding of the game's gemcost column)",
+    "site.lab": "game data stores 'lab'; the command is the #lab flag",
+    "unit.gemprod": "artifact of this check: #gemprod appends when vanilla.dm is applied on top of the game data",
+    "unit.eyeloss": "game data holds a strength (e.g. 5); #eyeloss takes no argument",
+    "unit.horrormark": "game data holds a strength (3-7); #horrormark takes no argument",
+    "unit.entangle": "game data holds a strength; #entangle takes no argument",
+    "unit.blessbers": "game data holds a level; #blessbers takes no argument",
+    "spell.name": "literal quote characters in game data names cannot be written inside a quoted argument",
+    "nation.epithet": "literal quote characters in game data names cannot be written inside a quoted argument"
   }
 }

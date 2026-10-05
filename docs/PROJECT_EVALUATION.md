@@ -21,6 +21,11 @@ live inspector repo.
 > Decisions: merging stays out of v1 (keep it in mind for v2). Export will move to
 > **original file order**, provided it stays intuitive and never loses data.
 > Still to do from M1: CI and the ratchet baseline. See `ROUND_TRIP_TESTING.md`.
+>
+> **Later the same day:** the four-stage fidelity suite and CI were built (`FIDELITY_SUITE.md`);
+> the parser fixes cut DomEnhanced's save differences from 1,478 to 932; and `vanilla.dm` now records the
+> game's base values instead of the inspector's display values (finding 1 resolved; see the fork's
+> `docs/EXPORT_RULES.md`).
 
 **How this was done:** built the solution and re-ran the round-trip loop today;
 read the code (with parallel audits of the core library, the GUI/release path, and
