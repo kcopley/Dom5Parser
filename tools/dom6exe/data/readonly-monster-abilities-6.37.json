@@ -2,7 +2,7 @@
  "game_version": "6.37",
  "exe_sha256_16": "d77cd364fe447e85",
  "vanilla_ability_keys": 462,
- "settable_by_monster_commands": 355,
+ "settable_by_monster_commands": 358,
  "not_settable": [
   {
    "ability": 160,
@@ -24,64 +24,6 @@
     "27 Centaur = 4061",
     "227 Satyr Sneak = 712",
     "228 Satyr = 712"
-   ]
-  },
-  {
-   "ability": 112,
-   "name_hint": "sailingshipsize",
-   "monsters": 71,
-   "possibly_set_by": [
-    "ap",
-    "armor",
-    "att",
-    "cold",
-    "coldres",
-    "copyspr",
-    "copystats",
-    "custommagic",
-    "def",
-    "descr",
-    "enc",
-    "eyes",
-    "fireres",
-    "fixedname",
-    "gcost",
-    "gemprod",
-    "heat",
-    "hp",
-    "itemslots",
-    "magicboost",
-    "magicskill",
-    "mapmove",
-    "mor",
-    "mr",
-    "nametype",
-    "newmonster",
-    "pathcost",
-    "poisonres",
-    "prec",
-    "prot",
-    "rcost",
-    "rpcost",
-    "sailing",
-    "selectmonster",
-    "shockres",
-    "size",
-    "spr1",
-    "spr2",
-    "startdom",
-    "stealthy",
-    "str",
-    "unmountedspr1",
-    "unmountedspr2",
-    "weapon",
-    "xspr1",
-    "xspr2"
-   ],
-   "examples": [
-    "263 Vanherse = 999",
-    "264 Vanjarl = 999",
-    "501 Allfather = 999"
    ]
   },
   {
@@ -586,17 +528,6 @@
    ]
   },
   {
-   "ability": 24,
-   "name_hint": "sorceryrange",
-   "monsters": 3,
-   "possibly_set_by": [],
-   "examples": [
-    "245 Master Enchanter = 1",
-    "2449 Idol of Sorcery = 2",
-    "2978 Master Sorcerer = 1"
-   ]
-  },
-  {
    "ability": 682,
    "name_hint": null,
    "monsters": 3,
@@ -693,16 +624,6 @@
    "examples": [
     "141 Barbarian Chief = 1",
     "147 Barbarian Lord = 1"
-   ]
-  },
-  {
-   "ability": 23,
-   "name_hint": "elementrange",
-   "monsters": 2,
-   "possibly_set_by": [],
-   "examples": [
-    "244 Arch Mage = 1",
-    "248 Arch Mage = 1"
    ]
   },
   {
