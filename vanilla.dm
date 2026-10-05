@@ -1,5 +1,5 @@
 -- Dominions 6 Full Data Export --
--- Generated: 2026-01-08T17:58:51.111Z --
+-- Game data: Dominions 6.37 (dom6inspector gamedata) --
 
 
 -- ======================================== --
@@ -846,7 +846,7 @@
 #name "Decay"
 #def 0
 #rcost 0
-#dmg "decay"
+#dmg 256
 #nratt 1
 #att 0
 #len 0
@@ -1310,7 +1310,7 @@
 #name "Plague"
 #def 0
 #rcost 0
-#dmg "carryplague"
+#dmg 8
 #nratt 1
 #att 0
 #len 0
@@ -1579,7 +1579,7 @@
 #name "Curse"
 #def 0
 #rcost 0
-#dmg "curse"
+#dmg 2
 #nratt 1
 #att 0
 #len 0
@@ -1837,7 +1837,7 @@
 #name "Entanglement"
 #def 0
 #rcost 0
-#dmg "entangle"
+#dmg 64
 #nratt 1
 #att 0
 #len 0
@@ -1914,7 +1914,7 @@
 #name "Disease"
 #def 0
 #rcost 0
-#dmg "disease"
+#dmg 1
 #nratt 1
 #att 0
 #len 0
@@ -2731,7 +2731,7 @@
 #name "Bane Burst"
 #def 0
 #rcost 0
-#dmg "decay"
+#dmg 256
 #nratt 1
 #att 0
 #len 1
@@ -3480,7 +3480,7 @@
 #name "Plague Breath"
 #def 0
 #rcost 0
-#dmg "disease"
+#dmg 1
 #nratt 1
 #len 0
 #range -2
@@ -4796,7 +4796,7 @@
 #name "Powerful Decay"
 #def 0
 #rcost 0
-#dmg "decay"
+#dmg 256
 #nratt 1
 #att 0
 #len 0
@@ -5079,7 +5079,7 @@
 #name "Curse"
 #def 0
 #rcost 0
-#dmg "curse"
+#dmg 2
 #nratt 1
 #len 0
 #range 50
@@ -5549,7 +5549,7 @@
 #name "Mesmerize"
 #def 0
 #rcost 0
-#dmg "enrage(dominions3:causeconfusion)"
+#dmg 128
 #nratt 1
 #len 0
 #range 25
@@ -5705,7 +5705,7 @@
 #name "Disease"
 #def 0
 #rcost 0
-#dmg "disease"
+#dmg 1
 #nratt 1
 #att 0
 #len 1
@@ -5936,7 +5936,7 @@
 #name "Small Area Curse and Decay"
 #def 0
 #rcost 0
-#dmg "curse"
+#dmg 2
 #nratt 1
 #att 0
 #len 0
@@ -5950,7 +5950,7 @@
 #name "Small Area Decay"
 #def 0
 #rcost 0
-#dmg "decay"
+#dmg 256
 #nratt 1
 #att 0
 #len 0
@@ -5993,7 +5993,7 @@
 #name "Area Decay"
 #def 0
 #rcost 0
-#dmg "decay"
+#dmg 256
 #nratt 1
 #att 0
 #len 0
@@ -6666,7 +6666,7 @@
 #name "Wail of Doom"
 #def 0
 #rcost 0
-#dmg "curse"
+#dmg 2
 #nratt 1
 #len 0
 #range 50
@@ -7633,7 +7633,7 @@
 #dmg 10
 #nratt 1
 #att 2
-#len 1
+#len 2
 #twohanded
 #magic
 #slash
@@ -8566,7 +8566,7 @@
 #name "Maddening Rage"
 #def 0
 #rcost 0
-#dmg "enrage(dominions3:causeconfusion)"
+#dmg 128
 #nratt 1
 #att 0
 #len 0
@@ -8628,7 +8628,7 @@
 #name "Death Blessing Disease"
 #def 0
 #rcost 0
-#dmg "disease"
+#dmg 1
 #nratt 1
 #att 0
 #len 5
@@ -9075,7 +9075,7 @@
 #name "Cockerel Blindness"
 #def 0
 #rcost 0
-#dmg "blind"
+#dmg 4096
 #nratt 1
 #att 0
 #len 1
@@ -9459,7 +9459,7 @@
 #name "Draw Blood"
 #def 0
 #rcost 0
-#dmg "bleed"
+#dmg 8192
 #nratt 1
 #att 0
 #len 0
@@ -9512,7 +9512,7 @@
 #name "Curse"
 #def 0
 #rcost 0
-#dmg "curse"
+#dmg 2
 #nratt 1
 #att 0
 #len 0
@@ -10729,7 +10729,7 @@
 #name "Poison Decay"
 #def 0
 #rcost 0
-#dmg "decay"
+#dmg 256
 #nratt 1
 #att 0
 #len 0
@@ -11083,7 +11083,7 @@
 #name "Earth Grip Explosion"
 #def 0
 #rcost 0
-#dmg "earthgrip"
+#dmg 16384
 #nratt 1
 #att 0
 #len 0
@@ -11858,7 +11858,7 @@
 #name "Disease"
 #def 0
 #rcost 0
-#dmg "disease"
+#dmg 1
 #nratt 1
 #att 0
 #len 1
@@ -11996,7 +11996,7 @@
 #name "Entanglement"
 #def 0
 #rcost 0
-#dmg "entangle"
+#dmg 64
 #nratt 1
 #att 0
 #len 0
@@ -12105,7 +12105,7 @@
 #end
 
 #selectweapon 878
-#name "Brass Instrument"
+#name "Brass Busine"
 #def 0
 #rcost 2
 #dmg 1
@@ -12168,6 +12168,45 @@
 #pierce
 #bonus
 #secondaryeffect 54
+#end
+
+#selectweapon 883
+#name "Fay Bow"
+#def 0
+#rcost 0
+#dmg 7
+#nratt 1
+#len 0
+#range 40
+#ammo 12
+#twohanded
+#magic
+#pierce
+#halfstr
+#flammable
+#end
+
+#selectweapon 884
+#name "Fay Dagger"
+#def 0
+#rcost 0
+#dmg 2
+#nratt 1
+#att 2
+#len 1
+#magic
+#pierce
+#end
+
+#selectweapon 885
+#name "Silver Busine"
+#def 0
+#rcost 2
+#dmg 1
+#nratt 1
+#att -1
+#len 1
+#blunt
 #end
 
 
@@ -15038,6 +15077,7 @@
 #gcost 10020
 #rcost 15
 #rpcost 10000
+#swampsurvival
 #nomagicleader
 #noundeadleader
 #weapon 357
@@ -18621,7 +18661,7 @@
 #selectmonster 129
 #name "Spire Horn Militia"
 #hp 10
-#str 10
+#str 9
 #att 8
 #def 7
 #prec 11
@@ -18680,7 +18720,7 @@
 #selectmonster 131
 #name "Spire Horn Warrior"
 #hp 10
-#str 10
+#str 9
 #att 10
 #def 9
 #prec 11
@@ -20948,7 +20988,7 @@
 #ressize 3
 #prot 0
 #gcost 10010
-#rcost 11
+#rcost 16
 #rpcost 10000
 #nomagicleader
 #noundeadleader
@@ -20956,7 +20996,7 @@
 #armor 6
 #armor 20
 #pathcost 10
-#mountmnr 3563
+#mountmnr 3564
 #nofalldmg
 #end
 
@@ -21346,6 +21386,7 @@
 #rcost 1
 #rpcost 15
 #fireres 25
+#darkvision 50
 #animal
 #wastesurvival
 #heat 6
@@ -22422,7 +22463,7 @@
 #startdom 1
 #mountmnr 210
 #elementrange 1
-#itemslots 29830
+#itemslots 31878
 #end
 
 #selectmonster 249
@@ -26199,7 +26240,7 @@
 #ressize 3
 #prot 0
 #gcost 10010
-#rcost 29
+#rcost 27
 #rpcost 10000
 #nomagicleader
 #noundeadleader
@@ -26621,7 +26662,6 @@
 #gcost 0
 #rcost 1
 #rpcost 10000
-#heal
 #startage 33
 #nomagicleader
 #noundeadleader
@@ -30320,7 +30360,7 @@
 #rpcost 10000
 #coldres 15
 #shockres -5
-#maxage 200
+#maxage 1000
 #nomagicleader
 #noundeadleader
 #magicskill 8 1
@@ -30582,6 +30622,7 @@
 #rpcost 10000
 #forestsurvival
 #stealthy 0
+#maxage 100
 #pillagebonus 10
 #nomagicleader
 #noundeadleader
@@ -33467,7 +33508,6 @@
 #coldres 25
 #shockres -5
 #cold 15
-#maxage 1000
 #coldpower 1
 #nomagicleader
 #noundeadleader
@@ -42733,6 +42773,7 @@
 #armor 20
 #armor 112
 #pathcost 10
+#formationfighter 2
 #end
 
 #selectmonster 884
@@ -43020,7 +43061,7 @@
 #att 10
 #def 10
 #prec 10
-#mr 14
+#mr 15
 #mor 12
 #enc 2
 #ap 13
@@ -47388,6 +47429,7 @@
 #weapon 351
 #pathcost 10
 #nametype 104
+#slave
 #end
 
 #selectmonster 1023
@@ -48601,7 +48643,7 @@
 #nomagicleader
 #noundeadleader
 #weapon 651
-#armor 23
+#armor 101
 #armor 135
 #armor 25
 #pathcost 10
@@ -52009,7 +52051,7 @@
 #str 11
 #att 11
 #def 11
-#prec 8
+#prec 10
 #mr 10
 #mor 12
 #enc 3
@@ -54497,7 +54539,8 @@
 #nomagicleader
 #noundeadleader
 #weapon 596
-#weapon 378
+#weapon 857
+#weapon 858
 #armor 130
 #armor 132
 #pathcost 10
@@ -54525,7 +54568,8 @@
 #nomagicleader
 #noundeadleader
 #weapon 596
-#weapon 378
+#weapon 857
+#weapon 858
 #armor 130
 #armor 132
 #pathcost 10
@@ -54579,7 +54623,8 @@
 #rpcost 10000
 #nomagicleader
 #noundeadleader
-#weapon 378
+#weapon 857
+#weapon 858
 #armor 130
 #armor 132
 #pathcost 10
@@ -56920,7 +56965,7 @@
 #mr 17
 #mor 13
 #enc 4
-#ap 8
+#ap 10
 #mapmove 12
 #size 4
 #ressize 4
@@ -58183,7 +58228,7 @@
 #mor 14
 #enc 2
 #ap 15
-#mapmove 28
+#mapmove 20
 #size 6
 #ressize 5
 #prot 6
@@ -63248,7 +63293,7 @@
 #mor 14
 #enc 3
 #ap 13
-#mapmove 16
+#mapmove 22
 #size 3
 #ressize 3
 #prot 0
@@ -63383,7 +63428,7 @@
 #mor 15
 #enc 3
 #ap 13
-#mapmove 14
+#mapmove 20
 #size 3
 #ressize 3
 #prot 0
@@ -64472,7 +64517,7 @@
 #armor 118
 #pathcost 10
 #nametype 101
-#formationfighter -2
+#formationfighter -3
 #end
 
 #selectmonster 1544
@@ -68319,7 +68364,7 @@
 #magicskill 1 1
 #magicskill 5 1
 #custommagic 5376 100
-#weapon 6
+#weapon 645
 #armor 148
 #pathcost 10
 #nametype 111
@@ -75439,6 +75484,7 @@
 #armor 126
 #pathcost 10
 #nametype 106
+#combatcaster
 #end
 
 #selectmonster 1873
@@ -76568,7 +76614,7 @@
 #pathcost 10
 #nametype 129
 #spiritsight
-#fixforgebonus -5
+#mastersmith -4
 #itemslots 7326
 #end
 
@@ -79349,8 +79395,8 @@
 #enc 2
 #ap 14
 #mapmove 18
-#size 8
-#ressize 8
+#size 7
+#ressize 7
 #prot 2
 #gcost 10100
 #rcost 1
@@ -86269,7 +86315,7 @@
 #end
 
 #selectmonster 2192
-#name "Draug"
+#name "Draugherse"
 #hp 40
 #str 15
 #att 13
@@ -86304,7 +86350,7 @@
 #end
 
 #selectmonster 2193
-#name "Draug"
+#name "Draugherse"
 #hp 40
 #str 18
 #att 13
@@ -86340,20 +86386,20 @@
 
 #selectmonster 2194
 #name "Draugadrott"
-#hp 30
-#str 18
+#hp 45
+#str 20
 #att 13
 #def 13
 #prec 10
-#mr 16
-#mor 17
+#mr 18
+#mor 30
 #enc 0
 #ap 10
-#mapmove 18
+#mapmove 20
 #size 3
 #ressize 3
 #prot 5
-#gcost 0
+#gcost 150
 #rcost 1
 #rpcost 10000
 #coldres 25
@@ -86362,45 +86408,65 @@
 #amphibian
 #fear 5
 #cold 3
-#poorleader
 #nomagicleader
+#magicskill 2 1
+#magicskill 5 1
+#magicskill 8 1
 #weapon 8
 #armor 13
-#pathcost 10
+#homerealm 1
+#shapechange 2195
+#pathcost 60
+#startdom 2
+#nametype 115
 #neednoteat
 #spiritsight
+#moregrowth -1
 #end
 
 #selectmonster 2195
 #name "Flayed Bull"
-#hp 30
-#str 18
+#hp 140
+#str 28
 #att 13
-#def 13
+#def 12
 #prec 10
-#mr 16
-#mor 17
+#mr 18
+#mor 30
 #enc 0
-#ap 10
-#mapmove 20
-#size 6
-#ressize 6
-#prot 5
-#gcost 0
+#ap 20
+#mapmove 22
+#size 9
+#ressize 9
+#prot 0
+#gcost 170
 #rcost 1
 #rpcost 10000
 #coldres 25
 #poisonres 25
 #undead
-#amphibian
-#fear 5
+#pooramphibian
+#trample
+#berserk 5
+#fear 10
 #cold 3
-#poorleader
+#researchbonus -8
 #nomagicleader
-#weapon 8
-#pathcost 10
+#magicskill 2 1
+#magicskill 5 1
+#magicskill 8 1
+#weapon 830
+#weapon 831
+#homerealm 1
+#shapechange 2194
+#pathcost 60
+#startdom 2
+#invulnerable 18
 #neednoteat
 #spiritsight
+#moregrowth -1
+#mastersmith -1
+#itemslots 12416
 #end
 
 #selectmonster 2196
@@ -86788,7 +86854,7 @@
 #mor 30
 #enc 2
 #ap 13
-#mapmove 16
+#mapmove 18
 #size 3
 #ressize 3
 #prot 0
@@ -95866,7 +95932,7 @@
 #ressize 3
 #prot 0
 #gcost 50
-#rcost 38
+#rcost 36
 #rpcost 10000
 #trample
 #heal
@@ -98297,7 +98363,7 @@
 #selectmonster 2564
 #name "Spire Horn Militia"
 #hp 10
-#str 10
+#str 9
 #att 8
 #def 7
 #prec 11
@@ -98357,7 +98423,7 @@
 #selectmonster 2566
 #name "Spire Horn Warrior"
 #hp 10
-#str 10
+#str 9
 #att 10
 #def 9
 #prec 11
@@ -99255,7 +99321,7 @@
 #selectmonster 2594
 #name "Spire Horn Warrior"
 #hp 10
-#str 10
+#str 9
 #att 10
 #def 9
 #prec 11
@@ -99648,7 +99714,7 @@
 #armor 2
 #pathcost 10
 #heatrec 1
-#mountmnr 3528
+#mountmnr 4131
 #skilledrider 3
 #end
 
@@ -101572,10 +101638,12 @@
 #holy
 #undead
 #inanimate
+#pooramphibian
 #nomagicleader
 #pathcost 10
 #pierceres
 #neednoteat
+#uwdamage 10
 #inspirational 1
 #spiritsight
 #mountmnr 3586
@@ -101609,6 +101677,7 @@
 #holy
 #undead
 #inanimate
+#pooramphibian
 #nobadevents 10
 #nomagicleader
 #magicskill 0 1
@@ -101617,6 +101686,7 @@
 #pathcost 10
 #pierceres
 #neednoteat
+#uwdamage 10
 #inspirational 1
 #spiritsight
 #mountmnr 3586
@@ -101650,6 +101720,7 @@
 #holy
 #undead
 #inanimate
+#pooramphibian
 #nobadevents 10
 #nomagicleader
 #magicskill 3 1
@@ -101659,6 +101730,7 @@
 #pathcost 10
 #pierceres
 #neednoteat
+#uwdamage 10
 #inspirational 1
 #spiritsight
 #mountmnr 3586
@@ -101693,6 +101765,7 @@
 #holy
 #undead
 #inanimate
+#pooramphibian
 #nobadevents 15
 #nomagicleader
 #magicskill 0 2
@@ -101705,6 +101778,7 @@
 #pathcost 10
 #pierceres
 #neednoteat
+#uwdamage 10
 #inspirational 2
 #spiritsight
 #mountmnr 3586
@@ -103470,6 +103544,7 @@
 #holy
 #undead
 #inanimate
+#pooramphibian
 #nobadevents 20
 #nomagicleader
 #magicskill 0 2
@@ -103481,6 +103556,7 @@
 #pathcost 10
 #pierceres
 #neednoteat
+#uwdamage 10
 #inspirational 2
 #spiritsight
 #mountmnr 3586
@@ -103984,6 +104060,7 @@
 #rpcost 10000
 #darkvision 100
 #amphibian
+#forestsurvival
 #swampsurvival
 #stealthy 10
 #startage 55
@@ -106167,8 +106244,8 @@
 #nomagicleader
 #noundeadleader
 #magicskill 1 2
-#weapon 823
-#weapon 823
+#weapon 826
+#weapon 826
 #weapon 825
 #homerealm 5
 #pathcost 80
@@ -118051,7 +118128,7 @@
 #att 11
 #def 9
 #prec 7
-#mr 9
+#mr 12
 #mor 14
 #enc 2
 #ap 17
@@ -118353,7 +118430,7 @@
 #prec 11
 #mr 13
 #mor 9
-#enc 4
+#enc 3
 #ap 12
 #mapmove 16
 #size 3
@@ -118383,7 +118460,7 @@
 #prec 11
 #mr 16
 #mor 9
-#enc 4
+#enc 3
 #ap 12
 #mapmove 16
 #size 3
@@ -118856,7 +118933,7 @@
 #prec 10
 #mr 13
 #mor 11
-#enc 4
+#enc 3
 #ap 12
 #mapmove 16
 #size 3
@@ -121414,6 +121491,7 @@
 #weapon 7
 #shapechange 3240
 #pathcost 10
+#ironvul 1
 #glamour
 #latehero 10
 #spellsinger
@@ -121449,6 +121527,7 @@
 #weapon 408
 #shapechange 3239
 #pathcost 10
+#ironvul 1
 #itemslots 12288
 #end
 
@@ -123880,7 +123959,7 @@
 #mapmove 18
 #size 3
 #ressize 3
-#prot 5
+#prot 0
 #gcost 10010
 #rcost 27
 #rpcost 10000
@@ -131129,6 +131208,7 @@
 #dungeon
 #lesserhorror
 #swimming
+#spiritsight
 #itemslots 12288
 #end
 
@@ -131589,7 +131669,6 @@
 #animal
 #forestsurvival
 #stealthy 0
-#heal
 #maxage 150
 #poorleader
 #nomagicleader
@@ -131621,6 +131700,7 @@
 #rcost 1
 #rpcost 20
 #fireres 5
+#darkvision 50
 #animal
 #maxage 100
 #poorleader
@@ -132796,7 +132876,7 @@
 #selectmonster 3566
 #name "Centaur Chariot"
 #hp 20
-#str 10
+#str 13
 #att 9
 #def 12
 #prec 12
@@ -132817,7 +132897,6 @@
 #nomagicleader
 #noundeadleader
 #weapon 357
-#weapon 1
 #weapon 55
 #armor 103
 #armor 119
@@ -134982,7 +135061,7 @@
 #ressize 3
 #prot 0
 #gcost 10018
-#rcost 11
+#rcost 16
 #rpcost 13000
 #maxage 150
 #nomagicleader
@@ -134993,7 +135072,7 @@
 #armor 2
 #pathcost 10
 #mobilearcher 1
-#mountmnr 3563
+#mountmnr 3564
 #nofalldmg
 #end
 
@@ -135610,7 +135689,7 @@
 #att 10
 #def 11
 #prec 10
-#mr 14
+#mr 15
 #mor 12
 #enc 2
 #ap 13
@@ -135684,7 +135763,7 @@
 #mor 30
 #enc 2
 #ap 13
-#mapmove 16
+#mapmove 18
 #size 3
 #ressize 3
 #prot 0
@@ -144487,7 +144566,7 @@
 #mor 14
 #enc 1
 #ap 12
-#mapmove 10
+#mapmove 8
 #size 3
 #ressize 3
 #prot 0
@@ -147666,6 +147745,7 @@
 #rcost 1
 #rpcost 10000
 #coldres 25
+#poisonres 10
 #female
 #magicbeing
 #forestsurvival
@@ -147810,8 +147890,8 @@
 #att 8
 #def 8
 #prec 12
-#mr 17
-#mor 12
+#mr 18
+#mor 30
 #enc 3
 #ap 10
 #mapmove 16
@@ -147839,8 +147919,8 @@
 #att 11
 #def 11
 #prec 10
-#mr 16
-#mor 10
+#mr 18
+#mor 30
 #enc 2
 #ap 14
 #mapmove 18
@@ -149908,7 +149988,7 @@
 #def 11
 #prec 7
 #mr 14
-#mor 15
+#mor 50
 #enc 0
 #ap 20
 #mapmove 20
@@ -149923,6 +150003,7 @@
 #undead
 #magicbeing
 #inanimate
+#mindless
 #pooramphibian
 #forestsurvival
 #heal
@@ -150764,7 +150845,7 @@
 #magicskill 7 1
 #magicskill 9 1
 #custommagic 17792 100
-#weapon 18
+#weapon 7
 #armor 44
 #pathcost 10
 #nametype 167
@@ -151049,6 +151130,7 @@
 #female
 #flying
 #forestsurvival
+#stealthy 0
 #heal
 #maxage 250
 #poormagicleader
@@ -151085,6 +151167,7 @@
 #poisonres 5
 #diseaseres 100
 #forestsurvival
+#stealthy 0
 #heal
 #maxage 250
 #nomagicleader
@@ -151125,7 +151208,7 @@
 #diseaseres 100
 #animal
 #forestsurvival
-#stealthy 40
+#stealthy 0
 #maxage 150
 #poorleader
 #nomagicleader
@@ -151645,6 +151728,7 @@
 #mountmnr 4111
 #skilledrider 2
 #truesight
+#latehero 10
 #combatcaster
 #end
 
@@ -151682,6 +151766,828 @@
 #end
 
 #selectmonster 4112
+#name "Longdead"
+#hp 5
+#str 10
+#att 11
+#def 9
+#prec 10
+#mr 9
+#mor 50
+#enc 0
+#ap 11
+#mapmove 20
+#size 3
+#ressize 3
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 10000
+#coldres 15
+#poisonres 25
+#undead
+#inanimate
+#mindless
+#pooramphibian
+#noheal
+#poorleader
+#nomagicleader
+#weapon 18
+#pathcost 10
+#pierceres
+#neednoteat
+#spiritsight
+#end
+
+#selectmonster 4113
+#name "Longdead"
+#hp 5
+#str 10
+#att 11
+#def 9
+#prec 10
+#mr 9
+#mor 50
+#enc 0
+#ap 11
+#mapmove 18
+#size 3
+#ressize 3
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 10000
+#coldres 15
+#poisonres 25
+#undead
+#inanimate
+#mindless
+#pooramphibian
+#noheal
+#poorleader
+#nomagicleader
+#weapon 18
+#armor 31
+#pathcost 10
+#pierceres
+#neednoteat
+#spiritsight
+#end
+
+#selectmonster 4114
+#name "Longdead"
+#hp 5
+#str 10
+#att 11
+#def 9
+#prec 10
+#mr 9
+#mor 50
+#enc 0
+#ap 11
+#mapmove 20
+#size 3
+#ressize 3
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 10000
+#coldres 15
+#poisonres 25
+#undead
+#inanimate
+#mindless
+#pooramphibian
+#noheal
+#poorleader
+#nomagicleader
+#weapon 17
+#pathcost 10
+#pierceres
+#neednoteat
+#spiritsight
+#end
+
+#selectmonster 4115
+#name "Buraq"
+#hp 90
+#str 21
+#att 10
+#def 14
+#prec 14
+#mr 18
+#mor 30
+#enc 2
+#ap 30
+#mapmove 40
+#size 9
+#ressize 9
+#prot 9
+#gcost 10000
+#rcost 1
+#rpcost 10000
+#female
+#flying
+#awe 1
+#researchbonus -8
+#nomagicleader
+#noundeadleader
+#magicskill 1 1
+#magicskill 7 1
+#weapon 831
+#armor 148
+#homerealm 5
+#pathcost 80
+#startdom 2
+#nametype 164
+#moreorder 1
+#mastersmith -1
+#itemslots 12416
+#end
+
+#selectmonster 4116
+#name "Fay Archer"
+#hp 11
+#str 10
+#att 11
+#def 13
+#prec 13
+#mr 14
+#mor 11
+#enc 1
+#ap 12
+#mapmove 16
+#size 3
+#ressize 3
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#poisonres 10
+#diseaseres 100
+#forestsurvival
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 817
+#weapon 883
+#armor 259
+#armor 261
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4117
+#name "Unseelie Archer"
+#hp 11
+#str 10
+#att 11
+#def 13
+#prec 13
+#mr 14
+#mor 11
+#enc 1
+#ap 12
+#mapmove 16
+#size 3
+#ressize 3
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 15
+#poisonres 10
+#diseaseres 100
+#forestsurvival
+#iceprot 1
+#heal
+#maxage 250
+#coldpower 1
+#nomagicleader
+#noundeadleader
+#weapon 884
+#weapon 883
+#armor 259
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4118
+#name "Unseelie Folk"
+#hp 8
+#str 8
+#att 11
+#def 11
+#prec 11
+#mr 14
+#mor 9
+#enc 1
+#ap 10
+#mapmove 14
+#size 2
+#ressize 2
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 643
+#armor 10
+#armor 135
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4119
+#name "Unseelie Folk"
+#hp 9
+#str 9
+#att 11
+#def 11
+#prec 11
+#mr 14
+#mor 8
+#enc 1
+#ap 10
+#mapmove 14
+#size 2
+#ressize 2
+#prot 3
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#pooramphibian
+#forestsurvival
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 643
+#armor 10
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4120
+#name "Unseelie Folk"
+#hp 10
+#str 8
+#att 11
+#def 10
+#prec 12
+#mr 14
+#mor 8
+#enc 1
+#ap 10
+#mapmove 14
+#size 2
+#ressize 2
+#prot 2
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 643
+#armor 10
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4121
+#name "Unseelie Folk"
+#hp 10
+#str 9
+#att 12
+#def 11
+#prec 12
+#mr 14
+#mor 11
+#enc 1
+#ap 10
+#mapmove 14
+#size 2
+#ressize 2
+#prot 2
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 643
+#weapon 20
+#armor 10
+#armor 20
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4122
+#name "Unseelie Folk"
+#hp 8
+#str 8
+#att 10
+#def 10
+#prec 12
+#mr 14
+#mor 7
+#enc 1
+#ap 10
+#mapmove 14
+#size 2
+#ressize 2
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 674
+#weapon 23
+#armor 10
+#armor 135
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4123
+#name "Unseelie Stablehand"
+#hp 8
+#str 8
+#att 9
+#def 9
+#prec 11
+#mr 14
+#mor 9
+#enc 1
+#ap 10
+#mapmove 14
+#size 2
+#ressize 2
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#animalawe 1
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 877
+#armor 10
+#armor 135
+#pathcost 10
+#neednoteat
+#ironvul 2
+#glamour
+#truesight
+#end
+
+#selectmonster 4124
+#name "Unseelie Musician"
+#hp 6
+#str 6
+#att 9
+#def 14
+#prec 13
+#mr 14
+#mor 8
+#enc 1
+#ap 10
+#mapmove 14
+#size 2
+#ressize 2
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#female
+#flying
+#forestsurvival
+#heal
+#maxage 250
+#poormagicleader
+#noundeadleader
+#weapon 403
+#weapon 885
+#armor 10
+#armor 135
+#pathcost 10
+#neednoteat
+#ironvul 1
+#glamour
+#truesight
+#end
+
+#selectmonster 4125
+#name "Unseelie Cat Knight"
+#hp 4
+#str 5
+#att 13
+#def 14
+#prec 12
+#mr 14
+#mor 13
+#enc 1
+#ap 10
+#mapmove 14
+#size 1
+#ressize 1
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#stealthy 0
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 651
+#armor 281
+#armor 284
+#armor 285
+#pathcost 10
+#neednoteat
+#ironvul 1
+#glamour
+#mountmnr 4126
+#regainmount 1
+#skilledrider 2
+#truesight
+#end
+
+#selectmonster 4126
+#name "Unseelie Cat"
+#hp 5
+#str 5
+#att 12
+#def 15
+#prec 12
+#mr 14
+#mor 12
+#enc 2
+#ap 24
+#mapmove 20
+#size 1
+#ressize 1
+#prot 2
+#gcost 0
+#rcost 1
+#rpcost 10000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#animal
+#forestsurvival
+#stealthy 0
+#maxage 150
+#poorleader
+#nomagicleader
+#noundeadleader
+#weapon 236
+#weapon 20
+#pathcost 10
+#ironvul 1
+#glamour
+#truesight
+#itemslots 12288
+#end
+
+#selectmonster 4127
+#name "Fay Folk Swan Knight"
+#hp 4
+#str 5
+#att 13
+#def 14
+#prec 12
+#mr 14
+#mor 13
+#enc 1
+#ap 10
+#mapmove 14
+#size 1
+#ressize 1
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 651
+#armor 281
+#armor 284
+#armor 285
+#pathcost 10
+#neednoteat
+#ironvul 1
+#glamour
+#mountmnr 4128
+#regainmount 1
+#skilledrider 2
+#truesight
+#end
+
+#selectmonster 4128
+#name "Fay Swan"
+#hp 7
+#str 6
+#att 9
+#def 12
+#prec 9
+#mr 14
+#mor 13
+#enc 2
+#ap 5
+#mapmove 32
+#size 2
+#ressize 2
+#prot 1
+#gcost 0
+#rcost 1
+#rpcost 10000
+#poisonres 5
+#diseaseres 100
+#animal
+#flying
+#forestsurvival
+#swampsurvival
+#maxage 150
+#nomagicleader
+#noundeadleader
+#weapon 677
+#pathcost 10
+#neednoteat
+#ironvul 1
+#glamour
+#truesight
+#itemslots 12288
+#end
+
+#selectmonster 4129
+#name "Unseelie Raven Knight"
+#hp 3
+#str 4
+#att 13
+#def 15
+#prec 12
+#mr 14
+#mor 12
+#enc 1
+#ap 10
+#mapmove 14
+#size 1
+#ressize 1
+#prot 0
+#gcost 0
+#rcost 1
+#rpcost 25000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#forestsurvival
+#stealthy 0
+#heal
+#maxage 250
+#nomagicleader
+#noundeadleader
+#weapon 651
+#armor 281
+#armor 284
+#armor 285
+#pathcost 10
+#neednoteat
+#ironvul 1
+#glamour
+#mountmnr 4130
+#regainmount 1
+#skilledrider 3
+#truesight
+#end
+
+#selectmonster 4130
+#name "Unseelie Raven"
+#hp 5
+#str 4
+#att 10
+#def 13
+#prec 14
+#mr 14
+#mor 12
+#enc 2
+#ap 5
+#mapmove 32
+#size 2
+#ressize 2
+#prot 1
+#gcost 0
+#rcost 1
+#rpcost 10000
+#coldres 10
+#poisonres 5
+#diseaseres 100
+#animal
+#flying
+#forestsurvival
+#stealthy 0
+#maxage 150
+#nomagicleader
+#noundeadleader
+#weapon 404
+#pathcost 10
+#neednoteat
+#ironvul 1
+#glamour
+#truesight
+#itemslots 12288
+#end
+
+#selectmonster 4131
+#name "Shah of Horses"
+#hp 28
+#str 18
+#att 14
+#def 10
+#prec 5
+#mr 8
+#mor 14
+#enc 2
+#ap 30
+#mapmove 16
+#size 5
+#ressize 5
+#prot 4
+#gcost 10040
+#rcost 1
+#rpcost 20
+#fireres 10
+#darkvision 50
+#holy
+#animal
+#maxage 100
+#poorleader
+#nomagicleader
+#noundeadleader
+#weapon 55
+#armor 253
+#pathcost 10
+#itemslots 12288
+#end
+
+#selectmonster 4132
+#name "Gnu"
+#hp 19
+#str 14
+#att 11
+#def 10
+#prec 5
+#mr 5
+#mor 11
+#enc 2
+#ap 28
+#mapmove 22
+#size 5
+#ressize 5
+#prot 6
+#gcost 10020
+#rcost 1
+#rpcost 15
+#animal
+#poorleader
+#nomagicleader
+#noundeadleader
+#weapon 331
+#weapon 55
+#pathcost 10
+#itemslots 12288
+#end
+
+#selectmonster 4133
+#name "Gnu Clan Cavalry"
+#hp 11
+#str 11
+#att 10
+#def 10
+#prec 10
+#mr 9
+#mor 12
+#enc 2
+#ap 14
+#mapmove 14
+#size 3
+#ressize 3
+#prot 0
+#gcost 10012
+#rcost 2
+#rpcost 10000
+#nomagicleader
+#noundeadleader
+#weapon 315
+#armor 7
+#armor 112
+#armor 20
+#pathcost 10
+#nametype 126
+#mountmnr 4132
+#skilledrider 1
+#end
+
+#selectmonster 4134
+#name "Gnu Clan Commander"
+#hp 13
+#str 12
+#att 10
+#def 10
+#prec 10
+#mr 9
+#mor 13
+#enc 2
+#ap 14
+#mapmove 16
+#size 3
+#ressize 3
+#prot 0
+#gcost 10010
+#rcost 2
+#rpcost 10000
+#nomagicleader
+#noundeadleader
+#weapon 315
+#armor 7
+#armor 112
+#armor 20
+#pathcost 10
+#nametype 126
+#mountmnr 4132
+#skilledrider 1
+#end
+
+#selectmonster 4135
 #name "Debug Senpai"
 #hp 38
 #str 18
@@ -151713,7 +152619,7 @@
 #pathcost 10
 #end
 
-#selectmonster 4113
+#selectmonster 4136
 #name "Debug Kohai"
 #hp 10
 #str 10
@@ -157918,7 +158824,7 @@
 #path 0 4
 #pathlevel 0 5
 #damage 3870
-#nreff 6
+#nreff 7
 #precision 0
 #spec 0
 #provrange 5
@@ -160031,7 +160937,7 @@
 #path 0 1
 #pathlevel 0 1
 #damage 3015
-#fatiguecost 3
+#fatiguecost 5
 #nreff 1
 #precision 0
 #spec 8390784
@@ -162492,7 +163398,7 @@
 #fatiguecost 20
 #nreff 1
 #precision 1
-#spec 0
+#spec 1649267441664
 #casttime 100
 #end
 
@@ -171654,6 +172560,109 @@
 #pathlevel 0 2
 #damage 1084
 #nreff 1013
+#precision 0
+#spec 0
+#end
+
+#selectspell 1467
+#name "Summon Fay Archers"
+#school 0
+#researchlevel 4
+#path 0 7
+#path 1 6
+#pathlevel 0 2
+#pathlevel 1 1
+#damage 4116
+#nreff 505
+#precision 0
+#spec 0
+#onlygeosrc 128
+#coldsummon 4117
+#end
+
+#selectspell 1468
+#name "Summon Unseelie Folk"
+#school 0
+#researchlevel 3
+#path 0 7
+#path 1 2
+#pathlevel 0 2
+#pathlevel 1 1
+#damage -26
+#nreff 10
+#precision 0
+#spec 0
+#onlygeosrc 128
+#end
+
+#selectspell 1469
+#name "Summon Unseelie Soldiers"
+#school 0
+#researchlevel 4
+#path 0 7
+#path 1 2
+#pathlevel 0 2
+#pathlevel 1 1
+#damage 3906
+#nreff 505
+#precision 0
+#spec 0
+#onlygeosrc 128
+#end
+
+#selectspell 1470
+#name "Summon Unseelie Archers"
+#school 0
+#researchlevel 4
+#path 0 7
+#path 1 2
+#pathlevel 0 2
+#pathlevel 1 1
+#damage 4117
+#nreff 505
+#precision 0
+#spec 0
+#onlygeosrc 128
+#end
+
+#selectspell 1471
+#name "Summon Unseelie Knights"
+#school 0
+#researchlevel 5
+#path 0 7
+#path 1 2
+#pathlevel 0 3
+#pathlevel 1 1
+#damage 3907
+#nreff 3
+#precision 0
+#spec 0
+#onlygeosrc 128
+#end
+
+#selectspell 1472
+#name "Summon Unseelie Prince"
+#school 0
+#researchlevel 6
+#path 0 7
+#path 1 2
+#pathlevel 0 4
+#pathlevel 1 1
+#damage 3909
+#nreff 1
+#precision 0
+#spec 0
+#onlygeosrc 128
+#end
+
+#selectspell 1473
+#name "Herd of Gnus"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#damage 4132
+#nreff 1018
 #precision 0
 #spec 0
 #end
@@ -190228,6 +191237,18 @@
 #dominion 2
 #end
 
+#selectsite 1405
+#name "The Throne of Violence"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#incunrest 50
+#dominion 1
+#blessstr 1
+#blessdtv 1
+#end
+
 
 -- ======================================== --
 -- NATIONS --
@@ -190805,6 +191826,7 @@
 #cheapgod20 3386
 #cheapgod20 3387
 #cheapgod20 3388
+#cheapgod20 4115
 #cheapgod40 3473
 #end
 
@@ -191169,10 +192191,12 @@
 #addrecunit 2304
 #addrecunit 2305
 #addrecunit 2306
+#addrecunit 4133
 #addrecunit 2307
 #addreccom 2288
 #addreccom 2289
 #addreccom 2290
+#addreccom 4134
 #addreccom 2291
 #addreccom 2292
 #addreccom 2293
@@ -191258,6 +192282,7 @@
 #homerealm 10
 #cheapgod20 501
 #cheapgod20 1098
+#cheapgod20 2194
 #cheapgod20 2206
 #end
 
@@ -191281,6 +192306,7 @@
 #homerealm 1
 #homerealm 10
 #cheapgod20 501
+#cheapgod20 2194
 #cheapgod20 2789
 #cheapgod20 2801
 #cheapgod20 2802
@@ -192220,6 +193246,7 @@
 #cheapgod20 3386
 #cheapgod20 3387
 #cheapgod20 3388
+#cheapgod20 4115
 #end
 
 #selectnation 66
@@ -192758,6 +193785,7 @@
 #homerealm 10
 #cheapgod20 501
 #cheapgod20 1098
+#cheapgod20 2194
 #cheapgod20 2206
 #end
 
@@ -192790,6 +193818,7 @@
 #homerealm 1
 #homerealm 10
 #cheapgod20 1561
+#cheapgod20 2194
 #cheapgod20 3086
 #end
 
@@ -193853,6 +194882,7 @@
 #homerealm 1
 #homerealm 10
 #cheapgod20 1098
+#cheapgod20 2194
 #end
 
 #selectnation 116
@@ -199885,6 +200915,7 @@
 #header "Word is spreading that Astrolo"
 #rarity 12
 #req_capital 0
+#req_cave 0
 #req_code 0
 #msg "Word is spreading that Astrologers have spotted a comet headed straight for Earth!"
 #worldunrest 5
@@ -216097,7 +217128,7 @@
 #req_mnr 2449
 #req_code -14
 #msg "The Idol has cast a powerful enchantment! Reaching into the realm of the fallen warriors, it has summoned them back to fight alongside his mortal servants!"
-#com 2194
+#com 2192
 #4d6units "915,915"
 #deathboost 1
 #code -73
@@ -216121,7 +217152,7 @@
 #req_unique 6
 #req_code -85
 #msg "The idol consolidates its power."
-#2com "2194,2194"
+#2com "2192,2192"
 #2d6units "2533,2533"
 #4d6units 2531
 #end
@@ -216169,7 +217200,7 @@
 #req_unique 3
 #req_code -85
 #msg "The idols host grows."
-#2com "2194,2194"
+#2com "2192,2192"
 #1d6units "2533,2533"
 #2d6units 2531
 #end
@@ -216240,7 +217271,7 @@
 #req_code 0
 #req_nearbycode -85
 #msg "The Northmen and their sinister allies are claiming this land! [Hall of the Draugadrott]"
-#2com 2194
+#2com 2192
 #4d6units "2531,2531,2531"
 #code -86
 #end
@@ -216249,7 +217280,7 @@
 #header "The northmen have been driven "
 #rarity 0
 #req_land 1
-#req_nomonster 2194
+#req_nomonster 2192
 #req_code -87,-87
 #msg "The northmen have been driven away! Some of their plunder was salvaged. People in the area are finding faith and hope anew! "
 #gold 300
@@ -216265,7 +217296,7 @@
 #req_unique 1
 #req_land 1
 #req_site 1
-#req_monster 2194
+#req_monster 2192
 #req_code -86
 #msg "The northmen settle. [Hall of the Draugadrott]"
 #addsite -1
@@ -216278,7 +217309,7 @@
 #rarity 0
 #req_unique 4
 #req_land 1
-#req_mnr 2194
+#req_mnr 2192
 #req_code -87
 #msg "The northmen strengthen their hold."
 #2d6units 2190
@@ -216287,14 +217318,14 @@
 #end
 
 #newevent 1889
-#header "The Draugadrottir have come to"
+#header "The Draughersir have come to c"
 #rarity 0
 #req_unique 1
 #req_land 0
 #req_code 0
 #req_nearbycode -85
-#msg "The Draugadrottir have come to claim a land to rule under the waves!"
-#2com 2194
+#msg "The Draughersir have come to claim a land to rule under the waves!"
+#2com 2192
 #deathboost 1
 #code -86
 #end
@@ -216303,7 +217334,7 @@
 #header "The draug settle. [Hall of the"
 #rarity 0
 #req_land 0
-#req_monster 2194
+#req_monster 2192
 #req_code -86
 #msg "The draug settle. [Hall of the Draugadrott]"
 #addsite -1
@@ -216316,7 +217347,7 @@
 #rarity 0
 #req_unique 6
 #req_land 0
-#req_mnr 2194
+#req_mnr 2192
 #req_code -87
 #msg "The draug strengthen their hold."
 #2d6units 2190
@@ -216328,7 +217359,7 @@
 #header "The Draug have been driven awa"
 #rarity 0
 #req_land 0
-#req_nomonster 2194
+#req_nomonster 2192
 #req_code -87,-87
 #msg "The Draug have been driven away! People find faith and hope anew! Some of their plunder was salvaged. People in the area are finding faith and hope anew! "
 #gold 300
@@ -216339,26 +217370,26 @@
 #end
 
 #newevent 1893
-#header "The draugadrott gain power."
+#header "The draugherse gain power."
 #rarity 0
 #req_unique 2
 #req_land 0
-#req_mnr 2194
+#req_mnr 2192
 #req_code -87
-#msg "The draugadrott gain power."
+#msg "The draugherse gain power."
 #addequip 1
 #waterboost 1
 #deathboost 1
 #end
 
 #newevent 1894
-#header "The draugadrott gain power."
+#header "The draugherse gain power."
 #rarity 0
 #req_unique 2
 #req_land 1
-#req_mnr 2194
+#req_mnr 2192
 #req_code -87
-#msg "The draugadrott gain power."
+#msg "The draugherse gain power."
 #addequip 1
 #waterboost 1
 #deathboost 1
@@ -216473,7 +217504,7 @@
 #req_unique 3
 #req_code -73
 #msg "The Idol raises fallen warriors to serve once more."
-#com 2194
+#com 2192
 #2d6units 2190
 #addequip 1
 #deathboost 1
@@ -216591,7 +217622,7 @@
 #req_maxdef 18
 #req_anycode -73
 #msg "Lord save us from the wrath of the Northmen! A deadly cold rises from the sea when unhuman warriors come to slay the living, envious of their warmth."
-#com 2194
+#com 2192
 #2com 2190
 #6d6units 2119
 #end
@@ -218111,7 +219142,6 @@
 #gold -100
 #com 406
 #4d6units 174
-#6d6units 33
 #end
 
 #newevent 2055
@@ -218131,7 +219161,6 @@
 #req_unique 1
 #req_site 1
 #req_claimedthrone 1
-#req_fullowner 1
 #req_monster 1340
 #msg "You have been empowered by the Throne of War! [The Throne of War]"
 #fireboost 1340
@@ -221527,6 +222556,7 @@
 #header "Your temple has been desecrate"
 #rarity 2
 #req_story 1
+#req_land 1
 #req_temple 1
 #req_code 0
 #msg "Your temple has been desecrated! An acolyte was found strung face down above the altar, the divine statues broken, your glorious visage defaced and entrails scattered in the chancel. Repairs have been costly."
@@ -221832,7 +222862,6 @@
 #req_freesites 1
 #req_code -49
 #msg "A gateway to the lower realms has opened, spewing forth inhabitants of that dismal place! [Demon Gate]"
-#addsite -1
 #4com 88
 #code 0
 #end
@@ -224216,6 +225245,7 @@
 #req_monster 826
 #req_targpath4 0
 #msg "One of your commanders agreed to run an errand for the Arch Devil."
+#banished -12
 #end
 
 #newevent 2582
@@ -224224,6 +225254,7 @@
 #req_monster 827
 #req_targpath4 0
 #msg "One of your commanders agreed to run an errand for the Arch Devil."
+#banished -12
 #end
 
 #newevent 2583
@@ -224232,6 +225263,7 @@
 #req_monster 828
 #req_targpath4 0
 #msg "One of your commanders agreed to run an errand for the Arch Devil."
+#banished -12
 #end
 
 #newevent 2584
@@ -224240,6 +225272,7 @@
 #req_monster 829
 #req_targpath4 0
 #msg "One of your commanders agreed to run an errand for the Arch Devil."
+#banished -12
 #end
 
 #newevent 2585
@@ -231418,7 +232451,6 @@
 #newevent 3234
 #header "The dwarves holding up the sky"
 #rarity 13
-#req_monster 3425
 #msg "The dwarves holding up the sky are not doing their job properly. The sky has fallen, the entire world is covered in permanent darkness and violent storms are raging."
 #worlddarkness
 #end
