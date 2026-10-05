@@ -1,4 +1,4 @@
-﻿using Dom5Edit.Commands;
+using Dom5Edit.Commands;
 using Dom5Edit.Props;
 
 namespace Dom5Edit.Entities
@@ -198,6 +198,8 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.IMMORTAL, CommandProperty.Create);
             _propertyMap.Add(Command.DOMIMMORTAL, CommandProperty.Create);
             _propertyMap.Add(Command.FORCESS, CommandProperty.Create);
+            _propertyMap.Add(Command.SPIKES, IntProperty.Create); //#spikes <dmg>
+            _propertyMap.Add(Command.SLEEPRES, IntProperty.Create); //#sleepres <bonus>
             _propertyMap.Add(Command.REFORMTIME, IntProperty.Create);
             _propertyMap.Add(Command.SPRINGIMMORTAL, CommandProperty.Create);
             _propertyMap.Add(Command.REFORM, IntProperty.Create);

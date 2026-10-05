@@ -186,6 +186,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.COLD, IntProperty.Create);
             _propertyMap.Add(Command.OVERCHARGED, IntProperty.Create);
             _propertyMap.Add(Command.EYELOSS, CommandProperty.Create);
+            _propertyMap.Add(Command.SLEEPRES, IntProperty.Create); //#sleepres <bonus>
             _propertyMap.Add(Command.AMBIDEXTROUS, IntProperty.Create);
             _propertyMap.Add(Command.BERSERK, IntProperty.Create);
             _propertyMap.Add(Command.BLESSBERS, CommandProperty.Create);
