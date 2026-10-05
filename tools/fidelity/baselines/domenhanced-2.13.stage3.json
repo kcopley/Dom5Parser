@@ -1,8 +1,8 @@
 {
- "dataDiffs": 1478,
+ "dataDiffs": 932,
  "diagnosticDiffs": 19,
  "fieldCounts": {
-  "unit.descr": 239,
+  "unit.descr": 198,
   "unit.moreorder": 12,
   "unit.woundfend": 36,
   "unit.magicboost_A": 5,
@@ -132,17 +132,16 @@
   "unit.bringeroffortune": 4,
   "spell.school": 8,
   "spell.notnations": 1,
-  "spell.details": 59,
   "spell.nogeodst": 3,
   "spell.nogeosrc": 1,
   "spell.portent": 26,
+  "spell.details": 1,
   "spell.onlyatsite": 1,
   "spell.nextingeo": 29,
   "spell.aoe": 1,
   "spell.fatiguecost": 2,
   "spell.pathlevel1": 1,
   "spell.nations": 10,
-  "wpn.dmg": 12,
   "wpn.bonus": 1,
   "wpn.dt_aff": 1,
   "wpn.magic": 1,
@@ -163,7 +162,6 @@
   "nation.blessbonus": 7,
   "site.hcom": 2,
   "site.scales": 2,
-  "event.description": 450,
   "event.req_targmnr": 1
  }
 }
