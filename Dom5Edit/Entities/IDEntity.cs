@@ -469,13 +469,12 @@ namespace Dom5Edit.Entities
 
         /// <summary>
         /// Whether a source command belongs in a copy snapshot: not structural (copy/clear), not a
-        /// sprite, not ID-relative, and within a group the copy command overwrites.
+        /// sprite, and within a group the copy command overwrites. (#xpshape, #growhp and the other
+        /// ID-relative commands are copied: the game's #copystats copies the whole ability list.)
         /// </summary>
         private static bool ShouldSnapshot(IDEntity source, Command command, List<PropertyGroup> groups, bool all)
         {
             if (PropertyGroupMap.IsClearCommand(command) || PropertyGroupMap.IsFullCopyCommand(command))
-                return false;
-            if (PropertyGroupMap.IsIdRelativeCommand(command))
                 return false;
 
             var group = source.GetPropertyGroup(command);

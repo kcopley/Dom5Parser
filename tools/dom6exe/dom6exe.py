@@ -413,6 +413,30 @@ def monsters(exe):
     return out
 
 
+def flag_names(mons, inspector_dir, word, bits):
+    """Name flag bits after the dom6inspector unit CSV column that is set exactly on the monsters
+    with the bit (hints only)."""
+    path = os.path.join(inspector_dir, 'gamedata', 'BaseU.csv') if inspector_dir else None
+    if not path or not os.path.exists(path):
+        return {}
+    rows = {int(r['id']): r for r in csv.DictReader(open(path), delimiter='\t')}
+    cols = [c for c in next(iter(rows.values())) if c not in ('id', 'name', 'end')]
+    names = {}
+    for bit in bits:
+        have = {i for i, m in mons.items() if i in rows and m[word] & bit}
+        best = None
+        for c in cols:
+            cset = {i for i, r in rows.items() if (r.get(c) or '') not in ('', '0')}
+            if not cset & have:
+                continue
+            ratio = len(cset & have) / len(cset | have)
+            if best is None or ratio > best[1]:
+                best = (c, ratio)
+        if best and best[1] >= 0.9:
+            names[bit] = best[0]
+    return names
+
+
 def ability_names(mons, inspector_dir):
     """Name ability keys after the dom6inspector unit CSV column whose values agree (hints only)."""
     path = os.path.join(inspector_dir, 'gamedata', 'BaseU.csv') if inspector_dir else None
@@ -510,10 +534,12 @@ def cmd_readonly(exe, args):
     for word, off in (('flags', 0x368), ('flags2', 0x370)):
         setb = {int(b, 16) for b, cmds in lay['flag_bits'].get(hex(off), {}).items() if any('(clears)' not in c for c in cmds)}
         counts = collections.Counter(1 << b for m in mons.values() for b in range(64) if m[word] >> b & 1)
+        unset = [bit for bit in counts if bit not in setb]
+        fnames = flag_names(mons, args.inspector, word, unset)
         for bit, n in sorted(counts.items()):
             if bit not in setb:
                 holders = [i for i, m in mons.items() if m[word] & bit]
-                flag_ro.append({'word': word, 'bit': hex(bit), 'monsters': n,
+                flag_ro.append({'word': word, 'bit': hex(bit), 'name_hint': fnames.get(bit), 'monsters': n,
                                 'examples': ['%d %s' % (i, mons[i]['name']) for i in holders[:4]]})
     return {'game_version': exe.version, 'exe_sha256_16': exe.sha, 'vanilla_ability_keys': len(used),
             'settable_by_monster_commands': len(set(used) & settable), 'not_settable': ro, 'flag_bits_not_settable': flag_ro}

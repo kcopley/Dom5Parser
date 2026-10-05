@@ -40,9 +40,10 @@ state explicitly** into the target; at each clear, **remove the covered group's
 then-current values**. Result: every entity holds its true, fully-baked final
 values — order-correct by construction. This is the unambiguous ground truth.
 
-> Exclusion: the ID-relative commands (`#growhp`, `#shrinkhp`, `#xpshape`,
-> `#labxpshape`) are **not** copied by `#copystats` and are never materialized via
-> copy — see "ID-relative commands" below.
+> Correction (2026-10-05, read from Dominions6.exe's parser): the ID-relative commands
+> (`#growhp`, `#shrinkhp`, `#xpshape`, `#labxpshape`) **are** copied by `#copystats`. They
+> are abilities in the monster record, and `#copystats` copies the whole ability list.
+> They are materialized like any other property. See "ID-relative commands" below.
 
 ### Phase 2 — Re-sort copies/clears to canonical positions (on export)
 Hoist every copy/clear to a deterministic spot:
@@ -105,8 +106,8 @@ Four commands reference an entity by **numeric ID adjacency**, not an explicit t
 | `#labxpshape` | next ID (id + 1) |
 
 Rules:
-- **Not copied by `#copystats`** (confirmed) — they stay tied to each entity's own
-  ID and are excluded from materialize/copy propagation.
+- **Copied by `#copystats`** (Dominions6.exe, 2026-10-05; this note used to say the
+  opposite). The copy gets the same value; its target is the copy's own id ± 1.
 - The re-sort is **safe** for them: targets are numeric IDs, and reordering the file
   doesn't change IDs.
 - They are fragile under **ID mutation** (merge / new-ID allocation): a unit and its

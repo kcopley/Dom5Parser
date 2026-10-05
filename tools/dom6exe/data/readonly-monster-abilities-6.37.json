@@ -1169,6 +1169,7 @@
   {
    "word": "flags",
    "bit": "0x80",
+   "name_hint": null,
    "monsters": 65,
    "examples": [
     "81 Abysian Infantry",
@@ -1180,6 +1181,7 @@
   {
    "word": "flags",
    "bit": "0x10000",
+   "name_hint": null,
    "monsters": 88,
    "examples": [
     "181 Wraith Lord",
@@ -1191,6 +1193,7 @@
   {
    "word": "flags",
    "bit": "0x2000000000",
+   "name_hint": null,
    "monsters": 11,
    "examples": [
     "563 Queen of Storms",
@@ -1202,6 +1205,7 @@
   {
    "word": "flags2",
    "bit": "0x2",
+   "name_hint": null,
    "monsters": 1,
    "examples": [
     "3160 Hesperide"
@@ -1210,6 +1214,7 @@
   {
    "word": "flags2",
    "bit": "0x100000",
+   "name_hint": "stupid",
    "monsters": 13,
    "examples": [
     "4 Serpent",
@@ -1221,6 +1226,7 @@
   {
    "word": "flags2",
    "bit": "0x200000",
+   "name_hint": null,
    "monsters": 28,
    "examples": [
     "307 Lesser Horror",
@@ -1232,6 +1238,7 @@
   {
    "word": "flags2",
    "bit": "0x400000",
+   "name_hint": "verystupid",
    "monsters": 3,
    "examples": [
     "210 Giant Lobster",
@@ -1242,6 +1249,7 @@
   {
    "word": "flags2",
    "bit": "0x800000",
+   "name_hint": null,
    "monsters": 1,
    "examples": [
     "547 Dead One"
