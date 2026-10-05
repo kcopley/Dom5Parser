@@ -90,9 +90,33 @@ or `"baseline"`. Mark a stage known-failing with
   arrays, unset as `null`. `from`/`to` can be omitted to accept any value. Write
   expectations from intent, never by copying observed output.
 
-## Current state (2026-10-04)
+## Current state (2026-10-04, oracle 5b44841, game 6.37)
 
-_Filled in after the first full run; see the end of this file._
+Full run: **25 checks: 21 pass, 4 known-failing, 0 failing.**
+
+| Stage | Case | Result |
+|---|---|---|
+| 1 | 5 copy fixtures | pass |
+| 1 | edits-base | xfail: inspector exports vanilla unit 3's *displayed* mapmove/rcost (finding 1) |
+| 1 | DomEnhanced 2.13 | baseline **8,945**: mostly the same display-value class (`mapmove`, `rt`, `bow`, `leader`, `gemcost`) plus derived display fields |
+| 2 | exporter round trip | xfail: 4 mercs (finding 5) |
+| 2 | vanilla.dm current | pass |
+| 2 | vanilla base values | baseline **3,568** entities (finding 1) |
+| 3 | 5 copy fixtures + edits-base | pass, except `name_before_copy` xfail (finding 3) |
+| 3 | DomEnhanced 2.13 | baseline **932** (was 1,478 before the multi-line/negative-`#dmg` fixes) |
+| 4 | e01–e06, e08 (incl. edits on DomEnhanced) | pass: each edit changes exactly the expected fields |
+| 4 | e07 live template | xfail (finding 2) |
+
+DomEnhanced stage 3, largest remaining clusters:
+- `unit.battleshape` 399
+- `unit.descr` 198
+- `unit.misc` 197
+- `unit.gcost` 176
+- `unit.diseaseres` 173
+- `unit.armor` 108
+
+Many involve `#select` blocks folded into `#newmonster` blocks and re-ordered on save,
+which is the class the original-file-order export targets.
 
 ## Open findings (need decisions)
 
