@@ -17074,6 +17074,7 @@
 #poorleader
 #magicskill 9 1
 #weapon 92
+#magicimmune
 #fixedresearch 3
 #divineins
 #itemslots 991750
@@ -24277,6 +24278,7 @@
 #armor 123
 #beastmaster 2
 #swimming
+#undisleader 1
 #itemslots 991750
 #end
 
@@ -38899,6 +38901,7 @@
 #armor 145
 #nametype 113
 #templetrainer 32
+#undisleader 1
 #itemslots 991750
 #end
 
@@ -41207,6 +41210,7 @@
 #weapon 674
 #nametype 113
 #templetrainer 32
+#undisleader 1
 #itemslots 991750
 #end
 
@@ -42207,6 +42211,7 @@
 #weapon 89
 #armor 20
 #templetrainer 32
+#undisleader 1
 #itemslots 991750
 #end
 
@@ -76325,6 +76330,7 @@
 #weapon 511
 #nametype 146
 #damagerev 1
+#tmpbloodslaves 1
 #startaff 30
 #itemslots 991232
 #end
@@ -77899,6 +77905,7 @@
 #armor 8
 #armor 120
 #patience 3
+#tmpbloodslaves 1
 #itemslots 991750
 #end
 
@@ -78866,6 +78873,7 @@
 #custommagic 3200 10
 #weapon 674
 #armor 158
+#magicimmune
 #nametype 148
 #fixedresearch 6
 #itemslots 991750
@@ -88442,6 +88450,7 @@
 #armor 293
 #nametype 126
 #beastmaster 2
+#undisleader 1
 #itemslots 991750
 #end
 
@@ -96299,6 +96308,7 @@
 #stealthy 0
 #poorleader
 #weapon 92
+#magicimmune
 #fixedresearch 3
 #divineins
 #itemslots 991750
@@ -98457,6 +98467,7 @@
 #armor 148
 #armor 2
 #heatrec 1
+#userestricteditem 1
 #mountmnr 4131
 #skilledrider 3
 #itemslots 991750
@@ -98492,6 +98503,7 @@
 #armor 148
 #armor 28
 #coldrec 1
+#userestricteditem 1
 #appetite -1
 #itemslots 991750
 #end
@@ -99754,6 +99766,7 @@
 #weapon 65
 #armor 158
 #armor 148
+#userestricteditem 1
 #appetite 5
 #itemslots 991750
 #end
@@ -134157,6 +134170,7 @@
 #armor 5
 #beastmaster 2
 #swimming
+#undisleader 1
 #snaketattoo 1
 #itemslots 991750
 #end

@@ -16,6 +16,28 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Rules from the exe applied (step 2)
+
+Dom5Parser (`PropertyGroupMap`, `IDEntity`):
+- `#magicboost` is no longer in the magic group: `#clearmagic` keeps it, `#clearspec` removes it.
+- "Stats" (cleared only by #clear) are exactly the monster record's fields; #eyes, #pathcost,
+  #startdom, #drawsize, ages, #ressize, #homerealm, #nametype and the other abilities are
+  cleared by #clearspec. Leadership classes, magic being and body types are cleared only by
+  #clear (they live outside the ability list).
+- Copies include #xpshape / #growhp / #shrinkhp / #labxpshape (#copystats copies the whole
+  ability list).
+
+Inspector (fork ff69107): #clearspec / #clear modelled on the game; tightrein, ownblood,
+isashah, researchwithoutmagic are the abilities of #undisleader, #tmpbloodslaves,
+#userestricteditem, #magicimmune (manual text agrees) and are now exported.
+
+Docs corrected: COPY_INHERITANCE_REDESIGN (ID-relative commands are copied),
+PROJECT_EVALUATION 4b (three game-rule questions answered).
+
+Suite: 27 checks, 24 pass + 2 known failures + DomEnhanced stage 3 (900 -> 873; the two new
+fields there are the known save-order issue, copies of vanilla units the mod edited, now
+visible on more fields because the oracle's #clearspec is accurate). Baseline updated.
+
 ### Monster record layout from the parser (step 1)
 
 `dom6exe.py layout` reads, for each monster command, what its branch in the parser writes:

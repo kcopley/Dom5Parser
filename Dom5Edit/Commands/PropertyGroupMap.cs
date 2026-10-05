@@ -64,6 +64,11 @@ namespace Dom5Edit.Commands
             if (IsStatCommand(command))
                 return PropertyGroup.None;
 
+            // Leadership, magic being, body type: stored outside the ability list, so #clearspec
+            // leaves them (only #clear resets them)
+            if (IsClearOnlyCommand(command))
+                return PropertyGroup.None;
+
             // Identity/structural - NOT clearable
             if (IsIdentityCommand(command))
                 return PropertyGroup.None;
@@ -147,10 +152,10 @@ namespace Dom5Edit.Commands
 
         /// <summary>
         /// Checks if a command targets an entity by numeric ID adjacency (previous/next ID)
-        /// rather than an explicit reference. These are NOT copied by #copystats and must be
-        /// excluded from copy materialization. See "ID-relative commands" in
-        /// docs/COPY_INHERITANCE_REDESIGN.md.
+        /// rather than an explicit reference:
         ///   #growhp -> previous ID; #shrinkhp / #xpshape / #labxpshape -> next ID.
+        /// They matter when IDs change (merging). #copystats does copy them: they are abilities
+        /// in the monster record, and the game copies the whole ability list (tools/dom6exe).
         /// </summary>
         public static bool IsIdRelativeCommand(Command command)
         {
@@ -216,7 +221,8 @@ namespace Dom5Edit.Commands
             {
                 Command.MAGICSKILL => true,
                 Command.CUSTOMMAGIC => true,
-                Command.MAGICBOOST => true,
+                // #magicboost is an ability (10-22) on the monster, not in the magic table:
+                // #clearmagic keeps it, #clearspec removes it (read from the game's parser)
                 // Magic path range commands are abilities, not base magic
                 _ => false
             };
@@ -244,6 +250,9 @@ namespace Dom5Edit.Commands
         /// <summary>
         /// Checks if a command is a base stat command (NOT clearable by specific clears).
         /// These can only be cleared by #clear or overwritten by #copystats.
+        /// Exactly the fields of the game's monster record (tools/dom6exe layout): everything else
+        /// a monster command sets (#eyes, #pathcost, #startdom, #drawsize, ages, #ressize,
+        /// #homerealm, ...) is an ability, and #clearspec clears the ability list.
         /// </summary>
         private static bool IsStatCommand(Command command)
         {
@@ -263,36 +272,37 @@ namespace Dom5Edit.Commands
                 Command.ENC => true,
                 Command.MAPMOVE => true,
                 Command.AP => true,
-                Command.EYES => true,
-                Command.VOIDSANITY => true,
 
                 // Cost stats
                 Command.GCOST => true,
                 Command.RCOST => true,
                 Command.RPCOST => true,
                 Command.MCOST => true,
-                Command.RESSIZE => true,
-                Command.PATHCOST => true,
-                Command.HOLYCOST => true,
 
-                // Appearance stats
-                Command.DRAWSIZE => true,
-                Command.SPECIALLOOK => true,
+                _ => false
+            };
+        }
 
-                // Age stats
-                Command.STARTAGE => true,
-                Command.MAXAGE => true,
-                Command.OLDER => true,
-                Command.ADDRANDOMAGE => true,
-
-                // Pretender-specific
-                Command.STARTDOM => true,
-                Command.HOMEREALM => true,
-                Command.TRIPLEGOD => true,
-                Command.TRIPLEGODMAG => true,
-                Command.MINPRISON => true,
-                Command.MAXPRISON => true,
-
+        /// <summary>
+        /// Monster commands stored outside the ability list and the first flags word (leadership
+        /// classes and magic being in the second flags word, the body type in its own field):
+        /// #clearspec leaves them; only #clear resets them (tools/dom6exe layout).
+        /// </summary>
+        private static bool IsClearOnlyCommand(Command command)
+        {
+            return command switch
+            {
+                Command.NOLEADER => true, Command.POORLEADER => true, Command.OKLEADER => true,
+                Command.GOODLEADER => true, Command.EXPERTLEADER => true, Command.SUPERIORLEADER => true,
+                Command.NOMAGICLEADER => true, Command.POORMAGICLEADER => true, Command.OKMAGICLEADER => true,
+                Command.GOODMAGICLEADER => true, Command.EXPERTMAGICLEADER => true, Command.SUPERIORMAGICLEADER => true,
+                Command.NOUNDEADLEADER => true, Command.POORUNDEADLEADER => true, Command.OKUNDEADLEADER => true,
+                Command.GOODUNDEADLEADER => true, Command.EXPERTUNDEADLEADER => true, Command.SUPERIORUNDEADLEADER => true,
+                Command.MAGICBEING => true, Command.ALMOSTUNDEAD => true, Command.ALMOSTLIVING => true,
+                Command.HUMANOID => true, Command.MOUNTEDHUMANOID => true, Command.QUADRUPED => true,
+                Command.LIZARD => true, Command.NAGA => true, Command.SNAKE => true, Command.BIRD => true,
+                Command.DJINN => true, Command.TROGLODYTE => true, Command.MISCSHAPE => true,
+                Command.MAPTELEPORT => true,
                 _ => false
             };
         }
@@ -318,7 +328,7 @@ namespace Dom5Edit.Commands
                 Command.NEWMONSTER => true,
                 Command.MONTAG => true,
                 Command.MONTAGWEIGHT => true,
-                Command.NAMETYPE => true,
+                // (#nametype is an ability in the game's monster record: #clearspec removes it)
                 _ => false
             };
         }
