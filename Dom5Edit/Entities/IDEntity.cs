@@ -1,4 +1,4 @@
-﻿using Dom5Edit.Commands;
+using Dom5Edit.Commands;
 using Dom5Edit.Props;
 using Dom5Edit.Validation;
 
@@ -516,8 +516,24 @@ namespace Dom5Edit.Entities
         {
             if (src == null) return false;
             if (src.ParentMod != ParentMod) return true;       // dependency / vanilla base: always emitted first
-            if (src.ID > 0 && ID > 0 && src.ID < ID) return true; // emitted earlier in the ID-sorted section
-            return false;                                        // forward reference / unidentified: breaks on reload
+            if (src.ID <= 0 || ID <= 0) return false;          // unidentified: emitted last, cannot be relied on
+            // EntitySet.Export writes a type's mod-range ids (>= START_ID) first, then the vanilla range,
+            // each in id order: a mod-range source precedes a vanilla-range copier, not the reverse.
+            int start = ParentMod.Database[ParentMod.GetEntityType(GetType())].START_ID;
+            bool srcModRange = src.ID >= start, modRange = ID >= start;
+            if (srcModRange != modRange) return srcModRange;
+            return src.ID < ID;                                 // same section: id order
+        }
+
+        /// <summary>
+        /// True when the source is this mod's sparse #select edit of an entity a dependency (vanilla)
+        /// defines: on reload the copy command still reproduces the dependency's own state.
+        /// </summary>
+        private bool SourceExtendsDependency(IDEntity src)
+        {
+            if (src == null || !src.Selected || src.ID <= 0) return false;
+            var et = ParentMod.GetEntityType(src.GetType());
+            return ParentMod.Dependencies.Any(d => d.Database[et].TryGet(src.ID, null, out _));
         }
 
         /// <summary>
@@ -543,10 +559,18 @@ namespace Dom5Edit.Entities
 
             if (!CopyReproducesOnReload(src))
             {
-                // Forward reference: the copy resolves to nothing on reload, so emit the snapshot
-                // directly and drop the dead copy command. #copyspr resolves independently and stays.
                 var ownCommands = new HashSet<Command>(_properties.Select(p => p.Command));
                 var toBake = _materialized.Where(mp => !ownCommands.Contains(mp.Command)).ToList();
+                if (SourceExtendsDependency(src))
+                {
+                    // The source is this mod's edit of a vanilla entity, emitted after this copier
+                    // (Bug B). On reload the copy still yields the pristine vanilla entity, so keep it
+                    // and state the edits that were in place when the copy ran (the snapshot).
+                    foreach (var p in toBake) AddProperty(p);
+                    return;
+                }
+                // Forward reference: the copy resolves to nothing on reload, so emit the snapshot
+                // directly and drop the dead copy command. #copyspr resolves independently and stays.
                 foreach (var p in toBake) AddProperty(p);
                 foreach (var p in _properties
                             .Where(p => PropertyGroupMap.IsFullCopyCommand(p.Command) && p.Command != Command.COPYSPR)
@@ -944,13 +968,15 @@ namespace Dom5Edit.Entities
                 case Command.COPYSPELL:
                 case Command.COPYSITE:
                     return 2;
-                // Clear commands third
+                // Clear commands share the copy rank: OrderBy is stable, so copies and clears keep the
+                // order they were parsed in. Order matters in game: "#clear, #copystats X" is a clean copy,
+                // "#copystats X, #clear" wipes what was copied (sorting clears after copies did that).
                 case Command.CLEAR:
                 case Command.CLEARWEAPONS:
                 case Command.CLEARARMOR:
                 case Command.CLEARMAGIC:
                 case Command.CLEARSPEC:
-                    return 3;
+                    return 2;
                 // Name commands fourth (after copy so they override copied name)
                 case Command.NAME:
                 case Command.FIXEDNAME:

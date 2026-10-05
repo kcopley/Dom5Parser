@@ -1,4 +1,4 @@
-﻿namespace Dom5Edit.Commands
+namespace Dom5Edit.Commands
 {
     public enum Command
     {
@@ -285,6 +285,8 @@
         IMMORTAL,
         DOMIMMORTAL,
         FORCESS,
+        SPIKES,      // #spikes <dmg> (monster)
+        SLEEPRES,    // #sleepres <bonus> (monster / item: Undreaming)
         REFORMTIME,
         SPRINGIMMORTAL,
         REFORM,
@@ -1944,6 +1946,8 @@
             _commandMap.Add("#immortal", Command.IMMORTAL);
             _commandMap.Add("#domimmortal", Command.DOMIMMORTAL);
             _commandMap.Add("#forcess", Command.FORCESS);
+            _commandMap.Add("#spikes", Command.SPIKES);
+            _commandMap.Add("#sleepres", Command.SLEEPRES);
             _commandMap.Add("#reformtime", Command.REFORMTIME);
             _commandMap.Add("#springimmortal", Command.SPRINGIMMORTAL);
             _commandMap.Add("#reform", Command.REFORM);
