@@ -1,5 +1,5 @@
 {
- "dataDiffs": 909,
+ "dataDiffs": 900,
  "diagnosticDiffs": 19,
  "fieldCounts": {
   "unit.descr": 198,
@@ -13,7 +13,6 @@
   "unit.xpshape": 26,
   "unit.xpshapemon": 26,
   "unit.armor": 108,
-  "unit.weapons": 20,
   "unit.skilledrider": 4,
   "unit.pooramphibian": 1,
   "unit.airshield": 6,
@@ -43,6 +42,7 @@
   "unit.prot": 45,
   "unit.spreadgrowth": 1,
   "unit.str": 19,
+  "unit.weapons": 15,
   "unit.ap": 4,
   "unit.att": 6,
   "unit.def": 8,
@@ -104,7 +104,6 @@
   "unit.regeneration": 2,
   "unit.siegebonus": 2,
   "unit.bringeroffortune": 4,
-  "spell.school": 8,
   "spell.notnations": 1,
   "spell.nogeodst": 3,
   "spell.nogeosrc": 1,
@@ -114,6 +113,7 @@
   "spell.aoe": 1,
   "spell.gemcost": 2,
   "spell.pathlevel1": 1,
+  "spell.school": 4,
   "wpn.bonus": 1,
   "wpn.dt_aff": 1,
   "wpn.dt_paralyze": 1,

@@ -30,6 +30,11 @@
       }
     },
     {
+      "name": "names-duplicate_names",
+      "path": "Dom5Tests/fixtures/names/duplicate_names.dm",
+      "expect": "pass"
+    },
+    {
       "name": "edits-base",
       "path": "Dom5Tests/fixtures/edits/base_edits.dm",
       "expect": "pass"

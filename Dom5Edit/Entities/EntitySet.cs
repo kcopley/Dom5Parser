@@ -91,7 +91,7 @@ namespace Dom5Edit.Entities
 
             if (!string.IsNullOrEmpty(name))
             {
-                if (!NamedEntities.ContainsKey(name))
+                if (!NamedEntities.TryGetValue(name, out T existing))
                 {
                     NamedEntities.Add(name, t);
                 }
@@ -101,6 +101,7 @@ namespace Dom5Edit.Entities
                     var message = $"Duplicate {typeName} name \"{name}\" - this name was already defined earlier in the mod";
                     Parent.Log(message);
                     Parent.AddParseIssue(ParseIssueType.DuplicateName, message);
+                    if (IsLowerID(id, existing)) NamedEntities[name] = t;
                 }
             }
             else
@@ -111,11 +112,24 @@ namespace Dom5Edit.Entities
 
         public void GiveName(IDEntity ie, string name)
         {
-            if (!NamedEntities.ContainsKey(name))
+            if (!NamedEntities.TryGetValue(name, out T existing))
             {
                 NamedEntities.Add(name, (T)ie);
             }
+            else if (IsLowerID(ie.ID, existing))
+            {
+                NamedEntities[name] = (T)ie;
+            }
             UnnamedEntities.Remove((T)ie);
+        }
+
+        /// <summary>
+        /// The game resolves a name that several entities share to the lowest ID. An entity without
+        /// an ID (yet) never displaces one that has one.
+        /// </summary>
+        internal static bool IsLowerID(int id, IDEntity existing)
+        {
+            return id > 0 && (existing.ID <= 0 || id < existing.ID);
         }
 
         public void GiveID(string name, int id)
