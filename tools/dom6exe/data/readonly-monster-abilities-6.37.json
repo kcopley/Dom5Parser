@@ -2,34 +2,8 @@
  "game_version": "6.37",
  "exe_sha256_16": "d77cd364fe447e85",
  "vanilla_ability_keys": 462,
- "settable_by_monster_commands": 351,
+ "settable_by_monster_commands": 355,
  "not_settable": [
-  {
-   "ability": 1017,
-   "name_hint": "unmountedspr",
-   "monsters": 262,
-   "possibly_set_by": [
-    "unmountedspr1"
-   ],
-   "examples": [
-    "3 Serpent Cataphract = 10050",
-    "5 Serpent Lord = 10020",
-    "19 Heavy Cavalry = 500"
-   ]
-  },
-  {
-   "ability": 171,
-   "name_hint": "blind",
-   "monsters": 203,
-   "possibly_set_by": [
-    "blind"
-   ],
-   "examples": [
-    "158 Oracle = 1",
-    "159 Monument = 1",
-    "330 Dark Vines = 1"
-   ]
-  },
   {
    "ability": 160,
    "name_hint": null,
@@ -152,19 +126,6 @@
     "3695 Bush = 2",
     "3696 Shrub = 2",
     "3697 Small Shrub = 2"
-   ]
-  },
-  {
-   "ability": 213,
-   "name_hint": "assassin",
-   "monsters": 37,
-   "possibly_set_by": [
-    "assassin"
-   ],
-   "examples": [
-    "428 Assassin = 1",
-    "429 Slayer = 1",
-    "443 Star Child = 1"
    ]
   },
   {
@@ -755,20 +716,6 @@
    ]
   },
   {
-   "ability": 128,
-   "name_hint": "entangle",
-   "monsters": 2,
-   "possibly_set_by": [
-    "custommagic",
-    "entangle",
-    "superiormagicleader"
-   ],
-   "examples": [
-    "641 Ancient Mandragora = 3",
-    "2437 Annunaki of Growth and Rebirth = 1"
-   ]
-  },
-  {
    "ability": 38,
    "name_hint": null,
    "monsters": 2,
@@ -1215,6 +1162,89 @@
    ],
    "examples": [
     "4092 Lauma = 79"
+   ]
+  }
+ ],
+ "flag_bits_not_settable": [
+  {
+   "word": "flags",
+   "bit": "0x80",
+   "monsters": 65,
+   "examples": [
+    "81 Abysian Infantry",
+    "82 Abysian Infantry",
+    "83 Abysian Infantry",
+    "84 Abysian Infantry"
+   ]
+  },
+  {
+   "word": "flags",
+   "bit": "0x10000",
+   "monsters": 88,
+   "examples": [
+    "181 Wraith Lord",
+    "182 Wraith Lord",
+    "183 Wraith King",
+    "185 Bane"
+   ]
+  },
+  {
+   "word": "flags",
+   "bit": "0x2000000000",
+   "monsters": 11,
+   "examples": [
+    "563 Queen of Storms",
+    "911 Queen of Thunder",
+    "912 Queen of Clouds",
+    "3722 Air Elemental"
+   ]
+  },
+  {
+   "word": "flags2",
+   "bit": "0x2",
+   "monsters": 1,
+   "examples": [
+    "3160 Hesperide"
+   ]
+  },
+  {
+   "word": "flags2",
+   "bit": "0x100000",
+   "monsters": 13,
+   "examples": [
+    "4 Serpent",
+    "2481 Ettin King",
+    "2628 Turan Gryphon",
+    "2964 Mushussu - replaced"
+   ]
+  },
+  {
+   "word": "flags2",
+   "bit": "0x200000",
+   "monsters": 28,
+   "examples": [
+    "307 Lesser Horror",
+    "308 Horror",
+    "392 Ashen Angel",
+    "393 Lammashta"
+   ]
+  },
+  {
+   "word": "flags2",
+   "bit": "0x400000",
+   "monsters": 3,
+   "examples": [
+    "210 Giant Lobster",
+    "2322 XXX - Shark",
+    "3656 Shark"
+   ]
+  },
+  {
+   "word": "flags2",
+   "bit": "0x800000",
+   "monsters": 1,
+   "examples": [
+    "547 Dead One"
    ]
   }
  ]
