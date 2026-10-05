@@ -1,4 +1,4 @@
-﻿using Dom5Edit.Commands;
+using Dom5Edit.Commands;
 using Dom5Edit.Props;
 
 namespace Dom5Edit.Entities
@@ -47,6 +47,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.WALKABLE, IntProperty.Create);
             _propertyMap.Add(Command.SPEC, BitmaskProperty.Create);
             _propertyMap.Add(Command.RESTRICTED, NationRef.Create);
+            _propertyMap.Add(Command.HOMEREALM, IntProperty.Create); // #homerealm <realm>: restrict to nations of this home realm
             _propertyMap.Add(Command.FARSUMCOM, MonsterOrMontagRef.Create);
             _propertyMap.Add(Command.NOTFORNATION, NationRef.Create);
             _propertyMap.Add(Command.CASTTIME, IntProperty.Create);

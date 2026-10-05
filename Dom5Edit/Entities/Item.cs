@@ -1,4 +1,4 @@
-﻿using Dom5Edit.Commands;
+using Dom5Edit.Commands;
 using Dom5Edit.Props;
 
 namespace Dom5Edit.Entities
@@ -370,7 +370,10 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.GEMPROD, IntIntProperty.Create); //#gemprod <type> <number>
             _propertyMap.Add(Command.ELEMENTGEMS, IntProperty.Create); //#elementgems <gems>
             _propertyMap.Add(Command.SORCERYGEMS, IntProperty.Create); //#sorcerygems <gems>
-            _propertyMap.Add(Command.ASSASSIN, CommandProperty.Create); //#assassin 
+            _propertyMap.Add(Command.ASSASSIN, CommandProperty.Create); //#assassin
+            _propertyMap.Add(Command.UNSEEN, CommandProperty.Create); //#unseen
+            _propertyMap.Add(Command.SWIMMING, CommandProperty.Create); //#swimming
+            _propertyMap.Add(Command.NIGHTMAREAURA, IntProperty.Create); //#nightmareaura <area> 
             _propertyMap.Add(Command.GLAMOURMANIP, IntProperty.Create); //#glamourmanip <0 or 1>
             _propertyMap.Add(Command.GLAMOURRANGE, IntProperty.Create); //#glamourrange <range>
             _propertyMap.Add(Command.HOLYRANGE, IntProperty.Create); //#holyrange <range>
