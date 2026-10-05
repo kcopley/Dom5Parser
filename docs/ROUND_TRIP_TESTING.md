@@ -5,6 +5,11 @@ re-exports a `.dm` file. An independent external parser serves as the oracle.
 
 **Last Updated:** 2026-10-04 (oracle moved to the dom6inspector fork)
 
+> The round trip is now **stage 3** of the automated fidelity suite. For the other stages
+> (inspector self-check, vanilla data, scripted edits), how to run them, and the CI setup, see
+> **`FIDELITY_SUITE.md`**: `node tools/fidelity/run.mjs --quick`. This page covers the oracle
+> mechanics.
+
 ---
 
 ## The idea

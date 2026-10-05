@@ -1,0 +1,6 @@
+{
+  "description": "Set an int stat on a mod-defined monster.",
+  "base": "base_edits.dm",
+  "edits": [ { "op": "set", "entity": "monster", "id": 7410, "command": "#hp", "value": "20" } ],
+  "expect": [ { "type": "unit", "id": "7410", "field": "hp", "from": "12", "to": "20" } ]
+}

@@ -1,0 +1,6 @@
+{
+  "description": "Remove one of two weapons.",
+  "base": "base_edits.dm",
+  "edits": [ { "op": "remove", "entity": "monster", "id": 7410, "command": "#weapon", "value": "23" } ],
+  "expect": [ { "type": "unit", "id": "7410", "field": "weapons", "from": ["1", "23"], "to": ["1"] } ]
+}

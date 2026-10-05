@@ -1,0 +1,6 @@
+{
+  "description": "Change a value the mod already overrides on a vanilla unit.",
+  "base": "base_edits.dm",
+  "edits": [ { "op": "set", "entity": "monster", "id": 3, "command": "#mor", "value": "18" } ],
+  "expect": [ { "type": "unit", "id": "3", "field": "mor", "from": "15", "to": "18" } ]
+}

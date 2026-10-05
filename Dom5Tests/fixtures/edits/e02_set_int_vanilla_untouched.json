@@ -1,0 +1,6 @@
+{
+  "description": "Edit a vanilla unit the mod does not touch: it must be selected into the mod (copy-on-write) with only that change.",
+  "base": "base_edits.dm",
+  "edits": [ { "op": "set", "entity": "monster", "id": 5, "command": "#hp", "value": "25" } ],
+  "expect": [ { "type": "unit", "id": "5", "field": "hp", "from": "15", "to": "25" } ]
+}

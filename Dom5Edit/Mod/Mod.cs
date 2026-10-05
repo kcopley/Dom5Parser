@@ -621,6 +621,22 @@ namespace Dom5Edit
                 return NewEntity<T>(val, comment, true);
             }
         }
+
+        /// <summary>
+        /// Returns this mod's own entity with the given ID, creating a sparse #select entry in
+        /// this mod when only a dependency (e.g. vanilla) defines it. Edits then land in the mod
+        /// instead of mutating the shared dependency entity (copy-on-write).
+        /// </summary>
+        public T SelectForEdit<T>(int id) where T : IDEntity, new()
+        {
+            if (Database[GetEntityType(typeof(T))].TryGet(id, null, out IDEntity own))
+            {
+                return (T)own;
+            }
+            var entity = new T();
+            entity.Assign(id.ToString(), "", this, selected: true);
+            return entity;
+        }
         #endregion
 
     }
