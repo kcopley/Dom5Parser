@@ -1,0 +1,21 @@
+{
+ "dataDiffs": 3568,
+ "diagnosticDiffs": 0,
+ "fieldCounts": {
+  "unit.mapmove": 3171,
+  "unit.rcost": 228,
+  "unit.gemprod": 17,
+  "unit.entangle": 1,
+  "unit.norange": 2,
+  "unit.eyeloss": 8,
+  "unit.horrormark": 4,
+  "unit.blessbers": 2,
+  "spell.name": 1,
+  "spell.fatiguecost": 205,
+  "spell.nextspell": 26,
+  "item.def": 1,
+  "armor.def": 59,
+  "nation.epithet": 1,
+  "site.lab": 52
+ }
+}
