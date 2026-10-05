@@ -56,7 +56,9 @@ Quick reference notes for development context. See related documents for full de
   Bug B — `CopyReproducesOnReload` ignores `EntitySet.Export` section ordering (correctness,
   harness-masked); then the SEPARATE pre-existing export subsystems (weapons 66, onebattlespell
   59, spell.details 59, descr 41, xpshape 26, nextspell 24 — all present with `nonorm`).
-  Loop: `Dom5Tests roundtrip <in> <out> [nonorm]` → `dom5inspectorkc/roundtrip_check.js`.
+  Loop: `Dom5Tests roundtrip <in> <out> [nonorm]` → `node scripts/headless/roundtrip_check.js <in> <out>`
+  in the kcopley/dom6inspector fork (oracle moved 2026-10-04; DomEnhanced baseline now 1,478 under
+  the Dom6 oracle, which sees vanilla `#select` edits the old one couldn't). See `ROUND_TRIP_TESTING.md`.
   Fixtures: `Dom5Tests/fixtures/copy/{order_dependent_copy,forward_ref_copy,clear_mid_entity}.dm`
   (pass) + `{copyspr_after_copystats,name_before_copy}.dm` (repros).
 
