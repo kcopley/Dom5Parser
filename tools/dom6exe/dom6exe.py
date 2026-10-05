@@ -159,6 +159,116 @@ class Parser:
                         callee[args.split()[0]] += 1
                         break
         self.generic = [c for c, n in callee.most_common(2)]
+        self.index = {a: i for i, (a, op, args, tgt) in enumerate(self.ins)}
+
+    MEM = re.compile(r'(BYTE|WORD|DWORD|QWORD) PTR \[(\w+)(?:\+(\w+)\*(\d))?(?:\+(0x[0-9a-f]+))?\],(\w+)$')
+    SIZES = {'BYTE': 1, 'WORD': 2, 'DWORD': 4, 'QWORD': 8}
+
+    def branches(self, ctx):
+        """What each command's branch in an entity parser does, from its instructions:
+        stores into the entity record (base, offset, size), bits set or cleared in a flags
+        word, abilities added (generic handler, ability setter, or a shared tail reached with
+        the ability number in edx), and other calls. A branch is the code between the command
+        name check (lea rdx,name; call matcher; test; je next) and the next check."""
+        fs = self.contexts[ctx]
+        setter = getattr(self, '_setter', None)
+        out = collections.defaultdict(list)
+        for i in sorted(k for k, (f, s) in self.refs.items() if f in fs):
+            a, op, args, tgt = self.ins[i]
+            if not args.startswith('rdx,'):
+                continue
+            cmd = self.refs[i][1]
+            w = self.ins[i:i + 6]
+            jumps = [k for k, x in enumerate(w) if x[1] in ('je', 'jne')]
+            calls = [x for x in w if x[1] == 'call']
+            if not jumps or not calls or calls[0][2].split()[0] in self.generic:
+                continue
+            nxt = num(w[jumps[0]][2].split()[0])
+            k = i + jumps[0] + 1
+            bases, const, edx, rmw = {}, {}, None, {}
+            while k < len(self.ins) and self.ins[k][0] < nxt and k - i < 400:
+                aa, oo, rr, tt = self.ins[k]
+                dst = rr.split(',')[0]
+                if oo == 'lea' and tt is not None:
+                    bases[dst] = tt
+                # read-modify-write of a flags word in a register: mov reg,[rec+off]; and/or/bts/btr; mov [rec+off],reg
+                m = re.match(r'(\w+),(?:BYTE|WORD|DWORD|QWORD) PTR \[(\w+)(?:\+(\w+)\*\d)?(?:\+(0x[0-9a-f]+))?\]$', rr)
+                if oo == 'mov' and m and (bases.get(m.group(2)) or bases.get(m.group(3))):
+                    rmw[m.group(1)] = [0, 0]
+                m = re.match(r'(\w+),(0x[0-9a-f]+|\d+)$', rr)
+                if m and m.group(1) in rmw and oo in ('or', 'and', 'bts', 'btr'):
+                    v = num(m.group(2))
+                    if oo == 'or':
+                        rmw[m.group(1)][0] |= v
+                    elif oo == 'and':
+                        rmw[m.group(1)][1] |= (~v) & 0xffffffffffffffff
+                    elif oo == 'bts':
+                        rmw[m.group(1)][0] |= 1 << v
+                    else:
+                        rmw[m.group(1)][1] |= 1 << v
+                m = re.match(r'(e?\w+),(0x[0-9a-f]+)$', rr)
+                if oo in ('mov', 'movabs') and m:
+                    const[m.group(1).replace('e', 'r', 1) if m.group(1).startswith('e') else m.group(1)] = num(m.group(2))
+                    if m.group(1) == 'edx':
+                        edx = num(m.group(2))
+                m = self.MEM.match(rr)
+                if m and oo == 'mov' and m.group(6) in rmw:
+                    size, r1, r2, sc, disp, val = m.groups()
+                    base = bases.get(r1) or bases.get(r2)
+                    setb, clrb = rmw.pop(val)
+                    if base is not None and setb:
+                        out[cmd].append(('set_bits', base, num(disp or '0x0'), self.SIZES[size], setb))
+                    if base is not None and clrb:
+                        out[cmd].append(('clear_bits', base, num(disp or '0x0'), self.SIZES[size], (~clrb) & 0xffffffffffffffff))
+                elif m and oo in ('mov', 'or', 'and', 'add', 'sub', 'xor'):
+                    size, r1, r2, sc, disp, val = m.groups()
+                    base = bases.get(r1) or bases.get(r2)
+                    if base is not None:
+                        v = num(val) if val.startswith('0x') else const.get(val if val.startswith('r') else val, None)
+                        kind = 'store' if oo in ('mov', 'add', 'sub') else ('set_bits' if oo == 'or' else ('clear_bits' if oo == 'and' else oo))
+                        out[cmd].append((kind, base, num(disp or '0x0'), self.SIZES[size], v))
+                if oo == 'call':
+                    target = rr.split()[0]
+                    if target == setter and edx is not None:
+                        out[cmd].append(('ability', None, edx, None, None))
+                    else:
+                        out[cmd].append(('call', None, target, None, None))
+                if oo == 'jmp' and edx is not None and setter:
+                    t = self.index.get(num(rr.split()[0]))
+                    if t is not None and any(x[1] == 'call' and x[2].split()[0] == setter for x in self.ins[t:t + 10]):
+                        out[cmd].append(('ability', None, edx, None, None))
+                k += 1
+        return out
+
+    def record_layout(self, ctx):
+        """Fields, flag bits and abilities of an entity record, with the commands that write them."""
+        br = self.branches(ctx)
+        base_use = collections.Counter(e[1] for effs in br.values() for e in effs if e[1] is not None)
+        if not base_use:
+            return None
+        base = base_use.most_common(1)[0][0]
+        fields = collections.defaultdict(set)
+        bits = collections.defaultdict(lambda: collections.defaultdict(set))
+        abilities = collections.defaultdict(set)
+        for cmd, effs in br.items():
+            for kind, b, off, size, val in effs:
+                if kind == 'ability':
+                    abilities[off].add(cmd)
+                elif b != base:
+                    continue
+                elif kind == 'store':
+                    fields[(off, size)].add(cmd)
+                elif kind in ('set_bits', 'clear_bits') and val is not None:
+                    v = val if kind == 'set_bits' else (~val) & ((1 << (8 * size)) - 1)
+                    for bit in range(8 * size):
+                        if v >> bit & 1:
+                            bits[off][1 << bit].add(cmd + ('' if kind == 'set_bits' else ' (clears)'))
+        return {
+            'record_base': hex(base),
+            'fields': {'0x%x/%d' % k: sorted(v) for k, v in sorted(fields.items())},
+            'flag_bits': {hex(off): {hex(bit): sorted(c) for bit, c in sorted(bv.items())} for off, bv in sorted(bits.items())},
+            'abilities_direct': {str(k): sorted(v) for k, v in sorted(abilities.items())},
+        }
 
     def context_commands(self):
         out = {}
@@ -251,6 +361,12 @@ class Parser:
 MON_RECORD_CHECK = [(1, 'Logrian Slinger'), (2, 'Standard'), (3, 'Serpent Cataphract')]
 MON_NAME_LEN = 0x24
 MON_STATS = (0x28, 12)          # 12 int16
+# names from the parser's store instructions (dom6exe.py layout)
+MON_STAT_NAMES = ['ap', 'mapmove', 'size', 'hp', 'prot', 'str', 'enc', 'prec', 'att', 'def', 'mr', 'mor']
+MON_FIELDS = {'sprite': (0x24, '<i'), 'gcost': (0x35e, '<h'), 'rcost': (0x360, '<h'), 'rpcost': (0x364, '<i'),
+              'flags': (0x368, '<Q'), 'flags2': (0x370, '<I'), 'body': (0x374, '<I')}
+MON_WEAPONS = (0x340, 10)       # int16 weapon numbers (#weapon)
+MON_ARMOR = (0x354, 5)          # int16 armor numbers (#armor)
 MON_ABILITIES = (0x40, 48)      # 48 (int64 key, int64 value)
 MON_MAX = 20000                 # the parser rejects monster numbers above 19999 (cmp 0x4e1f)
 
@@ -281,7 +397,14 @@ def monsters(exe):
                 key, val = struct.unpack_from('<qq', r, MON_ABILITIES[0] + 16 * k)
                 if key:
                     ab[key] = val
-            out[i] = {'name': name, 'stats': list(struct.unpack_from('<%dh' % MON_STATS[1], r, MON_STATS[0])), 'abilities': ab}
+            rec = {'name': name}
+            rec.update(zip(MON_STAT_NAMES, struct.unpack_from('<%dh' % MON_STATS[1], r, MON_STATS[0])))
+            for f, (off, fmt) in MON_FIELDS.items():
+                rec[f] = struct.unpack_from(fmt, r, off)[0]
+            rec['weapons'] = [w for w in struct.unpack_from('<%dh' % MON_WEAPONS[1], r, MON_WEAPONS[0]) if w]
+            rec['armor'] = [w for w in struct.unpack_from('<%dh' % MON_ARMOR[1], r, MON_ARMOR[0]) if w]
+            rec['abilities'] = ab
+            out[i] = rec
         i += 1
     # layout check: Heavy Cavalry rides mount 3515 (ability 1015) in Dominions 6.37
     hc = out.get(20)
@@ -326,6 +449,7 @@ def cmd_commands(exe, args):
         if ctx in ('monster', 'item') and key is not None:
             keys[ctx][cmd] = key
     setter = p.ability_setter()
+    p._setter = setter
     if setter:
         for cmd, key in p.direct_ability_sets(setter):
             if key is not None:
@@ -337,6 +461,18 @@ def cmd_commands(exe, args):
         'contexts': p.context_commands(),
         'ability_keys': {ctx: dict(sorted(v.items())) for ctx, v in keys.items()},
     }
+
+
+def cmd_layout(exe, args):
+    p = Parser(exe)
+    p._setter = p.ability_setter()
+    out = {'game_version': exe.version, 'exe_sha256_16': exe.sha}
+    for ctx in p.contexts:
+        if ctx != 'top':
+            lay = p.record_layout(ctx)
+            if lay:
+                out[ctx] = lay
+    return out
 
 
 def cmd_monsters(exe, args):
@@ -364,20 +500,35 @@ def cmd_readonly(exe, args):
         ro.append({'ability': k, 'name_hint': names.get(k), 'monsters': n,
                    'possibly_set_by': sorted(candidates.get(k, ())),
                    'examples': ['%d %s = %s' % (i, mons[i]['name'], mons[i]['abilities'][k]) for i in holders[:3]]})
-    return {'game_version': exe.version, 'exe_sha256_16': exe.sha, 'vanilla_ability_keys': len(used), 'settable_by_monster_commands': len(set(used) & settable),
-            'not_settable': ro}
+    # flag bits: set by a command's OR into the flags words (layout), else read-only
+    p._setter = p.ability_setter()
+    lay = p.record_layout('monster')
+    for k in lay['abilities_direct']:
+        settable.add(int(k))
+    ro = [x for x in ro if x['ability'] not in settable]
+    flag_ro = []
+    for word, off in (('flags', 0x368), ('flags2', 0x370)):
+        setb = {int(b, 16) for b, cmds in lay['flag_bits'].get(hex(off), {}).items() if any('(clears)' not in c for c in cmds)}
+        counts = collections.Counter(1 << b for m in mons.values() for b in range(64) if m[word] >> b & 1)
+        for bit, n in sorted(counts.items()):
+            if bit not in setb:
+                holders = [i for i, m in mons.items() if m[word] & bit]
+                flag_ro.append({'word': word, 'bit': hex(bit), 'monsters': n,
+                                'examples': ['%d %s' % (i, mons[i]['name']) for i in holders[:4]]})
+    return {'game_version': exe.version, 'exe_sha256_16': exe.sha, 'vanilla_ability_keys': len(used),
+            'settable_by_monster_commands': len(set(used) & settable), 'not_settable': ro, 'flag_bits_not_settable': flag_ro}
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['commands', 'monsters', 'readonly'])
+    ap.add_argument('what', choices=['commands', 'layout', 'monsters', 'readonly'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
     ap.add_argument('--out', help='write JSON here (default: stdout)')
     args = ap.parse_args()
     exe = Exe(args.exe)
-    res = {'commands': cmd_commands, 'monsters': cmd_monsters, 'readonly': cmd_readonly}[args.what](exe, args)
+    res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly}[args.what](exe, args)
     text = json.dumps(res, indent=1, default=str)
     if args.out:
         open(args.out, 'w').write(text + '\n')

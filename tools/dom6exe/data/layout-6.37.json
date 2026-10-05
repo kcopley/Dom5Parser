@@ -1,0 +1,360 @@
+{
+ "game_version": "6.37",
+ "exe_sha256_16": "d77cd364fe447e85",
+ "monster": {
+  "record_base": "0x1432efc80",
+  "fields": {
+   "0x28/2": [
+    "ap"
+   ],
+   "0x2a/2": [
+    "mapmove",
+    "mapteleport",
+    "teleport"
+   ],
+   "0x2c/2": [
+    "size"
+   ],
+   "0x2e/2": [
+    "hp"
+   ],
+   "0x30/2": [
+    "prot"
+   ],
+   "0x32/2": [
+    "str"
+   ],
+   "0x34/2": [
+    "enc"
+   ],
+   "0x36/2": [
+    "prec"
+   ],
+   "0x38/2": [
+    "att"
+   ],
+   "0x3a/2": [
+    "def"
+   ],
+   "0x3c/2": [
+    "mr"
+   ],
+   "0x3e/2": [
+    "mor"
+   ],
+   "0x340/2": [
+    "clearweapons",
+    "weapon"
+   ],
+   "0x354/2": [
+    "armor",
+    "cleararmor"
+   ],
+   "0x35e/2": [
+    "gcost"
+   ],
+   "0x360/2": [
+    "rcost"
+   ],
+   "0x364/4": [
+    "rpcost"
+   ],
+   "0x374/4": [
+    "bird",
+    "djinn",
+    "humanoid",
+    "lizard",
+    "miscshape",
+    "mountedhumanoid",
+    "naga",
+    "quadruped",
+    "snake",
+    "troglodyte"
+   ]
+  },
+  "flag_bits": {
+   "0x368": {
+    "0x1": [
+     "heal"
+    ],
+    "0x2": [
+     "mounted"
+    ],
+    "0x4": [
+     "animal"
+    ],
+    "0x8": [
+     "amphibian",
+     "aquatic (clears)",
+     "pooramphibian (clears)"
+    ],
+    "0x10": [
+     "wastesurvival"
+    ],
+    "0x20": [
+     "undead"
+    ],
+    "0x40": [
+     "coldres"
+    ],
+    "0x100": [
+     "neednoteat"
+    ],
+    "0x200": [
+     "fireres"
+    ],
+    "0x400": [
+     "poisonres"
+    ],
+    "0x800": [
+     "amphibian (clears)",
+     "aquatic",
+     "pooramphibian (clears)"
+    ],
+    "0x1000": [
+     "flying"
+    ],
+    "0x2000": [
+     "trample"
+    ],
+    "0x4000": [
+     "immobile"
+    ],
+    "0x8000": [
+     "immortal"
+    ],
+    "0x20000": [
+     "forestsurvival"
+    ],
+    "0x40000": [
+     "shockres"
+    ],
+    "0x80000": [
+     "swampsurvival"
+    ],
+    "0x100000": [
+     "demon"
+    ],
+    "0x200000": [
+     "holy"
+    ],
+    "0x400000": [
+     "mountainsurvival"
+    ],
+    "0x800000": [
+     "glamour"
+    ],
+    "0x1000000": [
+     "noheal"
+    ],
+    "0x2000000": [
+     "ethereal"
+    ],
+    "0x4000000": [
+     "amphibian (clears)",
+     "aquatic (clears)",
+     "pooramphibian"
+    ],
+    "0x8000000": [
+     "stealthy"
+    ],
+    "0x10000000": [
+     "noitem"
+    ],
+    "0x20000000": [
+     "coldblood"
+    ],
+    "0x40000000": [
+     "inanimate"
+    ],
+    "0x80000000": [
+     "female"
+    ],
+    "0x100000000": [
+     "bluntres"
+    ],
+    "0x200000000": [
+     "slashres"
+    ],
+    "0x400000000": [
+     "pierceres"
+    ],
+    "0x800000000": [
+     "noslowrec (clears)",
+     "slowrec"
+    ],
+    "0x1000000000": [
+     "float"
+    ],
+    "0x4000000000": [
+     "blink",
+     "teleport"
+    ],
+    "0x8000000000": [
+     "snow"
+    ],
+    "0x10000000000": [
+     "swimming"
+    ],
+    "0x20000000000": [
+     "domimmortal"
+    ],
+    "0x80000000000": [
+     "illusion"
+    ],
+    "0x100000000000": [
+     "nospiritform (clears)",
+     "spiritform"
+    ]
+   },
+   "0x370": {
+    "0x1": [
+     "magicbeing"
+    ],
+    "0x4": [
+     "almostliving (clears)",
+     "almostundead",
+     "demon",
+     "undead"
+    ],
+    "0x8": [
+     "poormagicleader"
+    ],
+    "0x10": [
+     "okmagicleader"
+    ],
+    "0x20": [
+     "goodmagicleader"
+    ],
+    "0x40": [
+     "expertmagicleader"
+    ],
+    "0x80": [
+     "superiormagicleader"
+    ],
+    "0x100": [
+     "poorundeadleader"
+    ],
+    "0x200": [
+     "okundeadleader"
+    ],
+    "0x400": [
+     "goodundeadleader"
+    ],
+    "0x800": [
+     "expertundeadleader"
+    ],
+    "0x1000": [
+     "superiorundeadleader"
+    ],
+    "0x1000000": [
+     "noleader"
+    ],
+    "0x2000000": [
+     "poorleader"
+    ],
+    "0x4000000": [
+     "goodleader"
+    ],
+    "0x8000000": [
+     "expertleader"
+    ],
+    "0x10000000": [
+     "superiorleader"
+    ]
+   }
+  },
+  "abilities_direct": {
+   "20": [
+    "magicboost"
+   ],
+   "21": [
+    "magicboost"
+   ],
+   "22": [
+    "magicboost"
+   ],
+   "108": [
+    "stealthy"
+   ],
+   "127": [
+    "horrormark"
+   ],
+   "128": [
+    "entangle"
+   ],
+   "171": [
+    "blind"
+   ],
+   "178": [
+    "eyes"
+   ],
+   "182": [
+    "humanoid",
+    "itemslots",
+    "lizard",
+    "mountedhumanoid",
+    "noitem",
+    "quadruped",
+    "troglodyte"
+   ],
+   "198": [
+    "fireres"
+   ],
+   "199": [
+    "shockres"
+   ],
+   "200": [
+    "poisonres"
+   ],
+   "201": [
+    "coldres"
+   ],
+   "213": [
+    "assassin"
+   ],
+   "214": [
+    "spy"
+   ],
+   "220": [
+    "cold"
+   ],
+   "242": [
+    "startdom"
+   ],
+   "243": [
+    "pathcost"
+   ],
+   "251": [
+    "nametype"
+   ],
+   "316": [
+    "heat"
+   ],
+   "410": [
+    "sailing"
+   ],
+   "1017": [
+    "unmountedspr1"
+   ],
+   "1135": [
+    "unmountedspr1"
+   ]
+  }
+ },
+ "weapon": {
+  "record_base": "0x1447a6d90",
+  "fields": {},
+  "flag_bits": {
+   "0x40": {
+    "0x2": [
+     "twohanded"
+    ],
+    "0x100": [
+     "soulslaying"
+    ]
+   }
+  },
+  "abilities_direct": {}
+ }
+}
