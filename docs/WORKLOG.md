@@ -16,6 +16,22 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Weapons and armor from the exe (step 4)
+
+`vanilla` now writes weapons, armor and monsters into one file,
+`tools/dom6exe/data/vanilla-6.37.dm` (887 weapons, 298 armors, 4,138 monsters). Shared
+`ContextModel` per entity parser: fields stored (constant or parsed argument), flag bits set
+and cleared (the default bits from `#clear`), abilities through the type's own setter. New in
+the parser model: bits cleared with `add reg,-bit`, ability values passed into shared tails from
+the parsed argument, constants built from a register known to be 0 (`test eax,eax; jne` falls
+through with eax = 0, then `lea r8d,[rax+0x64]` = 100).
+
+Compared with the inspector: weapons differ mostly where the inspector lacks data (sounds,
+sprites, ~15 weapon abilities) or names commands the weapon parser doesn't have (`#flammable`
+is `#woodenweapon`, `#nofirebless` is `#iceweapon`, `#defnegate` is `#defroll`). Armor: most
+body armor has a stronger torso than limbs, which no command can write (read-only per part; the
+inspector writes a weighted `#prot`). Details in tools/dom6exe/README.md.
+
 ### Vanilla monsters written from the exe (step 4, monsters)
 
 `dom6exe.py vanilla` (new `tools/dom6exe/vanilla_dm.py`) writes every vanilla monster as

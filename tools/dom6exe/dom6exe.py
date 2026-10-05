@@ -210,7 +210,7 @@ class Parser:
             later = [j for j in order[n + 1:] if self.refs[j][1] != cmd]
             nxt = self.ins[later[0]][0] if later else self.ins[min(i + 400, len(self.ins) - 1)][0]
             k = i + 1
-            bases, const, edx, rmw, adds = {}, {}, None, {}, {}
+            bases, const, edx, rmw, adds, prev_test = {}, {}, None, {}, {}, None
             while k < len(self.ins) and self.ins[k][0] < nxt and k - i < 400:
                 aa, oo, rr, tt = self.ins[k]
                 dst = rr.split(',')[0]
@@ -227,6 +227,11 @@ class Parser:
                 if oo == 'mov' and m and (bases.get(reg64(m.group(2))) or bases.get(reg64(m.group(3)))):
                     rmw[m.group(1)] = [0, 0]
                 m = re.match(r'(\w+),(0x[0-9a-f]+|\d+)$', rr)
+                if m and m.group(1) in rmw and oo == 'add':
+                    v = -signed(num(m.group(2)))        # bt reg,N; jae; add reg,-(1 << N): clear a bit
+                    if v > 0 and v & (v - 1) == 0:
+                        oo = 'btr'
+                        m = re.match(r'(\w+),(.*)$', '%s,%d' % (m.group(1), v.bit_length() - 1))
                 if m and m.group(1) in rmw and oo in ('or', 'and', 'bts', 'btr'):
                     v = num(m.group(2))
                     if oo == 'or':
@@ -261,12 +266,15 @@ class Parser:
                 elif oo == 'movsxd' and m3 and d64:
                     const.pop(d64, None)
                     adds[d64] = adds.get(reg64(m3.group(2)), 0)
+                elif oo == 'jne' and prev_test:
+                    const[prev_test] = 0        # falling through 'test r,r; jne' means r == 0
                 elif d64 and oo not in ('cmp', 'test', 'push', 'call', 'jmp') and not oo.startswith('j'):
                     const.pop(d64, None)
                     if not (oo == 'mov' and m3 and reg64(m3.group(2)) in adds):
                         adds.pop(d64, None)
                     else:
                         adds[d64] = adds[reg64(m3.group(2))]
+                prev_test = reg64(m3.group(1)) if oo == 'test' and m3 and m3.group(1) == m3.group(2) else None
                 edx = const.get('rdx')
                 m = self.MEM.match(rr)
                 if m and oo == 'mov' and m.group(6) in rmw:
@@ -283,6 +291,8 @@ class Parser:
                     if base is not None:
                         v = num(val) if val.startswith('0x') else const.get(reg64(val))
                         kind = 'store' if oo in ('mov', 'add', 'sub') else ('set_bits' if oo == 'or' else ('clear_bits' if oo == 'and' else oo))
+                        if v is None and kind == 'store' and oo == 'mov' and reg64(val):
+                            v = ('arg', adds.get(reg64(val), 0))    # a parsed value (plus an offset)
                         out[cmd].append((kind, base, num(disp or '0x0'), self.SIZES[size], v))
                 if oo == 'call':
                     target = rr.split()[0]
@@ -298,17 +308,20 @@ class Parser:
                 if oo == 'jmp' and edx is not None and setter:
                     t = self.index.get(num(rr.split()[0]))
                     if t is not None and any(x[1] == 'call' and x[2].split()[0] == setter for x in self.ins[t:t + 10]):
-                        out[cmd].append(('ability', None, edx, None, self._tail_value(t, const, setter)))
+                        out[cmd].append(('ability', None, edx, None, self._tail_value(t, const, adds, setter)))
                 k += 1
         return out
 
-    def _tail_value(self, t, const, setter):
+    def _tail_value(self, t, const, adds, setter):
         """The value a shared tail (several commands jump to one setter call) passes, given
-        the registers at the jump: constants moved into r8 directly or via another register."""
+        the registers at the jump: constants moved into r8 directly or via another register;
+        else the parsed argument."""
         c = dict(const)
         for a, oo, rr, tt in self.ins[t:t + 10]:
             if oo == 'call':
-                return c.get('r8') if rr.split()[0] == setter else None
+                if rr.split()[0] != setter:
+                    return None
+                return c['r8'] if 'r8' in c else ('arg', adds.get('r8', 0))
             dst = rr.split(',')[0]
             d64 = reg64(dst)
             m = re.match(r'(\w+),(0x[0-9a-f]+)$', rr)
