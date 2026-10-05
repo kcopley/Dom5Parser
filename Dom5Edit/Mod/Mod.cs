@@ -449,6 +449,24 @@ namespace Dom5Edit
             IsLoaded = true;
         }
 
+        /// <summary>
+        /// Copy/inheritance redesign Phase 1 (see docs/COPY_INHERITANCE_REDESIGN.md): completes any
+        /// deferred copy snapshots (vanilla / forward sources) and bakes divergent inherited values
+        /// into explicit overrides, so a load->save is data-identical even when a copy source is
+        /// edited after being copied. Run AFTER Resolve() (dependencies must be attached) and BEFORE
+        /// Export(). Currently invoked by the round-trip harness; the GUI integration is a later phase.
+        /// </summary>
+        public void NormalizeCopies()
+        {
+            foreach (var set in Database.Values)
+            {
+                foreach (var entity in set.GetFullList())
+                {
+                    entity.FinalizeCopyMaterialization();
+                }
+            }
+        }
+
         public void Map()
         {
             foreach (var kvp in Database)

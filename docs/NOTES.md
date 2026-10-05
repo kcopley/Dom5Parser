@@ -43,12 +43,22 @@ Quick reference notes for development context. See related documents for full de
 - **ModInfoView** - Mod metadata editing (name, description, version, dom version, icon)
 
 ### In Progress
-- **Copy/inheritance redesign** - **Phase 0 COMPLETE** (round-trip loop automated,
-  red baseline established); **Phase 1 (materialize) is next.** Full design and
-  resumable status in `COPY_INHERITANCE_REDESIGN.md`. Verification via
-  `ROUND_TRIP_TESTING.md` (harness in the separate `dom5inspectorkc` repo).
-  Loop: `Dom5Tests roundtrip <in> <out>` → `dom5inspectorkc/roundtrip_check.js`.
-  Red test: `Dom5Tests/fixtures/copy/order_dependent_copy.dm` (FAIL: 7001.att 10|99).
+- **Copy/inheritance redesign** - materialize + **generic re-derive** built (uncommitted),
+  driven by `Mod.NormalizeCopies()` (round-trip path only; GUI untouched). Generic via the
+  group machinery — no per-property list. 3 isolation fixtures PASS + idempotent.
+  **Bug A FIXED (2026-06-08): big mod 630 → 351 diffs**, now NET-POSITIVE vs `nonorm` (374) —
+  normalization removes the whole order-dependent stat/bool cluster (28 fields × ~25 units) and
+  introduces only ~27 new field-occurrences. **The "weapon/armor ref export bug" was a
+  misdiagnosis** — those 393/117 diffs were Bug A's blast radius (empty snapshot → bogus
+  `#clear*`); the fix collapsed weapons 393→66, armor 117→4. Full status + the two key
+  discoveries + 4-agent review in `COPY_INHERITANCE_REDESIGN.md`.
+  **Next fixes:** `spell.nations` ×10 (the only multi-count diff re-derive still introduces);
+  Bug B — `CopyReproducesOnReload` ignores `EntitySet.Export` section ordering (correctness,
+  harness-masked); then the SEPARATE pre-existing export subsystems (weapons 66, onebattlespell
+  59, spell.details 59, descr 41, xpshape 26, nextspell 24 — all present with `nonorm`).
+  Loop: `Dom5Tests roundtrip <in> <out> [nonorm]` → `dom5inspectorkc/roundtrip_check.js`.
+  Fixtures: `Dom5Tests/fixtures/copy/{order_dependent_copy,forward_ref_copy,clear_mid_entity}.dm`
+  (pass) + `{copyspr_after_copystats,name_before_copy}.dm` (repros).
 
 ### Recently Completed (2026-05-31)
 - **Repo hygiene & trunk unification**:

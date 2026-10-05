@@ -194,11 +194,13 @@ namespace Dom5Tests
 
             try
             {
+                bool normalize = !args.Any(a => a.Equals("nonorm", StringComparison.OrdinalIgnoreCase));
                 Mod mod = new Mod();
                 mod.FullFilePath = inputPath;
                 mod.Parse(inputPath);
                 mod.ResolveDependencies();
                 mod.Resolve();
+                if (normalize) mod.NormalizeCopies(); // Phase 1: materialize + bake divergent copy values
                 mod.Export(outputPath);
                 Console.WriteLine($"Round-tripped: {Path.GetFullPath(inputPath)} -> {Path.GetFullPath(outputPath)}");
             }

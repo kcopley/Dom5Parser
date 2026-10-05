@@ -146,6 +146,25 @@ namespace Dom5Edit.Commands
         }
 
         /// <summary>
+        /// Checks if a command targets an entity by numeric ID adjacency (previous/next ID)
+        /// rather than an explicit reference. These are NOT copied by #copystats and must be
+        /// excluded from copy materialization. See "ID-relative commands" in
+        /// docs/COPY_INHERITANCE_REDESIGN.md.
+        ///   #growhp -> previous ID; #shrinkhp / #xpshape / #labxpshape -> next ID.
+        /// </summary>
+        public static bool IsIdRelativeCommand(Command command)
+        {
+            return command switch
+            {
+                Command.GROWHP => true,
+                Command.SHRINKHP => true,
+                Command.XPSHAPE => true,
+                Command.LABXPSHAPE => true,
+                _ => false
+            };
+        }
+
+        /// <summary>
         /// Checks if a command is a full copy command that overwrites properties.
         /// </summary>
         public static bool IsFullCopyCommand(Command command)
