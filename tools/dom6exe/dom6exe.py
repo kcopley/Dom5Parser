@@ -129,6 +129,18 @@ def num(x):
 IDENT = re.compile(r'[a-z_][a-z0-9_]*$')
 
 
+def text(b):
+    """Strings in the exe are UTF-8 (a few older ones Latin-1)."""
+    try:
+        return b.decode('utf-8')
+    except UnicodeDecodeError:
+        return b.decode('latin1')
+
+
+def signed(v, bits=64):
+    return v - (1 << bits) if v >= 1 << (bits - 1) else v
+
+
 class Parser:
     """The game's .dm parser, as found in the code."""
 
@@ -198,7 +210,7 @@ class Parser:
             later = [j for j in order[n + 1:] if self.refs[j][1] != cmd]
             nxt = self.ins[later[0]][0] if later else self.ins[min(i + 400, len(self.ins) - 1)][0]
             k = i + 1
-            bases, const, edx, rmw = {}, {}, None, {}
+            bases, const, edx, rmw, adds = {}, {}, None, {}, {}
             while k < len(self.ins) and self.ins[k][0] < nxt and k - i < 400:
                 aa, oo, rr, tt = self.ins[k]
                 dst = rr.split(',')[0]
@@ -225,11 +237,37 @@ class Parser:
                         rmw[m.group(1)][0] |= 1 << v
                     else:
                         rmw[m.group(1)][1] |= 1 << v
-                m = re.match(r'(e?\w+),(0x[0-9a-f]+)$', rr)
-                if oo in ('mov', 'movabs') and m:
-                    const[m.group(1).replace('e', 'r', 1) if m.group(1).startswith('e') else m.group(1)] = num(m.group(2))
-                    if m.group(1) == 'edx':
-                        edx = num(m.group(2))
+                # constants in registers: the ability number (edx) and value (r8) of setter calls
+                d64 = reg64(dst)
+                m = re.match(r'(\w+),(0x[0-9a-f]+)$', rr)
+                m2 = re.match(r'(\w+),\[(\w+)([+-])(0x[0-9a-f]+)\]$', rr)
+                m3 = re.match(r'(\w+),(\w+)$', rr)
+                if oo in ('mov', 'movabs') and m and d64:
+                    # a 32-bit register write zero-extends; 64-bit immediates are sign-extended
+                    const[d64] = signed(num(m.group(2))) if dst == d64 else num(m.group(2))
+                elif oo == 'xor' and m3 and m3.group(1) == m3.group(2) and d64:
+                    const[d64] = 0
+                elif oo == 'mov' and m3 and d64 and reg64(m3.group(2)) in const:
+                    const[d64] = const[reg64(m3.group(2))]
+                elif oo == 'lea' and m2 and d64 and reg64(m2.group(2)) in const:
+                    v = num(m2.group(4))
+                    const[d64] = const[reg64(m2.group(2))] + (v if m2.group(3) == '+' else -v)
+                elif oo in ('add', 'sub') and m and d64:
+                    v = signed(num(m.group(2)), 32 if dst != d64 else 64)
+                    if d64 in const:
+                        const[d64] += v if oo == 'add' else -v
+                    else:   # arithmetic on a parsed argument: #eyes stores N - 2
+                        adds[d64] = adds.get(d64, 0) + (v if oo == 'add' else -v)
+                elif oo == 'movsxd' and m3 and d64:
+                    const.pop(d64, None)
+                    adds[d64] = adds.get(reg64(m3.group(2)), 0)
+                elif d64 and oo not in ('cmp', 'test', 'push', 'call', 'jmp') and not oo.startswith('j'):
+                    const.pop(d64, None)
+                    if not (oo == 'mov' and m3 and reg64(m3.group(2)) in adds):
+                        adds.pop(d64, None)
+                    else:
+                        adds[d64] = adds[reg64(m3.group(2))]
+                edx = const.get('rdx')
                 m = self.MEM.match(rr)
                 if m and oo == 'mov' and m.group(6) in rmw:
                     size, r1, r2, sc, disp, val = m.groups()
@@ -243,21 +281,50 @@ class Parser:
                     size, r1, r2, sc, disp, val = m.groups()
                     base = bases.get(reg64(r1)) or bases.get(reg64(r2))
                     if base is not None:
-                        v = num(val) if val.startswith('0x') else const.get(val if val.startswith('r') else val, None)
+                        v = num(val) if val.startswith('0x') else const.get(reg64(val))
                         kind = 'store' if oo in ('mov', 'add', 'sub') else ('set_bits' if oo == 'or' else ('clear_bits' if oo == 'and' else oo))
                         out[cmd].append((kind, base, num(disp or '0x0'), self.SIZES[size], v))
                 if oo == 'call':
                     target = rr.split()[0]
                     if target == setter and edx is not None:
-                        out[cmd].append(('ability', None, edx, None, None))
+                        # value: a constant, or the parsed argument plus an offset
+                        val = const['r8'] if 'r8' in const else ('arg', adds.get('r8', 0))
+                        out[cmd].append(('ability', None, edx, None, val))
                     else:
                         out[cmd].append(('call', None, target, None, None))
+                    for r in ('rax', 'rcx', 'rdx', 'r8', 'r9', 'r10', 'r11'):
+                        const.pop(r, None)
+                        adds.pop(r, None)
                 if oo == 'jmp' and edx is not None and setter:
                     t = self.index.get(num(rr.split()[0]))
                     if t is not None and any(x[1] == 'call' and x[2].split()[0] == setter for x in self.ins[t:t + 10]):
-                        out[cmd].append(('ability', None, edx, None, None))
+                        out[cmd].append(('ability', None, edx, None, self._tail_value(t, const, setter)))
                 k += 1
         return out
+
+    def _tail_value(self, t, const, setter):
+        """The value a shared tail (several commands jump to one setter call) passes, given
+        the registers at the jump: constants moved into r8 directly or via another register."""
+        c = dict(const)
+        for a, oo, rr, tt in self.ins[t:t + 10]:
+            if oo == 'call':
+                return c.get('r8') if rr.split()[0] == setter else None
+            dst = rr.split(',')[0]
+            d64 = reg64(dst)
+            m = re.match(r'(\w+),(0x[0-9a-f]+)$', rr)
+            m2 = re.match(r'(\w+),\[(\w+)([+-])(0x[0-9a-f]+)\]$', rr)
+            m3 = re.match(r'(\w+),(\w+)$', rr)
+            if oo == 'mov' and m and d64:
+                c[d64] = num(m.group(2))
+            elif oo == 'xor' and m3 and m3.group(1) == m3.group(2):
+                c[d64] = 0
+            elif oo == 'mov' and m3 and reg64(m3.group(2)) in c:
+                c[d64] = c[reg64(m3.group(2))]
+            elif oo == 'lea' and m2 and reg64(m2.group(2)) in c:
+                c[d64] = c[reg64(m2.group(2))] + (1 if m2.group(3) == '+' else -1) * num(m2.group(4))
+            elif d64:
+                c.pop(d64, None)
+        return None
 
     def record_layout(self, ctx):
         """Fields, flag bits and abilities of an entity record, with the commands that write them."""
@@ -297,6 +364,14 @@ class Parser:
 
     def generic_calls(self):
         """(context, command, ability key) for every call to a generic handler."""
+        return [(c['context'], c['command'], c['key']) for c in self.generic_call_args()]
+
+    def generic_call_args(self):
+        """Every call to a generic handler with its arguments: ability key (r8d), minimum (r9),
+        maximum ([rsp+0x20]), kind ([rsp+0x28]: % 10 = 0 number, 1 monster, 2 spell, 3 item,
+        4 site, 6 nation; the tens look like repeatability) and an offset added to the stored
+        value ([rsp+0x30]). A command whose minimum equals its maximum takes no argument and
+        stores that value."""
         ctx_of = {f: c for c, fs in self.contexts.items() for f in fs}
         res = []
         for i, (a, op, args, tgt) in enumerate(self.ins):
@@ -312,14 +387,26 @@ class Parser:
                     fn, cmd = self.refs[k]
                 if oo == 'xor' and rr in ('r9d,r9d', 'r8d,r8d'):
                     reg[rr[:2]] = 0
-                m = re.match(r'(r8d|r9d),(0x[0-9a-f]+|\d+)$', rr)
+                m = re.match(r'(r8d?|r9d?),(0x[0-9a-f]+|\d+)$', rr)
                 if oo == 'mov' and m:
-                    reg[m.group(1)[:2]] = num(m.group(2))
+                    reg[m.group(1)[:2]] = num(m.group(2)) if m.group(1).endswith('d') else signed(num(m.group(2)))
                 m = re.match(r'(r8d|r9d),\[(r8|r9)\+(0x[0-9a-f]+)\]$', rr)
                 if oo == 'lea' and m and m.group(2) in reg:
                     reg[m.group(1)[:2]] = reg[m.group(2)] + num(m.group(3))
-            if cmd:
-                res.append((ctx_of.get(fn), cmd, reg.get('r8')))
+            if not cmd:
+                continue
+            stack = {}
+            for k in range(i - 1, max(i - 160, 0), -1):
+                aa, oo, rr, tt = self.ins[k]
+                m = re.match(r'(?:QWORD|DWORD) PTR \[rsp\+(0x20|0x28|0x30)\],(0x[0-9a-f]+|\d+)$', rr)
+                if oo == 'mov' and m and m.group(1) not in stack:
+                    stack[m.group(1)] = signed(num(m.group(2)), 64 if rr.startswith('QWORD') else 32)
+                if len(stack) == 3:
+                    break
+            kind = stack.get('0x28')
+            res.append({'context': ctx_of.get(fn), 'command': cmd, 'key': reg.get('r8'), 'min': reg.get('r9'),
+                        'max': stack.get('0x20'), 'kind': None if kind is None else kind % 10,
+                        'repeat': None if kind is None else kind // 10, 'offset': stack.get('0x30') or 0})
         return res
 
     def direct_ability_sets(self, setter):
@@ -409,20 +496,22 @@ def monsters(exe):
     i = 0
     while i < MON_MAX and start + (i + 1) * size <= raw + rsz:
         r = exe.data[start + i * size:start + (i + 1) * size]
-        name = r[:MON_NAME_LEN].split(b'\0')[0].decode('latin1')
+        name = text(r[:MON_NAME_LEN].split(b'\0')[0])
         if name:
-            ab = {}
+            ab, ablist = {}, []
             for k in range(MON_ABILITIES[1]):
                 key, val = struct.unpack_from('<qq', r, MON_ABILITIES[0] + 16 * k)
                 if key:
-                    ab[key] = val
+                    ab.setdefault(key, val)
+                    ablist.append((key, val))
             rec = {'name': name}
             rec.update(zip(MON_STAT_NAMES, struct.unpack_from('<%dh' % MON_STATS[1], r, MON_STATS[0])))
             for f, (off, fmt) in MON_FIELDS.items():
                 rec[f] = struct.unpack_from(fmt, r, off)[0]
             rec['weapons'] = [w for w in struct.unpack_from('<%dh' % MON_WEAPONS[1], r, MON_WEAPONS[0]) if w]
             rec['armor'] = [w for w in struct.unpack_from('<%dh' % MON_ARMOR[1], r, MON_ARMOR[0]) if w]
-            rec['abilities'] = ab
+            rec['abilities'] = ab           # first value per ability
+            rec['ability_list'] = ablist    # in order; repeatable abilities (#startitem, ...) can recur
             out[i] = rec
         i += 1
     # layout check: Heavy Cavalry rides mount 3515 (ability 1015) in Dominions 6.37
@@ -588,6 +677,14 @@ def cmd_layout(exe, args):
     return out
 
 
+def cmd_vanilla(exe, args):
+    """Vanilla monsters as .dm commands (vanilla_dm.py); --out names the .dm file."""
+    import vanilla_dm
+    res = vanilla_dm.write(exe, args.out)
+    args.out = None
+    return res
+
+
 def cmd_tables(exe, args):
     out = {'game_version': exe.version, 'exe_sha256_16': exe.sha}
     for typ, spec in TABLES.items():
@@ -650,7 +747,7 @@ def cmd_readonly(exe, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['commands', 'layout', 'monsters', 'readonly', 'tables'])
+    ap.add_argument('what', choices=['commands', 'layout', 'monsters', 'readonly', 'tables', 'vanilla'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
@@ -658,7 +755,7 @@ def main():
     args = ap.parse_args()
     exe = Exe(args.exe)
     res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
-           'tables': cmd_tables}[args.what](exe, args)
+           'tables': cmd_tables, 'vanilla': cmd_vanilla}[args.what](exe, args)
     text = json.dumps(res, indent=1, default=str)
     if args.out:
         open(args.out, 'w').write(text + '\n')

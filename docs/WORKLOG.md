@@ -16,6 +16,39 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Vanilla monsters written from the exe (step 4, monsters)
+
+`dom6exe.py vanilla` (new `tools/dom6exe/vanilla_dm.py`) writes every vanilla monster as
+`#selectmonster` commands: the parser read backwards, each stored value written as the command
+that stores it. Output: `tools/dom6exe/data/vanilla-monsters-6.37.dm` (4,138 monsters).
+
+To get there the parser model learned: register constants through moves and `lea`, values
+passed into shared tails (`#blind`, `#assassin` jump into `#spy`'s setter call), arithmetic on
+the argument (`#eyes N` stores N - 2), 64-bit minimums in the generic calls, and the generic
+handler itself (no-argument commands, optional argument kind 5, offsets, append/OR kinds).
+
+Also read from the code (details in tools/dom6exe/README.md): the ability getter's intrinsic
+resistances (+15, +10; `#poisonres 100` sets the flag rather than 100), item slots (ability 182,
+else by the `#noitem` flag; the body shape doesn't matter), leadership (class + 157 + 158 + 159
++ 160; 160 has no command), fixed names (one init function copies all 417), the magic table.
+
+Compared with the inspector-generated vanilla.dm: every difference has a cause, tabled in the
+README. Mostly the inspector writes derived values (ressize = size, spirit sight of horrors,
+leadership folded into classes) or lacks data (body shapes, the "no items" flag, 153 fixed
+names, ~300 abilities without a CSV column, 47 monsters); 40-odd cases where it names a
+different command than the one that stores the ability (`#domsummon` is `#domsummon2`, ...),
+and 459 `#startage` values about 10% above the stored ones. 1,605 stored values have no command
+and are read-only lines.
+
+Choices made, for the user to confirm:
+- Resistances and item slots are written as the value the game uses (`#poisonres 25` for the
+  intrinsic flag, `#itemslots` on every monster). Editing them is safe: those commands clear the
+  flag/replace the value, so the game then uses the value written.
+- The heat/cold aura flags (+3) and the leadership bonus 160 are read-only, not `#heat 3` or
+  `#command 25`: `#heat`/`#command` add to them, so an edit wouldn't give the value written.
+- Not yet used by Dom5Parser: vanilla.dm is still the inspector's. Switching needs the other
+  entity types and a way for Dom5Parser to show the read-only lines (step 5).
+
 ### All tables and parsers (step 3, in progress)
 
 - `dom6exe.py tables`: all seven vanilla tables located (monster 888 B, weapon 152, armor 104,
