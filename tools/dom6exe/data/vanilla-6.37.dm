@@ -1,5 +1,16949 @@
--- Dominions 6.37 vanilla monsters, written from Dominions6.exe by tools/dom6exe (exe d77cd364fe447e85).
--- "-- ro:" lines are stored values no monster command can set (shown read-only).
+-- Dominions 6.37 vanilla data, written from Dominions6.exe by tools/dom6exe (exe d77cd364fe447e85).
+-- "-- ro:" lines are stored values no command can set (shown read-only).
+
+#selectweapon 0
+#name "Nothing"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 0
+#sound 0
+#rcost 0
+#nostr
+#end
+
+#selectweapon 1
+#name "Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#ironweapon
+#pierce
+#end
+
+#selectweapon 2
+#name "Pike"
+#dmg 5
+#att 0
+#def -1
+#len 5
+#nratt 1
+#sound 12
+#rcost 2
+#twohanded
+#ironweapon
+#pierce
+#end
+
+#selectweapon 3
+#name "Trident"
+#dmg 7
+#att 0
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#twohanded
+#ironweapon
+#pierce
+#end
+
+#selectweapon 4
+#name "Lance"
+#dmg 6
+#att 1
+#def 0
+#len 3
+#nratt 1
+#ammo 1
+#sound 12
+#rcost 2
+#bonus
+#charge
+#norepel
+#pierce
+#skip
+#notdismounted 1
+-- ro: flag bit = 0x1000000000
+#end
+
+#selectweapon 5
+#name "Halberd"
+#dmg 10
+#att -1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 4
+#twohanded
+#ironweapon
+#pierce
+#slash
+#end
+
+#selectweapon 6
+#name "Short Sword"
+#dmg 5
+#att 1
+#def 1
+#len 1
+#nratt 1
+#rcost 2
+#ironweapon
+#pierce
+#slash
+#end
+
+#selectweapon 7
+#name "Quarterstaff"
+#dmg 3
+#att 1
+#def 3
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#twohanded
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 8
+#name "Broad Sword"
+#dmg 6
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 3
+#ironweapon
+#slash
+#end
+
+#selectweapon 9
+#name "Dagger"
+#dmg 2
+#att 1
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#ironweapon
+#pierce
+#end
+
+#selectweapon 10
+#name "Falchion"
+#dmg 8
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 4
+#ironweapon
+#slash
+#end
+
+#selectweapon 11
+#name "Great Sword"
+#dmg 9
+#att 1
+#def 2
+#len 2
+#nratt 1
+#sound 8
+#rcost 5
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 12
+#name "Mace"
+#dmg 6
+#att 0
+#def 0
+#len 1
+#nratt 1
+#rcost 1
+#blunt
+#end
+
+#selectweapon 13
+#name "Hammer"
+#dmg 7
+#att 0
+#def -1
+#len 1
+#nratt 1
+#rcost 2
+#pierce
+#blunt
+#end
+
+#selectweapon 14
+#name "Maul"
+#dmg 9
+#att 0
+#def -1
+#len 2
+#nratt 1
+#sound 11
+#rcost 1
+#twohanded
+#blunt
+#end
+
+#selectweapon 15
+#name "Morningstar"
+#dmg 6
+#att 1
+#def -2
+#len 1
+#nratt 1
+#sound 11
+#rcost 2
+#ironweapon
+#pierce
+#blunt
+#flail
+#end
+
+#selectweapon 16
+#name "Flail"
+#dmg 3
+#att 1
+#def -2
+#len 2
+#nratt 2
+#sound 11
+#rcost 3
+#twohanded
+#ironweapon
+#blunt
+#flail
+#end
+
+#selectweapon 17
+#name "Axe"
+#dmg 8
+#att 0
+#def -1
+#len 1
+#nratt 1
+#sound 10
+#rcost 1
+#ironweapon
+#slash
+#end
+
+#selectweapon 18
+#name "Battleaxe"
+#dmg 9
+#att 1
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 3
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 19
+#name "..."
+#dmg 2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#pierce
+#end
+
+#selectweapon 20
+#name "Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#end
+
+#selectweapon 21
+#name "Javelin"
+#range -1
+#dmg 2
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 19
+#rcost 1
+#pierce
+#flyspr 110 1
+#explspr 10301
+#woodenweapon
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 22
+#name "Sling"
+#range 30
+#dmg 5
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 15
+#sound 15
+#rcost 0
+#halfstr
+#blunt
+#flyspr 111 1
+#explspr 10301
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 23
+#name "Short Bow"
+#range 35
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 2
+#halfstr
+#twohanded
+#pierce
+#flyspr 109 1
+#explspr 10301
+#woodenweapon
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 24
+#name "Long Bow"
+#range 45
+#dmg 9
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 3
+#halfstr
+#twohanded
+#pierce
+#flyspr 109 1
+#explspr 10301
+#woodenweapon
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 25
+#name "Crossbow"
+#range 40
+#dmg 8
+#att 2
+#def 0
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 3
+#bowstr
+#twohanded
+#armorpiercing
+#pierce
+#flyspr 109 1
+#explspr 10301
+-- ro: explosion sprite frames = 5
+-- ro: ability 266 = 1
+#end
+
+#selectweapon 26
+#name "Arbalest"
+#range 50
+#dmg 12
+#att 2
+#def 0
+#len 0
+#nratt -3
+#ammo 10
+#sound 13
+#rcost 4
+#bowstr
+#twohanded
+#armorpiercing
+#pierce
+#flyspr 109 1
+#explspr 10301
+-- ro: explosion sprite frames = 5
+-- ro: ability 266 = 1
+#end
+
+#selectweapon 27
+#name "Boulder"
+#range -3
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 11
+#rcost 0
+#twohanded
+#blunt
+#flyspr 100 1
+#explspr 10301
+#speedmult 1
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 28
+#name "Long Spear"
+#dmg 3
+#att 0
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 2
+#ironweapon
+#pierce
+#end
+
+#selectweapon 29
+#name "Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#slash
+#end
+
+#selectweapon 30
+#name "Venomous Fangs"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 3
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 31
+#name "Coral Spear"
+#dmg 2
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 32
+#name "Coral Knife"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 33
+#name "Claws"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 2
+#sound 38
+#rcost 0
+#slash
+#end
+
+#selectweapon 34
+#name "Blow Pipe"
+#range 8
+#dmg 0
+#att 2
+#def 0
+#len 0
+#nratt 1
+#ammo 15
+#sound 46
+#rcost 1
+#dt_cap
+#pierce
+#secondaryeffect 54
+#flyspr 403 1
+#woodenweapon
+#end
+
+#selectweapon 35
+#name "Ice Knife"
+#dmg 1
+#att 2
+#def 0
+#len 0
+#nratt 1
+#rcost 1
+#magic
+#pierce
+#iceweapon
+#end
+
+#selectweapon 36
+#name "Ice Lance"
+#dmg 3
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#magic
+#charge
+#pierce
+#iceweapon
+#end
+
+#selectweapon 37
+#name "Ice Blade"
+#dmg 5
+#att 1
+#def 1
+#len 1
+#nratt 1
+#rcost 4
+#magic
+#slash
+#iceweapon
+#end
+
+#selectweapon 38
+#name "Snake Hair"
+#dmg -4
+#att -2
+#def 0
+#len 0
+#nratt 5
+#sound 50
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 39
+#name "Free"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#end
+
+#selectweapon 40
+#name "Whip"
+#dmg -1
+#att -1
+#def 0
+#len 4
+#nratt 1
+#sound 9
+#rcost 1
+#dt_cap
+#slash
+#end
+
+#selectweapon 41
+#name "Bane Blade"
+#dmg 10
+#att 2
+#def 3
+#len 2
+#nratt 1
+#sound 8
+#rcost 8
+#magic
+#twohanded
+#slash
+#secondaryeffect 64
+#end
+
+#selectweapon 42
+#name "Bane Blade"
+#dmg 7
+#att 1
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 5
+#magic
+#slash
+#secondaryeffect 64
+#end
+
+#selectweapon 43
+#name "Poisoned Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#slash
+#secondaryeffect 54
+#end
+
+#selectweapon 44
+#name "Ice Mace"
+#dmg 5
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 2
+#magic
+#blunt
+#iceweapon
+#end
+
+#selectweapon 45
+#name "Coral Club"
+#dmg 4
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 1
+#blunt
+#secondaryeffect 50
+#end
+
+#selectweapon 46
+#name "Coral Glaive"
+#dmg 9
+#att -1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 4
+#twohanded
+#pierce
+#slash
+#secondaryeffect 50
+#end
+
+#selectweapon 47
+#name "Lobster Claw"
+#dmg 20
+#att -4
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#slash
+#end
+
+#selectweapon 48
+#name "Fire Flare"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1015
+#aoe 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#bonus
+#norepel
+#unrepel
+#explspr 10133
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 49
+#name "Iron Prod"
+#dmg 8
+#att -2
+#def -1
+#len 2
+#nratt 1
+#sound 12
+#rcost 4
+#ironweapon
+#pierce
+#end
+
+#selectweapon 50
+#name "Weak Poison"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#end
+
+#selectweapon 51
+#name "Strong Poison"
+#dmg 15
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#end
+
+#selectweapon 52
+#name "Death Poison"
+#dmg 35
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#end
+
+#selectweapon 53
+#name "Debilitative Poison"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_sizestun
+#nostr
+#magic
+#armornegating
+#poison
+#end
+
+#selectweapon 54
+#name "Paralyzing Poison"
+#dmg 50
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_sizestun
+#nostr
+#magic
+#armornegating
+#mrnegates
+#poison
+#end
+
+#selectweapon 55
+#name "Hoof"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 56
+#name "Hoof"
+#dmg 13
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#blunt
+#end
+
+#selectweapon 57
+#name "Sickle"
+#dmg 5
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 2
+#ironweapon
+#slash
+#end
+
+#selectweapon 58
+#name "Wail"
+#dmg 999
+#att 0
+#def 0
+#len 5
+#nratt 1
+#ammo 1015
+#aoe 1
+#sound 20
+#rcost 0
+#nostr
+#magic
+#mrnegates
+#bonus
+#inanimateimmune
+#norepel
+#unrepel
+#secondaryeffectalways 60
+#end
+
+#selectweapon 59
+#name "Rod of Death"
+#dmg 10
+#att 3
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#blunt
+#internal
+#end
+
+#selectweapon 60
+#name "Fear"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 5
+#sound 0
+#rcost 0
+#nostr
+#magic
+#friendlyimmune
+-- ro: damage type = 4
+#end
+
+#selectweapon 61
+#name "Dancing Shard"
+#dmg 7
+#att -2
+#def 0
+#len 2
+#nratt 1
+#sound 12
+#rcost 0
+#dt_cap
+#nostr
+#magic
+#bonus
+#slash
+#unrepel
+#end
+
+#selectweapon 62
+#name "Bile"
+#range -2
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#aoe 3
+#sound 50
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#flyspr 10079 0
+#explspr 10139
+#speedmult 1
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 63
+#name "Life Drain"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#magic
+#armorpiercing
+#natural
+#end
+
+#selectweapon 64
+#name "Decay"
+#dmg 256
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+-- ro: flag bit = 0x4000
+#end
+
+#selectweapon 65
+#name "Venomous Fangs"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 66
+#name "Jotun Axe"
+#dmg 7
+#att 0
+#def -1
+#len 1
+#nratt 1
+#sound 11
+#rcost 1
+#ironweapon
+#slash
+#end
+
+#selectweapon 67
+#name "Phantasmal Weapon"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#false
+#end
+
+#selectweapon 68
+#name "Barbed Tail"
+#dmg -2
+#att -1
+#def 0
+#len 0
+#nratt 1
+#sound 103
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 54
+#end
+
+#selectweapon 69
+#name "Icicle Fist"
+#dmg 2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 222
+#end
+
+#selectweapon 70
+#name "Astral Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#armornegating
+#bonus
+#slash
+#secondaryeffect 367
+#end
+
+#selectweapon 71
+#name "Sleep Vines"
+#dmg 33
+#att -1
+#def 0
+#len 3
+#nratt 3
+#sound 87
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#mrnegates
+#bonus
+#inanimateimmune
+#woodenweapon
+#end
+
+#selectweapon 72
+#name "Sun Slayer"
+#dmg 13
+#att 5
+#def 6
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffectalways 73
+#end
+
+#selectweapon 73
+#name "Area Death"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 5
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#undeadimmune
+#internal
+#explspr 10140
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 74
+#name "Sword of Sharpness"
+#dmg 10
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#end
+
+#selectweapon 75
+#name "Enchanted Sword"
+#dmg 8
+#att 1
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 76
+#name "Fire Sword"
+#dmg 10
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 77
+#name "Ice Sword"
+#dmg 6
+#att 1
+#def 3
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#iceweapon
+#end
+
+#selectweapon 78
+#name "Stinger"
+#dmg 7
+#att 2
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#armorpiercing
+#pierce
+#end
+
+#selectweapon 79
+#name "Thorn Spear"
+#dmg 5
+#att 2
+#def 2
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 80
+#name "Fire Brand"
+#dmg 8
+#att 3
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffectalways 171
+#end
+
+#selectweapon 81
+#name "Thorn Staff"
+#dmg 5
+#att 3
+#def 5
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffect 51
+#end
+
+#selectweapon 82
+#name "Frost Brand"
+#dmg 8
+#att 1
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffectalways 765
+#end
+
+#selectweapon 83
+#name "Wave Breaker"
+#dmg 10
+#att 3
+#def 3
+#len 3
+#nratt 3
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#pierce
+#end
+
+#selectweapon 84
+#name "Unquenched Sword"
+#dmg 22
+#att 4
+#def 1
+#len 1
+#nratt 1
+#sound 16
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffectalways 525
+#end
+
+#selectweapon 85
+#name "Tentacle"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 12
+#rcost 0
+#armorpiercing
+#bonus
+#end
+
+#selectweapon 86
+#name "Mind Blast"
+#range 100
+#dmg 12
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 22
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#secondaryeffect 293
+#explspr 10153
+-- ro: flag bit = 0x4000
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 87
+#name "Mage Bane"
+#dmg 10
+#att 5
+#def 6
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffect 88
+#end
+
+#selectweapon 88
+#name "Unconsciousness"
+#dmg 110
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#secondaryeffect 247
+#end
+
+#selectweapon 89
+#name "Snake Staff"
+#dmg 5
+#att 3
+#def 5
+#len 4
+#nratt 1
+#sound 50
+#rcost 0
+#magic
+#twohanded
+#pierce
+#blunt
+#secondaryeffect 51
+#end
+
+#selectweapon 90
+#name "Crush"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#armorpiercing
+#bonus
+#blunt
+#end
+
+#selectweapon 91
+#name "Fatigue"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#magic
+#armorpiercing
+#end
+
+#selectweapon 92
+#name "Fist"
+#dmg -2
+#att -1
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#blunt
+#end
+
+#selectweapon 93
+#name "Fist"
+#dmg -2
+#att -1
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 94
+#name "Spear"
+#dmg 16
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#nostr
+#ironweapon
+#bonus
+#pierce
+#end
+
+#selectweapon 95
+#name "Flambeau"
+#dmg 13
+#att 4
+#def 2
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#secondaryeffectalways 405
+#end
+
+#selectweapon 96
+#name "Spear"
+#dmg 13
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#nostr
+#ironweapon
+#bonus
+#pierce
+#end
+
+#selectweapon 97
+#name "Woundflame"
+#dmg 8
+#att 4
+#def 5
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#pierce
+#slash
+#secondaryeffect 98
+#end
+
+#selectweapon 98
+#name "Plague"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#undeadimmune
+#end
+
+#selectweapon 99
+#name "Main Gauche of Parrying"
+#dmg 4
+#att 1
+#def 6
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#pierce
+#end
+
+#selectweapon 100
+#name "Standard"
+#dmg 1
+#att -2
+#def -3
+#len 4
+#nratt 1
+#sound 12
+#rcost 3
+#twohanded
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 101
+#name "Athame"
+#dmg 4
+#att 2
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#dt_weapondrain
+#magic
+#pierce
+#end
+
+#selectweapon 102
+#name "Faithful"
+#dmg 7
+#att 2
+#def 4
+#len 1
+#nratt 1
+#rcost 0
+#magic
+#pierce
+#slash
+#end
+
+#selectweapon 103
+#name "Stone Sword"
+#dmg 10
+#att 4
+#def 7
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffectalways 104
+#end
+
+#selectweapon 104
+#name "Area Petrification"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 5
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#explspr 39
+-- ro: damage type = 99
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 105
+#name "Staff of Storms"
+#dmg 3
+#att 2
+#def 4
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#blunt
+#shockifhit 12
+#end
+
+#selectweapon 106
+#name "Sword of Swiftness"
+#dmg 10
+#att 2
+#def 4
+#len 1
+#nratt 2
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 107
+#name "Halberd of Might"
+#dmg 16
+#att 2
+#def 3
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#pierce
+#slash
+#end
+
+#selectweapon 108
+#name "Greatsword of Sharpness"
+#dmg 15
+#att 4
+#def 4
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#end
+
+#selectweapon 109
+#name "Herald Lance"
+#dmg 6
+#att 1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#pierce
+#holyifhit 10
+#end
+
+#selectweapon 110
+#name "Wraith Sword"
+#dmg 11
+#att 2
+#def 3
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#dt_weapondrain
+#magic
+#twohanded
+#slash
+#end
+
+#selectweapon 111
+#name "Heart Finder Sword"
+#dmg 10
+#att 4
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffect 112
+#end
+
+#selectweapon 112
+#name "Heart Finding"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+#internal
+#end
+
+#selectweapon 113
+#name "Tempest"
+#dmg 15
+#att 5
+#def 6
+#len 2
+#nratt 1
+#sound 24
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffectalways 114
+#end
+
+#selectweapon 114
+#name "Chain Lightning"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_bouncekill
+#nostr
+#magic
+#armornegating
+#shock
+-- ro: flag bit = 0x200000000
+-- ro: ability 617 = 8
+#end
+
+#selectweapon 115
+#name "Dwarven Hammer"
+#dmg 8
+#att 0
+#def -1
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 116
+#name "Strangulation"
+#dmg -2
+#att 0
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#armorpiercing
+#blunt
+#secondaryeffect 91
+#end
+
+#selectweapon 117
+#name "Knife of the Damned"
+#dmg 4
+#att 4
+#def 1
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#armorpiercing
+#pierce
+#secondaryeffect 694
+-- ro: ability 944 = 366
+#end
+
+#selectweapon 118
+#name "Curse"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 119
+#name "Hammer of the Cyclops"
+#dmg 27
+#att 0
+#def -1
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#end
+
+#selectweapon 120
+#name "Enchanted Spear"
+#dmg 7
+#att 2
+#def 2
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#pierce
+#end
+
+#selectweapon 121
+#name "Dancing Trident"
+#dmg 19
+#att 4
+#def 0
+#len 4
+#nratt 1
+#sound 12
+#rcost 0
+#nostr
+#magic
+#bonus
+#pierce
+#unrepel
+#end
+
+#selectweapon 122
+#name "Harvest Blade"
+#dmg 16
+#att 10
+#def -5
+#len 0
+#nratt 1
+#aoe 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffectalways 125
+#end
+
+#selectweapon 123
+#name "Javelin of Flight"
+#range 30
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 30
+#sound 19
+#rcost 0
+#magic
+#pierce
+#flyspr 110 1
+#end
+
+#selectweapon 124
+#name "Ice Rod"
+#dmg 3
+#att 2
+#def 4
+#len 3
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#twohanded
+#blunt
+#iceweapon
+#coldifhit 10
+#end
+
+#selectweapon 125
+#name "Leg Chop"
+#dmg 16777216
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 126
+#name "Poison Dagger"
+#dmg 2
+#att 1
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#ironweapon
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 127
+#name "Venomous Bite"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 128
+#name "Gloves of the Gladiator"
+#dmg 3
+#att 2
+#def 1
+#len 0
+#nratt 4
+#sound 10
+#rcost 0
+#magic
+#twohanded
+#blunt
+#end
+
+#selectweapon 129
+#name "Duskdagger"
+#dmg 3
+#att 3
+#def 1
+#len 0
+#nratt 1
+#rcost 10
+#magic
+#armornegating
+#pierce
+#secondaryeffect 690
+#end
+
+#selectweapon 130
+#name "Hammer of the Mountains"
+#dmg 25
+#att -1
+#def -3
+#len 3
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 699
+#end
+
+#selectweapon 131
+#name "Frost Blast"
+#range 35
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1008
+#aoe 1
+#sound 21
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#cold
+#flyspr 10094 5
+#explspr 10102
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 132
+#name "Shortsword"
+#dmg 12
+#att 3
+#def 4
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#dt_large
+#magic
+#twohanded
+#slash
+#end
+
+#selectweapon 133
+#name "Midget Masher"
+#dmg 20
+#att 3
+#def 1
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#dt_small
+#magic
+#twohanded
+#blunt
+#end
+
+#selectweapon 134
+#name "Chain Shock"
+#dmg 3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_bouncekill
+#nostr
+#magic
+#armornegating
+#shock
+-- ro: ability 617 = 3
+#end
+
+#selectweapon 135
+#name "Champion's Trident"
+#dmg 12
+#att 3
+#def 6
+#len 3
+#nratt 2
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#pierce
+#end
+
+#selectweapon 136
+#name "Vine Whip"
+#dmg 0
+#att 3
+#def 0
+#len 4
+#nratt 1
+#sound 9
+#rcost 0
+#dt_cap
+#magic
+#slash
+#secondaryeffectalways 137
+#end
+
+#selectweapon 137
+#name "Entanglement"
+#dmg 64
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 138
+#name "Rat Tail"
+#dmg 0
+#att 2
+#def 0
+#len 4
+#nratt 1
+#sound 9
+#rcost 0
+#dt_cap
+#magic
+#slash
+#secondaryeffectalways 139
+#end
+
+#selectweapon 139
+#name "Greater Fear"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+-- ro: damage type = 4
+#end
+
+#selectweapon 140
+#name "Whip of Command"
+#dmg 1
+#att 3
+#def 0
+#len 4
+#nratt 1
+#sound 9
+#rcost 0
+#dt_cap
+#magic
+#slash
+#end
+
+#selectweapon 141
+#name "Poison Spit"
+#range 10
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 0
+#rcost 0
+#dt_poison
+#armorpiercing
+#poison
+#bonus
+#natural
+#flyspr 214 4
+#speedmult 1
+#end
+
+#selectweapon 142
+#name "Touch of Leprosy"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#secondaryeffect 143
+#end
+
+#selectweapon 143
+#name "Disease"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#inanimateimmune
+#end
+
+#selectweapon 144
+#name "Stinger"
+#dmg 0
+#att 5
+#def 0
+#len 2
+#nratt 1
+#sound 12
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 145
+#name "Heavenly Horn"
+#range 27
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 15
+#aoe 5
+#sound 112
+#rcost 0
+#dt_holy
+#nostr
+#magic
+#armorpiercing
+#flyspr -2 0
+#explspr 10220
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 146
+#name "Venomous Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 0
+#rcost 0
+#slash
+#secondaryeffect 52
+#end
+
+#selectweapon 147
+#name "Spray Poison"
+#range -2
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1007
+#aoe 6
+#sound 16
+#rcost 0
+#dt_poison
+#halfstr
+#magic
+#armornegating
+#poison
+#flyspr 10292 5
+#explspr 10297
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 148
+#name "Spider Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#slash
+#end
+
+#selectweapon 149
+#name "Flesh Eater"
+#dmg 14
+#att 4
+#def -1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffect 150
+#end
+
+#selectweapon 150
+#name "Chest Wound"
+#dmg 8388608
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 151
+#name "Wand"
+#dmg -2
+#att -2
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 152
+#name "Trueshot Longbow"
+#range 50
+#dmg 12
+#att 30
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#flyspr 109 1
+#explspr 10301
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 153
+#name "Stick"
+#dmg 2
+#att 0
+#def 1
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#twohanded
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 154
+#name "Bow of War"
+#range 40
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 13
+#ammo 7
+#sound 14
+#rcost 0
+#halfstr
+#twohanded
+#pierce
+#flyspr 109 1
+#explspr 10301
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 155
+#name "Black Bow"
+#range 45
+#dmg 12
+#att 5
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffect 156
+#flyspr 109 0
+#explspr 10301
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 156
+#name "Feeblemind"
+#dmg 33554432
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mind
+#end
+
+#selectweapon 157
+#name "Oath Rod"
+#dmg 5
+#att 3
+#def 5
+#len 3
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffect 156
+#end
+
+#selectweapon 158
+#name "Flailing Hands"
+#dmg 10
+#att 4
+#def -1
+#len 2
+#nratt 2
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 159
+#flail
+#end
+
+#selectweapon 159
+#name "Fear and Cold"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#secondaryeffect 160
+-- ro: damage type = 4
+#end
+
+#selectweapon 160
+#name "Cold"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armorpiercing
+#cold
+#bonus
+#unrepel
+#explspr 185
+-- ro: explosion sprite frames = 4
+#end
+
+#selectweapon 161
+#name "Just Man's Cross"
+#range 45
+#dmg 12
+#att 4
+#def 0
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 0
+#bowstr
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#flyspr 109 1
+#explspr 10301
+#holyifhit 20
+#holystunifhit 1
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 162
+#name "The Summit"
+#dmg 28
+#att 12
+#def 6
+#len 1
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#armorpiercing
+#end
+
+#selectweapon 163
+#name "Thistle Mace"
+#dmg 3
+#att -1
+#def -1
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffect 51
+#end
+
+#selectweapon 164
+#name "unused"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#end
+
+#selectweapon 165
+#name "Great Club"
+#dmg 7
+#att 0
+#def 1
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#twohanded
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 166
+#name "Golden Claw"
+#dmg 2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 167
+#name "Poison Sling"
+#range 15
+#dmg 64
+#att -4
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#aoe 1
+#sound 15
+#rcost 5
+#nostr
+#armornegating
+#poison
+#flyspr 111 0
+#explspr 10299
+-- ro: damage type = 146
+#end
+
+#selectweapon 168
+#name "Piercer"
+#range 35
+#dmg 12
+#att 10
+#def 0
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 0
+#nostr
+#magic
+#twohanded
+#armornegating
+#uwok
+#pierce
+#flyspr 109 0
+#explspr 10301
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 169
+#name "Gate Cleaver"
+#dmg 29
+#att -1
+#def -1
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#armornegating
+#slash
+#end
+
+#selectweapon 170
+#name "Sword of Justice"
+#dmg 15
+#att 3
+#def 4
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffectalways 405
+#end
+
+#selectweapon 171
+#name "Small Area Fire"
+#dmg 14
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#explspr 10113
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 172
+#name "Magic Sceptre"
+#dmg 0
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 173
+#name "Star of Heroes"
+#dmg 12
+#att 4
+#def -2
+#len 1
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#pierce
+#blunt
+#secondaryeffect 174
+#flail
+#end
+
+#selectweapon 174
+#name "Break Armor"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+-- ro: damage type = 159
+#end
+
+#selectweapon 175
+#name "Chi Kick"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#blunt
+#end
+
+#selectweapon 176
+#name "Stone Bird"
+#dmg 9
+#att 0
+#def 0
+#len 3
+#nratt 1
+#rcost 0
+#nostr
+#magic
+#bonus
+#blunt
+#unrepel
+-- ro: flag bit = 0x2000000000000
+#end
+
+#selectweapon 177
+#name "Astral Serpent"
+#dmg 3
+#att 5
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#magic
+#armornegating
+#bonus
+#norepel
+#pierce
+#unrepel
+#secondaryeffect 52
+#end
+
+#selectweapon 178
+#name "Summer Sword"
+#dmg 11
+#att 1
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 179
+#name "Sword of Aurgelmer"
+#dmg 13
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffect 694
+#end
+
+#selectweapon 180
+#name "Ethereal Crossbow"
+#range 45
+#dmg 999
+#att 5
+#def 0
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 0
+#nostr
+#magic
+#twohanded
+#armornegating
+#soulslaying
+#mrnegates
+#mind
+#uwok
+#pierce
+#flyspr 109 0
+#end
+
+#selectweapon 181
+#name "Implementor Axe"
+#dmg 10
+#att 2
+#def 0
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#end
+
+#selectweapon 182
+#name "Trunk"
+#dmg -3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 183
+#name "Snake Bladder Stick"
+#dmg 64
+#att 0
+#def 1
+#len 2
+#nratt 1
+#aoe 4
+#sound 12
+#rcost 0
+#nostr
+#magic
+#armornegating
+#poison
+#explspr 10156
+-- ro: damage type = 146
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 184
+#name "Hammer of the Forge Lord"
+#dmg 20
+#att 1
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 171
+#end
+
+#selectweapon 185
+#name "Lightning Swarm"
+#dmg 6
+#att 0
+#def 0
+#len 2
+#nratt 1
+#sound 24
+#rcost 0
+#nostr
+#magic
+#armornegating
+#shock
+#bonus
+-- ro: flag bit = 0x200000000
+#end
+
+#selectweapon 186
+#name "The Admiral's Sword"
+#dmg 12
+#att 5
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffect 694
+#end
+
+#selectweapon 187
+#name "Pain Sickle"
+#dmg 5
+#att 4
+#def 4
+#len 1
+#nratt 1
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffect 64
+#end
+
+#selectweapon 188
+#name "Tartarian Chains"
+#dmg 5
+#att 3
+#def -2
+#len 2
+#nratt 2
+#sound 11
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 189
+#flail
+#end
+
+#selectweapon 189
+#name "Enslavement"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#explspr 227
+-- ro: damage type = 28
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 190
+#name "Phantasmal Claw"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#false
+#slash
+#end
+
+#selectweapon 191
+#name "Ember"
+#dmg 15
+#att 5
+#def 4
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffectalways 192
+#end
+
+#selectweapon 192
+#name "Small Area Frost and Fire"
+#dmg 15
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#cold
+#secondaryeffectalways 171
+#explspr 10108
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 193
+#name "Trident from Beyond"
+#dmg 13
+#att 2
+#def 3
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#pierce
+#secondaryeffect 194
+#end
+
+#selectweapon 194
+#name "Soul Slay"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#soulslaying
+#mrnegates
+#mind
+#explspr 10206
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 195
+#name "Sword of Many Colors"
+#dmg 17
+#att 3
+#def 5
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffectalways 196
+#end
+
+#selectweapon 196
+#name "Killing Light"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 5
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#friendlyimmune
+#false
+#internal
+#explspr 10215
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 197
+#name "Gaze of Death"
+#range 15
+#dmg 10
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#aoe 20
+#sound 23
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#internal
+#flyspr 10258 5
+#explspr 10259
+#range0
+#speedmult 2
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 611 = 1
+-- ro: ability 163 = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 198
+#name "Flame Burst"
+#dmg 10
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#bonus
+#end
+
+#selectweapon 199
+#name "Banefire Bow"
+#range 35
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffect 64
+#flyspr 274 4
+#explspr 10301
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 200
+#name "Bane Burst"
+#dmg 256
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 16
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#bonus
+#end
+
+#selectweapon 201
+#name "Magic Spear"
+#dmg 5
+#att 2
+#def 0
+#len 4
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#pierce
+#end
+
+#selectweapon 202
+#name "Magic Sword"
+#dmg 7
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 203
+#name "Barbed Tail"
+#dmg -2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 103
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 54
+#end
+
+#selectweapon 204
+#name "Venomous Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#secondaryeffect 50
+#end
+
+#selectweapon 205
+#name "Sword of Injustice"
+#dmg 6
+#att 3
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffectalways 774
+#end
+
+#selectweapon 206
+#name "Ballista"
+#range 70
+#dmg 25
+#att -2
+#def 0
+#len 0
+#nratt -3
+#ammo 10
+#sound 13
+#rcost 0
+#nostr
+#twohanded
+#armorpiercing
+#pierce
+#flyspr 308 1
+#end
+
+#selectweapon 207
+#name "Venomous Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#slash
+#secondaryeffect 50
+#end
+
+#selectweapon 208
+#name "Thunder Whip"
+#dmg 2
+#att 0
+#def 0
+#len 4
+#nratt 1
+#sound 9
+#rcost 0
+#dt_cap
+#magic
+#slash
+#secondaryeffectalways 134
+#end
+
+#selectweapon 209
+#name "Fire Javelin"
+#range -1
+#dmg 2
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 19
+#rcost 0
+#magic
+#pierce
+#secondaryeffectalways 216
+#flyspr 354 4
+#end
+
+#selectweapon 210
+#name "Fire Sling"
+#range 30
+#dmg 5
+#att -3
+#def 0
+#len 0
+#nratt 1
+#ammo 15
+#sound 15
+#rcost 0
+#halfstr
+#magic
+#pierce
+#secondaryeffectalways 216
+#flyspr 358 4
+#end
+
+#selectweapon 211
+#name "Fire Short Bow"
+#range 35
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 216
+#flyspr 350 4
+#end
+
+#selectweapon 212
+#name "Fire Long Bow"
+#range 45
+#dmg 9
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 216
+#flyspr 350 4
+#end
+
+#selectweapon 213
+#name "Fire Crossbow"
+#range 40
+#dmg 8
+#att 2
+#def 0
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 0
+#bowstr
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#secondaryeffectalways 216
+#flyspr 350 4
+#end
+
+#selectweapon 214
+#name "Fire Arbalest"
+#range 50
+#dmg 12
+#att 2
+#def 0
+#len 0
+#nratt -3
+#ammo 10
+#sound 13
+#rcost 0
+#bowstr
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#secondaryeffectalways 216
+#flyspr 350 4
+#end
+
+#selectweapon 215
+#name "Fire Boulder"
+#range -3
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 171
+#flyspr 362 4
+#speedmult 1
+#end
+
+#selectweapon 216
+#name "Fire"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#end
+
+#selectweapon 217
+#name "Fire Bow of War"
+#range 40
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 13
+#ammo 7
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 216
+#flyspr 350 4
+#end
+
+#selectweapon 218
+#name "Star of Thraldom"
+#dmg 10
+#att 6
+#def -2
+#len 1
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 219
+#flail
+#end
+
+#selectweapon 219
+#name "False Fetters"
+#dmg 131072
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#end
+
+#selectweapon 220
+#name "Enchanted Pike"
+#dmg 9
+#att 3
+#def 1
+#len 5
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#pierce
+#end
+
+#selectweapon 221
+#name "Fire"
+#dmg 12
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#norepel
+#unrepel
+#end
+
+#selectweapon 222
+#name "Cold"
+#dmg 12
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armorpiercing
+#cold
+#norepel
+#unrepel
+#end
+
+#selectweapon 223
+#name "Venomous Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#secondaryeffect 50
+#end
+
+#selectweapon 224
+#name "Poison Spit"
+#range -1
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 12
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#natural
+#flyspr 214 4
+#end
+
+#selectweapon 225
+#name "Basilisk Bite"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffectalways 226
+#end
+
+#selectweapon 226
+#name "Basilisk Poison"
+#dmg 35
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#end
+
+#selectweapon 227
+#name "Divine Armament"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_holy
+#nostr
+#magic
+#fire
+#armorpiercing
+#end
+
+#selectweapon 228
+#name "Elf Shot"
+#range 35
+#dmg 100
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 20
+#sound 29
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+#pierce
+#flyspr 10271 5
+#explspr 10272
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 229
+#name "Flame Strike"
+#dmg 0
+#att 0
+#def 0
+#len 2
+#nratt 1
+#aoe 1
+#sound 16
+#rcost 0
+#magic
+#fire
+#armorpiercing
+#bonus
+#norepel
+#end
+
+#selectweapon 230
+#name "Owl"
+#dmg 13
+#att 0
+#def 0
+#len 5
+#nratt 1
+#rcost 0
+#nostr
+#bonus
+#slash
+#end
+
+#selectweapon 231
+#name "Thunder Fist"
+#dmg -2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 24
+#rcost 0
+#magic
+#blunt
+#shockifhit 10
+#end
+
+#selectweapon 232
+#name "Shock"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#shock
+#end
+
+#selectweapon 233
+#name "Rune Smasher"
+#dmg 7
+#att 2
+#def 1
+#len 1
+#nratt 1
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 234
+#name "Jotun Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#ironweapon
+#pierce
+#end
+
+#selectweapon 235
+#name "Pincer"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#end
+
+#selectweapon 236
+#name "Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#end
+
+#selectweapon 237
+#name "Bonds of Fire"
+#dmg 65536
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#defroll
+#explspr 10356
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 238
+#name "Magic Staff"
+#dmg 3
+#att 2
+#def 4
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#blunt
+#end
+
+#selectweapon 239
+#name "Venomous Fangs"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 240
+#name "Branch"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 241
+#name "Hell Sword"
+#dmg 14
+#att 5
+#def 1
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#dt_weapondrain
+#magic
+#twohanded
+#slash
+#end
+
+#selectweapon 242
+#name "Hunter's Knife"
+#dmg 4
+#att 2
+#def 1
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#armorpiercing
+#pierce
+#end
+
+#selectweapon 243
+#name "Lightning"
+#range 40
+#dmg 0
+#att 3
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 24
+#rcost 0
+#magic
+#armornegating
+#shock
+#uwok
+#secondaryeffectalways 704
+#flyspr 210 4
+#explspr 10219
+-- ro: flag bit = 0x4000
+-- ro: flag bit = 0x200000000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 244
+#name "Dark Fire Sword"
+#dmg 15
+#att 4
+#def 2
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#secondaryeffectalways 221
+#end
+
+#selectweapon 245
+#name "Axe of Sharpness"
+#dmg 11
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#end
+
+#selectweapon 246
+#name "Elf Bane"
+#dmg 12
+#att 3
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffect 247
+#end
+
+#selectweapon 247
+#name "Slay Magic"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#magiconly
+#armornegating
+#mrnegates
+#internal
+#end
+
+#selectweapon 248
+#name "Venomous Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 0
+#rcost 0
+#slash
+#secondaryeffect 50
+#end
+
+#selectweapon 249
+#name "Venomous Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 0
+#rcost 0
+#slash
+#secondaryeffect 51
+#end
+
+#selectweapon 250
+#name "Poisoned Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#slash
+#secondaryeffect 53
+#end
+
+#selectweapon 251
+#name "Venomous Fangs"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 54
+#end
+
+#selectweapon 252
+#name "Club"
+#dmg 3
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 253
+#name "Hatchet"
+#dmg 5
+#att 1
+#def 0
+#len 1
+#nratt 1
+#rcost 1
+#ironweapon
+#slash
+#end
+
+#selectweapon 254
+#name "Plague Breath"
+#range -2
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1009
+#aoe 10
+#sound 50
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#inanimateimmune
+#natural
+#secondaryeffectalways 255
+#flyspr 10080 0
+#explspr 10223
+#speedmult 1
+#range050
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 255
+#name "Area Fear"
+#dmg 4
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+-- ro: damage type = 4
+#end
+
+#selectweapon 256
+#name "Kryss"
+#dmg 3
+#att 0
+#def 0
+#len 1
+#nratt 1
+#rcost 1
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 257
+#name "Bardiche"
+#dmg 6
+#att 0
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 4
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 258
+#name "Claymore"
+#dmg 10
+#att 1
+#def 1
+#len 2
+#nratt 1
+#sound 8
+#rcost 5
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 259
+#name "Executioner's Axe"
+#dmg 10
+#att 1
+#def -1
+#len 2
+#nratt 1
+#sound 11
+#rcost 4
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 260
+#name "Throwing Axe"
+#range -1
+#dmg 5
+#att -4
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 19
+#rcost 2
+#ironweapon
+#slash
+#flyspr 411 4
+#speedmult 1
+#end
+
+#selectweapon 261
+#name "Web"
+#dmg 536870912
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 38
+#rcost 0
+#dt_aff
+#nostr
+#bonus
+#norepel
+#sizeresist
+#end
+
+#selectweapon 262
+#name "Web Spit"
+#range 8
+#dmg 536870912
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#bonus
+#sizeresist
+#natural
+#flyspr 10278 9
+#end
+
+#selectweapon 263
+#name "Net"
+#dmg 1125899906842624
+#att 0
+#def 0
+#len 4
+#nratt 1
+#ammo 1
+#sound 0
+#rcost 1
+#dt_aff
+#nostr
+#bonus
+#norepel
+#sizeresist
+#end
+
+#selectweapon 264
+#name "Composite Bow"
+#range 40
+#dmg 8
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 3
+#halfstr
+#twohanded
+#pierce
+#flyspr 109 1
+#end
+
+#selectweapon 265
+#name "Spiked Club"
+#dmg 4
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 12
+#rcost 1
+#pierce
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 266
+#name "Great Bow"
+#range 50
+#dmg 11
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 4
+#halfstr
+#twohanded
+#pierce
+#flyspr 109 1
+#woodenweapon
+#end
+
+#selectweapon 267
+#name "Pick Axe"
+#dmg 8
+#att -2
+#def -2
+#len 1
+#nratt 1
+#sound 10
+#rcost 3
+#twohanded
+#ironweapon
+#pierce
+#end
+
+#selectweapon 268
+#name "Jotun Longsword"
+#dmg 9
+#att 0
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 3
+#ironweapon
+#slash
+#end
+
+#selectweapon 269
+#name "Soul Leech"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 18
+#rcost 0
+#dt_drain
+#magic
+#armornegating
+#mrnegates
+#mind
+#bonus
+#norepel
+#unrepel
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 270
+#name "Consume Soul"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armornegating
+#soulslaying
+#mind
+#bonus
+#norepel
+#hardmrneg
+#unrepel
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 271
+#name "Life Drain Tentacle"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armorpiercing
+#bonus
+#natural
+#end
+
+#selectweapon 272
+#name "Claw of Kurgi"
+#dmg 20
+#att 5
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#magic
+#armornegating
+#slash
+#end
+
+#selectweapon 273
+#name "Pincer"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#armorpiercing
+#bonus
+#end
+
+#selectweapon 274
+#name "Enslave Mind"
+#range 25
+#dmg 999
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1010
+#sound 41
+#rcost 0
+#nostr
+#magic
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#explspr 10208
+-- ro: damage type = 28
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 275
+#name "Sun Sword"
+#dmg 15
+#att 3
+#def 3
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#dt_holy
+#magic
+#slash
+#secondaryeffectalways 276
+#end
+
+#selectweapon 276
+#name "Small Area Holyfire"
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_holy
+#nostr
+#magic
+#fire
+#armorpiercing
+#explspr 10113
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 277
+#name "Demon Whip"
+#dmg 2
+#att 4
+#def 0
+#len 4
+#nratt 1
+#sound 9
+#rcost 0
+#dt_cap
+#magic
+#slash
+#secondaryeffectalways 237
+-- ro: ability 917 = 8
+#end
+
+#selectweapon 278
+#name "Lightning Spear"
+#dmg 5
+#att 2
+#def 2
+#len 3
+#nratt 1
+#sound 24
+#rcost 0
+#magic
+#pierce
+#shockifhit 8
+#end
+
+#selectweapon 279
+#name "Spectral Javelin"
+#range -1
+#dmg 2
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 19
+#rcost 0
+#magic
+#uwok
+#pierce
+#mrhalf
+#flyspr 110 1
+#end
+
+#selectweapon 280
+#name "Spectral Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#pierce
+#mrhalf
+#end
+
+#selectweapon 281
+#name "Spectral Sword"
+#dmg 5
+#att 0
+#def 1
+#len 1
+#nratt 1
+#rcost 0
+#magic
+#slash
+#mrhalf
+#end
+
+#selectweapon 282
+#name "Paralyze"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 283
+#name "Paralyze"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 284
+#name "Steal Strength"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#magic
+#armornegating
+#mrnegates
+#secondaryeffect 285
+-- ro: ability 611 = 1
+-- ro: ability 163 = 5
+#end
+
+#selectweapon 285
+#name "Additional Weakness"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_weakness
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+-- ro: ability 611 = 1
+-- ro: ability 163 = 5
+#end
+
+#selectweapon 286
+#name "Touch of Leprosy"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#magic
+#secondaryeffect 143
+#end
+
+#selectweapon 287
+#name "Phantasmal Bow"
+#range 30
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#nostr
+#magic
+#twohanded
+#armornegating
+#mrnegates
+#false
+#pierce
+#flyspr 109 0
+#explspr 1
+-- ro: explosion sprite frames = 0
+#end
+
+#selectweapon 288
+#name "Obsidian Club Sword"
+#dmg 7
+#att 0
+#def 1
+#len 2
+#nratt 1
+#sound 11
+#rcost 2
+#twohanded
+#blunt
+#slash
+#end
+
+#selectweapon 289
+#name "Moon Blade"
+#dmg 13
+#att 4
+#def 5
+#len 2
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#twohanded
+#slash
+#killmagicifhit 10
+#end
+
+#selectweapon 290
+#name "Moon Lance"
+#dmg 6
+#att 1
+#def 1
+#len 3
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#pierce
+#killmagicifhit 10
+#end
+
+#selectweapon 291
+#name "unused"
+#dmg 6
+#att 0
+#def 0
+#len 4
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#end
+
+#selectweapon 292
+#name "Fire Blessing"
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#unrepel
+#end
+
+#selectweapon 293
+#name "Psychic Damage"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#mind
+-- ro: flag bit = 0x4000
+#end
+
+#selectweapon 294
+#name "Weakness"
+#range 30
+#dmg 2
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 10
+#sound 18
+#rcost 0
+#dt_weakness
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+#explspr 10154
+#end
+
+#selectweapon 295
+#name "Twin Spear"
+#dmg 10
+#att 2
+#def 2
+#len 3
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#armorpiercing
+#pierce
+#end
+
+#selectweapon 296
+#name "Twin Spear"
+#dmg 10
+#att 2
+#def 2
+#len 3
+#nratt 1
+#sound 10
+#rcost 0
+#dt_raise
+#magic
+#armorpiercing
+#pierce
+#end
+
+#selectweapon 297
+#name "Serpent Kryss"
+#dmg 4
+#att 2
+#def 1
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#armorpiercing
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 298
+#name "Tartarian Chains"
+#dmg 5
+#att 3
+#def -2
+#len 4
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#blunt
+#flail
+#end
+
+#selectweapon 299
+#name "Enchanted Sickle"
+#dmg 7
+#att 2
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 300
+#name "Head Butt"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 301
+#name "Fire Bola"
+#range -1
+#dmg 2
+#att 2
+#def 0
+#len 0
+#nratt 1
+#ammo 50
+#sound 19
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 302
+#flyspr 424 4
+#speedmult 1
+#end
+
+#selectweapon 302
+#name "Fire Bonds"
+#dmg 65536
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 303
+#name "Vine Bow"
+#range 35
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 19
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 137
+#flyspr 419 1
+#end
+
+#selectweapon 304
+#name "Evening Star"
+#dmg 10
+#att 6
+#def -2
+#len 1
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#pierce
+#blunt
+#secondaryeffectalways 305
+#flail
+#end
+
+#selectweapon 305
+#name "Fire and Weakness"
+#dmg 12
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#secondaryeffectalways 306
+#end
+
+#selectweapon 306
+#name "Weakness"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_weakness
+#nostr
+#magic
+#armornegating
+#inanimateimmune
+#end
+
+#selectweapon 307
+#name "Jotun Battleaxe"
+#dmg 9
+#att 1
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 3
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 308
+#name "Glaive"
+#dmg 10
+#att -1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 4
+#twohanded
+#ironweapon
+#pierce
+#slash
+#end
+
+#selectweapon 309
+#name "Jade Knife"
+#dmg 1
+#att 1
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#pierce
+#end
+
+#selectweapon 310
+#name "Infernal Scythe"
+#dmg 12
+#att -1
+#def -2
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#slash
+#secondaryeffect 441
+#end
+
+#selectweapon 311
+#name "Mind Blast"
+#range 100
+#dmg 10
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 22
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#secondaryeffect 293
+#explspr 10153
+-- ro: flag bit = 0x4000
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 312
+#name "Bane Dagger"
+#dmg 3
+#att 2
+#def 0
+#len 0
+#nratt 1
+#sound 8
+#rcost 1
+#magic
+#pierce
+#secondaryeffect 64
+#end
+
+#selectweapon 313
+#name "Spider Fangs"
+#dmg 14
+#att 0
+#def -1
+#len 0
+#nratt 1
+#sound 50
+#rcost 0
+#nostr
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 314
+#name "Spider Fangs"
+#dmg 16
+#att 0
+#def -1
+#len 0
+#nratt 1
+#sound 50
+#rcost 0
+#nostr
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 315
+#name "Machaka Spear"
+#dmg 5
+#att -1
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 3
+#ironweapon
+#pierce
+#end
+
+#selectweapon 316
+#name "Obsolete --- Death Poison and Web"
+#dmg 35
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#poison
+#secondaryeffect 261
+#end
+
+#selectweapon 317
+#name "Rake"
+#dmg 1
+#att -1
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 1
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 318
+#name "Snake Staff"
+#dmg 3
+#att 1
+#def 3
+#len 3
+#nratt 1
+#sound 50
+#rcost 1
+#magic
+#twohanded
+#pierce
+#blunt
+#secondaryeffect 51
+#woodenweapon
+#end
+
+#selectweapon 319
+#name "Sharpest Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 79
+#rcost 0
+#magic
+#armorpiercing
+#bonus
+#slash
+#end
+
+#selectweapon 320
+#name "Flaming Fist"
+#dmg -2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 118
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 221
+#end
+
+#selectweapon 321
+#name "Flaming Wheel"
+#range 30
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 10
+#sound 118
+#rcost 0
+#magic
+#fire
+#armorpiercing
+#flyspr 10182 4
+#speedmult 1
+-- ro: flag bit = 0x4000
+#end
+
+#selectweapon 322
+#name "Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 78
+#rcost 0
+#bonus
+#slash
+#end
+
+#selectweapon 323
+#name "Venomous Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 83
+#rcost 0
+#bonus
+#slash
+#secondaryeffect 50
+#end
+
+#selectweapon 324
+#name "Poison Spit"
+#range -1
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 83
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#natural
+#flyspr 10319 9
+#speedmult 1
+#end
+
+#selectweapon 325
+#name "Venomous Fangs"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 85
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 326
+#name "Iron Crutch"
+#dmg 3
+#att -1
+#def -1
+#len 2
+#nratt 1
+#sound 12
+#rcost 2
+#ironweapon
+#blunt
+#end
+
+#selectweapon 327
+#name "Smasher"
+#dmg 16
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 328
+#end
+
+#selectweapon 328
+#name "Shatter"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#dt_constructonly
+#nostr
+#magic
+#armornegating
+#end
+
+#selectweapon 329
+#name "Slime"
+#dmg 134217728
+#att 5
+#def 0
+#len 3
+#nratt 1
+#sound 87
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#end
+
+#selectweapon 330
+#name "Alicorn"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#end
+
+#selectweapon 331
+#name "Gore"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+-- ro: ability 657 = 1
+#end
+
+#selectweapon 332
+#name "Vision's Foe"
+#range 50
+#dmg 13
+#att 10
+#def 0
+#len 0
+#nratt -3
+#ammo 10
+#sound 13
+#rcost 0
+#bowstr
+#magic
+#twohanded
+#armornegating
+#pierce
+#secondaryeffectalways 333
+#flyspr 109 1
+#end
+
+#selectweapon 333
+#name "Eyeloss"
+#dmg 524288
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 334
+#name "Gore"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 335
+#name "Armloss"
+#dmg 1073741824
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 336
+#name "The Sharpest Tooth"
+#dmg 3
+#att 2
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#armorpiercing
+#pierce
+#secondaryeffect 337
+#end
+
+#selectweapon 337
+#name "The Deadliest Poison"
+#dmg 75
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#end
+
+#selectweapon 338
+#name "Hoof"
+#dmg 20
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#blunt
+#end
+
+#selectweapon 339
+#name "Cornucopia"
+#dmg 7
+#att 0
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#end
+
+#selectweapon 340
+#name "Procas's Axe of Rulership"
+#dmg 14
+#att 3
+#def -2
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#slash
+#secondaryeffectalways 335
+#end
+
+#selectweapon 341
+#name "Picus's Axe of Rulership"
+#dmg 12
+#att 5
+#def -2
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#slash
+#secondaryeffectalways 335
+#end
+
+#selectweapon 342
+#name "Poison Ink"
+#dmg 64
+#att 0
+#def 1
+#len 0
+#nratt 1
+#aoe 3
+#sound 12
+#rcost 0
+#nostr
+#magic
+#armornegating
+#poison
+#bonus
+#norepel
+#unrepel
+#explspr 10235
+-- ro: damage type = 145
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 343
+#name "Blade Hand"
+#dmg 4
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+-- ro: flag bit = 0x4000000
+#end
+
+#selectweapon 344
+#name "Demon-Slayer"
+#dmg 8
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#dt_holy
+#magic
+#slash
+#end
+
+#selectweapon 345
+#name "Fly Whisk"
+#dmg 0
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 87
+#rcost 0
+#dt_stun
+#magic
+#woodenweapon
+#end
+
+#selectweapon 346
+#name "Useless Kick"
+#dmg -5
+#att -4
+#def -2
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#blunt
+#end
+
+#selectweapon 347
+#name "Flail"
+#dmg 3
+#att 1
+#def -2
+#len 2
+#nratt 2
+#sound 11
+#rcost 3
+#ironweapon
+#blunt
+#flail
+#end
+
+#selectweapon 348
+#name "Banefire Strike"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 16
+#rcost 0
+#magic
+#armorpiercing
+#bonus
+#norepel
+#unrepel
+#secondaryeffectalways 349
+#explspr 10336
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 349
+#name "Powerful Decay"
+#dmg 256
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#undeadimmune
+#hardmrneg
+#end
+
+#selectweapon 350
+#name "Fire Flare"
+#dmg 12
+#att 0
+#def 0
+#len 2
+#nratt 1
+#ammo 1002
+#aoe 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#bonus
+#explspr 10133
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 351
+#name "Pitchfork"
+#dmg 3
+#att -1
+#def -1
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#twohanded
+#ironweapon
+#pierce
+#end
+
+#selectweapon 352
+#name "Gore"
+#dmg 13
+#att -1
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#slash
+#end
+
+#selectweapon 353
+#name "Moose Kick"
+#dmg 16
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#blunt
+#end
+
+#selectweapon 354
+#name "Antlers"
+#dmg 16
+#att -1
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#slash
+#end
+
+#selectweapon 355
+#name "Sting"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 88
+#rcost 0
+#armorpiercing
+#bonus
+#pierce
+#unrepel
+#secondaryeffect 50
+#end
+
+#selectweapon 356
+#name "Fire Composite Bow"
+#range 40
+#dmg 8
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 216
+#flyspr 350 4
+#end
+
+#selectweapon 357
+#name "Light Lance"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#ironweapon
+#charge
+#pierce
+#end
+
+#selectweapon 358
+#name "Snake Hair"
+#dmg -4
+#att -2
+#def 0
+#len 0
+#nratt 3
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 359
+#name "Venomous Bites"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 2
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 360
+#name "Sticks and Stones"
+#range -1
+#dmg -3
+#att -2
+#def 0
+#len 0
+#nratt 2
+#ammo 30
+#sound 15
+#rcost 0
+#blunt
+#flyspr 111 1
+#end
+
+#selectweapon 361
+#name "Dancing Sword"
+#dmg 1
+#att 2
+#def 0
+#len 1
+#nratt 3
+#sound 12
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#false
+#slash
+#unrepel
+#end
+
+#selectweapon 362
+#name "Chakram"
+#range -1
+#dmg 4
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 15
+#rcost 2
+#ironweapon
+#slash
+#flyspr 442 1
+#end
+
+#selectweapon 363
+#name "Iron Cudgel"
+#dmg 8
+#att 0
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 2
+#twohanded
+#ironweapon
+#blunt
+#end
+
+#selectweapon 364
+#name "Curse Luck"
+#dmg 255
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 11
+#rcost 0
+#nostr
+#magic
+#bonus
+#norepel
+#hardmrneg
+#unrepel
+-- ro: damage type = 504
+#end
+
+#selectweapon 365
+#name "Flail of Misfortune"
+#dmg 13
+#att 6
+#def 1
+#len 2
+#nratt 2
+#sound 11
+#rcost 0
+#magic
+#pierce
+#blunt
+#secondaryeffectalways 366
+#flail
+#end
+
+#selectweapon 366
+#name "Curse Luck"
+#dmg 255
+#att 0
+#def 0
+#len 4
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#bonus
+#norepel
+#unrepel
+-- ro: damage type = 504
+#end
+
+#selectweapon 367
+#name "Horror Mark"
+#dmg 261
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+-- ro: damage type = 600
+#end
+
+#selectweapon 368
+#name "Horror Mark"
+#range 50
+#dmg 261
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 30
+#sound 0
+#rcost 0
+#nostr
+#magic
+#uwok
+#bonus
+#explspr 10201
+#range0
+-- ro: damage type = 601
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 369
+#name "Curse"
+#range 50
+#dmg 2
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 30
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#uwok
+#bonus
+#explspr 10200
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 370
+#name "Theft of Reason"
+#range 50
+#dmg 33554432
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1002
+#sound 22
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#uwok
+#bonus
+#explspr 10239
+#range0
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 371
+#name "Theft of Life"
+#range 50
+#dmg 0
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#aoe 1
+#sound 18
+#rcost 0
+#dt_drain
+#magic
+#armornegating
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#explspr 10240
+#range0
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 372
+#name "Poison Bow"
+#range 40
+#dmg 8
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 4
+#halfstr
+#twohanded
+#pierce
+#secondaryeffect 50
+#flyspr 109 1
+#woodenweapon
+#end
+
+#selectweapon 373
+#name "Stone Spear"
+#dmg 2
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#pierce
+#woodenweapon
+#end
+
+#selectweapon 374
+#name "Flint Sword"
+#dmg 8
+#att 1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 375
+#name "Dogs"
+#dmg 11
+#att -2
+#def 0
+#len 0
+#nratt 3
+#sound 38
+#rcost 0
+#nostr
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 376
+#name "Yari"
+#dmg 4
+#att 1
+#def 0
+#len 4
+#nratt 1
+#sound 12
+#rcost 1
+#twohanded
+#ironweapon
+#pierce
+#end
+
+#selectweapon 377
+#name "Wakizashi"
+#dmg 5
+#att 2
+#def 1
+#len 1
+#nratt 1
+#rcost 4
+#ironweapon
+#pierce
+#slash
+#end
+
+#selectweapon 378
+#name "Katana"
+#dmg 6
+#att 3
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 7
+#twohanded
+#ironweapon
+#pierce
+#slash
+#end
+
+#selectweapon 379
+#name "No-Dachi"
+#dmg 8
+#att 2
+#def 2
+#len 2
+#nratt 1
+#sound 8
+#rcost 6
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 380
+#name "Naginata"
+#dmg 10
+#att -1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 4
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 381
+#name "Ninjato"
+#dmg 5
+#att 2
+#def 0
+#len 1
+#nratt 1
+#rcost 3
+#ironweapon
+#slash
+#end
+
+#selectweapon 382
+#name "Shuriken"
+#range -1
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 2
+#ammo 4
+#sound 15
+#rcost 1
+#ironweapon
+#pierce
+#secondaryeffect 51
+#flyspr 435 4
+#end
+
+#selectweapon 383
+#name "Throw Flames"
+#range 25
+#dmg -3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 16
+#rcost 0
+#magic
+#fire
+#armorpiercing
+#natural
+#flyspr 10182 4
+#speedmult 1
+#end
+
+#selectweapon 384
+#name "Minor Life Drain"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armornegating
+#natural
+#end
+
+#selectweapon 385
+#name "Major Life Drain"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armornegating
+#natural
+#end
+
+#selectweapon 386
+#name "Sceptre of Dark Regency"
+#dmg 0
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#armorpiercing
+#blunt
+#secondaryeffect 385
+#end
+
+#selectweapon 387
+#name "Sleep Touch"
+#dmg 30
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#mrnegates
+#end
+
+#selectweapon 388
+#name "Pearl Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#magic
+#pierce
+#end
+
+#selectweapon 389
+#name "Pearl Trident"
+#dmg 5
+#att -1
+#def 0
+#len 4
+#nratt 1
+#sound 12
+#rcost 4
+#magic
+#pierce
+#end
+
+#selectweapon 390
+#name "Scourge of Vengeance"
+#dmg 4
+#att 2
+#def 0
+#len 1
+#nratt 2
+#sound 11
+#rcost 2
+#magic
+#blunt
+#secondaryeffect 64
+#flail
+#end
+
+#selectweapon 391
+#name "Serpent"
+#dmg 11
+#att 4
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 2
+#nostr
+#magic
+#armorpiercing
+#pierce
+#secondaryeffect 52
+#flail
+#end
+
+#selectweapon 392
+#name "Torch of Strife"
+#dmg 4
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 2
+#magic
+#blunt
+#secondaryeffect 622
+#end
+
+#selectweapon 393
+#name "Touch of Tisiphone"
+#dmg 16
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#nostr
+#magic
+#armornegating
+#secondaryeffect 394
+#end
+
+#selectweapon 394
+#name "Curse of Tisiphone"
+#dmg 258
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 395
+#name "Shadow Brand"
+#dmg 12
+#att 4
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffectalways 396
+#end
+
+#selectweapon 396
+#name "Leeching Darkness"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 5
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+#explspr 10408
+-- ro: explosion sprite frames = 5
+-- ro: ability 163 = 5
+#end
+
+#selectweapon 397
+#name "Kick"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 398
+#name "Venomous Fangs"
+#dmg -10
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 399
+#name "Gore"
+#dmg 2
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 78
+#rcost 0
+#bonus
+#slash
+#end
+
+#selectweapon 400
+#name "Devour Soul"
+#dmg 2
+#att 0
+#def -1
+#len 0
+#nratt 1
+#sound 78
+#rcost 0
+#magic
+#bonus
+#internal
+#secondaryeffect 401
+#end
+
+#selectweapon 401
+#name "Soul Death"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#nostr
+#magic
+#armornegating
+#soulslaying
+#mind
+#end
+
+#selectweapon 402
+#name "Holy Scourge"
+#dmg 6
+#att 5
+#def -2
+#len 2
+#nratt 2
+#sound 11
+#rcost 3
+#magic
+#twohanded
+#blunt
+#flail
+#holyifhit 7
+#end
+
+#selectweapon 403
+#name "Mesmerize"
+#range 25
+#dmg 128
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 41
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#explspr 10208
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 404
+#name "Beak"
+#dmg 0
+#att -1
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#end
+
+#selectweapon 405
+#name "Holy Fire"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 3
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#norepel
+#unrepel
+#explspr 10327
+-- ro: damage type = 25
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 406
+#name "Fire Chakram"
+#range -1
+#dmg 4
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 15
+#rcost 2
+#magic
+#ironweapon
+#slash
+#secondaryeffectalways 216
+#flyspr 111 1
+#end
+
+#selectweapon 407
+#name "Fire Shuriken"
+#range -1
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 2
+#ammo 4
+#sound 15
+#rcost 1
+#magic
+#ironweapon
+#pierce
+#secondaryeffectalways 216
+#flyspr 411 4
+#end
+
+#selectweapon 408
+#name "Talons"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#pierce
+#end
+
+#selectweapon 409
+#name "Javelin"
+#range -1
+#dmg 2
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 1
+#sound 19
+#rcost 1
+#pierce
+#flyspr 110 1
+#explspr 10301
+#woodenweapon
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 410
+#name "O'al Kan's Sceptre"
+#dmg 0
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 411
+#end
+
+#selectweapon 411
+#name "Small Area Fatigue"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#explspr 10105
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 412
+#name "Axe of Hate"
+#dmg 13
+#att 4
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#slash
+#secondaryeffect 413
+#end
+
+#selectweapon 413
+#name "Fatigue and Disease"
+#dmg 20
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#secondaryeffect 414
+#end
+
+#selectweapon 414
+#name "Disease"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#mrnegates
+#end
+
+#selectweapon 415
+#name "Astral Hooks"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 3
+#sound 12
+#rcost 0
+#magic
+#bonus
+#slash
+#secondaryeffect 367
+#end
+
+#selectweapon 416
+#name "False Fetters"
+#dmg 131072
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 38
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#bonus
+#end
+
+#selectweapon 417
+#name "Ice Fist"
+#dmg 2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#pierce
+#end
+
+#selectweapon 418
+#name "Horror Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#aoe 1
+#sound 38
+#rcost 0
+#magic
+#armornegating
+#bonus
+#slash
+#unrepel
+#end
+
+#selectweapon 419
+#name "Lightning Strike"
+#range 40
+#dmg -3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1
+#sound 24
+#rcost 0
+#magic
+#armornegating
+#shock
+#secondaryeffectalways 704
+#flyspr 210 4
+#explspr 10245
+-- ro: flag bit = 0x4000
+-- ro: flag bit = 0x200000000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 420
+#name "Koppo"
+#dmg -3
+#att -2
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#armorpiercing
+#blunt
+#secondaryeffect 421
+#end
+
+#selectweapon 421
+#name "Limp"
+#dmg 262144
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 422
+#name "Stellar Bolt"
+#range 55
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 41
+#rcost 0
+#magic
+#armornegating
+#mrhalf
+#explspr 10395
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 423
+#name "Scorpion Tail"
+#dmg 0
+#att 0
+#def 0
+#len 2
+#nratt 1
+#sound 103
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 424
+#name "Boulder"
+#range -3
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 11
+#rcost 0
+#blunt
+#flyspr 100 1
+#speedmult 1
+#end
+
+#selectweapon 425
+#name "Fire Boulder"
+#range -3
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 171
+#flyspr 362 4
+#speedmult 1
+#end
+
+#selectweapon 426
+#name "Obsidian Glaive"
+#dmg 11
+#att 1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 8
+#magic
+#twohanded
+#pierce
+#slash
+#end
+
+#selectweapon 427
+#name "Granite Glaive"
+#dmg 7
+#att -1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#twohanded
+#blunt
+#end
+
+#selectweapon 428
+#name "Granite Sword"
+#dmg 4
+#att -1
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#blunt
+#end
+
+#selectweapon 429
+#name "Stone Club"
+#dmg 9
+#att -1
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#twohanded
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 430
+#name "Doom Glaive"
+#dmg 16
+#att 2
+#def 2
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#magic
+#twohanded
+#pierce
+#slash
+#secondaryeffectalways 431
+#end
+
+#selectweapon 431
+#name "Small Area Curse and Decay"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#secondaryeffectalways 432
+#explspr 10060
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 432
+#name "Small Area Decay"
+#dmg 256
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+-- ro: flag bit = 0x4000
+#end
+
+#selectweapon 433
+#name "Shadow Spear"
+#dmg 5
+#att 2
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 3
+#magic
+#pierce
+#end
+
+#selectweapon 434
+#name "Banefire Crossbow"
+#range 45
+#dmg 10
+#att 2
+#def 0
+#len 0
+#nratt -2
+#ammo 14
+#sound 13
+#rcost 0
+#bowstr
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#secondaryeffectalways 435
+#flyspr 274 4
+#explspr 10124
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 435
+#name "Area Decay"
+#dmg 256
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 3
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+-- ro: flag bit = 0x4000
+#end
+
+#selectweapon 436
+#name "Demon Bane"
+#dmg 15
+#att 5
+#def 2
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#slash
+#killdemonifhit 20
+#end
+
+#selectweapon 437
+#name "Long Spear"
+#dmg 12
+#att 0
+#def 0
+#len 4
+#nratt 1
+#sound 12
+#rcost 2
+#nostr
+#ironweapon
+#bonus
+#pierce
+#end
+
+#selectweapon 438
+#name "Plague Bow"
+#range 45
+#dmg 12
+#att 5
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffect 143
+#flyspr 109 0
+#end
+
+#selectweapon 439
+#name "Howling Bow"
+#range 40
+#dmg 9
+#att 2
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 5
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffect 440
+#flyspr 109 0
+#end
+
+#selectweapon 440
+#name "Lesser Fear"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+-- ro: damage type = 97
+#end
+
+#selectweapon 441
+#name "Banish to Inferno"
+#dmg -12
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#hardmrneg
+#explspr 10206
+-- ro: damage type = 108
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 442
+#name "Dimensional Shift"
+#dmg -11
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#hardmrneg
+#explspr 10206
+-- ro: damage type = 108
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 443
+#name "Dimensional Rod"
+#dmg 0
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 442
+#end
+
+#selectweapon 444
+#name "Infernal Sword"
+#dmg 14
+#att 4
+#def 4
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#secondaryeffect 441
+#end
+
+#selectweapon 445
+#name "Spear of the Dragon King"
+#dmg 8
+#att 2
+#def 1
+#len 4
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#pierce
+#end
+
+#selectweapon 446
+#name "Sceptre"
+#dmg 2
+#att 0
+#def 0
+#len 1
+#nratt 1
+#rcost 1
+#blunt
+#end
+
+#selectweapon 447
+#name "Crystal Fist"
+#dmg 2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#end
+
+#selectweapon 448
+#name "Death Blessing"
+#dmg 2
+#att 0
+#def 0
+#len 5
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#secondaryeffect 143
+#end
+
+#selectweapon 449
+#name "Life Drain"
+#dmg 20
+#att 5
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armorpiercing
+#bonus
+#natural
+#end
+
+#selectweapon 450
+#name "Tiny Bite"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 88
+#rcost 0
+#dt_cap
+#nostr
+#armornegating
+#bonus
+#slash
+#unrepel
+#end
+
+#selectweapon 451
+#name "Obsidian Club Sword"
+#dmg 4
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 2
+#blunt
+#slash
+#end
+
+#selectweapon 452
+#name "Harpoon"
+#range -1
+#dmg 3
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 1
+#sound 19
+#rcost 1
+#pierce
+#secondaryeffect 453
+#flyspr 110 1
+#woodenweapon
+#end
+
+#selectweapon 453
+#name "Harpooning"
+#dmg 1125899906842624
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#dt_aff
+#nostr
+#bonus
+#sizeresist
+#end
+
+#selectweapon 454
+#name "Ice Glaive"
+#dmg 9
+#att 0
+#def -1
+#len 3
+#nratt 1
+#sound 12
+#rcost 6
+#magic
+#twohanded
+#pierce
+#slash
+#iceweapon
+#end
+
+#selectweapon 455
+#name "Bone Glaive"
+#dmg 10
+#att 0
+#def -1
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#magic
+#twohanded
+#pierce
+#slash
+#secondaryeffect 285
+#end
+
+#selectweapon 456
+#name "Gaze of Fear"
+#range 40
+#dmg 4
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1003
+#aoe 5
+#sound 23
+#rcost 0
+#nostr
+#magic
+#armornegating
+#bonus
+#natural
+#explspr 10221
+-- ro: damage type = 4
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 457
+#name "Spectral Axe"
+#dmg 8
+#att 1
+#def 0
+#len 2
+#nratt 1
+#rcost 0
+#magic
+#twohanded
+#slash
+#mrhalf
+#secondaryeffect 458
+#end
+
+#selectweapon 458
+#name "Spectral Fire"
+#dmg 8
+#att 0
+#def 0
+#len 5
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#end
+
+#selectweapon 459
+#name "Thrown Sutra"
+#range 15
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 24
+#rcost 0
+#nostr
+#magic
+#armornegating
+#bonus
+#secondaryeffect 460
+#flyspr 10182 5
+#speedmult 1
+-- ro: damage type = 25
+#end
+
+#selectweapon 460
+#name "Stop the Dead"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#undeadonly
+#armornegating
+#mrnegates
+#end
+
+#selectweapon 461
+#name "Swallow"
+#dmg -5
+#att 0
+#def -2
+#len 0
+#nratt 1
+#aoe 1
+#sound 38
+#rcost 0
+#bonus
+-- ro: damage type = 122
+#end
+
+#selectweapon 462
+#name "Venomous Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 463
+#name "Agarthan Steel Crossbow"
+#range 40
+#dmg 10
+#att 2
+#def -2
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 5
+#bowstr
+#twohanded
+#armorpiercing
+#ironweapon
+#pierce
+#flyspr 109 1
+#end
+
+#selectweapon 464
+#name "Basalt Spear"
+#dmg 4
+#att 1
+#def -1
+#len 3
+#nratt 1
+#sound 12
+#rcost 6
+#magic
+#pierce
+#end
+
+#selectweapon 465
+#name "Basalt Club"
+#dmg 9
+#att -1
+#def -1
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 466
+#name "Apotropaic Sword"
+#dmg 8
+#att 1
+#def 1
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#dt_demon
+#magic
+#slash
+#end
+
+#selectweapon 467
+#name "Apotropaic Trident"
+#dmg 10
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#pierce
+#secondaryeffect 468
+#end
+
+#selectweapon 468
+#name "Halt Demon"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#demononly
+#armornegating
+#mrnegates
+#end
+
+#selectweapon 469
+#name "Ancestor Sword"
+#dmg 9
+#att 3
+#def 3
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffect 440
+#end
+
+#selectweapon 470
+#name "Spirit Club"
+#dmg 6
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 471
+#name "Boulder"
+#range 15
+#dmg 25
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 11
+#rcost 0
+#nostr
+#blunt
+#flyspr 100 1
+#speedmult 1
+#end
+
+#selectweapon 472
+#name "Flame Sword"
+#dmg 12
+#att 3
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffectalways 171
+#end
+
+#selectweapon 473
+#name "Golden Spear"
+#dmg 5
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#magic
+#pierce
+#end
+
+#selectweapon 474
+#name "Golden Sword"
+#dmg 7
+#att 1
+#def 1
+#len 1
+#nratt 1
+#rcost 8
+#magic
+#slash
+#end
+
+#selectweapon 475
+#name "Golden Lance"
+#dmg 5
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#magic
+#charge
+#pierce
+#end
+
+#selectweapon 476
+#name "Moon Blade"
+#dmg 8
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#slash
+#killmagicifhit 10
+#end
+
+#selectweapon 477
+#name "Unholy Sword"
+#dmg 6
+#att 3
+#def 1
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffect 480
+#end
+
+#selectweapon 478
+#name "Unholy Spear"
+#dmg 3
+#att 3
+#def 0
+#len 3
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#pierce
+#secondaryeffect 480
+#end
+
+#selectweapon 479
+#name "Unholy Axe"
+#dmg 7
+#att 3
+#def -1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffect 480
+#end
+
+#selectweapon 480
+#name "Halt Sacred"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#sacredonly
+#end
+
+#selectweapon 481
+#name "Touch of Madness"
+#dmg -3
+#att -3
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#mrnegates
+#secondaryeffect 156
+#end
+
+#selectweapon 482
+#name "Spectral Club"
+#dmg 4
+#att 0
+#def 0
+#len 1
+#nratt 1
+#rcost 0
+#magic
+#blunt
+#mrhalf
+#end
+
+#selectweapon 483
+#name "Gae Bulga"
+#range -1
+#dmg 10
+#att 2
+#def 0
+#len 0
+#nratt 1
+#ammo 1
+#sound 19
+#rcost 1
+#magic
+#pierce
+#secondaryeffect 453
+#flyspr 110 1
+#end
+
+#selectweapon 484
+#name "Wail of Doom"
+#range 50
+#dmg 2
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#uwok
+#explspr 10200
+-- ro: flag bit = 0x4000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 485
+#name "Fomorian Bronze Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#pierce
+#end
+
+#selectweapon 486
+#name "Gae Assail"
+#dmg 16
+#att 0
+#def 1
+#len 5
+#nratt 1
+#sound 12
+#rcost 0
+#nostr
+#magic
+#bonus
+#pierce
+#secondaryeffectalways 171
+#end
+
+#selectweapon 487
+#name "Spear of the Morrigan"
+#dmg 6
+#att 3
+#def 2
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#dt_weapondrain
+#magic
+#pierce
+#secondaryeffect 64
+#end
+
+#selectweapon 488
+#name "Great Head"
+#dmg 0
+#att 1
+#def 0
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 489
+#name "Immortal Head"
+#dmg 3
+#att 1
+#def 0
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 490
+#name "Lesser Head"
+#dmg -3
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 491
+#name "Lesser Heads"
+#dmg -3
+#att 0
+#def 0
+#len -1
+#nratt 2
+#sound 50
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 492
+#name "Rainbow"
+#range 30
+#dmg 8
+#att 2
+#def 0
+#len 0
+#nratt 1
+#ammo 10
+#sound 15
+#rcost 0
+#halfstr
+#magic
+#armornegating
+#blunt
+#secondaryeffectalways 333
+#flyspr 111 1
+#end
+
+#selectweapon 493
+#name "Sickle Staff"
+#dmg 6
+#att 0
+#def 1
+#len 3
+#nratt 1
+#sound 8
+#rcost 2
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 494
+#name "Lightning"
+#range 40
+#dmg 0
+#att 3
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 24
+#rcost 0
+#magic
+#armornegating
+#shock
+#uwok
+#secondaryeffectalways 704
+#flyspr 210 4
+#explspr 10219
+#range0
+-- ro: flag bit = 0x4000
+-- ro: flag bit = 0x200000000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 495
+#name "Poisonous Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#secondaryeffect 53
+#end
+
+#selectweapon 496
+#name "Sacred Pitcher"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#ammo 1
+#sound 87
+#rcost 0
+#dt_holy
+#magic
+#secondaryeffectalways 497
+#end
+
+#selectweapon 497
+#name "Sacred Water"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 18
+#rcost 0
+#dt_holy
+#nostr
+#magic
+#demonundead
+#armornegating
+#end
+
+#selectweapon 498
+#name "Twig"
+#dmg -3
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#dt_cap
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 499
+#name "Pestle"
+#dmg 1
+#att -1
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#blunt
+#end
+
+#selectweapon 500
+#name "Poison Darts"
+#range -1
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 2
+#ammo 6
+#sound 15
+#rcost 1
+#dt_cap
+#pierce
+#secondaryeffect 54
+#flyspr 441 1
+#end
+
+#selectweapon 501
+#name "Bamboo Rod"
+#dmg 1
+#att 1
+#def 2
+#len 1
+#nratt 1
+#rcost 0
+#blunt
+#end
+
+#selectweapon 502
+#name "Yak Tail Fly Whisk"
+#dmg -2
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 87
+#rcost 1
+#dt_cap
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 503
+#name "Theft of Strength"
+#range 50
+#dmg 0
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 30
+#aoe 3
+#sound 18
+#rcost 0
+#magic
+#armornegating
+#mrnegates
+#uwok
+#bonus
+#secondaryeffectalways 285
+#explspr 10049
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 504
+#name "Phantasmal Hoof"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#false
+#end
+
+#selectweapon 505
+#name "Devour"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 38
+#rcost 0
+#nostr
+#magic
+#bonus
+-- ro: damage type = 120
+#end
+
+#selectweapon 506
+#name "Plague Scythe"
+#dmg 10
+#att 1
+#def -2
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#slash
+#secondaryeffect 143
+#end
+
+#selectweapon 507
+#name "Giant Pestle"
+#dmg 9
+#att -1
+#def -1
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 508
+#name "Black Halberd"
+#dmg 12
+#att 1
+#def 2
+#len 3
+#nratt 1
+#sound 12
+#rcost 9
+#magic
+#twohanded
+#pierce
+#slash
+#secondaryeffectalways 509
+#end
+
+#selectweapon 509
+#name "Bane of Heresy"
+#dmg 15
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 18
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armorpiercing
+#sacredonly
+#end
+
+#selectweapon 510
+#name "Divine Grasp"
+#dmg -2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 24
+#rcost 0
+#dt_magic
+#magic
+#secondaryeffectalways 509
+#end
+
+#selectweapon 511
+#name "Stump"
+#dmg -3
+#att -2
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 512
+#name "Fossilized Sword"
+#dmg 4
+#att 0
+#def 1
+#len 1
+#nratt 1
+#rcost 2
+#blunt
+#end
+
+#selectweapon 513
+#name "Kopesh"
+#dmg 5
+#att 0
+#def 0
+#len 1
+#nratt 1
+#rcost 2
+#slash
+#end
+
+#selectweapon 514
+#name "Vitriol Breath"
+#range 13
+#dmg 16
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1007
+#aoe 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#acid
+#natural
+#flyspr 10179 0
+#explspr 10178
+#speedmult 1
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 515
+#name "Corrosion"
+#dmg 2199023255552
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#end
+
+#selectweapon 516
+#name "Censer"
+#dmg 1
+#att -1
+#def -1
+#len 1
+#nratt 1
+#sound 11
+#rcost 2
+#blunt
+#secondaryeffectalways 517
+#flail
+#end
+
+#selectweapon 517
+#name "Incense"
+#dmg 64
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#poison
+#explspr 10156
+-- ro: damage type = 144
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 518
+#name "Anakite Sword"
+#dmg 8
+#att 1
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 8
+#magic
+#slash
+#end
+
+#selectweapon 519
+#name "Poison Tipped Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 4
+#ironweapon
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 520
+#name "Dawn Blade"
+#dmg 9
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 8
+#magic
+#slash
+#end
+
+#selectweapon 521
+#name "The First Sword"
+#dmg 21
+#att 7
+#def 7
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#end
+
+#selectweapon 522
+#name "Golden Horns"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#slash
+-- ro: ability 657 = 1
+#end
+
+#selectweapon 523
+#name "Golden Sickle"
+#dmg 7
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 2
+#magic
+#slash
+#end
+
+#selectweapon 524
+#name "Pillar of Laws"
+#dmg 19
+#att -3
+#def -5
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 411
+#end
+
+#selectweapon 525
+#name "Large Area Fire"
+#dmg 15
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 9
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#explspr 10113
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 526
+#name "Soul Catcher"
+#dmg 10
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#secondaryeffect 528
+#end
+
+#selectweapon 527
+#name "Enchanted Katana"
+#dmg 7
+#att 4
+#def 3
+#len 1
+#nratt 1
+#sound 8
+#rcost 7
+#magic
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 528
+#name "Trap Soul"
+#dmg 131072
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mind
+#hardmrneg
+#end
+
+#selectweapon 529
+#name "Ghost Rending Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#slash
+#secondaryeffect 460
+#end
+
+#selectweapon 530
+#name "Enchanted Net"
+#dmg 1125899906842624
+#att 0
+#def 0
+#len 3
+#nratt 1
+#ammo 1
+#sound 0
+#rcost 1
+#dt_aff
+#nostr
+#magic
+#bonus
+#norepel
+#sizeresist
+#end
+
+#selectweapon 531
+#name "Mighty Yari"
+#dmg 7
+#att 1
+#def 0
+#len 4
+#nratt 1
+#sound 12
+#rcost 1
+#magic
+#twohanded
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 532
+#name "Tail Sweep"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 103
+#rcost 0
+#defroll
+#bonus
+#blunt
+#end
+
+#selectweapon 533
+#name "Dragon Fire"
+#range -3
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1009
+#aoe 2
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#fire
+#armorpiercing
+#natural
+#flyspr 10287 5
+#explspr 10288
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 917 = 8
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 534
+#name "Dragon Frost"
+#range -3
+#dmg -3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1008
+#aoe 4
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#armornegating
+#cold
+#natural
+#flyspr 10290 5
+#explspr 10318
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 919 = 1
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 535
+#name "Dragon Gas"
+#range -3
+#dmg 64
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1007
+#aoe 6
+#sound 16
+#rcost 0
+#nostr
+#magic
+#armornegating
+#poison
+#natural
+#flyspr 10292 5
+#explspr 10297
+#range050
+#skip
+#beam
+-- ro: damage type = 149
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 536
+#name "Mind Blast"
+#range 100
+#dmg 12
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#sound 22
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#secondaryeffect 293
+#explspr 10153
+#range0
+-- ro: flag bit = 0x4000
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 537
+#name "Flick Barbs"
+#range -1
+#dmg 2
+#att -4
+#def 0
+#len 0
+#nratt 4
+#ammo 3
+#sound 15
+#rcost 1
+#halfstr
+#pierce
+#secondaryeffect 51
+#flyspr 441 1
+#speedmult 3
+#end
+
+#selectweapon 538
+#name "Head Butt"
+#dmg -4
+#att -4
+#def -4
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#blunt
+#end
+
+#selectweapon 539
+#name "Copper Feathers"
+#dmg 8
+#att 0
+#def 0
+#len 5
+#nratt 1
+#ammo 1
+#aoe 1
+#sound 12
+#rcost 5
+#nostr
+#bonus
+#norepel
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 540
+#name "The Staff from the Sun"
+#dmg 4
+#att 3
+#def 3
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 541
+#end
+
+#selectweapon 541
+#name "Area Fire"
+#dmg 14
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 6
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#explspr 10113
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 542
+#name "Acid Touch"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#bonus
+#acid
+#flail
+#end
+
+#selectweapon 543
+#name "Slap"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 9
+#rcost 0
+#dt_cap
+#nostr
+#magic
+#armornegating
+#secondaryeffect 544
+#end
+
+#selectweapon 544
+#name "Shrink"
+#dmg 4294967296
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#mrnegates
+#natural
+#end
+
+#selectweapon 545
+#name "Slap"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 9
+#rcost 0
+#dt_cap
+#nostr
+#magic
+#armornegating
+#bonus
+#secondaryeffect 544
+#melee50
+#skip
+#end
+
+#selectweapon 546
+#name "Boulder"
+#range -3
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 15
+#sound 11
+#rcost 0
+#magic
+#blunt
+#flyspr 100 1
+#speedmult 1
+#end
+
+#selectweapon 547
+#name "Buff"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 548
+#name "Eyecatcher"
+#dmg -5
+#att -2
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#armornegating
+#pierce
+#secondaryeffect 333
+#end
+
+#selectweapon 549
+#name "Mantis Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#end
+
+#selectweapon 550
+#name "Weakness Tentacle"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#armorpiercing
+#bonus
+#secondaryeffect 285
+#end
+
+#selectweapon 551
+#name "Soul Rending Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#slash
+#secondaryeffectalways 552
+#end
+
+#selectweapon 552
+#name "Soul Rend"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#armornegating
+#mind
+#secondaryeffect 367
+#end
+
+#selectweapon 553
+#name "Rock"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#blunt
+#end
+
+#selectweapon 554
+#name "Lictor Axe"
+#dmg 10
+#att 2
+#def 0
+#len 2
+#nratt 1
+#sound 8
+#rcost 8
+#magic
+#twohanded
+#slash
+#secondaryeffect 460
+#end
+
+#selectweapon 555
+#name "Dawn Fang"
+#dmg 10
+#att 3
+#def 3
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#dt_holy
+#magic
+#slash
+#end
+
+#selectweapon 556
+#name "Belly Maw"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#magic
+#bonus
+-- ro: damage type = 143
+#end
+
+#selectweapon 557
+#name "Stinger"
+#dmg 0
+#att 0
+#def 0
+#len 2
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#armorpiercing
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 558
+#name "Distorted Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#armornegating
+#bonus
+#slash
+#end
+
+#selectweapon 559
+#name "Brass Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#shockifhit 8
+#end
+
+#selectweapon 560
+#name "Venomous Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 83
+#rcost 0
+#magic
+#bonus
+#slash
+#secondaryeffect 51
+#end
+
+#selectweapon 561
+#name "Gore Tide"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 18
+#rcost 0
+#magic
+#armornegating
+#mrnegates
+#bonus
+#unrepel
+#end
+
+#selectweapon 562
+#name "Stone Fist"
+#dmg 0
+#att -1
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#blunt
+#end
+
+#selectweapon 563
+#name "Spirit Club"
+#dmg 9
+#att 1
+#def 0
+#len 2
+#nratt 1
+#sound 8
+#rcost 7
+#magic
+#twohanded
+#blunt
+#secondaryeffect 564
+#end
+
+#selectweapon 564
+#name "Spirit Strike"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_sizestun
+#magic
+#armornegating
+#end
+
+#selectweapon 565
+#name "Golden Arbalest"
+#range 55
+#dmg 15
+#att 10
+#def 0
+#len 0
+#nratt 2
+#ammo 12
+#sound 13
+#rcost 0
+#bowstr
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#flyspr 109 1
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 566
+#name "Ivory Bow"
+#range 50
+#dmg 12
+#att 2
+#def 0
+#len 0
+#nratt 3
+#ammo 12
+#sound 14
+#rcost 0
+#dt_raise
+#halfstr
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#secondaryeffect 64
+#flyspr 274 4
+#end
+
+#selectweapon 567
+#name "Drake Fire"
+#range 6
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1008
+#aoe 1
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#fire
+#armorpiercing
+#flyspr 10287 5
+#explspr 10288
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 568
+#name "Drake Frost"
+#range 6
+#dmg -3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1007
+#aoe 2
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#armornegating
+#cold
+#flyspr 10290 5
+#explspr 10291
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 569
+#name "Drake Gas"
+#range 6
+#dmg 64
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1006
+#aoe 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#armornegating
+#poison
+#flyspr 10292 5
+#explspr 10297
+#range050
+#skip
+#beam
+-- ro: damage type = 146
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 570
+#name "Carmine Cleaver"
+#dmg 18
+#att 4
+#def 1
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#secondaryeffect 571
+#end
+
+#selectweapon 571
+#name "Burn Flesh"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#end
+
+#selectweapon 572
+#name "Spectral Long Spear"
+#dmg 3
+#att 0
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#pierce
+#mrhalf
+#end
+
+#selectweapon 573
+#name "Poisonous Gore"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#secondaryeffect 51
+#end
+
+#selectweapon 574
+#name "Shatterfist"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#bonus
+#blunt
+#secondaryeffectalways 328
+#end
+
+#selectweapon 575
+#name "Tiny Slap"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 88
+#rcost 0
+#dt_cap
+#bonus
+#blunt
+#unrepel
+#end
+
+#selectweapon 576
+#name "Weak Bite"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#dt_cap
+#bonus
+#slash
+#end
+
+#selectweapon 577
+#name "Coral Lance"
+#dmg 2
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#charge
+#pierce
+#secondaryeffect 50
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 578
+#name "Sting"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 88
+#rcost 0
+#dt_cap
+#nostr
+#armorpiercing
+#bonus
+#pierce
+#unrepel
+#secondaryeffect 50
+#end
+
+#selectweapon 579
+#name "Skull Club"
+#dmg 6
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 580
+#name "Coral Long Spear"
+#dmg 2
+#att 0
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 2
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 581
+#name "Bident"
+#dmg 7
+#att 0
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#magic
+#twohanded
+#pierce
+#end
+
+#selectweapon 582
+#name "Snake Skirt"
+#dmg -4
+#att -2
+#def 0
+#len 0
+#nratt 5
+#sound 50
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 583
+#name "Taloned Kick"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 584
+#name "Lightning"
+#range 40
+#dmg 0
+#att 5
+#def 0
+#len 0
+#nratt 1
+#ammo 3
+#sound 24
+#rcost 0
+#magic
+#armornegating
+#shock
+#uwok
+#secondaryeffectalways 704
+#flyspr 210 4
+#explspr 10219
+-- ro: flag bit = 0x4000
+-- ro: flag bit = 0x200000000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 585
+#name "Serpent Club"
+#dmg 7
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 52
+#rcost 0
+#magic
+#pierce
+#blunt
+#secondaryeffect 50
+#end
+
+#selectweapon 586
+#name "Reanimating Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#dt_raise
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 587
+#name "Torc"
+#dmg 0
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 588
+#name "Champion's Gladius"
+#dmg 8
+#att 2
+#def 4
+#len 1
+#nratt 1
+#rcost 0
+#magic
+#pierce
+#slash
+#end
+
+#selectweapon 589
+#name "Tail Slap"
+#dmg -5
+#att -2
+#def 0
+#len 0
+#nratt 1
+#sound 103
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 590
+#name "Short Pike"
+#dmg 5
+#att 0
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 2
+#twohanded
+#ironweapon
+#pierce
+#end
+
+#selectweapon 591
+#name "Cod"
+#dmg -3
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 87
+#rcost 0
+#dt_cap
+#blunt
+#end
+
+#selectweapon 592
+#name "Stinger"
+#dmg 0
+#att 2
+#def 0
+#len 0
+#nratt 1
+#sound 12
+#rcost 0
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 593
+#name "Spiked Club"
+#dmg 4
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#pierce
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 594
+#name "Poison Bow"
+#range 35
+#dmg 6
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 3
+#halfstr
+#twohanded
+#pierce
+#secondaryeffect 50
+#flyspr 109 1
+#woodenweapon
+#end
+
+#selectweapon 595
+#name "Hypnotize"
+#dmg 100
+#att 100
+#def 0
+#len 5
+#nratt 1
+#sound 85
+#rcost 0
+#dt_realstun
+#nostr
+#magic
+#mrnegates
+#mind
+#uwok
+#bonus
+#norepel
+#unrepel
+#natural
+-- ro: flag bit = 0x4000
+-- ro: ability 611 = 1
+-- ro: ability 619 = 1
+-- ro: ability 163 = 7
+#end
+
+#selectweapon 596
+#name "Light Lance"
+#dmg 3
+#att 1
+#def 0
+#len 3
+#nratt 1
+#ammo 1
+#sound 12
+#rcost 2
+#ironweapon
+#bonus
+#charge
+#norepel
+#pierce
+#skip
+#end
+
+#selectweapon 597
+#name "Life Drain"
+#dmg 10
+#att 2
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armorpiercing
+#bonus
+#natural
+#end
+
+#selectweapon 598
+#name "Shard Glaive"
+#dmg 10
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 8
+#magic
+#twohanded
+#pierce
+#slash
+#secondaryeffect 118
+#end
+
+#selectweapon 599
+#name "Corrosive Spit"
+#range -1
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 5
+#sound 83
+#rcost 0
+#armorpiercing
+#bonus
+#acid
+#natural
+#secondaryeffectalways 515
+#flyspr 214 4
+#speedmult 1
+#end
+
+#selectweapon 600
+#name "Crab Claw"
+#dmg 5
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#armorpiercing
+#bonus
+#end
+
+#selectweapon 601
+#name "Cave Fire Bottle"
+#range -2
+#dmg 10
+#att -1
+#def 0
+#len 0
+#nratt 1
+#ammo 1
+#aoe 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#flyspr 10182 4
+#speedmult 1
+#end
+
+#selectweapon 602
+#name "Fossilized Hatchet"
+#dmg 4
+#att 1
+#def 0
+#len 1
+#nratt 1
+#rcost 2
+#blunt
+#end
+
+#selectweapon 603
+#name "Corrosive Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffectalways 604
+#end
+
+#selectweapon 604
+#name "Corrosion"
+#dmg 2199023255552
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#end
+
+#selectweapon 605
+#name "Throw Rocks"
+#range -1
+#dmg -3
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 15
+#rcost 0
+#blunt
+#flyspr 111 1
+#end
+
+#selectweapon 606
+#name "Frost Bow"
+#range 35
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 5
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 607
+#flyspr 109 0
+#iceweapon
+#end
+
+#selectweapon 607
+#name "Freeze"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#cold
+#explspr 10324
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 608
+#name "Sword of Oaths"
+#dmg 8
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#dt_demon
+#magic
+#slash
+#end
+
+#selectweapon 609
+#name "Grab and Swallow"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#melee50
+-- ro: damage type = 121
+#end
+
+#selectweapon 610
+#name "Sacred Circlet"
+#dmg 0
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 611
+#name "Ice Spear"
+#dmg 3
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#magic
+#pierce
+#iceweapon
+#end
+
+#selectweapon 612
+#name "Ice Blade"
+#dmg 5
+#att 1
+#def 2
+#len 1
+#nratt 1
+#rcost 4
+#magic
+#slash
+#iceweapon
+#end
+
+#selectweapon 613
+#name "Enchanted Bow"
+#range 40
+#dmg 9
+#att 2
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#flyspr 109 1
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 614
+#name "Tusk"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#pierce
+#end
+
+#selectweapon 615
+#name "Hoof"
+#dmg 15
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#blunt
+#end
+
+#selectweapon 616
+#name "The Bloody Mace"
+#dmg 15
+#att 5
+#def 0
+#len 2
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#slash
+#secondaryeffect 564
+#end
+
+#selectweapon 617
+#name "Sun Mace"
+#dmg 7
+#att 1
+#def 0
+#len 1
+#nratt 1
+#rcost 1
+#magic
+#blunt
+#holyifhit 10
+#end
+
+#selectweapon 618
+#name "Sun Spear"
+#dmg 11
+#att 0
+#def 2
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#pierce
+#slash
+#holyifhit 10
+#end
+
+#selectweapon 619
+#name "Obsidian Dart"
+#range -1
+#dmg 0
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 4
+#sound 19
+#rcost 1
+#pierce
+#flyspr 441 1
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 620
+#name "Poison Dart"
+#range -1
+#dmg 0
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 4
+#sound 19
+#rcost 1
+#pierce
+#secondaryeffect 624
+#flyspr 441 1
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 621
+#name "Obsidian Shard Blade"
+#dmg 9
+#att 2
+#def 1
+#len 2
+#nratt 1
+#sound 11
+#rcost 9
+#magic
+#twohanded
+#slash
+#end
+
+#selectweapon 622
+#name "Maddening Rage"
+#dmg 128
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+-- ro: flag bit = 0x4000
+#end
+
+#selectweapon 623
+#name "Poisoned Obsidian Blade"
+#dmg 7
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 7
+#magic
+#slash
+#secondaryeffect 624
+#end
+
+#selectweapon 624
+#name "Paralyzing Poison"
+#dmg 25
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_sizestun
+#nostr
+#armornegating
+#poison
+#end
+
+#selectweapon 625
+#name "Obsidian Blade"
+#dmg 7
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 7
+#magic
+#slash
+#end
+
+#selectweapon 626
+#name "Thunder Axe"
+#dmg 9
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 24
+#rcost 0
+#magic
+#slash
+#shockifhit 10
+#end
+
+#selectweapon 627
+#name "Death Blessing Disease"
+#dmg 1
+#att 0
+#def 0
+#len 5
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#mrnegates
+#inanimateimmune
+#end
+
+#selectweapon 628
+#name "Tentacle"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 12
+#rcost 0
+#armorpiercing
+#end
+
+#selectweapon 629
+#name "Sting"
+#dmg -10
+#att -3
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#armorpiercing
+#bonus
+#pierce
+#secondaryeffect 834
+#end
+
+#selectweapon 630
+#name "Ghost Rending Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#secondaryeffect 460
+#end
+
+#selectweapon 631
+#name "Serpent Tail"
+#dmg 15
+#att 0
+#def -1
+#len 0
+#nratt 1
+#sound 103
+#rcost 0
+#nostr
+#magic
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 632
+#name "Serpent Mane"
+#dmg 10
+#att -2
+#def 0
+#len 0
+#nratt 5
+#sound 50
+#rcost 0
+#nostr
+#magic
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 633
+#name "Obsidian Dart"
+#range -1
+#dmg 12
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 4
+#sound 19
+#rcost 1
+#nostr
+#pierce
+#flyspr 441 1
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 634
+#name "Antlers"
+#dmg 0
+#att -1
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#end
+
+#selectweapon 635
+#name "Magic Lance"
+#dmg 5
+#att 2
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#magic
+#ironweapon
+#charge
+#pierce
+#end
+
+#selectweapon 636
+#name "Life Drain Tentacle"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#magic
+#armorpiercing
+#bonus
+#natural
+#end
+
+#selectweapon 637
+#name "Tool"
+#dmg 2
+#att -1
+#def 0
+#len 1
+#nratt 1
+#rcost 2
+#ironweapon
+#pierce
+#blunt
+#end
+
+#selectweapon 638
+#name "Instrument"
+#dmg 1
+#att -1
+#def 0
+#len 1
+#nratt 1
+#rcost 2
+#ironweapon
+#pierce
+#end
+
+#selectweapon 639
+#name "Spetum"
+#dmg 7
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#twohanded
+#ironweapon
+#pierce
+#end
+
+#selectweapon 640
+#name "Coral Tipped Javelin"
+#range -1
+#dmg 1
+#att -2
+#def 0
+#len 0
+#nratt 1
+#ammo 2
+#sound 19
+#rcost 1
+#pierce
+#secondaryeffect 50
+#flyspr 110 1
+#woodenweapon
+#end
+
+#selectweapon 641
+#name "Bronze Trident"
+#dmg 7
+#att 0
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 3
+#twohanded
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 642
+#name "Meteorite Trident"
+#dmg 7
+#att 0
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#magic
+#twohanded
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 643
+#name "Bronze Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 644
+#name "Bronze Long Spear"
+#dmg 3
+#att 0
+#def -1
+#len 4
+#nratt 1
+#sound 12
+#rcost 2
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 645
+#name "Bronze Sword"
+#dmg 4
+#att 1
+#def 1
+#len 1
+#nratt 1
+#rcost 3
+#pierce
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 646
+#name "Bronze Hatchet"
+#dmg 5
+#att 1
+#def 0
+#len 1
+#nratt 1
+#rcost 1
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 647
+#name "Spectral Bow"
+#range 35
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#uwok
+#pierce
+#mrhalf
+#flyspr 109 1
+#end
+
+#selectweapon 648
+#name "Enchanted Hammer"
+#dmg 8
+#att 1
+#def -1
+#len 1
+#nratt 1
+#rcost 3
+#magic
+#pierce
+#blunt
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 649
+#name "Crab Claw"
+#dmg 1
+#att -2
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#armorpiercing
+#bonus
+#end
+
+#selectweapon 650
+#name "Torch of Unquenchable Flame"
+#dmg 4
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 2
+#magic
+#blunt
+#secondaryeffectalways 171
+#end
+
+#selectweapon 651
+#name "Bronze Lance"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#charge
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 652
+#name "Flame Sting Tentacles"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 12
+#rcost 0
+#dt_poison
+#magic
+#fire
+#armorpiercing
+#poison
+#bonus
+#norepel
+#unrepel
+#end
+
+#selectweapon 653
+#name "Anemone Mace"
+#dmg -2
+#att 4
+#def 1
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 654
+#end
+
+#selectweapon 654
+#name "Anemone Poison"
+#dmg 15
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armorpiercing
+#poison
+#secondaryeffect 655
+#end
+
+#selectweapon 655
+#name "Anemone Paralyze"
+#dmg 9
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 0
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#end
+
+#selectweapon 656
+#name "Jellyberd"
+#dmg 0
+#att 2
+#def 3
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 657
+#end
+
+#selectweapon 657
+#name "Jellyberd Poison"
+#dmg 25
+#att 0
+#def 0
+#len 1
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armorpiercing
+#poison
+#secondaryeffectalways 658
+#end
+
+#selectweapon 658
+#name "Jellyberd Paralyze"
+#dmg 12
+#att 0
+#def 0
+#len 1
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#end
+
+#selectweapon 659
+#name "Cockerel Sceptre"
+#dmg 6
+#att 2
+#def 1
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 660
+#holyifhit 10
+#end
+
+#selectweapon 660
+#name "Cockerel Blindness"
+#dmg 4096
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#end
+
+#selectweapon 661
+#name "Mercybrand"
+#dmg 7
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffect 662
+#end
+
+#selectweapon 662
+#name "Flames of Mercy"
+#dmg 20
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#fire
+#armornegating
+#end
+
+#selectweapon 663
+#name "Rudder"
+#dmg 6
+#att 2
+#def -1
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#twohanded
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 664
+#name "Sistrum"
+#dmg 0
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#blunt
+#end
+
+#selectweapon 665
+#name "Pearl Blade"
+#dmg 5
+#att 1
+#def 1
+#len 1
+#nratt 1
+#rcost 4
+#magic
+#pierce
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 666
+#name "Torch"
+#dmg 3
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 1
+#blunt
+#secondaryeffectalways 216
+#end
+
+#selectweapon 667
+#name "Extinguished Torch"
+#dmg 3
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 1
+#blunt
+#end
+
+#selectweapon 668
+#name "Metal Glaive"
+#dmg 10
+#att -1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#twohanded
+#pierce
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 669
+#name "Metal Yari"
+#dmg 4
+#att 1
+#def 0
+#len 4
+#nratt 1
+#sound 12
+#rcost 2
+#twohanded
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 670
+#name "Bone Trident"
+#dmg 5
+#att 0
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#twohanded
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 671
+#name "Stone Dagger"
+#dmg 1
+#att 1
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#pierce
+#end
+
+#selectweapon 672
+#name "Tiny Tentacle"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 88
+#rcost 0
+#dt_cap
+#nostr
+#armornegating
+#bonus
+#slash
+#end
+
+#selectweapon 673
+#name "Bronze Glaive"
+#dmg 9
+#att -1
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#twohanded
+#pierce
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 674
+#name "Bronze Dagger"
+#dmg 2
+#att 1
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 675
+#name "Bronze Axe"
+#dmg 7
+#att 0
+#def -1
+#len 1
+#nratt 1
+#sound 10
+#rcost 2
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 676
+#name "Fiery Breath"
+#dmg 6
+#att 0
+#def 0
+#len -1
+#nratt 1
+#ammo 1001
+#aoe 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#bonus
+#norepel
+#unrepel
+#natural
+#explspr 10113
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 677
+#name "Wing Buff"
+#dmg -3
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 678
+#name "Bow of the Titans"
+#range 100
+#dmg 22
+#att 100
+#def 0
+#len 0
+#nratt -2
+#ammo 10
+#sound 14
+#rcost 0
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#flyspr 109 1
+#end
+
+#selectweapon 679
+#name "Short Trident"
+#dmg 5
+#att -1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#ironweapon
+#pierce
+#end
+
+#selectweapon 680
+#name "Short Bronze Trident"
+#dmg 5
+#att -1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 3
+#pierce
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 681
+#name "Burning Blade"
+#dmg 12
+#att 3
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#fireifhit 16
+#end
+
+#selectweapon 682
+#name "Mace of Eruption"
+#dmg 8
+#att 1
+#def 0
+#len 1
+#nratt 1
+#rcost 1
+#magic
+#blunt
+#secondaryeffect 683
+#end
+
+#selectweapon 683
+#name "Flame Eruption"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#explspr 10113
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 684
+#name "Flames"
+#dmg 16
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#end
+
+#selectweapon 685
+#name "Ice Mist Scimitar"
+#dmg 8
+#att 2
+#def 3
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#iceweapon
+-- ro: ability 919 = 1
+#end
+
+#selectweapon 686
+#name "Master's Athame"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#dt_weapondrain
+#magic
+#pierce
+#end
+
+#selectweapon 687
+#name "Rime Hammer"
+#dmg 21
+#att 5
+#def 1
+#len 3
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#iceweapon
+#aftercloudarea 5
+-- ro: ability 919 = 1
+#end
+
+#selectweapon 688
+#name "Blood Thorn"
+#dmg 4
+#att 2
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#dt_weapondrain
+#magic
+#pierce
+#end
+
+#selectweapon 689
+#name "Coral Blade"
+#dmg 9
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#secondaryeffect 690
+#end
+
+#selectweapon 690
+#name "Draw Blood"
+#dmg 8192
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#sizeresist
+#end
+
+#selectweapon 691
+#name "Blacksteel Sword"
+#dmg 9
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 692
+#name "Hardwood Club"
+#dmg 5
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 693
+#name "Ice Lance"
+#dmg 3
+#att 1
+#def 2
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#magic
+#charge
+#pierce
+#iceweapon
+#end
+
+#selectweapon 694
+#name "Curse"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#end
+
+#selectweapon 695
+#name "Belch Flames"
+#dmg 6
+#att 0
+#def 0
+#len 2
+#nratt 1
+#aoe 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#bonus
+#norepel
+#unrepel
+#natural
+#explspr 10133
+-- ro: explosion sprite frames = 5
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 696
+#name "Petrifying Gas"
+#range 6
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1007
+#aoe 4
+#sound 102
+#rcost 0
+#nostr
+#magic
+#armornegating
+#bonus
+#flyspr 10295 5
+#explspr 10296
+#range050
+#speedmult 1
+#skip
+#beam
+-- ro: damage type = 99
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 697
+#name "Sling of Accuracy"
+#range 40
+#dmg 12
+#att 5
+#def 0
+#len 0
+#nratt 1
+#ammo 15
+#sound 15
+#rcost 0
+#halfstr
+#magic
+#blunt
+#flyspr 111 1
+#end
+
+#selectweapon 698
+#name "Bronze Battleaxe"
+#dmg 8
+#att 1
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 3
+#twohanded
+#slash
+#end
+
+#selectweapon 699
+#name "Small Area Stun"
+#dmg 100
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_realstun
+#nostr
+#magic
+#sizeresist
+#explspr 10260
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 700
+#name "Sword of the Five Elements"
+#dmg 8
+#att 3
+#def 4
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 701
+#name "Shillelagh"
+#dmg 5
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#blunt
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 702
+#name "Gore"
+#dmg 22
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 78
+#rcost 0
+#nostr
+#bonus
+#slash
+#end
+
+#selectweapon 703
+#name "Claw"
+#dmg 20
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#slash
+#end
+
+#selectweapon 704
+#name "Small Area Shock"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_cap
+#nostr
+#magic
+#armornegating
+#shock
+#explspr 10245
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 705
+#name "Vajra"
+#dmg 5
+#att 2
+#def 0
+#len 0
+#nratt 1
+#sound 24
+#rcost 0
+#magic
+#pierce
+#shockifhit 8
+#end
+
+#selectweapon 706
+#name "Gastraphetes"
+#range 25
+#dmg 7
+#att 2
+#def 0
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 3
+#bowstr
+#twohanded
+#armorpiercing
+#uwok
+#pierce
+#flyspr 109 1
+#explspr 10301
+-- ro: explosion sprite frames = 5
+-- ro: ability 603 = -50
+#end
+
+#selectweapon 707
+#name "Hand Axe"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 1
+#ironweapon
+#slash
+#end
+
+#selectweapon 708
+#name "Stone Lance"
+#dmg 2
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#charge
+#pierce
+#end
+
+#selectweapon 709
+#name "Water Breath"
+#range 12
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1004
+#aoe 1
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#armorpiercing
+#natural
+#secondaryeffectalways 699
+#flyspr 10290 5
+#explspr 10312
+#range050
+#skip2
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 710
+#name "Flaming Breath"
+#range 6
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1004
+#aoe 1
+#sound 16
+#rcost 0
+#magic
+#fire
+#armorpiercing
+#natural
+#flyspr 10287 5
+#explspr 10288
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 711
+#name "Spectral Axe"
+#dmg 8
+#att 1
+#def 0
+#len 2
+#nratt 1
+#rcost 0
+#magic
+#twohanded
+#slash
+#mrhalf
+#end
+
+#selectweapon 712
+#name "Apotropaic Spear"
+#dmg 5
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#pierce
+#secondaryeffect 468
+#end
+
+#selectweapon 713
+#name "Wheel of the Turning Year"
+#dmg 5
+#att -2
+#def 2
+#len 1
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 714
+#name "Tremor"
+#dmg 7
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 25
+#sound 45
+#rcost 0
+#nostr
+#armorpiercing
+#defroll
+#bonus
+#norepel
+#unrepel
+#flyingimmune
+#secondaryeffectalways 715
+#explspr 10314
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 715
+#name "Tremor Stun"
+#dmg 100
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 50
+#sound 0
+#rcost 0
+#dt_realstun
+#nostr
+#defroll
+#sizeresist
+#flyingimmune
+#end
+
+#selectweapon 716
+#name "Apotropaic Dagger"
+#dmg 4
+#att 2
+#def 0
+#len 0
+#nratt 1
+#sound 8
+#rcost 0
+#dt_demon
+#magic
+#pierce
+#end
+
+#selectweapon 717
+#name "Shatter Souls"
+#range 10
+#dmg 5
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 10
+#aoe 50
+#sound 23
+#rcost 0
+#dt_magic
+#nostr
+#magic
+#armornegating
+#mind
+#uwok
+#bonus
+#hardmrneg
+#natural
+#internal
+#secondaryeffect 367
+#flyspr 10315 5
+#explspr 10316
+#range0
+#speedmult 2
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 718
+#name "Apotropaic Mace"
+#dmg 6
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffect 468
+#end
+
+#selectweapon 719
+#name "Life Drain"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#magic
+#armorpiercing
+#bonus
+#natural
+#end
+
+#selectweapon 720
+#name "Ritual Baton"
+#dmg 2
+#att 0
+#def 1
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#blunt
+#woodenweapon
+#end
+
+#selectweapon 721
+#name "Short Bow"
+#range 35
+#dmg 9
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 2
+#nostr
+#bonus
+#pierce
+#flyspr 109 1
+#explspr 10301
+#woodenweapon
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 722
+#name "God-Slayer Spear"
+#dmg 6
+#att 2
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 7
+#magic
+#pierce
+#secondaryeffectalways 509
+#end
+
+#selectweapon 723
+#name "Bronze Discus"
+#range -1
+#dmg 6
+#att -3
+#def 0
+#len 0
+#nratt 1
+#ammo 4
+#sound 15
+#rcost 3
+#blunt
+#flyspr 444 1
+#speedmult 1
+#end
+
+#selectweapon 724
+#name "Orichalcum Sword"
+#dmg 6
+#att 1
+#def 2
+#len 1
+#nratt 1
+#rcost 2
+#magic
+#pierce
+#slash
+#end
+
+#selectweapon 725
+#name "Brass Hoof"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#blunt
+#end
+
+#selectweapon 726
+#name "Brass Horns"
+#dmg 0
+#att -1
+#def -1
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#slash
+#end
+
+#selectweapon 727
+#name "Fiery Breath"
+#range 6
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1008
+#aoe 1
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#fire
+#armorpiercing
+#natural
+#flyspr 10287 5
+#explspr 10288
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 728
+#name "Double Axe"
+#dmg 8
+#att 1
+#def 0
+#len 2
+#nratt 1
+#sound 11
+#rcost 4
+#twohanded
+#slash
+#end
+
+#selectweapon 729
+#name "Banefire Torch"
+#dmg 4
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 11
+#rcost 2
+#magic
+#blunt
+#secondaryeffectalways 730
+#end
+
+#selectweapon 730
+#name "Banefire"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#secondaryeffectalways 64
+#explspr 10335
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 731
+#name "Key to Every Entrance"
+#dmg 5
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#blunt
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 732
+#name "Head Butt"
+#dmg 16
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#nostr
+#bonus
+#blunt
+#end
+
+#selectweapon 733
+#name "Cyclope Spear"
+#dmg 4
+#att 1
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 4
+#magic
+#pierce
+#end
+
+#selectweapon 734
+#name "Cyclope Sword"
+#dmg 8
+#att 1
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 6
+#magic
+#slash
+#end
+
+#selectweapon 735
+#name "Serpent Leg"
+#dmg -2
+#att -1
+#def 0
+#len 0
+#nratt 1
+#sound 50
+#rcost 0
+#halfstr
+#magic
+#bonus
+#pierce
+#secondaryeffect 51
+#end
+
+#selectweapon 736
+#name "Snake Tresses"
+#dmg 0
+#att -2
+#def 0
+#len 0
+#nratt 5
+#sound 50
+#rcost 0
+#halfstr
+#magic
+#bonus
+#pierce
+#secondaryeffect 50
+#end
+
+#selectweapon 737
+#name "Spark Bite"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 24
+#rcost 0
+#magic
+#bonus
+#slash
+#secondaryeffectalways 738
+#end
+
+#selectweapon 738
+#name "Shock"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#shock
+#end
+
+#selectweapon 739
+#name "Tiny Sting"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 88
+#rcost 0
+#nostr
+#armornegating
+#poison
+#bonus
+#pierce
+#unrepel
+-- ro: damage type = 139
+#end
+
+#selectweapon 740
+#name "Tiny Bite"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 88
+#rcost 0
+#dt_cap
+#nostr
+#armorpiercing
+#bonus
+#slash
+#unrepel
+#end
+
+#selectweapon 741
+#name "Poisoned Bronze Spear"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#pierce
+#secondaryeffect 624
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 742
+#name "Mantis Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#pierce
+#end
+
+#selectweapon 743
+#name "Spider Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#end
+
+#selectweapon 744
+#name "Enchanted No-Dachi"
+#dmg 9
+#att 3
+#def 3
+#len 2
+#nratt 1
+#sound 8
+#rcost 7
+#magic
+#twohanded
+#ironweapon
+#slash
+#end
+
+#selectweapon 745
+#name "Baculus"
+#dmg 4
+#att 2
+#def 3
+#len 3
+#nratt 1
+#sound 12
+#rcost 7
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 509
+#end
+
+#selectweapon 746
+#name "Scimitar"
+#dmg 7
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 3
+#ironweapon
+#slash
+#end
+
+#selectweapon 747
+#name "Golden Fist"
+#dmg -2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 118
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 748
+#end
+
+#selectweapon 748
+#name "Petrify"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#explspr 39
+-- ro: damage type = 99
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 749
+#name "Enchanted Scimitar"
+#dmg 7
+#att 3
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 8
+#magic
+#slash
+#end
+
+#selectweapon 750
+#name "Bronze Falchion"
+#dmg 7
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 6
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 751
+#name "Bronze Sword"
+#dmg 4
+#att 1
+#def 1
+#len 1
+#nratt 1
+#rcost 3
+#pierce
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 752
+#name "Frost Breath"
+#dmg 9
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1003
+#aoe 1
+#sound 21
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#cold
+#bonus
+#norepel
+#unrepel
+#natural
+#explspr 10128
+#melee50
+#skip
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 753
+#name "Dive attack"
+#dmg 4
+#att 4
+#def 0
+#len 0
+#nratt 1
+#ammo 1
+#sound 12
+#rcost 0
+#bonus
+#norepel
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 754
+#name "Razor Wings"
+#dmg -3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 38
+#rcost 0
+#slash
+#end
+
+#selectweapon 755
+#name "Burning Beak"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#fireifhit 12
+#end
+
+#selectweapon 756
+#name "Burning Claw"
+#dmg 2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#fireifhit 16
+#end
+
+#selectweapon 757
+#name "Bronze Scimitar"
+#dmg 6
+#att 1
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 5
+#slash
+#end
+
+#selectweapon 758
+#name "Silver Horns"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#slash
+-- ro: ability 657 = 1
+#end
+
+#selectweapon 759
+#name "XXX - Crossbow"
+#range 40
+#dmg 8
+#att 2
+#def 0
+#len 0
+#nratt -2
+#ammo 12
+#sound 13
+#rcost 3
+#nostr
+#armorpiercing
+#bonus
+#pierce
+#flyspr 109 1
+#explspr 10301
+-- ro: explosion sprite frames = 5
+-- ro: ability 266 = 1
+#end
+
+#selectweapon 760
+#name "Scourge of Power"
+#dmg 4
+#att 2
+#def 0
+#len 1
+#nratt 2
+#sound 11
+#rcost 2
+#magic
+#blunt
+#flail
+#end
+
+#selectweapon 761
+#name "Throw Salt"
+#dmg 1
+#att 0
+#def 0
+#len 5
+#nratt 1
+#aoe 1
+#sound 39
+#rcost 1
+#nostr
+#magic
+#armornegating
+#bonus
+#norepel
+#unrepel
+-- ro: damage type = 142
+#end
+
+#selectweapon 762
+#name "Death Explosion"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#natural
+#explspr 10133
+-- ro: explosion sprite frames = 5
+-- ro: ability 721 = 16
+#end
+
+#selectweapon 763
+#name "Life Draining Flare"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_drain
+#magic
+#armorpiercing
+#bonus
+#norepel
+#unrepel
+#natural
+#end
+
+#selectweapon 764
+#name "Unseen Sword"
+#dmg 8
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+-- ro: ability 932 = 1
+#end
+
+#selectweapon 765
+#name "Frozen Flames"
+#dmg 8
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#cold
+#explspr 10134
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 766
+#name "Phantasmal Bite"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#false
+#end
+
+#selectweapon 767
+#name "Phantasmal Claw"
+#dmg 3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#false
+#end
+
+#selectweapon 768
+#name "Phantasmal Great Weapon"
+#dmg 2
+#att 0
+#def 0
+#len 2
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#twohanded
+#armornegating
+#mrnegates
+#false
+#end
+
+#selectweapon 769
+#name "Phantasmal Lance"
+#dmg 3
+#att 0
+#def 0
+#len 3
+#nratt 1
+#ammo 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#charge
+#false
+#norepel
+#skip
+#end
+
+#selectweapon 770
+#name "Phantasmal Weapon"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#false
+#end
+
+#selectweapon 771
+#name "Phantasmal Weapon"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#false
+#end
+
+#selectweapon 772
+#name "Death Globe"
+#dmg 30
+#att 5
+#def 0
+#len 3
+#nratt 1
+#rcost 0
+#nostr
+#magic
+#armornegating
+#bonus
+#inanimateimmune
+#hardmrneg
+#unrepel
+#end
+
+#selectweapon 773
+#name "Tainted Soul"
+#dmg 15
+#att 5
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armorpiercing
+#bonus
+#inanimateimmune
+#norepel
+#unrepel
+#end
+
+#selectweapon 774
+#name "Small Area Bane Fire"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armorpiercing
+#secondaryeffectalways 349
+#explspr 10336
+#end
+
+#selectweapon 775
+#name "Singing Sword"
+#dmg 9
+#att 2
+#def 3
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 776
+#name "Dragon Bile"
+#range -3
+#dmg 3
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1007
+#aoe 2
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#armorpiercing
+#acid
+#natural
+#flyspr 10371 5
+#explspr 10372
+#range050
+#skip
+#beam
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 777
+#name "Small Hammer"
+#dmg 3
+#att -1
+#def -1
+#len 1
+#nratt 1
+#rcost 1
+#blunt
+-- ro: ability 1 = 0
+#end
+
+#selectweapon 778
+#name "Tail Flipper"
+#dmg -5
+#att -2
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#blunt
+#end
+
+#selectweapon 779
+#name "Web Spit"
+#range 8
+#dmg 536870912
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#bonus
+#sizeresist
+#natural
+#flyspr 10278 9
+#explspr 10279
+#beam
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 780
+#name "Asp Poison"
+#dmg 35
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#armornegating
+#poison
+#secondaryeffect 781
+#end
+
+#selectweapon 781
+#name "Poison Decay"
+#dmg 256
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+-- ro: flag bit = 0x4000
+#end
+
+#selectweapon 782
+#name "Flame Poison"
+#dmg 25
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_poison
+#nostr
+#magic
+#fire
+#armornegating
+#poison
+#end
+
+#selectweapon 783
+#name "Asp Bite"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 88
+#rcost 0
+#dt_cap
+#armorpiercing
+#bonus
+#slash
+#unrepel
+#secondaryeffect 780
+#end
+
+#selectweapon 784
+#name "Flame Poison Bite"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 88
+#rcost 0
+#dt_cap
+#armorpiercing
+#bonus
+#slash
+#unrepel
+#secondaryeffect 782
+#end
+
+#selectweapon 785
+#name "Sword Hand"
+#dmg 6
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 3
+#ironweapon
+#bonus
+#slash
+#end
+
+#selectweapon 786
+#name "Lightning Tusk"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 9
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffectalways 134
+#end
+
+#selectweapon 787
+#name "Star of Darkness"
+#dmg 10
+#att 2
+#def 1
+#len 1
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#pierce
+#blunt
+#secondaryeffect 788
+#end
+
+#selectweapon 788
+#name "Cause Fatigue"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#end
+
+#selectweapon 789
+#name "Pixie Spear"
+#dmg 5
+#att 3
+#def 1
+#len 3
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#pierce
+#secondaryeffect 790
+#end
+
+#selectweapon 790
+#name "Pixie Fatigue"
+#dmg 25
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#hardmrneg
+#end
+
+#selectweapon 791
+#name "Twilight Glaive"
+#dmg 15
+#att 4
+#def 4
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#magic
+#twohanded
+#pierce
+#slash
+#secondaryeffectalways 792
+#end
+
+#selectweapon 792
+#name "Twilight Fatigue"
+#dmg 25
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#armornegating
+#mrnegates
+#mind
+#explspr 10105
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 793
+#name "Toy Sword"
+#dmg 1
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#dt_cap
+#magic
+#blunt
+#secondaryeffectalways 794
+#end
+
+#selectweapon 794
+#name "Imagined Wound"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#armornegating
+#mrnegates
+#false
+#end
+
+#selectweapon 795
+#name "Coral Horn"
+#dmg 2
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#melee50
+#skip
+#end
+
+#selectweapon 796
+#name "Gobble"
+#dmg -2
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+-- ro: damage type = 123
+#end
+
+#selectweapon 797
+#name "Man Catcher"
+#dmg 2
+#att -3
+#def 0
+#len 3
+#nratt 1
+#sound 12
+#rcost 5
+#twohanded
+#secondaryeffect 798
+-- ro: ability 266 = 1
+#end
+
+#selectweapon 798
+#name "Grab"
+#dmg 100
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_realstun
+#nostr
+#magic
+#sizeresist
+#explspr 10260
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 799
+#name "Dragon Lightning"
+#range -3
+#dmg 2
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 1009
+#sound 24
+#rcost 0
+#dt_bouncekill
+#nostr
+#magic
+#armornegating
+#shock
+#natural
+#flyspr 10307 5
+#explspr 10393
+#speedmult 3
+#range050
+#skip
+#beam
+-- ro: flag bit = 0x4000
+-- ro: flag bit = 0x200000000
+-- ro: explosion sprite frames = 5
+-- ro: ability 617 = 3
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 800
+#name "Scythe"
+#dmg 8
+#att -2
+#def -1
+#len 3
+#nratt 1
+#sound 12
+#rcost 4
+#twohanded
+#ironweapon
+#pierce
+#slash
+#end
+
+#selectweapon 801
+#name "Cone of Flames"
+#range 9
+#dmg 6
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 1005
+#aoe 1
+#sound 16
+#rcost 0
+#halfstr
+#magic
+#fire
+#armorpiercing
+#natural
+#flyspr 10287 5
+#explspr 10288
+#beam
+#range0
+-- ro: explosion sprite frames = 5
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 802
+#name "Banefire Crossbow"
+#range 40
+#dmg 8
+#att 2
+#def 0
+#len 0
+#nratt -3
+#ammo 12
+#sound 14
+#rcost 8
+#bowstr
+#magic
+#twohanded
+#armorpiercing
+#pierce
+#secondaryeffect 64
+#flyspr 274 4
+#explspr 10301
+-- ro: explosion sprite frames = 5
+-- ro: ability 266 = 1
+#end
+
+#selectweapon 803
+#name "Dream Touch"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#false
+#end
+
+#selectweapon 804
+#name "Shock Explosion"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_cap
+#nostr
+#magic
+#armornegating
+#shock
+#explspr 10393
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 805
+#name "Slime Explosion"
+#dmg 134217728
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#explspr 10139
+-- ro: flag bit = 0x10000
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 806
+#name "Earth Grip Explosion"
+#dmg 16384
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#flyingimmune
+#explspr 10138
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 807
+#name "Heavenly Sword"
+#dmg 8
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffectalways 808
+#holyifhit 7
+#end
+
+#selectweapon 808
+#name "Holy Fire"
+#dmg 7
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_holy
+#nostr
+#magic
+#fire
+#armorpiercing
+#norepel
+#unrepel
+#end
+
+#selectweapon 809
+#name "Mirage Bola"
+#range -1
+#dmg 0
+#att 2
+#def 0
+#len 0
+#nratt 1
+#ammo 50
+#sound 19
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 810
+#flyspr 424 4
+#speedmult 1
+#end
+
+#selectweapon 810
+#name "False Fetters"
+#dmg 131072
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#hardmrneg
+#end
+
+#selectweapon 811
+#name "Steal Strength"
+#dmg 0
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#magic
+#armornegating
+#mrnegates
+#bonus
+#secondaryeffect 285
+-- ro: ability 611 = 1
+-- ro: ability 163 = 5
+#end
+
+#selectweapon 812
+#name "Enchanted Pick Axe"
+#dmg 9
+#att -1
+#def -2
+#len 1
+#nratt 1
+#sound 10
+#rcost 3
+#magic
+#twohanded
+#pierce
+-- ro: flag bit = 0x4000000
+#end
+
+#selectweapon 813
+#name "False Fire Burst"
+#dmg 10
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 16
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#mrnegates
+#bonus
+#false
+#end
+
+#selectweapon 814
+#name "Sling of Crystal Shards"
+#range 30
+#dmg 6
+#att -1
+#def 0
+#len 0
+#nratt 6
+#ammo 12
+#sound 15
+#rcost 0
+#dt_cap
+#halfstr
+#magic
+#armorpiercing
+#mind
+#slash
+#secondaryeffect 815
+#flyspr 111 1
+#end
+
+#selectweapon 815
+#name "Shard Illusion"
+#dmg 297
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+-- ro: damage type = 1
+#end
+
+#selectweapon 816
+#name "Blade of Grass"
+#dmg 7
+#att 2
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#armorpiercing
+#slash
+#secondaryeffect 690
+#end
+
+#selectweapon 817
+#name "Fay Blade"
+#dmg 6
+#att 2
+#def 3
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 818
+#name "Fay Lance"
+#dmg 7
+#att 2
+#def 0
+#len 3
+#nratt 1
+#ammo 1
+#sound 12
+#rcost 2
+#magic
+#bonus
+#charge
+#norepel
+#pierce
+#notdismounted 1
+#skip
+-- ro: flag bit = 0x1000000000
+#end
+
+#selectweapon 819
+#name "Kitchen Knife"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#pierce
+#end
+
+#selectweapon 820
+#name "Fancy Sword"
+#dmg 5
+#att 1
+#def 1
+#len 1
+#nratt 1
+#rcost 2
+#pierce
+#slash
+#end
+
+#selectweapon 821
+#name "Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 822
+#name "Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 78
+#rcost 0
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 823
+#name "Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 824
+#name "Claw"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#slash
+#end
+
+#selectweapon 825
+#name "Beak"
+#dmg 0
+#att -1
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 826
+#name "Talons"
+#dmg 1
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#end
+
+#selectweapon 827
+#name "Venomous Fangs"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 828
+#name "Head Butt"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#blunt
+#end
+
+#selectweapon 829
+#name "Antlers"
+#dmg 0
+#att -1
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+#end
+
+#selectweapon 830
+#name "Gore"
+#dmg 0
+#att -1
+#def -1
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#slash
+-- ro: ability 657 = 1
+#end
+
+#selectweapon 831
+#name "Hoof"
+#dmg 0
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#blunt
+#end
+
+#selectweapon 832
+#name "Stinger"
+#dmg 0
+#att 5
+#def 0
+#len 2
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 52
+#end
+
+#selectweapon 833
+#name "Flick Barbs"
+#range -1
+#dmg 2
+#att -4
+#def 0
+#len 0
+#nratt 6
+#ammo 3
+#sound 15
+#rcost 1
+#halfstr
+#magic
+#pierce
+#secondaryeffect 51
+#flyspr 441 1
+#speedmult 3
+#end
+
+#selectweapon 834
+#name "Acid"
+#dmg 15
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#armornegating
+#acid
+#end
+
+#selectweapon 835
+#name "Tentacle"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 12
+#rcost 0
+#magic
+#armorpiercing
+#end
+
+#selectweapon 836
+#name "Gold Chain Tail Sweep"
+#dmg -4
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 103
+#rcost 0
+#magic
+#defroll
+#bonus
+#blunt
+#petrifyifhit 1
+#end
+
+#selectweapon 837
+#name "Paralyze"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 18
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#inanimateimmune
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 838
+#name "Pincer"
+#dmg 1
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#armorpiercing
+#bonus
+#end
+
+#selectweapon 839
+#name "Mind Blast"
+#range 100
+#dmg 15
+#att 100
+#def 0
+#len 0
+#nratt 1
+#ammo 1001
+#sound 22
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#mrnegates
+#mind
+#uwok
+#bonus
+#natural
+#secondaryeffect 293
+#explspr 10153
+-- ro: flag bit = 0x4000
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 840
+#name "Flame Blade"
+#dmg 8
+#att 2
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 6
+#magic
+#armorpiercing
+#slash
+#secondaryeffectalways 841
+#end
+
+#selectweapon 841
+#name "Small Area Fire"
+#dmg 10
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#nostr
+#magic
+#fire
+#armorpiercing
+#explspr 10113
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 842
+#name "Withering Horn"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 64
+#end
+
+#selectweapon 843
+#name "Sceptre of Corruption"
+#dmg 1
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+#secondaryeffectalways 64
+#end
+
+#selectweapon 844
+#name "Winter Bringer"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 10
+#rcost 0
+#magic
+#blunt
+-- ro: ability 918 = 1
+#end
+
+#selectweapon 845
+#name "Phantasmal Horn"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#false
+#end
+
+#selectweapon 846
+#name "Phantasmal Tail Flipper"
+#dmg 1
+#att -2
+#def 0
+#len 1
+#nratt 1
+#sound 10
+#rcost 0
+#nostr
+#magic
+#armornegating
+#mrnegates
+#bonus
+#false
+#end
+
+#selectweapon 847
+#name "Root"
+#dmg -5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 12
+#rcost 0
+#armorpiercing
+#bonus
+#blunt
+#end
+
+#selectweapon 848
+#name "Void Lightning"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_bouncekill
+#nostr
+#magic
+#armornegating
+#shock
+#bonus
+#natural
+#secondaryeffectalways 64
+-- ro: flag bit = 0x200000000
+-- ro: ability 617 = 16
+#end
+
+#selectweapon 849
+#name "Consume Souls"
+#dmg 999
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 18
+#rcost 0
+#dt_drain
+#nostr
+#magic
+#armornegating
+#soulslaying
+#mrnegates
+#mind
+#bonus
+#norepel
+#unrepel
+#natural
+-- ro: ability 611 = 1
+-- ro: ability 163 = 4
+#end
+
+#selectweapon 850
+#name "Drake Lightning"
+#range -2
+#dmg 2
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 1009
+#sound 24
+#rcost 0
+#dt_bouncekill
+#nostr
+#magic
+#armornegating
+#shock
+#natural
+#flyspr 10307 5
+#explspr 10393
+#speedmult 3
+#range050
+#skip
+#beam
+-- ro: flag bit = 0x4000
+-- ro: flag bit = 0x200000000
+-- ro: explosion sprite frames = 5
+-- ro: ability 617 = 1
+-- ro: ability 937 = 1
+#end
+
+#selectweapon 851
+#name "Magic Axe"
+#dmg 8
+#att 0
+#def -1
+#len 1
+#nratt 1
+#sound 10
+#rcost 1
+#magic
+#ironweapon
+#slash
+#end
+
+#selectweapon 852
+#name "Lance"
+#dmg 6
+#att 1
+#def 0
+#len 3
+#nratt 1
+#ammo 1
+#sound 12
+#rcost 2
+#bonus
+#charge
+#norepel
+#pierce
+-- ro: flag bit = 0x1000000000
+#end
+
+#selectweapon 853
+#name "Shock Trident"
+#dmg 10
+#att 3
+#def 4
+#len 3
+#nratt 1
+#sound 12
+#rcost 2
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 854
+#end
+
+#selectweapon 854
+#name "Chain Shock"
+#dmg 2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 0
+#rcost 0
+#dt_bouncekill
+#nostr
+#magic
+#armornegating
+#shock
+-- ro: ability 617 = 5
+#end
+
+#selectweapon 855
+#name "Incineration"
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 16
+#rcost 0
+#magic
+#fire
+#armornegating
+#bonus
+#norepel
+#unrepel
+#explspr 10409
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 856
+#name "Fire Flare"
+#dmg -2
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 16
+#rcost 0
+#magic
+#fire
+#armorpiercing
+#bonus
+#norepel
+#unrepel
+#explspr 10133
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 857
+#name "Katana"
+#dmg 6
+#att 2
+#def 1
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#ironweapon
+#pierce
+#slash
+#notdismounted 2
+#end
+
+#selectweapon 858
+#name "Katana"
+#dmg 6
+#att 3
+#def 2
+#len 1
+#nratt 1
+#sound 8
+#rcost 7
+#twohanded
+#ironweapon
+#pierce
+#slash
+#notmounted 2
+#end
+
+#selectweapon 859
+#name "Infected Bite"
+#dmg 2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#secondaryeffect 860
+#end
+
+#selectweapon 860
+#name "Disease"
+#dmg 1
+#att 0
+#def 0
+#len 1
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#armornegating
+#mrnegates
+#end
+
+#selectweapon 861
+#name "Ice Hammer"
+#dmg 6
+#att 1
+#def -1
+#len 1
+#nratt 1
+#sound 10
+#rcost 2
+#magic
+#pierce
+#blunt
+#iceweapon
+#end
+
+#selectweapon 862
+#name "Spectral Great Sword"
+#dmg 9
+#att 1
+#def 2
+#len 2
+#nratt 1
+#rcost 0
+#magic
+#slash
+#mrhalf
+#end
+
+#selectweapon 863
+#name "Spectral Great Club"
+#dmg 7
+#att 0
+#def 1
+#len 2
+#nratt 1
+#rcost 0
+#magic
+#blunt
+#mrhalf
+#end
+
+#selectweapon 864
+#name "Stunning Strike"
+#dmg -2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 118
+#rcost 0
+#dt_cap
+#bonus
+#blunt
+#secondaryeffect 865
+#end
+
+#selectweapon 865
+#name "Stun"
+#dmg 100
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_realstun
+#nostr
+#magic
+#sizeresist
+#explspr 10260
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 866
+#name "Spirit Strike"
+#dmg -2
+#att 0
+#def 0
+#len -1
+#nratt 1
+#sound 118
+#rcost 0
+#dt_cap
+#magic
+#armorpiercing
+#bonus
+#blunt
+#secondaryeffect 865
+#end
+
+#selectweapon 867
+#name "Skull Club"
+#dmg 9
+#att 1
+#def 0
+#len 2
+#nratt 1
+#sound 8
+#rcost 7
+#magic
+#twohanded
+#blunt
+#secondaryeffect 868
+#end
+
+#selectweapon 868
+#name "Dark Slumber"
+#dmg 20
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_sizestun
+#nostr
+#magic
+#armornegating
+#end
+
+#selectweapon 869
+#name "Carrion Bow"
+#range 35
+#dmg 5
+#att 0
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 19
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#secondaryeffectalways 870
+#flyspr 419 1
+#end
+
+#selectweapon 870
+#name "Entanglement"
+#dmg 64
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#secondaryeffectalways 871
+#end
+
+#selectweapon 871
+#name "Carrion Seed"
+#dmg 144115188075855872
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 0
+#rcost 0
+#dt_aff
+#nostr
+#magic
+#mrnegates
+#inanimateimmune
+#end
+
+#selectweapon 872
+#name "Meteorite Dagger"
+#dmg 2
+#att 1
+#def 0
+#len 0
+#nratt 1
+#rcost 0
+#magic
+#pierce
+-- ro: flag bit = 0x4000000
+#end
+
+#selectweapon 873
+#name "Carrion Vine"
+#dmg 0
+#att 0
+#def 0
+#len 3
+#nratt 1
+#sound 87
+#rcost 0
+#dt_poison
+#halfstr
+#magic
+#armornegating
+#poison
+#bonus
+#inanimateimmune
+#secondaryeffectalways 871
+#woodenweapon
+#end
+
+#selectweapon 874
+#name "Pillar of Truths"
+#dmg 35
+#att -2
+#def -5
+#len 2
+#nratt 1
+#sound 11
+#rcost 0
+#magic
+#twohanded
+#blunt
+#secondaryeffectalways 875
+#end
+
+#selectweapon 875
+#name "Truths"
+#dmg 15
+#att 0
+#def 0
+#len 0
+#nratt 1
+#aoe 1
+#sound 18
+#rcost 0
+#dt_paralyze
+#nostr
+#magic
+#armornegating
+#hardmrneg
+#end
+
+#selectweapon 876
+#name "Antlers"
+#dmg 0
+#att -1
+#def 0
+#len 1
+#nratt 1
+#sound 38
+#rcost 0
+#bonus
+#slash
+#notmounted
+#end
+
+#selectweapon 877
+#name "Bronze Hayfork"
+#dmg 3
+#att -1
+#def -1
+#len 3
+#nratt 1
+#sound 12
+#rcost 1
+#twohanded
+#pierce
+#end
+
+#selectweapon 878
+#name "Brass Busine"
+#dmg 1
+#att -1
+#def 0
+#len 1
+#nratt 1
+#rcost 2
+#blunt
+#end
+
+#selectweapon 879
+#name "Morningstar of Waking Dreams"
+#dmg 6
+#att 2
+#def -1
+#len 1
+#nratt 1
+#sound 11
+#rcost 2
+#magic
+#pierce
+#blunt
+#secondaryeffectalways 880
+#flail
+#end
+
+#selectweapon 880
+#name "Dreams"
+#dmg 30
+#att 0
+#def 0
+#len 0
+#nratt 1
+#sound 38
+#rcost 0
+#dt_stun
+#nostr
+#magic
+#mrnegates
+#mind
+#end
+
+#selectweapon 881
+#name "Fist"
+#dmg -2
+#att -1
+#def -1
+#len -1
+#nratt 1
+#sound 38
+#rcost 0
+#magic
+#blunt
+#end
+
+#selectweapon 882
+#name "Venomous Fangs"
+#dmg -2
+#att 0
+#def -1
+#len -1
+#nratt 1
+#sound 50
+#rcost 0
+#magic
+#bonus
+#pierce
+#secondaryeffect 54
+#end
+
+#selectweapon 883
+#name "Fay Bow"
+#range 40
+#dmg 7
+#att 1
+#def 0
+#len 0
+#nratt 1
+#ammo 12
+#sound 14
+#rcost 0
+#halfstr
+#magic
+#twohanded
+#pierce
+#flyspr 109 1
+#explspr 10301
+#woodenweapon
+-- ro: explosion sprite frames = 5
+#end
+
+#selectweapon 884
+#name "Fay Dagger"
+#dmg 2
+#att 2
+#def 0
+#len 1
+#nratt 1
+#sound 8
+#rcost 0
+#magic
+#pierce
+#end
+
+#selectweapon 885
+#name "Silver Busine"
+#dmg 1
+#att -1
+#def 0
+#len 1
+#nratt 1
+#rcost 2
+#blunt
+#end
+
+#selectweapon 886
+#name "end"
+#dmg -999
+#att 0
+#def 0
+#len 0
+#nratt 0
+#sound 0
+#rcost 0
+#nostr
+#magic
+#end
+
+#selectarmor 0
+#name "Nothing"
+#type 0
+#def 0
+#rcost 0
+#enc 0
+#end
+
+#selectarmor 1
+#name "Buckler"
+#type 4
+#def 2
+#rcost 1
+#enc 0
+#prot 14
+#end
+
+#selectarmor 2
+#name "Shield"
+#type 4
+#def 3
+#rcost 2
+#enc 1
+#prot 16
+#woodenarmor
+#end
+
+#selectarmor 3
+#name "Kite Shield"
+#type 4
+#def 4
+#rcost 4
+#enc 2
+#prot 19
+#ironarmor
+#end
+
+#selectarmor 4
+#name "Tower Shield"
+#type 4
+#def 5
+#rcost 3
+#enc 2
+#prot 16
+#woodenarmor
+#end
+
+#selectarmor 5
+#name "Leather Cuirass"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+-- ro: protection by part = 2:7 3:3 4:3
+#end
+
+#selectarmor 6
+#name "Ring Mail Cuirass"
+#type 5
+#def 0
+#rcost 3
+#enc 0
+-- ro: protection by part = 2:11 3:5 4:5
+#end
+
+#selectarmor 7
+#name "Scale Mail Cuirass"
+#type 5
+#def -1
+#rcost 6
+#enc 1
+#ironarmor
+-- ro: protection by part = 2:14 3:6 4:6
+#end
+
+#selectarmor 8
+#name "Chain Mail Cuirass"
+#type 5
+#def -1
+#rcost 9
+#enc 1
+#ironarmor
+-- ro: protection by part = 2:18 3:7 4:7
+#end
+
+#selectarmor 9
+#name "Plate Cuirass"
+#type 5
+#def -1
+#rcost 15
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:21 3:8 4:8
+-- ro: ability 582 = 2
+#end
+
+#selectarmor 10
+#name "Leather Hauberk"
+#type 5
+#def 0
+#rcost 2
+#enc 0
+-- ro: protection by part = 2:9 3:7 4:7
+#end
+
+#selectarmor 11
+#name "Ring Mail Hauberk"
+#type 5
+#def -1
+#rcost 5
+#enc 1
+-- ro: protection by part = 2:12 3:9 4:9
+#end
+
+#selectarmor 12
+#name "Scale Mail Hauberk"
+#type 5
+#def -1
+#rcost 9
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:15 3:11 4:11
+#end
+
+#selectarmor 13
+#name "Chain Mail Hauberk"
+#type 5
+#def -2
+#rcost 13
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:18 3:13 4:13
+#end
+
+#selectarmor 14
+#name "Plate Hauberk"
+#type 5
+#def -2
+#rcost 20
+#enc 4
+#ironarmor
+-- ro: protection by part = 2:21 3:15 4:15
+-- ro: ability 582 = 4
+#end
+
+#selectarmor 15
+#name "Full Leather Armor"
+#type 5
+#def -1
+#rcost 3
+#enc 1
+#prot 9
+#end
+
+#selectarmor 16
+#name "Full Ring Mail"
+#type 5
+#def -2
+#rcost 7
+#enc 2
+#prot 12
+#end
+
+#selectarmor 17
+#name "Full Scale Mail"
+#type 5
+#def -2
+#rcost 12
+#enc 3
+#prot 15
+#ironarmor
+#end
+
+#selectarmor 18
+#name "Full Chain Mail"
+#type 5
+#def -3
+#rcost 17
+#enc 3
+#prot 18
+#ironarmor
+#end
+
+#selectarmor 19
+#name "Full Plate Mail"
+#type 5
+#def -3
+#rcost 25
+#enc 5
+#prot 21
+#ironarmor
+-- ro: ability 582 = 6
+#end
+
+#selectarmor 20
+#name "Iron Cap"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 16
+#ironarmor
+#end
+
+#selectarmor 21
+#name "Full Helmet"
+#type 6
+#def -1
+#rcost 5
+#enc 0
+#prot 21
+#ironarmor
+#end
+
+#selectarmor 22
+#name "Coral Cuirass"
+#type 5
+#def -1
+#rcost 7
+#enc 2
+-- ro: protection by part = 2:14 3:6 4:6
+-- ro: ability 582 = 2
+#end
+
+#selectarmor 23
+#name "Coral Hauberk"
+#type 5
+#def -2
+#rcost 10
+#enc 3
+-- ro: protection by part = 2:14 3:10 4:10
+-- ro: ability 582 = 4
+#end
+
+#selectarmor 24
+#name "Coral Cap"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 14
+#end
+
+#selectarmor 25
+#name "Turtle Shell Shield"
+#type 4
+#def 3
+#rcost 1
+#enc 1
+#prot 15
+#end
+
+#selectarmor 26
+#name "Ice Cuirass"
+#type 5
+#def -1
+#rcost 16
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:20 3:9 4:9
+#end
+
+#selectarmor 27
+#name "Ice Hauberk"
+#type 5
+#def -2
+#rcost 22
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:20 3:15 4:15
+#end
+
+#selectarmor 28
+#name "Ice Aegis"
+#type 4
+#def 5
+#rcost 9
+#enc 1
+#prot 18
+#magicarmor
+#end
+
+#selectarmor 29
+#name "Ice Cap"
+#type 6
+#def 0
+#rcost 3
+#enc 0
+#prot 15
+#magicarmor
+#end
+
+#selectarmor 30
+#name "Rusty Plate Hauberk"
+#type 5
+#def -2
+#rcost 0
+#enc 4
+-- ro: protection by part = 2:19 3:13 4:13
+#end
+
+#selectarmor 31
+#name "Rusty Scale Mail Hauberk"
+#type 5
+#def -1
+#rcost 0
+#enc 2
+-- ro: protection by part = 2:13 3:9 4:9
+#end
+
+#selectarmor 32
+#name "Rusty Ring Mail Hauberk"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+-- ro: protection by part = 2:10 3:7 4:7
+#end
+
+#selectarmor 33
+#name "Rusty Chain Mail Hauberk"
+#type 5
+#def -2
+#rcost 0
+#enc 2
+-- ro: protection by part = 2:16 3:11 4:11
+#end
+
+#selectarmor 34
+#name "Twisting Thorns"
+#type 5
+#def -1
+#rcost 0
+#enc 5
+#magicarmor
+-- ro: protection by part = 6:13
+#end
+
+#selectarmor 35
+#name "Aseftik's Armor"
+#type 5
+#def -3
+#rcost 0
+#enc 4
+#prot 30
+#magicarmor
+#end
+
+#selectarmor 36
+#name "Dragon Scale Mail"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:22 3:11 4:11
+#end
+
+#selectarmor 37
+#name "Shambler Skin Hauberk"
+#type 5
+#def 0
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:11 3:8 4:7
+#end
+
+#selectarmor 38
+#name "Blacksteel Full Plate"
+#type 5
+#def -3
+#rcost 0
+#enc 4
+#prot 24
+#magicarmor
+#end
+
+#selectarmor 39
+#name "Blacksteel Plate"
+#type 5
+#def -1
+#rcost 0
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:24 3:10 4:10
+#end
+
+#selectarmor 40
+#name "Blacksteel Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 24
+#magicarmor
+#end
+
+#selectarmor 41
+#name "Blacksteel Tower Shield"
+#type 4
+#def 7
+#rcost 0
+#enc 2
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 42
+#name "Lead Shield"
+#type 4
+#def 3
+#rcost 0
+#enc 3
+#prot 23
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 43
+#name "Hydra Skin Armor"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+#prot 12
+#magicarmor
+#end
+
+#selectarmor 44
+#name "Furs"
+#type 5
+#def -1
+#rcost 1
+#enc 1
+-- ro: protection by part = 2:8 3:6 4:6
+-- ro: ability 582 = 0
+#end
+
+#selectarmor 45
+#name "Jade Mask"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 20
+#magicarmor
+#end
+
+#selectarmor 46
+#name "Rime Hauberk"
+#type 5
+#def -2
+#rcost 0
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:19 3:13 4:13
+#end
+
+#selectarmor 47
+#name "Monolith Armor"
+#type 5
+#def -8
+#rcost 0
+#enc 10
+#prot 34
+#magicarmor
+#end
+
+#selectarmor 48
+#name "Silver Hauberk"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:20 3:14 4:14
+#end
+
+#selectarmor 49
+#name "Lightweight Scale Mail"
+#type 5
+#def 0
+#rcost 12
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:16 3:8 4:8
+#end
+
+#selectarmor 50
+#name "Weightless Scale"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:16 3:8 4:8
+#end
+
+#selectarmor 51
+#name "Bone Armor"
+#type 5
+#def -2
+#rcost 0
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:15
+#end
+
+#selectarmor 52
+#name "Ice Studded Armor"
+#type 5
+#def -1
+#rcost 6
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:12 3:9 4:9
+#end
+
+#selectarmor 53
+#name "Meteorite Armor"
+#type 5
+#def -2
+#rcost 25
+#enc 4
+-- ro: protection by part = 2:22 3:15 4:15
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 54
+#name "Shroud of the Battle Saint"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:11 3:9 4:6
+#end
+
+#selectarmor 55
+#name "Crown of Overmight"
+#type 6
+#def -3
+#rcost 0
+#enc 2
+#prot 21
+#magicarmor
+#end
+
+#selectarmor 56
+#name "Armor of Souls"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:19 3:13 4:13
+#end
+
+#selectarmor 57
+#name "Shield of Valor"
+#type 4
+#def 7
+#rcost 0
+#enc 1
+#prot 21
+#magicarmor
+#end
+
+#selectarmor 58
+#name "Centaur Barding"
+#type 5
+#def -2
+#rcost 26
+#enc 3
+#ironarmor
+-- ro: protection by part = 2:21 3:15 4:13
+#end
+
+#selectarmor 59
+#name "Elemental Armor"
+#type 5
+#def -3
+#rcost 0
+#enc 4
+#magicarmor
+-- ro: protection by part = 2:24 3:16 4:16
+#end
+
+#selectarmor 60
+#name "Charcoal Shield"
+#type 4
+#def 4
+#rcost 0
+#enc 1
+#prot 26
+#magicarmor
+#end
+
+#selectarmor 61
+#name "Eye Shield"
+#type 4
+#def 5
+#rcost 0
+#enc 0
+#prot 16
+#magicarmor
+#end
+
+#selectarmor 62
+#name "Shield of the Accursed"
+#type 4
+#def 6
+#rcost 0
+#enc 1
+#prot 21
+#magicarmor
+#end
+
+#selectarmor 63
+#name "Vine Shield"
+#type 4
+#def 5
+#rcost 0
+#enc 0
+#prot 13
+#magicarmor
+#end
+
+#selectarmor 64
+#name "Aegis"
+#type 4
+#def 6
+#rcost 0
+#enc 1
+#prot 25
+#magicarmor
+#end
+
+#selectarmor 65
+#name "Weightless Tower Shield"
+#type 4
+#def 8
+#rcost 0
+#enc 0
+#prot 16
+#magicarmor
+#end
+
+#selectarmor 66
+#name "Weightless Kite Shield"
+#type 4
+#def 7
+#rcost 0
+#enc 0
+#prot 21
+#magicarmor
+#end
+
+#selectarmor 67
+#name "Lucky Coin"
+#type 4
+#def 4
+#rcost 0
+#enc 0
+#prot 19
+#magicarmor
+#end
+
+#selectarmor 68
+#name "Barrier"
+#type 4
+#def 9
+#rcost 0
+#enc 2
+#prot 40
+#magicarmor
+#end
+
+#selectarmor 69
+#name "Blacksteel Kite Shield"
+#type 4
+#def 6
+#rcost 0
+#enc 2
+#prot 29
+#magicarmor
+#end
+
+#selectarmor 70
+#name "Leather Shield"
+#type 4
+#def 4
+#rcost 0
+#enc 0
+#prot 11
+#end
+
+#selectarmor 71
+#name "Gold Shield"
+#type 4
+#def 8
+#rcost 0
+#enc 1
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 72
+#name "Fenris' Pelt"
+#type 5
+#def 0
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:20 3:13 4:13
+#end
+
+#selectarmor 73
+#name "Shield of Meteoritic Iron"
+#type 4
+#def 3
+#rcost 0
+#enc 4
+#prot 30
+#magicarmor
+#end
+
+#selectarmor 74
+#name "Stymphalian Wings"
+#type 5
+#def -4
+#rcost 0
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:24 3:16 4:10
+-- ro: ability 582 = 0
+#end
+
+#selectarmor 75
+#name "Fire Plate"
+#type 5
+#def -1
+#rcost 20
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:23 3:9 4:9
+#end
+
+#selectarmor 76
+#name "Magic Bracers"
+#type 8
+#def 2
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 6:2
+#end
+
+#selectarmor 77
+#name "..."
+#type 8
+#def 4
+#rcost 0
+#enc 0
+#magicarmor
+#end
+
+#selectarmor 78
+#name "Krupp's Bracers"
+#type 8
+#def 4
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 6:4
+#end
+
+#selectarmor 79
+#name "Spirit Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 20
+#magicarmor
+#end
+
+#selectarmor 80
+#name "Flame Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 6:5 1:21
+#end
+
+#selectarmor 81
+#name "Chain Mail of Displacement"
+#type 5
+#def -2
+#rcost 0
+#enc 2
+#prot 19
+#magicarmor
+#end
+
+#selectarmor 82
+#name "Flesh Ward"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:0
+#end
+
+#selectarmor 83
+#name "Starshine Skullcap"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 8
+#magicarmor
+#end
+
+#selectarmor 84
+#name "Amber Hauberk"
+#type 5
+#def -2
+#rcost 20
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:19 3:13 4:13
+#end
+
+#selectarmor 85
+#name "Amber Shield"
+#type 4
+#def 3
+#rcost 8
+#enc 1
+#prot 16
+#magicarmor
+#end
+
+#selectarmor 86
+#name "Amber Helmet"
+#type 6
+#def 0
+#rcost 3
+#enc 0
+#prot 16
+#magicarmor
+#end
+
+#selectarmor 87
+#name "Scutata Volturnus"
+#type 4
+#def 7
+#rcost 0
+#enc 2
+#prot 21
+#magicarmor
+#end
+
+#selectarmor 88
+#name "Lantern Shield"
+#type 4
+#def 5
+#rcost 0
+#enc 1
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 89
+#name "Copper Plate"
+#type 5
+#def -1
+#rcost 0
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:18 3:8 4:8
+#end
+
+#selectarmor 90
+#name "Rainbow Armor"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:16 3:7 4:7
+#end
+
+#selectarmor 91
+#name "XXX"
+#type 5
+#def -3
+#rcost 25
+#enc 4
+#prot 22
+#ironarmor
+#end
+
+#selectarmor 92
+#name "Enchanted Shield"
+#type 4
+#def 6
+#rcost 0
+#enc 1
+#prot 17
+#magicarmor
+#end
+
+#selectarmor 93
+#name "Rusty Scale Cuirass"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+-- ro: protection by part = 2:13 3:6 4:6
+#end
+
+#selectarmor 94
+#name "The Gift of Kurgi"
+#type 8
+#def 8
+#rcost 0
+#enc 0
+#end
+
+#selectarmor 95
+#name "Sun Armor"
+#type 5
+#def -3
+#rcost 0
+#enc 4
+#prot 25
+#magicarmor
+#end
+
+#selectarmor 96
+#name "Sun Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 25
+#magicarmor
+#end
+
+#selectarmor 97
+#name "Sun Shield"
+#type 4
+#def 6
+#rcost 0
+#enc 2
+#prot 25
+#magicarmor
+#end
+
+#selectarmor 98
+#name "Robe of the Sorceress"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#prot 16
+#magicarmor
+#end
+
+#selectarmor 99
+#name "Lorica Segmentata"
+#type 5
+#def -1
+#rcost 11
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:17 3:9 4:11
+-- ro: ability 582 = 2
+#end
+
+#selectarmor 100
+#name "Bronze Cuirass"
+#type 5
+#def -1
+#rcost 14
+#enc 3
+-- ro: protection by part = 2:20 3:7 4:7
+-- ro: ability 582 = 2
+#end
+
+#selectarmor 101
+#name "Bronze Hauberk"
+#type 5
+#def -2
+#rcost 18
+#enc 5
+-- ro: protection by part = 2:20 3:14 4:14
+-- ro: ability 582 = 4
+#end
+
+#selectarmor 102
+#name "Centaur Barding"
+#type 5
+#def -2
+#rcost 23
+#enc 4
+-- ro: protection by part = 2:20 3:14 4:13
+#end
+
+#selectarmor 103
+#name "Centaur Barding"
+#type 5
+#def 0
+#rcost 6
+#enc 0
+-- ro: protection by part = 2:9 3:6 4:6
+#end
+
+#selectarmor 104
+#name "Mictlan Armor"
+#type 5
+#def -1
+#rcost 4
+#enc 2
+#woodenarmor
+-- ro: protection by part = 2:12 3:10 4:10
+#end
+
+#selectarmor 105
+#name "Hide Shield"
+#type 4
+#def 3
+#rcost 0
+#enc 0
+#prot 11
+#end
+
+#selectarmor 106
+#name "Mictlan Copper Scale Armor"
+#type 5
+#def -1
+#rcost 10
+#enc 3
+-- ro: protection by part = 2:15 3:11 4:11
+#end
+
+#selectarmor 107
+#name "Jade Scale Armor"
+#type 5
+#def -1
+#rcost 0
+#enc 4
+#magicarmor
+-- ro: protection by part = 2:19 3:14 4:14
+#end
+
+#selectarmor 108
+#name "Greenstone Armor"
+#type 5
+#def -3
+#rcost 0
+#enc 6
+#magicarmor
+-- ro: protection by part = 2:23 3:18 4:18
+#end
+
+#selectarmor 109
+#name "Marble Breastplate"
+#type 5
+#def -1
+#rcost 0
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:23 3:10 4:10
+#end
+
+#selectarmor 110
+#name "Armor of Virtue"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:22 3:10 4:10
+#end
+
+#selectarmor 111
+#name "Spider Armor"
+#type 5
+#def -3
+#rcost 26
+#enc 4
+#prot 19
+#ironarmor
+#magicarmor
+#end
+
+#selectarmor 112
+#name "Great Hide Shield"
+#type 4
+#def 5
+#rcost 1
+#enc 1
+#prot 11
+#end
+
+#selectarmor 113
+#name "Skull Necklace"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+-- ro: protection by part = 6:11
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 114
+#name "Turtle Shell Hauberk"
+#type 5
+#def -2
+#rcost 4
+#enc 1
+-- ro: protection by part = 2:12 3:7 4:7
+#end
+
+#selectarmor 115
+#name "Icarian Wings"
+#type 5
+#def -3
+#rcost 10
+#enc 3
+#woodenarmor
+-- ro: protection by part = 2:11 3:6 4:7
+#end
+
+#selectarmor 116
+#name "Lorica Hamata"
+#type 5
+#def -1
+#rcost 5
+#enc 1
+#ironarmor
+-- ro: protection by part = 2:13 3:7 4:8
+-- ro: ability 582 = 0
+#end
+
+#selectarmor 117
+#name "Lorica Squamata"
+#type 5
+#def -1
+#rcost 7
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:15 3:8 4:10
+-- ro: ability 582 = 2
+#end
+
+#selectarmor 118
+#name "Half Helmet"
+#type 6
+#def 0
+#rcost 3
+#enc 0
+#prot 18
+#ironarmor
+#end
+
+#selectarmor 119
+#name "Reinforced Leather Cap"
+#type 6
+#def 0
+#rcost 1
+#enc 0
+#prot 9
+#end
+
+#selectarmor 120
+#name "Leather Cap"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 7
+#end
+
+#selectarmor 121
+#name "Leather Hood"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 6
+#end
+
+#selectarmor 122
+#name "Skull Cap"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 11
+#end
+
+#selectarmor 123
+#name "Hoplite Helmet"
+#type 6
+#def -1
+#rcost 5
+#enc 0
+#prot 21
+#end
+
+#selectarmor 124
+#name "Ice Helmet"
+#type 6
+#def 0
+#rcost 6
+#enc 0
+#prot 19
+#magicarmor
+#end
+
+#selectarmor 125
+#name "Skullface"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 11
+#magicarmor
+#end
+
+#selectarmor 126
+#name "Legionary Helmet"
+#type 6
+#def 0
+#rcost 3
+#enc 0
+#prot 19
+#ironarmor
+#end
+
+#selectarmor 127
+#name "Legionary Bronze Helmet"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 18
+#end
+
+#selectarmor 128
+#name "Ashigaru Armor"
+#type 5
+#def -1
+#rcost 7
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:15 3:11 4:9
+#end
+
+#selectarmor 129
+#name "Samurai Armor"
+#type 5
+#def -2
+#rcost 10
+#enc 3
+#ironarmor
+-- ro: protection by part = 2:16 3:14 4:14
+#end
+
+#selectarmor 130
+#name "Heavy Samurai Armor"
+#type 5
+#def -3
+#rcost 14
+#enc 4
+#ironarmor
+-- ro: protection by part = 2:19 3:17 4:17
+#end
+
+#selectarmor 131
+#name "Jingasa"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 13
+#ironarmor
+#end
+
+#selectarmor 132
+#name "Kabuto"
+#type 6
+#def 0
+#rcost 4
+#enc 0
+#prot 17
+#ironarmor
+#end
+
+#selectarmor 133
+#name "Icicle Mail"
+#type 5
+#def -1
+#rcost 13
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:14 3:11 4:11
+#end
+
+#selectarmor 134
+#name "Turtle Cap"
+#type 6
+#def 0
+#rcost 1
+#enc 0
+#prot 10
+#end
+
+#selectarmor 135
+#name "Bronze Cap"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 15
+#end
+
+#selectarmor 136
+#name "Bronze Scale Hauberk"
+#type 5
+#def -1
+#rcost 8
+#enc 2
+-- ro: protection by part = 2:14 3:10 4:10
+#end
+
+#selectarmor 137
+#name "Turtle Shell Barding"
+#type 5
+#def 0
+#rcost 4
+#enc 0
+-- ro: protection by part = 2:12 3:7 4:6
+#end
+
+#selectarmor 138
+#name "Ichtycentaur Cuirass"
+#type 5
+#def 0
+#rcost 4
+#enc 0
+-- ro: protection by part = 2:12 3:7 4:0
+#end
+
+#selectarmor 139
+#name "Ichtycentaur Barding"
+#type 5
+#def -2
+#rcost 20
+#enc 4
+-- ro: protection by part = 2:20 3:14 4:13
+#end
+
+#selectarmor 140
+#name "Shell Armor"
+#type 5
+#def -1
+#rcost 8
+#enc 1
+-- ro: protection by part = 2:13 3:8 4:8
+#end
+
+#selectarmor 141
+#name "Blind Helmet"
+#type 6
+#def 0
+#rcost 5
+#enc 0
+#prot 23
+#ironarmor
+#end
+
+#selectarmor 142
+#name "Bronze Scale Cuirass"
+#type 5
+#def -1
+#rcost 5
+#enc 1
+-- ro: protection by part = 2:14 3:5 4:5
+#end
+
+#selectarmor 143
+#name "Stone Shield"
+#type 4
+#def 4
+#rcost 0
+#enc 4
+#prot 26
+#magicarmor
+#end
+
+#selectarmor 144
+#name "Elephant Barding"
+#type 5
+#def 0
+#rcost 10
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:9 3:9 4:9 1:9
+#end
+
+#selectarmor 145
+#name "Mask"
+#type 6
+#def -1
+#rcost 0
+#enc 0
+#prot 7
+#end
+
+#selectarmor 146
+#name "Ancestor Armor"
+#type 5
+#def -3
+#rcost 15
+#enc 3
+#ironarmor
+#magicarmor
+-- ro: protection by part = 2:19 3:16 4:16
+#end
+
+#selectarmor 147
+#name "Armor of the Dragon King"
+#type 5
+#def -2
+#rcost 1
+#enc 3
+-- ro: protection by part = 2:20 3:18 4:18
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 148
+#name "Crown"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 5
+#end
+
+#selectarmor 149
+#name "Bone Cuirass"
+#type 5
+#def -1
+#rcost 3
+#enc 1
+-- ro: protection by part = 2:14 3:9 4:9
+#end
+
+#selectarmor 150
+#name "Bone Helmet"
+#type 6
+#def 0
+#rcost 1
+#enc 0
+#prot 14
+#end
+
+#selectarmor 151
+#name "Sharkskin Armor"
+#type 5
+#def -1
+#rcost 3
+#enc 1
+-- ro: protection by part = 2:10 3:7 4:7
+#end
+
+#selectarmor 152
+#name "Sharkskin Cap"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 10
+#end
+
+#selectarmor 153
+#name "Basalt Armor"
+#type 5
+#def -4
+#rcost 30
+#enc 6
+-- ro: protection by part = 2:22 3:16 4:16
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 154
+#name "Ancestor Cuirass"
+#type 5
+#def -1
+#rcost 10
+#enc 2
+#ironarmor
+#magicarmor
+-- ro: protection by part = 2:19 3:9 4:9
+#end
+
+#selectarmor 155
+#name "Golden Shield"
+#type 4
+#def 4
+#rcost 8
+#enc 1
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 156
+#name "Spectral Shield"
+#type 4
+#def 3
+#rcost 0
+#enc 0
+#prot 15
+#magicarmor
+#end
+
+#selectarmor 157
+#name "Crimson Shield"
+#type 4
+#def 4
+#rcost 10
+#enc 0
+#prot 19
+#magicarmor
+#end
+
+#selectarmor 158
+#name "Robes"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+#prot 3
+#woodenarmor
+#end
+
+#selectarmor 159
+#name "Imperial Robes"
+#type 5
+#def 0
+#rcost 3
+#enc 0
+#prot 4
+#woodenarmor
+#end
+
+#selectarmor 160
+#name "Fossilized Hauberk"
+#type 5
+#def -2
+#rcost 0
+#enc 4
+-- ro: protection by part = 2:17 3:11 4:11
+#end
+
+#selectarmor 161
+#name "Jeweled Breastplate"
+#type 5
+#def 0
+#rcost 10
+#enc 0
+-- ro: protection by part = 2:15 3:0 4:0
+#end
+
+#selectarmor 162
+#name "Crested Helmet"
+#type 6
+#def 0
+#rcost 3
+#enc 0
+#prot 14
+#end
+
+#selectarmor 163
+#name "Anakite Armor"
+#type 5
+#def -1
+#rcost 20
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:20 3:14 4:17
+#end
+
+#selectarmor 164
+#name "Anakite Shield"
+#type 4
+#def 4
+#rcost 8
+#enc 1
+#prot 20
+#magicarmor
+#end
+
+#selectarmor 165
+#name "Dawn Armor"
+#type 5
+#def -1
+#rcost 25
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:21 3:15 4:18
+#end
+
+#selectarmor 166
+#name "Dawn Shield"
+#type 4
+#def 4
+#rcost 7
+#enc 1
+#prot 19
+#magicarmor
+#end
+
+#selectarmor 167
+#name "Rotten Buckler"
+#type 4
+#def 2
+#rcost 0
+#enc 0
+#prot 9
+#end
+
+#selectarmor 168
+#name "Rotten Shield"
+#type 4
+#def 3
+#rcost 1
+#enc 1
+#prot 12
+#woodenarmor
+#end
+
+#selectarmor 169
+#name "Rusty Kite Shield"
+#type 4
+#def 4
+#rcost 2
+#enc 2
+#prot 15
+#end
+
+#selectarmor 170
+#name "Rotten Tower Shield"
+#type 4
+#def 5
+#rcost 2
+#enc 2
+#prot 12
+#woodenarmor
+#end
+
+#selectarmor 171
+#name "Full Scale Archer Armor"
+#type 5
+#def -4
+#rcost 15
+#enc 4
+#ironarmor
+-- ro: protection by part = 2:19 3:11 4:19
+#end
+
+#selectarmor 172
+#name "Mail Barding"
+#type 5
+#def -2
+#rcost 13
+#enc 4
+#ironarmor
+-- ro: protection by part = 6:14
+#end
+
+#selectarmor 173
+#name "Iron Face"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 174
+#name "Helmet of Champions"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 19
+#magicarmor
+#end
+
+#selectarmor 175
+#name "Helmet of Perfection"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 25
+#magicarmor
+#end
+
+#selectarmor 176
+#name "Dire Wolf Pelt"
+#type 5
+#def 0
+#rcost 10
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:9 3:7 4:7
+#end
+
+#selectarmor 177
+#name "Mirror Armor"
+#type 5
+#def -1
+#rcost 20
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:17 3:9 4:9
+#end
+
+#selectarmor 178
+#name "Shield of the Dawn"
+#type 4
+#def 7
+#rcost 0
+#enc 2
+#prot 35
+#magicarmor
+#end
+
+#selectarmor 179
+#name "Armor of the Dawn"
+#type 5
+#def -1
+#rcost 0
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:23 3:17 4:20
+#end
+
+#selectarmor 180
+#name "Helmet of the Dawn"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 181
+#name "Golden Hoplon"
+#type 4
+#def 7
+#rcost 0
+#enc 1
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 182
+#name "Immaculate Shield"
+#type 4
+#def 8
+#rcost 0
+#enc 1
+#prot 30
+#magicarmor
+#end
+
+#selectarmor 183
+#name "Linen Cuirass"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+-- ro: protection by part = 2:10 3:6 4:6
+#end
+
+#selectarmor 184
+#name "Kithaironic Lion Pelt"
+#type 5
+#def -1
+#rcost 15
+#enc 1
+-- ro: protection by part = 1:6 2:7 3:6 4:6
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 185
+#name "Brightmail Haubergeon"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:20 3:7 4:7
+#end
+
+#selectarmor 186
+#name "Shademail Haubergeon"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:20 3:7 4:7
+#end
+
+#selectarmor 187
+#name "Wooden Mask"
+#type 6
+#def -1
+#rcost 0
+#enc 0
+#prot 10
+#woodenarmor
+#magicarmor
+#end
+
+#selectarmor 188
+#name "Sharkskin Cuirass"
+#type 5
+#def 0
+#rcost 2
+#enc 1
+-- ro: protection by part = 2:10 3:4 4:4
+#end
+
+#selectarmor 189
+#name "Pearl Shield"
+#type 4
+#def 4
+#rcost 8
+#enc 1
+#prot 16
+#magicarmor
+#end
+
+#selectarmor 190
+#name "Coral Barding"
+#type 5
+#def -2
+#rcost 12
+#enc 4
+-- ro: protection by part = 2:14 3:10 4:9
+#end
+
+#selectarmor 191
+#name "Helmet of Invisibility"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 23
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 192
+#name "Magic Furs"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:10 3:8 4:8
+#end
+
+#selectarmor 193
+#name "Champion's Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 24
+#magicarmor
+#end
+
+#selectarmor 194
+#name "Enchanted Ring Mail Hauberk"
+#type 5
+#def -1
+#rcost 0
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:15 3:11 4:11
+#end
+
+#selectarmor 195
+#name "Fish Mitre"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 5
+#end
+
+#selectarmor 196
+#name "Golden Scale Mail"
+#type 5
+#def -2
+#rcost 25
+#enc 2
+#prot 17
+#magicarmor
+#end
+
+#selectarmor 197
+#name "Fossilized Helmet"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 17
+#end
+
+#selectarmor 198
+#name "Raptorian Plate Cuirass"
+#type 5
+#def -1
+#rcost 17
+#enc 1
+#ironarmor
+-- ro: protection by part = 2:20 3:7 4:7
+#end
+
+#selectarmor 199
+#name "Turan Plated Mail"
+#type 5
+#def -3
+#rcost 17
+#enc 4
+#ironarmor
+-- ro: protection by part = 2:21 3:18 4:21
+#end
+
+#selectarmor 200
+#name "Champion's Cuirass"
+#type 5
+#def -1
+#rcost 20
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:23 3:13 4:13
+#end
+
+#selectarmor 201
+#name "Armor of Knights"
+#type 5
+#def -2
+#rcost 20
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:23 3:18 4:18
+#end
+
+#selectarmor 202
+#name "Cloth Armor"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+-- ro: protection by part = 2:7 3:5 4:5
+#end
+
+#selectarmor 203
+#name "Reinforced Cloth Armor"
+#type 5
+#def 0
+#rcost 4
+#enc 1
+#woodenarmor
+-- ro: protection by part = 2:10 3:7 4:7
+#end
+
+#selectarmor 204
+#name "Armor of the Sun"
+#type 5
+#def -2
+#rcost 20
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:19 3:14 4:14
+#end
+
+#selectarmor 205
+#name "Sun Cuirass"
+#type 5
+#def -1
+#rcost 14
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:19 3:8 4:8
+#end
+
+#selectarmor 206
+#name "Obsidian Cuirass"
+#type 5
+#def -1
+#rcost 18
+#enc 2
+-- ro: protection by part = 2:22 3:8 4:8
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 207
+#name "Wicker Shield"
+#type 4
+#def 3
+#rcost 1
+#enc 1
+#prot 13
+#woodenarmor
+#end
+
+#selectarmor 208
+#name "Iron Shield"
+#type 4
+#def 3
+#rcost 3
+#enc 1
+#prot 19
+#ironarmor
+#end
+
+#selectarmor 209
+#name "Hoplon"
+#type 4
+#def 3
+#rcost 3
+#enc 1
+#prot 19
+#end
+
+#selectarmor 210
+#name "Meteorite Cuirass"
+#type 5
+#def -1
+#rcost 18
+#enc 2
+-- ro: protection by part = 2:21 3:8 4:8
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 211
+#name "Meteorite Cap"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 16
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 212
+#name "Magic Crown"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 9
+#magicarmor
+#end
+
+#selectarmor 213
+#name "Golden Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 20
+#magicarmor
+#end
+
+#selectarmor 214
+#name "Golden Armor"
+#type 5
+#def -2
+#rcost 0
+#enc 4
+#magicarmor
+-- ro: protection by part = 2:20 3:16 4:16
+#end
+
+#selectarmor 215
+#name "Full Plate of Ulm"
+#type 5
+#def -3
+#rcost 30
+#enc 4
+#prot 23
+#ironarmor
+#magicarmor
+-- ro: ability 582 = 6
+#end
+
+#selectarmor 216
+#name "Full Chain of Ulm"
+#type 5
+#def -3
+#rcost 21
+#enc 3
+#prot 19
+#ironarmor
+#magicarmor
+-- ro: ability 582 = 6
+#end
+
+#selectarmor 217
+#name "Plate Cuirass of Ulm"
+#type 5
+#def -1
+#rcost 19
+#enc 2
+#ironarmor
+#magicarmor
+-- ro: protection by part = 2:23 3:10 4:10
+-- ro: ability 582 = 2
+#end
+
+#selectarmor 218
+#name "Full Helmet of Ulm"
+#type 6
+#def -1
+#rcost 6
+#enc 0
+#prot 23
+#ironarmor
+#magicarmor
+#end
+
+#selectarmor 219
+#name "Half Helmet of Ulm"
+#type 6
+#def 0
+#rcost 4
+#enc 0
+#prot 19
+#ironarmor
+#magicarmor
+#end
+
+#selectarmor 220
+#name "Tower Shield of Ulm"
+#type 4
+#def 5
+#rcost 4
+#enc 2
+#prot 19
+#ironarmor
+#magicarmor
+#end
+
+#selectarmor 221
+#name "Kite Shield of Ulm"
+#type 4
+#def 4
+#rcost 5
+#enc 2
+#prot 22
+#ironarmor
+#magicarmor
+#end
+
+#selectarmor 222
+#name "Fish Cloak"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+-- ro: protection by part = 2:5 3:3 4:3
+#end
+
+#selectarmor 223
+#name "Enchanted Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 15
+#magicarmor
+#end
+
+#selectarmor 224
+#name "Shell Cap"
+#type 6
+#def 0
+#rcost 1
+#enc 0
+#prot 10
+#end
+
+#selectarmor 225
+#name "Ice Aegis"
+#type 4
+#def 7
+#rcost 0
+#enc 1
+#prot 21
+#magicarmor
+#end
+
+#selectarmor 226
+#name "Ice Cap"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 18
+#magicarmor
+#end
+
+#selectarmor 227
+#name "Magic Helmet"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 22
+#magicarmor
+#end
+
+#selectarmor 228
+#name "Skullface"
+#type 6
+#def -1
+#rcost 0
+#enc 0
+#prot 18
+#magicarmor
+#end
+
+#selectarmor 229
+#name "Metal Scale Armor"
+#type 5
+#def -2
+#rcost 14
+#enc 3
+#prot 15
+#end
+
+#selectarmor 230
+#name "Magic Robes"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+#prot 3
+#woodenarmor
+#magicarmor
+#end
+
+#selectarmor 231
+#name "Heavy Magic Robes"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+#prot 4
+#woodenarmor
+#magicarmor
+#end
+
+#selectarmor 232
+#name "Light Magic Furs"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:6 3:4 4:4
+#end
+
+#selectarmor 233
+#name "Armor of the Five Elements"
+#type 5
+#def -1
+#rcost 0
+#enc 2
+#prot 17
+#magicarmor
+#end
+
+#selectarmor 234
+#name "Magic Headdress"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 8
+#magicarmor
+#end
+
+#selectarmor 235
+#name "Magic Leather Shield"
+#type 4
+#def 4
+#rcost 0
+#enc 0
+#prot 13
+#magicarmor
+#end
+
+#selectarmor 236
+#name "Gleaming Cuirass"
+#type 5
+#def -1
+#rcost 9
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:16 3:8 4:8
+#end
+
+#selectarmor 237
+#name "Gleaming Hauberk"
+#type 5
+#def -2
+#rcost 21
+#enc 4
+#magicarmor
+-- ro: protection by part = 2:21 3:15 4:15
+#end
+
+#selectarmor 238
+#name "Gleaming Hoplon"
+#type 4
+#def 4
+#rcost 5
+#enc 1
+#prot 22
+#magicarmor
+#end
+
+#selectarmor 239
+#name "Gleaming Helmet"
+#type 6
+#def -1
+#rcost 6
+#enc 0
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 240
+#name "Champion's Headband"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 10
+#magicarmor
+#end
+
+#selectarmor 241
+#name "Orichalcum Cuirass"
+#type 5
+#def -1
+#rcost 20
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:22 3:9 4:9
+#end
+
+#selectarmor 242
+#name "Orichalcum Hoplon"
+#type 4
+#def 4
+#rcost 6
+#enc 1
+#prot 22
+#magicarmor
+#end
+
+#selectarmor 243
+#name "Orichalcum Helmet"
+#type 6
+#def -1
+#rcost 7
+#enc 0
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 244
+#name "Magic Silk Garments"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#prot 8
+#woodenarmor
+#magicarmor
+#end
+
+#selectarmor 245
+#name "Cyclope Cuirass"
+#type 5
+#def -1
+#rcost 17
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:22 3:9 4:9
+-- ro: ability 582 = 2
+#end
+
+#selectarmor 246
+#name "Cyclope Hauberk"
+#type 5
+#def -2
+#rcost 23
+#enc 4
+#magicarmor
+-- ro: protection by part = 2:22 3:16 4:16
+-- ro: ability 582 = 4
+#end
+
+#selectarmor 247
+#name "Cyclope Hoplon"
+#type 4
+#def 4
+#rcost 5
+#enc 1
+#prot 22
+#magicarmor
+#end
+
+#selectarmor 248
+#name "Cyclope Helmet"
+#type 6
+#def 0
+#rcost 6
+#enc 0
+#prot 22
+#magicarmor
+#end
+
+#selectarmor 249
+#name "Cloth Headpiece"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 3
+#end
+
+#selectarmor 250
+#name "Shield of Wisdom"
+#type 4
+#def 5
+#rcost 0
+#enc 1
+#prot 19
+#magicarmor
+#end
+
+#selectarmor 251
+#name "Leather Barding"
+#type 5
+#def 0
+#rcost 3
+#enc 0
+-- ro: protection by part = 2:7 3:3 4:3
+#end
+
+#selectarmor 252
+#name "Light Scale Barding"
+#type 5
+#def 0
+#rcost 6
+#enc 1
+#ironarmor
+-- ro: protection by part = 2:13 3:8 4:8
+#end
+
+#selectarmor 253
+#name "Cataphract Barding"
+#type 5
+#def -1
+#rcost 10
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:15 3:11 4:11 1:21
+#end
+
+#selectarmor 254
+#name "Plate Barding"
+#type 5
+#def -2
+#rcost 15
+#enc 3
+#ironarmor
+-- ro: protection by part = 2:21 3:15 4:15 1:21
+#end
+
+#selectarmor 255
+#name "Silver Barding"
+#type 5
+#def -1
+#rcost 20
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:22 3:16 4:16 1:22
+#end
+
+#selectarmor 256
+#name "Rusty Scale Barding"
+#type 5
+#def 0
+#rcost 0
+#enc 1
+#ironarmor
+-- ro: protection by part = 2:11 3:6 4:6
+#end
+
+#selectarmor 257
+#name "Rusty Cataphract Barding"
+#type 5
+#def -1
+#rcost 0
+#enc 2
+#ironarmor
+-- ro: protection by part = 2:13 3:9 4:9 1:19
+#end
+
+#selectarmor 258
+#name "Bloodstone Armor"
+#type 5
+#def -3
+#rcost 0
+#enc 6
+#magicarmor
+-- ro: protection by part = 2:23 3:18 4:18
+#end
+
+#selectarmor 259
+#name "Gossamer Vest"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:12 3:6 4:6
+#end
+
+#selectarmor 260
+#name "Twilight Shield"
+#type 4
+#def 4
+#rcost 0
+#enc 1
+#prot 14
+#magicarmor
+#end
+
+#selectarmor 261
+#name "Fay Cap"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 12
+#magicarmor
+#end
+
+#selectarmor 262
+#name "Mirror Shield"
+#type 4
+#def 6
+#rcost 0
+#enc 2
+#prot 22
+#end
+
+#selectarmor 263
+#name "Bronze Barding"
+#type 5
+#def -2
+#rcost 14
+#enc 3
+-- ro: protection by part = 2:20 3:14 4:14 1:20
+#end
+
+#selectarmor 264
+#name "Light Bronze Barding"
+#type 5
+#def 0
+#rcost 8
+#enc 1
+-- ro: protection by part = 2:12 3:7 4:7
+#end
+
+#selectarmor 265
+#name "Brightmail Hauberk"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:20 3:14 4:14
+#end
+
+#selectarmor 266
+#name "War Crown"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 14
+#end
+
+#selectarmor 267
+#name "Heavenly Shield"
+#type 4
+#def 4
+#rcost 8
+#enc 1
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 268
+#name "Heavenly Plate"
+#type 5
+#def -2
+#rcost 25
+#enc 3
+#prot 23
+#magicarmor
+#end
+
+#selectarmor 269
+#name "Fur Mask"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 5
+#end
+
+#selectarmor 270
+#name "Enchanted Leather Barding"
+#type 5
+#def 0
+#rcost 3
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:10 3:6 4:6 1:10
+#end
+
+#selectarmor 271
+#name "Boar Leather Barding"
+#type 5
+#def 0
+#rcost 3
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:15 3:7 4:7 1:15
+#end
+
+#selectarmor 272
+#name "Enchanted Plate Barding"
+#type 5
+#def -1
+#rcost 15
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:23 3:17 4:17 1:23
+#end
+
+#selectarmor 273
+#name "Blacksteel Barding"
+#type 5
+#def -2
+#rcost 15
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:24 3:18 4:18 1:24
+#end
+
+#selectarmor 274
+#name "Gossamer Barding"
+#type 5
+#def 0
+#rcost 3
+#enc 0
+#magicarmor
+-- ro: protection by part = 2:13 3:7 4:7 1:13
+#end
+
+#selectarmor 275
+#name "Fay Steed Barding"
+#type 5
+#def -1
+#rcost 15
+#enc 2
+#magicarmor
+-- ro: protection by part = 2:21 3:16 4:16 1:21
+#end
+
+#selectarmor 276
+#name "Lightweight Cataphract Barding"
+#type 5
+#def 0
+#rcost 10
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:16 3:12 4:12 1:22
+#end
+
+#selectarmor 277
+#name "Golden Barding"
+#type 5
+#def -2
+#rcost 15
+#enc 3
+#magicarmor
+-- ro: protection by part = 2:23 3:17 4:17 1:23
+#end
+
+#selectarmor 278
+#name "Magic Crown"
+#type 6
+#def 0
+#rcost 0
+#enc 0
+#prot 6
+#magicarmor
+#end
+
+#selectarmor 279
+#name "Armor of Meteoritic Iron"
+#type 5
+#def -3
+#rcost 0
+#enc 5
+#prot 23
+-- ro: ability 557 = 2
+#end
+
+#selectarmor 280
+#name "Plate Barding of Ulm"
+#type 5
+#def -2
+#rcost 15
+#enc 3
+#ironarmor
+#magicarmor
+-- ro: protection by part = 2:23 3:17 4:17 1:23
+#end
+
+#selectarmor 281
+#name "Gossamer Mail"
+#type 5
+#def -1
+#rcost 13
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:18 3:13 4:13
+#end
+
+#selectarmor 282
+#name "Fay Plate Armor"
+#type 5
+#def -2
+#rcost 25
+#enc 3
+#prot 21
+#magicarmor
+-- ro: ability 582 = 6
+#end
+
+#selectarmor 283
+#name "Fay Cap"
+#type 6
+#def 0
+#rcost 2
+#enc 0
+#prot 16
+#magicarmor
+#end
+
+#selectarmor 284
+#name "Fay Helmet"
+#type 6
+#def -1
+#rcost 5
+#enc 0
+#prot 21
+#magicarmor
+#end
+
+#selectarmor 285
+#name "Gossamer Shield"
+#type 4
+#def 4
+#rcost 6
+#enc 0
+#prot 15
+#magicarmor
+#end
+
+#selectarmor 286
+#name "Bone Mask"
+#type 6
+#def -1
+#rcost 0
+#enc 0
+#prot 9
+#end
+
+#selectarmor 287
+#name "Cat Barding"
+#type 5
+#def -1
+#rcost 10
+#enc 1
+#ironarmor
+-- ro: protection by part = 2:19 3:5 4:5 1:19
+#end
+
+#selectarmor 288
+#name "Charred Shield"
+#type 4
+#def 4
+#rcost 7
+#enc 1
+#prot 22
+#magicarmor
+#end
+
+#selectarmor 289
+#name "Lizard Barding"
+#type 5
+#def -1
+#rcost 12
+#enc 2
+-- ro: protection by part = 2:20 3:7 4:7 1:20
+#end
+
+#selectarmor 290
+#name "King's Barding"
+#type 5
+#def 0
+#rcost 15
+#enc 1
+#magicarmor
+-- ro: protection by part = 2:23 3:20 4:20 1:23
+#end
+
+#selectarmor 291
+#name "Icicle Dress"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+#prot 5
+#magicarmor
+#end
+
+#selectarmor 292
+#name "Storm Armor"
+#type 5
+#def -2
+#rcost 0
+#enc 3
+#prot 22
+#magicarmor
+#end
+
+#selectarmor 293
+#name "Lion Pelt"
+#type 5
+#def -1
+#rcost 1
+#enc 1
+-- ro: protection by part = 1:6 2:7 3:6 4:6
+-- ro: ability 582 = 0
+#end
+
+#selectarmor 294
+#name "Lion Cloak"
+#type 5
+#def -1
+#rcost 1
+#enc 1
+-- ro: protection by part = 1:0 2:7 3:6 4:6
+-- ro: ability 582 = 0
+#end
+
+#selectarmor 295
+#name "Invisible Clothes"
+#type 5
+#def 0
+#rcost 0
+#enc 0
+#prot 0
+#end
+
+#selectarmor 296
+#name "Gossamer Gown"
+#type 5
+#def 0
+#rcost 1
+#enc 0
+#prot 3
+#woodenarmor
+#magicarmor
+#end
+
+#selectarmor 297
+#name "end"
+#type 5
+#def -999
+#rcost 0
+#enc -999
+#end
 
 #selectmonster 0
 #name "no one"

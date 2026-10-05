@@ -25,7 +25,7 @@ import collections
 import re
 import struct
 
-from dom6exe import Parser, monsters, num, reg64
+from dom6exe import TABLES, Parser, monsters, num, reg64, table_records, text
 
 FLAGS, FLAGS2, BODY = 0x368, 0x370, 0x374
 HUMANOID = 0x701
@@ -119,6 +119,17 @@ def fixed_names(exe, p):
     return names
 
 
+def number_scanner(exe, p):
+    """The function commands call to read a number argument: called with a "%d"-style format."""
+    fmt = collections.Counter()
+    for k, (a, o, r, t) in enumerate(p.ins):
+        if o == 'call':
+            prev = [x for x in p.ins[k - 4:k] if x[1] == 'lea' and x[2].startswith('rdx,') and x[3]]
+            if prev and (exe.cstr(prev[-1][3]) or '').startswith('%d'):
+                fmt[r.split()[0]] += 1
+    return fmt.most_common(1)[0][0]
+
+
 class MonsterModel:
     """What each monster command stores, from the parser's code."""
 
@@ -127,14 +138,7 @@ class MonsterModel:
         p._setter = p.ability_setter()
         br = p.branches('monster')
         self.base = int(p.record_layout('monster')['record_base'], 16)
-        # the scanner a command calls to read a number argument: called with a "%d"-style format
-        fmt = collections.Counter()
-        for k, (a, o, r, t) in enumerate(p.ins):
-            if o == 'call':
-                prev = [x for x in p.ins[k - 4:k] if x[1] == 'lea' and x[2].startswith('rdx,') and x[3]]
-                if prev and (exe.cstr(prev[-1][3]) or '').startswith('%d'):
-                    fmt[r.split()[0]] += 1
-        scanner = fmt.most_common(1)[0][0]
+        scanner = number_scanner(exe, p)
         self.effects = {}
         for cmd, effs in br.items():
             e = {'bits': collections.Counter(), 'clears': collections.Counter(), 'stores': {}, 'abilities': [],
@@ -167,7 +171,7 @@ class MonsterModel:
                 self.direct[key].append((cmd, val))
         self.body_cmd = {}
         for cmd, e in sorted(self.effects.items()):
-            if BODY in e['stores'] and e['stores'][BODY] != HUMANOID:
+            if isinstance(e['stores'].get(BODY), int) and e['stores'][BODY] != HUMANOID:
                 self.body_cmd.setdefault(e['stores'][BODY], cmd)
 
     def ability_line(self, key, val):
@@ -334,17 +338,264 @@ def monster_commands(exe):
 
 
 def write(exe, path):
-    cmds = monster_commands(exe)
-    text = ['-- Dominions %s vanilla monsters, written from Dominions6.exe by tools/dom6exe (exe %s).' % (exe.version, exe.sha),
-            '-- "-- ro:" lines are stored values no monster command can set (shown read-only).', '']
-    for i, e in cmds.items():
-        text.append('#selectmonster %d' % i)
-        text.extend(e['lines'])
-        text.extend('-- ro: %s = %s' % (what, val) for what, val in e['readonly'])
-        text.append('#end')
-        text.append('')
+    sections = [('weapon', weapon_commands), ('armor', armor_commands), ('monster', monster_commands)]
+    text = ['-- Dominions %s vanilla data, written from Dominions6.exe by tools/dom6exe (exe %s).' % (exe.version, exe.sha),
+            '-- "-- ro:" lines are stored values no command can set (shown read-only).', '']
+    res = {'game_version': exe.version}
+    for kind, fn in sections:
+        cmds = fn(exe)
+        for i, e in cmds.items():
+            text.append('#select%s %d' % (kind, i))
+            text.extend(e['lines'])
+            text.extend('-- ro: %s = %s' % (what, val) for what, val in e['readonly'])
+            text.append('#end')
+            text.append('')
+        ro = collections.Counter(w for e in cmds.values() for w, v in e['readonly'])
+        res[kind] = {'count': len(cmds), 'readonly_values': sum(ro.values()), 'readonly_kinds': dict(ro.most_common())}
     if path:
         open(path, 'w', encoding='utf-8').write('\n'.join(text))
-    ro = collections.Counter(w for e in cmds.values() for w, v in e['readonly'])
-    return {'game_version': exe.version, 'monsters': len(cmds), 'readonly_values': sum(ro.values()),
-            'readonly_kinds': dict(ro.most_common())}
+    return res
+
+
+# ---------------------------------------------------------------------------------------------
+# Weapons and armor: commands store their argument in a record field, set or clear flag bits,
+# or add an ability through the type's own setter.
+
+def mask(size):
+    return (1 << 8 * size) - 1
+
+
+def bits_of(v):
+    return [1 << b for b in range(64) if v >> b & 1]
+
+
+class ContextModel:
+    """What each command of one entity parser does to the record: fields stored (a constant or
+    the parsed argument), flag bits set or cleared, abilities added through the type's setter."""
+
+    def __init__(self, exe, ctx, setter=None):
+        self.p = p = Parser(exe)
+        p._setter = setter
+        br = p.branches(ctx)
+        self.base = collections.Counter(e[1] for effs in br.values() for e in effs if e[1] is not None).most_common(1)[0][0]
+        scanner = number_scanner(exe, p)
+        self.effects = {}
+        for cmd, effs in br.items():
+            e = {'bits': collections.Counter(), 'clears': collections.Counter(), 'stores': {}, 'abilities': [],
+                 'numeric': any(k == 'call' and off == scanner for k, b, off, size, val in effs)}
+            for kind, b, off, size, val in effs:
+                if kind == 'ability':
+                    if (off, val) not in e['abilities']:
+                        e['abilities'].append((off, val))
+                elif b != self.base:
+                    continue
+                elif kind == 'set_bits' and val:
+                    e['bits'][off] |= val & mask(size)
+                elif kind == 'clear_bits' and val is not None:
+                    e['clears'][off] |= ~val & mask(size)
+                elif kind == 'store':
+                    e['stores'].setdefault((off, size), val)
+            self.effects[cmd] = e
+        self.by_ability = collections.defaultdict(list)
+        for cmd, e in sorted(self.effects.items()):
+            for key, spec in e['abilities']:
+                self.by_ability[key].append((cmd, spec))
+
+    def check(self, cmd, off, size, spec=('arg', 0)):
+        """Fail loudly if a command no longer stores what this module assumes."""
+        got = self.effects.get(cmd, {}).get('stores', {}).get((off, size))
+        if got != spec:
+            raise SystemExit('#%s: expected it to store %s at 0x%x/%d, the parser stores %s' % (cmd, spec, off, size, got))
+
+    def flag_lines(self, off, value, default, abilities):
+        """Commands that turn the default flag word into this value: first the ones clearing
+        default bits the record lacks, then the ones setting its other bits. A command may also
+        add abilities if the record has them (#ironweapon: a bit and ability 266); those are
+        returned as covered. Bits no command produces come back as unmatched."""
+        lines, covered, unmatched = [], set(), 0
+
+        def abilities_ok(e):
+            return all(key in abilities and (isinstance(spec, tuple) or abilities[key] == spec) for key, spec in e['abilities'])
+
+        done = 0
+        for b in bits_of(default & ~value):
+            if any(self.effects[l[1:]]['clears'][off] & b for l in lines):
+                continue
+            cands = [(bin(e['clears'][off]).count('1'), c) for c, e in self.effects.items()
+                     if e['clears'][off] & b and not e['bits'][off] & ~value and not e['stores'] and not e['abilities']]
+            if cands:
+                lines.append('#' + min(cands)[1])
+                done |= self.effects[min(cands)[1]]['bits'][off]
+            else:
+                unmatched |= b
+        need = value & ~default & ~done
+        while need:
+            b = need & -need
+            cands = []
+            for c, e in self.effects.items():
+                sets = e['bits'][off]
+                if sets & b and not sets & ~value and not e['clears'][off] & value & ~sets and not e['stores'] and abilities_ok(e):
+                    cands.append((-bin(sets & need).count('1'), len(e['abilities']), c))
+            if not cands:
+                unmatched |= b
+                need &= ~b
+                continue
+            c = min(cands)[2]
+            lines.append('#' + c)
+            need &= ~self.effects[c]['bits'][off]
+            covered |= {key for key, spec in self.effects[c]['abilities']}
+        return lines, covered, unmatched
+
+    def ability_lines(self, abilities, covered):
+        lines, ro = [], []
+        for key, val in abilities.items():
+            if key in covered:
+                continue
+            line = None
+            for cmd, spec in self.by_ability.get(key, []):
+                e = self.effects[cmd]
+                if e['bits'] or e['stores'] or {k for k, sp in e['abilities']} != {key}:
+                    continue
+                if isinstance(spec, tuple) and e['numeric']:
+                    line = '#%s %d' % (cmd, val - spec[1])
+                elif isinstance(spec, tuple) and val == 1:
+                    line = '#' + cmd        # no argument; the value 1 comes from a register
+                elif spec == val:
+                    line = '#' + cmd
+                if line:
+                    break
+            if line:
+                lines.append(line)
+            else:
+                ro.append(('ability %d' % key, val))
+        return lines, ro
+
+
+def setter_of(p, ctx, key_cmd):
+    """The ability setter of an entity type: the function a command's branch (or the shared
+    tail it jumps to) calls with the ability number in edx."""
+    for i, (f, s) in sorted(p.refs.items()):
+        if s == key_cmd and f in p.contexts[ctx]:
+            for k in range(i, i + 150):
+                a, op, args, tgt = p.ins[k]
+                if op == 'mov' and re.match(r'edx,0x[0-9a-f]+$', args):
+                    for a2, op2, args2, t2 in p.ins[k + 1:k + 4]:
+                        if op2 == 'call':
+                            return args2.split()[0]
+                        if op2 == 'jmp':
+                            t = p.index[num(args2.split()[0])]
+                            return next(x[2].split()[0] for x in p.ins[t:t + 6] if x[1] == 'call')
+    return None
+
+
+def records(exe, kind):
+    start, size, recs = table_records(exe, TABLES[kind])
+    return {i: r for i, r in recs.items() if r[:1] != b'\0'}
+
+
+def name_of(r):
+    return text(r[:36].split(b'\0')[0])
+
+
+# weapon record (6.37): defaults from #clear (0x140227f90)
+W_FIELDS = [('dmg', 0x28, 8, 2), ('att', 0x30, 2, 0), ('def', 0x32, 2, 0), ('len', 0x36, 2, 1),
+            ('nratt', 0x3a, 2, 1), ('ammo', 0x3c, 2, 0), ('aoe', 0x5a, 2, 0), ('sound', 0x5c, 2, 7),
+            ('rcost', 0x5e, 2, 0)]
+W_TYPE, W_RANGE, W_FLAGS, W_SECONDARY = 0x34, 0x38, 0x40, 0x50
+W_FLYSPR, W_EXPLSPR, W_ABILITIES = 0x52, 0x56, 0x60
+W_DEFAULT_FLAGS, W_DEFAULT_TYPE = 0x200001, 2
+
+
+def weapon_commands(exe):
+    p = Parser(exe)
+    model = ContextModel(exe, 'weapon', setter_of(p, 'weapon', 'fireifhit'))
+    for cmd, off, size, default in W_FIELDS:
+        model.check(cmd, off, size)
+    model.check('range', W_RANGE, 2)
+    model.check('secondaryeffect', W_SECONDARY, 2) if False else None
+    dt = {e['stores'][(W_TYPE, 2)]: c for c, e in sorted(model.effects.items()) if isinstance(e['stores'].get((W_TYPE, 2)), int)}
+    out = {}
+    for i, r in sorted(records(exe, 'weapon').items()):
+        u16 = lambda o: struct.unpack_from('<h', r, o)[0]
+        lines, ro = ['#name "%s"' % name_of(r).replace('"', "'")], []
+        rng = u16(W_RANGE)
+        if rng:
+            lines.append('#range %d' % rng)      # also sets len 0 and ammo 12 if unset: written below
+        for cmd, off, size, default in W_FIELDS:
+            v = struct.unpack_from('<q' if size == 8 else '<h', r, off)[0]
+            if v != default or cmd in ('dmg', 'att', 'def', 'len', 'nratt', 'rcost') or (rng and cmd in ('len', 'ammo')):
+                lines.append('#%s %d' % (cmd, v))
+        t = u16(W_TYPE)
+        if t != W_DEFAULT_TYPE:
+            lines.append('#' + dt[t]) if t in dt else ro.append(('damage type', t))
+        ab = {}
+        for k in range(7):
+            key, val = struct.unpack_from('<ii', r, W_ABILITIES + 8 * k)
+            if not key:
+                break
+            ab.setdefault(key, val)
+        flags = struct.unpack_from('<Q', r, W_FLAGS)[0]
+        fl, covered, unmatched = model.flag_lines(W_FLAGS, flags, W_DEFAULT_FLAGS, ab)
+        lines += fl
+        ro += [('flag bit', hex(b)) for b in bits_of(unmatched)]
+        sec = u16(W_SECONDARY)
+        if sec:
+            lines.append('#secondaryeffect %d' % sec if sec > 0 else '#secondaryeffectalways %d' % -sec)
+        if u16(W_FLYSPR) != -1 or u16(W_FLYSPR + 2):
+            lines.append('#flyspr %d %d' % (u16(W_FLYSPR), u16(W_FLYSPR + 2)))
+        if u16(W_EXPLSPR) != -1:
+            lines.append('#explspr %d' % u16(W_EXPLSPR))
+            if u16(W_EXPLSPR + 2) != 9:      # #explspr always stores 9 frames
+                ro.append(('explosion sprite frames', u16(W_EXPLSPR + 2)))
+        al, aro = model.ability_lines(ab, covered)
+        lines += al
+        ro += aro
+        out[i] = {'lines': lines, 'readonly': ro}
+    return out
+
+
+# armor record (6.37): protection by body part (part, value) from 0x24, 4 ability numbers at
+# 0x48 with their values at 0x58. #prot sets the part(s) its type covers (shield 5, helmet 1,
+# else torso 2, arms 3, legs 4 to the same value); #protparts h b sets head 1 and parts 2-4.
+A_PARTS, A_DEF, A_ENC, A_TYPE, A_RCOST, A_AB_KEYS, A_AB_VALS = 0x24, 0x3e, 0x40, 0x42, 0x44, 0x48, 0x58
+
+
+def armor_commands(exe):
+    p = Parser(exe)
+    model = ContextModel(exe, 'armor', setter_of(p, 'armor', 'ironarmor'))
+    for cmd, off in (('def', A_DEF), ('enc', A_ENC), ('type', A_TYPE), ('rcost', A_RCOST)):
+        model.check(cmd, off, 2)
+    out = {}
+    for i, r in sorted(records(exe, 'armor').items()):
+        h = lambda o: struct.unpack_from('<h', r, o)[0]
+        lines, ro = ['#name "%s"' % name_of(r).replace('"', "'")], []
+        typ = h(A_TYPE)
+        lines += ['#type %d' % typ, '#def %d' % h(A_DEF), '#rcost %d' % h(A_RCOST), '#enc %d' % h(A_ENC)]
+        parts = []
+        for k in range(4):
+            part, val = h(A_PARTS + 4 * k), h(A_PARTS + 4 * k + 2)
+            if not part:
+                break
+            parts.append((part, val))
+        pd = dict(parts)
+        if not parts:
+            pass
+        elif [x for x, v in parts] == [5] and typ == 4 or [x for x, v in parts] == [1] and typ == 6:
+            lines.append('#prot %d' % parts[0][1])
+        elif [x for x, v in parts] == [2, 3, 4] and pd[2] == pd[3] == pd[4] and typ not in (4, 6):
+            lines.append('#prot %d' % pd[2])
+        elif [x for x, v in parts] == [1, 2, 3, 4] and pd[2] == pd[3] == pd[4]:
+            lines.append('#protparts %d %d' % (pd[1], pd[2]))
+        else:
+            ro.append(('protection by part', ' '.join('%d:%d' % x for x in parts)))
+        ab = {}
+        for k in range(4):
+            key, val = struct.unpack_from('<i', r, A_AB_KEYS + 4 * k)[0], struct.unpack_from('<i', r, A_AB_VALS + 4 * k)[0]
+            if not key:
+                break
+            ab.setdefault(key, val)
+        al, aro = model.ability_lines(ab, set())
+        lines += al
+        ro += aro
+        out[i] = {'lines': lines, 'readonly': ro}
+    return out

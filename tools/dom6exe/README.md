@@ -8,7 +8,7 @@ tool that has no current maintainer. The exe itself holds both the vanilla table
 python3 tools/dom6exe/dom6exe.py commands  --out tools/dom6exe/data/commands-6.37.json
 python3 tools/dom6exe/dom6exe.py readonly  --out tools/dom6exe/data/readonly-monster-abilities-6.37.json
 python3 tools/dom6exe/dom6exe.py monsters  --out monsters.json      # ~3 MB, not committed
-python3 tools/dom6exe/dom6exe.py vanilla   --out tools/dom6exe/data/vanilla-monsters-6.37.dm
+python3 tools/dom6exe/dom6exe.py vanilla   --out tools/dom6exe/data/vanilla-6.37.dm
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
 `/mnt/c/Games/Steam/steamapps/common/Dominions6/Dominions6.exe`), `--inspector DIR` (a
@@ -23,7 +23,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `ability_keys` | For monster and item commands: the numbered ability each one sets (`#xpshape` = 1145). Monsters and items share the numbering. |
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
-| `vanilla` | Every vanilla monster as `#selectmonster` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `vanilla` | Vanilla weapons, armor and monsters as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
 
 ## How it finds things (no hard-coded addresses)
 
@@ -79,6 +79,27 @@ and GNU `objdump`. The exe is never copied into the repo.
 - `#demon` and `#undead` also set the "almost undead" bit; 128 vanilla demons and undead lack
   it (written as `#almostliving`, which clears it).
 
+## Weapons and armor (6.37)
+
+- Weapon `#clear` (0x140227f90) sets the defaults: dmg 2, dt_normal, len 1, nratt 1, sound 7,
+  no sprites, flags = full strength + a "not magic" bit that `#magic` clears.
+- Weapons keep up to 7 (ability, value) pairs at +0x60 (setter 0x1402fd530): `#woodenweapon`
+  268, `#iceweapon` 482, `#speedmult` 302, `#flail` 935, `#beam` 938, `#skip` 900, `#range0`
+  930 = 100, `#range050` 930 = 50, `#melee50` 931 = 50, `#fireifhit` 911 etc. `#ironweapon`
+  sets a flag bit and ability 266.
+- `#range N` also sets len 0 and, if ammo is 0, ammo 12. `#explspr` always stores 9 frames
+  (103 vanilla weapons have 5). `#secondaryeffect N` stores N, `#secondaryeffectalways N`
+  stores -N in the same field. `#thirdstr` does what `#halfstr` does.
+- Armor protection is a list of (body part, value): `#prot` sets the part(s) of its type
+  (shield 5, helmet 1, else torso, arms and legs alike); `#protparts h b` sets head and body.
+  141 vanilla armors (most body armor: a stronger torso) can't be written either way and are
+  read-only per part; the inspector writes (2 x torso + arms + legs) / 4. Armor abilities: 4
+  numbers at +0x48, values at +0x58 (`#magicarmor` 557 = 1; 11 vanilla armors have 2).
+- Commands the inspector writes that the weapon parser doesn't have: `#flammable` (is
+  `#woodenweapon`), `#nofirebless` (`#iceweapon`), `#defnegate` (`#defroll`), `#mrcheckhalfdmg`
+  (`#mrhalf`), `#usedinmelee`, `#dismounted`, `#hithead`, `#aironly`, `#demonimmune` (flag bits
+  and abilities with no command: read-only).
+
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 
 `vanilla` writes 4,138 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
@@ -97,6 +118,6 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- `vanilla` for weapons, armor, items, spells, sites and nations.
+- `vanilla` for items, spells, sites and nations.
 - Give Dom5Parser the command catalog: commands the game doesn't read in a context, and stored
   abilities no command sets (read-only in the editor).
