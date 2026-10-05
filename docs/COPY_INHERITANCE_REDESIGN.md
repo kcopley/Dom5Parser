@@ -169,7 +169,7 @@ Goal: a functionally-identical, style-faithful (where feasible) load→save.
 
 **Phase 0 — COMPLETE (2026-05-31).** Round-trip loop automated and a red baseline established:
 - `Dom5Tests roundtrip <in.dm> <out.dm>` imports + re-exports a mod with `vanilla.dm` as base (`Dom5Tests/Program.cs`). Append `nonorm` to skip Phase 1 normalization (for A/B comparison).
-- `dom5inspectorkc/roundtrip_check.js <vanilla.dm> <original> <roundtrip>` diffs the two parses, exit 0/1 (untracked, lives in the separate `dom5inspectorkc` repo). NOTE: it counts ALL differing entities but only *prints* the first 40; use the "differing fields by frequency" section for triage.
+- ~~`dom5inspectorkc/roundtrip_check.js`~~ (retired 2026-10-04: it had no vanilla base). The oracle is now `node scripts/headless/roundtrip_check.js <original> <roundtrip>` in the kcopley/dom6inspector fork, with a real CSV vanilla base; see `ROUND_TRIP_TESTING.md`. All numbers below (351/374/630) were measured with the old oracle. Under the new one, DomEnhanced is 1,478 normalized vs 1,499 `nonorm`.
 - Red test: `Dom5Tests/fixtures/copy/order_dependent_copy.dm` → was FAIL `unit #7001 att 10|99`.
 
 **Phase 1 — materialize + re-derive (combined), driven by `Mod.NormalizeCopies()`** (called after `Resolve()`, before `Export()`; round-trip harness only — GUI integration is Phase 4). Currently uncommitted.
