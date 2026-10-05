@@ -112,6 +112,27 @@ function judgeBaseline(stage, name, current) {
 
 function baselineOf(rep) { return { dataDiffs: rep.dataDiffs, diagnosticDiffs: rep.diagnosticDiffs, fieldCounts: rep.fieldCounts }; }
 
+// Take documented expected differences (suite.json, "type.field": reason) out of a report; they are
+// counted and printed separately. An entity counts as differing only if a non-expected field differs.
+function withoutExpected(rep, expected) {
+	const expectedCounts = {}, fieldCounts = {};
+	let dataDiffs = 0;
+	for (const e of rep.entities || []) {
+		let differs = false;
+		for (const f of Object.keys(e.fields)) {
+			const k = f !== '(entity)' ? e.type + '.' + f
+				: e.fields[f][0] === undefined ? '(entity only in roundtrip)' : '(entity only in original)'; // oracle's labels
+			if (expected[k]) { expectedCounts[k] = (expectedCounts[k] || 0) + 1; continue; }
+			fieldCounts[k] = (fieldCounts[k] || 0) + 1;
+			differs = true;
+		}
+		if (differs) dataDiffs++;
+	}
+	const exp = Object.entries(expectedCounts).sort((x, y) => y[1] - x[1]).map(([k, n]) => k + ' ' + n).join(', ');
+	if (exp) console.log('      expected (suite.json stage1Expected): ' + exp);
+	return { ...rep, dataDiffs, fieldCounts };
+}
+
 const stable = (v) => (v === null || typeof v !== 'object' ? JSON.stringify(v ?? null)
 	: Array.isArray(v) ? '[' + v.map(stable).join(',') + ']'
 		: '{' + Object.keys(v).sort().map((k) => JSON.stringify(k) + ':' + stable(v[k])).join(',') + '}');
@@ -144,7 +165,7 @@ if (opt.stages.includes(1)) {
 		const out = path.join(WORK, m.name + '.inspector.dm');
 		const r = oracle('export-mod.js', [m.abs, out]);
 		if (r.code !== 0) throw new Error('export-mod failed: ' + r.out.trim().split('\n').slice(-2).join(' | '));
-		const rep = compare(m.abs, out, 'final', m.name + '.stage1');
+		const rep = withoutExpected(compare(m.abs, out, 'final', m.name + '.stage1'), SUITE.stage1Expected || {});
 		if (m.expect === 'baseline') judgeBaseline(1, m.name, baselineOf(rep));
 		else judgePass(1, m.name, rep, m.knownFailing?.['1']);
 	});

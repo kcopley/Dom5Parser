@@ -8,7 +8,7 @@ differ only in ways we've explicitly listed as expected.
 **Runner:** `tools/fidelity/run.mjs` · **Config:** `tools/fidelity/suite.json` ·
 **Baselines:** `tools/fidelity/baselines/` · **CI:** `.github/workflows/fidelity.yml`
 
-**Last Updated:** 2026-10-04
+**Last Updated:** 2026-10-05
 
 ---
 
@@ -16,7 +16,7 @@ differ only in ways we've explicitly listed as expected.
 
 | Stage | Question | How | Compared at |
 |---|---|---|---|
-| **1. Inspector self-check** | Can the oracle write back out everything it read from a mod? | Inspector loads vanilla + mod, exports every entity the mod touched (`export-mod.js`), reloads the export | **final**: after the inspector's full post-processing (functional equality) |
+| **1. Inspector self-check** | Can the oracle write back out everything it read from a mod? | Inspector loads vanilla + mod, exports every entity the mod touched in full, after `#clear` (`export-mod.js`), reloads the export | **final**: after the inspector's full post-processing (functional equality) |
 | **2. Vanilla data** | Is `vanilla.dm` faithful to the game data? | (a) exporter round-trips the CSV data (`verify-export.js`); (b) committed `vanilla.dm` = what the pinned oracle generates; (c) audit of `vanilla.dm` values that differ from the raw game data | parse |
 | **3. Save fidelity** | Does saving in Dom5Parser change any data? | `Dom5Tests roundtrip` (load → save) → oracle compares original vs saved | **parse**: strict, right after parsing (catches even a dropped command that only restated a default) |
 | **4. Edits** | Does an edit change exactly what it should, and nothing else? | `Dom5Tests edit` applies scripted edits → oracle compares an unedited save vs the edited save → must match the case's `expect` list exactly | parse |
@@ -58,6 +58,11 @@ skipped by `--quick` and run in CI, after oracle or `vanilla.dm` changes, and we
 | `XPASS` | known-failing case now passes; remove its `knownFailing` |
 | `NEW` | baseline case without a baseline file yet |
 
+**Expected differences:** values a mod command cannot write are listed with the reason in
+`suite.json`: `vanillaExpected` (stage 2c) and `stage1Expected` (stage 1, e.g. game
+attributes with no command, which the full re-export's `#clear` removes). They are counted
+and printed separately and don't fail a check.
+
 **Baselines (ratchet):** large real mods (DomEnhanced) can't be at zero yet, so their
 per-field difference counts are committed. The suite fails if any field's count rises, or
 a new field appears. Fixes lower the counts, and `--update-baselines` records the
@@ -90,19 +95,33 @@ or `"baseline"`. Mark a stage known-failing with
   arrays, unset as `null`. `from`/`to` can be omitted to accept any value. Write
   expectations from intent, never by copying observed output.
 
-## Current state (2026-10-04, oracle 5961cf1, game 6.37)
+## Current state (2026-10-05, oracle 867be95, game 6.37)
 
 | Stage | Case | Result |
 |---|---|---|
 | 1 | 5 copy fixtures, edits-base | pass |
-| 1 | DomEnhanced 2.13 | baseline **6,269** (8,945 at first). What remains is mostly the inspector's model of *mods*, not vanilla data: copies don't inherit the source's attribute-based properties (provrange, hiddenench, weapon flags), plus derived display fields (`rt`, `bow`, `leader`, `gemcost`, `sorttype`, ...). |
-| 2 | exporter round trip | **pass**: now strict. Each entity re-imports into a fresh object and must re-export the same command lines. The old test compared each object with itself. |
+| 1 | DomEnhanced 2.13 | baseline **6** unexpected differences (8,945 at first, 6,269 on 2026-10-04), plus 152 fields listed in `stage1Expected` (game attributes with no mod command). Every touched entity is now re-exported in full after `#clear`, so the export has to carry every value itself. |
+| 2 | exporter round trip | pass |
 | 2 | vanilla.dm current | pass |
-| 2 | vanilla base values | **pass, only expected differences** (3,568 at first). The expected ones are listed in `suite.json` `vanillaExpected`. |
+| 2 | vanilla base values | **pass, only expected differences** (`vanillaExpected`); baseline locked at zero |
 | 3 | copy fixtures + edits-base | pass, except `name_before_copy` (xfail) |
-| 3 | DomEnhanced 2.13 | baseline **932** |
+| 3 | DomEnhanced 2.13 | baseline **909** |
 | 4 | e01-e06, e08 | pass |
 | 4 | e07 live template | xfail |
+
+What changed in the oracle to get stage 1 there is in the fork's `docs/EXPORT_RULES.md`. In
+short, the inspector held the same data in two forms: the game data's, and the parser's for
+the mod command. Some game data was also applied after mods were read. Both are now aligned.
+`vanilla.dm` gained data it never had:
+- leadership for over 2,000 units (the tables had Dom5's scale);
+- 1,468 spell effects plus spell range and area;
+- ritual gem costs;
+- slow recruitment;
+- site summons;
+- item spells;
+- item slots for every unit.
+
+Dom5Parser loads it with the same 127 warnings as before.
 
 ## Open findings (need decisions or work)
 
@@ -125,12 +144,12 @@ or `"baseline"`. Mark a stage known-failing with
    original-file-order export design.
 3. **`name_before_copy` (stage 3).** `#name` declared above a `#copy*` is dropped on
    save. An in-game check settles it.
-4. **Never-exported game data.** About 180 parsed unit/item/site fields still aren't
-   exported. Each needs mapping to a Dom6 command (plus a parser handler in the
-   inspector) or a read-only ruling. In progress.
-5. **Inspector: copies don't inherit attributes.** `#copyspell`/`#copyweapon` should
-   carry the source's attribute-based properties, as in game. The inspector applies
-   attributes by id only, which is the main remaining stage 1 class.
+4. **Game attributes with no mod command.** About 120 fields (`stage1Expected`). A few may
+   have a command under another name; candidates to confirm in game: `aboleth`
+   (`#mindslime`?), `tightrein` (`#undisleader`?), `popspy` (`#spy`?), `landenc`
+   (`#landdamage`?).
+5. ~~Inspector: copies don't inherit attributes~~ **Resolved 2026-10-05.** Game attributes are
+   applied before mods are read.
 6. **Dom5Parser: read-only vanilla lines.** About 94 of the 127 warnings when loading
    `vanilla.dm` are the informational read-only commands (`#flammable`,
    `#nofirebless`, ...). Dom5Parser should know the list (`ModExport.readOnlyCommands`)
