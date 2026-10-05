@@ -16,6 +16,18 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### All tables and parsers (step 3, in progress)
+
+- `dom6exe.py tables`: all seven vanilla tables located (monster 888 B, weapon 152, armor 104,
+  item 528, spell 280, site 312, nation 3000), with exact matches of inspector CSV columns.
+- `layout` now works for every entity parser (branch = from a command name to the next one;
+  register clobber tracking). Weapon record: dmg 0x28 (int64), att 0x30, def 0x32, effect type
+  0x34 (#dt_*), len 0x36, range 0x38, nratt 0x3a, ammo 0x3c, flags 0x40 (43 bits),
+  secondaryeffectalways 0x50, flyspr 0x52/54, explspr 0x56/58, aoe 0x5a, sound 0x5c, rcost 0x5e.
+  Items keep an ability list at 0x78 (24 pairs) plus flag words at 0x1f8/0x200/0x208.
+- Plan from here: invert the parser (record value -> the command that writes it) to write
+  vanilla.dm straight from the exe, monsters first; check it against the inspector-generated one.
+
 ### Rules from the exe applied (step 2)
 
 Dom5Parser (`PropertyGroupMap`, `IDEntity`):

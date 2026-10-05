@@ -4,6 +4,9 @@
  "monster": {
   "record_base": "0x1432efc80",
   "fields": {
+   "0x24/4": [
+    "newmonster"
+   ],
    "0x28/2": [
     "ap"
    ],
@@ -342,19 +345,660 @@
    ]
   }
  },
- "weapon": {
-  "record_base": "0x1447a6d90",
-  "fields": {},
+ "item": {
+  "record_base": "0x14318e910",
+  "fields": {
+   "0x24/1": [
+    "constlevel"
+   ],
+   "0x25/1": [
+    "mainpath"
+   ],
+   "0x27/1": [
+    "mainlevel"
+   ],
+   "0x28/1": [
+    "secondarylevel"
+   ],
+   "0x29/1": [
+    "type"
+   ],
+   "0x2a/2": [
+    "copyspr",
+    "spr"
+   ],
+   "0x2c/2": [
+    "weapon"
+   ],
+   "0x2e/2": [
+    "armor"
+   ],
+   "0x78/8": [
+    "restricted",
+    "type"
+   ],
+   "0x80/8": [
+    "restricted",
+    "type"
+   ],
+   "0x88/8": [
+    "restricted",
+    "type"
+   ]
+  },
   "flag_bits": {
-   "0x40": {
+   "0x1f8": {
+    "0x1": [
+     "bless"
+    ],
     "0x2": [
-     "twohanded"
+     "luck"
+    ],
+    "0x10": [
+     "barkskin"
     ],
     "0x100": [
-     "soulslaying"
+     "bers"
+    ],
+    "0x10000": [
+     "stoneskin"
+    ],
+    "0x20000": [
+     "fly"
+    ],
+    "0x40000": [
+     "quickness"
+    ],
+    "0x8000000": [
+     "ethereal"
+    ],
+    "0x10000000": [
+     "ironskin"
+    ],
+    "0x1000000000": [
+     "slashres"
+    ],
+    "0x2000000000": [
+     "bluntres"
+    ],
+    "0x4000000000": [
+     "pierceres"
+    ],
+    "0x10000000000000": [
+     "float"
+    ]
+   },
+   "0x200": {
+    "0x4": [
+     "run"
+    ],
+    "0x40": [
+     "trample"
+    ],
+    "0x200": [
+     "nofind"
+    ]
+   },
+   "0x208": {
+    "0x1": [
+     "disease"
+    ],
+    "0x2": [
+     "curse"
+    ],
+    "0x8000": [
+     "cursed"
+    ],
+    "0x400000": [
+     "mute"
+    ],
+    "0x800000": [
+     "chestwound"
+    ],
+    "0x1000000": [
+     "crippled"
+    ],
+    "0x2000000": [
+     "feeblemind"
+    ],
+    "0x4000000": [
+     "nhwound"
     ]
    }
   },
+  "abilities_direct": {}
+ },
+ "weapon": {
+  "record_base": "0x1447a6d90",
+  "fields": {
+   "0x28/8": [
+    "dmg"
+   ],
+   "0x30/2": [
+    "att"
+   ],
+   "0x32/2": [
+    "def"
+   ],
+   "0x34/2": [
+    "dt_aff",
+    "dt_bouncekill",
+    "dt_cap",
+    "dt_constructonly",
+    "dt_demon",
+    "dt_drain",
+    "dt_holy",
+    "dt_interrupt",
+    "dt_large",
+    "dt_magic",
+    "dt_normal",
+    "dt_paralyze",
+    "dt_poison",
+    "dt_raise",
+    "dt_realstun",
+    "dt_sizestun",
+    "dt_small",
+    "dt_stun",
+    "dt_weakness",
+    "dt_weapondrain"
+   ],
+   "0x36/2": [
+    "len",
+    "range"
+   ],
+   "0x38/2": [
+    "range"
+   ],
+   "0x3a/2": [
+    "nratt"
+   ],
+   "0x3c/2": [
+    "ammo",
+    "range"
+   ],
+   "0x50/2": [
+    "secondaryeffectalways"
+   ],
+   "0x52/2": [
+    "flyspr"
+   ],
+   "0x54/2": [
+    "flyspr"
+   ],
+   "0x56/2": [
+    "explspr"
+   ],
+   "0x58/2": [
+    "explspr"
+   ],
+   "0x5a/2": [
+    "aoe"
+   ],
+   "0x5c/2": [
+    "sound"
+   ],
+   "0x5e/2": [
+    "rcost"
+   ]
+  },
+  "flag_bits": {
+   "0x40": {
+    "0x1": [
+     "bowstr (clears)",
+     "fullstr",
+     "halfstr (clears)",
+     "nostr (clears)"
+    ],
+    "0x2": [
+     "twohanded"
+    ],
+    "0x4": [
+     "spiritformimmune"
+    ],
+    "0x8": [
+     "demononly",
+     "demonundead",
+     "undeadonly"
+    ],
+    "0x10": [
+     "magiconly"
+    ],
+    "0x20": [
+     "fire"
+    ],
+    "0x40": [
+     "armorpiercing"
+    ],
+    "0x80": [
+     "armornegating"
+    ],
+    "0x100": [
+     "soulslaying"
+    ],
+    "0x200": [
+     "cold"
+    ],
+    "0x800": [
+     "shock"
+    ],
+    "0x1000": [
+     "mrnegates"
+    ],
+    "0x2000": [
+     "poison"
+    ],
+    "0x8000": [
+     "sacredonly"
+    ],
+    "0x20000": [
+     "mind"
+    ],
+    "0x40000": [
+     "friendlyimmune"
+    ],
+    "0x80000": [
+     "demononly",
+     "undeadimmune"
+    ],
+    "0x100000": [
+     "defroll"
+    ],
+    "0x400000": [
+     "enemyimmune"
+    ],
+    "0x800000": [
+     "nouw (clears)",
+     "uwok"
+    ],
+    "0x1000000": [
+     "mrnegateseasily"
+    ],
+    "0x4000000": [
+     "ironweapon"
+    ],
+    "0x8000000": [
+     "bonus"
+    ],
+    "0x10000000": [
+     "undeadonly"
+    ],
+    "0x20000000": [
+     "inanimateimmune"
+    ],
+    "0x80000000": [
+     "charge"
+    ],
+    "0x100000000": [
+     "illusionsimmune"
+    ],
+    "0x400000000": [
+     "false"
+    ],
+    "0x2000000000": [
+     "norepel"
+    ],
+    "0x4000000000": [
+     "pierce"
+    ],
+    "0x8000000000": [
+     "blunt"
+    ],
+    "0x10000000000": [
+     "slash"
+    ],
+    "0x20000000000": [
+     "acid"
+    ],
+    "0x40000000000": [
+     "sizeresist"
+    ],
+    "0x80000000000": [
+     "morroll"
+    ],
+    "0x100000000000": [
+     "hardmrneg"
+    ],
+    "0x200000000000": [
+     "unrepel"
+    ],
+    "0x400000000000": [
+     "flyingimmune"
+    ],
+    "0x20000000000000": [
+     "natural"
+    ],
+    "0x80000000000000": [
+     "internal"
+    ],
+    "0x400000000000000": [
+     "bowstr (clears)",
+     "fullstr (clears)",
+     "halfstr",
+     "nostr (clears)"
+    ],
+    "0x2000000000000000": [
+     "mrhalf"
+    ],
+    "0x4000000000000000": [
+     "bowstr",
+     "fullstr (clears)",
+     "halfstr (clears)",
+     "nostr (clears)"
+    ]
+   }
+  },
+  "abilities_direct": {}
+ },
+ "armor": {
+  "record_base": "0x1403828b0",
+  "fields": {
+   "0x0/1": [
+    "newarmor"
+   ],
+   "0x24/2": [
+    "clear",
+    "newarmor",
+    "prot",
+    "protparts"
+   ],
+   "0x26/2": [
+    "prot",
+    "protparts"
+   ],
+   "0x28/2": [
+    "prot",
+    "protparts"
+   ],
+   "0x2a/2": [
+    "prot",
+    "protparts"
+   ],
+   "0x2c/2": [
+    "prot",
+    "protparts"
+   ],
+   "0x2e/2": [
+    "prot",
+    "protparts"
+   ],
+   "0x30/2": [
+    "prot"
+   ],
+   "0x3e/2": [
+    "clear",
+    "def",
+    "newarmor"
+   ],
+   "0x40/2": [
+    "enc"
+   ],
+   "0x40/4": [
+    "clear",
+    "newarmor"
+   ],
+   "0x42/2": [
+    "type"
+   ],
+   "0x44/2": [
+    "clear",
+    "newarmor",
+    "rcost"
+   ],
+   "0x48/4": [
+    "clear",
+    "newarmor"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "spell": {
+  "record_base": "0x144526660",
+  "fields": {
+   "0x24/1": [
+    "school"
+   ],
+   "0x25/1": [
+    "clearallspells",
+    "researchlevel"
+   ],
+   "0x26/1": [
+    "path"
+   ],
+   "0x2a/2": [
+    "fatiguecost"
+   ],
+   "0x2c/2": [
+    "aoe"
+   ],
+   "0x2e/2": [
+    "effect"
+   ],
+   "0x30/2": [
+    "range"
+   ],
+   "0x32/2": [
+    "precision"
+   ],
+   "0x38/8": [
+    "damage",
+    "damagemon"
+   ],
+   "0x40/2": [
+    "nreff"
+   ],
+   "0x42/2": [
+    "flightspr"
+   ],
+   "0x44/2": [
+    "flightspr"
+   ],
+   "0x46/2": [
+    "explspr"
+   ],
+   "0x48/2": [
+    "explspr"
+   ],
+   "0x50/8": [
+    "spec"
+   ],
+   "0x58/8": [
+    "spec2"
+   ],
+   "0x60/2": [
+    "nextspell"
+   ],
+   "0x62/2": [
+    "sample",
+    "sound"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "site": {
+  "record_base": "0x1443f5930",
+  "fields": {
+   "0x28/2": [
+    "look"
+   ],
+   "0x2a/2": [
+    "path"
+   ],
+   "0x2c/2": [
+    "level"
+   ],
+   "0x2e/2": [
+    "rarity"
+   ],
+   "0x30/8": [
+    "clear"
+   ],
+   "0x130/4": [
+    "loc"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "nation": {
+  "record_base": "0x142f24480",
+  "fields": {
+   "0x90/2": [
+    "name"
+   ],
+   "0xac/2": [
+    "era",
+    "name"
+   ],
+   "0xb0/4": [
+    "clearnation"
+   ],
+   "0xa10/8": [
+    "clearrec"
+   ],
+   "0xab8/4": [
+    "cleargods",
+    "clearnation"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "merc": {
+  "record_base": "0x1432b1db0",
+  "fields": {
+   "0x0/1": [
+    "eramask"
+   ],
+   "0x1/1": [
+    "level"
+   ],
+   "0x4c/4": [
+    "com"
+   ],
+   "0x50/4": [
+    "unit"
+   ],
+   "0x54/4": [
+    "nrunits",
+    "unit"
+   ],
+   "0x58/4": [
+    "minmen"
+   ],
+   "0x5c/4": [
+    "minpay",
+    "newmerc"
+   ],
+   "0x60/4": [
+    "xp"
+   ],
+   "0xa0/4": [
+    "randequip"
+   ],
+   "0x134/2": [
+    "recrate"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "poptype": {
+  "record_base": "0x143093850",
+  "fields": {
+   "0x0/8": [
+    "clearrec"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "nametype": {
+  "record_base": "0x142a88920",
+  "fields": {
+   "0x0/8": [
+    "addname",
+    "end"
+   ],
+   "0x8/8": [
+    "end"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "event": {
+  "record_base": "0x140639c60",
+  "fields": {
+   "0x960/1": [
+    "rarity"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "global": {
+  "record_base": "0x14318eb46",
+  "fields": {
+   "0x1/1": [
+    "poppergold"
+   ],
+   "0x3/1": [
+    "poppergold"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "bless": {
+  "record_base": "0x18b5371e0",
+  "fields": {
+   "0x2/2": [
+    "form"
+   ],
+   "0x4/2": [
+    "prison"
+   ],
+   "0x6/1": [
+    "magic"
+   ],
+   "0x10/2": [
+    "domstr"
+   ],
+   "0x12/1": [
+    "scale"
+   ],
+   "0x18/2": [
+    "bless"
+   ],
+   "0x90/2": [
+    "researchgoal"
+   ],
+   "0xb8/2": [
+    "favrit"
+   ],
+   "0xe0/1": [
+    "favrit"
+   ],
+   "0xf4/1": [
+    "favrit"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "sound": {
+  "record_base": "0x1430ae780",
+  "fields": {
+   "0x9c6/2": [
+    "smpmode"
+   ],
+   "0x9ca/2": [
+    "loop"
+   ]
+  },
+  "flag_bits": {},
   "abilities_direct": {}
  }
 }

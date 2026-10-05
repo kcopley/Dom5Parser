@@ -105,6 +105,20 @@ class Exe:
         return ins
 
 
+REG64 = {}
+for _r in ('ax', 'bx', 'cx', 'dx', 'si', 'di', 'bp', 'sp'):
+    for _v in ('r' + _r, 'e' + _r, _r, _r[0] + 'l' if _r[1] == 'x' else _r + 'l'):
+        REG64[_v] = 'r' + _r
+for _n in range(8, 16):
+    for _suf in ('', 'd', 'w', 'b'):
+        REG64['r%d%s' % (_n, _suf)] = 'r%d' % _n
+
+
+def reg64(r):
+    """The 64-bit register a register name is part of (ecx -> rcx, r8d -> r8), or None."""
+    return REG64.get(r)
+
+
 def num(x):
     try:
         return int(x, 16) if x.startswith('0x') else int(x)
@@ -173,27 +187,32 @@ class Parser:
         fs = self.contexts[ctx]
         setter = getattr(self, '_setter', None)
         out = collections.defaultdict(list)
-        for i in sorted(k for k, (f, s) in self.refs.items() if f in fs):
-            a, op, args, tgt = self.ins[i]
-            if not args.startswith('rdx,'):
-                continue
+        # A branch runs from its command's name to the next command name in the same parser.
+        # (The monster parser calls a matcher per command; others inline the comparison.)
+        order = sorted(k for k, (f, s) in self.refs.items() if f in fs)
+        for n, i in enumerate(order):
             cmd = self.refs[i][1]
             w = self.ins[i:i + 6]
-            jumps = [k for k, x in enumerate(w) if x[1] in ('je', 'jne')]
-            calls = [x for x in w if x[1] == 'call']
-            if not jumps or not calls or calls[0][2].split()[0] in self.generic:
+            if any(x[1] == 'call' and x[2].split()[0] in self.generic for x in w):
                 continue
-            nxt = num(w[jumps[0]][2].split()[0])
-            k = i + jumps[0] + 1
+            later = [j for j in order[n + 1:] if self.refs[j][1] != cmd]
+            nxt = self.ins[later[0]][0] if later else self.ins[min(i + 400, len(self.ins) - 1)][0]
+            k = i + 1
             bases, const, edx, rmw = {}, {}, None, {}
             while k < len(self.ins) and self.ins[k][0] < nxt and k - i < 400:
                 aa, oo, rr, tt = self.ins[k]
                 dst = rr.split(',')[0]
-                if oo == 'lea' and tt is not None:
-                    bases[dst] = tt
+                # a register written by anything else no longer holds the address it was loaded with
+                if reg64(dst) and not (oo == 'lea' and tt is not None) and oo not in ('cmp', 'test', 'push'):
+                    bases.pop(reg64(dst), None)
+                if oo == 'call':
+                    for r in ('rax', 'rcx', 'rdx', 'r8', 'r9', 'r10', 'r11'):
+                        bases.pop(r, None)
+                if oo == 'lea' and tt is not None and reg64(dst):
+                    bases[reg64(dst)] = tt
                 # read-modify-write of a flags word in a register: mov reg,[rec+off]; and/or/bts/btr; mov [rec+off],reg
                 m = re.match(r'(\w+),(?:BYTE|WORD|DWORD|QWORD) PTR \[(\w+)(?:\+(\w+)\*\d)?(?:\+(0x[0-9a-f]+))?\]$', rr)
-                if oo == 'mov' and m and (bases.get(m.group(2)) or bases.get(m.group(3))):
+                if oo == 'mov' and m and (bases.get(reg64(m.group(2))) or bases.get(reg64(m.group(3)))):
                     rmw[m.group(1)] = [0, 0]
                 m = re.match(r'(\w+),(0x[0-9a-f]+|\d+)$', rr)
                 if m and m.group(1) in rmw and oo in ('or', 'and', 'bts', 'btr'):
@@ -214,7 +233,7 @@ class Parser:
                 m = self.MEM.match(rr)
                 if m and oo == 'mov' and m.group(6) in rmw:
                     size, r1, r2, sc, disp, val = m.groups()
-                    base = bases.get(r1) or bases.get(r2)
+                    base = bases.get(reg64(r1)) or bases.get(reg64(r2))
                     setb, clrb = rmw.pop(val)
                     if base is not None and setb:
                         out[cmd].append(('set_bits', base, num(disp or '0x0'), self.SIZES[size], setb))
@@ -222,7 +241,7 @@ class Parser:
                         out[cmd].append(('clear_bits', base, num(disp or '0x0'), self.SIZES[size], (~clrb) & 0xffffffffffffffff))
                 elif m and oo in ('mov', 'or', 'and', 'add', 'sub', 'xor'):
                     size, r1, r2, sc, disp, val = m.groups()
-                    base = bases.get(r1) or bases.get(r2)
+                    base = bases.get(reg64(r1)) or bases.get(reg64(r2))
                     if base is not None:
                         v = num(val) if val.startswith('0x') else const.get(val if val.startswith('r') else val, None)
                         kind = 'store' if oo in ('mov', 'add', 'sub') else ('set_bits' if oo == 'or' else ('clear_bits' if oo == 'and' else oo))
