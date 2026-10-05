@@ -1,0 +1,336 @@
+{
+ "game_version": "6.37",
+ "exe_sha256_16": "d77cd364fe447e85",
+ "monster": {
+  "file_offset": "0x32ee080",
+  "address": "0x1432efc80",
+  "record_size": 888,
+  "count": 20000,
+  "vanilla_entries": 4138,
+  "last_vanilla_id": 4137,
+  "fields_matching_inspector_csv": {
+   "wpn1": [
+    "0x340/i16",
+    "0x340/u16"
+   ],
+   "wpn2": [
+    "0x342/i16",
+    "0x342/u16"
+   ],
+   "wpn3": [
+    "0x344/i16",
+    "0x344/u16"
+   ],
+   "wpn4": [
+    "0x346/i16",
+    "0x346/u16"
+   ],
+   "wpn5": [
+    "0x348/i16",
+    "0x348/u16"
+   ],
+   "wpn6": [
+    "0x34a/i16",
+    "0x34a/u16"
+   ],
+   "wpn7": [
+    "0x34c/i16",
+    "0x34c/u16",
+    "0x34c/i32",
+    "0x34c/u32",
+    "0x34c/i64"
+   ],
+   "armor1": [
+    "0x354/i16",
+    "0x354/u16"
+   ],
+   "armor2": [
+    "0x356/i16",
+    "0x356/u16"
+   ],
+   "armor3": [
+    "0x358/i16",
+    "0x358/u16"
+   ],
+   "basecost": [
+    "0x35e/i16",
+    "0x35e/u16"
+   ],
+   "rcost": [
+    "0x360/i8",
+    "0x360/i16"
+   ],
+   "size": [
+    "0x2c/i8",
+    "0x2c/u8",
+    "0x2c/i16",
+    "0x2c/u16"
+   ],
+   "hp": [
+    "0x2e/i16",
+    "0x2e/u16"
+   ],
+   "prot": [
+    "0x30/i8",
+    "0x30/u8",
+    "0x30/i16",
+    "0x30/u16"
+   ],
+   "mr": [
+    "0x3c/i8",
+    "0x3c/u8",
+    "0x3c/i16",
+    "0x3c/u16"
+   ],
+   "mor": [
+    "0x3e/i8",
+    "0x3e/u8",
+    "0x3e/i16",
+    "0x3e/u16"
+   ],
+   "str": [
+    "0x32/i8",
+    "0x32/u8",
+    "0x32/i16",
+    "0x32/u16"
+   ],
+   "att": [
+    "0x38/i8",
+    "0x38/u8",
+    "0x38/i16",
+    "0x38/u16"
+   ],
+   "def": [
+    "0x3a/i8",
+    "0x3a/u8",
+    "0x3a/i16",
+    "0x3a/u16"
+   ],
+   "prec": [
+    "0x36/i8",
+    "0x36/u8",
+    "0x36/i16",
+    "0x36/u16"
+   ],
+   "enc": [
+    "0x34/i8",
+    "0x34/u8",
+    "0x34/i16",
+    "0x34/u16"
+   ],
+   "mapmove": [
+    "0x2a/i8",
+    "0x2a/u8",
+    "0x2a/i16",
+    "0x2a/u16"
+   ],
+   "ap": [
+    "0x28/i8",
+    "0x28/u8",
+    "0x28/i16",
+    "0x28/u16"
+   ],
+   "rpcost": [
+    "0x364/i32",
+    "0x364/u32"
+   ]
+  }
+ },
+ "weapon": {
+  "file_offset": "0x47a5190",
+  "address": "0x1447a6d90",
+  "record_size": 152,
+  "count": 4000,
+  "vanilla_entries": 887,
+  "last_vanilla_id": 886,
+  "fields_matching_inspector_csv": {
+   "att": [
+    "0x30/i8",
+    "0x30/i16"
+   ],
+   "def": [
+    "0x32/i8",
+    "0x32/i16"
+   ],
+   "len": [
+    "0x36/i8",
+    "0x36/i16"
+   ],
+   "nratt": [
+    "0x3a/i8",
+    "0x3a/i16"
+   ],
+   "ammo": [
+    "0x3c/i16",
+    "0x3c/u16",
+    "0x3c/i32",
+    "0x3c/u32"
+   ],
+   "rcost": [
+    "0x5e/i8",
+    "0x5e/u8",
+    "0x5e/i16",
+    "0x5e/u16"
+   ]
+  }
+ },
+ "armor": {
+  "file_offset": "0x380cb0",
+  "address": "0x1403828b0",
+  "record_size": 104,
+  "count": 2000,
+  "vanilla_entries": 298,
+  "last_vanilla_id": 297,
+  "fields_matching_inspector_csv": {
+   "type": [
+    "0x42/i8",
+    "0x42/u8",
+    "0x42/i16",
+    "0x42/u16"
+   ],
+   "def": [
+    "0x3e/i8",
+    "0x3e/i16"
+   ],
+   "enc": [
+    "0x40/i8",
+    "0x40/u8",
+    "0x40/i16",
+    "0x40/u16"
+   ],
+   "rcost": [
+    "0x44/i8",
+    "0x44/u8",
+    "0x44/i16",
+    "0x44/u16",
+    "0x44/i32",
+    "0x44/u32"
+   ]
+  }
+ },
+ "item": {
+  "file_offset": "0x318cd10",
+  "address": "0x14318e910",
+  "record_size": 528,
+  "count": 2000,
+  "vanilla_entries": 531,
+  "last_vanilla_id": 530,
+  "fields_matching_inspector_csv": {
+   "mainlevel": [
+    "0x27/i8",
+    "0x27/u8"
+   ],
+   "secondarylevel": [
+    "0x28/i8",
+    "0x28/u8"
+   ],
+   "weapon": [
+    "0x2c/i16",
+    "0x2c/u16"
+   ],
+   "armor": [
+    "0x2e/i16",
+    "0x2e/u16"
+   ],
+   "foolsluck": [
+    "0x204/i8",
+    "0x204/u8"
+   ],
+   "limitedenlargement": [
+    "0x1fd/i8",
+    "0x1fd/u8"
+   ]
+  }
+ },
+ "spell": {
+  "file_offset": "0x4524a60",
+  "address": "0x144526660",
+  "record_size": 280,
+  "count": 8000,
+  "vanilla_entries": 1475,
+  "last_vanilla_id": 1474,
+  "fields_matching_inspector_csv": {
+   "school": [
+    "0x24/i8"
+   ],
+   "researchlevel": [
+    "0x25/i8",
+    "0x25/u8"
+   ],
+   "path1": [
+    "0x26/i8"
+   ],
+   "pathlevel1": [
+    "0x28/i8",
+    "0x28/u8"
+   ],
+   "path2": [
+    "0x27/i8"
+   ],
+   "pathlevel2": [
+    "0x29/i8"
+   ],
+   "effects_count": [
+    "0x40/i16",
+    "0x40/u16"
+   ],
+   "precision": [
+    "0x32/i8",
+    "0x32/i16"
+   ],
+   "next_spell": [
+    "0x60/u8",
+    "0x60/i16",
+    "0x60/u16"
+   ],
+   "damage": [
+    "0x38/i64"
+   ]
+  }
+ },
+ "site": {
+  "file_offset": "0x43f3d30",
+  "address": "0x1443f5930",
+  "record_size": 312,
+  "count": 4000,
+  "vanilla_entries": 1407,
+  "last_vanilla_id": 1406,
+  "fields_matching_inspector_csv": {
+   "rarity": [
+    "0x2e/i8",
+    "0x2e/u8",
+    "0x2e/i16",
+    "0x2e/u16"
+   ],
+   "loc": [
+    "0x130/i32",
+    "0x130/u32",
+    "0x130/i64"
+   ],
+   "level": [
+    "0x2c/i8",
+    "0x2c/u8",
+    "0x2c/i16",
+    "0x2c/u16"
+   ]
+  }
+ },
+ "nation": {
+  "file_offset": "0x2f22880",
+  "address": "0x142f24480",
+  "record_size": 3000,
+  "count": 500,
+  "vanilla_entries": 111,
+  "last_vanilla_id": 135,
+  "fields_matching_inspector_csv": {
+   "era": [
+    "0xac/i8",
+    "0xac/u8",
+    "0xac/i16",
+    "0xac/u16",
+    "0xac/i32",
+    "0xac/u32"
+   ]
+  }
+ }
+}
