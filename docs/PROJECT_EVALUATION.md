@@ -131,7 +131,7 @@ confirmed by reading the source and export for sample entities.
 
 | Cluster | Count | What happens | Question |
 |---|---|---|---|
-| `unit.weapons` | 66 | Vanilla has duplicate weapon names (Spear = 1 and 96, Katana = 378 and 858, Javelin = 21 and 409, Claw, Fist, Long Spear…). The editor resolves the name to the **lowest** ID and writes the ID. The inspector's lookup is last-wins. The manual just says "use the number instead." | Which ID does the game pick? |
+| `unit.weapons` | 66 | Vanilla has duplicate weapon names (Spear = 1 and 96, Katana = 378 and 858, Javelin = 21 and 409, Claw, Fist, Long Spear…). The editor resolves the name to the **lowest** ID and writes the ID. The inspector's lookup was last-wins. | **Answered (2026-10-05): the lowest ID** (per the user). The inspector and Dom5Parser both resolve shared names that way now; fixture `names/duplicate_names.dm`. |
 | `unit.magicboost_*` | ~60 | `#magicboost 53 -10` placed before `#clearmagic`: the parser deletes it, because `PropertyGroupMap` puts `MAGICBOOST` in the Magic group. The manual says `#clearmagic` "removes all magic skills." | Does `#clearmagic` clear boosts? |
 | `unit.name` / `descr` before `#copystats` | ~8 | `#name` / `#descr` declared above `#copystats` are wiped (e.g. 8131 "Lion Hero", War Horse ×3). This is the `name_before_copy` repro. | The manual says copystats "will overwrite all previous commands," but its list doesn't include name or description |
 | `unit.xpshape` | 26 | 6599 gets `#xpshapemon -1085` from a *later* `#selectmonster`, after 6603/6604 copied it. The exporter merges `#select` blocks into the definition, so the oracle now copies it. | Does `#copystats` copy `xpshape*`? (You believed not.) If not, it's harmless in game, but the oracle must model that or it stays a false positive forever. |
@@ -140,9 +140,9 @@ confirmed by reading the source and export for sample entities.
 **Principle worth adopting:** the parser currently *deletes* properties declared
 before a clear or copy, based on assumptions about what the game does. If an
 assumption is wrong, that destroys data. Until a rule is confirmed in game,
-preserve the data and have the validator warn. On the duplicate-name question:
-whichever answer is right, writing an ID where the source used a name locks in a
-guess. Keep the source's name form on export unless a merge remap needs an ID.
+preserve the data and have the validator warn. The duplicate-name question is
+settled (lowest ID), so writing the resolved ID where the source used a name is now
+safe.
 
 ### 4c. Oracle noise (fix in the harness)
 

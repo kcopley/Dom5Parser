@@ -124,14 +124,27 @@ namespace Dom5Edit
         public bool TryGet(EntityType t, int i, string s, out IDEntity entity)
         {
             var set = Database[t];
+            // By ID: dependencies (vanilla) first, then this mod
             foreach (var m in Dependencies)
             {
-                if (m.Database[t].TryGet(i, s, out entity))
+                if (m.Database[t].TryGetValue(i, out entity))
                 {
                     return true;
                 }
             }
-            return set.TryGet(i, s, out entity);
+            if (set.TryGetValue(i, out entity)) return true;
+
+            // By name: when vanilla and mods share a name, the game takes the lowest ID
+            IDEntity best = null;
+            foreach (var m in Dependencies)
+            {
+                if (m.Database[t].TryGetValueNamed(s, out IDEntity e) && (best == null || EntitySet<IDEntity>.IsLowerID(e.ID, best)))
+                    best = e;
+            }
+            if (set.TryGetValueNamed(s, out IDEntity own) && (best == null || EntitySet<IDEntity>.IsLowerID(own.ID, best)))
+                best = own;
+            entity = best;
+            return best != null;
         }
 
         public Dictionary<EntityType, DependentEntitySet> Dependents { get; } = new Dictionary<EntityType, DependentEntitySet>()
