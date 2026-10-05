@@ -25,6 +25,9 @@ namespace Dom5Tests
                 case "roundtrip":
                     RoundTrip(basePath, args);
                     break;
+                case "edit":
+                    Edit(basePath, args);
+                    break;
                 case "all":
                 default:
                     TestVanilla(basePath, null);
@@ -164,33 +167,17 @@ namespace Dom5Tests
             if (string.IsNullOrEmpty(inputPath) || string.IsNullOrEmpty(outputPath))
             {
                 Console.WriteLine("Usage: Dom5Tests roundtrip <input.dm> <output.dm>");
+                Environment.ExitCode = 2;
                 return;
             }
             if (!File.Exists(inputPath))
             {
                 Console.WriteLine($"ERROR: input mod not found: {Path.GetFullPath(inputPath)}");
+                Environment.ExitCode = 2;
                 return;
             }
 
-            // Load vanilla as the dependency base (so copies/inheritance resolve), if present.
-            string vanillaDmPath = Path.Combine(basePath, "vanilla.dm");
-            if (File.Exists(vanillaDmPath))
-            {
-                VanillaLoader.GameVersion = GameVersion.Dom6;
-                VanillaLoader.VanillaDmPath = vanillaDmPath;
-                string spellMappingPath = Path.Combine(basePath, "spell_effects_mapping.json");
-                string spellTypesPath = Path.Combine(basePath, "spell_effect_types.json");
-                if (File.Exists(spellMappingPath))
-                {
-                    VanillaLoader.SpellEffectMappingPath = spellMappingPath;
-                    VanillaLoader.SpellEffectTypesPath = spellTypesPath;
-                }
-                VanillaLoader.Reload();
-            }
-            else
-            {
-                Console.WriteLine("WARNING: vanilla.dm not found; round-tripping without vanilla base.");
-            }
+            LoadVanillaBase(basePath);
 
             try
             {
@@ -208,7 +195,148 @@ namespace Dom5Tests
             {
                 Console.WriteLine($"ERROR during round-trip: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
+                Environment.ExitCode = 1;
             }
+        }
+
+        /// <summary>
+        /// Loads vanilla.dm as the dependency base (so copies/inheritance resolve), if present.
+        /// </summary>
+        static void LoadVanillaBase(string basePath)
+        {
+            string vanillaDmPath = Path.Combine(basePath, "vanilla.dm");
+            if (!File.Exists(vanillaDmPath))
+            {
+                Console.WriteLine("WARNING: vanilla.dm not found; running without vanilla base.");
+                return;
+            }
+            VanillaLoader.GameVersion = GameVersion.Dom6;
+            VanillaLoader.VanillaDmPath = vanillaDmPath;
+            string spellMappingPath = Path.Combine(basePath, "spell_effects_mapping.json");
+            string spellTypesPath = Path.Combine(basePath, "spell_effect_types.json");
+            if (File.Exists(spellMappingPath))
+            {
+                VanillaLoader.SpellEffectMappingPath = spellMappingPath;
+                VanillaLoader.SpellEffectTypesPath = spellTypesPath;
+            }
+            VanillaLoader.Reload();
+        }
+
+        /// <summary>
+        /// Imports a mod, applies scripted edits, and re-exports it, so the fidelity suite can
+        /// check that the saved data differs from an unedited save by exactly those edits.
+        /// Usage: Dom5Tests edit &lt;input.dm&gt; &lt;edits.json&gt; &lt;output.dm&gt;
+        ///
+        /// edits.json: { "edits": [ { "op": "set"|"add"|"remove", "entity": "monster", "id": 7000,
+        ///                            "command": "#hp", "value": "25" }, ... ] }
+        /// Edits go through the same core calls as the editor's edit commands: set = Set&lt;IntProperty&gt;
+        /// for int commands (SetIntPropertyCommand), otherwise replace; add = AddProperty;
+        /// remove = RemoveProperty (all properties with that command, or only those whose
+        /// argument equals "value"). Vanilla entities are selected into the mod (copy-on-write).
+        /// </summary>
+        static void Edit(string basePath, string[] args)
+        {
+            if (args.Length < 4)
+            {
+                Console.WriteLine("Usage: Dom5Tests edit <input.dm> <edits.json> <output.dm>");
+                Environment.ExitCode = 2;
+                return;
+            }
+            string inputPath = args[1], editsPath = args[2], outputPath = args[3];
+            LoadVanillaBase(basePath);
+            try
+            {
+                Mod mod = new Mod();
+                mod.FullFilePath = inputPath;
+                mod.Parse(inputPath);
+                mod.ResolveDependencies();
+                mod.Resolve();
+
+                using var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(editsPath));
+                int applied = 0;
+                foreach (var edit in doc.RootElement.GetProperty("edits").EnumerateArray())
+                {
+                    ApplyEdit(mod, edit);
+                    applied++;
+                }
+                mod.Resolve(); // resolve references introduced by the edits
+                mod.NormalizeCopies();
+                mod.Export(outputPath);
+                Console.WriteLine($"Edited ({applied} edits): {Path.GetFullPath(inputPath)} -> {Path.GetFullPath(outputPath)}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR during edit: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+                Environment.ExitCode = 1;
+            }
+        }
+
+        static void ApplyEdit(Mod mod, System.Text.Json.JsonElement edit)
+        {
+            string op = edit.GetProperty("op").GetString();
+            string kind = edit.GetProperty("entity").GetString();
+            int id = edit.GetProperty("id").GetInt32();
+            string commandText = edit.GetProperty("command").GetString();
+            if (!commandText.StartsWith("#")) commandText = "#" + commandText;
+            if (!CommandsMap.TryGetCommand(commandText, out Command command))
+                throw new ArgumentException($"Unknown command {commandText}");
+            string value = edit.TryGetProperty("value", out var v) ? v.GetString() : null;
+            // The parser strips the quotes around string arguments before entities see them.
+            if (value != null && value.Length >= 2 && value[0] == '"' && value[^1] == '"') value = value[1..^1];
+
+            IDEntity entity = kind switch
+            {
+                "monster" => mod.SelectForEdit<Monster>(id),
+                "weapon" => mod.SelectForEdit<Weapon>(id),
+                "armor" => mod.SelectForEdit<Armor>(id),
+                "item" => mod.SelectForEdit<Item>(id),
+                "spell" => mod.SelectForEdit<Spell>(id),
+                "site" => mod.SelectForEdit<Site>(id),
+                "nation" => mod.SelectForEdit<Nation>(id),
+                _ => throw new ArgumentException($"Unknown entity kind {kind}"),
+            };
+
+            switch (op)
+            {
+                case "set":
+                    bool isInt = entity.GetPropertyMap().TryGetValue(command, out var create)
+                        && create().GetType() == typeof(IntProperty);
+                    if (isInt && int.TryParse(value, out int intValue))
+                    {
+                        entity.Set<IntProperty>(command, p => p.Value = intValue);
+                    }
+                    else
+                    {
+                        foreach (var p in entity.Properties.Where(p => p.Command == command).ToList())
+                            entity.RemoveProperty(p);
+                        entity.Parse(command, value ?? "", "");
+                    }
+                    break;
+                case "add":
+                    entity.Parse(command, value ?? "", "");
+                    break;
+                case "remove":
+                    var matches = entity.Properties
+                        .Where(p => p.Command == command && (value == null || ArgumentText(p) == value))
+                        .ToList();
+                    if (matches.Count == 0)
+                        throw new InvalidOperationException($"remove: {kind} {id} has no {commandText} {value}");
+                    foreach (var p in matches) entity.RemoveProperty(p);
+                    break;
+                default:
+                    throw new ArgumentException($"Unknown op {op}");
+            }
+        }
+
+        /// <summary>The argument part of a property's export line, without command or comment.</summary>
+        static string ArgumentText(Property p)
+        {
+            string s = p.ToExportString();
+            int comment = s.IndexOf(" -- ", StringComparison.Ordinal);
+            if (comment >= 0) s = s.Substring(0, comment);
+            int space = s.IndexOf(' ');
+            return space < 0 ? "" : s.Substring(space + 1).Trim().Trim('"');
         }
 
         static void PrintModStats(Mod mod, string label)

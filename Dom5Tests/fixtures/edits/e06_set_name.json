@@ -1,0 +1,6 @@
+{
+  "description": "Rename a mod-defined monster.",
+  "base": "base_edits.dm",
+  "edits": [ { "op": "set", "entity": "monster", "id": 7410, "command": "#name", "value": "\"Renamed Unit\"" } ],
+  "expect": [ { "type": "unit", "id": "7410", "field": "name", "from": "Two Weapons", "to": "Renamed Unit" } ]
+}

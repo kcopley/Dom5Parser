@@ -1,0 +1,6 @@
+{
+  "description": "Add a weapon to a monster that already has two (multi-valued command).",
+  "base": "base_edits.dm",
+  "edits": [ { "op": "add", "entity": "monster", "id": 7410, "command": "#weapon", "value": "8" } ],
+  "expect": [ { "type": "unit", "id": "7410", "field": "weapons", "from": ["1", "23"], "to": ["1", "23", "8"] } ]
+}

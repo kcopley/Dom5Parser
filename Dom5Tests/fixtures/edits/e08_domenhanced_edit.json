@@ -1,0 +1,12 @@
+{
+  "description": "Edits on the full DomEnhanced mod must change only the edited unit (Venedian City Guard: copies vanilla 2109, hp 10, weapons cleared then Spear).",
+  "base": "../../../docs/DomEnhanced2_13.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 6714, "command": "#hp", "value": "15" },
+    { "op": "add", "entity": "monster", "id": 6714, "command": "#weapon", "value": "8" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "6714", "field": "hp", "from": "10", "to": "15" },
+    { "type": "unit", "id": "6714", "field": "weapons", "from": ["1"], "to": ["1", "8"] }
+  ]
+}

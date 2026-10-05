@@ -1,0 +1,50 @@
+{
+  "description": "Fidelity suite corpus. 'expect': 'pass' means zero oracle differences; 'baseline' means compare against tools/fidelity/baselines/<name>.<stage>.json and fail only if a count rises. knownFailing marks a stage as expected to fail (reported XFAIL).",
+  "mods": [
+    {
+      "name": "copy-order_dependent_copy",
+      "path": "Dom5Tests/fixtures/copy/order_dependent_copy.dm",
+      "expect": "pass"
+    },
+    {
+      "name": "copy-forward_ref_copy",
+      "path": "Dom5Tests/fixtures/copy/forward_ref_copy.dm",
+      "expect": "pass"
+    },
+    {
+      "name": "copy-clear_mid_entity",
+      "path": "Dom5Tests/fixtures/copy/clear_mid_entity.dm",
+      "expect": "pass"
+    },
+    {
+      "name": "copy-copyspr_after_copystats",
+      "path": "Dom5Tests/fixtures/copy/copyspr_after_copystats.dm",
+      "expect": "pass"
+    },
+    {
+      "name": "copy-name_before_copy",
+      "path": "Dom5Tests/fixtures/copy/name_before_copy.dm",
+      "expect": "pass",
+      "knownFailing": {
+        "3": "#name declared before #copyweapon is dropped on save (docs/PROJECT_EVALUATION.md 4b)"
+      }
+    },
+    {
+      "name": "edits-base",
+      "path": "Dom5Tests/fixtures/edits/base_edits.dm",
+      "expect": "pass",
+      "knownFailing": {
+        "1": "inspector exports the displayed mapmove/rcost of vanilla unit 3 instead of the base value (see stage 2 vanilla-base-values)"
+      }
+    },
+    {
+      "name": "domenhanced-2.13",
+      "path": "docs/DomEnhanced2_13.dm",
+      "expect": "baseline"
+    }
+  ],
+  "edits": "Dom5Tests/fixtures/edits",
+  "vanillaKnownFailing": {
+    "merc": "4 mercs with unit \"0\" are not re-imported by the exporter round trip (pre-existing)"
+  }
+}
