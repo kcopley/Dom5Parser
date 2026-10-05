@@ -31,9 +31,9 @@ namespace Dom5Edit.Props
             {
                 if (string.IsNullOrEmpty(Value))
                     return false;
-                // If it parses as an integer, it's not a special type
-                // Use ulong.TryParse because damage bitmasks can exceed int.MaxValue
-                return !ulong.TryParse(Value, out _);
+                // If it parses as an integer, it's not a special type. long covers negative
+                // damage (e.g. a parrying shield's #dmg -3); ulong covers bitmasks above long.MaxValue.
+                return !long.TryParse(Value, out _) && !ulong.TryParse(Value, out _);
             }
         }
 

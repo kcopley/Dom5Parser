@@ -69,7 +69,12 @@ namespace Dom5Edit
                 LineNumber++;
                 s = s.Trim(); //remove whitespaces
                 s = s.Replace('\t', ' ');
-                if (s.Length < 1) continue; //empty line
+                if (s.Length < 1)
+                {
+                    // a blank line inside a multi-line string is a paragraph break, keep it
+                    if (isMultiLine) prevLine = prevLine + Environment.NewLine;
+                    continue;
+                }
 
                 //mod information data
                 int ind = s.IndexOf("#dependency", StringComparison.OrdinalIgnoreCase);
@@ -79,9 +84,9 @@ namespace Dom5Edit
                     continue; //skip these lines, grabbed above
                 }
 
-                if ((s.IndexOf("#descr") != -1 && s.Length > 6) || (s.IndexOf("#summary") != -1 && s.Length > 8) || (s.IndexOf("#msg") != -1 && s.Length > 4))
+                if (!isMultiLine && s[0] == '#' && s.IndexOf('"') != -1)
                 {
-                    //could be multi line description
+                    //could be a multi-line string (#descr, #details, #msg, #description, ...)
                     //check if has both quotes
                     int firstQuote = s.IndexOf('"');
                     int secondQuote = s.IndexOf('"', firstQuote + 1);
@@ -119,7 +124,10 @@ namespace Dom5Edit
                         int anotherCommandIndex = GetNextCommandIndex(s);
                         string leftsplit = s.Substring(0, anotherCommandIndex);
                         string rightsplit = s.Substring(anotherCommandIndex);
-                        string multiline = prevLine + Environment.NewLine + leftsplit;
+                        // nothing before the next command: the closing quote was just forgotten
+                        string multiline = string.IsNullOrWhiteSpace(leftsplit)
+                            ? prevLine.TrimEnd('\r', '\n')
+                            : prevLine + Environment.NewLine + leftsplit;
                         ProcessStringToLine(multiline);
                         ProcessStringToLine(rightsplit);
                         prevLine = "";
