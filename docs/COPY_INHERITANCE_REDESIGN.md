@@ -19,8 +19,13 @@ The editor wants a **declarative** model — "B copies template A; edit A → B
 follows" — because that is what makes editing pleasant. These two models are
 genuinely different, and the current editor resolves copy chains as if they were
 a static tree (B inherits A's *final* state). That is wrong whenever B copied A
-*before* A was edited, and it is the likely cause of the round-trip harness's
-~25-unit "all core stats differ" divergence cluster.
+*before* A was edited.
+
+> **Correction (2026-06-01, from Phase 1 measurement):** this order-dependent-edit
+> bug is real but *rare* in practice. The "~25-unit all core stats differ" cluster
+> was originally blamed on it; investigation showed the cluster is actually
+> **forward-reference copies broken by ID-ordered export** (see "KEY DISCOVERY" under
+> Implementation status). Both are addressed below.
 
 **Goal:** reconcile the two — reproduce illwinter's semantics exactly on export,
 while presenting a clean declarative inheritance model for editing.
@@ -163,19 +168,45 @@ Goal: a functionally-identical, style-faithful (where feasible) load→save.
 ## Implementation status
 
 **Phase 0 — COMPLETE (2026-05-31).** Round-trip loop automated and a red baseline established:
-- `Dom5Tests roundtrip <in.dm> <out.dm>` imports + re-exports a mod with `vanilla.dm` as base (`Dom5Tests/Program.cs`).
-- `dom5inspectorkc/roundtrip_check.js <vanilla.dm> <original> <roundtrip>` diffs the two parses, exit 0/1 (untracked, lives in the separate `dom5inspectorkc` repo).
-- Red test: `Dom5Tests/fixtures/copy/order_dependent_copy.dm` → **FAIL: `unit #7001 att 10|99`**. B copied A while `att=10`; the lazy exporter writes A (now `att=99`) before B and gives B no override, so reload re-copies the edited A. The materialize fix must bake `att=10` onto 7001 and turn this green.
+- `Dom5Tests roundtrip <in.dm> <out.dm>` imports + re-exports a mod with `vanilla.dm` as base (`Dom5Tests/Program.cs`). Append `nonorm` to skip Phase 1 normalization (for A/B comparison).
+- `dom5inspectorkc/roundtrip_check.js <vanilla.dm> <original> <roundtrip>` diffs the two parses, exit 0/1 (untracked, lives in the separate `dom5inspectorkc` repo). NOTE: it counts ALL differing entities but only *prints* the first 40; use the "differing fields by frequency" section for triage.
+- Red test: `Dom5Tests/fixtures/copy/order_dependent_copy.dm` → was FAIL `unit #7001 att 10|99`.
 
-**Confirmed decisions:** Option A (materialize inline at parse, eager snapshot); vanilla-pristine resolution; exclude sprites (`#copystats`) + the 4 ID-relative commands from copy; GUI migration deferred to the last phase.
+**Phase 1 — materialize + re-derive (combined), driven by `Mod.NormalizeCopies()`** (called after `Resolve()`, before `Export()`; round-trip harness only — GUI integration is Phase 4). Currently uncommitted.
 
-**Key code facts (grounding for Phase 1):**
-- Root cause: `IDEntity.TryGet` → `TryGetCopyFrom` resolves the source's *final* state (order-independent).
-- `IDEntity.AddProperty` already calls `ApplyCopyCommand` / `ApplyClearCommand` (wipes the entity's own pre-copy/clear props). Phase 1 ADDS an eager deep-copy of the source's *current* props after that wipe.
-- `ModExporter.WriteEntities` iterates `mod.Database` by type/ID — it reorders vs file order, which by itself breaks order-dependent copies.
-- The inspector's `#copystats` copies `name` too (verified: 0 name diff in the red test) — materialize must copy name.
+Mechanics (in `IDEntity`):
+- **Snapshot capture (materialize)** — when a copy command is parsed (`AddProperty` → `CaptureCopySnapshot`), deep-clone the SAME-MOD source's current properties into `_materialized`, frozen in file order. `BuildSnapshot` scopes to the copy command's groups (`GetGroupsOverwrittenByCopy`), excludes sprites + the 4 ID-relative commands, group-`None` deduped last-wins. Vanilla / file-order-forward sources are NOT captured (left to the loader). Refs in the clone are resolved in `FinalizeCopyMaterialization` (they were cloned pre-`Resolve`).
+- **Re-derive (export)** — `BakeDivergentOverrides` emits ONLY values the live copy would NOT reproduce, keeping the copy command and leaving everything else implicit (so unrelated export bugs stay hidden). **Generic via the group machinery, no per-property list:** group `None` (stats/identity) = scalar → bake if it differs from the source's current resolved value (`BuildSnapshot(src)`); clearable groups (Weapons/Armor/Magic/Special) = lists → if the copied set diverges and the entity didn't itself touch the group, re-assert via `#clear<group>` + members. The catch-all `Special` default makes new commands work with no code change.
+- **Flatten (forward references)** — if the source won't be emitted earlier on the ID-ordered reload (`CopyReproducesOnReload` false), bake the whole snapshot and DROP the dead copy command.
+- **Same-mod-source guard** — only act when `src.ParentMod == this.ParentMod`.
 
-**Phase 1 — NEXT:** eager materialize in copy handling (vanilla-pristine, exclusions); add isolation tests (clear-mid-entity, copy-vanilla-then-edit-vanilla); re-run the red test (expect green) and the `de_original→de_new` comparison (expect the ~25-unit `#copystats` cluster to shrink).
+**KEY DISCOVERY — the cluster was forward-reference copies, not order-dependent edits** (`#copystats S` with `S.ID > this.ID`, e.g. `8640 → 8649`): file-order parse resolves the source but the ID-ordered exporter emits the copier first → flatten fixes it. **KEY DISCOVERY — the harness has no vanilla units** (`vanilla.dm` is all `#selectmonster`; the inspector's `_select` throws on ids without CSV data), so vanilla `#copystats` fails symmetrically both sides → same-mod guard required, vanilla-pristine rule in-game-only.
+
+**Status / results (updated 2026-06-08, after Bug A fix):** the 3 isolation fixtures (`order_dependent_copy`, `forward_ref_copy`, `clear_mid_entity`) PASS; round-trip² is idempotent; the Bug A repro (`copyspr_after_copystats`) now bakes correctly. **Big mod: 630 → 351 data diffs** (the `#copyspr` clobber fix alone removed 279). Normalization is now **net-positive vs the un-normalized baseline** (`nonorm` = 374): it eliminates the entire order-dependent stat/bool cluster — 28 fields × ~25 units (att, def, hp, prot, str, size, mr, mor, ap, enc, gcost, mapmove, maxage, prec, body, foot, hand, head, heal, immobile, inanimate, invisible, regeneration, stealthy, misc, nohof, nowish, unteleportable) — while introducing only **~27 new field-occurrences** (17 singletons + `spell.nations` ×10).
+
+> **The "weapon/armor reference export bug" was a MISDIAGNOSIS.** There was no ref name→id export bug. The 393 `unit.weapons` / 117 `unit.armor` diffs were Bug A's blast radius: `#copyspr` emptied `_materialized`, so the re-derive saw the weapon/armor set as "diverged" (empty snapshot vs the source's real set) and emitted bogus `#clearweapons`/`#cleararmor`. Fixing Bug A collapsed `unit.weapons` 393→66 and `unit.armor` 117→4. Verified by reverting the one guard (630) and re-applying (351).
+
+**Remaining 351 = pre-existing export issues in OTHER subsystems, not copy logic.** The normalized field set is (almost) a strict subset of `nonorm`: `unit.weapons` 66, `unit.onebattlespell` 59, `spell.details` 59, `unit.descr` 41, `unit.xpshape` 26, `spell.nextspell` 24, `wpn.dmg` 12, `unit.magicboost_*`, `unit.name` 7 — all present with `nonorm` too. The only things normalization itself still INTRODUCES are `spell.nations` ×10 (the one cluster worth chasing — likely `#copyspell` re-derive baking nations) plus 17 count-1 singletons (item.weapon/armor/autospell/…, spell.aoe/onlyatsite/…, unit.immortal/undeadleader, wpn.*).
+
+### Review findings (2026-06-01, 4 parallel agents: adversarial / edge / code-quality / advocate)
+
+Two genuine bugs (repro fixtures saved):
+- **Bug A — FIXED (2026-06-08): `#copyspr` after `#copystats` wiped the stats snapshot.** `CaptureCopySnapshot` set `_materialized = BuildSnapshot(...)` even when the copy's scope was `{Sprites}` → empty snapshot OVERWROTE the good `#copystats` one. `#copystats X / #copyspr Y` is ubiquitous. **Fix applied:** bail when the overwritten groups are entirely `Sprites` (`groups.All(g => g == PropertyGroup.Sprites)`) — generic, no command-name list, and subsumes the old `Count == 0` guard. **Impact: 630 → 351 big-mod diffs** (this single guard; it was also the root cause of the phantom weapon/armor "ref bug"). Repro `Dom5Tests/fixtures/copy/copyspr_after_copystats.dm` now bakes `#att 10` correctly.
+- **Bug B — logic error: `CopyReproducesOnReload` assumes pure ID order, but `EntitySet.Export` emits in sections** (`>= START_ID` block before `< START_ID`). A mod-range monster copying a mod-edited vanilla unit (id `< START_ID`, same `ParentMod`) is misclassified as "reproduces" and not flattened → forward-breaks on reload. Harness-masked by vanilla symmetry; real in-game. **Fix:** make the check section-aware (a `>= START_ID` source precedes a `< START_ID` copier; else compare IDs within the same section). Repro is in-game / needs a `#newmonster`-based vanilla-substitute fixture.
+
+Lower-priority (logged, not yet done):
+- `Canon` strips at the first `" -- "` → a value legitimately containing `" -- "` mis-compares. Prefer a comment-free `ToExportString`.
+- Flatten loop calls `AddProperty` per prop → each re-sorts `_properties` (O(n²·log n)); use a bulk append-then-sort.
+- `CaptureCopySnapshot` runs on every parse (incl. GUI) though only the harness reads `_materialized` — small wasted alloc; consider gating.
+- `name`/`descr` declared BEFORE a copy: `sort_properties` hoists the copy above the name, and `ApplyCopyCommand`'s partial branch (copystats) wipes group-`None` identity while the `coversAll` branch (copyweapon) honors `IsIdentityCommand` — inconsistent. Repro: `name_before_copy.dm`. (Partly pre-existing.)
+- **Deep multi-valued chains** are "best effort" in `BuildSnapshot` (the one genuinely weak spot all agents flagged) — add a bounding fixture; consider an `AddParseIssue` when a chain snapshot draws from a non-reproducing source.
+- Nits: `GetProp` could be `private`; doc mentions removed `ResolveReloadValue`.
+
+Advocate validated the core architecture as sound: capture-at-parse is the only correct moment; same-mod guard is principled (vanilla-pristine + oracle-symmetry); re-derive-not-flatten is what keeps regressions at zero; group-machinery genericity is real (catch-all default). Acceptable documented trade-offs: monster-focus of edit handling, re-sort deferred, vanilla-untestable.
+
+**Deferred (later phases):** topological **re-sort** (emit sources before copiers, keep the copy command — semantically transparent, no `#copystats`-semantics replication) as the cleaner alternative to flatten; non-monster edit handling; GUI consuming the shared resolution.
+
+**Separate, pre-existing export work (NOT copy logic — present with `nonorm`):** these surface in the remaining 351 and are unaffected by normalization, so they belong to other subsystems — `unit.weapons` (66), `unit.onebattlespell` (59), `spell.details` (59), `unit.descr` (41), `unit.xpshape` (26), `spell.nextspell` (24), `wpn.dmg` (12), `unit.magicboost_*`, `unit.name` (7). The ONE diff cluster normalization itself still introduces is `spell.nations` ×10 (chase next), plus 17 count-1 singletons.
 
 ## Architecture note
 

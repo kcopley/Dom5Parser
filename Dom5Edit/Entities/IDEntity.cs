@@ -8,6 +8,13 @@ namespace Dom5Edit.Entities
     {
         private List<Property> _properties = new List<Property>();
         public IReadOnlyList<Property> Properties => _properties.AsReadOnly();
+
+        // Copy/inheritance redesign Phase 1 (see docs/COPY_INHERITANCE_REDESIGN.md):
+        // a frozen, order-correct snapshot of this entity's copy source, captured at the
+        // moment the copy command was parsed (mod sources) or completed at Resolve (vanilla
+        // sources). null = this entity does not copy anything. Inert unless Mod.NormalizeCopies()
+        // is run; the legacy lazy TryGetCopyFrom resolution is otherwise unchanged.
+        private List<Property> _materialized = null;
         public HashSet<Nation> AssociatedNations = new HashSet<Nation>();
         public bool Selected { get; set; }
         public bool Named { get; set; }
@@ -251,6 +258,11 @@ namespace Dom5Edit.Entities
             else if (PropertyGroupMap.IsFullCopyCommand(property.Command))
             {
                 ApplyCopyCommand(property);
+                // Copy/inheritance redesign Phase 1: freeze an order-correct snapshot of the
+                // source's CURRENT state. Captured here (during parse) so later edits to the
+                // source don't leak into this copy. Vanilla/forward sources can't be resolved
+                // yet (dependencies attach after parse) and are completed in FinalizeCopyMaterialization.
+                CaptureCopySnapshot(property);
             }
 
             _properties.Add(property);
@@ -372,6 +384,234 @@ namespace Dom5Edit.Entities
                 ParentMod?.AddParseIssue(ParseIssueType.PropertiesClearedBySubsequentClear, message, copyProperty.LineNumber);
             }
         }
+
+        #region Copy materialization (Phase 1)
+
+        /// <summary>
+        /// Freezes a snapshot of a copy command's source as it exists right now, so later edits
+        /// to the source do not change what this entity copied. Only resolves MOD sources already
+        /// present in the local database (vanilla isn't attached during parse); vanilla and
+        /// forward-referenced sources are completed later in <see cref="FinalizeCopyMaterialization"/>.
+        /// </summary>
+        private void CaptureCopySnapshot(Property copyProperty)
+        {
+            if (ParentMod == null) return;
+            if (copyProperty is not StringOrIDRef copyRef) return;
+
+            var groups = PropertyGroupMap.GetGroupsOverwrittenByCopy(copyProperty.Command);
+            // A copy whose overwritten groups are entirely sprites (e.g. #copyspr) or empty freezes
+            // nothing for the stat snapshot — and must NOT clobber a snapshot a prior same-entity
+            // #copystats captured (Bug A). Sprites are excluded from snapshots anyway, so building
+            // one here would yield an empty list and wipe the real materialization. With the snapshot
+            // emptied, the re-derive then saw the weapon/armor set as "diverged" (empty vs the source's
+            // real set) and emitted bogus #clear* commands — this guard removes ~279 big-mod diffs.
+            // (An empty list's .All(...) is vacuously true, so this also covers the no-group case.)
+            if (groups.All(g => g == PropertyGroup.Sprites)) return;
+
+            EntityType type = ((Reference)copyRef).GetEntityType();
+            if (!ParentMod.Database.TryGetValue(type, out var set)) return;
+
+            // Local lookup only: at parse time the source's CURRENT (pre-later-edit) state is what
+            // illwinter would copy. A miss means vanilla or a forward reference -> defer.
+            if (!set.TryGet(copyRef.ID, copyRef.IsStringRef ? copyRef.Name : null, out var source)) return;
+            if (source == null || source == this) return;
+
+            _materialized = BuildSnapshot(source, groups);
+        }
+
+        /// <summary>
+        /// Builds a deep-copied snapshot of <paramref name="source"/>'s properties for the groups a
+        /// copy command overwrites, excluding sprites and the ID-relative commands (which #copystats
+        /// does not copy). Includes the source's own values plus, for chains, its already-materialized
+        /// inherited base for commands it did not itself set.
+        /// </summary>
+        private List<Property> BuildSnapshot(IDEntity source, List<PropertyGroup> groups)
+        {
+            bool all = groups.Contains(PropertyGroup.All);
+            var snap = new List<Property>();
+            var taken = new HashSet<Command>();
+
+            foreach (var p in source._properties)
+            {
+                if (!ShouldSnapshot(source, p.Command, groups, all)) continue;
+                // Single-valued stat/identity props can appear twice on the source when it was
+                // re-#selected and edited (the parser appends rather than replaces); illwinter
+                // takes the last, so the snapshot must too. Multi-valued groups accumulate.
+                bool singleValued = !(p is Reference) && source.GetPropertyGroup(p.Command) == PropertyGroup.None;
+                if (singleValued)
+                {
+                    snap.RemoveAll(x => x.Command == p.Command);
+                }
+                var clone = p.Clone();
+                clone.Parent = this;
+                snap.Add(clone);
+                taken.Add(p.Command);
+            }
+
+            // Chain support (best effort): pull the source's inherited base for commands it did not
+            // explicitly override. Multi-valued groups in a chain may be under-captured here; that is
+            // a known Phase 1 limitation surfaced by the round-trip harness rather than a silent gap.
+            if (source._materialized != null)
+            {
+                foreach (var p in source._materialized)
+                {
+                    if (taken.Contains(p.Command)) continue;
+                    if (!ShouldSnapshot(source, p.Command, groups, all)) continue;
+                    var clone = p.Clone();
+                    clone.Parent = this;
+                    snap.Add(clone);
+                    taken.Add(p.Command);
+                }
+            }
+
+            return snap;
+        }
+
+        /// <summary>
+        /// Whether a source command belongs in a copy snapshot: not structural (copy/clear), not a
+        /// sprite, not ID-relative, and within a group the copy command overwrites.
+        /// </summary>
+        private static bool ShouldSnapshot(IDEntity source, Command command, List<PropertyGroup> groups, bool all)
+        {
+            if (PropertyGroupMap.IsClearCommand(command) || PropertyGroupMap.IsFullCopyCommand(command))
+                return false;
+            if (PropertyGroupMap.IsIdRelativeCommand(command))
+                return false;
+
+            var group = source.GetPropertyGroup(command);
+            if (group == PropertyGroup.Sprites)
+                return false;
+            if (all)
+                return true;
+            return groups.Contains(group);
+        }
+
+        /// <summary>First property with the given command on this entity (own properties only).</summary>
+        internal Property GetProp(Command c) => _properties.FirstOrDefault(p => p.Command == c);
+
+        /// <summary>
+        /// Completes deferred (vanilla / forward) snapshots now that dependencies are resolved, then
+        /// bakes any divergent inherited values into explicit overrides so a load->save is data-identical.
+        /// Driven by <see cref="Mod.NormalizeCopies"/>; no-op for entities that do not copy.
+        /// </summary>
+        internal void FinalizeCopyMaterialization()
+        {
+            if (_materialized == null) return; // captured only for same-mod sources resolvable at parse
+            // The snapshot was cloned at parse, before dependencies were attached, so its references
+            // are unresolved (raw ids). Resolve them now so they compare and export consistently with
+            // the source's own (resolved) references — otherwise every reference looks "divergent".
+            foreach (var p in _materialized)
+                if (p is Reference r) r.Resolve();
+            BakeDivergentOverrides();
+        }
+
+        /// <summary>
+        /// Whether the copy command on this entity will resolve to the SAME state on reload that it
+        /// resolved to during the original parse. The exporter emits entities in ID order, so on
+        /// reload a copy only sees its source if the source is emitted earlier: a dependency
+        /// (vanilla, written as the base file) or a same-mod entity with a smaller ID. A copy of a
+        /// larger-ID (forward-referenced) source breaks on reload and loses everything it copied.
+        /// </summary>
+        private bool CopyReproducesOnReload(IDEntity src)
+        {
+            if (src == null) return false;
+            if (src.ParentMod != ParentMod) return true;       // dependency / vanilla base: always emitted first
+            if (src.ID > 0 && ID > 0 && src.ID < ID) return true; // emitted earlier in the ID-sorted section
+            return false;                                        // forward reference / unidentified: breaks on reload
+        }
+
+        /// <summary>
+        /// Re-derive: reconcile the copy against what a re-loaded export would reproduce, emitting
+        /// only the values the live copy would NOT reproduce (the divergences) and leaving everything
+        /// else implicit behind the copy command. Generic — driven entirely by the copy command's
+        /// defined scope (PropertyGroupMap) and the group machinery, with no per-property list:
+        ///   - group None (stats / identity) = scalar: bake the diverging inherited value.
+        ///   - clearable groups (Weapons / Armor / Magic / Special) = lists: if the copied set
+        ///     diverges and the entity didn't itself touch the group, re-assert it (clear + members).
+        /// Forward-referenced sources (copy breaks on the ID-ordered reload) are flattened instead.
+        /// Only same-mod sources are touched; vanilla copies are left for the loader to replay.
+        /// </summary>
+        private void BakeDivergentOverrides()
+        {
+            if (!TryGetCopyFrom(out var src) || src == null) return;
+            if (src.ParentMod != ParentMod) return; // vanilla / dependency: leave the live copy command
+
+            var copyProp = _properties.FirstOrDefault(p =>
+                PropertyGroupMap.IsFullCopyCommand(p.Command) && p.Command != Command.COPYSPR);
+            if (copyProp == null) return;
+            var groups = PropertyGroupMap.GetGroupsOverwrittenByCopy(copyProp.Command);
+
+            if (!CopyReproducesOnReload(src))
+            {
+                // Forward reference: the copy resolves to nothing on reload, so emit the snapshot
+                // directly and drop the dead copy command. #copyspr resolves independently and stays.
+                var ownCommands = new HashSet<Command>(_properties.Select(p => p.Command));
+                var toBake = _materialized.Where(mp => !ownCommands.Contains(mp.Command)).ToList();
+                foreach (var p in toBake) AddProperty(p);
+                foreach (var p in _properties
+                            .Where(p => PropertyGroupMap.IsFullCopyCommand(p.Command) && p.Command != Command.COPYSPR)
+                            .ToList())
+                    _properties.Remove(p);
+                return;
+            }
+
+            // What the live copy reproduces on reload = the source's CURRENT resolved state.
+            var srcResolved = BuildSnapshot(src, groups);
+
+            // 1. Scalars (group None): re-assert an inherited value that diverges and isn't overridden.
+            foreach (var mp in _materialized)
+            {
+                if (GetPropertyGroup(mp.Command) != PropertyGroup.None) continue;
+                if (GetProp(mp.Command) != null) continue; // entity already states this explicitly
+                var srcVal = srcResolved.LastOrDefault(sp => sp.Command == mp.Command);
+                if (!CanonEquals(mp, srcVal)) AddProperty(mp);
+            }
+
+            // 2. Clearable groups (lists): if the copied set diverges and the entity didn't itself
+            //    modify the group, re-assert the copied set with a clear + the members.
+            foreach (var group in groups)
+            {
+                var clearCmd = PropertyGroupMap.GetClearCommand(group);
+                if (!clearCmd.HasValue) continue; // None / non-clearable
+
+                bool ownModified = _properties.Any(p => GetPropertyGroup(p.Command) == group)
+                                   || _properties.Any(p => p.Command == clearCmd.Value);
+                if (ownModified) continue;
+
+                var matG = _materialized.Where(p => GetPropertyGroup(p.Command) == group).ToList();
+                var srcG = srcResolved.Where(p => GetPropertyGroup(p.Command) == group).ToList();
+                if (CanonSetEquals(matG, srcG)) continue; // copy reproduces the group as-is
+
+                AddProperty(CommandProperty.Create(clearCmd.Value, this));
+                foreach (var p in matG) AddProperty(p);
+            }
+        }
+
+        /// <summary>Compares two properties by export text, ignoring trailing comments.</summary>
+        private static bool CanonEquals(Property a, Property b)
+        {
+            if (a == null || b == null) return a == null && b == null;
+            return Canon(a.ToExportString()) == Canon(b.ToExportString());
+        }
+
+        /// <summary>Compares two property lists as multisets of canonical export text.</summary>
+        private static bool CanonSetEquals(List<Property> a, List<Property> b)
+        {
+            if (a.Count != b.Count) return false;
+            var sa = a.Select(p => Canon(p.ToExportString())).OrderBy(s => s, StringComparer.Ordinal).ToList();
+            var sb = b.Select(p => Canon(p.ToExportString())).OrderBy(s => s, StringComparer.Ordinal).ToList();
+            return sa.SequenceEqual(sb);
+        }
+
+        private static string Canon(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return "";
+            int i = s.IndexOf(" -- ", StringComparison.Ordinal);
+            if (i >= 0) s = s.Substring(0, i);
+            return s.TrimEnd();
+        }
+
+        #endregion
 
         /// <summary>
         /// Checks if a command is an identity/structural command that should not be overwritten by copy.
