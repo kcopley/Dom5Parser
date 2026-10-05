@@ -1,0 +1,1221 @@
+{
+ "game_version": "6.37",
+ "exe_sha256_16": "d77cd364fe447e85",
+ "vanilla_ability_keys": 462,
+ "settable_by_monster_commands": 351,
+ "not_settable": [
+  {
+   "ability": 1017,
+   "name_hint": "unmountedspr",
+   "monsters": 262,
+   "possibly_set_by": [
+    "unmountedspr1"
+   ],
+   "examples": [
+    "3 Serpent Cataphract = 10050",
+    "5 Serpent Lord = 10020",
+    "19 Heavy Cavalry = 500"
+   ]
+  },
+  {
+   "ability": 171,
+   "name_hint": "blind",
+   "monsters": 203,
+   "possibly_set_by": [
+    "blind"
+   ],
+   "examples": [
+    "158 Oracle = 1",
+    "159 Monument = 1",
+    "330 Dark Vines = 1"
+   ]
+  },
+  {
+   "ability": 160,
+   "name_hint": null,
+   "monsters": 122,
+   "possibly_set_by": [],
+   "examples": [
+    "5 Serpent Lord = 25",
+    "44 Mounted Commander = 25",
+    "45 Mounted Commander = 25"
+   ]
+  },
+  {
+   "ability": 1152,
+   "name_hint": null,
+   "monsters": 94,
+   "possibly_set_by": [],
+   "examples": [
+    "27 Centaur = 4061",
+    "227 Satyr Sneak = 712",
+    "228 Satyr = 712"
+   ]
+  },
+  {
+   "ability": 112,
+   "name_hint": "sailingshipsize",
+   "monsters": 71,
+   "possibly_set_by": [
+    "ap",
+    "armor",
+    "att",
+    "cold",
+    "coldres",
+    "copyspr",
+    "copystats",
+    "custommagic",
+    "def",
+    "descr",
+    "enc",
+    "eyes",
+    "fireres",
+    "fixedname",
+    "gcost",
+    "gemprod",
+    "heat",
+    "hp",
+    "itemslots",
+    "magicboost",
+    "magicskill",
+    "mapmove",
+    "mor",
+    "mr",
+    "nametype",
+    "newmonster",
+    "pathcost",
+    "poisonres",
+    "prec",
+    "prot",
+    "rcost",
+    "rpcost",
+    "sailing",
+    "selectmonster",
+    "shockres",
+    "size",
+    "spr1",
+    "spr2",
+    "startdom",
+    "stealthy",
+    "str",
+    "unmountedspr1",
+    "unmountedspr2",
+    "weapon",
+    "xspr1",
+    "xspr2"
+   ],
+   "examples": [
+    "263 Vanherse = 999",
+    "264 Vanjarl = 999",
+    "501 Allfather = 999"
+   ]
+  },
+  {
+   "ability": 358,
+   "name_hint": null,
+   "monsters": 58,
+   "possibly_set_by": [],
+   "examples": [
+    "13 Hoplite Commander = 1",
+    "14 Hoplite = 1",
+    "15 Hypaspist Commander = 1"
+   ]
+  },
+  {
+   "ability": 252,
+   "name_hint": null,
+   "monsters": 46,
+   "possibly_set_by": [],
+   "examples": [
+    "3109 Gigante Ekdromos = 162",
+    "3110 Gigante Hoplite = 162",
+    "3111 Lochos = 162"
+   ]
+  },
+  {
+   "ability": 1127,
+   "name_hint": null,
+   "monsters": 40,
+   "possibly_set_by": [],
+   "examples": [
+    "197 Soulless = 1",
+    "315 Soulless Giant = 1",
+    "317 Soulless = 1"
+   ]
+  },
+  {
+   "ability": 1087,
+   "name_hint": null,
+   "monsters": 38,
+   "possibly_set_by": [],
+   "examples": [
+    "3695 Bush = 2",
+    "3696 Shrub = 2",
+    "3697 Small Shrub = 2"
+   ]
+  },
+  {
+   "ability": 213,
+   "name_hint": "assassin",
+   "monsters": 37,
+   "possibly_set_by": [
+    "assassin"
+   ],
+   "examples": [
+    "428 Assassin = 1",
+    "429 Slayer = 1",
+    "443 Star Child = 1"
+   ]
+  },
+  {
+   "ability": 655,
+   "name_hint": null,
+   "monsters": 33,
+   "possibly_set_by": [],
+   "examples": [
+    "385 Neteret of Joy = 1",
+    "386 Neter of the Sun = 1",
+    "527 Will o' the Wisp = 1"
+   ]
+  },
+  {
+   "ability": 1125,
+   "name_hint": null,
+   "monsters": 23,
+   "possibly_set_by": [],
+   "examples": [
+    "3912 Fay Folk = 1",
+    "3913 Fay Folk = 1",
+    "3914 Fay Folk = 1"
+   ]
+  },
+  {
+   "ability": 566,
+   "name_hint": "startitem",
+   "monsters": 18,
+   "possibly_set_by": [],
+   "examples": [
+    "2104 Ryujin = 1",
+    "2105 Ryujin = 1",
+    "2316 Dragon King = 1"
+   ]
+  },
+  {
+   "ability": 684,
+   "name_hint": "autoblessed",
+   "monsters": 15,
+   "possibly_set_by": [],
+   "examples": [
+    "3280 Mirror Guard = 1",
+    "3281 Baculite = 1",
+    "3282 Soldier Priest = 1"
+   ]
+  },
+  {
+   "ability": 153,
+   "name_hint": null,
+   "monsters": 13,
+   "possibly_set_by": [],
+   "examples": [
+    "404 Vampire Lord = 2",
+    "405 Vampire = 2",
+    "862 Vampire Queen = 2"
+   ]
+  },
+  {
+   "ability": 530,
+   "name_hint": "aboleth",
+   "monsters": 13,
+   "possibly_set_by": [],
+   "examples": [
+    "660 Aboleth = 1",
+    "1401 Polypal Mother = 1",
+    "1402 Polypal Queen = 1"
+   ]
+  },
+  {
+   "ability": 359,
+   "name_hint": null,
+   "monsters": 12,
+   "possibly_set_by": [],
+   "examples": [
+    "139 Barbarian = 1",
+    "140 Barbarian = 1",
+    "141 Barbarian Chief = 1"
+   ]
+  },
+  {
+   "ability": 365,
+   "name_hint": "dreanimator",
+   "monsters": 12,
+   "possibly_set_by": [],
+   "examples": [
+    "383 Prince of Death = 4",
+    "825 Ice Devil = 4",
+    "933 King of Legends = 2"
+   ]
+  },
+  {
+   "ability": 244,
+   "name_hint": "eyeloss",
+   "monsters": 9,
+   "possibly_set_by": [],
+   "examples": [
+    "1025 Divine Glyph = 5",
+    "1368 Seraph = 5",
+    "1384 Solar Disc = 5"
+   ]
+  },
+  {
+   "ability": 304,
+   "name_hint": "reincarnation",
+   "monsters": 9,
+   "possibly_set_by": [],
+   "examples": [
+    "1141 Tiger Rider = 10",
+    "1142 White One = 5",
+    "1143 Guru = 50"
+   ]
+  },
+  {
+   "ability": 460,
+   "name_hint": "adventurers",
+   "monsters": 9,
+   "possibly_set_by": [],
+   "examples": [
+    "2323 Adventurer = 1",
+    "2324 Adventurer = 1",
+    "2325 Adventurer = 1"
+   ]
+  },
+  {
+   "ability": 1101,
+   "name_hint": null,
+   "monsters": 9,
+   "possibly_set_by": [],
+   "examples": [
+    "3587 Bekryde = -10",
+    "3588 Bekryde Warrior = -5",
+    "3589 Bekryde Scout = 1"
+   ]
+  },
+  {
+   "ability": 1039,
+   "name_hint": "illusion",
+   "monsters": 8,
+   "possibly_set_by": [],
+   "examples": [
+    "297 Warrior Illusion = 1",
+    "298 Wolf Illusion = 1",
+    "448 False Horror = 1"
+   ]
+  },
+  {
+   "ability": 1054,
+   "name_hint": "randomitems",
+   "monsters": 8,
+   "possibly_set_by": [],
+   "examples": [
+    "651 Eater of Dreams = 300",
+    "1148 Eater of Gods = 300",
+    "1151 Slave to Unreason = 400"
+   ]
+  },
+  {
+   "ability": 659,
+   "name_hint": "wolf",
+   "monsters": 7,
+   "possibly_set_by": [],
+   "examples": [
+    "284 Wolf = 1",
+    "511 Winter Wolf = 1",
+    "1224 Dire Wolf = 1"
+   ]
+  },
+  {
+   "ability": 1161,
+   "name_hint": null,
+   "monsters": 7,
+   "possibly_set_by": [],
+   "examples": [
+    "398 Mummy = 1",
+    "625 Mummy = 1",
+    "643 Bog Mummy = 1"
+   ]
+  },
+  {
+   "ability": 32,
+   "name_hint": null,
+   "monsters": 7,
+   "possibly_set_by": [
+    "end",
+    "goodmagicleader",
+    "newmonster",
+    "selectmonster",
+    "undead"
+   ],
+   "examples": [
+    "580 Sea King = 1",
+    "1342 Titan of Rivers = 2",
+    "1370 Volla of the Bountiful Forest = 1"
+   ]
+  },
+  {
+   "ability": 388,
+   "name_hint": "offscriptresearch",
+   "monsters": 7,
+   "possibly_set_by": [],
+   "examples": [
+    "1151 Slave to Unreason = 9",
+    "1913 Abomination of Desolation = 7",
+    "2211 Mind Slime Horror = 5"
+   ]
+  },
+  {
+   "ability": 517,
+   "name_hint": "sendlesserhorrormult",
+   "monsters": 7,
+   "possibly_set_by": [],
+   "examples": [
+    "2209 Horror Mantis = 11",
+    "2210 Float Cat Horror = 10",
+    "2212 Soultorn = 200"
+   ]
+  },
+  {
+   "ability": 173,
+   "name_hint": "turmoilsummon",
+   "monsters": 6,
+   "possibly_set_by": [],
+   "examples": [
+    "238 Pan = 435",
+    "516 Pandemoniac = 435",
+    "812 Lord of the Wild = 435"
+   ]
+  },
+  {
+   "ability": 179,
+   "name_hint": null,
+   "monsters": 6,
+   "possibly_set_by": [],
+   "examples": [
+    "747 Heart Companion = 1",
+    "805 Eunuch = 1",
+    "1181 Enarie = 1"
+   ]
+  },
+  {
+   "ability": 676,
+   "name_hint": "mountainrec",
+   "monsters": 6,
+   "possibly_set_by": [],
+   "examples": [
+    "1390 Bakemono-Sho = 1",
+    "1391 Bakemono Archer = 1",
+    "1392 Bakemono Warrior = 1"
+   ]
+  },
+  {
+   "ability": 492,
+   "name_hint": "isayazad",
+   "monsters": 6,
+   "possibly_set_by": [],
+   "examples": [
+    "2620 Yazad of Fire = 1",
+    "2621 Yazad of Justice = 1",
+    "2622 Yazad of the Stars = 1"
+   ]
+  },
+  {
+   "ability": 511,
+   "name_hint": "mummify",
+   "monsters": 6,
+   "possibly_set_by": [],
+   "examples": [
+    "2654 Apu = 2660",
+    "2655 Apusqispay = 2660",
+    "2656 Aclla = 2661"
+   ]
+  },
+  {
+   "ability": 1094,
+   "name_hint": null,
+   "monsters": 6,
+   "possibly_set_by": [],
+   "examples": [
+    "3826 Table = 2",
+    "3827 Counter = 1",
+    "3828 Bookshelf = 1"
+   ]
+  },
+  {
+   "ability": 206,
+   "name_hint": "voidsum",
+   "monsters": 5,
+   "possibly_set_by": [],
+   "examples": [
+    "333 Starspawn = 6",
+    "560 Stargazer = 10",
+    "1562 Void Spectre = 10"
+   ]
+  },
+  {
+   "ability": 30,
+   "name_hint": null,
+   "monsters": 5,
+   "possibly_set_by": [],
+   "examples": [
+    "827 Arch Devil = 1",
+    "2553 Ahura of the Oath = 1",
+    "3086 Deives of the Sun = 2"
+   ]
+  },
+  {
+   "ability": 364,
+   "name_hint": "preanimator",
+   "monsters": 5,
+   "possibly_set_by": [],
+   "examples": [
+    "933 King of Legends = 2",
+    "2661 Mallqui Priestess = 2",
+    "2662 Mallqui Priest = 3"
+   ]
+  },
+  {
+   "ability": 1119,
+   "name_hint": null,
+   "monsters": 5,
+   "possibly_set_by": [],
+   "examples": [
+    "3826 Table = 1",
+    "3827 Counter = 1",
+    "4004 Tree = 1"
+   ]
+  },
+  {
+   "ability": 691,
+   "name_hint": "bird",
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "517 Black Hawk = 1",
+    "2929 Swan = 1",
+    "3327 Strange Bird = 1"
+   ]
+  },
+  {
+   "ability": 638,
+   "name_hint": "stunimmunity",
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "781 Juggernaut = 1",
+    "1271 Maker of Ruins = 1",
+    "2159 Gelatinous Cube = 1"
+   ]
+  },
+  {
+   "ability": 563,
+   "name_hint": "astralfetters",
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "1148 Eater of Gods = 1",
+    "1149 Eater of Gods = 1",
+    "1150 Eater of Gods = 1"
+   ]
+  },
+  {
+   "ability": 681,
+   "name_hint": "landenc",
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "1482 Kappa = 5",
+    "1530 Kappa Mage = 5",
+    "1531 Kappa Chief = 5"
+   ]
+  },
+  {
+   "ability": 271,
+   "name_hint": "curseattacker",
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "1768 Barghest = 5",
+    "2449 Idol of Sorcery = 1",
+    "2789 Raven of the Underworld = 5"
+   ]
+  },
+  {
+   "ability": 493,
+   "name_hint": "isadaeva",
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "2632 Daeva of Shooting Stars = 1",
+    "2633 Yata = 1",
+    "2634 Daeva of Frost and Snow = 1"
+   ]
+  },
+  {
+   "ability": 520,
+   "name_hint": "theftofthesunawe",
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "2672 Sun Guide = 1",
+    "2677 Ah K'in = 1",
+    "2684 Ah K'in Kan Ek' = 1"
+   ]
+  },
+  {
+   "ability": 640,
+   "name_hint": null,
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "3042 Prince of the Setting Sun = 20",
+    "3043 Prince of the Setting Sun = 20",
+    "3044 Princess of the Setting Sun = 20"
+   ]
+  },
+  {
+   "ability": 696,
+   "name_hint": null,
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "3425 Dwarf of the North = 1",
+    "3426 Dwarf of the South = 1",
+    "3427 Dwarf of the East = 1"
+   ]
+  },
+  {
+   "ability": 197,
+   "name_hint": null,
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "3477 Ghul = 3478",
+    "3479 Ghul = 3480",
+    "3481 Ghulah = 3482"
+   ]
+  },
+  {
+   "ability": 1061,
+   "name_hint": null,
+   "monsters": 4,
+   "possibly_set_by": [],
+   "examples": [
+    "3718 Fire Elemental = 1",
+    "3726 Air Elemental = 1",
+    "3734 Water Elemental = 1"
+   ]
+  },
+  {
+   "ability": 360,
+   "name_hint": null,
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "23 Knight Commander = 1",
+    "141 Barbarian Chief = 1",
+    "147 Barbarian Lord = 1"
+   ]
+  },
+  {
+   "ability": 24,
+   "name_hint": "sorceryrange",
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "245 Master Enchanter = 1",
+    "2449 Idol of Sorcery = 2",
+    "2978 Master Sorcerer = 1"
+   ]
+  },
+  {
+   "ability": 682,
+   "name_hint": null,
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "761 Serpent Priest = 32",
+    "830 Serpent Acolyte = 32",
+    "865 Pontifex Serpentus = 32"
+   ]
+  },
+  {
+   "ability": 392,
+   "name_hint": null,
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "995 Eater of the Dead = 994",
+    "996 Eater of the Dead = 994",
+    "997 Unfettered = 994"
+   ]
+  },
+  {
+   "ability": 260,
+   "name_hint": "ethtrue",
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "1149 Eater of Gods = 50",
+    "1150 Eater of Gods = 75",
+    "2501 Legion of Gods = 50"
+   ]
+  },
+  {
+   "ability": 283,
+   "name_hint": null,
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "1336 Devata = 1",
+    "1585 Fallen = 1",
+    "1906 Rudra = 1"
+   ]
+  },
+  {
+   "ability": 664,
+   "name_hint": "stygianguide",
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "3205 Titan of Crossroads = 75",
+    "3210 Lampad = 75",
+    "3895 Ferryman = 75"
+   ]
+  },
+  {
+   "ability": 686,
+   "name_hint": "heathensummon",
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "3290 Bishop Vicomte = 5",
+    "3291 Viceroy Primate = 7",
+    "3380 Protopope = 9"
+   ]
+  },
+  {
+   "ability": 408,
+   "name_hint": null,
+   "monsters": 3,
+   "possibly_set_by": [],
+   "examples": [
+    "3890 Cave Kobold = 5",
+    "3891 Bluecap = 25",
+    "3892 Blue Flame = 25"
+   ]
+  },
+  {
+   "ability": 104,
+   "name_hint": null,
+   "monsters": 2,
+   "possibly_set_by": [
+    "end"
+   ],
+   "examples": [
+    "138 Gorgon = 2",
+    "3650 Immortal Gorgon = 2"
+   ]
+  },
+  {
+   "ability": 633,
+   "name_hint": null,
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "141 Barbarian Chief = 1",
+    "147 Barbarian Lord = 1"
+   ]
+  },
+  {
+   "ability": 23,
+   "name_hint": "elementrange",
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "244 Arch Mage = 1",
+    "248 Arch Mage = 1"
+   ]
+  },
+  {
+   "ability": 673,
+   "name_hint": "erastartageincrease",
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "586 Great Hag = 350",
+    "1958 Hag = 350"
+   ]
+  },
+  {
+   "ability": 128,
+   "name_hint": "entangle",
+   "monsters": 2,
+   "possibly_set_by": [
+    "custommagic",
+    "entangle",
+    "superiormagicleader"
+   ],
+   "examples": [
+    "641 Ancient Mandragora = 3",
+    "2437 Annunaki of Growth and Rebirth = 1"
+   ]
+  },
+  {
+   "ability": 38,
+   "name_hint": null,
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "810 Lord of Hell = 3",
+    "2278 Prince of Lust = 3"
+   ]
+  },
+  {
+   "ability": 1103,
+   "name_hint": null,
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "927 Noble = 1",
+    "1544 Warrior of the Five Elements = 1"
+   ]
+  },
+  {
+   "ability": 1151,
+   "name_hint": "exhaustion",
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "982 Clockwork Horror = 10",
+    "2321 Clockwork Soldier = 10"
+   ]
+  },
+  {
+   "ability": 249,
+   "name_hint": "clockworklord",
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "1073 Maker of the Maze = 2",
+    "1848 Mason of the Underworld = 1"
+   ]
+  },
+  {
+   "ability": 36,
+   "name_hint": null,
+   "monsters": 2,
+   "possibly_set_by": [
+    "copyspr",
+    "fixedname",
+    "spr1",
+    "spr2"
+   ],
+   "examples": [
+    "1370 Volla of the Bountiful Forest = 1",
+    "3080 Duiu of Farming = 1"
+   ]
+  },
+  {
+   "ability": 62,
+   "name_hint": "foreignmagicboost",
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "2095 Ujigami = -1",
+    "2097 Yama-no-kami = -1"
+   ]
+  },
+  {
+   "ability": 512,
+   "name_hint": "mummification",
+   "monsters": 2,
+   "possibly_set_by": [
+    "fireres",
+    "okundeadleader"
+   ],
+   "examples": [
+    "2658 Inca = 2659",
+    "2659 Coya = 2658"
+   ]
+  },
+  {
+   "ability": 308,
+   "name_hint": "moralebonus",
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "3214 Iron Bound = 8",
+    "3216 Iron Guard = 8"
+   ]
+  },
+  {
+   "ability": 1111,
+   "name_hint": null,
+   "monsters": 2,
+   "possibly_set_by": [],
+   "examples": [
+    "3852 Void Dreamer = 5",
+    "3853 Void Herald = 10"
+   ]
+  },
+  {
+   "ability": 632,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "147 Barbarian Lord = 30"
+   ]
+  },
+  {
+   "ability": 1099,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "247 Freak = 33554432"
+   ]
+  },
+  {
+   "ability": 138,
+   "name_hint": "petrificationimmune",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "466 Cockatrice = 100"
+   ]
+  },
+  {
+   "ability": 37,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "485 Great Enchantress = 1"
+   ]
+  },
+  {
+   "ability": 147,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "605 Son of Niefel = 511"
+   ]
+  },
+  {
+   "ability": 185,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "636 Basilisk = 35"
+   ]
+  },
+  {
+   "ability": 671,
+   "name_hint": "wintersummon1d3",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "862 Vampire Queen = 405"
+   ]
+  },
+  {
+   "ability": 33,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [
+    "spr1",
+    "spr2",
+    "unmountedspr1",
+    "unmountedspr2",
+    "xspr1",
+    "xspr2"
+   ],
+   "examples": [
+    "906 King of Deeper Earth = 1"
+   ]
+  },
+  {
+   "ability": 263,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1151 Slave to Unreason = 5"
+   ]
+  },
+  {
+   "ability": 639,
+   "name_hint": "mountedbeserk",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1778 Hero = 1"
+   ]
+  },
+  {
+   "ability": 319,
+   "name_hint": "capitalhome",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1795 Partholonian Sorceress = 1"
+   ]
+  },
+  {
+   "ability": 320,
+   "name_hint": "defiler",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1911 Defiler of Dreams = 1"
+   ]
+  },
+  {
+   "ability": 1143,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1913 Abomination of Desolation = 307"
+   ]
+  },
+  {
+   "ability": 1021,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1922 Grid Druzhina = -5"
+   ]
+  },
+  {
+   "ability": 325,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1949 Leshiy = 10"
+   ]
+  },
+  {
+   "ability": 674,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1958 Hag = 5"
+   ]
+  },
+  {
+   "ability": 675,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "1958 Hag = 2"
+   ]
+  },
+  {
+   "ability": 61,
+   "name_hint": "uwpathboost",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "2106 Kaijin = -1"
+   ]
+  },
+  {
+   "ability": 1164,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "2159 Gelatinous Cube = 1"
+   ]
+  },
+  {
+   "ability": 415,
+   "name_hint": "undying",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "2212 Soultorn = 10"
+   ]
+  },
+  {
+   "ability": 296,
+   "name_hint": "disbelieve",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "2457 Bodhisattva of Mercy = 25"
+   ]
+  },
+  {
+   "ability": 471,
+   "name_hint": "horrormarked",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "2495 Member of the Closed Council = 1"
+   ]
+  },
+  {
+   "ability": 660,
+   "name_hint": "uncurableaffliction",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3204 Grey One = 524288"
+   ]
+  },
+  {
+   "ability": 663,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3204 Grey One = 802"
+   ]
+  },
+  {
+   "ability": 679,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3262 Jorogumo = 10"
+   ]
+  },
+  {
+   "ability": 215,
+   "name_hint": "popspy",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3419 Plague Doctor = 1"
+   ]
+  },
+  {
+   "ability": 1040,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3510 Orchard of Souls = 773"
+   ]
+  },
+  {
+   "ability": 1041,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3510 Orchard of Souls = 8"
+   ]
+  },
+  {
+   "ability": 1042,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3510 Orchard of Souls = 452"
+   ]
+  },
+  {
+   "ability": 1043,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3510 Orchard of Souls = 4"
+   ]
+  },
+  {
+   "ability": 1044,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3510 Orchard of Souls = 75"
+   ]
+  },
+  {
+   "ability": 1144,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3510 Orchard of Souls = 3512"
+   ]
+  },
+  {
+   "ability": 1026,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3571 Mushussu = 1"
+   ]
+  },
+  {
+   "ability": 1029,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3606 Bekryde Shepherd = 4096"
+   ]
+  },
+  {
+   "ability": 1074,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3675 Cub-Warrior = 1"
+   ]
+  },
+  {
+   "ability": 1073,
+   "name_hint": "cubmother",
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3682 Bear Clan Cub-Mother = 1"
+   ]
+  },
+  {
+   "ability": 1149,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [],
+   "examples": [
+    "3827 Counter = 1"
+   ]
+  },
+  {
+   "ability": 1168,
+   "name_hint": null,
+   "monsters": 1,
+   "possibly_set_by": [
+    "sleepres"
+   ],
+   "examples": [
+    "4092 Lauma = 79"
+   ]
+  }
+ ]
+}
