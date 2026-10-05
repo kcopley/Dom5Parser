@@ -90,63 +90,56 @@ or `"baseline"`. Mark a stage known-failing with
   arrays, unset as `null`. `from`/`to` can be omitted to accept any value. Write
   expectations from intent, never by copying observed output.
 
-## Current state (2026-10-04, oracle 5b44841, game 6.37)
-
-Full run: **25 checks: 21 pass, 4 known-failing, 0 failing.**
+## Current state (2026-10-04, oracle 5961cf1, game 6.37)
 
 | Stage | Case | Result |
 |---|---|---|
-| 1 | 5 copy fixtures | pass |
-| 1 | edits-base | xfail: inspector exports vanilla unit 3's *displayed* mapmove/rcost (finding 1) |
-| 1 | DomEnhanced 2.13 | baseline **8,945**: mostly the same display-value class (`mapmove`, `rt`, `bow`, `leader`, `gemcost`) plus derived display fields |
-| 2 | exporter round trip | xfail: 4 mercs (finding 5) |
+| 1 | 5 copy fixtures, edits-base | pass |
+| 1 | DomEnhanced 2.13 | baseline **6,269** (8,945 at first). What remains is mostly the inspector's model of *mods*, not vanilla data: copies don't inherit the source's attribute-based properties (provrange, hiddenench, weapon flags), plus derived display fields (`rt`, `bow`, `leader`, `gemcost`, `sorttype`, ...). |
+| 2 | exporter round trip | **pass**: now strict. Each entity re-imports into a fresh object and must re-export the same command lines. The old test compared each object with itself. |
 | 2 | vanilla.dm current | pass |
-| 2 | vanilla base values | baseline **3,568** entities (finding 1) |
-| 3 | 5 copy fixtures + edits-base | pass, except `name_before_copy` xfail (finding 3) |
-| 3 | DomEnhanced 2.13 | baseline **932** (was 1,478 before the multi-line/negative-`#dmg` fixes) |
-| 4 | e01–e06, e08 (incl. edits on DomEnhanced) | pass: each edit changes exactly the expected fields |
-| 4 | e07 live template | xfail (finding 2) |
+| 2 | vanilla base values | **pass, only expected differences** (3,568 at first). The expected ones are listed in `suite.json` `vanillaExpected`. |
+| 3 | copy fixtures + edits-base | pass, except `name_before_copy` (xfail) |
+| 3 | DomEnhanced 2.13 | baseline **932** |
+| 4 | e01-e06, e08 | pass |
+| 4 | e07 live template | xfail |
 
-DomEnhanced stage 3, largest remaining clusters:
-- `unit.battleshape` 399
-- `unit.descr` 198
-- `unit.misc` 197
-- `unit.gcost` 176
-- `unit.diseaseres` 173
-- `unit.armor` 108
+## Open findings (need decisions or work)
 
-Many involve `#select` blocks folded into `#newmonster` blocks and re-ordered on save,
-which is the class the original-file-order export targets.
-
-## Open findings (need decisions)
-
-1. **`vanilla.dm` carries display values for some fields** (stage 2c). The inspector's
-   post-processing turns base values into displayed ones, and the exporter writes the
-   displayed value. Example: Serpent Cataphract `#mapmove` base 18 → displayed 14 (armor
-   penalty), and `vanilla.dm` says 14. Read as a mod command, the game would apply the
-   penalty again. Affected so far:
-   - `unit.mapmove` (base + commander bonus − armor penalty)
-   - `unit.rcost` (base + equipment)
-   - `armor.def` (shown as −encumbrance)
-
-   Value can't be expressed as a mod command (5 → on/off):
-   - `eyeloss`, `horrormark`, `norange`
-
-   Exporting the *base* value needs per-field decisions. Your `DATA_TRANSFORMATIONS.md`
-   ("Auto-Calculated Values") is the starting point, but its map-move formula doesn't match
-   the inspector's actual code (`MUnit.js`). Exporting from the pre-post-processing state
-   wholesale is *not* the fix: it drops weapon damage, armor protection, nation recruit lists
-   and more, which are only assembled during post-processing.
-2. **Live templates (stage 4 `e07`).** Editing a mod template doesn't reach the monsters
-   that copy it. Copy snapshots are taken at parse time, so the old value gets baked into
-   the copies. The design doc says copies of mod templates should follow edits. Where an
-   edit lands in file order is the same question as the original-file-order export design,
-   so decide them together.
-3. **`name_before_copy` (stage 3).** `#name` declared above a `#copy*` is dropped on save.
-   The dom6inspector treats `#copystats` as overwriting an earlier name, which matches
-   Dom5Parser for monsters, but `#copyweapon` doesn't. An in-game check settles it.
-4. **Upstream candidates** for larzm42/dom6inspector:
-   - the `#uwcom`/`#coastcom`/`#coastrec` crash fix (fixed in the fork)
-   - the affliction `#dmg` export
-   - the post-processing performance (precompute site→event/unit indexes)
-5. **4 mercenaries** (`unit "0"`) aren't re-imported by the exporter round trip. Known-failing.
+1. ~~`vanilla.dm` carries display values~~ **Resolved 2026-10-04.** The exporter now
+   writes the game's base values. Rules, evidence and expected differences are in the
+   fork's `docs/EXPORT_RULES.md`. Highlights:
+   - map move: 3,171 units fixed (Serpent Cataphract 14 -> 18);
+   - resource cost: 228 fixed;
+   - national spell restrictions: they were missing entirely, 852 lines now;
+   - `#magicarmor`: missing on all 175 armors;
+   - affliction weapons: exported as plain damage (`#dmg 256` without `#dt_aff`);
+   - weapon damage types: `#dt_*` from the game data's own annotations
+     (placeholders 190 -> 37);
+   - nations: first hero, multiheroes and underwater commanders were lost; Dom6
+     `#uwrec`/`#coastrec` forms now used;
+   - no defaults or display tags written as data;
+   - no `%` or `NaN` in values.
+2. **Live templates (stage 4 `e07`).** Editing a mod template doesn't reach the
+   monsters that copy it (copy snapshots are taken at parse). Decide together with the
+   original-file-order export design.
+3. **`name_before_copy` (stage 3).** `#name` declared above a `#copy*` is dropped on
+   save. An in-game check settles it.
+4. **Never-exported game data.** About 180 parsed unit/item/site fields still aren't
+   exported. Each needs mapping to a Dom6 command (plus a parser handler in the
+   inspector) or a read-only ruling. In progress.
+5. **Inspector: copies don't inherit attributes.** `#copyspell`/`#copyweapon` should
+   carry the source's attribute-based properties, as in game. The inspector applies
+   attributes by id only, which is the main remaining stage 1 class.
+6. **Dom5Parser: read-only vanilla lines.** About 94 of the 127 warnings when loading
+   `vanilla.dm` are the informational read-only commands (`#flammable`,
+   `#nofirebless`, ...). Dom5Parser should know the list (`ModExport.readOnlyCommands`)
+   and show them read-only. About 25 more come from `##placeholders##` in event
+   message text being parsed as commands.
+7. **Upstream candidates** for larzm42/dom6inspector (all fixed in the fork):
+   - the `#uwcom`/`#coastcom`/`#coastrec`/`#uwrec` crashes and overrides;
+   - `#dt_aff` double decoding;
+   - armor `type` erased for mod armors;
+   - `#prot NaN`;
+   - post-processing performance.
+8. ~~4 mercenaries not re-imported~~ resolved.
