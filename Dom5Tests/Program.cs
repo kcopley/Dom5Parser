@@ -39,6 +39,12 @@ namespace Dom5Tests
                 case "events":
                     Events(basePath, args);
                     break;
+                case "derived-check":
+                    DerivedCheck.Run(basePath, args);
+                    break;
+                case "derived":
+                    DerivedCheck.Print(basePath, args);
+                    break;
                 case "all":
                 default:
                     TestVanilla(basePath, null);
@@ -254,7 +260,7 @@ namespace Dom5Tests
         /// <summary>
         /// Loads vanilla.dm as the dependency base (so copies/inheritance resolve), if present.
         /// </summary>
-        static void LoadVanillaBase(string basePath)
+        internal static void LoadVanillaBase(string basePath)
         {
             string vanillaDmPath = Path.Combine(basePath, "vanilla.dm");
             if (!File.Exists(vanillaDmPath))

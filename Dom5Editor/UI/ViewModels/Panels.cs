@@ -33,7 +33,7 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>An icon shown with the row (a GameIcon kind), or null.</summary>
         public string? Icon { get; init; }
         /// <summary>For a table panel: the row's values, one per column.</summary>
-        public IReadOnlyList<string> Cells { get; init; } = Array.Empty<string>();
+        public IReadOnlyList<TableCell> Cells { get; init; } = Array.Empty<TableCell>();
         private string _editText = "";
 
         /// <summary>For editable rows: the value as text; setting it (the box lost focus) commits the edit.</summary>
@@ -53,6 +53,9 @@ namespace Dom5Editor.UI.ViewModels
         public Action<PanelRow>? Edited { get; set; }
     }
 
+    /// <summary>One cell of a table panel's row: its text, the column's width, and a hint of its own (null: the row's).</summary>
+    public sealed record TableCell(string Text, double Width, string? Tooltip = null);
+
     /// <summary>
     /// A list of references the entity holds, one line each (a monster's weapons or armor; a nation's
     /// recruits): add one from a picker, remove one, open one. Removing or changing an inherited
@@ -63,7 +66,15 @@ namespace Dom5Editor.UI.ViewModels
         private readonly EntityPageViewModel _page;
 
         /// <summary>A column of a table panel: its header, icon, and the referenced entity's value it shows.</summary>
-        public sealed record TableColumn(string Header, string? Icon, Func<Dom5Edit.Resolve.ResolvedEntity, string> Value, string Tooltip = "");
+        public sealed record TableColumn(string Header, string? Icon, Func<Dom5Edit.Resolve.ResolvedEntity, string> Value, string Tooltip = "")
+        {
+            /// <summary>
+            /// The cell when it depends on the entity holding the list too (a unit's attack with the
+            /// weapon): given the row's value and the referenced entity, text and hint; null: Value.
+            /// </summary>
+            public Func<ResolvedValue, Dom5Edit.Resolve.ResolvedEntity, (string Text, string? Tooltip)>? ForRow { get; init; }
+            public double Width { get; init; } = 58;
+        }
 
         public ReferenceListPanel(EntityPageViewModel page, string title, Command command, EntityType refType, Func<int, string>? detail = null,
             IReadOnlyList<TableColumn>? columns = null)
@@ -76,11 +87,11 @@ namespace Dom5Editor.UI.ViewModels
             foreach (var v in page.Resolved.GetAll(command))
             {
                 var (id, name) = page.ReferenceOf(v.Property, EntityPageViewModel.RefTypeName(refType));
-                IReadOnlyList<string> cells = Array.Empty<string>();
+                IReadOnlyList<TableCell> cells = Array.Empty<TableCell>();
                 if (Columns.Count > 0)
                     cells = id > 0 && page.Session.Mod.TryGet(refType, id, null, out var target)
-                        ? Columns.Select(c => c.Value(page.Session.Resolve(target))).ToList()
-                        : Columns.Select(_ => "").ToList();
+                        ? Columns.Select(c => Cell(c, v, page.Session.Resolve(target))).ToList()
+                        : Columns.Select(c => new TableCell("", c.Width)).ToList();
                 Rows.Add(new PanelRow(v, string.IsNullOrEmpty(name) ? $"#{id}" : name, detail?.Invoke(id) ?? "", page.SourceText(v), true) { RefId = id, Cells = cells });
             }
             Candidates = page.Session.References(refType);
@@ -88,6 +99,14 @@ namespace Dom5Editor.UI.ViewModels
             OpenCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.Session.Navigate(RefType, r.RefId); });
             CopyEditCommand = new RelayCommand<PanelRow>(CopyAndEdit);
             NewCommand = new RelayCommand(MakeNew);
+        }
+
+        private static TableCell Cell(TableColumn c, ResolvedValue row, Dom5Edit.Resolve.ResolvedEntity target)
+        {
+            if (c.ForRow == null)
+                return new TableCell(c.Value(target), c.Width);
+            var (text, tip) = c.ForRow(row, target);
+            return new TableCell(text, c.Width, string.IsNullOrEmpty(tip) ? null : tip);
         }
 
         public IReadOnlyList<TableColumn> Columns { get; }

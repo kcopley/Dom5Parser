@@ -29,6 +29,7 @@ namespace Dom5Editor.UI
     ///   --add-path F             the magic panel's add-path button; --add-random FAWE 50 adds a random path;
     ///   --toggle-random N D      toggles path D on the Nth random path
     ///   --dump                   log the selected entity's values and where each comes from
+    ///   --derived                log what the game makes of its stats (the bracketed values, "in game" notes, table rows)
     ///   --undo / --redo          undo or redo the last edit
     ///   --save FILE.dm           save the mod (the editor's Save)
     ///   --png FILE.png           render the window
@@ -588,6 +589,37 @@ namespace Dom5Editor.UI
                             GC.WaitForPendingFinalizers();
                             GC.Collect();
                             Log($"sweep: {opened} pages, {failed} failed; slowest {slowest} ms ({slowestName}); memory {GC.GetTotalMemory(true) / (1 << 20)} MB managed, {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1 << 20)} MB working set; {pages.Count(w => w.IsAlive)} of {pages.Count} pages still alive; {vm.Session!.ChangedListeners} session listeners");
+                            break;
+                        }
+                        case "--derived":
+                        {
+                            // --derived: log the stats with what the game makes of them (in brackets on the page), the
+                            // "in game" notes, and the table rows (a unit's attack and damage with each weapon)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            Log($"derived values of {page.DisplayName} #{page.ID}:");
+                            foreach (var stats in page.Panels.OfType<StatsPanel>())
+                            {
+                                foreach (var f in stats.Columns.SelectMany(c => c.Cells).Concat(stats.Footer).OfType<NumberField>())
+                                    Log($"   {f.Label} [{f.Text}]{(f.HasDerived ? " " + f.Derived : "")}{(f.HasDerived ? "   | " + f.DerivedTip.Replace("\n", " | ") : "")}");
+                                foreach (var n in stats.Notes)
+                                    Log($"   in game: {n.Text}   | {n.Tooltip.Replace("\n", " | ")}");
+                            }
+                            foreach (var list in page.Panels.OfType<ReferenceListPanel>().Where(p => p.IsTable))
+                                foreach (var row in list.Rows)
+                                    Log($"   {list.Title} {row.Text}: {string.Join("  ", row.Cells.Select(c => c.Text))}");
+                            if (page is MonsterPageViewModel)
+                            {
+                                // what working the values out costs (resolver cached, as on a page rebuild)
+                                var session = vm.Session!;
+                                Dom5Edit.Resolve.ResolvedEntity? Find(EntityType t, int id) =>
+                                    id > 0 && session.Mod.TryGet(t, id, null, out var e) ? session.Resolve(e) : null;
+                                var watch = System.Diagnostics.Stopwatch.StartNew();
+                                const int runs = 200;
+                                for (int k = 0; k < runs; k++)
+                                    Dom5Edit.Derived.UnitTotals.Compute(Dom5Edit.Derived.UnitStats.Of(page.Resolved, Find),
+                                        id => Find(EntityType.MONSTER, id) is { } m ? Dom5Edit.Derived.UnitStats.Of(m, Find) : null);
+                                Log($"   (worked out in {watch.Elapsed.TotalMilliseconds * 1000 / runs:0} µs)");
+                            }
                             break;
                         }
                         case "--dump":

@@ -9,6 +9,7 @@ Quick reference notes for development context. See related documents for full de
 - `SPRITE_AND_DESCRIPTION_ACCESS.md` - File paths and formats for game sprites and descriptions
 - `ENTITYVIEWMODEL_REFACTORING.md` - Planned refactoring for EntityViewModel generics and badge system
 - `ROUND_TRIP_TESTING.md` - Headless oracle that verifies the editor preserves mod data on re-export
+- `DERIVED_VALUES.md` - What the game makes of a monster's stats (defence with gear, protection, gold, ...): the inspector's formulas, shown in brackets on the monster page; `Dom5Tests derived-check`
 
 ---
 

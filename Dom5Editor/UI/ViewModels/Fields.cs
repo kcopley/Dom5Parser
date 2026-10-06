@@ -46,6 +46,18 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>An icon shown with the label (a GameIcon kind: "hp", "path:F", ...), or null.</summary>
         public string? Icon { get; init; }
 
+        /// <summary>
+        /// What the game makes of the value, shown after the box when it isn't the box's value: a
+        /// unit's defence with its gear "(15)", a weapon's damage "(+str)" (Dom5Edit.Derived). "" if none.
+        /// </summary>
+        public string Derived { get; init; } = "";
+        /// <summary>How the derived value is worked out, one line per part.</summary>
+        public string DerivedTip { get; init; } = "";
+        public bool HasDerived => Derived.Length > 0;
+        /// <summary>The room kept after the box for the derived value (the same in a panel, so boxes line up); 0: none.</summary>
+        public double DerivedWidth { get; init; }
+        public bool HasDerivedSlot => DerivedWidth > 0;
+
         /// <summary>The value the mod sets here (its own line), which Reset drops.</summary>
         protected virtual ResolvedValue? OwnValue => Value != null && Value.Source == ValueSource.Own ? Value : null;
 
@@ -266,7 +278,14 @@ namespace Dom5Editor.UI.ViewModels
         public ObservableCollection<Column> Columns { get; } = new ObservableCollection<Column>();
         /// <summary>A row under the columns (cost).</summary>
         public ObservableCollection<PanelField> Footer { get; } = new ObservableCollection<PanelField>();
+
+        /// <summary>Values the game works out that have no box here (leadership with paths, resistances, casting encumbrance), under the columns.</summary>
+        public ObservableCollection<DerivedNote> Notes { get; } = new ObservableCollection<DerivedNote>();
+        public bool HasNotes => Notes.Count > 0;
     }
+
+    /// <summary>One value the game works out ("leadership 220"), with how (tooltip).</summary>
+    public sealed record DerivedNote(string Text, string Tooltip);
 
     /// <summary>One line of a nation's army: a role, the unit (a picker), and how many (a count, or a multiplier per point of defence).</summary>
     public sealed class UnitRowField
