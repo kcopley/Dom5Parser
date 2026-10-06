@@ -64,7 +64,7 @@
           "display": "Air Range",
           "type": "int",
           "description": "Air spell range bonus.",
-          "icon": "magicicons/Path_A.png"
+          "icon": "path:A"
         },
         {
           "name": "allrange",
@@ -83,7 +83,7 @@
           "display": "Astral Range",
           "type": "int",
           "description": "Astral spell range bonus.",
-          "icon": "magicicons/Path_S.png"
+          "icon": "path:S"
         },
         {
           "name": "autospellrepeat",
@@ -102,7 +102,7 @@
           "display": "Blood Range",
           "type": "int",
           "description": "Blood spell range bonus.",
-          "icon": "magicicons/Path_B.png"
+          "icon": "path:B"
         },
         {
           "name": "bonusspells",
@@ -185,7 +185,7 @@
           "display": "Death Range",
           "type": "int",
           "description": "Death spell range bonus.",
-          "icon": "magicicons/Path_D.png"
+          "icon": "path:D"
         },
         {
           "name": "divineins",
@@ -216,7 +216,7 @@
           "display": "Earth Range",
           "type": "int",
           "description": "Earth spell range bonus.",
-          "icon": "magicicons/Path_E.png"
+          "icon": "path:E"
         },
         {
           "name": "elementgems",
@@ -229,7 +229,7 @@
           "display": "Element Range",
           "type": "int",
           "description": "Elemental spell range bonus.",
-          "icon": "magicicons/Path_E.png"
+          "icon": "path:E"
         },
         {
           "name": "fallpower",
@@ -254,7 +254,7 @@
           "display": "Fire Range",
           "type": "int",
           "description": "Fire spell range bonus.",
-          "icon": "magicicons/Path_F.png"
+          "icon": "path:F"
         },
         {
           "name": "fixforgebonus",
@@ -291,7 +291,7 @@
           "display": "Glamour Range",
           "type": "int",
           "description": "Glamour spell range bonus.",
-          "icon": "magicicons/Path_G.png"
+          "icon": "path:G"
         },
         {
           "name": "grandcom",
@@ -308,7 +308,7 @@
           "display": "Holy Range",
           "type": "int",
           "description": "Holy spell range bonus.",
-          "icon": "magicicons/Path_H.png"
+          "icon": "path:H"
         },
         {
           "name": "infernoret",
@@ -374,7 +374,7 @@
           "display": "Nature Range",
           "type": "int",
           "description": "Nature spell range bonus.",
-          "icon": "magicicons/Path_N.png"
+          "icon": "path:N"
         },
         {
           "name": "pen",
@@ -428,7 +428,7 @@
           "display": "Sorcery Range",
           "type": "int",
           "description": "Sorcery spell range bonus.",
-          "icon": "magicicons/Path_S.png"
+          "icon": "path:S"
         },
         {
           "name": "spell",
@@ -465,42 +465,42 @@
           "display": "Tmp Air Gems",
           "type": "int",
           "description": "Temporary air gems per turn.",
-          "icon": "magicicons/Gem_A.png"
+          "icon": "gem:A"
         },
         {
           "name": "tmpastralgems",
           "display": "Tmp Astral Gems",
           "type": "int",
           "description": "Temporary astral gems per turn.",
-          "icon": "magicicons/Gem_S.png"
+          "icon": "gem:S"
         },
         {
           "name": "tmpbloodslaves",
           "display": "Tmp Blood Slaves",
           "type": "int",
           "description": "Temporary blood slaves per turn.",
-          "icon": "magicicons/Gem_B.png"
+          "icon": "gem:B"
         },
         {
           "name": "tmpdeathgems",
           "display": "Tmp Death Gems",
           "type": "int",
           "description": "Temporary death gems per turn.",
-          "icon": "magicicons/Gem_D.png"
+          "icon": "gem:D"
         },
         {
           "name": "tmpearthgems",
           "display": "Tmp Earth Gems",
           "type": "int",
           "description": "Temporary earth gems per turn.",
-          "icon": "magicicons/Gem_E.png"
+          "icon": "gem:E"
         },
         {
           "name": "tmpfiregems",
           "display": "Tmp Fire Gems",
           "type": "int",
           "description": "Temporary fire gems per turn.",
-          "icon": "magicicons/Gem_F.png"
+          "icon": "gem:F"
         },
         {
           "name": "tmpglamourgems",
@@ -513,14 +513,14 @@
           "display": "Tmp Nature Gems",
           "type": "int",
           "description": "Temporary nature gems per turn.",
-          "icon": "magicicons/Gem_N.png"
+          "icon": "gem:N"
         },
         {
           "name": "tmpwatergems",
           "display": "Tmp Water Gems",
           "type": "int",
           "description": "Temporary water gems per turn.",
-          "icon": "magicicons/Gem_W.png"
+          "icon": "gem:W"
         },
         {
           "name": "unsurr",
@@ -539,7 +539,7 @@
           "display": "Water Range",
           "type": "int",
           "description": "Water spell range bonus.",
-          "icon": "magicicons/Path_W.png"
+          "icon": "path:W"
         },
         {
           "name": "winterpower",
@@ -1057,7 +1057,7 @@
           "display": "Fire Shield",
           "type": "int",
           "description": "Fire shield damage.",
-          "icon": "magicicons/Path_F.png"
+          "icon": "path:F"
         },
         {
           "name": "float",

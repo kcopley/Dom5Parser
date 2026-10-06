@@ -59,8 +59,7 @@ namespace Dom5Editor.UI.Controls
     /// <summary>
     /// The icon shapes, each drawn in a 16 x 16 box: path symbols after the game's (fire a flame,
     /// air wind, water a drop, earth a hammer, astral a star, death a skull, nature a tree,
-    /// glamour crystals, blood a bowl, holy candles), used when the game's own icons aren't next to
-    /// the editor; gems as cut stones in the path colors; and stats (HP a heart, protection a
+    /// glamour crystals, blood a bowl, holy candles), used where the game has no icon for a kind; gems as cut stones in the path colors; and stats (HP a heart, protection a
     /// helmet, MR a sparkle, ...) after the game's unit window.
     /// </summary>
     public static class GameIcons
@@ -75,9 +74,9 @@ namespace Dom5Editor.UI.Controls
         private static readonly Dictionary<string, ImageSource?> _bitmaps = new Dictionary<string, ImageSource?>();
 
         /// <summary>
-        /// The game's own icon: from the player's install (Sprites.GameArt: stats, paths, gems,
-        /// costs, abilities by command), else for a path or gem the copies next to the editor
-        /// (icons/magicicons/Path_F.png, Gem_F.png). Null otherwise (the vector shape is used).
+        /// The game's own icon (Sprites.GameArt: compiled into the editor, else read from the
+        /// player's install): stats, paths, gems, costs, abilities by command. Null otherwise (the
+        /// vector shape is used).
         /// </summary>
         public static ImageSource? Bitmap(string? kind)
         {
@@ -85,32 +84,7 @@ namespace Dom5Editor.UI.Controls
                 return null;
             if (_bitmaps.TryGetValue(kind, out var cached))
                 return cached;
-            if (Sprites.GameArt.Icon(kind.Length == 1 ? "path:" + kind : kind) is ImageSource game)
-                return _bitmaps[kind] = game;
-            if (!(kind.StartsWith("path:") || kind.StartsWith("gem:") || kind.Length == 1))
-                return _bitmaps[kind] = null;
-            string file = kind.StartsWith("gem:") ? "Gem_" + kind.Substring(4) : "Path_" + (kind.StartsWith("path:") ? kind.Substring(5) : kind);
-            ImageSource? image = null;
-            try
-            {
-                var path = System.IO.Path.Combine(AppContext.BaseDirectory, "icons", "magicicons", file + ".png");
-                if (System.IO.File.Exists(path))
-                {
-                    var b = new System.Windows.Media.Imaging.BitmapImage();
-                    b.BeginInit();
-                    b.UriSource = new Uri(path);
-                    b.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-                    b.EndInit();
-                    b.Freeze();
-                    image = b;
-                }
-            }
-            catch (Exception)
-            {
-                image = null; // a broken file: the vector shape instead
-            }
-            _bitmaps[kind] = image;
-            return image;
+            return _bitmaps[kind] = Sprites.GameArt.Icon(kind.Length == 1 ? "path:" + kind : kind);
         }
 
         public static Drawing? Get(string? kind)

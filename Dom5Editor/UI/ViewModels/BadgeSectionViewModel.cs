@@ -59,10 +59,11 @@ namespace Dom5Editor.UI.ViewModels
         public ICommand ReferenceChangedCommand { get; }
 
         /// <summary>A badge for one value, wired to edit it.</summary>
-        internal PropertyItem AddBadge(ResolvedValue? value, Command command, string label, string kind, string? tooltip, Brush? background, Brush? border, string? refType, string? defaultText = null)
+        internal PropertyItem AddBadge(ResolvedValue? value, Command command, string label, string kind, string? tooltip, Brush? background, Brush? border, string? refType, string? defaultText = null, string? icon = null)
         {
             var r = _page.Resolved;
-            var badge = new PropertyItem { Command = command, DisplayName = label, Tag = value, IconKind = IconOf(command), IsPageReadOnly = _page.IsReadOnly };
+            // the badge config's icon (a game icon key: "path:F", "gem:S") when there's no ability icon
+            var badge = new PropertyItem { Command = command, DisplayName = label, Tag = value, IconKind = IconOf(command) ?? icon, IsPageReadOnly = _page.IsReadOnly };
             if (background != null) badge.Background = background;
             if (border != null) badge.BorderBrush = border;
             bool own = value != null && r.IsEditableInPlace(value);

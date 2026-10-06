@@ -657,15 +657,15 @@ namespace Dom5Editor.UI.ViewModels
                         var dflt = GameDefault(c) ?? (section.ShowDefaults && kind == "int" && def.Default.HasValue ? def.Default.Value.ToString() : null);
                         if (dflt != null && kind != "flag")
                         {
-                            vm.AddBadge(null, c, def.Display, kind, def.Description, bg, border, null, dflt);
+                            vm.AddBadge(null, c, def.Display, kind, def.Description, bg, border, null, dflt, def.Icon);
                         }
                         else if (dflt == "1" && kind == "flag")
-                            vm.AddBadge(null, c, def.Display, kind, def.Description, bg, border, null);
+                            vm.AddBadge(null, c, def.Display, kind, def.Description, bg, border, null, icon: def.Icon);
                         continue;
                     }
                     bool many = refType != null || GameRules.IsRepeatable(Type, c) || GameRules.IsKeyedByFirstArgument(Type, c);
                     foreach (var v in many ? values : new List<ResolvedValue> { values[^1] })
-                        vm.AddBadge(v, c, def.Display, kind, def.Description, bg, border, refType);
+                        vm.AddBadge(v, c, def.Display, kind, def.Description, bg, border, refType, icon: def.Icon);
                 }
                 if (!section.ReadOnly)
                     foreach (var (def, _, c) in commands)
