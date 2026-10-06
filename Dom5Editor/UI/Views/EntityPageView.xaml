@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <!-- a badge section: grid or wrap of badges, with the add box -->
         <DataTemplate x:Key="SectionTemplate" DataType="{x:Type vm:BadgeSectionViewModel}">
-            <StackPanel Margin="0,0,0,10">
+            <StackPanel Margin="0,0,0,10" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock Text="{Binding Title}" FontSize="9" FontWeight="Bold"
                            Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
                 <ContentControl Content="{Binding}">
@@ -130,6 +130,30 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="{DynamicResource TextMutedBrush}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- what refers to this entity -->
+            <StackPanel Visibility="{Binding HasUsedBy, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,10">
+                <TextBlock Text="{Binding UsedByTitle}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                <ItemsControl ItemsSource="{Binding UsedBy}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:UsageRow}">
+                            <Button Command="{Binding OpenCommand}" Style="{DynamicResource ButtonSmall}" Margin="0,0,4,4"
+                                    ToolTip="{Binding Via, StringFormat='Refers to it with {0}'}">
+                                <TextBlock>
+                                    <Run Text="{Binding TypeLabel, Mode=OneWay}" Foreground="{DynamicResource TextMutedBrush}"/>
+                                    <Run Text="{Binding Name, Mode=OneWay}"/>
+                                    <Run Text="{Binding Id, Mode=OneWay, StringFormat='#{0}'}" Foreground="{DynamicResource TextMutedBrush}"/>
+                                </TextBlock>
+                            </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

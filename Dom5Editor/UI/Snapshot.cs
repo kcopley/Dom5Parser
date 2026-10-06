@@ -181,6 +181,28 @@ namespace Dom5Editor.UI
                             Log($"refresh {cached} ms (resolver cached); replay {replay} ms; refresh after replay {after} ms; plan {planMs} ms + blocks {watch.ElapsedMilliseconds - planMs} ms, {lines} lines, {edited} entities marked edited");
                             break;
                         }
+                        case "--jump":
+                        {
+                            // --jump TEXT: the "Go to" box, picking the first entity whose name contains TEXT
+                            var text = args[++i];
+                            vm.EnsureJumpTargets();
+                            var item = vm.JumpTargets!.FirstOrDefault(r => r.DisplayName.Contains(text, StringComparison.OrdinalIgnoreCase))
+                                       ?? throw new InvalidOperationException("nothing named " + text);
+                            vm.JumpTo(item);
+                            Log($"jump {text}: {item.DisplayName} #{item.ID} ({vm.JumpTargets!.Count} entities to go to)");
+                            break;
+                        }
+                        case "--hide-vanilla":
+                        {
+                            var tab = vm.SelectedTab as EntityTypeTab ?? throw new InvalidOperationException("no entity tab");
+                            tab.ShowVanilla = false;
+                            Log($"hide vanilla in {tab.Title}");
+                            break;
+                        }
+                        case "--back":
+                            vm.GoBack();
+                            Log($"back: {Selected(vm)?.DisplayName}");
+                            break;
                         case "--dump":
                         {
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
@@ -189,6 +211,8 @@ namespace Dom5Editor.UI
                                 Log($"   structure {line.ToExportString()}");
                             foreach (var v in page.Resolved.Values)
                                 Log($"   {v.Property.ToExportString(),-40} {page.SourceText(v)}");
+                            foreach (var (c, a) in page.Resolved.Assets)
+                                Log($"   asset {c}: {(a.ToExportString() ?? "").Substring(0, Math.Min(60, (a.ToExportString() ?? "").Length))}");
                             break;
                         }
                         case "--save":

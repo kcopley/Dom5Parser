@@ -32,6 +32,14 @@ namespace Dom5Editor.UI.ViewModels
             DeleteCommand = new RelayCommand<object>(o => Delete(o as EntityListItem), o => o is EntityListItem i && (i.IsNew || i.IsModified));
         }
 
+        // the list's filter, kept per tab (the list view is rebuilt when the tab is shown again)
+        private string _searchText = "";
+        private bool _showVanilla = true, _showModified = true, _showNew = true;
+        public string SearchText { get => _searchText; set { _searchText = value ?? ""; OnPropertyChanged(); } }
+        public bool ShowVanilla { get => _showVanilla; set { _showVanilla = value; OnPropertyChanged(); } }
+        public bool ShowModified { get => _showModified; set { _showModified = value; OnPropertyChanged(); } }
+        public bool ShowNew { get => _showNew; set { _showNew = value; OnPropertyChanged(); } }
+
         public System.Windows.Input.ICommand NewCommand { get; }
         public System.Windows.Input.ICommand DeleteCommand { get; }
 

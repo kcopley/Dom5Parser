@@ -575,6 +575,13 @@ namespace Dom5Editor.UI.Controls
         /// <summary>
         /// Programmatically sets the selected item by ID without triggering change events.
         /// </summary>
+        /// <summary>Puts the cursor in the box to type a search.</summary>
+        public void FocusInput()
+        {
+            FilterTextBox.Focus();
+            FilterTextBox.SelectAll();
+        }
+
         public void SetSelectedIdSilent(int? id)
         {
             _isUpdatingFromCode = true;

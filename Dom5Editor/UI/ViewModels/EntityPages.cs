@@ -120,16 +120,24 @@ namespace Dom5Editor.UI.ViewModels
             Panels.Add(new ReferenceListPanel(this, "WEAPONS", Command.WEAPON, EntityType.WEAPON, WeaponSummary));
             Panels.Add(new ReferenceListPanel(this, "ARMOR", Command.ARMOR, EntityType.ARMOR, ArmorSummary));
             Panels.Add(new MagicPanel(this));
-            var costs = new FieldsPanel("COST AND COMMAND");
+            var costs = new FieldsPanel("COST, COMMAND, BODY");
             costs.Fields.Add(new NumberField(this, "Gold", Command.GCOST, note: GoldNote,
                 tooltip: "#gcost: gold (and design points for pretenders); 10000 means calculated by the game, plus or minus the rest"));
             costs.Fields.Add(new NumberField(this, "Resources", Command.RCOST));
             costs.Fields.Add(new NumberField(this, "Recruit points", Command.RPCOST));
             costs.Fields.Add(new CommandChoiceField(this, "Leader", Leaders(Command.NOLEADER, Command.POORLEADER, Command.OKLEADER, Command.GOODLEADER, Command.EXPERTLEADER, Command.SUPERIORLEADER)));
-            costs.Fields.Add(new CommandChoiceField(this, "Magic leader", Leaders(Command.NOMAGICLEADER, Command.POORMAGICLEADER, Command.OKMAGICLEADER, Command.GOODMAGICLEADER, Command.EXPERTMAGICLEADER, Command.SUPERIORMAGICLEADER)));
-            costs.Fields.Add(new CommandChoiceField(this, "Undead leader", Leaders(Command.NOUNDEADLEADER, Command.POORUNDEADLEADER, Command.OKUNDEADLEADER, Command.GOODUNDEADLEADER, Command.EXPERTUNDEADLEADER, Command.SUPERIORUNDEADLEADER)));
+            costs.Fields.Add(new CommandChoiceField(this, "Magic leader", Leaders(Command.NOMAGICLEADER, Command.POORMAGICLEADER, Command.OKMAGICLEADER, Command.GOODMAGICLEADER, Command.EXPERTMAGICLEADER, Command.SUPERIORMAGICLEADER), defaultIndex: 0));
+            costs.Fields.Add(new CommandChoiceField(this, "Undead leader", Leaders(Command.NOUNDEADLEADER, Command.POORUNDEADLEADER, Command.OKUNDEADLEADER, Command.GOODUNDEADLEADER, Command.EXPERTUNDEADLEADER, Command.SUPERIORUNDEADLEADER), defaultIndex: 0));
             costs.Fields.Add(new NumberField(this, "Leadership +", Command.COMMAND, tooltip: "#command: adds this to the leadership the class gives"));
+            costs.Fields.Add(new CommandChoiceField(this, "Body", new[]
+            {
+                (Command.HUMANOID, "Humanoid"), (Command.MOUNTEDHUMANOID, "Mounted humanoid"), (Command.QUADRUPED, "Quadruped"),
+                (Command.LIZARD, "Lizard"), (Command.NAGA, "Naga"), (Command.SNAKE, "Snake"), (Command.BIRD, "Bird"),
+                (Command.DJINN, "Djinn"), (Command.TROGLODYTE, "Troglodyte"), (Command.MISCSHAPE, "Other shape"),
+            }, tooltip: "Body shape: hit locations; it also sets item slots (set them below after it)", defaultIndex: 0));
             Panels.Add(costs);
+            Panels.Add(new ItemSlotsPanel(this));
+            covered.Add(Command.ITEMSLOTS);
             covered.UnionWith(new[] { Command.WEAPON, Command.ARMOR, Command.MAGICSKILL, Command.CUSTOMMAGIC, Command.GCOST, Command.RCOST, Command.RPCOST, Command.COMMAND });
             foreach (var f in costs.Fields.OfType<CommandChoiceField>())
                 covered.UnionWith(f.Commands);

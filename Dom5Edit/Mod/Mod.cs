@@ -343,7 +343,23 @@ namespace Dom5Edit
             }
         }
 
+        /// <summary>While the file is read: lines added then are the file's (not edits).</summary>
+        internal bool IsParsing { get; private set; }
+
         internal void read_stream(StreamReader sr)
+        {
+            IsParsing = true;
+            try
+            {
+                read_stream_core(sr);
+            }
+            finally
+            {
+                IsParsing = false;
+            }
+        }
+
+        private void read_stream_core(StreamReader sr)
         {
             // Delegate to ModParser
             _parser.Parse(sr);

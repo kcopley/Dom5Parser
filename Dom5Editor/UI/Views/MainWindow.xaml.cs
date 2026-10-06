@@ -53,6 +53,10 @@ namespace Dom5Editor.UI.Views
                 new RelayCommand(() => _viewModel.Redo(), () => _viewModel.CanRedo),
                 Key.Y, ModifierKeys.Control));
 
+            // Ctrl+F = the list's search box; Ctrl+P = go to any entity
+            InputBindings.Add(new KeyBinding(new RelayCommand(() => VisibleList()?.FocusSearch()), Key.F, ModifierKeys.Control));
+            InputBindings.Add(new KeyBinding(new RelayCommand(() => { _viewModel.EnsureJumpTargets(); JumpBox.FocusInput(); }, () => _viewModel.HasMod), Key.P, ModifierKeys.Control));
+
             // Alt+Left / Alt+Right = back / forward through the entities visited
             InputBindings.Add(new KeyBinding(
                 new RelayCommand(() => _viewModel.GoBack(), () => _viewModel.CanGoBack),
@@ -69,6 +73,29 @@ namespace Dom5Editor.UI.Views
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e) => _viewModel.GoBack();
+
+        private void JumpBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => _viewModel.EnsureJumpTargets();
+
+        private void JumpBox_SelectionChanged(object sender, Controls.ReferenceSelectionChangedEventArgs e)
+        {
+            _viewModel.JumpTo(e.NewItem);
+            Dispatcher.BeginInvoke(new Action(() => JumpBox.SetSelectedIdSilent(null)), System.Windows.Threading.DispatcherPriority.Input);
+        }
+
+        /// <summary>The entity list on screen, if any.</summary>
+        private Controls.EntityListControl? VisibleList() => FindVisual<Controls.EntityListControl>(EntityTabs).FirstOrDefault(c => c.IsVisible);
+
+        private static IEnumerable<T> FindVisual<T>(DependencyObject root) where T : DependencyObject
+        {
+            for (int i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(root); i++)
+            {
+                var child = System.Windows.Media.VisualTreeHelper.GetChild(root, i);
+                if (child is T t)
+                    yield return t;
+                foreach (var d in FindVisual<T>(child))
+                    yield return d;
+            }
+        }
 
         private void ForwardButton_Click(object sender, RoutedEventArgs e) => _viewModel.GoForward();
 

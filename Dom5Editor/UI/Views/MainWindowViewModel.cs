@@ -100,6 +100,7 @@ namespace Dom5Editor.UI.Views
             _back.Clear();
             _forward.Clear();
             _current = null;
+            _jumpTargets = null;
             session.History.Changed += OnHistoryChanged;
             session.Changed += OnSessionChanged;
             session.NavigationRequested += NavigateToEntity;
@@ -126,6 +127,8 @@ namespace Dom5Editor.UI.Views
 
         private void OnSessionChanged(IModEdit edit)
         {
+            if (edit.Entities.Count > 0)
+                _jumpTargets = null; // names or entities may have changed; rebuilt on next use
             foreach (var tab in Tabs.OfType<EntityTypeTab>())
                 tab.OnChanged(edit);
             OnPropertyChanged(nameof(EntityCount));
@@ -165,6 +168,29 @@ namespace Dom5Editor.UI.Views
         }
 
         // ---- navigation ----
+
+        private List<Controls.ReferenceItem>? _jumpTargets;
+
+        /// <summary>Every entity of every type, for the "Go to" box: name and type, ID; built when first used.</summary>
+        public IReadOnlyList<Controls.ReferenceItem>? JumpTargets => _jumpTargets;
+
+        public void EnsureJumpTargets()
+        {
+            if (_session == null || _jumpTargets != null)
+                return;
+            _jumpTargets = new List<Controls.ReferenceItem>();
+            foreach (var (type, title) in TabTypes)
+                foreach (var r in _session.References(type))
+                    _jumpTargets.Add(new Controls.ReferenceItem { ID = r.ID, DisplayName = $"{r.DisplayName}  ({title.TrimEnd('s').ToLowerInvariant()})", Tag = (type, r.ID) });
+            OnPropertyChanged(nameof(JumpTargets));
+        }
+
+        /// <summary>Goes to a "Go to" box pick.</summary>
+        public void JumpTo(Controls.ReferenceItem? item)
+        {
+            if (item?.Tag is ValueTuple<EntityType, int> t)
+                NavigateToEntity(t.Item1, t.Item2);
+        }
 
         /// <summary>Shows an entity: its type's tab, selected in the list.</summary>
         public void NavigateToEntity(EntityType type, int id)

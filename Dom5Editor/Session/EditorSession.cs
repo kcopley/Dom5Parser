@@ -35,14 +35,19 @@ namespace Dom5Editor.Session
             Mod = mod;
             FilePath = path;
             Editor = new ModEditor(mod);
+            Usage = new UsageIndex(this);
             Editor.Changed += e =>
             {
                 // the touched entities' names (or existence) may have changed: update their rows
                 foreach (var entity in e.Entities)
                     UpdateReference(entity);
+                Usage.OnChanged(e);
                 Changed?.Invoke(e);
             };
         }
+
+        /// <summary>Which entities refer to which ("used by").</summary>
+        public UsageIndex Usage { get; }
 
         public void Navigate(EntityType type, int id) => NavigationRequested?.Invoke(type, id);
 

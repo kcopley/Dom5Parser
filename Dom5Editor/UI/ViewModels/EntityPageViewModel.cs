@@ -226,6 +226,32 @@ namespace Dom5Editor.UI.ViewModels
 
         public ICommand NavigateCommand { get; }
 
+        /// <summary>The entities that refer to this one (a weapon's monsters, a unit's nations), each a link.</summary>
+        public ObservableCollection<UsageRow> UsedBy { get; } = new ObservableCollection<UsageRow>();
+
+        public bool HasUsedBy => UsedBy.Count > 0;
+        public string UsedByTitle { get; private set; } = "";
+
+        private void BuildUsedBy()
+        {
+            UsedBy.Clear();
+            if (ID <= 0)
+                return;
+            // one link per entity, with the commands it refers with
+            var users = Session.Usage.UsedBy(Type, ID)
+                .GroupBy(u => (u.Type, u.Id))
+                .OrderBy(g => g.Key.Type).ThenBy(g => g.Key.Id)
+                .ToList();
+            const int shown = 200;
+            foreach (var g in users.Take(shown))
+            {
+                var (type, id) = g.Key;
+                var via = string.Join(", ", g.Select(u => CommandName(u.Via)).Distinct());
+                UsedBy.Add(new UsageRow(type, id, NameOf(type, id), via, () => Session.Navigate(type, id)));
+            }
+            UsedByTitle = users.Count > shown ? $"USED BY ({users.Count}, first {shown} shown)" : $"USED BY ({users.Count})";
+        }
+
         /// <summary>Rebuilds the page from what the entity is in game now.</summary>
         public void Refresh()
         {
@@ -241,6 +267,7 @@ namespace Dom5Editor.UI.ViewModels
             Sections.Clear();
             BuildSections(covered);
             Other = BuildOther(covered);
+            BuildUsedBy();
             OnPropertyChanged(string.Empty);
         }
 
@@ -458,6 +485,26 @@ namespace Dom5Editor.UI.ViewModels
 
         protected void OnPropertyChanged([CallerMemberName] string? name = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    /// <summary>One entity that refers to the page's entity.</summary>
+    public sealed class UsageRow
+    {
+        public UsageRow(EntityType type, int id, string name, string via, Action open)
+        {
+            Type = type;
+            Id = id;
+            Name = string.IsNullOrEmpty(name) ? $"#{id}" : name;
+            Via = via;
+            OpenCommand = new RelayCommand(open);
+        }
+
+        public EntityType Type { get; }
+        public string TypeLabel => Type.ToString().ToLowerInvariant();
+        public int Id { get; }
+        public string Name { get; }
+        public string Via { get; }
+        public ICommand OpenCommand { get; }
     }
 
     /// <summary>One of an entity's own copy or clear lines, as the page lists them.</summary>
