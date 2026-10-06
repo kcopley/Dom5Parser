@@ -495,6 +495,18 @@ namespace Dom5Editor.UI
                             Log($"   slots: {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.PixelWidth}x{x.Image.PixelHeight}" : "none")}"))}");
                             break;
                         }
+                        case "--page-command":
+                        {
+                            // --page-command NAME: run one of the selected page's commands (CopyToNewCommand, EditFileCommand, ...)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var name = args[++i];
+                            var command = page.GetType().GetProperty(name)?.GetValue(page) as System.Windows.Input.ICommand
+                                          ?? throw new ArgumentException($"the page has no {name}");
+                            command.Execute(null);
+                            var now = Selected(vm)!;
+                            Log($"{name}: {(page.Error != null ? "error: " + page.Error : "now on " + now.DisplayName)}");
+                            break;
+                        }
                         case "--icons":
                         {
                             // where the game's icons come from: compiled in, and the install found (or not)

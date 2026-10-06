@@ -220,7 +220,11 @@ known value on every run.
   `#magicscale` 11; the parser compares `prodscale` twice). No command adds an effect
   (`#clearfx` only empties them), so effects and buffs are `-- ro:` lines: 138 effects (32
   named by the monster command that stores that ability and value, e.g. `#heat 3`; the rest,
-  bless-only numbers like 550 and 551, as "ability N") and 11 buff words. `#cost1` also raises
+  bless-only numbers, as "ability N") and 11 buff words. 550 is a marker: the effects after it
+  apply only while the god is incarnated (the bless describer, 0x1400fe940, prints "(incarnate
+  only)" for them; the effect lookup 0x1400fd7e0 can require an effect to come after it). 551
+  isn't known: a bless with it goes on a nation-level list while a count (0x1400fec10) is
+  below 5. `#cost1` also raises
   `#path1` to at least 0, so a bless without a second path gets neither. The record after the
   last is named "end". (The inspector has no bless data.)
 - **Poptypes** (82, numbers 25-106): `#selectpoptype N` (0-249) picks entry N of two tables:
@@ -238,8 +242,8 @@ known value on every run.
   from the manual's table): every exe list has an id there.
 - **Mercenaries** (78): a table of 300 bands of 312 bytes; the vanilla ones are the records
   before the first whose `#level` byte is 99 (named "end"). There is no `#selectmerc`: a mod
-  can't change a vanilla band. `#clearmercs` (in a parser chunk the context anchor misses, so
-  the catalog lacks it) marks record 0 as the end, and `#newmerc` takes the first free record
+  can't change a vanilla band. `#clearmercs` (a mod-level command read in the merc parser's
+  entry chunk, with `#newmerc`; the catalog takes it from there) marks record 0 as the end, and `#newmerc` takes the first free record
   (`#eramask 7`, `#minpay 100` by default). So the vanilla bands are written as the `#newmerc`
   blocks that would make them; the editor shows them read-only. `#unit` sets `#nrunits` 10
   when it is 0, so `#nrunits` follows it. Up to 7 (nation, percent) pairs no command writes

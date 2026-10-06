@@ -107,7 +107,7 @@
                                    VerticalAlignment="Center" Margin="8,0,0,0" Visibility="{Binding HasId, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Style="{StaticResource HeaderText}" VerticalAlignment="Center"
                                    Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
-                        <TextBox Text="{Binding Name, UpdateSourceTrigger=LostFocus}" FontSize="16" FontWeight="SemiBold"
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=LostFocus}" FontSize="16" FontWeight="SemiBold" IsReadOnly="{Binding IsReadOnly}"
                                  Style="{DynamicResource TextBoxBase}" KeyDown="CommitOnEnter" ToolTip="Name (#name). Enter or leave the box to save it."
                                  Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </DockPanel>
@@ -125,7 +125,11 @@
         <DataTemplate x:Key="NotePart">
             <Grid>
                     <!-- why the page can't be edited (the game's own mercenaries) -->
-                    <TextBlock Text="{Binding ReadOnlyNote}" Foreground="{DynamicResource WarningBrush}" TextWrapping="Wrap" Margin="0,0,0,8"/>
+                    <StackPanel Margin="0,0,0,8">
+                        <TextBlock Text="{Binding ReadOnlyNote}" Foreground="{DynamicResource WarningBrush}" TextWrapping="Wrap"/>
+                        <Button Content="New band from this one" Style="{DynamicResource ButtonSmall}" HorizontalAlignment="Left" Margin="0,4,0,0"
+                                Command="{Binding CopyToNewCommand}" ToolTip="Make a new band (#newmerc) with this one's values, and open it to edit"/>
+                    </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="DescriptionPart">

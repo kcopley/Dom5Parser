@@ -50,7 +50,8 @@ Source: `scripts/DMI/MUnit.js` `prepareForRender` (around line 958), `prepareDat
   +20); death +50 undead leadership, blood +10. Death adds to fear (or 1 a level above 5); fire to
   heat aura and fire shield, water to cold aura, when it has one; nature +10 supply a level;
   earth 3+ adds its level to protection. Commanders with 3+ in fire, water, air, nature get 2 x
-  level - 1 fire, cold, shock, poison resistance. `#command`, `#magiccommand`, `#undcommand` add
+  level - 1 fire, cold, shock, poison resistance. (The commander +2 map move, earth's protection
+  and the path resistances were confirmed by the user, a beta tester, 2026-10-06.) `#command`, `#magiccommand`, `#undcommand` add
   for a leader. The game's own leadership bonus (ability 160, read-only) is a part too.
 - **Old age** (start age at or past max age): per quarter of its max age past it, 1 to 6 times:
   -1 strength, attack, defence; -0.5 precision; +1 encumbrance; -5% hit points and combat speed.
@@ -146,15 +147,16 @@ per recruitment role):
 - **Start ages** (459 units): the inspector's are about 10% higher than the exe's `#startage`
   (55 vs 50). Through old age this moves a few units' other stats (8-11 units).
 - **Fire resistance with a heat aura** (24 units): the inspector's data has 10 more (Summer Lion
-  60, vanilla.dm `#fireres 50` and a read-only heat aura flag). The exe's ability getter adds to
-  resistances in some cases (tools/dom6exe/README.md, "Intrinsic resistances"); the exact rule
-  isn't in the editor yet, so the stored value is shown.
+  60, vanilla.dm `#fireres 50` and a read-only heat aura flag). The exe's ability getter
+  (0x1401c5ae0) adds the +10 only with the intrinsic flag (`#fireres 100`): 15 for the flag, +10
+  with a heat aura (cold: cold aura; poison: undead, inanimate or a poison cloud; shock: none).
+  vanilla.dm's values already include it (the writer folds the flag in), so 50 is the game's
+  value and the inspector's 60 is its Dom5 rule. A mod's `#fireres 100` shows as (15) or (25).
 - **Effect weapons** (13 weapons): affliction weapons (nets, webs) have an affliction mask as
   `#dmg`: no damage is worked out; the inspector shows 0. Gas and curse weapons: the inspector
   shows the effect's name, here its `#dmg`.
-- **Repeated random magic** (7 units, e.g. Lore Master's three `#magicskill 50 1`): the resolver
-  keeps one line of a repeated `#magicskill 50/51/52` (it treats `#magicskill` as keyed by the
-  path), while the game adds a pick for each (the manual: "unless it is a random skill"). A fix
-  belongs in `GameRules` (Dom5Edit/Resolve). It only changes the gold of such commanders.
+- **Repeated random magic** (7 units, e.g. Lore Master's three `#magicskill 50 1`): fixed
+  (9d6de32): each `#magicskill 50-53` line is another pick, as the manual says ("unless it is a
+  random skill") and the user confirmed.
 - Smaller: Beast Trainer's `#command -25` (not in the inspector's leadership); a few units'
   stealth below 40 (no effect on cost).

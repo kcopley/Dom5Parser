@@ -91,6 +91,7 @@
                 <ToggleButton x:Name="DropdownButton"
                               Grid.Column="2"
                               Width="18"
+                              Visibility="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityInverseConverter}}"
                               IsChecked="{Binding IsDropdownOpen, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
                               Background="Transparent"
                               BorderThickness="0"
