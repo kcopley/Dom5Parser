@@ -10,6 +10,7 @@ maintained. This reads the exe directly instead:
   monsters   the vanilla monster table: name, base stats, numbered abilities
   readonly   abilities vanilla monsters have that no mod command can set; an editor shows
              them read-only
+  events     the vanilla events as #selectevent blocks (events.py)
 
 Usage:
   python3 tools/dom6exe/dom6exe.py [--exe PATH] [--inspector DIR] commands|monsters|readonly [--out FILE]
@@ -459,7 +460,7 @@ class Parser:
             kind = stack.get('0x28')
             res.append({'context': ctx_of.get(fn), 'command': cmd, 'key': reg.get('r8'), 'min': reg.get('r9'),
                         'max': stack.get('0x20'), 'kind': None if kind is None else kind % 10,
-                        'repeat': None if kind is None else kind // 10, 'offset': stack.get('0x30') or 0})
+                        'repeat': None if kind is None else kind // 10, 'offset': stack.get('0x30') or 0, 'at': i})
         return res
 
     def direct_ability_sets(self, setter):
@@ -831,6 +832,14 @@ def cmd_vanilla(exe, args):
     return res
 
 
+def cmd_events(exe, args):
+    """Vanilla events as #selectevent blocks (events.py); --out names the .dm file."""
+    import events
+    res = events.write(exe, args.out, messages=args.messages)
+    args.out = None
+    return res
+
+
 def cmd_tables(exe, args):
     out = {'game_version': exe.version, 'exe_sha256_16': exe.sha}
     for typ, spec in TABLES.items():
@@ -893,15 +902,17 @@ def cmd_readonly(exe, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['catalog', 'commands', 'layout', 'monsters', 'readonly', 'tables', 'vanilla'])
+    ap.add_argument('what', choices=['catalog', 'commands', 'events', 'layout', 'monsters', 'readonly', 'tables', 'vanilla'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
     ap.add_argument('--out', help='write JSON here (default: stdout)')
+    ap.add_argument('--messages', action='store_true',
+                    help='events: include the messages (the game\'s text: for local use, not for the repo)')
     args = ap.parse_args()
     exe = Exe(args.exe)
     res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
-           'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog}[args.what](exe, args)
+           'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog, 'events': cmd_events}[args.what](exe, args)
     text = json.dumps(res, indent=1, default=str)
     if args.out:
         open(args.out, 'w').write(text + '\n')

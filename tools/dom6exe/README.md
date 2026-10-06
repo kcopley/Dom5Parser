@@ -10,6 +10,7 @@ python3 tools/dom6exe/dom6exe.py readonly  --out tools/dom6exe/data/readonly-mon
 python3 tools/dom6exe/dom6exe.py monsters  --out monsters.json      # ~3 MB, not committed
 python3 tools/dom6exe/dom6exe.py vanilla   --out vanilla.dm    # the editor's vanilla base
 python3 tools/dom6exe/dom6exe.py catalog   --out Dom5Edit/GameData/game-commands-6.37.json
+python3 tools/dom6exe/dom6exe.py events    --out tools/dom6exe/data/events-6.37.dm
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
 `/mnt/c/Games/Steam/steamapps/common/Dominions6/Dominions6.exe`), `--inspector DIR` (a
@@ -26,6 +27,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
 | `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern); and per command, what it writes (`effects`: fields and abilities it sets, appends to, ORs into or removes, flag bits it sets or clears, and the argument range of generic-handler commands). Dom5Parser's resolver (Dom5Edit/Resolve) uses the effects to tell whether a line replaces an earlier one. |
 | `vanilla` | All vanilla weapons, armor, monsters, spells, items, sites and nations as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
 
 ## How it finds things (no hard-coded addresses)
 
@@ -39,6 +41,14 @@ and GNU `objdump`. The exe is never copied into the repo.
 - **Monster table:** located from known vanilla names (1 Logrian Slinger, 2 Standard, 3
   Serpent Cataphract), so the record size falls out (888 bytes in 6.37). The parser caps
   monster numbers at 19999. Every run checks the layout against Heavy Cavalry (20).
+- **Event table:** from the event parser's own branches: `#msg` (the table's address, the
+  record size it multiplies by, the message size), `#rarity` (a byte store), `#selectevent`
+  (the end marker it refuses, the highest number), `#newevent` (the free marker it scans for,
+  the first mod slot). The two pair lists come from the generic handler: it appends to one
+  list or the other depending on which "current event" global is set, and the event parser
+  sets one before the `#req_` commands and the other before the effects. Every run checks
+  the record size against three consecutive vanilla events that share a message, and that
+  the record after the last vanilla event reads "end".
 
 ## Game rules read from the code (6.37)
 
@@ -173,6 +183,64 @@ and GNU `objdump`. The exe is never copied into the repo.
   picture, fort era, god lists, AI and dominion settings (~100 commands per nation). The
   inspector's 25 extra nations are empty slots it names `nation_35` etc.
 
+## Events (6.37)
+
+- Event table at 0x140639c60: 13,000 records of 2,920 bytes. Message +0 (2,400 bytes, so at
+  most 2,399 characters), rarity +2400 (a signed byte), 12 requirement pairs +2408, 20 effect
+  pairs +2600; a pair is two int64, (code, value). Vanilla events are records 0-3301; record
+  3302 reads "end" with rarity 99.
+- Requirements and effects are numbered separately: `#req_code` stores requirement 59,
+  `#decscale3` effect 59. (The catalog's `a59` for both doesn't say which list.)
+- `#selectevent N` picks record N. It ignores N above 12998 and records with rarity 99. The
+  first `#newevent`, `#selectevent` or `#clearallevents` backs up the table, marks every
+  record after the vanilla ones free (rarity 98, message "Insert event message here") and
+  record 12999 as the end.
+- `#newevent` takes the first free record from 3500 on, so mod events are numbered 3500, 3501,
+  ... in the order the game reads them. Records 3302-3499 are only reachable with
+  `#selectevent`.
+- `#clear` empties the event: no pairs, the placeholder message, rarity 98 (free). The event
+  never happens until a new `#rarity`, and a mod event left with rarity 98 (a `#newevent`
+  block without `#rarity` too) is taken again by the next `#newevent`.
+- Every other event command goes through the generic handler. A list holds 12 requirements
+  and 20 effects; lines beyond that are dropped. A command appends its pair, or replaces the
+  pair with the same code if it is not repeatable: most requirements replace (repeatable:
+  `#req_code`, `#req_notcode`, `#req_anycode`, `#req_notanycode`, `#req_fornation`, the
+  monster lists `#req_mnr`, `#req_nomnr`, `#req_targmnr`, ..., `#req_targorder`,
+  `#req_targnoorder`, `#req_targpath1-4`, `#req_targnopath1-4`, `#req_var*`); most effects
+  append (replacing: `#delay`, `#delay25`, `#delay50`, `#delayskip`, `#notext`, `#nolog`,
+  `#header`, `#arena*`, `#resolvearena*`, `#setpoptype`, `#addascension`, `#minascension`,
+  `#dispglobals`, `#newnbor`, `#remnbor`). Values are clamped to the command's range.
+- The game reads a list up to its first empty slot (the event describers, the spell-event
+  lookup by `#id`).
+- `#delay N` plans record (this one + 1) N turns later; with `#delayskip p`, p% of the time
+  record + 2. "The next event" is the next record number, not the next block in the file: a
+  `#selectevent` block in between doesn't count.
+- The event parser also compares `#2com`, `#4com`, `#5com`, `#1unit`, `#1d3units`-`#4d3units`,
+  `#1d6units`-`#16d6units`, `#1d3vis`, `#1d6vis`, `#2d4vis`, `#2d6vis`, `#3d6vis` and
+  `#4d6vis` by name (effects 151-153, 155, 156-159, 160-175, 14-19). The catalog misses them
+  (its name pattern needs a leading letter).
+- `#req_notnation` stores what `#req_notfornation` does, `#arena1` what `#arena` does.
+- Vanilla stores 522 of its 20,095 pairs (2.6%) with codes no command writes: effect 190
+  (gold with a random part, value x 1.0-2.0; the game's debug text calls it "gold" like
+  `#gold`'s 42; 221 pairs), 39 (a value the next `#assassin` passes to its battle; 154),
+  177/179/183 (18d6, 20d6, 24d6 units: one branch handles 160-187 as (code - 159)d6, the
+  commands stop at 16d6; 68), 77 (`#researchaff`, documented but not read by the parser; 13),
+  requirement 22 (`req_siege`; 14), 133 and 137 (`orpathearth`, `orpathglamour`), and 21 more
+  codes used 1-7 times. They are `-- ro:` lines.
+- Vanilla also has values a mod can't write: the same non-repeatable code twice (91, e.g. two
+  `#req_monster` or two `#req_rare`: the game checks both), values outside the command's range
+  (`#req_mydominion 2`/`3`, `#req_commander` with a monster number, `#req_noera 0`,
+  `#req_story 3`), `#visitors` stored as 0 (the command stores 1), and one effect after an
+  empty slot (3086, never read). The .dm marks each with a comment.
+- Vanilla rarities the manual doesn't list: 14 (the two arena events), 15 (the two seasonal
+  weather events), -9 (two empty placeholders, 3186 and 3204, message "...").
+- Compared with the inspector's `events.csv` (3,300 events; it skips the two placeholders):
+  rarity and the number of pairs agree on every event, and every code that occurs once in an
+  event has the same value (77 after the inspector's 32-bit truncation). Where a code repeats,
+  the inspector writes its first value each time (750 pairs). Messages agree except its
+  Latin-1 reading of UTF-8 (25) and newlines (3). Some of its names are from an older
+  numbering (effect 183 "16d6units", effect 91 "holyboost": 91 is `#bloodboost`).
+
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 
 `vanilla` writes 4,138 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
@@ -193,3 +261,5 @@ abilities). Where the two files differ, by cause:
 
 - Dom5Parser reads the `-- ro:` lines (`IDEntity.GameValues`); the monster view lists them.
   Other views, and switching the editor's vanilla base to this file, are next.
+- The editor showing the game's events from `data/events-6.37.dm` (E-6 in
+  `docs/EVENT_EDITOR.md`).
