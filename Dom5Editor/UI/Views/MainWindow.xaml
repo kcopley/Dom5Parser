@@ -28,9 +28,15 @@
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0,0,0,1"
                 Padding="8,6">
-            <DockPanel>
-                <!-- Left side: File operations -->
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+            <!-- left: file, undo, back/forward; then "go to" (it takes the room left, within limits), validate; right: the mod's name -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*" MinWidth="140" MaxWidth="400"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="60"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <Button x:Name="NewButton"
                             Content="New"
                             ToolTip="Start a new, empty mod (Ctrl+N)"
@@ -60,11 +66,11 @@
                             Content="Save As"
                             ToolTip="Save the mod to a new file (Ctrl+Shift+S)"
                             Style="{StaticResource ButtonBase}"
-                            Margin="0,0,16,0"
+                            Margin="0,0,10,0"
                             IsEnabled="{Binding HasMod}"
                             Click="SaveAsButton_Click"/>
 
-                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="0,2,16,2"/>
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="0,2,10,2"/>
 
                     <Button x:Name="UndoButton"
                             Content="Undo"
@@ -76,60 +82,57 @@
                     <Button x:Name="RedoButton"
                             Content="Redo"
                             Style="{StaticResource ButtonBase}"
-                            Margin="0,0,16,0"
+                            Margin="0,0,10,0"
                             IsEnabled="{Binding CanRedo}"
                             ToolTip="{Binding RedoTip}"
                             Click="RedoButton_Click"/>
 
-                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="0,2,16,2"/>
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="0,2,10,2"/>
 
-                    <Button Content="◀ Back"
+                    <Button Content="◀" Padding="10,0"
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,4,0"
                             IsEnabled="{Binding CanGoBack}"
                             ToolTip="Back to the previous entity (Alt+Left)"
                             Click="BackButton_Click"/>
-                    <Button Content="Forward ▶"
+                    <Button Content="▶" Padding="10,0"
                             Style="{StaticResource ButtonBase}"
                             IsEnabled="{Binding CanGoForward}"
-                            ToolTip="Forward (Alt+Right)"
+                            ToolTip="Forward to the next entity (Alt+Right)"
                             Click="ForwardButton_Click"/>
                 </StackPanel>
 
-                <!-- Right side: Status indicators -->
-                <StackPanel Orientation="Horizontal"
-                            DockPanel.Dock="Right"
-                            HorizontalAlignment="Right">
+                <controls:SearchableReferenceComboBox x:Name="JumpBox" Grid.Column="1"
+                                                      MaxWidth="380" Height="24" Margin="12,0,8,0" HorizontalAlignment="Stretch"
+                                                      IsEnabled="{Binding HasMod}"
+                                                      ItemsSource="{Binding JumpTargets}"
+                                                      Placeholder="Go to any entity... (Ctrl+P)"
+                                                      ToolTip="Go to any monster, weapon, spell, nation, event... by name or ID (Ctrl+P)"
+                                                      GotKeyboardFocus="JumpBox_GotKeyboardFocus"
+                                                      SelectionChanged="JumpBox_SelectionChanged"/>
+                <Button x:Name="ValidateButton" Grid.Column="2"
+                        Content="Validate"
+                        ToolTip="Check the mod for problems (unread lines, missing references, ID clashes)"
+                        Style="{StaticResource ButtonBase}"
+                        IsEnabled="{Binding HasMod}"
+                        Click="ValidateButton_Click"/>
+
+                <!-- the mod's name: trimmed when the window is narrow (the whole name in its tooltip) -->
+                <DockPanel Grid.Column="3" Margin="12,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right">
                     <TextBlock x:Name="ModifiedIndicator"
                                Text="*"
                                Style="{StaticResource HeaderText}"
                                Foreground="{StaticResource WarningBrush}"
                                Visibility="{Binding IsDirty, Converter={StaticResource BoolToVisibilityConverter}}"
                                ToolTip="Unsaved changes"
-                               Margin="0,0,8,0"/>
+                               Margin="0,0,6,0" DockPanel.Dock="Left"/>
                     <TextBlock x:Name="ModNameDisplay"
                                Text="{Binding ModName, FallbackValue='No mod loaded'}"
+                               ToolTip="{Binding ModName, FallbackValue='No mod loaded'}"
+                               TextTrimming="CharacterEllipsis"
                                Style="{StaticResource SubHeaderText}"/>
-                </StackPanel>
-
-                <!-- Center: go to any entity, and validation -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <controls:SearchableReferenceComboBox x:Name="JumpBox"
-                                                          Width="300" Height="24" Margin="0,0,12,0"
-                                                          IsEnabled="{Binding HasMod}"
-                                                          ItemsSource="{Binding JumpTargets}"
-                                                          Placeholder="Go to any entity... (Ctrl+P)"
-                                                          ToolTip="Go to any monster, weapon, spell, nation, event... by name or ID (Ctrl+P)"
-                                                          GotKeyboardFocus="JumpBox_GotKeyboardFocus"
-                                                          SelectionChanged="JumpBox_SelectionChanged"/>
-                    <Button x:Name="ValidateButton"
-                            Content="Validate"
-                            ToolTip="Check the mod for problems (unread lines, missing references, ID clashes)"
-                            Style="{StaticResource ButtonBase}"
-                            IsEnabled="{Binding HasMod}"
-                            Click="ValidateButton_Click"/>
-                </StackPanel>
-            </DockPanel>
+                </DockPanel>
+            </Grid>
         </Border>
 
         <!-- ========================================
@@ -140,10 +143,57 @@
                     Style="{StaticResource TabControlBase}"
                     IsEnabled="{Binding HasMod}"
                     ItemsSource="{Binding Tabs}"
-                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
+                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                    SelectionChanged="EntityTabs_SelectionChanged">
+            <!-- the tabs in one row (all fit from about 1000 px wide; narrower, the row scrolls: the mouse wheel moves it) -->
+            <TabControl.Template>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Background="{StaticResource BackgroundMediumBrush}">
+                            <ScrollViewer x:Name="TabStrip" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                                          Focusable="False" PreviewMouseWheel="TabStrip_PreviewMouseWheel">
+                                <ScrollViewer.Resources>
+                                    <!-- a thin bar under the tabs, only when they don't fit -->
+                                    <Style TargetType="ScrollBar">
+                                        <Setter Property="Height" Value="5"/>
+                                        <Setter Property="MinHeight" Value="5"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ScrollBar">
+                                                    <Track x:Name="PART_Track">
+                                                        <Track.Thumb>
+                                                            <Thumb>
+                                                                <Thumb.Template>
+                                                                    <ControlTemplate TargetType="Thumb">
+                                                                        <Border Background="{StaticResource BorderBrush}" CornerRadius="2"/>
+                                                                    </ControlTemplate>
+                                                                </Thumb.Template>
+                                                            </Thumb>
+                                                        </Track.Thumb>
+                                                    </Track>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ScrollViewer.Resources>
+                                <StackPanel Orientation="Horizontal" IsItemsHost="True"/>
+                            </ScrollViewer>
+                        </Border>
+                        <Border Grid.Row="1" Background="{TemplateBinding Background}">
+                            <ContentPresenter ContentSource="SelectedContent"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </TabControl.Template>
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem" BasedOn="{StaticResource TabItemBase}">
                     <Setter Property="Header" Value="{Binding Title}"/>
+                    <Setter Property="Padding" Value="11,8"/>
+                    <Setter Property="FontSize" Value="12.5"/>
                 </Style>
             </TabControl.ItemContainerStyle>
             <TabControl.Resources>
