@@ -64,7 +64,7 @@
                 Margin="0,0,0,3"
                 ItemsSource="{Binding SearchablePropertyItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Placeholder="+ Add property..."
-                ToolTip="Add an ability or property to this section: type to search by name or command (#flying). Each shows the manual's description when you hover it."
+                ToolTip="Add an ability (type a name or #command)"
                 Visibility="{Binding ShowSimpleAddButton, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="OnPropertyAddSelectionChanged"/>
 

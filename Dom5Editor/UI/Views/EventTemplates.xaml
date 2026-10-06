@@ -144,7 +144,7 @@
                 </ItemsControl>
             </WrapPanel>
             <Expander Header="PREVIEW (as the player reads it, with sample names)" Margin="0,2,0,2" Foreground="{DynamicResource TextSecondaryBrush}"
-                      ToolTip="The message with its tags filled in with sample names, the header line the game adds, and the bracketed site or item name left out"
+                      ToolTip="The message as players see it, with sample names"
                       FontSize="9" FontWeight="Bold">
                 <Border Background="#14FFFFFF" CornerRadius="4" Padding="10,6" Margin="0,4,0,0">
                     <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" FontSize="12" FontWeight="Normal" Foreground="{DynamicResource TextPrimaryBrush}"/>
@@ -321,7 +321,7 @@
                     </ItemsControl>
                 </StackPanel>
                 <Expander IsExpanded="{Binding MapOpen, Mode=OneTime}" Margin="0,6,0,0" Foreground="{DynamicResource TextSecondaryBrush}"
-                          ToolTip="The chain as cards and arrows (colored by how they link). Click a card to open that event; hover an arrow for what links them."
+                          ToolTip="The chain as cards and arrows: click a card to open it, hover an arrow to see the link"
                           FontSize="9" FontWeight="Bold" Visibility="{Binding HasMap, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Expander.Header>
                         <TextBlock>

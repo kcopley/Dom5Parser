@@ -154,6 +154,93 @@ namespace Dom5Editor.UI.ViewModels
 
         public bool HasSprite => Sprite != null;
 
+        // ---- sprites: the images a type takes, each settable from a file ----
+
+        private static readonly (Command Command, string Label, bool Always)[] MonsterImages =
+        {
+            (Command.SPR1, "Normal", true), (Command.SPR2, "Attack", true),
+            (Command.UNMOUNTEDSPR1, "Unmounted", false), (Command.UNMOUNTEDSPR2, "Unmounted attack", false),
+            (Command.MOUNTEDSPR1, "Mounted", false), (Command.MOUNTEDSPR2, "Mounted attack", false),
+            (Command.XSPR1, "Extra", false), (Command.XSPR2, "Extra attack", false),
+        };
+
+        /// <summary>
+        /// The images shown in the header, each one clickable (or an image file dropped on it) to set
+        /// it: a monster's normal and attack sprites (and its unmounted, mounted and extra ones when
+        /// it has them), an item's picture, a nation's flag.
+        /// </summary>
+        public IReadOnlyList<SpriteSlot> SpriteSlots
+        {
+            get
+            {
+                var images = Type switch
+                {
+                    EntityType.MONSTER => MonsterImages,
+                    EntityType.ITEM => new[] { (Command.SPR, "Picture", true) },
+                    EntityType.NATION => new[] { (Command.FLAG, "Flag", true) },
+                    _ => Array.Empty<(Command, string, bool)>(),
+                };
+                var slots = new List<SpriteSlot>();
+                foreach (var (c, label, always) in images)
+                {
+                    var value = Resolved.Get(c);
+                    var p = value?.Property ?? Resolved.Assets.GetValueOrDefault(c);
+                    if (p == null && !always)
+                        continue;
+                    var path = (p as Dom5Edit.Props.FilePathProperty)?.Value;
+                    slots.Add(new SpriteSlot(this, c, label, Sprites.SpriteLoader.Load(path, Session.Mod.FullFilePath), path,
+                        value == null ? "from the game" : value.Source == ValueSource.Own ? "the mod's" : SourceText(value), slots.Count == 0));
+                }
+                return slots;
+            }
+        }
+
+        public bool HasSpriteSlots => Type == EntityType.MONSTER || Type == EntityType.ITEM || Type == EntityType.NATION;
+        public bool ShowsSingleSprite => HasSprite && !HasSpriteSlots;
+
+        private string? _notice;
+
+        /// <summary>What the last image import did (copied where), shown under the header.</summary>
+        public string? Notice
+        {
+            get => _notice;
+            private set { _notice = value; OnPropertyChanged(); OnPropertyChanged(nameof(HasNotice)); }
+        }
+
+        public bool HasNotice => !string.IsNullOrEmpty(_notice);
+
+        /// <summary>
+        /// Sets an image command from a file: copied into the mod's sprites folder unless it's in
+        /// the mod's folder already (the game reads a mod's images from there), then the line set.
+        /// </summary>
+        public void SetImage(Command c, string file)
+        {
+            var modFile = Session.Mod.FullFilePath;
+            if (string.IsNullOrEmpty(modFile))
+            {
+                Notice = null;
+                Error = "Save the mod first: the image is copied into the mod's folder, next to the .dm file";
+                return;
+            }
+            Sprites.SpriteImport.Result result;
+            try
+            {
+                result = Sprites.SpriteImport.Import(file, modFile);
+            }
+            catch (Exception ex) when (ex is System.IO.IOException || ex is UnauthorizedAccessException || ex is NotSupportedException || ex is ArgumentException)
+            {
+                Error = $"The image couldn't be brought into the mod: {ex.Message}";
+                return;
+            }
+            SetValue(c, $"\"{result.RelativePath}\"");
+            if (Error != null)
+                return;
+            Notice = (result.CopiedTo != null
+                    ? $"Copied {System.IO.Path.GetFileName(file)} into the mod's folder ({result.CopiedTo}) and set {CommandName(c)} \"{result.RelativePath}\"."
+                    : $"Set {CommandName(c)} \"{result.RelativePath}\" (the image is in the mod's folder already).")
+                + (result.Note != null ? $" Note: {result.Note}." : "");
+        }
+
         // ---- copy and clear lines ----
 
         /// <summary>The copy command this type has (#copystats, #copyweapon, ...), or null.</summary>
@@ -196,9 +283,7 @@ namespace Dom5Editor.UI.ViewModels
         public string CopySourceName => CopySourceId is int id ? $"{NameOf(Type, id)} #{id}" : "(none)";
 
         /// <summary>The copy picker's and its open button's tooltips.</summary>
-        public string CopyPickTip => $"This {Nouns.Of(Type)} starts as a copy of the {Nouns.Of(Type)} picked here "
-            + $"({(CopyCommand is Command c ? CommandName(c) : "")}: everything but what the game doesn't copy), then its own lines apply on top. "
-            + "Pick another to copy that one instead.";
+        public string CopyPickTip => $"The {Nouns.Of(Type)} this one starts as a copy of ({(CopyCommand is Command c ? CommandName(c) : "")}); its own lines apply on top";
         public string CopyOpenTip => CopySourceId is int ? $"Open {CopySourceName}, the {Nouns.Of(Type)} this one copies" : "It copies nothing";
 
         public IEnumerable<ReferenceItem> CopyCandidates => Session.References(RefTypeName(Type));
@@ -350,8 +435,7 @@ namespace Dom5Editor.UI.ViewModels
             IsEditingFile = false;
         });
 
-        public string EditFileTip => $"Edit this {Nouns.Of(Type)}'s lines as text, as they're written in the .dm file. Apply checks every line and changes only what you changed (one undo step); "
-            + "lines you leave as they are keep their text and place.";
+        public string EditFileTip => $"Edit this {Nouns.Of(Type)}'s lines as text, as in the .dm file";
 
         public string UsedByTitle { get; private set; } = "";
 
@@ -828,5 +912,45 @@ namespace Dom5Editor.UI.ViewModels
         public Property Property { get; }
         public string Text { get; }
         public string Target { get; }
+    }
+    /// <summary>One image of the entity shown in the page header: click to pick a file, or drop one on it.</summary>
+    public sealed class SpriteSlot
+    {
+        private readonly EntityPageViewModel _page;
+
+        public SpriteSlot(EntityPageViewModel page, Command command, string label, System.Windows.Media.Imaging.BitmapSource? image, string? path, string source, bool isMain)
+        {
+            _page = page;
+            Command = command;
+            Label = label;
+            Image = image;
+            IsMain = isMain;
+            var name = EntityPageViewModel.CommandName(command);
+            Tooltip = (path == null ? $"{label} image ({name}): none" : $"{label} image ({name}): {(source == "from the game" ? "the game's own" : path)}")
+                + "\nClick or drop a .tga/.png to set it (copied into the mod's sprites folder)";
+            PickCommand = new RelayCommand(Pick);
+        }
+
+        public Command Command { get; }
+        public string Label { get; }
+        public System.Windows.Media.Imaging.BitmapSource? Image { get; }
+        public bool HasImage => Image != null;
+        public bool IsMain { get; }
+        public double Size => IsMain ? 64 : 40;
+        public string Tooltip { get; }
+        public ICommand PickCommand { get; }
+
+        private void Pick()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = $"{Label} image ({EntityPageViewModel.CommandName(Command)})",
+                Filter = "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*",
+            };
+            if (dialog.ShowDialog() == true)
+                SetFromFile(dialog.FileName);
+        }
+
+        public void SetFromFile(string file) => _page.SetImage(Command, file);
     }
 }

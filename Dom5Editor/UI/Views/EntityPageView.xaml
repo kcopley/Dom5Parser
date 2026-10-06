@@ -59,10 +59,48 @@
         <DataTemplate x:Key="HeaderPart">
             <Grid>
                     <!-- header: name (editable), ID, where it comes from -->
+                    <StackPanel>
                     <DockPanel Margin="0,0,0,6">
                         <Image DockPanel.Dock="Left" Source="{Binding Sprite}" MaxHeight="64" MaxWidth="64" Stretch="Uniform" Margin="0,0,8,0"
                                RenderOptions.BitmapScalingMode="NearestNeighbor"
-                               Visibility="{Binding HasSprite, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                               Visibility="{Binding ShowsSingleSprite, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <!-- the images it takes (normal, attack, ...): click to pick a file, or drop one -->
+                        <ItemsControl DockPanel.Dock="Left" ItemsSource="{Binding SpriteSlots}" Margin="0,0,8,0" VerticalAlignment="Top"
+                                      Visibility="{Binding HasSpriteSlots, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:SpriteSlot}">
+                                    <StackPanel Margin="0,0,6,0" VerticalAlignment="Bottom">
+                                        <Button Command="{Binding PickCommand}" ToolTip="{Binding Tooltip}" AllowDrop="True" Drop="OnSpriteDrop" DragOver="OnSpriteDragOver"
+                                                Width="{Binding Size}" Height="{Binding Size}" Cursor="Hand" Padding="0" Background="#10FFFFFF"
+                                                BorderBrush="#40FFFFFF" BorderThickness="1">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="B" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="B" Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                            <Grid>
+                                                <Image Source="{Binding Image}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                       Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                <TextBlock Text="+" FontSize="16" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                           Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
+                                            </Grid>
+                                        </Button>
+                                        <TextBlock Text="{Binding Label}" FontSize="8" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                         <TextBlock DockPanel.Dock="Right" Text="{Binding SourceLabel}" Style="{StaticResource MutedText}"
                                    VerticalAlignment="Center" Margin="8,0,0,0"/>
                         <TextBlock DockPanel.Dock="Right" Text="{Binding ID, StringFormat='#{0}'}" Style="{StaticResource SubHeaderText}"
@@ -73,6 +111,9 @@
                                  Style="{DynamicResource TextBoxBase}" KeyDown="CommitOnEnter" ToolTip="Name (#name). Enter or leave the box to save it."
                                  Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </DockPanel>
+                    <TextBlock Text="{Binding Notice}" Foreground="{DynamicResource AccentHighlightBrush}" TextWrapping="Wrap" Margin="0,0,0,6" FontSize="11"
+                               Visibility="{Binding HasNotice, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ErrorPart">
@@ -221,10 +262,10 @@
                                          FontFamily="{DynamicResource MonospaceFont}" FontSize="11" FontWeight="Normal"
                                          TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" MinHeight="80" MaxHeight="500" VerticalScrollBarVisibility="Auto"
                                          Style="{DynamicResource TextBoxBase}"
-                                         ToolTip="One command per line, as in a .dm file (#hp 20 -- a comment). The first line and #end stay."/>
+                                         ToolTip="One command per line (#hp 20 -- a comment); keep the first line and #end"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                                     <Button Content="Apply" Style="{DynamicResource ButtonSmall}" FontWeight="Normal" Command="{Binding ApplyFileCommand}"
-                                            ToolTip="Check the lines and change the entity to match them (one undo step). Nothing changes if a line is wrong."/>
+                                            ToolTip="Change the entity to match the text (one undo step)"/>
                                     <Button Content="Cancel" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" FontWeight="Normal" Command="{Binding CancelFileCommand}"
                                             ToolTip="Stop editing and drop the changes to the text"/>
                                 </StackPanel>
