@@ -1701,7 +1701,7 @@
           "display": "Astral Range",
           "type": "int",
           "default": 0,
-          "icon": "magicicons/Path_S.png",
+          "icon": "path:S",
           "description": "Astral magic cast by the monster has increased range."
         },
         {
@@ -1714,7 +1714,7 @@
           "display": "Blood Range",
           "type": "int",
           "default": 0,
-          "icon": "magicicons/Path_B.png",
+          "icon": "path:B",
           "description": "Blood magic cast by the monster has increased range."
         },
         {
@@ -1873,7 +1873,7 @@
           "display": "Element Range",
           "type": "int",
           "default": 0,
-          "icon": "magicicons/Path_E.png",
+          "icon": "path:E",
           "description": "Elemental magic cast by the monster has increased range."
         },
         {
@@ -1908,7 +1908,7 @@
           "display": "Fire Range",
           "type": "int",
           "default": 0,
-          "icon": "magicicons/Path_F.png",
+          "icon": "path:F",
           "description": "Fire magic cast by the monster has increased range."
         },
         {
@@ -1944,7 +1944,7 @@
           "name": "glamourrange",
           "display": "Glamour Range",
           "type": "flag",
-          "icon": "magicicons/Path_G.png",
+          "icon": "path:G",
           "description": "Glamour magic cast by the monster has increased range."
         },
         {
@@ -1975,7 +1975,7 @@
           "name": "holyrange",
           "display": "Holy Range",
           "type": "flag",
-          "icon": "magicicons/Path_H.png",
+          "icon": "path:H",
           "description": "Holy magic cast by the monster has increased range."
         },
         {
@@ -2133,7 +2133,7 @@
           "display": "Sorcery Range",
           "type": "int",
           "default": 0,
-          "icon": "magicicons/Path_S.png",
+          "icon": "path:S",
           "description": "Sorcery magic cast by the monster has increased range."
         },
         {
@@ -2247,7 +2247,7 @@
           "display": "Water Range",
           "type": "int",
           "default": 0,
-          "icon": "magicicons/Path_W.png",
+          "icon": "path:W",
           "description": "Water magic cast by the monster has increased range."
         },
         {

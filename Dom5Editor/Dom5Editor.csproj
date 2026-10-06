@@ -71,11 +71,5 @@
       <EmbeddedResource Include="Resources\game-icons.pack" LogicalName="game-icons.pack" />
     </ItemGroup>
 
-    <!-- Magic path and gem icons -->
-    <ItemGroup>
-      <Content Include="icons\magicicons\*.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
 
 </Project>

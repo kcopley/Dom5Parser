@@ -698,7 +698,7 @@
           "display": "Req Fire",
           "type": "int",
           "description": "Required Fire magic level.",
-          "icon": "magicicons/Path_F.png",
+          "icon": "path:F",
           "color": "#322D2A",
           "borderColor": "#6B4030"
         },
@@ -707,7 +707,7 @@
           "display": "Req Air",
           "type": "int",
           "description": "Required Air magic level.",
-          "icon": "magicicons/Path_A.png",
+          "icon": "path:A",
           "color": "#32302A",
           "borderColor": "#5A5540"
         },
@@ -716,7 +716,7 @@
           "display": "Req Water",
           "type": "int",
           "description": "Required Water magic level.",
-          "icon": "magicicons/Path_W.png",
+          "icon": "path:W",
           "color": "#2A2D32",
           "borderColor": "#4A5A6A"
         },
@@ -725,7 +725,7 @@
           "display": "Req Earth",
           "type": "int",
           "description": "Required Earth magic level.",
-          "icon": "magicicons/Path_E.png",
+          "icon": "path:E",
           "color": "#322A2A",
           "borderColor": "#5A4030"
         },
@@ -734,7 +734,7 @@
           "display": "Req Astral",
           "type": "int",
           "description": "Required Astral magic level.",
-          "icon": "magicicons/Path_S.png",
+          "icon": "path:S",
           "color": "#302A32",
           "borderColor": "#504560"
         },
@@ -743,7 +743,7 @@
           "display": "Req Death",
           "type": "int",
           "description": "Required Death magic level.",
-          "icon": "magicicons/Path_D.png",
+          "icon": "path:D",
           "color": "#2A2A2D",
           "borderColor": "#404050"
         },
@@ -752,7 +752,7 @@
           "display": "Req Nature",
           "type": "int",
           "description": "Required Nature magic level.",
-          "icon": "magicicons/Path_N.png",
+          "icon": "path:N",
           "color": "#2A322A",
           "borderColor": "#3A5A3A"
         },
@@ -761,7 +761,7 @@
           "display": "Req Blood",
           "type": "int",
           "description": "Required Blood magic level.",
-          "icon": "magicicons/Path_B.png",
+          "icon": "path:B",
           "color": "#322A2A",
           "borderColor": "#604040"
         },
@@ -770,7 +770,7 @@
           "display": "Req Holy",
           "type": "int",
           "description": "Required Holy level.",
-          "icon": "magicicons/Path_H.png",
+          "icon": "path:H",
           "color": "#32302A",
           "borderColor": "#605040"
         },
@@ -779,7 +779,7 @@
           "display": "Req Glamour",
           "type": "int",
           "description": "Required Glamour magic level.",
-          "icon": "magicicons/Path_G.png",
+          "icon": "path:G",
           "color": "#2A3230",
           "borderColor": "#406050"
         },
@@ -2441,7 +2441,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Fire magic for monster.",
-          "icon": "magicicons/Path_F.png",
+          "icon": "path:F",
           "color": "#322D2A",
           "borderColor": "#6B4030"
         },
@@ -2451,7 +2451,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Air magic for monster.",
-          "icon": "magicicons/Path_A.png",
+          "icon": "path:A",
           "color": "#32302A",
           "borderColor": "#5A5540"
         },
@@ -2461,7 +2461,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Water magic for monster.",
-          "icon": "magicicons/Path_W.png",
+          "icon": "path:W",
           "color": "#2A2D32",
           "borderColor": "#4A5A6A"
         },
@@ -2471,7 +2471,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Earth magic for monster.",
-          "icon": "magicicons/Path_E.png",
+          "icon": "path:E",
           "color": "#322A2A",
           "borderColor": "#5A4030"
         },
@@ -2481,7 +2481,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Astral magic for monster.",
-          "icon": "magicicons/Path_S.png",
+          "icon": "path:S",
           "color": "#302A32",
           "borderColor": "#504560"
         },
@@ -2491,7 +2491,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Death magic for monster.",
-          "icon": "magicicons/Path_D.png",
+          "icon": "path:D",
           "color": "#2A2A2D",
           "borderColor": "#404050"
         },
@@ -2501,7 +2501,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Nature magic for monster.",
-          "icon": "magicicons/Path_N.png",
+          "icon": "path:N",
           "color": "#2A322A",
           "borderColor": "#3A5A3A"
         },
@@ -2511,7 +2511,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Blood magic for monster.",
-          "icon": "magicicons/Path_B.png",
+          "icon": "path:B",
           "color": "#322A2A",
           "borderColor": "#604040"
         },
@@ -2521,7 +2521,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Holy for monster.",
-          "icon": "magicicons/Path_H.png",
+          "icon": "path:H",
           "color": "#32302A",
           "borderColor": "#605040"
         },
@@ -2531,7 +2531,7 @@
           "type": "ref",
           "refType": "monster",
           "description": "Boost Glamour for monster.",
-          "icon": "magicicons/Path_G.png",
+          "icon": "path:G",
           "color": "#2A3230",
           "borderColor": "#406050"
         },

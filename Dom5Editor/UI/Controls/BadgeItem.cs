@@ -338,7 +338,8 @@ namespace Dom5Editor.UI.Controls
 
         private string _iconPath;
         /// <summary>
-        /// Optional icon path (relative to icons folder, e.g., "magicicons/Path_F.png").
+        /// Optional icon: a game icon key ("path:F", "gem:S": the icons compiled into the editor,
+        /// Sprites.GameArt), or an image path relative to an icons folder next to the exe.
         /// </summary>
         public string IconPath
         {
@@ -381,6 +382,8 @@ namespace Dom5Editor.UI.Controls
         {
             if (string.IsNullOrEmpty(relativePath))
                 return null;
+            if (!relativePath.Contains('/') && !relativePath.Contains('.'))
+                return Sprites.GameArt.Icon(relativePath);
 
             try
             {

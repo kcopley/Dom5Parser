@@ -1889,7 +1889,7 @@
           "description": "Fire bless bonus.",
           "color": "#322D2A",
           "borderColor": "#6B4030",
-          "icon": "magicicons/Path_F.png"
+          "icon": "path:F"
         },
         {
           "name": "airblessbonus",
@@ -1898,7 +1898,7 @@
           "description": "Air bless bonus.",
           "color": "#32302A",
           "borderColor": "#5A5540",
-          "icon": "magicicons/Path_A.png"
+          "icon": "path:A"
         },
         {
           "name": "waterblessbonus",
@@ -1907,7 +1907,7 @@
           "description": "Water bless bonus.",
           "color": "#2A2D32",
           "borderColor": "#4A5A6A",
-          "icon": "magicicons/Path_W.png"
+          "icon": "path:W"
         },
         {
           "name": "earthblessbonus",
@@ -1916,7 +1916,7 @@
           "description": "Earth bless bonus.",
           "color": "#32302A",
           "borderColor": "#605040",
-          "icon": "magicicons/Path_E.png"
+          "icon": "path:E"
         },
         {
           "name": "astralblessbonus",
@@ -1925,7 +1925,7 @@
           "description": "Astral bless bonus.",
           "color": "#302A32",
           "borderColor": "#605060",
-          "icon": "magicicons/Path_S.png"
+          "icon": "path:S"
         },
         {
           "name": "deathblessbonus",
@@ -1934,7 +1934,7 @@
           "description": "Death bless bonus.",
           "color": "#302A2A",
           "borderColor": "#504040",
-          "icon": "magicicons/Path_D.png"
+          "icon": "path:D"
         },
         {
           "name": "natureblessbonus",
@@ -1943,7 +1943,7 @@
           "description": "Nature bless bonus.",
           "color": "#2A322A",
           "borderColor": "#3A5A3A",
-          "icon": "magicicons/Path_N.png"
+          "icon": "path:N"
         },
         {
           "name": "bloodblessbonus",
@@ -1952,7 +1952,7 @@
           "description": "Blood bless bonus.",
           "color": "#322A2A",
           "borderColor": "#6A3030",
-          "icon": "magicicons/Path_B.png"
+          "icon": "path:B"
         },
         {
           "name": "minprison",

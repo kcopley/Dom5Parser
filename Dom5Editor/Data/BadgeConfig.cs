@@ -147,7 +147,7 @@ namespace Dom5Editor.Data
         public string RefType { get; set; }
 
         /// <summary>
-        /// Optional icon path relative to icons folder (e.g., "magicicons/Path_F.png").
+        /// Optional icon: a game icon key ("path:F", "gem:S"; compiled into the editor) or an image path relative to an icons folder.
         /// </summary>
         [JsonPropertyName("icon")]
         public string Icon { get; set; }

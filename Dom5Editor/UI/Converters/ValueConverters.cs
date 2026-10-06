@@ -219,48 +219,6 @@ namespace Dom5Editor.UI.Converters
     }
 
     /// <summary>
-    /// Converts a path letter (F, A, W, etc.) to a gem icon path.
-    /// </summary>
-    public class PathLetterToGemIconConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is string letter && !string.IsNullOrEmpty(letter))
-            {
-                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                return System.IO.Path.Combine(baseDir, "icons", "magicicons", $"Gem_{letter}.png");
-            }
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    /// <summary>
-    /// Converts a path letter (F, A, W, etc.) to a path icon path.
-    /// </summary>
-    public class PathLetterToPathIconConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is string letter && !string.IsNullOrEmpty(letter))
-            {
-                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                return System.IO.Path.Combine(baseDir, "icons", "magicicons", $"Path_{letter}.png");
-            }
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    /// <summary>
     /// A value put into a sentence: ConverterParameter is the format ("Add {0} magic"). For a
     /// tooltip: StringFormat doesn't apply there (ToolTip isn't a string property).
     /// </summary>

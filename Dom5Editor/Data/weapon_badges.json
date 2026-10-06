@@ -145,7 +145,7 @@
           "description": "Fire damage.",
           "color": "#322D2A",
           "borderColor": "#6B4030",
-          "icon": "magicicons/Path_F.png"
+          "icon": "path:F"
         },
         {
           "name": "cold",
@@ -154,7 +154,7 @@
           "description": "Cold damage.",
           "color": "#2A2D32",
           "borderColor": "#4A5A6A",
-          "icon": "magicicons/Path_W.png"
+          "icon": "path:W"
         },
         {
           "name": "shock",
@@ -163,7 +163,7 @@
           "description": "Shock/lightning damage.",
           "color": "#32302A",
           "borderColor": "#5A5540",
-          "icon": "magicicons/Path_A.png"
+          "icon": "path:A"
         },
         {
           "name": "poison",
