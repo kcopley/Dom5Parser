@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text.Json;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Dom5Editor.Sprites
 {
@@ -11,6 +12,8 @@ namespace Dom5Editor.Sprites
     /// Which archive and index each key is comes from Data/game_icons.json (keys: "hp", "mr",
     /// "path:F", "gem:S", "gold", ability commands like "fireres", ...). <see cref="Icon"/> is null
     /// when the game isn't found or the key isn't mapped, so callers keep their own fallback.
+    /// Vanilla units', items' and sites' pictures (<see cref="Sprite"/>, <see cref="SitePicture"/>)
+    /// are only ever read from the install.
     /// </summary>
     public static class GameArt
     {
@@ -86,6 +89,42 @@ namespace Dom5Editor.Sprites
                 _icons[key] = image;
                 return image;
             }
+        }
+
+        /// <summary>
+        /// A unit's or item's picture from the install, by the sprite number the game stores
+        /// (Dom5Edit.GameSprite: monster.trs for monsters, item.trs for items) and a frame (1: the
+        /// attack frame, the next image). Null when the game or the image isn't there. Decoded on
+        /// first use and cached; nothing of it is shipped with the editor.
+        /// </summary>
+        public static BitmapSource? Sprite(string archive, int number, int frame = 0)
+        {
+            TrsArchive? a;
+            lock (_lock)
+                a = Archive(archive);
+            if (a == null)
+                return null;
+            int index = a.SpriteIndex(number);
+            return index < 0 ? null : a.Image(index + frame);
+        }
+
+        /// <summary>
+        /// A site's picture from the install, as the game picks it (6.37, tools/dom6exe/sprites.py):
+        /// sites.trs group path + 1 (path 0-9: fire, air, water, earth, astral, death, nature,
+        /// glamour, blood, holy), image <paramref name="look"/> when it is 0-99, else image
+        /// <paramref name="level"/> (0-3). A vanilla site without #look has look -1; a new site 0.
+        /// </summary>
+        public static BitmapSource? SitePicture(int path, int level, int look)
+        {
+            TrsArchive? a;
+            lock (_lock)
+                a = Archive("sites.trs");
+            if (a == null)
+                return null;
+            int start = a.GroupStart(Math.Clamp(path, 0, 9) + 1);
+            if (start < 0)
+                return null;
+            return a.Image(start + (look >= 0 && look < 100 ? look : Math.Clamp(level, 0, 3)));
         }
 
         // the icons compiled into the editor (tools/gameart/trs.py pack): key -> (width, height, half size, zlib BGRA)
