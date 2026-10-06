@@ -271,6 +271,28 @@ namespace Dom5Editor.UI
                                 Log("   | " + line);
                             break;
                         }
+                        case "--type-tab":
+                        {
+                            // --type-tab COMMAND VALUE NEXT: type VALUE in COMMAND's box on screen, then Tab to
+                            // NEXT's box: logs where the cursor is after the edit rebuilt the page
+                            var c = CommandOf(args[++i]);
+                            var value = args[++i];
+                            var next = CommandOf(args[++i]);
+                            window.Activate();
+                            System.Windows.Controls.TextBox BoxOf(Command cmd) =>
+                                Visuals<CompactBadge>(window).Where(b => b.DataContext is PropertyItem p && p.Command == cmd)
+                                    .SelectMany(Visuals<System.Windows.Controls.TextBox>).First(t => t.IsVisible);
+                            var box = BoxOf(c);
+                            System.Windows.Input.Keyboard.Focus(box);
+                            box.Text = value;
+                            Pump();
+                            System.Windows.Input.Keyboard.Focus(BoxOf(next)); // what Tab does
+                            Pump();
+                            var focused = System.Windows.Input.Keyboard.FocusedElement as DependencyObject;
+                            var badge = focused == null ? null : Parent<CompactBadge>(focused);
+                            Log($"typed {value} in {args[i - 2]}, tabbed: cursor in {(badge?.DataContext as PropertyItem)?.Command.ToString() ?? "(nothing)"}; page has {Selected(vm)?.Resolved.Get(c)?.Arguments}");
+                            break;
+                        }
                         case "--dump":
                         {
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
@@ -331,6 +353,26 @@ namespace Dom5Editor.UI
         {
             for (int k = 0; k < 3; k++)
                 Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.ContextIdle);
+        }
+
+        private static IEnumerable<T> Visuals<T>(DependencyObject root) where T : DependencyObject
+        {
+            for (int k = 0; k < VisualTreeHelper.GetChildrenCount(root); k++)
+            {
+                var child = VisualTreeHelper.GetChild(root, k);
+                if (child is T t)
+                    yield return t;
+                foreach (var d in Visuals<T>(child))
+                    yield return d;
+            }
+        }
+
+        private static T? Parent<T>(DependencyObject d) where T : DependencyObject
+        {
+            for (var x = VisualTreeHelper.GetParent(d); x != null; x = VisualTreeHelper.GetParent(x))
+                if (x is T t)
+                    return t;
+            return null;
         }
 
         private static Command CommandOf(string text)
