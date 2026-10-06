@@ -80,8 +80,8 @@ namespace Dom5Editor.Data
 
             try
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                var assemblyLocation = Path.GetDirectoryName(assembly.Location);
+                // (the exe's folder: Assembly.Location is empty in a single-file build)
+                var assemblyLocation = AppContext.BaseDirectory;
 
                 // Try multiple possible locations
                 var possiblePaths = new[]
