@@ -66,6 +66,49 @@ Then:
   damage types, abilities by command) found in the exe's draw code. `GameIcon` uses the game's
   icon when the game is installed, the vector drawing otherwise. Read at run time, not shipped.
 
+## 2026-10-06 (evening): vanilla data, the game's art and text, inspector values, tooltips
+
+The user's review ("it looks amazing"), asking for: more vanilla data (nation descriptions,
+mercenaries, anything missing), the inspector's computed values next to the stat boxes,
+the game's icons compiled in for easier test deploys, tooltips on everything (and then
+shorter), the file text editable if safe, and sprites settable on a new monster (copied
+into the mod, saying so). Four background agents (worktrees) and the lead:
+
+- **Icons compiled in** (222fabe): `tools/gameart/trs.py pack` -> `Resources/game-icons.pack`
+  (151 icons, 83 KB, embedded). The user, a beta tester, has the developers' permission for
+  game tools; unit/item/site sprites stay install-only (the user's call).
+- **Sprites from the install** (d31b0ae): `dom6exe sprites` decodes how the game picks a
+  monster's/item's image (group-relative numbers in monster.trs/item.trs; sites by path,
+  level, look); `vanilla-sprites.json` ships only numbers. 4,129 monsters, 529 items, 1,406
+  sites. Vanilla flags are composed by the game (pole, banner, emblem): not shown.
+- **Game texts from the exe** (37f53d9): `dom6exe texts` finds the game's text lists from the
+  parser code; 6,602 texts (monster/item/spell descriptions, spell details/portent/cure, nation
+  description/summary/brief) read at start (~0.1 s), checksum-checked, display assets only.
+- **Vanilla tables** (055094d): blesses (93), poptypes (82), nametypes (67 lists, 14,532
+  names), mercenaries (78; read-only in the editor: the game can't select them) and nation
+  colors/epithets in vanilla.dm; "end" records dropped; number 0 (bless/nation/event 0)
+  handled as a real number. Mercs agree 1,092/1,092 with the inspector's CSV.
+- **Inspector values** (508a730): `Dom5Edit/Derived` ports the inspector's unit maths (defence,
+  protection, encumbrance, map move, ages, old age, costs, leadership, per-weapon attack and
+  damage, item gem costs) with each value's parts; shown in brackets after the boxes and as
+  "in game" chips. 99.92% of 131,936 values agree with the inspector on its own inputs; the
+  differences are intended and listed in docs/DERIVED_VALUES.md.
+- **Tooltips** (075e119, fe6511b): every control says what it does to what ("Make a copy of
+  Claw #824 for Moloch to use instead, and open it"); snapshot `--tooltips` finds controls
+  without one (0 on every page type). StringFormat doesn't apply to ToolTip: a Format
+  converter. Then shortened to one sentence.
+- **Edit as text** (075e119): `ModEditor.ReplaceText` diffs the block's text against its lines
+  (unchanged lines keep text and place; a changed line replaces in place; new lines go where
+  typed, saved as typed). Fidelity e18/e19; a DomEnhanced edit changes exactly those lines.
+- **Sprite import** (fe6511b): header image slots (normal/attack/unmounted/... ; item picture;
+  nation flag): click or drop a file; copied into the mod's `sprites/` folder (safe name, other
+  formats converted to .png), the page says where; size checked against the manual.
+- **Fixes:** a window handler kept every closed page alive (~1.5 MB each; a full sweep reached
+  5 GB) (ada0c30); random magic skills (#magicskill 50-53) each add a pick (9d6de32).
+
+Worktree note: a worktree checks out docs/DomEnhanced2_13.dm with LF endings, which makes
+DomEnhanced stage 3 fail with hundreds of diffs (multi-line descriptions); use main's CRLF copy.
+
 ## 2026-10-05 (later): a complete editor, rebuilt on the resolver
 
 The user asked for a complete mod editor (every entity editable, real panels for the
