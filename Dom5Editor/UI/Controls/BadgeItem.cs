@@ -322,6 +322,9 @@ namespace Dom5Editor.UI.Controls
         /// </summary>
         public string Tooltip { get; set; }
 
+        /// <summary>What the value means, shown after it ("Fire", "always (unlimited)"); null if nothing to say.</summary>
+        public string ValueNote { get; set; }
+
         private string _iconPath;
         /// <summary>
         /// Optional icon path (relative to icons folder, e.g., "magicicons/Path_F.png").
@@ -632,13 +635,18 @@ namespace Dom5Editor.UI.Controls
         /// Converts this item to a ReferenceItem for use in searchable dropdowns.
         /// The original AvailablePropertyItem is stored in the Tag property.
         /// </summary>
+        /// <summary>What the command does (the manual), shown when pointing at it in the add list.</summary>
+        public string Tooltip { get; set; }
+
         public ReferenceItem ToReferenceItem()
         {
             return new ReferenceItem
             {
                 ID = (int)Command,
                 DisplayName = DisplayName,
-                Tag = this
+                Tag = this,
+                Tooltip = Tooltip,
+                ShowId = false,
             };
         }
     }

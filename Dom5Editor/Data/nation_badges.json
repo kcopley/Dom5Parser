@@ -2212,7 +2212,8 @@
         {
           "name": "nametype",
           "display": "Nametype",
-          "type": "int"
+          "type": "ref",
+          "refType": "nametype"
         },
         {
           "name": "plaincom",

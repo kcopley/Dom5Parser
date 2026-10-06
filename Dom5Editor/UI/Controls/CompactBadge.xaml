@@ -69,6 +69,11 @@
                 </TextBox.Style>
             </TextBox>
 
+            <!-- What the value means ("Fire", "always (unlimited)") -->
+            <TextBlock Text="{Binding ValueNote, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       FontSize="8" VerticalAlignment="Center" Margin="3,0,0,0" Foreground="{DynamicResource TextSecondaryBrush}"
+                       Visibility="{Binding ValueNote, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}"/>
+
             <!-- Reference display section - only visible when IsReference is true -->
             <!-- For read-only references: show name + ID -->
             <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"

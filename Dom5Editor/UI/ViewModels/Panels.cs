@@ -328,7 +328,7 @@ namespace Dom5Editor.UI.ViewModels
             get
             {
                 var fixedPaths = string.Join(" ", Paths.Select(p => (p.RefId >= 0 && p.RefId < PathLetters.Length ? PathLetters[p.RefId] : "?") + p.Detail));
-                var random = string.Join(", ", Random.Select(r => $"+1 {r.Letters} {r.Chance}%"));
+                var random = string.Join(", ", Random.Select(r => int.TryParse(r.Chance, out var c) && c > 100 ? $"{r.Letters} {c}%" : $"+1 {r.Letters} {r.Chance}%"));
                 return string.Join(", ", new[] { fixedPaths, random }.Where(x => x.Length > 0));
             }
         }
@@ -356,7 +356,8 @@ namespace Dom5Editor.UI.ViewModels
                 _page.ChangeValue(row.Value, args);
         }
 
-        private static int? ChanceOf(string text) => int.TryParse(text?.Trim().TrimEnd('%'), out var c) && c >= 1 && c <= 100 ? c : null;
+        /// <summary>A chance in percent: 1-100 for one level; more is a linked random (the manual: 200 is +2 levels in the same path).</summary>
+        private static int? ChanceOf(string text) => int.TryParse(text?.Trim().TrimEnd('%'), out var c) && c >= 1 && c <= 1000 ? c : null;
 
         /// <summary>#custommagic path mask: bit 7 is fire, then air, water, earth, astral, death, nature, glamour, blood, holy.</summary>
         public static string MaskLetters(long mask)

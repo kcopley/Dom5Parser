@@ -620,6 +620,12 @@ namespace Dom5Editor.UI.Controls
         /// </summary>
         public object Tag { get; set; }
 
+        /// <summary>A hover hint for the entry (what a command does), or null.</summary>
+        public string Tooltip { get; set; }
+
+        /// <summary>Whether the list shows the ID (not for commands: their number means nothing to a modder).</summary>
+        public bool ShowId { get; set; } = true;
+
         public override string ToString()
         {
             return !string.IsNullOrEmpty(DisplayName)

@@ -318,6 +318,18 @@ namespace Dom5Editor.UI
                             Log($"stat {label} = {value}{(page.Error != null ? " error: " + page.Error : "")}");
                             break;
                         }
+                        case "--tooltip":
+                        {
+                            // --tooltip COMMAND: log a badge's hover hint and value note
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var badge = page.Sections.Append(page.Other!).SelectMany(x => x.Badges).FirstOrDefault(b => b.Command == c)
+                                        ?? throw new InvalidOperationException("no badge for " + args[i]);
+                            Log($"tooltip {args[i]} (value {badge.Value}, note {badge.ValueNote ?? "-"}):");
+                            foreach (var line in (badge.Tooltip ?? "").Split('\n'))
+                                Log("   | " + line);
+                            break;
+                        }
                         case "--validate":
                         {
                             var result = vm.Validate();

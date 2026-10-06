@@ -27,6 +27,8 @@ namespace Dom5Editor.UI.ViewModels
             Value = key == null
                 ? page.Resolved.Get(command)
                 : page.Resolved.GetAll(command).LastOrDefault(v => v.Selector == key);
+            // a field's own hint, else the manual's
+            tooltip ??= Data.CommandHints.Tooltip(page.Type, command);
             Tooltip = string.Join("\n", new[] { tooltip, EntityPageViewModel.CommandName(command) + (key != null ? " " + key : ""),
                 Value != null ? page.SourceText(Value) : "Not set: the game's default" }.Where(s => !string.IsNullOrEmpty(s)));
         }

@@ -327,6 +327,7 @@ namespace Dom5Editor.UI.ViewModels
                     {
                         Command = a.Command, DisplayName = $"{a.DisplayName}  ({sec.Title.ToLowerInvariant()})",
                         DefaultValue = a.DefaultValue, IsReference = a.IsReference, ReferenceType = a.ReferenceType,
+                        Tooltip = a.Tooltip,
                     });
             BuildUsedBy();
             OnPropertyChanged(string.Empty);
@@ -416,6 +417,7 @@ namespace Dom5Editor.UI.ViewModels
                                 DefaultValue = kind == "int" ? def.Default ?? 1 : null,
                                 IsReference = kind == "ref" || kind == "weaponref",
                                 ReferenceType = kind == "weaponref" ? "weapon" : def.RefType,
+                                Tooltip = CommandHints.Tooltip(Type, c) ?? def.Description,
                             });
                     }
                 Sections.Add(vm);
@@ -450,7 +452,7 @@ namespace Dom5Editor.UI.ViewModels
                     continue;
                 if (Resolved.Has(c) && !GameRules.IsRepeatable(Type, c))
                     continue;
-                vm.Available.Add(new AvailablePropertyItem { Command = c, DisplayName = CommandName(c).TrimStart('#') });
+                vm.Available.Add(new AvailablePropertyItem { Command = c, DisplayName = CommandName(c).TrimStart('#'), Tooltip = CommandHints.Tooltip(Type, c) });
             }
             vm.Available.Sort((a, b) => string.CompareOrdinal(a.DisplayName, b.DisplayName));
             return vm;
