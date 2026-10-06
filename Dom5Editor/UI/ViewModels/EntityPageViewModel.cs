@@ -95,11 +95,11 @@ namespace Dom5Editor.UI.ViewModels
             }
         }
 
-        public string DisplayName => string.IsNullOrEmpty(Name) ? $"#{ID}" : Name;
+        public string DisplayName => !string.IsNullOrEmpty(Name) ? Name : Entity.HeaderName ?? $"#{ID}";
 
         public string SourceLabel => Item.IsNew ? "New in this mod"
             : !Item.IsModified ? "Vanilla"
-            : Resolved.Vanilla == null && Entity.Selected ? "Changed by this mod (the vanilla data has no " + Type.ToString().ToLowerInvariant() + "s to show)"
+            : Resolved.Vanilla == null && Entity.Selected ? $"Changed by this mod (the vanilla data has no {Plural(Type)} to show)"
             : "Vanilla, changed by this mod";
 
         /// <summary>Whether the type has a #name (poptypes and nametypes don't).</summary>
@@ -117,6 +117,26 @@ namespace Dom5Editor.UI.ViewModels
         public bool HasError => !string.IsNullOrEmpty(_error);
 
         public bool HasDescription => Entity.GetPropertyMap().ContainsKey(Command.DESCR);
+
+        /// <summary>Other long texts, each in its own box: an event's message, a nation's summary and brief, a spell's details.</summary>
+        public ObservableCollection<LongText> LongTexts { get; } = new ObservableCollection<LongText>();
+
+        private static readonly (Command Command, string Label)[] LongTextCommands =
+        {
+            (Command.MSG, "Message"), (Command.SUMMARY, "Summary"), (Command.BRIEF, "Brief"), (Command.DETAILS, "Details"),
+        };
+
+        /// <summary>Every command that can still be added, across the sections ("Section: command"), for the add box at the top.</summary>
+        public List<AvailablePropertyItem> AllAvailable { get; } = new List<AvailablePropertyItem>();
+
+        public ICommand AddAnyCommand => new RelayCommand<AvailablePropertyItem>(item =>
+        {
+            if (item == null)
+                return;
+            var section = Sections.Concat(Other != null ? new[] { Other } : Array.Empty<BadgeSectionViewModel>())
+                .FirstOrDefault(sec => sec.Available.Any(a => a.Command == item.Command));
+            section?.AddCommand.Execute(section.Available.First(a => a.Command == item.Command));
+        });
 
         /// <summary>The description (#descr), or the vanilla one the editor shows when nothing sets it.</summary>
         public string Description
@@ -258,6 +278,13 @@ namespace Dom5Editor.UI.ViewModels
             _stale = false;
             Resolved = Session.Resolve(Entity);
             var covered = new HashSet<Command> { Command.NAME, Command.DESCR };
+            LongTexts.Clear();
+            foreach (var (c, label) in LongTextCommands)
+                if (Entity.GetPropertyMap().ContainsKey(c))
+                {
+                    LongTexts.Add(new LongText(this, c, label));
+                    covered.Add(c);
+                }
             Structure.Clear();
             foreach (var p in Resolved.Structure)
                 Structure.Add(new StructureLine(p, $"{CommandName(p.Command)} {DisplayArguments(p)}".Trim(),
@@ -267,6 +294,14 @@ namespace Dom5Editor.UI.ViewModels
             Sections.Clear();
             BuildSections(covered);
             Other = BuildOther(covered);
+            AllAvailable.Clear();
+            foreach (var sec in Sections.Append(Other))
+                foreach (var a in sec.Available)
+                    AllAvailable.Add(new AvailablePropertyItem
+                    {
+                        Command = a.Command, DisplayName = $"{a.DisplayName}  ({sec.Title.ToLowerInvariant()})",
+                        DefaultValue = a.DefaultValue, IsReference = a.IsReference, ReferenceType = a.ReferenceType,
+                    });
             BuildUsedBy();
             OnPropertyChanged(string.Empty);
         }
@@ -496,6 +531,12 @@ namespace Dom5Editor.UI.ViewModels
 
         public static string RefTypeName(EntityType t) => t.ToString().ToLowerInvariant();
 
+        private static string Plural(EntityType t)
+        {
+            var s = t.ToString().ToLowerInvariant();
+            return s.EndsWith("s") ? s + "es" : s.EndsWith("y") ? s[..^1] + "ies" : s + "s";
+        }
+
         private static string ConfigName(EntityType t) => t switch
         {
             EntityType.MERCENARY => "mercenary",
@@ -504,6 +545,40 @@ namespace Dom5Editor.UI.ViewModels
 
         protected void OnPropertyChanged([CallerMemberName] string? name = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    /// <summary>A long text command (#msg, #summary, ...) in a multi-line box; leaving the box saves it.</summary>
+    public sealed class LongText
+    {
+        private readonly EntityPageViewModel _page;
+
+        public LongText(EntityPageViewModel page, Command command, string label)
+        {
+            _page = page;
+            Command = command;
+            Label = label;
+            Value = page.Resolved.Get(command);
+        }
+
+        public Command Command { get; }
+        public string Label { get; }
+        public ResolvedValue? Value { get; }
+        public bool IsInherited => Value == null || Value.Source != ValueSource.Own;
+        public string Tooltip => EntityPageViewModel.CommandName(Command) + (Value != null ? "\n" + _page.SourceText(Value) : "\nNot set");
+
+        public string Text
+        {
+            get => Value?.Property is StringProperty s ? s.Value ?? "" : "";
+            set
+            {
+                if (value == Text)
+                    return;
+                if (string.IsNullOrEmpty(value) && Value != null)
+                    _page.RemoveValue(Value);
+                else
+                    _page.SetValue(Command, _page.CommitArguments(Command, value));
+            }
+        }
     }
 
     /// <summary>One entity that refers to the page's entity.</summary>

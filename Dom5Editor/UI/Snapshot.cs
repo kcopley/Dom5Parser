@@ -82,6 +82,18 @@ namespace Dom5Editor.UI
                             vm.NavigateToEntity(type, id);
                             Log($"selected {type} {id}: {Selected(vm)?.DisplayName ?? "(not found)"}");
                             break;
+                        case "--select-name":
+                        {
+                            // --select-name TYPE NAME: the first entity of the type whose list name contains NAME
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            var name = args[++i];
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            tab.SelectedItem = tab.Items.FirstOrDefault(x => x.DisplayName.Contains(name, StringComparison.OrdinalIgnoreCase))
+                                               ?? throw new InvalidOperationException($"no {t} named {name}");
+                            Log($"selected {t} {tab.SelectedItem.DisplayName} #{tab.SelectedItem.ID}");
+                            break;
+                        }
                         case "--badge":
                             SetBadge(vm, args[++i], args[++i]);
                             break;
