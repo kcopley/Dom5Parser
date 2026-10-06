@@ -172,8 +172,9 @@ source table above). Views read it instead of each doing its own vanilla/copy lo
 **E3. Every entity, every command.** In progress (2026-10-05): every command the game reads has
 a badge or a panel; panels for monsters (weapons, armor, magic, cost, leadership, body, item
 slots), spells (paths, cost, effect), items (type, paths), sites (path, level, rarity, gems).
-Still to do: nation recruitment as lists, event requirements/effects, armor type, derived
-values (map move from #teleport), readable labels for game values. The plan: verify and rewrite each view; real panels for the
+Since: nation recruit lists, armor type, body shape and item slots, derived values, long
+texts, every type checked in scripted sessions. Still to do: an event-specific layout
+(requirements and effects read as a script), readable labels for game values. The plan: verify and rewrite each view; real panels for the
 structured parts: monster weapons and armor, magic paths and random magic, leadership, item
 slots, shapes, summons; nation recruitment, start units, sites, pretenders; spell effects,
 damage and requirements; item effects; site specifics; events. Spell and gold costs shown
@@ -181,8 +182,9 @@ decoded; game values with readable labels. Remove-inherited writes the group rew
 `tools/editor_coverage.py` reaches zero missing.
 
 **E4. Browsing and navigation.** Done (2026-10-05): links on every reference, back/forward,
-used by, go to (Ctrl+P), Ctrl+F, hide vanilla/changed/new kept per tab. Still to do: sortable
-stat columns, sprites in lists, create-from-reference, remembered window layout. The plan:
+used by, go to (Ctrl+P), Ctrl+F, hide vanilla/changed/new kept per tab. Since: sprites and
+key stats in lists, sort by ID or name, Copy & edit, remembered window layout and recent mods.
+Still to do: sorting by a stat. The plan:
 - Entity lists: search by name or ID; toggles to show/hide vanilla, mod-edited and mod-new
   entries (hiding vanilla makes the list just the mod's work), remembered per tab; sortable
   stat columns per type (weapons: damage, attack; armor: protection, defence, encumbrance;
@@ -199,7 +201,9 @@ stat columns, sprites in lists, create-from-reference, remembered window layout.
 - Keyboard: Ctrl+S, Ctrl+Z/Ctrl+Y, Ctrl+F to the list search, Delete removes the focused
   value. The window remembers its layout, tab and selection.
 
-**E5. Robustness and packaging** (PROJECT_EVALUATION.md section 8).
+**E5. Robustness and packaging** (PROJECT_EVALUATION.md section 8). Done: crash guard and log,
+missing-vanilla error, data beside the exe, self-contained publish (`tools/publish.sh`), version,
+README. Open for the user: renaming the exe (Dom5Editor.exe), an icon, a release workflow.
 
 ## How this is verified
 
