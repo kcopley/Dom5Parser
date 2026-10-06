@@ -16,6 +16,21 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Read-only game values in Dom5Parser (step 5, second part)
+
+- The parser reads the exe-written vanilla data's `-- ro: label = value` lines into
+  `IDEntity.GameValues` (never exported). All 3,491 load.
+- Editor: the monster view lists them under "GAME DATA (read-only: no mod command sets these)"
+  in the Abilities group; for a mod's edit of a vanilla monster it shows the vanilla entity's.
+  Built, not run. Other entity views don't show them yet; copies don't inherit them in the
+  display yet.
+- Takes effect once the editor loads the exe-written file instead of the inspector's
+  vanilla.dm. That switch waits until after original-order saving (step 6), which removes the
+  save path's dependence on vanilla values.
+- On the user's question (2026-10-05): the Python tool stays a developer-side extractor; its
+  outputs (vanilla data, command catalog) ship with Dom5Parser. Reading the exe at runtime
+  would need a disassembler library in C# and re-run fragile analysis on every start.
+
 ### Command catalog in Dom5Parser (step 5, first part)
 
 - `dom6exe.py catalog` writes `Dom5Edit/GameData/game-commands-6.37.json` (embedded resource):
@@ -46,7 +61,7 @@ Plan agreed with the user:
 298 armor, 4,138 monsters, 1,475 spells, 531 items, 1,407 sites, 111 nations). Nation parsers
 branch on "name or number" and "-1 removes", so the directly-set abilities are found by
 following the code to the first setter call (both ways at a conditional jump). Read-only:
-4,891 values in all, about a third of them sprite numbers and frame counts.
+3,491 values in all, about a third of them sprite numbers and frame counts.
 
 Step 4 comparison summary (details per type in tools/dom6exe/README.md): wherever the two
 disagree, the exe's version is the one the game's parser would produce. The inspector's data

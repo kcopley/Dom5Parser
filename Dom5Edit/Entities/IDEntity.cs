@@ -10,6 +10,12 @@ namespace Dom5Edit.Entities
         private List<Property> _properties = new List<Property>();
         public IReadOnlyList<Property> Properties => _properties.AsReadOnly();
 
+        /// <summary>
+        /// Values the game stores that no command can set ("-- ro:" lines in the exe-written
+        /// vanilla data). Shown read-only, never exported.
+        /// </summary>
+        public List<GameValue> GameValues { get; } = new List<GameValue>();
+
         // Copy/inheritance redesign Phase 1 (see docs/COPY_INHERITANCE_REDESIGN.md):
         // a frozen, order-correct snapshot of this entity's copy source, captured at the
         // moment the copy command was parsed (mod sources) or completed at Resolve (vanilla

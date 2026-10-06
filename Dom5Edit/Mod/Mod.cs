@@ -226,6 +226,11 @@ namespace Dom5Edit
                 LineWasTrimmed = _parser.LineWasTrimmed;
                 HandleParsedCommand(cmd.Command, cmd.Value, cmd.Comment);
             };
+            _parser.OnGameValue = (label, value) =>
+            {
+                if (_currentEntity is IDEntity entity)
+                    entity.GameValues.Add(new GameValue(label, value));
+            };
             _parser.OnLog = (line, msg) =>
             {
                 LineNumber = line;
