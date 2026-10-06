@@ -207,8 +207,10 @@ README. Open for the user: renaming the exe (Dom5Editor.exe), an icon, a release
 
 **E6. Pages that are quick to read and edit** (2026-10-06, from the user's review: "90% there").
 Done: icons, the monster stat block, magic, tables, hover hints from the manuals (with value
-names next to values). Still to do: the other pages' review, monster abilities grouped by the
-manual's sections, nation page speed.
+names next to values), monster and item abilities grouped by the manual's sections, weapon
+and armor stat blocks and weapon qualities, spell combat values decoded, forms for the small
+types, list filters by kind, pages built as they scroll into view (a nation page 1.2 s ->
+0.26 s).
 - Icons with text for what modders recognize at a glance: magic paths and gems, the monster
   stats, costs. Our own vector icons (the game's art isn't ours to ship).
 - Monster stats laid out like the game's unit window (body: HP, size, protection, MR, morale,

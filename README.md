@@ -8,10 +8,20 @@ it, and save without losing anything the file had.
   copied from another entity (`#copystats`, `#copyweapon`, ...). Copies, clears and repeated
   lines are combined the way the game's own parser does it (read from `Dominions6.exe`).
 - **Every command editable:** each command the game reads for a type has a badge or a panel:
-  weapons and armor, magic paths and random magic, leadership, body and item slots, spell
-  paths, cost and effect (with the summoned monster), item slots and paths, site gems, nation
-  recruitment, and the rest. Commands the game ignores are marked "n/r"; values no command can
-  set are shown read-only.
+  monster stats laid out like the game's unit window, weapons and armor as tables, magic paths
+  and random magic with the game's path icons, leadership, body and item slots; weapon damage
+  types and qualities; spell paths, cost, effect and area; item and site paths; nation
+  recruitment; forms for mercenaries, poptypes, blesses and AI templates. Abilities are grouped
+  by the modding manual's sections. Commands the game ignores are marked "n/r"; values no
+  command can set are shown read-only.
+- **Hints from the manuals:** pointing at any value shows what the command does and its table
+  of values (paths, rarities, scales, orders, afflictions), and values read as words next to
+  the number ("Fire", "always (unlimited)").
+- **Events as scripts:** an event reads as sentences (how it's rolled, who owns it, when it
+  happens, what it does, in order), each value edited in place; codes, delays, variables,
+  player choices and enchantment spells link events into chains, drawn as a map and checked
+  (a code no event sets, a missing [site name], ...). Follow-ups, delayed follow-ups and player
+  choices are one button each.
 - **Edits that mean what you expect:** changing a vanilla unit adds a `#select` block for it
   (vanilla data is never changed); removing an inherited value writes what the game needs
   (`#fear 0`, or a group clear plus the rest of the group); a change to a template reaches the
@@ -20,8 +30,9 @@ it, and save without losing anything the file had.
   unedited lines are written exactly as read. The previous file is kept as `.bak`.
 - **Browsing:** links between entities (a unit's weapons, a nation's recruits, a summon spell's
   monster), back and forward (Alt+arrows, mouse buttons), "used by" on every page, go to any
-  entity (Ctrl+P), list search (Ctrl+F), lists filtered to vanilla / changed / new, sprites and
-  key stats in the lists. "Copy & edit" gives a unit its own changed copy of a weapon or armor.
+  entity (Ctrl+P), list search (Ctrl+F), lists filtered to vanilla / changed / new and by kind
+  (mages, rituals, events in a chain, ...), sprites and key stats in the lists. "Copy & edit"
+  gives a unit its own changed copy of a weapon or armor; "+ New weapon" makes one for it.
 
 ## Running it
 
