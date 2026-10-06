@@ -84,6 +84,15 @@ namespace Dom5Editor
             // Set game version to Dom6
             VanillaLoader.GameVersion = GameVersion.Dom6;
 
+            // the game's own texts, sprites and event messages come from the player's install: a
+            // folder they picked (the ▾ menu), else Steam's (Dom5Edit.Events.GameInstall)
+            var gameFolder = Session.Settings.Load().GameFolder;
+            if (!string.IsNullOrEmpty(gameFolder))
+            {
+                Dom5Edit.Events.GameInstall.Folder = gameFolder;
+                Sprites.GameArt.Configure(gameFolder);
+            }
+
             // Search for vanilla.dm in several locations
             string vanillaDmPath = FindVanillaDm();
             if (!string.IsNullOrEmpty(vanillaDmPath))

@@ -100,8 +100,34 @@ namespace Dom5Editor.UI.Views
             }
             if (menu.Items.Count == 0)
                 menu.Items.Add(new System.Windows.Controls.MenuItem { Header = "(no recent mods)", IsEnabled = false });
+            menu.Items.Add(new System.Windows.Controls.Separator());
+            var game = Dom5Edit.Events.GameInstall.Exe();
+            var gameItem = new System.Windows.Controls.MenuItem
+            {
+                Header = "Dominions 6 folder...",
+                ToolTip = game != null ? $"The game's texts, sprites and event messages are read from {System.IO.Path.GetDirectoryName(game)}. Pick another folder."
+                                       : "Dominions 6 wasn't found: pick its folder (the one with Dominions6.exe) to show the game's texts, sprites and event messages",
+            };
+            gameItem.Click += (s, a) => PickGameFolder();
+            menu.Items.Add(gameItem);
             menu.PlacementTarget = (UIElement)sender;
             menu.IsOpen = true;
+        }
+
+        /// <summary>Asks for Dominions6.exe and remembers its folder (read at the next start).</summary>
+        private void PickGameFolder()
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = "Where is Dominions 6? Pick Dominions6.exe",
+                Filter = "Dominions6.exe|Dominions6.exe|Programs (*.exe)|*.exe",
+            };
+            if (dialog.ShowDialog(this) != true)
+                return;
+            _settings.GameFolder = System.IO.Path.GetDirectoryName(dialog.FileName);
+            _settings.Save();
+            MessageBox.Show(this, $"The editor will read the game's texts, sprites and event messages from {_settings.GameFolder} the next time it starts.",
+                "Dominions 6 folder", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void SetupKeyboardShortcuts()
