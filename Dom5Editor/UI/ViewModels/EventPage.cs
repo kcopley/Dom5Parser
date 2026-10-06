@@ -34,7 +34,11 @@ namespace Dom5Editor.UI.ViewModels
         public override bool ShowsAddBox => false;
 
         /// <summary>An event's name: its title, from the message.</summary>
-        public override string DisplayName => EventInfo.Title(Resolved.Values.Select(v => v.Property).ToList());
+        public override string DisplayName => TitleOf(Entity, Resolved.Values.Select(v => v.Property).ToList());
+
+        /// <summary>An event's title: from its message; a game event the mod changes (#selectevent N) without one is "Game event N".</summary>
+        public static string TitleOf(IDEntity e, IReadOnlyList<Property> lines) =>
+            e.Selected && e.ID > 0 && EventInfo.Message(lines) == null ? $"Game event {e.ID}" : EventInfo.Title(lines);
 
         protected override void BuildPanels(HashSet<Command> covered)
         {
