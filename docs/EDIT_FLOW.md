@@ -130,8 +130,13 @@ From a map of the editor's code:
   (since 2026-10-05); a new mod by the old merge, which drops `#version`/`#domversion`/`#icon`
   and keeps only one value per command for edited entities.
 
-## Plan (M3: one save path)
+## Roadmap: a complete editor
 
+Each step is checked with scripted edits (`Dom5Tests edit`) and `Dom5Editor --snapshot` renders
+before it counts as done. The existing views are treated as unverified: each one is checked,
+and rewritten where it's wrong.
+
+**E1. One edit model (M3).**
 1. **Copy-on-write**: the first edit of a vanilla-only entity makes the mod's `#select` entity
    (`Mod.SelectForEdit`), the view model switches to it (source `VanillaModified`) and the edit
    goes there. One entry point (`EntityViewModel.EnsureEditable`) used by every edit path.
@@ -139,7 +144,37 @@ From a map of the editor's code:
    written safely with a `.bak`. `ChangesModExporter` goes.
 3. Fix the bypasses (name, copy commands, damage, custom magic) to go through undo, and the
    magic path edit to target its path; Bless/Template history types.
-4. Check each with `Dom5Editor --snapshot` renders and scripted edits.
+
+**E2. Show what the game sees.** Every shown value comes from one resolver that replays the
+mod the way the game reads it (vanilla, then each block in file order: copies, clears,
+replace-or-append per command, from tools/dom6exe), and says where each value came from (the
+source table above). Views read it instead of each doing its own vanilla/copy lookups.
+
+**E3. Every entity, every command.** Verify and rewrite each view; real panels for the
+structured parts: monster weapons and armor, magic paths and random magic, leadership, item
+slots, shapes, summons; nation recruitment, start units, sites, pretenders; spell effects,
+damage and requirements; item effects; site specifics; events. Spell and gold costs shown
+decoded; game values with readable labels. Remove-inherited writes the group rewrite (above).
+`tools/editor_coverage.py` reaches zero missing.
+
+**E4. Browsing and navigation.**
+- Entity lists: search by name or ID; toggles to show/hide vanilla, mod-edited and mod-new
+  entries (hiding vanilla makes the list just the mod's work), remembered per tab; sortable
+  stat columns per type (weapons: damage, attack; armor: protection, defence, encumbrance;
+  monsters: HP, size, cost); sprites in the monster and item lists.
+- Every reference is a link: a monster's weapons, armor, copy source, shapes and summons; a
+  nation's recruits and start units; a spell's summoned unit; an item's weapon. Clicking opens
+  the referenced entity; Back/Forward history (Alt+Left/Right, mouse buttons).
+- "Used by": the entities that refer to this one (monsters with this weapon, nations recruiting
+  this unit, copies of this template), each a link.
+- Jump anywhere (Ctrl+P): one search box over every type by name or ID.
+- Pickers for references: searchable, with ID, key stats and a vanilla/mod marker, and the same
+  hide-vanilla toggle.
+- Create from a reference: "new weapon for this monster" makes the weapon and attaches it.
+- Keyboard: Ctrl+S, Ctrl+Z/Ctrl+Y, Ctrl+F to the list search, Delete removes the focused
+  value. The window remembers its layout, tab and selection.
+
+**E5. Robustness and packaging** (PROJECT_EVALUATION.md section 8).
 
 ## How this is verified
 

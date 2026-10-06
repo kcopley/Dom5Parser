@@ -4,7 +4,14 @@ This document outlines the planned enhancements to build out Dom5Parser into a f
 
 **Last Updated:** 2026-05-31
 
-## Current Focus (2026-05-31)
+## Current Focus (2026-10-05)
+
+The live roadmap for the editor is **`docs/EDIT_FLOW.md`, "Roadmap: a complete editor"**
+(E1 one edit model, E2 show what the game sees, E3 every entity and command, E4 browsing and
+navigation, E5 packaging). The feature backlog below is older; items in it are folded into
+that roadmap as they're picked up.
+
+## Earlier focus (2026-05-31)
 
 The original phase plan (below) largely **succeeded** — the editor, JSON badge
 system, validation, undo/redo, and all entity views are built. Re-framed to where
