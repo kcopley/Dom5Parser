@@ -115,6 +115,11 @@ map move, earth protection and path resistances confirmed):
   undead/inanimate/poison cloud for poison), from the exe's getter; vanilla.dm already has
   totals, so the inspector's +10 on Summer Lion etc. is its Dom5 rule.
 - Bless effect 550 is the "incarnate only" marker (09fd570); 551 still unknown.
+- Vanilla nation flags (79bd0b6): the game builds image nation+1 of flag.trs at start and after
+  mods load (pole 501, cloth 502 tinted by #color, border 503 by #secondarycolor, emblem 500 +
+  nation up to 135); `dom6exe flags` writes the recipe (numbers only), GameArt.NationFlag
+  rebuilds it from the install: 110/110 pixel-identical to the Python composition. A mod's
+  #color recolors a vanilla flag; #flag wins. Shown on the nation page and list rows.
 - Full fidelity suite 36/36; full sweep 12,747 pages, 0 failures, 260 MB.
 
 Worktree note: a worktree checks out docs/DomEnhanced2_13.dm with LF endings, which makes
