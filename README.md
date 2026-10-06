@@ -55,7 +55,7 @@ gems, abilities) are compiled into the editor.
 ```
 dotnet build Dom5Edit.sln
 dotnet run --project Dom5Editor/Dom5Editor.csproj
-./tools/publish.sh        # one self-contained exe in publish/Dom6ModEditor (from WSL)
+./tools/publish.sh        # one self-contained exe in publish/Dom6ModEditor, and a zip for testers (from WSL)
 ```
 
 ## Project layout
