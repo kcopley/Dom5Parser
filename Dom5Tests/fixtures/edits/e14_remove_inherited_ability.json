@@ -1,0 +1,20 @@
+{
+  "description": "Remove an ability a copy inherits: #fear 0 (the game removes an ability set to 0).",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "remove",
+      "entity": "monster",
+      "id": 7431,
+      "command": "#fear"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "fear",
+      "from": "5"
+    }
+  ]
+}

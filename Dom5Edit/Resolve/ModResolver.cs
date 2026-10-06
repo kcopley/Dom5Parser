@@ -26,6 +26,7 @@ namespace Dom5Edit.Resolve
             public IDEntity? Vanilla;
             public List<ResolvedValue> Values = new List<ResolvedValue>();
             public List<Property> Structure = new List<Property>();
+            public List<Property> Removals = new List<Property>();
             public IReadOnlyList<GameValue> GameValues = Array.Empty<GameValue>();
         }
 
@@ -70,11 +71,11 @@ namespace Dom5Edit.Resolve
             Walk();
             ResolvedEntity result;
             if (_states!.TryGetValue(key, out var state))
-                result = new ResolvedEntity(state.Entity, state.Vanilla, state.Values.ToList(), state.Structure.ToList(), state.GameValues);
+                result = new ResolvedEntity(state.Entity, state.Vanilla, state.Values.ToList(), state.Structure.ToList(), state.Removals.ToList(), state.GameValues);
             else if (entity.ParentMod != _mod && Base != null)
                 result = Base.Resolve(entity);
             else
-                result = new ResolvedEntity(entity, null, Array.Empty<ResolvedValue>(), Array.Empty<Property>(), entity.GameValues);
+                result = new ResolvedEntity(entity, null, Array.Empty<ResolvedValue>(), Array.Empty<Property>(), Array.Empty<Property>(), entity.GameValues);
             _resolved[key] = result;
             return result;
         }
@@ -177,6 +178,7 @@ namespace Dom5Edit.Resolve
                     gameValues = source.GameValues;
                 }
                 state.Values.RemoveAll(v => GameRules.Copies(type, c, v.Command));
+                state.Removals.RemoveAll(x => GameRules.Copies(type, c, x.Command));
                 state.Values.AddRange(copied);
                 if (c != Command.COPYSPR)
                     state.GameValues = gameValues ?? Array.Empty<GameValue>();
@@ -187,6 +189,7 @@ namespace Dom5Edit.Resolve
             if (GameRules.IsClear(c))
             {
                 state.Values.RemoveAll(v => GameRules.Clears(type, c, v.Command));
+                state.Removals.RemoveAll(x => GameRules.Clears(type, c, x.Command));
                 if (c == Command.CLEAR)
                     state.GameValues = Array.Empty<GameValue>();
                 state.Structure.Add(p);
@@ -202,6 +205,14 @@ namespace Dom5Edit.Resolve
                     state.Values.RemoveAt(i);
                     at = i;
                 }
+            }
+            state.Removals.RemoveAll(x => x.Command == c);
+            // a line setting an ability to 0 removes it: no value, but kept to show as removed
+            if (GameRules.IsRemoval(type, p))
+            {
+                if (_lineSource == ValueSource.Own)
+                    state.Removals.Add(p);
+                return;
             }
             // a value that replaces another takes its place (the game overwrites it where it is)
             if (at >= 0)

@@ -57,10 +57,47 @@ namespace Dom5Edit.Resolve
                 return false;
             if (clear == Command.CLEAR)
                 return type != EntityType.MONSTER || GroupOf(type, c) != PropertyGroup.Sprites;
-            var group = PropertyGroupMap.GetGroupClearedBy(clear)
-                        ?? (clear == Command.CLEARREC ? PropertyGroup.Recruitment
-                            : clear == Command.CLEARDEF ? PropertyGroup.Defense : (PropertyGroup?)null);
+            var group = ClearedGroup(clear);
             return group.HasValue && GroupOf(type, c) == group.Value;
+        }
+
+        /// <summary>
+        /// Whether an earlier copy or clear line would undo a later line about the same group: for
+        /// a copy or clear line, any earlier copy or clear touching its group; for another line, a
+        /// copy that copies it or a clear that clears it. Used to place added lines after them.
+        /// </summary>
+        public static bool Overrides(EntityType type, Command earlier, Command later)
+        {
+            if (!IsCopy(earlier) && !IsClear(earlier))
+                return false;
+            if (IsCopy(later))
+                return true;
+            if (IsClear(later))
+            {
+                var group = ClearedGroup(later);
+                if (group == null || group == PropertyGroup.All)
+                    return true;
+                return IsCopy(earlier)
+                    ? PropertyGroupMap.GetGroupsOverwrittenByCopy(earlier) is var g && (g.Contains(PropertyGroup.All) || g.Contains(group.Value))
+                    : earlier == Command.CLEAR || ClearedGroup(earlier) == group;
+            }
+            return IsCopy(earlier) ? Copies(type, earlier, later) : Clears(type, earlier, later);
+        }
+
+        /// <summary>The group a clear command clears (All for #clear).</summary>
+        public static PropertyGroup? ClearedGroup(Command clear) =>
+            PropertyGroupMap.GetGroupClearedBy(clear)
+            ?? (clear == Command.CLEARREC ? PropertyGroup.Recruitment
+                : clear == Command.CLEARDEF ? PropertyGroup.Defense : (PropertyGroup?)null);
+
+        /// <summary>The clear command for a group on this entity type (#clearweapons, ...), or null.</summary>
+        public static Command? ClearCommandFor(EntityType type, PropertyGroup group)
+        {
+            if (type == EntityType.POPTYPE)
+                return group == PropertyGroup.Recruitment ? Command.CLEARREC : group == PropertyGroup.Defense ? Command.CLEARDEF : null;
+            if (group == PropertyGroup.None || group == PropertyGroup.All || group == PropertyGroup.Sprites)
+                return null;
+            return PropertyGroupMap.GetClearCommand(group);
         }
 
         private static bool IsIdentity(Command c) =>
@@ -99,6 +136,23 @@ namespace Dom5Edit.Resolve
                 return true;
             return GameCommandCatalog.EffectOf(type, c)?.Appends == true;
         }
+
+        /// <summary>
+        /// An ability the game removes when a line sets it to 0 (#fear 0): the ability setter
+        /// removes on 0, and the command's range allows 0.
+        /// </summary>
+        public static bool RemovesWithZero(EntityType type, Command c)
+        {
+            if (IsRepeatable(type, c) || IsKeyedByFirstArgument(c))
+                return false;
+            var e = GameCommandCatalog.EffectOf(type, c);
+            return e != null && e.Set.Count > 0 && e.Set.All(k => k.StartsWith("a")) && e.Bits.Count == 0
+                   && !e.NoArgument && e.Min <= 0 && e.Max >= 0;
+        }
+
+        /// <summary>A line that removes an ability rather than setting it (#fear 0).</summary>
+        public static bool IsRemoval(EntityType type, Props.Property p) =>
+            RemovesWithZero(type, p.Command) && ResolvedValue.ArgumentsOf(p) == "0";
 
         /// <summary>Whether the command's first argument picks which value it sets (#magicskill path level).</summary>
         public static bool IsKeyedByFirstArgument(Command c) => _keyedByFirstArgument.Contains(c);

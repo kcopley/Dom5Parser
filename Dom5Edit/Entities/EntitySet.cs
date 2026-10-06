@@ -221,6 +221,28 @@ namespace Dom5Edit.Entities
             }
         }
 
+        /// <summary>Takes an entity out of the set (deleted in the editor); <see cref="Restore"/> puts it back.</summary>
+        internal void Remove(T t)
+        {
+            foreach (var kv in Entities.Where(kv => ReferenceEquals(kv.Value, t)).ToList())
+                Entities.Remove(kv.Key);
+            foreach (var kv in NamedEntities.Where(kv => ReferenceEquals(kv.Value, t)).ToList())
+                NamedEntities.Remove(kv.Key);
+            UnIDdEntities.RemoveAll(x => ReferenceEquals(x, t));
+            UnnamedEntities.RemoveAll(x => ReferenceEquals(x, t));
+        }
+
+        /// <summary>Puts back an entity <see cref="Remove"/> took out (an undone delete or create).</summary>
+        internal void Restore(T t)
+        {
+            Add(t.ID, t.Named ? t._name : null, t);
+            if (t.TryGetName(out var name) && !string.IsNullOrEmpty(name))
+                GiveName(t, name);
+        }
+
+        /// <summary>The next ID free in the mod's range for this type.</summary>
+        internal int NextFreeID() => GetNextID();
+
         /// <summary>The entities in the order Export writes them.</summary>
         internal IEnumerable<T> ExportOrder()
         {

@@ -83,16 +83,20 @@ namespace Dom5Edit.Resolve
         /// <summary>The entity's own copy and clear lines that still count, in order.</summary>
         public IReadOnlyList<Property> Structure { get; }
 
+        /// <summary>The entity's own lines that remove an inherited ability (#fear 0): not values, but the editor shows them as removed.</summary>
+        public IReadOnlyList<Property> Removals { get; }
+
         /// <summary>Values the game stores that no command can set (read-only), from vanilla or a copy source.</summary>
         public IReadOnlyList<GameValue> GameValues { get; }
 
         internal ResolvedEntity(IDEntity entity, IDEntity? vanilla, IReadOnlyList<ResolvedValue> values,
-                                IReadOnlyList<Property> structure, IReadOnlyList<GameValue> gameValues)
+                                IReadOnlyList<Property> structure, IReadOnlyList<Property> removals, IReadOnlyList<GameValue> gameValues)
         {
             Entity = entity;
             Vanilla = vanilla;
             Values = values;
             Structure = structure;
+            Removals = removals;
             GameValues = gameValues;
         }
 

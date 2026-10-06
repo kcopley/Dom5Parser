@@ -24,6 +24,12 @@ namespace Dom5Edit.Props
         internal string? BaselineExport { get; set; }
 
         /// <summary>The text to save: the original line if unedited, else the regenerated one.</summary>
+        /// <summary>
+        /// An added copy or clear line (or a line re-added after one) that must take effect before the
+        /// entity's own lines: saved before them rather than at the end of a block (SavePlan).
+        /// </summary>
+        internal bool PlaceFirst { get; set; }
+
         internal string SaveText()
         {
             var text = ToExportString();

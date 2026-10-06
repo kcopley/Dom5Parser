@@ -1,0 +1,23 @@
+{
+  "description": "Change the level of a magic path a copy inherits: #magicskill replaces the level of that path.",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "change",
+      "entity": "monster",
+      "id": 7431,
+      "command": "#magicskill",
+      "from": "4 2",
+      "value": "4 3"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "S",
+      "from": "2",
+      "to": "3"
+    }
+  ]
+}

@@ -51,3 +51,28 @@
 #selectmonster 7420
 #clearspec
 #end
+
+-- A template with flags, an ability, two weapons and two magic paths, and a copy of it: removing
+-- or changing an inherited entry on the copy has to clear its group and add the rest back.
+#newmonster 7430
+#name "Rich Template"
+#hp 11
+#flying
+#amphibian
+#fear 5
+#weapon 1 -- Spear
+#weapon 23 -- Short Bow
+#magicskill 0 1
+#magicskill 4 2
+#end
+
+#newmonster 7431
+#name "Rich Copy"
+#copystats 7430
+#end
+
+-- A unit with lines of its own, to add a copy command to.
+#newmonster 7440
+#name "Own Lines"
+#hp 20
+#end

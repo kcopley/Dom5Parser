@@ -34,6 +34,7 @@ namespace Dom5Edit
         private readonly Dictionary<IDEntity, HashSet<Property>> _live = new(ReferenceEqualityComparer.Instance);
         private readonly Dictionary<Property, List<Property>> _inSlot = new(ReferenceEqualityComparer.Instance);
         private readonly Dictionary<SourceBlock, List<Property>> _atEnd = new(ReferenceEqualityComparer.Instance);
+        private readonly Dictionary<SourceBlock, List<Property>> _atStart = new(ReferenceEqualityComparer.Instance);
 
         /// <summary>Whether the mod is saved in its parsed file's block order (else canonically: by type and ID).</summary>
         public bool InSourceOrder { get; }
@@ -54,7 +55,8 @@ namespace Dom5Edit
             }
 
             // Live properties no block has (added in the session): a replacement goes where the
-            // removed property of the same command was; anything else at the end of a block.
+            // removed property of the same command was; a copy or clear (PlaceFirst) before the
+            // entity's own lines; anything else at the end of a block.
             foreach (var (entity, blocks) in _blocksOf)
             {
                 if (!_held.Contains(entity))
@@ -68,6 +70,14 @@ namespace Dom5Edit
                     var gap = removed.FirstOrDefault(r => r.Command == p.Command);
                     if (gap != null)
                         Add(_inSlot, gap, p);
+                    else if (p.PlaceFirst)
+                    {
+                        var anchor = FirstPlaceAnchor(entity, blocks, p);
+                        if (anchor != null)
+                            Add(_inSlot, anchor, p);
+                        else
+                            Add(_atStart, blocks[0], p);
+                    }
                     else
                         Add(_atEnd, PlacementBlock(entity, blocks, p), p);
                 }
@@ -85,6 +95,10 @@ namespace Dom5Edit
         public IReadOnlyList<Property> ReplacementsAfter(Property p) =>
             _inSlot.TryGetValue(p, out var list) ? list : (IReadOnlyList<Property>)Array.Empty<Property>();
 
+        /// <summary>Properties added in the session that go right after this block's header.</summary>
+        public IReadOnlyList<Property> AddedAtStart(SourceBlock block) =>
+            _atStart.TryGetValue(block, out var list) ? list : (IReadOnlyList<Property>)Array.Empty<Property>();
+
         /// <summary>Properties added in the session that go at the end of this block.</summary>
         public IReadOnlyList<Property> AddedAtEnd(SourceBlock block) =>
             _atEnd.TryGetValue(block, out var list) ? list : (IReadOnlyList<Property>)Array.Empty<Property>();
@@ -101,7 +115,7 @@ namespace Dom5Edit
                 {
                     if (!Holds(block.Entity))
                         continue;
-                    var lines = new List<Property>();
+                    var lines = new List<Property>(AddedAtStart(block));
                     foreach (var p in block.Properties)
                     {
                         if (Writes(block, p))
@@ -141,6 +155,26 @@ namespace Dom5Edit
                     && PropertyGroupMap.GetGroupsOverwrittenByCopy(q.Command) is var copied
                     && (copied.Contains(PropertyGroup.All) || copied.Contains(group)));
             return overriddenLater ? blocks[^1] : blocks[0];
+        }
+
+        /// <summary>
+        /// Where a PlaceFirst line goes: right after the entity's last written copy or clear line that
+        /// touches the same group (one before it would undo it), else (null) at the start of the first
+        /// block. A clear and the lines re-added after it share the group, so they land together.
+        /// </summary>
+        private Property? FirstPlaceAnchor(IDEntity entity, List<SourceBlock> blocks, Property p)
+        {
+            var type = entity.GetEntityType();
+            Property? anchor = null;
+            foreach (var block in blocks)
+                foreach (var q in block.Properties)
+                {
+                    if (!Writes(block, q) || ReferenceEquals(q, p))
+                        continue;
+                    if (Resolve.GameRules.Overrides(type, q.Command, p.Command))
+                        anchor = q;
+                }
+            return anchor;
         }
 
         private static void Add<TKey>(Dictionary<TKey, List<Property>> map, TKey key, Property p) where TKey : notnull
