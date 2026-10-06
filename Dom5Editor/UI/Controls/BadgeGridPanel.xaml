@@ -40,6 +40,7 @@
                         CommandParameter="{Binding}"
                         Tooltip="{Binding Tooltip}"
                             ValueNote="{Binding ValueNote}"
+                            IconKind="{Binding IconKind}"
                         HasIcon="{Binding HasIcon}"
                         IconSource="{Binding IconSource}"
                         IsReference="{Binding IsReference}"

@@ -160,6 +160,16 @@ namespace Dom5Editor.UI.Controls
 
         #region Tooltip
 
+        public static readonly DependencyProperty IconKindProperty =
+            DependencyProperty.Register(nameof(IconKind), typeof(string), typeof(CompactBadge), new PropertyMetadata(null));
+
+        /// <summary>A GameIcon kind shown before the label, or null.</summary>
+        public string IconKind
+        {
+            get => (string)GetValue(IconKindProperty);
+            set => SetValue(IconKindProperty, value);
+        }
+
         public static readonly DependencyProperty ValueNoteProperty =
             DependencyProperty.Register(nameof(ValueNote), typeof(string), typeof(CompactBadge), new PropertyMetadata(null));
 

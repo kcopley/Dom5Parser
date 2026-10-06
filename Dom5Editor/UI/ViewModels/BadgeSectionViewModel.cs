@@ -62,7 +62,7 @@ namespace Dom5Editor.UI.ViewModels
         internal PropertyItem AddBadge(ResolvedValue? value, Command command, string label, string kind, string? tooltip, Brush? background, Brush? border, string? refType, string? defaultText = null)
         {
             var r = _page.Resolved;
-            var badge = new PropertyItem { Command = command, DisplayName = label, Tag = value };
+            var badge = new PropertyItem { Command = command, DisplayName = label, Tag = value, IconKind = IconOf(command) };
             if (background != null) badge.Background = background;
             if (border != null) badge.BorderBrush = border;
             bool own = value != null && r.IsEditableInPlace(value);
@@ -105,6 +105,20 @@ namespace Dom5Editor.UI.ViewModels
             Badges.Add(badge);
             return badge;
         }
+
+        /// <summary>Icons for abilities modders know at a glance (resistances, flying, stealth, ...).</summary>
+        private static readonly Dictionary<Command, string> Icons = new Dictionary<Command, string>
+        {
+            [Command.FIRERES] = "path:F", [Command.COLDRES] = "cold", [Command.SHOCKRES] = "shock", [Command.POISONRES] = "poison",
+            [Command.FLYING] = "wing", [Command.FLOAT] = "wing", [Command.AQUATIC] = "water", [Command.AMPHIBIAN] = "water",
+            [Command.STEALTHY] = "stealth", [Command.ETHEREAL] = "ghost", [Command.REGENERATION] = "regen",
+            [Command.FEAR] = "fear", [Command.AWE] = "awe", [Command.ANIMALAWE] = "awe",
+            [Command.DARKVISION] = "sight", [Command.SPIRITSIGHT] = "sight", [Command.TRUESIGHT] = "sight",
+            [Command.HOLY] = "path:H", [Command.BLUNTRES] = "def", [Command.PIERCERES] = "def", [Command.SLASHRES] = "def",
+            [Command.BERSERK] = "att", [Command.MAGICBOOST] = "mr",
+        };
+
+        private static string? IconOf(Command c) => Icons.TryGetValue(c, out var k) ? k : null;
 
         private string Tooltip(string? description, ResolvedValue? value, Command command)
         {
