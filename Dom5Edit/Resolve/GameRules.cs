@@ -111,11 +111,18 @@ namespace Dom5Edit.Resolve
             Command.ADDGOD, Command.DELGOD, Command.STARTSITE, Command.ADDNAME, Command.RESTRICTED,
         };
 
-        /// <summary>Two-argument commands whose first argument picks what the second sets (a path, a gem type, a scale): lines with different first arguments are different values.</summary>
-        private static readonly HashSet<Command> _keyedByFirstArgument = new HashSet<Command>
+        /// <summary>
+        /// Two-argument commands whose first argument picks what the second sets (a path, a gem
+        /// type, a scale): lines with different first arguments are different values. Per type: a
+        /// spell's #path is "#path slot path", a site's is "#path path".
+        /// </summary>
+        private static readonly Dictionary<EntityType, HashSet<Command>> _keyedByFirstArgument = new Dictionary<EntityType, HashSet<Command>>
         {
-            Command.MAGICSKILL, Command.MAGICBOOST, Command.GEMPROD, Command.GEMS,
-            Command.PATH, Command.PATHLEVEL, Command.MAGIC, Command.SCALE,
+            { EntityType.MONSTER, new HashSet<Command> { Command.MAGICSKILL, Command.MAGICBOOST, Command.GEMPROD } },
+            { EntityType.ITEM, new HashSet<Command> { Command.MAGICBOOST, Command.GEMPROD } },
+            { EntityType.SPELL, new HashSet<Command> { Command.PATH, Command.PATHLEVEL } },
+            { EntityType.SITE, new HashSet<Command> { Command.GEMS } },
+            { EntityType.TEMPLATE, new HashSet<Command> { Command.MAGIC, Command.SCALE } },
         };
 
         /// <summary>Commands that set one value among alternatives (a leader class): a later one replaces an earlier one.</summary>
@@ -143,7 +150,7 @@ namespace Dom5Edit.Resolve
         /// </summary>
         public static bool RemovesWithZero(EntityType type, Command c)
         {
-            if (IsRepeatable(type, c) || IsKeyedByFirstArgument(c))
+            if (IsRepeatable(type, c) || IsKeyedByFirstArgument(type, c))
                 return false;
             var e = GameCommandCatalog.EffectOf(type, c);
             return e != null && e.Set.Count > 0 && e.Set.All(k => k.StartsWith("a")) && e.Bits.Count == 0
@@ -155,7 +162,8 @@ namespace Dom5Edit.Resolve
             RemovesWithZero(type, p.Command) && ResolvedValue.ArgumentsOf(p) == "0";
 
         /// <summary>Whether the command's first argument picks which value it sets (#magicskill path level).</summary>
-        public static bool IsKeyedByFirstArgument(Command c) => _keyedByFirstArgument.Contains(c);
+        public static bool IsKeyedByFirstArgument(EntityType? type, Command c) =>
+            type is EntityType t && _keyedByFirstArgument.TryGetValue(t, out var set) && set.Contains(c);
 
         /// <summary>
         /// Whether a later line replaces an earlier one, so the earlier one no longer counts: the
@@ -168,7 +176,7 @@ namespace Dom5Edit.Resolve
             Command c = later.Command;
             if (IsRepeatable(type, c))
                 return false;
-            if (IsKeyedByFirstArgument(c) || IsKeyedByFirstArgument(earlier.Command))
+            if (IsKeyedByFirstArgument(type, c) || IsKeyedByFirstArgument(type, earlier.Command))
                 return c == earlier.Command && later.Selector == earlier.Selector;
             if (c == earlier.Command)
                 return true;

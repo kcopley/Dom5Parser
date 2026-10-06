@@ -9,6 +9,13 @@
       "showDefaults": true,
       "commands": [
         {
+          "name": "dmg",
+          "display": "DMG",
+          "type": "int",
+          "default": 0,
+          "description": "Damage (for some effects, the effect's strength or the unit it summons)."
+        },
+        {
           "name": "nratt",
           "display": "NRATT",
           "type": "int",

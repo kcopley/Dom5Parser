@@ -8,6 +8,10 @@
         are grey; their tooltip says where they come from.
     -->
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Theme/Converters.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
     <DataTemplate DataType="{x:Type vm:EntityPageViewModel}">
         <views:EntityPageView/>
     </DataTemplate>
@@ -113,6 +117,86 @@
                         Command="{Binding AddRandomCommand}" CommandParameter="{Binding Text, ElementName=NewRandom}"/>
             </StackPanel>
             <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+    </DataTemplate>
+    <!-- a field's label: grey while the value is inherited -->
+    <Style x:Key="FieldLabel" TargetType="TextBlock">
+        <Setter Property="Width" Value="110"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsInherited}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate DataType="{x:Type vm:ChoiceField}">
+        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
+            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
+            <ComboBox Width="220" ItemsSource="{Binding Options}" DisplayMemberPath="Name" SelectedValuePath="Value"
+                      SelectedValue="{Binding Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,2"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:CommandChoiceField}">
+        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
+            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
+            <ComboBox Width="220" ItemsSource="{Binding Options}" DisplayMemberPath="Name" SelectedValuePath="Value"
+                      SelectedValue="{Binding Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,2"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NumberField}">
+        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
+            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
+            <TextBox Text="{Binding Text, UpdateSourceTrigger=LostFocus}" Width="80" Style="{StaticResource InlineBox}"/>
+            <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:RefField}">
+        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
+            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
+            <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding Candidates}"
+                                                  SelectedId="{Binding SelectedId, Mode=TwoWay}" Placeholder="(none)"/>
+            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding OpenCommand}" ToolTip="Open"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- fields of one part of an entity (a spell's paths, an item's slot) -->
+    <DataTemplate DataType="{x:Type vm:FieldsPanel}">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitle}"/>
+            <ItemsControl ItemsSource="{Binding Fields}"/>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"
+                       Visibility="{Binding HasHint, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- one row per first argument of a keyed command (a site's gems by path) -->
+    <DataTemplate DataType="{x:Type vm:KeyedListPanel}">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitle}"/>
+            <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:PanelRow}">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
+                            <TextBlock Text="{Binding Text}" Width="110" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=LostFocus}" Width="50" Style="{StaticResource InlineBox}"/>
+                            <TextBlock Text="{Binding DataContext.ValueLabel, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                       Foreground="{DynamicResource TextMutedBrush}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" ToolTip="Remove"
+                                    Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <controls:SearchableReferenceComboBox Width="160" Height="22" HorizontalAlignment="Left" Margin="0,3,0,0"
+                                                  ItemsSource="{Binding Addable}" SelectedId="{Binding AddPick, Mode=TwoWay}" Placeholder="+ Add..."/>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"
+                       Visibility="{Binding HasHint, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>
