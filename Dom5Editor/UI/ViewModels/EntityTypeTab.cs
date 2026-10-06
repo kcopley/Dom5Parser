@@ -53,7 +53,7 @@ namespace Dom5Editor.UI.ViewModels
             IDEntity? made = null;
             LastError = _session.Edit(ed =>
             {
-                var edit = ed.Create(Type, $"New {Title.TrimEnd('s').ToLowerInvariant()}", out var m);
+                var edit = ed.Create(Type, $"New {Singular.ToLowerInvariant()}", out var m);
                 made = m;
                 return edit;
             });
@@ -87,6 +87,9 @@ namespace Dom5Editor.UI.ViewModels
 
         public EntityType Type { get; }
         public string Title { get; }
+
+        /// <summary>One of the type ("Monster" for "Monsters", "Mercenary" for "Mercenaries").</summary>
+        public string Singular => Title.EndsWith("ies") ? Title[..^3] + "y" : Title.EndsWith("sses") || Title.EndsWith("ses") ? Title[..^2] : Title.TrimEnd('s');
 
         public ObservableCollection<EntityListItem> Items => _items ??= Build();
 
@@ -253,7 +256,11 @@ namespace Dom5Editor.UI.ViewModels
         private string NameOf(IDEntity entity)
         {
             var name = _session.Resolve(entity).Get(Command.NAME)?.Property is StringProperty s ? s.Value : null;
-            return string.IsNullOrEmpty(name) ? $"{Title.TrimEnd('s')} {entity.ID}" : name!;
+            if (string.IsNullOrEmpty(name))
+                name = entity.HeaderName;
+            if (string.IsNullOrEmpty(name))
+                return entity.ID > 0 ? $"{Singular} {entity.ID}" : $"(unnamed {Singular.ToLowerInvariant()})";
+            return name!;
         }
 
         private void OnPropertyChanged([CallerMemberName] string? name = null) =>

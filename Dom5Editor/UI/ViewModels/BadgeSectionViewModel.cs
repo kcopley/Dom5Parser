@@ -50,8 +50,8 @@ namespace Dom5Editor.UI.ViewModels
         public bool CanAdd => !ReadOnly && Available.Count > 0;
         public bool HasBadges => Badges.Count > 0;
 
-        /// <summary>Shown when it has something to show or add.</summary>
-        public bool IsVisible => HasBadges || CanAdd;
+        /// <summary>Shown when it has values (or is a grid of stats); the add box at the top of the page adds to the others.</summary>
+        public bool IsVisible => HasBadges || IsGrid;
 
         public ICommand RemoveCommand { get; }
         public ICommand AddCommand { get; }

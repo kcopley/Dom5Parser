@@ -82,6 +82,26 @@
                      Margin="0,0,0,8" ToolTip="Description (#descr)"
                      Visibility="{Binding HasDescription, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
+            <!-- other long texts (an event's message, a nation's summary and brief, ...) -->
+            <ItemsControl ItemsSource="{Binding LongTexts}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:LongText}">
+                        <StackPanel Margin="0,0,0,8" ToolTip="{Binding Tooltip}">
+                            <TextBlock Text="{Binding Label}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                            <TextBox Text="{Binding Text, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True"
+                                     MinHeight="40" MaxHeight="160" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- add any command the game reads for this type (it shows in its section) -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="ADD" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                           VerticalAlignment="Center" Width="60"/>
+                <controls:BadgeWrapPanel AvailableItems="{Binding AllAvailable}" AddCommand="{Binding AddAnyCommand}" ShowAddButton="True"/>
+            </StackPanel>
+
             <!-- copy source and the entity's own copy/clear lines -->
             <StackPanel Visibility="{Binding HasCopy, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,8">
                 <StackPanel Orientation="Horizontal">

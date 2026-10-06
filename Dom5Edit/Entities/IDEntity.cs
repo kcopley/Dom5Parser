@@ -25,6 +25,9 @@ namespace Dom5Edit.Entities
         public HashSet<Nation> AssociatedNations = new HashSet<Nation>();
         public bool Selected { get; set; }
         public bool Named { get; set; }
+
+        /// <summary>The name in the entity's header (#selectbless "Death Explosion"), or null when the header has an ID.</summary>
+        public string? HeaderName => Named ? _name : null;
         internal string _name;
 
         private IDEntity _dependent = null;
