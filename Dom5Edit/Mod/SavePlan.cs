@@ -59,7 +59,8 @@ namespace Dom5Edit
             // entity's own lines; anything else at the end of a block.
             foreach (var (entity, blocks) in _blocksOf)
             {
-                if (!_held.Contains(entity))
+                // an entity no edit has touched is written as read
+                if (!_held.Contains(entity) || !entity.EditedSinceLoad)
                     continue;
                 var liveNow = _live[entity] = new HashSet<Property>(entity.Properties, ReferenceEqualityComparer.Instance);
                 var inBlocks = new HashSet<Property>(blocks.SelectMany(b => b.Properties), ReferenceEqualityComparer.Instance);
@@ -89,7 +90,7 @@ namespace Dom5Edit
 
         /// <summary>Whether a parsed block's property is written: live now, or taken out by a later clear or copy in the file (the game still reads it there).</summary>
         public bool Writes(SourceBlock block, Property p) =>
-            _live[block.Entity].Contains(p) || !_mod.PropertiesAfterParse.Contains(p);
+            !_live.TryGetValue(block.Entity, out var live) || live.Contains(p) || !_mod.PropertiesAfterParse.Contains(p);
 
         /// <summary>Properties added in the session that go right after this (removed) property.</summary>
         public IReadOnlyList<Property> ReplacementsAfter(Property p) =>

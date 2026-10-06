@@ -342,6 +342,23 @@ namespace Dom5Tests
                 mod.Resolve();
             }
             var resolver = Dom5Edit.Resolve.ModResolver.For(mod);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            if (mod.Database[EntityType.MONSTER].GetFullList().FirstOrDefault() is { } any)
+                resolver.Resolve(any);
+            Console.WriteLine($"(first replay: {watch.ElapsedMilliseconds} ms)");
+            watch.Restart();
+            var plan = new SavePlan(mod);
+            long planMs = watch.ElapsedMilliseconds;
+            int lines = plan.Blocks().Sum(b => b.Lines.Count);
+            Console.WriteLine($"(save plan: {planMs} ms, blocks: {watch.ElapsedMilliseconds - planMs} ms, {lines} lines)");
+            for (int k = 0; k < 3; k++)
+            {
+                watch.Restart();
+                resolver.Invalidate();
+                if (mod.Database[EntityType.MONSTER].GetFullList().FirstOrDefault() is { } again)
+                    resolver.Resolve(again);
+                Console.WriteLine($"(replay after an edit: {watch.ElapsedMilliseconds} ms)");
+            }
             for (int i = 2; i + 1 < args.Length; i += 2)
             {
                 var type = Enum.Parse<EntityType>(args[i], ignoreCase: true);
