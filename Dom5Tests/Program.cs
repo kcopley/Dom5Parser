@@ -92,6 +92,7 @@ namespace Dom5Tests
 
                 PrintModStats(vanilla, "Vanilla");
                 CheckLogFile(vanillaDmPath);
+                PrintGameValues(vanilla);
                 PrintSampleEntities(vanilla);
 
                 Console.WriteLine("\n=== Vanilla Test Complete ===");
@@ -155,6 +156,21 @@ namespace Dom5Tests
                 Console.WriteLine($"\nERROR during loading: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
             }
+        }
+
+        /// <summary>
+        /// Read-only game values ("-- ro:" lines of the exe-written vanilla data).
+        /// </summary>
+        static void PrintGameValues(Mod mod)
+        {
+            int total = 0, entities = 0;
+            foreach (var set in mod.Database.Values)
+                foreach (var e in set.GetFullList())
+                    if (e.GameValues.Count > 0) { entities++; total += e.GameValues.Count; }
+            Console.WriteLine($"\nRead-only game values: {total} on {entities} entities");
+            if (mod.Database[EntityType.MONSTER].TryGetValue(263, out var m))
+                foreach (var v in m.GameValues)
+                    Console.WriteLine($"  monster 263 {m.Name}: {v}");
         }
 
         /// <summary>

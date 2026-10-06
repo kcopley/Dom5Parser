@@ -183,4 +183,5 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- Show the vanilla file's read-only values (`-- ro:` lines) in the editor.
+- Dom5Parser reads the `-- ro:` lines (`IDEntity.GameValues`); the monster view lists them.
+  Other views, and switching the editor's vanilla base to this file, are next.

@@ -11,6 +11,7 @@ namespace Dom5Edit
         private readonly char spaceDelimiter = ' ';
         private readonly string tabDelimiter = "\t";
         private readonly string commentDelimiter = "--";
+        private const string GameValuePrefix = "-- ro:";
 
         /// <summary>
         /// Represents a parsed command from a .dm file.
@@ -27,6 +28,12 @@ namespace Dom5Edit
         /// Callback invoked for each parsed command.
         /// </summary>
         public Action<ParsedCommand> OnCommand { get; set; }
+
+        /// <summary>
+        /// Callback invoked for a read-only game value line ("-- ro: label = value"), with the
+        /// label and value.
+        /// </summary>
+        public Action<string, string> OnGameValue { get; set; }
 
         /// <summary>
         /// Callback invoked for logging/errors.
@@ -73,6 +80,16 @@ namespace Dom5Edit
                 {
                     // a blank line inside a multi-line string is a paragraph break, keep it
                     if (isMultiLine) prevLine = prevLine + Environment.NewLine;
+                    continue;
+                }
+
+                // a stored value no command can set, in the exe-written vanilla data
+                if (!isMultiLine && s.StartsWith(GameValuePrefix))
+                {
+                    var body = s.Substring(GameValuePrefix.Length);
+                    int eq = body.LastIndexOf(" = ");
+                    if (eq != -1)
+                        OnGameValue?.Invoke(body.Substring(0, eq).Trim(), body.Substring(eq + 3).Trim());
                     continue;
                 }
 

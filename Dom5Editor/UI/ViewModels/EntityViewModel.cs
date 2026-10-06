@@ -110,6 +110,22 @@ namespace Dom5Editor.UI.Views
         /// </summary>
         public IDEntity Entity => _entity;
 
+        /// <summary>
+        /// Values the game stores that no command can set (from the exe-written vanilla data):
+        /// the entity's own, else, for a mod's edit of a vanilla entity, the vanilla entity's.
+        /// </summary>
+        public IReadOnlyList<GameValue> GameValues
+        {
+            get
+            {
+                if (_entity.GameValues.Count > 0)
+                    return _entity.GameValues;
+                return (IReadOnlyList<GameValue>)GetVanillaEntity()?.GameValues ?? Array.Empty<GameValue>();
+            }
+        }
+
+        public bool HasGameValues => GameValues.Count > 0;
+
         // ========================================
         // Entity Navigation
         // ========================================

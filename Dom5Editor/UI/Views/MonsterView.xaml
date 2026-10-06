@@ -471,6 +471,21 @@
                             AddCommand="{Binding AddResistanceBadgeCommand}"
                             ShowAddButton="True"
                             NavigateCommand="{Binding NavigateToReferenceCommand}"/>
+
+                        <!-- Game data no command can set (read-only, from the exe-written vanilla data) -->
+                        <StackPanel Visibility="{Binding HasGameValues, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="GAME DATA (read-only: no mod command sets these)" FontSize="8" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,8,0,2"/>
+                            <ItemsControl ItemsSource="{Binding GameValues}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="9" Foreground="{DynamicResource TextSecondaryBrush}" TextWrapping="Wrap">
+                                            <Run Text="{Binding Label, Mode=OneWay}"/><Run Text=": "/><Run Text="{Binding Value, Mode=OneWay}" FontWeight="SemiBold"/>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </StackPanel>
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
