@@ -476,6 +476,23 @@ namespace Dom5Editor.UI.ViewModels
             Panels.Add(site);
             Panels.Add(new KeyedListPanel(this, "GEMS", Command.GEMS, Data.GameTables.GemPaths, "per turn"));
             covered.UnionWith(new[] { Command.PATH, Command.LEVEL, Command.RARITY, Command.GEMS });
+
+            // the units the site gives: recruitable by whoever owns it, or by its first owner only; summoned each month
+            foreach (var (c, title) in new[]
+            {
+                (Command.MON, "RECRUITABLE UNITS"), (Command.COM, "RECRUITABLE COMMANDERS"),
+                (Command.HOMEMON, "UNITS FOR ITS FIRST OWNER ONLY"), (Command.HOMECOM, "COMMANDERS FOR ITS FIRST OWNER ONLY"),
+                (Command.SUMMON, "SUMMONED BY ENTERING IT (A MAGE OF ITS PATH)"),
+            })
+            {
+                if (!Entity.GetPropertyMap().ContainsKey(c))
+                    continue;
+                // (shown when set; the others stay addable in the badges)
+                if (!Resolved.Has(c) && c != Command.MON && c != Command.COM)
+                    continue;
+                Panels.Add(new ReferenceListPanel(this, title, c, EntityType.MONSTER, columns: NationPageViewModel.UnitColumns));
+                covered.Add(c);
+            }
         }
     }
 
