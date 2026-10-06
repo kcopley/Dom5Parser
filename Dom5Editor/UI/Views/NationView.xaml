@@ -282,6 +282,26 @@
                 </controls:PropertyGroupControl.GroupContent>
             </controls:PropertyGroupControl>
 
+
+            <!-- Values the game stores that no mod command sets (read-only, from the exe-written vanilla.dm) -->
+            <controls:PropertyGroupControl Header="Game Data (read-only)" IsExpanded="False"
+                                           Visibility="{Binding HasGameValues, Converter={StaticResource BoolToVisibilityConverter}}">
+                <controls:PropertyGroupControl.GroupContent>
+                    <StackPanel>
+                        <TextBlock Text="Stored in the game's data; no mod command sets these." FontSize="8"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                        <ItemsControl ItemsSource="{Binding GameValues}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontSize="9" Foreground="{DynamicResource TextSecondaryBrush}" TextWrapping="Wrap">
+                                        <Run Text="{Binding Label, Mode=OneWay}"/><Run Text=": "/><Run Text="{Binding Value, Mode=OneWay}" FontWeight="SemiBold"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </controls:PropertyGroupControl.GroupContent>
+            </controls:PropertyGroupControl>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

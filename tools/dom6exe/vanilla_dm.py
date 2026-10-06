@@ -594,6 +594,8 @@ def weapon_commands(exe):
 # armor record (6.37): protection by body part (part, value) from 0x24, 4 ability numbers at
 # 0x48 with their values at 0x58. #prot sets the part(s) its type covers (shield 5, helmet 1,
 # else torso 2, arms 3, legs 4 to the same value); #protparts h b sets head 1 and parts 2-4.
+# Body armor is written with its torso value: the game uses body and head protection only.
+# Part 6 (a few necklaces, bracers, a barding) has no command and stays read-only.
 A_PARTS, A_DEF, A_ENC, A_TYPE, A_RCOST, A_AB_KEYS, A_AB_VALS = 0x24, 0x3e, 0x40, 0x42, 0x44, 0x48, 0x58
 
 
@@ -615,14 +617,15 @@ def armor_commands(exe):
                 break
             parts.append((part, val))
         pd = dict(parts)
+        kinds = [x for x, v in parts]
         if not parts:
             pass
-        elif [x for x, v in parts] == [5] and typ == 4 or [x for x, v in parts] == [1] and typ == 6:
+        elif kinds == [5] and typ == 4 or kinds == [1] and typ == 6:
             lines.append('#prot %d' % parts[0][1])
-        elif [x for x, v in parts] == [2, 3, 4] and pd[2] == pd[3] == pd[4] and typ not in (4, 6):
-            lines.append('#prot %d' % pd[2])
-        elif [x for x, v in parts] == [1, 2, 3, 4] and pd[2] == pd[3] == pd[4]:
-            lines.append('#protparts %d %d' % (pd[1], pd[2]))
+        elif 2 in pd and set(kinds) <= {1, 2, 3, 4}:
+            # the game uses body and head protection only (the user, 2026-10-05): arms and legs
+            # (parts 3, 4), which vanilla often sets lower than the torso, are left out
+            lines.append('#protparts %d %d' % (pd[1], pd[2]) if 1 in pd else '#prot %d' % pd[2])
         else:
             ro.append(('protection by part', ' '.join('%d:%d' % x for x in parts)))
         ab = {}

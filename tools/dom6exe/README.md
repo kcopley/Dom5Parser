@@ -8,7 +8,7 @@ tool that has no current maintainer. The exe itself holds both the vanilla table
 python3 tools/dom6exe/dom6exe.py commands  --out tools/dom6exe/data/commands-6.37.json
 python3 tools/dom6exe/dom6exe.py readonly  --out tools/dom6exe/data/readonly-monster-abilities-6.37.json
 python3 tools/dom6exe/dom6exe.py monsters  --out monsters.json      # ~3 MB, not committed
-python3 tools/dom6exe/dom6exe.py vanilla   --out tools/dom6exe/data/vanilla-6.37.dm
+python3 tools/dom6exe/dom6exe.py vanilla   --out vanilla.dm    # the editor's vanilla base
 python3 tools/dom6exe/dom6exe.py catalog   --out Dom5Edit/GameData/game-commands-6.37.json
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
@@ -98,9 +98,12 @@ and GNU `objdump`. The exe is never copied into the repo.
   stores -N in the same field. `#thirdstr` does what `#halfstr` does.
 - Armor protection is a list of (body part, value): `#prot` sets the part(s) of its type
   (shield 5, helmet 1, else torso, arms and legs alike); `#protparts h b` sets head and body.
-  141 vanilla armors (most body armor: a stronger torso) can't be written either way and are
-  read-only per part; the inspector writes (2 x torso + arms + legs) / 4. Armor abilities: 4
-  numbers at +0x48, values at +0x58 (`#magicarmor` 557 = 1; 11 vanilla armors have 2).
+  Most vanilla body armor has a stronger torso than arms and legs; the game uses body and head
+  protection only (the user), so it's written as `#prot <torso>` (or `#protparts <head>
+  <torso>`). Part 6 (Twisting Thorns, Skull Necklace, Mail Barding, the bracers, Flame Helmet)
+  has no command: modders reach it with `#copyarmor` of one of these, e.g. to give a helmet
+  body protection. Those stay read-only. Armor abilities: 4 numbers at +0x48, values at +0x58
+  (`#magicarmor` 557 = 1; 11 vanilla armors have 2).
 - Commands the inspector writes that the weapon parser doesn't have: `#flammable` (is
   `#woodenweapon`), `#nofirebless` (`#iceweapon`), `#defnegate` (`#defroll`), `#mrcheckhalfdmg`
   (`#mrhalf`), `#usedinmelee`, `#dismounted`, `#hithead`, `#aironly`, `#demonimmune` (flag bits
