@@ -694,6 +694,25 @@
           "description": "Custom sound file path."
         }
       ]
+    },
+    {
+      "id": "more",
+      "displayName": "MORE",
+      "description": "Other commands the game reads for this type",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "magiconly",
+          "display": "Magiconly",
+          "type": "flag"
+        },
+        {
+          "name": "mrhalf",
+          "display": "Mrhalf",
+          "type": "flag"
+        }
+      ]
     }
   ]
 }

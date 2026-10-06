@@ -1941,6 +1941,466 @@
           "description": "Item draw size modifier."
         }
       ]
+    },
+    {
+      "id": "more",
+      "displayName": "MORE",
+      "description": "Other commands the game reads for this type",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "autospell",
+          "display": "Autospell",
+          "type": "ref",
+          "refType": "spell"
+        },
+        {
+          "name": "batstartsum1",
+          "display": "Batstartsum1",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum1d3",
+          "display": "Batstartsum1d3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum1d6",
+          "display": "Batstartsum1d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum2",
+          "display": "Batstartsum2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum2d6",
+          "display": "Batstartsum2d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum3",
+          "display": "Batstartsum3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum3d6",
+          "display": "Batstartsum3d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum4",
+          "display": "Batstartsum4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum4d6",
+          "display": "Batstartsum4d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum5",
+          "display": "Batstartsum5",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum5d6",
+          "display": "Batstartsum5d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum1",
+          "display": "Battlesum1",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum1d2",
+          "display": "Battlesum1d2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum1d3",
+          "display": "Battlesum1d3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum2",
+          "display": "Battlesum2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum3",
+          "display": "Battlesum3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum4",
+          "display": "Battlesum4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum5",
+          "display": "Battlesum5",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesumwarm",
+          "display": "Battlesumwarm",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "beauty",
+          "display": "Beauty",
+          "type": "int"
+        },
+        {
+          "name": "bravemount",
+          "display": "Bravemount",
+          "type": "int"
+        },
+        {
+          "name": "chorusmaster",
+          "display": "Chorusmaster",
+          "type": "int"
+        },
+        {
+          "name": "chorusslave",
+          "display": "Chorusslave",
+          "type": "int"
+        },
+        {
+          "name": "corpsehealer",
+          "display": "Corpsehealer",
+          "type": "int"
+        },
+        {
+          "name": "dancenof",
+          "display": "Dancenof",
+          "type": "int"
+        },
+        {
+          "name": "dancenratt",
+          "display": "Dancenratt",
+          "type": "int"
+        },
+        {
+          "name": "dancesize",
+          "display": "Dancesize",
+          "type": "int"
+        },
+        {
+          "name": "dancespr",
+          "display": "Dancespr",
+          "type": "int"
+        },
+        {
+          "name": "danceweapon",
+          "display": "Danceweapon",
+          "type": "weaponRef"
+        },
+        {
+          "name": "deathgrab",
+          "display": "Deathgrab",
+          "type": "int"
+        },
+        {
+          "name": "deathshock",
+          "display": "Deathshock",
+          "type": "int"
+        },
+        {
+          "name": "deathslime",
+          "display": "Deathslime",
+          "type": "int"
+        },
+        {
+          "name": "domsummon",
+          "display": "Domsummon",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "domsummon2",
+          "display": "Domsummon2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "domsummon20",
+          "display": "Domsummon20",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "dread",
+          "display": "Dread",
+          "type": "int"
+        },
+        {
+          "name": "enchantedblood",
+          "display": "Enchantedblood",
+          "type": "int",
+          "description": "#noforgebonus Gets points bonus to MR and heals about."
+        },
+        {
+          "name": "falseregen",
+          "display": "Falseregen",
+          "type": "int"
+        },
+        {
+          "name": "faysummon",
+          "display": "Faysummon",
+          "type": "int"
+        },
+        {
+          "name": "forestsurv",
+          "display": "Forestsurv",
+          "type": "flag"
+        },
+        {
+          "name": "grandcom",
+          "display": "Grandcom",
+          "type": "int"
+        },
+        {
+          "name": "growthpower",
+          "display": "Growthpower",
+          "type": "int"
+        },
+        {
+          "name": "magicboost",
+          "display": "Magicboost",
+          "type": "intint"
+        },
+        {
+          "name": "makemonsters1",
+          "display": "Makemonsters1",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "makemonsters2",
+          "display": "Makemonsters2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "makemonsters3",
+          "display": "Makemonsters3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "makemonsters4",
+          "display": "Makemonsters4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "makemonsters5",
+          "display": "Makemonsters5",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "mountsurv",
+          "display": "Mountsurv",
+          "type": "flag"
+        },
+        {
+          "name": "nationrebate",
+          "display": "Nationrebate",
+          "type": "ref",
+          "refType": "nation",
+          "description": "\"nation name\" Increases the chance of receiving a guardian spirit with +value The item is 20% cheaper to forge for this nation."
+        },
+        {
+          "name": "nightmareaura",
+          "display": "Nightmareaura",
+          "type": "int"
+        },
+        {
+          "name": "notfornation",
+          "display": "Notfornation",
+          "type": "ref",
+          "refType": "nation"
+        },
+        {
+          "name": "onlysleepers",
+          "display": "Onlysleepers",
+          "type": "flag"
+        },
+        {
+          "name": "patience",
+          "display": "Patience",
+          "type": "int"
+        },
+        {
+          "name": "praise",
+          "display": "Praise",
+          "type": "int"
+        },
+        {
+          "name": "raiseshape",
+          "display": "Raiseshape",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "raredomsummon",
+          "display": "Raredomsummon",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "regainmount",
+          "display": "Regainmount",
+          "type": "int"
+        },
+        {
+          "name": "restricted",
+          "display": "Restricted",
+          "type": "ref",
+          "refType": "nation",
+          "description": "\"nation name\"."
+        },
+        {
+          "name": "restricteditem",
+          "display": "Restricteditem",
+          "type": "int",
+          "description": "Be healed until the item is removed."
+        },
+        {
+          "name": "sabbathmaster",
+          "display": "Sabbathmaster",
+          "type": "flag"
+        },
+        {
+          "name": "sabbathslave",
+          "display": "Sabbathslave",
+          "type": "flag"
+        },
+        {
+          "name": "slaver",
+          "display": "Slaver",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "slaverbonus",
+          "display": "Slaverbonus",
+          "type": "int"
+        },
+        {
+          "name": "sleepres",
+          "display": "Sleepres",
+          "type": "int",
+          "description": "MAGIC ABILITIES NON-COMBAT ABILITIES #douse."
+        },
+        {
+          "name": "smartmount",
+          "display": "Smartmount",
+          "type": "int"
+        },
+        {
+          "name": "spell",
+          "display": "Spell",
+          "type": "ref",
+          "refType": "spell"
+        },
+        {
+          "name": "spikes",
+          "display": "Spikes",
+          "type": "int"
+        },
+        {
+          "name": "spr",
+          "display": "Spr",
+          "type": "string"
+        },
+        {
+          "name": "statsiege",
+          "display": "Statsiege",
+          "type": "int"
+        },
+        {
+          "name": "summon1",
+          "display": "Summon1",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "summon2",
+          "display": "Summon2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "summon3",
+          "display": "Summon3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "summon4",
+          "display": "Summon4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "summon5",
+          "display": "Summon5",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "swampsurv",
+          "display": "Swampsurv",
+          "type": "flag"
+        },
+        {
+          "name": "swimming",
+          "display": "Swimming",
+          "type": "flag"
+        },
+        {
+          "name": "templetrainer",
+          "display": "Templetrainer",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "unseen",
+          "display": "Unseen",
+          "type": "flag"
+        },
+        {
+          "name": "wastesurv",
+          "display": "Wastesurv",
+          "type": "flag"
+        }
+      ]
     }
   ]
 }
