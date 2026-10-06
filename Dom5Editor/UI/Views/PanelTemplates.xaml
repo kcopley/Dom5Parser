@@ -3,7 +3,8 @@
                     xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
                     xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels"
                     xmlns:views="clr-namespace:Dom5Editor.UI.Views"
-                    xmlns:behaviors="clr-namespace:Dom5Editor.UI.Behaviors">
+                    xmlns:behaviors="clr-namespace:Dom5Editor.UI.Behaviors"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
     <!--
         Views for entity pages and their panels (Dom5Editor/UI/ViewModels/Panels.cs). Inherited rows
         are grey; their tooltip says where they come from.
@@ -369,6 +370,38 @@
             <Button Style="{StaticResource ResetButton}"/>
             <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"
                        Visibility="{Binding HasNote, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- a nation's army in rows: role, unit, how many -->
+    <DataTemplate DataType="{x:Type vm:ArmyPanel}">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitle}"/>
+            <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type sys:String}">
+                        <TextBlock Text="{Binding}" FontSize="10" Foreground="{DynamicResource AccentHighlightBrush}" Margin="0,6,0,2"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:UnitRowField}">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Unit.Tooltip}">
+                            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" Width="130"/>
+                            <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding Unit.Candidates}"
+                                                                  SelectedId="{Binding Unit.SelectedId, Mode=TwoWay}" Placeholder="(none)"/>
+                            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding Unit.OpenCommand}" ToolTip="Open"/>
+                            <Button Style="{StaticResource ResetButton}" DataContext="{Binding Unit}"/>
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding HasCount, Converter={StaticResource BoolToVisibilityConverter}}"
+                                        ToolTip="{Binding Count.Tooltip}">
+                                <TextBlock Text="{Binding CountLabel}" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="10,0,4,0"/>
+                                <TextBox Text="{Binding Count.Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
+                                         Width="44" TextAlignment="Right" Style="{StaticResource InlineBox}"/>
+                                <Button Style="{StaticResource ResetButton}" DataContext="{Binding Count}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+            </ItemsControl>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"
+                       Visibility="{Binding HasHint, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </StackPanel>
     </DataTemplate>
 

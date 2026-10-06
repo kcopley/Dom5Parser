@@ -268,6 +268,69 @@ namespace Dom5Editor.UI.ViewModels
         public ObservableCollection<PanelField> Footer { get; } = new ObservableCollection<PanelField>();
     }
 
+    /// <summary>One line of a nation's army: a role, the unit (a picker), and how many (a count, or a multiplier per point of defence).</summary>
+    public sealed class UnitRowField
+    {
+        public UnitRowField(string label, RefField unit, NumberField? count, string countLabel)
+        {
+            Label = label;
+            Unit = unit;
+            Count = count;
+            CountLabel = countLabel;
+        }
+
+        public string Label { get; }
+        public RefField Unit { get; }
+        public NumberField? Count { get; }
+        public bool HasCount => Count != null;
+        public string CountLabel { get; }
+        public bool IsInherited => Unit.IsInherited && (Count == null || Count.IsInherited);
+    }
+
+    /// <summary>A nation's army in rows (its starting army, its province defence), with headings.</summary>
+    public sealed class ArmyPanel
+    {
+        private readonly EntityPageViewModel _page;
+        private readonly HashSet<Command> _covered;
+
+        public ArmyPanel(EntityPageViewModel page, HashSet<Command> covered, string title, string hint = "")
+        {
+            _page = page;
+            _covered = covered;
+            Title = title;
+            Hint = hint;
+        }
+
+        public string Title { get; }
+        public string Hint { get; }
+        public bool HasHint => Hint.Length > 0;
+
+        /// <summary>Rows (UnitRowField) and headings (strings).</summary>
+        public ObservableCollection<object> Rows { get; } = new ObservableCollection<object>();
+
+        public void Heading(string text) => Rows.Add(text);
+
+        /// <summary>
+        /// Adds a row for a unit command and its count; one that's optional is only shown when the
+        /// entity sets it (else it stays in its badge section, where it can be added).
+        /// </summary>
+        public bool Add(string label, Command unit, Command? count = null, string countLabel = "×", bool always = true)
+        {
+            var map = _page.Entity.GetPropertyMap();
+            if (!map.ContainsKey(unit))
+                return false;
+            if (!always && !_page.Resolved.Has(unit) && !(count is Command c0 && _page.Resolved.Has(c0)))
+                return false;
+            var unitField = new RefField(_page, label, unit, EntityType.MONSTER);
+            NumberField? countField = count is Command c && map.ContainsKey(c) ? new NumberField(_page, label + " count", c) : null;
+            Rows.Add(new UnitRowField(label, unitField, countField, countLabel));
+            _covered.Add(unit);
+            if (count is Command cc)
+                _covered.Add(cc);
+            return true;
+        }
+    }
+
     /// <summary>A flag (a command with no value) as a checkbox: on when the entity has it in game.</summary>
     public sealed class FlagField : INotifyPropertyChanged
     {

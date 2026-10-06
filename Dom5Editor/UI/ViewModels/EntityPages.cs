@@ -243,6 +243,56 @@ namespace Dom5Editor.UI.ViewModels
             Panels.Add(new ReferenceListPanel(this, "FOREIGN RECRUITS", Command.ADDFOREIGNUNIT, EntityType.MONSTER, columns: UnitColumns));
             Panels.Add(new ReferenceListPanel(this, "FOREIGN COMMANDERS", Command.ADDFOREIGNCOM, EntityType.MONSTER, columns: UnitColumns));
             covered.UnionWith(new[] { Command.ADDRECUNIT, Command.ADDRECCOM, Command.ADDFOREIGNUNIT, Command.ADDFOREIGNCOM });
+
+            var start = new ArmyPanel(this, covered, "STARTING ARMY", "What the nation starts with in its capital.");
+            start.Add("Commander", Command.STARTCOM);
+            start.Add("Scout", Command.STARTSCOUT);
+            start.Add("Troops 1", Command.STARTUNITTYPE1, Command.STARTUNITNBRS1);
+            start.Add("Troops 2", Command.STARTUNITTYPE2, Command.STARTUNITNBRS2);
+            start.Add("Troops 3", Command.STARTUNITTYPE3, Command.STARTUNITNBRS3, always: false);
+            Panels.Add(start);
+            Panels.Add(new ReferenceListPanel(this, "START SITES", Command.STARTSITE, EntityType.SITE));
+            covered.Add(Command.STARTSITE);
+
+            var pd = new ArmyPanel(this, covered, "PROVINCE DEFENCE",
+                "The numbers are units per 10 points of province defence (the manual: #defmult1 20 gives 2 units per point, the default for unit 1; the others default to 10).");
+            pd.Add("Commander 1", Command.DEFCOM1);
+            pd.Add("Commander 2", Command.DEFCOM2);
+            pd.Add("Unit 1", Command.DEFUNIT1, Command.DEFMULT1, "per 10 PD:");
+            pd.Add("Unit 1B", Command.DEFUNIT1B, Command.DEFMULT1B, "per 10 PD:");
+            pd.Add("Unit 1C", Command.DEFUNIT1C, Command.DEFMULT1C, "per 10 PD:", always: false);
+            pd.Add("Unit 1D", Command.DEFUNIT1D, Command.DEFMULT1D, "per 10 PD:", always: false);
+            pd.Add("Unit 2", Command.DEFUNIT2, Command.DEFMULT2, "per 10 PD:");
+            pd.Add("Unit 2B", Command.DEFUNIT2B, Command.DEFMULT2B, "per 10 PD:");
+            pd.Heading("Walls and guards");
+            pd.Add("Wall commander", Command.WALLCOM);
+            pd.Add("Wall unit", Command.WALLUNIT, Command.WALLMULT, "×");
+            pd.Add("Guard commander", Command.GUARDCOM);
+            pd.Add("Guard unit", Command.GUARDUNIT, Command.GUARDMULT, "×");
+            pd.Add("Guard spirit", Command.GUARDSPIRIT, always: false);
+            int before = pd.Rows.Count;
+            pd.Heading("Underwater");
+            bool uw = pd.Add("Commander 1", Command.UWDEFCOM1, always: false) | pd.Add("Commander 2", Command.UWDEFCOM2, always: false)
+                | pd.Add("Unit 1", Command.UWDEFUNIT1, Command.UWDEFMULT1, "per 10 PD:", always: false) | pd.Add("Unit 1B", Command.UWDEFUNIT1B, Command.UWDEFMULT1B, "per 10 PD:", always: false)
+                | pd.Add("Unit 1C", Command.UWDEFUNIT1C, Command.UWDEFMULT1C, "per 10 PD:", always: false) | pd.Add("Unit 1D", Command.UWDEFUNIT1D, Command.UWDEFMULT1D, "per 10 PD:", always: false)
+                | pd.Add("Unit 2", Command.UWDEFUNIT2, Command.UWDEFMULT2, "per 10 PD:", always: false) | pd.Add("Unit 2B", Command.UWDEFUNIT2B, Command.UWDEFMULT2B, "per 10 PD:", always: false)
+                | pd.Add("Wall commander", Command.UWWALLCOM, always: false) | pd.Add("Wall unit", Command.UWWALLUNIT, Command.UWWALLMULT, "×", always: false)
+                | pd.Add("Guard commander", Command.UWGUARDCOM, always: false) | pd.Add("Guard unit", Command.UWGUARDUNIT, Command.UWGUARDMULT, "×", always: false);
+            if (!uw)
+                pd.Rows.RemoveAt(before);
+            before = pd.Rows.Count;
+            pd.Heading("In conquered forts (foreign)");
+            bool foreign = pd.Add("Wall commander", Command.FOREIGNWALLCOM, always: false) | pd.Add("Wall unit", Command.FOREIGNWALLUNIT, Command.FOREIGNWALLMULT, "×", always: false)
+                | pd.Add("Guard commander", Command.FOREIGNGUARDCOM, always: false) | pd.Add("Guard unit", Command.FOREIGNGUARDUNIT, Command.FOREIGNGUARDMULT, "×", always: false);
+            if (!foreign)
+                pd.Rows.RemoveAt(before);
+            Panels.Add(pd);
+
+            Panels.Add(new ReferenceListPanel(this, "PRETENDERS ADDED", Command.ADDGOD, EntityType.MONSTER));
+            Panels.Add(new ReferenceListPanel(this, "PRETENDERS REMOVED", Command.DELGOD, EntityType.MONSTER));
+            Panels.Add(new ReferenceListPanel(this, "PRETENDERS 20% CHEAPER", Command.CHEAPGOD20, EntityType.MONSTER));
+            Panels.Add(new ReferenceListPanel(this, "PRETENDERS 40% CHEAPER", Command.CHEAPGOD40, EntityType.MONSTER));
+            covered.UnionWith(new[] { Command.ADDGOD, Command.DELGOD, Command.CHEAPGOD20, Command.CHEAPGOD40 });
         }
     }
 

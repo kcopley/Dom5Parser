@@ -652,6 +652,13 @@ namespace Dom5Editor.UI
                 if (p is FieldsPanel f)
                     foreach (var x in f.Fields)
                         yield return x;
+                if (p is ArmyPanel a)
+                    foreach (var row in a.Rows.OfType<UnitRowField>())
+                    {
+                        yield return row.Unit;
+                        if (row.Count != null)
+                            yield return row.Count;
+                    }
                 if (p is StatsPanel s)
                     foreach (var cell in s.Columns.SelectMany(c => c.Cells).Concat(s.Footer))
                     {
