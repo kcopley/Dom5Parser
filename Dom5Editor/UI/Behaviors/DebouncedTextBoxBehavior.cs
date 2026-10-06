@@ -2,21 +2,16 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Threading;
 
 namespace Dom5Editor.UI.Behaviors
 {
     /// <summary>
-    /// Attached behavior that adds debounced binding updates to TextBox controls.
-    /// When enabled, the TextBox will wait for a pause in typing before updating the binding source.
+    /// Attached behavior for a TextBox whose binding updates explicitly: the value is committed
+    /// when the box loses focus or on Enter, and Escape puts the shown value back. (The name is
+    /// from when it committed after a pause in typing.)
     /// </summary>
     public static class DebouncedTextBoxBehavior
     {
-        private const int DefaultDelayMs = 400;
-
-        /// <summary>
-        /// Enables debounced updates for a TextBox.
-        /// </summary>
         public static readonly DependencyProperty IsEnabledProperty =
             DependencyProperty.RegisterAttached(
                 "IsEnabled",
@@ -24,33 +19,12 @@ namespace Dom5Editor.UI.Behaviors
                 typeof(DebouncedTextBoxBehavior),
                 new PropertyMetadata(false, OnIsEnabledChanged));
 
-        /// <summary>
-        /// The delay in milliseconds before updating the binding source.
-        /// </summary>
-        public static readonly DependencyProperty DelayProperty =
-            DependencyProperty.RegisterAttached(
-                "Delay",
-                typeof(int),
-                typeof(DebouncedTextBoxBehavior),
-                new PropertyMetadata(DefaultDelayMs));
-
-        // Timer storage per TextBox
-        private static readonly DependencyProperty TimerProperty =
-            DependencyProperty.RegisterAttached(
-                "Timer",
-                typeof(DispatcherTimer),
-                typeof(DebouncedTextBoxBehavior),
-                new PropertyMetadata(null));
-
         public static bool GetIsEnabled(DependencyObject obj) => (bool)obj.GetValue(IsEnabledProperty);
         public static void SetIsEnabled(DependencyObject obj, bool value) => obj.SetValue(IsEnabledProperty, value);
 
-        public static int GetDelay(DependencyObject obj) => (int)obj.GetValue(DelayProperty);
-        public static void SetDelay(DependencyObject obj, int value) => obj.SetValue(DelayProperty, value);
-
-        private static DispatcherTimer GetTimer(DependencyObject obj) => (DispatcherTimer)obj.GetValue(TimerProperty);
-        private static void SetTimer(DependencyObject obj, DispatcherTimer value) => obj.SetValue(TimerProperty, value);
-
+        // Commits when the box loses focus or on Enter; Escape puts the value back. (It used to
+        // commit after a pause in typing, which saved half-typed numbers and rebuilt the page
+        // under the cursor: every commit is an edit.)
         private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not TextBox textBox)
@@ -58,43 +32,30 @@ namespace Dom5Editor.UI.Behaviors
 
             if ((bool)e.NewValue)
             {
-                // Create timer for this TextBox
-                var timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromMilliseconds(GetDelay(textBox));
-                timer.Tick += (s, args) => OnTimerTick(textBox, timer);
-                SetTimer(textBox, timer);
-
-                // Subscribe to events
-                textBox.TextChanged += OnTextChanged;
                 textBox.LostFocus += OnLostFocus;
+                textBox.KeyDown += OnKeyDown;
             }
             else
             {
-                // Clean up
-                var timer = GetTimer(textBox);
-                if (timer != null)
-                {
-                    timer.Stop();
-                    SetTimer(textBox, null);
-                }
-
-                textBox.TextChanged -= OnTextChanged;
                 textBox.LostFocus -= OnLostFocus;
+                textBox.KeyDown -= OnKeyDown;
             }
         }
 
-        private static void OnTextChanged(object sender, TextChangedEventArgs e)
+        private static void OnKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (sender is not TextBox textBox)
                 return;
-
-            var timer = GetTimer(textBox);
-            if (timer == null)
-                return;
-
-            // Reset the timer
-            timer.Stop();
-            timer.Start();
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                CommitValue(textBox);
+                e.Handled = true;
+            }
+            else if (e.Key == System.Windows.Input.Key.Escape)
+            {
+                textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateTarget();
+                e.Handled = true;
+            }
         }
 
         private static void OnLostFocus(object sender, RoutedEventArgs e)
@@ -102,21 +63,11 @@ namespace Dom5Editor.UI.Behaviors
             if (sender is not TextBox textBox)
                 return;
 
-            // Commit immediately on focus loss
-            CommitValue(textBox);
-        }
-
-        private static void OnTimerTick(TextBox textBox, DispatcherTimer timer)
-        {
-            timer.Stop();
             CommitValue(textBox);
         }
 
         private static void CommitValue(TextBox textBox)
         {
-            var timer = GetTimer(textBox);
-            timer?.Stop();
-
             // Only update if value actually changed from source
             var binding = textBox.GetBindingExpression(TextBox.TextProperty);
             if (binding == null)
