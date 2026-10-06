@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
                     xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels"
-                    xmlns:views="clr-namespace:Dom5Editor.UI.Views">
+                    xmlns:views="clr-namespace:Dom5Editor.UI.Views"
+                    xmlns:behaviors="clr-namespace:Dom5Editor.UI.Behaviors">
     <!--
         Views for entity pages and their panels (Dom5Editor/UI/ViewModels/Panels.cs). Inherited rows
         are grey; their tooltip says where they come from.
@@ -87,7 +88,7 @@
                     <DataTemplate DataType="{x:Type vm:PanelRow}">
                         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
                             <TextBlock Text="{Binding Text}" Width="70" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
-                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=LostFocus}" Width="34" Style="{StaticResource InlineBox}"
+                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="34" Style="{StaticResource InlineBox}"
                                      ToolTip="Level (0 removes the path)"/>
                             <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove"
                                     Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
@@ -106,7 +107,7 @@
                         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
                             <TextBlock Text="{Binding Text}" Width="70" Style="{StaticResource RowText}" VerticalAlignment="Center"
                                        FontFamily="{DynamicResource MonospaceFont}"/>
-                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=LostFocus}" Width="40" Style="{StaticResource InlineBox}"
+                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="40" Style="{StaticResource InlineBox}"
                                      ToolTip="Chance in percent"/>
                             <TextBlock Text="%" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                             <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove"
@@ -155,7 +156,7 @@
     <DataTemplate DataType="{x:Type vm:NumberField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
             <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
-            <TextBox Text="{Binding Text, UpdateSourceTrigger=LostFocus}" Width="80" Style="{StaticResource InlineBox}"/>
+            <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="80" Style="{StaticResource InlineBox}"/>
             <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
@@ -177,11 +178,11 @@
             </TextBlock>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Hands" Width="40" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
-                <TextBox Text="{Binding Hands, UpdateSourceTrigger=LostFocus}" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-6"/>
+                <TextBox Text="{Binding Hands, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-6"/>
                 <TextBlock Text="Heads" Width="40" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
-                <TextBox Text="{Binding Heads, UpdateSourceTrigger=LostFocus}" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-3"/>
+                <TextBox Text="{Binding Heads, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-3"/>
                 <TextBlock Text="Misc" Width="34" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
-                <TextBox Text="{Binding Misc, UpdateSourceTrigger=LostFocus}" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-4"/>
+                <TextBox Text="{Binding Misc, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-4"/>
                 <CheckBox Content="Body" IsChecked="{Binding HasBody}" Margin="12,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
                 <CheckBox Content="Feet" IsChecked="{Binding HasFeet}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
                 <CheckBox Content="Bow" IsChecked="{Binding HasBow}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
@@ -210,7 +211,7 @@
                     <DataTemplate DataType="{x:Type vm:PanelRow}">
                         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
                             <TextBlock Text="{Binding Text}" Width="110" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
-                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=LostFocus}" Width="50" Style="{StaticResource InlineBox}"/>
+                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="50" Style="{StaticResource InlineBox}"/>
                             <TextBlock Text="{Binding DataContext.ValueLabel, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                        Foreground="{DynamicResource TextMutedBrush}" Margin="6,0,0,0" VerticalAlignment="Center"/>
                             <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" ToolTip="Remove"
