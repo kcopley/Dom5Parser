@@ -34,6 +34,10 @@ namespace Dom5Editor.UI.ViewModels
         public string? Icon { get; init; }
         /// <summary>For a table panel: the row's values, one per column.</summary>
         public IReadOnlyList<string> Cells { get; init; } = Array.Empty<string>();
+        /// <summary>The buttons' tooltips, saying what they do to which entity.</summary>
+        public string RemoveTip { get; init; } = "Remove";
+        public string OpenTip { get; init; } = "Open it";
+        public string CopyTip { get; init; } = "";
         private string _editText = "";
 
         /// <summary>For editable rows: the value as text; setting it (the box lost focus) commits the edit.</summary>
@@ -81,7 +85,18 @@ namespace Dom5Editor.UI.ViewModels
                     cells = id > 0 && page.Session.Mod.TryGet(refType, id, null, out var target)
                         ? Columns.Select(c => c.Value(page.Session.Resolve(target))).ToList()
                         : Columns.Select(_ => "").ToList();
-                Rows.Add(new PanelRow(v, string.IsNullOrEmpty(name) ? $"#{id}" : name, detail?.Invoke(id) ?? "", page.SourceText(v), true) { RefId = id, Cells = cells });
+                var text = string.IsNullOrEmpty(name) ? $"#{id}" : name;
+                var it = Nouns.Named(text, id);
+                Rows.Add(new PanelRow(v, text, detail?.Invoke(id) ?? "", page.SourceText(v), true)
+                {
+                    RefId = id, Cells = cells,
+                    OpenTip = $"Open the {Nouns.Of(refType)} {it}",
+                    RemoveTip = v.Source == ValueSource.Own
+                        ? $"Take {it} away from {page.DisplayName} (removes the mod's line). Undo brings it back."
+                        : $"Take {it} away from {page.DisplayName}. It's inherited (vanilla or a copy), so the mod removes it the game's way (a clear, then the others added back). Undo brings it back.",
+                    CopyTip = $"Copy {it} to a new {Nouns.Of(refType)} in the mod, give the copy to {page.DisplayName} in place of {text}, and open the copy to edit. "
+                              + $"Other {Nouns.Plural(page.Type)} that use {text} keep the original.",
+                });
             }
             Candidates = page.Session.References(refType);
             RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
@@ -96,6 +111,8 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>"New weapon" (armor, ...): makes a new one, gives it to this entity, and opens it.</summary>
         public bool CanMakeNew => RefType == EntityType.WEAPON || RefType == EntityType.ARMOR;
         public string NewLabel => $"+ New {RefType.ToString().ToLowerInvariant()}";
+        public string NewTip => $"Make a new {Nouns.Of(RefType)} in the mod, give it to {_page.DisplayName}, and open it to edit";
+        public string AddTip => $"Give {_page.DisplayName} another {Nouns.Of(RefType)}: type a name or ID to search";
         public ICommand NewCommand { get; }
 
         private void MakeNew()

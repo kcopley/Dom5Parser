@@ -203,6 +203,12 @@ namespace Dom5Editor.UI.ViewModels
 
         public string CopySourceName => CopySourceId is int id ? $"{NameOf(Type, id)} #{id}" : "(none)";
 
+        /// <summary>The copy picker's and its open button's tooltips.</summary>
+        public string CopyPickTip => $"This {Nouns.Of(Type)} starts as a copy of the {Nouns.Of(Type)} picked here "
+            + $"({(CopyCommand is Command c ? CommandName(c) : "")}: everything but what the game doesn't copy), then its own lines apply on top. "
+            + "Pick another to copy that one instead.";
+        public string CopyOpenTip => CopySourceId is int ? $"Open {CopySourceName}, the {Nouns.Of(Type)} this one copies" : "It copies nothing";
+
         public IEnumerable<ReferenceItem> CopyCandidates => Session.References(RefTypeName(Type));
 
         /// <summary>The entity's own copy and clear lines, in the order the game reads them.</summary>
@@ -258,6 +264,7 @@ namespace Dom5Editor.UI.ViewModels
         public IEnumerable<UsageRow> UsedByShownRows => _showAllUsedBy ? UsedBy : UsedBy.Take(UsedByShown);
         public bool HasMoreUsedBy => !_showAllUsedBy && UsedBy.Count > UsedByShown;
         public string ShowAllUsedByText => $"Show all {UsedBy.Count}";
+        public string ShowAllUsedByTip => $"List all {UsedBy.Count} entities that refer to this {Nouns.Of(Type)}";
         public ICommand ShowAllUsedByCommand => new RelayCommand(() =>
         {
             _showAllUsedBy = true;
@@ -288,6 +295,72 @@ namespace Dom5Editor.UI.ViewModels
                 return lines.Count > 0 ? string.Join("\n", lines) : "(not in the mod)";
             }
         }
+        // ---- editing the lines as text ----
+
+        private bool _editingFile;
+        private string _fileDraft = "";
+        private string? _fileError;
+
+        /// <summary>Whether the "in the file" box is being edited as text.</summary>
+        public bool IsEditingFile
+        {
+            get => _editingFile;
+            private set { _editingFile = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsNotEditingFile)); }
+        }
+
+        public bool IsNotEditingFile => !_editingFile;
+
+        /// <summary>The text being edited (Apply replaces the entity's lines with it).</summary>
+        public string FileDraft
+        {
+            get => _fileDraft;
+            set { _fileDraft = value ?? ""; OnPropertyChanged(); }
+        }
+
+        /// <summary>Why the last Apply didn't go through, or null.</summary>
+        public string? FileError
+        {
+            get => _fileError;
+            private set { _fileError = value; OnPropertyChanged(); OnPropertyChanged(nameof(HasFileError)); }
+        }
+
+        public bool HasFileError => _fileError != null;
+
+        public ICommand EditFileCommand => new RelayCommand(() =>
+        {
+            var text = Session.Editor.BlockText(Entity);
+            if (text == null)
+            {
+                FileError = "The mod writes this entity in several blocks of the file: edit its lines on the page";
+                return;
+            }
+            FileError = null;
+            FileDraft = text;
+            IsEditingFile = true;
+        });
+
+        public ICommand ApplyFileCommand => new RelayCommand(() =>
+        {
+            Edit(ed => ed.ReplaceText(Entity, FileDraft));
+            if (Error != null)
+            {
+                FileError = Error;
+                return;
+            }
+            FileError = null;
+            IsEditingFile = false;
+            OnPropertyChanged(nameof(FileText));
+        });
+
+        public ICommand CancelFileCommand => new RelayCommand(() =>
+        {
+            FileError = null;
+            IsEditingFile = false;
+        });
+
+        public string EditFileTip => $"Edit this {Nouns.Of(Type)}'s lines as text, as they're written in the .dm file. Apply checks every line and changes only what you changed (one undo step); "
+            + "lines you leave as they are keep their text and place.";
+
         public string UsedByTitle { get; private set; } = "";
 
         private void BuildUsedBy()
@@ -747,6 +820,7 @@ namespace Dom5Editor.UI.ViewModels
         public string Name { get; }
         public string Via { get; }
         public ICommand OpenCommand { get; }
+        public string Tooltip => $"The {Nouns.Of(Type)} {Nouns.Named(Name, Id)} refers to it ({Via}). Click to open it.";
     }
 
     /// <summary>One of an entity's own copy or clear lines, as the page lists them.</summary>

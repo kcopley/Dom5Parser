@@ -41,6 +41,14 @@ namespace Dom5Editor.UI
     {
         private static readonly List<string> _log = new List<string>();
 
+        private static T? FindParent<T>(DependencyObject d) where T : DependencyObject
+        {
+            for (var x = System.Windows.Media.VisualTreeHelper.GetParent(d); x != null; x = System.Windows.Media.VisualTreeHelper.GetParent(x))
+                if (x is T t)
+                    return t;
+            return null;
+        }
+
         public static bool TryRun(string[] args, Application app)
         {
             if (args.Length == 0 || args[0] != "--snapshot")
@@ -406,6 +414,67 @@ namespace Dom5Editor.UI
                             int n = tab.Items.Count(x => x.InFacet(facet));
                             tab.Facet = facet;
                             Log($"facet {t} {facet}: {n} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
+                            break;
+                        }
+                        case "--tooltips":
+                        {
+                            // --tooltips: every visible control (button, box, check box, list) with no tooltip on
+                            // it or on anything around it, and the tooltips the page's buttons show
+                            Pump();
+                            int controls = 0, missing = 0;
+                            var seen = new HashSet<string>();
+                            void Walk(DependencyObject d)
+                            {
+                                if (d is FrameworkElement fe && fe.IsVisible && fe.IsHitTestVisible && fe.Opacity > 0 && (d is System.Windows.Controls.Primitives.ButtonBase || d is System.Windows.Controls.TextBox
+                                    || d is System.Windows.Controls.ComboBox || d is Controls.SearchableReferenceComboBox))
+                                {
+                                    // inside a combo box's own template: its parts show the combo box's tooltip
+                                    bool part = fe.TemplatedParent is System.Windows.Controls.ComboBox || fe.TemplatedParent is System.Windows.Controls.Primitives.ScrollBar
+                                                || FindParent<Controls.SearchableReferenceComboBox>(fe) is { } sr && !ReferenceEquals(sr, fe);
+                                    if (!part)
+                                    {
+                                        controls++;
+                                        object? tip = null;
+                                        for (DependencyObject? x = d; x != null && tip == null; x = System.Windows.Media.VisualTreeHelper.GetParent(x))
+                                            if (x is FrameworkElement f && f.ToolTip is object t && !(t is string ts && ts.Length == 0))
+                                                tip = t;
+                                        var what = $"{d.GetType().Name} '{(d as System.Windows.Controls.ContentControl)?.Content as string ?? (d as System.Windows.Controls.TextBox)?.Text ?? ""}' in {fe.DataContext?.GetType().Name}";
+                                        if (tip == null && seen.Add(what))
+                                        {
+                                            missing++;
+                                            Log($"   no tooltip: {what}");
+                                        }
+                                        else if (tip is string text && d is System.Windows.Controls.Primitives.ButtonBase && seen.Add("tip:" + text))
+                                            Log($"   tip: {d.GetType().Name} '{(d as System.Windows.Controls.ContentControl)?.Content as string}': {text.Replace('\n', ' ')}");
+                                    }
+                                }
+                                for (int k = 0; k < System.Windows.Media.VisualTreeHelper.GetChildrenCount(d); k++)
+                                    Walk(System.Windows.Media.VisualTreeHelper.GetChild(d, k));
+                            }
+                            Walk(window);
+                            Log($"tooltips: {controls} controls shown, {missing} kinds without a tooltip");
+                            break;
+                        }
+                        case "--file-edit":
+                        {
+                            // --file-edit FIND REPLACE: the "in the file" box edited as text (\n for a new line), applied
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            string find = args[++i].Replace("\\n", "\n"), replace = args[++i].Replace("\\n", "\n");
+                            page.ShowFile = true;
+                            page.EditFileCommand.Execute(null);
+                            if (!page.IsEditingFile)
+                            {
+                                Log($"file edit: can't edit ({page.FileError})");
+                                break;
+                            }
+                            page.FileDraft = page.FileDraft.Replace(find, replace);
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            page.ApplyFileCommand.Execute(null);
+                            var now = Selected(vm)!;
+                            Log($"file edit ({watch.ElapsedMilliseconds} ms): {(page.FileError != null ? "error: " + page.FileError : "applied")}");
+                            now.ShowFile = true;
+                            foreach (var line in now.FileText.Split('\n'))
+                                Log("   | " + line);
                             break;
                         }
                         case "--icons":

@@ -115,9 +115,9 @@
                                        VerticalAlignment="Center" Margin="0,0,8,0"
                                        ToolTip="Copy command (#copystats, #copyweapon, ...): this entity starts as a copy of another, then its own lines apply."/>
                             <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding CopyCandidates}"
-                                                                  SelectedId="{Binding CopySourceId, Mode=TwoWay}" Placeholder="(no copy)"/>
+                                                                  SelectedId="{Binding CopySourceId, Mode=TwoWay}" Placeholder="(no copy)" ToolTip="{Binding CopyPickTip}"/>
                             <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding NavigateToCopyCommand}"
-                                    ToolTip="Open the copied entity"/>
+                                    ToolTip="{Binding CopyOpenTip}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,4" Visibility="{Binding HasClears, Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock Text="CLEARS" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
@@ -186,7 +186,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type vm:UsageRow}">
                                     <Button Command="{Binding OpenCommand}" Style="{DynamicResource ButtonSmall}" Margin="0,0,4,4"
-                                            ToolTip="{Binding Via, StringFormat='Refers to it with {0}'}">
+                                            ToolTip="{Binding Tooltip}">
                                         <TextBlock>
                                             <Run Text="{Binding TypeLabel, Mode=OneWay}" Foreground="{DynamicResource TextMutedBrush}"/>
                                             <Run Text="{Binding Name, Mode=OneWay}"/>
@@ -196,7 +196,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Button Content="{Binding ShowAllUsedByText}" Command="{Binding ShowAllUsedByCommand}" Style="{DynamicResource ButtonSmall}"
+                        <Button Content="{Binding ShowAllUsedByText}" Command="{Binding ShowAllUsedByCommand}" Style="{DynamicResource ButtonSmall}" ToolTip="{Binding ShowAllUsedByTip}"
                                 HorizontalAlignment="Left" Visibility="{Binding HasMoreUsedBy, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </StackPanel>
             </Grid>
@@ -204,10 +204,34 @@
         <DataTemplate x:Key="FilePart">
             <Grid>
                     <!-- the entity's lines as the save writes them -->
-                    <Expander Header="IN THE FILE (as saved)" IsExpanded="{Binding ShowFile}" Margin="0,0,0,10" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="9" FontWeight="Bold">
-                        <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{DynamicResource MonospaceFont}" FontSize="11" FontWeight="Normal"
-                                 TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" MaxHeight="400" VerticalScrollBarVisibility="Auto"
-                                 Style="{DynamicResource TextBoxBase}" Margin="0,4,0,0"/>
+                    <Expander Header="IN THE FILE (as saved)" IsExpanded="{Binding ShowFile}" Margin="0,0,0,10" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="9" FontWeight="Bold"
+                              ToolTip="The entity's lines as the save writes them to the .dm file">
+                        <StackPanel Margin="0,4,0,0">
+                            <!-- as saved (read-only) -->
+                            <StackPanel Visibility="{Binding IsNotEditingFile, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{DynamicResource MonospaceFont}" FontSize="11" FontWeight="Normal"
+                                         TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" MaxHeight="400" VerticalScrollBarVisibility="Auto"
+                                         Style="{DynamicResource TextBoxBase}" ToolTip="Read-only here: Edit as text to change it"/>
+                                <Button Content="Edit as text" Style="{DynamicResource ButtonSmall}" HorizontalAlignment="Left" Margin="0,4,0,0" FontWeight="Normal"
+                                        Command="{Binding EditFileCommand}" ToolTip="{Binding EditFileTip}"/>
+                            </StackPanel>
+                            <!-- editing -->
+                            <StackPanel Visibility="{Binding IsEditingFile, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBox Text="{Binding FileDraft, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" AcceptsTab="False"
+                                         FontFamily="{DynamicResource MonospaceFont}" FontSize="11" FontWeight="Normal"
+                                         TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" MinHeight="80" MaxHeight="500" VerticalScrollBarVisibility="Auto"
+                                         Style="{DynamicResource TextBoxBase}"
+                                         ToolTip="One command per line, as in a .dm file (#hp 20 -- a comment). The first line and #end stay."/>
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                    <Button Content="Apply" Style="{DynamicResource ButtonSmall}" FontWeight="Normal" Command="{Binding ApplyFileCommand}"
+                                            ToolTip="Check the lines and change the entity to match them (one undo step). Nothing changes if a line is wrong."/>
+                                    <Button Content="Cancel" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" FontWeight="Normal" Command="{Binding CancelFileCommand}"
+                                            ToolTip="Stop editing and drop the changes to the text"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <TextBlock Text="{Binding FileError}" Foreground="{DynamicResource ErrorBrush}" FontWeight="Normal" FontSize="11" TextWrapping="Wrap" Margin="0,4,0,0"
+                                       Visibility="{Binding HasFileError, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        </StackPanel>
                     </Expander>
             </Grid>
         </DataTemplate>

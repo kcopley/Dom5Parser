@@ -13,5 +13,6 @@
     <converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
     <converters:PathLetterToGemIconConverter x:Key="PathLetterToGemIconConverter"/>
     <converters:PathLetterToPathIconConverter x:Key="PathLetterToPathIconConverter"/>
+    <converters:FormatConverter x:Key="Format"/>
 
 </ResourceDictionary>
