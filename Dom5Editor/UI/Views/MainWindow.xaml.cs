@@ -212,6 +212,25 @@ namespace Dom5Editor.UI.Views
             _viewModel.Redo();
         }
 
+        // the tab row scrolls sideways when the window is too narrow for it: the wheel moves it, and
+        // the selected tab is kept in sight
+        private void TabStrip_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (sender is System.Windows.Controls.ScrollViewer strip && strip.ScrollableWidth > 0)
+            {
+                strip.ScrollToHorizontalOffset(strip.HorizontalOffset - e.Delta);
+                e.Handled = true;
+            }
+        }
+
+        private void EntityTabs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (!ReferenceEquals(e.OriginalSource, EntityTabs))
+                return; // (a list or combo box inside a tab)
+            if (EntityTabs.ItemContainerGenerator.ContainerFromItem(EntityTabs.SelectedItem) is FrameworkElement tab)
+                tab.BringIntoView();
+        }
+
         private void ValidateButton_Click(object sender, RoutedEventArgs e)
         {
             var results = _viewModel.Validate();
