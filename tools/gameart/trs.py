@@ -5,12 +5,15 @@ Usage:
   python3 tools/gameart/trs.py list ARCHIVE
   python3 tools/gameart/trs.py extract ARCHIVE OUTDIR [--only 3,10-20]
   python3 tools/gameart/trs.py sheet ARCHIVE OUT.png [--only 0-99] [--cols 16] [--cell 64] [--zoom 2] [--bg 404040]
+  python3 tools/gameart/trs.py pack [--map Dom5Editor/Data/game_icons.json] [--out Dom5Editor/Resources/game-icons.pack]
 
 ARCHIVE is a path, or just a name (misc.trs) looked up in the game's data folder
 (--data DIR, else $DOM6_DATA, else the default Steam folder).
 
-The game's art is not ours to distribute: extract and sheet refuse to write inside this
-repository. Write to a scratch folder instead. Format: tools/gameart/README.md.
+The game's art is Illwinter's. The icons the editor shows (the keys in game_icons.json) are
+compiled into it as one packed resource, with the developers' permission for game tools
+(`pack`); extract and sheet still refuse to write inside this repository: write those to a
+scratch folder. Format: tools/gameart/README.md.
 
 Python 3.8+, standard library only.
 """
@@ -269,6 +272,38 @@ def refuse_repo(path):
                  'Write to a scratch folder outside it.')
 
 
+PACK_MAGIC = b'D6IP'
+
+
+def write_pack(map_path, out, data_dir):
+    """The editor's icons in one file (compiled into it, Dom5Editor/Sprites/GameArt.cs):
+    'D6IP', u16 version 1, u16 count, then per icon (little-endian): u8 key length, key
+    (UTF-8), u16 width, u16 height, u8 flags (1: the game draws it at half size), u32 length,
+    zlib-compressed BGRA pixels, rows top to bottom."""
+    import json
+    icons = json.load(open(map_path, encoding='utf-8'))['icons']
+    archives = {}
+    entries = []
+    for key, where in sorted(icons.items()):
+        name = where['archive']
+        if name not in archives:
+            archives[name] = TrsArchive(find_archive(name, data_dir))
+        arc = archives[name]
+        im = arc.images[where['index']]
+        w, h, rgba = arc.decode(where['index'])
+        bgra = bytearray(rgba)
+        bgra[0::4], bgra[2::4] = rgba[2::4], rgba[0::4]
+        packed = zlib.compress(bytes(bgra), 9)
+        k = key.encode('utf-8')
+        entries.append(struct.pack('<B', len(k)) + k + struct.pack('<HHBI', w, h, 1 if im.flags & FLAG_HALF else 0, len(packed)) + packed)
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'wb') as f:
+        f.write(PACK_MAGIC + struct.pack('<HH', 1, len(entries)))
+        for e in entries:
+            f.write(e)
+    return len(entries), os.path.getsize(out)
+
+
 def main():
     ap = argparse.ArgumentParser(description='Dominions 6 .trs image archives')
     ap.add_argument('--data', help="the game's data folder")
@@ -280,7 +315,14 @@ def main():
     p.add_argument('--only'); p.add_argument('--cols', type=int, default=16)
     p.add_argument('--cell', type=int, default=64); p.add_argument('--bg', default='404040')
     p.add_argument('--zoom', type=int, default=1, help='enlarge small images (nearest pixel)')
+    p = sub.add_parser('pack', help="the editor's icons (game_icons.json) as one resource compiled into it")
+    p.add_argument('--map', default=os.path.join(REPO, 'Dom5Editor', 'Data', 'game_icons.json'))
+    p.add_argument('--out', default=os.path.join(REPO, 'Dom5Editor', 'Resources', 'game-icons.pack'))
     a = ap.parse_args()
+    if a.cmd == 'pack':
+        n, size = write_pack(a.map, a.out, a.data)
+        print(f'{n} icons, {size} bytes -> {a.out}')
+        return
     arc = TrsArchive(find_archive(a.archive, a.data))
 
     if a.cmd == 'list':

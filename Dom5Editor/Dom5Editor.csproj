@@ -60,6 +60,11 @@
       </Content>
     </ItemGroup>
 
+    <!-- The game's icons the editor shows, packed (tools/gameart/trs.py pack) and compiled in -->
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\game-icons.pack" LogicalName="game-icons.pack" />
+    </ItemGroup>
+
     <!-- Magic path and gem icons -->
     <ItemGroup>
       <Content Include="icons\magicicons\*.png">
