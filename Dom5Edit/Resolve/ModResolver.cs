@@ -27,6 +27,7 @@ namespace Dom5Edit.Resolve
             public List<ResolvedValue> Values = new List<ResolvedValue>();
             public List<Property> Structure = new List<Property>();
             public List<Property> Removals = new List<Property>();
+            public Dictionary<Command, Property> Assets = new Dictionary<Command, Property>();
             public IReadOnlyList<GameValue> GameValues = Array.Empty<GameValue>();
         }
 
@@ -71,7 +72,8 @@ namespace Dom5Edit.Resolve
             Walk();
             ResolvedEntity result;
             if (_states!.TryGetValue(key, out var state))
-                result = new ResolvedEntity(state.Entity, state.Vanilla, state.Values.ToList(), state.Structure.ToList(), state.Removals.ToList(), state.GameValues);
+                result = new ResolvedEntity(state.Entity, state.Vanilla, state.Values.ToList(), state.Structure.ToList(), state.Removals.ToList(), state.GameValues)
+                    { Assets = new Dictionary<Command, Property>(state.Assets) };
             else if (entity.ParentMod != _mod && Base != null)
                 result = Base.Resolve(entity);
             else
@@ -134,25 +136,27 @@ namespace Dom5Edit.Resolve
                 state.Vanilla = vanilla;
                 state.Values.AddRange(start.Values);
                 state.GameValues = start.GameValues;
+                foreach (var (c, p) in start.Assets)
+                    state.Assets[c] = p;
             }
             return state;
         }
 
         /// <summary>The entity as it is at this point of the replay: the mod's state so far, else the base's.</summary>
-        private (IDEntity Entity, IReadOnlyList<ResolvedValue> Values, IReadOnlyList<GameValue> GameValues) Current(IDEntity source)
+        private (IDEntity Entity, IReadOnlyList<ResolvedValue> Values, IReadOnlyList<GameValue> GameValues, IReadOnlyDictionary<Command, Property> Assets) Current(IDEntity source)
         {
             if (_states!.TryGetValue(Key(source), out var state))
-                return (state.Entity, state.Values, state.GameValues);
+                return (state.Entity, state.Values, state.GameValues, state.Assets);
             if (Base != null)
             {
                 var inBase = source.ParentMod == _mod ? FindInBase(source) : source;
                 if (inBase != null)
                 {
                     var r = Base.Resolve(inBase);
-                    return (r.Entity, r.Values, r.GameValues);
+                    return (r.Entity, r.Values, r.GameValues, r.Assets);
                 }
             }
-            return (source, Array.Empty<ResolvedValue>(), Array.Empty<GameValue>());
+            return (source, Array.Empty<ResolvedValue>(), Array.Empty<GameValue>(), new Dictionary<Command, Property>());
         }
 
         private IDEntity? FindInBase(IDEntity entity)
@@ -176,6 +180,10 @@ namespace Dom5Edit.Resolve
                     var source = Current(target);
                     copied.AddRange(source.Values.Where(v => GameRules.Copies(type, c, v.Command)).Select(v => v.CopiedBy(source.Entity)));
                     gameValues = source.GameValues;
+                    foreach (var key in state.Assets.Keys.Where(k => GameRules.Copies(type, c, k)).ToList())
+                        state.Assets.Remove(key);
+                    foreach (var (k, a) in source.Assets.Where(x => GameRules.Copies(type, c, x.Key)))
+                        state.Assets[k] = a;
                 }
                 state.Values.RemoveAll(v => GameRules.Copies(type, c, v.Command));
                 state.Removals.RemoveAll(x => GameRules.Copies(type, c, x.Command));
@@ -195,6 +203,12 @@ namespace Dom5Edit.Resolve
                 state.Structure.Add(p);
                 return;
             }
+            if (p.IsDisplayAsset)
+            {
+                state.Assets[c] = p;
+                return;
+            }
+            state.Assets.Remove(c); // a line of the data replaces the shown asset
             var value = new ResolvedValue(p, _lineSource);
             int at = -1;
             for (int i = state.Values.Count - 1; i >= 0; i--)

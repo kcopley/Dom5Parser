@@ -45,7 +45,7 @@ namespace Dom5Edit.Resolve
         /// <summary>The line's arguments as the game reads them (without the command and comment).</summary>
         public string Arguments => ArgumentsOf(Property);
 
-        internal static string ArgumentsOf(Property p)
+        public static string ArgumentsOf(Property p)
         {
             string s = p.ToExportString() ?? "";
             int comment = s.IndexOf(" --", StringComparison.Ordinal);
@@ -88,6 +88,9 @@ namespace Dom5Edit.Resolve
 
         /// <summary>Values the game stores that no command can set (read-only), from vanilla or a copy source.</summary>
         public IReadOnlyList<GameValue> GameValues { get; }
+
+        /// <summary>Vanilla sprites and descriptions the editor shows (not lines of the data; Property.IsDisplayAsset), by command.</summary>
+        public IReadOnlyDictionary<Command, Property> Assets { get; internal set; } = new Dictionary<Command, Property>();
 
         internal ResolvedEntity(IDEntity entity, IDEntity? vanilla, IReadOnlyList<ResolvedValue> values,
                                 IReadOnlyList<Property> structure, IReadOnlyList<Property> removals, IReadOnlyList<GameValue> gameValues)

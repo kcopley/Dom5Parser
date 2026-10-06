@@ -274,8 +274,7 @@ namespace Dom5Tests
         /// <summary>
         /// Imports a mod, applies scripted edits, and re-exports it, so the fidelity suite can
         /// check that the saved data differs from an unedited save by exactly those edits.
-        /// Usage: Dom5Tests edit &lt;input.dm&gt; &lt;edits.json&gt; &lt;output.dm&gt; [editorsave]
-        /// (editorsave: save through the editor's ChangesModExporter instead of Mod.Export)
+        /// Usage: Dom5Tests edit &lt;input.dm&gt; &lt;edits.json&gt; &lt;output.dm&gt;
         ///
         /// edits.json: { "edits": [ { "op": "set"|"add"|"remove"|"change"|"reset", "entity": "monster",
         ///                            "id": 7000, "command": "#hp", "value": "25", "from": "..." }, ... ] }
@@ -314,16 +313,7 @@ namespace Dom5Tests
                 mod.Resolve(); // resolve references introduced by the edits
                 if (!mod.PreserveSourceOrder)
                     mod.NormalizeCopies(); // the canonical writer re-derives copies; in file order they replay
-                if (args.Any(a => a.Equals("editorsave", StringComparison.OrdinalIgnoreCase)))
-                {
-                    // the editor's Save (MainWindowViewModel.SaveMod): ChangesModExporter over the loaded mod
-                    using var writer = new StreamWriter(outputPath);
-                    new ChangesModExporter(new ChangesMod { LoadedMod = mod }).Export(writer, mod.ModName ?? "Mod", mod.Description);
-                }
-                else
-                {
-                    mod.Export(outputPath);
-                }
+                mod.Export(outputPath); // the editor's Save is the same call (EditorSession.Save)
                 Console.WriteLine($"Edited ({applied} edits): {Path.GetFullPath(inputPath)} -> {Path.GetFullPath(outputPath)}");
             }
             catch (Exception ex)

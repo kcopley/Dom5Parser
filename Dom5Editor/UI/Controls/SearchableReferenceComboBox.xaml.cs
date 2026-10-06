@@ -159,6 +159,7 @@ namespace Dom5Editor.UI.Controls
                 {
                     _filterText = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(ShowPlaceholder));
 
                     // Restart debounce timer when user is typing
                     if (!_isUpdatingFromSelection && IsDropdownOpen)
@@ -170,6 +171,9 @@ namespace Dom5Editor.UI.Controls
             }
         }
 
+        /// <summary>Whether to show the placeholder text (nothing typed or selected, closed).</summary>
+        public bool ShowPlaceholder => string.IsNullOrEmpty(_filterText) && !_isDropdownOpen;
+
         private bool _isDropdownOpen;
         public bool IsDropdownOpen
         {
@@ -180,6 +184,7 @@ namespace Dom5Editor.UI.Controls
                 {
                     _isDropdownOpen = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(ShowPlaceholder));
 
                     if (value)
                     {

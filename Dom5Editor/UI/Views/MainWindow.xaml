@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
         xmlns:views="clr-namespace:Dom5Editor.UI.Views"
+        xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels"
         mc:Ignorable="d"
-        Title="Dom5 Editor"
+        Title="Dom6 Mod Editor"
         Height="900" Width="1400"
         MinHeight="600" MinWidth="900"
         WindowStartupLocation="CenterScreen"
@@ -65,9 +66,24 @@
                     <Button x:Name="RedoButton"
                             Content="Redo"
                             Style="{StaticResource ButtonBase}"
+                            Margin="0,0,16,0"
                             IsEnabled="{Binding CanRedo}"
                             ToolTip="{Binding RedoDescription}"
                             Click="RedoButton_Click"/>
+
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="0,2,16,2"/>
+
+                    <Button Content="◀ Back"
+                            Style="{StaticResource ButtonBase}"
+                            Margin="0,0,4,0"
+                            IsEnabled="{Binding CanGoBack}"
+                            ToolTip="Back to the previous entity (Alt+Left)"
+                            Click="BackButton_Click"/>
+                    <Button Content="Forward ▶"
+                            Style="{StaticResource ButtonBase}"
+                            IsEnabled="{Binding CanGoForward}"
+                            ToolTip="Forward (Alt+Right)"
+                            Click="ForwardButton_Click"/>
                 </StackPanel>
 
                 <!-- Right side: Status indicators -->
@@ -98,385 +114,46 @@
         </Border>
 
         <!-- ========================================
-             MAIN CONTENT - Entity Type Tabs
+             MAIN CONTENT: the mod header, then a tab per entity type (MainWindowViewModel.Tabs)
              ======================================== -->
         <TabControl x:Name="EntityTabs"
                     Grid.Row="1"
                     Style="{StaticResource TabControlBase}"
                     IsEnabled="{Binding HasMod}"
-                    SelectedIndex="{Binding SelectedEntityTypeIndex, Mode=TwoWay}">
-
-            <!-- Mod Info Tab -->
-            <TabItem Header="Mod Info" Style="{StaticResource TabItemBase}">
-                <Border Background="{StaticResource BackgroundDarkBrush}" Padding="16">
-                    <views:ModInfoView DataContext="{Binding}"/>
-                </Border>
-            </TabItem>
-
-            <!-- Monsters Tab -->
-            <TabItem Header="Monsters" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="MonsterList"
-                                                 Grid.Column="0"
-                                                 EntityType="Monster"
-                                                 Entities="{Binding Monsters}"
-                                                 SelectedEntity="{Binding SelectedMonster, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedMonster}"/>
+                    ItemsSource="{Binding Tabs}"
+                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem" BasedOn="{StaticResource TabItemBase}">
+                    <Setter Property="Header" Value="{Binding Title}"/>
+                </Style>
+            </TabControl.ItemContainerStyle>
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type views:ModInfoViewModel}">
+                    <Border Background="{StaticResource BackgroundDarkBrush}" Padding="16">
+                        <views:ModInfoView/>
                     </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Weapons Tab -->
-            <TabItem Header="Weapons" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="WeaponList"
-                                                 Grid.Column="0"
-                                                 EntityType="Weapon"
-                                                 Entities="{Binding Weapons}"
-                                                 SelectedEntity="{Binding SelectedWeapon, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedWeapon}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Armor Tab -->
-            <TabItem Header="Armor" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="ArmorList"
-                                                 Grid.Column="0"
-                                                 EntityType="Armor"
-                                                 Entities="{Binding Armors}"
-                                                 SelectedEntity="{Binding SelectedArmor, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedArmor}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Spells Tab -->
-            <TabItem Header="Spells" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="SpellList"
-                                                 Grid.Column="0"
-                                                 EntityType="Spell"
-                                                 Entities="{Binding Spells}"
-                                                 SelectedEntity="{Binding SelectedSpell, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedSpell}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Items Tab -->
-            <TabItem Header="Items" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="ItemList"
-                                                 Grid.Column="0"
-                                                 EntityType="Item"
-                                                 Entities="{Binding Items}"
-                                                 SelectedEntity="{Binding SelectedItem, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedItem}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Sites Tab -->
-            <TabItem Header="Sites" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="SiteList"
-                                                 Grid.Column="0"
-                                                 EntityType="Site"
-                                                 Entities="{Binding Sites}"
-                                                 SelectedEntity="{Binding SelectedSite, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedSite}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Nations Tab -->
-            <TabItem Header="Nations" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="NationList"
-                                                 Grid.Column="0"
-                                                 EntityType="Nation"
-                                                 Entities="{Binding Nations}"
-                                                 SelectedEntity="{Binding SelectedNation, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedNation}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Events Tab -->
-            <TabItem Header="Events" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="EventList"
-                                                 Grid.Column="0"
-                                                 EntityType="Event"
-                                                 Entities="{Binding Events}"
-                                                 SelectedEntity="{Binding SelectedEvent, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedEvent}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Mercenaries Tab -->
-            <TabItem Header="Mercenaries" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="MercenaryList"
-                                                 Grid.Column="0"
-                                                 EntityType="Mercenary"
-                                                 Entities="{Binding Mercenaries}"
-                                                 SelectedEntity="{Binding SelectedMercenary, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedMercenary}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Poptypes Tab -->
-            <TabItem Header="Poptypes" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="PoptypeList"
-                                                 Grid.Column="0"
-                                                 EntityType="Poptype"
-                                                 Entities="{Binding Poptypes}"
-                                                 SelectedEntity="{Binding SelectedPoptype, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedPoptype}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Nametypes Tab -->
-            <TabItem Header="Nametypes" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="NametypeList"
-                                                 Grid.Column="0"
-                                                 EntityType="Nametype"
-                                                 Entities="{Binding Nametypes}"
-                                                 SelectedEntity="{Binding SelectedNametype, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedNametype}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Blesses Tab -->
-            <TabItem Header="Blesses" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="BlessList"
-                                                 Grid.Column="0"
-                                                 EntityType="Bless"
-                                                 Entities="{Binding Blesses}"
-                                                 SelectedEntity="{Binding SelectedBless, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedBless}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <!-- Templates Tab -->
-            <TabItem Header="Templates" Style="{StaticResource TabItemBase}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" MinWidth="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EntityListControl x:Name="TemplateList"
-                                                 Grid.Column="0"
-                                                 EntityType="Template"
-                                                 Entities="{Binding Templates}"
-                                                 SelectedEntity="{Binding SelectedTemplate, Mode=TwoWay}"/>
-
-                    <GridSplitter Grid.Column="1"
-                                  Width="4"
-                                  HorizontalAlignment="Center"
-                                  Background="{StaticResource BorderBrush}"/>
-
-                    <Border Grid.Column="2"
-                            Background="{StaticResource BackgroundDarkBrush}"
-                            Padding="16">
-                        <ContentControl Content="{Binding SelectedTemplate}"/>
-                    </Border>
-                </Grid>
-            </TabItem>
-
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:EntityTypeTab}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" MinWidth="200"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <controls:EntityListControl Grid.Column="0"
+                                                    EntityType="{Binding Title}"
+                                                    Entities="{Binding Items}"
+                                                    SelectedEntity="{Binding SelectedItem, Mode=TwoWay}"
+                                                    NewCommand="{Binding NewCommand}"
+                                                    DeleteCommand="{Binding DeleteCommand}"/>
+                        <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Center"
+                                      Background="{StaticResource BorderBrush}"/>
+                        <Border Grid.Column="2" Background="{StaticResource BackgroundDarkBrush}" Padding="16">
+                            <ContentControl Content="{Binding Page}"/>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </TabControl.Resources>
         </TabControl>
 
         <!-- ========================================

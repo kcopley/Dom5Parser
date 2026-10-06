@@ -187,6 +187,9 @@ namespace Dom5Edit.Entities
             throw new NotImplementedException();
         }
 
+        /// <summary>The entity's type (MONSTER, WEAPON, ...).</summary>
+        public EntityType Kind => GetEntityType();
+
 
         public virtual Dictionary<Command, Func<Property>> GetPropertyMap() { throw new NotImplementedException(); }
 

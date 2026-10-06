@@ -144,11 +144,20 @@
                            VerticalAlignment="Center"
                            DockPanel.Dock="Left"/>
                 <Button x:Name="AddButton"
-                        Content="+ Add"
+                        Content="+ New"
                         Style="{DynamicResource ButtonSmall}"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
+                        ToolTip="Make a new entity of this type in the mod"
                         Click="AddButton_Click"/>
+                <Button x:Name="DeleteButton"
+                        Content="Delete"
+                        Style="{DynamicResource ButtonSmall}"
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,4,0"
+                        ToolTip="Delete the selected entity from the mod (for a vanilla one: drop the mod's changes to it). Undo brings it back."
+                        Click="DeleteButton_Click"/>
             </DockPanel>
         </Border>
     </Grid>

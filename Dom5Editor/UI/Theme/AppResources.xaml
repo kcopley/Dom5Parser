@@ -1,80 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:views="clr-namespace:Dom5Editor.UI.Views">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Merge theme and converters -->
+    <!-- Theme, converters, and the views of entity pages and their panels -->
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="AppTheme.xaml"/>
         <ResourceDictionary Source="Converters.xaml"/>
+        <ResourceDictionary Source="../Views/PanelTemplates.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
-    <!-- ========================================
-         DATA TEMPLATES - Entity ViewModels to Views
-         ======================================== -->
-
-    <!-- Monster view using the full MonsterView control -->
-    <DataTemplate DataType="{x:Type views:MonsterViewModel}">
-        <views:MonsterView/>
-    </DataTemplate>
-
-    <!-- Weapon view using the full WeaponView control -->
-    <DataTemplate DataType="{x:Type views:WeaponViewModel}">
-        <views:WeaponView/>
-    </DataTemplate>
-
-    <!-- Armor view using the full ArmorView control -->
-    <DataTemplate DataType="{x:Type views:ArmorViewModel}">
-        <views:ArmorView/>
-    </DataTemplate>
-
-    <!-- Spell view using the full SpellView control -->
-    <DataTemplate DataType="{x:Type views:SpellViewModel}">
-        <views:SpellView/>
-    </DataTemplate>
-
-    <!-- Item view using the full ItemView control -->
-    <DataTemplate DataType="{x:Type views:ItemViewModel}">
-        <views:ItemView/>
-    </DataTemplate>
-
-    <!-- Site view using the full SiteView control -->
-    <DataTemplate DataType="{x:Type views:SiteViewModel}">
-        <views:SiteView/>
-    </DataTemplate>
-
-    <!-- Nation view using the full NationView control -->
-    <DataTemplate DataType="{x:Type views:NationViewModel}">
-        <views:NationView/>
-    </DataTemplate>
-
-    <!-- Event view using the full EventView control -->
-    <DataTemplate DataType="{x:Type views:EventViewModel}">
-        <views:EventView/>
-    </DataTemplate>
-
-    <!-- Mercenary view using the full MercenaryView control -->
-    <DataTemplate DataType="{x:Type views:MercenaryViewModel}">
-        <views:MercenaryView/>
-    </DataTemplate>
-
-    <!-- Poptype view using the full PoptypeView control -->
-    <DataTemplate DataType="{x:Type views:PoptypeViewModel}">
-        <views:PoptypeView/>
-    </DataTemplate>
-
-    <!-- Nametype view using the full NametypeView control -->
-    <DataTemplate DataType="{x:Type views:NametypeViewModel}">
-        <views:NametypeView/>
-    </DataTemplate>
-
-    <!-- Bless view using the full BlessView control -->
-    <DataTemplate DataType="{x:Type views:BlessViewModel}">
-        <views:BlessView/>
-    </DataTemplate>
-
-    <!-- Template view using the full TemplateView control -->
-    <DataTemplate DataType="{x:Type views:TemplateViewModel}">
-        <views:TemplateView/>
-    </DataTemplate>
 
 </ResourceDictionary>

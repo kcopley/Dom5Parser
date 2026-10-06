@@ -111,24 +111,37 @@ start units, spell effects and requirements, item and site specifics. **(target)
 command the game reads for an entity type is editable in a badge or a panel; measured against
 `Dom5Edit/GameData/game-commands-*.json`.
 
-## Current state **(now, 2026-10-05)**
+## GUI structure **(now)**
 
-From a map of the editor's code:
-- **No copy-on-write.** A vanilla-only entity's view model holds the shared vanilla object
-  (`MainWindowViewModel.LoadEntities`, source `Vanilla`) and every edit changes it in place.
-  Vanilla is never reloaded, so edits survive New/Load and "modified from vanilla" compares the
-  object with itself. Entities the mod `#select`s get the mod's entity (`VanillaModified`) and read
-  through to vanilla in the view model (`GetProperty`), which is the shape copy-on-write needs.
-- **Edits that bypass undo:** the name setter, copy-command setters (`CopyStatsId` etc.), weapon
-  `Damage`, in-place custom magic edits; `Reset*` helpers exist but nothing calls them; ModInfo
-  edits (`#modname`, `#version`, ...) set the mod's fields directly with no undo or dirty flag.
-- **Bless and Template edits throw** in `CommandHistory.GetEntityType` (no case for them).
-- **Magic path edit** (`OnMagicPathLevelChanged`) changes the *first* `#magicskill` property,
-  not the one for the edited path.
-- `HasSessionChanges` is never reset; weapon/armor adds are recorded twice in `ChangesMod`.
-- **Save** goes through `ChangesModExporter`: a loaded mod is written by the file-order writer
-  (since 2026-10-05); a new mod by the old merge, which drops `#version`/`#domversion`/`#icon`
-  and keeps only one value per command for edited entities.
+```mermaid
+flowchart LR
+    L[EntityTypeTab<br/>list of EntityListItem] -->|select| P[EntityPageViewModel<br/>+ type panels]
+    P -->|reads| R[ModResolver<br/>what the entity is in game]
+    P -->|edits| S[EditorSession.Edit]
+    S --> E[ModEditor<br/>Dom5Edit.Editing]
+    E -->|IModEdit| H[EditHistory<br/>undo / redo]
+    E -->|Changed| P
+    E -->|Changed| L
+    S -->|Save| X[Mod.Export<br/>SavePlan, SafeFile]
+```
+
+- `Dom5Editor/Session/EditorSession`: the open mod, its `ModEditor`, `EditHistory`, saving,
+  reference lists for pickers, navigation requests.
+- `EntityTypeTab`: one per type; light list rows (vanilla, changed, new); the selected
+  entity's page is built on selection, not for every entity up front.
+- `EntityPageViewModel`: header (name, ID, source, sprite, description), copy source and the
+  entity's own copy/clear lines, the type's panels, the JSON badge sections, and **other lines**
+  (every value no section or panel shows, and any other command the game reads, as text): so
+  every command is editable somewhere and nothing an entity has is hidden.
+- Panels (`Panels.cs`): `ReferenceListPanel` (monster weapons and armor, with stats), `MagicPanel`
+  (paths, random paths). More per type in E3.
+- Every change: page -> `EditorSession.Edit` -> `ModEditor` -> `IModEdit` recorded for undo; the
+  session's `Changed` refreshes pages and lists. Nothing writes the model directly.
+- Vanilla sprites and descriptions loaded for display (`VanillaAssetLoader`) are
+  `Property.IsDisplayAsset`: the resolver keeps them apart from values, so they're shown but never
+  copied into a mod as lines.
+- Verified with `Dom5Editor --snapshot` (load, select, set/add/remove, new/delete, undo/redo,
+  dump, render, save).
 
 ## Roadmap: a complete editor
 
@@ -136,7 +149,9 @@ Each step is checked with scripted edits (`Dom5Tests edit`) and `Dom5Editor --sn
 before it counts as done. The existing views are treated as unverified: each one is checked,
 and rewritten where it's wrong.
 
-**E1. One edit model (M3).**
+**E1. One edit model (M3).** Done 2026-10-05: core `ModEditor` (copy-on-write, exact undo,
+inherited removal), resolver-driven pages, one save path (`ChangesMod`/`ChangesModExporter`
+deleted). The steps as planned:
 1. **Copy-on-write**: the first edit of a vanilla-only entity makes the mod's `#select` entity
    (`Mod.SelectForEdit`), the view model switches to it (source `VanillaModified`) and the edit
    goes there. One entry point (`EntityViewModel.EnsureEditable`) used by every edit path.
@@ -145,7 +160,7 @@ and rewritten where it's wrong.
 3. Fix the bypasses (name, copy commands, damage, custom magic) to go through undo, and the
    magic path edit to target its path; Bless/Template history types.
 
-**E2. Show what the game sees.** Every shown value comes from one resolver that replays the
+**E2. Show what the game sees.** Done 2026-10-05 (`Dom5Edit.Resolve`). Every shown value comes from one resolver that replays the
 mod the way the game reads it (vanilla, then each block in file order: copies, clears,
 replace-or-append per command, from tools/dom6exe), and says where each value came from (the
 source table above). Views read it instead of each doing its own vanilla/copy lookups.

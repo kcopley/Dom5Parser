@@ -269,6 +269,7 @@ namespace Dom5Edit
             if (prop != null)
             {
                 prop.Parse(command, value, "");
+                prop.IsDisplayAsset = true; // for showing, not game data: the resolver keeps it apart
                 entity.AddProperty(prop);
             }
         }
@@ -282,6 +283,7 @@ namespace Dom5Edit
             if (prop != null)
             {
                 prop.Parse(command, value, "");
+                prop.IsDisplayAsset = true; // for showing, not game data: the resolver keeps it apart
                 entity.AddProperty(prop);
             }
         }
