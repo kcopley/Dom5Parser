@@ -133,7 +133,7 @@
             <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"
                     Padding="2,0" Margin="3,0,0,0" VerticalAlignment="Center"
                     ToolTip="Dominions doesn't read this command for this entity type: kept in the mod, but it changes nothing in game"
-                    Visibility="{Binding IsLocked, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding ShowNotRead, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock Text="n/r" Foreground="White" FontSize="7"/>
             </Border>
 

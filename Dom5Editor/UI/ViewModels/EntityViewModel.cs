@@ -637,6 +637,19 @@ namespace Dom5Editor.UI.Views
                     hasValue = true;
                     usingDefault = true;
                 }
+                // a value the game uses when the entity sets none (resource size = size, ...):
+                // shown as a default too
+                if (!hasValue && (cmdDef.IsInt || cmdDef.IsFlag) && TryGetGameDefault(command, out int gameDefault))
+                {
+                    if (cmdDef.IsFlag)
+                        effectiveFlagValue = hasValue = gameDefault != 0;
+                    else
+                    {
+                        effectiveValue = gameDefault;
+                        hasValue = true;
+                    }
+                    usingDefault = hasValue;
+                }
 
                 // Determine modification and inheritance status
                 bool isModified = false;
@@ -647,8 +660,9 @@ namespace Dom5Editor.UI.Views
                 {
                     // Modified if entity has direct value different from vanilla
                     isModified = entityHasDirect && (entityFlagValue != vanillaFlagValue);
-                    // Inherited if value comes from copystats or vanilla (not directly on entity)
-                    isInherited = !entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue));
+                    // Inherited if value comes from copystats or vanilla (not directly on entity),
+                    // or it's the game's default
+                    isInherited = usingDefault || (!entityHasDirect && (entityIsCopied || (!entityHasValue && vanillaHasValue)));
                 }
                 else if (cmdDef.IsInt)
                 {
@@ -1625,6 +1639,17 @@ namespace Dom5Editor.UI.Views
         protected int? GetIntProperty(Command command)
         {
             return GetProperty<IntProperty>(command)?.Value;
+        }
+
+        /// <summary>
+        /// The value the game uses for a command the entity doesn't set, when it isn't simply
+        /// "none" (a monster's resource size is its size; a spell's cast time is 100). Shown as a
+        /// default badge. Flags: 1 for set.
+        /// </summary>
+        protected virtual bool TryGetGameDefault(Command command, out int value)
+        {
+            value = 0;
+            return false;
         }
 
         /// <summary>

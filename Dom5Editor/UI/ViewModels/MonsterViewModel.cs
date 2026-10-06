@@ -22,6 +22,27 @@ namespace Dom5Editor.UI.Views
     /// </summary>
     public class MonsterViewModel : EntityViewModel
     {
+        /// <summary>
+        /// Game defaults for monsters: resource size is the size unless #ressize sets it; horrors
+        /// have spirit sight (the game's ability getter, tools/dom6exe README).
+        /// </summary>
+        protected override bool TryGetGameDefault(Command command, out int value)
+        {
+            value = 0;
+            switch (command)
+            {
+                case Command.RESSIZE:
+                    value = GetIntProperty(Command.SIZE) ?? 2;
+                    return true;
+                case Command.SPIRITSIGHT:
+                    value = HasProperty<CommandProperty>(Command.LESSERHORROR) || HasProperty<CommandProperty>(Command.GREATERHORROR)
+                            || HasProperty<CommandProperty>(Command.DOOMHORROR) ? 1 : 0;
+                    return value == 1;
+                default:
+                    return false;
+            }
+        }
+
         public MonsterViewModel(Monster entity, CommandHistory history, EntitySource source = EntitySource.Vanilla)
             : base(entity, history, source)
         {
@@ -474,6 +495,18 @@ namespace Dom5Editor.UI.Views
         private void RefreshGeneralBadges()
         {
             var (active, available) = BuildBadgesFromSection("general", BadgeValueChangedHandler);
+            // the leadership bonus a vanilla monster has with no command for it (ability 160; the
+            // game adds it to the leader class like #command, which doesn't replace it)
+            var bonus = GameValues.FirstOrDefault(v => v.Label.Contains("ability 160"));
+            if (bonus != null && int.TryParse(bonus.Value, out int bonusValue))
+            {
+                var badge = PropertyItem.CreateValue(Command.COMMAND, "Leader bonus", bonusValue);
+                badge.IsGameValue = true;
+                badge.IsInherited = true;
+                badge.CanRemove = false;
+                badge.Tooltip = "Leadership the game data gives this monster with no command for it. #command adds to it.";
+                active.Add(badge);
+            }
             _generalBadges = active;
             _availableGeneralBadges = available;
             OnPropertyChanged(nameof(GeneralBadges));

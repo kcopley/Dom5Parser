@@ -222,6 +222,8 @@ namespace Dom5Tests
                 bool normalize = canonical && !args.Any(a => a.Equals("nonorm", StringComparison.OrdinalIgnoreCase));
                 Mod mod = new Mod();
                 mod.PreserveSourceOrder = !canonical;
+                // "regen": every line regenerated (in file order), to test the export itself
+                mod.KeepOriginalText = !args.Any(a => a.Equals("regen", StringComparison.OrdinalIgnoreCase));
                 mod.FullFilePath = inputPath;
                 mod.Parse(inputPath);
                 mod.ResolveDependencies();

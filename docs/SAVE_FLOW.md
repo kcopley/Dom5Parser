@@ -144,6 +144,11 @@ only: in file order the copies replay as written.
   later `#clearspec` (rule 2), e11 added ability on a template reaches its copies. e09 and e10
   fail if their rule is broken (checked by breaking them).
 - `Dom5Tests roundtrip in.dm out.dm` then `cmp`: an unedited save is byte-identical (DomEnhanced).
+- Because unedited lines are written as read, that alone doesn't test the export. Stage 3's
+  `domenhanced-2.13-regen` saves with every line regenerated (`Mod.KeepOriginalText = false`,
+  `roundtrip ... regen`), still in file order; its baseline is 6, all equivalences the game treats
+  the same (`-0` for `0`, `#immortal 3` written as `#immortal`, names written as the IDs they
+  resolve to or with the spell's own capitalization).
   `Dom5Tests edit ... editorsave` saves through the editor's exporter; on e01-e11 it writes the
   same files as `Mod.Export`.
 - Fixtures in `Dom5Tests/fixtures/copy/` (order-dependent copy, forward reference, clear mid
