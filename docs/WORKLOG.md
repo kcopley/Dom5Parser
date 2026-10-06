@@ -37,6 +37,26 @@ Verified with `Dom5Editor --snapshot` renders and scripted sessions (set, add, r
 new, delete, undo/redo, jump, dump, save) and the fidelity suite: full 34/34, quick 26/26.
 DomEnhanced still saves byte-identical.
 
+Later the same day:
+- **More panels:** monster body shape and item slots as counts (following the body shape's own
+  slots, read from the exe); armor type; nation recruits/commanders as lists; "Copy & edit"
+  (a unit's own changed copy of a weapon, armor or unit, in one undo step); derived values
+  (#teleport's map move 100); long texts (#msg, #summary, #brief, #details) in boxes; one add
+  box per page; "in the file" shows the entity's lines as the save writes them.
+- **Lists:** sprites and key stats per row, sort by ID or name, filters kept per tab.
+- **Robustness and packaging:** crash guard with errors.log; remembered window layout and
+  recent mods; delete asks first when others refer to the entity; a clear error when
+  vanilla.dm is missing; data beside the exe; `tools/publish.sh` (one self-contained exe,
+  tested); README rewritten for the editor.
+- **Game rules found and fixed along the way:** #clearrec clears only the recruitment list and
+  #clearnation the abilities and gods (start units and terrain recruits were taken by
+  #clearrec before); a second `#selectbless "Name"` block continues the first (it made a
+  duplicate); a spell selected by name in one block and by ID in another gets both blocks;
+  `#weapon 474 "Golden Sword"` is weapon 474.
+- Every entity type checked in scripted sessions (monsters, weapons, armor, spells, items,
+  sites, nations, events, mercenaries, poptypes, nametypes, blesses, templates): each edits and
+  saves exactly.
+
 ## 2026-10-05: game data from Dominions6.exe
 
 Plan agreed with the user:
