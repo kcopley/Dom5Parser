@@ -259,4 +259,16 @@ namespace Dom5Editor.UI.Converters
             throw new NotImplementedException();
         }
     }
+
+    /// <summary>
+    /// A value put into a sentence: ConverterParameter is the format ("Add {0} magic"). For a
+    /// tooltip: StringFormat doesn't apply there (ToolTip isn't a string property).
+    /// </summary>
+    public class FormatConverter : IValueConverter
+    {
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+            value == null || value is string s && s.Length == 0 ? null : string.Format(culture, parameter as string ?? "{0}", value);
+
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
+    }
 }

@@ -472,7 +472,8 @@ namespace Dom5Tests
             string op = edit.GetProperty("op").GetString();
             string kind = edit.GetProperty("entity").GetString();
             int id = edit.GetProperty("id").GetInt32();
-            string commandText = edit.GetProperty("command").GetString();
+            // (the "text" op edits the entity's block as text: no command)
+            string commandText = edit.TryGetProperty("command", out var ct) ? ct.GetString() : "#end";
             if (!commandText.StartsWith("#")) commandText = "#" + commandText;
             if (!CommandsMap.TryGetCommand(commandText, out Command command))
                 throw new ArgumentException($"Unknown command {commandText}");
@@ -518,6 +519,19 @@ namespace Dom5Tests
                     break;
                 case "reset":
                     editor.Reset(entity, command);
+                    break;
+                case "text":
+                    // the page's "in the file" box: the block as text, with "replace" pairs applied
+                    string block = editor.BlockText(entity) ?? throw new InvalidOperationException($"text: {kind} {id} has no single block");
+                    if (edit.TryGetProperty("replace", out var pairs))
+                        foreach (var pair in pairs.EnumerateArray())
+                        {
+                            var find = pair[0].GetString();
+                            if (!block.Contains(find))
+                                throw new InvalidOperationException($"text: no \"{find}\" in\n{block}");
+                            block = block.Replace(find, pair[1].GetString());
+                        }
+                    editor.ReplaceText(entity, block);
                     break;
                 default:
                     throw new ArgumentException($"Unknown op {op}");

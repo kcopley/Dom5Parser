@@ -74,6 +74,8 @@ namespace Dom5Editor.UI.Views
         public bool IsDirty => _session?.History.IsDirty == true;
         public string? UndoDescription => _session?.History.UndoDescription is string d ? "Undo: " + d : null;
         public string? RedoDescription => _session?.History.RedoDescription is string d ? "Redo: " + d : null;
+        public string UndoTip => (UndoDescription ?? "Nothing to undo") + " (Ctrl+Z)";
+        public string RedoTip => (RedoDescription ?? "Nothing to redo") + " (Ctrl+Y)";
         public bool CanGoBack => _back.Count > 0;
         public bool CanGoForward => _forward.Count > 0;
 
@@ -150,6 +152,8 @@ namespace Dom5Editor.UI.Views
             OnPropertyChanged(nameof(IsDirty));
             OnPropertyChanged(nameof(UndoDescription));
             OnPropertyChanged(nameof(RedoDescription));
+            OnPropertyChanged(nameof(UndoTip));
+            OnPropertyChanged(nameof(RedoTip));
         }
 
         public void Undo()
