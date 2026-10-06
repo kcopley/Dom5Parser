@@ -1,7 +1,7 @@
 #!/bin/sh
 # Builds the editor as one self-contained Windows exe with its data files, in publish/Dom6ModEditor.
-# (Run from WSL; uses the Windows dotnet. The game's icons are compiled in; unit sprites and descriptions are
-# read from the user's install or supplied folders; see README.)
+# (Run from WSL; uses the Windows dotnet. The game's icons are compiled in; unit sprites and
+# descriptions come from supplied folders (see README).)
 set -e
 cd "$(dirname "$0")/.."
 DOTNET="/mnt/c/Program Files/dotnet/dotnet.exe"
