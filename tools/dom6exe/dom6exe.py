@@ -745,6 +745,8 @@ def command_effects(p):
       or     keys it ORs into (item restrictions)
       del    abilities it removes (#humanoid removes the item-slot ability)
       bits / clears   flag bits it sets / clears
+      values          the constant a command stores, by key, when it isn't the argument
+                      (#quadruped stores item slots 786432)
       min / max       the argument's range, for commands read by a generic handler (it clamps
                       to it); min = max: the command takes no argument
       optional        the argument may be left out
@@ -778,19 +780,26 @@ def command_effects(p):
                     arg = {'min': c['min'], 'max': c['max']}
                     if c['kind'] == 5:
                         arg['optional'] = True
+            values = {}
             for kind, b, off, size, val in br.get(cmd, []):
                 if kind == 'ability':
                     e['set' if val != 0 else 'del'].add('a%d' % off)
+                    if isinstance(val, int) and val != 0:
+                        values['a%d' % off] = val - (1 << 64) if val >= 1 << 63 else val
                 elif b != base or base is None:
                     continue
                 elif kind == 'store':
                     e['set'].add('f%d' % off)
+                    if isinstance(val, int):
+                        values['f%d' % off] = val - (1 << 64) if val >= 1 << 63 else val
                 elif kind == 'set_bits' and val:
                     e['bits'].add('%d:%d' % (off, val & ((1 << 8 * size) - 1)))
                 elif kind == 'clear_bits' and val is not None and ~val & ((1 << 8 * size) - 1):
                     e['clears'].add('%d:%d' % (off, ~val & ((1 << 8 * size) - 1)))
             if cmd in direct:
                 e['set'].add('a%d' % direct[cmd])
+            if values:
+                arg['values'] = dict(sorted(values.items()))
             if e or arg:
                 effects[cmd] = dict({k: sorted(v) for k, v in sorted(e.items())}, **arg)
         out[ctx] = effects

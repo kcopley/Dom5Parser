@@ -102,8 +102,16 @@
                                Style="{StaticResource SubHeaderText}"/>
                 </StackPanel>
 
-                <!-- Center: Validation button -->
+                <!-- Center: go to any entity, and validation -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <controls:SearchableReferenceComboBox x:Name="JumpBox"
+                                                          Width="300" Height="24" Margin="0,0,12,0"
+                                                          IsEnabled="{Binding HasMod}"
+                                                          ItemsSource="{Binding JumpTargets}"
+                                                          Placeholder="Go to any entity... (Ctrl+P)"
+                                                          ToolTip="Type a name or ID of any monster, weapon, spell, nation, ..."
+                                                          GotKeyboardFocus="JumpBox_GotKeyboardFocus"
+                                                          SelectionChanged="JumpBox_SelectionChanged"/>
                     <Button x:Name="ValidateButton"
                             Content="Validate"
                             Style="{StaticResource ButtonBase}"
@@ -144,6 +152,10 @@
                                                     EntityType="{Binding Title}"
                                                     Entities="{Binding Items}"
                                                     SelectedEntity="{Binding SelectedItem, Mode=TwoWay}"
+                                                    SearchText="{Binding SearchText}"
+                                                    ShowVanilla="{Binding ShowVanilla}"
+                                                    ShowModified="{Binding ShowModified}"
+                                                    ShowNew="{Binding ShowNew}"
                                                     NewCommand="{Binding NewCommand}"
                                                     DeleteCommand="{Binding DeleteCommand}"/>
                         <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Center"

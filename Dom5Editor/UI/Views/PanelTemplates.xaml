@@ -164,6 +164,28 @@
         </StackPanel>
     </DataTemplate>
 
+    <!-- a monster's item slots as counts -->
+    <DataTemplate DataType="{x:Type vm:ItemSlotsPanel}">
+        <StackPanel Margin="0,0,0,10" ToolTip="{Binding Source}">
+            <TextBlock Style="{StaticResource PanelTitle}">
+                <Run Text="ITEM SLOTS"/><Run Text="{Binding Mask, Mode=OneWay, StringFormat='  (#itemslots {0})'}" Foreground="{DynamicResource TextMutedBrush}"/>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Hands" Width="40" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Hands, UpdateSourceTrigger=LostFocus}" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-6"/>
+                <TextBlock Text="Heads" Width="40" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Heads, UpdateSourceTrigger=LostFocus}" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-3"/>
+                <TextBlock Text="Misc" Width="34" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Misc, UpdateSourceTrigger=LostFocus}" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-4"/>
+                <CheckBox Content="Body" IsChecked="{Binding HasBody}" Margin="12,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
+                <CheckBox Content="Feet" IsChecked="{Binding HasFeet}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
+                <CheckBox Content="Bow" IsChecked="{Binding HasBow}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
+                <CheckBox Content="Crowns only" IsChecked="{Binding CrownsOnly}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"
+                          ToolTip="Head slots can only have crowns"/>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+
     <!-- fields of one part of an entity (a spell's paths, an item's slot) -->
     <DataTemplate DataType="{x:Type vm:FieldsPanel}">
         <StackPanel Margin="0,0,0,10">

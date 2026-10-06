@@ -51,7 +51,10 @@
       "f64",
       "f68",
       "f72"
-     ]
+     ],
+     "values": {
+      "f64": 327680
+     }
     },
     "def": {
      "set": [
@@ -66,12 +69,18 @@
     "ironarmor": {
      "set": [
       "a267"
-     ]
+     ],
+     "values": {
+      "a267": 1
+     }
     },
     "magicarmor": {
      "set": [
       "a557"
-     ]
+     ],
+     "values": {
+      "a557": 1
+     }
     },
     "newarmor": {
      "set": [
@@ -81,7 +90,15 @@
       "f64",
       "f68",
       "f72"
-     ]
+     ],
+     "values": {
+      "f0": 0,
+      "f36": 0,
+      "f62": 0,
+      "f64": 327680,
+      "f68": 0,
+      "f72": 0
+     }
     },
     "prot": {
      "set": [
@@ -92,7 +109,12 @@
       "f44",
       "f46",
       "f48"
-     ]
+     ],
+     "values": {
+      "f36": 2,
+      "f40": 3,
+      "f44": 4
+     }
     },
     "protparts": {
      "set": [
@@ -102,7 +124,12 @@
       "f42",
       "f44",
       "f46"
-     ]
+     ],
+     "values": {
+      "f36": 2,
+      "f40": 3,
+      "f44": 4
+     }
     },
     "rcost": {
      "set": [
@@ -117,7 +144,10 @@
     "woodenarmor": {
      "set": [
       "a269"
-     ]
+     ],
+     "values": {
+      "a269": 1
+     }
     }
    }
   },
@@ -157,7 +187,10 @@
     "clearscales": {
      "set": [
       "f176"
-     ]
+     ],
+     "values": {
+      "f176": 255
+     }
     },
     "cost0": {
      "set": [
@@ -4857,7 +4890,10 @@
       "f120",
       "f128",
       "f136"
-     ]
+     ],
+     "values": {
+      "f120": 278
+     }
     },
     "restricteditem": {
      "set": [
@@ -5357,7 +5393,12 @@
       "f128",
       "f136",
       "f41"
-     ]
+     ],
+     "values": {
+      "f120": 1423,
+      "f128": 1,
+      "f41": 9
+     }
     },
     "undcommand": {
      "set": [
@@ -5589,7 +5630,10 @@
     "newmerc": {
      "set": [
       "f92"
-     ]
+     ],
+     "values": {
+      "f92": 100
+     }
     },
     "nrunits": {
      "set": [
@@ -5610,7 +5654,10 @@
      "set": [
       "f80",
       "f84"
-     ]
+     ],
+     "values": {
+      "f84": 10
+     }
     },
     "xp": {
      "set": [
@@ -6367,12 +6414,18 @@
     "armor": {
      "set": [
       "f852"
-     ]
+     ],
+     "values": {
+      "f852": 0
+     }
     },
     "assassin": {
      "set": [
       "a213"
-     ]
+     ],
+     "values": {
+      "a213": 1
+     }
     },
     "assencloc": {
      "set": [
@@ -6669,7 +6722,10 @@
     "bird": {
      "set": [
       "f884"
-     ]
+     ],
+     "values": {
+      "f884": 11530
+     }
     },
     "blessbers": {
      "set": [
@@ -6688,7 +6744,10 @@
     "blind": {
      "set": [
       "a171"
-     ]
+     ],
+     "values": {
+      "a171": 1
+     }
     },
     "blink": {
      "bits": [
@@ -6857,12 +6916,18 @@
     "cleararmor": {
      "set": [
       "f852"
-     ]
+     ],
+     "values": {
+      "f852": 0
+     }
     },
     "clearweapons": {
      "set": [
       "f832"
-     ]
+     ],
+     "values": {
+      "f832": 0
+     }
     },
     "clumsy": {
      "set": [
@@ -7186,7 +7251,10 @@
     "djinn": {
      "set": [
       "f884"
-     ]
+     ],
+     "values": {
+      "f884": 1548
+     }
     },
     "doheal": {
      "set": [
@@ -7404,7 +7472,10 @@
     "entangle": {
      "set": [
       "a128"
-     ]
+     ],
+     "values": {
+      "a128": 1
+     }
     },
     "ethereal": {
      "bits": [
@@ -7855,7 +7926,10 @@
     "horrormark": {
      "set": [
       "a127"
-     ]
+     ],
+     "values": {
+      "a127": 5
+     }
     },
     "horsetattoo": {
      "set": [
@@ -7882,7 +7956,10 @@
      ],
      "set": [
       "f884"
-     ]
+     ],
+     "values": {
+      "f884": 1793
+     }
     },
     "iceforging": {
      "set": [
@@ -8123,7 +8200,11 @@
      "set": [
       "a182",
       "f884"
-     ]
+     ],
+     "values": {
+      "a182": 17571840,
+      "f884": 21765
+     }
     },
     "localsun": {
      "set": [
@@ -8222,7 +8303,10 @@
     "mapteleport": {
      "set": [
       "f42"
-     ]
+     ],
+     "values": {
+      "f42": 100
+     }
     },
     "mason": {
      "set": [
@@ -8304,7 +8388,10 @@
     "miscshape": {
      "set": [
       "f884"
-     ]
+     ],
+     "values": {
+      "f884": 14
+     }
     },
     "mobilearcher": {
      "set": [
@@ -8395,7 +8482,11 @@
      "set": [
       "a182",
       "f884"
-     ]
+     ],
+     "values": {
+      "a182": 860678,
+      "f884": 1793
+     }
     },
     "mountiscom": {
      "set": [
@@ -8419,7 +8510,10 @@
     "naga": {
      "set": [
       "f884"
-     ]
+     ],
+     "values": {
+      "f884": 19975
+     }
     },
     "nametype": {
      "set": [
@@ -8810,7 +8904,11 @@
      "set": [
       "a182",
       "f884"
-     ]
+     ],
+     "values": {
+      "a182": 786432,
+      "f884": 19715
+     }
     },
     "raiseonkill": {
      "set": [
@@ -9155,7 +9253,10 @@
     "snake": {
      "set": [
       "f884"
-     ]
+     ],
+     "values": {
+      "f884": 21512
+     }
     },
     "snaketattoo": {
      "set": [
@@ -9247,7 +9348,10 @@
     "spy": {
      "set": [
       "a214"
-     ]
+     ],
+     "values": {
+      "a214": 1
+     }
     },
     "standard": {
      "set": [
@@ -9473,7 +9577,10 @@
      ],
      "set": [
       "f42"
-     ]
+     ],
+     "values": {
+      "f42": 100
+     }
     },
     "templetrainer": {
      "set": [
@@ -9603,7 +9710,11 @@
      "set": [
       "a182",
       "f884"
-     ]
+     ],
+     "values": {
+      "a182": 983558,
+      "f884": 781
+     }
     },
     "truesight": {
      "set": [
@@ -9802,7 +9913,10 @@
     "weapon": {
      "set": [
       "f832"
-     ]
+     ],
+     "values": {
+      "f832": 0
+     }
     },
     "winterpower": {
      "set": [
@@ -10373,7 +10487,10 @@
     "clearrec": {
      "set": [
       "f2576"
-     ]
+     ],
+     "values": {
+      "f2576": -2
+     }
     },
     "coastcom": {
      "add": [
@@ -11062,7 +11179,10 @@
      "set": [
       "f144",
       "f172"
-     ]
+     ],
+     "values": {
+      "f172": 2
+     }
     },
     "nationinc": {
      "min": -1000,
@@ -11478,7 +11598,10 @@
     "clearrec": {
      "set": [
       "f0"
-     ]
+     ],
+     "values": {
+      "f0": -2
+     }
     },
     "defcom1": {
      "set": [
@@ -12189,7 +12312,10 @@
     "clearallspells": {
      "set": [
       "f37"
-     ]
+     ],
+     "values": {
+      "f37": 254
+     }
     },
     "damage": {
      "set": [
@@ -12214,7 +12340,10 @@
      "set": [
       "f70",
       "f72"
-     ]
+     ],
+     "values": {
+      "f72": 9
+     }
     },
     "farsumcom": {
      "min": -100000,
@@ -12229,7 +12358,10 @@
      "set": [
       "f66",
       "f68"
-     ]
+     ],
+     "values": {
+      "f68": 1
+     }
     },
     "globallook": {
      "min": 0,
@@ -12606,7 +12738,10 @@
     "aftercloudarea": {
      "set": [
       "a923"
-     ]
+     ],
+     "values": {
+      "a923": 1
+     }
     },
     "ammo": {
      "set": [
@@ -12636,7 +12771,10 @@
     "beam": {
      "set": [
       "a938"
-     ]
+     ],
+     "values": {
+      "a938": 1
+     }
     },
     "blunt": {
      "bits": [
@@ -12699,102 +12837,162 @@
     "dt_aff": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 11
+     }
     },
     "dt_bouncekill": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 134
+     }
     },
     "dt_cap": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 109
+     }
     },
     "dt_constructonly": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 96
+     }
     },
     "dt_demon": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 107
+     }
     },
     "dt_drain": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 103
+     }
     },
     "dt_holy": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 24
+     }
     },
     "dt_interrupt": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 129
+     }
     },
     "dt_large": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 32
+     }
     },
     "dt_magic": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 73
+     }
     },
     "dt_normal": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 2
+     }
     },
     "dt_paralyze": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 66
+     }
     },
     "dt_poison": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 7
+     }
     },
     "dt_raise": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 74
+     }
     },
     "dt_realstun": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 128
+     }
     },
     "dt_sizestun": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 46
+     }
     },
     "dt_small": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 33
+     }
     },
     "dt_stun": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 3
+     }
     },
     "dt_weakness": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 67
+     }
     },
     "dt_weapondrain": {
      "set": [
       "f52"
-     ]
+     ],
+     "values": {
+      "f52": 104
+     }
     },
     "enemyimmune": {
      "bits": [
@@ -12805,7 +13003,10 @@
      "set": [
       "f86",
       "f88"
-     ]
+     ],
+     "values": {
+      "f88": 9
+     }
     },
     "false": {
      "bits": [
@@ -12825,7 +13026,10 @@
     "flail": {
      "set": [
       "a935"
-     ]
+     ],
+     "values": {
+      "a935": 1
+     }
     },
     "flyingimmune": {
      "bits": [
@@ -12877,7 +13081,10 @@
     "iceweapon": {
      "set": [
       "a482"
-     ]
+     ],
+     "values": {
+      "a482": 1
+     }
     },
     "illusionsimmune": {
      "bits": [
@@ -12900,7 +13107,10 @@
      ],
      "set": [
       "a266"
-     ]
+     ],
+     "values": {
+      "a266": 1
+     }
     },
     "killdemonifhit": {
      "set": [
@@ -12930,7 +13140,10 @@
     "melee50": {
      "set": [
       "a931"
-     ]
+     ],
+     "values": {
+      "a931": 50
+     }
     },
     "mind": {
      "bits": [
@@ -12980,7 +13193,10 @@
     "notmounted": {
      "set": [
       "a943"
-     ]
+     ],
+     "values": {
+      "a943": 1
+     }
     },
     "nouw": {
      "clears": [
@@ -13017,17 +13233,26 @@
       "f54",
       "f56",
       "f60"
-     ]
+     ],
+     "values": {
+      "f60": 12
+     }
     },
     "range0": {
      "set": [
       "a930"
-     ]
+     ],
+     "values": {
+      "a930": 100
+     }
     },
     "range050": {
      "set": [
       "a930"
-     ]
+     ],
+     "values": {
+      "a930": 50
+     }
     },
     "rcost": {
      "set": [
@@ -13062,12 +13287,18 @@
     "skip": {
      "set": [
       "a900"
-     ]
+     ],
+     "values": {
+      "a900": 1
+     }
     },
     "skip2": {
      "set": [
       "a900"
-     ]
+     ],
+     "values": {
+      "a900": 2
+     }
     },
     "slash": {
      "bits": [
@@ -13122,7 +13353,10 @@
     "woodenweapon": {
      "set": [
       "a268"
-     ]
+     ],
+     "values": {
+      "a268": 1
+     }
     }
    }
   }

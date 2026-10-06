@@ -157,6 +157,9 @@ namespace Dom5Edit.GameData
         public long? Max { get; private set; }
         /// <summary>The argument may be left out.</summary>
         public bool Optional { get; private set; }
+
+        /// <summary>Constants the command stores, by key, where it doesn't store its argument (#quadruped: item slots a182 = 786432).</summary>
+        public IReadOnlyDictionary<string, long> Values { get; private set; } = new Dictionary<string, long>();
         /// <summary>The command takes no argument (its range is one value).</summary>
         public bool NoArgument => Min.HasValue && Min == Max;
 
@@ -194,6 +197,9 @@ namespace Dom5Edit.GameData
                 Min = e.TryGetProperty("min", out var min) ? min.GetInt64() : null,
                 Max = e.TryGetProperty("max", out var max) ? max.GetInt64() : null,
                 Optional = e.TryGetProperty("optional", out var opt) && opt.GetBoolean(),
+                Values = e.TryGetProperty("values", out var vals)
+                    ? vals.EnumerateObject().Where(v => v.Value.TryGetInt64(out _)).ToDictionary(v => v.Name, v => v.Value.GetInt64())
+                    : new Dictionary<string, long>(),
             };
         }
     }

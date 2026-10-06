@@ -194,4 +194,78 @@ namespace Dom5Editor.UI.ViewModels
             return mask;
         }
     }
+
+    /// <summary>
+    /// A monster's item slots (#itemslots) as counts: hands, heads, body, feet, misc, and the bow
+    /// and crown-only bits (the manual's "Item slot values" table). Other bits are kept as they are.
+    /// With no #itemslots the game uses its default: 991750 (2 hands, bow, head, body, feet, 2 misc),
+    /// or 786432 (2 misc) with #noitem; the body shape commands set their own.
+    /// </summary>
+    public sealed class ItemSlotsPanel : System.ComponentModel.INotifyPropertyChanged
+    {
+        private static readonly long[] HandBits = { 2, 4, 8, 16, 32, 64 };
+        private static readonly long[] HeadBits = { 8192, 16384, 32768 };
+        private static readonly long[] MiscBits = { 262144, 524288, 1048576, 2097152 };
+        private const long Bow = 512, Body = 65536, Feet = 131072, CrownOnly = 16777216;
+
+        private readonly EntityPageViewModel _page;
+        private readonly long _mask;
+
+        public ItemSlotsPanel(EntityPageViewModel page)
+        {
+            _page = page;
+            // the last line that sets the slots (ability 182): #itemslots, or a body shape with its own
+            var v = page.Resolved.Values.LastOrDefault(x => x.Command == Command.ITEMSLOTS
+                || Dom5Edit.GameData.GameCommandCatalog.EffectOf(page.Type, x.Command)?.Values.ContainsKey("a182") == true);
+            IsInherited = v == null || v.Source != ValueSource.Own || v.Command != Command.ITEMSLOTS;
+            if (v != null && v.Command == Command.ITEMSLOTS && long.TryParse(v.Arguments, out var m))
+            {
+                _mask = m;
+                Source = page.SourceText(v);
+            }
+            else if (v != null)
+            {
+                _mask = Dom5Edit.GameData.GameCommandCatalog.EffectOf(page.Type, v.Command)!.Values["a182"];
+                Source = $"Set by {EntityPageViewModel.CommandName(v.Command)} (its slots); changing them adds #itemslots";
+            }
+            else
+            {
+                _mask = page.Resolved.Has(Command.NOITEM) ? 786432 : 991750;
+                Source = "Not set: the game's default for the body (2 hands, bow, head, body, feet, 2 misc; #noitem: 2 misc)";
+            }
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;
+
+        public bool IsInherited { get; }
+        public string Source { get; } = "";
+        public long Mask => _mask;
+
+        public int Hands { get => Count(HandBits); set => Commit(With(HandBits, value)); }
+        public int Heads { get => Count(HeadBits); set => Commit(With(HeadBits, value)); }
+        public int Misc { get => Count(MiscBits); set => Commit(With(MiscBits, value)); }
+        public bool HasBody { get => (_mask & Body) != 0; set => Commit(Flag(Body, value)); }
+        public bool HasFeet { get => (_mask & Feet) != 0; set => Commit(Flag(Feet, value)); }
+        public bool HasBow { get => (_mask & Bow) != 0; set => Commit(Flag(Bow, value)); }
+        public bool CrownsOnly { get => (_mask & CrownOnly) != 0; set => Commit(Flag(CrownOnly, value)); }
+
+        private int Count(long[] bits) => bits.Count(b => (_mask & b) != 0);
+
+        /// <summary>The mask with this many of the group's slots (the lowest bits first, as the table's values are).</summary>
+        private long With(long[] bits, int count)
+        {
+            long m = _mask;
+            for (int i = 0; i < bits.Length; i++)
+                m = i < Math.Max(0, count) ? m | bits[i] : m & ~bits[i];
+            return m;
+        }
+
+        private long Flag(long bit, bool on) => on ? _mask | bit : _mask & ~bit;
+
+        private void Commit(long mask)
+        {
+            if (mask != _mask)
+                _page.SetValue(Command.ITEMSLOTS, mask.ToString());
+        }
+    }
 }

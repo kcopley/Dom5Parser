@@ -155,9 +155,12 @@ namespace Dom5Editor.UI.ViewModels
     /// </summary>
     public sealed class CommandChoiceField : PanelField
     {
-        public CommandChoiceField(EntityPageViewModel page, string label, IReadOnlyList<(Command Command, string Name)> choices, string? tooltip = null)
+        private readonly int? _default;
+
+        public CommandChoiceField(EntityPageViewModel page, string label, IReadOnlyList<(Command Command, string Name)> choices, string? tooltip = null, int? defaultIndex = null)
             : base(page, label, choices[0].Command, null, tooltip)
         {
+            _default = defaultIndex;
             Commands = choices.Select(c => c.Command).ToList();
             Options = choices.Select((c, i) => new ChoiceOption(i, c.Name)).ToList();
             Current = page.Resolved.Values.LastOrDefault(v => Commands.Contains(v.Command));
@@ -170,7 +173,7 @@ namespace Dom5Editor.UI.ViewModels
 
         public int? Selected
         {
-            get => Current != null ? Commands.ToList().IndexOf(Current.Command) : null;
+            get => Current != null ? Commands.ToList().IndexOf(Current.Command) : _default;
             set
             {
                 if (value is not int i || i < 0 || i >= Commands.Count || i == Selected)

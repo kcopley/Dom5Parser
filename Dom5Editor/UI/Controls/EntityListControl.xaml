@@ -29,7 +29,10 @@
                          Grid.Column="0"
                          Style="{DynamicResource TextBoxBase}"
                          Text="{Binding SearchText, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
-                         Tag="Search..."/>
+                         ToolTip="Search by name or ID (Ctrl+F)"/>
+                <TextBlock Grid.Column="0" Text="Search name or ID... (Ctrl+F)" IsHitTestVisible="False"
+                           Foreground="{DynamicResource TextMutedBrush}" Margin="10,0,0,0" VerticalAlignment="Center"
+                           Visibility="{Binding HasSearchText, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
 
                 <Button x:Name="ClearSearchButton"
                         Grid.Column="1"
@@ -49,16 +52,19 @@
             <StackPanel Orientation="Horizontal">
                 <CheckBox x:Name="ShowVanillaCheck"
                           Content="Vanilla"
+                          ToolTip="Vanilla entities the mod doesn't change"
                           Style="{DynamicResource CheckBoxBase}"
                           IsChecked="{Binding ShowVanilla, RelativeSource={RelativeSource AncestorType=UserControl}}"
                           Margin="0,0,12,0"/>
                 <CheckBox x:Name="ShowModifiedCheck"
-                          Content="Modified"
+                          Content="Changed"
+                          ToolTip="Vanilla entities the mod changes"
                           Style="{DynamicResource CheckBoxBase}"
                           IsChecked="{Binding ShowModified, RelativeSource={RelativeSource AncestorType=UserControl}}"
                           Margin="0,0,12,0"/>
                 <CheckBox x:Name="ShowNewCheck"
                           Content="New"
+                          ToolTip="Entities the mod adds"
                           Style="{DynamicResource CheckBoxBase}"
                           IsChecked="{Binding ShowNew, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             </StackPanel>

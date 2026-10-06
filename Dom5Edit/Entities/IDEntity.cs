@@ -689,17 +689,18 @@ namespace Dom5Edit.Entities
         // saved file (SavePlan), and an undo restores the list exactly.
 
         /// <summary>
-        /// Whether the entity's lines may differ from what the file gave it (an edit touched them):
-        /// the save plan works out placement only for these.
+        /// Whether the entity's lines may differ from what the file gave it (changed after it was
+        /// read): the save plan works out placement only for these.
         /// </summary>
         internal bool EditedSinceLoad { get; private set; }
 
         /// <summary>For diagnostics (Dom5Editor --snapshot --time-refresh).</summary>
         public bool EditedSinceLoadPublic => EditedSinceLoad;
 
+        /// <summary>Any change made outside the parser (an edit, or a loader adding display assets).</summary>
         private void MarkEdited()
         {
-            if (ParentMod?.IsLoaded == true)
+            if (ParentMod != null && !ParentMod.IsParsing)
                 EditedSinceLoad = true;
         }
 

@@ -194,7 +194,7 @@
       "displayName": "TYPES",
       "description": "Creature type flags (read-only, inherited)",
       "renderer": "badge",
-      "readOnly": true,
+      "readOnly": false,
       "commands": [
         {
           "name": "humanoid",
@@ -246,7 +246,7 @@
           "name": "troglodyte",
           "display": "Troglodyte",
           "type": "flag",
-          "description": "Can only have a limited number of special abilities so don\u2019t Use this for humanoids without a head."
+          "description": "Can only have a limited number of special abilities so don’t Use this for humanoids without a head."
         },
         {
           "name": "miscshape",
@@ -317,7 +317,7 @@
           "name": "coldblood",
           "display": "Cold Blood",
           "type": "flag",
-          "description": "#dungeon Cold blooded like the lizards of C\u2019tis."
+          "description": "#dungeon Cold blooded like the lizards of C’tis."
         },
         {
           "name": "immortal",
@@ -464,7 +464,7 @@
           "name": "landrec",
           "display": "Land Recruit",
           "type": "flag",
-          "description": "\u201d<monster name>\u201d #(terrain)fortrec \"<monster name>\" Add a unit to the list of recruitable units for this nation in This unit can be recruited in (terrain) provinces wit."
+          "description": "”<monster name>” #(terrain)fortrec \"<monster name>\" Add a unit to the list of recruitable units for this nation in This unit can be recruited in (terrain) provinces wit."
         },
         {
           "name": "noriverpass",
@@ -690,7 +690,7 @@
           "name": "neednoteat",
           "display": "No Eat",
           "type": "flag",
-          "description": "This monster doesn\u2019t need any food and doesn\u2019t consume any."
+          "description": "This monster doesn’t need any food and doesn’t consume any."
         },
         {
           "name": "taxcollector",
@@ -1526,7 +1526,7 @@
           "name": "dungeon",
           "display": "Dungeon",
           "type": "flag",
-          "description": "Cold blooded like the lizards of C\u2019tis."
+          "description": "Cold blooded like the lizards of C’tis."
         },
         {
           "name": "elegist",

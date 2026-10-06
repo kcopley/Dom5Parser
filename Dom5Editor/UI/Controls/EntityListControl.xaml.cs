@@ -86,55 +86,53 @@ namespace Dom5Editor.UI.Controls
         // Filter Properties
         // ========================================
 
-        private string _searchText = "";
+        // Dependency properties, so the list's owner can keep them (a tab remembers its filter)
+
+        public static readonly DependencyProperty SearchTextProperty = FilterProperty(nameof(SearchText), "");
+        public static readonly DependencyProperty ShowVanillaProperty = FilterProperty(nameof(ShowVanilla), true);
+        public static readonly DependencyProperty ShowModifiedProperty = FilterProperty(nameof(ShowModified), true);
+        public static readonly DependencyProperty ShowNewProperty = FilterProperty(nameof(ShowNew), true);
+
+        private static DependencyProperty FilterProperty(string name, object defaultValue) =>
+            DependencyProperty.Register(name, defaultValue.GetType(), typeof(EntityListControl),
+                new FrameworkPropertyMetadata(defaultValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (d, e) =>
+                {
+                    var control = (EntityListControl)d;
+                    control.OnPropertyChanged(nameof(HasSearchText));
+                    control.RefreshFilter();
+                }));
+
         public string SearchText
         {
-            get => _searchText;
-            set
-            {
-                _searchText = value ?? "";
-                OnPropertyChanged(nameof(SearchText));
-                OnPropertyChanged(nameof(HasSearchText));
-                RefreshFilter();
-            }
+            get => (string)GetValue(SearchTextProperty) ?? "";
+            set => SetValue(SearchTextProperty, value ?? "");
         }
 
-        public bool HasSearchText => !string.IsNullOrEmpty(_searchText);
+        public bool HasSearchText => !string.IsNullOrEmpty(SearchText);
 
-        private bool _showVanilla = true;
         public bool ShowVanilla
         {
-            get => _showVanilla;
-            set
-            {
-                _showVanilla = value;
-                OnPropertyChanged(nameof(ShowVanilla));
-                RefreshFilter();
-            }
+            get => (bool)GetValue(ShowVanillaProperty);
+            set => SetValue(ShowVanillaProperty, value);
         }
 
-        private bool _showModified = true;
         public bool ShowModified
         {
-            get => _showModified;
-            set
-            {
-                _showModified = value;
-                OnPropertyChanged(nameof(ShowModified));
-                RefreshFilter();
-            }
+            get => (bool)GetValue(ShowModifiedProperty);
+            set => SetValue(ShowModifiedProperty, value);
         }
 
-        private bool _showNew = true;
         public bool ShowNew
         {
-            get => _showNew;
-            set
-            {
-                _showNew = value;
-                OnPropertyChanged(nameof(ShowNew));
-                RefreshFilter();
-            }
+            get => (bool)GetValue(ShowNewProperty);
+            set => SetValue(ShowNewProperty, value);
+        }
+
+        /// <summary>Puts the cursor in the search box (Ctrl+F).</summary>
+        public void FocusSearch()
+        {
+            SearchBox.Focus();
+            SearchBox.SelectAll();
         }
 
         // ========================================
@@ -200,13 +198,13 @@ namespace Dom5Editor.UI.Controls
             if (isNew && !ShowNew) return false;
 
             // Filter by search text
-            if (!string.IsNullOrEmpty(_searchText))
+            if (!string.IsNullOrEmpty(SearchText))
             {
                 string displayName = displayNameProp?.GetValue(item) as string ?? "";
                 int? id = idProp?.GetValue(item) as int?;
 
-                bool matchesName = displayName.IndexOf(_searchText, StringComparison.OrdinalIgnoreCase) >= 0;
-                bool matchesId = id?.ToString().Contains(_searchText) ?? false;
+                bool matchesName = displayName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
+                bool matchesId = id?.ToString().Contains(SearchText) ?? false;
 
                 if (!matchesName && !matchesId) return false;
             }
@@ -218,6 +216,10 @@ namespace Dom5Editor.UI.Controls
         {
             _entitiesView?.Refresh();
             OnPropertyChanged(nameof(FilteredCount));
+            // keep the selected entity in sight
+            if (SelectedEntity != null)
+                Dispatcher.BeginInvoke(new Action(() => EntityListBox.ScrollIntoView(SelectedEntity)),
+                    System.Windows.Threading.DispatcherPriority.Background);
         }
 
         // ========================================
