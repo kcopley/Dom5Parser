@@ -2,11 +2,15 @@
 
 Dominions 6 keeps its sprites and icons in `data/*.trs` archives. `trs.py` reads them;
 `Dom5Editor/Sprites/TrsArchive.cs` is the same decoder in C#, and `GameArt.cs` uses it to show
-the game's own icons in the editor, read at run time from the user's install.
+the game's own icons in the editor.
 
-The game's art is not ours to distribute. Nothing extracted from it is committed:
-`extract` and `sheet` refuse to write inside the repository. The repository holds only
-`Dom5Editor/Data/game_icons.json`, which says which archive and index each icon is.
+The game's art is Illwinter's. The developers allow game tools to use the icons (the project's
+owner is on the beta team; the online wiki uses them too), so the icons the editor shows are
+compiled into it: `pack` writes the keys of `Dom5Editor/Data/game_icons.json` (which archive and
+index each icon is) to `Dom5Editor/Resources/game-icons.pack`, an embedded resource, not a
+folder of images. GameArt reads the pack first and the user's install second (for a key the
+pack lacks). Nothing else extracted from the game is committed: `extract` and `sheet` refuse
+to write inside the repository.
 
 ## Commands
 
@@ -14,7 +18,13 @@ The game's art is not ours to distribute. Nothing extracted from it is committed
 python3 tools/gameart/trs.py list ARCHIVE                     # index, size, flags, encoding, offset, length, group
 python3 tools/gameart/trs.py extract ARCHIVE OUTDIR [--only 3,10-20]   # one PNG per image
 python3 tools/gameart/trs.py sheet ARCHIVE OUT.png [--only 0-99] [--zoom 2]  # numbered contact sheet
+python3 tools/gameart/trs.py pack                             # game_icons.json -> Dom5Editor/Resources/game-icons.pack
 ```
+
+Pack format (little-endian): `D6IP`, u16 version 1, u16 count, then per icon: u8 key length,
+key (UTF-8), u16 width, u16 height, u8 flags (1: drawn at half size, shown at 192 dpi), u32
+length, zlib-compressed BGRA pixels. 151 icons are 83 KB. Run `pack` again after changing
+game_icons.json (or for a new game version).
 
 `ARCHIVE` is a path or a bare name (`res.trs`) looked up in `--data DIR`, `$DOM6_DATA`, or the
 default Steam folders. Python 3.8+, standard library only (PNGs are written with zlib).
@@ -81,6 +91,16 @@ mineral, misc, misc2, unit1, trade1, weapon, terrain, monster, ground, walls, si
 only some exist as files) and the code that picks which image to draw. Draw calls name an
 archive by its place in that list (res.trs = 10, misc.trs = 27) and an image index, which is how
 `game_icons.json` was built.
+
+## Unit, item and site sprites
+
+Not compiled in: the editor reads them from the player's install when a list row or page shows
+them, and caches them while shown. Which image each vanilla monster and item is comes from the
+numbers the game stores (`tools/dom6exe sprites`, `tools/dom6exe/data/sprites-6.37.json`,
+shipped as `vanilla-sprites.json`): below 1000 an image index, else the first image of the
+(n / 1000)-th group label plus n % 1000; the attack frame is the next image. A site's picture is
+worked out from its `#path`, `#level` and `#look` (sites.trs groups fire, air, ...), so a mod's
+own sites show one too. Details: tools/dom6exe/README.md, "Sprites".
 
 ## game_icons.json
 

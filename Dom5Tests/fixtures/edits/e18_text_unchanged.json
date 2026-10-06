@@ -1,0 +1,6 @@
+{
+  "description": "Edit a block as text without changing it: nothing changes.",
+  "base": "base_edits.dm",
+  "edits": [ { "op": "text", "entity": "monster", "id": 7430 } ],
+  "expect": []
+}

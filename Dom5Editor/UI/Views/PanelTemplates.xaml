@@ -97,13 +97,13 @@
                         <Border Padding="2,1" CornerRadius="3" Background="Transparent" x:Name="RowBorder" ToolTip="{Binding Source}">
                             <DockPanel>
                                 <Button DockPanel.Dock="Right" Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                                        ToolTip="Remove" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        ToolTip="{Binding RemoveTip}" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         CommandParameter="{Binding}"/>
                                 <Button DockPanel.Dock="Right" Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                                        ToolTip="Open it" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        ToolTip="{Binding OpenTip}" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         CommandParameter="{Binding}"/>
                                 <Button DockPanel.Dock="Right" Content="Copy &amp; edit" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                                        ToolTip="Make a new one copying this, use it here instead, and open it (other users keep the old one)"
+                                        ToolTip="{Binding CopyTip}"
                                         Command="{Binding DataContext.CopyEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         CommandParameter="{Binding}"
                                         Visibility="{Binding DataContext.CanCopyEdit, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -136,9 +136,9 @@
             <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
                 <controls:SearchableReferenceComboBox Width="260" Height="22" HorizontalAlignment="Left"
                                                       ItemsSource="{Binding Candidates}" SelectedId="{Binding AddPick, Mode=TwoWay}"
-                                                      Placeholder="+ Add..."/>
+                                                      Placeholder="+ Add..." ToolTip="{Binding AddTip}"/>
                 <Button Content="{Binding NewLabel}" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" Command="{Binding NewCommand}"
-                        ToolTip="Make a new one, give it to this entity, and open it to edit"
+                        ToolTip="{Binding NewTip}"
                         Visibility="{Binding CanMakeNew, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
             <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
@@ -201,7 +201,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type vm:PathToggle}">
-                    <ToggleButton IsChecked="{Binding IsOn, Mode=TwoWay}" Style="{StaticResource PathToggle}" ToolTip="{Binding Name}"/>
+                    <ToggleButton IsChecked="{Binding IsOn, Mode=TwoWay}" Style="{StaticResource PathToggle}" ToolTip="{Binding Name, Converter={StaticResource Format}, ConverterParameter='{}{0}: lit means this random path can be {0}'}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
@@ -227,8 +227,10 @@
                                     <controls:GameIcon Kind="{Binding Icon}" Width="20" Height="20" Margin="0,0,4,0"/>
                                     <TextBlock Text="{Binding Text}" Style="{StaticResource RowText}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                     <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
-                                             Width="26" TextAlignment="Center" Style="{StaticResource InlineBox}" ToolTip="Level (0 removes the path)"/>
-                                    <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove this path"
+                                             Width="26" TextAlignment="Center" Style="{StaticResource InlineBox}"
+                                             ToolTip="{Binding Text, Converter={StaticResource Format}, ConverterParameter='{}{0} level (0 removes the path)'}"/>
+                                    <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                            ToolTip="{Binding Text, Converter={StaticResource Format}, ConverterParameter='Remove {0} magic'}"
                                             Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                             CommandParameter="{Binding}"/>
                                 </StackPanel>
@@ -245,7 +247,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:PathToggle}">
-                            <Button Style="{StaticResource PathAddButton}" ToolTip="{Binding Name, StringFormat='Add {0} magic (level 1)'}"
+                            <Button Style="{StaticResource PathAddButton}" ToolTip="{Binding Name, Converter={StaticResource Format}, ConverterParameter='Add {0} magic (level 1)'}"
                                     Command="{Binding DataContext.AddPathCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
                         </DataTemplate>
@@ -384,7 +386,7 @@
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
             <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding Candidates}"
                                                   SelectedId="{Binding SelectedId, Mode=TwoWay}" Placeholder="(none)"/>
-            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding OpenCommand}" ToolTip="Open"/>
+            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding OpenCommand}" ToolTip="{Binding OpenTip}"/>
             <Button Style="{StaticResource ResetButton}"/>
             <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"
                        Visibility="{Binding HasNote, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -407,7 +409,7 @@
                             <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" Width="130"/>
                             <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding Unit.Candidates}"
                                                                   SelectedId="{Binding Unit.SelectedId, Mode=TwoWay}" Placeholder="(none)"/>
-                            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding Unit.OpenCommand}" ToolTip="Open"/>
+                            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding Unit.OpenCommand}" ToolTip="{Binding Unit.OpenTip}"/>
                             <Button Style="{StaticResource ResetButton}" DataContext="{Binding Unit}"/>
                             <StackPanel Orientation="Horizontal" Visibility="{Binding HasCount, Converter={StaticResource BoolToVisibilityConverter}}"
                                         ToolTip="{Binding Count.Tooltip}">
@@ -596,14 +598,14 @@
             </TextBlock>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Hands" Width="40" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
-                <TextBox Text="{Binding Hands, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-6"/>
+                <TextBox Text="{Binding Hands, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="Hand slots (0-6): weapons and shields"/>
                 <TextBlock Text="Heads" Width="40" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
-                <TextBox Text="{Binding Heads, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-3"/>
+                <TextBox Text="{Binding Heads, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="Head slots (0-3): helmets and crowns"/>
                 <TextBlock Text="Misc" Width="34" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource FieldLabel}"/>
-                <TextBox Text="{Binding Misc, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="0-4"/>
-                <CheckBox Content="Body" IsChecked="{Binding HasBody}" Margin="12,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
-                <CheckBox Content="Feet" IsChecked="{Binding HasFeet}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
-                <CheckBox Content="Bow" IsChecked="{Binding HasBow}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Misc, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="28" Style="{StaticResource InlineBox}" ToolTip="Miscellaneous item slots (0-4)"/>
+                <CheckBox Content="Body" IsChecked="{Binding HasBody}" ToolTip="A body armor slot" Margin="12,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
+                <CheckBox Content="Feet" IsChecked="{Binding HasFeet}" ToolTip="A boots slot" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
+                <CheckBox Content="Bow" IsChecked="{Binding HasBow}" ToolTip="Can use a bow (a two-handed missile weapon) in its hands" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"/>
                 <CheckBox Content="Crowns only" IsChecked="{Binding CrownsOnly}" Margin="8,0,0,0" Style="{DynamicResource CheckBoxBase}" VerticalAlignment="Center"
                           ToolTip="Head slots can only have crowns"/>
             </StackPanel>
@@ -633,7 +635,7 @@
                             <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="50" Style="{StaticResource InlineBox}"/>
                             <TextBlock Text="{Binding DataContext.ValueLabel, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                        Foreground="{DynamicResource TextMutedBrush}" Margin="6,0,0,0" VerticalAlignment="Center"/>
-                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" ToolTip="Remove"
+                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" ToolTip="{Binding Text, Converter={StaticResource Format}, ConverterParameter='Remove {0}'}"
                                     Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
                         </StackPanel>
@@ -647,7 +649,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:ChoiceOption}">
-                            <Button Style="{StaticResource PathAddButton}" ToolTip="{Binding Name, StringFormat='Add {0}'}"
+                            <Button Style="{StaticResource PathAddButton}" ToolTip="{Binding Name, Converter={StaticResource Format}, ConverterParameter='Add {0}'}"
                                     Command="{Binding DataContext.AddKeyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
                         </DataTemplate>
@@ -655,6 +657,7 @@
                 </ItemsControl>
                 <controls:SearchableReferenceComboBox Width="160" Height="22" HorizontalAlignment="Left"
                                                       ItemsSource="{Binding Addable}" SelectedId="{Binding AddPick, Mode=TwoWay}" Placeholder="+ Add..."
+                                                      ToolTip="{Binding Title, Converter={StaticResource Format}, ConverterParameter='Add a row to {0}: type to search'}"
                                                       Visibility="{Binding HasIconKeys, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
             </StackPanel>
             <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"

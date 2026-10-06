@@ -91,12 +91,13 @@
                           Style="{DynamicResource ComboBoxBase}" Padding="6,2" ToolTip="{Binding OwnerTooltip}"/>
                 <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Margin="10,6,0,0">
                     <controls:SearchableReferenceComboBox Width="240" Height="22" ItemsSource="{Binding Nations}" SelectedId="{Binding OwnerNation, Mode=TwoWay}"
-                                                          Placeholder="(pick a nation)"
+                                                          Placeholder="(pick a nation)" ToolTip="The nation that owns the event (#nation): gets its units, gold and message"
                                                           Visibility="{Binding IsNationOwner, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <StackPanel Orientation="Horizontal" Visibility="{Binding IsEnchantmentOwner, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Text="enchantment" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBox Text="{Binding OwnerEnchantment, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
-                                 Width="60" Style="{StaticResource EventBoxText}"/>
+                                 Width="60" Style="{StaticResource EventBoxText}"
+                                 ToolTip="The enchantment number (#nationench): the event goes to the nation that cast that global enchantment (a spell's #damage when its effect is 81/10081 ...)"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -143,6 +144,7 @@
                 </ItemsControl>
             </WrapPanel>
             <Expander Header="PREVIEW (as the player reads it, with sample names)" Margin="0,2,0,2" Foreground="{DynamicResource TextSecondaryBrush}"
+                      ToolTip="The message as players see it, with sample names"
                       FontSize="9" FontWeight="Bold">
                 <Border Background="#14FFFFFF" CornerRadius="4" Padding="10,6" Margin="0,4,0,0">
                     <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" FontSize="12" FontWeight="Normal" Foreground="{DynamicResource TextPrimaryBrush}"/>
@@ -151,6 +153,7 @@
             <WrapPanel Orientation="Horizontal" Margin="0,2,0,0">
                 <TextBlock Text="Header" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <ComboBox Width="290" ItemsSource="{Binding HeaderOptions}" DisplayMemberPath="Name" SelectedValuePath="Value"
+                          ToolTip="The line the game puts above the message (#header): the default names the province"
                           SelectedValue="{Binding Header, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,1"/>
                 <CheckBox Content="No message (#notext)" IsChecked="{Binding NoTextValue}" Margin="14,0,0,0" VerticalAlignment="Center"
                           Style="{DynamicResource CheckBoxBase}" ToolTip="The event doesn't send a message"/>
@@ -172,7 +175,7 @@
                     </TextBlock.Style>
                 </TextBlock>
                 <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" Command="{Binding OpenNamedCommand}"
-                        Visibility="{Binding OpenNamedCommand, Converter={StaticResource NullToVisibilityConverter}}" ToolTip="Open it"/>
+                        Visibility="{Binding OpenNamedCommand, Converter={StaticResource NullToVisibilityConverter}}" ToolTip="{Binding BracketName, Converter={StaticResource Format}, ConverterParameter='Open {0}, the site or item the message names'}"/>
             </StackPanel>
         </StackPanel>
     </DataTemplate>
@@ -223,7 +226,7 @@
                         <controls:SearchableReferenceComboBox Width="220" Height="22" ItemsSource="{Binding Candidates}" SelectedId="{Binding RefId, Mode=TwoWay}"
                                                               IsEnabled="{Binding CanEdit}"
                                                               Placeholder="(pick)"/>
-                        <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="3,0,0,0" Command="{Binding OpenCommand}" ToolTip="Open it"/>
+                        <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="3,0,0,0" Command="{Binding OpenCommand}" ToolTip="{Binding OpenTip}"/>
                     </StackPanel>
                     <!-- flags (orders, afflictions, terrain) -->
                     <Grid Margin="3,0" Visibility="{Binding IsMask, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -286,7 +289,7 @@
             </ItemsControl>
             <controls:SearchableReferenceComboBox Width="460" Height="22" HorizontalAlignment="Left" Margin="4,3,0,0"
                                                   ItemsSource="{Binding Addable}" SelectedId="{Binding AddPick, Mode=TwoWay}"
-                                                  Placeholder="{Binding AddPlaceholder}"/>
+                                                  Placeholder="{Binding AddPlaceholder}" ToolTip="{Binding AddTip}"/>
         </StackPanel>
     </DataTemplate>
 
@@ -318,6 +321,7 @@
                     </ItemsControl>
                 </StackPanel>
                 <Expander IsExpanded="{Binding MapOpen, Mode=OneTime}" Margin="0,6,0,0" Foreground="{DynamicResource TextSecondaryBrush}"
+                          ToolTip="The chain as cards and arrows: click a card to open it, hover an arrow to see the link"
                           FontSize="9" FontWeight="Bold" Visibility="{Binding HasMap, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Expander.Header>
                         <TextBlock>

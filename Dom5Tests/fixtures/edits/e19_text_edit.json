@@ -1,0 +1,67 @@
+{
+  "description": "Edit a block as text: change a line, insert one in the middle, remove one. Monster 7431 copies 7430 (#copystats), so it changes too.",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "text",
+      "entity": "monster",
+      "id": 7430,
+      "replace": [
+        [
+          "#hp 11",
+          "#hp 15 -- tougher"
+        ],
+        [
+          "#amphibian\n",
+          "#amphibian\n#mr 14\n"
+        ],
+        [
+          "#fear 5\n",
+          ""
+        ]
+      ]
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7430",
+      "field": "hp",
+      "from": "11",
+      "to": "15"
+    },
+    {
+      "type": "unit",
+      "id": "7430",
+      "field": "mr",
+      "to": "14"
+    },
+    {
+      "type": "unit",
+      "id": "7430",
+      "field": "fear",
+      "from": "5",
+      "to": null
+    },
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "hp",
+      "from": "11",
+      "to": "15"
+    },
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "mr",
+      "to": "14"
+    },
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "fear",
+      "from": "5",
+      "to": null
+    }
+  ]
+}

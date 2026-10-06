@@ -64,6 +64,7 @@ namespace Dom5Editor
                     int siteCount = vanilla.Database[Dom5Edit.Entities.EntityType.SITE].GetFullList().Count;
                     int nationCount = vanilla.Database[Dom5Edit.Entities.EntityType.NATION].GetFullList().Count;
                     System.Diagnostics.Debug.WriteLine($"[App] Vanilla data loaded: {monsterCount} monsters, {siteCount} sites, {nationCount} nations");
+                    System.Diagnostics.Debug.WriteLine($"[App] Game texts: {VanillaLoader.TextsStatus}");
                 }
                 else
                 {

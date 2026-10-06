@@ -167,7 +167,12 @@ namespace Dom5Editor.UI.ViewModels
 
         public EntityType RefType { get; }
         public IReadOnlyList<ReferenceItem> Candidates { get; }
-        public ICommand OpenCommand { get; }
+public ICommand OpenCommand { get; }
+
+        /// <summary>The open button's tooltip: which entity it opens.</summary>
+        public string OpenTip => SelectedId is int id && id != 0
+            ? $"Open the {Nouns.Of(RefType)} {Nouns.Named(Candidates.FirstOrDefault(c => c.ID == id)?.DisplayName, id)}"
+            : $"Open the {Nouns.Of(RefType)} (none picked)";
 
         /// <summary>What a value the picker can't show is: a negative monster number is a monster tag.</summary>
         public string Note => Value != null && int.TryParse(Arguments.Split(' ')[0], out var n) && n < 0 && RefType == EntityType.MONSTER

@@ -34,6 +34,7 @@ namespace Dom5Editor.UI
     ///   --save FILE.dm           save the mod (the editor's Save)
     ///   --png FILE.png           render the window
     ///   --view FILE.png          render the selected entity's view at its full height
+    ///   --scroll-list TYPE N     scroll a type's list N screens (0: to the end), timing each (sprites decode as rows show)
     ///   --size W H               window size (default 1400 x 2000)
     /// Messages go to FILE.png.log / FILE.dm.log next to the first output, and to stdout.
     /// Example: Dom5Editor.exe --snapshot --select monster 1 --badge hp 30 --png hp.png --save out.dm
@@ -41,6 +42,14 @@ namespace Dom5Editor.UI
     public static class Snapshot
     {
         private static readonly List<string> _log = new List<string>();
+
+        private static T? FindParent<T>(DependencyObject d) where T : DependencyObject
+        {
+            for (var x = System.Windows.Media.VisualTreeHelper.GetParent(d); x != null; x = System.Windows.Media.VisualTreeHelper.GetParent(x))
+                if (x is T t)
+                    return t;
+            return null;
+        }
 
         public static bool TryRun(string[] args, Application app)
         {
@@ -68,6 +77,7 @@ namespace Dom5Editor.UI
                 if (!args.Contains("--mod"))
                     vm.CreateNewMod();
                 Pump();
+                Log("game texts: " + Dom5Edit.VanillaLoader.TextsStatus);
 
                 for (int i = 1; i < args.Length; i++)
                 {
@@ -409,6 +419,86 @@ namespace Dom5Editor.UI
                             Log($"facet {t} {facet}: {n} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
                             break;
                         }
+                        case "--tooltips":
+                        {
+                            // --tooltips: every visible control (button, box, check box, list) with no tooltip on
+                            // it or on anything around it, and the tooltips the page's buttons show
+                            Pump();
+                            int controls = 0, missing = 0;
+                            var seen = new HashSet<string>();
+                            void Walk(DependencyObject d)
+                            {
+                                if (d is FrameworkElement fe && fe.IsVisible && fe.IsHitTestVisible && fe.Opacity > 0 && (d is System.Windows.Controls.Primitives.ButtonBase || d is System.Windows.Controls.TextBox
+                                    || d is System.Windows.Controls.ComboBox || d is Controls.SearchableReferenceComboBox))
+                                {
+                                    // inside a combo box's own template: its parts show the combo box's tooltip
+                                    bool part = fe.TemplatedParent is System.Windows.Controls.ComboBox || fe.TemplatedParent is System.Windows.Controls.Primitives.ScrollBar
+                                                || FindParent<Controls.SearchableReferenceComboBox>(fe) is { } sr && !ReferenceEquals(sr, fe);
+                                    if (!part)
+                                    {
+                                        controls++;
+                                        object? tip = null;
+                                        for (DependencyObject? x = d; x != null && tip == null; x = System.Windows.Media.VisualTreeHelper.GetParent(x))
+                                            if (x is FrameworkElement f && f.ToolTip is object t && !(t is string ts && ts.Length == 0))
+                                                tip = t;
+                                        var what = $"{d.GetType().Name} '{(d as System.Windows.Controls.ContentControl)?.Content as string ?? (d as System.Windows.Controls.TextBox)?.Text ?? ""}' in {fe.DataContext?.GetType().Name}";
+                                        if (tip == null && seen.Add(what))
+                                        {
+                                            missing++;
+                                            Log($"   no tooltip: {what}");
+                                        }
+                                        else if (tip is string text && d is System.Windows.Controls.Primitives.ButtonBase && seen.Add("tip:" + text))
+                                            Log($"   tip: {d.GetType().Name} '{(d as System.Windows.Controls.ContentControl)?.Content as string}': {text.Replace('\n', ' ')}");
+                                    }
+                                }
+                                for (int k = 0; k < System.Windows.Media.VisualTreeHelper.GetChildrenCount(d); k++)
+                                    Walk(System.Windows.Media.VisualTreeHelper.GetChild(d, k));
+                            }
+                            Walk(window);
+                            Log($"tooltips: {controls} controls shown, {missing} kinds without a tooltip");
+                            break;
+                        }
+                        case "--file-edit":
+                        {
+                            // --file-edit FIND REPLACE: the "in the file" box edited as text (\n for a new line), applied
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            string find = args[++i].Replace("\\n", "\n"), replace = args[++i].Replace("\\n", "\n");
+                            page.ShowFile = true;
+                            page.EditFileCommand.Execute(null);
+                            if (!page.IsEditingFile)
+                            {
+                                Log($"file edit: can't edit ({page.FileError})");
+                                break;
+                            }
+                            page.FileDraft = page.FileDraft.Replace(find, replace);
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            page.ApplyFileCommand.Execute(null);
+                            var now = Selected(vm)!;
+                            Log($"file edit ({watch.ElapsedMilliseconds} ms): {(page.FileError != null ? "error: " + page.FileError : "applied")}");
+                            now.ShowFile = true;
+                            foreach (var line in now.FileText.Split('\n'))
+                                Log("   | " + line);
+                            break;
+                        }
+                        case "--sprite":
+                        {
+                            // --sprite COMMAND FILE: a header image set from a file (as picking it or dropping it does)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var file = args[++i];
+                            page.SetImage(c, Path.GetFullPath(file));
+                            var now = Selected(vm)!;
+                            Log($"sprite {args[i - 1]}: {(now.Error != null ? "error: " + now.Error : now.Notice)}");
+                            Log($"   slots: {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.PixelWidth}x{x.Image.PixelHeight}" : "none")}"))}");
+                            break;
+                        }
+                        case "--icons":
+                        {
+                            // where the game's icons come from: compiled in, and the install found (or not)
+                            var hp = Sprites.GameArt.Icon("hp");
+                            Log($"icons: {Sprites.GameArt.PackedCount} compiled in; install: {Sprites.GameArt.DataFolder ?? "not found"}; hp icon {(hp == null ? "missing" : $"{hp.Width}x{hp.Height}")}; {Dom5Edit.VanillaSprites.Status}");
+                            break;
+                        }
                         case "--pause":
                         {
                             // --pause SECONDS: keep running (for a memory dump of the process)
@@ -476,6 +566,40 @@ namespace Dom5Editor.UI
                                 Pump();
                             }
                             Log($"page scrolled to {scroller.VerticalOffset:0} of {scroller.ExtentHeight:0}");
+                            break;
+                        }
+                        case "--scroll-list":
+                        {
+                            // --scroll-list TYPE SCREENS: scroll the type's list a screen at a time (0: to the
+                            // end); logs the slowest screen (rows are worked out, sprites decoded, as they show)
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            int screens = int.Parse(args[++i]);
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            window.UpdateLayout();
+                            Pump();
+                            var list = Visuals<EntityListControl>(window).First(l => l.IsVisible && l.DataContext == tab);
+                            var scroller = Visuals<System.Windows.Controls.ScrollViewer>(list).First(s => s.ScrollableHeight > 0);
+                            scroller.ScrollToTop();
+                            window.UpdateLayout();
+                            Pump();
+                            var total = System.Diagnostics.Stopwatch.StartNew();
+                            long slowest = 0;
+                            int n = 0;
+                            while ((screens == 0 || n < screens) && scroller.VerticalOffset < scroller.ScrollableHeight)
+                            {
+                                var watch = System.Diagnostics.Stopwatch.StartNew();
+                                scroller.PageDown();
+                                window.UpdateLayout();
+                                Pump();
+                                slowest = Math.Max(slowest, watch.ElapsedMilliseconds);
+                                n++;
+                            }
+                            Log($"scroll-list {t}: {n} screens in {total.ElapsedMilliseconds} ms, slowest {slowest} ms; " +
+                                $"memory {GC.GetTotalMemory(true) / (1 << 20)} MB managed, {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1 << 20)} MB working set");
+                            var all = System.Diagnostics.Stopwatch.StartNew();
+                            int shown = tab.Items.Count(x => x.Sprite != null);
+                            Log($"   {shown} of {tab.Items.Count} rows have a sprite (the rest worked out in {all.ElapsedMilliseconds} ms)");
                             break;
                         }
                         case "--tooltip":

@@ -11,6 +11,7 @@ maintained. This reads the exe directly instead:
   readonly   abilities vanilla monsters have that no mod command can set; an editor shows
              them read-only
   events     the vanilla events as #selectevent blocks (events.py)
+  texts      where the game's texts are (descriptions, nation summaries; texts.py)
 
 Usage:
   python3 tools/dom6exe/dom6exe.py [--exe PATH] [--inspector DIR] commands|monsters|readonly [--out FILE]
@@ -840,6 +841,20 @@ def cmd_events(exe, args):
     return res
 
 
+def cmd_sprites(exe, args):
+    """Vanilla monster and item sprite numbers, and the site picture rule (sprites.py)."""
+    import sprites
+    return sprites.collect(exe)
+
+
+def cmd_texts(exe, args):
+    """Where the game's texts (descriptions, nation summaries, ...) are (texts.py); --out names the JSON."""
+    import texts
+    res = texts.write(exe, args.out)
+    args.out = None
+    return res
+
+
 def cmd_tables(exe, args):
     out = {'game_version': exe.version, 'exe_sha256_16': exe.sha}
     for typ, spec in TABLES.items():
@@ -902,7 +917,7 @@ def cmd_readonly(exe, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['catalog', 'commands', 'events', 'layout', 'monsters', 'readonly', 'tables', 'vanilla'])
+    ap.add_argument('what', choices=['catalog', 'commands', 'events', 'layout', 'monsters', 'readonly', 'sprites', 'tables', 'texts', 'vanilla'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
@@ -912,7 +927,8 @@ def main():
     args = ap.parse_args()
     exe = Exe(args.exe)
     res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
-           'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog, 'events': cmd_events}[args.what](exe, args)
+           'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog, 'events': cmd_events,
+           'sprites': cmd_sprites, 'texts': cmd_texts}[args.what](exe, args)
     text = json.dumps(res, indent=1, default=str)
     if args.out:
         open(args.out, 'w').write(text + '\n')

@@ -34,6 +34,10 @@ namespace Dom5Editor.UI.ViewModels
         public string? Icon { get; init; }
         /// <summary>For a table panel: the row's values, one per column.</summary>
         public IReadOnlyList<TableCell> Cells { get; init; } = Array.Empty<TableCell>();
+        /// <summary>The buttons' tooltips, saying what they do to which entity.</summary>
+        public string RemoveTip { get; init; } = "Remove";
+        public string OpenTip { get; init; } = "Open it";
+        public string CopyTip { get; init; } = "";
         private string _editText = "";
 
         /// <summary>For editable rows: the value as text; setting it (the box lost focus) commits the edit.</summary>
@@ -92,7 +96,17 @@ namespace Dom5Editor.UI.ViewModels
                     cells = id > 0 && page.Session.Mod.TryGet(refType, id, null, out var target)
                         ? Columns.Select(c => Cell(c, v, page.Session.Resolve(target))).ToList()
                         : Columns.Select(c => new TableCell("", c.Width)).ToList();
-                Rows.Add(new PanelRow(v, string.IsNullOrEmpty(name) ? $"#{id}" : name, detail?.Invoke(id) ?? "", page.SourceText(v), true) { RefId = id, Cells = cells });
+                var text = string.IsNullOrEmpty(name) ? $"#{id}" : name;
+                var it = Nouns.Named(text, id);
+                Rows.Add(new PanelRow(v, text, detail?.Invoke(id) ?? "", page.SourceText(v), true)
+                {
+                    RefId = id, Cells = cells,
+                    OpenTip = $"Open the {Nouns.Of(refType)} {it}",
+                    RemoveTip = v.Source == ValueSource.Own
+                        ? $"Remove {it} from {page.DisplayName}"
+                        : $"Remove {it} from {page.DisplayName} (inherited: the mod clears the list and adds the rest back)",
+                    CopyTip = $"Make a copy of {it} for {page.DisplayName} to use instead, and open it. Other {Nouns.Plural(page.Type)} keep {text}.",
+                });
             }
             Candidates = page.Session.References(refType);
             RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
@@ -115,6 +129,8 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>"New weapon" (armor, ...): makes a new one, gives it to this entity, and opens it.</summary>
         public bool CanMakeNew => RefType == EntityType.WEAPON || RefType == EntityType.ARMOR;
         public string NewLabel => $"+ New {RefType.ToString().ToLowerInvariant()}";
+        public string NewTip => $"Make a new {Nouns.Of(RefType)} for {_page.DisplayName} and open it";
+        public string AddTip => $"Add a {Nouns.Of(RefType)} to {_page.DisplayName} (type a name or ID)";
         public ICommand NewCommand { get; }
 
         private void MakeNew()

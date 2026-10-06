@@ -30,6 +30,12 @@
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </Content>
+      <!-- the vanilla sprite numbers (tools/dom6exe sprites): the pictures are read from the player's install -->
+      <Content Include="..\tools\dom6exe\data\sprites-6.37.json" Link="vanilla-sprites.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
@@ -58,6 +64,11 @@
       <Content Include="Data\game_icons.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <!-- The game's icons the editor shows, packed (tools/gameart/trs.py pack) and compiled in -->
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\game-icons.pack" LogicalName="game-icons.pack" />
     </ItemGroup>
 
     <!-- Magic path and gem icons -->

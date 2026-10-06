@@ -124,5 +124,20 @@ namespace Dom5Editor.UI.Views
                     yield return d;
             }
         }
+    
+        // an image file dropped on one of the header's images sets it (copied into the mod's folder)
+        private void OnSpriteDragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
+            e.Handled = true;
+        }
+
+        private void OnSpriteDrop(object sender, DragEventArgs e)
+        {
+            if ((sender as FrameworkElement)?.DataContext is UI.ViewModels.SpriteSlot slot
+                && e.Data.GetData(DataFormats.FileDrop) is string[] files && files.Length > 0)
+                slot.SetFromFile(files[0]);
+            e.Handled = true;
+        }
     }
 }

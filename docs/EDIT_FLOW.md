@@ -137,9 +137,11 @@ flowchart LR
   (paths, random paths). More per type in E3.
 - Every change: page -> `EditorSession.Edit` -> `ModEditor` -> `IModEdit` recorded for undo; the
   session's `Changed` refreshes pages and lists. Nothing writes the model directly.
-- Vanilla sprites and descriptions loaded for display (`VanillaAssetLoader`) are
-  `Property.IsDisplayAsset`: the resolver keeps them apart from values, so they're shown but never
-  copied into a mod as lines.
+- Vanilla sprites and descriptions loaded for display (`VanillaAssetLoader`; the game's texts
+  from the player's exe, `GameData.VanillaTexts`) are `Property.IsDisplayAsset`: the resolver
+  keeps them apart from values, so they're shown but never copied into a mod as lines. A page's
+  description and long-text boxes (summary, brief, details, portent, cure) show the game's text
+  when nothing sets one; typing in the box writes the command into the mod.
 - Verified with `Dom5Editor --snapshot` (load, select, set/add/remove, field, new/delete,
   undo/redo, dump, time-refresh, render, save).
 - Speed (DomEnhanced, 140k lines, Release): the resolver is lazy per entity (an entity's blocks,

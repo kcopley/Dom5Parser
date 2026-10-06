@@ -29,7 +29,7 @@
                          Grid.Column="0"
                          Style="{DynamicResource TextBoxBase}"
                          Text="{Binding SearchText, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="Search by name or ID (Ctrl+F)"/>
+                         ToolTip="Search by name or ID (Ctrl+F); for events, also the message text"/>
                 <TextBlock Grid.Column="0" Text="Search name or ID... (Ctrl+F)" IsHitTestVisible="False"
                            Foreground="{DynamicResource TextMutedBrush}" Margin="10,0,0,0" VerticalAlignment="Center"
                            Visibility="{Binding HasSearchText, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
@@ -38,7 +38,7 @@
                         Grid.Column="1"
                         Content="X"
                         Style="{DynamicResource ButtonIcon}"
-                        Margin="4,0,0,0"
+                        Margin="4,0,0,0" ToolTip="Clear the search"
                         Visibility="{Binding HasSearchText, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
                         Click="ClearSearchButton_Click"/>
             </Grid>
@@ -52,31 +52,31 @@
             <WrapPanel Orientation="Horizontal">
                 <CheckBox x:Name="ShowVanillaCheck"
                           Content="Vanilla"
-                          ToolTip="Vanilla entities the mod doesn't change"
+                          ToolTip="Show the game's own entities that the mod doesn't change"
                           Style="{DynamicResource CheckBoxBase}"
                           IsChecked="{Binding ShowVanilla, RelativeSource={RelativeSource AncestorType=UserControl}}"
                           Margin="0,0,12,0"/>
                 <CheckBox x:Name="ShowModifiedCheck"
                           Content="Changed"
-                          ToolTip="Vanilla entities the mod changes"
+                          ToolTip="Show the game's entities that the mod changes (#select...)"
                           Style="{DynamicResource CheckBoxBase}"
                           IsChecked="{Binding ShowModified, RelativeSource={RelativeSource AncestorType=UserControl}}"
                           Margin="0,0,12,0"/>
                 <CheckBox x:Name="ShowNewCheck"
                           Content="New"
-                          ToolTip="Entities the mod adds"
+                          ToolTip="Show the entities the mod adds (#new...)"
                           Style="{DynamicResource CheckBoxBase}"
                           IsChecked="{Binding ShowNew, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 <ComboBox x:Name="SortBox" Width="70" Margin="12,0,0,0" Style="{DynamicResource ComboBoxBase}" Padding="4,1"
                           SelectedValue="{Binding SortBy, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                          SelectedValuePath="Tag" ToolTip="Sort by">
+                          SelectedValuePath="Tag" ToolTip="Sort the list by ID (entities without one, like new events, in file order after them) or by name">
                     <ComboBoxItem Content="ID" Tag="ID"/>
                     <ComboBoxItem Content="Name" Tag="DisplayName"/>
                 </ComboBox>
                 <StackPanel Orientation="Horizontal" Margin="0,5,0,0"
                             Visibility="{Binding Facets, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}">
                     <TextBlock Text="Show" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                    <ComboBox Width="170" Style="{DynamicResource ComboBoxBase}" Padding="4,1" ToolTip="Show only these"
+                    <ComboBox Width="170" Style="{DynamicResource ComboBoxBase}" Padding="4,1" ToolTip="Show only some of them: by kind (rituals, mages, ...) or by state (in a chain, with problems)"
                               ItemsSource="{Binding Facets, RelativeSource={RelativeSource AncestorType=UserControl}}"
                               SelectedItem="{Binding Facet, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 </StackPanel>
@@ -110,7 +110,7 @@
                         <Border x:Name="StateIndicator" Grid.Column="0" Width="4" CornerRadius="2" Margin="0,0,6,0"
                                 Background="{DynamicResource VanillaBrush}"/>
 
-                        <!-- sprite (monsters, items) -->
+                        <!-- sprite (monsters, items, sites) -->
                         <Image Grid.Column="1" Source="{Binding Sprite}" Width="28" Height="28" Stretch="Uniform" Margin="0,0,6,0"
                                RenderOptions.BitmapScalingMode="NearestNeighbor"
                                Visibility="{Binding Sprite, Converter={StaticResource NullToVisibilityConverter}}"/>
@@ -152,7 +152,7 @@
                         Style="{DynamicResource ButtonSmall}"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
-                        ToolTip="Make a new entity of this type in the mod"
+                        ToolTip="{Binding NewTip}" ToolTipService.ShowOnDisabled="True"
                         Click="AddButton_Click"/>
                 <Button x:Name="DeleteButton"
                         Content="Delete"
@@ -160,7 +160,7 @@
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
                         Margin="0,0,4,0"
-                        ToolTip="Delete the selected entity from the mod (for a vanilla one: drop the mod's changes to it). Undo brings it back."
+                        ToolTip="{Binding DeleteTip}" ToolTipService.ShowOnDisabled="True"
                         Click="DeleteButton_Click"/>
             </DockPanel>
         </Border>
