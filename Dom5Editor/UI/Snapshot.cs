@@ -228,6 +228,40 @@ namespace Dom5Editor.UI
                             Log($"copy & edit {title} {row.Text}: now on {Selected(vm)?.DisplayName} #{Selected(vm)?.ID}{(page.Error != null ? " error: " + page.Error : "")}");
                             break;
                         }
+                        case "--add-badge":
+                        {
+                            // --add-badge COMMAND: pick the command in a section's add box (a reference
+                            // starts as an empty badge with its picker; pick with --ref)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var section = page.Sections.Append(page.Other!).FirstOrDefault(x => x.Available.Any(a => a.Command == c))
+                                          ?? throw new InvalidOperationException("no add box offers " + args[i]);
+                            section.AddCommand.Execute(section.Available.First(a => a.Command == c));
+                            Log($"add badge {args[i]} (in {section.Id}){(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--ref":
+                        {
+                            // --ref COMMAND ID: pick an entity in the (last) reference badge of the command
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            int pick = int.Parse(args[++i]);
+                            var badge = page.Sections.Append(page.Other!).SelectMany(x => x.Badges).LastOrDefault(b => b.Command == c && b.IsReference)
+                                        ?? throw new InvalidOperationException("no reference badge for " + args[i - 1]);
+                            var before = badge.ReferenceId;
+                            badge.OnReferenceChanged(before, pick, "");
+                            Log($"ref {args[i - 1]} {before} -> {pick}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--validate":
+                        {
+                            var result = vm.Validate();
+                            Log($"validate: {vm.StatusMessage}");
+                            if (result != null)
+                                foreach (var issue in result.Issues.OrderBy(x => x.ToString().StartsWith("Error") ? 0 : 1).Take(8))
+                                    Log($"   {issue}");
+                            break;
+                        }
                         case "--dump":
                         {
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");

@@ -79,6 +79,7 @@ namespace Dom5Edit.Resolve
         public void Invalidate()
         {
             _plan = null;
+            _owners = null;
             _memo.Clear();
             _resolved.Clear();
         }
@@ -122,23 +123,52 @@ namespace Dom5Edit.Resolve
             return id > 0 ? (entity.GetEntityType(), id) : entity;
         }
 
-        /// <summary>The mod's own entity for this one's key, with its blocks, or null if the mod has none.</summary>
+        /// <summary>
+        /// The mod's own entity for this one's key, with its blocks, or null if the mod has none. A
+        /// game entity the mod selects both by name and by ID is two objects here; their blocks are
+        /// all its blocks, in the save's order.
+        /// </summary>
         private Memo? MemoOf(IDEntity entity)
         {
             var key = Key(entity);
             if (_memo.TryGetValue(key, out var memo))
                 return memo;
-            IDEntity? own = entity.ParentMod == _mod ? entity : null;
-            if (own == null && entity.ID > 0 && _mod.Database.TryGetValue(entity.GetEntityType(), out var set) && set.TryGetValue(entity.ID, out var found))
-                own = found;
+            var owners = OwnersOf(key, entity);
             memo = null;
-            if (own != null)
+            if (owners.Count > 0)
             {
-                var blocks = Plan.BlocksOf(own);
+                var blocks = owners.SelectMany(o => Plan.BlocksOf(o)).OrderBy(b => b.Position).ToList();
                 if (blocks.Count > 0)
-                    memo = new Memo { Entity = own, Blocks = blocks };
+                    memo = new Memo { Entity = owners.FirstOrDefault(o => o.ID > 0 && !o.Named) ?? owners[0], Blocks = blocks };
             }
             return _memo[key] = memo;
+        }
+
+        private Dictionary<object, List<IDEntity>>? _owners;
+
+        /// <summary>The mod's entities with this key (by type and ID: one usually, two when it selects one by name and by ID).</summary>
+        private List<IDEntity> OwnersOf(object key, IDEntity entity)
+        {
+            if (key is not ValueTuple<EntityType, int>)
+                return entity.ParentMod == _mod ? new List<IDEntity> { entity } : new List<IDEntity>();
+            if (_owners == null)
+            {
+                _owners = new Dictionary<object, List<IDEntity>>();
+                foreach (var set in _mod.Database.Values)
+                    foreach (var e in set.GetFullList())
+                    {
+                        EntityType t;
+                        try { t = e.GetEntityType(); }
+                        catch (NotImplementedException) { continue; }
+                        if (e.ID <= 0)
+                            continue;
+                        var k = (t, e.ID);
+                        if (!_owners.TryGetValue(k, out var list))
+                            _owners[k] = list = new List<IDEntity>();
+                        list.Add(e);
+                    }
+            }
+            return _owners.TryGetValue(key, out var found) ? found : new List<IDEntity>();
         }
 
         /// <summary>
