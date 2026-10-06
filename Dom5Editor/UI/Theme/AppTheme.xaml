@@ -122,6 +122,15 @@
     </Style>
 
     <!-- TextBox Style -->
+    <!-- a one-line value box without a scroll viewer: pages have hundreds of these, and each
+         scroll viewer brings two scrollbars' worth of visuals -->
+    <ControlTemplate x:Key="LightTextBoxTemplate" TargetType="TextBox">
+        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+            <AdornerDecorator x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
+        </Border>
+    </ControlTemplate>
+
     <Style x:Key="TextBoxBase" TargetType="TextBox">
         <Setter Property="Background" Value="{StaticResource InputBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>

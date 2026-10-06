@@ -408,6 +408,47 @@ namespace Dom5Editor.UI
                             Log($"facet {t} {facet}: {n} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
                             break;
                         }
+                        case "--time-view":
+                        {
+                            // --time-view TYPE NAME: how long selecting a page takes until it's laid out; and how many visuals it has
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            var name = args[++i];
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            Pump();
+                            var item = tab.Items.First(x => x.DisplayName.Contains(name, StringComparison.OrdinalIgnoreCase));
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            tab.SelectedItem = item;
+                            long model = watch.ElapsedMilliseconds;
+                            window.UpdateLayout();
+                            long layout = watch.ElapsedMilliseconds;
+                            Pump();
+                            long shown = watch.ElapsedMilliseconds;
+                            Log($"   model {model} ms, layout {layout - model} ms, render {shown - layout} ms");
+                            var counts = Visuals<FrameworkElement>(window).GroupBy(v => v.GetType().Name).OrderByDescending(g => g.Count()).Take(6)
+                                .Select(g => $"{g.Key} {g.Count()}");
+                            Log($"time-view {item.DisplayName}: page {model} ms, shown {shown} ms; visuals {Visuals<FrameworkElement>(window).Count()}: {string.Join(", ", counts)}");
+                            var badges = Visuals<CompactBadge>(window).ToList();
+                            var rows = Visuals<System.Windows.Controls.ContentPresenter>(window).Where(c => c.Content is PanelRow).ToList();
+                            Log($"   {badges.Count} badges, {badges.Sum(b => Visuals<FrameworkElement>(b).Count())} visuals in them; {rows.Count} table rows, {rows.Sum(r => Visuals<FrameworkElement>(r).Count())} visuals; page {Visuals<FrameworkElement>(Visuals<EntityPageView>(window).First()).Count()}");
+                            var pickers = Visuals<SearchableReferenceComboBox>(Visuals<EntityPageView>(window).First()).ToList();
+                            Log($"   {pickers.Count} pickers ({pickers.Count(p => p.IsVisible)} shown), {pickers.Sum(p => Visuals<FrameworkElement>(p).Count())} visuals in them");
+                            break;
+                        }
+                        case "--scroll":
+                        {
+                            // --scroll Y: scroll the page to Y; then logs where it is (after the next steps, --scroll -1 just logs)
+                            var view = Visuals<EntityPageView>(window).First();
+                            var scroller = Visuals<System.Windows.Controls.ScrollViewer>(view).First();
+                            double y = double.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture);
+                            if (y >= 0)
+                            {
+                                scroller.ScrollToVerticalOffset(y);
+                                Pump();
+                            }
+                            Log($"page scrolled to {scroller.VerticalOffset:0} of {scroller.ExtentHeight:0}");
+                            break;
+                        }
                         case "--tooltip":
                         {
                             // --tooltip COMMAND: log a badge's hover hint and value note
@@ -446,9 +487,21 @@ namespace Dom5Editor.UI
                             var value = args[++i];
                             var next = CommandOf(args[++i]);
                             window.Activate();
-                            System.Windows.Controls.TextBox BoxOf(Command cmd) =>
-                                Visuals<CompactBadge>(window).Where(b => b.DataContext is PropertyItem p && p.Command == cmd)
-                                    .SelectMany(Visuals<System.Windows.Controls.TextBox>).First(t => t.IsVisible);
+                            System.Windows.Controls.TextBox BoxOf(Command cmd)
+                            {
+                                // (the page makes parts as they scroll into view)
+                                var page = Selected(vm)!;
+                                var section = page.Sections.Append(page.Other!).FirstOrDefault(x => x.Badges.Any(b => b.Command == cmd));
+                                if (section != null)
+                                {
+                                    Visuals<EntityPageView>(window).First().ShowPart(section);
+                                    Pump();
+                                }
+                                var badges = Visuals<CompactBadge>(window).Where(b => b.DataContext is PropertyItem p && p.Command == cmd).ToList();
+                                var boxes = badges.SelectMany(Visuals<System.Windows.Controls.TextBox>).ToList();
+                                return boxes.FirstOrDefault(t => t.IsVisible)
+                                       ?? throw new InvalidOperationException($"no box for {cmd}: {badges.Count} badges, {boxes.Count} boxes ({boxes.Count(b => b.IsVisible)} visible); {Visuals<CompactBadge>(window).Count()} badges on screen");
+                            }
                             var box = BoxOf(c);
                             System.Windows.Input.Keyboard.Focus(box);
                             box.Text = value;

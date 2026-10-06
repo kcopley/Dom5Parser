@@ -26,6 +26,7 @@
 
     <!-- a small inline value box, like a badge's -->
     <Style x:Key="InlineBox" TargetType="TextBox">
+        <Setter Property="Template" Value="{DynamicResource LightTextBoxTemplate}"/>
         <Setter Property="Background" Value="#1AFFFFFF"/>
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
         <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>

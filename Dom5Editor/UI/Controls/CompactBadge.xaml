@@ -8,116 +8,104 @@
              mc:Ignorable="d"
              d:DesignHeight="20" d:DesignWidth="100"
              x:Name="Root">
+    <!--
+        One value on an entity page. A page can have a hundred of these, so each part a badge may
+        need (its value box, a reference's name and picker, the link button, the n/r and inh tags,
+        the remove button) is a template made only when the badge needs that part.
+    -->
+    <UserControl.Resources>
+        <!-- a part shown when its condition (the ContentControl's Tag binding, true) holds -->
+        <Style x:Key="Part" TargetType="ContentControl">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
 
-    <Border Background="{Binding BadgeBackground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            BorderBrush="{Binding BadgeBorder, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            BorderThickness="1" CornerRadius="3" Padding="5,2" Margin="0,0,4,4"
-            ToolTip="{Binding Tooltip, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <StackPanel Orientation="Horizontal">
+        <!-- ": value" and what the value means -->
+        <DataTemplate x:Key="ValuePart">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
+                           Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <TextBox Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                         FontSize="9" MinWidth="24" Padding="3,1"
+                         HorizontalContentAlignment="Center" VerticalAlignment="Center"
+                         Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                         IsReadOnly="{Binding IsLocked, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                         behaviors:DebouncedTextBoxBehavior.IsEnabled="True">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Template" Value="{DynamicResource LightTextBoxTemplate}"/>
+                            <Setter Property="Background" Value="#1AFFFFFF"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                            <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+                            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#33FFFFFF"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Background" Value="#44FFFFFF"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <TextBlock Text="{Binding ValueNote, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           FontSize="8" VerticalAlignment="Center" Margin="3,0,0,0" Foreground="{DynamicResource TextSecondaryBrush}"/>
+            </StackPanel>
+        </DataTemplate>
 
-            <!-- Modified indicator (small gold bar) -->
-            <Rectangle Width="2" Fill="{DynamicResource AccentHighlightBrush}"
-                       Margin="0,0,3,0" RadiusX="1" RadiusY="1"
-                       Visibility="{Binding IsModified, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <!-- a reference that can't be changed here: ": name #id" -->
+        <DataTemplate x:Key="ReadOnlyReferencePart">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
+                           Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <TextBlock Text="{Binding ReferenceDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           FontSize="9" VerticalAlignment="Center" FontWeight="SemiBold"
+                           Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <TextBlock Text="{Binding ReferenceIdDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           FontSize="8" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}" Margin="4,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
 
-            <!-- Session edit indicator (cyan dot) -->
-            <Ellipse Width="4" Height="4" Fill="{DynamicResource SessionEditBrush}"
-                     Margin="0,0,3,0" VerticalAlignment="Center"
-                     Visibility="{Binding IsSessionEdit, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <!-- a reference to change: its name, and the picker made when the name is clicked -->
+        <DataTemplate x:Key="EditableReferencePart">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
+                           Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <ContentControl VerticalAlignment="Center" Focusable="False" IsTabStop="False" Loaded="OnReferenceHostLoaded">
+                    <Button Click="OnReferenceEditClick" MinWidth="150" MaxWidth="250" Height="20" Padding="5,0"
+                            HorizontalContentAlignment="Left" Cursor="Hand" ToolTip="Click to pick another"
+                            Background="#1AFFFFFF" BorderBrush="#40FFFFFF" BorderThickness="0,0,0,1">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="B" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="B" Property="Background" Value="#33FFFFFF"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding ReferenceIdDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                       FontSize="8" Foreground="{DynamicResource TextSecondaryBrush}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding ReferenceDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="9"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </Button>
+                </ContentControl>
+            </StackPanel>
+        </DataTemplate>
 
-            <!-- Icon (optional) -->
-            <Image Width="12" Height="12" Margin="0,0,3,0" VerticalAlignment="Center"
-                   Source="{Binding IconSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   Visibility="{Binding HasIcon, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
-                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-
-            <!-- Label -->
-            <TextBlock Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontSize="9" VerticalAlignment="Center"
-                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-
-            <!-- Value (for int badges) - only visible when HasValue is true -->
-            <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
-                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Visibility="{Binding HasValue, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <TextBox x:Name="ValueTextBox"
-                     Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
-                     FontSize="9" MinWidth="24" Padding="3,1" Margin="0,0,0,0"
-                     HorizontalContentAlignment="Center" VerticalAlignment="Center"
-                     Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                     Visibility="{Binding HasValue, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
-                     IsReadOnly="{Binding IsLocked, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                     behaviors:DebouncedTextBoxBehavior.IsEnabled="True">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Background" Value="#1AFFFFFF"/>
-                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                        <Setter Property="BorderBrush" Value="#40FFFFFF"/>
-                        <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#33FFFFFF"/>
-                                <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="Background" Value="#44FFFFFF"/>
-                                <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-
-            <!-- What the value means ("Fire", "always (unlimited)") -->
-            <TextBlock Text="{Binding ValueNote, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontSize="8" VerticalAlignment="Center" Margin="3,0,0,0" Foreground="{DynamicResource TextSecondaryBrush}"
-                       Visibility="{Binding ValueNote, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}"/>
-
-            <!-- Reference display section - only visible when IsReference is true -->
-            <!-- For read-only references: show name + ID -->
-            <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
-                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Visibility="{Binding ShowReadOnlyReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <TextBlock Text="{Binding ReferenceDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontSize="9" VerticalAlignment="Center" FontWeight="SemiBold"
-                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Visibility="{Binding ShowReadOnlyReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <!-- ID display for read-only references -->
-            <TextBlock Text="{Binding ReferenceIdDisplay, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontSize="8" VerticalAlignment="Center"
-                       Foreground="{DynamicResource TextSecondaryBrush}"
-                       Margin="4,0,0,0"
-                       Visibility="{Binding ShowReadOnlyReference, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <!-- For editable references: show searchable combo box -->
-            <TextBlock Text=": " FontSize="9" VerticalAlignment="Center"
-                       Foreground="{Binding LabelForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Visibility="{Binding IsReferenceEditable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <local:SearchableReferenceComboBox
-                x:Name="ReferenceComboBox"
-                MinWidth="150"
-                MaxWidth="250"
-                Height="20"
-                VerticalAlignment="Center"
-                ItemsSource="{Binding AvailableReferences, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                SelectedId="{Binding ReferenceId, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
-                Placeholder="Select..."
-                Visibility="{Binding IsReferenceEditable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"
-                SelectionChanged="OnReferenceSelectionChanged"/>
-
-            <!-- Navigate button (arrow) - shown for all references when ID is valid -->
-            <Button x:Name="NavigateButton"
-                    Content="&#x2192;"
-                    FontSize="11" FontWeight="Bold"
-                    Padding="3,0" Margin="4,0,0,0" MinWidth="20" Height="18"
-                    VerticalAlignment="Center"
-                    ToolTip="Go to entity"
-                    Click="OnNavigateClick"
-                    Visibility="{Binding ShowNavigateButton, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}">
+        <DataTemplate x:Key="NavigatePart">
+            <Button Content="&#x2192;" FontSize="11" FontWeight="Bold" Padding="3,0" Margin="4,0,0,0" MinWidth="20" Height="18"
+                    VerticalAlignment="Center" ToolTip="Go to entity" Click="OnNavigateClick">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
@@ -133,28 +121,25 @@
                     </Style>
                 </Button.Style>
             </Button>
+        </DataTemplate>
 
-            <!-- Not read by the game -->
-            <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"
-                    Padding="2,0" Margin="3,0,0,0" VerticalAlignment="Center"
-                    ToolTip="Dominions doesn't read this command for this entity type: kept in the mod, but it changes nothing in game"
-                    Visibility="{Binding ShowNotRead, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}">
+        <DataTemplate x:Key="NotReadPart">
+            <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2" Padding="2,0" Margin="3,0,0,0" VerticalAlignment="Center"
+                    ToolTip="Dominions doesn't read this command for this entity type: kept in the mod, but it changes nothing in game">
                 <TextBlock Text="n/r" Foreground="White" FontSize="7"/>
             </Border>
+        </DataTemplate>
 
-            <!-- Inherited badge -->
-            <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2"
-                    Padding="2,0" Margin="3,0,0,0" VerticalAlignment="Center"
-                    Visibility="{Binding IsInherited, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}">
+        <DataTemplate x:Key="InheritedPart">
+            <Border Background="{DynamicResource AccentSecondaryBrush}" CornerRadius="2" Padding="2,0" Margin="3,0,0,0" VerticalAlignment="Center">
                 <TextBlock Text="inh" Foreground="White" FontSize="7"/>
             </Border>
+        </DataTemplate>
 
-            <!-- Remove button -->
-            <Button Content="&#x00D7;" FontSize="8" Padding="1,0" Margin="3,0,0,0" MinWidth="12" Height="12"
-                    VerticalAlignment="Center"
+        <DataTemplate x:Key="RemovePart">
+            <Button Content="&#x00D7;" FontSize="8" Padding="1,0" Margin="3,0,0,0" MinWidth="12" Height="12" VerticalAlignment="Center"
                     Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                    CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                    Visibility="{Binding CanRemove, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}">
+                    CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Background" Value="Transparent"/>
@@ -168,6 +153,102 @@
                     </Style>
                 </Button.Style>
             </Button>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Background="{Binding BadgeBackground, ElementName=Root}"
+            BorderBrush="{Binding BadgeBorder, ElementName=Root}"
+            BorderThickness="1" CornerRadius="3" Padding="5,2" Margin="0,0,4,4"
+            ToolTip="{Binding Tooltip, ElementName=Root}">
+        <StackPanel Orientation="Horizontal">
+            <!-- markers: from this mod (gold bar), set in this session (cyan dot), an icon -->
+            <Rectangle Width="2" Fill="{DynamicResource AccentHighlightBrush}" Margin="0,0,3,0" RadiusX="1" RadiusY="1"
+                       Visibility="{Binding IsModified, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Ellipse Width="4" Height="4" Fill="{DynamicResource SessionEditBrush}" Margin="0,0,3,0" VerticalAlignment="Center"
+                     Visibility="{Binding IsSessionEdit, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Image Width="12" Height="12" Margin="0,0,3,0" VerticalAlignment="Center" Source="{Binding IconSource, ElementName=Root}"
+                   Visibility="{Binding HasIcon, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+
+            <TextBlock Text="{Binding Label, ElementName=Root}" FontSize="9" VerticalAlignment="Center"
+                       Foreground="{Binding LabelForeground, ElementName=Root}"/>
+
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl" BasedOn="{StaticResource Part}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasValue, ElementName=Root}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ValuePart}"/>
+                                <Setter Property="Content" Value="{Binding}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl" BasedOn="{StaticResource Part}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowReadOnlyReference, ElementName=Root}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ReadOnlyReferencePart}"/>
+                                <Setter Property="Content" Value="{Binding}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsReferenceEditable, ElementName=Root}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource EditableReferencePart}"/>
+                                <Setter Property="Content" Value="{Binding}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl" BasedOn="{StaticResource Part}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowNavigateButton, ElementName=Root}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource NavigatePart}"/>
+                                <Setter Property="Content" Value="{Binding}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl" BasedOn="{StaticResource Part}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowNotRead, ElementName=Root}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource NotReadPart}"/>
+                                <Setter Property="Content" Value="{Binding}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl" BasedOn="{StaticResource Part}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsInherited, ElementName=Root}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource InheritedPart}"/>
+                                <Setter Property="Content" Value="{Binding}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl" BasedOn="{StaticResource Part}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CanRemove, ElementName=Root}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource RemovePart}"/>
+                                <Setter Property="Content" Value="{Binding}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
         </StackPanel>
     </Border>
 </UserControl>
