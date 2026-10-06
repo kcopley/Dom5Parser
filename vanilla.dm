@@ -13984,19 +13984,6 @@
 #blunt
 #end
 
-#selectweapon 886
-#name "end"
-#dmg -999
-#att 0
-#def 0
-#len 0
-#nratt 0
-#sound 0
-#rcost 0
-#nostr
-#magic
-#end
-
 #selectarmor 1
 #name "Buckler"
 #type 4
@@ -16915,14 +16902,6 @@
 #prot 3
 #woodenarmor
 #magicarmor
-#end
-
-#selectarmor 297
-#name "end"
-#type 5
-#def -999
-#rcost 0
-#enc -999
 #end
 
 #selectmonster 1
@@ -152365,28 +152344,6 @@
 #armor 2
 #end
 
-#selectmonster 4137
-#name "end"
-#okleader
-#ap 0
-#mapmove 0
-#size 0
-#hp 0
-#prot 0
-#str 0
-#enc 0
-#prec 0
-#att 0
-#def 0
-#mr 0
-#mor 0
-#gcost 0
-#rcost 0
-#rpcost 0
-#itemslots 991750
--- ro: body shape = 0x0
-#end
-
 #selectspell 1
 #name "Minor Area Shock"
 #school -1
@@ -179845,20 +179802,6 @@
 #restricted 76
 #end
 
-#selectspell 1474
-#name "end"
-#school -1
-#researchlevel -1
-#fatiguecost -1
-#aoe -1
-#effect -1
-#range -1
-#precision -1
-#damage -1
-#nreff -1
-#spec 0
-#end
-
 #selectitem 1
 #name "Fire Sword"
 #constlevel 1
@@ -186957,14 +186900,6 @@
 #mr 4
 -- ro: sprite = 2016
 -- ro: ability 1414 = 20
-#end
-
-#selectitem 530
-#name "end"
-#constlevel 199
-#mainpath 255
-#mainlevel 0
-#type 0
 #end
 
 #selectsite 1
@@ -202657,48 +202592,57 @@
 #decunrest -5
 #end
 
-#selectsite 1406
-#name "end"
-#path 99
-#level 99
-#rarity 99
-#loc 0
-#end
-
 #selectnation 0
 #name "Independents"
 #epithet "Independents"
 #era 0
+#color 1 1 1
+#secondarycolor 1 1 1
+-- ro: file name = ind0
 #end
 
 #selectnation 1
 #name "Special Monsters"
 #epithet "Special Monsters"
 #era 0
+#color 0.6 0.6 0.6
+#secondarycolor 0.7 0.7 0.7
+-- ro: file name = ind1
 #end
 
 #selectnation 2
 #name "Special Monsters"
 #epithet "Special Monsters"
 #era 0
+#color 0.5 0.5 0.5
+#secondarycolor 0.6 0.6 0.6
+-- ro: file name = ind2
 #end
 
 #selectnation 3
 #name "Special Monsters"
 #epithet "Special Monsters"
 #era 0
+#color 0.4 0.4 0.4
+#secondarycolor 0.5 0.5 0.5
+-- ro: file name = ind3
 #end
 
 #selectnation 4
 #name "Special Monsters"
 #epithet "Special Monsters"
 #era 0
+#color 0.3 0.3 0.3
+#secondarycolor 0.4 0.4 0.4
+-- ro: file name = ind4
 #end
 
 #selectnation 5
 #name "Arcoscephale"
 #epithet "Golden Era"
 #era 1
+#color 0.4 0.8 0.8
+#secondarycolor 0.9 0.8 0.2
 #addrecunit 50
 #addrecunit 201
 #addrecunit 199
@@ -202772,6 +202716,7 @@
 #cheapgod20 3208
 #cheapgod20 3209
 #cheapgod20 3368
+-- ro: file name = early_arcoscephale
 -- ro: ability 137 = 1
 #end
 
@@ -202779,6 +202724,8 @@
 #name "Mekone"
 #epithet "Brazen Giants"
 #era 1
+#color 0.9 0.7 0.4
+#secondarycolor 0.4 0.25 0.1
 #addrecunit 3100
 #addrecunit 3101
 #addrecunit 3103
@@ -202857,6 +202804,7 @@
 #cheapgod20 2463
 #cheapgod20 3124
 #cheapgod20 3368
+-- ro: file name = early_mekone
 -- ro: ability 273 = 101
 #end
 
@@ -202864,6 +202812,8 @@
 #name "Pangaea"
 #epithet "Age of Revelry"
 #era 1
+#color 0.2 0.8 0.2
+#secondarycolor 0.6 0.4 0.2
 #addrecunit 239
 #addrecunit 227
 #addrecunit 228
@@ -202962,6 +202912,7 @@
 #cheapgod20 2783
 #cheapgod20 2961
 #cheapgod20 3650
+-- ro: file name = early_pangaea
 -- ro: ability 273 = 103
 -- ro: ability 272 = 100
 #end
@@ -202970,6 +202921,8 @@
 #name "Ermor"
 #epithet "New Faith"
 #era 1
+#color 0.7 0.4 0.8
+#secondarycolor 1 0.8 0.2
 #addrecunit 50
 #addrecunit 1100
 #addrecunit 1101
@@ -203040,12 +202993,15 @@
 #cheapgod20 874
 #cheapgod20 1343
 #cheapgod20 2463
+-- ro: file name = early_ermor
 #end
 
 #selectnation 9
 #name "Sauromatia"
 #epithet "Amazon Queens"
 #era 1
+#color 0.5 0.4 0.3
+#secondarycolor 0.6 0.1 0.1
 #addrecunit 1184
 #addrecunit 1669
 #addrecunit 1168
@@ -203126,12 +203082,15 @@
 #guardcom 1173
 #cheapgod20 157
 #cheapgod20 266
+-- ro: file name = early_sauromatia
 #end
 
 #selectnation 10
 #name "Fomoria"
 #epithet "The Cursed Ones"
 #era 1
+#color 0.4 0.2 0.4
+#secondarycolor 0.5 0.5 0.5
 #addrecunit 1820
 #addrecunit 1814
 #addrecunit 1812
@@ -203192,12 +203151,15 @@
 #cheapgod20 2795
 #cheapgod20 2856
 #cheapgod20 3076
+-- ro: file name = early_fomoria
 #end
 
 #selectnation 11
 #name "Tir na n'Og"
 #epithet "Land of the Ever Young"
 #era 1
+#color 0.1 0.7 0.1
+#secondarycolor 1 1 0.9
 #addrecunit 1749
 #addrecunit 1758
 #addrecunit 1757
@@ -203249,12 +203211,15 @@
 #cheapgod20 1905
 #cheapgod20 2856
 #cheapgod20 3693
+-- ro: file name = early_tirnanog
 #end
 
 #selectnation 12
 #name "Marverni"
 #epithet "Time of Druids"
 #era 1
+#color 0.3 0.6 0.1
+#secondarycolor 1 0.8 0.3
 #addrecunit 1210
 #addrecunit 1211
 #addrecunit 1212
@@ -203327,12 +203292,15 @@
 #cheapgod20 3080
 #cheapgod20 3081
 #cheapgod20 3082
+-- ro: file name = early_marverni
 #end
 
 #selectnation 13
 #name "Ulm"
 #epithet "Enigma of Steel"
 #era 1
+#color 0.2 0.4 0.5
+#secondarycolor 0.5 0.5 0.6
 #addrecunit 1162
 #addrecunit 1163
 #addrecunit 1152
@@ -203412,12 +203380,15 @@
 #cheapgod20 1340
 #cheapgod20 1370
 #cheapgod20 2234
+-- ro: file name = early_ulm
 #end
 
 #selectnation 14
 #name "Pyrène"
 #epithet "Kingdom of the Bekrydes"
 #era 1
+#color 0.3 0.2 0.2
+#secondarycolor 0.1 0.7 0
 #addrecunit 3633
 #addrecunit 3587
 #addrecunit 3689
@@ -203523,12 +203494,15 @@
 #cheapgod20 3639
 #cheapgod20 3641
 #cheapgod20 3894
+-- ro: file name = early_pyrene
 #end
 
 #selectnation 15
 #name "Agartha"
 #epithet "Pale Ones"
 #era 1
+#color 0.2 0.2 0.2
+#secondarycolor 1 0.8 0
 #addrecunit 1452
 #addrecunit 1489
 #addrecunit 1465
@@ -203641,6 +203615,7 @@
 #cheapgod20 2791
 #cheapgod20 2955
 #cheapgod20 3639
+-- ro: file name = early_agartha
 -- ro: ability 376 = 2
 -- ro: ability 666 = 1636
 -- ro: ability 667 = 20
@@ -203651,6 +203626,8 @@
 #name "Abysia"
 #epithet "Children of Flame"
 #era 1
+#color 0.8 0.1 0
+#secondarycolor 1 0.7 0
 #addrecunit 81
 #addrecunit 82
 #addrecunit 83
@@ -203738,6 +203715,7 @@
 #cheapgod20 655
 #cheapgod20 1025
 #cheapgod20 2792
+-- ro: file name = early_abysia
 -- ro: ability 650 = 1
 #end
 
@@ -203745,6 +203723,8 @@
 #name "Hinnom"
 #epithet "Sons of the Fallen"
 #era 1
+#color 0.8 0.7 0.6
+#secondarycolor 0.7 0.1 0.1
 #addrecunit 2184
 #addrecunit 2018
 #addrecunit 2034
@@ -203818,12 +203798,15 @@
 #cheapgod20 1025
 #cheapgod20 2082
 #cheapgod20 2462
+-- ro: file name = early_gath
 #end
 
 #selectnation 18
 #name "Ubar"
 #epithet "Kingdom of the Unseen"
 #era 1
+#color 0.1 0.1 0.2
+#secondarycolor 0.9 1 0.6
 #addrecunit 3453
 #addrecunit 3454
 #addrecunit 3470
@@ -203902,6 +203885,7 @@
 #cheapgod20 3388
 #cheapgod20 4115
 #cheapgod40 3473
+-- ro: file name = early_ubar
 -- ro: ability 273 = 102
 -- ro: ability 273 repeated (the game reads the first) = 105
 -- ro: ability 632 = 1
@@ -203911,6 +203895,8 @@
 #name "Ur"
 #epithet "The First City"
 #era 1
+#color 0.7 0.5 0.4
+#secondarycolor 0.3 0.3 0.8
 #addrecunit 2172
 #addrecunit 2173
 #addrecunit 2174
@@ -203998,6 +203984,7 @@
 #cheapgod20 3191
 #cheapgod20 3344
 #cheapgod40 2437
+-- ro: file name = early_ur
 -- ro: ability 666 = 3090
 -- ro: ability 667 = 20
 -- ro: ability 668 = 3093
@@ -204007,6 +203994,8 @@
 #name "Kailasa"
 #epithet "Rise of the Ape Kings"
 #era 1
+#color 1 0.8 0.3
+#secondarycolor 0.9 0.9 0.8
 #addrecunit 1118
 #addrecunit 1120
 #addrecunit 1121
@@ -204084,12 +204073,15 @@
 #cheapgod20 2466
 #cheapgod20 2549
 #cheapgod20 3926
+-- ro: file name = early_kailasa
 #end
 
 #selectnation 21
 #name "Lanka"
 #epithet "Land of Demons"
 #era 1
+#color 0.9 0.7 0.2
+#secondarycolor 0.7 0.2 0.1
 #addrecunit 1118
 #addrecunit 1120
 #addrecunit 1121
@@ -204170,6 +204162,7 @@
 #cheapgod20 1341
 #cheapgod20 2550
 #cheapgod20 3662
+-- ro: file name = early_lanka
 -- ro: ability 210 = 1
 -- ro: ability 310 = 1
 -- ro: ability 272 = 100
@@ -204179,6 +204172,8 @@
 #name "T'ien Ch'i"
 #epithet "Spring and Autumn"
 #era 1
+#color 0.9 0.3 0.3
+#secondarycolor 0.25 0.25 0.25
 #addrecunit 794
 #addrecunit 795
 #addrecunit 796
@@ -204255,12 +204250,15 @@
 #cheapgod20 3929
 #cheapgod20 3931
 #cheapgod20 3932
+-- ro: file name = early_tienchi
 #end
 
 #selectnation 23
 #name "Yomi"
 #epithet "Oni Kings"
 #era 1
+#color 0.5 0.5 0.5
+#secondarycolor 0.9 0.1 0.1
 #addrecunit 1393
 #addrecunit 1394
 #addrecunit 1395
@@ -204339,6 +204337,7 @@
 #cheapgod20 2978
 #cheapgod20 3073
 #cheapgod20 3074
+-- ro: file name = early_yomi
 -- ro: ability 309 = 1
 -- ro: ability 272 = 100
 -- ro: ability 357 = 1
@@ -204348,6 +204347,8 @@
 #name "Caelum"
 #epithet "Eagle Kings"
 #era 1
+#color 0.7 0.7 1
+#secondarycolor 1 0.8 0
 #addrecunit 2564
 #addrecunit 2566
 #addrecunit 2565
@@ -204418,12 +204419,15 @@
 #cheapgod20 2552
 #cheapgod20 2578
 #cheapgod20 2785
+-- ro: file name = early_caelum
 #end
 
 #selectnation 25
 #name "Mictlan"
 #epithet "Reign of Blood"
 #era 1
+#color 0.3 0.8 0.5
+#secondarycolor 0.6 0.1 0.1
 #addrecunit 721
 #addrecunit 722
 #addrecunit 723
@@ -204489,6 +204493,7 @@
 #cheapgod20 857
 #cheapgod20 858
 #cheapgod20 2442
+-- ro: file name = early_mictlan
 -- ro: ability 642 repeated (the game reads the first) = 1
 #end
 
@@ -204496,6 +204501,8 @@
 #name "Xibalba"
 #epithet "Vigil of the Sun"
 #era 1
+#color 0.2 0.2 0.2
+#secondarycolor 0.7 0.1 0.1
 #addrecunit 2668
 #addrecunit 2669
 #addrecunit 2670
@@ -204580,12 +204587,15 @@
 #cheapgod20 2755
 #cheapgod20 2756
 #cheapgod20 3192
+-- ro: file name = early_xibalba
 #end
 
 #selectnation 27
 #name "C'tis"
 #epithet "Lizard Kings"
 #era 1
+#color 0.7 0.8 0.2
+#secondarycolor 0.4 0.9 0.9
 #addrecunit 168
 #addrecunit 167
 #addrecunit 4062
@@ -204657,12 +204667,15 @@
 #cheapgod20 2445
 #cheapgod20 2793
 #cheapgod20 2799
+-- ro: file name = early_ctis
 #end
 
 #selectnation 28
 #name "Machaka"
 #epithet "Lion Kings"
 #era 1
+#color 0.9 0.6 0.1
+#secondarycolor 0.6 0.5 0.4
 #addrecunit 2126
 #addrecunit 2298
 #addrecunit 2299
@@ -204753,12 +204766,15 @@
 #cheapgod20 2790
 #cheapgod20 2792
 #cheapgod20 2958
+-- ro: file name = early_machaka
 #end
 
 #selectnation 29
 #name "Berytos"
 #epithet "The Phoenix Empire"
 #era 1
+#color 0.7 0.1 0.4
+#secondarycolor 0.9 0.9 0.9
 #addrecunit 2254
 #addrecunit 2255
 #addrecunit 2256
@@ -204828,12 +204844,15 @@
 #cheapgod20 2462
 #cheapgod20 2792
 #cheapgod20 2881
+-- ro: file name = early_berytos
 #end
 
 #selectnation 30
 #name "Vanheim"
 #epithet "Age of Vanir"
 #era 1
+#color 0.6 0.1 0.1
+#secondarycolor 0.7 0.7 0.9
 #addrecunit 1679
 #addrecunit 1508
 #addrecunit 1509
@@ -204885,12 +204904,15 @@
 #cheapgod20 1098
 #cheapgod20 2194
 #cheapgod20 2206
+-- ro: file name = early_vanheim
 #end
 
 #selectnation 31
 #name "Helheim"
 #epithet "Dusk and Death"
 #era 1
+#color 0.3 0.3 0.3
+#secondarycolor 0.7 0.5 0.8
 #addrecunit 1679
 #addrecunit 1508
 #addrecunit 1509
@@ -204945,12 +204967,15 @@
 #cheapgod20 2802
 #cheapgod20 2803
 #cheapgod20 3888
+-- ro: file name = early_helheim
 #end
 
 #selectnation 32
 #name "Rus"
 #epithet "Sons of Heaven"
 #era 1
+#color 0.9 0.9 0.9
+#secondarycolor 0.7 0.1 0.1
 #addrecunit 2989
 #addrecunit 2990
 #addrecunit 2991
@@ -205025,12 +205050,15 @@
 #cheapgod20 2748
 #cheapgod20 2749
 #cheapgod20 3086
+-- ro: file name = early_bogarus
 #end
 
 #selectnation 33
 #name "Niefelheim"
 #epithet "Sons of Winter"
 #era 1
+#color 0.4 0.2 0.1
+#secondarycolor 0.8 0.8 1
 #addrecunit 1302
 #addrecunit 1303
 #addrecunit 1304
@@ -205103,6 +205131,7 @@
 #cheapgod20 645
 #cheapgod20 1229
 #cheapgod20 2801
+-- ro: file name = early_niefelheim
 -- ro: ability 340 = 1
 #end
 
@@ -205110,6 +205139,8 @@
 #name "Muspelheim"
 #epithet "Sons of Fire"
 #era 1
+#color 0.3 0.1 0
+#secondarycolor 1 0.7 0.2
 #addreccom 3972
 #delgod 158
 #delgod 269
@@ -205189,6 +205220,7 @@
 #cheapgod20 2800
 #cheapgod20 2801
 #cheapgod20 3876
+-- ro: file name = early_muspelheim
 -- ro: ability 680 = 3958
 -- ro: ability 682 = 3969
 -- ro: ability 684 = 5
@@ -205204,6 +205236,8 @@
 #name "Pelagia"
 #epithet "Pearl Kings"
 #era 1
+#color 1 0.4 0.4
+#secondarycolor 1 0.9 1
 #addrecunit 2388
 #addrecunit 1291
 #addrecunit 2382
@@ -205288,6 +205322,7 @@
 #cheapgod20 1232
 #cheapgod20 1233
 #hero1 2806
+-- ro: file name = early_pelagia
 -- ro: ability 176 repeated (the game reads the first) = 2386
 -- ro: ability 180 repeated (the game reads the first) = 10
 -- ro: ability 666 = 2382
@@ -205299,6 +205334,8 @@
 #name "Oceania"
 #epithet "Coming of the Capricorns"
 #era 1
+#color 0.1 0.6 0.4
+#secondarycolor 0.5 0.3 0.1
 #addrecunit 1041
 #addrecunit 2376
 #addrecunit 2378
@@ -205383,6 +205420,7 @@
 #cheapgod20 294
 #cheapgod20 2849
 #cheapgod20 3057
+-- ro: file name = early_oceania
 -- ro: ability 322 = 3
 -- ro: ability 281 = -1
 -- ro: ability 666 = 2378
@@ -205394,6 +205432,8 @@
 #name "Therodos"
 #epithet "Telkhine Spectre"
 #era 1
+#color 0.9 0.9 0.9
+#secondarycolor 0.5 0.3 0.2
 #addreccom 2833
 #delgod 109
 #addgod 159
@@ -205472,6 +205512,7 @@
 #cheapgod40 2881
 #cheapgod40 2882
 #cheapgod40 3368
+-- ro: file name = early_therodos
 -- ro: ability 400 = 20
 -- ro: ability 324 = -2
 -- ro: ability 317 = 1
@@ -205485,6 +205526,8 @@
 #name "Atlantis"
 #epithet "Emergence of the Deep Ones"
 #era 1
+#color 0.2 0.2 0.9
+#secondarycolor 0.3 0.3 0.3
 #addrecunit 1682
 #addrecunit 1681
 #addrecunit 1683
@@ -205561,6 +205604,7 @@
 #cheapgod20 109
 #cheapgod20 2853
 #cheapgod20 3640
+-- ro: file name = early_atlantis
 -- ro: ability 666 = 1682
 -- ro: ability 667 = 30
 -- ro: ability 668 = 1694
@@ -205570,6 +205614,8 @@
 #name "R'lyeh"
 #epithet "Time of Aboleths"
 #era 1
+#color 0 0.2 0.3
+#secondarycolor 0.1 0.7 0.7
 #addrecunit 1517
 #addrecunit 1526
 #addrecunit 1515
@@ -205656,6 +205702,7 @@
 #cheapgod20 1402
 #cheapgod20 2855
 #cheapgod20 3098
+-- ro: file name = early_rlyeh
 -- ro: ability 666 = 1404
 -- ro: ability 667 = 30
 -- ro: ability 668 = 1401
@@ -205665,6 +205712,8 @@
 #name "Arcoscephale"
 #epithet "The Old Kingdom"
 #era 2
+#color 0.4 0.8 0.8
+#secondarycolor 0.9 0.8 0.2
 #addrecunit 50
 #addrecunit 201
 #addrecunit 199
@@ -205736,6 +205785,7 @@
 #cheapgod20 3208
 #cheapgod20 3209
 #cheapgod20 3368
+-- ro: file name = mid_arcoscephale
 -- ro: ability 137 = 1
 #end
 
@@ -205743,6 +205793,8 @@
 #name "Phlegra"
 #epithet "Deformed Giants"
 #era 2
+#color 0.9 0.7 0.4
+#secondarycolor 0.4 0.25 0.1
 #addrecunit 3132
 #addrecunit 3133
 #addrecunit 3134
@@ -205819,6 +205871,7 @@
 #cheapgod20 3121
 #cheapgod20 2463
 #cheapgod20 3124
+-- ro: file name = mid_phlegra
 -- ro: ability 273 = 101
 #end
 
@@ -205826,6 +205879,8 @@
 #name "Pangaea"
 #epithet "Age of Bronze"
 #era 2
+#color 0.2 0.8 0.2
+#secondarycolor 0.9 0.4 0.1
 #addrecunit 239
 #addrecunit 227
 #addrecunit 228
@@ -205927,12 +205982,15 @@
 #cheapgod20 2961
 #cheapgod20 2977
 #cheapgod20 3650
+-- ro: file name = mid_pangaea
 #end
 
 #selectnation 53
 #name "Asphodel"
 #epithet "Carrion Woods"
 #era 2
+#color 0.1 0.3 0
+#secondarycolor 0.6 0.6 0.4
 #addrecunit 239
 #addrecunit 227
 #addrecunit 228
@@ -206024,6 +206082,7 @@
 #cheapgod20 4024
 #cheapgod20 4025
 #cheapgod20 4032
+-- ro: file name = mid_asphodel
 -- ro: ability 69 = 1
 -- ro: ability 25 = 79
 -- ro: ability 400 = 40
@@ -206035,6 +206094,8 @@
 #name "Ermor"
 #epithet "Ashen Empire"
 #era 2
+#color 0.5 0.2 0.4
+#secondarycolor 0.5 0.3 0.1
 #delgod 138
 #delgod 385
 #delgod 812
@@ -206099,6 +206160,7 @@
 #cheapgod20 2850
 #cheapgod20 3888
 #cheapgod20 3895
+-- ro: file name = mid_ermor
 -- ro: ability 324 = -3
 -- ro: ability 290 = 1
 -- ro: ability 210 = 1
@@ -206112,6 +206174,8 @@
 #name "Sceleria"
 #epithet "The Reformed Empire"
 #era 2
+#color 0.6 0.3 0.5
+#secondarycolor 0.75 0.7 0.6
 #addrecunit 50
 #addrecunit 662
 #addrecunit 663
@@ -206180,6 +206244,7 @@
 #cheapgod20 2850
 #cheapgod20 3888
 #cheapgod20 3895
+-- ro: file name = mid_sceleria
 -- ro: ability 210 = 1
 #end
 
@@ -206187,6 +206252,8 @@
 #name "Pythium"
 #epithet "Emerald Empire"
 #era 2
+#color 0.7 0.3 0.8
+#secondarycolor 1 0.8 0.1
 #addrecunit 50
 #addrecunit 684
 #addrecunit 685
@@ -206254,12 +206321,15 @@
 #guardcom 683
 #cheapgod20 158
 #cheapgod20 874
+-- ro: file name = mid_pythium
 #end
 
 #selectnation 57
 #name "Man"
 #epithet "Tower of Avalon"
 #era 2
+#color 0 0.6 0
+#secondarycolor 0.9 0.9 0.9
 #addrecunit 1
 #addrecunit 2127
 #addrecunit 61
@@ -206337,12 +206407,15 @@
 #cheapgod20 2930
 #cheapgod20 3076
 #cheapgod20 3079
+-- ro: file name = mid_man
 #end
 
 #selectnation 58
 #name "Eriu"
 #epithet "Last of the Tuatha"
 #era 2
+#color 0.5 0.7 0.1
+#secondarycolor 0.8 0.5 0.2
 #addrecunit 1779
 #addrecunit 1780
 #addrecunit 1781
@@ -206410,12 +206483,15 @@
 #cheapgod20 2856
 #cheapgod20 3076
 #cheapgod20 3693
+-- ro: file name = mid_eriu
 #end
 
 #selectnation 59
 #name "Agartha"
 #epithet "Golem Cult"
 #era 2
+#color 0.2 0.2 0.2
+#secondarycolor 0.75 0.7 0.65
 #addrecunit 1447
 #addrecunit 1355
 #addrecunit 1354
@@ -206509,6 +206585,7 @@
 #cheapgod20 2791
 #cheapgod20 2955
 #cheapgod20 3639
+-- ro: file name = mid_agartha
 -- ro: ability 666 = 1636
 -- ro: ability 667 = 18
 -- ro: ability 668 = 1638
@@ -206518,6 +206595,8 @@
 #name "Ulm"
 #epithet "Forges of Ulm"
 #era 2
+#color 0.1 0.1 0.6
+#secondarycolor 0.9 0.9 0.7
 #addrecunit 2153
 #addrecunit 417
 #addrecunit 67
@@ -206591,12 +206670,15 @@
 #cheapgod20 550
 #cheapgod20 1230
 #cheapgod20 1340
+-- ro: file name = mid_ulm
 #end
 
 #selectnation 61
 #name "Marignon"
 #epithet "Fiery Justice"
 #era 2
+#color 0.9 0.4 0
+#secondarycolor 0.9 0.8 0.1
 #addrecunit 218
 #addrecunit 219
 #addrecunit 220
@@ -206682,6 +206764,7 @@
 #cheapgod20 3080
 #cheapgod20 3082
 #cheapgod20 3416
+-- ro: file name = mid_marignon
 -- ro: ability 41 = 1
 #end
 
@@ -206689,6 +206772,8 @@
 #name "Pyrène"
 #epithet "Time of the Akelarre"
 #era 2
+#color 0.9 0.1 0.1
+#secondarycolor 0.1 0.7 0.2
 #addrecunit 3607
 #addrecunit 3608
 #addrecunit 3609
@@ -206774,12 +206859,15 @@
 #cheapgod20 3416
 #cheapgod20 3632
 #cheapgod20 3894
+-- ro: file name = mid_pyrene
 #end
 
 #selectnation 63
 #name "Abysia"
 #epithet "Blood and Fire"
 #era 2
+#color 0.8 0.1 0
+#secondarycolor 1 0.7 0
 #addrecunit 372
 #addrecunit 983
 #addrecunit 81
@@ -206871,6 +206959,7 @@
 #cheapgod20 486
 #cheapgod20 1025
 #cheapgod20 2792
+-- ro: file name = mid_abysia
 -- ro: ability 650 = 1
 #end
 
@@ -206878,6 +206967,8 @@
 #name "Ashdod"
 #epithet "Reign of the Anakim"
 #era 2
+#color 0.8 0.7 0.6
+#secondarycolor 0.2 0.2 0.2
 #addrecunit 2003
 #addrecunit 2004
 #addrecunit 2005
@@ -206936,12 +207027,15 @@
 #buildfort 15
 #cheapgod20 1025
 #cheapgod20 2082
+-- ro: file name = mid_gath
 #end
 
 #selectnation 65
 #name "Na'Ba"
 #epithet "Queens of the Desert"
 #era 2
+#color 0.1 0.1 0.2
+#secondarycolor 0.8 0.8 0.8
 #addrecunit 3332
 #addrecunit 3333
 #addrecunit 3356
@@ -207029,12 +207123,15 @@
 #cheapgod20 3387
 #cheapgod20 3388
 #cheapgod20 4115
+-- ro: file name = mid_naba
 #end
 
 #selectnation 66
 #name "Uruk"
 #epithet "City States"
 #era 2
+#color 0.7 0.5 0.4
+#secondarycolor 0.2 0.2 0.8
 #addrecunit 2935
 #addrecunit 2936
 #addrecunit 2938
@@ -207122,6 +207219,7 @@
 #cheapgod20 3190
 #cheapgod20 3191
 #cheapgod20 3344
+-- ro: file name = mid_ur
 -- ro: ability 666 = 3090
 -- ro: ability 667 = 10
 -- ro: ability 668 = 3093
@@ -207129,8 +207227,10 @@
 
 #selectnation 67
 #name "Ind"
-#epithet "Magnificent Kingdom of Exalted Virtu"
+#epithet "Magnificent Kingdom of Exalted Virtue"
 #era 2
+#color 1 0.9 0.6
+#secondarycolor 0.2 0.3 0.6
 #addreccom 3284
 #addforeigncom 3313
 #addforeigncom 3297
@@ -207226,6 +207326,7 @@
 #cheapgod20 2463
 #cheapgod20 2787
 #cheapgod20 2958
+-- ro: file name = mid_ind
 -- ro: ability 23 = 32
 -- ro: ability 371 = 3
 -- ro: ability 428 = 3312
@@ -207337,6 +207438,8 @@
 #name "Bandar Log"
 #epithet "Land of the Apes"
 #era 2
+#color 1 0.8 0.3
+#secondarycolor 0.9 0.9 0.8
 #addrecunit 1118
 #addrecunit 1120
 #addrecunit 1121
@@ -207425,12 +207528,15 @@
 #cheapgod20 2959
 #cheapgod20 3661
 #cheapgod20 3926
+-- ro: file name = mid_bandarlog
 #end
 
 #selectnation 69
 #name "T'ien Ch'i"
 #epithet "Imperial Bureaucracy"
 #era 2
+#color 0.9 0.3 0.3
+#secondarycolor 0.25 0.25 0.25
 #addrecunit 797
 #addrecunit 794
 #addrecunit 795
@@ -207516,6 +207622,7 @@
 #cheapgod20 3929
 #cheapgod20 3931
 #cheapgod20 3932
+-- ro: file name = mid_tienchi
 -- ro: ability 220 = 794
 -- ro: ability 221 = 6
 -- ro: ability 222 = 801
@@ -207526,6 +207633,8 @@
 #name "Shinuyama"
 #epithet "Land of the Bakemono"
 #era 2
+#color 0.5 0.5 0.5
+#secondarycolor 0.9 0.1 0.1
 #addrecunit 1311
 #addrecunit 1312
 #addrecunit 1393
@@ -207626,6 +207735,7 @@
 #cheapgod20 3073
 #cheapgod20 3074
 #cheapgod20 3651
+-- ro: file name = mid_bakemono
 -- ro: ability 666 = 1550
 -- ro: ability 667 = 8
 -- ro: ability 668 = 1531
@@ -207635,6 +207745,8 @@
 #name "Caelum"
 #epithet "Reign of the Seraphim"
 #era 2
+#color 0.7 0.7 1
+#secondarycolor 1 1 1
 #addrecunit 129
 #addrecunit 131
 #addrecunit 128
@@ -207707,6 +207819,7 @@
 #cheapgod20 509
 #cheapgod20 2552
 #cheapgod20 2578
+-- ro: file name = mid_caelum
 -- ro: ability 340 = 1
 #end
 
@@ -207714,6 +207827,8 @@
 #name "Nazca"
 #epithet "Kingdom of the Sun"
 #era 2
+#color 0.6 0.5 0.4
+#secondarycolor 0.9 0.7 0.2
 #addrecunit 2643
 #addrecunit 2644
 #addrecunit 2645
@@ -207806,6 +207921,7 @@
 #cheapgod20 2699
 #cheapgod20 2737
 #cheapgod20 3394
+-- ro: file name = mid_nazca
 -- ro: ability 210 = 1
 #end
 
@@ -207813,6 +207929,8 @@
 #name "Mictlan"
 #epithet "Reign of the Lawgiver"
 #era 2
+#color 0.3 0.8 0.5
+#secondarycolor 0.8 0.8 0.9
 #addrecunit 721
 #addrecunit 1545
 #addrecunit 1546
@@ -207872,12 +207990,15 @@
 #buildfort 11
 #cheapgod20 1897
 #cheapgod20 2443
+-- ro: file name = mid_mictlan
 #end
 
 #selectnation 74
 #name "Xibalba"
 #epithet "Flooded Caves"
 #era 2
+#color 0.2 0.2 0.2
+#secondarycolor 0.2 0.7 0.8
 #addrecunit 2721
 #addrecunit 2722
 #addrecunit 2723
@@ -207987,6 +208108,7 @@
 #cheapgod20 604
 #cheapgod20 2755
 #cheapgod20 2756
+-- ro: file name = mid_xibalba
 -- ro: ability 717 = 32
 -- ro: ability 666 = 2888
 -- ro: ability 667 = 15
@@ -207997,6 +208119,8 @@
 #name "C'tis"
 #epithet "Miasma"
 #era 2
+#color 0.7 0.9 0.2
+#secondarycolor 0.5 0.4 0.3
 #addrecunit 168
 #addrecunit 167
 #addrecunit 4062
@@ -208065,6 +208189,7 @@
 #cheapgod20 2445
 #cheapgod20 2793
 #cheapgod20 2799
+-- ro: file name = mid_ctis
 -- ro: ability 59 = 1
 -- ro: ability 500 = 3
 #end
@@ -208073,6 +208198,8 @@
 #name "Machaka"
 #epithet "Reign of Sorcerors"
 #era 2
+#color 0.9 0.6 0.1
+#secondarycolor 0.2 0.2 0.2
 #addrecunit 2126
 #addrecunit 878
 #addrecunit 879
@@ -208162,12 +208289,15 @@
 #cheapgod20 3651
 #cheapgod20 3654
 #cheapgod20 3655
+-- ro: file name = mid_machaka
 #end
 
 #selectnation 77
 #name "Phaeacia"
 #epithet "Isle of the Dark Ships"
 #era 2
+#color 0.2 0.3 0.4
+#secondarycolor 0.7 0.1 0.4
 #addrecunit 3143
 #addrecunit 3144
 #addrecunit 3145
@@ -208242,12 +208372,15 @@
 #cheapgod20 1348
 #cheapgod20 2851
 #cheapgod20 3124
+-- ro: file name = mid_phaeacia
 #end
 
 #selectnation 78
 #name "Vanheim"
 #epithet "Arrival of Man"
 #era 2
+#color 0.6 0.1 0.1
+#secondarycolor 0.6 0.6 0.7
 #addrecunit 142
 #addrecunit 143
 #addrecunit 144
@@ -208298,12 +208431,15 @@
 #cheapgod20 1098
 #cheapgod20 2194
 #cheapgod20 2206
+-- ro: file name = mid_vanheim
 #end
 
 #selectnation 79
 #name "Vanarus"
 #epithet "Land of the Chuds"
 #era 2
+#color 0.4 0.4 0.8
+#secondarycolor 0.5 0.3 0.1
 #addrecunit 2343
 #addrecunit 2344
 #addrecunit 2345
@@ -208360,12 +208496,15 @@
 #cheapgod20 1561
 #cheapgod20 2194
 #cheapgod20 3086
+-- ro: file name = mid_rus
 #end
 
 #selectnation 80
 #name "Jotunheim"
 #epithet "Iron Woods"
 #era 2
+#color 0.4 0.2 0.1
+#secondarycolor 0.5 0.5 0.6
 #addrecunit 3423
 #addrecunit 541
 #addrecunit 282
@@ -208450,6 +208589,7 @@
 #cheapgod20 645
 #cheapgod20 1229
 #cheapgod20 2801
+-- ro: file name = mid_jotunheim
 -- ro: ability 340 = 1
 #end
 
@@ -208457,6 +208597,8 @@
 #name "Nidavangr"
 #epithet "Bear, Wolf and Crow"
 #era 2
+#color 0.4 0.4 0.4
+#secondarycolor 0.2 0.2 0.3
 #addrecunit 3673
 #addrecunit 3676
 #addrecunit 3675
@@ -208525,6 +208667,7 @@
 #cheapgod20 2789
 #cheapgod20 2801
 #cheapgod20 3086
+-- ro: file name = mid_nid
 -- ro: ability 137 = 1
 #end
 
@@ -208532,6 +208675,8 @@
 #name "Ys"
 #epithet "Morgen Queens"
 #era 2
+#color 0.3 0.4 0.8
+#secondarycolor 1 0.7 0.1
 #addrecunit 2907
 #addrecunit 2908
 #addrecunit 2923
@@ -208613,6 +208758,7 @@
 #cheapgod20 2848
 #cheapgod20 2856
 #cheapgod20 2922
+-- ro: file name = mid_ys
 -- ro: ability 666 = 2923
 -- ro: ability 667 = 12
 -- ro: ability 668 = 2913
@@ -208622,6 +208768,8 @@
 #name "Pelagia"
 #epithet "Triton Kings"
 #era 2
+#color 1 0.4 0.4
+#secondarycolor 1 0.9 1
 #addrecunit 1046
 #addrecunit 1048
 #addrecunit 1056
@@ -208703,6 +208851,7 @@
 #uwwallcom 1069
 #cheapgod20 1232
 #cheapgod20 1233
+-- ro: file name = mid_pelagia
 -- ro: ability 176 repeated (the game reads the first) = 1046
 -- ro: ability 180 repeated (the game reads the first) = 10
 -- ro: ability 666 = 1057
@@ -208714,6 +208863,8 @@
 #name "Oceania"
 #epithet "Mermidons"
 #era 2
+#color 0.1 0.6 0.4
+#secondarycolor 0.9 0.5 0
 #addrecunit 2404
 #addrecunit 2406
 #addrecunit 2408
@@ -208800,6 +208951,7 @@
 #cheapgod20 294
 #cheapgod20 2849
 #cheapgod20 3057
+-- ro: file name = mid_oceania
 -- ro: ability 322 = 2
 -- ro: ability 281 = -1
 -- ro: ability 666 = 2408
@@ -208811,6 +208963,8 @@
 #name "Atlantis"
 #epithet "Kings of the Deep"
 #era 2
+#color 0.2 0.2 0.9
+#secondarycolor 0.9 0.5 0.5
 #addrecunit 110
 #addrecunit 111
 #addrecunit 107
@@ -208896,6 +209050,7 @@
 #cheapgod20 873
 #cheapgod20 2853
 #cheapgod20 3058
+-- ro: file name = mid_atlantis
 -- ro: ability 666 = 2862
 -- ro: ability 667 = 8
 -- ro: ability 668 = 441
@@ -208905,6 +209060,8 @@
 #name "R'lyeh"
 #epithet "Fallen Star"
 #era 2
+#color 0 0.2 0.3
+#secondarycolor 0.8 0.8 1
 #addrecunit 1517
 #addrecunit 1526
 #addrecunit 1515
@@ -208996,6 +209153,7 @@
 #cheapgod20 2855
 #cheapgod20 3054
 #cheapgod20 3396
+-- ro: file name = mid_rlyeh
 -- ro: ability 157 = 1
 -- ro: ability 666 = 1524
 -- ro: ability 667 = 18
@@ -209006,6 +209164,8 @@
 #name "Arcoscephale"
 #epithet "Sibylline Guidance"
 #era 3
+#color 0.4 0.8 0.8
+#secondarycolor 0.9 0.8 0.2
 #addrecunit 50
 #addrecunit 201
 #addrecunit 1551
@@ -209077,6 +209237,7 @@
 #cheapgod20 3208
 #cheapgod20 3209
 #cheapgod20 3368
+-- ro: file name = late_arcoscephale
 -- ro: ability 137 = 1
 -- ro: ability 386 = 1
 #end
@@ -209085,6 +209246,8 @@
 #name "Phlegra"
 #epithet "Sleeping Giants"
 #era 3
+#color 0.9 0.7 0.4
+#secondarycolor 0.4 0.25 0.1
 #addrecunit 3211
 #addrecunit 3212
 #addrecunit 3213
@@ -209158,6 +209321,7 @@
 #cheapgod20 3121
 #cheapgod20 2463
 #cheapgod20 3124
+-- ro: file name = late_phlegra
 -- ro: ability 273 = 101
 #end
 
@@ -209165,6 +209329,8 @@
 #name "Pangaea"
 #epithet "New Era"
 #era 3
+#color 0.2 0.8 0.2
+#secondarycolor 0.6 0.6 0.7
 #addrecunit 239
 #addrecunit 2155
 #addrecunit 227
@@ -209243,12 +209409,15 @@
 #cheapgod20 2783
 #cheapgod20 2977
 #cheapgod20 3650
+-- ro: file name = late_pangaea
 #end
 
 #selectnation 98
 #name "Pythium"
 #epithet "Serpent Cult"
 #era 3
+#color 0.3 0.6 0.2
+#secondarycolor 1 0.8 0.1
 #addrecunit 1862
 #addrecunit 1863
 #addrecunit 1864
@@ -209327,6 +209496,7 @@
 #cheapgod20 2799
 #cheapgod20 3208
 #cheapgod20 3209
+-- ro: file name = late_pythium
 -- ro: ability 1010 = 10
 #end
 
@@ -209334,6 +209504,8 @@
 #name "Lemuria"
 #epithet "Soul Gates"
 #era 3
+#color 0.5 0.3 0.6
+#secondarycolor 0.1 0.1 0.1
 #delgod 138
 #delgod 385
 #delgod 812
@@ -209389,6 +209561,7 @@
 #cheapgod20 872
 #cheapgod20 2850
 #cheapgod20 3895
+-- ro: file name = late_lemur
 -- ro: ability 324 = -2
 -- ro: ability 287 = 1
 -- ro: ability 290 = 1
@@ -209404,6 +209577,8 @@
 #name "Man"
 #epithet "Towers of Chelms"
 #era 3
+#color 0 0.6 0
+#secondarycolor 0.2 0.2 0.2
 #addrecunit 2127
 #addrecunit 61
 #addrecunit 62
@@ -209467,12 +209642,15 @@
 #guardmult 15
 #guardcom 1644
 #cheapgod20 3059
+-- ro: file name = late_chelms
 #end
 
 #selectnation 101
 #name "Ulm"
 #epithet "Black Forest"
 #era 3
+#color 0.1 0.1 0.5
+#secondarycolor 0.5 0 0
 #addrecunit 482
 #addrecunit 1013
 #addrecunit 1014
@@ -209535,12 +209713,15 @@
 #guardcom 1016
 #cheapgod20 656
 #cheapgod20 862
+-- ro: file name = late_ulm
 #end
 
 #selectnation 102
 #name "Agartha"
 #epithet "Ktonian Dead"
 #era 3
+#color 0.2 0.2 0.2
+#secondarycolor 0.9 0.8 0.7
 #addrecunit 1675
 #addrecunit 1676
 #addrecunit 1677
@@ -209618,6 +209799,7 @@
 #cheapgod20 2503
 #cheapgod20 2955
 #cheapgod20 3888
+-- ro: file name = late_agartha
 -- ro: ability 233 = 1352
 -- ro: ability 234 = 10
 #end
@@ -209626,6 +209808,8 @@
 #name "Marignon"
 #epithet "Conquerors of the Sea"
 #era 3
+#color 0.9 0.4 0
+#secondarycolor 0.9 0.8 0.1
 #addrecunit 2108
 #addrecunit 2109
 #addrecunit 2110
@@ -209724,6 +209908,7 @@
 #cheapgod20 3081
 #cheapgod20 3082
 #cheapgod20 3416
+-- ro: file name = late_marignon
 -- ro: ability 41 = 1
 #end
 
@@ -209731,6 +209916,8 @@
 #name "Abysia"
 #epithet "Blood of Humans"
 #era 3
+#color 0.8 0.1 0
+#secondarycolor 0.2 0.2 0.2
 #addrecunit 1090
 #addrecunit 984
 #addrecunit 985
@@ -209821,6 +210008,7 @@
 #cheapgod20 486
 #cheapgod20 1025
 #cheapgod20 2792
+-- ro: file name = late_abysia
 -- ro: ability 650 = 1
 #end
 
@@ -209828,6 +210016,8 @@
 #name "Ragha"
 #epithet "Dual Kingdom"
 #era 3
+#color 0.8 0.1 0
+#secondarycolor 0.8 0.8 1
 #addrecunit 2579
 #addrecunit 2580
 #addrecunit 2581
@@ -209909,6 +210099,7 @@
 #cheapgod20 2611
 #cheapgod20 2627
 #cheapgod20 2788
+-- ro: file name = late_ragha
 -- ro: ability 309 = 1
 #end
 
@@ -209916,6 +210107,8 @@
 #name "Caelum"
 #epithet "Return of the Raptors"
 #era 3
+#color 0.6 0.6 1
+#secondarycolor 0.2 0.2 0.2
 #addrecunit 2564
 #addrecunit 2593
 #addrecunit 2594
@@ -209986,6 +210179,7 @@
 #cheapgod20 509
 #cheapgod20 2552
 #cheapgod20 2789
+-- ro: file name = late_caelum
 -- ro: ability 340 = 1
 #end
 
@@ -209993,6 +210187,8 @@
 #name "Gath"
 #epithet "Last of the Giants"
 #era 3
+#color 0.8 0.7 0.6
+#secondarycolor 0.7 0.1 0.1
 #addrecunit 1994
 #addrecunit 1996
 #addrecunit 1993
@@ -210058,12 +210254,15 @@
 #cheapgod20 1025
 #cheapgod20 2082
 #cheapgod20 2462
+-- ro: file name = late_gath
 #end
 
 #selectnation 108
 #name "Patala"
 #epithet "Reign of the Nagas"
 #era 3
+#color 1 0.8 0.3
+#secondarycolor 0.1 0.4 0.2
 #addrecunit 1118
 #addrecunit 1120
 #addrecunit 1121
@@ -210156,12 +210355,15 @@
 #cheapgod20 2549
 #cheapgod20 3874
 #cheapgod20 3926
+-- ro: file name = late_patala
 #end
 
 #selectnation 109
 #name "T'ien Ch'i"
 #epithet "Barbarian Kings"
 #era 3
+#color 0.9 0.3 0.3
+#secondarycolor 0.4 0.2 0.1
 #addrecunit 794
 #addrecunit 795
 #addrecunit 796
@@ -210242,12 +210444,15 @@
 #cheapgod20 3929
 #cheapgod20 391
 #cheapgod20 3932
+-- ro: file name = late_tienchi
 #end
 
 #selectnation 110
 #name "Jomon"
 #epithet "Human Daimyos"
 #era 3
+#color 0.5 0.5 0.5
+#secondarycolor 0.9 0.1 0.1
 #addrecunit 1238
 #addrecunit 1239
 #addrecunit 1240
@@ -210331,6 +210536,7 @@
 #cheapgod20 2979
 #cheapgod20 3072
 #cheapgod20 3073
+-- ro: file name = late_jomon
 -- ro: ability 666 = 2103
 -- ro: ability 667 = 5
 -- ro: ability 668 = 2102
@@ -210340,6 +210546,8 @@
 #name "Mictlan"
 #epithet "Blood and Rain"
 #era 3
+#color 0.3 0.8 0.5
+#secondarycolor 0.3 0.4 0.7
 #addrecunit 721
 #addrecunit 1545
 #addrecunit 1546
@@ -210427,6 +210635,7 @@
 #buildfort 11
 #homefort 12
 #cheapgod20 603
+-- ro: file name = late_mictlan
 -- ro: ability 666 = 2896
 -- ro: ability 667 = 7
 -- ro: ability 668 = 2894
@@ -210436,6 +210645,8 @@
 #name "Xibalba"
 #epithet "Return of the Zotz"
 #era 3
+#color 0.2 0.2 0.2
+#secondarycolor 0.7 0.1 0.1
 #addrecunit 2738
 #addrecunit 2739
 #addrecunit 2740
@@ -210534,6 +210745,7 @@
 #cheapgod20 2755
 #cheapgod20 2756
 #cheapgod20 3192
+-- ro: file name = late_xibalba
 -- ro: ability 666 = 2890
 -- ro: ability 667 = 15
 -- ro: ability 668 = 2891
@@ -210543,6 +210755,8 @@
 #name "C'tis"
 #epithet "Desert Tombs"
 #era 3
+#color 0.7 0.9 0.2
+#secondarycolor 0.8 0.8 0.6
 #addrecunit 168
 #addrecunit 167
 #addrecunit 4062
@@ -210616,6 +210830,7 @@
 #cheapgod20 2205
 #cheapgod20 2445
 #cheapgod20 2793
+-- ro: file name = late_ctis
 -- ro: ability 210 = 1
 -- ro: ability 197 = 1
 -- ro: ability 654 = 616
@@ -210627,13 +210842,19 @@
 #selectnation 114
 #name "Machaka xxxx"
 #era 0
+#color 1 0.8 0.3
+#secondarycolor 0 0 0
 #addgod 159
+-- ro: status = unused slot (a mod's #name makes it a nation)
+-- ro: file name = late_machaka
 #end
 
 #selectnation 115
 #name "Midgård"
 #epithet "Age of Men"
 #era 3
+#color 0.6 0.1 0.1
+#secondarycolor 0.7 0.7 0.7
 #addrecunit 2148
 #addrecunit 142
 #addrecunit 143
@@ -210685,12 +210906,15 @@
 #guardcom 2150
 #cheapgod20 1098
 #cheapgod20 2194
+-- ro: file name = late_midgard
 #end
 
 #selectnation 116
 #name "Bogarus"
 #epithet "Age of Heroes"
 #era 3
+#color 0.4 0.4 0.8
+#secondarycolor 0.7 0.1 0.1
 #addrecunit 1929
 #addrecunit 1930
 #addrecunit 1931
@@ -210765,12 +210989,15 @@
 #guardcom 1917
 #cheapgod20 1561
 #cheapgod20 3086
+-- ro: file name = late_rus
 #end
 
 #selectnation 117
 #name "Utgård"
 #epithet "Well of Urd"
 #era 3
+#color 0.4 0.2 0.1
+#secondarycolor 0.3 0.3 0.3
 #addrecunit 837
 #addrecunit 838
 #addrecunit 3436
@@ -210847,12 +211074,15 @@
 #cheapgod20 644
 #cheapgod20 645
 #cheapgod20 1229
+-- ro: file name = late_utgard
 #end
 
 #selectnation 118
 #name "Vaettiheim"
 #epithet "Wolf Kin Jarldom"
 #era 3
+#color 0.5 0.5 0.7
+#secondarycolor 0.4 0.3 0.2
 #addrecunit 3401
 #addrecunit 3412
 #addrecunit 3402
@@ -210924,12 +211154,15 @@
 #cheapgod20 644
 #cheapgod20 645
 #cheapgod20 1229
+-- ro: file name = late_vaetti
 #end
 
 #selectnation 119
 #name "Feminie"
 #epithet "Sage-Queens"
 #era 3
+#color 0.9 0.1 0.1
+#secondarycolor 0.8 0.7 0.5
 #addrecunit 3803
 #addrecunit 3804
 #addrecunit 3805
@@ -211021,12 +211254,15 @@
 #guardcom 3811
 #cheapgod20 158
 #cheapgod20 4002
+-- ro: file name = late_feminie
 #end
 
 #selectnation 120
 #name "Piconye"
 #epithet "Legacy of the Prester King"
 #era 3
+#color 0.3 0.3 0.8
+#secondarycolor 0.8 0.6 0.2
 #addrecunit 3783
 #addrecunit 3784
 #addrecunit 3785
@@ -211117,12 +211353,15 @@
 #cheapgod20 158
 #cheapgod20 215
 #cheapgod20 4001
+-- ro: file name = late_piconye
 #end
 
 #selectnation 121
 #name "Andramania"
 #epithet "Dog Republic"
 #era 3
+#color 0.9 0.7 0.3
+#secondarycolor 0.3 0.5 0.8
 #addrecunit 3840
 #addrecunit 3841
 #addrecunit 3842
@@ -211171,17 +211410,24 @@
 #homerealm 7
 #homerealm 10
 #cheapgod20 4003
+-- ro: file name = late_andramania
 #end
 
 #selectnation 122
 #name "Oman"
 #era 0
+#color 0 0 0
+#secondarycolor 0 0 0
+-- ro: status = unused slot (a mod's #name makes it a nation)
+-- ro: file name = nation_122
 #end
 
 #selectnation 123
 #name "Pyrène"
 #epithet "Cambion Kings"
 #era 3
+#color 0.5 0 0
+#secondarycolor 0.8 0.3 0.6
 #addrecunit 4034
 #addrecunit 4035
 #addrecunit 4036
@@ -211265,12 +211511,15 @@
 #cheapgod20 3416
 #cheapgod20 3632
 #cheapgod20 3894
+-- ro: file name = late_pyrene
 #end
 
 #selectnation 124
 #name "Zemaitia"
 #epithet "Sylvan Knights"
 #era 3
+#color 0.2 0.4 0.1
+#secondarycolor 0.9 0.4 0.8
 #addrecunit 4074
 #addrecunit 4075
 #addrecunit 4076
@@ -211362,6 +211611,7 @@
 #cheapgod20 3692
 #cheapgod20 4107
 #cheapgod20 4108
+-- ro: file name = late_zemaitia
 -- ro: ability 642 repeated (the game reads the first) = -1
 #end
 
@@ -211369,6 +211619,8 @@
 #name "Erytheia"
 #epithet "Kingdom of Two Worlds"
 #era 3
+#color 1 0.9 0.5
+#secondarycolor 0.8 0.2 0.1
 #addrecunit 3024
 #addreccom 3025
 #addreccom 3029
@@ -211458,6 +211710,7 @@
 #cheapgod20 2851
 #cheapgod20 3053
 #cheapgod20 3368
+-- ro: file name = late_erytheia
 -- ro: ability 185 (#coastnation stores 1) = 3
 -- ro: ability 176 repeated (the game reads the first) = 3030
 -- ro: ability 180 repeated (the game reads the first) = 10
@@ -211470,6 +211723,8 @@
 #name "Atlantis"
 #epithet "Frozen Sea"
 #era 3
+#color 0.2 0.2 0.9
+#secondarycolor 0.8 0.8 0.6
 #addrecunit 1617
 #addrecunit 1625
 #addrecunit 1626
@@ -211562,6 +211817,7 @@
 #cheapgod20 265
 #cheapgod20 2852
 #cheapgod20 2853
+-- ro: file name = late_atlantis
 -- ro: ability 185 (#coastnation stores 1) = 3
 -- ro: ability 666 = 2087
 -- ro: ability 667 = 5
@@ -211572,6 +211828,8 @@
 #name "R'lyeh"
 #epithet "Dreamlands"
 #era 3
+#color 0 0.2 0.3
+#secondarycolor 1 0.8 1
 #addrecunit 1517
 #addrecunit 1526
 #addrecunit 1515
@@ -211667,6 +211925,7 @@
 #cheapgod20 2980
 #cheapgod20 3054
 #cheapgod20 3396
+-- ro: file name = late_rlyeh
 -- ro: ability 167 = 1
 -- ro: ability 400 = 60
 -- ro: ability 168 = 10
@@ -211677,8 +211936,17609 @@
 -- ro: ability 668 = 444
 #end
 
-#selectnation 135
-#name "end"
-#epithet "end"
-#era 0
+#selectbless 0
+#name "Increased Morale"
+#path0 0
+#cost0 0
+-- ro: effect = ability 308: 1
+#end
+
+#selectbless 1
+#name "Superior Morale"
+#path0 0
+#cost0 1
+-- ro: effect = ability 308: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 2
+#name "Wasteland Survival"
+#path0 0
+#cost0 1
+#path1 5
+#cost1 1
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 423: 1
+#end
+
+#selectbless 3
+#name "Fire Resistance"
+#path0 0
+#cost0 2
+-- ro: effect = ability 198 (#fireres): 5
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 4
+#name "Attack Skill"
+#path0 0
+#cost0 2
+-- ro: effect = ability 1057: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 5
+#name "Inspirational Presence"
+#path0 0
+#cost0 3
+-- ro: effect = ability 550: 1
+-- ro: effect = #inspirational 1
+-- ro: effect = ability 160: 50
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 6
+#name "Righteous Wrath"
+#path0 0
+#cost0 4
+-- ro: effect = ability 1030: 3
+#end
+
+#selectbless 7
+#name "Death Explosion"
+#path0 0
+#cost0 5
+-- ro: effect = #deathfire 6
+#end
+
+#selectbless 8
+#name "Heat Aura"
+#path0 0
+#cost0 5
+-- ro: effect = #heat 3
+-- ro: effect = ability 198 (#fireres): 10
+#end
+
+#selectbless 9
+#name "Fire Shield"
+#path0 0
+#cost0 6
+-- ro: effect = #fireshield 7
+#end
+
+#selectbless 10
+#name "Flaming Weapons"
+#path0 0
+#cost0 7
+-- ro: effect = ability 545: 8
+#end
+
+#selectbless 11
+#name "Unbearable Splendour"
+#path0 0
+#cost0 8
+#path1 4
+#cost1 4
+-- ro: effect = ability 244: 1
+#end
+
+#selectbless 12
+#name "Precision"
+#path0 1
+#cost0 1
+-- ro: effect = ability 181: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 13
+#name "Shock Resistance"
+#path0 1
+#cost0 2
+-- ro: effect = ability 199 (#shockres): 5
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 14
+#name "Farshot"
+#path0 1
+#cost0 2
+-- ro: effect = ability 548: 30
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 15
+#name "Swiftness"
+#path0 1
+#cost0 4
+-- ro: effect = ability 595: 30
+-- ro: effect = ability 551: 1
+-- ro: effect = ability 377: 1
+#end
+
+#selectbless 16
+#name "Storm Flight"
+#path0 1
+#cost0 4
+-- ro: effect = #stormimmune
+#end
+
+#selectbless 17
+#name "Wind Walker"
+#path0 1
+#cost0 5
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 426: 6
+#end
+
+#selectbless 18
+#name "Weightlessness"
+#path0 1
+#cost0 5
+#path1 3
+#cost1 1
+-- ro: battle buffs = 0x10000000000000
+-- ro: effect = ability 1027: 50
+#end
+
+#selectbless 19
+#name "Air Shield"
+#path0 1
+#cost0 6
+-- ro: effect = #airshield 80
+#end
+
+#selectbless 20
+#name "Thunder Weapons"
+#path0 1
+#cost0 7
+-- ro: effect = ability 546: 1
+#end
+
+#selectbless 21
+#name "Charged Bodies"
+#path0 1
+#cost0 8
+-- ro: effect = ability 547: 1
+-- ro: effect = ability 199 (#shockres): 5
+#end
+
+#selectbless 22
+#name "Flight"
+#path0 1
+#cost0 9
+-- ro: battle buffs = 0x20000
+#end
+
+#selectbless 23
+#name "Winter's Gift"
+#path0 2
+#cost0 1
+#coldscale 1
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 576: 1
+#end
+
+#selectbless 24
+#name "Swamp Survival"
+#path0 2
+#cost0 1
+#path1 6
+#cost1 1
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 424: 1
+#end
+
+#selectbless 25
+#name "Cold Resistance"
+#path0 2
+#cost0 2
+-- ro: effect = ability 201 (#coldres): 5
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 26
+#name "Swimming"
+#path0 2
+#cost0 2
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 571: 1
+#end
+
+#selectbless 27
+#name "Defence Skill"
+#path0 2
+#cost0 2
+-- ro: effect = ability 377: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 28
+#name "Chill Aura"
+#path0 2
+#cost0 5
+-- ro: effect = #cold 3
+-- ro: effect = ability 201 (#coldres): 10
+#end
+
+#selectbless 29
+#name "Slowing Weapons"
+#path0 2
+#cost0 5
+-- ro: effect = ability 1035: 5
+#end
+
+#selectbless 30
+#name "Vitriol Weapons"
+#path0 2
+#cost0 6
+#path1 0
+#cost1 2
+-- ro: effect = ability 1034: 7
+#end
+
+#selectbless 31
+#name "Water Breathing"
+#path0 2
+#cost0 6
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 110: 1
+#end
+
+#selectbless 32
+#name "Frost Mist Weapons"
+#path0 2
+#cost0 7
+#coldscale 1
+-- ro: effect = ability 1028: 1
+#end
+
+#selectbless 33
+#name "Quickness"
+#path0 2
+#cost0 9
+#magicscale 1
+-- ro: battle buffs = 0x40000
+#end
+
+#selectbless 34
+#name "Mountain Survival"
+#path0 3
+#cost0 1
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 421: 1
+#end
+
+#selectbless 35
+#name "Reinvigoration"
+#path0 3
+#cost0 2
+-- ro: effect = #reinvigoration 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 36
+#name "Reconstruction"
+#path0 3
+#cost0 5
+-- ro: effect = #reconst 5
+#end
+
+#selectbless 37
+#name "Strength of the Earth"
+#path0 3
+#cost0 2
+-- ro: effect = ability 1058: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 38
+#name "Unbreakable"
+#path0 3
+#cost0 4
+-- ro: effect = #woundfend 3
+#end
+
+#selectbless 39
+#name "Resilience of the Earth"
+#path0 3
+#cost0 6
+-- ro: effect = ability 198 (#fireres): 10
+-- ro: effect = ability 199 (#shockres): 10
+#end
+
+#selectbless 40
+#name "Larger"
+#path0 3
+#cost0 4
+#path1 6
+#cost1 3
+-- ro: battle buffs = 0x80000000
+-- ro: effect = ability 550: 1
+#end
+
+#selectbless 41
+#name "Hard Skin"
+#path0 3
+#cost0 6
+-- ro: battle buffs = 0x400000000000
+#end
+
+#selectbless 42
+#name "Fortitude"
+#path0 3
+#cost0 7
+-- ro: battle buffs = 0x7000000000
+#end
+
+#selectbless 43
+#name "Arcane Command"
+#path0 4
+#cost0 1
+-- ro: effect = ability 550: 1
+-- ro: effect = #magiccommand 25
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 44
+#name "Magic Resistance"
+#path0 4
+#cost0 2
+-- ro: effect = ability 161: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 45
+#name "Spirit Sight"
+#path0 4
+#cost0 3
+#path1 5
+#cost1 1
+-- ro: effect = ability 550: 1
+-- ro: effect = #spiritsight
+#end
+
+#selectbless 46
+#name "Solar Weapons"
+#path0 4
+#cost0 3
+#path1 0
+#cost1 1
+-- ro: effect = ability 543: 4
+#end
+
+#selectbless 47
+#name "Far Caster"
+#path0 4
+#cost0 4
+-- ro: effect = ability 556: 50
+#end
+
+#selectbless 48
+#name "Arcane Finesse"
+#path0 4
+#cost0 4
+-- ro: effect = ability 162: 1
+#end
+
+#selectbless 49
+#name "Magic Weapons"
+#path0 4
+#cost0 5
+-- ro: effect = ability 542: 1
+#end
+
+#selectbless 50
+#name "Twist Fate"
+#path0 4
+#cost0 6
+-- ro: effect = ability 541: 1
+#end
+
+#selectbless 51
+#name "Fateweaving"
+#path0 4
+#cost0 7
+#misfortscale 1
+-- ro: effect = #curseluckshield 5
+#end
+
+#selectbless 52
+#name "Etherealness"
+#path0 4
+#cost0 8
+#magicscale 2
+-- ro: battle buffs = 0x8000000
+#end
+
+#selectbless 53
+#name "Undying"
+#path0 5
+#cost0 1
+-- ro: effect = ability 415: 2
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 54
+#name "Undead Command"
+#path0 5
+#cost0 1
+-- ro: effect = ability 550: 1
+-- ro: effect = #undcommand 50
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 55
+#name "Half Dead"
+#path0 5
+#cost0 2
+#deathscale 2
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 537: 1
+-- ro: effect = #diseaseres 80
+#end
+
+#selectbless 56
+#name "Mending Bones"
+#path0 5
+#cost0 3
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 569: 1
+#end
+
+#selectbless 57
+#name "Withering Weapons"
+#path0 5
+#cost0 4
+-- ro: effect = ability 539: 3
+#end
+
+#selectbless 58
+#name "Stygian Flesh"
+#path0 5
+#cost0 5
+-- ro: effect = #invulnerable 10
+#end
+
+#selectbless 59
+#name "Reforming Flesh"
+#path0 5
+#cost0 6
+-- ro: effect = #undregen 10
+#end
+
+#selectbless 60
+#name "Reanimators"
+#path0 5
+#cost0 7
+-- ro: effect = #raiseonkill 50
+-- ro: effect = ability 550: 1
+-- ro: effect = #undcommand 5
+#end
+
+#selectbless 61
+#name "Death Weapons"
+#path0 5
+#cost0 8
+-- ro: effect = ability 540: 2
+#end
+
+#selectbless 62
+#name "Fear"
+#path0 5
+#cost0 9
+#chaosscale 1
+-- ro: effect = #fear 5
+#end
+
+#selectbless 63
+#name "Resilient"
+#path0 6
+#cost0 1
+-- ro: effect = ability 305: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 64
+#name "Low Light Vision"
+#path0 6
+#cost0 1
+-- ro: effect = #darkvision 50
+#end
+
+#selectbless 65
+#name "Poison Resistance"
+#path0 6
+#cost0 2
+-- ro: effect = ability 200 (#poisonres): 5
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 66
+#name "Forest Survival"
+#path0 6
+#cost0 2
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 422: 1
+#end
+
+#selectbless 67
+#name "Unaging"
+#path0 6
+#cost0 3
+#magicscale 1
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 479: 75
+#end
+
+#selectbless 68
+#name "Poison Weapons"
+#path0 6
+#cost0 4
+#deathscale 1
+-- ro: effect = ability 538: 5
+#end
+
+#selectbless 69
+#name "Recuperation"
+#path0 6
+#cost0 5
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 568: 1
+#end
+
+#selectbless 70
+#name "Berserker"
+#path0 6
+#cost0 5
+-- ro: effect = ability 550: 1
+-- ro: effect = #berserk 2
+#end
+
+#selectbless 71
+#name "Barkskin"
+#path0 6
+#cost0 6
+-- ro: battle buffs = 0x10
+#end
+
+#selectbless 72
+#name "Regeneration"
+#path0 6
+#cost0 7
+-- ro: effect = #regeneration 10
+#end
+
+#selectbless 73
+#name "Undreaming"
+#path0 7
+#cost0 1
+-- ro: effect = ability 550: 1
+-- ro: effect = #sleepres 4
+#end
+
+#selectbless 74
+#name "Quiet Stride"
+#path0 7
+#cost0 2
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 390: 20
+#end
+
+#selectbless 75
+#name "True Sight"
+#path0 7
+#cost0 3
+-- ro: effect = ability 550: 1
+-- ro: effect = #truesight
+#end
+
+#selectbless 76
+#name "Blur"
+#path0 7
+#cost0 3
+-- ro: battle buffs 2 = 0x40000000000
+#end
+
+#selectbless 77
+#name "Obfuscate"
+#path0 7
+#cost0 6
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 108 (#stealthy): 40
+#end
+
+#selectbless 78
+#name "Awe"
+#path0 7
+#cost0 6
+#path1 0
+#cost1 2
+-- ro: effect = #awe 3
+#end
+
+#selectbless 79
+#name "Displacement"
+#path0 7
+#cost0 7
+-- ro: battle buffs 2 = 0x80000000000
+#end
+
+#selectbless 80
+#name "Dread"
+#path0 7
+#cost0 8
+#magicscale 1
+-- ro: effect = #dread 5
+#end
+
+#selectbless 81
+#name "Luck"
+#path0 7
+#cost0 8
+#luckscale 2
+-- ro: battle buffs = 0x2
+#end
+
+#selectbless 82
+#name "Strong Vitae"
+#path0 8
+#cost0 1
+-- ro: effect = ability 305: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 83
+#name "Strength of the Flesh"
+#path0 8
+#cost0 2
+-- ro: effect = ability 1058: 1
+-- ro: effect = ability 551: 1
+#end
+
+#selectbless 84
+#name "Strong Blood"
+#path0 8
+#cost0 3
+-- ro: effect = ability 550: 1
+-- ro: effect = ability 200 (#poisonres): 5
+-- ro: effect = #diseaseres 80
+#end
+
+#selectbless 85
+#name "Enchanted Blood"
+#path0 8
+#cost0 4
+-- ro: effect = #enchantedblood 1
+#end
+
+#selectbless 86
+#name "Blood Surge"
+#path0 8
+#cost0 4
+-- ro: effect = ability 554: 3
+#end
+
+#selectbless 87
+#name "Blood Bond"
+#path0 8
+#cost0 5
+-- ro: effect = ability 555: 5
+#end
+
+#selectbless 88
+#name "Unholy Weapons"
+#path0 8
+#cost0 6
+-- ro: effect = ability 544: 15
+#end
+
+#selectbless 89
+#name "Blood Vengeance"
+#path0 8
+#cost0 7
+-- ro: effect = #bloodvengeance 1
+#end
+
+#selectbless 90
+#name "Vampiric Weapons"
+#path0 8
+#cost0 8
+#path1 5
+#cost1 4
+-- ro: effect = ability 1032: 3
+#end
+
+#selectbless 91
+#name "Awareness"
+#path0 1
+#cost0 3
+-- ro: effect = #unsurr 2
+#end
+
+#selectbless 92
+#name "Heroism"
+#path0 7
+#cost0 1
+-- ro: effect = ability 550: 1
+-- ro: effect = #xpgain 35
+-- ro: effect = ability 551: 1
+#end
+
+#selectpoptype 25
+#addrecunit 139
+#addrecunit 140
+#addreccom 141
+#defunit1 139
+#defunit1b 140
+#defcom1 141
+#end
+
+#selectpoptype 26
+#addrecunit 137
+#addreccom 136
+#defunit1 137
+#defmult1 15
+#defcom1 136
+#end
+
+#selectpoptype 27
+#addrecunit 30
+#addrecunit 17
+#addrecunit 38
+#addreccom 34
+#addreccom 240
+#defunit1 30
+#defunit1b 17
+#defunit1c 38
+#defmult1c 5
+#defcom1 34
+#end
+
+#selectpoptype 28
+#addrecunit 18
+#addrecunit 33
+#addrecunit 39
+#addreccom 35
+#addreccom 240
+#defunit1 33
+#defunit1b 18
+#defunit1c 39
+#defmult1c 5
+#defcom1 35
+#end
+
+#selectpoptype 29
+#addrecunit 31
+#addrecunit 32
+#addrecunit 40
+#addreccom 426
+#addreccom 36
+#addreccom 240
+#defunit1 32
+#defunit1b 31
+#defunit1c 40
+#defmult1c 5
+#defcom1 36
+#end
+
+#selectpoptype 30
+#addrecunit 30
+#addrecunit 55
+#addrecunit 22
+#addreccom 23
+#addreccom 240
+#defunit1 30
+#defmult1 20
+#defunit1b 55
+#defmult1b 10
+#defcom1 23
+#end
+
+#selectpoptype 31
+#addrecunit 176
+#addreccom 406
+#defunit1 176
+#defmult1 20
+#defcom1 406
+#end
+
+#selectpoptype 32
+#addrecunit 29
+#addrecunit 39
+#addrecunit 47
+#addreccom 35
+#addreccom 240
+#defunit1 29
+#defunit1b 47
+#defunit1c 39
+#defmult1c 5
+#defcom1 36
+#end
+
+#selectpoptype 33
+#addrecunit 29
+#addrecunit 40
+#addrecunit 48
+#addreccom 36
+#addreccom 240
+#defunit1 29
+#defunit1b 48
+#defunit1c 40
+#defmult1c 5
+#defcom1 36
+#end
+
+#selectpoptype 34
+#addrecunit 205
+#addreccom 252
+#defunit1 205
+#defmult1 15
+#defcom1 252
+#end
+
+#selectpoptype 35
+#addrecunit 50
+#addreccom 34
+#defunit1 50
+#defmult1 20
+#defcom1 34
+#end
+
+#selectpoptype 36
+#addrecunit 423
+#addreccom 1514
+#defunit1 423
+#defmult1 15
+#defcom1 1514
+#end
+
+#selectpoptype 37
+#addrecunit 125
+#addrecunit 126
+#addreccom 105
+#defunit1 125
+#defunit1b 126
+#defcom1 105
+#end
+
+#selectpoptype 38
+#addrecunit 483
+#addrecunit 271
+#addrecunit 273
+#addreccom 272
+#defunit1 483
+#defunit1b 273
+#defmult1c 5
+#defcom1 272
+-- ro: defender #defunit1b repeated (the game reads the first) = 271
+#end
+
+#selectpoptype 39
+#addrecunit 18
+#addrecunit 33
+#addrecunit 29
+#addreccom 426
+#addreccom 34
+#addreccom 240
+#defunit1 18
+#defunit1b 33
+#defmult1c 5
+#defcom1 34
+-- ro: defender #defunit1b repeated (the game reads the first) = 29
+#end
+
+#selectpoptype 40
+#addrecunit 348
+#addrecunit 367
+#addreccom 347
+#addreccom 346
+#defunit1 348
+#defmult1 15
+#defunit1b 367
+#defmult1b 3
+#defcom1 347
+#end
+
+#selectpoptype 41
+#addrecunit 351
+#addrecunit 612
+#addreccom 350
+#addreccom 349
+#defunit1 351
+#defmult1 15
+#defunit1b 612
+#defmult1b 2
+#defcom1 350
+#end
+
+#selectpoptype 42
+#addrecunit 354
+#addrecunit 370
+#addreccom 353
+#addreccom 352
+#defunit1 354
+#defmult1 15
+#defunit1b 370
+#defmult1b 3
+#defcom1 353
+#end
+
+#selectpoptype 43
+#addrecunit 357
+#addrecunit 369
+#addreccom 356
+#addreccom 355
+#defunit1 357
+#defmult1 15
+#defunit1b 369
+#defmult1b 3
+#defcom1 356
+#end
+
+#selectpoptype 44
+#addrecunit 447
+#defunit1 1615
+#defmult1 5
+#defcom1 1616
+#end
+
+#selectpoptype 45
+#addrecunit 175
+#addrecunit 577
+#addrecunit 545
+#addreccom 406
+#defunit1 175
+#defunit1b 577
+#defmult1b 5
+#defcom1 406
+#end
+
+#selectpoptype 46
+#addrecunit 574
+#addrecunit 573
+#addreccom 576
+#addreccom 575
+#defunit1 574
+#defunit1b 573
+#defmult1b 5
+#defcom1 576
+#end
+
+#selectpoptype 47
+#addrecunit 49
+#addrecunit 21
+#addreccom 426
+#addreccom 44
+#addreccom 240
+#defunit1 49
+#defunit1b 21
+#defmult1b 3
+#defcom1 44
+#end
+
+#selectpoptype 48
+#addrecunit 30
+#addrecunit 28
+#addrecunit 38
+#addreccom 34
+#addreccom 240
+#defunit1 30
+#defunit1b 28
+#defunit1c 38
+#defmult1c 5
+#defcom1 34
+#end
+
+#selectpoptype 49
+#addrecunit 18
+#addrecunit 28
+#addrecunit 39
+#addreccom 35
+#addreccom 240
+#defunit1 18
+#defunit1b 28
+#defunit1c 39
+#defmult1c 5
+#defcom1 35
+#end
+
+#selectpoptype 50
+#addrecunit 31
+#addrecunit 29
+#addrecunit 40
+#addreccom 426
+#addreccom 36
+#addreccom 240
+#defunit1 31
+#defunit1b 29
+#defunit1c 40
+#defmult1c 5
+#defcom1 36
+#end
+
+#selectpoptype 51
+#addrecunit 30
+#addrecunit 24
+#addrecunit 20
+#addreccom 46
+#addreccom 240
+#defunit1 30
+#defunit1b 24
+#defunit1c 20
+#defmult1c 3
+#defcom1 46
+#end
+
+#selectpoptype 52
+#addrecunit 18
+#addrecunit 25
+#addrecunit 19
+#addreccom 45
+#addreccom 240
+#defunit1 18
+#defunit1b 25
+#defunit1c 19
+#defmult1c 3
+#defcom1 45
+#end
+
+#selectpoptype 53
+#addrecunit 31
+#addrecunit 26
+#addrecunit 21
+#addreccom 426
+#addreccom 44
+#addreccom 240
+#defunit1 31
+#defunit1b 26
+#defunit1c 21
+#defmult1c 3
+#defcom1 44
+#end
+
+#selectpoptype 54
+#addrecunit 38
+#addrecunit 20
+#addreccom 46
+#addreccom 240
+#defunit1 38
+#defunit1b 20
+#defmult1b 3
+#defcom1 46
+#end
+
+#selectpoptype 55
+#addrecunit 39
+#addrecunit 19
+#addreccom 45
+#addreccom 240
+#defunit1 39
+#defunit1b 19
+#defmult1b 3
+#defcom1 45
+#end
+
+#selectpoptype 56
+#addrecunit 40
+#addrecunit 21
+#addreccom 426
+#addreccom 44
+#addreccom 240
+#defunit1 40
+#defunit1b 21
+#defmult1b 3
+#defcom1 44
+#end
+
+#selectpoptype 57
+#addrecunit 110
+#addrecunit 206
+#addreccom 207
+#defunit1 110
+#defunit1b 206
+#defmult1b 3
+#defcom1 207
+#end
+
+#selectpoptype 58
+#addrecunit 29
+#addrecunit 40
+#addrecunit 49
+#addreccom 36
+#addreccom 240
+#defunit1 29
+#defunit1b 40
+#defmult1b 5
+#defcom1 36
+-- ro: defender #defunit1b repeated (the game reads the first) = 49
+#end
+
+#selectpoptype 59
+#addrecunit 30
+#addrecunit 28
+#addrecunit 17
+#addreccom 34
+#addreccom 240
+#defunit1 30
+#defunit1b 28
+#defunit1c 17
+#defmult1c 5
+#defcom1 34
+#end
+
+#selectpoptype 60
+#addrecunit 18
+#addrecunit 29
+#addrecunit 33
+#addreccom 35
+#addreccom 240
+#defunit1 18
+#defunit1b 29
+#defunit1c 33
+#defmult1c 5
+#defcom1 35
+#end
+
+#selectpoptype 61
+#addrecunit 541
+#addrecunit 282
+#addrecunit 518
+#addreccom 283
+#defunit1 541
+#defunit1b 282
+#defmult1b 5
+#defunit1c 518
+#defmult1c 1
+#defcom1 283
+#end
+
+#selectpoptype 62
+#addrecunit 1595
+#addrecunit 1594
+#addreccom 1598
+#defunit1 1595
+#defunit1b 1594
+#defcom1 1598
+#end
+
+#selectpoptype 63
+#addrecunit 176
+#addrecunit 174
+#addrecunit 175
+#addreccom 406
+#defunit1 176
+#defunit1b 174
+#defunit1c 175
+#defmult1c 3
+#defcom1 406
+#end
+
+#selectpoptype 64
+#addrecunit 175
+#addrecunit 577
+#addreccom 406
+#defunit1 175
+#defunit1b 577
+#defmult1b 5
+#defcom1 406
+#end
+
+#selectpoptype 65
+#addrecunit 974
+#addrecunit 975
+#addreccom 976
+#defunit1 974
+#defunit1b 975
+#defcom1 976
+#end
+
+#selectpoptype 66
+#addrecunit 541
+#addrecunit 282
+#addrecunit 1085
+#addreccom 283
+#defunit1 541
+#defunit1b 282
+#defmult1b 5
+#defcom1 283
+#end
+
+#selectpoptype 67
+#addrecunit 541
+#addrecunit 282
+#addrecunit 1085
+#addreccom 283
+#addreccom 913
+#addreccom 323
+#end
+
+#selectpoptype 68
+#addrecunit 50
+#addrecunit 38
+#addrecunit 150
+#addreccom 34
+#addreccom 240
+#defunit1 50
+#defunit1b 38
+#defunit1c 150
+#defmult1c 1
+#defcom1 34
+#end
+
+#selectpoptype 69
+#addrecunit 1001
+#addreccom 1002
+#end
+
+#selectpoptype 70
+#addrecunit 541
+#addrecunit 282
+#addrecunit 1085
+#addreccom 283
+#addreccom 913
+#addreccom 1010
+#end
+
+#selectpoptype 71
+#addrecunit 518
+#addrecunit 1037
+#addrecunit 1086
+#addreccom 519
+#defunit1 518
+#defmult1 1
+#defunit1b 1037
+#defmult1b 1
+#defcom1 519
+#end
+
+#selectpoptype 72
+#addrecunit 1065
+#addreccom 1067
+#defunit1 1065
+#defmult1 20
+#defcom1 1067
+#end
+
+#selectpoptype 73
+#addrecunit 175
+#addrecunit 577
+#addrecunit 1060
+#addreccom 406
+#defunit1 175
+#defunit1b 577
+#defmult1b 5
+#defcom1 406
+#end
+
+#selectpoptype 74
+#addrecunit 29
+#addrecunit 26
+#addrecunit 1187
+#addreccom 46
+#addreccom 240
+#defunit1 29
+#defunit1b 26
+#defunit1c 1187
+#defmult1c 3
+#defcom1 46
+#end
+
+#selectpoptype 75
+#addrecunit 483
+#addrecunit 271
+#addrecunit 273
+#addrecunit 1196
+#addreccom 272
+#addreccom 1196
+#addreccom 1195
+#addreccom 1198
+#defunit1 483
+#defunit1b 273
+#defmult1c 2
+#defcom1 1196
+-- ro: defender #defunit1b repeated (the game reads the first) = 1196
+#end
+
+#selectpoptype 76
+#addrecunit 483
+#addreccom 1195
+#addreccom 1198
+#defunit1 483
+#defcom1 1195
+#end
+
+#selectpoptype 77
+#addrecunit 1118
+#addrecunit 1121
+#addrecunit 1122
+#addreccom 1127
+#defunit1 1118
+#defunit1b 1121
+#defunit1c 1122
+#defcom1 1127
+#end
+
+#selectpoptype 78
+#addrecunit 123
+#addrecunit 124
+#addreccom 1596
+#defunit1 123
+#defunit1b 124
+#defcom1 1596
+#end
+
+#selectpoptype 79
+#addrecunit 1592
+#addrecunit 1593
+#addreccom 1597
+#defunit1 1592
+#defunit1b 1593
+#defcom1 1597
+#end
+
+#selectpoptype 80
+#addrecunit 1601
+#addrecunit 1600
+#addreccom 1602
+#defunit1 1601
+#defunit1b 1600
+#defcom1 1602
+#end
+
+#selectpoptype 81
+#addrecunit 1465
+#addreccom 1463
+#defunit1 1465
+#defmult1 15
+#defcom1 1463
+#end
+
+#selectpoptype 82
+#addrecunit 1610
+#addrecunit 1611
+#addreccom 1612
+#defunit1 1610
+#defunit1b 1611
+#defcom1 1612
+#end
+
+#selectpoptype 83
+#addrecunit 1613
+#addreccom 1614
+#defunit1 1613
+#defmult1 20
+#defcom1 1614
+#end
+
+#selectpoptype 84
+#addrecunit 1615
+#addreccom 1616
+#defunit1 1615
+#defmult1 4
+#defcom1 1616
+#end
+
+#selectpoptype 85
+#addrecunit 1550
+#addreccom 1531
+#defunit1 1550
+#defmult1 5
+#defcom1 1531
+#end
+
+#selectpoptype 86
+#addrecunit 1394
+#addreccom 1845
+#defunit1 1394
+#defmult1 15
+#defmult1b 15
+#defcom1 1845
+-- ro: defender #defunit1 repeated (the game reads the first) = 1393
+#end
+
+#selectpoptype 87
+#addrecunit 1394
+#addrecunit 1395
+#addreccom 1845
+#defunit1 1394
+#defunit1b 1395
+#defcom1 1845
+#end
+
+#selectpoptype 88
+#addrecunit 1836
+#addreccom 1609
+#defunit1 1836
+-- ro: defender key 235 = 1609
+#end
+
+#selectpoptype 89
+#addrecunit 1749
+#addrecunit 1758
+#addrecunit 1756
+#addreccom 1750
+#defunit1 1749
+#defunit1b 1758
+#defcom1 1750
+#end
+
+#selectpoptype 90
+#addrecunit 2382
+#addreccom 406
+#defunit1 2382
+#defmult1 15
+#defcom1 406
+#end
+
+#selectpoptype 91
+#addrecunit 2383
+#addreccom 406
+#defunit1 2383
+#defmult1 20
+#defcom1 406
+#end
+
+#selectpoptype 92
+#addrecunit 2383
+#addrecunit 545
+#addreccom 406
+#defunit1 2383
+#defunit1b 545
+#defmult1b 2
+#defcom1 406
+#end
+
+#selectpoptype 93
+#addrecunit 2504
+#addreccom 2505
+#defunit1 2504
+#defcom1 2505
+#end
+
+#selectpoptype 94
+#addrecunit 2510
+#addreccom 2511
+#defunit1 2510
+#defmult1 4
+#defcom1 2511
+#end
+
+#selectpoptype 95
+#addrecunit 974
+#addreccom 2804
+#defunit1 974
+#defunit1b 974
+#defcom1 2804
+#end
+
+#selectpoptype 96
+#addrecunit 2817
+#addrecunit 2818
+#addreccom 2819
+#addreccom 2820
+#defunit1 2817
+#defunit1b 2818
+#defmult1b 5
+#defcom1 2819
+#end
+
+#selectpoptype 97
+#addrecunit 2902
+#addrecunit 2903
+#addrecunit 2904
+#addreccom 2905
+#addreccom 2906
+#defunit1 2903
+#defunit1b 2904
+#defcom1 2905
+#end
+
+#selectpoptype 98
+#addrecunit 3089
+#addreccom 3093
+#defunit1 3089
+#defcom1 3093
+#end
+
+#selectpoptype 99
+#addrecunit 3183
+#addrecunit 3184
+#addrecunit 50
+#addreccom 3182
+#defunit1 3184
+#defunit1b 50
+#defunit1c 3183
+#defmult1c 5
+#defcom1 3182
+#end
+
+#selectpoptype 100
+#addrecunit 3185
+#addrecunit 50
+#addreccom 3186
+#defunit1 3185
+#defunit1b 50
+#defcom1 3186
+#end
+
+#selectpoptype 101
+#addrecunit 3187
+#addrecunit 3185
+#addrecunit 17
+#addreccom 3186
+#defunit1 3185
+#defunit1b 17
+#defunit1c 3187
+#defmult1c 5
+#defcom1 3186
+#end
+
+#selectpoptype 102
+#addrecunit 3188
+#addrecunit 50
+#addreccom 3186
+#defunit1 3188
+#defunit1b 50
+#defcom1 3186
+#end
+
+#selectpoptype 103
+#addrecunit 3276
+#addrecunit 3277
+#addreccom 3278
+#addreccom 3279
+#defunit1 3276
+#defmult1 6
+#defunit1b 3277
+#defmult1b 6
+#defcom1 3278
+-- ro: defender key 230 = 3279
+#end
+
+#selectpoptype 104
+#addrecunit 3689
+#addrecunit 3836
+#addrecunit 3837
+#addrecunit 3838
+#addreccom 3839
+#defunit1 3836
+#defunit1b 3838
+#defcom1 3839
+#end
+
+#selectpoptype 105
+#addrecunit 1489
+#addrecunit 1472
+#addreccom 1638
+#defunit1 1489
+#defunit1b 1472
+#defmult1b 5
+#defcom1 1638
+-- ro: defender key 230 = 1638
+#end
+
+#selectpoptype 106
+#defunit1 390
+#defmult1 2
+#defcom1 391
+#end
+
+#selectnametype 100
+#addname "Morael"
+#addname "Elohar"
+#addname "Grafe"
+#addname "Arnold"
+#addname "Amrod"
+#addname "Anfar"
+#addname "Arriod"
+#addname "Alarimn"
+#addname "Ariod"
+#addname "Bolmarc"
+#addname "Bogliod"
+#addname "Bonife"
+#addname "Benim"
+#addname "Barke"
+#addname "Banner"
+#addname "Bifrons"
+#addname "Bune"
+#addname "Cimmeru"
+#addname "Cibragol"
+#addname "Celarim"
+#addname "Confar"
+#addname "Domar"
+#addname "Dirck"
+#addname "Dragan"
+#addname "Dragol"
+#addname "Dernan"
+#addname "Dantheol"
+#addname "Danfozar"
+#addname "Dolgad"
+#addname "Emug"
+#addname "Essis"
+#addname "Ecus"
+#addname "Erborn"
+#addname "Fannon"
+#addname "Fenric"
+#addname "Frateborn"
+#addname "Fras"
+#addname "Fennag"
+#addname "Finfag"
+#addname "Fomiraghist"
+#addname "Fomoric"
+#addname "Falco"
+#addname "Farol"
+#addname "Finbal"
+#addname "Foen"
+#addname "Grifec"
+#addname "Gerus"
+#addname "Gobrusius"
+#addname "Hanifel"
+#addname "Hemskeborn"
+#addname "Hintal"
+#addname "Hermobol"
+#addname "Hassar"
+#addname "Hanif"
+#addname "Inberke"
+#addname "Invo"
+#addname "Irgan"
+#addname "Ingvar"
+#addname "Ipobor"
+#addname "Idro"
+#addname "Jano"
+#addname "Jadros"
+#addname "Kake"
+#addname "Kaspar"
+#addname "Krate"
+#addname "Korigol"
+#addname "Kaskater"
+#addname "Lemric"
+#addname "Ladar"
+#addname "Lobimag"
+#addname "Lekiro"
+#addname "Lanno"
+#addname "Lavede"
+#addname "Libar"
+#addname "Leric"
+#addname "Monan"
+#addname "Meligol"
+#addname "Melbon"
+#addname "Modic"
+#addname "Manvale"
+#addname "Manhelte"
+#addname "Mistilo"
+#addname "Mistoril"
+#addname "Mergos"
+#addname "Manthe"
+#addname "Norag"
+#addname "Nobb"
+#addname "Naggor"
+#addname "Naric"
+#addname "Noth"
+#addname "Nan Bagor"
+#addname "Nuvather"
+#addname "Nanvather"
+#addname "Nejdego"
+#addname "Naio"
+#addname "Offar"
+#addname "Obaric"
+#addname "Oligar"
+#addname "Oedre"
+#addname "Ofagion"
+#addname "Omarbe"
+#addname "Onbec"
+#addname "Othar"
+#addname "Othkar"
+#addname "Orivade"
+#addname "Paller"
+#addname "Podro"
+#addname "Pud"
+#addname "Panabust"
+#addname "Ptago"
+#addname "Phetheldro"
+#addname "Pagobar"
+#addname "Panbog"
+#addname "Pihmago"
+#addname "Qesban"
+#addname "Qadric"
+#addname "Quellan"
+#addname "Qos Qon"
+#addname "Radan"
+#addname "Retheric"
+#addname "Robidan"
+#addname "Radevad"
+#addname "Ratheldun"
+#addname "Robior"
+#addname "Regic"
+#addname "Rex"
+#addname "Rama"
+#addname "Rames"
+#addname "Rod"
+#addname "Riego"
+#addname "Stene"
+#addname "Saeg"
+#addname "Soferic"
+#addname "Stanebor"
+#addname "Stark"
+#addname "Slokad"
+#addname "Sivitos"
+#addname "Specado"
+#addname "Stegibar"
+#addname "Swanuth"
+#addname "Shaige"
+#addname "Shan"
+#addname "Sethan"
+#addname "Sheddan"
+#addname "Shai Kal"
+#addname "Shaiar"
+#addname "Sedestar"
+#addname "Starwald"
+#addname "Turioc"
+#addname "Tracan"
+#addname "Tredel"
+#addname "Tabrok"
+#addname "Trast"
+#addname "Tarbar"
+#addname "Ta'ar Bal"
+#addname "Tygos"
+#addname "Tvitno"
+#addname "Topigog"
+#addname "Thomm"
+#addname "Than"
+#addname "Theon"
+#addname "Theag"
+#addname "Theoc"
+#addname "Umrig"
+#addname "Urbon"
+#addname "Urbuthre"
+#addname "Ualgo"
+#addname "Ugen"
+#addname "Utheldon"
+#addname "Vather"
+#addname "Vanno"
+#addname "Veric"
+#addname "Vilgo"
+#addname "Voldan"
+#addname "Varrath"
+#addname "Vano"
+#addname "Wather"
+#addname "Wonde"
+#addname "Weldan"
+#addname "Wericar"
+#addname "Wossan"
+#addname "Woledar"
+#addname "Wagiobath"
+#addname "Xeran"
+#addname "Yloc"
+#addname "Zanbarth"
+#addname "Zece"
+#addname "Zanerio"
+#addname "Zenan"
+#addname "Zwago"
+#addname "Zierod"
+#addname "Anyc"
+#addname "Talion"
+#addname "Talor"
+#addname "Talic"
+#addname "Eilas"
+#addname "Einthys"
+#addname "Eilophys"
+#addname "Alithys"
+#addname "Athel"
+#addname "Ythelos"
+#addname "Ythail"
+#addname "Yelic"
+#addname "Ayphelon"
+#addname "Zephyron"
+#addname "Zelion"
+#addname "Zaelon"
+#addname "Zaelys"
+#addname "Zanantes"
+#addname "Ythenon"
+#addname "Ilinaon"
+#addname "Ilvin"
+#addname "Ilvitys"
+#addname "Zinvil"
+#addname "Eznan"
+#addname "Ylzar"
+#addname "Visic"
+#addname "Vinzil"
+#addname "Vinion"
+#addname "Vintys"
+#addname "Zerphiric"
+#addname "Zorphion"
+#addname "Ilvic"
+#end
+
+#selectnametype 101
+#addname "Anbegor"
+#addname "Abogol"
+#addname "Anog"
+#addname "Aba'al Rog"
+#addname "Alijan Ba'al"
+#addname "Ba'al Ra"
+#addname "Ba'al Kekon"
+#addname "Ba'al Gorgon"
+#addname "Ba'al Mag"
+#addname "Ba'al Kar"
+#addname "Bet-El"
+#addname "Borog"
+#addname "Bragegol"
+#addname "Carga"
+#addname "Cron"
+#addname "Choronzron"
+#addname "Charygas"
+#addname "Drogugor"
+#addname "Darbethor"
+#addname "Demgorgon"
+#addname "Egragon"
+#addname "Ethog"
+#addname "Gemogliag"
+#addname "Gargagon"
+#addname "Grogol"
+#addname "Hagathor"
+#addname "Hathan Kan"
+#addname "Hator"
+#addname "Kragon"
+#addname "Kog"
+#addname "Karakor"
+#addname "Krakagog"
+#addname "Mormigol"
+#addname "Mormareg"
+#addname "Mormag"
+#addname "Mog"
+#addname "Magog"
+#addname "Magor"
+#addname "Ogorol"
+#addname "O'al Bar"
+#addname "Rogal Kan"
+#addname "Rago"
+#addname "Ragog"
+#addname "Sotar"
+#addname "Togaric"
+#addname "Togmarogv"
+#addname "Tagor"
+#addname "Vohy"
+#addname "Ashak"
+#addname "Armati"
+#addname "Jebel"
+#addname "Bebel"
+#addname "Ishkabeble"
+#addname "Yaaru"
+#addname "Alecto"
+#addname "Belos"
+#addname "Shapash"
+#addname "Narman"
+#addname "Gorak"
+#addname "Harut"
+#addname "Cerberos"
+#addname "Malik"
+#addname "Ruman"
+#addname "Forneus"
+#addname "Monker"
+#addname "Nakir"
+#addname "Kushiel"
+#addname "Negarsanel"
+#addname "Xaphan"
+#addname "Imamiah"
+#addname "Lahatiel"
+#addname "Barbiel"
+#addname "Belphegor"
+#addname "Frocas"
+#addname "Gaap"
+#addname "Gurson"
+#addname "Phurzuph"
+#addname "Rimman"
+#addname "Forcalor"
+#addname "Bael"
+#addname "Agaros"
+#addname "Marbas"
+#addname "Crokel"
+#addname "Duma"
+#addname "Forfax"
+#addname "Gadriel"
+#addname "Raym"
+#addname "Maktiel"
+#addname "Chutirel"
+#addname "Mansemat"
+#addname "Oniel"
+#addname "Paimon"
+#addname "Belbu"
+#addname "Abaddon"
+#addname "Barbatos"
+#addname "Kakabel"
+#addname "Marcosias"
+#addname "Murmur"
+#addname "Rahab"
+#addname "Shaitan"
+#addname "Sammael"
+#addname "Asmodeus"
+#addname "Bealzebub"
+#addname "Belial"
+#addname "Astaroth"
+#addname "Dalkiel"
+#addname "Kasadye"
+#addname "Mashith"
+#addname "Typhon"
+#addname "Mammon"
+#addname "Maskim"
+#addname "Cameran"
+#addname "Ophis"
+#addname "Sorath"
+#addname "Eisheth"
+#addname "Zenunaim"
+#addname "Agrat bat Malat"
+#addname "Naamah"
+#addname "Yegon"
+#addname "Mastinim"
+#addname "Melek-I-Taus"
+#addname "Amanas"
+#addname "Gebbeleth"
+#addname "Hatiphas"
+#addname "Kakabel"
+#addname "Kasbeel"
+#addname "Semayaza"
+#addname "Tchort"
+#addname "Azazel"
+#addname "Mesarech"
+#addname "Nygon"
+#addname "Tamiel"
+#addname "Forneus"
+#addname "Furfur"
+#addname "Zimimar"
+#addname "Vephar"
+#addname "Vapula"
+#addname "Caimael"
+#addname "Ben-Japheth"
+#addname "Nurbis"
+#addname "Vathek"
+#addname "Kame"
+#addname "Izkriath"
+#addname "Malphas"
+#addname "Saminga"
+#addname "Masheth"
+#addname "Cremnian"
+#addname "Alaemon"
+#addname "Alastor"
+#addname "Carniel"
+#addname "Marou"
+#addname "Saleos"
+#addname "Vaphoron"
+#addname "Kobal"
+#addname "Valefor"
+#end
+
+#selectnametype 102
+#addname "Chelmeric"
+#addname "Arthur"
+#addname "Theoderic"
+#addname "Edgar"
+#addname "Morgan"
+#addname "Eimeric"
+#addname "Hengist"
+#addname "Aethelred"
+#addname "Gisulf"
+#addname "Godwin"
+#addname "Harold"
+#addname "Offa"
+#addname "Oswiu"
+#addname "Cederic"
+#addname "Wilfred"
+#addname "Hector"
+#addname "Robin"
+#addname "John"
+#addname "Lushen"
+#addname "Mungo"
+#addname "Walter"
+#addname "Bower"
+#addname "Chauser"
+#addname "Havelock"
+#addname "Gawain"
+#addname "Jack"
+#addname "Gologras"
+#addname "Robert"
+#addname "Ralph"
+#addname "Will"
+#addname "Amadace"
+#addname "Cleges"
+#addname "Degare"
+#addname "Gowther"
+#addname "Isumbras"
+#addname "Launfal"
+#addname "Orfeo"
+#addname "Perceval"
+#addname "Tristrem"
+#addname "Tryamour"
+#addname "Eglamour"
+#addname "Aelfhere"
+#addname "Adelard"
+#addname "Aelbert"
+#addname "Aegelric"
+#addname "Aelfwold"
+#addname "Aelfred"
+#addname "Aelle"
+#addname "Aesc"
+#addname "Aethelbald"
+#addname "Aethelbert"
+#addname "Aethelfrith"
+#addname "Aethelmund"
+#addname "Aethelric"
+#addname "Aethelstan"
+#addname "Aethelwald"
+#addname "Aethelwulf"
+#addname "Alchred"
+#addname "Alfred"
+#addname "Beonna"
+#addname "Beorhtric"
+#addname "Beornoth"
+#addname "Beorthelm"
+#addname "Beornwulf"
+#addname "Beowulf"
+#addname "Berthwald"
+#addname "Cathwulf"
+#addname "Ceawlin"
+#addname "Cenred"
+#addname "Cenwath"
+#addname "Cenberth"
+#addname "Ceolfrith"
+#addname "Ceolnoth"
+#addname "Coelwulf"
+#addname "Cerdic"
+#addname "Cuthert"
+#addname "Cuthred"
+#addname "Cuthwine"
+#addname "Cynewulf"
+#addname "Cyneric"
+#addname "Cynethryth"
+#addname "Cyneberth"
+#addname "Eadbald"
+#addname "Eadbert"
+#addname "Eadred"
+#addname "Eardwulf"
+#addname "Edgar"
+#addname "Edmund"
+#addname "Edward"
+#addname "Edwin"
+#addname "Egbert"
+#addname "Egfrith"
+#addname "Eric"
+#addname "Frithestan"
+#addname "Godwine"
+#addname "Grimbald"
+#addname "Guthfrith"
+#addname "Harold"
+#addname "Hariulf"
+#addname "Hengest"
+#addname "Hedda"
+#addname "Hlothere"
+#addname "Humbert"
+#addname "Ithamar"
+#addname "Jaenberth"
+#addname "Leofric"
+#addname "Leofwine"
+#addname "Offa"
+#addname "Oelf"
+#addname "Oelfwine"
+#addname "Oda"
+#addname "Oslac"
+#addname "Osmund"
+#addname "Oswine"
+#addname "Oswulf"
+#addname "Saberht"
+#addname "Sigbert"
+#addname "Sigehelm"
+#addname "Sigered"
+#addname "Siward"
+#addname "Swithulf"
+#addname "Uthred"
+#addname "Ulfcytel"
+#addname "Waeferth"
+#addname "Waermund"
+#addname "Wealdhere"
+#addname "Werhard"
+#addname "Wigmund"
+#addname "Whithorn"
+#addname "Wilfrid"
+#addname "Wiglaf"
+#addname "Willehad"
+#addname "Wuffa"
+#addname "Wulfhere"
+#addname "Wulfred"
+#addname "Wulfstan"
+#addname "Wynfrith"
+#addname "Wulfnoth"
+#end
+
+#selectnametype 103
+#addname "Wilmia"
+#addname "Morgana"
+#addname "Wulfhilde"
+#addname "Ynghilde"
+#addname "Feida"
+#addname "Darielle"
+#addname "Catherin"
+#addname "Godgifu"
+#addname "Gunhild"
+#addname "Judith"
+#addname "Aeb"
+#addname "Ailbe"
+#addname "Macha"
+#addname "Danu"
+#addname "Banba"
+#addname "Fodla"
+#addname "Eriu"
+#addname "Elotha"
+#addname "Tailltiu"
+#addname "Airmid"
+#addname "Morrigan"
+#addname "Fiomguala"
+#addname "Aoife"
+#addname "Dechtire"
+#addname "Leborcham"
+#addname "Fial"
+#addname "Emer"
+#addname "Medb"
+#addname "Fedelm"
+#addname "Fiacal"
+#addname "Bodball"
+#addname "Grainne"
+#addname "Cama"
+#addname "Branwem"
+#addname "Riannon"
+#addname "Cigfa"
+#addname "Goewin"
+#addname "Arianrhod"
+#addname "Blodeuedd"
+#addname "Igraine"
+#addname "Guinevere"
+#addname "Brigid"
+#addname "Sabrina"
+#addname "Etain"
+#addname "Fuamnach"
+#addname "Etar"
+#addname "Genevra"
+#addname "Danu"
+#end
+
+#selectnametype 104
+#addname "Karl"
+#addname "Erkeborn"
+#addname "Henric"
+#addname "Fredric"
+#addname "Alaric"
+#addname "Hermann"
+#addname "Arnold"
+#addname "Anselm"
+#addname "Donner"
+#addname "Hermann"
+#addname "Balthazar"
+#addname "Berthold"
+#addname "Lars"
+#addname "Joern"
+#addname "Pippin"
+#addname "Pons"
+#addname "Alfred"
+#addname "Adolf"
+#addname "Albert"
+#addname "Ernst"
+#addname "Folke"
+#addname "Van Dük"
+#addname "Günter"
+#addname "Könhelm"
+#addname "Frithigern"
+#addname "Alarik"
+#addname "Wallin"
+#addname "Geiserik"
+#addname "Gunderik"
+#addname "Theoderik"
+#addname "Thorismund"
+#addname "Childerik"
+#addname "Eurich"
+#addname "Hunerik"
+#addname "Clovis"
+#addname "Gunthamund"
+#addname "Thresamund"
+#addname "Amalarik"
+#addname "Hilderik"
+#addname "Gelimer"
+#addname "Vitiges"
+#addname "Childebert"
+#addname "Clodomir"
+#addname "Totila"
+#addname "Sigebert"
+#addname "Gontran"
+#addname "Rekkared"
+#addname "Agiluf"
+#addname "Witterich"
+#addname "Gundemar"
+#addname "Sisebert"
+#addname "Adaloald"
+#addname "Aripert"
+#addname "Rodoald"
+#addname "Tulka"
+#addname "Rothari"
+#addname "Grimoald"
+#addname "Roderik"
+#addname "Ratchis"
+#addname "Aistulf"
+#addname "Karloman"
+#addname "Lothar"
+#addname "Arnulf"
+#addname "Konrad"
+#addname "Tankred"
+#addname "Albrecht"
+#addname "Ruprecht"
+#end
+
+#selectnametype 105
+#addname "Allator"
+#addname "Ashem"
+#addname "Antema"
+#addname "Cashal"
+#addname "Cernem"
+#addname "Korgol"
+#addname "Kotyth"
+#addname "Losmig"
+#addname "Milogos"
+#addname "Mithok"
+#addname "Murok"
+#addname "Simith"
+#addname "Styx"
+#addname "Terryth"
+#addname "Vörnak"
+#addname "Sathmog"
+#addname "Angmar"
+#addname "Khamul"
+#addname "Kurgal"
+#addname "Mordeith"
+#addname "Lothar"
+#addname "Nar"
+#addname "Ahriman"
+#addname "Mogmol"
+#addname "Necromorben"
+#addname "Mort"
+#addname "Zantaron"
+#addname "Tahmar"
+#addname "Ymic"
+#addname "Angrod"
+#addname "Uvatha"
+#addname "Suleiman"
+#addname "Myrkuul"
+#addname "Domex"
+#addname "Ziruk"
+#addname "Sirakzil"
+#addname "Ärek Iilum"
+#addname "Embaar"
+#addname "Maegul"
+#addname "Adonhel"
+#addname "Karmgul"
+#addname "Uftrak"
+#addname "Askator"
+#addname "Argator"
+#addname "Betegrath"
+#addname "Bakhtor"
+#addname "Bayr al Adhu"
+#addname "Cernetu"
+#addname "Castartu"
+#addname "Darzatu"
+#addname "Dimmu"
+#addname "Eriadu"
+#addname "Ebenezar"
+#addname "Fegamur"
+#addname "Fechuntu"
+#addname "Githeren"
+#addname "Gevalodh"
+#addname "Gevudrah"
+#addname "Gether Kuhadh"
+#addname "Hahkaloth"
+#addname "Heikhra"
+#addname "Igevurdh"
+#addname "Igthengu"
+#addname "Jithu"
+#addname "Jinnud"
+#addname "Kumlakh"
+#addname "Kmorduk"
+#addname "Lodvathu"
+#addname "Laidukh"
+#addname "Mogracu"
+#addname "Mekhaloth"
+#addname "Mekhennum"
+#addname "Meknadin"
+#addname "Mekinthur"
+#addname "Meikru Zoth"
+#addname "Nur Zaruth"
+#addname "Nur Manthu"
+#addname "Nardimmu"
+#addname "Nakhaloth"
+#addname "Oskatu"
+#addname "Okeddur"
+#addname "Pekharoth"
+#addname "Penetor"
+#addname "Pantor"
+#addname "Qudlik"
+#addname "Qudarrath"
+#addname "Revdinator"
+#addname "Raitor"
+#addname "Sidsheku"
+#addname "Saoluthi"
+#addname "Sarmas"
+#addname "Shek Dimmu"
+#addname "Trikhatre"
+#addname "Trakhtor"
+#addname "Uvekhtu"
+#addname "Ur"
+#addname "Urathu"
+#addname "Vekhithu"
+#addname "Valgömu"
+#addname "Xomanthu"
+#addname "Xirrath"
+#addname "Ychekhes"
+#addname "Ygirod"
+#addname "Zrakhnadar"
+#addname "Zeginthu"
+#addname "Öknar Hadu"
+#addname "Öskogoth"
+#addname "Mesamalok"
+#addname "Alalar"
+#addname "Tagg Klatu"
+#addname "Melkior"
+#addname "Deathtongue"
+#addname "Grind"
+#addname "Rend"
+#addname "Rotheart"
+#addname "Deadflesh"
+#addname "Wormwood"
+#addname "Dustheart"
+#addname "Ashsoul"
+#addname "Rotflesh"
+#addname "Winterbreath"
+#addname "Foulflesh"
+#addname "Etter"
+#addname "Venomspew"
+#addname "Plaguevomit"
+#addname "Bonecrush"
+#addname "Boneater"
+#addname "Femur"
+#addname "Foetid"
+#addname "Gnarlytooth"
+#addname "Plaguewhistler"
+#addname "Feartongue"
+#addname "Leprosy"
+#addname "Scrofula"
+#addname "Typhon"
+#addname "Banewound"
+#addname "Eyeless"
+#addname "Eyesore"
+#addname "Boneheart"
+#addname "Foulslay"
+#addname "Soulrend"
+#addname "Bitterwind"
+#addname "Plaguetooth"
+#addname "Plaguetongue"
+#addname "Rotbrother"
+#addname "Heartrot"
+#addname "Sigh"
+#addname "Boneshudder"
+#addname "Shudder"
+#addname "Hollow"
+#addname "Heartless"
+#addname "Headless"
+#addname "Crawler"
+#addname "Nightbane"
+#addname "Wormvenom"
+#addname "Wormfood"
+#addname "Wormfriend"
+#addname "Unburied"
+#addname "Childslay"
+#addname "Manhate"
+#addname "Manslay"
+#addname "Shriek"
+#addname "Despair"
+#addname "Hopevoid"
+#addname "Quickdeath"
+#addname "Plaguehope"
+#addname "Leperlove"
+#addname "Sickpit"
+#addname "Plaguepit"
+#addname "Deathstink"
+#addname "Plaguestink"
+#addname "Wormlove"
+#addname "Wormplague"
+#addname "Lepercrawl"
+#addname "Spittle"
+#addname "Plaguespittle"
+#addname "Gravetongue"
+#addname "Eyegrave"
+#addname "Gravesoul"
+#addname "Gravecaller"
+#addname "Deathgrip"
+#addname "Skullbreaker"
+#addname "Graveskull"
+#addname "Tombworm"
+#addname "Nightworm"
+#addname "Nightheart"
+#addname "Chillwind"
+#addname "Chillsoul"
+#addname "Gravechill"
+#addname "Gravespittle"
+#addname "Tombspittle"
+#addname "Plaguestorm"
+#addname "Childfeaster"
+#addname "Wormfeast"
+#addname "Plaguesoul"
+#addname "Plaguesinger"
+#addname "Deathlight"
+#addname "Puswound"
+#addname "Puseye"
+#addname "Tombshadow"
+#addname "Knucklebones"
+#addname "Splitskull"
+#addname "Screech"
+#addname "Graveschreech"
+#addname "Orphaneater"
+#addname "Fleshfeaster"
+#addname "Carnage"
+#addname "Dustsoul"
+#addname "Deathgasp"
+#addname "Deathjest"
+#end
+
+#selectnametype 106
+#addname "Lycurgus"
+#addname "Augustus"
+#addname "Dementius"
+#addname "Erectus"
+#addname "Aceus"
+#addname "Augustinus"
+#addname "Elbalus"
+#addname "Dentatus"
+#addname "Degalus"
+#addname "Benedictus"
+#addname "Bartholomeus"
+#addname "Iglarus"
+#addname "Egalitus"
+#addname "Theocratus"
+#addname "Eaclius"
+#addname "Galbalus"
+#addname "Carolus"
+#addname "Gedurus"
+#addname "Gerdaldus"
+#addname "Magnus"
+#addname "Faglius"
+#addname "Fenlius"
+#addname "Connicus"
+#addname "Invictus"
+#addname "Heliotheus"
+#addname "Hierofagus"
+#addname "Hierotalpalus"
+#addname "Carmus"
+#addname "Celestus"
+#addname "Constantin"
+#addname "Cornelius"
+#addname "Agrippa"
+#addname "Titus"
+#addname "Scipio"
+#addname "Terentius"
+#addname "Marcus"
+#addname "Antonius"
+#addname "Lampronius"
+#addname "Lorca"
+#addname "Sparca"
+#addname "Servilius"
+#addname "Achates"
+#addname "Aenas"
+#addname "Aeolus"
+#addname "Aesculapios"
+#addname "Amulius"
+#addname "Anchises"
+#addname "Ancus"
+#addname "Marius"
+#addname "Apuleius"
+#addname "Avernus"
+#addname "Brutus"
+#addname "Cacus"
+#addname "Camillus"
+#addname "Celeno"
+#addname "Castor"
+#addname "Pollux"
+#addname "Canens"
+#addname "Coriolanus"
+#addname "Dispater"
+#addname "Hannibal"
+#addname "Horatius"
+#addname "Lausus"
+#addname "Livius"
+#addname "Latinus"
+#addname "Lucumo"
+#addname "Antonius"
+#addname "Aurelius"
+#addname "Marcus"
+#addname "Maximus"
+#addname "Mesentius"
+#addname "Octavianus"
+#addname "Ovidius"
+#addname "Peneus"
+#addname "Picus"
+#addname "Pompeius"
+#addname "Procas"
+#addname "Silvius"
+#addname "Quinquatrus"
+#addname "Quirinus"
+#addname "Remus"
+#addname "Radamanthys"
+#addname "Robigus"
+#addname "Sextus"
+#addname "Salmoneus"
+#addname "Silvanus"
+#addname "Silvius"
+#addname "Tantalus"
+#addname "Tarchon"
+#addname "Terminus"
+#addname "Titus"
+#addname "Herminius"
+#addname "Traianus"
+#addname "Turnus"
+#addname "Vergilius"
+#addname "Virbius"
+#addname "Vulcanus"
+#addname "Cluentius"
+#addname "Antifates"
+#addname "Aquiculus"
+#addname "Viribus"
+#addname "Amianus"
+#addname "Annius"
+#addname "Antonius"
+#addname "Arrianus"
+#addname "Atticus"
+#addname "Attilus"
+#addname "Balbus"
+#addname "Capito"
+#addname "Cestius"
+#addname "Cincius"
+#addname "Cato"
+#addname "Clodius"
+#addname "Decimus"
+#addname "Deiotaurus"
+#addname "Eleusis"
+#addname "Fadius"
+#addname "Flavius"
+#addname "Glabrio"
+#addname "Iconium"
+#addname "Iunuis"
+#addname "Lamius"
+#addname "Lyso"
+#addname "Maecius"
+#addname "Manius"
+#addname "Mucius"
+#addname "Oppius"
+#addname "Philomelium"
+#addname "Selicius"
+#addname "Servius"
+#addname "Sulpicius"
+#addname "Varius"
+#end
+
+#selectnametype 107
+#addname "Denetheus"
+#addname "Aeneas"
+#addname "Demagon"
+#addname "Astros"
+#addname "Anthros"
+#addname "Anthetene"
+#addname "Emidras"
+#addname "Eilatos"
+#addname "Athenos"
+#addname "Mpousios"
+#addname "Paraminides"
+#addname "Polygamnon"
+#addname "Polykritos"
+#addname "Polymarcos"
+#addname "Polykratos"
+#addname "Achilles"
+#addname "Odysseus"
+#addname "Demosthene"
+#addname "Monophilos"
+#addname "Theophiletos"
+#addname "Arcophilos"
+#addname "Perseus"
+#addname "Filemon"
+#addname "Akestes"
+#addname "Daidalos"
+#addname "Euryalos"
+#addname "Eurystheus"
+#addname "Ixion"
+#addname "Akates"
+#addname "Orontes"
+#addname "Gyas"
+#addname "Sychaeus"
+#addname "Teukros"
+#addname "Anchises"
+#addname "Nautes"
+#addname "Pandaros"
+#addname "Sarpedon"
+#addname "Achamos"
+#addname "Seleucos"
+#addname "Kleophon"
+#addname "Thrasyboulos"
+#addname "Perdikkas"
+#addname "Antigonos"
+#addname "Eumenes"
+#addname "Lysimachos"
+#addname "Ptolemaios"
+#addname "Antipater"
+#addname "Agathokles"
+#addname "Kassandros"
+#addname "Nikator"
+#addname "Filetairos"
+#addname "Attalos"
+#addname "Mithridates"
+#addname "Antiochos"
+#addname "Artabanes"
+#addname "Berenike"
+#addname "Anastasios"
+#addname "Alcibiades"
+#addname "Kallikolon"
+#addname "Bouprasion"
+#addname "Telemon"
+#addname "Hippotion"
+#addname "Krethon"
+#addname "Tenthredon"
+#addname "Abantes"
+#addname "Adamas"
+#addname "Admetos"
+#addname "Adrastos"
+#addname "Adrestos"
+#addname "Aehifies"
+#addname "Agapenor"
+#addname "Agasthenes"
+#addname "Agastrophos"
+#addname "Agelaos"
+#addname "Agenor"
+#addname "Agrios"
+#addname "Aiakides"
+#addname "Aiakos"
+#addname "Aiantes"
+#addname "Aias"
+#addname "Aidoneus"
+#addname "Aiedoneus"
+#addname "Aigeus"
+#addname "Aigialos"
+#addname "Aigilips"
+#addname "Aineias"
+#addname "Aisepos"
+#addname "Aisyetes"
+#addname "Aisymnos"
+#addname "Aithikes"
+#addname "Akamas"
+#addname "Akessamenos"
+#addname "Aktor"
+#addname "Alexandros"
+#addname "Alizones"
+#addname "Alkathoos"
+#addname "Alkestis"
+#addname "Alos"
+#addname "Alpheios"
+#addname "Amarynkes"
+#addname "Amid"
+#addname "Amphidamas"
+#addname "Amphimachos"
+#addname "Amphoteros"
+#addname "Amrynkeus"
+#addname "Amyklai"
+#addname "Anchises"
+#addname "Ankaios"
+#addname "Antenor"
+#addname "Antilochos"
+#addname "Antimachos"
+#addname "Antiphates"
+#addname "Antiphonos"
+#addname "Antiphos"
+#addname "Apaisos"
+#addname "Aphareus"
+#addname "Apollo"
+#addname "Archelochos"
+#addname "Archeptolemos"
+#addname "Areithoos"
+#addname "Aretos"
+#addname "Argeas"
+#addname "Argives"
+#addname "Arimoi"
+#addname "Arkesilaos"
+#addname "Arsinoos"
+#addname "Asaios"
+#addname "Asios"
+#addname "Askalapbos"
+#addname "Askalaphos"
+#addname "Askanios"
+#addname "Asopos"
+#addname "Assarakos"
+#addname "Asteropaios"
+#addname "Astyanax"
+#addname "Astypylos"
+#addname "Athos"
+#addname "Atreides"
+#addname "Atreus"
+#addname "Charopos"
+#addname "Chersidamas"
+#addname "Chromios"
+#addname "Chromis"
+#addname "Chryseis"
+#addname "Chryses"
+#addname "Chrysothemis"
+#addname "Daidalos"
+#addname "Damasos"
+#addname "Dares"
+#addname "Daulis"
+#addname "Deiopites"
+#addname "Deiphobos"
+#addname "Deipylos"
+#addname "Deipyros"
+#addname "Deisenor"
+#addname "Democritus"
+#addname "Demuchos"
+#addname "Diokles"
+#addname "Diomedes"
+#addname "Diores"
+#addname "Dolops"
+#addname "Doyrklos"
+#addname "Drakios"
+#addname "Dryops"
+#addname "Echeklos"
+#addname "Echepolos"
+#addname "Echios"
+#addname "Eionai"
+#addname "Eioneus"
+#addname "Elasos"
+#addname "Elephenor"
+#addname "Enienes"
+#addname "Eniopeus"
+#addname "Ennomos"
+#addname "Enops"
+#addname "Enyalios"
+#addname "Enyo"
+#addname "Epaltes"
+#addname "Epidauros"
+#addname "Epikles"
+#addname "Epistor"
+#addname "Epistrophos"
+#addname "Epytos"
+#addname "Erichthonios"
+#addname "Eriopis"
+#addname "Erymas"
+#addname "Erythrai"
+#addname "Eteokles"
+#addname "Eteonos"
+#addname "Euchenor"
+#addname "Euenos"
+#addname "Euippos"
+#addname "Euphemos"
+#addname "Euphorbos"
+#addname "Eurybated"
+#addname "Eurybates"
+#addname "Eurypylos"
+#addname "Eurystheus"
+#addname "Eurytos"
+#addname "Eutresis"
+#addname "Exadios"
+#addname "Gargaros"
+#addname "Gerenian"
+#addname "Glaukos"
+#addname "Glib"
+#addname "Glisas"
+#addname "Gortys"
+#addname "Gouneus"
+#addname "Grenikos"
+#addname "Haliartos"
+#addname "Hecktor"
+#addname "Hector"
+#addname "Helenos"
+#addname "Helos"
+#addname "Heptaporos"
+#addname "Hermos"
+#addname "Hippasos"
+#addname "Hippemolgoi"
+#addname "Hippodamas"
+#addname "Hippolochos"
+#addname "Hippomachos"
+#addname "Hyampolis"
+#addname "Hyllos"
+#addname "Hypsenor"
+#addname "Hyrtakos"
+#addname "Ialmenos"
+#addname "Ialysos"
+#addname "Iamenos"
+#addname "Ipheus"
+#addname "Iphidamas"
+#addname "Iphiklos"
+#addname "Iphitos"
+#addname "Kabesos"
+#addname "Kadmos"
+#addname "Kaineus"
+#addname "Kalchas"
+#addname "Kaletor"
+#addname "Kalliaros"
+#addname "Kameiros"
+#addname "Kapaneus"
+#addname "Kapys"
+#addname "Karesos"
+#addname "Karytos"
+#addname "Kasos"
+#addname "Kaukones"
+#addname "Kaystrios"
+#addname "Kebriones"
+#addname "Kephisos"
+#addname "Kleonai"
+#addname "Klonios"
+#addname "Klytios"
+#addname "Klytomedes"
+#addname "Koronos"
+#addname "Kos"
+#addname "Krapathos"
+#addname "Kreiontes"
+#addname "Kyparisseis"
+#addname "Kyparissos"
+#addname "Kyphos"
+#addname "Kytoros"
+#addname "Laas"
+#addname "Laerkes"
+#addname "Laertes"
+#addname "Lamppos"
+#addname "Laodokos"
+#addname "Laogonos"
+#addname "Leitos"
+#addname "Leleges"
+#addname "Lemnos"
+#addname "Leonteus"
+#addname "Lernessos"
+#addname "Leto"
+#addname "Leukos"
+#addname "Likymnios"
+#addname "Lindos"
+#addname "Lykomedes"
+#addname "Lyktos"
+#addname "Lyrnessos"
+#addname "Lysandros"
+#addname "Maiandros"
+#addname "Makar"
+#addname "Mases"
+#addname "Megas"
+#addname "Meges"
+#addname "Mekisteus"
+#addname "Melanippos"
+#addname "Melas"
+#addname "Meleagros"
+#addname "Menelaos"
+#addname "Menestheus"
+#addname "Menoitios"
+#addname "Menortios"
+#addname "Mentes"
+#addname "Meriones"
+#addname "Merops"
+#addname "Messeis"
+#addname "Mesthles"
+#addname "Mestor"
+#addname "Miletos"
+#addname "Morys"
+#addname "Moulios"
+#addname "Mulios"
+#addname "Mykalessos"
+#addname "Mynes"
+#addname "Myrsinos"
+#addname "Mysians"
+#addname "Nastes"
+#addname "Naubolos"
+#addname "Neleian"
+#addname "Neleus"
+#addname "Neoptolemos"
+#addname "Neriones"
+#addname "Nestor"
+#addname "Nireus"
+#addname "Nisyros"
+#addname "Ochesios"
+#addname "Odios"
+#addname "Oedipus"
+#addname "Oileus"
+#addname "Oineus"
+#addname "Oinomaos"
+#addname "Oitylos"
+#addname "Olenos"
+#addname "Onchestos"
+#addname "Ophelestes"
+#addname "Opheltios"
+#addname "Opites"
+#addname "Opoeis"
+#addname "Orchomenos"
+#addname "Orestes"
+#addname "Ormenios"
+#addname "Ormenos"
+#addname "Orneiai"
+#addname "Oros"
+#addname "Orsilochos"
+#addname "Orthaios"
+#addname "Othryoneus"
+#addname "Otreus"
+#addname "Otrynteus"
+#addname "Pandokos"
+#addname "Panopeus"
+#addname "Panthos"
+#addname "Parthenios"
+#addname "Pedasos"
+#addname "Peires"
+#addname "Peirithoos"
+#addname "Peneleos"
+#addname "Pergasos"
+#addname "Perimos"
+#addname "Periphas"
+#addname "Peteos"
+#addname "Phaistos"
+#addname "Phalkes"
+#addname "Phegeus"
+#addname "Pheidas"
+#addname "Pheidippos"
+#addname "Pheneos"
+#addname "Pherai"
+#addname "Pheres"
+#addname "Philetor"
+#addname "Philoktetes"
+#addname "Phorkys"
+#addname "Phthires"
+#addname "Phylakos"
+#addname "Phyleides"
+#addname "Phyleus"
+#addname "Pittheus"
+#addname "Plakos"
+#addname "Podaleirios"
+#addname "Podargos"
+#addname "Podarkes"
+#addname "Polites"
+#addname "Polybos"
+#addname "Polydamus"
+#addname "Polydoros"
+#addname "Polyidos"
+#addname "Polyktor"
+#addname "Polymelos"
+#addname "Polyneikes"
+#addname "Polyphetes"
+#addname "Polyphontes"
+#addname "Polypoites"
+#addname "Polyxeinos"
+#addname "Portheus"
+#addname "Praktios"
+#addname "Pramnian"
+#addname "Priam"
+#addname "Pronos"
+#addname "Protesilaos"
+#addname "Prothoenor"
+#addname "Prothoos"
+#addname "Pteleos"
+#addname "Ptolemaios"
+#addname "Pylaimenes"
+#addname "Pylaios"
+#addname "Pylartes"
+#addname "Pyraichmes"
+#addname "Pyrasos"
+#addname "Pyris"
+#addname "Pytho"
+#addname "Rhesos"
+#addname "Rhigmos"
+#addname "Sangarios"
+#addname "Satnioeis"
+#addname "Schedios"
+#addname "Schoinos"
+#addname "Selepos"
+#addname "Selleeis"
+#addname "Sestos"
+#addname "Simoeis"
+#addname "Simoeisios"
+#addname "Simois"
+#addname "Sipylos"
+#addname "Skamandros"
+#addname "Skolos"
+#addname "Skyros"
+#addname "Smintheus"
+#addname "Sokos"
+#addname "Spercheios"
+#addname "Stentor"
+#addname "Sthenelos"
+#addname "Stichios"
+#addname "Stymphelos"
+#addname "Taithybios"
+#addname "Talaimenes"
+#addname "Thersilochos"
+#addname "Thersites"
+#addname "Thrasios"
+#addname "Thrasymelos"
+#addname "Thyestes"
+#addname "Thymbraios"
+#addname "Thymoites"
+#addname "Titaresios"
+#addname "Typhoeus"
+#addname "Xanthos"
+#addname "Zakynthos"
+#end
+
+#selectnametype 108
+#addname "Helena"
+#addname "Pallas"
+#addname "Mellia"
+#addname "Anabele"
+#addname "Medea"
+#addname "Penelope"
+#addname "Persephone"
+#addname "Sophia"
+#addname "Demophila"
+#addname "Antigeida"
+#addname "Apollonia"
+#addname "Appea"
+#addname "Artanike"
+#addname "Aristodama"
+#addname "Baectocaedeia"
+#addname "Berenike"
+#addname "Cassandreia"
+#addname "Cleopatra"
+#addname "Chrysippa"
+#addname "Dinodike"
+#addname "Demetria"
+#addname "Eleuthema"
+#addname "Erasistrata"
+#addname "Eurydice"
+#addname "Gymaea"
+#addname "Hierolyta"
+#addname "Hippolyta"
+#addname "Hieronyma"
+#addname "Hipparchidna"
+#addname "Isidyche"
+#addname "Isideia"
+#addname "Isimede"
+#addname "Kyrippa"
+#addname "Mnesimeas"
+#addname "Metrophania"
+#addname "Memnedite"
+#addname "Olympias"
+#addname "Ptolemidyche"
+#addname "Philippa"
+#addname "Samophia"
+#addname "Thessa"
+#addname "Adresteia"
+#addname "Anemoreia"
+#addname "Alkmene"
+#addname "Antheia"
+#addname "Argissa"
+#addname "Ariadne"
+#addname "Askanie"
+#addname "Eiretria"
+#addname "Hypereia"
+#addname "Astyocheia"
+#addname "Koroneia"
+#addname "Pasithea"
+#addname "Iphianassa"
+#addname "Karia"
+#addname "Kassandra"
+#addname "Meliboia"
+#addname "Thespeia"
+#addname "Zeleia"
+#addname "Arene"
+#addname "Asine"
+#addname "Hermione"
+#addname "Hyrmine"
+#addname "Klymene"
+#addname "Kyllene"
+#addname "Gonoessa"
+#addname "Gyrtona"
+#addname "Hippodameia"
+#addname "Histiaia"
+#addname "Kromna"
+#addname "Krokyleia"
+#addname "Larisa"
+#addname "Lilaia"
+#addname "Mideia"
+#addname "Nisa"
+#addname "Okalea"
+#addname "Peraia"
+#addname "Periboia"
+#addname "Pityeia"
+#addname "Plataia"
+#addname "Rhea"
+#addname "Tereia"
+#addname "Aithe"
+#addname "Aithre"
+#addname "Alope"
+#addname "Andromache"
+#addname "Arisbe"
+#addname "Astyoche"
+#addname "Chryse"
+#addname "Ephyre"
+#addname "Glaphyre"
+#addname "Hekabe"
+#addname "Hekamede"
+#addname "Hyperesie"
+#addname "Kardamyle"
+#addname "Kranae"
+#addname "Laodike"
+#addname "Laothoe"
+#addname "Lapithae"
+#addname "Medesikaste"
+#addname "Podarge"
+#addname "Pursue"
+#addname "Rhipe"
+#addname "Skarphe"
+#addname "Syme"
+#addname "Take"
+#addname "Tarphe"
+#addname "Thaumakie"
+#addname "Thymbre"
+#addname "Trike"
+#addname "Aulis"
+#addname "Elis"
+#end
+
+#selectnametype 109
+#addname "Chronos"
+#addname "Chtonios"
+#addname "Catoblephon"
+#addname "Charbos"
+#addname "Dionysos"
+#addname "Ares"
+#addname "Heros"
+#addname "Stymphos"
+#addname "Acheron"
+#addname "Parnasseus"
+#addname "Polyphemos"
+#addname "Polysseus"
+#addname "Chronophon"
+#addname "Posediphon"
+#addname "Parchophon"
+#addname "Apotheos"
+#addname "Theoseus"
+#addname "Theonos"
+#addname "Basiliskos"
+#addname "Osorkon"
+#addname "Kyaxares"
+#addname "Peisistratos"
+#addname "Mitras"
+#addname "Adonis"
+#addname "Pandauraos"
+#addname "Satyricos"
+#addname "Hippophorsos"
+#addname "Hippotauros"
+#addname "Hippomemnon"
+#addname "Hipparion"
+#addname "Chiron"
+#addname "Herakles"
+#addname "Chirokles"
+#addname "Hippokles"
+#addname "Heramemnon"
+#addname "Zeuxippos"
+#addname "Kronotauron"
+#addname "Taurosatyricos"
+#addname "Uranos"
+#addname "Uranokles"
+#addname "Uranotheus"
+#addname "Theoxippos"
+#addname "Kronokles"
+#addname "Hermokles"
+#addname "Herades"
+#addname "Hadetheus"
+#addname "Menopathos"
+#addname "Polydeukes"
+#addname "Kastor"
+#addname "Iapetos"
+#addname "Hephaistos"
+#addname "Amphios"
+#addname "Alastor"
+#addname "Charops"
+#addname "Aigaion"
+#addname "Aithon"
+#addname "Alkimedon"
+#addname "Alkimos"
+#addname "Amydon"
+#addname "Anthedon"
+#addname "Asterion"
+#addname "Bellerophon"
+#addname "Agathon"
+#addname "Aigion"
+#addname "Aleision"
+#addname "Alkmaon"
+#addname "Andraimon"
+#addname "Anthemion"
+#addname "Antron"
+#addname "Arion"
+#addname "Aspledon"
+#addname "Automedon"
+#addname "Buprasion"
+#addname "Chalkodon"
+#addname "Cheiron"
+#addname "Deikoon"
+#addname "Demokoon"
+#addname "Demoleon"
+#addname "Deukalion"
+#addname "Dolon"
+#addname "Dorion"
+#addname "Doulichion"
+#addname "Eetion"
+#addname "Eilesion"
+#addname "Eleon"
+#addname "Ereuthalion"
+#addname "Euaimon"
+#addname "Eurymedon"
+#addname "Haimon"
+#addname "Harpalion"
+#addname "Helikaon"
+#addname "Hiketaon"
+#addname "Hippokoon"
+#addname "Hyperion"
+#addname "Iphition"
+#addname "Iton"
+#addname "Kalydon"
+#addname "Koon"
+#addname "Lakedaimon"
+#addname "Lekton"
+#addname "Lykaon"
+#addname "Machaon"
+#addname "Medeon"
+#addname "Medon"
+#addname "Menon"
+#addname "Molion"
+#addname "Mydon"
+#addname "Mygdon"
+#addname "Neriton"
+#addname "Noemon"
+#addname "Nomion"
+#addname "Oukalegon"
+#addname "Paeon"
+#addname "Paieon"
+#addname "Pammon"
+#addname "Pandion"
+#addname "Pedaion"
+#addname "Pelegon"
+#addname "Pelion"
+#addname "Peteon"
+#addname "Phradmon"
+#addname "Pleuron"
+#addname "Pylon"
+#addname "Rhytion"
+#addname "Sarpedon"
+#addname "Sesamon"
+#addname "Sidon"
+#addname "Sikyon"
+#addname "Telamon"
+#addname "Thoon"
+#addname "Thronion"
+#addname "Thryon"
+#addname "Hipponoos"
+#addname "Hippothoos"
+#addname "Hyads"
+#addname "Ainios"
+#addname "Ainos"
+#addname "Aipytos"
+#addname "Eumedes"
+#addname "Eumelos"
+#addname "Euneos"
+#addname "Kronos"
+#addname "Kteatos"
+#addname "Kynos"
+#addname "Minos"
+#addname "Minyai"
+#addname "Mnesos"
+#addname "Molos"
+#addname "Paiones"
+#addname "Palmys"
+#addname "Pandaros"
+#addname "Talaos"
+#addname "Talthybios"
+#addname "Tartaros"
+#addname "Tethys"
+#addname "Teukros"
+#addname "Teutamos"
+#addname "Augeias"
+#addname "Autonoos"
+#addname "Autophonos"
+#addname "Averter"
+#addname "Axios"
+#addname "Azeus"
+#addname "Balios"
+#addname "Bias"
+#addname "Boagrios"
+#addname "Boreas"
+#addname "Briareus"
+#addname "Briseis"
+#addname "Briseus"
+#addname "Idaios"
+#addname "Idomeneus"
+#addname "Ilos"
+#addname "Imbrasos"
+#addname "Imbrios"
+#addname "Imbros"
+#addname "Iolkos"
+#addname "Ionians"
+#addname "Peiroos"
+#addname "Peirros"
+#addname "Peisandros"
+#addname "Peleides"
+#addname "Peleus"
+#addname "Pelian"
+#addname "Pelias"
+#addname "Pelops"
+#addname "Peneios"
+#addname "Linos"
+#addname "Lykastos"
+#addname "Theseus"
+#addname "Thestor"
+#addname "Thoas"
+#addname "Thootes"
+#addname "Telamonian"
+#addname "Telemachos"
+#addname "Tenedos"
+#addname "Thalpios"
+#addname "Thalysios"
+#addname "Thamyris"
+#addname "Thaos"
+#addname "Thebaios"
+#addname "Themis"
+#addname "Tithonos"
+#addname "Tlepolemos"
+#addname "Tmolos"
+#addname "Trachis"
+#addname "Trito"
+#addname "Troes"
+#addname "Tydeides"
+#addname "Tydeus"
+#end
+
+#selectnametype 110
+#addname "Kore"
+#addname "Sophia"
+#addname "Parmacede"
+#addname "Gaeamede"
+#addname "Persephone"
+#addname "Cybele"
+#addname "Demeter"
+#addname "Artemis"
+#addname "Kyra"
+#addname "Echidna"
+#addname "Eulesia"
+#addname "Mysteria"
+#addname "Dida"
+#addname "Astarte"
+#addname "Dida"
+#addname "Thetidania"
+#addname "Dina"
+#addname "Dinosophia"
+#addname "Dinomede"
+#addname "Dinomemna"
+#addname "Tyrannodina"
+#addname "Satyridna"
+#addname "Satyrica"
+#addname "Pandemonia"
+#addname "Echidna"
+#addname "Taurogyne"
+#addname "Astrogyne"
+#addname "Diogyne"
+#addname "Philia"
+#addname "Maudema"
+#addname "Chrysostetis"
+#addname "Chrysalia"
+#addname "Satyrippa"
+#addname "Menohippa"
+#addname "Hippogaea"
+#addname "Hippolyta"
+#addname "Diohippa"
+#addname "Sophipania"
+#addname "Epiphania"
+#addname "Hermea"
+#addname "Rhea"
+#addname "Naiad"
+#addname "Bryseiai"
+#addname "Euboia"
+#addname "Aipeia"
+#addname "Aigina"
+#addname "Klytaimnestra"
+#addname "Amphigeneia"
+#addname "Araithyrea"
+#addname "Euryale"
+#addname "Mantineia"
+#addname "Trikke"
+#addname "Myrine"
+#addname "Bessa"
+#addname "Harma"
+#addname "Hyria"
+#addname "Styra"
+#addname "Tegea"
+#addname "Parhasie"
+#addname "Perkote"
+#addname "Messe"
+#addname "Boibe"
+#addname "Mykale"
+#addname "Niobe"
+#addname "Phylake"
+#addname "Methone"
+#addname "Pylene"
+#addname "Dodona"
+#addname "Gerenia"
+#addname "Enispe"
+#addname "Enope"
+#addname "Demeter"
+#addname "Dione"
+#addname "Elone"
+#addname "Helike"
+#addname "Graia"
+#end
+
+#selectnametype 111
+#addname "Ailo"
+#addname "Afrasiyab"
+#addname "Ainyu"
+#addname "Aipivanghu"
+#addname "Airyu"
+#addname "Aithwyav"
+#addname "Amrav"
+#addname "Amru"
+#addname "Anghuyav"
+#addname "Anghuyu"
+#addname "Ardumanish"
+#addname "Arejahvant"
+#addname "Arejavan"
+#addname "Arenavak"
+#addname "Arezva"
+#addname "Arshan"
+#addname "Arshavant"
+#addname "Arshvant"
+#addname "Ashasairyank"
+#addname "Ashavanghav"
+#addname "Ateredainghav"
+#addname "Ateresravah"
+#addname "Aterevanush"
+#addname "Aterezantav"
+#addname "Aushedar"
+#addname "Avaraoshtri"
+#addname "Avaregav"
+#addname "Avarethrabah"
+#addname "Baeshatastura"
+#addname "Bastavaray"
+#addname "Baungha"
+#addname "Berezavant"
+#addname "Berezishnav"
+#addname "Berezishnu"
+#addname "Berezyarshtay"
+#addname "Berezyarshti"
+#addname "Bujisravah"
+#addname "Bujra"
+#addname "Byarshan"
+#addname "Canred"
+#addname "Chakhshni"
+#addname "Chamrav"
+#addname "Chamru"
+#addname "Chaxshnay"
+#addname "Daenavazah"
+#addname "Dainghufradah"
+#addname "Darshinika"
+#addname "Dashtaghnay"
+#addname "Dashtaghni"
+#addname "Dashtayanay"
+#addname "Daungha"
+#addname "Dawramaeshi"
+#addname "Dazgaraspa"
+#addname "Erezav"
+#addname "Erezavant"
+#addname "Faridoon"
+#addname "Fradhaxshtay"
+#addname "Franghad"
+#addname "Frangrasyan"
+#addname "Frarazay"
+#addname "Frarazi"
+#addname "Frasrutar"
+#addname "Frava"
+#addname "Fravartay"
+#addname "Frenay"
+#addname "Frinaspa"
+#addname "Gaevanay"
+#addname "Gaevani"
+#addname "Gaomant"
+#addname "Gaopivanghav"
+#addname "Gaoray"
+#addname "Garsivaz"
+#addname "Gaubruva"
+#addname "Gaumata"
+#addname "Gauri"
+#addname "Gavayan"
+#addname "Gaya"
+#addname "Gayadhastay"
+#addname "Gayomard"
+#addname "Gravaratav"
+#addname "Gravaratu"
+#addname "Gushtasp"
+#addname "Hanghaurvah"
+#addname "Hanghaurvaungh"
+#addname "Haosravah"
+#addname "Haxamanish"
+#addname "Hitaspa"
+#addname "Hooshang"
+#addname "Huchithra"
+#addname "Hufravaxsh"
+#addname "Hugau"
+#addname "Hugav"
+#addname "Hvareshay"
+#addname "Hvarez"
+#addname "Hvareza"
+#addname "Hvaspa"
+#addname "Hvovi"
+#addname "Imanish"
+#addname "Isadvastar"
+#addname "Isvant"
+#addname "Jagkrut"
+#addname "Jamasp"
+#addname "Jamshed"
+#addname "Jikle"
+#addname "Jishtay"
+#addname "Jishti"
+#addname "Kahrkana"
+#addname "Kanbujiya"
+#addname "Kanuka"
+#addname "Kaosha"
+#addname "Kara"
+#addname "Karesna"
+#addname "Karshnaz"
+#addname "Karsna"
+#addname "Kasupatu"
+#addname "Kasupitav"
+#addname "Katav"
+#addname "Katu"
+#addname "Kavarasman"
+#addname "Kavay"
+#addname "Kavi"
+#addname "Keresanay"
+#addname "Keresaokhshan"
+#addname "Keresaoxshan"
+#addname "Keresavazdah"
+#addname "Kersasp"
+#addname "Khshtavaenya"
+#addname "Kurav"
+#addname "Lohrasp"
+#addname "Marduniya"
+#addname "Marezishmyah"
+#addname "Martiya"
+#addname "Maxshtay"
+#addname "Mayu"
+#addname "Mazdravanghav"
+#addname "Minochehr"
+#addname "Nabunaiti"
+#addname "Nanarastay"
+#addname "Nighar"
+#addname "Paesanghanu"
+#addname "Paityarshavant"
+#addname "Parshanta"
+#addname "Payanghar"
+#addname "Perethvafsman"
+#addname "Perethvarshtay"
+#addname "Peshotan"
+#addname "Pourudhaxshtay"
+#addname "Pourushasp"
+#addname "Pourushtay"
+#addname "Pourushti"
+#addname "Ravant"
+#addname "Retsrt"
+#addname "Saimuzhi"
+#addname "Sanghavak"
+#addname "Saoshyant"
+#addname "Sedf"
+#addname "Simaezhi"
+#addname "Siyavarshan"
+#addname "Siyavush"
+#addname "Soshyant"
+#addname "Soshyos"
+#addname "Spitay"
+#addname "Spiti"
+#addname "Sriraokhshan"
+#addname "Sriraoxshan"
+#addname "Sriravanghav"
+#addname "Staotar"
+#addname "Stipay"
+#addname "Stipi"
+#addname "Stivant"
+#addname "Syavarshan"
+#addname "Syavaspi"
+#addname "Tadhryavant"
+#addname "Tanius"
+#addname "Tathryavant"
+#addname "Taurvaetay"
+#addname "Taurvati"
+#addname "Thrimithwant"
+#addname "Thrit"
+#addname "Thrita"
+#addname "Thriti"
+#addname "Thuxra"
+#addname "Tizhyarshtay"
+#addname "Tizyarshti"
+#addname "Tushnamatay"
+#addname "Urudhav"
+#addname "Urudhayant"
+#addname "Urudhu"
+#addname "Urupay"
+#addname "Usadhan"
+#addname "Usan"
+#addname "Ushtavaiti"
+#addname "Usmanar"
+#addname "Uspasnav"
+#addname "Uspasnu"
+#addname "Utayutay"
+#addname "Utayuti"
+#addname "Uxshan"
+#addname "Uxshenti"
+#addname "Vadhaghan"
+#addname "Vadhut"
+#addname "Vaezhyarshtay"
+#addname "Vagerezan"
+#addname "Vahishtahe"
+#addname "Vahumisa"
+#addname "Vahyazdata"
+#addname "Vandaremainish"
+#addname "Vanghav"
+#addname "Vanghvam"
+#addname "Varesmapay"
+#addname "Varidhkana"
+#addname "Varshna"
+#addname "Varshnay"
+#addname "Varshni"
+#addname "Vayaspara"
+#addname "Vazhaspa"
+#addname "Vidafarnah"
+#addname "Vidahfarnah"
+#addname "Vidarna"
+#addname "Vidhisravah"
+#addname "Vindahfarnah"
+#addname "Viraz"
+#addname "Vishtasp"
+#addname "Vishtaspa"
+#addname "Visruta"
+#addname "Visrutar"
+#addname "Vistarav"
+#addname "Vistauru"
+#addname "Vivahvant"
+#addname "Vizhyarshti"
+#addname "Vohuraochah"
+#addname "Vohvastay"
+#addname "Vohvasti"
+#addname "Vohvasti"
+#addname "Vohvazdah"
+#addname "Vyarshavant"
+#addname "Xnathaiti"
+#addname "Xshayarshan"
+#addname "Xshtavay"
+#addname "Xshviwraspa"
+#addname "Xvanvant"
+#addname "Yuxtavaray"
+#addname "Zainigav"
+#addname "Zairichi"
+#addname "Zairyach"
+#addname "Zairyank"
+#addname "Zarazdati"
+#addname "Zarthosht"
+#addname "Zavan"
+#addname "Zbaurvant"
+#addname "Zighray"
+#addname "Zohak"
+#addname "Zrazdatay"
+#end
+
+#selectnametype 112
+#addname "Aila"
+#addname "Caemila"
+#addname "Caelina"
+#addname "Caelma"
+#addname "Caelcia"
+#addname "Emyli"
+#addname "Yatha"
+#addname "Zephyriadne"
+#addname "Zelia"
+#addname "Ymiania"
+#addname "Imine"
+#addname "Ilinani"
+#addname "Iminine"
+#addname "Imitya"
+#addname "Izinana"
+#addname "Izyda"
+#addname "Zenia"
+#addname "Zabele"
+#addname "Zeila"
+#addname "Zaela"
+#addname "Zaemila"
+#addname "Zanathiana"
+#addname "Anibele"
+#addname "Alizan"
+#addname "Azili"
+#addname "Yana"
+#addname "Zana"
+#addname "Zorphini"
+#addname "Ephini"
+#addname "Ephzela"
+#addname "Aetava"
+#addname "Aghraeradha"
+#addname "Ainyava"
+#addname "Airyava"
+#addname "Aithwyav"
+#addname "Akayadha"
+#addname "Ankasa"
+#addname "Aoshnara"
+#addname "Ara"
+#addname "Arastya"
+#addname "Aoikhmatastura"
+#addname "Aravaoshtra"
+#addname "Araxa"
+#addname "Arejaona"
+#addname "Arshya"
+#addname "Artavardiya"
+#addname "Asabana"
+#addname "Ashahe"
+#addname "Ashahura"
+#addname "Ashasaredha"
+#addname "Ashasavah"
+#addname "Ashastu"
+#addname "Ashaurvaedha"
+#addname "Ashavazdah"
+#addname "Aspachanah"
+#addname "Asruta"
+#addname "Aterechithra"
+#addname "Ateredata"
+#addname "Aterepata"
+#addname "Aterexvarenah"
+#addname "Athwya"
+#addname "Athwyoza"
+#addname "Aurvasara"
+#addname "Avafrin"
+#addname "Avaya"
+#addname "Axnangha"
+#addname "Axrura"
+#addname "Axtya"
+#addname "Ayuta"
+#addname "Azata"
+#addname "Baremna"
+#addname "Bendva"
+#addname "Bivandangha"
+#addname "Budhra"
+#addname "Chamrav"
+#addname "Chathwarespa"
+#addname "Corche"
+#addname "Dahaka"
+#addname "Dangha"
+#addname "Darshinika"
+#addname "Deanica"
+#addname "Dejamaspa"
+#addname "Dradha"
+#addname "Duraekaeta"
+#addname "Duraesruta"
+#addname "Eredhwa"
+#addname "Erexsha"
+#addname "Erezraspa"
+#addname "Ferashaoshtra"
+#addname "Frachithra"
+#addname "Frachya"
+#addname "Fradhidaya"
+#addname "Fradhaxshtay"
+#addname "Franghad"
+#addname "Frangrasyan"
+#addname "Franya"
+#addname "Fraoraosa"
+#addname "Frashaoshtra"
+#addname "Frashavaxsha"
+#addname "Frasrutara"
+#addname "Fratura"
+#addname "Frava"
+#addname "Frayaodha"
+#addname "Frayazenta"
+#addname "Frenah"
+#addname "Frenay"
+#addname "Freni"
+#addname "Frinaspa"
+#addname "Frya"
+#addname "Fryana"
+#addname "Fyushta"
+#addname "Gaevanay"
+#addname "Gandarewa"
+#addname "Gandrewa"
+#addname "Gaoray"
+#addname "Gaorayana"
+#addname "Gaotema"
+#addname "Garshta"
+#addname "Gaubruva"
+#addname "Gaumata"
+#addname "Gauri"
+#addname "Gaya"
+#addname "Gayadhastay"
+#addname "Grehma"
+#addname "Habaspa"
+#addname "Hadaxaya"
+#addname "Haoshanha"
+#addname "Haldita"
+#addname "Haoshyangha"
+#addname "Haredhaspa"
+#addname "Hitaspa"
+#addname "Huchithra"
+#addname "Hugav"
+#addname "Humaya"
+#addname "Humayaka"
+#addname "Hushyaothna"
+#addname "Hutana"
+#addname "Hutaosa"
+#addname "Huvaxshtra"
+#addname "Huyazata"
+#addname "Hvaredhay"
+#addname "Hvadaena"
+#addname "Hvadhata"
+#addname "Hvaresha"
+#addname "Hvareshay"
+#addname "Hvaspa"
+#addname "Hvazata"
+#addname "Hvova"
+#addname "Imaima"
+#addname "Jamaspa"
+#addname "Janara"
+#addname "Jannara"
+#addname "Jooloya"
+#addname "Kabujiya"
+#addname "Kaeva"
+#addname "Kahrkana"
+#addname "Kanavankkuri"
+#addname "Kanbujiya"
+#addname "Kanuka"
+#addname "Kaosha"
+#addname "Kara"
+#addname "Kata"
+#addname "Karsna"
+#addname "Kata"
+#addname "Katav"
+#addname "Kavata"
+#addname "Khshaeta"
+#addname "Keresaspa"
+#addname "Mahrkusha"
+#addname "Marduniya"
+#addname "Martiya"
+#addname "Mathravaka"
+#addname "Manuschithra"
+#addname "Mayava"
+#addname "Maxshtay"
+#addname "Mazdayasna"
+#addname "Nabukudrachara"
+#addname "Nabunaiti"
+#addname "Nadintabaira"
+#addname "Naditabaira"
+#addname "Naptya"
+#addname "Nanarasti"
+#addname "Naotara"
+#addname "Neremyazdana"
+#addname "Nijara"
+#addname "Nivika"
+#addname "Oighmatastura"
+#addname "Paeshatah"
+#addname "Pairishtura"
+#addname "Parata"
+#addname "Parshinta"
+#addname "Paurva"
+#addname "Payanghar"
+#addname "Pazinah"
+#addname "Pereididhaya"
+#addname "Peshana"
+#addname "Pishishyaothana"
+#addname "Pisinah"
+#addname "Pitaona"
+#addname "Pouruchista"
+#addname "Pourushaspa"
+#addname "Pudha"
+#addname "Sadhanah"
+#addname "Saena"
+#addname "Saimuzhi"
+#addname "Sama"
+#addname "Samamny"
+#addname "Sanghangha"
+#addname "Savah"
+#addname "Sayuzhdri"
+#addname "Shiranichity"
+#addname "Snaoya"
+#addname "Snavidhka"
+#addname "Spengha"
+#addname "Spentodhata"
+#addname "Spinjaurushka"
+#addname "Spitama"
+#addname "Spitay"
+#addname "Spityura"
+#addname "Sriraoxshan"
+#addname "Taxma"
+#addname "Taxmaspada"
+#addname "Thraetaona"
+#addname "Thrita"
+#addname "Thuxra"
+#addname "Tura"
+#addname "Tusa"
+#addname "Tushnamaiti"
+#addname "Upadasma"
+#addname "Urvaxshaya"
+#addname "Ushtavaiti"
+#addname "Ushtazanta"
+#addname "Ushtra"
+#addname "Usinemah"
+#addname "Usmanara"
+#addname "Usnaka"
+#addname "Uspaeshata"
+#addname "Uspasnav"
+#addname "Uzava"
+#addname "Uzya"
+#addname "Vaedhayangha"
+#addname "Vaedhangha"
+#addname "Vaesadha"
+#addname "Vagereza"
+#addname "Vahauka"
+#addname "Vahishtahe"
+#addname "Vahmaedhata"
+#addname "Vahumisa"
+#addname "Vahyazdata"
+#addname "Vanara"
+#addname "Vanghudhata"
+#addname "Vara"
+#addname "Varaza"
+#addname "Vareshava"
+#addname "Varesmapa"
+#addname "Varidhkana"
+#addname "Varshna"
+#addname "Varakasa"
+#addname "Varaza"
+#addname "Vareshava"
+#addname "Vareshna"
+#addname "Varesmapa"
+#addname "Vayaspara"
+#addname "Vazhaspa"
+#addname "Vidafarnah"
+#addname "Vidahfarnah"
+#addname "Vidarna"
+#addname "Viraspa"
+#addname "Visadha"
+#addname "Vishtaspa"
+#addname "Visruta"
+#addname "Visrutara"
+#addname "Vistarav"
+#addname "Vivahvant"
+#addname "Vivana"
+#addname "Vivareshva"
+#addname "Vohushtra"
+#addname "Vyatana"
+#addname "Xshathrita"
+#addname "Xshviwraspa"
+#addname "Xvadaena"
+#addname "Xvadhata"
+#addname "Xvanvant"
+#addname "Xvaxshathra"
+#addname "Yima"
+#addname "Yukhtaspa"
+#addname "Yuxtaspa"
+#addname "Yoishta"
+#addname "Yuxtaspa"
+#addname "Yuxtavaray"
+#addname "Zairita"
+#addname "Zaosha"
+#addname "Zavan"
+#addname "Zrayangha"
+#addname "Zrayah"
+#addname "Zrayangha"
+#end
+
+#selectnametype 113
+#addname "Dheem"
+#addname "Cthees"
+#addname "Adheem"
+#addname "Behesh"
+#addname "Blasht"
+#addname "Blassyr"
+#addname "C'teem"
+#addname "Vissick"
+#addname "Shee'ash"
+#addname "Pack'eng"
+#addname "Rash'ikis"
+#addname "Thulsa"
+#addname "Sche'em"
+#addname "Echinnis"
+#addname "Tschah"
+#addname "Kushin"
+#addname "Kush'nah"
+#addname "Sheetil"
+#addname "Hnephiss"
+#addname "Shaas"
+#addname "Tseefis Khan"
+#addname "Shetyrs"
+#addname "Ash'embe"
+#addname "Chubu"
+#addname "Shemes"
+#addname "Tesh Tsseth"
+#addname "Balatsuiqbi"
+#addname "Petubastis"
+#addname "Hastrubal"
+#addname "Yazdegird"
+#addname "Hormizd"
+#addname "Zamasp"
+#addname "Chrosroes Anushirvan"
+#addname "Anushirvan"
+#addname "Vsevolod"
+#addname "Fa'iz"
+#addname "Abubu"
+#addname "Abzu"
+#addname "Admanduga"
+#addname "Adapa"
+#addname "Akitu"
+#addname "Alma"
+#addname "Alu"
+#addname "Ama'ushumgalanna"
+#addname "Ashnan"
+#addname "Asipu"
+#addname "Atargatis"
+#addname "Athirat"
+#addname "Atarsamain"
+#addname "Atrahasi"
+#addname "Asalluhe"
+#addname "Apil'Adad"
+#addname "Arulli"
+#addname "Assurbanipal"
+#addname "Baru"
+#addname "Belshemin"
+#addname "Bit Rimki"
+#addname "Bubbar"
+#addname "Barag Kiba"
+#addname "Belit Balali"
+#addname "Belili"
+#addname "Damu"
+#addname "Dilmun"
+#addname "Dinanu"
+#addname "Dingir"
+#addname "Dikumah"
+#addname "Dimgalabzu"
+#addname "Duttur"
+#addname "Ea"
+#addname "Ebeh"
+#addname "Enki"
+#addname "Enkimdu"
+#addname "Enlil"
+#addname "Enu"
+#addname "Eshmun"
+#addname "Etimmu"
+#addname "Edinnausagga"
+#addname "Egisnugal"
+#addname "Eannatum"
+#addname "Emeslam"
+#addname "Eninnu"
+#addname "Enmebaragesi"
+#addname "Ennugi"
+#addname "Entemena"
+#addname "Enten"
+#addname "Erekh"
+#addname "Esagila"
+#addname "Esharra"
+#addname "Ezinu"
+#addname "Eshtar"
+#addname "Gishbare"
+#addname "Gurshar"
+#addname "Guedinna"
+#addname "Gallu"
+#addname "Gibil"
+#addname "Gilgamesh"
+#addname "Girru"
+#addname "Gula"
+#addname "Hadad"
+#addname "Hursag"
+#addname "Huwawa"
+#addname "Igigi"
+#addname "Igalima"
+#addname "Igizitu"
+#addname "Ilu"
+#addname "Ilabrat"
+#addname "Imin'shattam"
+#addname "Ishkur"
+#addname "Ishtaran"
+#addname "Ishu'kallu"
+#addname "Imdugud"
+#addname "Ina'ramnisu"
+#addname "Irra"
+#addname "Ishib"
+#addname "Ishkur"
+#addname "Istaritu"
+#addname "Issakku"
+#addname "Kash'shitu"
+#addname "Kantuzilis"
+#addname "Kish"
+#addname "Kingaluda"
+#addname "Kinirsha"
+#addname "Kishar"
+#addname "Kiur"
+#addname "Kulla"
+#addname "Kurgarru"
+#addname "Kurunnam"
+#addname "Kemosh"
+#addname "Keret"
+#addname "Kiksanu"
+#addname "Lugal"
+#addname "Lugalabzu"
+#addname "Ludlul bel Nimeqi"
+#addname "Lahar"
+#addname "Lahamu"
+#addname "Lamar"
+#addname "Latarak"
+#addname "Lipit'eshtar"
+#addname "Lugal'dimmerankia"
+#addname "Lugal'eudmelambi'nirgal"
+#addname "Lugal'kurdub"
+#addname "Lugal'zagesi"
+#addname "Lugal'sisa"
+#addname "Lullu"
+#addname "Lugal'igi'husham"
+#addname "Kudurru"
+#addname "Kurnugia"
+#addname "Kother'wa'hasis"
+#addname "Kohen"
+#addname "Mahhu"
+#addname "Maqlu"
+#addname "Martu"
+#addname "Masmasu"
+#addname "Mekal"
+#addname "Melqart"
+#addname "Mesaru"
+#addname "Milkom"
+#addname "Mot"
+#addname "Mudugsaa"
+#addname "Mummu"
+#addname "Meluhha"
+#addname "Mat'tamtin"
+#addname "Mushdama"
+#addname "Nan Lugal"
+#addname "Namchadnessar"
+#addname "Neti"
+#addname "Nidaba"
+#addname "Nimrud"
+#addname "Ninagal"
+#addname "Ninanna"
+#addname "Nin Dim"
+#addname "Ninbahar"
+#addname "Ninegalla"
+#addname "Ningikuga"
+#addname "Ningirsu"
+#addname "Ningublaga"
+#addname "Ninigikug"
+#addname "Ninmesarra"
+#addname "Ninmug"
+#addname "Ninshebargunu"
+#addname "Ninshubur"
+#addname "Ninsigsig"
+#addname "Ninsuna"
+#addname "Nintur"
+#addname "Nudimmud"
+#addname "Nabu"
+#addname "Nammu"
+#addname "Nanshe"
+#addname "Nambarbe"
+#addname "Nanna"
+#addname "Nergal"
+#addname "Nerigal"
+#addname "Nikkal"
+#addname "Ninazu"
+#addname "Ningal"
+#addname "Ninki"
+#addname "Ninlil"
+#addname "Ninmah"
+#addname "Nintuh"
+#addname "Nusku"
+#addname "Paghat"
+#addname "Qadistu"
+#addname "Qedestim"
+#addname "Rimmon"
+#addname "Rim Sin"
+#addname "Sa Ilu"
+#addname "Samgu"
+#addname "Sapatta"
+#addname "Sargon"
+#addname "Sarpanitu"
+#addname "Sar Puhi"
+#addname "Semiramis"
+#addname "Sesgallu"
+#addname "Shahar"
+#addname "Shalim"
+#addname "Shahr"
+#addname "Shamash"
+#addname "Shapsh"
+#addname "Shemesh"
+#addname "Simios"
+#addname "Simtu"
+#addname "Sin"
+#addname "Sittenkanon"
+#addname "Surpu"
+#addname "Sharu"
+#addname "Sagzu'dingirenek"
+#addname "Tamtun"
+#addname "Tibira'dingirenek"
+#addname "Tibira'kalammak"
+#addname "Tukulti'ninurta"
+#addname "Tammuz"
+#addname "Tanit"
+#addname "Tiglat-Pileser"
+#addname "Tinnit"
+#addname "Udum"
+#addname "Urigallu"
+#addname "Utnapishtim"
+#addname "Ubsu'ukkinna"
+#addname "Udnua"
+#addname "Ulnun"
+#addname "Urbaba"
+#addname "Uttu"
+#addname "Utuhegal"
+#addname "Usur'amassu"
+#addname "Lemnuti"
+#addname "Zirru"
+#addname "Zu"
+#end
+
+#selectnametype 114
+#addname "Carlos"
+#addname "Iohannes"
+#addname "Defranc"
+#addname "Guiseppe"
+#addname "Francois"
+#addname "Ernaud"
+#addname "Ferramada"
+#addname "Domitane"
+#addname "Innocent"
+#addname "Evalencio"
+#addname "Lucius"
+#addname "Succendemus"
+#addname "Tomaso"
+#addname "Albioni"
+#addname "Enforca"
+#addname "Lucidor"
+#addname "Hugo"
+#addname "Guillom"
+#addname "Ceravantes"
+#addname "Bernardo"
+#addname "Jean"
+#addname "Arnaud"
+#addname "Vidal"
+#addname "Pierre"
+#addname "Raymond"
+#addname "Philippe"
+#addname "Berenger"
+#addname "Othon"
+#addname "Colbert"
+#addname "Magnino"
+#addname "Vermudo"
+#addname "Ramiro"
+#addname "Ruggiro"
+#addname "Henrique"
+#addname "Urraca"
+#addname "Gugliemo"
+#addname "Federico"
+#addname "Jaime"
+#addname "Philippe"
+#addname "Giacomo"
+#addname "Roberto"
+#addname "Luigi"
+#addname "Enrique"
+#addname "Carlo"
+#addname "Martino"
+#addname "Duarte"
+#addname "Ferrante"
+#addname "Lorenzo"
+#addname "Acolin"
+#addname "Alferne"
+#addname "Almace"
+#addname "Alverne"
+#addname "Amboires"
+#addname "Anseis"
+#addname "Argoune"
+#addname "Astrimunes"
+#addname "Baivers"
+#addname "Baiviere"
+#addname "Balaguee"
+#addname "Baldewin"
+#addname "Baldise"
+#addname "Balide"
+#addname "Baliganz"
+#addname "Barbamusche"
+#addname "Basan"
+#addname "Basbrun"
+#addname "Baviere"
+#addname "Beaune"
+#addname "Belserne"
+#addname "Besencun"
+#addname "Bevon"
+#addname "Blaive"
+#addname "Blandune"
+#addname "Blos"
+#addname "Bramimound"
+#addname "Bretaigne"
+#addname "Brigal"
+#addname "Bruise"
+#addname "Bruns"
+#addname "Bulgar"
+#addname "Burdel"
+#addname "Burguigne"
+#addname "Butenrot"
+#addname "Calabrie"
+#addname "Canabeus"
+#addname "Canelious"
+#addname "Capadoce"
+#addname "Capuel"
+#addname "Carlon"
+#addname "Chares"
+#addname "Charle"
+#addname "Charlemagne"
+#addname "Charlemain"
+#addname "Charlun"
+#addname "Chemubles"
+#addname "Cheriant"
+#addname "Chernuble"
+#addname "Clarbune"
+#addname "Clariens"
+#addname "Clarifan"
+#addname "Clarun"
+#addname "Climorins"
+#addname "Commibles"
+#addname "Cordres"
+#addname "Corsablix"
+#addname "Dapamort"
+#addname "Dathan"
+#addname "Drouin"
+#addname "Durendal"
+#addname "Durestant"
+#addname "Enfruns"
+#addname "Engelier"
+#addname "Ermines"
+#addname "Esclavers"
+#addname "Esclavoz"
+#addname "Escremiz"
+#addname "Estorgant"
+#addname "Estramariz"
+#addname "Esturgus"
+#addname "Eudropin"
+#addname "Eugez"
+#addname "Falfarun"
+#addname "Floredee"
+#addname "Flurit"
+#addname "Francor"
+#addname "Frank"
+#addname "Frisouns"
+#addname "Funde"
+#addname "Gabriel"
+#addname "Gaignon"
+#addname "Gailne"
+#addname "Galafes"
+#addname "Galazine"
+#addname "Gebuin"
+#addname "Gerard"
+#addname "Gerer"
+#addname "Gerins"
+#addname "Giles"
+#addname "Girunde"
+#addname "Gramimond"
+#addname "Grandones"
+#addname "Gros"
+#addname "Grossaille"
+#addname "Gualtier"
+#addname "Guarlan"
+#addname "Gue"
+#addname "Guenelon"
+#addname "Guide"
+#addname "Guineman"
+#addname "Guitsand"
+#addname "Guiun"
+#addname "Halteclere"
+#addname "Hamon"
+#addname "Henry"
+#addname "Jangleu"
+#addname "Joiuse"
+#addname "Jouner"
+#addname "Jozerans"
+#addname "Lazaron"
+#addname "Leus"
+#addname "Leutice"
+#addname "Loewis"
+#addname "Lorains"
+#addname "Lotherengs"
+#addname "Lumbardie"
+#addname "Maelgut"
+#addname "Mahee"
+#addname "Maience"
+#addname "Malbien"
+#addname "Malcud"
+#addname "Malduiz"
+#addname "Malpalin"
+#addname "Malpreis"
+#addname "Malprimis"
+#addname "Malpruse"
+#addname "Malquiant"
+#addname "Malsarun"
+#addname "Maltet"
+#addname "Maltraien"
+#addname "Marbrus"
+#addname "Marches"
+#addname "Metase"
+#addname "Micenes"
+#addname "Michael"
+#addname "Milun"
+#addname "Muneigre"
+#addname "Murgles"
+#addname "Naimon"
+#addname "Nerbune"
+#addname "Nevelon"
+#addname "Olivier"
+#addname "Oluferne"
+#addname "Omer"
+#addname "Ormaleus"
+#addname "Otes"
+#addname "Otton"
+#addname "Otun"
+#addname "Peitevins"
+#addname "Peitou"
+#addname "Peter"
+#addname "Pinabels"
+#addname "Pinceners"
+#addname "Poitevins"
+#addname "Poitou"
+#addname "Preciuse"
+#addname "Priamun"
+#addname "Primes"
+#addname "Puillain"
+#addname "Rabel"
+#addname "Reims"
+#addname "Reinier"
+#addname "Reins"
+#addname "Rembalt"
+#addname "Rencesvals"
+#addname "Rides"
+#addname "Rollant"
+#addname "Rollanz"
+#addname "Romaigne"
+#addname "Romain"
+#addname "Rossillon"
+#addname "Runier"
+#addname "Saisonie"
+#addname "Santone"
+#addname "Sanz"
+#addname "Sarazands"
+#addname "Sarragucese"
+#addname "Sarragus"
+#addname "Sebres"
+#addname "Sevree"
+#addname "Sevrin"
+#addname "Sezilie"
+#addname "Sibile"
+#addname "Siglorel"
+#addname "Silvester"
+#addname "Soltras"
+#addname "Sorbres"
+#addname "Sorel"
+#addname "Sorence"
+#addname "Sorz"
+#addname "Suatilie"
+#addname "Sulian"
+#addname "Tachebrun"
+#addname "Tedbalt"
+#addname "Tencendur"
+#addname "Tervagant"
+#addname "Tierris"
+#addname "Tierry"
+#addname "Timozel"
+#addname "Toledan"
+#addname "Torleu"
+#addname "Tuele"
+#addname "Turgin"
+#addname "Turgis"
+#addname "Turpine"
+#addname "Val"
+#addname "Valdabrun"
+#addname "Vale"
+#addname "Valtrene"
+#addname "Veillantif"
+#addname "Virgilie"
+#end
+
+#selectnametype 115
+#addname "Andre"
+#addname "Aurgelmer"
+#addname "Anborn"
+#addname "Are"
+#addname "Andvare"
+#addname "Borme"
+#addname "Frej"
+#addname "Fafner"
+#addname "Grafe"
+#addname "Gunnlaug"
+#addname "Grane"
+#addname "Grodvitner"
+#addname "Gemner"
+#addname "Grimmner"
+#addname "Gramner"
+#addname "Grim"
+#addname "Granlodner"
+#addname "Harvikel"
+#addname "Harald"
+#addname "Hakon"
+#addname "Hrut"
+#addname "Hymer"
+#addname "Mimer"
+#addname "Orm"
+#addname "Ragnar"
+#addname "Sigvard"
+#addname "Sigvidar"
+#addname "Surle"
+#addname "Sigtryg"
+#addname "Sinfjotle"
+#addname "Sure"
+#addname "Starkader"
+#addname "Tjodvig"
+#addname "Vidar"
+#addname "Vale"
+#addname "Yngvar"
+#addname "Loddfavner"
+#addname "Bergelmer"
+#addname "Fjollvitner"
+#addname "Bolthorn"
+#addname "Oddfavner"
+#addname "Rimgrimner"
+#addname "Svavner"
+#addname "Rimmner"
+#addname "Loddgrimner"
+#addname "Rimlaug"
+#addname "Tjatse"
+#addname "Bolvitner"
+#addname "Oddvitner"
+#addname "Grimvitner"
+#addname "Ymir"
+#addname "Gylfe"
+#addname "Ganglere"
+#addname "Bure"
+#addname "Bur"
+#addname "Vile"
+#addname "Ve"
+#addname "Trudgelmer"
+#addname "Aud"
+#addname "Delling"
+#addname "Mundilfare"
+#addname "Arvaker"
+#addname "Allsvinn"
+#addname "Hjuke"
+#addname "Lodur"
+#addname "Höner"
+#addname "Ask"
+#addname "Ygg"
+#addname "Ae"
+#addname "Afe"
+#addname "Alf"
+#addname "Balder"
+#addname "Barre"
+#addname "Bjarke"
+#addname "Brage"
+#addname "Fres"
+#addname "Brokk"
+#addname "Byleist"
+#addname "Eitre"
+#addname "Farbaute"
+#addname "Forsete"
+#addname "Freke"
+#addname "Hermod"
+#addname "Garm"
+#addname "Geirrod"
+#addname "Gymer"
+#addname "Gjuke"
+#addname "Gere"
+#addname "Gugner"
+#addname "Gunnar"
+#addname "Gunnlaug"
+#addname "Guttorm"
+#addname "Bödvar"
+#addname "Hjlprek"
+#addname "Hjuke"
+#addname "Hjälmgunnar"
+#addname "Hrimmner"
+#addname "Hringhorne"
+#addname "Hrugner"
+#addname "Hrafn"
+#addname "Hugin"
+#addname "Hvergelmer"
+#addname "Hymir"
+#addname "Höder"
+#addname "Högne"
+#addname "Kvase"
+#addname "Liftrase"
+#addname "Lyngve"
+#addname "Lodur"
+#addname "Lopt"
+#addname "Laage"
+#addname "Löding"
+#addname "Magne"
+#addname "Munin"
+#addname "Mökkurkalfe"
+#addname "Narfe"
+#addname "Noatun"
+#addname "Nör"
+#addname "Ottar"
+#addname "Ran"
+#addname "Ratatosk"
+#addname "Regin"
+#addname "Rig"
+#addname "Rolf"
+#addname "Sessrumner"
+#addname "Siggeir"
+#addname "Sigmund"
+#addname "Sigurd"
+#addname "Skirner"
+#addname "Starkad"
+#addname "Surt"
+#addname "Svalin"
+#addname "Trudvang"
+#addname "Ull"
+#addname "Vimur"
+#addname "Völsung"
+#addname "Snorri"
+#addname "Frode"
+#addname "Od"
+#addname "Yngve"
+#addname "Grymis"
+#addname "Yngvefrej"
+#addname "Fjölner"
+#addname "Tjodulf"
+#addname "Sveigder"
+#addname "Vanlande"
+#addname "Domalde"
+#addname "Gisl"
+#addname "Önder"
+#addname "Visbur"
+#addname "Dryggve"
+#addname "Danper"
+#addname "Yngone"
+#addname "Dag"
+#addname "Agne"
+#addname "Froste"
+#addname "Alrek"
+#addname "Erik"
+#addname "Elfse"
+#addname "Hake"
+#addname "Jörund"
+#addname "Hagbard"
+#addname "Hugleik"
+#addname "Gudlaug"
+#addname "Eyvind"
+#addname "Gylaug"
+#addname "Fridleif"
+#addname "Aun"
+#addname "Ane"
+#addname "Halvdan"
+#addname "Tunne"
+#addname "Egil"
+#addname "Geirtjuv"
+#addname "Adil"
+#addname "Sölve"
+#addname "Bryt-Önund"
+#addname "Önund"
+#addname "Ingjald"
+#addname "Svipdag"
+#addname "Algöt"
+#addname "Sigverk"
+#addname "Hjörvard"
+#addname "Götvid"
+#addname "Hulvid"
+#addname "Hilder"
+#addname "Högne"
+#addname "Saxe"
+#addname "Bove"
+#addname "Gudröd"
+#addname "Olav Trätälja"
+#addname "Sigtrygg"
+#addname "Skjöld"
+#addname "Gandalf"
+#addname "Harek"
+#addname "Guttorm"
+#addname "Gorm"
+#addname "Grjotgard"
+#addname "Arnvid"
+#addname "Vemund"
+#addname "Aasbjörn"
+#addname "Jatmund"
+#addname "Fjun"
+#addname "Sten-Tor"
+#addname "Felman"
+#addname "Fritjof"
+#addname "Sten Stolpe"
+#addname "Torv-Einar"
+#addname "Gånge-Rolf"
+#addname "Aegir"
+#addname "Alvaldi"
+#addname "Baugi"
+#addname "Bergelmir"
+#addname "Bölthorn"
+#addname "Byleist"
+#addname "Eggther"
+#addname "Fjölvar"
+#addname "Fjörgyn"
+#addname "Fornjot"
+#addname "Gangr"
+#addname "Geirröd"
+#addname "Gilling"
+#addname "Gjalp"
+#addname "Greip"
+#addname "Gymir"
+#addname "Helblindi"
+#addname "Helreginn"
+#addname "Hljod"
+#addname "Hraesvelgr"
+#addname "Hrimgrimmnir"
+#addname "Hrimnir"
+#addname "Hrodr"
+#addname "Hrugnir"
+#addname "Hrym"
+#addname "Hymir"
+#addname "Hyrokkin"
+#addname "Idhi"
+#addname "Im"
+#addname "Leikn"
+#addname "Litr"
+#addname "Logi"
+#addname "Mögthrasir"
+#addname "Narfi"
+#addname "Sökkmimir"
+#addname "Suttung"
+#addname "Thökk"
+#addname "Thrivaldi"
+#addname "Vafthrudnir"
+#addname "Vali"
+#addname "Vidblindi"
+#addname "Vosud"
+#addname "Vörnir"
+#addname "Logi"
+#addname "Halogi"
+#addname "Ölvaldi"
+#end
+
+#selectnametype 116
+#addname "Hymla"
+#addname "Ambla"
+#addname "Embla"
+#addname "Urd"
+#addname "Verdandi"
+#addname "Skuld"
+#addname "Skade"
+#addname "Sigrdriva"
+#addname "Siv"
+#addname "Vandriva"
+#addname "Rimdriva"
+#addname "Gefjun"
+#addname "Audhumla"
+#addname "Bestla"
+#addname "Jord"
+#addname "Bil"
+#addname "Amma"
+#addname "Gullveig"
+#addname "Angerboda"
+#addname "Sif"
+#addname "Frigg"
+#addname "Brynhild"
+#addname "Edda"
+#addname "Roskva"
+#addname "Elle"
+#addname "Erna"
+#addname "Nanna"
+#addname "Tökk"
+#addname "Fulla"
+#addname "Gerd"
+#addname "Grid"
+#addname "Gunnhild"
+#addname "Gudrun"
+#addname "Grimhild"
+#addname "Heidrun"
+#addname "Hjördis"
+#addname "Idun"
+#addname "Ivalde"
+#addname "Ida"
+#addname "Lif"
+#addname "Lit"
+#addname "Mode"
+#addname "Modgunn"
+#addname "Rind"
+#addname "Sigyn"
+#addname "Tir"
+#addname "Vigrid"
+#addname "Hleida"
+#addname "Hnoss"
+#addname "Gersimi"
+#addname "Driva"
+#addname "Huld"
+#addname "Vana"
+#addname "Aude"
+#addname "Skjalv"
+#addname "Bera"
+#addname "Aalov"
+#addname "Yrsa"
+#addname "Göthild"
+#addname "Hildegun"
+#addname "Hildur"
+#addname "Aasa Illraada"
+#addname "Signe"
+#addname "Sölva"
+#addname "Solveig"
+#addname "Alfhild"
+#addname "Ragnhild"
+#addname "Tyra"
+#addname "Tyrrni"
+#addname "Gyda"
+#addname "Göndul"
+#addname "Skögul"
+#addname "Saga"
+#addname "Astrid"
+#addname "Aurboda"
+#addname "Gunnlög"
+#addname "Gunnlöd"
+#addname "Hardgeipr"
+#addname "Hrimgerd"
+#addname "Hrimlöd"
+#addname "Jörd"
+#addname "Jarnsaxa"
+#addname "Laufey"
+#addname "Gersemi"
+#addname "Hnoss"
+#addname "Heidr"
+#addname "Bil"
+#addname "Eir"
+#addname "Gefjon"
+#addname "Gna"
+#addname "Hlin"
+#addname "Ilmr"
+#addname "Irpa"
+#addname "Lofn"
+#addname "Nanna"
+#addname "Njörun"
+#addname "Ran"
+#addname "Saga"
+#addname "Rindr"
+#addname "Sigyn"
+#addname "Sjöfn"
+#addname "Snotra"
+#addname "Sol"
+#addname "Syn"
+#addname "Thordgerd"
+#addname "Thrudr"
+#addname "Var"
+#addname "Vör"
+#end
+
+#selectnametype 117
+#addname "Xithoph"
+#addname "Yad Yith"
+#addname "Chtogul"
+#addname "Ctalou"
+#addname "Olug"
+#addname "Olgothu"
+#addname "Batux"
+#addname "Xi Mi"
+#addname "Xi Goo"
+#addname "Shub Chtug"
+#addname "Soggoth"
+#addname "Phun Goo"
+#addname "Hulud"
+#addname "Yig Goloth"
+#addname "Shubbaruth"
+#addname "Igg Yad"
+#addname "Shad Foth"
+#addname "Yi Xid"
+#addname "Fothx"
+#addname "Githü"
+#addname "Neoutig"
+#addname "Cyy Coth"
+#addname "Kloanthos"
+#addname "Xanthus"
+#addname "Tsagosh"
+#addname "Ctenophoros"
+#addname "Tuzscha"
+#addname "Glaah"
+#addname "N'ktun"
+#addname "N'goo"
+#addname "Y'halu"
+#addname "Hatheg Klah"
+#addname "Ograthan"
+#addname "Enquanok"
+#addname "Celephais"
+#addname "Shantak"
+#addname "Azatoth"
+#addname "Zona Nyl"
+#addname "Umr Tawil"
+#addname "Zenig Aphorat"
+#addname "Zarkomand"
+#addname "Ilek Vad"
+#addname "Snireth Ko"
+#addname "Kaman Thah"
+#addname "Yarni Zai"
+#addname "Oltarnees"
+#addname "Annolith"
+#addname "Nabu-Sjumukin"
+#addname "Ululai"
+#addname "Pulu"
+#addname "Neriglissar"
+#addname "Vonones"
+#addname "Kavadh"
+#addname "Kubrat"
+#addname "Taharka"
+#addname "Tokht"
+#addname "Kardam"
+#addname "Omurtag"
+#addname "Svatopluk"
+#addname "Togrul Beg"
+#addname "Alp Arslan"
+#addname "Vukan"
+#addname "Ogotai"
+#addname "Gujuk"
+#addname "Ulugh Beg"
+#addname "Yaqub"
+#addname "Shaddai"
+#addname "Udug"
+#addname "Ululu"
+#addname "Shul'shagana"
+#addname "Shul'utula"
+#addname "Shukalletuda"
+#addname "Azag"
+#addname "Shamem"
+#addname "Hubur"
+#addname "Ususu"
+#addname "Annumaki"
+#addname "Amurru"
+#addname "An"
+#addname "Anat"
+#addname "Antu"
+#addname "Anzu"
+#addname "Zopfkath"
+#addname "Aqhat"
+#addname "Gugalanna"
+#addname "Gulaturru"
+#addname "Lagash"
+#addname "Mashdagu"
+#addname "Sagtur"
+#addname "Takultu"
+#addname "Tehom"
+#addname "Urnammu"
+#addname "Uzumna"
+#addname "Zag'mi"
+#addname "Zag'mu"
+#addname "Utr'taku"
+#addname "Urshanabi"
+#addname "Utu"
+#addname "Chnun"
+#addname "Shu"
+#addname "Atummu"
+#addname "Shuddu"
+#addname "Chnunud"
+#addname "Inutho"
+#addname "Muh Thulan"
+#addname "Hafeg Klah"
+#addname "Haon Door"
+#addname "Voor Mifadreth"
+#addname "Ahtun"
+#addname "L'ghux"
+#addname "Shuggoron"
+#addname "Nihargon"
+#addname "Nigofa"
+#addname "Ornomchoa"
+#addname "O'ngai"
+#addname "Otyg"
+#addname "Phetolith"
+#addname "Quahilutu"
+#addname "Qithas"
+#addname "Ra'ntegoth"
+#addname "Rlimshaikoth"
+#addname "Kosuth"
+#addname "Askuth"
+#addname "Gorenigrai"
+#addname "Sabish kaah"
+#addname "Shogothpwsha"
+#addname "Shigmel"
+#addname "Shuul Goo"
+#addname "Tuumhaa"
+#addname "T'yogh"
+#addname "Ubb"
+#addname "Ubosathlah"
+#addname "Loighor"
+#addname "Uzxuldrom"
+#addname "Uoth"
+#addname "N'gai"
+#addname "Xzadak Glah"
+#addname "Xlikloth"
+#addname "Yad Taddag"
+#addname "Yadnif Goo"
+#addname "Yakt Hoob"
+#addname "Yighaa"
+#addname "Y Golonak"
+#addname "Yothoohonde"
+#addname "Yikilth"
+#addname "Ylid Heem"
+#addname "Y'm'bif"
+#addname "Ytt Ogtta"
+#addname "Ygh'yha"
+#addname "Zothaqqoth"
+#addname "Zagauba"
+#addname "Zukkekon"
+#addname "Ahu'yhuala"
+#addname "Aklozabaoth"
+#addname "Afoomza"
+#addname "Atlanasha"
+#addname "Baalboo"
+#addname "Baalzagoth"
+#addname "Baot Zugogg"
+#addname "Femauth"
+#addname "Geth"
+#addname "Shaugnaar Faug"
+#addname "Buggshaff"
+#addname "Zhigg"
+#addname "Kauthuga"
+#addname "Cax Kulu"
+#addname "Cyaega"
+#addname "Zynotoggly"
+#addname "Do Na"
+#end
+
+#selectnametype 118
+#addname "Ceres"
+#addname "Camena"
+#addname "Camilla"
+#addname "Circe"
+#addname "Compitalia"
+#addname "Consualia"
+#addname "Cymodoce"
+#addname "Deiphobe"
+#addname "Deiopeia"
+#addname "Dido"
+#addname "Epione"
+#addname "Luna"
+#addname "Flora"
+#addname "Floralia"
+#addname "Minerva"
+#addname "Diana"
+#addname "Invicta"
+#addname "Hersilia"
+#addname "Horatia"
+#addname "Hygeia"
+#addname "Juno"
+#addname "Juturna"
+#addname "Laurentia"
+#addname "Lavinia"
+#addname "Lucina"
+#addname "Matronalia"
+#addname "Pomona"
+#addname "Proserpina"
+#addname "Saturnalia"
+#addname "Tarpeia"
+#addname "Tullia"
+#end
+
+#selectnametype 119
+#addname "Anne"
+#addname "Alalia"
+#addname "Aoila"
+#addname "Ainene"
+#addname "Ananni"
+#addname "Aceline"
+#addname "Alia"
+#addname "Anuvade"
+#addname "Andenia"
+#addname "Armia"
+#addname "Ami"
+#addname "Amia"
+#addname "Belia"
+#addname "Bina"
+#addname "Birge"
+#addname "Bethred"
+#addname "Barana"
+#addname "Brethen"
+#addname "Benna"
+#addname "Borsippa"
+#addname "Cylia"
+#addname "Cany"
+#addname "Celia"
+#addname "Cimebeth"
+#addname "Corna"
+#addname "Coma"
+#addname "Cantaelle"
+#addname "Camelle"
+#addname "Cyca"
+#addname "Denethia"
+#addname "Denise"
+#addname "Deri"
+#addname "Dadagyne"
+#addname "Denya"
+#addname "Edna"
+#addname "Emila"
+#addname "Evita"
+#addname "Egira"
+#addname "Ea"
+#addname "Eata"
+#addname "Fyllia"
+#addname "Fanelle"
+#addname "Faella"
+#addname "Firatha"
+#addname "Fai"
+#addname "Gade"
+#addname "Gy"
+#addname "Goethia"
+#addname "Gina"
+#addname "Gaiale"
+#addname "Gillie"
+#addname "Hyrca"
+#addname "Hedna"
+#addname "Hathe"
+#addname "Hecata"
+#addname "Hera"
+#addname "Herathie"
+#addname "Iamatelle"
+#addname "Inevita"
+#addname "Inibelle"
+#addname "Irma"
+#addname "Ita Kama"
+#addname "Iwo Ama"
+#addname "Janie"
+#addname "Jeshta"
+#addname "Juna"
+#addname "Joriedne"
+#addname "Jormunda"
+#addname "Jora"
+#addname "Jarith"
+#addname "Kara"
+#addname "Kathlen"
+#addname "Kacara"
+#addname "Kora"
+#addname "Kantena"
+#addname "Kirsie"
+#addname "Kiriata"
+#addname "Lydia"
+#addname "Laia"
+#addname "Leda"
+#addname "Lepia"
+#addname "Lene"
+#addname "Lobo Mater"
+#addname "Latena"
+#addname "Matrona"
+#addname "Mama Gaga"
+#addname "Mimi"
+#addname "Moriana"
+#addname "Meliath"
+#addname "Mirmicona"
+#addname "Madema"
+#addname "Mania"
+#addname "Nin"
+#addname "Nenola"
+#addname "Nashtharte"
+#addname "Neddina"
+#addname "Nora"
+#addname "Nacille"
+#addname "Odia"
+#addname "Oravea"
+#addname "Orata"
+#addname "Obine"
+#addname "Ovine"
+#addname "Penetheste"
+#addname "Penelia"
+#addname "Petrona"
+#addname "Palasi"
+#addname "Pladina"
+#addname "Polli"
+#addname "Quenlyn"
+#addname "Queste"
+#addname "Qilla"
+#addname "Qya"
+#addname "Radia"
+#addname "Ravena"
+#addname "Ryda"
+#addname "Rammatifone"
+#addname "Rellandela"
+#addname "Rilba"
+#addname "Sena"
+#addname "Silian"
+#addname "Silena"
+#addname "Sethenana"
+#addname "Salicara"
+#addname "Sade"
+#addname "Stine"
+#addname "Trana"
+#addname "Triala"
+#addname "Triviste"
+#addname "Tetrala"
+#addname "Tella"
+#addname "Tolma"
+#addname "Titico"
+#addname "Ulma"
+#addname "Undia"
+#addname "Umbra"
+#addname "Ura"
+#addname "Uvini"
+#addname "Volde"
+#addname "Veca"
+#addname "Vicasa"
+#addname "Vilmia"
+#addname "Venna"
+#addname "Varabeth"
+#addname "Wintha"
+#addname "Wyglia"
+#addname "Wanda"
+#addname "Wea"
+#addname "Ylde"
+#addname "Yna"
+#addname "Yriella"
+#addname "Ylvethe"
+#addname "Ylla"
+#addname "Kiriata"
+#addname "Norven"
+#addname "Trana"
+#addname "Volde"
+#addname "Ylde"
+#addname "Mina"
+#addname "Ladiena"
+#addname "Ulga"
+#end
+
+#selectnametype 120
+#addname "Aia"
+#addname "Allatu"
+#addname "Asariluhi"
+#addname "Ashera"
+#addname "Amama"
+#addname "Damgal Nanna"
+#addname "Damkina"
+#addname "Ereshkigalanna"
+#addname "Esagila"
+#addname "Geshtinanna"
+#addname "Inanna"
+#addname "Ishtar"
+#addname "Lilitu"
+#addname "Lamashtu"
+#addname "Lamassu"
+#addname "Melammu"
+#addname "Ninsaba"
+#addname "Ningirsu"
+#addname "Ningishzida"
+#addname "Ninhursag"
+#addname "Nininsina"
+#addname "Ninurta"
+#addname "Shala"
+#addname "Sin'liqi'unninni"
+#addname "Tashmeta"
+#addname "Uru'inimgena"
+#addname "Ushum'galkalamma"
+#addname "Ushum'galanna"
+#addname "Ziusudra"
+#end
+
+#selectnametype 121
+#addname "KanXi"
+#addname "Haoxian"
+#addname "Yazi"
+#addname "Baxia"
+#addname "Pulao"
+#addname "Bixi"
+#addname "Qiuniu"
+#addname "Suanmi"
+#addname "Jiaotu"
+#addname "Zong Dingbo"
+#addname "Mr. Tan"
+#addname "Dong Yong"
+#addname "Kui-xing"
+#addname "Lan Cai-he"
+#addname "Lao-jun"
+#addname "Lao-zi"
+#addname "Cai-shen"
+#addname "Chu Jiang"
+#addname "Da-yu"
+#addname "Di-cang"
+#addname "Di-guan"
+#addname "Di-ya"
+#addname "Tian-long"
+#addname "Wen Chang"
+#addname "Dong-yue da-di"
+#addname "Yu-huang"
+#addname "Er-lang"
+#addname "Fan-kui"
+#addname "Fei Lian"
+#addname "Feng Bo"
+#addname "Fu Xi"
+#addname "Fu-xing"
+#addname "Gao Yao"
+#addname "Gong Gong"
+#addname "Gou Mang"
+#addname "Guan-di"
+#addname "Guan-yin"
+#addname "Gun"
+#addname "Han"
+#addname "He Bo"
+#addname "Hou Ji"
+#addname "Hou Tu"
+#addname "How-chu"
+#addname "How-too"
+#addname "Hu Jing-de"
+#addname "Huang Fei-hu"
+#addname "Huang-lao"
+#addname "Huang-lao-jun"
+#addname "Jian Lao"
+#addname "Jin Jia"
+#addname "Lei-gong"
+#addname "Ling-bao tian-zong"
+#addname "Ling-guan"
+#addname "Liu Bei"
+#addname "Lu Ban"
+#addname "Lu-xing"
+#addname "Ma Wang"
+#addname "Ma-mian"
+#addname "Mo-hi-hai"
+#addname "Mu Gong"
+#addname "Mu-king"
+#addname "Niu Wang"
+#addname "Niu-you"
+#addname "Pa"
+#addname "Pa-cha"
+#addname "Pan-gu"
+#addname "Peng-zi"
+#addname "Qin-shu-pao"
+#addname "Ru Shou"
+#addname "Shen Yi"
+#addname "Shen-nung"
+#addname "Shou-lao"
+#addname "Shou-xing"
+#addname "Shui-guan"
+#addname "Shun"
+#addname "Si-ming"
+#addname "Song Di"
+#addname "Sun Hou-zi"
+#addname "Sun Wu-Kung"
+#addname "Sun-pi"
+#addname "Tai-sui-xing"
+#addname "Tai-yi"
+#addname "Tai-yue da-di"
+#addname "Tang"
+#addname "Tao-de tian-zong"
+#addname "Tian-guan"
+#addname "Tian-long"
+#addname "Tian-zong"
+#addname "Tu-di"
+#addname "Yang Jing"
+#addname "Yan-lo"
+#addname "Yao"
+#addname "Yao-shi"
+#addname "Yen-di"
+#addname "Yen-lo-wang"
+#addname "Yi-Ti"
+#addname "Yu"
+#addname "Yuan-shi tian-zong"
+#addname "Yu-huang"
+#addname "Yu-qiang"
+#addname "Zao-jun"
+#addname "Zhang Fei"
+#addname "Zhang Xian"
+#addname "Zhi Song-zi"
+#addname "Zhong kui"
+#addname "Zhong-kui"
+#addname "Zhu Rong"
+#addname "Zhu-yi"
+#addname "Zi-yu"
+#end
+
+#selectnametype 122
+#addname "Nüwa"
+#addname "Zhi-ni"
+#addname "Tian-mu"
+#addname "Tian Hou"
+#addname "Song-zi niang-niang"
+#addname "She-di"
+#addname "Ran-deng"
+#addname "Qi Gu-niang"
+#addname "Pan Jin Lian"
+#addname "Nü-gua"
+#addname "Lei-zi"
+#addname "Jian Di"
+#addname "Ji Nu"
+#addname "Heng O"
+#addname "Gong De Tian"
+#addname "Feng Po-po"
+#addname "Dou-mu"
+#addname "Chih Nu"
+#addname "Bixia Yuanjin"
+#addname "Ba"
+#addname "Sunü"
+#addname "Fufei"
+#addname "Momu"
+#addname "Cannü"
+#addname "Chang'e"
+#addname "Yaoji"
+#addname "Meixi"
+#addname "Daji"
+#addname "Fuhao"
+#addname "Baosi"
+#addname "Zhinü"
+#addname "Fan"
+#addname "Du Sanniang"
+#addname "Madam Li"
+#addname "Consort Xia"
+#addname "Nüxu"
+#addname "Nie Ying"
+#addname "Ruji"
+#addname "Xishi"
+#addname "Dongshi"
+#addname "Wuyan"
+#addname "Zhuang Tianshi"
+#addname "Mengmu"
+#addname "Zhuangzhi"
+#addname "Meng Jiangnü"
+#addname "Yu Meiren"
+#addname "Meng Guang"
+#addname "Lü"
+#addname "Zhuo Wenjun"
+#addname "Wang Zhaojun"
+#addname "Zhao Feiyan"
+#addname "Ban Jieyu"
+#addname "Ban Zhao"
+#addname "Lady Li"
+#addname "Wusun"
+#addname "Cai Wenji"
+#addname "Ma Gu"
+#addname "Jia Wu"
+#addname "Luofu"
+#addname "Diaochan"
+#addname "Zhen"
+#addname "Baogu"
+#addname "Wei"
+#addname "Green Pearl"
+#addname "Xie Daoyun"
+#addname "Lechang"
+#addname "Su Xiaoxiao"
+#addname "Lady Huarui"
+#addname "Zhu Yingtai"
+#addname "Hua Mulan"
+#addname "Wencheng"
+#addname "Shangguan Wan'er"
+#addname "Qianniang"
+#addname "Yang Guifei"
+#addname "Eifei"
+#addname "Willow"
+#addname "Gongsun Daniang"
+#addname "Li Wa"
+#addname "Hongxian"
+#addname "Yingying"
+#addname "Du Qiuniang"
+#addname "Xue Tao"
+#addname "Yu Xuanji"
+#addname "Guan Panpan"
+#addname "Jiao Guiying"
+#addname "Nie Yinniang"
+#addname "Tan Wenwan"
+#addname "Han Cuipin"
+#addname "She Saihua"
+#addname "Mu Guiying"
+#addname "Yue"
+#addname "Liang Hongyu"
+#addname "Su Xiaomei"
+#addname "Li Qingzhao"
+#addname "Zhu Shuzhen"
+#addname "Sun Daoxuan"
+#addname "Chen Ruolan"
+#addname "Shentu Xiguang"
+#addname "Huang Daopo"
+#addname "Qi"
+#addname "Ma"
+#addname "Du Shiniang"
+#addname "Li Xiangjun"
+#addname "Chen Yuanyuan"
+#addname "Eighth Madam"
+#addname "Qin Liangyu"
+#addname "Xiangfei"
+#addname "Wu Zao"
+#addname "Wang Cong'er"
+#addname "Zhou Xiuying"
+#addname "Lin Hei'er"
+#addname "Hong Xuanjiao"
+#addname "Zhenfei"
+#addname "Sai Jinhua"
+#addname "Qiujin"
+#end
+
+#selectnametype 123
+#addname "Acolmiztli"
+#addname "Acolnahuacatl"
+#addname "Amimitl"
+#addname "Atl"
+#addname "Atlaua"
+#addname "Camaxtli"
+#addname "Centeotl"
+#addname "Chalchiuhtlatonal"
+#addname "Chalchiutotolin"
+#addname "Chalmecatl"
+#addname "Chicomexochtli"
+#addname "Chiconahuiehecatl"
+#addname "Chimalpopoca"
+#addname "Cipactli"
+#addname "Citlalatonac"
+#addname "Cochimetl"
+#addname "Ehecatl"
+#addname "Huehueteotl"
+#addname "Huehue Zaca"
+#addname "Huitzilopochtli"
+#addname "Huitzilihuitl"
+#addname "Huitzilatzin"
+#addname "Itzlacoliuhque"
+#addname "Itzli"
+#addname "Ixtlilton"
+#addname "Macuilxochitl"
+#addname "Metztli"
+#addname "Mextli"
+#addname "Mictlantecuhtli"
+#addname "Mixcoatl"
+#addname "Moctezuma"
+#addname "Nanauatzin"
+#addname "Omacatl"
+#addname "Ometecuhtli"
+#addname "Ometeotl"
+#addname "Opochtli"
+#addname "Patecatl"
+#addname "Paynal"
+#addname "Popocatepetl"
+#addname "Quetzalcoatl"
+#addname "Tecciztecatl"
+#addname "Teoyaomqui"
+#addname "Tepeyollotl"
+#addname "Tezcatlipoca"
+#addname "Tizoc"
+#addname "Titlacauan"
+#addname "Tlahuixcalpantecuhtli"
+#addname "Tlaloc"
+#addname "Tlacaelel"
+#addname "Tlacacuitlahuatzin"
+#addname "Tlaltecuhtli"
+#addname "Tloquenahuaque"
+#addname "Tonacatecuhtli"
+#addname "Tonatiuh"
+#addname "Tzontemoc"
+#addname "Ueuecoyotl"
+#addname "Xipe Totec"
+#addname "Xiuhcoatl"
+#addname "Xiuhtecuhtli"
+#addname "Xochipilli"
+#addname "Xocotl"
+#addname "Xolotl"
+#addname "Yacatecuhtli"
+#end
+
+#selectnametype 124
+#addname "Acolmiztlia"
+#addname "Acuecucyoticihuati"
+#addname "Atlacamani"
+#addname "Atlacoya"
+#addname "Atlatonin"
+#addname "Xilonen"
+#addname "Xochiquetzal"
+#addname "Ayauhteotl"
+#addname "Chalchiuhtlicue"
+#addname "Chalmecacihuilt"
+#addname "Chantico"
+#addname "Chicomecoatl"
+#addname "Chiconahui"
+#addname "Cihuacoatl"
+#addname "Citlalicue"
+#addname "Ciucoatl"
+#addname "Coatlicue"
+#addname "Coyolxauhqui"
+#addname "Huixtocihuatl"
+#addname "Iztaccihuatl"
+#addname "Malinalxochi"
+#addname "Mayahuel"
+#addname "Miyahuaxochtzin"
+#addname "Omecihuatl"
+#addname "Teteoinnan"
+#addname "Tlazolteotl"
+#addname "Tonacacihuatl"
+#addname "Tonantzin"
+#end
+
+#selectnametype 125
+#addname "Adong"
+#addname "Aisha"
+#addname "Amina"
+#addname "Andaiye"
+#addname "Asha"
+#addname "Ashia"
+#addname "Asya"
+#addname "Ayan"
+#addname "Ayanna"
+#addname "Aziza"
+#addname "Bahati"
+#addname "Chauski"
+#addname "Chuike"
+#addname "Daib"
+#addname "Dalila"
+#addname "Damali"
+#addname "Deiriai"
+#addname "Deka"
+#addname "Ewunkie"
+#addname "Fujo"
+#addname "Gulai"
+#addname "Habiba"
+#addname "Hasina"
+#addname "Jaha"
+#addname "Jemila"
+#addname "Kalifa"
+#addname "Kariamu"
+#addname "Kenyetta"
+#addname "Kesi"
+#addname "Khatiti"
+#addname "Layla"
+#addname "Lulu"
+#addname "Mijiza"
+#addname "Mosi"
+#addname "Muga"
+#addname "Mukumtagara"
+#addname "Nadifa"
+#addname "Najuma"
+#addname "Njeri"
+#addname "Ngina"
+#addname "Pili"
+#addname "Rhamah"
+#addname "Sala"
+#addname "Shamfa"
+#addname "Uwingabiye"
+#addname "Wambui"
+#addname "Abla"
+#addname "Adhra"
+#addname "Adila"
+#addname "Adimu"
+#addname "Adin"
+#addname "Adla"
+#addname "Afaafa"
+#addname "Afiya"
+#addname "Afua"
+#addname "Ahadi"
+#addname "Aida"
+#addname "Ainra"
+#addname "Aisha"
+#addname "Ajia"
+#addname "Akilah"
+#addname "Akili"
+#addname "Aliya"
+#addname "Almasi"
+#addname "Amali"
+#addname "Amana"
+#addname "Amani"
+#addname "Amaziah"
+#addname "Amina"
+#addname "Aminah"
+#addname "Aminia"
+#addname "Aminifu"
+#addname "Amira"
+#addname "Amne"
+#addname "Aneesa"
+#addname "Angavu"
+#addname "Anisa"
+#addname "Anisun"
+#addname "Arafa"
+#addname "Arifa"
+#addname "Arusi"
+#addname "Asali"
+#addname "Asatira"
+#addname "Asha"
+#addname "Ashura"
+#addname "Asilia"
+#addname "Asiya"
+#addname "Asma"
+#addname "Asmahani"
+#addname "Asumini"
+#addname "Asya"
+#addname "Atiya"
+#addname "Awena"
+#addname "Aza"
+#addname "Aziza"
+#addname "Badriya"
+#addname "Bahati"
+#addname "Bahiya"
+#addname "Barika"
+#addname "Barke"
+#addname "Basha"
+#addname "Bashaam"
+#addname "Bashira"
+#addname "Basma"
+#addname "Batuuli"
+#addname "Baya"
+#addname "Bayyina"
+#addname "Bebi"
+#addname "Bia"
+#addname "Bimkubwa"
+#addname "Bimnono"
+#addname "Binti"
+#addname "Binty"
+#addname "Bishara"
+#addname "Bitisururu"
+#addname "Bititi"
+#addname "Biubwa"
+#addname "Buqisi"
+#addname "Busara"
+#addname "Bushira"
+#addname "Chane"
+#addname "Chausiku"
+#addname "Chiku"
+#addname "Chuki"
+#addname "Dada"
+#addname "Dafina"
+#addname "Dakima"
+#addname "Dalali"
+#addname "Dalila"
+#addname "Dalili"
+#addname "Damisi"
+#addname "Dawa"
+#addname "Dhakiya"
+#addname "Dhambizao"
+#addname "Dhuriya"
+#addname "Dodo"
+#addname "Doli"
+#addname "Duni"
+#addname "Durah"
+#addname "Durra"
+#addname "Eidi"
+#addname "Eshe"
+#addname "Etana"
+#addname "Fadhila"
+#addname "Fadhili"
+#addname "Fadiya"
+#addname "Fahari"
+#addname "Fahima"
+#addname "Faida"
+#addname "Faika"
+#addname "Faiza"
+#addname "Faizah"
+#addname "Fakhta"
+#addname "Fanaka"
+#addname "Fanikia"
+#addname "Fara"
+#addname "Faraja"
+#addname "Farashuu"
+#addname "Farida"
+#addname "Farisi"
+#addname "Fasaha"
+#addname "Fauziya"
+#addname "Feruzi"
+#addname "Fidela"
+#addname "Fila"
+#addname "Firdawsi"
+#addname "Firyali"
+#addname "Freya"
+#addname "Fujo"
+#addname "Furaha"
+#addname "Ghalyela"
+#addname "Ghanima"
+#addname "Gharibuu"
+#addname "Gheche"
+#addname "Ghinjo"
+#addname "Ghipe"
+#addname "Hadhi"
+#addname "Hadiya"
+#addname "Hafsa"
+#addname "Haiba"
+#addname "Haifa"
+#addname "Hakika"
+#addname "Hakima"
+#addname "Hala"
+#addname "Hanaa"
+#addname "Hanifa"
+#addname "Hanuni"
+#addname "Haoniyao"
+#addname "Hartha"
+#addname "Harusi"
+#addname "Hasanati"
+#addname "Hashiki"
+#addname "Hasnaa"
+#addname "Hawa"
+#addname "Hawla"
+#addname "Hazina"
+#addname "Hediye"
+#addname "Hiari"
+#addname "Hiba"
+#addname "Hidaya"
+#addname "Himidi"
+#addname "Hisani"
+#addname "Hissa"
+#addname "Hobo"
+#addname "Huba"
+#addname "Hudham"
+#addname "Hun"
+#addname "Huruma"
+#addname "Hususa"
+#addname "Idihi"
+#addname "Iffat"
+#addname "Ilham"
+#addname "Imani"
+#addname "Imara"
+#addname "Inaya"
+#addname "Intisar"
+#addname "Itidal"
+#addname "Ituri"
+#addname "Jabulile"
+#addname "Jaha"
+#addname "Jahi"
+#addname "Jahia"
+#addname "Jali"
+#addname "Jamala"
+#addname "Jamila"
+#addname "Jana"
+#addname "Jani"
+#addname "Janna"
+#addname "Jasira"
+#addname "Jauhar"
+#addname "Jina"
+#addname "Jinaki"
+#addname "Jioni"
+#addname "Jirani"
+#addname "Johari"
+#addname "Jokha"
+#addname "Joldia"
+#addname "Judhar"
+#addname "Jumu"
+#addname "Juwayria"
+#addname "Juza"
+#addname "Kalorii"
+#addname "Kamaria"
+#addname "Kamili"
+#addname "Kamilya"
+#addname "Kanai"
+#addname "Kanzi"
+#addname "Karama"
+#addname "Karamu"
+#addname "Karima"
+#addname "Karimu"
+#addname "Kashore"
+#addname "Kauthar"
+#addname "Kawaida"
+#addname "Kazija"
+#addname "Kesi"
+#addname "Khanfura"
+#addname "Khola"
+#addname "Kiaga"
+#addname "Kianga"
+#addname "Kibali"
+#addname "Kibibe"
+#addname "Kibibi"
+#addname "Kiburi"
+#addname "Kidawa"
+#addname "Kidhi"
+#addname "Kifimbo"
+#addname "Kijakazi"
+#addname "Kijicho"
+#addname "Kike"
+#addname "Kimacho"
+#addname "Kinaya"
+#addname "Kinuka"
+#addname "Kinyemi"
+#addname "Kioja"
+#addname "Kipendo"
+#addname "Kipenzi"
+#addname "Kipusa"
+#addname "Kirafiki"
+#addname "Kirimu"
+#addname "Kisasa"
+#addname "Kisima"
+#addname "Kitambi"
+#addname "Kito"
+#addname "Kitoto"
+#addname "Kizo"
+#addname "Kujuwakwangu"
+#addname "Kulula"
+#addname "Kupenda"
+#addname "Kurwa"
+#addname "Kwasi"
+#addname "Kyesi"
+#addname "Lakeisha"
+#addname "Laketa"
+#addname "Lalamika"
+#addname "Latifu"
+#addname "Layla"
+#addname "Lela"
+#addname "Lila"
+#addname "Liwaza"
+#addname "Lubaya"
+#addname "Lulu"
+#addname "Machui"
+#addname "Madaha"
+#addname "Madiha"
+#addname "Mafunda"
+#addname "Mahbuba"
+#addname "Mahfudha"
+#addname "Maijani"
+#addname "Maimuna"
+#addname "Maisha"
+#addname "Makini"
+#addname "Malaika"
+#addname "Malenga"
+#addname "Mali"
+#addname "Malia"
+#addname "Maliha"
+#addname "Malika"
+#addname "Malkia"
+#addname "Maluum"
+#addname "Manga"
+#addname "Mapenzi"
+#addname "Marahaba"
+#addname "Marashi"
+#addname "Mariamu"
+#addname "Marini"
+#addname "Marjani"
+#addname "Masara"
+#addname "Mashavu"
+#addname "Masika"
+#addname "Masiya"
+#addname "Maskini"
+#addname "Mastura"
+#addname "Mathna"
+#addname "Matuko"
+#addname "Maua"
+#addname "Maulidi"
+#addname "Mayasa"
+#addname "Maysara"
+#addname "Mchumba"
+#addname "Mema"
+#addname "Menikaliya"
+#addname "Mera"
+#addname "Meyya"
+#addname "Meyye"
+#addname "Mgeni"
+#addname "Midra"
+#addname "Midwa"
+#addname "Mila"
+#addname "Milele"
+#addname "Mimi"
+#addname "Mkali"
+#addname "Mkiyoni"
+#addname "Mkweli"
+#addname "Mmanga"
+#addname "Monima"
+#addname "Mooza"
+#addname "Mosi"
+#addname "Moza"
+#addname "Mpenzi"
+#addname "Mpingo"
+#addname "Mrashi"
+#addname "Msaada"
+#addname "Mshinda"
+#addname "Msiba"
+#addname "Mtakuja"
+#addname "Mtakwishayenu"
+#addname "Mtama"
+#addname "Mtumwa"
+#addname "Mtupeni"
+#addname "Mua"
+#addname "Mufiida"
+#addname "Muhima"
+#addname "Muna"
+#addname "Munira"
+#addname "Murua"
+#addname "Muslima"
+#addname "Mvita"
+#addname "Mwajuma"
+#addname "Mwaka"
+#addname "Mwakhamisi"
+#addname "Mwamini"
+#addname "Mwammoja"
+#addname "Mwana"
+#addname "Mwanabaraka"
+#addname "Mwanadongo"
+#addname "Mwanahamisi"
+#addname "Mwanahawa"
+#addname "Mwanaidi"
+#addname "Mwanajuma"
+#addname "Mwanakhamisi"
+#addname "Mwanakheri"
+#addname "Mwanakweli"
+#addname "Mwanamize"
+#addname "Mwanatabu"
+#addname "Mwari"
+#addname "Mwasaa"
+#addname "Mwasham"
+#addname "Mwatabu"
+#addname "Mwema"
+#addname "Mwezi"
+#addname "Mzuri"
+#addname "Nabila"
+#addname "Nadhari"
+#addname "Nadhiri"
+#addname "Nadia"
+#addname "Nadiya"
+#addname "Nadra"
+#addname "Nafaika"
+#addname "Nafisika"
+#addname "Naima"
+#addname "Najah"
+#addname "Nakawa"
+#addname "Nana"
+#addname "Nasra"
+#addname "Natasa"
+#addname "Nathari"
+#addname "Nawiri"
+#addname "Nayfa"
+#addname "Nayla"
+#addname "Naysun"
+#addname "Nazura"
+#addname "Ndege"
+#addname "Neema"
+#addname "Neemaka"
+#addname "Nia"
+#addname "Niara"
+#addname "Nishati"
+#addname "Noni"
+#addname "Nteremezi"
+#addname "Nuaha"
+#addname "Nufaika"
+#addname "Nuha"
+#addname "Nunuu"
+#addname "Nura"
+#addname "Nurisha"
+#addname "Nuru"
+#addname "Nusurika"
+#addname "Nyemya"
+#addname "Nyimbo"
+#addname "Nyofu"
+#addname "Paka"
+#addname "Panya"
+#addname "Pasua"
+#addname "Patanisha"
+#addname "Penda"
+#addname "Pendahui"
+#addname "Pendo"
+#addname "Penzima"
+#addname "Pili"
+#addname "Pulika"
+#addname "Raawiya"
+#addname "Rabuwa"
+#addname "Raha"
+#addname "Rahma"
+#addname "Raisa"
+#addname "Ramla"
+#addname "Randa"
+#addname "Rayha"
+#addname "Rayyan"
+#addname "Razina"
+#addname "Raziya"
+#addname "Reem"
+#addname "Rehani"
+#addname "Rehema"
+#addname "Remba"
+#addname "Ridhaa"
+#addname "Ridhisha"
+#addname "Rim"
+#addname "Riziki"
+#addname "Rozi"
+#addname "Rukiya"
+#addname "Ruqaya"
+#addname "Rusha"
+#addname "Ruzuna"
+#addname "Saada"
+#addname "Sabra"
+#addname "Sadaka"
+#addname "Sadiki"
+#addname "Sadikifu"
+#addname "Sadikika"
+#addname "Safaa"
+#addname "Safi"
+#addname "Saiwa"
+#addname "Sakina"
+#addname "Sala"
+#addname "Samiha"
+#addname "Sanaa"
+#addname "Sanura"
+#addname "Sebtuu"
+#addname "Sema"
+#addname "Semeni"
+#addname "Shamba"
+#addname "Shamim"
+#addname "Shangilia"
+#addname "Shangwe"
+#addname "Shani"
+#addname "Sharifa"
+#addname "Shawana"
+#addname "Shemsa"
+#addname "Sheshe"
+#addname "Shiba"
+#addname "Shida"
+#addname "Shifaa"
+#addname "Shirika"
+#addname "Shukura"
+#addname "Shukuru"
+#addname "Shuruku"
+#addname "Sibadili"
+#addname "Sihaba"
+#addname "Siham"
+#addname "Sijaona"
+#addname "Sikia"
+#addname "Sikitu"
+#addname "Sikudhani"
+#addname "Silika"
+#addname "Simba"
+#addname "Siri"
+#addname "Sisya"
+#addname "Siti"
+#addname "Siwatu"
+#addname "Siwazuri"
+#addname "Siyasa"
+#addname "Somo"
+#addname "Somoe"
+#addname "Staajabu"
+#addname "Stara"
+#addname "Subira"
+#addname "Suhaila"
+#addname "Suluma"
+#addname "Taabu"
+#addname "Tabasamu"
+#addname "Tabia"
+#addname "Talha"
+#addname "Tamaa"
+#addname "Tamasha"
+#addname "Tambika"
+#addname "Tambuzi"
+#addname "Tamu"
+#addname "Tanabahi"
+#addname "Tanashati"
+#addname "Tarajika"
+#addname "Tata"
+#addname "Tathinina"
+#addname "Tatu"
+#addname "Tausi"
+#addname "Tawa"
+#addname "Tefle"
+#addname "Terema"
+#addname "Time"
+#addname "Tisha"
+#addname "Tosha"
+#addname "Touree"
+#addname "Tufaha"
+#addname "Tuhfa"
+#addname "Tumaini"
+#addname "Tuni"
+#addname "Tunu"
+#addname "Turkiya"
+#addname "Uboro"
+#addname "Uheri"
+#addname "Uhuru"
+#addname "Ujamaa"
+#addname "Ukarimu"
+#addname "Unguja"
+#addname "Uzima"
+#addname "Uzuri"
+#addname "Wanda"
+#addname "Waseme"
+#addname "Wema"
+#addname "Wepesi"
+#addname "Wimbo"
+#addname "Winda"
+#addname "Wingu"
+#addname "Yakini"
+#addname "Yasmin"
+#addname "Yatima"
+#addname "Yumna"
+#addname "Yusra"
+#addname "Zaafarani"
+#addname "Zaituni"
+#addname "Zalika"
+#addname "Zalira"
+#addname "Zamani"
+#addname "Zamzam"
+#addname "Zari"
+#addname "Zarina"
+#addname "Zawadi"
+#addname "Zaynab"
+#addname "Zena"
+#addname "Zenabu"
+#addname "Zera"
+#addname "Zeyana"
+#addname "Zina"
+#addname "Zubayda"
+#addname "Zubeda"
+#addname "Zuhura"
+#addname "Zulaykha"
+#addname "Zulekha"
+#addname "Zuri"
+#addname "Zuwena"
+#addname "Zwena"
+#end
+
+#selectnametype 126
+#addname "Abeid"
+#addname "Alimayu"
+#addname "Ato"
+#addname "Ayele"
+#addname "Babu"
+#addname "Bhoke"
+#addname "Bomani"
+#addname "Cacanja"
+#addname "Dedan"
+#addname "Erasto"
+#addname "Idi"
+#addname "Jaramogi"
+#addname "Jojo"
+#addname "Kagale"
+#addname "Kahero"
+#addname "Kamau"
+#addname "Kambui"
+#addname "Karanja"
+#addname "Karume"
+#addname "Kassahun"
+#addname "Kenyatta"
+#addname "Ketema"
+#addname "Kiambu"
+#addname "Macharia"
+#addname "Machumu"
+#addname "Makonnen"
+#addname "Mbiyu"
+#addname "Mganga"
+#addname "Mombera"
+#addname "Mugeta"
+#addname "Mugo"
+#addname "Mwando"
+#addname "Mwangi"
+#addname "Nadif"
+#addname "Ngugi"
+#addname "Njonjo"
+#addname "Oboi"
+#addname "Odai"
+#addname "Oding"
+#addname "Oginga"
+#addname "Okang"
+#addname "Sentwaki"
+#addname "Pili"
+#addname "Walialu"
+#addname "Wimana"
+#addname "Aaron"
+#addname "Abasi"
+#addname "Abedi"
+#addname "Abuu"
+#addname "Adili"
+#addname "Adnan"
+#addname "Aharon"
+#addname "Ainran"
+#addname "Akili"
+#addname "Alute"
+#addname "Amaad"
+#addname "Amani"
+#addname "Amar"
+#addname "Ambar"
+#addname "Ame"
+#addname "Amini"
+#addname "Amiri"
+#addname "Antar"
+#addname "Ashur"
+#addname "Asimwe"
+#addname "Athumani"
+#addname "Atif"
+#addname "Ayubu"
+#addname "Azaan"
+#addname "Baakir"
+#addname "Baba"
+#addname "Babechi"
+#addname "Babu"
+#addname "Badawi"
+#addname "Badilini"
+#addname "Badrani"
+#addname "Badru"
+#addname "Baha"
+#addname "Baingana"
+#addname "Baka"
+#addname "Bakari"
+#addname "Baraka"
+#addname "Bashiri"
+#addname "Bausi"
+#addname "Bavual"
+#addname "Boma"
+#addname "Boraafya"
+#addname "Burhani"
+#addname "Bushiri"
+#addname "Bwana"
+#addname "Chacha"
+#addname "Chaga"
+#addname "Chandu"
+#addname "Chane"
+#addname "Chega"
+#addname "Cheja"
+#addname "Chimalsi"
+#addname "Dada"
+#addname "Dahoma"
+#addname "Dajan"
+#addname "Daktari"
+#addname "Damu"
+#addname "Daraja"
+#addname "Darweshi"
+#addname "Dau"
+#addname "Daud"
+#addname "Daudi"
+#addname "Dhoruba"
+#addname "Dini"
+#addname "Dogo"
+#addname "Dumisha"
+#addname "Ekevu"
+#addname "Elewa"
+#addname "Elimu"
+#addname "Erevu"
+#addname "Fadhili"
+#addname "Fikirini"
+#addname "Fogo"
+#addname "Fuad"
+#addname "Fumo"
+#addname "Fumu"
+#addname "Fundikira"
+#addname "Funga"
+#addname "Furaha"
+#addname "Ghali"
+#addname "Ghalib"
+#addname "Ghaniy"
+#addname "Gharib"
+#addname "Gheilani"
+#addname "Ghofiri"
+#addname "Gyasi"
+#addname "Haoniyao"
+#addname "Harambee"
+#addname "Harun"
+#addname "Hasan"
+#addname "Hauli"
+#addname "Hekima"
+#addname "Heri"
+#addname "Heshima"
+#addname "Heshimu"
+#addname "Hodari"
+#addname "Humud"
+#addname "Idi"
+#addname "Idriis"
+#addname "Imara"
+#addname "Imarika"
+#addname "Isiyoshindika"
+#addname "Jaha"
+#addname "Jahi"
+#addname "Jahina"
+#addname "Jauhar"
+#addname "Jawaad"
+#addname "Jecha"
+#addname "Jefar"
+#addname "Jela"
+#addname "Jemadari"
+#addname "Jenebi"
+#addname "Jengo"
+#addname "Jitu"
+#addname "Jitujeusi"
+#addname "Juma"
+#addname "Jumaane"
+#addname "Jumange"
+#addname "Jumanne"
+#addname "Jumba"
+#addname "Jumbe"
+#addname "Juta"
+#addname "Kabaila"
+#addname "Kabona"
+#addname "Kafara"
+#addname "Kalamka"
+#addname "Kalunga"
+#addname "Kame"
+#addname "Kamili"
+#addname "Kanaifu"
+#addname "Kandoro"
+#addname "Kani"
+#addname "Karama"
+#addname "Kareem"
+#addname "Karim"
+#addname "Karume"
+#addname "Kasim"
+#addname "Kasisi"
+#addname "Kesi"
+#addname "Keto"
+#addname "Khairi"
+#addname "Khalafu"
+#addname "Khalfan"
+#addname "Khalfani"
+#addname "Khalifa"
+#addname "Khamisi"
+#addname "Khatibu"
+#addname "Khelefu"
+#addname "Kheri"
+#addname "Khiari"
+#addname "Kiango"
+#addname "Kibasila"
+#addname "Kibasira"
+#addname "Kibwana"
+#addname "Kibwe"
+#addname "Kifimbo"
+#addname "Kigoma"
+#addname "Kijana"
+#addname "Kijani"
+#addname "Kimameta"
+#addname "Kimweri"
+#addname "Kimya"
+#addname "Kinda"
+#addname "Kinjeketile"
+#addname "Kinjikitile"
+#addname "Kiongozi"
+#addname "Kipanga"
+#addname "Kisasi"
+#addname "Kito"
+#addname "Kitunda"
+#addname "Kitunzi"
+#addname "Kitwana"
+#addname "Kiume"
+#addname "Kombo"
+#addname "Komboa"
+#addname "Kondo"
+#addname "Kongoresi"
+#addname "Kristo"
+#addname "Kudumu"
+#addname "Kukimbia"
+#addname "Kumbufu"
+#addname "Kumbuka"
+#addname "Kunjufu"
+#addname "Kuumba"
+#addname "Kuweza"
+#addname "Kwagalana"
+#addname "Kwanza"
+#addname "Kweli"
+#addname "Liyongo"
+#addname "Lumumba"
+#addname "Maabade"
+#addname "Maamuni"
+#addname "Maarifa"
+#addname "Mabruke"
+#addname "Machano"
+#addname "Machungwa"
+#addname "Machupa"
+#addname "Madhubuti"
+#addname "Magoma"
+#addname "Mahbub"
+#addname "Makame"
+#addname "Makamu"
+#addname "Makini"
+#addname "Makungu"
+#addname "Makwetu"
+#addname "Mambo"
+#addname "Manani"
+#addname "Mandara"
+#addname "Maneno"
+#addname "Manzi"
+#addname "Manzili"
+#addname "Mapute"
+#addname "Marzuku"
+#addname "Masamaha"
+#addname "Mashal"
+#addname "Mashuhuri"
+#addname "Masilahi"
+#addname "Maskini"
+#addname "Masud"
+#addname "Matari"
+#addname "Matojo"
+#addname "Matwa"
+#addname "Maulana"
+#addname "Maulidi"
+#addname "Mbaarak"
+#addname "Mbamba"
+#addname "Mbaruku"
+#addname "Mbaya"
+#addname "Mbingu"
+#addname "Mbishiri"
+#addname "Mbita"
+#addname "Mbwana"
+#addname "Mchawi"
+#addname "Mcheshi"
+#addname "Mdahoma"
+#addname "Mdogo"
+#addname "Mfaki"
+#addname "Mfalme"
+#addname "Mgeni"
+#addname "Mhina"
+#addname "Milina"
+#addname "Mirza"
+#addname "Miujiza"
+#addname "Mjibu"
+#addname "Mjima"
+#addname "Mkadam"
+#addname "Mkamba"
+#addname "Mkristo"
+#addname "Mkubwa"
+#addname "Mkufunzi"
+#addname "Mkwasi"
+#addname "Mosi"
+#addname "Mrehe"
+#addname "Mrekhe"
+#addname "Msamaki"
+#addname "Msanaa"
+#addname "Msemaji"
+#addname "Mshabaha"
+#addname "Mshangama"
+#addname "Mshindi"
+#addname "Mtaalamu"
+#addname "Mtafiti"
+#addname "Mtangulizi"
+#addname "Mtavila"
+#addname "Mtawa"
+#addname "Mtembei"
+#addname "Mteremeshi"
+#addname "Mteremo"
+#addname "Mteule"
+#addname "Mtoro"
+#addname "Mtoto"
+#addname "Mtulivu"
+#addname "Mtume"
+#addname "Mtumwa"
+#addname "Mubaadar"
+#addname "Mudrik"
+#addname "Muhashaham"
+#addname "Muhashmy"
+#addname "Muhidini"
+#addname "Muhsin"
+#addname "Muhyiddin"
+#addname "Mukhtaar"
+#addname "Mundhir"
+#addname "Mungu"
+#addname "Munim"
+#addname "Munir"
+#addname "Muombwa"
+#addname "Murtada"
+#addname "Muyaka"
+#addname "Mwaka"
+#addname "Mwalimu"
+#addname "Mwanga"
+#addname "Mwanza"
+#addname "Mwapacha"
+#addname "Mwinyi"
+#addname "Mwinyimadi"
+#addname "Mwita"
+#addname "Mzale"
+#addname "Mzee"
+#addname "Nguvumali"
+#addname "Niamoja"
+#addname "Nuru"
+#addname "Nyuni"
+#addname "Pandu"
+#addname "Penha"
+#addname "Pili"
+#addname "Pongwa"
+#addname "Popo"
+#addname "Pupa"
+#addname "Rajabu"
+#addname "Rehani"
+#addname "Rejalla"
+#addname "Ridha"
+#addname "Ridhwani"
+#addname "Rifaa"
+#addname "Roho"
+#addname "Rubama"
+#addname "Rubanza"
+#addname "Rumaliza"
+#addname "Saad"
+#addname "Saami"
+#addname "Saburi"
+#addname "Sadiki"
+#addname "Saeed"
+#addname "Safwani"
+#addname "Saghiri"
+#addname "Sahalani"
+#addname "Said"
+#addname "Sarhaan"
+#addname "Sefu"
+#addname "Seif"
+#addname "Shaabani"
+#addname "Shaaboni"
+#addname "Shahaab"
+#addname "Shahidi"
+#addname "Shakwe"
+#addname "Shamakani"
+#addname "Shambe"
+#addname "Shawn"
+#addname "Shazidi"
+#addname "Shibisha"
+#addname "Shinda"
+#addname "Shinuni"
+#addname "Shomari"
+#addname "Shujaa"
+#addname "Shukrani"
+#addname "Sifa"
+#addname "Simai"
+#addname "Simba"
+#addname "Sinaan"
+#addname "Siwatu"
+#addname "Siwazuri"
+#addname "Songoro"
+#addname "Stima"
+#addname "Sudi"
+#addname "Suhuba"
+#addname "Sultaan"
+#addname "Sulubu"
+#addname "Suluhu"
+#addname "Sumai"
+#addname "Sumait"
+#addname "Suwedi"
+#addname "Suwesi"
+#addname "Takata"
+#addname "Takatifu"
+#addname "Taki"
+#addname "Thani"
+#addname "Thuweni"
+#addname "Tiifu"
+#addname "Tindo"
+#addname "Tukufu"
+#addname "Tulivu"
+#addname "Tumaini"
+#addname "Tumbo"
+#addname "Ubaya"
+#addname "Ubora"
+#addname "Ubwa"
+#addname "Ufanisi"
+#addname "Uhuru"
+#addname "Uki"
+#addname "Ukurugenzi"
+#addname "Vuai"
+#addname "Vual"
+#addname "Wakili"
+#addname "Waziri"
+#addname "Yaani"
+#addname "Yahya"
+#addname "Yakubu"
+#addname "Yasini"
+#addname "Yungkee"
+#addname "Zaki"
+#addname "Zakwani"
+#addname "Zalika"
+#addname "Zamoyoni"
+#addname "Zende"
+#addname "Zuber"
+#addname "Zuberi"
+#addname "Zuher"
+#addname "Zuhri"
+#addname "Zuri"
+#end
+
+#selectnametype 129
+#addname "Aanand"
+#addname "Abala"
+#addname "Abayankara"
+#addname "Abhasa"
+#addname "Abhay"
+#addname "Abhayananda"
+#addname "Abhayda"
+#addname "Abhi"
+#addname "Abhidi"
+#addname "Abhidyu"
+#addname "Abhihava"
+#addname "Abhijata"
+#addname "Abhijeet"
+#addname "Abhijit"
+#addname "Abhik"
+#addname "Abhikama"
+#addname "Abhikhyana"
+#addname "Abhimand"
+#addname "Abhimanyusuta"
+#addname "Abhimoda"
+#addname "Abhinanda"
+#addname "Abhinandin"
+#addname "Abhinav"
+#addname "Abhinavan"
+#addname "Abhinivesa"
+#addname "Abhipuspa"
+#addname "Abhiraja"
+#addname "Abhiraksita"
+#addname "Abhirastra"
+#addname "Abhiru"
+#addname "Abhiruci"
+#addname "Abhisala"
+#addname "Abhiseka"
+#addname "Abhisikta"
+#addname "Abhisri"
+#addname "Abhisumat"
+#addname "Abhivada"
+#addname "Abhiviraja"
+#addname "Abhra"
+#addname "Abhramu"
+#addname "Abhranta"
+#addname "Abhrottha"
+#addname "Abhyavarsini"
+#addname "Abir"
+#addname "Acalapati"
+#addname "Acananas"
+#addname "Acchoda"
+#addname "Achyuta"
+#addname "Acyutayu"
+#addname "Adarsa"
+#addname "Addana"
+#addname "Adesa"
+#addname "Adharma"
+#addname "Adhiksita"
+#addname "Adhinatha"
+#addname "Adhira"
+#addname "Adhirohna"
+#addname "Adhisa"
+#addname "Adhita"
+#addname "Adhrgu"
+#addname "Adhvara"
+#addname "Adhyapayana"
+#addname "Adidaitya"
+#addname "Adimula"
+#addname "Adinatha"
+#addname "Adiraja"
+#addname "Adisa"
+#addname "Adisisira"
+#addname "Adit"
+#addname "Aditeya"
+#addname "Adityagarbha"
+#addname "Adityaprabha"
+#addname "Adityavarman"
+#addname "Adityesa"
+#addname "Adra"
+#addname "Adrisa"
+#addname "Adura"
+#addname "Advaya"
+#addname "Advika"
+#addname "Adyota"
+#addname "Agama"
+#addname "Agasti"
+#addname "Agendra"
+#addname "Agharika"
+#addname "Agnibha"
+#addname "Agnibija"
+#addname "Agnidhraka"
+#addname "Agnikana"
+#addname "Agnima"
+#addname "Agnimukha"
+#addname "Agnira"
+#addname "Agniruha"
+#addname "Agnisinha"
+#addname "Agnisri"
+#addname "Agnistuta"
+#addname "Agnivamin"
+#addname "Agnivesa"
+#addname "Agnpurna"
+#addname "Agraja"
+#addname "Agrayana"
+#addname "Agreni"
+#addname "Ahamyati"
+#addname "Ahankara"
+#addname "Ahannatha"
+#addname "Ahar"
+#addname "Ahavaniya"
+#addname "Ahika"
+#addname "Ahima"
+#addname "Ahirbudhnya"
+#addname "Ahobala"
+#addname "Ahuka"
+#addname "Ahuta"
+#addname "Aila"
+#addname "Aitareya"
+#addname "Ajakara"
+#addname "Ajakava"
+#addname "Ajamukha"
+#addname "Ajanidha"
+#addname "Ajapala"
+#addname "Ajata"
+#addname "Ajay"
+#addname "Ajina"
+#addname "Ajira"
+#addname "Ajitabha"
+#addname "Ajitatman"
+#addname "Ajyapa"
+#addname "Akalmasa"
+#addname "Akama"
+#addname "Akampita"
+#addname "Akantaka"
+#addname "Akarkkara"
+#addname "Akarsita"
+#addname "Akasacamasa"
+#addname "Akhanda"
+#addname "Akhila"
+#addname "Akhilendra"
+#addname "Akila"
+#addname "Akra"
+#addname "Akrodhana"
+#addname "Akrsasasva"
+#addname "Akrti"
+#addname "Aksaja"
+#addname "Aksakumara"
+#addname "Aksata"
+#addname "Akshay"
+#addname "Aksina"
+#addname "Aksobhya"
+#addname "Akuntha"
+#addname "Akupya"
+#addname "Alagesa"
+#addname "Alaghu"
+#addname "Alia"
+#addname "Alinda"
+#addname "Alobhin"
+#addname "Aloka"
+#addname "Alopa"
+#addname "Alugu"
+#addname "Amahatha"
+#addname "Amaka"
+#addname "Amalgarbha"
+#addname "Amana"
+#addname "Amanda"
+#addname "Amandip"
+#addname "Amanjot"
+#addname "Amanthu"
+#addname "Amar"
+#addname "Amaradatta"
+#addname "Amarajota"
+#addname "Amaranjaya"
+#addname "Amarasinha"
+#addname "Amardita"
+#addname "Amarika"
+#addname "Amarjit"
+#addname "Amaropama"
+#addname "Amarsa"
+#addname "Amaruka"
+#addname "Amaruttama"
+#addname "Amava"
+#addname "Amaya"
+#addname "Ambastha"
+#addname "Ambava"
+#addname "Ambhoja"
+#addname "Ambhrna"
+#addname "Ambudhara"
+#addname "Ambunidhi"
+#addname "Amburuha"
+#addname "Amir"
+#addname "Amisa"
+#addname "Amit"
+#addname "Amitabh"
+#addname "Amitagati"
+#addname "Amitan"
+#addname "Amitatman"
+#addname "Amitava"
+#addname "Amitayus"
+#addname "Amitkumar"
+#addname "Amitrajit"
+#addname "Amod"
+#addname "Amodin"
+#addname "Amoghadarsin"
+#addname "Amoghavarsa"
+#addname "Amol"
+#addname "Amolak"
+#addname "Amrapali"
+#addname "Amrish"
+#addname "Amrita"
+#addname "Amritaka"
+#addname "Amritamaya"
+#addname "Amritaprabha"
+#addname "Amul"
+#addname "Amura"
+#addname "Amurtarayas"
+#addname "Anabhisastra"
+#addname "Anadinava"
+#addname "Anaghadru"
+#addname "Anama"
+#addname "Anamiva"
+#addname "Anana"
+#addname "Ananda"
+#addname "Anandam"
+#addname "Anandaprabha"
+#addname "Anandasagara"
+#addname "Anandbhuj"
+#addname "Anandin"
+#addname "Anangada"
+#addname "Anangapida"
+#addname "Ananta"
+#addname "Anantaguna"
+#addname "Anantarama"
+#addname "Ananth"
+#addname "Anantharaman"
+#addname "Anapana"
+#addname "Anargha"
+#addname "Anarvva"
+#addname "Anasin"
+#addname "Anasvan"
+#addname "Anava"
+#addname "Anavatapta"
+#addname "Andaka"
+#addname "Andhraka"
+#addname "Anenasya"
+#addname "Angabhu"
+#addname "Anganemi"
+#addname "Angaristha"
+#addname "Angavaha"
+#addname "Angirasa"
+#addname "Angusa"
+#addname "Aniha"
+#addname "Anikavidarana"
+#addname "Anil"
+#addname "Anilkumar"
+#addname "Animesa"
+#addname "Aninata"
+#addname "Anirbana"
+#addname "Aniruddha"
+#addname "Anirudha"
+#addname "Anita"
+#addname "Anitha"
+#addname "Anjali"
+#addname "Anjan"
+#addname "Anjanaparvan"
+#addname "Anjuli"
+#addname "Ankur"
+#addname "Annadeva"
+#addname "Anniruddha"
+#addname "Anouar"
+#addname "Ansa"
+#addname "Ansala"
+#addname "Ansarin"
+#addname "Ansin"
+#addname "Ansu"
+#addname "Ansuka"
+#addname "Antara"
+#addname "Antariksa"
+#addname "Antarvedi"
+#addname "Antideva"
+#addname "Anubhaj"
+#addname "Anubhavya"
+#addname "Anucakra"
+#addname "Anudatta"
+#addname "Anudruhu"
+#addname "Anudvega"
+#addname "Anugya"
+#addname "Anuhlada"
+#addname "Anuhu"
+#addname "Anuja"
+#addname "Anuka"
+#addname "Anukasa"
+#addname "Anumita"
+#addname "Anuna"
+#addname "Anupa"
+#addname "Anupama"
+#addname "Anuprabha"
+#addname "Anuprya"
+#addname "Anurag"
+#addname "Anuragin"
+#addname "Anurakt"
+#addname "Anuratha"
+#addname "Anuruc"
+#addname "Anurudha"
+#addname "Anusikha"
+#addname "Anusrtasravas"
+#addname "Anutosa"
+#addname "Anuvas"
+#addname "Anuvitta"
+#addname "Anuyatri"
+#addname "Anynaga"
+#addname "Apa"
+#addname "Apaghana"
+#addname "Apalala"
+#addname "Apamanyu"
+#addname "Apantaratamas"
+#addname "Aparahnaka"
+#addname "Aparimeya"
+#addname "Aparita"
+#addname "Aparthiva"
+#addname "Apaspati"
+#addname "Apasyu"
+#addname "Apiguna"
+#addname "Apindra"
+#addname "Appayyadiksita"
+#addname "Apramaya"
+#addname "Apratima"
+#addname "Apratirupa"
+#addname "Apratiyodhin"
+#addname "Apta"
+#addname "Apupa"
+#addname "Ara"
+#addname "Aracana"
+#addname "Araga"
+#addname "Arana"
+#addname "Aranya"
+#addname "Arapacana"
+#addname "Aravinda"
+#addname "Aravini"
+#addname "Arca"
+#addname "Arcika"
+#addname "Ardra"
+#addname "Arganjan"
+#addname "Arhana"
+#addname "Arhattama"
+#addname "Arijit"
+#addname "Arimejaya"
+#addname "Arisudana"
+#addname "Arja"
+#addname "Arjava"
+#addname "Arjun"
+#addname "Arka"
+#addname "Arkapriya"
+#addname "Arkasmani"
+#addname "Arkkaparna"
+#addname "Arnava"
+#addname "Aroon"
+#addname "Arsabhi"
+#addname "Arsya"
+#addname "Arthadarsin"
+#addname "Arthvana"
+#addname "Artiman"
+#addname "Arujas"
+#addname "Arulamani"
+#addname "Arumugham"
+#addname "Aruna"
+#addname "Arunansu"
+#addname "Arunodaya"
+#addname "Arunsu"
+#addname "Arva"
+#addname "Arvavasu"
+#addname "Arvinder"
+#addname "Arvuda"
+#addname "Aryabhata"
+#addname "Aryaki"
+#addname "Aryaman"
+#addname "Aryamisra"
+#addname "Aryasva"
+#addname "Aryika"
+#addname "Asamati"
+#addname "Asanga"
+#addname "Asankita"
+#addname "Asavaha"
+#addname "Asecana"
+#addname "Ashe"
+#addname "Ashok"
+#addname "Ashokvardan"
+#addname "Ashutosh"
+#addname "Ashwin"
+#addname "Asikrishna"
+#addname "Asim"
+#addname "Asiman"
+#addname "Asita"
+#addname "Asitadhanva"
+#addname "Asitasman"
+#addname "Asketa"
+#addname "Askran"
+#addname "Asma"
+#addname "Asmita"
+#addname "Asokavardhana"
+#addname "Asravya"
+#addname "Asruta"
+#addname "Astajihva"
+#addname "Astaratha"
+#addname "Astika"
+#addname "Asu"
+#addname "Asuman"
+#addname "Asuratarajasa"
+#addname "Asuri"
+#addname "Asvajit"
+#addname "Asvala"
+#addname "Asvamedhadatta"
+#addname "Asvasena"
+#addname "Asvathama"
+#addname "Asvatthi"
+#addname "Asvavan"
+#addname "Asvini"
+#addname "Atal"
+#addname "Atamas"
+#addname "Atasa"
+#addname "Ati"
+#addname "Atidatta"
+#addname "Atihata"
+#addname "Atimanita"
+#addname "Atimaya"
+#addname "Atirathra"
+#addname "Atisa"
+#addname "Atisanda"
+#addname "Atish"
+#addname "Atisringa"
+#addname "Atisvarya"
+#addname "Atiya"
+#addname "Atmajnana"
+#addname "Atmavira"
+#addname "Attana"
+#addname "Atulavikrama"
+#addname "Atyaditya"
+#addname "Atyarati"
+#addname "Aurasa"
+#addname "Autathya"
+#addname "Auttanapadi"
+#addname "Avacuda"
+#addname "Avadha"
+#addname "Avajaya"
+#addname "Avajyuta"
+#addname "Avanibhusana"
+#addname "Avanikanta"
+#addname "Avanindra"
+#addname "Avanisvara"
+#addname "Avantivarman"
+#addname "Avaraja"
+#addname "Avarodha"
+#addname "Avas"
+#addname "Avasathya"
+#addname "Avicala"
+#addname "Avidosa"
+#addname "Avijit"
+#addname "Avijna"
+#addname "Avika"
+#addname "Aviklava"
+#addname "Avilasa"
+#addname "Avinash"
+#addname "Avinidevas"
+#addname "Avipriya"
+#addname "Avirama"
+#addname "Avisa"
+#addname "Avitr"
+#addname "Avrita"
+#addname "Ayasmaya"
+#addname "Ayobahu"
+#addname "Ayuddha"
+#addname "Ayuja"
+#addname "Ayustejas"
+#addname "Ayutanayi"
+#addname "Ayutayu"
+#addname "Babhri"
+#addname "Babhruloman"
+#addname "Babila"
+#addname "Babul"
+#addname "Bachil"
+#addname "Badara"
+#addname "Badarisaila"
+#addname "Baddharajya"
+#addname "Baduli"
+#addname "Bahudanti"
+#addname "Bahudhara"
+#addname "Bahuhiranya"
+#addname "Bahuketu"
+#addname "Bahuli"
+#addname "Bahumulya"
+#addname "Bahuprada"
+#addname "Bahurai"
+#addname "Bahusasta"
+#addname "Bahusruta"
+#addname "Bahuvata"
+#addname "Bahuvidha"
+#addname "Bahuvirya"
+#addname "Baira"
+#addname "Bakasahavasin"
+#addname "Bakthavatachalam"
+#addname "Bakulesa"
+#addname "Bala"
+#addname "Balacakravartin"
+#addname "Balachander"
+#addname "Baladeya"
+#addname "Baladhi"
+#addname "Baladitya"
+#addname "Balagra"
+#addname "Balajestha"
+#addname "Balakrishna"
+#addname "Balakrit"
+#addname "Balamada"
+#addname "Balamitra"
+#addname "Balamukhya"
+#addname "Balanika"
+#addname "Balaprana"
+#addname "Balasaheb"
+#addname "Balasena"
+#addname "Balastha"
+#addname "Balasubramanian"
+#addname "Balavana"
+#addname "Balavata"
+#addname "Balavira"
+#addname "Balayogi"
+#addname "Balayus"
+#addname "Balesa"
+#addname "Bali"
+#addname "Balik"
+#addname "Balistha"
+#addname "Balram"
+#addname "Balula"
+#addname "Balya"
+#addname "Banasankara"
+#addname "Bandhujivin"
+#addname "Bandin"
+#addname "Banhiman"
+#addname "Bani"
+#addname "Bansika"
+#addname "Bappa"
+#addname "Bapu"
+#addname "Barhacandra"
+#addname "Barhana"
+#addname "Barhapida"
+#addname "Barhisapala"
+#addname "Barkha"
+#addname "Baru"
+#addname "Baryai"
+#addname "Basanta"
+#addname "Baskarapriya"
+#addname "Baspa"
+#addname "Bater"
+#addname "Beanta"
+#addname "Beman"
+#addname "Beniprasada"
+#addname "Bhadrabahu"
+#addname "Bhadradeha"
+#addname "Bhadrakumbha"
+#addname "Bhadranukha"
+#addname "Bhadrasena"
+#addname "Bhadrasravas"
+#addname "Bhadrasva"
+#addname "Bhadratmaja"
+#addname "Bhadrayu"
+#addname "Bhadriraju"
+#addname "Bhagaratha"
+#addname "Bhagavana"
+#addname "Bhagavatiprasada"
+#addname "Bhagwandas"
+#addname "Bhagwati"
+#addname "Bhairavasin"
+#addname "Bhakta"
+#addname "Bhalachandra"
+#addname "Bhamaha"
+#addname "Bhandila"
+#addname "Bhanucandra"
+#addname "Bhanuvarman"
+#addname "Bharat"
+#addname "Bharath"
+#addname "Bharathi"
+#addname "Bharava"
+#addname "Bhargavaka"
+#addname "Bhari"
+#addname "Bharti"
+#addname "Bharupa"
+#addname "Bhaskar"
+#addname "Bhasker"
+#addname "Bhattara"
+#addname "Bhatti"
+#addname "Bhaumiratna"
+#addname "Bhavananda"
+#addname "Bhavasagara"
+#addname "Bhavesh"
+#addname "Bhavin"
+#addname "Bhavitra"
+#addname "Bhavya"
+#addname "Bhiksita"
+#addname "Bhim"
+#addname "Bhimagupta"
+#addname "Bhimapala"
+#addname "Bhiru"
+#addname "Bhonesa"
+#addname "Bhrajata"
+#addname "Bhrajistha"
+#addname "Bhudev"
+#addname "Bhudhana"
+#addname "Bhujavirya"
+#addname "Bhuman"
+#addname "Bhumija"
+#addname "Bhumindra"
+#addname "Bhumitra"
+#addname "Bhunayaka"
+#addname "Bhupa"
+#addname "Bhupen"
+#addname "Bhuridaksina"
+#addname "Bhurikirti"
+#addname "Bhusana"
+#addname "Bhusnu"
+#addname "Bhutasantapana"
+#addname "Bhutivardhana"
+#addname "Bhuvan"
+#addname "Bhuvanadaka"
+#addname "Bhuvanapati"
+#addname "Bhuvanesh"
+#addname "Bhuvaneswary"
+#addname "Bhuyan"
+#addname "Bidyut"
+#addname "Bikas"
+#addname "Billa"
+#addname "Bimbaka"
+#addname "Bimbita"
+#addname "Bindu"
+#addname "Binota"
+#addname "Bipin"
+#addname "Bipula"
+#addname "Birendra"
+#addname "Birju"
+#addname "Bishen"
+#addname "Bishwamba"
+#addname "Biswanath"
+#addname "Bjupinder"
+#addname "Bo"
+#addname "Bodhamaya"
+#addname "Bodhinmanas"
+#addname "Bokil"
+#addname "Bommareddy"
+#addname "Borah"
+#addname "Brahmabhuti"
+#addname "Brahmadhara"
+#addname "Brahmagandha"
+#addname "Brahmagiri"
+#addname "Brahmakunda"
+#addname "Brahmananda"
+#addname "Brahmaprakasa"
+#addname "Brahmarasa"
+#addname "Brahmavarman"
+#addname "Brahmayasas"
+#addname "Brahme"
+#addname "Brajamani"
+#addname "Brhadkaya"
+#addname "Brhat"
+#addname "Bubhutsu"
+#addname "Buddhadeva"
+#addname "Buddhagupta"
+#addname "Buddhapala"
+#addname "Buddharaja"
+#addname "Buddhiprabha"
+#addname "Buddu"
+#addname "Budharatna"
+#addname "Bukka"
+#addname "Cachari"
+#addname "Caitya"
+#addname "Cakaraka"
+#addname "Cakravata"
+#addname "Caksusya"
+#addname "Camaraja"
+#addname "Camikara"
+#addname "Campeya"
+#addname "Cancu"
+#addname "Candakirana"
+#addname "Candidasa"
+#addname "Candrabhana"
+#addname "Candrabhuti"
+#addname "Candradipa"
+#addname "Candragomin"
+#addname "Candrakesa"
+#addname "Candramanek"
+#addname "Candramohan"
+#addname "Candranibha"
+#addname "Candraprabhava"
+#addname "Candrasman"
+#addname "Candravallabha"
+#addname "Candrin"
+#addname "Canga"
+#addname "Caranadasa"
+#addname "Carudatta"
+#addname "Carusara"
+#addname "Catura"
+#addname "Cetas"
+#addname "Chabila"
+#addname "Chajju"
+#addname "Chandan"
+#addname "Chandrakant"
+#addname "Chatravati"
+#addname "Chavillakara"
+#addname "Chirag"
+#addname "Chuttur"
+#addname "Cidananda"
+#addname "Cidrupa"
+#addname "Cidvilasa"
+#addname "Cikita"
+#addname "Ciman"
+#addname "Cintaratna"
+#addname "Cirajusa"
+#addname "Cirayu"
+#addname "Citapati"
+#addname "Citrakantha"
+#addname "Citravasu"
+#addname "Cittabhoga"
+#addname "Cittaprabha"
+#addname "Cittaranjana"
+#addname "Cittin"
+#addname "Civarin"
+#addname "Cudakarana"
+#addname "Cunanda"
+#addname "Dabhiti"
+#addname "Dahanavardhana"
+#addname "Daksapati"
+#addname "Daksha"
+#addname "Daladhisvara"
+#addname "Dalamodaka"
+#addname "Dalijit"
+#addname "Damati"
+#addname "Damodar"
+#addname "Damodaran"
+#addname "Danasagara"
+#addname "Dandaka"
+#addname "Dandasena"
+#addname "Dandavirya"
+#addname "Dara"
+#addname "Darbhi"
+#addname "Darsana"
+#addname "Daruna"
+#addname "Das"
+#addname "Dasadyu"
+#addname "Dasaketu"
+#addname "Dasmata"
+#addname "Dasura"
+#addname "Dattadatta"
+#addname "Dattra"
+#addname "Daulat"
+#addname "Davindar"
+#addname "Dayada"
+#addname "Dayanita"
+#addname "Dayarama"
+#addname "Dayavira"
+#addname "Debabrata"
+#addname "Debaprosad"
+#addname "Debashish"
+#addname "Debtosh"
+#addname "Deepkaran"
+#addname "Deepti"
+#addname "Dehesvara"
+#addname "Deodan"
+#addname "Desaraj"
+#addname "Dev"
+#addname "Devamaya"
+#addname "Devanabha"
+#addname "Devanand"
+#addname "Devanayaka"
+#addname "Devanna"
+#addname "Devanucara"
+#addname "Devapalita"
+#addname "Devapuspa"
+#addname "Devarama"
+#addname "Devarcaka"
+#addname "Devarpana"
+#addname "Devasakha"
+#addname "Devasativa"
+#addname "Devasilpa"
+#addname "Devasista"
+#addname "Devasru"
+#addname "Devasura"
+#addname "Devavadha"
+#addname "Devavesman"
+#addname "Devavid"
+#addname "Devayasas"
+#addname "Devender"
+#addname "Devesita"
+#addname "Devidasa"
+#addname "Devin"
+#addname "Deviprasad"
+#addname "Devya"
+#addname "Dhanajita"
+#addname "Dhanapala"
+#addname "Dhandapani"
+#addname "Dharabhuja"
+#addname "Dharamsi"
+#addname "Dhareshwar"
+#addname "Dharmacara"
+#addname "Dharmadeva"
+#addname "Dharmaghosa"
+#addname "Dharmamitra"
+#addname "Dharman"
+#addname "Dharmapala"
+#addname "Dharmasarathi"
+#addname "Dharmasindhu"
+#addname "Dharmavarna"
+#addname "Dharmayasas"
+#addname "Dharmendra"
+#addname "Dharmistha"
+#addname "Dhavak"
+#addname "Dhavalacandra"
+#addname "Dhavita"
+#addname "Dhillip"
+#addname "Dhircetas"
+#addname "Dhritiman"
+#addname "Dhrsni"
+#addname "Dhrtadaksa"
+#addname "Dhrtaraja"
+#addname "Dhruvasva"
+#addname "Dhuna"
+#addname "Dhuninatha"
+#addname "Dhupala"
+#addname "Dhvanamodin"
+#addname "Dhyanayogi"
+#addname "Dibag"
+#addname "Didyu"
+#addname "Digjaya"
+#addname "Diksin"
+#addname "Dilip"
+#addname "Dindayala"
+#addname "Dipa"
+#addname "Dipankura"
+#addname "Dipin"
+#addname "Diptavirya"
+#addname "Dirghadarsana"
+#addname "Ditaujas"
+#addname "Divekar"
+#addname "Divigamana"
+#addname "Diviksaya"
+#addname "Divya"
+#addname "Divyadarsana"
+#addname "Divyaprabhava"
+#addname "Doki"
+#addname "Dorai"
+#addname "Doraiswamy"
+#addname "Drdhaksa"
+#addname "Drdharuci"
+#addname "Dridhabuddhi"
+#addname "Drsika"
+#addname "Drstavirya"
+#addname "Duddu"
+#addname "Dulala"
+#addname "Dulicandra"
+#addname "Durdamana"
+#addname "Durgadatta"
+#addname "Durlabha"
+#addname "Durvartu"
+#addname "Dvarakadasa"
+#addname "Dvimurdhan"
+#addname "Dyudhaman"
+#addname "Dyuksa"
+#addname "Dyutita"
+#addname "Edhas"
+#addname "Edhita"
+#addname "Ekabandhu"
+#addname "Ekada"
+#addname "Ekagra"
+#addname "Ekaja"
+#addname "Ekala"
+#addname "Ekanatha"
+#addname "Ekantin"
+#addname "Ekasarga"
+#addname "Ekatala"
+#addname "Ekayana"
+#addname "Ekayastika"
+#addname "Ekdak"
+#addname "Ekta"
+#addname "Elu"
+#addname "Esana"
+#addname "Esita"
+#addname "Evavada"
+#addname "Gaganecara"
+#addname "Gandhesa"
+#addname "Ganeshram"
+#addname "Ganin"
+#addname "Ganpat"
+#addname "Gatha"
+#addname "Gaur"
+#addname "Gauraprabha"
+#addname "Gaurava"
+#addname "Gautam"
+#addname "Gayan"
+#addname "Gayaprasada"
+#addname "Ghanambu"
+#addname "Ghanshyam"
+#addname "Giani"
+#addname "Giribhu"
+#addname "Girijaprasada"
+#addname "Gita"
+#addname "Gobind"
+#addname "Gogana"
+#addname "Golaki"
+#addname "Goman"
+#addname "Gopakumar"
+#addname "Gopaladasa"
+#addname "Gopalakrishnan"
+#addname "Gopalkrishna"
+#addname "Gopi"
+#addname "Gopila"
+#addname "Gopu"
+#addname "Gosalaka"
+#addname "Gotam"
+#addname "Govil"
+#addname "Govinda"
+#addname "Govindan"
+#addname "Govindarajulu"
+#addname "Grama"
+#addname "Gramapala"
+#addname "Gul"
+#addname "Gulyani"
+#addname "Gunadhya"
+#addname "Gunamaya"
+#addname "Gunasraja"
+#addname "Gunayukta"
+#addname "Gunidatta"
+#addname "Gurdip"
+#addname "Guru"
+#addname "Guruda"
+#addname "Gurudipa"
+#addname "Gurumita"
+#addname "Gurumurthi"
+#addname "Guruprasad"
+#addname "Gururajan"
+#addname "Gurusimran"
+#addname "Guruvayur"
+#addname "Gusana"
+#addname "Gyaneshwar"
+#addname "Haliksana"
+#addname "Hansaraja"
+#addname "Hanumant"
+#addname "Haran"
+#addname "Haranetra"
+#addname "Harasvarupa"
+#addname "Harbajan"
+#addname "Hardeep"
+#addname "Haria"
+#addname "Haridhana"
+#addname "Harija"
+#addname "Harikishan"
+#addname "Harinath"
+#addname "Hariraja"
+#addname "Harishkumar"
+#addname "Harjinder"
+#addname "Harmage"
+#addname "Harnish"
+#addname "Harosit"
+#addname "Harsala"
+#addname "Harsavardhana"
+#addname "Harsh"
+#addname "Harshal"
+#addname "Harsoda"
+#addname "Hasamukha"
+#addname "Hasta"
+#addname "Hatisa"
+#addname "Havaldar"
+#addname "Heli"
+#addname "Hema"
+#addname "Heman"
+#addname "Hemanth"
+#addname "Hima"
+#addname "Himavalluka"
+#addname "Himmat"
+#addname "Hinadosa"
+#addname "Hiralal"
+#addname "Hiren"
+#addname "Hiru"
+#addname "Hita"
+#addname "Hitesh"
+#addname "Honna"
+#addname "Hresa"
+#addname "Hridayaja"
+#addname "Hridayesa"
+#addname "Hukam"
+#addname "Hurditya"
+#addname "Idhma"
+#addname "Iksana"
+#addname "Ikvala"
+#addname "Ilacandra"
+#addname "Ilanko"
+#addname "Ili"
+#addname "Inan"
+#addname "Inderjit"
+#addname "Indrabala"
+#addname "Indraghosa"
+#addname "Indraja"
+#addname "Indrarajan"
+#addname "Indrasita"
+#addname "Indrasvat"
+#addname "Indrayan"
+#addname "Indrayava"
+#addname "Indumathy"
+#addname "Inganam"
+#addname "Iravan"
+#addname "Irimpu"
+#addname "Isanam"
+#addname "Isav"
+#addname "Ishao"
+#addname "Ismin"
+#addname "Istaka"
+#addname "Isvaracandra"
+#addname "Isvasa"
+#addname "Iyam"
+#addname "Jagacitra"
+#addname "Jagadananda"
+#addname "Jagadish"
+#addname "Jagan"
+#addname "Jagannathan"
+#addname "Jaganu"
+#addname "Jagara"
+#addname "Jagatipati"
+#addname "Jagatjiva"
+#addname "Jagatprakasa"
+#addname "Jagganathan"
+#addname "Jagjit"
+#addname "Jagnu"
+#addname "Jai"
+#addname "Jaidev"
+#addname "Jaidhvani"
+#addname "Jaighosa"
+#addname "Jaikirti"
+#addname "Jaimalla"
+#addname "Jaipida"
+#addname "Jairasa"
+#addname "Jaishankar"
+#addname "Jaisisa"
+#addname "Jaitanga"
+#addname "Jaivaha"
+#addname "Jaivata"
+#addname "Jaja"
+#addname "Jalada"
+#addname "Jalancala"
+#addname "Jalarka"
+#addname "Jambunathan"
+#addname "Jana"
+#addname "Janadhipa"
+#addname "Jananatha"
+#addname "Janapalaka"
+#addname "Janarajan"
+#addname "Janardhanan"
+#addname "Janaswami"
+#addname "Janendra"
+#addname "Jangi"
+#addname "Janita"
+#addname "Janu"
+#addname "Jasalina"
+#addname "Jasapala"
+#addname "Jasavanta"
+#addname "Jaswinder"
+#addname "Jatacira"
+#addname "Jatasaya"
+#addname "Jatin"
+#addname "Jatusthira"
+#addname "Javagal"
+#addname "Javeed"
+#addname "Jawahar"
+#addname "Jawaheer"
+#addname "Jaya"
+#addname "Jayachnadran"
+#addname "Jayakar"
+#addname "Jayakumar"
+#addname "Jayan"
+#addname "Jayanta"
+#addname "Jayanthi"
+#addname "Jayaraman"
+#addname "Jayashree"
+#addname "Jayasvamin"
+#addname "Jayin"
+#addname "Jaywant"
+#addname "Jeetender"
+#addname "Jenya"
+#addname "Jeyakesavan"
+#addname "Jhinka"
+#addname "Jinaduraja"
+#addname "Jinraj"
+#addname "Jita"
+#addname "Jitinder"
+#addname "Jitrindra"
+#addname "Jivabhuta"
+#addname "Jivana"
+#addname "Jivanatha"
+#addname "Jivaratna"
+#addname "Jiwani"
+#addname "Johar"
+#addname "Josita"
+#addname "Joyendu"
+#addname "Jugala"
+#addname "Jugnu"
+#addname "Juvas"
+#addname "Jvalanmani"
+#addname "Jyayas"
+#addname "Jyotin"
+#addname "Jyotiprakasa"
+#addname "Kacapa"
+#addname "Kacima"
+#addname "Kadambi"
+#addname "Kahola"
+#addname "Kaivalya"
+#addname "Kajjala"
+#addname "Kakila"
+#addname "Kakudman"
+#addname "Kala"
+#addname "Kalabhiti"
+#addname "Kalal"
+#addname "Kalamurti"
+#addname "Kalapriya"
+#addname "Kaldhuta"
+#addname "Kalhara"
+#addname "Kalidas"
+#addname "Kalila"
+#addname "Kallola"
+#addname "Kalpana"
+#addname "Kalpesa"
+#addname "Kalpita"
+#addname "Kalvik"
+#addname "Kalyan"
+#addname "Kalyanasundaram"
+#addname "Kalyanavata"
+#addname "Kamadev"
+#addname "Kamal"
+#addname "Kamalahasa"
+#addname "Kamalanayana"
+#addname "Kamalodaya"
+#addname "Kamarupa"
+#addname "Kamasrama"
+#addname "Kambadur"
+#addname "Kameswar"
+#addname "Kami"
+#addname "Kamlesh"
+#addname "Kanak"
+#addname "Kanakambujam"
+#addname "Kanakarasa"
+#addname "Kanala"
+#addname "Kancuka"
+#addname "Kandala"
+#addname "Kaninaka"
+#addname "Kanjavadana"
+#addname "Kankala"
+#addname "Kannan"
+#addname "Kanthamani"
+#addname "Kantida"
+#addname "Kanvala"
+#addname "Kanwal"
+#addname "Kapil"
+#addname "Kara"
+#addname "Karajala"
+#addname "Karan"
+#addname "Karanja"
+#addname "Karavinda"
+#addname "Karin"
+#addname "Karmacandra"
+#addname "Karmarkar"
+#addname "Karmatman"
+#addname "Karmendra"
+#addname "Karnaka"
+#addname "Karnikara"
+#addname "Karpuratilaka"
+#addname "Karthik"
+#addname "Kartikeya"
+#addname "Karunakara"
+#addname "Karunamoorthy"
+#addname "Kasara"
+#addname "Kashyap"
+#addname "Kasilingam"
+#addname "Kasinathan"
+#addname "Kataka"
+#addname "Katamaraja"
+#addname "Katriyar"
+#addname "Katumbi"
+#addname "Kavana"
+#addname "Kavibhusana"
+#addname "Kavita"
+#addname "Kerkhi"
+#addname "Ketana"
+#addname "Ketita"
+#addname "Ketubhuta"
+#addname "Kevalin"
+#addname "Keyur"
+#addname "Khamurti"
+#addname "Khanjana"
+#addname "Khatri"
+#addname "Khayali"
+#addname "Khettry"
+#addname "Khullana"
+#addname "Khusila"
+#addname "Khusmana"
+#addname "Kinjata"
+#addname "Kirba"
+#addname "Kirika"
+#addname "Kirit"
+#addname "Kirpal"
+#addname "Kirti"
+#addname "Kirtideva"
+#addname "Kirtimaya"
+#addname "Kishan"
+#addname "Kishor"
+#addname "Kisku"
+#addname "Kistikumara"
+#addname "Komala"
+#addname "Kotijit"
+#addname "Kotta"
+#addname "Kovida"
+#addname "Krantivira"
+#addname "Kratukarana"
+#addname "Kratupati"
+#addname "Kris"
+#addname "Krishan"
+#addname "Krishnakumar"
+#addname "Krishnamurthi"
+#addname "Krishnamy"
+#addname "Krishnaraju"
+#addname "Krishnaswamy"
+#addname "Krpana"
+#addname "Krpananda"
+#addname "Krsnakanta"
+#addname "Krsnika"
+#addname "Krtahasta"
+#addname "Krtalaksana"
+#addname "Krtsna"
+#addname "Krtya"
+#addname "Ksamabhuj"
+#addname "Ksamapati"
+#addname "Ksantu"
+#addname "Ksaya"
+#addname "Ksayata"
+#addname "Kshama"
+#addname "Ksipanu"
+#addname "Ksitendra"
+#addname "Ksitilavabhuj"
+#addname "Ksitindra"
+#addname "Ksitipuruhuta"
+#addname "Kuberabandhu"
+#addname "Kudhara"
+#addname "Kujapa"
+#addname "Kuladeva"
+#addname "Kuladipaka"
+#addname "Kulamani"
+#addname "Kulavira"
+#addname "Kuldip"
+#addname "Kulisaya"
+#addname "Kulvinder"
+#addname "Kumara"
+#addname "Kumaran"
+#addname "Kumaresan"
+#addname "Kundam"
+#addname "Kunjita"
+#addname "Kunsa"
+#addname "Kupati"
+#addname "Kurcika"
+#addname "Kuruntika"
+#addname "Kush"
+#addname "Kushwah"
+#addname "Kusumakar"
+#addname "Kusumasekhara"
+#addname "Kusumojjvala"
+#addname "Kutilagesa"
+#addname "Kuvalyesa"
+#addname "Lakshmanan"
+#addname "Lala"
+#addname "Laloo"
+#addname "Leil"
+#addname "Madanraj"
+#addname "Madhavan"
+#addname "Madhuveer"
+#addname "Mahesh"
+#addname "Maheswari"
+#addname "Malkiat"
+#addname "Manilal"
+#addname "Manjit"
+#addname "Manoja"
+#addname "Manooj"
+#addname "Massem"
+#addname "Milkesh"
+#addname "Mina"
+#addname "Mohana"
+#addname "Mohinder"
+#addname "Moosa"
+#addname "Mrinal"
+#addname "Mukul"
+#addname "Muralidhar"
+#addname "Muru"
+#addname "Nagendra"
+#addname "Nalin"
+#addname "Narain"
+#addname "Narayana"
+#addname "Naren"
+#addname "Naresh"
+#addname "Narottam"
+#addname "Nataraja"
+#addname "Natraj"
+#addname "Navin"
+#addname "Nayan"
+#addname "Nikhil"
+#addname "Nitya"
+#addname "Om"
+#addname "Pallab"
+#addname "Paramjit"
+#addname "Parasher"
+#addname "Parvathi"
+#addname "Peshora"
+#addname "Pirthee"
+#addname "Prabha"
+#addname "Prabhu"
+#addname "Prabhusha"
+#addname "Pradeep"
+#addname "Pramod"
+#addname "Pranav"
+#addname "Prasad"
+#addname "Prathapan"
+#addname "Prem"
+#addname "Premchand"
+#addname "Pururavas"
+#addname "Purushothaman"
+#addname "Radhakrish"
+#addname "Radhakrishnan"
+#addname "Raghavachary"
+#addname "Raghu"
+#addname "Raghuvir"
+#addname "Raivata"
+#addname "Rajam"
+#addname "Rajeeb"
+#addname "Rajendar"
+#addname "Rajendra"
+#addname "Rajeshh"
+#addname "Rajeshwari"
+#addname "Rajib"
+#addname "Rajindar"
+#addname "Rajjun"
+#addname "Rajluxmi"
+#addname "Rajneesh"
+#addname "Rajpal"
+#addname "Ram"
+#addname "Ramabhadran"
+#addname "Ramachandramurthy"
+#addname "Ramakant"
+#addname "Ramakota"
+#addname "Ramani"
+#addname "Ramesh"
+#addname "Rameshwar"
+#addname "Ramindar"
+#addname "Ramkrishna"
+#addname "Ramnath"
+#addname "Ranjit"
+#addname "Ras"
+#addname "Ratan"
+#addname "Ratilal"
+#addname "Ravichandran"
+#addname "Ravindiran"
+#addname "Ravindran"
+#addname "Renu"
+#addname "Romesh"
+#addname "Runjeet"
+#addname "Sabu"
+#addname "Sakar"
+#addname "Sanjeev"
+#addname "Sanjog"
+#addname "Sankar"
+#addname "Santu"
+#addname "Sarang"
+#addname "Sardar"
+#addname "Sateesh"
+#addname "Satish"
+#addname "Saurabh"
+#addname "Sefreen"
+#addname "Seth"
+#addname "Sewam"
+#addname "Sham"
+#addname "Shankar"
+#addname "Sharma"
+#addname "Sheetal"
+#addname "Shekhar"
+#addname "Shital"
+#addname "Shivaji"
+#addname "Shyam"
+#addname "Siddharth"
+#addname "Sitaram"
+#addname "Sohan"
+#addname "Sonali"
+#addname "Srikanta"
+#addname "Srinivas"
+#addname "Srinivasan"
+#addname "Subhadra"
+#addname "Subhash"
+#addname "Sudhin"
+#addname "Sumanjit"
+#addname "Sundara"
+#addname "Sunder"
+#addname "Sunil"
+#addname "Suseela"
+#addname "Susheela"
+#addname "Susila"
+#addname "Swapna"
+#addname "Taruna"
+#addname "Teja"
+#addname "Teji"
+#addname "Thakur"
+#addname "Tulsi"
+#addname "Vasan"
+#addname "Vasanta"
+#addname "Vasanthi"
+#addname "Vasu"
+#addname "Vedi"
+#addname "Venkatesh"
+#addname "Vidya"
+#addname "Vij"
+#addname "Vijay"
+#addname "Vikram"
+#addname "Vimal"
+#addname "Vinaya"
+#addname "Vinayaka"
+#addname "Vishnu"
+#addname "Vishwanata"
+#addname "Vishy"
+#addname "Yashpal"
+#addname "Yog"
+#end
+
+#selectnametype 130
+#addname "Aanchal"
+#addname "Aarthika"
+#addname "Aarti"
+#addname "Abburi"
+#addname "Abha"
+#addname "Abhati"
+#addname "Abheri"
+#addname "Abhibha"
+#addname "Abhidhya"
+#addname "Abhidya"
+#addname "Abhigurti"
+#addname "Abhijiti"
+#addname "Abhijna"
+#addname "Abhikya"
+#addname "Abhilasa"
+#addname "Abhilasin"
+#addname "Abhiniti"
+#addname "Abhipri"
+#addname "Abhipriti"
+#addname "Abhipuspam"
+#addname "Abhiraksa"
+#addname "Abhirati"
+#addname "Abhirka"
+#addname "Abhiruci"
+#addname "Abhisri"
+#addname "Abhisvara"
+#addname "Abhiti"
+#addname "Abhivadaka"
+#addname "Abhivibha"
+#addname "Abhraganga"
+#addname "Abhramu"
+#addname "Abhranti"
+#addname "Abhrayanti"
+#addname "Abhumukhi"
+#addname "Abja"
+#addname "Abjini"
+#addname "Aboli"
+#addname "Acala"
+#addname "Acaryanandana"
+#addname "Acaryaputra"
+#addname "Acaryatanaya"
+#addname "Acchoda"
+#addname "Achit"
+#addname "Acira"
+#addname "Adapa"
+#addname "Adarna"
+#addname "Adevi"
+#addname "Adhimuhya"
+#addname "Adhrsya"
+#addname "Adibuddha"
+#addname "Adilakshmi"
+#addname "Adita"
+#addname "Aditya"
+#addname "Adityabandhu"
+#addname "Adlakha"
+#addname "Adrika"
+#addname "Adrsyanti"
+#addname "Adusumilli"
+#addname "Advaitavadini"
+#addname "Agnajita"
+#addname "Agnayi"
+#addname "Agneyi"
+#addname "Agnimukhi"
+#addname "Agnivardini"
+#addname "Agraja"
+#addname "Agrayi"
+#addname "Ahalya"
+#addname "Ahana"
+#addname "Ahanti"
+#addname "Ahdita"
+#addname "Ahi"
+#addname "Ahilya"
+#addname "Ahimsa"
+#addname "Ahladita"
+#addname "Ahu"
+#addname "Ahuti"
+#addname "Aiksvaki"
+#addname "Aisvarya"
+#addname "Aiyah"
+#addname "Aja"
+#addname "Ajai"
+#addname "Ajamukhhi"
+#addname "Ajani"
+#addname "Ajanta"
+#addname "Ajara"
+#addname "Ajatashatru"
+#addname "Ajathya"
+#addname "Ajaya"
+#addname "Aji"
+#addname "Ajinder"
+#addname "Ajitha"
+#addname "Ajmani"
+#addname "Ajoy"
+#addname "Ajwani"
+#addname "Akaash"
+#addname "Akaliki"
+#addname "Akalka"
+#addname "Akanksa"
+#addname "Akasadipa"
+#addname "Akasaganga"
+#addname "Akasi"
+#addname "Akella"
+#addname "Akkina"
+#addname "Akkiraju"
+#addname "Akolekar"
+#addname "Akranti"
+#addname "Akriti"
+#addname "Akrti"
+#addname "Aksasutra"
+#addname "Aksi"
+#addname "Aksiti"
+#addname "Akupara"
+#addname "Akuti"
+#addname "Alagar"
+#addname "Alaka"
+#addname "Alakaravati"
+#addname "Alambusa"
+#addname "Alamelu"
+#addname "Alapini"
+#addname "Alisa"
+#addname "Alishah"
+#addname "Alka"
+#addname "Alkesh"
+#addname "Alla"
+#addname "Alpa"
+#addname "Alpana"
+#addname "Alwar"
+#addname "Amal"
+#addname "Amala"
+#addname "Amani"
+#addname "Amaraja"
+#addname "Amaranagana"
+#addname "Amaratatini"
+#addname "Amaravati"
+#addname "Amardeep"
+#addname "Amari"
+#addname "Amarta"
+#addname "Amati"
+#addname "Amavasya"
+#addname "Amba"
+#addname "Ambady"
+#addname "Ambala"
+#addname "Ambali"
+#addname "Ambalika"
+#addname "Ambaraprabha"
+#addname "Ambatipudi"
+#addname "Ambaya"
+#addname "Ambhoji"
+#addname "Ambhojini"
+#addname "Ambi"
+#addname "Ambika"
+#addname "Ambrish"
+#addname "Ambuj"
+#addname "Ambujakshi"
+#addname "Ambujanana"
+#addname "Ambumati"
+#addname "Ambupadma"
+#addname "Ambuvahini"
+#addname "Ameena"
+#addname "Ameet"
+#addname "Ami"
+#addname "Amiksh"
+#addname "Amina"
+#addname "Amisa"
+#addname "Amita"
+#addname "Amitesvari"
+#addname "Amiti"
+#addname "Amiya"
+#addname "Ammu"
+#addname "Amodini"
+#addname "Amoghaksi"
+#addname "Amohanika"
+#addname "Amramanjari"
+#addname "Amrit"
+#addname "Amrita"
+#addname "Amritama"
+#addname "Amritansh"
+#addname "Amritendu"
+#addname "Amruth"
+#addname "Amsel"
+#addname "Amutha"
+#addname "Anabhra"
+#addname "Anadya"
+#addname "Anaga"
+#addname "Anamika"
+#addname "Anamra"
+#addname "Ananda"
+#addname "Anandadevi"
+#addname "Anandalakshmi"
+#addname "Anandamayi"
+#addname "Anandaparna"
+#addname "Anandaprabha"
+#addname "Anantalakshmi"
+#addname "Ananya"
+#addname "Anati"
+#addname "Anavadya"
+#addname "Anavi"
+#addname "Anay"
+#addname "Andala"
+#addname "Andika"
+#addname "Aneesh"
+#addname "Angad"
+#addname "Angada"
+#addname "Angaja"
+#addname "Angana"
+#addname "Angaravati"
+#addname "Angarita"
+#addname "Anguri"
+#addname "Anhati"
+#addname "Anhiti"
+#addname "Anil"
+#addname "Anila"
+#addname "Anima"
+#addname "Aninda"
+#addname "Anindini"
+#addname "Anindita"
+#addname "Anindya"
+#addname "Anisa"
+#addname "Anita"
+#addname "Anjalika"
+#addname "Anjanam"
+#addname "Anjasi"
+#addname "Anji"
+#addname "Anjini"
+#addname "Anjna"
+#addname "Anju"
+#addname "Anjum"
+#addname "Anjuman"
+#addname "Ankan"
+#addname "Ankita"
+#addname "Ankitha"
+#addname "Ankolika"
+#addname "Annamalai"
+#addname "Annanya"
+#addname "Anni"
+#addname "Anokhi"
+#addname "Anoma"
+#addname "Anritam"
+#addname "Ansuiya"
+#addname "Ansumala"
+#addname "Ansumati"
+#addname "Antika"
+#addname "Antini"
+#addname "Antur"
+#addname "Anu"
+#addname "Anubha"
+#addname "Anugita"
+#addname "Anuka"
+#addname "Anukanksa"
+#addname "Anula"
+#addname "Anulekha"
+#addname "Anuli"
+#addname "Anumodita"
+#addname "Anunayika"
+#addname "Anunita"
+#addname "Anuniti"
+#addname "Anupallavi"
+#addname "Anuprahba"
+#addname "Anupriya"
+#addname "Anuradha"
+#addname "Anurakti"
+#addname "Anurati"
+#addname "Anurima"
+#addname "Anusara"
+#addname "Anushree"
+#addname "Anusna"
+#addname "Anusobhini"
+#addname "Anusri"
+#addname "Anutapta"
+#addname "Anvakriti"
+#addname "Anvita"
+#addname "Anviti"
+#addname "Anya"
+#addname "Apaciti"
+#addname "Apaga"
+#addname "Apala"
+#addname "Aparajita"
+#addname "Aparananda"
+#addname "Aparna"
+#addname "Apaya"
+#addname "Apeksita"
+#addname "Apti"
+#addname "Apurani"
+#addname "Apurva"
+#addname "Aqsa"
+#addname "Ara"
+#addname "Aradhana"
+#addname "Aradhita"
+#addname "Araja"
+#addname "Arani"
+#addname "Arasu"
+#addname "Arati"
+#addname "Aravamudan"
+#addname "Aravas"
+#addname "Aravindini"
+#addname "Arcana"
+#addname "Archana"
+#addname "Archna"
+#addname "Arcismati"
+#addname "Ardhaganga"
+#addname "Arhana"
+#addname "Arhantika"
+#addname "Arihan"
+#addname "Arikta"
+#addname "Arindam"
+#addname "Aripra"
+#addname "Arja"
+#addname "Arkasuta"
+#addname "Arnab"
+#addname "Aroga"
+#addname "Arohi"
+#addname "Arpana"
+#addname "Arpita"
+#addname "Arthana"
+#addname "Artika"
+#addname "Aruja"
+#addname "Aruksita"
+#addname "Aruna"
+#addname "Arunabha"
+#addname "Aruni"
+#addname "Arunika"
+#addname "Arunima"
+#addname "Arupa"
+#addname "Arusi"
+#addname "Arvanti"
+#addname "Arya"
+#addname "Aryamani"
+#addname "Asa"
+#addname "Asadhika"
+#addname "Asali"
+#addname "Asanjini"
+#addname "Asanni"
+#addname "Asija"
+#addname "Asika"
+#addname "Asikni"
+#addname "Asira"
+#addname "Asirvatham"
+#addname "Asisa"
+#addname "Askini"
+#addname "Asmaki"
+#addname "Asmati"
+#addname "Asmi"
+#addname "Asna"
+#addname "Asokari"
+#addname "Asta"
+#addname "Astha"
+#addname "Asthula"
+#addname "Asti"
+#addname "Astriti"
+#addname "Asura"
+#addname "Asutosh"
+#addname "Asvattha"
+#addname "Asvika"
+#addname "Atchut"
+#addname "Atchuta"
+#addname "Atharvan"
+#addname "Athavale"
+#addname "Athawale"
+#addname "Athreya"
+#addname "Atibala"
+#addname "Atimoda"
+#addname "Atiriya"
+#addname "Atmadhika"
+#addname "Atmajyoti"
+#addname "Atmodbhava"
+#addname "Atyuha"
+#addname "Aurjitya"
+#addname "Ausinari"
+#addname "Auvvayar"
+#addname "Avabha"
+#addname "Avachat"
+#addname "Avadhanam"
+#addname "Avajiti"
+#addname "Avalur"
+#addname "Avanati"
+#addname "Avani"
+#addname "Avanthika"
+#addname "Avanti"
+#addname "Avantika"
+#addname "Avantivati"
+#addname "Avaraja"
+#addname "Avasarala"
+#addname "Avatansa"
+#addname "Avatika"
+#addname "Aviral"
+#addname "Avisi"
+#addname "Avisya"
+#addname "Ayati"
+#addname "Ayodhika"
+#addname "Ayugu"
+#addname "Babhru"
+#addname "Babita"
+#addname "Bachendri"
+#addname "Badani"
+#addname "Badarayani"
+#addname "Badari"
+#addname "Badithe"
+#addname "Badsah"
+#addname "Bagade"
+#addname "Bagesri"
+#addname "Bagga"
+#addname "Bahughanda"
+#addname "Bahuli"
+#addname "Bahulika"
+#addname "Bahumati"
+#addname "Bahuratna"
+#addname "Bahvisvara"
+#addname "Baiju"
+#addname "Baindur"
+#addname "Bakavati"
+#addname "Bakula"
+#addname "Bakulamala"
+#addname "Bakulika"
+#addname "Bala"
+#addname "Balada"
+#addname "Balaja"
+#addname "Balaji"
+#addname "Balakunda"
+#addname "Balandhara"
+#addname "Balapuspika"
+#addname "Balasandhya"
+#addname "Balavati"
+#addname "Balki"
+#addname "Banaganga"
+#addname "Banasri"
+#addname "Banasuta"
+#addname "Bandaru"
+#addname "Bandhini"
+#addname "Bandhumati"
+#addname "Bandhupriya"
+#addname "Bandhura"
+#addname "Bandlish"
+#addname "Bano"
+#addname "Bansuri"
+#addname "Baratam"
+#addname "Barhayita"
+#addname "Barhina"
+#addname "Barhisa"
+#addname "Basanti"
+#addname "Basha"
+#addname "Baskaran"
+#addname "Basude"
+#addname "Basvangoud"
+#addname "Batakrishna"
+#addname "Bawa"
+#addname "Bawara"
+#addname "Baxi"
+#addname "Bayya"
+#addname "Bbusoowy"
+#addname "Beddhu"
+#addname "Beena"
+#addname "Beerud"
+#addname "Behari"
+#addname "Bekkem"
+#addname "Bela"
+#addname "Beli"
+#addname "Bellamkonda"
+#addname "Bellare"
+#addname "Belur"
+#addname "Bemra"
+#addname "Betanabhatla"
+#addname "Bettadapura"
+#addname "Bettadpur"
+#addname "Bhabani"
+#addname "Bhabra"
+#addname "Bhadrabhusana"
+#addname "Bhadramukhi"
+#addname "Bhadrarupa"
+#addname "Bhadrasvapna"
+#addname "Bhadravalli"
+#addname "Bhadrika"
+#addname "Bhagavanti"
+#addname "Bhagavatula"
+#addname "Bhagra"
+#addname "Bhagya"
+#addname "Bhaina"
+#addname "Bhalli"
+#addname "Bhamidipati"
+#addname "Bhamini"
+#addname "Bhanap"
+#addname "Bhanavi"
+#addname "Bhandana"
+#addname "Bhanot"
+#addname "Bhanuja"
+#addname "Bhanumati"
+#addname "Bhanupriya"
+#addname "Bhanusri"
+#addname "Bharadvaji"
+#addname "Bharadwaj"
+#addname "Bharani"
+#addname "Bharati"
+#addname "Bharava"
+#addname "Bhardwaj"
+#addname "Bhargavi"
+#addname "Bharti"
+#addname "Bharu"
+#addname "Bhasi"
+#addname "Bhati"
+#addname "Bhattini"
+#addname "Bhauma"
+#addname "Bhavaja"
+#addname "Bhavana"
+#addname "Bhavangama"
+#addname "Bhavanika"
+#addname "Bhavanti"
+#addname "Bhavapuspa"
+#addname "Bhaviki"
+#addname "Bhavitra"
+#addname "Bhimavarapu"
+#addname "Bhishma"
+#addname "Bhogya"
+#addname "Bhomira"
+#addname "Bhoopathi"
+#addname "Bhraji"
+#addname "Bhramambika"
+#addname "Bhramarika"
+#addname "Bhrami"
+#addname "Bhrigu"
+#addname "Bhrngari"
+#addname "Bhubaneswar"
+#addname "Bhumralkar"
+#addname "Bhurji"
+#addname "Bhusa"
+#addname "Bhuva"
+#addname "Bhuvanagiri"
+#addname "Bhuvanamati"
+#addname "Bhuvanesani"
+#addname "Bhuvani"
+#addname "Bhuvis"
+#addname "Bidalika"
+#addname "Bijaharini"
+#addname "Bijaksara"
+#addname "Bijal"
+#addname "Bijli"
+#addname "Bijoy"
+#addname "Biju"
+#addname "Bikramjit"
+#addname "Billoo"
+#addname "Bimbi"
+#addname "Bimbini"
+#addname "Bina"
+#addname "Bindiya"
+#addname "Bindu"
+#addname "Bindumati"
+#addname "Bindurekha"
+#addname "Binita"
+#addname "Birewar"
+#addname "Bisala"
+#addname "Bisaria"
+#addname "Bishnu"
+#addname "Bishu"
+#addname "Bisini"
+#addname "Biswanath"
+#addname "Bodhini"
+#addname "Boppana"
+#addname "Boreda"
+#addname "Brahmanjali"
+#addname "Brhadyuti"
+#addname "Brhanmati"
+#addname "Bridgnandan"
+#addname "Brij"
+#addname "Brijesh"
+#addname "Brinda"
+#addname "Buddhidevi"
+#addname "Buddhimatika"
+#addname "Bula"
+#addname "Bulusu"
+#addname "Burjiz"
+#addname "Cahana"
+#addname "Caitali"
+#addname "Caitri"
+#addname "Cakramardika"
+#addname "Caksani"
+#addname "Caksusi"
+#addname "Canaya"
+#addname "Candakirana"
+#addname "Candani"
+#addname "Candrabala"
+#addname "Candragauri"
+#addname "Candragolika"
+#addname "Candrakali"
+#addname "Candramati"
+#addname "Candramukha"
+#addname "Candramukhi"
+#addname "Candrasila"
+#addname "Candrasri"
+#addname "Candrasubha"
+#addname "Candravadana"
+#addname "Candravasa"
+#addname "Candri"
+#addname "Candrima"
+#addname "Candrupa"
+#addname "Carani"
+#addname "Carnapurna"
+#addname "Carubala"
+#addname "Carucitra"
+#addname "Carudarsana"
+#addname "Carulata"
+#addname "Carulocana"
+#addname "Carusila"
+#addname "Carutama"
+#addname "Casukhela"
+#addname "Casula"
+#addname "Caturika"
+#addname "Cauvery"
+#addname "Cchandra"
+#addname "Celana"
+#addname "Cesta"
+#addname "Cetana"
+#addname "Chadaga"
+#addname "Chaitanya"
+#addname "Chaitra"
+#addname "Chakradhar"
+#addname "Chakrapani"
+#addname "Chalamala"
+#addname "Chalana"
+#addname "Chalasani"
+#addname "Challa"
+#addname "Chand"
+#addname "Chanda"
+#addname "Chandra"
+#addname "Chandrakanta"
+#addname "Chandralekha"
+#addname "Chaund"
+#addname "Chava"
+#addname "Chavi"
+#addname "Chhaya"
+#addname "Chinna"
+#addname "Chinta"
+#addname "Chintala"
+#addname "Chintam"
+#addname "Chinya"
+#addname "Chitra"
+#addname "Chitta"
+#addname "Chundra"
+#addname "Cinta"
+#addname "Citrai"
+#addname "Citrajyoti"
+#addname "Citrali"
+#addname "Citramaya"
+#addname "Citramayi"
+#addname "Citrarati"
+#addname "Citrini"
+#addname "Citrita"
+#addname "Citta"
+#addname "Cittii"
+#addname "Cudala"
+#addname "Cumba"
+#addname "Cumban"
+#addname "Cunni"
+#addname "Daga"
+#addname "Dahanolka"
+#addname "Daksayaninya"
+#addname "Dalaja"
+#addname "Damodari"
+#addname "Dandapani"
+#addname "Danti"
+#addname "Darpanika"
+#addname "Darsatasri"
+#addname "Dasamalika"
+#addname "Dattadevi"
+#addname "Datti"
+#addname "Dayadi"
+#addname "Dayanvita"
+#addname "Dayavati"
+#addname "Dayita"
+#addname "Dayumnahuti"
+#addname "Deena"
+#addname "Deepali"
+#addname "Deepika"
+#addname "Desna"
+#addname "Devaki"
+#addname "Devamani"
+#addname "Devamati"
+#addname "Devamayi"
+#addname "Devanganga"
+#addname "Devapratima"
+#addname "Devaradhana"
+#addname "Devarapalli"
+#addname "Devasmita"
+#addname "Devavani"
+#addname "Devavati"
+#addname "Devaviti"
+#addname "Devayosa"
+#addname "Devi"
+#addname "Devika"
+#addname "Deviki"
+#addname "Devina"
+#addname "Dhamani"
+#addname "Dhanavati"
+#addname "Dhanistha"
+#addname "Dhanvanya"
+#addname "Dhanyamala"
+#addname "Dharmini"
+#addname "Dhilati"
+#addname "Dhita"
+#addname "Dhiti"
+#addname "Dhrtavati"
+#addname "Dhulika"
+#addname "Dhulipala"
+#addname "Dhulipalla"
+#addname "Didhi"
+#addname "Dinaprabha"
+#addname "Dipa"
+#addname "Dipakalika"
+#addname "Dipaksi"
+#addname "Dipali"
+#addname "Dipamala"
+#addname "Dipanjali"
+#addname "Dipanwita"
+#addname "Dipavali"
+#addname "Dipmani"
+#addname "Dipra"
+#addname "Dipsikha"
+#addname "Disti"
+#addname "Divija"
+#addname "Divolka"
+#addname "Divyadevi"
+#addname "Divyajyoti"
+#addname "Divyakriti"
+#addname "Drdhamati"
+#addname "Drgbhu"
+#addname "Drsika"
+#addname "Druhi"
+#addname "Druti"
+#addname "Dulari"
+#addname "Durgila"
+#addname "Duvasvati"
+#addname "Dyotana"
+#addname "Dyuksa"
+#addname "Edha"
+#addname "Ekabhakti"
+#addname "Ekacarini"
+#addname "Ekadasi"
+#addname "Ekadhana"
+#addname "Ekaja"
+#addname "Ekakini"
+#addname "Ekamati"
+#addname "Ekangika"
+#addname "Ekanta"
+#addname "Ekisa"
+#addname "Eloksi"
+#addname "Enaksi"
+#addname "Eneela"
+#addname "Eni"
+#addname "Enipada"
+#addname "Esa"
+#addname "Esanika"
+#addname "Eta"
+#addname "Etaha"
+#addname "Eti"
+#addname "Gaganecara"
+#addname "Gajagamani"
+#addname "Gajagati"
+#addname "Gajalakshmi"
+#addname "Gajamukta"
+#addname "Gajapathi"
+#addname "Gajaweera"
+#addname "Gajra"
+#addname "Gamati"
+#addname "Gamin"
+#addname "Ganda"
+#addname "Gandhaja"
+#addname "Gangangini"
+#addname "Ganjan"
+#addname "Ganmanya"
+#addname "Garbhagrha"
+#addname "Gargi"
+#addname "Gathika"
+#addname "Gaurang"
+#addname "Gavah"
+#addname "Gayanti"
+#addname "Gayathri"
+#addname "Gayatri"
+#addname "Gayatrini"
+#addname "Geeta"
+#addname "Geetha"
+#addname "Geethanjali"
+#addname "Gera"
+#addname "Gesna"
+#addname "Ghanivalli"
+#addname "Ghanivallika"
+#addname "Ghosavati"
+#addname "Ghugari"
+#addname "Girisma"
+#addname "Girni"
+#addname "Gita"
+#addname "Gitali"
+#addname "Gitanjali"
+#addname "Giti"
+#addname "Gitika"
+#addname "Gopa"
+#addname "Gopabala"
+#addname "Gopaja"
+#addname "Goparasa"
+#addname "Gorocana"
+#addname "Gouri"
+#addname "Gowri"
+#addname "Gulal"
+#addname "Gulika"
+#addname "Gulmini"
+#addname "Gunamaya"
+#addname "Gunavini"
+#addname "Gunca"
+#addname "Guncaka"
+#addname "Gundu"
+#addname "Guneeta"
+#addname "Gunita"
+#addname "Gunjan"
+#addname "Gunnika"
+#addname "Gunti"
+#addname "Gunvati"
+#addname "Gupti"
+#addname "Gurdiya"
+#addname "Gurnika"
+#addname "Gurti"
+#addname "Gurucarana"
+#addname "Guruda"
+#addname "Gurudeva"
+#addname "Gurudipa"
+#addname "Gurumita"
+#addname "Gurumukha"
+#addname "Gurunama"
+#addname "Guruprasada"
+#addname "Gurusarana"
+#addname "Guruvacana"
+#addname "Guruvira"
+#addname "Gutika"
+#addname "Hala"
+#addname "Halima"
+#addname "Haliman"
+#addname "Hansanadini"
+#addname "Hansanandini"
+#addname "Hararvarupa"
+#addname "Haravali"
+#addname "Haribhadra"
+#addname "Harinaksi"
+#addname "Hariprita"
+#addname "Harisri"
+#addname "Harmya"
+#addname "Harsala"
+#addname "Harsavina"
+#addname "Harsi"
+#addname "Harsita"
+#addname "Harsumati"
+#addname "Hasika"
+#addname "Hasumati"
+#addname "Heena"
+#addname "Hela"
+#addname "Hemaksi"
+#addname "Hemamalini"
+#addname "Hemangini"
+#addname "Hemanti"
+#addname "Hemaprabha"
+#addname "Hemavarna"
+#addname "Himasveta"
+#addname "Hiya"
+#addname "Hrada"
+#addname "Ibha"
+#addname "Ibhi"
+#addname "Iccha"
+#addname "Icchavati"
+#addname "Iditri"
+#addname "Iha"
+#addname "Ihita"
+#addname "Ijya"
+#addname "Iksa"
+#addname "Iksenya"
+#addname "Iksulata"
+#addname "Ilaksi"
+#addname "Ilesa"
+#addname "Ilika"
+#addname "Ilisa"
+#addname "Inaksi"
+#addname "Indali"
+#addname "Inderjit"
+#addname "Indira"
+#addname "Indrabala"
+#addname "Indrabha"
+#addname "Indrabhattarika"
+#addname "Indrahuti"
+#addname "Indranilika"
+#addname "Indu"
+#addname "Induvadana"
+#addname "Inika"
+#addname "Ipsa"
+#addname "Ipsita"
+#addname "Iraja"
+#addname "Iravati"
+#addname "Irijaya"
+#addname "Irika"
+#addname "Isa"
+#addname "Isanika"
+#addname "Isika"
+#addname "Istara"
+#addname "Itkila"
+#addname "Iya"
+#addname "Jabala"
+#addname "Jagatna"
+#addname "Jagavi"
+#addname "Jagrati"
+#addname "Jagrti"
+#addname "Jagruti"
+#addname "Jailekha"
+#addname "Jaimala"
+#addname "Jaiman"
+#addname "Jaiprbha"
+#addname "Jaishree"
+#addname "Jaisila"
+#addname "Jaisudha"
+#addname "Jaivanti"
+#addname "Jaivati"
+#addname "Jalabalika"
+#addname "Jalajaksi"
+#addname "Jalajini"
+#addname "Jalalata"
+#addname "Jalambika"
+#addname "Jalanili"
+#addname "Jalarnava"
+#addname "Jalavalika"
+#addname "Jallata"
+#addname "Jama"
+#addname "Jambhalika"
+#addname "Janabalika"
+#addname "Janaki"
+#addname "Janamohini"
+#addname "Janasruti"
+#addname "Janhita"
+#addname "Janki"
+#addname "Januja"
+#addname "Jasalina"
+#addname "Jasarani"
+#addname "Jaswinder"
+#addname "Jatarupa"
+#addname "Jatila"
+#addname "Jatukarna"
+#addname "Jaya"
+#addname "Jayalaksmi"
+#addname "Jayanti"
+#addname "Jayashree"
+#addname "Jayita"
+#addname "Jayitri"
+#addname "Jeendan"
+#addname "Jhala"
+#addname "Jharna"
+#addname "Jhatalika"
+#addname "Jhillika"
+#addname "Jhilmil"
+#addname "Jigisa"
+#addname "Jindan"
+#addname "Jitya"
+#addname "Jivapuspa"
+#addname "Jivika"
+#addname "Jogu"
+#addname "Josa"
+#addname "Josya"
+#addname "Jurni"
+#addname "Justi"
+#addname "Jutika"
+#addname "Jvalita"
+#addname "Jvalitri"
+#addname "Jyota"
+#addname "Jyoti"
+#addname "Jyotiranika"
+#addname "Jyotsna"
+#addname "Jyotsni"
+#addname "Kadhapriya"
+#addname "Kahini"
+#addname "Kailash"
+#addname "Kajal"
+#addname "Kajri"
+#addname "Kakali"
+#addname "Kaksi"
+#addname "Kalahapriya"
+#addname "Kalakanya"
+#addname "Kalamali"
+#addname "Kalandika"
+#addname "Kalapini"
+#addname "Kale"
+#addname "Kalia"
+#addname "Kaliappa"
+#addname "Kalidindi"
+#addname "Kalipi"
+#addname "Kalli"
+#addname "Kalmesika"
+#addname "Kalpana"
+#addname "Kalpavati"
+#addname "Kalyani"
+#addname "Kama"
+#addname "Kamadyu"
+#addname "Kamala"
+#addname "Kamalah"
+#addname "Kamalalocana"
+#addname "Kamalanayani"
+#addname "Kamalata"
+#addname "Kamaleksana"
+#addname "Kamalika"
+#addname "Kamana"
+#addname "Kamandaki"
+#addname "Kamarekha"
+#addname "Kamayani"
+#addname "Kamini"
+#addname "Kamita"
+#addname "Kamlesh"
+#addname "Kamma"
+#addname "Kamna"
+#addname "Kamni"
+#addname "Kamra"
+#addname "Kamya"
+#addname "Kana"
+#addname "Kanakalata"
+#addname "Kanakamanjari"
+#addname "Kanakamudra"
+#addname "Kanakasundari"
+#addname "Kanakavali"
+#addname "Kanakavalli"
+#addname "Kanakvi"
+#addname "Kanam"
+#addname "Kananabala"
+#addname "Kancanabha"
+#addname "Kanchana"
+#addname "Kandarpabala"
+#addname "Kandhara"
+#addname "Kangana"
+#addname "Kani"
+#addname "Kania"
+#addname "Kanici"
+#addname "Kanika"
+#addname "Kanin"
+#addname "Kanistha"
+#addname "Kanita"
+#addname "Kanjari"
+#addname "Kanjira"
+#addname "Kankan"
+#addname "Kankanika"
+#addname "Kanksa"
+#addname "Kanksini"
+#addname "Kannika"
+#addname "Kanta"
+#addname "Kanti"
+#addname "Kanya"
+#addname "Kanyala"
+#addname "Kanyana"
+#addname "Kanyaratna"
+#addname "Kapadia"
+#addname "Kapardika"
+#addname "Karabhoru"
+#addname "Karia"
+#addname "Karika"
+#addname "Karisma"
+#addname "Karisni"
+#addname "Karkari"
+#addname "Karmistha"
+#addname "Karpani"
+#addname "Karpuri"
+#addname "Karsna"
+#addname "Karttiki"
+#addname "Karuna"
+#addname "Karunya"
+#addname "Kasturba"
+#addname "Kasturi"
+#addname "Kasturika"
+#addname "Kasu"
+#addname "Kausalika"
+#addname "Kausalya"
+#addname "Kavika"
+#addname "Kavita"
+#addname "Keyurin"
+#addname "Khatu"
+#addname "Kheli"
+#addname "Kilasla"
+#addname "Kinjala"
+#addname "Kiranamayi"
+#addname "Kirmi"
+#addname "Kishori"
+#addname "Kisori"
+#addname "Kiya"
+#addname "Kour"
+#addname "Kranti"
+#addname "Krpa"
+#addname "Krsana"
+#addname "Krsi"
+#addname "Krsnan"
+#addname "Krsni"
+#addname "Ksa"
+#addname "Ksamamati"
+#addname "Ksamya"
+#addname "Ksanada"
+#addname "Ksatriyani"
+#addname "Ksirasagara"
+#addname "Ksunu"
+#addname "Kuladevi"
+#addname "Kulanari"
+#addname "Kulangana"
+#addname "Kumari"
+#addname "Kumaria"
+#addname "Kumud"
+#addname "Kumudika"
+#addname "Kumudini"
+#addname "Kundamala"
+#addname "Kundini"
+#addname "Kunja"
+#addname "Kunjalata"
+#addname "Kunsi"
+#addname "Kurangaksi"
+#addname "Kurira"
+#addname "Kusumanjali"
+#addname "Kusumavati"
+#addname "Kusumaya"
+#addname "Kusumita"
+#addname "Kuthodari"
+#addname "Kuvalayadhrs"
+#addname "Kuvalayini"
+#addname "Kuvalayita"
+#addname "Kuvarini"
+#addname "Laboni"
+#addname "Laduri"
+#addname "Lakshmi"
+#addname "Lakshmikantan"
+#addname "Lakshminarashimhan"
+#addname "Lakshminaraya"
+#addname "Lakshminarayanan"
+#addname "Laxmi"
+#addname "Laxmikant"
+#addname "Laxminarasimha"
+#addname "Leela"
+#addname "Leena"
+#addname "Lela"
+#addname "Madhavi"
+#addname "Madhu"
+#addname "Madhucchandra"
+#addname "Madhukar"
+#addname "Madhulika"
+#addname "Madhumati"
+#addname "Madhumita"
+#addname "Madhumitra"
+#addname "Madhur"
+#addname "Madhuri"
+#addname "Madhusree"
+#addname "Madhusudhan"
+#addname "Madhusudhana"
+#addname "Madhusudhanan"
+#addname "Makara"
+#addname "Mala"
+#addname "Malar"
+#addname "Malathi"
+#addname "Malati"
+#addname "Malini"
+#addname "Mandara"
+#addname "Mangla"
+#addname "Manglani"
+#addname "Mani"
+#addname "Manika"
+#addname "Manish"
+#addname "Manisha"
+#addname "Meena"
+#addname "Meera"
+#addname "Mehadi"
+#addname "Mena"
+#addname "Menaka"
+#addname "Mesha"
+#addname "Meshal"
+#addname "Minda"
+#addname "Mira"
+#addname "Mita"
+#addname "Mohana"
+#addname "Mohani"
+#addname "Mohini"
+#addname "Mohit"
+#addname "Munakshi"
+#addname "Mungela"
+#addname "Natesa"
+#addname "Natisa"
+#addname "Nayantara"
+#addname "Nimai"
+#addname "Nimi"
+#addname "Nimmi"
+#addname "Ninderjit"
+#addname "Nisha"
+#addname "Nishchint"
+#addname "Padma"
+#addname "Padmaja"
+#addname "Padmavati"
+#addname "Padmini"
+#addname "Pandita"
+#addname "Pari"
+#addname "Parimal"
+#addname "Parimala"
+#addname "Parmeshwarii"
+#addname "Parminder"
+#addname "Paro"
+#addname "Pinga"
+#addname "Pollyam"
+#addname "Pom"
+#addname "Poonam"
+#addname "Poornima"
+#addname "Pratibha"
+#addname "Preia"
+#addname "Prema"
+#addname "Premila"
+#addname "Premlata"
+#addname "Priya"
+#addname "Promila"
+#addname "Pupul"
+#addname "Purna"
+#addname "Purnima"
+#addname "Pushpa"
+#addname "Puspa"
+#addname "Radhe"
+#addname "Radhika"
+#addname "Rajalakshmi"
+#addname "Raje"
+#addname "Raji"
+#addname "Rajni"
+#addname "Rakesh"
+#addname "Rani"
+#addname "Rati"
+#addname "Reena"
+#addname "Renu"
+#addname "Rita"
+#addname "Ritu"
+#addname "Rochana"
+#addname "Rohana"
+#addname "Rohena"
+#addname "Rupinder"
+#addname "Sahana"
+#addname "Sahera"
+#addname "Sakara"
+#addname "Sakari"
+#addname "Sakyamuni"
+#addname "Sala"
+#addname "Sandhya"
+#addname "Santosh"
+#addname "Sarala"
+#addname "Saroj"
+#addname "Saroja"
+#addname "Sarojini"
+#addname "Sateesh"
+#addname "Satheesh"
+#addname "Sathya"
+#addname "Satish"
+#addname "Satya"
+#addname "Satyam"
+#addname "Saura"
+#addname "Savita"
+#addname "Savitha"
+#addname "Savitri"
+#addname "Seema"
+#addname "Seeta"
+#addname "Seetha"
+#addname "Sepatha"
+#addname "Shabana"
+#addname "Shaila"
+#addname "Shakti"
+#addname "Shakuntala"
+#addname "Shalini"
+#addname "Shanta"
+#addname "Shantanu"
+#addname "Shanthi"
+#addname "Shanti"
+#addname "Sharad"
+#addname "Sharada"
+#addname "Sharath"
+#addname "Sharmila"
+#addname "Shashi"
+#addname "Sheela"
+#addname "Sheila"
+#addname "Shoba"
+#addname "Shobha"
+#addname "Shobhana"
+#addname "Shobhna"
+#addname "Shobu"
+#addname "Shreya"
+#addname "Shri"
+#addname "Shyama"
+#addname "Shyamala"
+#addname "Shyamani"
+#addname "Siddartha"
+#addname "Sidharth"
+#addname "Smriti"
+#addname "Sneh"
+#addname "Soochet"
+#addname "Sri"
+#addname "Suja"
+#addname "Sujata"
+#addname "Sujatha"
+#addname "Sumant"
+#addname "Sumanth"
+#addname "Sumantra"
+#addname "Sumantu"
+#addname "Sumathi"
+#addname "Sumati"
+#addname "Sumit"
+#addname "Sumita"
+#addname "Sumitra"
+#addname "Sumitro"
+#addname "Suneet"
+#addname "Suneetha"
+#addname "Sunit"
+#addname "Sunita"
+#addname "Sunitha"
+#addname "Suniti"
+#addname "Surajit"
+#addname "Sureshta"
+#addname "Surjit"
+#addname "Sushila"
+#addname "Sushma"
+#addname "Swaran"
+#addname "Tara"
+#addname "Uma"
+#addname "Umi"
+#addname "Urmila"
+#addname "Urmilla"
+#addname "Urvashi"
+#addname "Urvasi"
+#addname "Usha"
+#addname "Vanmala"
+#addname "Vasanta"
+#addname "Vasundara"
+#addname "Vasundhara"
+#addname "Vimala"
+#addname "Vimi"
+#addname "Vimla"
+#addname "Zubeida"
+#end
+
+#selectnametype 131
+#addname "Abelard"
+#addname "Adalbert"
+#addname "Adalbrecht"
+#addname "Adalfuns"
+#addname "Adalhard"
+#addname "Adelstan"
+#addname "Adelulf"
+#addname "Adso"
+#addname "Aganbold"
+#addname "Agid"
+#addname "Agin"
+#addname "Agino"
+#addname "Aigo"
+#addname "Albgast"
+#addname "Albirich"
+#addname "Aldo"
+#addname "Amalrich"
+#addname "Ambrico"
+#addname "Amo"
+#addname "Ampho"
+#addname "Anafrid"
+#addname "Andhari"
+#addname "Ansehelm"
+#addname "Ansgor"
+#addname "Ansila"
+#addname "Ansobert"
+#addname "Aranold"
+#addname "Archembald"
+#addname "Archimbalt"
+#addname "Arenvald"
+#addname "Arnald"
+#addname "Arnegis"
+#addname "Arnoald"
+#addname "Arnwald"
+#addname "Ascalo"
+#addname "Ascila"
+#addname "Aspuanis"
+#addname "Athalwolf"
+#addname "Audegar"
+#addname "Audila"
+#addname "Audo"
+#addname "Autgar"
+#addname "Avila"
+#addname "Azzo"
+#addname "Baldavin"
+#addname "Baldewin"
+#addname "Bardo"
+#addname "Baro"
+#addname "Baso"
+#addname "Bazzo"
+#addname "Berahthraben"
+#addname "Berhtolf"
+#addname "Berico"
+#addname "Beringaer"
+#addname "Beringer"
+#addname "Berinhard"
+#addname "Bero"
+#addname "Beroald"
+#addname "Berthar"
+#addname "Bertilo"
+#addname "Bezilo"
+#addname "Binizo"
+#addname "Blanko"
+#addname "Bobo"
+#addname "Bodenolf"
+#addname "Bodo"
+#addname "Bodolev"
+#addname "Bodoloff"
+#addname "Boiorix"
+#addname "Bovo"
+#addname "Burchard"
+#addname "Carbo"
+#addname "Chacili"
+#addname "Chazili"
+#addname "Chlodovech"
+#addname "Chlodowig"
+#addname "Chonrad"
+#addname "Chretzo"
+#addname "Chrezzo"
+#addname "Clarebald"
+#addname "Clarembald"
+#addname "Cobbo"
+#addname "Cornel"
+#addname "Crotila"
+#addname "Cuno"
+#addname "Dagilo"
+#addname "Dammo"
+#addname "Dolleo"
+#addname "Draga"
+#addname "Drogo"
+#addname "Dudo"
+#addname "Duihna"
+#addname "Eburhart"
+#addname "Edelstein"
+#addname "Eginolf"
+#addname "Eidhart"
+#addname "Eigio"
+#addname "Embrico"
+#addname "Emercho"
+#addname "Emicho"
+#addname "Emmerich"
+#addname "Ercanbald"
+#addname "Ernolf"
+#addname "Ernust"
+#addname "Eutha"
+#addname "Facco"
+#addname "Fadiko"
+#addname "Faramund"
+#addname "Fastred"
+#addname "Fato"
+#addname "Fersio"
+#addname "Fersomeris"
+#addname "Filibert"
+#addname "Fizzilo"
+#addname "Flaco"
+#addname "Flanbert"
+#addname "Folkher"
+#addname "Folkmod"
+#addname "Franco"
+#addname "Fridebraht"
+#addname "Fridurih"
+#addname "Frilo"
+#addname "Frithuric"
+#addname "Fulco"
+#addname "Fullofaudes"
+#addname "Gabo"
+#addname "Gadfrid"
+#addname "Gaido"
+#addname "Gairbert"
+#addname "Gairebold"
+#addname "Gairhard"
+#addname "Gairovald"
+#addname "Garibald"
+#addname "Gastne"
+#addname "Gaufrid"
+#addname "Gautbehrt"
+#addname "Gautelen"
+#addname "Gautzelin"
+#addname "Gauzelen"
+#addname "Gauzpert"
+#addname "Gawin"
+#addname "Gebahard"
+#addname "Gebhard"
+#addname "Gelther"
+#addname "Gerbodo"
+#addname "Gerbotho"
+#addname "Gerhart"
+#addname "Gerlach"
+#addname "Gerulf"
+#addname "Gerwald"
+#addname "Gevehard"
+#addname "Gigo"
+#addname "Gimmo"
+#addname "Gisfrid"
+#addname "Gisilbehrt"
+#addname "Gisilbert"
+#addname "Giso"
+#addname "Glaumunt"
+#addname "Glauperaht"
+#addname "Godafried"
+#addname "Godehard"
+#addname "Godila"
+#addname "Godohelm"
+#addname "Goldkopf"
+#addname "Gomeric"
+#addname "Gosbert"
+#addname "Gotteschalk"
+#addname "Gottschalk"
+#addname "Gotzstaf"
+#addname "Grawo"
+#addname "Gundobald"
+#addname "Gunnulf"
+#addname "Guntard"
+#addname "Guntmar"
+#addname "Gusso"
+#addname "Hagarih"
+#addname "Hagilo"
+#addname "Haimirich"
+#addname "Haimo"
+#addname "Halo"
+#addname "Hanno"
+#addname "Hano"
+#addname "Haribehrt"
+#addname "Hariberct"
+#addname "Hariman"
+#addname "Harimann"
+#addname "Hariwald"
+#addname "Heimerich"
+#addname "Helgaud"
+#addname "Helmhart"
+#addname "Heribehrt"
+#addname "Herilo"
+#addname "Herman"
+#addname "Herminafrid"
+#addname "Hildeberht"
+#addname "Hildegaud"
+#addname "Hildibrand"
+#addname "Hiruz"
+#addname "Hluodohari"
+#addname "Hluodowig"
+#addname "Holo"
+#addname "Hraban"
+#addname "Hremfing"
+#addname "Hroch"
+#addname "Hrodebert"
+#addname "Hrodgar"
+#addname "Hrodger"
+#addname "Hrodo"
+#addname "Hrodric"
+#addname "Hrodrich"
+#addname "Hrodulf"
+#addname "Hrotmar"
+#addname "Hrudolf"
+#addname "Hruodiger"
+#addname "Hruodland"
+#addname "Hruodpehrt"
+#addname "Hugi"
+#addname "Hugo"
+#addname "Hugubehrt"
+#addname "Hugubert"
+#addname "Hunberct"
+#addname "Hunfrid"
+#addname "Huolo"
+#addname "Hurmio"
+#addname "Isenbard"
+#addname "Iso"
+#addname "Johannes"
+#addname "Joppo"
+#addname "Jordanes"
+#addname "Judbert"
+#addname "Judo"
+#addname "Kacili"
+#addname "Kuonrat"
+#addname "Laico"
+#addname "Lallo"
+#addname "Landebert"
+#addname "Landico"
+#addname "Lando"
+#addname "Landoberct"
+#addname "Lanzo"
+#addname "Leonhard"
+#addname "Leudbald"
+#addname "Lewenhart"
+#addname "Liukardis"
+#addname "Liutbalt"
+#addname "Luitgarde"
+#addname "Luitpold"
+#addname "Magahard"
+#addname "Maganhard"
+#addname "Maginfred"
+#addname "Maginrad"
+#addname "Malbert"
+#addname "Malger"
+#addname "Mallobaudes"
+#addname "Malo"
+#addname "Mangod"
+#addname "Manifred"
+#addname "Mantio"
+#addname "Manzio"
+#addname "Maricho"
+#addname "Maso"
+#addname "Masso"
+#addname "Matto"
+#addname "Mazo"
+#addname "Mazzi"
+#addname "Mello"
+#addname "Merobaudes"
+#addname "Mezzi"
+#addname "Milo"
+#addname "Muato"
+#addname "Mundo"
+#addname "Munifrid"
+#addname "Munio"
+#addname "Munizo"
+#addname "Nadilo"
+#addname "Nagal"
+#addname "Neozzo"
+#addname "Niuzilo"
+#addname "Nordemann"
+#addname "Oggod"
+#addname "Otho"
+#addname "Pizzo"
+#addname "Poppa"
+#addname "Quito"
+#addname "Radulf"
+#addname "Raffo"
+#addname "Rafold"
+#addname "Raganald"
+#addname "Raganfrid"
+#addname "Raganhard"
+#addname "Raganher"
+#addname "Raginhart"
+#addname "Raginmund"
+#addname "Raimer"
+#addname "Rampo"
+#addname "Ratilo"
+#addname "Rautio"
+#addname "Richart"
+#addname "Ricohard"
+#addname "Riso"
+#addname "Runo"
+#addname "Rusto"
+#addname "Sarilo"
+#addname "Sconea"
+#addname "Shilgen"
+#addname "Sibico"
+#addname "Sibilo"
+#addname "Sidimund"
+#addname "Siegmyrth"
+#addname "Sindo"
+#addname "Sito"
+#addname "Situli"
+#addname "Snaracho"
+#addname "Snarung"
+#addname "Snato"
+#addname "Snazi"
+#addname "Stallo"
+#addname "Starchari"
+#addname "Sumar"
+#addname "Sunno"
+#addname "Suppo"
+#addname "Tadica"
+#addname "Tallo"
+#addname "Teutobod"
+#addname "Thancharat"
+#addname "Thancheri"
+#addname "Theodbald"
+#addname "Theodemar"
+#addname "Theodoric"
+#addname "Theudobald"
+#addname "Theutlich"
+#addname "Thieme"
+#addname "Thiemmo"
+#addname "Thiudorieks"
+#addname "Trafstila"
+#addname "Trapsta"
+#addname "Trostheri"
+#addname "Trostila"
+#addname "Truhtilo"
+#addname "Ucco"
+#addname "Ulta"
+#addname "Unsenis"
+#addname "Varin"
+#addname "Vidans"
+#addname "Waibilo"
+#addname "Waido"
+#addname "Walahfrid"
+#addname "Waldhar"
+#addname "Waldhere"
+#addname "Waldibert"
+#addname "Waldomar"
+#addname "Walhbert"
+#addname "Waliko"
+#addname "Waloco"
+#addname "Walpurga"
+#addname "Wandilo"
+#addname "Warenheri"
+#addname "Warinhari"
+#addname "Wazo"
+#addname "Wecelo"
+#addname "Weidheri"
+#addname "Weila"
+#addname "Welp"
+#addname "Welpo"
+#addname "Wercha"
+#addname "Wercrata"
+#addname "Werdo"
+#addname "Wezilo"
+#addname "Wibil"
+#addname "Widargelt"
+#addname "Widigast"
+#addname "Wido"
+#addname "Widogast"
+#addname "Wigo"
+#addname "Willahelm"
+#addname "Willamar"
+#addname "Willehelm"
+#addname "Winebaud"
+#addname "Winicho"
+#addname "Wintar"
+#addname "Wintri"
+#addname "Withari"
+#addname "Wocco"
+#addname "Woco"
+#addname "Wolkan"
+#addname "Wracwulf"
+#addname "Wultgar"
+#addname "Wunnihad"
+#addname "Wurm"
+#addname "Zinzo"
+#addname "Ablabius"
+#addname "Achila"
+#addname "Agila"
+#addname "Agiwulf"
+#addname "Agriwulf"
+#addname "Aidoingus"
+#addname "Aithanarid"
+#addname "Alaric"
+#addname "Alatheus"
+#addname "Alaviv"
+#addname "Alica"
+#addname "Aligern"
+#addname "Alla"
+#addname "Amal"
+#addname "Amalaric"
+#addname "Ammius"
+#addname "Anagastes"
+#addname "Andagis"
+#addname "Anianus"
+#addname "Ansila"
+#addname "Ansis"
+#addname "Aoric"
+#addname "Apahida"
+#addname "Ardabur"
+#addname "Ardaric"
+#addname "Argaith"
+#addname "Ariaric"
+#addname "Arimir"
+#addname "Arius"
+#addname "Arnegliscus"
+#addname "Arvandus"
+#addname "Asbad"
+#addname "Aspar"
+#addname "Ataulf"
+#addname "Ataulph"
+#addname "Athalaric"
+#addname "Athanagild"
+#addname "Athanaric"
+#addname "Atharid"
+#addname "Athaulf"
+#addname "Babai"
+#addname "Badua"
+#addname "Baduila"
+#addname "Baza"
+#addname "Berig"
+#addname "Berimud"
+#addname "Berimund"
+#addname "Bessa"
+#addname "Bessas"
+#addname "Bessi"
+#addname "Beuca"
+#addname "Beucad"
+#addname "Bigelis"
+#addname "Bilimer"
+#addname "Borani"
+#addname "Braga"
+#addname "Brandila"
+#addname "Candac"
+#addname "Cannabas"
+#addname "Cannabaudes"
+#addname "Cethegus"
+#addname "Chindasuinth"
+#addname "Cniva"
+#addname "Cnivida"
+#addname "Colias"
+#addname "Crocus"
+#addname "Cunigast"
+#addname "Cunimund"
+#addname "Cyrila"
+#addname "Dubius"
+#addname "Duda"
+#addname "Ebermud"
+#addname "Eberwolf"
+#addname "Ebrimud"
+#addname "Edica"
+#addname "Eraric"
+#addname "Eriulf"
+#addname "Ermanaric"
+#addname "Ermelandus"
+#addname "Ervig"
+#addname "Euric"
+#addname "Eutharic"
+#addname "Farnobius"
+#addname "Fastida"
+#addname "Feletheus"
+#addname "Feva"
+#addname "Filimer"
+#addname "Flaccitheus"
+#addname "Fravitta"
+#addname "Fredegar"
+#addname "Fretela"
+#addname "Frideric"
+#addname "Fridigern"
+#addname "Frigeridus"
+#addname "Frithila"
+#addname "Fritigern"
+#addname "Gadaric"
+#addname "Gainas"
+#addname "Gaiseric"
+#addname "Galindo"
+#addname "Galindus"
+#addname "Gaut"
+#addname "Gauterit"
+#addname "Geberic"
+#addname "Gelimer"
+#addname "Gento"
+#addname "Gerung"
+#addname "Gesalec"
+#addname "Gesimund"
+#addname "Getica"
+#addname "Goar"
+#addname "Goddas"
+#addname "Godegisel"
+#addname "Godigisclus"
+#addname "Goiaricus"
+#addname "Gouththas"
+#addname "Gundehar"
+#addname "Gundiok"
+#addname "Gundobad"
+#addname "Gunteric"
+#addname "Gunthigis"
+#addname "Gutthikas"
+#addname "Hadubrand"
+#addname "Heldebald"
+#addname "Heldefredus"
+#addname "Heribrand"
+#addname "Hermangild"
+#addname "Hermenigild"
+#addname "Herminafrid"
+#addname "Hernegliscus"
+#addname "Hildebad"
+#addname "Hildebrand"
+#addname "Hilderic"
+#addname "Hilderith"
+#addname "Himnerith"
+#addname "Hisarna"
+#addname "Hulmul"
+#addname "Huml"
+#addname "Huneric"
+#addname "Hunigild"
+#addname "Hunimund"
+#addname "Hunulf"
+#addname "Hunumund"
+#addname "Ibba"
+#addname "Ildebad"
+#addname "Inna"
+#addname "Irnfried"
+#addname "Jordanes"
+#addname "Lagariman"
+#addname "Lampridius"
+#addname "Leovigild"
+#addname "Leuvibild"
+#addname "Livila"
+#addname "Marcomir"
+#addname "Modaharius"
+#addname "Modares"
+#addname "Munderic"
+#addname "Mundo"
+#addname "Namatius"
+#addname "Naulabates"
+#addname "Nidada"
+#addname "Niketas"
+#addname "Odoin"
+#addname "Odotheus"
+#addname "Odovacar"
+#addname "Ostrogotha"
+#addname "Osuin"
+#addname "Ovida"
+#addname "Patza"
+#addname "Radagaisus"
+#addname "Rausimod"
+#addname "Recared"
+#addname "Reccared"
+#addname "Recceswinth"
+#addname "Rechiar"
+#addname "Rechimund"
+#addname "Recitach"
+#addname "Rekitach"
+#addname "Remismund"
+#addname "Respa"
+#addname "Retemeris"
+#addname "Rhima"
+#addname "Ricimer"
+#addname "Rictiovarus"
+#addname "Rikiar"
+#addname "Roderic"
+#addname "Rodolf"
+#addname "Roduulf"
+#addname "Rudesind"
+#addname "Saba"
+#addname "Sadagares"
+#addname "Safrax"
+#addname "Salla"
+#addname "Sangiban"
+#addname "Sansalas"
+#addname "Saphrax"
+#addname "Sarus"
+#addname "Segeric"
+#addname "Selenas"
+#addname "Shapur"
+#addname "Sidimund"
+#addname "Sigeric"
+#addname "Sigesar"
+#addname "Sigibald"
+#addname "Sigismund"
+#addname "Sigisvult"
+#addname "Sindila"
+#addname "Sisbert"
+#addname "Sisebut"
+#addname "Sisenand"
+#addname "Soas"
+#addname "Suatrius"
+#addname "Sueridus"
+#addname "Sunericus"
+#addname "Sunnia"
+#addname "Tanais"
+#addname "Tanca"
+#addname "Teias"
+#addname "Teja"
+#addname "Tharuaro"
+#addname "Thela"
+#addname "Theodahad"
+#addname "Theodehad"
+#addname "Theodemer"
+#addname "Theoderic"
+#addname "Theoderid"
+#addname "Theodoric"
+#addname "Theodulf"
+#addname "Theudegisel"
+#addname "Theudegisklos"
+#addname "Theudis"
+#addname "Thidrek"
+#addname "Thiudimir"
+#addname "Thorismud"
+#addname "Thorismund"
+#addname "Thrasamund"
+#addname "Thrasaric"
+#addname "Thraustila"
+#addname "Totila"
+#addname "Tribigild"
+#addname "Tufa"
+#addname "Tuluin"
+#addname "Ulfilas"
+#addname "Unigild"
+#addname "Unila"
+#addname "Unimund"
+#addname "Uraias"
+#addname "Valamer"
+#addname "Valamir"
+#addname "Valaravans"
+#addname "Valia"
+#addname "Vandalarius"
+#addname "Vandil"
+#addname "Veduco"
+#addname "Vetericus"
+#addname "Vetranio"
+#addname "Videric"
+#addname "Vidigoia"
+#addname "Vidimir"
+#addname "Viliaris"
+#addname "Vinitharius"
+#addname "Visimar"
+#addname "Vithimiris"
+#addname "Vithmiris"
+#addname "Vitigis"
+#addname "Vittamar"
+#addname "Vultuulf"
+#addname "Wala"
+#addname "Walahmar"
+#addname "Wallia"
+#addname "Wamba"
+#addname "Wella"
+#addname "Winguric"
+#addname "Witige"
+#addname "Wittigis"
+#addname "Wittiza"
+#end
+
+#selectnametype 132
+#addname "Ada"
+#addname "Adala"
+#addname "Adalberta"
+#addname "Adalheid"
+#addname "Adalheidis"
+#addname "Adalind"
+#addname "Adalindis"
+#addname "Adallindis"
+#addname "Adalmut"
+#addname "Adalrada"
+#addname "Adaltrutis"
+#addname "Adaluuidis"
+#addname "Adalwara"
+#addname "Adalwif"
+#addname "Adda"
+#addname "Addela"
+#addname "Adela"
+#addname "Adelaidis"
+#addname "Adelheidis"
+#addname "Adeltrudis"
+#addname "Adhela"
+#addname "Adila"
+#addname "Adwala"
+#addname "Aebbe"
+#addname "Agentrudis"
+#addname "Agglethrudis"
+#addname "Albelenda"
+#addname "Alberad"
+#addname "Alberadis"
+#addname "Albrad"
+#addname "Albrade"
+#addname "Albruga"
+#addname "Alburch"
+#addname "Alburg"
+#addname "Alda"
+#addname "Aldguda"
+#addname "Aldgudana"
+#addname "Aldruth"
+#addname "Aleidis"
+#addname "Alfgarda"
+#addname "Alfild"
+#addname "Alflent"
+#addname "Alia"
+#addname "Alverat"
+#addname "Alvered"
+#addname "Amalberga"
+#addname "Amalberta"
+#addname "Amalbirga"
+#addname "Amalfriede"
+#addname "Amalgunde"
+#addname "Amoltrud"
+#addname "Amulberga"
+#addname "Anselda"
+#addname "Ansitruda"
+#addname "Anstruda"
+#addname "Aschilt"
+#addname "Athala"
+#addname "Athela"
+#addname "Aua"
+#addname "Auacyn"
+#addname "Auekin"
+#addname "Auin"
+#addname "Auina"
+#addname "Auriana"
+#addname "Aurildis"
+#addname "Austrechildis"
+#addname "Ava"
+#addname "Avacyn"
+#addname "Avekin"
+#addname "Avelina"
+#addname "Aveza"
+#addname "Avin"
+#addname "Ayla"
+#addname "Baltelda"
+#addname "Balthechildis"
+#addname "Balthildis"
+#addname "Bauin"
+#addname "Bava"
+#addname "Bavacin"
+#addname "Bavin"
+#addname "Bechte"
+#addname "Belegardis"
+#addname "Berehta"
+#addname "Bergard"
+#addname "Bergundis"
+#addname "Berhta"
+#addname "Beriungis"
+#addname "Berna"
+#addname "Bernewief"
+#addname "Bernewif"
+#addname "Berta"
+#addname "Bertaida"
+#addname "Berthildis"
+#addname "Berthlenda"
+#addname "Bertildis"
+#addname "Bertliana"
+#addname "Bertrada"
+#addname "Bertruda"
+#addname "Bertswinda"
+#addname "Betlindis"
+#addname "Bettin"
+#addname "Binhildis"
+#addname "Blitekin"
+#addname "Boltiarda"
+#addname "Bova"
+#addname "Boviardis"
+#addname "Bytzel"
+#addname "Childebertana"
+#addname "Chlotichhilda"
+#addname "Chunegundis"
+#addname "Cilia"
+#addname "Clodauuiua"
+#addname "Clotrada"
+#addname "Conegont"
+#addname "Conegundis"
+#addname "Conegunt"
+#addname "Constantia"
+#addname "Contzel"
+#addname "Crapahildis"
+#addname "Cristehildis"
+#addname "Cristemburga"
+#addname "Cristemia"
+#addname "Cristyne"
+#addname "Cunegund"
+#addname "Cunegundis"
+#addname "Dadin"
+#addname "Dagarada"
+#addname "Danburga"
+#addname "Demuth"
+#addname "Dilli"
+#addname "Dillo"
+#addname "Doda"
+#addname "Dodda"
+#addname "Duda"
+#addname "Eberhild"
+#addname "Ebertana"
+#addname "Eburhild"
+#addname "Eburhilt"
+#addname "Edeberga"
+#addname "Edeborg"
+#addname "Edila"
+#addname "Ega"
+#addname "Egecin"
+#addname "Egeluuara"
+#addname "Egesburga"
+#addname "Egesloga"
+#addname "Ehgelhild"
+#addname "Ehgeluuara"
+#addname "Elftrudis"
+#addname "Else"
+#addname "Elsebeth"
+#addname "Emecin"
+#addname "Emeludt"
+#addname "Emma"
+#addname "Engelgard"
+#addname "Engelsuit"
+#addname "Engeluuara"
+#addname "Engelwara"
+#addname "Enna"
+#addname "Erchembrog"
+#addname "Eremburgis"
+#addname "Ereprad"
+#addname "Erkembrog"
+#addname "Erkenbrog"
+#addname "Erkenburoc"
+#addname "Erkenrad"
+#addname "Ermandrud"
+#addname "Ermecin"
+#addname "Ermegardis"
+#addname "Ermengarda"
+#addname "Ermengardis"
+#addname "Ermentrudis"
+#addname "Ermeswindis"
+#addname "Ermina"
+#addname "Erpsuid"
+#addname "Errictruda"
+#addname "Ethelchif"
+#addname "Ethelgard"
+#addname "Ethelgarda"
+#addname "Eue"
+#addname "Euerloga"
+#addname "Eurildis"
+#addname "Eurohildis"
+#addname "Everelda"
+#addname "Evereldis"
+#addname "Evfemia"
+#addname "Farahilda"
+#addname "Flouerana"
+#addname "Folclind"
+#addname "Folclinda"
+#addname "Folcrada"
+#addname "Folcuuara"
+#addname "Folgarda"
+#addname "Folsuindis"
+#addname "Folsuuendis"
+#addname "Fordola"
+#addname "Fortlifh"
+#addname "Frauuara"
+#addname "Fredeburgis"
+#addname "Fredegonde"
+#addname "Frederada"
+#addname "Fredeuuara"
+#addname "Frethegard"
+#addname "Frethesuinda"
+#addname "Frethesuindis"
+#addname "Fridegundis"
+#addname "Fridesuenda"
+#addname "Fridewiga"
+#addname "Frisburgis"
+#addname "Frithelinda"
+#addname "Frouuin"
+#addname "Frouuina"
+#addname "Fye"
+#addname "Gailan"
+#addname "Gailana"
+#addname "Geila"
+#addname "Gelduuara"
+#addname "Gele"
+#addname "Geneva"
+#addname "Gerberga"
+#addname "Gerburg"
+#addname "Geredrudis"
+#addname "Geretrudis"
+#addname "Gerharde"
+#addname "Gerhild"
+#addname "Gerlent"
+#addname "Gerlinda"
+#addname "Gersenda"
+#addname "Gersuenda"
+#addname "Gersuinda"
+#addname "Gertruda"
+#addname "Gertrudis"
+#addname "Geruuara"
+#addname "Geua"
+#addname "Geva"
+#addname "Gisela"
+#addname "Gisila"
+#addname "Gisla"
+#addname "Glismodis"
+#addname "Godalinda"
+#addname "Godeca"
+#addname "Godecin"
+#addname "Godelda"
+#addname "Godelinda"
+#addname "Godildis"
+#addname "Goduuara"
+#addname "Gothuuera"
+#addname "Grede"
+#addname "Gredechin"
+#addname "Grimuuara"
+#addname "Grishild"
+#addname "Guda"
+#addname "Gude"
+#addname "Gundichild"
+#addname "Gundrada"
+#addname "Guodhelda"
+#addname "Guodlia"
+#addname "Gyel"
+#addname "Gyszel"
+#addname "Hadaken"
+#addname "Hadewidis"
+#addname "Harwara"
+#addname "Hazeca"
+#addname "Hedewigis"
+#addname "Heidindrudis"
+#addname "Heilewif"
+#addname "Heilswinda"
+#addname "Heldeburga"
+#addname "Heletradana"
+#addname "Heleuuidis"
+#addname "Helewidis"
+#addname "Helinda"
+#addname "Heltrada"
+#addname "Hengelsenda"
+#addname "Herden"
+#addname "Herdin"
+#addname "Herenborg"
+#addname "Herenfrida"
+#addname "Herlindis"
+#addname "Herlinda"
+#addname "Hermana"
+#addname "Hermengarda"
+#addname "Hette"
+#addname "Hildberta"
+#addname "Hildborg"
+#addname "Hildcardis"
+#addname "Hildeberga"
+#addname "Hildeburg"
+#addname "Hildeburgis"
+#addname "Hildegard"
+#addname "Hildegardis"
+#addname "Hildelana"
+#addname "Hildemunda"
+#addname "Hildeswindis"
+#addname "Hildeuuara"
+#addname "Hildeuuif"
+#addname "Hildewara"
+#addname "Hildewif"
+#addname "Hildrada"
+#addname "Hildwara"
+#addname "Hiltrude"
+#addname "Hirmenlind"
+#addname "Hostaruuara"
+#addname "Hruodgarda"
+#addname "Hruotberta"
+#addname "Ida"
+#addname "Idasgarda"
+#addname "Ideslef"
+#addname "Idesuuif"
+#addname "Ideswif"
+#addname "Idisiardis"
+#addname "Imicina"
+#addname "Imma"
+#addname "Ingela"
+#addname "Ingelswindis"
+#addname "Ingeluuara"
+#addname "Ingelwara"
+#addname "Iodberta"
+#addname "Iolitha"
+#addname "Irmele"
+#addname "Irmengard"
+#addname "Irmenhild"
+#addname "Irmenlind"
+#addname "Isa"
+#addname "Isburch"
+#addname "Isold"
+#addname "Judda"
+#addname "Kordel"
+#addname "Kordula"
+#addname "Kungund"
+#addname "Landburuga"
+#addname "Landgarda"
+#addname "Landrada"
+#addname "Lanthildis"
+#addname "Lantuuara"
+#addname "Lavena"
+#addname "Lavina"
+#addname "Lebdrudis"
+#addname "Leddinga"
+#addname "Leuekin"
+#addname "Leuuich"
+#addname "Liaueld"
+#addname "Lidiardis"
+#addname "Liedrada"
+#addname "Liefhun"
+#addname "Lieftet"
+#addname "Liepmayt"
+#addname "Lietgarda"
+#addname "Lietgardis"
+#addname "Lietuuif"
+#addname "Lieuuara"
+#addname "Lifgarda"
+#addname "Linda"
+#addname "Lindi"
+#addname "Liodburga"
+#addname "Liodgard"
+#addname "Liodrada"
+#addname "Litburh"
+#addname "Litgardis"
+#addname "Litiardis"
+#addname "Lucardis"
+#addname "Lugardis"
+#addname "Lype"
+#addname "Lyse"
+#addname "Machtildis"
+#addname "Madelrada"
+#addname "Madhalberta"
+#addname "Magthildis"
+#addname "Magtildis"
+#addname "Mahthild"
+#addname "Mahthildis"
+#addname "Malasintha"
+#addname "Malasuintha"
+#addname "Margarete"
+#addname "Markuuara"
+#addname "Mathildis"
+#addname "Mauriana"
+#addname "Meckil"
+#addname "Megenberta"
+#addname "Megendrod"
+#addname "Megenhelda"
+#addname "Megenlind"
+#addname "Megenlioba"
+#addname "Megensind"
+#addname "Megensinda"
+#addname "Megenuuara"
+#addname "Meinburg"
+#addname "Meinnelda"
+#addname "Meinsent"
+#addname "Meinswindis"
+#addname "Menborch"
+#addname "Methdin"
+#addname "Methild"
+#addname "Methildis"
+#addname "Minna"
+#addname "Murina"
+#addname "Nidlebis"
+#addname "Niesenn"
+#addname "Nordrada"
+#addname "Oda"
+#addname "Odala"
+#addname "Odburga"
+#addname "Odela"
+#addname "Odgiva"
+#addname "Odguda"
+#addname "Odgudana"
+#addname "Odila"
+#addname "Odilia"
+#addname "Odlenda"
+#addname "Odriana"
+#addname "Olburgis"
+#addname "Olga"
+#addname "Orieldis"
+#addname "Osgarda"
+#addname "Osgiua"
+#addname "Otberta"
+#addname "Otgiua"
+#addname "Otgiva"
+#addname "Otilia"
+#addname "Oydela"
+#addname "Pharahildis"
+#addname "Radagundis"
+#addname "Radborg"
+#addname "Radburg"
+#addname "Radburgis"
+#addname "Radegund"
+#addname "Radeken"
+#addname "Radgert"
+#addname "Radlia"
+#addname "Radsuinda"
+#addname "Rainilda"
+#addname "Rainildis"
+#addname "Ramburga"
+#addname "Regana"
+#addname "Regenburuga"
+#addname "Regenelda"
+#addname "Regenlind"
+#addname "Regenset"
+#addname "Reginsuint"
+#addname "Regneuuig"
+#addname "Reinewif"
+#addname "Reingard"
+#addname "Reingardis"
+#addname "Reingart"
+#addname "Reingaud"
+#addname "Reingod"
+#addname "Reinhedis"
+#addname "Reinsuent"
+#addname "Relindis"
+#addname "Renburgis"
+#addname "Rennewief"
+#addname "Riberta"
+#addname "Richelda"
+#addname "Richildis"
+#addname "Riclindis"
+#addname "Ricsuinda"
+#addname "Rikildis"
+#addname "Rinelt"
+#addname "Rinilda"
+#addname "Rodburga"
+#addname "Rodgarda"
+#addname "Rodgardae"
+#addname "Rofsind"
+#addname "Rosamunda"
+#addname "Roslindis"
+#addname "Roswitha"
+#addname "Rotburga"
+#addname "Rothin"
+#addname "Rotlenda"
+#addname "Seburg"
+#addname "Seburga"
+#addname "Siborch"
+#addname "Siburg"
+#addname "Sigarda"
+#addname "Sigberta"
+#addname "Sigeberta"
+#addname "Sigeburgis"
+#addname "Sigethrod"
+#addname "Sigiburgis"
+#addname "Snelburch"
+#addname "Stenburch"
+#addname "Stilleuuara"
+#addname "Strilleburg"
+#addname "Suitburgis"
+#addname "Syardis"
+#addname "Syele"
+#addname "Teudsindis"
+#addname "Thancuuara"
+#addname "Theaduuara"
+#addname "Thedela"
+#addname "Theodelinda"
+#addname "Thidela"
+#addname "Thieda"
+#addname "Thietgarda"
+#addname "Thietuuich"
+#addname "Thietwara"
+#addname "Thiodsind"
+#addname "Thiodsuinda"
+#addname "Thiutuuara"
+#addname "Thrasborg"
+#addname "Thrudberga"
+#addname "Ticekin"
+#addname "Tietlenda"
+#addname "Tietza"
+#addname "Trhutborgana"
+#addname "Trudlinde"
+#addname "Trutilda"
+#addname "Ualdburg"
+#addname "Ualdethruda"
+#addname "Uda"
+#addname "Ueremund"
+#addname "Uerenburoc"
+#addname "Uiburgis"
+#addname "Uindborog"
+#addname "Uinebarga"
+#addname "Uireda"
+#addname "Ulgarda"
+#addname "Uoldolberta"
+#addname "Veleda"
+#addname "Vrowecin"
+#addname "Vualdberta"
+#addname "Vualdedruda"
+#addname "Vualdetruda"
+#addname "Vuifken"
+#addname "Vuinetberta"
+#addname "Vuiuechin"
+#addname "Waldburg"
+#addname "Warehild"
+#addname "Wavin"
+#addname "Wiblind"
+#addname "Wiburgis"
+#addname "Wifhildis"
+#addname "Wihted"
+#addname "Wilberga"
+#addname "Wilgeva"
+#addname "Willelda"
+#addname "Willesuindis"
+#addname "Wivecin"
+#addname "Wivin"
+#addname "Wlbergis"
+#addname "Wlbgis"
+#addname "Wlfildis"
+#addname "Wlgert"
+#addname "Yrmengardis"
+#addname "Amalasuintha"
+#addname "Amalberga"
+#addname "Amalfrida"
+#addname "Areagne"
+#addname "Chlotsuintha"
+#addname "Ereleuva"
+#addname "Erelieva"
+#addname "Gaatha"
+#addname "Giso"
+#addname "Glismoda"
+#addname "Gudeliva"
+#addname "Helchen"
+#addname "Hunila"
+#addname "Kriemhild"
+#addname "Matasuntha"
+#addname "Ostrogotho"
+#addname "Sunigilda"
+#addname "Sunilda"
+#addname "Theodananda"
+#addname "Thiudigotho"
+#addname "Vadamerca"
+#addname "Valdamerca"
+#addname "Wilgefortis"
+#end
+
+#selectnametype 133
+#addname "Ai"
+#addname "Aiko"
+#addname "Akane"
+#addname "Aki"
+#addname "Akiko"
+#addname "Akina"
+#addname "Ami"
+#addname "Anda"
+#addname "Aneko"
+#addname "Arisa"
+#addname "Asako"
+#addname "Asami"
+#addname "Atsuko"
+#addname "Ayako"
+#addname "Ayame"
+#addname "Chiaki"
+#addname "Chika"
+#addname "Chikako"
+#addname "Chiko"
+#addname "Chisato"
+#addname "Chiyo"
+#addname "Chizu"
+#addname "Cho"
+#addname "Dai"
+#addname "Daichi"
+#addname "Ema"
+#addname "Emi"
+#addname "Emiko"
+#addname "Eri"
+#addname "Eriko"
+#addname "Etsuko"
+#addname "Fuji"
+#addname "Fujiko"
+#addname "Fumi"
+#addname "Fumie"
+#addname "Fumiko"
+#addname "Fumiyo"
+#addname "Gin"
+#addname "Hamako"
+#addname "Hana"
+#addname "Haru"
+#addname "Haruko"
+#addname "Harumi"
+#addname "Hatsue"
+#addname "Hatsuyo"
+#addname "Hiromusi"
+#addname "Hisa"
+#addname "Hisayo"
+#addname "Hitomi"
+#addname "Honami"
+#addname "Hoshi"
+#addname "Hoshiko"
+#addname "Hoshiyo"
+#addname "Ichi"
+#addname "Ikue"
+#addname "Ikuko"
+#addname "Imako"
+#addname "Isako"
+#addname "Ishi"
+#addname "Izuko"
+#addname "Izumi"
+#addname "Jun"
+#addname "Junko"
+#addname "Kaede"
+#addname "Kagami"
+#addname "Kameko"
+#addname "Kami"
+#addname "Kasuga"
+#addname "Katsue"
+#addname "Katsuko"
+#addname "Kawanomu"
+#addname "Kaya"
+#addname "Kazue"
+#addname "Kazuko"
+#addname "Kazumi"
+#addname "Kei"
+#addname "Keiko"
+#addname "Kenshi"
+#addname "Kiku"
+#addname "Kimi"
+#addname "Kimiko"
+#addname "Kioko"
+#addname "Kita"
+#addname "Kohana"
+#addname "Kogin"
+#addname "Kogo"
+#addname "Koi"
+#addname "Komachi"
+#addname "Koto"
+#addname "Kozakura"
+#addname "Kumi"
+#addname "Kumiko"
+#addname "Kuni"
+#addname "Kuri"
+#addname "Kusuriko"
+#addname "Kyoko"
+#addname "Leiko"
+#addname "Machi"
+#addname "Machiko"
+#addname "Madoka"
+#addname "Maeko"
+#addname "Maemi"
+#addname "Mai"
+#addname "Maiko"
+#addname "Maiya"
+#addname "Maki"
+#addname "Makiko"
+#addname "Mami"
+#addname "Mamiko"
+#addname "Manami"
+#addname "Mari"
+#addname "Mariko"
+#addname "Marise"
+#addname "Masago"
+#addname "Masako"
+#addname "Masami"
+#addname "Masuko"
+#addname "Masumi"
+#addname "Matsu"
+#addname "Matsuko"
+#addname "Maya"
+#addname "Mayako"
+#addname "Mayo"
+#addname "Mayoko"
+#addname "Mayu"
+#addname "Mayuko"
+#addname "Mayumi"
+#addname "Megumi"
+#addname "Michiko"
+#addname "Midori"
+#addname "Miho"
+#addname "Mihoko"
+#addname "Mikazuki"
+#addname "Miki"
+#addname "Mina"
+#addname "Minako"
+#addname "Mineko"
+#addname "Mio"
+#addname "Misa"
+#addname "Misako"
+#addname "Misato"
+#addname "Mitsu"
+#addname "Mitsuko"
+#addname "Miya"
+#addname "Miyako"
+#addname "Miyoko"
+#addname "Mizuki"
+#addname "Momoko"
+#addname "Mutsuko"
+#addname "Mutsumi"
+#addname "Naho"
+#addname "Nahoko"
+#addname "Nami"
+#addname "Namie"
+#addname "Namiko"
+#addname "Namiyo"
+#addname "Nana"
+#addname "Nanako"
+#addname "Nanami"
+#addname "Nao"
+#addname "Naoko"
+#addname "Naomi"
+#addname "Nari"
+#addname "Nariko"
+#addname "Narumi"
+#addname "Natsuko"
+#addname "Natsumi"
+#addname "Nayoko"
+#addname "Nene"
+#addname "Niji"
+#addname "Nijina"
+#addname "Noriko"
+#addname "Nyoko"
+#addname "Ochobo"
+#addname "Oki"
+#addname "Onshi"
+#addname "Orino"
+#addname "Rei"
+#addname "Reiko"
+#addname "Remi"
+#addname "Renshi"
+#addname "Rie"
+#addname "Rieko"
+#addname "Rikako"
+#addname "Rina"
+#addname "Rinako"
+#addname "Risa"
+#addname "Risako"
+#addname "Ritsuko"
+#addname "Romi"
+#addname "Rui"
+#addname "Rumiko"
+#addname "Ruri"
+#addname "Ryoko"
+#addname "Sachi"
+#addname "Sachiko"
+#addname "Sadako"
+#addname "Sae"
+#addname "Saeko"
+#addname "Saki"
+#addname "Sakiko"
+#addname "Sakuko"
+#addname "Sakura"
+#addname "Sakurako"
+#addname "Sanako"
+#addname "Satoko"
+#addname "Satomi"
+#addname "Satu"
+#addname "Saya"
+#addname "Sayo"
+#addname "Sayoko"
+#addname "Sayuri"
+#addname "Sei"
+#addname "Seiko"
+#addname "Seki"
+#addname "Sen"
+#addname "Senshi"
+#addname "Setsuko"
+#addname "Shika"
+#addname "Shikibu"
+#addname "Shina"
+#addname "Shino"
+#addname "Shinobu"
+#addname "Shiori"
+#addname "Shizue"
+#addname "Shizuka"
+#addname "Shizuyo"
+#addname "Shoko"
+#addname "Siki"
+#addname "Sugi"
+#addname "Suki"
+#addname "Sumi"
+#addname "Suzu"
+#addname "Tadako"
+#addname "Taji"
+#addname "Taka"
+#addname "Takako"
+#addname "Takara"
+#addname "Tama"
+#addname "Tamako"
+#addname "Tami"
+#addname "Tamika"
+#addname "Tamiko"
+#addname "Tamiyo"
+#addname "Tanak"
+#addname "Tara"
+#addname "Taree"
+#addname "Taura"
+#addname "Taya"
+#addname "Teika"
+#addname "Tenshi"
+#addname "Teruko"
+#addname "Tokie"
+#addname "Tokiko"
+#addname "Tokiwa"
+#addname "Tokiyo"
+#addname "Tokuko"
+#addname "Tomiko"
+#addname "Tomoe"
+#addname "Toshi"
+#addname "Towika"
+#addname "Toya"
+#addname "Tsukiyama"
+#addname "Tsuyu"
+#addname "Tukiko"
+#addname "Tukiyo"
+#addname "Wakana"
+#addname "Wazuka"
+#addname "Umeko"
+#addname "Umeno"
+#addname "Yasuko"
+#addname "Yayoi"
+#addname "Yodo"
+#addname "Yoko"
+#addname "Yoshi"
+#addname "Yoshiko"
+#addname "Yu"
+#addname "Yui"
+#addname "Yuka"
+#addname "Yukako"
+#addname "Yukari"
+#addname "Yuki"
+#addname "Yukiko"
+#addname "Yukio"
+#addname "Yuma"
+#addname "Yumako"
+#addname "Yumi"
+#addname "Yumiko"
+#addname "Yuri"
+#addname "Yuriko"
+#addname "Yutsuko"
+#end
+
+#selectnametype 134
+#addname "Akeno"
+#addname "Akifusa"
+#addname "Akihide"
+#addname "Akihiko"
+#addname "Akihira"
+#addname "Akihiro"
+#addname "Akihito"
+#addname "Akikane"
+#addname "Akikazu"
+#addname "Akimitsu"
+#addname "Akimoto"
+#addname "Akira"
+#addname "Akisada"
+#addname "Akitoki"
+#addname "Akitoshi"
+#addname "Akitsuna"
+#addname "Akizumi"
+#addname "Benkei"
+#addname "Benjiro"
+#addname "Botan"
+#addname "Buntaro"
+#addname "Chikafusa"
+#addname "Chikayo"
+#addname "Chiko"
+#addname "Chomei"
+#addname "Chuemon"
+#addname "Dai"
+#addname "Danno"
+#addname "Dosan"
+#addname "Eichi"
+#addname "Emishi"
+#addname "Emon"
+#addname "Fuhito"
+#addname "Fujihiro"
+#addname "Fujitaka"
+#addname "Fujiyori"
+#addname "Fumihiko"
+#addname "Fumio"
+#addname "Fumitoki"
+#addname "Fusaaki"
+#addname "Fusahira"
+#addname "Fusakage"
+#addname "Fusamasa"
+#addname "Fusanari"
+#addname "Fusasaki"
+#addname "Fusashige"
+#addname "Fusatsugu"
+#addname "Fusazane"
+#addname "Fuyufusa"
+#addname "Fuyuhira"
+#addname "Fuyuie"
+#addname "Fuyumichi"
+#addname "Fuyunori"
+#addname "Fuyusuke"
+#addname "Fuyutsugu"
+#addname "Fuyuuji"
+#addname "Fuyuyasu"
+#addname "Genichi"
+#addname "Goro"
+#addname "Hideaki"
+#addname "Hidekazu"
+#addname "Hirofumi"
+#addname "Hirohisa"
+#addname "Hirokazu"
+#addname "Hiroshi"
+#addname "Hisashi"
+#addname "Hitoshi"
+#addname "Ichiro"
+#addname "Jiro"
+#addname "Joben"
+#addname "Jomei"
+#addname "Jotaro"
+#addname "Juichi"
+#addname "Junichi"
+#addname "Juro"
+#addname "Kado"
+#addname "Kaemon"
+#addname "Kamlyn"
+#addname "Kane"
+#addname "Kano"
+#addname "Kaori"
+#addname "Katsuhiko"
+#addname "Katsumi"
+#addname "Kazuhiko"
+#addname "Kazuki"
+#addname "Kazunori"
+#addname "Kazuo"
+#addname "Kazushi"
+#addname "Kei"
+#addname "Keiji"
+#addname "Keitaro"
+#addname "Ken"
+#addname "Kenichi"
+#addname "Kenji"
+#addname "Kensaku"
+#addname "Kimimichi"
+#addname "Kiminari"
+#addname "Kimitomo"
+#addname "Kinaki"
+#addname "Kinari"
+#addname "Kinchika"
+#addname "Kinfusa"
+#addname "Kinfuyu"
+#addname "Kinhide"
+#addname "Kinhira"
+#addname "Kinkata"
+#addname "Kinkiyo"
+#addname "Kinmasa"
+#addname "Kinmichi"
+#addname "Kinmitsu"
+#addname "Kinmori"
+#addname "Kinmoto"
+#addname "Kinmune"
+#addname "Kinnaga"
+#addname "Kinnao"
+#addname "Kinnori"
+#addname "Kino"
+#addname "Kinsada"
+#addname "Kinshige"
+#addname "Kinsue"
+#addname "Kinsuke"
+#addname "Kintada"
+#addname "Kintaro"
+#addname "Kintoki"
+#addname "Kintoshi"
+#addname "Kintsugu"
+#addname "Kintsuna"
+#addname "Kintsune"
+#addname "Kintsura"
+#addname "Kinyasu"
+#addname "Kinyuki"
+#addname "Kioshi"
+#addname "Kisoi"
+#addname "Kiyofusa"
+#addname "Kiyohide"
+#addname "Kiyohira"
+#addname "Kiyokata"
+#addname "Kiyokuni"
+#addname "Kiyomasa"
+#addname "Kiyomitsu"
+#addname "Kiyomori"
+#addname "Kiyomune"
+#addname "Kiyonaga"
+#addname "Kiyonari"
+#addname "Kiyonori"
+#addname "Kiyosada"
+#addname "Kiyoshige"
+#addname "Kiyosuke"
+#addname "Kiyotada"
+#addname "Kiyotaka"
+#addname "Kiyotane"
+#addname "Kiyotoki"
+#addname "Kiyotomo"
+#addname "Kiyotsuna"
+#addname "Kiyotsune"
+#addname "Kiyouji"
+#addname "Kiyoyuki"
+#addname "Koichi"
+#addname "Komaro"
+#addname "Koremasa"
+#addname "Kosaku"
+#addname "Kotaro"
+#addname "Kuronushi"
+#addname "Kyoichi"
+#addname "Kyuso"
+#addname "Mabuchi"
+#addname "Makoto"
+#addname "Mamoru"
+#addname "Manabu"
+#addname "Manzo"
+#addname "Mareo"
+#addname "Masaari"
+#addname "Masachika"
+#addname "Masafumi"
+#addname "Masafusa"
+#addname "Masaharu"
+#addname "Masahide"
+#addname "Masahiko"
+#addname "Masahira"
+#addname "Masahiro"
+#addname "Masaie"
+#addname "Masakado"
+#addname "Masakage"
+#addname "Masakata"
+#addname "Masakatsu"
+#addname "Masakazu"
+#addname "Masaki"
+#addname "Masakiyo"
+#addname "Masakuni"
+#addname "Masami"
+#addname "Masamichi"
+#addname "Masamitsu"
+#addname "Masamori"
+#addname "Masamoto"
+#addname "Masamune"
+#addname "Masamura"
+#addname "Masanaga"
+#addname "Masanari"
+#addname "Masanobu"
+#addname "Masanori"
+#addname "Masao"
+#addname "Masasada"
+#addname "Masashi"
+#addname "Masashige"
+#addname "Masasue"
+#addname "Masasuke"
+#addname "Masatada"
+#addname "Masataka"
+#addname "Masatake"
+#addname "Masatane"
+#addname "Masatoki"
+#addname "Masatomo"
+#addname "Masatoo"
+#addname "Masatora"
+#addname "Masatoyo"
+#addname "Masatsugu"
+#addname "Masatsuna"
+#addname "Masatsune"
+#addname "Masatsura"
+#addname "Masauji"
+#addname "Masayasu"
+#addname "Masayo"
+#addname "Masayori"
+#addname "Masayoshi"
+#addname "Masayuki"
+#addname "Masazane"
+#addname "Mashiro"
+#addname "Masuyuki"
+#addname "Michifusa"
+#addname "Michihiro"
+#addname "Michio"
+#addname "Mieko"
+#addname "Miki"
+#addname "Mikio"
+#addname "Minoru"
+#addname "Mitsukane"
+#addname "Miyamoto"
+#addname "Mochiyo"
+#addname "Montaro"
+#addname "Morio"
+#addname "Morinaga"
+#addname "Munetaka"
+#addname "Murashige"
+#addname "Nagafusa"
+#addname "Nakahira"
+#addname "Nambo"
+#addname "Naoki"
+#addname "Naoko"
+#addname "Naoshige"
+#addname "Narihiro"
+#addname "Nikki"
+#addname "Nikko"
+#addname "Noboru"
+#addname "Nobuhisa"
+#addname "Nobukazu"
+#addname "Nobuo"
+#addname "Nobuyoshi"
+#addname "Noriaki"
+#addname "Norihide"
+#addname "Norihisa"
+#addname "Norio"
+#addname "Oguromaro"
+#addname "Okimoto"
+#addname "Okura"
+#addname "Omaro"
+#addname "Osamu"
+#addname "Otondo"
+#addname "Rai"
+#addname "Raidon"
+#addname "Razan"
+#addname "Rei"
+#addname "Reizo"
+#addname "Rikyu"
+#addname "Rinji"
+#addname "Rintaro"
+#addname "Roka"
+#addname "Rokuemon"
+#addname "Ryoichi"
+#addname "Ryokai"
+#addname "Ryosei"
+#addname "Ryuichi"
+#addname "Ryutaro"
+#addname "Saburo"
+#addname "Sachio"
+#addname "Sadakata"
+#addname "Sanetomo"
+#addname "Saniiro"
+#addname "Sanzo"
+#addname "Saru"
+#addname "Satoru"
+#addname "Satoshi"
+#addname "Seiichi"
+#addname "Senichi"
+#addname "Shigeaki"
+#addname "Shigekazu"
+#addname "Shigeki"
+#addname "Shijo"
+#addname "Shingen"
+#addname "ShinIchi"
+#addname "Shintaro"
+#addname "Shinzaburo"
+#addname "Shiro"
+#addname "Shoda"
+#addname "Shoetsu"
+#addname "Shoichi"
+#addname "Shuichi"
+#addname "ShunIchi"
+#addname "Sumio"
+#addname "Suzu"
+#addname "Tadao"
+#addname "Tadashi"
+#addname "Taji"
+#addname "Takaaki"
+#addname "Takafumi"
+#addname "Takahiro"
+#addname "Takakazu"
+#addname "Takao"
+#addname "Takashi"
+#addname "Takayuki"
+#addname "Takeo"
+#addname "Takeshi"
+#addname "Takuya"
+#addname "Tanak"
+#addname "Tanjiro"
+#addname "Taro"
+#addname "Teijo"
+#addname "Teiljo"
+#addname "Teruo"
+#addname "Tetsuhiko"
+#addname "Tetsunori"
+#addname "Tetsuo"
+#addname "Tetsuya"
+#addname "Tetsuyuki"
+#addname "Tokiie"
+#addname "Tokikane"
+#addname "Tokikiyo"
+#addname "Tokikuni"
+#addname "Tokimasa"
+#addname "Tokimasu"
+#addname "Tokimichi"
+#addname "Tokimochi"
+#addname "Tokimori"
+#addname "Tokimoto"
+#addname "Tokimune"
+#addname "Tomeo"
+#addname "Tomohiko"
+#addname "Tomokazu"
+#addname "Tomoyuki"
+#addname "Torio"
+#addname "Toru"
+#addname "Toshiharu"
+#addname "Toshikazu"
+#addname "Toshio"
+#addname "Toshiro"
+#addname "Toshiyuki"
+#addname "Tsunechika"
+#addname "Tsunefusa"
+#addname "Tsuneharu"
+#addname "Tsunehide"
+#addname "Tsunehira"
+#addname "Tsunehisa"
+#addname "Tsuneie"
+#addname "Tsunekage"
+#addname "Tsunekane"
+#addname "Tsunekuni"
+#addname "Tsunemasa"
+#addname "Tsunemi"
+#addname "Tsunemichi"
+#addname "Tsunemitsu"
+#addname "Tsunemori"
+#addname "Tsunemoto"
+#addname "Tsutomu"
+#addname "Udo"
+#addname "Yasukazu"
+#addname "Yasuo"
+#addname "Yoichi"
+#addname "Yoshi"
+#addname "Yoshifumi"
+#addname "Yoshikazu "
+#addname "Yoshimitsu"
+#addname "Yoshiyuki"
+#addname "Yuichi"
+#addname "Yuki"
+#addname "Yukihide"
+#addname "Yukihira"
+#addname "Yukihiro"
+#addname "Yukihisa"
+#addname "Yukikata"
+#addname "Yukikiyo"
+#addname "Yukimasa"
+#addname "Yukimichi"
+#addname "Yukimitsu"
+#addname "Yukimori"
+#addname "Yukimura"
+#addname "Yukio"
+#addname "Yukisada"
+#addname "Yutaka"
+#end
+
+#selectnametype 135
+#addname "Hippolyte"
+#addname "Maytha "
+#addname "Alysia"
+#addname "Areto "
+#addname "Ariah"
+#addname "Celene"
+#addname "Evanda"
+#addname "Dawnithinia"
+#addname "Kala "
+#addname "Ephinys "
+#addname "Yakut "
+#addname "Otere"
+#addname "Aina"
+#addname "Aello"
+#addname "Ainia"
+#addname "Ainippe"
+#addname "Alcibie"
+#addname "Alcippe"
+#addname "Alkaia"
+#addname "Anaea"
+#addname "Anaxilea"
+#addname "Androdaira"
+#addname "Androdaixa"
+#addname "Andromache"
+#addname "Andromeda"
+#addname "Alcinoe"
+#addname "Antimache"
+#addname "Areximacha"
+#addname "Okypous"
+#addname "Pisto"
+#addname "Scyleia"
+#addname "Teisipyte"
+#addname "Telepyleia"
+#addname "Thraso"
+#addname "Toxaris"
+#addname "Toxis"
+#addname "Toxophile"
+#addname "Antandre"
+#addname "Antianara"
+#addname "Antibrote"
+#addname "Antiope"
+#addname "Areto"
+#addname "Asteria"
+#addname "Bremusa"
+#addname "Celaeno"
+#addname "Cleite"
+#addname "Clonie"
+#addname "Deianeira"
+#addname "Derimacheia"
+#addname "Derinoe"
+#addname "Eriobea"
+#addname "Euryale"
+#addname "Eurybe"
+#addname "Evandre"
+#addname "Gryne"
+#addname "Harmothoe"
+#addname "Hipp"
+#addname "Hippolyta"
+#addname "Hippothoe"
+#addname "Hypsipyle"
+#addname "Iphito"
+#addname "Kleoptoleme"
+#addname "Kydoime"
+#addname "Lampado"
+#addname "Lykopis"
+#addname "Lysippe"
+#addname "Marpe"
+#addname "Marpesia"
+#addname "Melanippe"
+#addname "Molpadia"
+#addname "Myrine"
+#addname "Myrto"
+#addname "Cleobule"
+#addname "Mytilene"
+#addname "Omphale"
+#addname "Oreithyia"
+#addname "Chione"
+#addname "Marpesia"
+#addname "Otrere"
+#addname "Pantariste"
+#addname "Penthesilia"
+#addname "Philippis"
+#addname "Phoebe"
+#addname "Polemusa"
+#addname "Prothoe"
+#addname "Tecmessa"
+#addname "Thalestris"
+#addname "Thermadosa"
+#addname "Valasca"
+#addname "Orithia"
+#addname "Amynomene"
+#addname "Androdameia"
+#addname "Antianeira"
+#addname "Antimachos"
+#addname "Antiopeia"
+#addname "Aristomache"
+#addname "Clyemne"
+#addname "Deinomache"
+#addname "Doris"
+#addname "Echephyle"
+#addname "Eumache"
+#addname "Euryleia"
+#addname "Hippomache"
+#addname "Kreousa"
+#addname "Laodoke"
+#addname "Melousa"
+#addname "Mimnousa"
+#addname "Molpadia"
+#addname "Okyale"
+#addname "Pyrgomache"
+#addname "Xanthippe"
+#addname "Tabiti"
+#addname "Opoea"
+#end
+
+#selectnametype 136
+#addname "Anacharsis"
+#addname "Papaeus"
+#addname "Oricus"
+#addname "Artimpasa"
+#addname "Arapeithes"
+#addname "Ariapithes"
+#addname "Atheas"
+#addname "Idanthyrsus"
+#addname "Gnurus"
+#addname "Lycus"
+#addname "Spargapithes"
+#addname "Madyes"
+#addname "Protothyes"
+#addname "Palacus"
+#addname "Partatua"
+#addname "Saulius"
+#addname "Scyles"
+#addname "Scylas"
+#addname "Scylurus"
+#addname "Skunxa"
+#addname "Octamasadas"
+#addname "Arianthas"
+#addname "Targitaus"
+#addname "Leipoxais"
+#addname "Arpoxais"
+#addname "Colaxais"
+#addname "Auchatus"
+#addname "Catiarus"
+#addname "Paralatus"
+#addname "Agathyrsus"
+#addname "Gelonus"
+#addname "Scythes"
+#addname "Araxus"
+#addname "Cimmeru"
+#addname "Arimaspu"
+#addname "Cyzicenian"
+#addname "Arimais"
+#addname "Arimaxis"
+#addname "Arimascythes"
+#addname "Spargapithes"
+#end
+
+#selectnametype 137
+#addname "Orgetorix"
+#addname "Vercingetorix"
+#addname "Catamantaledes"
+#addname "Casticus"
+#addname "Dumnorix"
+#addname "Aeduan"
+#addname "Divitiacus"
+#addname "Numeius"
+#addname "Verudoctius"
+#addname "Divico"
+#addname "Liscus"
+#addname "Ariovistus"
+#addname "Cimberius"
+#addname "Nasuas"
+#addname "Labenius"
+#addname "Iccius"
+#addname "Antrbrogius"
+#addname "Viridovix"
+#addname "Sabinus"
+#addname "Volusensus"
+#addname "Commius"
+#addname "Cingetorix"
+#addname "Indutiomarus"
+#addname "Cassivellaunus"
+#addname "Carvilius"
+#addname "Taximagulus"
+#addname "Segonax"
+#addname "Ambiorix"
+#addname "Cativolcus"
+#addname "Tasgetius"
+#addname "Moritasgus"
+#addname "Cavarinus"
+#addname "Acco"
+#addname "Cotuatus"
+#addname "Conetodunus"
+#addname "Celtillus"
+#addname "Gobanitio"
+#addname "Lucterius"
+#addname "Teutomarus"
+#addname "Ollovicon"
+#addname "Convictolitanis"
+#addname "Cotus"
+#addname "Valetiacus"
+#addname "Eporedirix"
+#addname "Viridomarus"
+#addname "Cabillonus"
+#addname "Litavicus"
+#addname "Camalugenus"
+#addname "Correus"
+#addname "Vertiscus"
+#addname "Dumnacus"
+#addname "Drapes"
+#addname "Luterius"
+#addname "Guturvatus"
+#addname "Epasnactus"
+#end
+
+#selectnametype 138
+#addname "Agrippina"
+#addname "Antonia"
+#addname "Julia"
+#end
+
+#selectnametype 139
+#addname "Abdiel"
+#addname "Adnachiel"
+#addname "Afriel"
+#addname "Ambriel"
+#addname "Amitiel"
+#addname "Anael"
+#addname "Anauel"
+#addname "Ananchel"
+#addname "Ariel"
+#addname "Asmodel"
+#addname "Balthial"
+#addname "Barakiel"
+#addname "Barbiel"
+#addname "Barchiel"
+#addname "Bath Kol"
+#addname "Camael"
+#addname "Cassiel"
+#addname "Cathetel"
+#addname "Chamuel"
+#addname "Charmeine"
+#addname "Elemiah"
+#addname "Elijah"
+#addname "Ezekiel"
+#addname "Gabriel"
+#addname "Gazardiel"
+#addname "Haamiah"
+#addname "Hadraniel"
+#addname "Hael"
+#addname "Hamaliel"
+#addname "Hamied"
+#addname "Haniel"
+#addname "Harahel"
+#addname "Hayyel"
+#addname "Herchel"
+#addname "Humiel"
+#addname "Hamael"
+#addname "Iofiel"
+#addname "Israfel"
+#addname "Israfil"
+#addname "Izra'il"
+#addname "Jamaerah"
+#addname "Jehoel"
+#addname "Jophiel"
+#addname "Kakabel"
+#addname "Kutiel"
+#addname "Lailah"
+#addname "Liwet"
+#addname "Machidiel"
+#addname "Malchediel"
+#addname "Maion"
+#addname "Manakel"
+#addname "Melchisedek"
+#addname "Micah"
+#addname "Michael"
+#addname "Mihael"
+#addname "Mihr"
+#addname "Mumiah"
+#addname "Munkir & Nakir"
+#addname "Muriel"
+#addname "Nathaniel"
+#addname "Nemamiah"
+#addname "Omniel"
+#addname "Orifiel"
+#addname "Perpetiel"
+#addname "Qaphsiel"
+#addname "Raguel"
+#addname "Ramiel"
+#addname "Rampel"
+#addname "Raphael"
+#addname "Rashnu"
+#addname "Raziel"
+#addname "Rehael"
+#addname "Remliel"
+#addname "Rhamiel"
+#addname "Sachael"
+#addname "Samandiriel"
+#addname "Sandalphon"
+#addname "Sariel"
+#addname "Seraphiel"
+#addname "Shemael"
+#addname "Shushienae"
+#addname "Sofiel"
+#addname "Soqed Hozi"
+#addname "Tabbris"
+#addname "Taharial"
+#addname "Uriel"
+#addname "Urim"
+#addname "Uzziel"
+#addname "Valoel"
+#addname "Verchiel"
+#addname "Herchel"
+#addname "Yofiel"
+#addname "Zacharael"
+#addname "Zadkiel"
+#addname "Zagzagel"
+#addname "Zuriel"
+#end
+
+#selectnametype 140
+#addname "Aamon"
+#addname "Abalam"
+#addname "Abalim"
+#addname "Abigor"
+#addname "Adramelech"
+#addname "Agares"
+#addname "Aim"
+#addname "Alal"
+#addname "Allocer"
+#addname "Amaymon"
+#addname "Amdukias"
+#addname "Amduscias"
+#addname "Amoymon"
+#addname "Andras"
+#addname "Andrealphus"
+#addname "Andromalius"
+#addname "Asb'el"
+#addname "Ashtoroth"
+#addname "Asmodai"
+#addname "Asmodeus"
+#addname "Astaroth"
+#addname "Ayperos"
+#addname "Ayporos"
+#addname "Aym"
+#addname "Azaze"
+#addname "Baal"
+#addname "Balam"
+#addname "Balan"
+#addname "Baraqel"
+#addname "Barbas"
+#addname "Barbatos"
+#addname "Basas'el"
+#addname "Bathin"
+#addname "Bathym"
+#addname "Beal"
+#addname "Beale"
+#addname "Beall"
+#addname "Beball"
+#addname "Beleth"
+#addname "Berith"
+#addname "Betryal"
+#addname "Bilet"
+#addname "Bileth"
+#addname "Bine"
+#addname "Bitru"
+#addname "Bofry"
+#addname "Bolfri"
+#addname "Bolfry"
+#addname "Botis"
+#addname "Caacrinolaas"
+#addname "Caassimolar"
+#addname "Caim"
+#addname "Camio"
+#addname "Carabia"
+#addname "Cerbere"
+#addname "Chax"
+#addname "Cimeies"
+#addname "Classyalabolas"
+#addname "Corson"
+#addname "Crocell"
+#addname "Curson"
+#addname "Dantalion"
+#addname "Danyul"
+#addname "Decarabia"
+#addname "Elathan"
+#addname "Eligos"
+#addname "Ethniu"
+#addname "Flavros"
+#addname "Flauros"
+#addname "Focalor"
+#addname "Foraii"
+#addname "Foras"
+#addname "Forneus"
+#addname "Forras"
+#addname "Furfur"
+#addname "Gader'el"
+#addname "Gamigin"
+#addname "Glassia-labolis"
+#addname "Glasya-Labolas"
+#addname "Gomory"
+#addname "Gremory"
+#addname "Gualichu"
+#addname "Gusion"
+#addname "Gusoin"
+#addname "Gusoyn"
+#addname "Haborym"
+#addname "Haagenti"
+#addname "Halphas"
+#addname "Hanan'el"
+#addname "Hauras"
+#addname "Ipes"
+#addname "Kimaris"
+#addname "Kokb'ael"
+#addname "Labal"
+#addname "Labasu"
+#addname "Leraje"
+#addname "Leraie"
+#addname "Leviathan"
+#addname "Malaphar"
+#addname "Malephar"
+#addname "Malphas"
+#addname "Malthus"
+#addname "Mammon"
+#addname "Marax"
+#addname "Marchosias"
+#addname "Marthim"
+#addname "Mathim"
+#addname "Melchiresa"
+#addname "Mephistopheles"
+#addname "Merihem"
+#addname "Morax"
+#addname "Naberius"
+#addname "Naberus"
+#addname "Naphula"
+#addname "Neqa'el"
+#addname "Oray"
+#addname "Oriax"
+#addname "Ornias"
+#addname "Orobas"
+#addname "Oso"
+#addname "Paimon"
+#addname "Paimonia"
+#addname "Paymon"
+#addname "Phenex"
+#addname "Pithius"
+#addname "Pruflas"
+#addname "Pruslas"
+#addname "Puloman"
+#addname "Purson"
+#addname "Rahab"
+#addname "Raim"
+#addname "Raum"
+#addname "Ronove"
+#addname "Ronwe"
+#addname "Rum'el"
+#addname "Rumyal"
+#addname "Sabnock"
+#addname "Saleos"
+#addname "Sallos"
+#addname "Salmac"
+#addname "Samagina"
+#addname "Savnok"
+#addname "Scox"
+#addname "Sear"
+#addname "Seere"
+#addname "Seir"
+#addname "Semyaz"
+#addname "Separ"
+#addname "Shax"
+#addname "Sidragasum"
+#addname "Stolas"
+#addname "Surgat"
+#addname "Sydonai"
+#addname "Tap"
+#addname "Thammuz"
+#addname "Tuchulcha"
+#addname "Tuma'el"
+#addname "Tur'el"
+#addname "Ualac"
+#addname "Uvall"
+#addname "Valac"
+#addname "Valefar"
+#addname "Valefor"
+#addname "Valu"
+#addname "Vapula"
+#addname "Vassago"
+#addname "Vepar"
+#addname "Vephar"
+#addname "Vine"
+#addname "Volac"
+#addname "Voso"
+#addname "Voval"
+#addname "Vual"
+#addname "Wall"
+#addname "Xezbeth"
+#addname "Yeqon"
+#addname "Yeter'el"
+#addname "Zagan"
+#addname "Zaebos"
+#addname "Zepar"
+#addname "Ziminiar"
+#end
+
+#selectnametype 141
+#addname "Adlartok"
+#addname "Aga"
+#addname "Aglakti"
+#addname "Agloolik"
+#addname "Aguta"
+#addname "Ahnah"
+#addname "Aipalovik"
+#addname "Aituserk"
+#addname "Akiak"
+#addname "Akkikiktok"
+#addname "Akkilokipok"
+#addname "Akkituyo"
+#addname "Akluitok"
+#addname "Akna"
+#addname "Akrittok"
+#addname "Alornerk"
+#addname "Amaguq"
+#addname "Amak"
+#addname "Anan"
+#addname "Anerner"
+#addname "Aningan"
+#addname "Annakpok"
+#addname "Anuun"
+#addname "Anuniaq"
+#addname "Anyu"
+#addname "Aput"
+#addname "Aquutaq"
+#addname "Arjalinerk"
+#addname "Arnaaluk"
+#addname "Arrlu"
+#addname "Asiavik"
+#addname "Assiminik"
+#addname "Asungaq "
+#addname "Ataciara"
+#addname "Ataneq"
+#addname "Ataninnuaq"
+#addname "Atk"
+#addname "Aukanec"
+#addname "Aumanil"
+#addname "Atkonarto"
+#addname "Aukanec"
+#addname "Biisaiyowaq"
+#addname "Buni"
+#addname "Chen"
+#addname "Chu"
+#addname "Chugach"
+#addname "Chugiak"
+#addname "Chulyin"
+#addname "Cikuq"
+#addname "Cupun"
+#addname "Deniigi"
+#addname "Desna"
+#addname "Ek Chua"
+#addname "Eska"
+#addname "He"
+#addname "Igalaq"
+#addname "Iglopuk"
+#addname "Ikia"
+#addname "Ikniqpalagaq"
+#addname "Ileanaitut"
+#addname "Illiivat"
+#addname "Iluak"
+#addname "Iluliaq"
+#addname "Iluq"
+#addname "Immuyak"
+#addname "Imnek"
+#addname "Injuquaq"
+#addname "Inungoark"
+#addname "Ipiktok"
+#addname "Iqniq"
+#addname "Irdlirvirisissong"
+#addname "Issorartuyok"
+#addname "Issudlerk"
+#addname "Issumata"
+#addname "Itigiaq"
+#addname "Iyaroak"
+#addname "Kakrayok"
+#addname "Kamik"
+#addname "Kanguyak"
+#addname "Kannoyak"
+#addname "Kanosak"
+#addname "Kanut"
+#addname "Kapi"
+#addname "Kappianartok"
+#addname "Kappiataitok"
+#addname "Karpok"
+#addname "Kaskae"
+#addname "Kassuq"
+#addname "Kattituyo"
+#addname "Kaya"
+#addname "Keelut"
+#addname "Keruguq"
+#addname "Kesuk"
+#addname "K'eyush"
+#addname "Kilalurak"
+#addname "Kilaun"
+#addname "Kinaktok"
+#addname "Kinalik"
+#addname "Kinapak"
+#addname "Kingudlerk"
+#addname "Kinguyakkii"
+#addname "Kirima"
+#addname "Kok"
+#addname "Kakortok"
+#addname "Krernertok"
+#addname "Kuk'uq"
+#addname "Kulitak"
+#addname "Kunikpok"
+#addname "Kunwakto"
+#addname "Kussuyok"
+#addname "Kuvageega"
+#addname "Maguyuk"
+#addname "Makittuq"
+#addname "Makoktok"
+#addname "Makpigat"
+#addname "Mangokpok"
+#addname "Maniitok"
+#addname "Manirak"
+#addname "Masaaraq"
+#addname "Massak"
+#addname "Massalerauvok"
+#addname "Mauja "
+#addname "Mequssuk"
+#addname "Miki"
+#addname "Miks"
+#addname "Mumik"
+#addname "Naartok"
+#addname "Naga"
+#addname "Nagojut"
+#addname "Nannuraluk"
+#addname "Nanuq"
+#addname "Nasamiituuq"
+#addname "Nauja"
+#addname "Negiliq"
+#addname "Nerromiktok"
+#addname "Nertornartok"
+#addname "Nigaq"
+#addname "Nilak"
+#addname "Ningakpok"
+#addname "Nini"
+#addname "Nippikortuyok"
+#addname "Noahtakmiut"
+#addname "Noatak"
+#addname "Nukili"
+#addname "Nukka"
+#addname "Nunataq"
+#addname "Nutaaq"
+#addname "Nutaralak"
+#addname "Nutarniq"
+#addname "Okauyak"
+#addname "Olikpok"
+#addname "Onartok "
+#addname "Oogrooq"
+#addname "Oomailiq"
+#addname "Pakak"
+#addname "Palarto"
+#addname "Pamiiruq"
+#addname "Pamiiyok"
+#addname "Panik"
+#addname "Pattangayok"
+#addname "Pekartok"
+#addname "Piaktok"
+#addname "Pikatt"
+#addname "Piktaungitok"
+#addname "Pitsiar"
+#addname "Poallu"
+#addname "Pukak"
+#addname "Pukiq"
+#addname "Pukulria"
+#addname "Purnaq"
+#addname "Putyuk"
+#addname "Qaniit "
+#addname "Qannik"
+#addname "Qatqain"
+#addname "Qatiichii "
+#addname "Qeorvik"
+#addname "Qigiq"
+#addname "Qilaq"
+#addname "Qimmiq"
+#addname "Qimugkauyar"
+#addname "Qimugta"
+#addname "Qimukti"
+#addname "Qopuk"
+#addname "Quvianu"
+#addname "Sadluyok"
+#addname "Saghani"
+#addname "Sakari"
+#addname "Salaksarto"
+#addname "Sangila"
+#addname "Sedna"
+#addname "Sesi"
+#addname "Shesh"
+#addname "Shila"
+#addname "Shtiya"
+#addname "Siaru"
+#addname "Siku"
+#addname "Sikuaq"
+#addname "Silatuyo"
+#addname "Sinaaq"
+#addname "sinniktok"
+#addname "Sirmiq"
+#addname "Sitiyok"
+#addname "Sivudlerk"
+#addname "Sos"
+#addname "Suinnak"
+#addname "Suka"
+#addname "Sulu"
+#addname "Sura  "
+#addname "Takiyok"
+#addname "Tatkret"
+#addname "Takubvik"
+#addname "Taliriktug"
+#addname "Tanaraq"
+#addname "Taqukaq"
+#addname "Tarralikitak"
+#addname "Tartok"
+#addname "Tattilgat"
+#addname "Tavrani Tavra"
+#addname "Tekkeitsertok"
+#addname "Tiglikte"
+#addname "Tiilaqiia"
+#addname "Tikaani"
+#addname "Tikivik"
+#addname "Tiquana"
+#addname "Tiguaq"
+#addname "Tingenek"
+#addname "Tingiyo"
+#addname "Tipvigu"
+#addname "Tlate Hii"
+#addname "Tomkin"
+#addname "Tonrar"
+#addname "Tonraq"
+#addname "Tootega"
+#addname "Torngasak"
+#addname "Tornuaq"
+#addname "Tuaq"
+#addname "Tukkuttok"
+#addname "Tuktu"
+#addname "Tukturaluk"
+#addname "Tullik"
+#addname "Tulugaq"
+#addname "Tulukaruk"
+#addname "Tunerk"
+#addname "Tungortok"
+#addname "Tungulria"
+#addname "Tupilek"
+#addname "Tupit"
+#addname "Tuuluuwa"
+#addname "Tuwawi"
+#addname "Ublureak"
+#addname "Uglu"
+#addname "Uiritsaktak"
+#addname "Ukluk"
+#addname "Ulva"
+#addname "Umiak"
+#addname "Umiaktorvik"
+#addname "Unalaq"
+#addname "Uukkarnit"
+#addname "Uvlugiaq"
+#addname "Uyarak"
+#addname "Yakone"
+#addname "Yuralria"
+#end
+
+#selectnametype 142
+#addname "Fionn"
+#addname "Cumhal"
+#addname "Goll"
+#addname "Cailte"
+#addname "Conan"
+#addname "Diarmuid"
+#addname "Aengus"
+#addname "Lughaid"
+#addname "Oisin"
+#addname "Oscar"
+#addname "Abban"
+#addname "Adhamhnan"
+#addname "Adanodan"
+#addname "Ailbhe"
+#addname "Ailgel"
+#addname "Ailill"
+#addname "Ailin"
+#addname "Aininn"
+#addname "Ainmire"
+#addname "Airechtach"
+#addname "Airmedach"
+#addname "Alabhaoiss"
+#addname "Alastrann"
+#addname "Alchad"
+#addname "Alstrom"
+#addname "Amalgaid"
+#addname "Amergin"
+#addname "Anluan"
+#addname "Aodh"
+#addname "Aodha"
+#addname "Aoidh"
+#addname "Aodhaigh"
+#addname "Aodhan"
+#addname "Aodhfin"
+#addname "Aonghas"
+#addname "Angus"
+#addname "Ardar"
+#addname "Ardghal"
+#addname "Ardal"
+#addname "Argal"
+#addname "Artegal"
+#addname "Arthgallo"
+#addname "Art"
+#addname "Artan"
+#addname "Artuir"
+#addname "Baeth"
+#addname "Baetan"
+#addname "Balor"
+#addname "Bairne"
+#addname "Baithaus"
+#addname "Banan"
+#addname "Banbhan"
+#addname "Baothghalach"
+#addname "Barrfind"
+#addname "Barrin"
+#addname "Bairre"
+#addname "Beacan"
+#addname "Beag"
+#addname "Beairtle"
+#addname "Beanon"
+#addname "Bearach"
+#addname "Bearchan"
+#addname "Beartlai"
+#addname "Becan"
+#addname "Behillagh"
+#addname "Benen"
+#addname "Beolagh"
+#addname "Beothach"
+#addname "Bercan"
+#addname "Bergin"
+#addname "Blanaid"
+#addname "Boethis"
+#addname "Bran"
+#addname "Brandubh"
+#addname "Breadan"
+#addname "Breanainn"
+#addname "Breandan"
+#addname "Bresal"
+#addname "Breas"
+#addname "Brian"
+#addname "Brion"
+#addname "Bricc"
+#addname "Britanmael"
+#addname "Bron"
+#addname "Bruaidheadh"
+#addname "Bruatur"
+#addname "Bruddai"
+#addname "Buadhach"
+#addname "Buagh"
+#addname "Buaigre"
+#addname "Cadhla"
+#addname "Caeilte"
+#addname "Caentigern"
+#addname "Cainchinne"
+#addname "Cainneach"
+#addname "Cairbre"
+#addname "Coirbre"
+#addname "Cearcill"
+#addname "Caireall"
+#addname "Cairthinn"
+#addname "Caiside"
+#addname "Calbhach"
+#addname "Callough"
+#addname "Caoilte"
+#addname "Caoimhe"
+#addname "Caiomhin"
+#addname "Caemgen"
+#addname "Caolainn"
+#addname "Caraid"
+#addname "Carantoc"
+#addname "Carthach"
+#addname "Cascorach"
+#addname "Cassidan"
+#addname "Cathal"
+#addname "Cathan"
+#addname "Cathaoir"
+#addname "Cahir"
+#addname "Cathfer"
+#addname "Catharnach"
+#addname "Cathasach"
+#addname "Cathbadh"
+#addname "Cathbharr"
+#addname "Ceallach"
+#addname "Ceollach"
+#addname "Cearbhall"
+#addname "Cearul"
+#addname "Cearnach"
+#addname "Cedach"
+#addname "Celsus"
+#addname "Celtchair"
+#addname "Cenn"
+#addname "Cesarn"
+#addname "Chattan"
+#addname "Chulain"
+#addname "Cian"
+#addname "Cianan"
+#addname "Ciaran"
+#addname "Ciardan"
+#addname "Ciardha"
+#addname "Ciardubhan"
+#addname "Ciarrai"
+#addname "Cillian"
+#addname "Cinneide"
+#addname "Cionadh"
+#addname "Coan"
+#addname "Cobhran"
+#addname "Cognat"
+#addname "Colcu"
+#addname "Comhghall"
+#addname "Congal"
+#addname "Comhghan"
+#addname "Conaing"
+#addname "Conall"
+#addname "Conan"
+#addname "Conchobhar"
+#addname "Cnochur"
+#addname "Conor"
+#addname "Congalach"
+#addname "Conganchas"
+#addname "Conn"
+#addname "Connlaeth"
+#addname "Connlaodh"
+#addname "Coplait"
+#addname "Cormac"
+#addname "Cothric"
+#addname "Couleth"
+#addname "Cridan"
+#addname "Crimhthann"
+#addname "Crofinn"
+#addname "Cromanus"
+#addname "Cronan"
+#addname "Crosson"
+#addname "Cruamthain"
+#addname "Cuan"
+#addname "Cuileann"
+#addname "Cullen"
+#addname "Cuimin"
+#addname "Comyn"
+#addname "Cuinn"
+#addname "Cuirithir"
+#addname "Cumall"
+#addname "Cumhaighe"
+#addname "Curoi"
+#addname "Curran"
+#addname "Cuthacar"
+#addname "Daigh"
+#addname "Daimi"
+#addname "Dalach"
+#addname "Damaen"
+#addname "Dara"
+#addname "Darach"
+#addname "Deaglan"
+#addname "Deicola"
+#addname "Dela"
+#addname "Demna"
+#addname "Desle"
+#addname "Desmond"
+#addname "Devlin"
+#addname "Diarmait"
+#addname "Duirmhuid"
+#addname "Diamit"
+#addname "Diarmaid"
+#addname "Dieul"
+#addname "Dimnaus"
+#addname "Disisbod"
+#addname "Diuma"
+#addname "Dimma"
+#addname "Doibhilin"
+#addname "Doireidh"
+#addname "Domhnall"
+#addname "Donall"
+#addname "Donn"
+#addname "Donnabhan"
+#addname "Donnan"
+#addname "Donnchadh"
+#addname "Donagh"
+#addname "Donndubhan"
+#addname "Donngal"
+#addname "Doran"
+#addname "Dorchaidh"
+#addname "Dubhaltach"
+#addname "Dubhan"
+#addname "Dubhdara"
+#addname "Dubheidir"
+#addname "Dubghall"
+#addname "Dubhghlas"
+#addname "Duigenan"
+#addname "Dungal"
+#addname "Eachann"
+#addname "Eachdhonn"
+#addname "Eadbhard"
+#addname "Eanna"
+#addname "Earna"
+#addname "Earnan"
+#addname "Echen"
+#addname "Eibhear"
+#addname "Eigneach"
+#addname "Eimar"
+#addname "Eimeid"
+#addname "Eimhin"
+#addname "Eirni"
+#addname "Eithear"
+#addname "Elochad"
+#addname "Emianus"
+#addname "Ennae"
+#addname "Eochaidh"
+#addname "Echaid"
+#addname "Eogabail"
+#addname "Eoghan"
+#addname "Eolus"
+#addname "Erc"
+#addname "Ercus"
+#addname "Eremon"
+#addname "Fachnan"
+#addname "Fachtna"
+#addname "Fiachna"
+#addname "Faebhar"
+#addname "Failbe"
+#addname "Failge"
+#addname "Faolan"
+#addname "Farann"
+#addname "Faughnan"
+#addname "Feagh"
+#addname "Fearadhach"
+#addname "Feardorcha"
+#addname "Fardoragh"
+#addname "Fearghal"
+#addname "Fearghas"
+#addname "Fergus"
+#addname "Feichin"
+#addname "Feidhlim"
+#addname "Fedelmid"
+#addname "Feuillan"
+#addname "Fillan"
+#addname "Fiachra"
+#addname "Finegas"
+#addname "Fingar"
+#addname "Finghin"
+#addname "Finn"
+#addname "Fionn"
+#addname "Fionnan"
+#addname "Finnchad"
+#addname "Finntan"
+#addname "Fionnbhar"
+#addname "Fios"
+#addname "Flaithbertach"
+#addname "Flaithri"
+#addname "Flann"
+#addname "Flannchadh"
+#addname "Fochmare"
+#addname "Fogartach"
+#addname "Foillas"
+#addname "Forgael"
+#addname "Fortchern"
+#addname "Frainc"
+#addname "Froichan"
+#addname "Fuatach"
+#addname "Fulan"
+#addname "Firlan"
+#addname "Fursa"
+#addname "Gaithan"
+#addname "Gall"
+#addname "Goll"
+#addname "Gallech"
+#addname "Garbhan"
+#addname "Garfhidh"
+#addname "Garnard"
+#addname "Gilian"
+#addname "Glaisne"
+#addname "Glassan"
+#addname "Gnathach"
+#addname "Gobann"
+#addname "Gordan"
+#addname "Gorman"
+#addname "Gosan"
+#addname "Grada"
+#addname "Guaire"
+#addname "Herygh"
+#addname "Hewney"
+#addname "Huydhran"
+#addname "Iarbonel"
+#addname "Iarlaith"
+#addname "Iobhar"
+#addname "Ighneachan"
+#addname "Imchath"
+#addname "Incha"
+#addname "Indract"
+#addname "Ingnathach"
+#addname "Ioeil"
+#addname "Iosog"
+#addname "Irial"
+#addname "Irimia"
+#addname "Iucharba"
+#addname "Iud"
+#addname "Iuil"
+#addname "Joavan"
+#addname "Kenncoh"
+#addname "Kescog"
+#addname "Labhcas"
+#addname "Labraid"
+#addname "Lachtna"
+#addname "Leagh"
+#addname "Laistranus"
+#addname "Laoiseach"
+#addname "Lavren"
+#addname "Leann"
+#addname "Lithgean"
+#addname "Lochlainn"
+#addname "Laughlin"
+#addname "Lodan"
+#addname "Loman"
+#addname "Lonan "
+#addname "Lorcan"
+#addname "Lua"
+#addname "Luchta"
+#addname "Lugh"
+#addname "Lughaidh"
+#addname "Lysagh"
+#addname "Machar"
+#addname "Maduta"
+#addname "Maedoc"
+#addname "Mairid"
+#addname "Manchan"
+#addname "Manus"
+#addname "Mathghamhain"
+#addname "Mathuin"
+#addname "Mathghamhaim"
+#addname "Mathgamain"
+#addname "Meadhran"
+#addname "Meallan"
+#addname "Medabh"
+#addname "Mel"
+#addname "Meldan"
+#addname "Melkorka"
+#addname "Melrone"
+#addname "Meubred"
+#addname "Midhir"
+#addname "Mirin"
+#addname "Mo-Bioc"
+#addname "Mochoemoc"
+#addname "Mochta"
+#addname "Mochumma"
+#addname "Modomnoc"
+#addname "Mogue"
+#addname "Molling"
+#addname "Moloi"
+#addname "More"
+#addname "Morna"
+#addname "Muchin"
+#addname "Mughran"
+#addname "Muirghean"
+#addname "Muirgheas"
+#addname "Muiriartach"
+#addname "Muireadhach"
+#addname "Muirchertach"
+#addname "Muiredach"
+#addname "Muirioch"
+#addname "Murtagh"
+#addname "Munnu"
+#addname "Mura"
+#addname "Murchadh"
+#addname "Naoise"
+#addname "Nathi"
+#addname "Nemid"
+#addname "Nevan"
+#addname "Niadh"
+#addname "Niall"
+#addname "Ninian"
+#addname "Notal"
+#addname "Nuallan"
+#addname "Odhran"
+#addname "Oran"
+#addname "Odhar"
+#addname "Ogan"
+#addname "Oisin"
+#addname "Oscar"
+#addname "Otteran"
+#addname "Ounam"
+#addname "Phelan"
+#addname "Piran"
+#addname "Radhulbh"
+#addname "Raghallach"
+#addname "Riaghan"
+#addname "Ri Ogh'n"
+#addname "Ri an"
+#addname "Ronan"
+#addname "Rordan"
+#addname "Riordan"
+#addname "Reardan"
+#addname "Rioghbhardan"
+#addname "Ros"
+#addname "Ro adhan"
+#addname "Ruaidhri"
+#addname "Ruairi"
+#addname "Rudraighe"
+#addname "Ruidhe"
+#addname "Saebhreathach"
+#addname "Saoirse"
+#addname "Sanctan"
+#addname "Saranus"
+#addname "Scelianus"
+#addname "Scolaidh"
+#addname "Scolaighe"
+#addname "Se"
+#addname "Seachnall"
+#addname "Seafraid"
+#addname "Seaghdha"
+#addname "Seanan"
+#addname "Searlan"
+#addname "Sedna"
+#addname "Seaghan"
+#addname "Sheary"
+#addname "Shiel"
+#addname "Siadhal"
+#addname "Siaghal"
+#addname "Siochfioldha"
+#addname "Sinon"
+#addname "Siran"
+#addname "Siseal"
+#addname "Sol"
+#addname "Starn"
+#addname "Steimhin"
+#addname "Suibhne"
+#addname "Suthan"
+#addname "Tadhg"
+#addname "Tadg"
+#addname "Tadc"
+#addname "Tegue"
+#addname "Teigue"
+#addname "Teige"
+#addname "Taig"
+#addname "Taidgh"
+#addname "Tiege"
+#addname "Taidhgin"
+#addname "Tathai"
+#addname "Tiamhdha"
+#addname "Tighearnach"
+#addname "Tiarnach"
+#addname "Tiarna"
+#addname "Tierney"
+#addname "Tighearnan"
+#addname "Tigern"
+#addname "Tiarnan"
+#addname "Tiernan"
+#addname "Tiomoid"
+#addname "Tirech"
+#addname "Toirdhealbhach"
+#addname "Toirdhealbharch"
+#addname "Tairdelbach"
+#addname "Toirealach"
+#addname "Tarlach"
+#addname "Tirloch"
+#addname "Traolach"
+#addname "Turlough"
+#addname "Turleyence"
+#addname "Tomaltach"
+#addname "Torrianus"
+#addname "Treon"
+#addname "Toathal"
+#addname "Tuathal"
+#addname "Uaithne"
+#addname "Uallachan"
+#addname "Uar"
+#addname "Uileos"
+#addname "Uillen"
+#addname "Uistean"
+#addname "Ultan"
+#addname "Urthaile"
+#addname "Usliu"
+#addname "Uthmaran"
+#addname "Vigean"
+#addname "Wyllow"
+#end
+
+#selectnametype 143
+#addname "Grainne"
+#addname "Aife"
+#addname "Aclitenis"
+#addname "Aibfinna"
+#addname "Aifric"
+#addname "Ailbe"
+#addname "Ailidh"
+#addname "Aine"
+#addname "Aime"
+#addname "Enya"
+#addname "Aisling"
+#addname "Aislinn"
+#addname "Ashling"
+#addname "Alannah"
+#addname "Almaith"
+#addname "Almha"
+#addname "Anastas"
+#addname "Anga"
+#addname "Annabla"
+#addname "Aodhamair"
+#addname "Aodhnait"
+#addname "Aoibh"
+#addname "Aoife"
+#addname "Aife"
+#addname "Arlene"
+#addname "Athracht"
+#addname "Aurnia"
+#addname "Barran"
+#addname "Beatha"
+#addname "Becuma"
+#addname "Beibhinn"
+#addname "Bega"
+#addname "Beirnis"
+#addname "Bel"
+#addname "Belocc"
+#addname "Beonill"
+#addname "Berrach"
+#addname "Berriona"
+#addname "Bidina"
+#addname "Bil"
+#addname "Blath"
+#addname "Blaithnait"
+#addname "Bluinse"
+#addname "Bodhbh"
+#addname "Breanda"
+#addname "Brighid"
+#addname "Brunach"
+#addname "Cacht"
+#addname "Caintigerna"
+#addname "Caoilainn"
+#addname "Caelfind"
+#addname "Caoimhe"
+#addname "Caral"
+#addname "Cathan"
+#addname "Ceara"
+#addname "Cearuilin"
+#addname "Ciannait"
+#addname "Ciara"
+#addname "Ciarda"
+#addname "Ciit"
+#addname "Cingit"
+#addname "Cliodhna"
+#addname "Clodagh"
+#addname "Clothra"
+#addname "Cochrann"
+#addname "Coemfind"
+#addname "Coimell"
+#addname "Colan"
+#addname "Colleen"
+#addname "Conandil"
+#addname "Conchenn"
+#addname "Coinchind"
+#addname "Conchobarre"
+#addname "Congan"
+#addname "Creda"
+#addname "Croeb"
+#addname "Cron"
+#addname "Cuach"
+#addname "Cumman"
+#addname "Daireen"
+#addname "Damhnait"
+#addname "Dana"
+#addname "Danu"
+#addname "Ana"
+#addname "Danann"
+#addname "Dar-Carthaind"
+#addname "Dareca"
+#addname "Dearbhail"
+#addname "Decla"
+#addname "Delbchaem"
+#addname "Dercco"
+#addname "Derdraigen"
+#addname "Derdriu"
+#addname "Derg"
+#addname "Devnet"
+#addname "Doireann"
+#addname "Donelle"
+#addname "Donnfhlaidh"
+#addname "Dunlaith"
+#addname "Donla"
+#addname "Downett"
+#addname "Dron"
+#addname "Eabhna"
+#addname "Ealga"
+#addname "Echna"
+#addname "Edana"
+#addname "Eibhliu"
+#addname "Eibhleann"
+#addname "Eihrig"
+#addname "Eile"
+#addname "Eilgri"
+#addname "Eimear"
+#addname "Eimhin"
+#addname "Eirnin"
+#addname "Eithne"
+#addname "Elan"
+#addname "Elige"
+#addname "Elva"
+#addname "Enda"
+#addname "Erennach"
+#addname "Eri"
+#addname "Erin"
+#addname "Etain"
+#addname "Ethlinn"
+#addname "Etromma"
+#addname "Failend"
+#addname "Faimdid"
+#addname "Fainche"
+#addname "Fand"
+#addname "Fann"
+#addname "Faoiltiarna"
+#addname "Feidhelm"
+#addname "Fenit"
+#addname "Find"
+#addname "Findchoem"
+#addname "Findetand"
+#addname "Findscuap"
+#addname "Finnsech"
+#addname "Finna"
+#addname "Finnabhair"
+#addname "Fionnghuala"
+#addname "Finola"
+#addname "Nuala"
+#addname "Flann"
+#addname "Fodhla"
+#addname "Fuamnach"
+#addname "Garb"
+#addname "Gloir"
+#addname "Gobnait"
+#addname "Gorman"
+#addname "Gormflaith"
+#addname "Gormlaith"
+#addname "Gormla"
+#addname "Grainne"
+#addname "Grian"
+#addname "Guinnear"
+#addname "Hisolda"
+#addname "Hya"
+#addname "Ibel"
+#addname "Ide"
+#addname "Ita"
+#addname "Indecht"
+#addname "Indiu"
+#addname "Inis"
+#addname "Isleen"
+#addname "Keeley"
+#addname "Keenat"
+#addname "Labhaoise"
+#addname "Lara"
+#addname "Lasairiona"
+#addname "Lebarcham"
+#addname "Lethann"
+#addname "Liadan"
+#addname "Liban"
+#addname "Life"
+#addname "Lile"
+#addname "Luighseach"
+#addname "Macha"
+#addname "Mada"
+#addname "Magael"
+#addname "Mallaidh"
+#addname "Meabh"
+#addname "Medb"
+#addname "Meld"
+#addname "Mide"
+#addname "Mincloth"
+#addname "Mise"
+#addname "Moen"
+#addname "Moncha"
+#addname "Moninna"
+#addname "Mongfind"
+#addname "Mor"
+#addname "Moirin"
+#addname "Muadhnait"
+#addname "Mugain"
+#addname "Muireann"
+#addname "Muirecht"
+#addname "Muirgen"
+#addname "Muirgheal"
+#addname "Muiriath"
+#addname "Muirne"
+#addname "Naomh"
+#addname "Narbflaith"
+#addname "Neassa"
+#addname "Nemdaille"
+#addname "Niamh"
+#addname "Noinin"
+#addname "Noleen"
+#addname "Ochae"
+#addname "Odharnait"
+#addname "Oebfinn"
+#addname "Ohnicio"
+#addname "Oilbhe"
+#addname "Orlaith"
+#addname "Osmanna"
+#addname "Paili"
+#addname "Piala"
+#addname "Ranait"
+#addname "Realtan"
+#addname "Rigan"
+#addname "Rioghnach"
+#addname "Riomthach"
+#addname "Roach"
+#addname "Sadbh"
+#addname "Saoirse"
+#addname "Samhaoir"
+#addname "Samthann"
+#addname "Sarnat"
+#addname "Scathach"
+#addname "Scathdercc"
+#addname "Sciath"
+#addname "Silbhe"
+#addname "Sinech"
+#addname "Slaine"
+#addname "Sodelb"
+#addname "Sogaes"
+#addname "Sorcha"
+#addname "Sosaidh"
+#addname "Stediana"
+#addname "Taillte"
+#addname "Tanith"
+#addname "Tathan"
+#addname "Teamhair"
+#addname "Teath"
+#addname "Teiti"
+#addname "Teitl"
+#addname "Tlachtga"
+#addname "Treasa"
+#addname "Tuilelaith"
+#addname "Una"
+#end
+
+#selectnametype 144
+#addname "Wind Dancer"
+#addname "Dreamdance"
+#addname "Stardance"
+#addname "Summerwind"
+#addname "Rage"
+#addname "Thorn"
+#addname "Bristle"
+#addname "Dusk"
+#addname "Dawn"
+#addname "Running Cloud"
+#addname "Snarebreaker"
+#addname "Man Slayer"
+#addname "Beast"
+#addname "Goldfur"
+#addname "Golden"
+#addname "Uncaged"
+#addname "Dreamwild"
+#addname "Dreamsong"
+#addname "Rainbow"
+#addname "Moonbeam"
+#addname "Sunhide"
+#addname "Moonsong"
+#addname "Moonsinger"
+#addname "Starlight"
+#addname "Starshadow"
+#addname "Nightwhisper"
+#addname "Shadow"
+#addname "Fury"
+#addname "Revelry"
+#addname "Gluttony"
+#addname "Feaster"
+#addname "Man Eater"
+#addname "Howl"
+#addname "Ragetusk"
+#addname "Butterfly"
+#addname "Sparrow"
+#addname "Dreamsoarer"
+#addname "Spring"
+#addname "Shadebreeze"
+#addname "Thunderer"
+#addname "King"
+#addname "Unforgiving"
+#addname "Silent"
+#addname "Hidden"
+#addname "Unmarked"
+#addname "Untamed"
+#addname "Sniffer"
+#addname "Man Hunter"
+#addname "Stalker"
+#addname "Willful"
+#addname "Capricious"
+#addname "Trickster"
+#end
+
+#selectnametype 145
+#addname "Thistle"
+#addname "Barkheart"
+#addname "Barksong"
+#addname "Barkrustle"
+#addname "Ironbark"
+#addname "Leafsong"
+#addname "Willow"
+#addname "Shadegiver"
+#addname "Rootheart"
+#addname "Rootbeard"
+#addname "Moonsinger"
+#addname "Verdant"
+#addname "Hollow"
+#addname "Leafmantle"
+#addname "Whitewood"
+#addname "Blackbranch"
+#addname "Whisperleaf"
+#addname "Mistthought"
+#addname "Whisperer"
+#addname "Rustleleaf"
+#addname "Shiverleaf"
+#addname "Leafbeard"
+#addname "Mossbeard"
+#addname "Mosshide"
+#addname "Growth"
+#addname "Vinewillow"
+#addname "Sapmind"
+#addname "Heartbud"
+#addname "Hazelheart"
+#addname "Oakheart"
+#addname "Oakstrong"
+#end
+
+#selectnametype 146
+#addname "Ivan"
+#addname "Afanasi"
+#addname "Agafi"
+#addname "Agraf"
+#addname "Aleksandr"
+#addname "Aleksei"
+#addname "Anatoly"
+#addname "Andrei"
+#addname "Anisim"
+#addname "Anton"
+#addname "Arkady"
+#addname "Arseni"
+#addname "Averki"
+#addname "Boris"
+#addname "Briacheslav"
+#addname "Daniil"
+#addname "Danilo"
+#addname "Danislav"
+#addname "David"
+#addname "Demyan"
+#addname "Dmitri"
+#addname "Dobrynia"
+#addname "Dunai"
+#addname "Efim"
+#addname "Ekim"
+#addname "Evgenia"
+#addname "Feodor"
+#addname "Feodosi"
+#addname "Gavril"
+#addname "Gennady"
+#addname "Giorgy"
+#addname "Gleb"
+#addname "Grigory"
+#addname "Igor"
+#addname "Ilarion"
+#addname "Ilya"
+#addname "Ioann"
+#addname "Ippolit"
+#addname "Ivanko"
+#addname "Ivats"
+#addname "Iziaslav"
+#addname "Kapsirko"
+#addname "Kazimir"
+#addname "Kiryak"
+#addname "Konstantin"
+#addname "Kuzma"
+#addname "Leonid"
+#addname "Leontii"
+#addname "Lev"
+#addname "Maksim"
+#addname "Mikhail"
+#addname "Mikifor"
+#addname "Mikula"
+#addname "Mstislav"
+#addname "Nikifor"
+#addname "Nikita"
+#addname "Nikolai"
+#addname "Oleg"
+#addname "Osip"
+#addname "Pafnuty"
+#addname "Pavel"
+#addname "Piotr"
+#addname "Pozvizd"
+#addname "Radko"
+#addname "Roman"
+#addname "Rostislav"
+#addname "Rurik"
+#addname "Sadko"
+#addname "Sdila"
+#addname "Semyon"
+#addname "Sergei"
+#addname "Stanislav"
+#addname "Sviatopolk"
+#addname "Sviatoslav"
+#addname "Sudislav"
+#addname "Tverdislav"
+#addname "Varlam"
+#addname "Vasiliy"
+#addname "Vasilko"
+#addname "Viktor"
+#addname "Vladimir"
+#addname "Vseslav"
+#addname "Vsevolod"
+#addname "Vyachek"
+#addname "Vysheslav"
+#addname "Yakim"
+#addname "Yakov"
+#addname "Yaropolk"
+#addname "Yermolay"
+#addname "Yuri"
+#addname "Zakhary"
+#addname "Zavid"
+#end
+
+#selectnametype 147
+#addname "Ivana"
+#addname "Agafya"
+#addname "Aglaya"
+#addname "Aksinya"
+#addname "Akulina"
+#addname "Aleksandra"
+#addname "Alla"
+#addname "Alyona"
+#addname "Amalia"
+#addname "Anastasia"
+#addname "Anfisa"
+#addname "Anisya"
+#addname "Anna"
+#addname "Antonina"
+#addname "Daria"
+#addname "Dunya"
+#addname "Dunyasha"
+#addname "Ekaterina"
+#addname "Elena"
+#addname "Elizaveta"
+#addname "Evdokia"
+#addname "Evgenia"
+#addname "Evpraksia"
+#addname "Faina"
+#addname "Fatima"
+#addname "Felitsata"
+#addname "Fyokla"
+#addname "Galina"
+#addname "Grusha"
+#addname "Irina"
+#addname "Katerina"
+#addname "Klavia"
+#addname "Larisa"
+#addname "Lipa"
+#addname "Lizaveta"
+#addname "Lyubov"
+#addname "Lyudmila"
+#addname "Marfa"
+#addname "Marfida"
+#addname "Marfusha"
+#addname "Mariya"
+#addname "Marya"
+#addname "Marina"
+#addname "Matriona"
+#addname "Nadezhda"
+#addname "Nadia"
+#addname "Nastasia"
+#addname "Natalia"
+#addname "Nina"
+#addname "Olga"
+#addname "Pelageia"
+#addname "Polina"
+#addname "Raisa"
+#addname "Rufina"
+#addname "Serafima"
+#addname "Sofiya"
+#addname "Svetlana"
+#addname "Tamara"
+#addname "Tatyana"
+#addname "Ustinya"
+#addname "Varvara"
+#addname "Vasilisa"
+#addname "Vera"
+#addname "Yulia"
+#addname "Zinaida"
+#end
+
+#selectnametype 148
+#addname "Goliath"
+#addname "Abiah"
+#addname "Ahia"
+#addname "Aron"
+#addname "Achaziah"
+#addname "Adriel"
+#addname "Amiram"
+#addname "Amir"
+#addname "Amittai"
+#addname "Amiel"
+#addname "Amnon"
+#addname "Amoz"
+#addname "Anaia"
+#addname "Arach"
+#addname "Ariel"
+#addname "Arnon"
+#addname "Asaph"
+#addname "Asher"
+#addname "Avishai"
+#addname "Avital"
+#addname "Avner"
+#addname "Avraham"
+#addname "Abram"
+#addname "Azaniah"
+#addname "Azaria"
+#addname "Barak"
+#addname "Benaya"
+#addname "Benayahu"
+#addname "Benyamin"
+#addname "Boas"
+#addname "Chiram"
+#addname "Hiram"
+#addname "Chizkiah"
+#addname "Daniel"
+#addname "Dar"
+#addname "David"
+#addname "Dishon"
+#addname "Dotan"
+#addname "Eban"
+#addname "Eden"
+#addname "Efah"
+#addname "Efram"
+#addname "Ephrayim"
+#addname "Ephron"
+#addname "Ehud"
+#addname "Eili"
+#addname "Eker"
+#addname "Eilam"
+#addname "Esai"
+#addname "Elazar"
+#addname "Elika"
+#addname "Eliyahu"
+#addname "Elihu"
+#addname "Elkan"
+#addname "Enosh"
+#addname "Eran"
+#addname "Eren"
+#addname "Ethan"
+#addname "Evenezer"
+#addname "Ezra"
+#addname "Ezer"
+#addname "Gal"
+#addname "Gavriel"
+#addname "Gedalia"
+#addname "Guni"
+#addname "Hadar"
+#addname "Haggiah"
+#addname "Hanan"
+#addname "Hananel"
+#addname "Haniel"
+#addname "Hanoch"
+#addname "Hevel"
+#addname "Hod"
+#addname "Hodiah"
+#addname "Hoshama"
+#addname "Ikabod"
+#addname "Irah"
+#addname "Itamar"
+#addname "Jabin"
+#addname "Jado"
+#addname "Janai"
+#addname "Jerah"
+#addname "Jareb"
+#addname "Javen"
+#addname "Jotham"
+#addname "Kaleb"
+#addname "Kelaya"
+#addname "Kemuel"
+#addname "Kenan"
+#addname "Kolaiah"
+#addname "Ladan"
+#addname "Lael"
+#addname "Lavan"
+#addname "Levi"
+#addname "Maaseiah"
+#addname "Makabi"
+#addname "Malachai"
+#addname "Mamer"
+#addname "Manoah"
+#addname "Maon"
+#addname "Maresha"
+#addname "Matitiah"
+#addname "Menachem"
+#addname "Menassah"
+#addname "Mered"
+#addname "Meshulam"
+#addname "Midian"
+#addname "Mikel"
+#addname "Minyamin"
+#addname "Moshe"
+#addname "Mordechai"
+#addname "Nadab"
+#addname "Nahum"
+#addname "Nechemia"
+#addname "Nedabiah"
+#addname "Netaniah"
+#addname "Nimrod"
+#addname "Noah"
+#addname "Oded"
+#addname "Omer"
+#addname "Omri"
+#addname "Ofer"
+#addname "Orev"
+#addname "Otniel"
+#addname "Ovadia"
+#addname "Peleg"
+#addname "Peretz"
+#addname "Racham"
+#addname "Rahim"
+#addname "Rafael"
+#addname "Rafa"
+#addname "Resheph"
+#addname "Reuben"
+#addname "Rishon"
+#addname "Rivai"
+#addname "Rosh"
+#addname "Ruel"
+#addname "Saloman"
+#addname "Salomon"
+#addname "Sheloman"
+#addname "Saul"
+#addname "Shafan"
+#addname "Shafer"
+#addname "Shalmai"
+#addname "Shamai"
+#addname "Shaul"
+#addname "Shemariah"
+#addname "Shemarya"
+#addname "Shemuel"
+#addname "Shet"
+#addname "Shilem"
+#addname "Shiloh"
+#addname "Shimon"
+#addname "Shimshon"
+#addname "Shomer"
+#addname "Telem"
+#addname "Temen"
+#addname "Terach"
+#addname "Tirzo"
+#addname "Tobiah"
+#addname "Tov"
+#addname "Tevel"
+#addname "Uria"
+#addname "Uriel"
+#addname "Yaakov"
+#addname "Akib"
+#addname "Kiba"
+#addname "Yahriel"
+#addname "Yair"
+#addname "Yamin"
+#addname "Yaphet"
+#addname "Yarden"
+#addname "Yarev"
+#addname "Yaron"
+#addname "Yehazkel"
+#addname "Heschel"
+#addname "Yedidia"
+#addname "Yehiel"
+#addname "Yehoyakim"
+#addname "Yakim"
+#addname "Yehudah"
+#addname "Yeriel"
+#addname "Yersz"
+#addname "Yehoshua"
+#addname "Yirmeyahu"
+#addname "Yishachar"
+#addname "Yisrael"
+#addname "Sroel"
+#addname "Iser"
+#addname "Isa"
+#addname "Yitro"
+#addname "Ithra"
+#addname "Yitzchak"
+#addname "Yoav"
+#addname "Yoel"
+#addname "Yochanan"
+#addname "Yona"
+#addname "Yonatun"
+#addname "Yoram"
+#addname "Yosef"
+#addname "Yuval"
+#addname "Zabdi"
+#addname "Zadkiel"
+#addname "Zadok"
+#addname "Zakai"
+#addname "Zakur"
+#addname "Zechariah"
+#addname "Zach"
+#addname "Zedekia"
+#addname "Zefaniah"
+#addname "Zevadiah"
+#addname "Zevah"
+#addname "Zippor"
+#addname "Zohar"
+#addname "Zuriel"
+#end
+
+#selectnametype 149
+#addname "Goliath"
+#addname "Ebrium"
+#addname "Ibbi-Sipish"
+#addname "Ili-ilimma"
+#addname "Idrimik"
+#addname "Ammittamru"
+#addname "Niqmaddu"
+#addname "Arhalba"
+#addname "Niqmepa"
+#addname "Ibiranu"
+#addname "Ammurapi"
+#addname "Aziru"
+#addname "Labaya"
+#addname "Abdikheba"
+#addname "Suwardata"
+#addname "Ulkan"
+#addname "Taruman"
+#addname "Sidan"
+#addname "Radan"
+#addname "Thar"
+#addname "Keret"
+#addname "Danil"
+#addname "Ham"
+#addname "Canaan"
+#addname "Sidon"
+#addname "Heth"
+#addname "Mamre"
+#addname "Makamaron"
+#addname "Sihon"
+#addname "Og"
+#addname "Adonizedek"
+#addname "Debir"
+#addname "Jabin"
+#addname "Abibaal"
+#addname "Hiram"
+#addname "Baal-Eser"
+#addname "Abdastratus"
+#addname "Methusastartus"
+#addname "Eshbaal"
+#addname "Mattan"
+#addname "Abd Melqart"
+#addname "Yakinbaal"
+#addname "Chelbes"
+#addname "Abbar"
+#addname "Mahar-Ba'al"
+#addname "Abdemon"
+#addname "Ba'al Hadad"
+#addname "Ba'al-Hammon"
+#addname "El Elyon"
+#addname "Eshmun"
+#addname "Baalat"
+#addname "Kotharat"
+#addname "Kothar"
+#addname "Hasis"
+#addname "Lotan"
+#addname "Yam"
+#addname "Mot"
+#addname "Resheph"
+#addname "Shalim"
+#addname "Shachar"
+#addname "Shamayim"
+#addname "Shemesh"
+#addname "Yam-nahar"
+#addname "Yarikh"
+#addname "Zedek"
+#addname "Ishbi-benob"
+#addname "Rapha"
+#addname "Lahmi"
+#addname "Sippai"
+#addname "Acmon"
+#addname "Acharon"
+#addname "Adoniah"
+#addname "Adriel"
+#addname "Amir"
+#addname "Amittai"
+#addname "Amiel"
+#addname "Amnon"
+#addname "Arach"
+#addname "Ariel"
+#addname "Asaph"
+#addname "Azrael"
+#addname "Azarel"
+#addname "Barak"
+#addname "Hiram"
+#addname "Chizkiah"
+#addname "Dar"
+#addname "Dishon"
+#addname "Ehud"
+#addname "Eilam"
+#addname "Elyakim"
+#addname "Enosh"
+#addname "Eran"
+#addname "Eren"
+#addname "Gamliel"
+#addname "Gedaliahu"
+#addname "Gidon"
+#addname "Gilad"
+#addname "Gomer"
+#addname "Hadar"
+#addname "Hezron"
+#addname "Hod"
+#addname "Irah"
+#addname "Itamar"
+#addname "Jerah"
+#addname "Kemuel"
+#addname "Makabi"
+#addname "Malki"
+#addname "Mamer"
+#addname "Maon"
+#addname "Meshulam"
+#addname "Methushelach"
+#addname "Motl"
+#addname "Nadab"
+#addname "Nahum"
+#addname "Nimrod"
+#addname "Og"
+#addname "Omer"
+#addname "Ophir"
+#addname "Ofer"
+#addname "Oran"
+#addname "Orev"
+#addname "Ozi"
+#addname "Pinchas"
+#addname "Raam"
+#addname "Raamah"
+#addname "Racham"
+#addname "Rahim"
+#addname "Rafael"
+#addname "Rafa"
+#addname "Rephaia"
+#addname "Resheph"
+#addname "Rishon"
+#addname "Shalmai"
+#addname "Shamai"
+#addname "Shemarya"
+#addname "Shet"
+#addname "Shiloh"
+#addname "Telem"
+#addname "Temen"
+#addname "Terach"
+#addname "Tevel"
+#addname "Uzzi"
+#addname "Uzia"
+#addname "Uziel"
+#addname "Yahriel"
+#addname "Yair"
+#addname "Yamin"
+#addname "Yedidia"
+#addname "Yehiel"
+#addname "Yehoyakim"
+#addname "Yeriel"
+#addname "Yersz"
+#addname "Yehoshua"
+#addname "Yirmeyahu"
+#addname "Yishmael "
+#addname "Sroel"
+#addname "Yitro"
+#addname "Yonatun"
+#addname "Zabdi"
+#addname "Zadkiel"
+#addname "Zadok"
+#addname "Zakai"
+#addname "Zakur"
+#addname "Zach"
+#addname "Zefaniah"
+#addname "Zevadiah"
+#addname "Zevah"
+#addname "Zevulun"
+#addname "Zippor"
+#addname "Zohar"
+#addname "Zuriel"
+#end
+
+#selectnametype 150
+#addname "Shekinah"
+#addname "Baalat"
+#addname "Anat"
+#addname "Asherah"
+#addname "Kathirat"
+#addname "Tehwom"
+#addname "Astarte"
+#addname "Ashtart"
+#addname "Amiela"
+#addname "Anaelle"
+#addname "Aphrat"
+#addname "Ariela"
+#addname "Asnat"
+#addname "Atarah"
+#addname "Azriela"
+#addname "Bariel"
+#addname "Batsevah"
+#addname "Beracha"
+#addname "Beula"
+#addname "Delila"
+#addname "Dinah"
+#addname "Elia"
+#addname "Elama"
+#addname "Elishevah"
+#addname "Hadara"
+#addname "Gavriela"
+#addname "Hagar"
+#addname "Hana"
+#addname "Hephzibah"
+#addname "Ismaela"
+#addname "Izevel"
+#addname "Keziah"
+#addname "Jordana"
+#addname "Leia"
+#addname "Marah"
+#addname "Miryam"
+#addname "Mahalia"
+#addname "Milkah"
+#addname "Nataniah"
+#addname "Orpa"
+#addname "Sariel"
+#addname "Shevah"
+#addname "Uriela"
+#addname "Tikvah"
+#addname "Shimona"
+#addname "Shiloh"
+#addname "Shoshana"
+#addname "Tama"
+#addname "Tirza"
+#addname "Yaela"
+#addname "Yedidah"
+#addname "Yudith"
+#addname "Yemina"
+#addname "Zillah"
+#addname "Zippora"
+#end
+
+#selectnametype 151
+#addname "Abubu"
+#addname "Abzu"
+#addname "Admanduga"
+#addname "Adapa"
+#addname "Akitu"
+#addname "Alma"
+#addname "Alu"
+#addname "Ama'ushumgalanna"
+#addname "Ashnan"
+#addname "Asipu"
+#addname "Atargatis"
+#addname "Athirat"
+#addname "Atarsamain"
+#addname "Atrahasi"
+#addname "Asalluhe"
+#addname "Apil'Adad"
+#addname "Arulli"
+#addname "Assurbanipal"
+#addname "Baru"
+#addname "Belshemin"
+#addname "Bit Rimki"
+#addname "Bubbar"
+#addname "Barag Kiba"
+#addname "Belit Balali"
+#addname "Belili"
+#addname "Damu"
+#addname "Dilmun"
+#addname "Dinanu"
+#addname "Dingir"
+#addname "Dikumah"
+#addname "Dimgalabzu"
+#addname "Duttur"
+#addname "Ea"
+#addname "Ebeh"
+#addname "Enki"
+#addname "Enkimdu"
+#addname "Enlil"
+#addname "Enu"
+#addname "Eshmun"
+#addname "Etimmu"
+#addname "Edinnausagga"
+#addname "Egisnugal"
+#addname "Eannatum"
+#addname "Emeslam"
+#addname "Eninnu"
+#addname "Enmebaragesi"
+#addname "Ennugi"
+#addname "Entemena"
+#addname "Enten"
+#addname "Erekh"
+#addname "Esagila"
+#addname "Esharra"
+#addname "Ezinu"
+#addname "Eshtar"
+#addname "Gishbare"
+#addname "Gurshar"
+#addname "Guedinna"
+#addname "Gallu"
+#addname "Gibil"
+#addname "Gilgamesh"
+#addname "Girru"
+#addname "Gula"
+#addname "Hadad"
+#addname "Hursag"
+#addname "Huwawa"
+#addname "Igigi"
+#addname "Igalima"
+#addname "Igizitu"
+#addname "Ilu"
+#addname "Ilabrat"
+#addname "Imin'shattam"
+#addname "Ishkur"
+#addname "Ishtaran"
+#addname "Ishu'kallu"
+#addname "Imdugud"
+#addname "Ina'ramnisu"
+#addname "Irra"
+#addname "Ishib"
+#addname "Ishkur"
+#addname "Istaritu"
+#addname "Issakku"
+#addname "Kash'shitu"
+#addname "Kantuzilis"
+#addname "Kish"
+#addname "Kingaluda"
+#addname "Kinirsha"
+#addname "Kishar"
+#addname "Kiur"
+#addname "Kulla"
+#addname "Kurgarru"
+#addname "Kurunnam"
+#addname "Kemosh"
+#addname "Keret"
+#addname "Kiksanu"
+#addname "Lugal"
+#addname "Lugalabzu"
+#addname "Ludlul bel Nimeqi"
+#addname "Lahar"
+#addname "Lahamu"
+#addname "Lamar"
+#addname "Latarak"
+#addname "Lipit'eshtar"
+#addname "Lugal'dimmerankia"
+#addname "Lugal'eudmelambi'nirgal"
+#addname "Lugal'kurdub"
+#addname "Lugal'zagesi"
+#addname "Lugal'sisa"
+#addname "Lullu"
+#addname "Lugal'igi'husham"
+#addname "Kudurru"
+#addname "Kurnugia"
+#addname "Kother'wa'hasis"
+#addname "Kohen"
+#addname "Mahhu"
+#addname "Maqlu"
+#addname "Martu"
+#addname "Masmasu"
+#addname "Mekal"
+#addname "Melqart"
+#addname "Mesaru"
+#addname "Milkom"
+#addname "Mot"
+#addname "Mudugsaa"
+#addname "Mummu"
+#addname "Meluhha"
+#addname "Mat'tamtin"
+#addname "Mushdama"
+#addname "Nan Lugal"
+#addname "Namchadnessar"
+#addname "Neti"
+#addname "Nidaba"
+#addname "Nimrud"
+#addname "Ninagal"
+#addname "Ninanna"
+#addname "Nin Dim"
+#addname "Ninbahar"
+#addname "Ninegalla"
+#addname "Ningikuga"
+#addname "Ningirsu"
+#addname "Ningublaga"
+#addname "Ninigikug"
+#addname "Ninmesarra"
+#addname "Ninmug"
+#addname "Ninshebargunu"
+#addname "Ninshubur"
+#addname "Ninsigsig"
+#addname "Ninsuna"
+#addname "Nintur"
+#addname "Nudimmud"
+#addname "Nabu"
+#addname "Nammu"
+#addname "Nanshe"
+#addname "Nambarbe"
+#addname "Nanna"
+#addname "Nergal"
+#addname "Nerigal"
+#addname "Nikkal"
+#addname "Ninazu"
+#addname "Ningal"
+#addname "Ninki"
+#addname "Ninlil"
+#addname "Ninmah"
+#addname "Nintuh"
+#addname "Nusku"
+#addname "Paghat"
+#addname "Qadistu"
+#addname "Qedestim"
+#addname "Rimmon"
+#addname "Rim Sin"
+#addname "Sa Ilu"
+#addname "Samgu"
+#addname "Sapatta"
+#addname "Sargon"
+#addname "Sarpanitu"
+#addname "Sar Puhi"
+#addname "Semiramis"
+#addname "Sesgallu"
+#addname "Shahar"
+#addname "Shalim"
+#addname "Shahr"
+#addname "Shamash"
+#addname "Shapsh"
+#addname "Shemesh"
+#addname "Simios"
+#addname "Simtu"
+#addname "Sin"
+#addname "Sittenkanon"
+#addname "Surpu"
+#addname "Sharu"
+#addname "Sagzu'dingirenek"
+#addname "Tamtun"
+#addname "Tibira'dingirenek"
+#addname "Tibira'kalammak"
+#addname "Tukulti'ninurta"
+#addname "Tammuz"
+#addname "Tanit"
+#addname "Tiglat-Pileser"
+#addname "Tinnit"
+#addname "Udum"
+#addname "Urigallu"
+#addname "Utnapishtim"
+#addname "Ubsu'ukkinna"
+#addname "Udnua"
+#addname "Ulnun"
+#addname "Urbaba"
+#addname "Uttu"
+#addname "Utuhegal"
+#addname "Usur'amassu"
+#addname "Lemnuti"
+#addname "Zirru"
+#addname "Zu"
+#addname "Abdi-arah"
+#addname "Abiditan"
+#addname "Abi-eshu"
+#addname "Abiyamuta"
+#addname "Abuwaqar"
+#addname "Adda-kalla"
+#addname "Addi-liblut"
+#addname "Ad-mat-ili"
+#addname "Aham-nishi"
+#addname "Ahatiwaqrat"
+#addname "Ahikibani"
+#addname "Ahi-shagish"
+#addname "Ah-kalla"
+#addname "Ahum"
+#addname "Ahum-waqar"
+#addname "Ahuratum"
+#addname "Ahu-shina"
+#addname "Akiya"
+#addname "Ali-ellati"
+#addname "Allala"
+#addname "Ama-sin"
+#addname "Ammi-ditana"
+#addname "Amnanu"
+#addname "Apil-ashnan"
+#addname "Apil-ilishu"
+#addname "Apilsha"
+#addname "Apiyatum"
+#addname "Appanili"
+#addname "Arammadara"
+#addname "Ashi-qurud"
+#addname "Ashmadu"
+#addname "Askur-addu"
+#addname "Assur-na'da"
+#addname "Assur-susuli"
+#addname "Assur-taklaku"
+#addname "Awil-aya"
+#addname "Awil-ishtar"
+#addname "Awiliya"
+#addname "Awil-shamash"
+#addname "Awil-sin"
+#addname "Ayar-ilum"
+#addname "Baba"
+#addname "Babati"
+#addname "Bakshishum"
+#addname "Baqqanum"
+#addname "Belanum"
+#addname "Beli-Ashared"
+#addname "Belshunu"
+#addname "Buhazum"
+#addname "Bunu-ishtar"
+#addname "Burrukam"
+#addname "Buttatum"
+#addname "Dada"
+#addname "Dadanum"
+#addname "Damqi-ilishu"
+#addname "Dazuzum"
+#addname "Ditanu"
+#addname "Dudu"
+#addname "Duququm"
+#addname "Dur-rimush"
+#addname "Ea-nasir"
+#addname "Eikuppi-adad"
+#addname "Ellu-mushu"
+#addname "Eluti"
+#addname "Enlil-bani"
+#addname "Enlil-ennam"
+#addname "Enlil-kurgalani"
+#addname "Enlil-zi-shagal"
+#addname "Ennam-belum"
+#addname "Etel-pisha"
+#addname "Etel-pi-sharrim"
+#addname "Etirum"
+#addname "Etum"
+#addname "Gazualum"
+#addname "Gimil-lum"
+#addname "Gimil-ninurta"
+#addname "Heana"
+#addname "Hudu-libbi"
+#addname "Hunhalbida"
+#addname "Huttupum"
+#addname "Ibal-pi-el"
+#addname "Ibbi-adad"
+#addname "Ibbi-shahan"
+#addname "Ibi"
+#addname "Iblinum"
+#addname "Ibnatum"
+#addname "Ibni-amurru"
+#addname "Iddin-enlil"
+#addname "Iddin-ilum"
+#addname "Iddin-ninshubur"
+#addname "Igmilum"
+#addname "Ikuppi-adad"
+#addname "Ila-kabkabu"
+#addname "Ilanum"
+#addname "Ili-alum"
+#addname "Ili-idinnam"
+#addname "Ili-iqisham"
+#addname "Illuratum"
+#addname "Ilshu-abushu"
+#addname "Ilshubani"
+#addname "Ilu-asu"
+#addname "Ilulu"
+#addname "Ilum-aha"
+#addname "Imdi-ilum"
+#addname "Imgua"
+#addname "Imgur-sin"
+#addname "Inbusha"
+#addname "Inim-shara"
+#addname "Iphur-kishi"
+#addname "Ipqatum"
+#addname "Ipqu-adad"
+#addname "Ipqu-annunitum"
+#addname "Ipqu-aya"
+#addname "Iptiyamuta"
+#addname "Ir-Nanna"
+#addname "Irra"
+#addname "Irrara"
+#addname "Ishhi-addu"
+#addname "Ishme-adad"
+#addname "Ishme-dagan"
+#addname "Ishme-Ea"
+#addname "Ishme-karab"
+#addname "Ishtup-sin"
+#addname "Kikuid"
+#addname "Kubburum"
+#addname "Kudiya"
+#addname "Ku-enlila"
+#addname "Ku-inanna"
+#addname "Ku-ningal"
+#addname "Kurhitti-mushtesher"
+#addname "Kurumtum"
+#addname "Kuwari"
+#addname "Laliya"
+#addname "Lamusa"
+#addname "La'um"
+#addname "Lipit-ea"
+#addname "Lipit-enlil"
+#addname "Lipit-ishtar"
+#addname "Lipit-tishpak"
+#addname "Lu-amar-suenaka"
+#addname "Lu-bau"
+#addname "Lu-dingira"
+#addname "Lu-enlila"
+#addname "Luga"
+#addname "Lugal-azida"
+#addname "Lugalkam"
+#addname "Lugal-urudu"
+#addname "Lugatum"
+#addname "Lu-inana"
+#addname "Lu-nanna"
+#addname "Lu-nin-ilduma"
+#addname "Lu-ninurta"
+#addname "Lu-shalim"
+#addname "Malgum-liblut"
+#addname "Mannum-ki-iliya"
+#addname "Marduk-asir"
+#addname "Mari-ersetim"
+#addname "Mar-iltum"
+#addname "Maru-yatum"
+#addname "Mattaki"
+#addname "Mesi-ilum"
+#addname "Mezizi"
+#addname "Milki-la-el"
+#addname "Minninum"
+#addname "Mukannishum"
+#addname "Munawirtum"
+#addname "Mut-kabid"
+#addname "Mutu-bisir"
+#addname "Nabi-enlil"
+#addname "Nabi-sin"
+#addname "Namhu"
+#addname "Nammahani"
+#addname "Namzu"
+#addname "Nanna-mansum"
+#addname "Nanna-sig"
+#addname "Naram-sin"
+#addname "Narubtum"
+#addname "Nasha"
+#addname "Nawirum-ili"
+#addname "Nidnatum"
+#addname "Nin-unumun-ki-ag"
+#addname "Ninurta-ra'im-zerim"
+#addname "Nur-ishtar"
+#addname "Nur-kubi"
+#addname "Nur-shamash"
+#addname "Palusum"
+#addname "Pirhum"
+#addname "Pu-balum"
+#addname "Pu-dagan"
+#addname "Pushu-ken"
+#addname "Puzrish-dagan"
+#addname "Puzu"
+#addname "Puzur-assur"
+#addname "Puzur-erra"
+#addname "Puzur-ishtar"
+#addname "Qisht-ea"
+#addname "Qishti-ilabrat"
+#addname "Rabi-sillashu"
+#addname "Rabi-sillashu"
+#addname "Rish-shamash"
+#addname "Sabium"
+#addname "Sabum"
+#addname "Sagil-zimu"
+#addname "Samsi-addu"
+#addname "Samum"
+#addname "Ses-kalla"
+#addname "Shalanum"
+#addname "Shalim-tehhushu"
+#addname "Shallurum"
+#addname "Shamash-andulli"
+#addname "Shamash-gamil"
+#addname "Shamash-hazir"
+#addname "Shamash-nasir"
+#addname "Shamshi-addu"
+#addname "Shatamurrim"
+#addname "Shep-sin"
+#addname "Sherum-ili"
+#addname "Shesh-kalla"
+#addname "Shubnalu"
+#addname "Shu-mama"
+#addname "Shummanla-shamash"
+#addname "Shuqallilum"
+#addname "Sidu"
+#addname "Sig-ersetim"
+#addname "Silli-emah"
+#addname "Silli-ishtar"
+#addname "Silli-shamash"
+#addname "Silli-sin"
+#addname "Sillush-dagan"
+#addname "Sin-alshu"
+#addname "Sin-gamil"
+#addname "Sin-idinnam"
+#addname "Sin-kashid"
+#addname "Sin-idinnam"
+#addname "Sin-imgurani"
+#addname "Sin-ishmeni"
+#addname "Sin-lidish"
+#addname "Sin-magir"
+#addname "Sin-mushtal"
+#addname "Sin-nadin-shumi"
+#addname "Sinnashi"
+#addname "Sin-nasir"
+#addname "Sumalika"
+#addname "Sumu-abum"
+#addname "Sumu-la-el"
+#addname "Taribat-sin"
+#addname "Taribatum"
+#addname "Taribum"
+#addname "Tubityamuta"
+#addname "Ubar-sin"
+#addname "Ubarum"
+#addname "Udama"
+#addname "Udish"
+#addname "Ugazum"
+#addname "Ur-dumizida"
+#addname "Ur-gula"
+#addname "Ur-lama"
+#addname "Ur-shubula"
+#addname "Ur-shulpae"
+#addname "Uselli"
+#addname "Uta-misharam"
+#addname "Utul-ishtar"
+#addname "Warad-enlil"
+#addname "Warad-iliya"
+#addname "Warad-ishtar"
+#addname "Warad-kubi"
+#addname "Warad-murrim"
+#addname "Warad-shamash"
+#addname "Warad-sin"
+#addname "Warassuni"
+#addname "Wardum"
+#addname "Watrum"
+#addname "Wusum-beli"
+#addname "Yaggit-lim"
+#addname "Yahdun-lim"
+#addname "Yahurum"
+#addname "Yamquzzuhalamma"
+#addname "Yarim-lim"
+#addname "Yashub-yahad"
+#addname "Yasmah-addu"
+#addname "Yassur-addu"
+#addname "Yayatum"
+#addname "Zababa-il"
+#addname "Zamaranum"
+#addname "Zaninum"
+#addname "Zimri-dagan"
+#addname "Ziyatum"
+#addname "Zummabu"
+#addname "Zuzu"
+#end
+
+#selectnametype 152
+#addname "Aia"
+#addname "Allatu"
+#addname "Asariluhi"
+#addname "Ashera"
+#addname "Ashtart"
+#addname "Amama"
+#addname "Anunit"
+#addname "Bau"
+#addname "Damgal Nanna"
+#addname "Damkina"
+#addname "Ereshkigalanna"
+#addname "Esagila"
+#addname "Geshtinanna"
+#addname "Inanna"
+#addname "Ishtar"
+#addname "Lilitu"
+#addname "Lamashtu"
+#addname "Lamassu"
+#addname "Melammu"
+#addname "Ninsaba"
+#addname "Ningirsu"
+#addname "Ningishzida"
+#addname "Ninhursag"
+#addname "Nininsina"
+#addname "Ninurta"
+#addname "Shala"
+#addname "Sin'liqi'unninni"
+#addname "Tashmeta"
+#addname "Tashlultum"
+#addname "Uru'inimgena"
+#addname "Ushum'galkalamma"
+#addname "Ushum'galanna"
+#addname "Ziusudra"
+#addname "Lahamu"
+#addname "Nammu"
+#addname "Ningal"
+#addname "Ningikuga"
+#addname "Ninil"
+#addname "Nin-imma "
+#addname "Ninkurra"
+#addname "Ninshubur"
+#addname "Ninsun"
+#addname "Ninsar"
+#addname "Uttu"
+#addname "Abi-simti"
+#addname "Ahassunu"
+#addname "Ahatiwaqrat"
+#addname "Ahunatum"
+#addname "Ali-ahhusha"
+#addname "Alittum"
+#addname "Amurritum"
+#addname "Arwi-a"
+#addname "Belessunu"
+#addname "Beletum"
+#addname "Bikku-lum"
+#addname "Bittatum"
+#addname "Daqqartum"
+#addname "Ealamassi"
+#addname "Eshargamelat"
+#addname "Habannatum"
+#addname "Humusi"
+#addname "Hunabatum"
+#addname "Iltani"
+#addname "Ilusha-hegal"
+#addname "Ishtar-belessa"
+#addname "Ishtar-gamelat"
+#addname "Ishtar-ibbi"
+#addname "Ishtar-rabi-at"
+#addname "Kammani"
+#addname "Ku-aya"
+#addname "Liwwir-esagil"
+#addname "Manatum"
+#addname "Munawirtum"
+#addname "Nakurtum"
+#addname "Nin-dada"
+#addname "Nin-kagina"
+#addname "Nuratum"
+#addname "Sapurtum"
+#addname "Sharrat-sippar"
+#addname "Shat-sin"
+#addname "Shatu-murrim"
+#addname "Shiptu"
+#addname "Sin-nada"
+#addname "Summirat-ishtar"
+#addname "Tabni-ishtar"
+#addname "Takurtum"
+#addname "Taram-uram"
+#addname "Ummi-waqrat"
+#addname "Yadidatum"
+#addname "Ishme-Dagan"
+#addname "Puabu"
+#addname "Ashusikildigir"
+#addname "Enanatuma"
+#addname "Ninbanda"
+#addname "Shub-ad"
+#addname "Gula"
+#addname "Ashnan"
+#end
+
+#selectnametype 153
+#addname "Stalagmite"
+#addname "Stalactite"
+#addname "Basalt"
+#addname "Granite"
+#addname "Onyx"
+#addname "Rockheart"
+#addname "Stoneheart"
+#addname "Deepheart"
+#addname "Pebbleheart"
+#addname "Boulderheart"
+#addname "Caveheart"
+#addname "Basaltheart"
+#addname "Earthheart"
+#addname "Soilheart"
+#addname "Gemheart"
+#addname "Onyxheart"
+#addname "Paleheart"
+#addname "Sandheart"
+#addname "Pillarheart"
+#addname "Twoheart"
+#addname "Rockthought"
+#addname "Stonethought"
+#addname "Deepthought"
+#addname "Pebblethought"
+#addname "Boulderthought"
+#addname "Cavethought"
+#addname "Basaltthought"
+#addname "Earththought"
+#addname "Soilthought"
+#addname "Gemthought"
+#addname "Palethought"
+#addname "Sandthought"
+#addname "Pillarthought"
+#addname "Twothought"
+#addname "Rocksoul"
+#addname "Stonesoul"
+#addname "Deepsoul"
+#addname "Cavesoul"
+#addname "Earthsoul"
+#addname "Gemsoul"
+#addname "Twosoul"
+#addname "Caveson"
+#addname "Earthson"
+#addname "Twoson"
+#addname "Rockstrength"
+#addname "Stonestrength"
+#addname "Deepstrength"
+#addname "Pebblestrength"
+#addname "Boulderstrength"
+#addname "Cavestrength"
+#addname "Earthstrength"
+#addname "Twostrength"
+#addname "Rockhand"
+#addname "Stonehand"
+#addname "Pebblehand"
+#addname "Boulderhand"
+#addname "Cavehand"
+#addname "Gemhand"
+#addname "Palehand"
+#addname "Sandhand"
+#addname "Onehand"
+#addname "Rockspine"
+#addname "Stonespine"
+#addname "Pebblespine"
+#addname "Boulderspine"
+#addname "Cavespine"
+#addname "Earthspine"
+#addname "Gemspine"
+#addname "Pillarspine"
+#addname "Twospine"
+#addname "Rockmind"
+#addname "Stonemind"
+#addname "Deepmind"
+#addname "Pebblemind"
+#addname "Bouldermind"
+#addname "Cavemind"
+#addname "Earthmind"
+#addname "Soilmind"
+#addname "Palemind"
+#addname "Sandmind"
+#addname "Pillarmind"
+#addname "Rockfinger"
+#addname "Stonefinger"
+#addname "Pebblefingers"
+#addname "Cavefinger"
+#addname "Earthfinger"
+#addname "Gemfinger"
+#addname "Palefingers"
+#addname "Sandfinger"
+#addname "Pillarfingers"
+#addname "Twofinger"
+#addname "Rockbone"
+#addname "Stonebone"
+#addname "Deepbone"
+#addname "Pebblebone"
+#addname "Cavebone"
+#addname "Earthbone"
+#addname "Sandbone"
+#addname "Pillarbone"
+#addname "Twobone"
+#addname "Rockeye"
+#addname "Stoneeye"
+#addname "Deepeye"
+#addname "Pebbleeye"
+#addname "Eartheye"
+#addname "Sandeye"
+#addname "Twoeyes"
+#addname "Rockmined"
+#addname "Stonemined"
+#addname "Pebblemined"
+#addname "Cavemined"
+#addname "Rockborn"
+#addname "Stoneborn"
+#addname "Deepborn"
+#addname "Pebbleborn"
+#addname "Boulderborn"
+#addname "Caveborn"
+#addname "Basaltborn"
+#addname "Earthborn"
+#addname "Soilborn"
+#addname "Gemborn"
+#addname "Paleborn"
+#addname "Sandborn"
+#addname "Pillarborn"
+#addname "Rockspawned"
+#addname "Stonespawned"
+#addname "Deepspawned"
+#addname "Pebblespawned"
+#addname "Boulderspawned"
+#addname "Cavespawned"
+#addname "Earthspawned"
+#addname "Soilspawned"
+#addname "Gemspawned"
+#addname "Sandspawned"
+#addname "Pillarspawned"
+#addname "Twospawned"
+#addname "Rockbreaker"
+#addname "Stonebreaker"
+#addname "Deepbreaker"
+#addname "Pebblebreaker"
+#addname "Boulderbreaker"
+#addname "Cavebreaker"
+#addname "Basaltbreaker"
+#addname "Earthbreaker"
+#addname "Soilbreaker"
+#addname "Gembreaker"
+#addname "Onyxbreaker"
+#addname "Palebreaker"
+#addname "Pillarbreaker"
+#addname "Twicebreaker"
+#end
+
+#selectnametype 154
+#addname "Rubyheart"
+#addname "Emeraldheart"
+#addname "Saphireheart"
+#addname "Diamondheart"
+#addname "Rubythought"
+#addname "Diamondthought"
+#addname "Rubysoul"
+#addname "Emeraldsoul"
+#addname "Diamondsoul"
+#addname "Rubymind"
+#addname "Emeraldmind"
+#addname "Diamondmind"
+#addname "Rubyeye"
+#addname "Emeraldeye"
+#addname "Diamondeye"
+#addname "Rubyborn"
+#addname "Emeraldborn"
+#addname "Saphireborn"
+#addname "Diamondborn"
+#addname "Rubyspawned"
+#addname "Emeraldspawned"
+#addname "Saphirespawned"
+#addname "Diamondspawned"
+#addname "Ruby"
+#addname "Emerald"
+#addname "Saphire"
+#addname "Diamond"
+#addname "Stonekiss"
+#addname "Pebblekiss"
+#addname "Cavekiss"
+#addname "Earthkiss"
+#addname "Sandkiss"
+#addname "Twokiss"
+#addname "Olmkiss"
+#addname "Rockfriend"
+#addname "Stonefriend"
+#addname "Deepfriend"
+#addname "Pebblefriend"
+#addname "Boulderfriend"
+#addname "Cavefriend"
+#addname "Basaltfriend"
+#addname "Earthfriend"
+#addname "Soilfriend"
+#addname "Gemfriend"
+#addname "Onyxfriend"
+#addname "Palefriend"
+#addname "Sandfriend"
+#addname "Pillarfriend"
+#addname "Twofriend"
+#addname "Olmfriend"
+#end
+
+#selectnametype 155
+#addname "Acahuana"
+#addname "Apocatequil"
+#addname "Apacheia"
+#addname "Apomayta"
+#addname "Atoc"
+#addname "Atahualpa"
+#addname "Amaru"
+#addname "Amaru Yupanqui"
+#addname "Amaru Auca"
+#addname "Amaru Tupac"
+#addname "Amaru Capac"
+#addname "Amaru Huallpa"
+#addname "Amaru Cusi"
+#addname "Amaru Roca"
+#addname "Ati"
+#addname "Auca"
+#addname "Auca Tupac"
+#addname "Auca Capac"
+#addname "Auca Huascar"
+#addname "Catequil"
+#addname "Con"
+#addname "Coniraya"
+#addname "Echecho"
+#addname "Epunamun"
+#addname "Guachimines"
+#addname "Guamansuri"
+#addname "Cachi"
+#addname "Capac Yupanqui"
+#addname "Cuyochi"
+#addname "Cusi"
+#addname "Chaculchimac"
+#addname "Cuyochi"
+#addname "Huallpa"
+#addname "Huallpa Roca"
+#addname "Huallpa Yupanqui"
+#addname "Huallpa Tupac"
+#addname "Huallpa Capac"
+#addname "Huallpa Rimachi"
+#addname "Huiracocha"
+#addname "Hango"
+#addname "Hango Atao"
+#addname "Huyana"
+#addname "Huyana Cusi"
+#addname "Huyana Roca"
+#addname "Huyana Tupac"
+#addname "Huyana Capac"
+#addname "Huascar"
+#addname "Hatun Capac"
+#addname "Hatun Ripac"
+#addname "Hatun Roca"
+#addname "Hatun Sinchi"
+#addname "Hatun Tupac"
+#addname "Ilyapa"
+#addname "Inti Cusi Huallpa"
+#addname "Lloque"
+#addname "Lloque Tupac"
+#addname "Lloque Capac"
+#addname "Lloque Yupanqui"
+#addname "Maita"
+#addname "Maricanchi"
+#addname "Manco Sinchi"
+#addname "Manco Roca"
+#addname "Manco Ripac"
+#addname "Manco Huascar"
+#addname "Manco Auca"
+#addname "Manco Yupanqui"
+#addname "Mayta Capac"
+#addname "Ninan"
+#addname "Ninan Cuyochi"
+#addname "Pachari"
+#addname "Pachacamac"
+#addname "Pahuac Maita"
+#addname "Punchau"
+#addname "Thonapa"
+#addname "Paullu"
+#addname "Paullu Huascar"
+#addname "Paullu Sinchi"
+#addname "Paullu Yupanqui"
+#addname "Paullu Tupac"
+#addname "Paullu Manco"
+#addname "Paullu Capac"
+#addname "Pachacuti"
+#addname "Quizquiz"
+#addname "Roca"
+#addname "Ripac"
+#addname "Ruminahui"
+#addname "Sinchi"
+#addname "Sinchi Titu"
+#addname "Sinchi Tupac"
+#addname "Sinchi Roca"
+#addname "Sinchi Huascar"
+#addname "Sinchi Capac"
+#addname "Sinchi Cusi"
+#addname "Sayri"
+#addname "Sayri Capac"
+#addname "Sayri Tupac"
+#addname "Topa Atao"
+#addname "Topa Capac"
+#addname "Topa Tupac"
+#addname "Topa Uchu"
+#addname "Topa Huascar"
+#addname "Titu"
+#addname "Titu Atao"
+#addname "Titu Paullu"
+#addname "Titu Roca"
+#addname "Titu Tupac"
+#addname "Titu Capac"
+#addname "Titu Cusi"
+#addname "Tupac Huallpa"
+#addname "Tupac Amaru"
+#addname "Tupac Yupanqui"
+#addname "Uchu"
+#addname "Uchu Yupanqui"
+#addname "Uchu Capac"
+#addname "Uchu Sayri"
+#addname "Urcaguary"
+#addname "Urco"
+#addname "Vicaquirao"
+#addname "Viracocha"
+#addname "Yupanqui"
+#end
+
+#selectnametype 156
+#addname "Mama Raua"
+#addname "Mama Huaco"
+#addname "Mama Cura"
+#addname "Mama Cusi"
+#addname "Mama Cahua"
+#addname "Mama Cora"
+#addname "Mama Cora Ocllo"
+#addname "Mama Cuca"
+#addname "Mama Michay"
+#addname "Mama Chiqlla"
+#addname "Mama Nusta"
+#addname "Mama Runu"
+#addname "Mama Anawarkhi"
+#addname "Axomama"
+#addname "Anahuarque"
+#addname "Asarpay"
+#addname "Cava"
+#addname "Cavillaca"
+#addname "Chasca"
+#addname "Chasca Coyllur"
+#addname "Chic'Ya"
+#addname "Chimpu Ocllo"
+#addname "Cuxi Uarcay"
+#addname "Cusi"
+#addname "Cusi Ocllo"
+#addname "Cusi Huaco"
+#addname "Cusi Hilpay"
+#addname "Cusi Chimbo"
+#addname "Cusirimay"
+#addname "Cocomama"
+#addname "Copacati"
+#addname "Cuca"
+#addname "Curi Illpay"
+#addname "Cora"
+#addname "Cora Ocllo"
+#addname "Cora Michay"
+#addname "Cora Huaco"
+#addname "Cora Chimbo"
+#addname "Cura Chiqlla"
+#addname "Cura Michay"
+#addname "Cura Runu"
+#addname "Cura Cahua"
+#addname "Cura Raua"
+#addname "Cura Ocllo"
+#addname "Cura Huaco"
+#addname "Raua"
+#addname "Raua Huaco"
+#addname "Raua Cuca"
+#addname "Raua Cora"
+#addname "Raua Hilpay"
+#addname "Raua Pacha"
+#addname "Si"
+#addname "Quinuama"
+#addname "Nusta"
+#addname "Nusta Huaco"
+#addname "Nusta Runu"
+#addname "Nusta Sisa"
+#addname "Nusta Hilpay"
+#addname "Nusta Ocllo"
+#addname "Nusta Pacha"
+#addname "Pacha"
+#addname "Pacha Duchicela"
+#addname "Pacha Cusi"
+#addname "Pacha Ocllo"
+#addname "Pacha Runu"
+#addname "Pacha Huaco"
+#addname "Pacha Sisa"
+#addname "Quispe Sisa"
+#addname "Quispe Oclla"
+#addname "Quispe Huaco"
+#addname "Quispe Chiqlla"
+#addname "Quispe Cuca"
+#addname "Urpihuachac"
+#end
+
+#selectnametype 157
+#addname "Cuxtal"
+#addname "Chamahez"
+#addname "Camulatz"
+#addname "Zotz"
+#addname "Acan"
+#addname "Acat"
+#addname "Ahau"
+#addname "Ah Muzen Cab"
+#addname "Ah Puch"
+#addname "Ah Tabai"
+#addname "Ah Uuc Ticab"
+#addname "Ah Bolom Tzacab"
+#addname "Ah Cancum"
+#addname "Ah Chuy Kat"
+#addname "Ah Chun Caan"
+#addname "Ah Ciliz"
+#addname "Ah Cuxtal"
+#addname "Ah Pekku"
+#addname "Ah Mun"
+#addname "Ah Hulneb"
+#addname "Ah Tabai"
+#addname "Ah Uncir Tzacab"
+#addname "Ah Xoc Xin"
+#addname "Ahau Chamahez"
+#addname "Ahmakiq"
+#addname "Ahulane"
+#addname "Ahluic"
+#addname "Ajbit"
+#addname "Ajtzak"
+#addname "Akna"
+#addname "Alom"
+#addname "Balam"
+#addname "Bitol"
+#addname "Bolon"
+#addname "Bolon Yokte"
+#addname "Buluc"
+#addname "Buluc Chabtan"
+#addname "Backlum Chaam"
+#addname "Bolon Tzacab"
+#addname "Cabrakan"
+#addname "Chacoch"
+#addname "Chaac"
+#addname "Chaac Uyab Xoc"
+#addname "Cit Bolon Tum"
+#addname "Cizin"
+#addname "Cantzicnal"
+#addname "Colop U Uichkin"
+#addname "Coyopa"
+#addname "Cum Hau"
+#addname "Cabaguil"
+#addname "Cakulha"
+#addname "Camaxtli"
+#addname "Camalotz"
+#addname "Cauac"
+#addname "Chac Uayab Xoc"
+#addname "Chamer"
+#addname "Cit Bolon Tum"
+#addname "Cizin"
+#addname "Colop U Uichikin"
+#addname "Cotzbalam"
+#addname "Coyopa"
+#addname "Cuchumaqic"
+#addname "Cum Hau"
+#addname "Ek Chuaj"
+#addname "Q'uq'umatz"
+#addname "Hachak'yum"
+#addname "Hobnil"
+#addname "Hozanek"
+#addname "Hun"
+#addname "Hun Batz"
+#addname "Hun Chowen"
+#addname "Hun Hunapu"
+#addname "Hun Ahpu"
+#addname "Hunahpu Gutch"
+#addname "Hunahpu Utiu"
+#addname "Hun Ixim"
+#addname "Hun Nal Ye"
+#addname "Huracan"
+#addname "Hapikern"
+#addname "Hunab Ku"
+#addname "Imix"
+#addname "Itzamna"
+#addname "Itzananohk'u"
+#addname "Itzam Ye"
+#addname "Jacawitz"
+#addname "Kinich Ahau"
+#addname "Kinich Kakmo"
+#addname "Kisin"
+#addname "Kianto"
+#addname "Kichigonai"
+#addname "Kukulcan"
+#addname "Kan"
+#addname "Kan U Uayeyab"
+#addname "Kan Xib Yui"
+#addname "Mam"
+#addname "Manik"
+#addname "Mitnal"
+#addname "Mulac"
+#addname "Maximon"
+#addname "Nohochacyum"
+#addname "Oxlahuntiku"
+#addname "Och Kan"
+#addname "Pawahtuun"
+#addname "Poxlom"
+#addname "Qaholom"
+#addname "Saccimi"
+#addname "Tepeu"
+#addname "Tohil"
+#addname "Tecumbalam"
+#addname "Tlacolotl"
+#addname "Tzacol"
+#addname "Tzultacaj"
+#addname "Usukan"
+#addname "Uc Zip"
+#addname "Uyitzin"
+#addname "Vatanchu"
+#addname "Voltan"
+#addname "Vucub Came"
+#addname "Vucub Caqix"
+#addname "Yantho"
+#addname "Xamaniqinqu"
+#addname "Xaman Ek'"
+#addname "Xabalanque"
+#addname "Xpiayoc"
+#addname "Xecotcovach"
+#addname "Xcarruchan"
+#addname "Yaluk"
+#addname "Yum Kaax"
+#addname "Yum Cimil"
+#addname "Yum Chakob"
+#addname "Zac Cimi"
+#addname "Zipacna"
+#addname "Zotzilaha"
+#end
+
+#selectnametype 158
+#addname "Chimalmat"
+#addname "Ah Uaynih"
+#addname "Ah Wink Ir Masa"
+#addname "Akhushtal"
+#addname "Akna"
+#addname "Alaghom Naom Tzentel"
+#addname "Chen"
+#addname "Chin"
+#addname "Chirakan Ixmucane"
+#addname "Colel Cab"
+#addname "Chak Chel"
+#addname "Ixchel"
+#addname "Ixmucane"
+#addname "Ixmacane"
+#addname "Ixtat Ix"
+#addname "Ixtab"
+#addname "Ix Tub Tun"
+#addname "Ixtoj"
+#addname "Ixtziya"
+#addname "Ixkakaw"
+#addname "Ix'qanil"
+#addname "Ixazaluoth"
+#addname "Ixazalvoh"
+#addname "Ixcuiname"
+#addname "Ixpiyacoc"
+#addname "Xqic"
+#addname "Xmucane"
+#end
+
+#selectnametype 159
+#addname "Achelous"
+#addname "Asopus"
+#addname "Enipeus"
+#addname "Scamander"
+#addname "Acheron"
+#addname "Acragas"
+#addname "Aeas"
+#addname "Aegaeus"
+#addname "Aesar"
+#addname "Aesepus"
+#addname "Almo"
+#addname "Alpheus"
+#addname "Amnisos"
+#addname "Amphrysos"
+#addname "Anapos"
+#addname "Anauros"
+#addname "Anigros"
+#addname "Apidanus"
+#addname "Arar"
+#addname "Araxes"
+#addname "Ardescus"
+#addname "Arnos"
+#addname "Asopus"
+#addname "Asterion"
+#addname "Axius"
+#addname "Baphyras"
+#addname "Borysthenes"
+#addname "Brychon"
+#addname "Caanthus"
+#addname "Caicinus"
+#addname "Caicus"
+#addname "Cayster"
+#addname "Cebren"
+#addname "Cephissus"
+#addname "Chremetes"
+#addname "Kladeos"
+#addname "Clitumnus"
+#addname "Cocytus"
+#addname "Cratais"
+#addname "Crinisus"
+#addname "Cydnos"
+#addname "Cytheros"
+#addname "Elisson"
+#addname "Enipeus"
+#addname "Erasinus"
+#addname "Eridanus"
+#addname "Erymanthus"
+#addname "Euphrates"
+#addname "Eurotas"
+#addname "Evenus"
+#addname "Ganges"
+#addname "Granicus"
+#addname "Haliacmon"
+#addname "Halys"
+#addname "Hebrus"
+#addname "Heptaporus"
+#addname "Hermus"
+#addname "Hydaspes"
+#addname "Ilissos"
+#addname "Imbrasos"
+#addname "Inachus"
+#addname "Indus"
+#addname "Inopos"
+#addname "Ismenus"
+#addname "Istrus"
+#addname "Ister"
+#addname "Ladon"
+#addname "Lamos"
+#addname "Lycormas"
+#addname "Marsyas"
+#addname "Maeander"
+#addname "Meles"
+#addname "Mincius"
+#addname "Nestos"
+#addname "Nilus"
+#addname "Numicius"
+#addname "Nymphaeus"
+#addname "Orontes"
+#addname "Pactolus"
+#addname "Parthenius"
+#addname "Phasis"
+#addname "Phlegethon"
+#addname "Phyllis"
+#addname "Peneus"
+#addname "Pleistos"
+#addname "Porpax"
+#addname "Rhesus"
+#addname "Rhine"
+#addname "Rhodius"
+#addname "Rhyndacus"
+#addname "Satnioeis"
+#addname "Sangarius"
+#addname "Scamander"
+#addname "Simoeis"
+#addname "Spercheus"
+#addname "Strymon"
+#addname "Symaethus"
+#addname "Tanais"
+#addname "Termessus"
+#addname "Thermodon"
+#addname "Tiberinus"
+#addname "Tigris"
+#addname "Titaressus"
+#end
+
+#selectnametype 160
+#addname "Agaue"
+#addname "Aktaie"
+#addname "Amatheia"
+#addname "Amphinome"
+#addname "Amphithoe"
+#addname "Amphitrite"
+#addname "Apseude"
+#addname "Autono"
+#addname "Dero"
+#addname "Dexamene"
+#addname "Dione"
+#addname "Doris"
+#addname "Dot"
+#addname "Dynamen"
+#addname "Eione"
+#addname "Erat"
+#addname "Euagore"
+#addname "Euarne"
+#addname "Eudor"
+#addname "Eukrante"
+#addname "Eulimen"
+#addname "Eumolpe"
+#addname "Eunik"
+#addname "Eupomp"
+#addname "Galateia"
+#addname "Galene"
+#addname "Glauke"
+#addname "Glaukonome"
+#addname "Halia"
+#addname "Halimede"
+#addname "Hipponoe"
+#addname "Hippothoe"
+#addname "Iair"
+#addname "Ianassa"
+#addname "Ianeira"
+#addname "Ion"
+#addname "Kallianassa"
+#addname "Kallianeira"
+#addname "Kalyps"
+#addname "Ket"
+#addname "Klai"
+#addname "Klymen"
+#addname "Kranto"
+#addname "Kym"
+#addname "Kymatolege"
+#addname "Kymodok"
+#addname "Kymotho"
+#addname "Laomedei"
+#addname "Leagor"
+#addname "Limnorei"
+#addname "Lysianass"
+#addname "Mair"
+#addname "Melit"
+#addname "Menipp"
+#addname "Nausitho"
+#addname "Nemerte"
+#addname "Neomeris"
+#addname "Nesai"
+#addname "Nes"
+#addname "Oreithyi"
+#addname "Panopei"
+#addname "Pasithe"
+#addname "Pherous"
+#addname "Plexaure"
+#addname "Plot"
+#addname "Polynom"
+#addname "Pontomedus"
+#addname "Pontoporei"
+#addname "Poulyno"
+#addname "Prono"
+#addname "Protomedei"
+#addname "Psamath"
+#addname "Sa"
+#addname "Spei"
+#addname "Thalei"
+#addname "Themist"
+#addname "Theti"
+#addname "Thoe"
+#addname "Acaste"
+#addname "Admete"
+#addname "Aethra"
+#addname "Amaltheia"
+#addname "Amphiro"
+#addname "Anchiroe"
+#addname "Anthracia"
+#addname "Argia"
+#addname "Asia"
+#addname "Asterodia"
+#addname "Asterope"
+#addname "Beroe"
+#addname "Bolbe"
+#addname "Cleodora"
+#addname "Callirrhoe"
+#addname "Calypso"
+#addname "Camarina"
+#addname "Capheira"
+#addname "Cerceis"
+#addname "Ceto"
+#addname "Chryseis"
+#addname "Clio"
+#addname "Clymene"
+#addname "Clytie"
+#addname "Crocale"
+#addname "Daira"
+#addname "Dione"
+#addname "Dodone"
+#addname "Doris"
+#addname "Eidyia"
+#addname "Electra"
+#addname "Ephyra"
+#addname "Euagoreis"
+#addname "Eudore"
+#addname "Europa"
+#addname "Eurynome"
+#addname "Galaxaure"
+#addname "Glauke"
+#addname "Hagno"
+#addname "Hesione"
+#addname "Hippo"
+#addname "Hyale "
+#addname "Iakhe"
+#addname "Ianira"
+#addname "Ianthe"
+#addname "Ithome"
+#addname "Leucippe"
+#addname "Lysithea"
+#addname "Melia"
+#addname "Meliboea"
+#addname "Melite"
+#addname "Melobosis"
+#addname "Menestho"
+#addname "Merope"
+#addname "Metis"
+#addname "Mopsopia"
+#addname "Myrtoessa"
+#addname "Nede "
+#addname "Nemesis"
+#addname "Nephele"
+#addname "Ocyrrhoe"
+#addname "Oinoe "
+#addname "Ozomene "
+#addname "Pasithoe"
+#addname "Peitho"
+#addname "Periboea"
+#addname "Perse"
+#addname "Petraea"
+#addname "Phaino"
+#addname "Phiale "
+#addname "Philyra "
+#addname "Phrixa "
+#addname "Pleione "
+#addname "Plexaure"
+#addname "Plouto"
+#addname "Polydora"
+#addname "Polyphe "
+#addname "Polyxo"
+#addname "Pronoia"
+#addname "Prymno"
+#addname "Psekas "
+#addname "Rhanis "
+#addname "Rhodia"
+#addname "Rhodope"
+#addname "Stilbo"
+#addname "Styx "
+#addname "Telesto"
+#addname "Theisoa"
+#addname "Thoe"
+#addname "Tyche"
+#addname "Urania"
+#addname "Xanthe"
+#addname "Zeuxo"
+#end
+
+#selectnametype 161
+#addname "Aktaios"
+#addname "Argyron"
+#addname "Atabyrius"
+#addname "Chalcon"
+#addname "Chryson"
+#addname "Damnameneus"
+#addname "Damon"
+#addname "Demonax"
+#addname "Hormenius"
+#addname "Ormenos"
+#addname "Lykos"
+#addname "Lyktos"
+#addname "Megalesius"
+#addname "Mylas"
+#addname "Nicon"
+#addname "Simon"
+#addname "Skelmis"
+#addname "Kadmylos"
+#addname "Eetion"
+#addname "Dardanos"
+#addname "Trophonius"
+#addname "Xuthus"
+#addname "Kreon"
+#addname "Stymphalus"
+#addname "Thalpius"
+#addname "Cercyon"
+#addname "Amphictyon"
+#end
+
+#selectnametype 162
+#addname "Agrius"
+#addname "Alektos"
+#addname "Aristaeus"
+#addname "Astarias"
+#addname "Aster"
+#addname "Asterius"
+#addname "Asterus"
+#addname "Clytius"
+#addname "Damysus"
+#addname "Enceladus"
+#addname "Ephialtes"
+#addname "Euryalus"
+#addname "Eurymedon"
+#addname "Eurytus"
+#addname "Gration"
+#addname "Hopladamas"
+#addname "Hippolytus"
+#addname "Leon"
+#addname "Mimas"
+#addname "Mimon"
+#addname "Mimos"
+#addname "Pallas"
+#addname "Pelorus"
+#addname "Picolous"
+#addname "Polybotes"
+#addname "Porphyrion"
+#addname "Thoas"
+#addname "Thoon"
+#addname "Otus"
+#addname "Hyperion"
+#addname "Coeus"
+#addname "Crius"
+#addname "Iapetus"
+#addname "Atlas"
+#addname "Epimetheus"
+#addname "Menoethius"
+#addname "Pallas"
+#addname "Perses"
+#addname "Geryone"
+#addname "Eurythion"
+#end
+
+#selectnametype 163
+#addname "Aretas"
+#addname "Malecus"
+#addname "Rabel"
+#addname "Muqimu"
+#addname "Obadas"
+#addname "Huldo"
+#addname "Sagilat"
+#addname "Gamilat"
+#addname "Yatha'"
+#addname "Yakrib"
+#addname "Yakrib Malek Watar"
+#addname "Yakrib Amar Bayin"
+#addname "Samah'ali"
+#addname "Malek"
+#addname "Watar"
+#addname "Watar Yuha'min"
+#addname "Yada'"
+#addname "Yada' El Bayin"
+#addname "Yada' Ad"
+#addname "Akh Karab"
+#addname "Yanuf"
+#addname "Zamir"
+#addname "Zamir Ali Bayin"
+#addname "Zamir Ali Zarih"
+#addname "Karab"
+#addname "Karab El Bayin"
+#addname "Karab Athtat"
+#addname "Wahab"
+#addname "Nasir"
+#addname "Anmar Yuha'man"
+#addname "Anmar"
+#addname "Yarim"
+#addname "Yarim Aymin"
+#addname "Yarim Nahfan"
+#addname "Yazil"
+#addname "Yazil Bayin"
+#addname "Sa'd"
+#addname "Sa'd Um Namran"
+#addname "Murthid"
+#addname "Nasha"
+#addname "Hayu"
+#addname "Yazil"
+#addname "Shamdar"
+#addname "Rab"
+#addname "Shahar"
+#addname "Shahar Aymin"
+#addname "Shahar Yahbir"
+#addname "El Ez"
+#addname "Namran"
+#addname "Namran "
+#addname "Yuhan'em"
+#addname "Yuhaqbiz"
+#addname "Yuhan'im"
+#addname "Ali Yahbir"
+#addname "Zari' Amar Aymin"
+#addname "Tharin Ayfi'"
+#addname "Yarim Yuharhib"
+#addname "Sharhib"
+#addname "Sharhib El Yakif"
+#addname "Nawfim"
+#addname "Hassan"
+#addname "Hassan Yuha'min"
+#addname "Mu'di"
+#addname "Mu'di Yan'im"
+#addname "Sumuafa'"
+#addname "Sayf"
+#addname "Lakhi'athah"
+#addname "Yarim Aymin"
+#addname "Far'am Yanhab"
+#addname "Far'an"
+#addname "Inzak"
+#addname "Meskilak"
+#addname "Kahl"
+#addname "Almaqah"
+#addname "'Amm"
+#addname "'Athtar"
+#addname "Abbas"
+#addname "Abbud"
+#addname "Abdul"
+#addname "Abdulmalik"
+#addname "Abdulrahman"
+#addname "Akhil"
+#addname "Akbar"
+#addname "Adnan"
+#addname "Adil"
+#addname "Ahmad"
+#addname "Akili"
+#addname "Akram"
+#addname "Alam"
+#addname "Alim"
+#addname "Amin"
+#addname "Anwar"
+#addname "Arafat"
+#addname "Arif"
+#addname "Asad"
+#addname "Ashraf"
+#addname "Asif"
+#addname "Auyb"
+#addname "Azim"
+#addname "Azhar"
+#addname "Bahir"
+#addname "Basam"
+#addname "Babu"
+#addname "Bilal"
+#addname "Dabir"
+#addname "Fadi"
+#addname "Fadil"
+#addname "Faisal"
+#addname "Fakhir"
+#addname "Farid"
+#addname "Faris"
+#addname "Fath"
+#addname "Gamal"
+#addname "Ghazi"
+#addname "Gadi"
+#addname "Gilad"
+#addname "Habid"
+#addname "Hadi"
+#addname "Haidar"
+#addname "Hakim"
+#addname "Hamal"
+#addname "Hamza"
+#addname "Hamid"
+#addname "Hanif"
+#addname "Harith"
+#addname "Hanbal"
+#addname "Hasan"
+#addname "Hashim"
+#addname "Husam"
+#addname "Humam"
+#addname "Hilal"
+#addname "Idris"
+#addname "Imad"
+#addname "Imran"
+#addname "Ishaq"
+#addname "Jibril"
+#addname "Jamil"
+#addname "Jamal"
+#addname "Jinan"
+#addname "Kadar"
+#addname "Kadir"
+#addname "Kadin"
+#addname "Kahil"
+#addname "Khaled"
+#addname "Kalil"
+#addname "Kamal"
+#addname "Karif"
+#addname "Kasib"
+#addname "Kateb"
+#addname "Khaliq"
+#addname "Khalid"
+#addname "Khaldun"
+#addname "Kasim"
+#addname "Mahdi"
+#addname "Mahir"
+#addname "Mahir"
+#addname "Maimun"
+#addname "Makhi"
+#addname "Masus"
+#addname "Manzur"
+#addname "Mubarak"
+#addname "Munir"
+#addname "Mushin"
+#addname "Mushin"
+#addname "Mustafa"
+#addname "Nabil"
+#addname "Nader"
+#addname "Nadim "
+#addname "Najib"
+#addname "Nassar"
+#addname "Nazih"
+#addname "Nibal"
+#addname "Numa"
+#addname "Nusair"
+#addname "Omar"
+#addname "Qabil"
+#addname "Qasim"
+#addname "Qudamah"
+#addname "Qadir"
+#addname "Qadim"
+#addname "Rabah"
+#addname "Rabi"
+#addname "Rafi"
+#addname "Radwan"
+#addname "Rafiq"
+#addname "Rahul"
+#addname "Rakim"
+#addname "Rahman"
+#addname "Rashad"
+#addname "Rashid"
+#addname "Said"
+#addname "Saladin"
+#addname "Salah"
+#addname "Salim"
+#addname "Shafiq"
+#addname "Shakir"
+#addname "Sharad"
+#addname "Shihab"
+#addname "Suhail"
+#addname "Siraj"
+#addname "Tabari"
+#addname "Tahir"
+#addname "Talal"
+#addname "Talib"
+#addname "Tariq"
+#addname "Tarif"
+#addname "Tayyib"
+#addname "Umara"
+#addname "Ubaid"
+#addname "Usman"
+#addname "Uzair"
+#addname "Utba"
+#addname "Wakil"
+#addname "Wali"
+#addname "Wazir"
+#addname "Wafiq"
+#addname "Yahir"
+#addname "Yasin"
+#addname "Yazid"
+#addname "Yasir"
+#addname "Yusuf"
+#addname "Zafir"
+#addname "Zahir"
+#addname "Zaki"
+#addname "Zaid"
+#addname "Zayed"
+#addname "Zuhayr"
+#addname "Zimraan"
+#end
+
+#selectnametype 164
+#addname "Khaldw"
+#addname "Shaqylat"
+#addname "Phasal"
+#addname "Gamlat"
+#addname "Hagrwth"
+#addname "Shuqailat"
+#addname "Huldu"
+#addname "Amatisi"
+#addname "Hatebat"
+#addname "'Mat"
+#addname "Qaynat"
+#addname "Alilat"
+#addname "Latan"
+#addname "Abia"
+#addname "Abida"
+#addname "Adara"
+#addname "Adelmira"
+#addname "Adhara"
+#addname "Adila"
+#addname "Adra"
+#addname "Aerin"
+#addname "Afina"
+#addname "Afra"
+#addname "Ahlam"
+#addname "Aiesha"
+#addname "Aisha"
+#addname "Aishia"
+#addname "Akila"
+#addname "Alea"
+#addname "Aleia"
+#addname "Alima"
+#addname "Aliye"
+#addname "Alzena"
+#addname "Amal"
+#addname "Amani"
+#addname "Amina"
+#addname "Amira"
+#addname "Anisah"
+#addname "Araya"
+#addname "Asha"
+#addname "Ashya"
+#addname "Atiya"
+#addname "Aza"
+#addname "Azia"
+#addname "Bibi"
+#addname "Calla"
+#addname "Celmira"
+#addname "Dunia"
+#addname "Elmira"
+#addname "Elmani"
+#addname "Fadila"
+#addname "Faiza"
+#addname "Farida"
+#addname "Ghada"
+#addname "Gamila"
+#addname "Habiba"
+#addname "Hadil"
+#addname "Hafsa"
+#addname "Halimah"
+#addname "Hanah"
+#addname "Hanan"
+#addname "Hanifa"
+#addname "Haya"
+#addname "Hiba"
+#addname "Hoda"
+#addname "Imani"
+#addname "Indemira"
+#addname "Jalila"
+#addname "Jala"
+#addname "Jaliyah"
+#addname "Jamila"
+#addname "Janan"
+#addname "Janna"
+#addname "Jarita"
+#addname "Jazmin"
+#addname "Jenay"
+#addname "Jenaya"
+#addname "Jesenia"
+#addname "Jenae"
+#addname "Kadeja"
+#addname "Kaela"
+#addname "Kala"
+#addname "Kalei"
+#addname "Kalila"
+#addname "Karima"
+#addname "Kaylah"
+#addname "Karida"
+#addname "Kaliyah"
+#addname "Keilah"
+#addname "Kela"
+#addname "Ketifa"
+#addname "Keyla"
+#addname "Khalia"
+#addname "Khalilah"
+#addname "Khaylah"
+#addname "Kismet"
+#addname "Laila"
+#addname "Lamis"
+#addname "Lakia"
+#addname "Lamya"
+#addname "Layla"
+#addname "Leilah"
+#addname "Lela"
+#addname "Leyla"
+#addname "Lila"
+#addname "Lili"
+#addname "Lina"
+#addname "Lisha"
+#addname "Maha"
+#addname "Maisha"
+#addname "Majidah"
+#addname "Mariya"
+#addname "May"
+#addname "Mina"
+#addname "Maysa"
+#addname "Mina"
+#addname "Muriel"
+#addname "Munira"
+#addname "Mushira"
+#addname "Mouna"
+#addname "May"
+#addname "Nada"
+#addname "Nadira"
+#addname "Nafisa"
+#addname "Nahir"
+#addname "Nailah"
+#addname "Naimah"
+#addname "Najmah"
+#addname "Nakea"
+#addname "Nakiah"
+#addname "Nasrin"
+#addname "Nekia"
+#addname "Nisa"
+#addname "Nikia"
+#addname "Oma"
+#addname "Oraida"
+#addname "Qadira"
+#addname "Qamra"
+#addname "Qitarah"
+#addname "Querina"
+#addname "Rabia"
+#addname "Rajah"
+#addname "Randa"
+#addname "Rasha"
+#addname "Rayya"
+#addname "Rim"
+#addname "Rihana"
+#addname "Rima"
+#addname "Saba"
+#addname "Sabi"
+#addname "Sabiya"
+#addname "Sabra"
+#addname "Sadiya"
+#addname "Safia"
+#addname "Safa"
+#addname "Sahara"
+#addname "Salama"
+#addname "Salima"
+#addname "Salma"
+#addname "Samina"
+#addname "Samiyah"
+#addname "Shahina"
+#addname "Shahira"
+#addname "Shakala"
+#addname "Sana"
+#addname "Shakira"
+#addname "Shamara"
+#addname "Shamari"
+#addname "Shula"
+#addname "Tabina"
+#addname "Tahira"
+#addname "Takiya"
+#addname "Talitha"
+#addname "Thania"
+#addname "Uzza"
+#addname "Ulima"
+#addname "Walad"
+#addname "Yamila"
+#addname "Yamina"
+#addname "Yashira"
+#addname "Yesenia"
+#addname "Yemena"
+#addname "Zada"
+#addname "Zahra"
+#addname "Zayna"
+#addname "Zaida"
+#addname "Zia"
+#addname "Zubaida"
+#addname "Zuleika"
+#addname "Zoraida"
+#addname "Zita"
+#addname "Zulima"
+#end
+
+#selectnametype 165
+#addname "Abarran"
+#addname "Aingeru"
+#addname "Aitor"
+#addname "Alesander"
+#addname "Amets"
+#addname "Anaia"
+#addname "Anaut"
+#addname "Ander"
+#addname "Andoni"
+#addname "Antton"
+#addname "Apal"
+#addname "Aresti"
+#addname "Argi"
+#addname "Argider"
+#addname "Arnas"
+#addname "Arotza"
+#addname "Arrats"
+#addname "Artizar"
+#addname "Artzai"
+#addname "Asentzio"
+#addname "Astigar"
+#addname "Atseden"
+#addname "Atze"
+#addname "Atzo"
+#addname "Bakar"
+#addname "Balendin"
+#addname "Barea"
+#addname "Basajaun"
+#addname "Benat"
+#addname "Belasko"
+#addname "Beltza"
+#addname "Benat"
+#addname "Berbiz"
+#addname "Bernat"
+#addname "Bero"
+#addname "Beti"
+#addname "Bihar"
+#addname "Bikendi"
+#addname "Bingen"
+#addname "Bittor"
+#addname "Bixintxo"
+#addname "Bolivar"
+#addname "Danel"
+#addname "Deunoro"
+#addname "Domeka"
+#addname "Dunixi"
+#addname "Eder"
+#addname "Edorta"
+#addname "Edur"
+#addname "Egun"
+#addname "Eguntsenti"
+#addname "Eguzki"
+#addname "Ekain"
+#addname "Ekaitz"
+#addname "Ekialde"
+#addname "Elazar"
+#addname "Eleder"
+#addname "Eli"
+#addname "Elorri"
+#addname "Endika"
+#addname "Eneko"
+#addname "Erlantz"
+#addname "Erlea"
+#addname "Erramun"
+#addname "Errapel"
+#addname "Erruki"
+#addname "Eskuin"
+#addname "Estebe"
+#addname "Eztebe"
+#addname "Frantzes"
+#addname "Frantzisko"
+#addname "Gabirel"
+#addname "Gaizka"
+#addname "Ganix"
+#addname "Garaile"
+#addname "Garoa"
+#addname "Gartzi"
+#addname "Gau"
+#addname "Gaztea"
+#addname "Gentza"
+#addname "Gergori"
+#addname "Gero"
+#addname "Gilen"
+#addname "Giro"
+#addname "Gizon"
+#addname "Gogo"
+#addname "Goiz"
+#addname "Gora"
+#addname "Gorka"
+#addname "Gorri"
+#addname "Gotzon"
+#addname "Gurutz"
+#addname "Gutxi"
+#addname "Haritz"
+#addname "Harkaitz"
+#addname "Hartz"
+#addname "Hats"
+#addname "Herensuge"
+#addname "Hibai"
+#addname "Hodei"
+#addname "Hori"
+#addname "Ibar"
+#addname "Igon"
+#addname "Ihintza"
+#addname "Ikatz"
+#addname "Imanol"
+#addname "Inaki"
+#addname "Indar"
+#addname "Ineko"
+#addname "Ion"
+#addname "Ipar"
+#addname "Iturri"
+#addname "Itzaina"
+#addname "Itzal"
+#addname "Ixaka"
+#addname "Ixidor"
+#addname "Izotz"
+#addname "Jakes"
+#addname "Joanes"
+#addname "Jokin"
+#addname "Jon"
+#addname "Joseba"
+#addname "Josepe"
+#addname "Josu"
+#addname "Julen"
+#addname "Kemen"
+#addname "Kepa"
+#addname "Kerman"
+#addname "Kimetz"
+#addname "Kerbasi"
+#addname "Koldo"
+#addname "Koldobika"
+#addname "Laurendi"
+#addname "Laurentzi"
+#addname "Lehoi"
+#addname "Ler"
+#addname "Lertxun"
+#addname "Liher"
+#addname "Lizar"
+#addname "Lizardi"
+#addname "Lon"
+#addname "Lore"
+#addname "Luix"
+#addname "Luken"
+#addname "Luzea"
+#addname "Markel"
+#addname "Marko"
+#addname "Martzel"
+#addname "Marz"
+#addname "Matia"
+#addname "Mattin"
+#addname "Matxin"
+#addname "Mendebal"
+#addname "Mikel"
+#addname "Mitxel"
+#addname "Nikola"
+#addname "Odol"
+#addname "Orkatz"
+#addname "Oroitz"
+#addname "Ortle"
+#addname "Ortzi"
+#addname "Oskarbi"
+#addname "Ostadar"
+#addname "Ostargi"
+#addname "Ostots"
+#addname "Otsoa"
+#addname "Otsoko"
+#addname "Pantzeska"
+#addname "Patxi"
+#addname "Paulin"
+#addname "Paulo"
+#addname "Peio"
+#addname "Peli"
+#addname "Peru"
+#addname "Petri"
+#addname "Salbatore"
+#addname "Santutxo"
+#addname "Seme"
+#addname "Sendoa"
+#addname "Su"
+#addname "Teobaldo"
+#addname "Tibalt"
+#addname "Tipi"
+#addname "Todor"
+#addname "Tubal"
+#addname "Txatxu"
+#addname "Txeru"
+#addname "Txilar"
+#addname "Txomin"
+#addname "Uhin"
+#addname "Umea"
+#addname "Unai"
+#addname "Ur"
+#addname "Urdin"
+#addname "Urki"
+#addname "Urre"
+#addname "Xabier"
+#addname "Xalbador"
+#addname "Xanti"
+#addname "Xarles"
+#addname "Ximon"
+#addname "Ximun"
+#addname "Yuli"
+#addname "Zeru"
+#addname "Zigor"
+#addname "Zilar"
+#addname "Zorion"
+#addname "Zuhaitz"
+#addname "Zumar"
+#addname "Zuri"
+#addname "Zuzen"
+#end
+
+#selectnametype 166
+#addname "Abarrane"
+#addname "Agurne"
+#addname "Aintza"
+#addname "Aintzane"
+#addname "Alaia"
+#addname "Alazne"
+#addname "Alesandese"
+#addname "Alize"
+#addname "Amalur"
+#addname "Amalure"
+#addname "Amets"
+#addname "Ametza"
+#addname "Andere"
+#addname "Angelu"
+#addname "Antxone"
+#addname "Apain"
+#addname "Apala"
+#addname "Arantxa"
+#addname "Argine"
+#addname "Arima"
+#addname "Arine"
+#addname "Arrats"
+#addname "Arrixaka"
+#addname "Arrosa"
+#addname "Artea"
+#addname "Artizar"
+#addname "Aurkena"
+#addname "Aurkene"
+#addname "Austine"
+#addname "Babesne"
+#addname "Bakarne"
+#addname "Bakene"
+#addname "Balere"
+#addname "Barkarna"
+#addname "Barkarne"
+#addname "Beltzane"
+#addname "Bengolarrea"
+#addname "Berezi"
+#addname "Betiko"
+#addname "Betisa"
+#addname "Bibine"
+#addname "Bidane"
+#addname "Bihotz"
+#addname "Bittore"
+#addname "Bittori"
+#addname "Bitxi"
+#addname "Bitxilore"
+#addname "Bixenta"
+#addname "Danele"
+#addname "Dolore"
+#addname "Domeka"
+#addname "Eder"
+#addname "Ederna"
+#addname "Ederne"
+#addname "Edurne"
+#addname "Egiarte"
+#addname "Eguzkine"
+#addname "Elixabete"
+#addname "Erlea"
+#addname "Errasti"
+#addname "Erregina"
+#addname "Errukine"
+#addname "Eskarne"
+#addname "Estebeni"
+#addname "Esti"
+#addname "Eukene"
+#addname "Euria"
+#addname "Ezkurra"
+#addname "Fede"
+#addname "Florentxi"
+#addname "Frantziska"
+#addname "Fruitutsu"
+#addname "Gabone"
+#addname "Gainko"
+#addname "Garaine"
+#addname "Garaitz"
+#addname "Garazi"
+#addname "Garbi"
+#addname "Garbine"
+#addname "Garden"
+#addname "Gartzene"
+#addname "Gaxuxa"
+#addname "Gaztain"
+#addname "Gentzane"
+#addname "Goizane"
+#addname "Goizargi"
+#addname "Goizeder"
+#addname "Gorane"
+#addname "Goratze"
+#addname "Gorria"
+#addname "Gotzone"
+#addname "Gozo"
+#addname "Gurutze"
+#addname "Guruzne"
+#addname "Haizea"
+#addname "Hilargi"
+#addname "Idoya"
+#addname "Igone"
+#addname "Ihintza"
+#addname "Ikerne"
+#addname "Irati"
+#addname "Irune"
+#addname "Itsaso"
+#addname "Iturrieta"
+#addname "Itxaro"
+#addname "Itziar"
+#addname "Ixone"
+#addname "Izar"
+#addname "Izaro"
+#addname "Jaione"
+#addname "Jauregi"
+#addname "Jone"
+#addname "Josebe"
+#addname "Josune"
+#addname "Joxepa"
+#addname "Julene"
+#addname "Kalare"
+#addname "Karitate"
+#addname "Karmele"
+#addname "Katerin"
+#addname "Katixa"
+#addname "Kattalin"
+#addname "Kemena"
+#addname "Kemina"
+#addname "Kistine"
+#addname "Koldobike"
+#addname "Kontxesi"
+#addname "Kontzeziona"
+#addname "Krabelin"
+#addname "Kupine"
+#addname "Laida"
+#addname "Larraitz"
+#addname "Lerden"
+#addname "Lide"
+#addname "Liernia"
+#addname "Lili"
+#addname "Lilura"
+#addname "Lirain"
+#addname "Lore"
+#addname "Lorea"
+#addname "Luixa"
+#addname "Lur"
+#addname "Mahats"
+#addname "Maialen"
+#addname "Maitagarri"
+#addname "Maitane"
+#addname "Maite"
+#addname "Maitea"
+#addname "Maiteder"
+#addname "Maitena"
+#addname "Makatza"
+#addname "Malen"
+#addname "Maritxu"
+#addname "Martine"
+#addname "Martixa"
+#addname "Matxalen"
+#addname "Mendia"
+#addname "Mendiete"
+#addname "Mikele"
+#addname "Mirari"
+#addname "Miren"
+#addname "Mitxoleta"
+#addname "Muskilda"
+#addname "Nahia"
+#addname "Negu"
+#addname "Nekane"
+#addname "Nere"
+#addname "Nerea"
+#addname "Nikole"
+#addname "Oihana"
+#addname "Oinaze"
+#addname "Oro"
+#addname "Orreaga"
+#addname "Osabide"
+#addname "Osane"
+#addname "Osasune"
+#addname "Otsana"
+#addname "Otsanda"
+#addname "Panpoxa"
+#addname "Pantxike"
+#addname "Pauli"
+#addname "Pizkunde"
+#addname "Pozne"
+#addname "Sagari"
+#addname "Sahats"
+#addname "Sorkunde"
+#addname "Sorne"
+#addname "Terese"
+#addname "Txori"
+#addname "Udaberri"
+#addname "Udane"
+#addname "Udara"
+#addname "Udazken"
+#addname "Urdien"
+#addname "Urdina"
+#addname "Urkia"
+#addname "Urrea"
+#addname "Urretxa"
+#addname "Urtza"
+#addname "Usoa"
+#addname "Ximena"
+#addname "Xixili"
+#addname "Xoramen"
+#addname "Yanamari"
+#addname "Zabal"
+#addname "Zabaleta"
+#addname "Zaballa"
+#addname "Zandua"
+#addname "Zelai"
+#addname "Zorion"
+#addname "Zorione"
+#addname "Zubia"
+#addname "Zuhaitz"
+#addname "Zurine"
+#end
+
+#selectnametype 167
+#addname "Adas"
+#addname "Adolfas"
+#addname "Adomas"
+#addname "Aidas"
+#addname "Albertas"
+#addname "Albinas"
+#addname "Aleksandras"
+#addname "Alfonsas"
+#addname "Alfredas"
+#addname "Algimantas"
+#addname "Algirdas"
+#addname "Algis"
+#addname "Almantas"
+#addname "Alvydas"
+#addname "Andrius"
+#addname "Anicetas"
+#addname "Antanas"
+#addname "Aras"
+#addname "Arijus"
+#addname "Armandas"
+#addname "Arnas"
+#addname "Arnoldas"
+#addname "Aronas"
+#addname "Arturas"
+#addname "Arunas"
+#addname "Arvydas"
+#addname "Audrius"
+#addname "Augustas"
+#addname "Augustinas"
+#addname "Aurelijus"
+#addname "Azuolas"
+#addname "Benas"
+#addname "Benediktas"
+#addname "Benjaminas"
+#addname "Bronislovas"
+#addname "Bronius"
+#addname "Ceslovas"
+#addname "Dainius"
+#addname "Danielius"
+#addname "Darijus"
+#addname "Darius"
+#addname "Daumantas"
+#addname "Deividas"
+#addname "Domantas"
+#addname "Domas"
+#addname "Dominykas"
+#addname "Donatas"
+#addname "Dovilas"
+#addname "Dovydas"
+#addname "Edgaras"
+#addname "Edmundas"
+#addname "Eduardas"
+#addname "Edvardas"
+#addname "Edvinas"
+#addname "Egidijus"
+#addname "Eimantas"
+#addname "Elijas"
+#addname "Emilis"
+#addname "Erikas"
+#addname "Ernestas"
+#addname "Eugenijus"
+#addname "Evaldas"
+#addname "Gabrielius"
+#addname "Gediminas"
+#addname "Giedrius"
+#addname "Gintaras"
+#addname "Gintautas"
+#addname "Gustas"
+#addname "Gustavas"
+#addname "Gvidas"
+#addname "Henrikas"
+#addname "Herkus"
+#addname "Ignas"
+#addname "Ilja"
+#addname "Jaroslavas"
+#addname "Jokubas"
+#addname "Jonas"
+#addname "Julius"
+#addname "Juozapas"
+#addname "Juozas"
+#addname "Jurgis"
+#addname "Justas"
+#addname "Justinas"
+#addname "Kajus"
+#addname "Karolis"
+#addname "Kasparas"
+#addname "Kazimieras"
+#addname "Kazys"
+#addname "Kestas"
+#addname "Kestutis"
+#addname "Konstantinas"
+#addname "Kostas"
+#addname "Laurynas"
+#addname "Leonardas"
+#addname "Leonas"
+#addname "Linas"
+#addname "Liudvikas"
+#addname "Lukas"
+#addname "Mantas"
+#addname "Mantvydas"
+#addname "Marijus"
+#addname "Marius"
+#addname "Markas"
+#addname "Martynas"
+#addname "Matas"
+#addname "Mecislovas"
+#addname "Mindaugas"
+#addname "Modestas"
+#addname "Motiejus"
+#addname "Mykolas"
+#addname "Nedas"
+#addname "Nojus"
+#addname "Paulius"
+#addname "Petras"
+#addname "Pijus"
+#addname "Pilypas"
+#addname "Povilas"
+#addname "Pranas"
+#addname "Pranciskus"
+#addname "Raimondas"
+#addname "Raimundas"
+#addname "Ramunas"
+#addname "Remigijus"
+#addname "Renatas"
+#addname "Ricardas"
+#addname "Rimantas"
+#addname "Rimas"
+#addname "Robertas"
+#addname "Rokas"
+#addname "Rolandas"
+#addname "Romanas"
+#addname "Romas"
+#addname "Romualdas"
+#addname "Rytis"
+#addname "Saulius"
+#addname "Sergejus"
+#addname "Sigitas"
+#addname "Simas"
+#addname "Simonas"
+#addname "Stanislovas"
+#addname "Stasys"
+#addname "Steponas"
+#addname "Tadas"
+#addname "Tauras"
+#addname "Tautvydas"
+#addname "Titas"
+#addname "Tomas"
+#addname "Urbonas"
+#addname "Vaclovas"
+#addname "Valdas"
+#addname "Valdemaras"
+#addname "Valentinas"
+#addname "Vasilijus"
+#addname "Vidas"
+#addname "Vidmantas"
+#addname "Viktoras"
+#addname "Vilhelmas"
+#addname "Vilmantas"
+#addname "Viltautas"
+#addname "Vincentas"
+#addname "Virgilijus"
+#addname "Virginijus"
+#addname "Visvaldas"
+#addname "Vitalijus"
+#addname "Vladas"
+#addname "Vladimiras"
+#addname "Voldemaras"
+#addname "Vydmantas"
+#addname "Vygantas"
+#addname "Vytautas"
+#addname "Zenonas"
+#addname "Zigmantas"
+#addname "Zydrunas"
+#end
+
+#selectnametype 168
+#addname "Adele"
+#addname "Agne"
+#addname "Aiste"
+#addname "Akvile"
+#addname "Albina"
+#addname "Aldona"
+#addname "Aleksandra"
+#addname "Alma"
+#addname "Amalija"
+#addname "Amelija"
+#addname "Ana"
+#addname "Anastasija"
+#addname "Anele"
+#addname "Angele"
+#addname "Aniceta"
+#addname "Antanina"
+#addname "Anzelika"
+#addname "Apolonija"
+#addname "Atene"
+#addname "Audra"
+#addname "Audrone"
+#addname "Auguste"
+#addname "Aurelija"
+#addname "Ausra"
+#addname "Austeja"
+#addname "Barbora"
+#addname "Birute"
+#addname "Brone"
+#addname "Bronislova"
+#addname "Daina"
+#addname "Daiva"
+#addname "Dalia"
+#addname "Dalija"
+#addname "Danguole"
+#addname "Danute"
+#addname "Deimante"
+#addname "Diana"
+#addname "Domante"
+#addname "Donata"
+#addname "Doroteja"
+#addname "Dovile"
+#addname "Edita"
+#addname "Egle"
+#addname "Eimante"
+#addname "Elena"
+#addname "Eleonora"
+#addname "Elija"
+#addname "Elzbieta"
+#addname "Elze"
+#addname "Ema"
+#addname "Emilija"
+#addname "Ernesta"
+#addname "Estera"
+#addname "Eugenija"
+#addname "Evelina"
+#addname "Filomena"
+#addname "Gabija"
+#addname "Gabriele"
+#addname "Gene"
+#addname "Genovaite"
+#addname "Gertruda"
+#addname "Giedre"
+#addname "Gintare"
+#addname "Goda"
+#addname "Grazina"
+#addname "Greta"
+#addname "Guste"
+#addname "Henrika"
+#addname "Ieva"
+#addname "Igle"
+#addname "Ilona"
+#addname "Inesa"
+#addname "Inga"
+#addname "Ingrida"
+#addname "Irena"
+#addname "Irma"
+#addname "Izabele"
+#addname "Jadvyga"
+#addname "Janina"
+#addname "Jelena"
+#addname "Jolanta"
+#addname "Judita"
+#addname "Julija"
+#addname "Jurate"
+#addname "Jurgita"
+#addname "Justina"
+#addname "Kamile"
+#addname "Karolina"
+#addname "Katre"
+#addname "Kazimiera"
+#addname "Kornelija"
+#addname "Kotryna"
+#addname "Kristina"
+#addname "Laima"
+#addname "Laimute"
+#addname "Larisa"
+#addname "Laura"
+#addname "Leja"
+#addname "Lidija"
+#addname "Liepa"
+#addname "Ligita"
+#addname "Lilija"
+#addname "Lilijana"
+#addname "Lina"
+#addname "Lina"
+#addname "Liucija"
+#addname "Liudvika"
+#addname "Lukne"
+#addname "Magdalena"
+#addname "Margarita"
+#addname "Marija"
+#addname "Marijona"
+#addname "Marina"
+#addname "Maryte"
+#addname "Mateja"
+#addname "Melanija"
+#addname "Migle"
+#addname "Milda"
+#addname "Monika"
+#addname "Morta"
+#addname "Natalija"
+#addname "Nijole"
+#addname "Nina"
+#addname "Odeta"
+#addname "Olivija"
+#addname "Ona"
+#addname "Patricija"
+#addname "Paulina"
+#addname "Pranciska"
+#addname "Ramune"
+#addname "Rasa"
+#addname "Regina"
+#addname "Renata"
+#addname "Rima"
+#addname "Rimante"
+#addname "Rita"
+#addname "Romualda"
+#addname "Rozalija"
+#addname "Roze"
+#addname "Rugile"
+#addname "Rusne"
+#addname "Ruta"
+#addname "Sandra"
+#addname "Saule"
+#addname "Silvija"
+#addname "Simona"
+#addname "Skaiste"
+#addname "Smilte"
+#addname "Snieguole"
+#addname "Sofija"
+#addname "Solveiga"
+#addname "Stanislova"
+#addname "Stase"
+#addname "Stefanija"
+#addname "Svajone"
+#addname "Svetlana"
+#addname "Tamara"
+#addname "Tatjana"
+#addname "Teresa"
+#addname "Terese"
+#addname "Ugne"
+#addname "Urte"
+#addname "Vaiva"
+#addname "Vakare"
+#addname "Valentina"
+#addname "Valerija"
+#addname "Vanda"
+#addname "Veronika"
+#addname "Vida"
+#addname "Viktorija"
+#addname "Vilhelmina"
+#addname "Vilma"
+#addname "Vilmante"
+#addname "Viltaute"
+#addname "Vilte"
+#addname "Violeta"
+#addname "Virginija"
+#addname "Vita"
+#addname "Vitalija"
+#addname "Vytaute"
+#addname "Zaneta"
+#addname "Zinaida"
+#addname "Zita"
+#addname "Zofija"
+#addname "Zoja"
+#addname "Zuzana"
+#addname "Zydre"
+#end
+
+-- Mercenaries: the game's own bands, in its order. A mod can't select or change them (there
+-- is no #selectmerc): #clearmercs removes them all, and #newmerc adds a band after them. Each
+-- is written as the #newmerc block that would make it.
+
+#newmerc
+#name "Dante's Stingers"
+#bossname "Dante"
+#level 0
+#com 291
+#unit 285
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 20
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "Quickspears"
+#bossname "Aimery"
+#level 0
+#com 291
+#unit 285
+#nrunits 30
+#minmen 15
+#minpay 200
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "Günter Blukraft's Sonnenkinder"
+#bossname "Günter Blukraft"
+#level 0
+#com 291
+#unit 286
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 15
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 60 (Ulm) = 75%
+#end
+
+#newmerc
+#name "The Black Fists"
+#bossname "Sir Edward Blackfist"
+#level 0
+#com 293
+#unit 286
+#nrunits 30
+#minmen 10
+#minpay 200
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "Ferdinando's Footmen"
+#bossname "Ferdinando"
+#level 0
+#com 291
+#unit 287
+#nrunits 50
+#minmen 15
+#minpay 200
+#xp 12
+#randequip 1
+#recrate 100
+#eramask 6
+#end
+
+#newmerc
+#name "Guifre's Swordsmen"
+#bossname "'Sir' Guifre"
+#level 0
+#com 291
+#unit 287
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 15
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 61 (Marignon) = 75%
+-- ro: minimum pay for nation 103 (Marignon) = 75%
+#end
+
+#newmerc
+#name "Arnaud's Archers"
+#bossname "Arnaud"
+#level 0
+#com 291
+#unit 33
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 15
+#randequip 1
+#recrate 100
+#eramask 3
+#end
+
+#newmerc
+#name "The Bowmen"
+#bossname "Lothar"
+#level 0
+#com 291
+#unit 17
+#nrunits 30
+#minmen 10
+#minpay 150
+#xp 10
+#randequip 1
+#recrate 100
+#eramask 3
+#end
+
+#newmerc
+#name "Fritjof's Archers"
+#bossname "Fritjof"
+#level 0
+#com 291
+#unit 17
+#nrunits 30
+#minmen 10
+#minpay 150
+#xp 10
+#randequip 1
+#recrate 100
+#eramask 3
+#end
+
+#newmerc
+#name "Magnus's Crossbows"
+#bossname "Rolf Magnus"
+#level 0
+#com 291
+#unit 290
+#nrunits 20
+#minmen 10
+#minpay 120
+#xp 12
+#randequip 1
+#recrate 100
+#eramask 6
+#end
+
+#newmerc
+#name "William's Boys"
+#bossname "William"
+#level 0
+#com 293
+#unit 288
+#nrunits 50
+#minmen 15
+#minpay 300
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 4
+-- ro: minimum pay for nation 100 (Man) = 75%
+#end
+
+#newmerc
+#name "Brave Breakers"
+#bossname "Grom Brave Breaker"
+#level 0
+#com 293
+#unit 288
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 20
+#randequip 1
+#recrate 100
+#eramask 4
+#end
+
+#newmerc
+#name "Farstrikers"
+#bossname "Guillaume"
+#level 0
+#com 291
+#unit 55
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 20
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "Hector's Heavy Horsemen"
+#bossname "Hector Stark"
+#level 0
+#com 292
+#unit 292
+#nrunits 25
+#minmen 7
+#minpay 350
+#xp 20
+#randequip 1
+#recrate 25
+#eramask 6
+-- ro: minimum pay for nation 60 (Ulm) = 75%
+#end
+
+#newmerc
+#name "Durand's Cavalry"
+#bossname "Durand the Great"
+#level 0
+#com 292
+#unit 292
+#nrunits 15
+#minmen 5
+#minpay 300
+#xp 50
+#randequip 1
+#recrate 25
+#eramask 6
+#end
+
+#newmerc
+#name "Black Riders"
+#bossname "Wilhelm"
+#level 0
+#com 91
+#unit 91
+#nrunits 15
+#minmen 5
+#minpay 350
+#xp 50
+#randequip 1
+#recrate 25
+#eramask 6
+-- ro: minimum pay for nation 60 (Ulm) = 75%
+-- ro: minimum pay for nation 101 (Ulm) = 75%
+#end
+
+#newmerc
+#name "Bernard's Brave Men"
+#bossname "Bernard the Brave"
+#level 0
+#com 293
+#unit 289
+#nrunits 50
+#minmen 15
+#minpay 350
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "The Armored Fist of God"
+#bossname "Guiseppe del Migo"
+#level 0
+#com 149
+#unit 289
+#nrunits 40
+#minmen 12
+#minpay 300
+#xp 25
+#randequip 1
+#recrate 100
+#eramask 6
+-- ro: minimum pay for nation 54 (Ermor) = 300%
+-- ro: minimum pay for nation 55 (Sceleria) = 200%
+-- ro: minimum pay for nation 99 (Lemuria) = 300%
+#end
+
+#newmerc
+#name "Burelk's City Guard"
+#bossname "Burelk"
+#level 0
+#com 291
+#unit 18
+#nrunits 100
+#minmen 30
+#minpay 200
+#xp 0
+#randequip 1
+#recrate 200
+#eramask 7
+-- ro: minimum pay for nation 111 (Mictlan) = 150%
+#end
+
+#newmerc
+#name "Elephant Corps"
+#bossname "Hannibal"
+#level 0
+#com 150
+#unit 150
+#nrunits 10
+#minmen 2
+#minpay 200
+#xp 10
+#randequip 1
+#recrate 10
+#eramask 7
+-- ro: minimum pay for nation 29 (Berytos) = 50%
+#end
+
+#newmerc
+#name "Black Bone's Pirates"
+#bossname "Black Bone"
+#level 0
+#com 870
+#unit 871
+#nrunits 40
+#minmen 15
+#minpay 200
+#xp 0
+#randequip 2
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "Rexor's Barbarians"
+#bossname "Rexor"
+#level 0
+#com 141
+#unit 140
+#nrunits 50
+#minmen 5
+#minpay 150
+#xp 3
+#randequip 0
+#recrate 200
+#eramask 3
+-- ro: minimum pay for nation 13 (Ulm) = 75%
+#end
+
+#newmerc
+#name "Victor's Villains"
+#bossname "Victor"
+#level 0
+#com 482
+#unit 482
+#nrunits 20
+#minmen 5
+#minpay 50
+#xp 20
+#randequip 1
+#recrate 300
+#eramask 7
+-- ro: minimum pay for nation 101 (Ulm) = 75%
+#end
+
+#newmerc
+#name "The Archers in White"
+#bossname "Sanne"
+#level 0
+#com 367
+#unit 348
+#nrunits 30
+#minmen 15
+#minpay 150
+#xp 20
+#randequip 1
+#recrate 50
+#eramask 3
+-- ro: minimum pay for nation 9 (Sauromatia) = 75%
+#end
+
+#newmerc
+#name "Raiders of the Silver Steppe"
+#bossname "Xenos"
+#level 0
+#com 1169
+#unit 1168
+#nrunits 30
+#minmen 10
+#minpay 250
+#xp 15
+#randequip 1
+#recrate 100
+#eramask 3
+-- ro: minimum pay for nation 9 (Sauromatia) = 75%
+#end
+
+#newmerc
+#name "Fordo Boggit's Elite Warriors"
+#bossname "Fordo Boggit"
+#level 0
+#com 272
+#unit 271
+#nrunits 50
+#minmen 10
+#minpay 250
+#xp 16
+#randequip 1
+#recrate 50
+#eramask 6
+#end
+
+#newmerc
+#name "Urgek Beast Brother"
+#bossname "Urgek"
+#level 0
+#com 458
+#unit 457
+#nrunits 30
+#minmen 10
+#minpay 40
+#xp 0
+#randequip 0
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 61 (Marignon) = 150%
+#end
+
+#newmerc
+#name "Bindar's Mighty Markatas"
+#bossname "Bindar"
+#level 0
+#com 1127
+#unit 1120
+#nrunits 50
+#minmen 20
+#minpay 40
+#xp 0
+#randequip 0
+#recrate 300
+#eramask 7
+-- ro: minimum pay for nation 20 (Kailasa) = 75%
+-- ro: minimum pay for nation 68 (Bandar Log) = 75%
+-- ro: minimum pay for nation 108 (Patala) = 75%
+#end
+
+#newmerc
+#name "Abhiraja's Archers"
+#bossname "Abhiraja"
+#level 0
+#com 1127
+#unit 1121
+#nrunits 50
+#minmen 15
+#minpay 150
+#xp 10
+#randequip 0
+#recrate 200
+#eramask 7
+-- ro: minimum pay for nation 20 (Kailasa) = 75%
+-- ro: minimum pay for nation 68 (Bandar Log) = 75%
+-- ro: minimum pay for nation 108 (Patala) = 75%
+#end
+
+#newmerc
+#name "The Bandar Band"
+#bossname "Mahapindar"
+#level 0
+#com 1135
+#unit 1132
+#nrunits 30
+#minmen 10
+#minpay 250
+#xp 15
+#randequip 0
+#recrate 100
+#eramask 6
+-- ro: minimum pay for nation 20 (Kailasa) = 75%
+-- ro: minimum pay for nation 68 (Bandar Log) = 75%
+-- ro: minimum pay for nation 108 (Patala) = 75%
+#end
+
+#newmerc
+#name "Ship Wreckers"
+#bossname "Y'gologna"
+#level 0
+#com 441
+#unit 208
+#nrunits 30
+#minmen 10
+#minpay 250
+#xp 20
+#randequip 1
+#recrate 100
+#eramask 7
+#item "Sword of Sharpness"
+-- ro: minimum pay for nation 43 (Atlantis) = 50%
+-- ro: minimum pay for nation 88 (Atlantis) = 50%
+#end
+
+#newmerc
+#name "The Fishermen"
+#bossname "Sho'guu"
+#level 0
+#com 976
+#unit 974
+#nrunits 40
+#minmen 15
+#minpay 150
+#xp 0
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 40 (Pelagia) = 75%
+-- ro: minimum pay for nation 86 (Pelagia) = 75%
+-- ro: minimum pay for nation 125 (Erytheia) = 75%
+-- ro: minimum pay for nation 41 (Oceania) = 75%
+-- ro: minimum pay for nation 87 (Oceania) = 75%
+-- ro: minimum pay for nation 88 (Atlantis) = 75%
+#end
+
+#newmerc
+#name "The Wet Ones"
+#bossname "Napa Tua"
+#level 0
+#com 1637
+#unit 1635
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 15
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 59 (Agartha) = 50%
+#end
+
+#newmerc
+#name "Melkorka's Green Men"
+#bossname "Melkorka"
+#level 0
+#com 2905
+#unit 2903
+#nrunits 50
+#minmen 10
+#minpay 250
+#xp 15
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 85 (Ys) = 75%
+#end
+
+#newmerc
+#name "Swimming Men"
+#bossname "Pau Pau"
+#level 0
+#com 577
+#unit 577
+#nrunits 50
+#minmen 15
+#minpay 250
+#xp 15
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 40 (Pelagia) = 75%
+-- ro: minimum pay for nation 86 (Pelagia) = 75%
+#end
+
+#newmerc
+#name "Dagan, the Renegade Sage"
+#bossname "Dagan"
+#level 0
+#com 478
+#nrunits 0
+#minmen 0
+#minpay 60
+#xp 10
+#randequip 1
+#recrate 0
+#eramask 7
+#end
+
+#newmerc
+#name "Obscuro, the Hidden Master"
+#bossname "Obscuro"
+#level 0
+#com 341
+#nrunits 0
+#minmen 0
+#minpay 75
+#xp 10
+#randequip 1
+#recrate 0
+#eramask 7
+#end
+
+#newmerc
+#name "Madam Fortuna"
+#bossname "Madam Fortuna"
+#level 0
+#com 1011
+#unit 50
+#nrunits 10
+#minmen 5
+#minpay 60
+#xp 10
+#randequip 2
+#recrate 100
+#eramask 4
+#item "Pendant of Luck"
+-- ro: minimum pay for nation 57 (Man) = 75%
+#end
+
+#newmerc
+#name "The Lions"
+#bossname "Louis"
+#level 1
+#com 291
+#unit 285
+#nrunits 75
+#minmen 25
+#minpay 500
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "Hornets"
+#bossname "Mortada"
+#level 1
+#com 293
+#unit 288
+#nrunits 75
+#minmen 20
+#minpay 500
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 4
+#end
+
+#newmerc
+#name "Miguel's Sons"
+#bossname "Miguel"
+#level 1
+#com 293
+#unit 288
+#nrunits 30
+#minmen 10
+#minpay 200
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 4
+#end
+
+#newmerc
+#name "Iron Men"
+#bossname "Clovis"
+#level 1
+#com 293
+#unit 287
+#nrunits 50
+#minmen 15
+#minpay 400
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "The Merry Men"
+#bossname "Rivaude"
+#level 0
+#com 2107
+#unit 32
+#nrunits 50
+#minmen 15
+#minpay 150
+#xp 15
+#randequip 1
+#recrate 200
+#eramask 4
+#end
+
+#newmerc
+#name "Poignant Pikes"
+#bossname "Salvatore"
+#level 1
+#com 293
+#unit 289
+#nrunits 50
+#minmen 20
+#minpay 400
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 4
+#end
+
+#newmerc
+#name "God's Justice"
+#bossname "Guiseppe II"
+#level 1
+#com 149
+#unit 289
+#nrunits 75
+#minmen 25
+#minpay 600
+#xp 35
+#randequip 2
+#recrate 100
+#eramask 6
+-- ro: minimum pay for nation 54 (Ermor) = 300%
+-- ro: minimum pay for nation 61 (Marignon) = 75%
+-- ro: minimum pay for nation 55 (Sceleria) = 150%
+-- ro: minimum pay for nation 99 (Lemuria) = 300%
+#end
+
+#newmerc
+#name "Hell Hooves"
+#bossname "Berenger"
+#level 1
+#com 91
+#unit 91
+#nrunits 30
+#minmen 10
+#minpay 500
+#xp 50
+#randequip 1
+#recrate 100
+#eramask 6
+#end
+
+#newmerc
+#name "Master Gibur"
+#bossname "Gibur"
+#level 1
+#com 103
+#unit 3731
+#nrunits 1
+#minmen 0
+#minpay 100
+#xp 20
+#randequip 2
+#recrate 0
+#eramask 7
+#end
+
+#newmerc
+#name "Fish Master Sogg"
+#bossname "Sogg"
+#level 1
+#com 103
+#unit 1664
+#nrunits 1
+#minmen 0
+#minpay 150
+#xp 20
+#randequip 2
+#recrate 0
+#eramask 7
+#end
+
+#newmerc
+#name "Istana's Warriors"
+#bossname "Istana"
+#level 1
+#com 353
+#unit 354
+#nrunits 50
+#minmen 20
+#minpay 200
+#xp 0
+#randequip 2
+#recrate 50
+#eramask 7
+-- ro: minimum pay for nation 9 (Sauromatia) = 75%
+#end
+
+#newmerc
+#name "The Green Horde"
+#bossname "Murong Chui"
+#level 1
+#com 930
+#unit 938
+#nrunits 40
+#minmen 20
+#minpay 300
+#xp 0
+#randequip 2
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 109 (T'ien Ch'i) = 50%
+#end
+
+#newmerc
+#name "The Master Assassin"
+#bossname "Terminus"
+#level 1
+#com 428
+#nrunits 0
+#minmen 0
+#minpay 25
+#xp 50
+#randequip 2
+#recrate 0
+#eramask 7
+#item "Duskdagger"
+#item "Robe of Shadows"
+-- ro: minimum pay for nation 56 (Pythium) = 75%
+#end
+
+#newmerc
+#name "Eternal Knights"
+#bossname "Orion"
+#level 1
+#com 366
+#unit 366
+#nrunits 15
+#minmen 0
+#minpay 200
+#xp 500
+#randequip 1
+#recrate 0
+#eramask 4
+#item "Flambeau"
+#item "Amulet of Missile Protection"
+-- ro: minimum pay for nation 54 (Ermor) = 300%
+-- ro: minimum pay for nation 55 (Sceleria) = 200%
+-- ro: minimum pay for nation 99 (Lemuria) = 300%
+#end
+
+#newmerc
+#name "Helmut's Sappers"
+#bossname "Helmut"
+#level 1
+#com 748
+#unit 749
+#nrunits 30
+#minmen 10
+#minpay 300
+#xp 0
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 60 (Ulm) = 75%
+#end
+
+#newmerc
+#name "The Snake Charmer"
+#bossname "Putin"
+#level 0
+#com 403
+#unit 18
+#nrunits 75
+#minmen 1
+#minpay 200
+#xp 10
+#randequip 1
+#recrate 200
+#eramask 6
+-- ro: minimum pay for nation 27 (C'tis) = 75%
+-- ro: minimum pay for nation 116 (Bogarus) = 75%
+#end
+
+#newmerc
+#name "Stroumsa's Freaks"
+#bossname "Stroumsa"
+#level 1
+#com 150
+#unit 455
+#nrunits 75
+#minmen 25
+#minpay 300
+#xp 0
+#randequip 1
+#recrate 100
+#eramask 7
+#end
+
+#newmerc
+#name "The Lost Legion"
+#bossname "The Lost One"
+#level 1
+#com 443
+#unit 337
+#nrunits 30
+#minmen 10
+#minpay 50
+#xp 0
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 88 (Atlantis) = 200%
+#end
+
+#newmerc
+#name "Skull Smashers"
+#bossname "Gryf"
+#level 1
+#com 518
+#unit 518
+#nrunits 15
+#minmen 5
+#minpay 200
+#xp 10
+#randequip 1
+#recrate 50
+#eramask 7
+-- ro: minimum pay for nation 16 (Abysia) = 150%
+-- ro: minimum pay for nation 63 (Abysia) = 150%
+#end
+
+#newmerc
+#name "Wolfkin Reavers"
+#bossname "Uttumvirke"
+#level 1
+#com 283
+#unit 541
+#nrunits 50
+#minmen 25
+#minpay 300
+#xp 0
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 80 (Jotunheim) = 75%
+-- ro: minimum pay for nation 33 (Niefelheim) = 75%
+-- ro: minimum pay for nation 118 (Vaettiheim) = 50%
+#end
+
+#newmerc
+#name "Rozul's Red Raptors"
+#bossname "Rozul"
+#level 1
+#com 205
+#unit 205
+#nrunits 50
+#minmen 15
+#minpay 200
+#xp 0
+#randequip 2
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 24 (Caelum) = 75%
+-- ro: minimum pay for nation 71 (Caelum) = 75%
+-- ro: minimum pay for nation 72 (Nazca) = 75%
+-- ro: minimum pay for nation 106 (Caelum) = 50%
+#end
+
+#newmerc
+#name "Mighty Pak-ur"
+#bossname "Pak-ur"
+#level 1
+#com 488
+#nrunits 0
+#minmen 0
+#minpay 80
+#xp 0
+#randequip 3
+#recrate 0
+#eramask 1
+-- ro: minimum pay for nation 7 (Pangaea) = 50%
+#end
+
+#newmerc
+#name "Otto the Great"
+#bossname "Otto"
+#level 1
+#com 1334
+#unit 1124
+#nrunits 100
+#minmen 10
+#minpay 350
+#xp 10
+#randequip 2
+#recrate 100
+#eramask 2
+#item "Crown of Command"
+-- ro: minimum pay for nation 68 (Bandar Log) = 75%
+#end
+
+#newmerc
+#name "Nergash's Damned Legion"
+#bossname "Nergash"
+#level 1
+#com 310
+#unit 195
+#nrunits 125
+#minmen 20
+#minpay 350
+#xp 10
+#randequip 1
+#recrate 10
+#eramask 7
+#item "Crown of Bones"
+-- ro: minimum pay for nation 61 (Marignon) = 200%
+-- ro: minimum pay for nation 54 (Ermor) = 50%
+-- ro: minimum pay for nation 99 (Lemuria) = 50%
+#end
+
+#newmerc
+#name "Ghoul Father"
+#bossname "Yazrid ibn Hassar"
+#level 1
+#com 481
+#unit 198
+#nrunits 75
+#minmen 25
+#minpay 300
+#xp 10
+#randequip 1
+#recrate 100
+#eramask 7
+#item "Lifelong Protection"
+#item "Crown of Bones"
+-- ro: minimum pay for nation 61 (Marignon) = 200%
+#end
+
+#newmerc
+#name "Mamor, the White Wizard"
+#bossname "Mamor"
+#level 1
+#com 100
+#unit 287
+#nrunits 10
+#minmen 0
+#minpay 150
+#xp 10
+#randequip 1
+#recrate 50
+#eramask 7
+#item "Lightweight Scale Mail"
+#end
+
+#newmerc
+#name "Göte"
+#bossname "Göte"
+#level 1
+#com 95
+#unit 433
+#nrunits 30
+#minmen 10
+#minpay 250
+#xp 5
+#randequip 2
+#recrate 20
+#eramask 7
+-- ro: minimum pay for nation 61 (Marignon) = 200%
+-- ro: minimum pay for nation 103 (Marignon) = 75%
+-- ro: minimum pay for nation 101 (Ulm) = 75%
+#end
+
+#newmerc
+#name "The Master Druid"
+#bossname "Erbum"
+#level 1
+#com 105
+#unit 361
+#nrunits 50
+#minmen 10
+#minpay 300
+#xp 0
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 57 (Man) = 75%
+#end
+
+#newmerc
+#name "Ferrus, the Iron Wizard"
+#bossname "Ferrus"
+#level 1
+#com 477
+#unit 532
+#nrunits 10
+#minmen 0
+#minpay 200
+#xp 0
+#randequip 1
+#recrate 50
+#eramask 7
+#item "Amulet of Antimagic"
+-- ro: minimum pay for nation 60 (Ulm) = 75%
+#end
+
+#newmerc
+#name "The Boar Mage"
+#bossname "Baratus"
+#level 1
+#com 552
+#unit 549
+#nrunits 50
+#minmen 10
+#minpay 200
+#xp 0
+#randequip 2
+#recrate 50
+#eramask 7
+-- ro: minimum pay for nation 12 (Marverni) = 50%
+-- ro: minimum pay for nation 57 (Man) = 75%
+#end
+
+#newmerc
+#name "Reavers of the Deep"
+#bossname "Gladd Yog"
+#level 1
+#com 976
+#unit 975
+#nrunits 50
+#minmen 25
+#minpay 300
+#xp 0
+#randequip 1
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 88 (Atlantis) = 50%
+#end
+
+#newmerc
+#name "God's Enforcers"
+#bossname "Guiseppe IV"
+#level 2
+#com 149
+#unit 289
+#nrunits 150
+#minmen 50
+#minpay 900
+#xp 75
+#randequip 2
+#recrate 100
+#eramask 6
+#item "Sceptre of Authority"
+#item "Crown of Command"
+-- ro: minimum pay for nation 61 (Marignon) = 75%
+-- ro: minimum pay for nation 54 (Ermor) = 300%
+-- ro: minimum pay for nation 55 (Sceleria) = 150%
+-- ro: minimum pay for nation 99 (Lemuria) = 300%
+#end
+
+#newmerc
+#name "Knight Errants"
+#bossname "Sir Perceville"
+#level 2
+#com 23
+#unit 22
+#nrunits 20
+#minmen 6
+#minpay 300
+#xp 20
+#randequip 3
+#recrate 50
+#eramask 6
+-- ro: minimum pay for nation 54 (Ermor) = 250%
+-- ro: minimum pay for nation 99 (Lemuria) = 250%
+#end
+
+#newmerc
+#name "Agyraspides"
+#bossname "Seleucus"
+#level 2
+#com 13
+#unit 14
+#nrunits 75
+#minmen 20
+#minpay 350
+#xp 30
+#randequip 2
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 50 (Arcoscephale) = 75%
+#end
+
+#newmerc
+#name "The Feathered Serpent"
+#bossname "Omecoatl"
+#level 2
+#com 525
+#unit 423
+#nrunits 75
+#minmen 25
+#minpay 450
+#xp 0
+#randequip 2
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 111 (Mictlan) = 50%
+#end
+
+#newmerc
+#name "The Dragon Tamer"
+#bossname "Choznar"
+#level 2
+#com 214
+#unit 523
+#nrunits 5
+#minmen 0
+#minpay 100
+#xp 0
+#randequip 2
+#recrate 20
+#eramask 7
+-- ro: minimum pay for nation 16 (Abysia) = 75%
+-- ro: minimum pay for nation 63 (Abysia) = 75%
+#end
+
+#newmerc
+#name "The Wind Lord"
+#bossname "Tempestus"
+#level 2
+#com 93
+#unit 562
+#nrunits 50
+#minmen 15
+#minpay 350
+#xp 0
+#randequip 3
+#recrate 100
+#eramask 7
+#item "Crown of Command"
+#end
+
+#newmerc
+#name "The Whispering Legion"
+#bossname "Saladaar"
+#level 2
+#com 329
+#unit 566
+#nrunits 25
+#minmen 5
+#minpay 600
+#xp 0
+#randequip 2
+#recrate 200
+#eramask 7
+-- ro: minimum pay for nation 54 (Ermor) = 50%
+-- ro: minimum pay for nation 99 (Lemuria) = 50%
+#end
+
+#newmerc
+#name "Celestial Apostates"
+#bossname "Bajie"
+#level 2
+#com 903
+#unit 902
+#nrunits 15
+#minmen 2
+#minpay 450
+#xp 0
+#randequip 2
+#recrate 100
+#eramask 7
+-- ro: minimum pay for nation 69 (T'ien Ch'i) = 300%
+#end
+
+#newmerc
+#name "The Whisperer"
+#bossname "Urvikel"
+#level 1
+#com 2220
+#unit 541
+#nrunits 75
+#minmen 15
+#minpay 500
+#xp 0
+#randequip 2
+#recrate 50
+#eramask 7
+#item "Skull Staff"
+#item "Lodestone Amulet"
+-- ro: minimum pay for nation 80 (Jotunheim) = 75%
 #end

@@ -35,8 +35,8 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>Where the list sorts it "by ID": its ID, or for entities with none (events), after them in file order.</summary>
         public int SortKey => HasNumber ? ID : int.MaxValue / 2 + Order;
 
-        /// <summary>Whether it has a number in game: an ID, or a game event's number (event 0 is one; a new event has none).</summary>
-        public bool HasNumber => Type == EntityType.EVENT ? ID >= 0 : ID > 0;
+        /// <summary>Whether it has a number in game: an ID, or a game event's number (event 0 is one, as are nation 0 and bless 0; a new event has none).</summary>
+        public bool HasNumber => Type == EntityType.EVENT ? ID >= 0 : ID > 0 || ID == 0 && EntityTypeTab.NumberedFromZero(Type);
 
         /// <summary>Its place among the entities without an ID (their order in the file).</summary>
         internal int Order { get; set; }

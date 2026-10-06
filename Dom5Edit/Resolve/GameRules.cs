@@ -127,6 +127,7 @@ namespace Dom5Edit.Resolve
             Command.WEAPON, Command.ARMOR, Command.CUSTOMMAGIC,
             Command.ADDRECUNIT, Command.ADDRECCOM, Command.ADDFOREIGNUNIT, Command.ADDFOREIGNCOM,
             Command.ADDGOD, Command.DELGOD, Command.STARTSITE, Command.ADDNAME, Command.RESTRICTED,
+            Command.ITEM,   // a mercenary band's items (up to 4)
         };
 
         /// <summary>

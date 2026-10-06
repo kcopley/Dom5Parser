@@ -474,7 +474,8 @@ namespace Dom5Editor.UI.ViewModels
         public string Title => $"NAMES ({_names.Count})";
 
         /// <summary>A warning when the game's own names for this nametype aren't known (no vanilla nametype data).</summary>
-        public string Hint => _page.Entity.Selected && _page.Resolved.Vanilla == null
+        public string Hint => _page.Entity.Selected && _page.Resolved.Vanilla == null && _page.Entity.ParentMod == _page.Session.Mod
+                              && !EntityTypeTab.HasVanillaData(EntityType.NAMETYPE)
             ? "These are only the names this mod adds: the game's own names for it aren't in the editor's data. Removing, renaming or reordering a name writes #clear, which removes the game's names too; adding names at the end doesn't."
             : "";
 
