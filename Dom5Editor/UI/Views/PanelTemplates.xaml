@@ -58,6 +58,11 @@
                             <Button DockPanel.Dock="Right" Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
                                     ToolTip="Open" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
+                            <Button DockPanel.Dock="Right" Content="Copy &amp; edit" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                    ToolTip="Make a new one copying this, use it here instead, and open it (other users keep the old one)"
+                                    Command="{Binding DataContext.CopyEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"
+                                    Visibility="{Binding DataContext.CanCopyEdit, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock DockPanel.Dock="Right" Text="{Binding Detail}" Foreground="{DynamicResource TextMutedBrush}"
                                        FontFamily="{DynamicResource MonospaceFont}" Margin="8,0,0,0" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding RefId, StringFormat='#{0}'}" Width="48" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center"/>

@@ -59,11 +59,23 @@ namespace Dom5Editor.UI.ViewModels
                 SelectedItem = Items.FirstOrDefault(i => ReferenceEquals(i.Entity, made));
         }
 
+        /// <summary>Asks the user to confirm something (set by the window; with none, the answer is yes).</summary>
+        public static Func<string, bool>? Confirm { get; set; }
+
+        /// <summary>Raised with a message for the status bar.</summary>
+        public event Action<string>? Status;
+
         private void Delete(EntityListItem? item)
         {
             if (item == null)
                 return;
+            var users = item.ID > 0 ? _session.Usage.UsedBy(Type, item.ID).Select(u => (u.Type, u.Id)).Distinct().Count() : 0;
+            string what = item.IsNew ? $"Delete {item.DisplayName} #{item.ID}" : $"Drop this mod's changes to {item.DisplayName} #{item.ID}";
+            if (users > 0 && item.IsNew && Confirm?.Invoke($"{what}?\n\n{users} entities refer to it; their references would point at nothing. (Undo brings it back.)") == false)
+                return;
             LastError = _session.Edit(ed => ed.Delete(item.Entity));
+            Status?.Invoke(LastError ?? (item.IsNew ? $"Deleted {item.DisplayName} #{item.ID}" + (users > 0 ? $"; {users} entities still refer to it" : "")
+                                                     : $"Dropped the mod's changes to {item.DisplayName} #{item.ID}"));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -38,6 +38,10 @@ namespace Dom5Editor.Data
             (1, "1-handed weapon"), (2, "2-handed weapon"), (3, "Missile weapon"), (4, "Shield"), (5, "Body armor"),
             (6, "Helmet"), (7, "Boots"), (8, "Misc item"), (9, "Crown"), (10, "Barding"));
 
+        /// <summary>Armor #type (the manual: 4 shield, 5 body armor, 6 helmet, 9 barding; 8 is in vanilla data too).</summary>
+        public static readonly IReadOnlyList<ChoiceOption> ArmorTypes = Opts(
+            (4, "Shield"), (5, "Body armor"), (6, "Helmet"), (8, "Misc"), (9, "Barding"));
+
         public static readonly IReadOnlyList<ChoiceOption> SiteLevels = Opts(
             (0, "0 (found automatically)"), (1, "1"), (2, "2"), (3, "3"), (4, "4"));
 

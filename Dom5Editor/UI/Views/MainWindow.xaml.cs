@@ -19,6 +19,10 @@ namespace Dom5Editor.UI.Views
 
             // Set up keyboard shortcuts
             SetupKeyboardShortcuts();
+
+            // deleting something others use asks first
+            ViewModels.EntityTypeTab.Confirm = message =>
+                MessageBox.Show(this, message, "Delete", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK;
         }
 
         private void SetupKeyboardShortcuts()
