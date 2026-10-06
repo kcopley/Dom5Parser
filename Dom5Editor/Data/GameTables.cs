@@ -14,8 +14,14 @@ namespace Dom5Editor.Data
     {
         private static ChoiceOption[] Opts(params (int, string)[] xs) => xs.Select(x => new ChoiceOption(x.Item1, x.Item2)).ToArray();
 
+        /// <summary>Path options with their icons (path 0-9: "path:F" ...; gems: "gem:F").</summary>
+        private static ChoiceOption[] PathOpts(string prefix, params (int, string)[] xs) => xs.Select(x => new ChoiceOption(x.Item1, x.Item2)
+        {
+            Icon = UI.Controls.GameIcons.PathLetter(x.Item1) is string l ? prefix + l : null,
+        }).ToArray();
+
         /// <summary>Monster and item magic paths (#magicskill, #mainpath): 0-8 and holy.</summary>
-        public static readonly IReadOnlyList<ChoiceOption> Paths = Opts(
+        public static readonly IReadOnlyList<ChoiceOption> Paths = PathOpts("path:",
             (0, "Fire"), (1, "Air"), (2, "Water"), (3, "Earth"), (4, "Astral"), (5, "Death"), (6, "Nature"),
             (7, "Glamour"), (8, "Blood"), (9, "Holy"));
 
@@ -23,12 +29,14 @@ namespace Dom5Editor.Data
         public static readonly IReadOnlyList<ChoiceOption> PathsOrNone = new[] { new ChoiceOption(-1, "None") }.Concat(Paths).ToArray();
 
         /// <summary>Spell paths (#path n p): -1 none, 0-8, 9 priest.</summary>
-        public static readonly IReadOnlyList<ChoiceOption> SpellPaths = Opts(
+        public static readonly IReadOnlyList<ChoiceOption> SpellPaths = PathOpts("path:",
             (-1, "None"), (0, "Fire"), (1, "Air"), (2, "Water"), (3, "Earth"), (4, "Astral"), (5, "Death"),
             (6, "Nature"), (7, "Glamour"), (8, "Blood"), (9, "Priest"));
 
         /// <summary>Gem types (#gems path n): paths 0-8.</summary>
-        public static readonly IReadOnlyList<ChoiceOption> GemPaths = Paths.Take(9).ToArray();
+        public static readonly IReadOnlyList<ChoiceOption> GemPaths = Paths.Take(9).Select(o => new ChoiceOption(o.Value, o.Name) { Icon = "gem:" + GemLetter(o.Value) }).ToArray();
+
+        private static string GemLetter(int path) => UI.Controls.GameIcons.PathLetter(path) ?? "";
 
         public static readonly IReadOnlyList<ChoiceOption> Schools = Opts(
             (-1, "Cannot be researched"), (0, "Conjuration"), (1, "Alteration"), (2, "Evocation"), (3, "Construction"),

@@ -24,6 +24,10 @@ namespace Dom5Editor.UI
     ///   --new TYPE               make a new entity (the list's "+ New") and select it
     ///   --delete                 delete the selected entity (the list's "Delete")
     ///   --field LABEL VALUE      set a panel field (choice by name or number, number, reference by ID)
+    ///   --stat LABEL VALUE       type in a stat box (a leadership: its class by name, "Good (100)")
+    ///   --reset LABEL            a field's reset button (back to what it inherits)
+    ///   --add-path F             the magic panel's add-path button; --add-random FAWE 50 adds a random path;
+    ///   --toggle-random N D      toggles path D on the Nth random path
     ///   --dump                   log the selected entity's values and where each comes from
     ///   --undo / --redo          undo or redo the last edit
     ///   --save FILE.dm           save the mod (the editor's Save)
@@ -152,7 +156,7 @@ namespace Dom5Editor.UI
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
                             var label = args[++i];
                             var value = args[++i];
-                            var field = page.Panels.OfType<FieldsPanel>().SelectMany(p => p.Fields).FirstOrDefault(f => f.Label == label)
+                            var field = AllFields(page).FirstOrDefault(f => f.Label == label)
                                         ?? throw new InvalidOperationException("no field " + label);
                             switch (field)
                             {
@@ -251,6 +255,67 @@ namespace Dom5Editor.UI
                             var before = badge.ReferenceId;
                             badge.OnReferenceChanged(before, pick, "");
                             Log($"ref {args[i - 1]} {before} -> {pick}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--add-path":
+                        {
+                            // --add-path F: the magic panel's path button
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var magic = page.Panels.OfType<MagicPanel>().Single();
+                            var letter = args[++i];
+                            var t = magic.AddablePaths.First(p => p.Letter == letter);
+                            magic.AddPathCommand.Execute(t);
+                            Log($"add path {t.Name}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--add-random":
+                        {
+                            // --add-random FAWE 50: light the paths in the new random path row, set the chance, add it
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var magic = page.Panels.OfType<MagicPanel>().Single();
+                            var letters = args[++i];
+                            foreach (var t in magic.NewRandom.Toggles)
+                                t.IsOn = letters.Contains(t.Letter);
+                            magic.NewRandom.Chance = args[++i];
+                            magic.AddRandomCommand.Execute(null);
+                            Log($"add random {letters} {args[i]}%{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--toggle-random":
+                        {
+                            // --toggle-random N D: toggle path D on the Nth random path row (from 1)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var row = page.Panels.OfType<MagicPanel>().Single().Random[int.Parse(args[++i]) - 1];
+                            var letter = args[++i];
+                            var t = row.Toggles.First(x => x.Letter == letter);
+                            t.IsOn = !t.IsOn;
+                            Log($"toggle {t.Name} on random path {args[i - 1]}: now {row.Letters}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--reset":
+                        {
+                            // --reset LABEL: a field's reset button (back to what it inherits)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var label = args[++i];
+                            var field = AllFields(page).FirstOrDefault(f => f.Label == label) ?? throw new InvalidOperationException("no field " + label);
+                            Log($"reset {label} ({field.ResetTip}){(field.CanReset ? "" : ": nothing to reset")}");
+                            field.ResetCommand.Execute(null);
+                            if (page.Error != null) Log("   error: " + page.Error);
+                            break;
+                        }
+                        case "--stat":
+                        {
+                            // --stat LABEL VALUE: type in a stat box (a leadership's class by name: "Good (100)")
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var label = args[++i];
+                            var value = args[++i];
+                            var stats = page.Panels.OfType<StatsPanel>().Single();
+                            var cells = stats.Columns.SelectMany(c => c.Cells).Concat(stats.Footer).ToList();
+                            if (cells.OfType<LeaderField>().FirstOrDefault(l => l.Label == label) is LeaderField leader)
+                                leader.Class.Selected = leader.Class.Options.First(o => o.Name == value).Value;
+                            else
+                                cells.OfType<NumberField>().First(f => f.Label == label).Text = value;
+                            Log($"stat {label} = {value}{(page.Error != null ? " error: " + page.Error : "")}");
                             break;
                         }
                         case "--validate":
@@ -420,6 +485,28 @@ namespace Dom5Editor.UI
 
         /// <summary>The selected entity's page on the current tab.</summary>
         private static EntityPageViewModel? Selected(MainWindowViewModel vm) => vm.SelectedPage;
+
+        /// <summary>Every panel field on the page: fields panels, the stat block (leadership as its class and bonus).</summary>
+        private static IEnumerable<PanelField> AllFields(EntityPageViewModel page)
+        {
+            foreach (var p in page.Panels)
+            {
+                if (p is FieldsPanel f)
+                    foreach (var x in f.Fields)
+                        yield return x;
+                if (p is StatsPanel s)
+                    foreach (var cell in s.Columns.SelectMany(c => c.Cells).Concat(s.Footer))
+                    {
+                        if (cell is PanelField pf)
+                            yield return pf;
+                        if (cell is LeaderField l)
+                        {
+                            yield return l.Class;
+                            yield return l.Bonus;
+                        }
+                    }
+            }
+        }
 
         /// <summary>Sets a badge's value as typing into it does (the page commits it as an edit).</summary>
         private static void SetBadge(MainWindowViewModel vm, string commandText, string value)

@@ -95,47 +95,53 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <!-- add any command the game reads for this type (it shows in its section) -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text="ADD" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
-                           VerticalAlignment="Center" Width="60"/>
-                <controls:BadgeWrapPanel AvailableItems="{Binding AllAvailable}" AddCommand="{Binding AddAnyCommand}" ShowAddButton="True"/>
-            </StackPanel>
-
-            <!-- copy source and the entity's own copy/clear lines -->
-            <StackPanel Visibility="{Binding HasCopy, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,8">
-                <StackPanel Orientation="Horizontal">
+            <!-- copy source, and the entity's own copy/clear lines, in one row -->
+            <WrapPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,4" Visibility="{Binding HasCopy, Converter={StaticResource BoolToVisibilityConverter}}">
                     <TextBlock Text="COPIES" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
-                               VerticalAlignment="Center" Width="60"
+                               VerticalAlignment="Center" Margin="0,0,8,0"
                                ToolTip="Copy command (#copystats, #copyweapon, ...): this entity starts as a copy of another, then its own lines apply."/>
                     <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding CopyCandidates}"
                                                           SelectedId="{Binding CopySourceId, Mode=TwoWay}" Placeholder="(no copy)"/>
                     <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding NavigateToCopyCommand}"
                             ToolTip="Open the copied entity"/>
                 </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="60,0,0,4" Visibility="{Binding HasClears, Converter={StaticResource BoolToVisibilityConverter}}">
-                <controls:SearchableReferenceComboBox Width="160" Height="22" ItemsSource="{Binding AddableClears}"
-                                                      SelectedId="{Binding AddClearPick, Mode=TwoWay}" Placeholder="+ Clear..."
-                                                      ToolTip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
-            </StackPanel>
-            <ItemsControl ItemsSource="{Binding Structure}" Margin="0,0,0,8"
-                          Visibility="{Binding HasStructure, Converter={StaticResource BoolToVisibilityConverter}}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vm:StructureLine}">
-                        <StackPanel Orientation="Horizontal" Margin="60,1,0,1">
-                            <TextBlock Text="{Binding Text}" FontFamily="{DynamicResource MonospaceFont}" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                            <TextBlock Text="{Binding Target}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0"/>
-                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" ToolTip="Remove this line"
-                                    Command="{Binding DataContext.RemoveStructureCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4" Visibility="{Binding HasClears, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="CLEARS" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"
+                               ToolTip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
+                    <ItemsControl ItemsSource="{Binding Structure}" VerticalAlignment="Center">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:StructureLine}">
+                                <Border Background="#18FFFFFF" CornerRadius="3" Padding="6,1,2,1" Margin="0,0,6,0" ToolTip="{Binding Target}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Text}" FontFamily="{DynamicResource MonospaceFont}" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                        <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove this line"
+                                                Command="{Binding DataContext.RemoveStructureCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <controls:SearchableReferenceComboBox Width="150" Height="22" ItemsSource="{Binding AddableClears}"
+                                                          SelectedId="{Binding AddClearPick, Mode=TwoWay}" Placeholder="+ Clear..."
+                                                          ToolTip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
+                </StackPanel>
+            </WrapPanel>
 
             <!-- type panels (weapons, armor, magic, ...) -->
             <ItemsControl ItemsSource="{Binding Panels}"/>
+
+            <!-- add any command the game reads for this type (it shows in its section) -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="ADD" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                           VerticalAlignment="Center" Width="60" ToolTip="Any command the game reads for this type; it shows in its section below"/>
+                <controls:BadgeWrapPanel AvailableItems="{Binding AllAvailable}" AddCommand="{Binding AddAnyCommand}" ShowAddButton="True"/>
+            </StackPanel>
 
             <!-- the JSON badge sections -->
             <ItemsControl ItemsSource="{Binding Sections}" ItemTemplate="{StaticResource SectionTemplate}"/>

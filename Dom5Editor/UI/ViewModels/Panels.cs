@@ -30,6 +30,10 @@ namespace Dom5Editor.UI.ViewModels
         public bool CanRemove { get; }
         /// <summary>For reference rows: the entity it points at.</summary>
         public int RefId { get; init; }
+        /// <summary>An icon shown with the row (a GameIcon kind), or null.</summary>
+        public string? Icon { get; init; }
+        /// <summary>For a table panel: the row's values, one per column.</summary>
+        public IReadOnlyList<string> Cells { get; init; } = Array.Empty<string>();
         private string _editText = "";
 
         /// <summary>For editable rows: the value as text; setting it (the box lost focus) commits the edit.</summary>
@@ -58,21 +62,54 @@ namespace Dom5Editor.UI.ViewModels
     {
         private readonly EntityPageViewModel _page;
 
-        public ReferenceListPanel(EntityPageViewModel page, string title, Command command, EntityType refType, Func<int, string>? detail = null)
+        /// <summary>A column of a table panel: its header, icon, and the referenced entity's value it shows.</summary>
+        public sealed record TableColumn(string Header, string? Icon, Func<Dom5Edit.Resolve.ResolvedEntity, string> Value, string Tooltip = "");
+
+        public ReferenceListPanel(EntityPageViewModel page, string title, Command command, EntityType refType, Func<int, string>? detail = null,
+            IReadOnlyList<TableColumn>? columns = null)
         {
             _page = page;
             Title = title;
             Command = command;
             RefType = refType;
+            Columns = columns ?? Array.Empty<TableColumn>();
             foreach (var v in page.Resolved.GetAll(command))
             {
                 var (id, name) = page.ReferenceOf(v.Property, EntityPageViewModel.RefTypeName(refType));
-                Rows.Add(new PanelRow(v, string.IsNullOrEmpty(name) ? $"#{id}" : name, detail?.Invoke(id) ?? "", page.SourceText(v), true) { RefId = id });
+                IReadOnlyList<string> cells = Array.Empty<string>();
+                if (Columns.Count > 0)
+                    cells = id > 0 && page.Session.Mod.TryGet(refType, id, null, out var target)
+                        ? Columns.Select(c => c.Value(page.Session.Resolve(target))).ToList()
+                        : Columns.Select(_ => "").ToList();
+                Rows.Add(new PanelRow(v, string.IsNullOrEmpty(name) ? $"#{id}" : name, detail?.Invoke(id) ?? "", page.SourceText(v), true) { RefId = id, Cells = cells });
             }
             Candidates = page.Session.References(refType);
             RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
             OpenCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.Session.Navigate(RefType, r.RefId); });
             CopyEditCommand = new RelayCommand<PanelRow>(CopyAndEdit);
+            NewCommand = new RelayCommand(MakeNew);
+        }
+
+        public IReadOnlyList<TableColumn> Columns { get; }
+        public bool IsTable => Columns.Count > 0;
+
+        /// <summary>"New weapon" (armor, ...): makes a new one, gives it to this entity, and opens it.</summary>
+        public bool CanMakeNew => RefType == EntityType.WEAPON || RefType == EntityType.ARMOR;
+        public string NewLabel => $"+ New {RefType.ToString().ToLowerInvariant()}";
+        public ICommand NewCommand { get; }
+
+        private void MakeNew()
+        {
+            IDEntity? made = null;
+            var owner = _page.Entity;
+            var kind = RefType.ToString().ToLowerInvariant();
+            _page.EditRun($"New {kind} for {_page.DisplayName}", (ed, tx) =>
+            {
+                made = tx.Create(RefType, $"{_page.DisplayName}'s {kind}");
+                tx.Add(owner, Command, made.ID.ToString());
+            });
+            if (made != null && _page.Error == null)
+                _page.Session.Navigate(RefType, made.ID);
         }
 
         /// <summary>The copy command of the referenced type, if it has one (#copyweapon, #copyarmor).</summary>
@@ -137,9 +174,95 @@ namespace Dom5Editor.UI.ViewModels
         public ICommand CopyEditCommand { get; }
     }
 
+    /// <summary>A magic path as a toggle (a random path's mask) or a button (add the path), with its icon.</summary>
+    public sealed class PathToggle : System.ComponentModel.INotifyPropertyChanged
+    {
+        private bool _isOn;
+        private readonly Action<PathToggle>? _changed;
+
+        public PathToggle(int path, bool isOn, Action<PathToggle>? changed = null)
+        {
+            Path = path;
+            _isOn = isOn;
+            _changed = changed;
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;
+
+        public int Path { get; }
+        public string Letter => MagicPanel.PathLetters[Path];
+        public string Name => MagicPanel.PathNames[Path];
+        public string Icon => "path:" + Letter;
+
+        public bool IsOn
+        {
+            get => _isOn;
+            set
+            {
+                if (_isOn == value)
+                    return;
+                _isOn = value;
+                PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof(IsOn)));
+                _changed?.Invoke(this);
+            }
+        }
+    }
+
+    /// <summary>One #custommagic line: the paths it rolls among (toggles), its chance, where it comes from.</summary>
+    public sealed class RandomPathRow
+    {
+        private readonly MagicPanel _panel;
+
+        public RandomPathRow(MagicPanel panel, ResolvedValue? value, long mask, string chance, string source)
+        {
+            _panel = panel;
+            Value = value;
+            Source = source;
+            _chance = chance;
+            Toggles = Enumerable.Range(0, MagicPanel.PathNames.Length)
+                .Select(i => new PathToggle(i, (mask >> (7 + i) & 1) != 0, OnToggled)).ToList();
+        }
+
+        public ResolvedValue? Value { get; }
+        public string Source { get; }
+        public bool IsInherited => Value != null && Value.Source != ValueSource.Own;
+        public IReadOnlyList<PathToggle> Toggles { get; }
+        public long Mask => Toggles.Where(t => t.IsOn).Aggregate(0L, (m, t) => m | 1L << (7 + t.Path));
+
+        /// <summary>The paths as letters (FAWE), for the summary.</summary>
+        public string Letters => string.Concat(Toggles.Where(t => t.IsOn).Select(t => t.Letter));
+
+        /// <summary>A warning for a mask the game can't use: none, or holy alone (the manual: it crashes).</summary>
+        public string Warning => Mask == 0 ? "Pick at least one path" : Mask == 1L << 16 ? "Holy alone crashes the game (manual): add another path" : "";
+        public bool HasWarning => Warning.Length > 0;
+
+        private string _chance;
+
+        /// <summary>The chance in percent (1-100); setting it (the box lost focus) commits it.</summary>
+        public string Chance
+        {
+            get => _chance;
+            set
+            {
+                if (_chance == value)
+                    return;
+                _chance = value;
+                if (Value != null)
+                    _panel.Commit(this);
+            }
+        }
+
+        private void OnToggled(PathToggle t)
+        {
+            if (Value != null && Mask != 0)
+                _panel.Commit(this);
+        }
+    }
+
     /// <summary>
     /// A monster's magic: its paths (#magicskill path level; a new level for a path it has replaces
-    /// the old one) and random paths (#custommagic mask chance, each line one more roll).
+    /// the old one) as chips with their icons, added by clicking a path; and random paths
+    /// (#custommagic mask chance, each line one more roll) as rows of path toggles with a chance.
     /// </summary>
     public sealed class MagicPanel
     {
@@ -156,7 +279,10 @@ namespace Dom5Editor.UI.ViewModels
                 var p = v.Property as IntIntProperty;
                 int path = p?.Value1 ?? -1, level = p?.Value2 ?? 0;
                 string name = path >= 0 && path < PathNames.Length ? PathNames[path] : $"path {path}";
-                var row = new PanelRow(v, name, level.ToString(), page.SourceText(v), true) { RefId = path, EditText = level.ToString() };
+                var row = new PanelRow(v, name, level.ToString(), page.SourceText(v), true)
+                {
+                    RefId = path, EditText = level.ToString(), Icon = path >= 0 && path < PathLetters.Length ? "path:" + PathLetters[path] : null,
+                };
                 row.Edited = CommitLevel;
                 Paths.Add(row);
             }
@@ -165,36 +291,50 @@ namespace Dom5Editor.UI.ViewModels
                 var args = ResolvedValue.ArgumentsOf(v.Property).Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 long mask = args.Length > 0 && long.TryParse(args[0], out var m) ? m : 0;
                 string chance = args.Length > 1 ? args[1] : "100";
-                var row = new PanelRow(v, MaskLetters(mask), chance + "%", page.SourceText(v), true) { EditText = chance };
-                row.Edited = CommitChance;
-                Random.Add(row);
+                Random.Add(new RandomPathRow(this, v, mask, chance, page.SourceText(v)));
             }
             var have = new HashSet<int>(Paths.Select(r => r.RefId));
-            AddablePaths = Enumerable.Range(0, PathNames.Length).Where(i => !have.Contains(i))
-                .Select(i => new ReferenceItem { ID = i, DisplayName = PathNames[i] }).ToList();
-            RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
-            AddRandomCommand = new RelayCommand<object>(p =>
+            AddablePaths = Enumerable.Range(0, PathNames.Length).Where(i => !have.Contains(i)).Select(i => new PathToggle(i, false)).ToList();
+            NewRandom = new RandomPathRow(this, null, 0, "100", "");
+            RemoveCommand = new RelayCommand<object>(r =>
             {
-                // a new roll among the elements at 100%; the mask is edited by letters below
-                if (p is string letters && Mask(letters) is long mask && mask > 0)
-                    _page.AddValue(Command.CUSTOMMAGIC, $"{mask} 100");
+                if (r is PanelRow row) _page.RemoveValue(row.Value);
+                else if (r is RandomPathRow rnd && rnd.Value != null) _page.RemoveValue(rnd.Value);
+            });
+            AddPathCommand = new RelayCommand<PathToggle>(t => { if (t != null) _page.SetValue(Command.MAGICSKILL, $"{t.Path} 1"); });
+            AddRandomCommand = new RelayCommand(() =>
+            {
+                if (NewRandom.Mask != 0 && NewRandom.Mask != 1L << 16 && ChanceOf(NewRandom.Chance) is int c)
+                    _page.AddValue(Command.CUSTOMMAGIC, $"{NewRandom.Mask} {c}");
             });
         }
 
         public ObservableCollection<PanelRow> Paths { get; } = new ObservableCollection<PanelRow>();
-        public ObservableCollection<PanelRow> Random { get; } = new ObservableCollection<PanelRow>();
-        public IReadOnlyList<ReferenceItem> AddablePaths { get; }
-        public bool HasInherited => Paths.Concat(Random).Any(r => r.IsInherited);
+        public ObservableCollection<RandomPathRow> Random { get; } = new ObservableCollection<RandomPathRow>();
+        public bool HasRandom => Random.Count > 0;
+
+        /// <summary>The paths it doesn't have, as buttons: clicking one adds it at level 1.</summary>
+        public IReadOnlyList<PathToggle> AddablePaths { get; }
+
+        /// <summary>The random path being put together: toggle its paths, set the chance, add it.</summary>
+        public RandomPathRow NewRandom { get; }
+
+        public bool HasInherited => Paths.Any(r => r.IsInherited) || Random.Any(r => r.IsInherited);
         public string Hint => HasInherited ? "Grey entries are inherited. Removing one writes #clearmagic and adds the others back." : "";
 
-        /// <summary>The add-path picker's choice: picking a path adds it at level 1.</summary>
-        public int? AddPathPick
+        /// <summary>The magic as the game sums it up: "F3 S2, +1 random (FAWE) 100%".</summary>
+        public string Summary
         {
-            get => null;
-            set { if (value is int path && path >= 0) _page.SetValue(Command.MAGICSKILL, $"{path} 1"); }
+            get
+            {
+                var fixedPaths = string.Join(" ", Paths.Select(p => (p.RefId >= 0 && p.RefId < PathLetters.Length ? PathLetters[p.RefId] : "?") + p.Detail));
+                var random = string.Join(", ", Random.Select(r => $"+1 {r.Letters} {r.Chance}%"));
+                return string.Join(", ", new[] { fixedPaths, random }.Where(x => x.Length > 0));
+            }
         }
 
         public ICommand RemoveCommand { get; }
+        public ICommand AddPathCommand { get; }
         public ICommand AddRandomCommand { get; }
 
         private void CommitLevel(PanelRow? row)
@@ -207,13 +347,16 @@ namespace Dom5Editor.UI.ViewModels
                 _page.ChangeValue(row.Value, $"{row.RefId} {level}");
         }
 
-        private void CommitChance(PanelRow? row)
+        internal void Commit(RandomPathRow row)
         {
-            if (row == null || !int.TryParse(row.EditText, out var chance) || chance + "%" == row.Detail)
+            if (row.Value == null || row.Mask == 0 || ChanceOf(row.Chance) is not int chance)
                 return;
-            var mask = ResolvedValue.ArgumentsOf(row.Value.Property).Split(' ')[0];
-            _page.ChangeValue(row.Value, $"{mask} {chance}");
+            var args = $"{row.Mask} {chance}";
+            if (args != row.Value.Arguments)
+                _page.ChangeValue(row.Value, args);
         }
+
+        private static int? ChanceOf(string text) => int.TryParse(text?.Trim().TrimEnd('%'), out var c) && c >= 1 && c <= 100 ? c : null;
 
         /// <summary>#custommagic path mask: bit 7 is fire, then air, water, earth, astral, death, nature, glamour, blood, holy.</summary>
         public static string MaskLetters(long mask)

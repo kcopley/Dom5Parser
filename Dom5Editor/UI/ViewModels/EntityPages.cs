@@ -98,23 +98,27 @@ namespace Dom5Editor.UI.ViewModels
     {
         public NationPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
 
+        /// <summary>A recruit's key stats, as table columns.</summary>
+        public static readonly IReadOnlyList<ReferenceListPanel.TableColumn> UnitColumns = new ReferenceListPanel.TableColumn[]
+        {
+            new("HP", "hp", r => r.Get(Command.HP)?.Arguments ?? "", "#hp: hit points"),
+            new("Att", "att", r => r.Get(Command.ATT)?.Arguments ?? "", "#att: attack skill"),
+            new("Def", "def", r => r.Get(Command.DEF)?.Arguments ?? "", "#def: defence skill"),
+            new("Prot", "prot", r => r.Get(Command.PROT)?.Arguments ?? "", "#prot: natural protection"),
+            new("MR", "mr", r => r.Get(Command.MR)?.Arguments ?? "", "#mr: magic resistance"),
+            new("Gold", "gold", r => Gold(r.Get(Command.GCOST)?.Arguments), "#gcost: gold (\"auto\": worked out by the game, from a base)"),
+            new("Res", "res", r => r.Get(Command.RCOST)?.Arguments ?? "", "#rcost: resources (weapons and armor add theirs)"),
+        };
+
+        private static string Gold(string? v) => int.TryParse(v, out var g) && g >= 5000 ? $"auto{(g - 10000 >= 0 ? "+" : "")}{g - 10000}" : v ?? "";
+
         protected override void BuildPanels(HashSet<Command> covered)
         {
-            Panels.Add(new ReferenceListPanel(this, "RECRUITS", Command.ADDRECUNIT, EntityType.MONSTER, UnitSummary));
-            Panels.Add(new ReferenceListPanel(this, "COMMANDERS", Command.ADDRECCOM, EntityType.MONSTER, UnitSummary));
-            Panels.Add(new ReferenceListPanel(this, "FOREIGN RECRUITS", Command.ADDFOREIGNUNIT, EntityType.MONSTER, UnitSummary));
-            Panels.Add(new ReferenceListPanel(this, "FOREIGN COMMANDERS", Command.ADDFOREIGNCOM, EntityType.MONSTER, UnitSummary));
+            Panels.Add(new ReferenceListPanel(this, "RECRUITS", Command.ADDRECUNIT, EntityType.MONSTER, columns: UnitColumns));
+            Panels.Add(new ReferenceListPanel(this, "COMMANDERS", Command.ADDRECCOM, EntityType.MONSTER, columns: UnitColumns));
+            Panels.Add(new ReferenceListPanel(this, "FOREIGN RECRUITS", Command.ADDFOREIGNUNIT, EntityType.MONSTER, columns: UnitColumns));
+            Panels.Add(new ReferenceListPanel(this, "FOREIGN COMMANDERS", Command.ADDFOREIGNCOM, EntityType.MONSTER, columns: UnitColumns));
             covered.UnionWith(new[] { Command.ADDRECUNIT, Command.ADDRECCOM, Command.ADDFOREIGNUNIT, Command.ADDFOREIGNCOM });
-        }
-
-        private string UnitSummary(int id)
-        {
-            if (id <= 0 || !Session.Mod.TryGet(EntityType.MONSTER, id, null, out var e))
-                return "";
-            var r = Session.Resolve(e);
-            string V(Command c) => r.Get(c)?.Arguments ?? "-";
-            var gold = int.TryParse(V(Command.GCOST), out var g) && g >= 5000 ? $"auto{(g - 10000 >= 0 ? "+" : "")}{g - 10000}" : V(Command.GCOST);
-            return $"hp {V(Command.HP)}  att {V(Command.ATT)}  def {V(Command.DEF)}  prot {V(Command.PROT)}  gold {gold}";
         }
     }
 
@@ -163,45 +167,113 @@ namespace Dom5Editor.UI.ViewModels
         }
     }
 
-    /// <summary>A monster: weapons, armor and magic in panels; the rest in its badge sections.</summary>
+    /// <summary>
+    /// A monster: its stats laid out like the game's unit window, weapons and armor as tables, magic,
+    /// cost, body and item slots in panels; the rest in its badge sections.
+    /// </summary>
     public sealed class MonsterPageViewModel : EntityPageViewModel
     {
         public MonsterPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
 
         protected override IEnumerable<string> PanelSections => new[] { "magicpaths", "magic" };
 
+        public static readonly IReadOnlyList<ReferenceListPanel.TableColumn> WeaponColumns = new ReferenceListPanel.TableColumn[]
+        {
+            new("Dmg", "dmg", r => r.Get(Command.DMG)?.Arguments ?? "", "#dmg: damage (strength is added for melee)"),
+            new("Att", "att", r => Signed(r.Get(Command.ATT)?.Arguments), "#att: attack bonus"),
+            new("Def", "def", r => Signed(r.Get(Command.DEF)?.Arguments), "#def: defence bonus"),
+            new("Len", "len", r => r.Get(Command.LEN)?.Arguments ?? "", "#len: length"),
+            new("×", "nratt", r => r.Get(Command.NRATT)?.Arguments ?? "1", "#nratt: attacks per round (negative: one attack every N rounds)"),
+            new("Range", null, r => r.Get(Command.RANGE)?.Arguments ?? "", "#range: missile range (blank: melee)"),
+        };
+
+        public static readonly IReadOnlyList<ReferenceListPanel.TableColumn> ArmorColumns = new ReferenceListPanel.TableColumn[]
+        {
+            new("Prot", "prot", r => r.Get(Command.PROT)?.Arguments ?? "", "#prot: protection"),
+            new("Def", "def", r => Signed(r.Get(Command.DEF)?.Arguments), "#def: defence modifier (shields: parry)"),
+            new("Enc", "enc", r => r.Get(Command.ENC)?.Arguments ?? "", "#enc: encumbrance"),
+            new("Type", null, r => ArmorType(r.Get(Command.TYPE)?.Arguments), "#type: shield, body armor, helmet, barding"),
+        };
+
+        private static string Signed(string? v) => int.TryParse(v, out var n) && n > 0 ? "+" + n : v ?? "";
+
+        private static string ArmorType(string? v) => v switch
+        {
+            "4" => "Shield", "5" => "Body", "6" => "Helmet", "8" => "Misc", "9" => "Barding", null => "", _ => v,
+        };
+
         protected override void BuildPanels(HashSet<Command> covered)
         {
-            Panels.Add(new ReferenceListPanel(this, "WEAPONS", Command.WEAPON, EntityType.WEAPON, WeaponSummary));
-            Panels.Add(new ReferenceListPanel(this, "ARMOR", Command.ARMOR, EntityType.ARMOR, ArmorSummary));
+            Panels.Add(BuildStats(covered));
+            Panels.Add(new ReferenceListPanel(this, "WEAPONS", Command.WEAPON, EntityType.WEAPON, columns: WeaponColumns));
+            Panels.Add(new ReferenceListPanel(this, "ARMOR", Command.ARMOR, EntityType.ARMOR, columns: ArmorColumns));
             Panels.Add(new MagicPanel(this));
-            var costs = new FieldsPanel("COST, COMMAND, BODY");
-            costs.Fields.Add(new NumberField(this, "Gold", Command.GCOST, note: GoldNote,
-                tooltip: "#gcost: gold (and design points for pretenders); 10000 means calculated by the game, plus or minus the rest"));
-            costs.Fields.Add(new NumberField(this, "Resources", Command.RCOST));
-            costs.Fields.Add(new NumberField(this, "Recruit points", Command.RPCOST));
-            costs.Fields.Add(new CommandChoiceField(this, "Leader", Leaders(Command.NOLEADER, Command.POORLEADER, Command.OKLEADER, Command.GOODLEADER, Command.EXPERTLEADER, Command.SUPERIORLEADER)));
-            costs.Fields.Add(new CommandChoiceField(this, "Magic leader", Leaders(Command.NOMAGICLEADER, Command.POORMAGICLEADER, Command.OKMAGICLEADER, Command.GOODMAGICLEADER, Command.EXPERTMAGICLEADER, Command.SUPERIORMAGICLEADER), defaultIndex: 0));
-            costs.Fields.Add(new CommandChoiceField(this, "Undead leader", Leaders(Command.NOUNDEADLEADER, Command.POORUNDEADLEADER, Command.OKUNDEADLEADER, Command.GOODUNDEADLEADER, Command.EXPERTUNDEADLEADER, Command.SUPERIORUNDEADLEADER), defaultIndex: 0));
-            costs.Fields.Add(new NumberField(this, "Leadership +", Command.COMMAND, tooltip: "#command: adds this to the leadership the class gives"));
-            costs.Fields.Add(new CommandChoiceField(this, "Body", new[]
+            var body = new FieldsPanel("BODY");
+            body.Fields.Add(new CommandChoiceField(this, "Body", new[]
             {
                 (Command.HUMANOID, "Humanoid"), (Command.MOUNTEDHUMANOID, "Mounted humanoid"), (Command.QUADRUPED, "Quadruped"),
                 (Command.LIZARD, "Lizard"), (Command.NAGA, "Naga"), (Command.SNAKE, "Snake"), (Command.BIRD, "Bird"),
                 (Command.DJINN, "Djinn"), (Command.TROGLODYTE, "Troglodyte"), (Command.MISCSHAPE, "Other shape"),
             }, tooltip: "Body shape: hit locations; it also sets item slots (set them below after it)", defaultIndex: 0));
-            Panels.Add(costs);
+            Panels.Add(body);
             Panels.Add(new ItemSlotsPanel(this));
             covered.Add(Command.ITEMSLOTS);
-            covered.UnionWith(new[] { Command.WEAPON, Command.ARMOR, Command.MAGICSKILL, Command.CUSTOMMAGIC, Command.GCOST, Command.RCOST, Command.RPCOST, Command.COMMAND });
-            foreach (var f in costs.Fields.OfType<CommandChoiceField>())
+            covered.UnionWith(new[] { Command.WEAPON, Command.ARMOR, Command.MAGICSKILL, Command.CUSTOMMAGIC });
+            foreach (var f in body.Fields.OfType<CommandChoiceField>())
                 covered.UnionWith(f.Commands);
         }
 
-        private static IReadOnlyList<(Command, string)> Leaders(params Command[] tiers)
+        /// <summary>The game's unit window: body, combat, movement and age; leadership at the foot of each; cost below.</summary>
+        private StatsPanel BuildStats(HashSet<Command> covered)
         {
-            string[] names = { "None", "Poor", "OK", "Good", "Expert", "Superior" };
-            return tiers.Select((c, i) => (c, names[i])).ToList();
+            NumberField Stat(string label, Command c, string icon, string tip, Func<string, string>? note = null)
+            {
+                covered.Add(c);
+                return new NumberField(this, label, c, defaultValue: GameDefault(c), note: note, tooltip: tip) { Icon = icon };
+            }
+            LeaderField Leader(string label, string icon, Command bonus, int? dflt, string tip, params Command[] tiers)
+            {
+                covered.UnionWith(tiers);
+                covered.Add(bonus);
+                return new LeaderField(this, label, icon, tiers, bonus, dflt, tip);
+            }
+
+            var stats = new StatsPanel();
+            var body = new StatsPanel.Column();
+            body.Cells.Add(Stat("Hit points", Command.HP, "hp", "#hp: maximum hit points. A human has 10, a giant 30, a huge dragon 125."));
+            body.Cells.Add(Stat("Size", Command.SIZE, "size", "#size: 1 bug, 2 hoburg, 3 human or wolf, 4 bandar or lion, 5 enkidu or horse, 6 jotun or ice drake, 7 anakite, 8 small titan, 9 large titan or elephant, 10 dragon. Flyers usually get 1 more."));
+            body.Cells.Add(Stat("Protection", Command.PROT, "prot", "#prot: natural protection (0 for humans, 5 a lizardman, about 18 a scaly dragon); armor adds to it."));
+            body.Cells.Add(Stat("Magic resistance", Command.MR, "mr", "#mr: magic resistance. A human has 10, 1st level mages 13, 3rd level mages 15; above 18 only void beings."));
+            body.Cells.Add(Stat("Morale", Command.MOR, "mor", "#mor: morale. A human soldier has 10, a minotaur 13. 50 makes it mindless (it dissolves without leadership); undead usually have 30."));
+            body.Cells.Add(Leader("Leadership", "leader", Command.COMMAND, null, "Leadership class: how many units it can lead (OK, 50, is the standard for commanders; poor, 10, for mages).",
+                Command.NOLEADER, Command.POORLEADER, Command.OKLEADER, Command.GOODLEADER, Command.EXPERTLEADER, Command.SUPERIORLEADER));
+            var combat = new StatsPanel.Column();
+            combat.Cells.Add(Stat("Strength", Command.STR, "str", "#str: strength, added to melee damage. A human soldier has 10, a giant 20, a dragon 25 or more."));
+            combat.Cells.Add(Stat("Attack", Command.ATT, "att", "#att: attack skill. A human soldier has 10; only the elite of the elite 15."));
+            combat.Cells.Add(Stat("Defence", Command.DEF, "def", "#def: defence skill. A human soldier has 10."));
+            combat.Cells.Add(Stat("Precision", Command.PREC, "prec", "#prec: precision, for missiles and spells. A human archer has 10."));
+            combat.Cells.Add(Stat("Combat speed", Command.AP, "ap", "#ap: combat speed (action points) when unencumbered: about 12 for a human, 20 a knight, 25 light cavalry."));
+            combat.Cells.Add(Leader("Magic leadership", "mleader", Command.MAGICCOMMAND, 0, "Magic leadership: how many magic beings it can lead.",
+                Command.NOMAGICLEADER, Command.POORMAGICLEADER, Command.OKMAGICLEADER, Command.GOODMAGICLEADER, Command.EXPERTMAGICLEADER, Command.SUPERIORMAGICLEADER));
+            var move = new StatsPanel.Column();
+            move.Cells.Add(Stat("Map move", Command.MAPMOVE, "mapmove", "#mapmove: speed on the world map. A human has 14, a horse 20; 0 can't move (except by rituals). Armor lowers it, a mount raises it. Old values 1-3 are converted."));
+            move.Cells.Add(Stat("Encumbrance", Command.ENC, "enc", "#enc: encumbrance. Humans have 3; undead and machines 0 (they never tire from fighting, only from spells)."));
+            move.Cells.Add(Stat("Resource size", Command.RESSIZE, "ressize", "#ressize: the size its resource cost is worked out from (1-10); not set: its size. Use 3 for a human-sized flier of size 4."));
+            move.Cells.Add(Stat("Start age", Command.STARTAGE, "age", "#startage: its age when it appears. Usually not set: the game works it out from max age and skills. 0 clears it, -1 means age 0.",
+                t => t.Length == 0 ? "auto" : ""));
+            move.Cells.Add(Stat("Max age", Command.MAXAGE, "age", "#maxage: after this age it risks afflictions and death. Default 50 for humans, 500 undead, 1000 demons; each magic level adds half of it.",
+                t => t.Length == 0 ? "default" : ""));
+            move.Cells.Add(Leader("Undead leadership", "uleader", Command.UNDCOMMAND, 0, "Undead leadership: how many undead (and demons) it can lead.",
+                Command.NOUNDEADLEADER, Command.POORUNDEADLEADER, Command.OKUNDEADLEADER, Command.GOODUNDEADLEADER, Command.EXPERTUNDEADLEADER, Command.SUPERIORUNDEADLEADER));
+            stats.Columns.Add(body);
+            stats.Columns.Add(combat);
+            stats.Columns.Add(move);
+
+            stats.Footer.Add(Stat("Gold", Command.GCOST, "gold", "#gcost: gold cost (design points for pretenders). Most human troops cost 10. Add 10000 to the base price to have the game work it out (age, magic, skills): 10010 is a base of 10.", GoldNote));
+            stats.Footer.Add(Stat("Resources", Command.RCOST, "res", "#rcost: resource cost; its weapons' and armor's costs are added. Most human troops have 1."));
+            stats.Footer.Add(Stat("Recruit points", Command.RPCOST, "rp", "#rpcost: recruitment points. 1 is standard for a simple commander, about 10 for a soldier. A base times 1000 has the game work it out (10000: base 10).",
+                t => int.TryParse(t, out var rp) && rp >= 1000 ? $"worked out by the game (base {rp / 1000})" : ""));
+            return stats;
         }
 
         private static string GoldNote(string text)
@@ -209,7 +281,7 @@ namespace Dom5Editor.UI.ViewModels
             if (!int.TryParse(text, out var g) || g < 5000)
                 return "";
             int rest = g - 10000;
-            return rest == 0 ? "calculated by the game" : $"calculated by the game {(rest > 0 ? "+" : "-")} {Math.Abs(rest)}";
+            return rest == 0 ? "worked out by the game" : $"worked out by the game {(rest > 0 ? "+" : "-")} {Math.Abs(rest)}";
         }
 
         /// <summary>What the game uses when the monster sets none: resource size is its size; horrors have spirit sight.</summary>
@@ -220,18 +292,5 @@ namespace Dom5Editor.UI.ViewModels
             _ => DerivedValue(c),
         };
 
-        private string WeaponSummary(int id) => Summary(EntityType.WEAPON, id,
-            (Command.DMG, "dmg"), (Command.ATT, "att"), (Command.DEF, "def"), (Command.LEN, "len"), (Command.NRATT, "x"));
-
-        private string ArmorSummary(int id) => Summary(EntityType.ARMOR, id,
-            (Command.PROT, "prot"), (Command.DEF, "def"), (Command.ENC, "enc"));
-
-        private string Summary(EntityType type, int id, params (Command Command, string Label)[] fields)
-        {
-            if (id <= 0 || !Session.Mod.TryGet(type, id, null, out var e))
-                return "";
-            var r = Session.Resolve(e);
-            return string.Join("  ", fields.Select(f => r.Get(f.Command) is { } v ? $"{f.Label} {v.Arguments}" : null).Where(s => s != null));
-        }
     }
 }
