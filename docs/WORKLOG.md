@@ -16,6 +16,27 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Vanilla data now from the exe; game defaults in the editor
+
+The user (2026-10-05): migrate away from the inspector; show the inspector's defaults as
+defaults, and leadership too; limb armor isn't used in game (body and head only); part-6 armor
+is what modders `#copyarmor` to get unusual protection (e.g. body protection on a helmet).
+
+- `vanilla.dm` is now written from Dominions6.exe (`dom6exe.py vanilla --out vanilla.dm`); the
+  copy under tools/dom6exe/data is gone. Body armor is written with its torso value; 6 part-6
+  armors stay read-only. Dom5Parser loads it with 49 warnings (48 poptype references vanilla
+  doesn't define, one vanilla monster with nonexistent armor 502). Quick suite unchanged.
+- Fidelity stage 2 (the inspector's own vanilla export) retired. Stages 3-4 keep the inspector
+  as an independent parser for comparing saves.
+- Editor: game defaults shown as defaults (resource size = size, spirit sight for horrors, cast
+  time 100); the leadership bonus (ability 160) as a read-only "Leader bonus" badge; every
+  entity view has a collapsed "Game Data (read-only)" group listing the `-- ro:` values.
+  Built, not run.
+- Answering the user's question about the byte-identical save: the data is fully loaded and
+  edited in the normal model; original text is only used to write unedited lines. Because that
+  would hide export bugs, stage 3 also saves DomEnhanced with every line regenerated (baseline 6,
+  all equivalences); that check found references with no value being written as 0 (fixed).
+
 ### Original-order saving (step 6): DomEnhanced saves byte-identical
 
 The flow map the user asked for is `docs/SAVE_FLOW.md`: parse → source blocks → live model →
