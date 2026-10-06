@@ -57,6 +57,7 @@ namespace Dom5Editor.UI
                     ShowInTaskbar = false, ShowActivated = false, SkipCloseConfirmation = true,
                 };
                 app.MainWindow = window;
+                EntityTypeTab.Confirm = null; // no dialogs off-screen: deletes go ahead (and say so in the log)
                 window.Show();
                 var vm = (MainWindowViewModel)window.DataContext;
                 if (!args.Contains("--mod"))
@@ -106,7 +107,7 @@ namespace Dom5Editor.UI
                             var tab = vm.SelectedTab as EntityTypeTab ?? throw new InvalidOperationException("no entity tab");
                             var item = tab.SelectedItem;
                             tab.DeleteCommand.Execute(item);
-                            Log($"delete {item?.DisplayName} #{item?.ID}{(tab.LastError != null ? " error: " + tab.LastError : "")}");
+                            Log($"delete {item?.DisplayName} #{item?.ID}: {vm.StatusMessage}");
                             break;
                         }
                         case "--set":
@@ -203,10 +204,22 @@ namespace Dom5Editor.UI
                             vm.GoBack();
                             Log($"back: {Selected(vm)?.DisplayName}");
                             break;
+                        case "--copy-edit":
+                        {
+                            // --copy-edit TITLE N: a list panel's "Copy & edit" on its Nth row (from 1)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var title = args[++i];
+                            int n = int.Parse(args[++i]);
+                            var panel = page.Panels.OfType<ReferenceListPanel>().First(p => p.Title == title);
+                            var row = panel.Rows[n - 1];
+                            panel.CopyEditCommand.Execute(row);
+                            Log($"copy & edit {title} {row.Text}: now on {Selected(vm)?.DisplayName} #{Selected(vm)?.ID}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
                         case "--dump":
                         {
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
-                            Log($"== {page.DisplayName} #{page.ID} ({page.SourceLabel})");
+                            Log($"== {page.DisplayName} #{page.ID} ({page.SourceLabel}; {(page.Entity.ParentMod == vm.Session!.Mod ? "the mod's entity" : "vanilla's entity")})");
                             foreach (var line in page.Resolved.Structure)
                                 Log($"   structure {line.ToExportString()}");
                             foreach (var v in page.Resolved.Values)

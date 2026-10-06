@@ -13,6 +13,7 @@ namespace Dom5Editor.UI.ViewModels
             EntityType.SPELL => new SpellPageViewModel(session, item),
             EntityType.ITEM => new ItemPageViewModel(session, item),
             EntityType.SITE => new SitePageViewModel(session, item),
+            EntityType.ARMOR => new ArmorPageViewModel(session, item),
             _ => new EntityPageViewModel(session, item),
         };
     }
@@ -87,6 +88,21 @@ namespace Dom5Editor.UI.ViewModels
             Panels.Add(item);
             covered.UnionWith(new[] { Command.TYPE, Command.CONSTLEVEL, Command.MAINPATH, Command.MAINLEVEL,
                 Command.SECONDARYPATH, Command.SECONDARYLEVEL, Command.WEAPON, Command.ARMOR });
+        }
+    }
+
+    /// <summary>Armor: its type (shield, body, helmet, barding); protection and the rest in its stats.</summary>
+    public sealed class ArmorPageViewModel : EntityPageViewModel
+    {
+        public ArmorPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
+
+        protected override void BuildPanels(HashSet<Command> covered)
+        {
+            var armor = new FieldsPanel("ARMOR");
+            armor.Fields.Add(new ChoiceField(this, "Type", Command.TYPE, null, Data.GameTables.ArmorTypes,
+                tooltip: "#type: which slot it's worn in; #prot protects the parts of that type"));
+            Panels.Add(armor);
+            covered.Add(Command.TYPE);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Dom5Edit.Commands;
+using Dom5Edit.Editing;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
 using Dom5Edit.Resolve;
@@ -71,6 +72,40 @@ namespace Dom5Editor.UI.ViewModels
             Candidates = page.Session.References(refType);
             RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
             OpenCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.Session.Navigate(RefType, r.RefId); });
+            CopyEditCommand = new RelayCommand<PanelRow>(CopyAndEdit);
+        }
+
+        /// <summary>The copy command of the referenced type, if it has one (#copyweapon, #copyarmor).</summary>
+        private Command? CopyCommand => RefType switch
+        {
+            EntityType.WEAPON => Command.COPYWEAPON,
+            EntityType.ARMOR => Command.COPYARMOR,
+            EntityType.ITEM => Command.COPYITEM,
+            EntityType.SPELL => Command.COPYSPELL,
+            EntityType.MONSTER => Command.COPYSTATS,
+            _ => null,
+        };
+
+        public bool CanCopyEdit => CopyCommand != null;
+
+        /// <summary>
+        /// The usual way to give a unit a changed weapon: a new weapon copying this one, used here in
+        /// its place, then opened to edit (one undo step). Other users of the old one are untouched.
+        /// </summary>
+        private void CopyAndEdit(PanelRow? row)
+        {
+            if (row == null || CopyCommand is not Command copy)
+                return;
+            IDEntity? made = null;
+            var owner = _page.Entity;
+            _page.EditRun($"Copy {row.Text} for {_page.DisplayName}", (ed, tx) =>
+            {
+                made = tx.Create(RefType, $"{row.Text} ({_page.DisplayName})");
+                tx.Set(made, copy, row.RefId.ToString()); // saved before its name: the copy doesn't overwrite it
+                tx.Change(owner, row.Value, made.ID.ToString());
+            });
+            if (made != null && _page.Error == null)
+                _page.Session.Navigate(RefType, made.ID);
         }
 
         public string Title { get; }
@@ -93,6 +128,7 @@ namespace Dom5Editor.UI.ViewModels
 
         public ICommand RemoveCommand { get; }
         public ICommand OpenCommand { get; }
+        public ICommand CopyEditCommand { get; }
     }
 
     /// <summary>

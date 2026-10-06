@@ -110,6 +110,7 @@ namespace Dom5Editor.UI.Views
             {
                 var tab = new EntityTypeTab(session, type, title);
                 tab.Selected += OnSelected;
+                tab.Status += message => StatusMessage = message;
                 tab.PropertyChanged += (s, e) =>
                 {
                     if (e.PropertyName != nameof(EntityTypeTab.Page))

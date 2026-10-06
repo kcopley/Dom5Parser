@@ -99,6 +99,8 @@ namespace Dom5Edit.Resolve
                     { Assets = new Dictionary<Command, Property>(state.Assets) };
             else if (entity.ParentMod != _mod && Base != null)
                 result = Base.Resolve(entity);
+            else if (Base != null && entity.ID > 0 && FindInBase(entity) is IDEntity inBase)
+                result = Base.Resolve(inBase); // a mod entity no longer in the mod (an undone first edit): vanilla again
             else
                 result = new ResolvedEntity(entity, null, Array.Empty<ResolvedValue>(), Array.Empty<Property>(), Array.Empty<Property>(), entity.GameValues);
             _resolved[key] = result;
