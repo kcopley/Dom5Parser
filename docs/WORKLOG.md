@@ -36,9 +36,21 @@ Checks: quick suite 26/26 after the save-plan changes; sweep of 543 pages, 0 fai
 on DomEnhanced's event pages 120-140 ms (the event graph is rebuilt after each event edit; spells
 only after spell edits).
 
-Next: the game's own events decoded from the exe (read-only browsing, `#selectevent` on top);
-review the other entity pages; group monster abilities by the manual's sections; nation
-pages are slow (1.8-2.9 s).
+Later the same day:
+- **Pages reviewed:** weapons (stat block, damage type and strength as choices, qualities
+  as checkboxes), armor and spell stat blocks (spell area/effects decoded), forms for
+  mercenaries/poptypes/blesses/templates, nations (starting army, province defence with
+  multipliers, pretender lists), sites (recruitable units as tables), spells that make an
+  enchantment or cause an event list those events and make new ones, an event message
+  preview. Monster and item abilities grouped by the manual's sections. Icons on common
+  ability badges. List filters for every main type.
+- **Speed:** pages are virtualized lists of parts (only what's on screen is built) and badges
+  build only the parts they show: a nation page 1.2 s -> 0.26 s.
+- **Fixed:** saving after "+ New poptype" crashed (no #newpoptype: new poptypes are
+  #selectpoptype from 150, nametypes from 170, mercenaries #newmerc); moved lines keep their
+  text as read; move + undo saves byte-identical.
+- Two background jobs: vanilla events decoded from the exe (E-6), and the game's own icons
+  read from its .trs archives at runtime (not shipped).
 
 ## 2026-10-05 (later): a complete editor, rebuilt on the resolver
 
