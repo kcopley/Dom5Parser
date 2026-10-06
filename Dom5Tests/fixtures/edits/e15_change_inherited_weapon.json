@@ -1,0 +1,29 @@
+{
+  "description": "Change one weapon a copy inherits: #clearweapons, then the weapons with the one replaced.",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "change",
+      "entity": "monster",
+      "id": 7431,
+      "command": "#weapon",
+      "from": "23",
+      "value": "8"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "weapons",
+      "from": [
+        "1",
+        "23"
+      ],
+      "to": [
+        "1",
+        "8"
+      ]
+    }
+  ]
+}

@@ -734,6 +734,12 @@ namespace Dom5Edit
             return TypeEntityMap[t];
         }
 
+        /// <summary>The entity class for an entity type (Monster for MONSTER, ...).</summary>
+        public Type TypeOf(EntityType type)
+        {
+            return TypeEntityMap.First(kv => kv.Value == type).Key;
+        }
+
         public IDEntity SelectEntity<T>(EntityType et, string val, string comment) where T : IDEntity, new()
         {
             if (int.TryParse(val, out int id) && this.TryGet(et, id, val, out IDEntity entity))

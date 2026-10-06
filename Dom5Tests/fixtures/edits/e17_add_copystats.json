@@ -1,0 +1,30 @@
+{
+  "description": "Add #copystats to a unit with lines of its own: saved before them, so its own name and hp stay.",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "set",
+      "entity": "monster",
+      "id": 7440,
+      "command": "#copystats",
+      "value": "7400"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7440",
+      "field": "att",
+      "from": null,
+      "to": "10"
+    },
+    {
+      "type": "unit",
+      "id": "7440",
+      "field": "weapons",
+      "to": [
+        "1"
+      ]
+    }
+  ]
+}

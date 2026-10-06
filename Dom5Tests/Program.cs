@@ -277,12 +277,13 @@ namespace Dom5Tests
         /// Usage: Dom5Tests edit &lt;input.dm&gt; &lt;edits.json&gt; &lt;output.dm&gt; [editorsave]
         /// (editorsave: save through the editor's ChangesModExporter instead of Mod.Export)
         ///
-        /// edits.json: { "edits": [ { "op": "set"|"add"|"remove", "entity": "monster", "id": 7000,
-        ///                            "command": "#hp", "value": "25" }, ... ] }
-        /// Edits go through the same core calls as the editor's edit commands: set = Set&lt;IntProperty&gt;
-        /// for int commands (SetIntPropertyCommand), otherwise replace; add = AddProperty;
-        /// remove = RemoveProperty (all properties with that command, or only those whose
-        /// argument equals "value"). Vanilla entities are selected into the mod (copy-on-write).
+        /// edits.json: { "edits": [ { "op": "set"|"add"|"remove"|"change"|"reset", "entity": "monster",
+        ///                            "id": 7000, "command": "#hp", "value": "25", "from": "..." }, ... ] }
+        /// Edits are the editor's operations (Dom5Edit.Editing.ModEditor): set, add, change (the value
+        /// whose arguments are "from" to "value"), reset (drop the entity's own lines), remove (every
+        /// value of the command, or those whose arguments are "value", until the entity has none in
+        /// game: inherited ones by "#x 0" or a group rewrite). Vanilla entities are selected into the
+        /// mod on the first edit (copy-on-write).
         /// </summary>
         static void Edit(string basePath, string[] args)
         {
@@ -304,9 +305,10 @@ namespace Dom5Tests
 
                 using var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(editsPath));
                 int applied = 0;
+                var editor = new Dom5Edit.Editing.ModEditor(mod);
                 foreach (var edit in doc.RootElement.GetProperty("edits").EnumerateArray())
                 {
-                    ApplyEdit(mod, edit);
+                    ApplyEdit(editor, edit);
                     applied++;
                 }
                 mod.Resolve(); // resolve references introduced by the edits
@@ -413,8 +415,9 @@ namespace Dom5Tests
             Console.WriteLine($"monsters {all.Count}");
         }
 
-        static void ApplyEdit(Mod mod, System.Text.Json.JsonElement edit)
+        static void ApplyEdit(Dom5Edit.Editing.ModEditor editor, System.Text.Json.JsonElement edit)
         {
+            var mod = editor.Mod;
             string op = edit.GetProperty("op").GetString();
             string kind = edit.GetProperty("entity").GetString();
             int id = edit.GetProperty("id").GetInt32();
@@ -423,52 +426,54 @@ namespace Dom5Tests
             if (!CommandsMap.TryGetCommand(commandText, out Command command))
                 throw new ArgumentException($"Unknown command {commandText}");
             string value = edit.TryGetProperty("value", out var v) ? v.GetString() : null;
-            // The parser strips the quotes around string arguments before entities see them.
-            if (value != null && value.Length >= 2 && value[0] == '"' && value[^1] == '"') value = value[1..^1];
+            string from = edit.TryGetProperty("from", out var f) ? f.GetString() : null;
 
-            IDEntity entity = kind switch
+            var type = kind switch
             {
-                "monster" => mod.SelectForEdit<Monster>(id),
-                "weapon" => mod.SelectForEdit<Weapon>(id),
-                "armor" => mod.SelectForEdit<Armor>(id),
-                "item" => mod.SelectForEdit<Item>(id),
-                "spell" => mod.SelectForEdit<Spell>(id),
-                "site" => mod.SelectForEdit<Site>(id),
-                "nation" => mod.SelectForEdit<Nation>(id),
+                "monster" => EntityType.MONSTER, "weapon" => EntityType.WEAPON, "armor" => EntityType.ARMOR,
+                "item" => EntityType.ITEM, "spell" => EntityType.SPELL, "site" => EntityType.SITE,
+                "nation" => EntityType.NATION,
                 _ => throw new ArgumentException($"Unknown entity kind {kind}"),
             };
+            if (!mod.TryGet(type, id, null, out var entity))
+                throw new InvalidOperationException($"no {kind} {id}");
 
+            // the editor's operations (Dom5Edit.Editing), as the GUI makes them
             switch (op)
             {
                 case "set":
-                    bool isInt = entity.GetPropertyMap().TryGetValue(command, out var create)
-                        && create().GetType() == typeof(IntProperty);
-                    if (isInt && int.TryParse(value, out int intValue))
-                    {
-                        entity.Set<IntProperty>(command, p => p.Value = intValue);
-                    }
-                    else
-                    {
-                        foreach (var p in entity.Properties.Where(p => p.Command == command).ToList())
-                            entity.RemoveProperty(p);
-                        entity.Parse(command, value ?? "", "");
-                    }
+                    editor.Set(entity, command, value ?? "");
                     break;
                 case "add":
-                    entity.Parse(command, value ?? "", "");
+                    editor.Add(entity, command, value ?? "");
                     break;
                 case "remove":
-                    var matches = entity.Properties
-                        .Where(p => p.Command == command && (value == null || ArgumentText(p) == value))
-                        .ToList();
-                    if (matches.Count == 0)
-                        throw new InvalidOperationException($"remove: {kind} {id} has no {commandText} {value}");
-                    foreach (var p in matches) entity.RemoveProperty(p);
+                    // every value of the command (or those with this argument), so the entity no longer has it
+                    var removed = editor.Run($"Remove {commandText}", tx =>
+                    {
+                        int n = 0;
+                        while (tx.Resolve(entity).GetAll(command).FirstOrDefault(x => value == null || SameArguments(x.Arguments, value)) is { } match)
+                        {
+                            tx.Remove(entity, match);
+                            if (++n > 100) throw new InvalidOperationException("remove doesn't converge");
+                        }
+                        if (n == 0) throw new InvalidOperationException($"remove: {kind} {id} has no {commandText} {value}");
+                    });
+                    break;
+                case "change":
+                    var target = editor.Resolve(entity).GetAll(command).FirstOrDefault(x => SameArguments(x.Arguments, from))
+                                 ?? throw new InvalidOperationException($"change: {kind} {id} has no {commandText} {from}");
+                    editor.Change(entity, target, value ?? "");
+                    break;
+                case "reset":
+                    editor.Reset(entity, command);
                     break;
                 default:
                     throw new ArgumentException($"Unknown op {op}");
             }
         }
+
+        static bool SameArguments(string a, string b) => a.Trim().Trim('"') == (b ?? "").Trim().Trim('"');
 
         /// <summary>The argument part of a property's export line, without command or comment.</summary>
         static string ArgumentText(Property p)

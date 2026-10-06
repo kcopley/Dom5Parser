@@ -1,0 +1,27 @@
+{
+  "description": "Remove a weapon a copy inherits: #clearweapons and the other weapon added back.",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "remove",
+      "entity": "monster",
+      "id": 7431,
+      "command": "#weapon",
+      "value": "1"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "weapons",
+      "from": [
+        "1",
+        "23"
+      ],
+      "to": [
+        "23"
+      ]
+    }
+  ]
+}

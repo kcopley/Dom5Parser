@@ -677,6 +677,43 @@ namespace Dom5Edit.Entities
             _properties.Clear();
         }
 
+        // Edits (Dom5Edit.Editing) change the live list directly, without the copy and clear side
+        // effects of AddProperty: where an added line takes effect is decided by its place in the
+        // saved file (SavePlan), and an undo restores the list exactly.
+
+        internal List<Property> SnapshotProperties() => new List<Property>(_properties);
+
+        internal void RestoreProperties(List<Property> properties) => _properties = new List<Property>(properties);
+
+        /// <summary>Adds a line (kept in order: copies and clears first, then the rest as added).</summary>
+        internal void InsertLive(Property p)
+        {
+            p.Parent = this;
+            _properties.Add(p);
+            _properties = _properties.OrderBy(sort_properties).ToList();
+        }
+
+        /// <summary>Puts a new line where an old one is (by reference).</summary>
+        internal bool ReplaceLive(Property old, Property replacement)
+        {
+            int i = _properties.FindIndex(q => ReferenceEquals(q, old));
+            if (i < 0)
+                return false;
+            replacement.Parent = this;
+            _properties[i] = replacement;
+            return true;
+        }
+
+        /// <summary>Removes this line (by reference: CommandProperty compares by value).</summary>
+        internal bool RemoveLive(Property p)
+        {
+            int i = _properties.FindIndex(q => ReferenceEquals(q, p));
+            if (i < 0)
+                return false;
+            _properties.RemoveAt(i);
+            return true;
+        }
+
         /// <summary>The property the last Parse call created (null if it rejected the command).</summary>
         internal Property? LastParsedProperty { get; private set; }
 

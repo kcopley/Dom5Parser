@@ -111,6 +111,8 @@ namespace Dom5Edit
                 foreach (var text in block.LeadingTrivia)
                     writer.WriteLine(text);
                 writer.WriteLine(keep && block.RawHeader != null && entity.ID == block.IdAtParse ? block.RawHeader : Header(block));
+                foreach (var p in plan.AddedAtStart(block))
+                    writer.WriteLine(Text(p));
                 int t = 0;
                 for (int i = 0; i < block.Properties.Count; i++)
                 {

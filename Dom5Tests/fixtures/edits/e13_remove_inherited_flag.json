@@ -1,0 +1,21 @@
+{
+  "description": "Remove a flag a copy inherits: #clearspec and every other special ability added back (amphibian and fear stay).",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "remove",
+      "entity": "monster",
+      "id": 7431,
+      "command": "#flying"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7431",
+      "field": "flying",
+      "from": "1",
+      "to": null
+    }
+  ]
+}
