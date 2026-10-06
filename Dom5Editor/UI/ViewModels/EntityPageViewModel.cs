@@ -149,16 +149,8 @@ namespace Dom5Editor.UI.ViewModels
             }
         }
 
-        /// <summary>The entity's sprite (#spr1, an item's #spr), from the mod's folder or the vanilla assets; null if none.</summary>
-        public System.Windows.Media.Imaging.BitmapSource? Sprite
-        {
-            get
-            {
-                var c = Entity.GetPropertyMap().ContainsKey(Command.SPR1) ? Command.SPR1 : Command.SPR;
-                var p = Resolved.Get(c)?.Property ?? Resolved.Assets.GetValueOrDefault(c);
-                return p is FilePathProperty f ? Sprites.SpriteLoader.Load(f.Value, Session.Mod.FullFilePath) : null;
-            }
-        }
+        /// <summary>The entity's picture (#spr1, an item's #spr, a site's from #path, #level and #look): the mod's file, else the vanilla one (supplied, or the game's from the install); null if none.</summary>
+        public System.Windows.Media.Imaging.BitmapSource? Sprite => Sprites.SpriteLoader.Of(Resolved, Type, Session.Mod.FullFilePath);
 
         public bool HasSprite => Sprite != null;
 

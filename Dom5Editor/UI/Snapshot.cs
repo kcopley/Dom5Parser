@@ -33,6 +33,7 @@ namespace Dom5Editor.UI
     ///   --save FILE.dm           save the mod (the editor's Save)
     ///   --png FILE.png           render the window
     ///   --view FILE.png          render the selected entity's view at its full height
+    ///   --scroll-list TYPE N     scroll a type's list N screens (0: to the end), timing each (sprites decode as rows show)
     ///   --size W H               window size (default 1400 x 2000)
     /// Messages go to FILE.png.log / FILE.dm.log next to the first output, and to stdout.
     /// Example: Dom5Editor.exe --snapshot --select monster 1 --badge hp 30 --png hp.png --save out.dm
@@ -481,7 +482,7 @@ namespace Dom5Editor.UI
                         {
                             // where the game's icons come from: compiled in, and the install found (or not)
                             var hp = Sprites.GameArt.Icon("hp");
-                            Log($"icons: {Sprites.GameArt.PackedCount} compiled in; install: {Sprites.GameArt.DataFolder ?? "not found"}; hp icon {(hp == null ? "missing" : $"{hp.Width}x{hp.Height}")}");
+                            Log($"icons: {Sprites.GameArt.PackedCount} compiled in; install: {Sprites.GameArt.DataFolder ?? "not found"}; hp icon {(hp == null ? "missing" : $"{hp.Width}x{hp.Height}")}; {Dom5Edit.VanillaSprites.Status}");
                             break;
                         }
                         case "--pause":
@@ -551,6 +552,40 @@ namespace Dom5Editor.UI
                                 Pump();
                             }
                             Log($"page scrolled to {scroller.VerticalOffset:0} of {scroller.ExtentHeight:0}");
+                            break;
+                        }
+                        case "--scroll-list":
+                        {
+                            // --scroll-list TYPE SCREENS: scroll the type's list a screen at a time (0: to the
+                            // end); logs the slowest screen (rows are worked out, sprites decoded, as they show)
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            int screens = int.Parse(args[++i]);
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            window.UpdateLayout();
+                            Pump();
+                            var list = Visuals<EntityListControl>(window).First(l => l.IsVisible && l.DataContext == tab);
+                            var scroller = Visuals<System.Windows.Controls.ScrollViewer>(list).First(s => s.ScrollableHeight > 0);
+                            scroller.ScrollToTop();
+                            window.UpdateLayout();
+                            Pump();
+                            var total = System.Diagnostics.Stopwatch.StartNew();
+                            long slowest = 0;
+                            int n = 0;
+                            while ((screens == 0 || n < screens) && scroller.VerticalOffset < scroller.ScrollableHeight)
+                            {
+                                var watch = System.Diagnostics.Stopwatch.StartNew();
+                                scroller.PageDown();
+                                window.UpdateLayout();
+                                Pump();
+                                slowest = Math.Max(slowest, watch.ElapsedMilliseconds);
+                                n++;
+                            }
+                            Log($"scroll-list {t}: {n} screens in {total.ElapsedMilliseconds} ms, slowest {slowest} ms; " +
+                                $"memory {GC.GetTotalMemory(true) / (1 << 20)} MB managed, {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1 << 20)} MB working set");
+                            var all = System.Diagnostics.Stopwatch.StartNew();
+                            int shown = tab.Items.Count(x => x.Sprite != null);
+                            Log($"   {shown} of {tab.Items.Count} rows have a sprite (the rest worked out in {all.ElapsedMilliseconds} ms)");
                             break;
                         }
                         case "--tooltip":
