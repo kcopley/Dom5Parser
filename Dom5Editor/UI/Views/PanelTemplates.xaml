@@ -170,6 +170,19 @@
         </StackPanel>
     </DataTemplate>
 
+    <!-- a nametype's names, one per line -->
+    <DataTemplate DataType="{x:Type vm:NamesPanel}">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitle}"/>
+            <TextBox Text="{Binding Text, UpdateSourceTrigger=LostFocus}" AcceptsReturn="True" TextWrapping="NoWrap"
+                     MinHeight="120" MaxHeight="500" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"
+                     FontFamily="{DynamicResource MonospaceFont}"
+                     ToolTip="One name per line. Names added at the end become #addname lines; other changes rewrite the list (#clear and every name)."/>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource WarningBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"
+                       Visibility="{Binding HasHint, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </StackPanel>
+    </DataTemplate>
+
     <!-- a monster's item slots as counts -->
     <DataTemplate DataType="{x:Type vm:ItemSlotsPanel}">
         <StackPanel Margin="0,0,0,10" ToolTip="{Binding Source}">

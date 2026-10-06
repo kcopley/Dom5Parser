@@ -74,16 +74,16 @@ namespace Dom5Editor.Session
             if (VanillaLoader.Vanilla != null)
                 foreach (var (type, set) in VanillaLoader.Vanilla.Database)
                     foreach (var e in set.GetFullList())
-                        if (e.ID <= 0 || !mod.Database[type].TryGetValue(e.ID, out _))
+                        if (e.ID <= 0 || !mod.Database.TryGetValue(type, out var own) || !own.TryGetValue(e.ID, out _))
                             Add(e);
         }
 
         /// <summary>The entity for a key as the game has it: the mod's, else vanilla's.</summary>
         private IDEntity? Current(EntityType type, int id)
         {
-            if (_session.Mod.Database[type].TryGetValue(id, out var own))
+            if (_session.Mod.Database.TryGetValue(type, out var set) && set.TryGetValue(id, out var own))
                 return own;
-            return VanillaLoader.Vanilla?.Database[type].TryGetValue(id, out var v) == true ? v : null;
+            return VanillaLoader.Vanilla?.Database.TryGetValue(type, out var vset) == true && vset.TryGetValue(id, out var v) ? v : null;
         }
 
         private void Add(IDEntity entity)

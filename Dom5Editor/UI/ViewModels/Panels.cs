@@ -310,4 +310,61 @@ namespace Dom5Editor.UI.ViewModels
                 _page.SetValue(Command.ITEMSLOTS, mask.ToString());
         }
     }
+
+    /// <summary>
+    /// A nametype's names (#addname), one per line. Names added at the end are saved as new
+    /// #addname lines; any other change (a name removed, renamed or moved) as #clear and the whole
+    /// list (the game only appends names).
+    /// </summary>
+    public sealed class NamesPanel
+    {
+        private readonly EntityPageViewModel _page;
+        private readonly List<string> _names;
+
+        public NamesPanel(EntityPageViewModel page)
+        {
+            _page = page;
+            _names = page.Resolved.GetAll(Command.ADDNAME).Select(v => page.DisplayArguments(v.Property)).ToList();
+        }
+
+        public string Title => $"NAMES ({_names.Count})";
+
+        /// <summary>A warning when the game's own names for this nametype aren't known (no vanilla nametype data).</summary>
+        public string Hint => _page.Entity.Selected && _page.Resolved.Vanilla == null
+            ? "These are only the names this mod adds: the game's own names for it aren't in the editor's data. Removing, renaming or reordering a name writes #clear, which removes the game's names too; adding names at the end doesn't."
+            : "";
+
+        public bool HasHint => Hint.Length > 0;
+
+        public string Text
+        {
+            get => string.Join("\n", _names);
+            set
+            {
+                var names = (value ?? "").Replace("\r", "").Split('\n').Select(n => n.Trim()).Where(n => n.Length > 0).ToList();
+                if (names.SequenceEqual(_names))
+                    return;
+                var entity = _page.Entity;
+                if (names.Count > _names.Count && names.Take(_names.Count).SequenceEqual(_names))
+                {
+                    var added = names.Skip(_names.Count).ToList();
+                    _page.EditRun($"Add {added.Count} names", (ed, tx) =>
+                    {
+                        foreach (var n in added)
+                            tx.Add(entity, Command.ADDNAME, "\"" + n.Replace("\"", "'") + "\"");
+                    });
+                    return;
+                }
+                _page.EditRun("Rewrite the names", (ed, tx) =>
+                {
+                    var own = tx.Editable(entity);
+                    foreach (var p in own.Properties.Where(p => p.Command == Command.ADDNAME || p.Command == Command.CLEAR).ToList())
+                        tx.RemoveLine(own, p);
+                    tx.Add(own, Command.CLEAR, "");
+                    foreach (var n in names)
+                        tx.Add(own, Command.ADDNAME, "\"" + n.Replace("\"", "'") + "\"");
+                });
+            }
+        }
+    }
 }

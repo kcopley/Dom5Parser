@@ -293,6 +293,43 @@ namespace Dom5Editor.UI
                             Log($"typed {value} in {args[i - 2]}, tabbed: cursor in {(badge?.DataContext as PropertyItem)?.Command.ToString() ?? "(nothing)"}; page has {Selected(vm)?.Resolved.Get(c)?.Arguments}");
                             break;
                         }
+                        case "--sweep":
+                        {
+                            // --sweep N: open the page of up to N of the mod's entities of every type (all if
+                            // N is 0); log any that fails, and the slowest
+                            int limit = int.Parse(args[++i]);
+                            int opened = 0, failed = 0;
+                            long slowest = 0;
+                            string slowestName = "";
+                            foreach (var tab in vm.Tabs.OfType<EntityTypeTab>())
+                            {
+                                vm.SelectedTab = tab;
+                                var items = tab.Items.Where(x => !x.IsVanilla || x.IsModified).ToList();
+                                foreach (var item in limit > 0 ? items.Take(limit) : items)
+                                {
+                                    var watch = System.Diagnostics.Stopwatch.StartNew();
+                                    try
+                                    {
+                                        tab.SelectedItem = item;
+                                        Pump();
+                                        _ = tab.Page?.Sections.Count;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        failed++;
+                                        Log($"   FAIL {tab.Title} {item.DisplayName} #{item.ID}: {ex.GetType().Name}: {ex.Message}");
+                                    }
+                                    opened++;
+                                    if (watch.ElapsedMilliseconds > slowest)
+                                    {
+                                        slowest = watch.ElapsedMilliseconds;
+                                        slowestName = $"{tab.Title} {item.DisplayName} #{item.ID}";
+                                    }
+                                }
+                            }
+                            Log($"sweep: {opened} pages, {failed} failed; slowest {slowest} ms ({slowestName})");
+                            break;
+                        }
                         case "--dump":
                         {
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");

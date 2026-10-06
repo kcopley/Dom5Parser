@@ -84,8 +84,8 @@ namespace Dom5Editor.Session
             if (!_references.TryGetValue(entity.Kind, out var list))
                 return;
             int i = list.FindIndex(r => entity.ID > 0 ? r.ID == entity.ID : ReferenceEquals(r.Tag, entity));
-            bool held = Mod.Database[entity.Kind].GetFullList().Contains(entity)
-                        || entity.ID > 0 && VanillaLoader.Vanilla?.Database[entity.Kind].TryGetValue(entity.ID, out _) == true;
+            bool held = Mod.Database.TryGetValue(entity.Kind, out var set) && set.GetFullList().Contains(entity)
+                        || entity.ID > 0 && VanillaLoader.Vanilla?.Database.TryGetValue(entity.Kind, out var vset) == true && vset.TryGetValue(entity.ID, out _);
             if (!held)
             {
                 if (i >= 0)

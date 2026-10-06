@@ -531,7 +531,8 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>An entity's name in game, by type and ID ("" if there's none).</summary>
         public string NameOf(EntityType type, int id)
         {
-            if (id <= 0 || !Session.Mod.TryGet(type, id, null, out var e))
+            // (monster tags and other dependent entities aren't in the database)
+            if (id <= 0 || !Session.Mod.Database.ContainsKey(type) || !Session.Mod.TryGet(type, id, null, out var e))
                 return "";
             return Session.Resolve(e).Get(Command.NAME)?.Property is StringProperty s ? s.Value ?? "" : "";
         }
