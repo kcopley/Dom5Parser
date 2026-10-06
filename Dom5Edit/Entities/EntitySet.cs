@@ -221,6 +221,16 @@ namespace Dom5Edit.Entities
             }
         }
 
+        /// <summary>The entities in the order Export writes them.</summary>
+        internal IEnumerable<T> ExportOrder()
+        {
+            return DisabledEntities.OrderBy(x => x.Key).Where(x => x.Key >= START_ID)
+                .Concat(DisabledEntities.OrderBy(x => x.Key).Where(x => x.Key < START_ID))
+                .Concat(Entities.OrderBy(x => x.Key).Where(x => x.Key >= START_ID))
+                .Concat(Entities.OrderBy(x => x.Key).Where(x => x.Key < START_ID))
+                .Select(x => x.Value).Concat(UnIDdEntities);
+        }
+
         /// <summary>Whether entities were disabled (DisableMages; a merge feature).</summary>
         internal bool HasDisabled => DisabledEntities.Count > 0;
 

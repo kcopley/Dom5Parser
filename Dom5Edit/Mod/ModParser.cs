@@ -64,6 +64,17 @@ namespace Dom5Edit
         public bool LineWasTrimmed { get; private set; }
 
         /// <summary>
+        /// A quoted argument without its quotes (LineWasTrimmed set). Only an argument that starts
+        /// with a quote is a string: in #weapon 474 "Golden Sword" the game reads the number, and
+        /// the name after it is a note.
+        /// </summary>
+        private string Unquote(string value)
+        {
+            LineWasTrimmed = value.StartsWith("\"");
+            return LineWasTrimmed ? value.Trim('\"') : value;
+        }
+
+        /// <summary>
         /// Parses a .dm file from a file path.
         /// </summary>
         public void Parse(string dmFile)
@@ -390,30 +401,12 @@ namespace Dom5Edit
             if (spaceIndex != -1) //has a value (but could be spaces before a comment? should be handled by trim above)
             {
                 command = line.Substring(0, spaceIndex).Trim();
-                value = line.Substring(spaceIndex + 1).Trim();
-                if (value.StartsWith("\"") || value.EndsWith("\""))
-                {
-                    value = value.Trim('\"');
-                    this.LineWasTrimmed = true;
-                }
-                else
-                {
-                    LineWasTrimmed = false;
-                }
+                value = Unquote(line.Substring(spaceIndex + 1).Trim());
             }
             else if (tabIndex != -1)
             {
                 command = line.Substring(0, tabIndex).Trim();
-                value = line.Substring(tabIndex + 1).Trim();
-                if (value.StartsWith("\"") || value.EndsWith("\""))
-                {
-                    value = value.Trim('\"');
-                    this.LineWasTrimmed = true;
-                }
-                else
-                {
-                    LineWasTrimmed = false;
-                }
+                value = Unquote(line.Substring(tabIndex + 1).Trim());
             }
 
             if (CommandsMap.TryGetCommand(command, out Command c))

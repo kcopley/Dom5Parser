@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -27,6 +29,12 @@ namespace Dom5Tests
                     break;
                 case "edit":
                     Edit(basePath, args);
+                    break;
+                case "resolve":
+                    Resolve(basePath, args);
+                    break;
+                case "resolve-dump":
+                    ResolveDump(basePath, args);
                     break;
                 case "all":
                 default:
@@ -322,6 +330,87 @@ namespace Dom5Tests
                 Console.WriteLine(ex.StackTrace);
                 Environment.ExitCode = 1;
             }
+        }
+
+        /// <summary>
+        /// Prints what entities are in game after a mod (Dom5Edit.Resolve), each value with where it
+        /// came from. Usage: Dom5Tests resolve &lt;mod.dm | vanilla&gt; &lt;type&gt; &lt;id&gt; [&lt;type&gt; &lt;id&gt; ...]
+        /// </summary>
+        static void Resolve(string basePath, string[] args)
+        {
+            LoadVanillaBase(basePath);
+            Mod mod;
+            if (args[1] == "vanilla")
+                mod = VanillaLoader.Vanilla;
+            else
+            {
+                mod = new Mod { FullFilePath = args[1] };
+                mod.Parse(args[1]);
+                mod.ResolveDependencies();
+                mod.Resolve();
+            }
+            var resolver = Dom5Edit.Resolve.ModResolver.For(mod);
+            for (int i = 2; i + 1 < args.Length; i += 2)
+            {
+                var type = Enum.Parse<EntityType>(args[i], ignoreCase: true);
+                int id = int.Parse(args[i + 1]);
+                if (!mod.TryGet(type, id, null, out var entity))
+                {
+                    Console.WriteLine($"{type} {id}: not found");
+                    continue;
+                }
+                var r = resolver.Resolve(entity);
+                Console.WriteLine($"{type} {id} \"{r.Entity.Name}\" ({(r.Entity.ParentMod == mod ? "mod" : "base")}{(r.Vanilla != null ? ", selects vanilla" : "")})");
+                foreach (var s in r.Structure)
+                    Console.WriteLine($"  structure  {s.ToExportString()}");
+                foreach (var v in r.Values)
+                {
+                    string from = v.Source == Dom5Edit.Resolve.ValueSource.Copied ? $"copied from {v.CopiedFrom?.ID} ({v.Via?.Source})" : v.Source.ToString();
+                    Console.WriteLine($"  {v.Property.ToExportString(),-40} {from}");
+                }
+                foreach (var g in r.GameValues)
+                    Console.WriteLine($"  ro: {g.Label} = {g.Value}");
+            }
+        }
+
+        /// <summary>
+        /// Dumps every mod monster's resolved stats, weapons, armor and magic paths as JSON, to
+        /// compare with another parser. Usage: Dom5Tests resolve-dump &lt;mod.dm&gt; &lt;out.json&gt;
+        /// </summary>
+        static void ResolveDump(string basePath, string[] args)
+        {
+            LoadVanillaBase(basePath);
+            var mod = new Mod { FullFilePath = args[1] };
+            mod.Parse(args[1]);
+            mod.ResolveDependencies();
+            mod.Resolve();
+            var resolver = Dom5Edit.Resolve.ModResolver.For(mod);
+            var stats = new Dictionary<Command, string>
+            {
+                { Command.HP, "hp" }, { Command.ATT, "att" }, { Command.DEF, "def" }, { Command.PROT, "prot" },
+                { Command.MR, "mr" }, { Command.MOR, "mor" }, { Command.STR, "str" }, { Command.PREC, "prec" },
+                { Command.ENC, "enc" }, { Command.SIZE, "size" }, { Command.AP, "ap" }, { Command.MAPMOVE, "mapmove" },
+            };
+            string[] paths = { "F", "A", "W", "E", "S", "D", "N", "G", "B", "H" };
+            var all = new SortedDictionary<int, Dictionary<string, object>>();
+            foreach (var entity in mod.Database[EntityType.MONSTER].GetFullList())
+            {
+                var r = resolver.Resolve(entity);
+                var d = new Dictionary<string, object>();
+                d["name"] = r.Get(Command.NAME) is { } n ? ((NameProperty)n.Property).Value : "";
+                foreach (var (c, key) in stats)
+                    if (r.Get(c) is { } v)
+                        d[key] = v.Arguments;
+                int RefId(Property p) => p is StringOrIDRef sr ? sr.ID : -1;
+                d["weapons"] = r.GetAll(Command.WEAPON).Select(v => RefId(v.Property).ToString()).ToList();
+                d["armor"] = r.GetAll(Command.ARMOR).Select(v => RefId(v.Property).ToString()).ToList();
+                foreach (var v in r.GetAll(Command.MAGICSKILL))
+                    if (v.Property is IntIntProperty ii && ii.Value1 >= 0 && ii.Value1 < paths.Length)
+                        d[paths[ii.Value1]] = ii.Value2.ToString();
+                all[entity.ID] = d;
+            }
+            File.WriteAllText(args[2], System.Text.Json.JsonSerializer.Serialize(all));
+            Console.WriteLine($"monsters {all.Count}");
         }
 
         static void ApplyEdit(Mod mod, System.Text.Json.JsonElement edit)

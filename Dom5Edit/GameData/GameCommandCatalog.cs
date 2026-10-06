@@ -18,6 +18,7 @@ namespace Dom5Edit.GameData
         {
             public bool Complete;
             public HashSet<string> Commands = new HashSet<string>();
+            public Dictionary<string, CommandEffect> Effects = new Dictionary<string, CommandEffect>();
         }
 
         private static readonly Dictionary<string, Context> _contexts = new Dictionary<string, Context>();
@@ -41,6 +42,9 @@ namespace Dom5Edit.GameData
                 var context = new Context { Complete = ctx.Value.GetProperty("complete").GetBoolean() };
                 foreach (var c in ctx.Value.GetProperty("commands").EnumerateArray())
                     context.Commands.Add(c.GetString()!);
+                if (ctx.Value.TryGetProperty("effects", out var effects))
+                    foreach (var e in effects.EnumerateObject())
+                        context.Effects[e.Name] = CommandEffect.Read(e.Value);
                 _contexts[ctx.Name] = context;
             }
         }
@@ -67,6 +71,20 @@ namespace Dom5Edit.GameData
             };
         }
 
+        /// <summary>
+        /// What the command writes into an entity of this type in the game (from the game's parser),
+        /// or null when the catalog doesn't model it (#weapon, #copystats, nation lists, ...).
+        /// </summary>
+        public static CommandEffect? EffectOf(EntityType type, Command command)
+        {
+            if (GameVersion == null || !CommandsMap.TryGetString(command, out var s))
+                return null;
+            var ctx = ContextOf(type);
+            if (ctx == null || !_contexts.TryGetValue(ctx, out var context))
+                return null;
+            return context.Effects.TryGetValue(s.TrimStart('#'), out var effect) ? effect : null;
+        }
+
         /// <summary>Whether the game reads this command for this entity (see the overload by type).</summary>
         public static bool? IsRead(IDEntity entity, Command command)
         {
@@ -91,6 +109,71 @@ namespace Dom5Edit.GameData
             if (context.Commands.Contains(name))
                 return true;
             return context.Complete ? false : null;
+        }
+    }
+
+    /// <summary>
+    /// What one command writes into its entity's game record (tools/dom6exe command_effects): keys
+    /// "f&lt;offset&gt;" for record fields, "a&lt;n&gt;" for abilities, "&lt;word offset&gt;:&lt;bit&gt;" for flag bits.
+    /// </summary>
+    public sealed class CommandEffect
+    {
+        /// <summary>Fields and abilities the command replaces.</summary>
+        public IReadOnlyCollection<string> Set { get; private set; } = Array.Empty<string>();
+        /// <summary>Abilities the command appends to (repeatable commands).</summary>
+        public IReadOnlyCollection<string> Add { get; private set; } = Array.Empty<string>();
+        /// <summary>Abilities the command ORs a value into.</summary>
+        public IReadOnlyCollection<string> Or { get; private set; } = Array.Empty<string>();
+        /// <summary>Abilities the command removes.</summary>
+        public IReadOnlyCollection<string> Del { get; private set; } = Array.Empty<string>();
+        /// <summary>Flag bits set, one key per bit.</summary>
+        public IReadOnlyCollection<string> Bits { get; private set; } = Array.Empty<string>();
+        /// <summary>Flag bits cleared, one key per bit.</summary>
+        public IReadOnlyCollection<string> Clears { get; private set; } = Array.Empty<string>();
+
+        /// <summary>The argument's range, for commands the game reads with its generic handler (it clamps to it); null if unknown.</summary>
+        public long? Min { get; private set; }
+        public long? Max { get; private set; }
+        /// <summary>The argument may be left out.</summary>
+        public bool Optional { get; private set; }
+        /// <summary>The command takes no argument (its range is one value).</summary>
+        public bool NoArgument => Min.HasValue && Min == Max;
+
+        /// <summary>A repeatable command: each line adds an entry rather than replacing the last.</summary>
+        public bool Appends => Set.Count == 0 && Bits.Count == 0 && (Add.Count > 0 || Or.Count > 0);
+
+        internal static CommandEffect Read(JsonElement e)
+        {
+            HashSet<string> Keys(string name, bool splitBits = false)
+            {
+                var set = new HashSet<string>();
+                if (!e.TryGetProperty(name, out var arr))
+                    return set;
+                foreach (var k in arr.EnumerateArray())
+                {
+                    var key = k.GetString()!;
+                    if (!splitBits)
+                    {
+                        set.Add(key);
+                        continue;
+                    }
+                    // "word:mask" -> one key per bit, so overlaps compare bit by bit
+                    var parts = key.Split(':');
+                    ulong mask = ulong.Parse(parts[1]);
+                    for (int b = 0; b < 64; b++)
+                        if ((mask >> b & 1) != 0)
+                            set.Add(parts[0] + ":" + b);
+                }
+                return set;
+            }
+            return new CommandEffect
+            {
+                Set = Keys("set"), Add = Keys("add"), Or = Keys("or"), Del = Keys("del"),
+                Bits = Keys("bits", true), Clears = Keys("clears", true),
+                Min = e.TryGetProperty("min", out var min) ? min.GetInt64() : null,
+                Max = e.TryGetProperty("max", out var max) ? max.GetInt64() : null,
+                Optional = e.TryGetProperty("optional", out var opt) && opt.GetBoolean(),
+            };
         }
     }
 }

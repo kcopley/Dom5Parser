@@ -24,7 +24,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `ability_keys` | For monster and item commands: the numbered ability each one sets (`#xpshape` = 1145). Monsters and items share the numbering. |
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
-| `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern). |
+| `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern); and per command, what it writes (`effects`: fields and abilities it sets, appends to, ORs into or removes, flag bits it sets or clears, and the argument range of generic-handler commands). Dom5Parser's resolver (Dom5Edit/Resolve) uses the effects to tell whether a line replaces an earlier one. |
 | `vanilla` | All vanilla weapons, armor, monsters, spells, items, sites and nations as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
 
 ## How it finds things (no hard-coded addresses)
@@ -47,7 +47,12 @@ and GNU `objdump`. The exe is never copied into the repo.
 - `#clearspec` clears the whole ability list (magic boosts and `#xpshape` included) and the
   flags word.
 - `#clear` is `#clearmagic` + `#clearspec`, plus a reset of the base stats to defaults and of
-  another block of slots. The name is kept.
+  another block of slots. The name is kept. In detail (helper 0x14022a660(monster, stats,
+  slots, name), which `#clear` calls with (1, 1, 0) and `#clearspec` with (0, 0, 0)): always the
+  flags word and the ability list; stats: the 12 base stats, gold/resource costs, recruitment
+  points, the second flags word (leadership classes, ...) and the body shape (humanoid); slots:
+  the weapon and armor lists; name: the name (never, from a command). Sprites aren't touched.
+  `#clearweapons` just ends the weapon list at slot 0.
 - `#copystats` copies the name, base stats, every ability (so magic boosts, `#xpshape`,
   `#growhp`/`#shrinkhp`), the flags and slot blocks, and replaces the target's magic skills with
   the source's. A `#name` above `#copystats` is overwritten.
