@@ -53,8 +53,16 @@ namespace Dom5Editor.UI.ViewModels
         {
             EntityType.EVENT => new[] { "All", "Good", "Bad", "Always", "Global", "In a chain", "Started by a spell", "With problems" },
             EntityType.SPELL => new[] { "All", "Combat spells", "Rituals", "Global enchantments", "Summons" },
+            EntityType.MONSTER => new[] { "All", "Mages", "Priests", "Pretenders", "Recruitable" },
+            EntityType.ITEM => new[] { "All", "Weapons", "Missile weapons", "Shields", "Armor", "Helmets and crowns", "Boots", "Misc items" },
+            EntityType.WEAPON => new[] { "All", "Melee", "Missile" },
+            EntityType.ARMOR => new[] { "All", "Shields", "Body armor", "Helmets", "Barding" },
+            EntityType.SITE => new[] { "All", "Fire", "Air", "Water", "Earth", "Astral", "Death", "Nature", "Glamour", "Blood", "Holy" },
+            EntityType.NATION => new[] { "All", "Early era", "Middle era", "Late era" },
             _ => null,
         };
+
+        private static readonly Command[] RecruitCommands = { Command.ADDRECUNIT, Command.ADDRECCOM, Command.ADDFOREIGNUNIT, Command.ADDFOREIGNCOM };
 
         /// <summary>Whether a row is in one of the type's own filters.</summary>
         private bool InFacet(EntityListItem item, string facet)
@@ -73,6 +81,37 @@ namespace Dom5Editor.UI.ViewModels
                     "In a chain" => graph.ChainOf(e) != null,
                     "Started by a spell" => graph.To(e).Any(l => !l.IsEventToEvent),
                     "With problems" => graph.ProblemsOf(e).Any(),
+                    _ => true,
+                };
+            }
+            if (Type != EntityType.SPELL)
+            {
+                var r = _session.Resolve(item.Entity);
+                long N(Command c) => Dom5Edit.Events.EventInfo.Number(r.Get(c)?.Property) ?? -1;
+                IEnumerable<long> Paths() => r.GetAll(Command.MAGICSKILL).Select(v => Dom5Edit.Events.EventInfo.Number(v.Property) ?? -1);
+                return (Type, facet) switch
+                {
+                    (EntityType.MONSTER, "Mages") => Paths().Any(p => p >= 0 && p <= 8) || r.Has(Command.CUSTOMMAGIC),
+                    (EntityType.MONSTER, "Priests") => Paths().Any(p => p == 9),
+                    (EntityType.MONSTER, "Pretenders") => r.Has(Command.PATHCOST) || r.Has(Command.STARTDOM),
+                    (EntityType.MONSTER, "Recruitable") => item.ID > 0 && _session.Usage.UsedBy(EntityType.MONSTER, item.ID).Any(u => RecruitCommands.Contains(u.Via)),
+                    (EntityType.ITEM, "Weapons") => N(Command.TYPE) is 1 or 2,
+                    (EntityType.ITEM, "Missile weapons") => N(Command.TYPE) == 3,
+                    (EntityType.ITEM, "Shields") => N(Command.TYPE) == 4,
+                    (EntityType.ITEM, "Armor") => N(Command.TYPE) is 5 or 10,
+                    (EntityType.ITEM, "Helmets and crowns") => N(Command.TYPE) is 6 or 9,
+                    (EntityType.ITEM, "Boots") => N(Command.TYPE) == 7,
+                    (EntityType.ITEM, "Misc items") => N(Command.TYPE) == 8,
+                    (EntityType.WEAPON, "Melee") => N(Command.RANGE) <= 0,
+                    (EntityType.WEAPON, "Missile") => N(Command.RANGE) > 0,
+                    (EntityType.ARMOR, "Shields") => N(Command.TYPE) == 4,
+                    (EntityType.ARMOR, "Body armor") => N(Command.TYPE) == 5,
+                    (EntityType.ARMOR, "Helmets") => N(Command.TYPE) == 6,
+                    (EntityType.ARMOR, "Barding") => N(Command.TYPE) == 9,
+                    (EntityType.SITE, _) => Array.IndexOf(new[] { "Fire", "Air", "Water", "Earth", "Astral", "Death", "Nature", "Glamour", "Blood", "Holy" }, facet) is int p && p >= 0 && N(Command.PATH) == p,
+                    (EntityType.NATION, "Early era") => N(Command.ERA) == 1,
+                    (EntityType.NATION, "Middle era") => N(Command.ERA) == 2,
+                    (EntityType.NATION, "Late era") => N(Command.ERA) == 3,
                     _ => true,
                 };
             }
@@ -312,7 +351,17 @@ namespace Dom5Editor.UI.ViewModels
             if (fields.Length == 0)
                 return "";
             var r = _session.Resolve(item.Entity);
-            return string.Join("  ", fields.Select(f => r.Get(f.Item1) is { } v ? $"{f.Item2} {v.Arguments}" : null).Where(x => x != null));
+            var detail = string.Join("  ", fields.Select(f => r.Get(f.Item1) is { } v ? $"{f.Item2} {v.Arguments}" : null).Where(x => x != null));
+            if (Type == EntityType.MONSTER)
+            {
+                // a mage's paths, as the game abbreviates them: F3 S2, +2 random
+                var paths = string.Join(" ", r.GetAll(Command.MAGICSKILL).Select(v => v.Property is IntIntProperty p && p.Value1 >= 0 && p.Value1 <= 9
+                    ? $"{"FAWESDNGBH"[p.Value1]}{p.Value2}" : null).Where(x => x != null));
+                int random = r.GetAll(Command.CUSTOMMAGIC).Count();
+                if (paths.Length > 0 || random > 0)
+                    detail += "   " + paths + (random > 0 ? $" +{random}" : "");
+            }
+            return detail;
         }
 
         /// <summary>An event's row: how it's rolled, and what starts it (an enchantment, a code, a spell).</summary>
