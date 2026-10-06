@@ -42,7 +42,7 @@ deleting a line, because the line is in vanilla or in the copy source. The game 
 - numeric abilities: setting 0 removes the ability (the game's ability setter, tools/dom6exe);
 - flags, weapons, armor, magic: only the group clears (`#clearspec`, `#clearweapons`,
   `#cleararmor`, `#clearmagic`), after which everything else in the group has to be added back.
-**(target)** The editor offers "remove inherited" and writes the right form: `#x 0` for a
+**(now)** The editor's remove does this (`Transaction.RemoveInherited`): `#x 0` for a
 numeric ability; for the others, the group clear plus the rest of the group, shown before it's
 done because it rewrites the group.
 
@@ -66,7 +66,7 @@ Placement rules for a property added to an entity that has blocks (`SAVE_FLOW.md
 1. a replacement goes where the removed property of the same command was;
 2. otherwise the end of the entity's first block, unless a later block sets the same command,
    clears its group or copies over it; then the end of its last block;
-3. **(target)** a copy or clear command (`#copystats`, `#clear...`) goes right after the block's
+3. **(now)** a copy or clear command (`#copystats`, `#clear...`) goes right after the block's
    header, before the entity's own properties: added at the end, the game would replay the
    entity's own lines first and then the copy would overwrite them.
 
@@ -90,13 +90,13 @@ parser (tools/dom6exe). This decides what an edit panel has to write.
 | Item slots, body shape | replace | — |
 
 So editing an inherited value is usually one line, but *removing* an inherited multi-valued entry
-rewrites its whole group. **(target)** Panels do that rewrite themselves and say so ("removes
+rewrites its whole group. **(now)** The editor does that rewrite itself; list panels say so ("removes
 via #clearweapons and re-adds 2 weapons") before applying it.
 
 ## Undo, dirty state, save
 
-- Every edit is an `IEditCommand` executed through `CommandHistory` (undo/redo). **(target)**:
-  every edit, including name, copy commands and resets (some bypass it now, see below).
+- Every edit is an `IModEdit` made by `ModEditor` and recorded in `EditHistory` (undo/redo),
+  including names, copy and clear lines, header fields, new and deleted entities.
 - Undo restores the exact previous model state, including which Property object sits in which
   block, so an undone edit saves exactly as before.
 - Save: one writer for everything, the mod's own (`ModExporter`, file order, unedited lines as
@@ -107,7 +107,7 @@ via #clearweapons and re-adds 2 weapons") before applying it.
 
 Simple commands are badges (flag, number, reference) defined in `Dom5Editor/Data/*_badges.json`.
 Structured parts get panels: monster weapons/armor/magic/shapes/summons, nation recruitment and
-start units, spell effects and requirements, item and site specifics. **(target)** every
+start units, spell effects and requirements, item and site specifics. **(now)** every
 command the game reads for an entity type is editable in a badge or a panel; measured against
 `Dom5Edit/GameData/game-commands-*.json`.
 
@@ -205,5 +205,5 @@ stat columns, sprites in lists, create-from-reference, remembered window layout.
 
 - Core: `Dom5Tests edit` scripted edits through the same entity calls as the editor (fidelity
   stage 4), saves compared by data and by file.
-- UI: **(target)** `Dom5Editor --snapshot`: load a mod, open an entity's view off-screen, apply
+- UI: **(now)** `Dom5Editor --snapshot`: load a mod, open an entity's view off-screen, apply
   edits through its view model, render to PNG for review.
