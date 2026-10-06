@@ -26,7 +26,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
 | `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern); and per command, what it writes (`effects`: fields and abilities it sets, appends to, ORs into or removes, flag bits it sets or clears, and the argument range of generic-handler commands). Dom5Parser's resolver (Dom5Edit/Resolve) uses the effects to tell whether a line replaces an earlier one. |
-| `vanilla` | All vanilla weapons, armor, monsters, spells, items, sites and nations as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `vanilla` | Every vanilla type the editor lists, written as the commands that store each value: weapons, armor, monsters, spells, items, sites and nations as `#select*` blocks (`vanilla_dm.py`), then blesses, poptypes and nametypes as `#select*` blocks and the mercenaries as `#newmerc` blocks (`vanilla_other.py`). Values no command can store are `-- ro:` lines (shown read-only). Each table's end marker (a record named "end") is left out. AI templates have no vanilla data: the game reads them only from mods. |
 | `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
 
 ## How it finds things (no hard-coded addresses)
@@ -176,12 +176,73 @@ and GNU `objdump`. The exe is never copied into the repo.
   start units 91-96; `#clearsites` removes 52). `#startcom` 90, `#startunittype1-3` /
   `#startunitnbrs1-3` 91-96, `#startscout` 97, `#hero1-10` 139-148 (-1 removes), `#startsite`
   52 (appends), the rest through the generic handler.
-- Not read yet: `#color`/`#secondarycolor` (floats, set through a helper), `#flag`, and the
-  texts (`#descr`, `#summary`, `#brief` live outside the record).
+- `#color`/`#secondarycolor`: three floats each (clamped to 0-1) at +0x94 and +0xa0, found
+  from the branches' float stores; written with the shortest decimals that read back the same.
+- `#epithet` reads up to 38 bytes, so it runs past its 36 into the 2 bytes before the
+  abbreviation (+0x4a): Ind's "Magnificent Kingdom of Exalted Virtue" has 37 characters.
+- The word at +0x90 is a status: `#name` turns -998 (an unused slot) into 0, and the game skips
+  -998 nations; -999 ends the table (the record named "end", left out). Nations 114 ("Machaka
+  xxxx") and 122 ("Oman") are unused slots with leftover data: written with `-- ro: status`.
+- The nation's file name (+0x4f, "early_arcoscephale"; found from the code that formats the
+  pretender files `newlords/<name>_N.2h`) has no command: `-- ro: file name`. The abbreviation
+  isn't written.
+- `#flag` and `#indepflag` load images (the game's own flags are in its data files), and
+  `#nametype` is refused for nations ("#nametype cannot be used for nations"). The texts
+  (`#descr`, `#summary`, `#brief`) live outside the record and aren't written.
+- The other nation commands store abilities and are written when a nation has them (fort,
+  temple and lab costs, `#idealcold`, `#likesterr`, `#fortera`, ...); a nation without one uses
+  the game's default, which isn't a stored value.
 - Compared with the inspector, which exports names, recruitment, heroes, start sites, home
   realms and cheap gods: the exe adds start units, defenders, wall and guard units, temple
-  picture, fort era, god lists, AI and dominion settings (~100 commands per nation). The
-  inspector's 25 extra nations are empty slots it names `nation_35` etc.
+  picture, fort era, god lists, AI and dominion settings (~100 commands per nation) and the
+  colors. The inspector's 25 extra nations are empty slots it names `nation_35` etc. Against
+  its `nations.csv`: name, era and file name agree on all 110 nations, the epithet on 109 (it
+  has Ind's full epithet; the writer cut it at 36 bytes until 2026-10-06).
+
+## Blesses, poptypes, nametypes and mercenaries (6.37, `vanilla_other.py`)
+
+Each table is located from its parser's branches (the store each command makes, the record
+size it multiplies by, the limit it compares with) and checked against an end marker or a
+known value on every run.
+
+- **Blesses** (93, numbers 0-92): `#selectbless N` picks record N (below 100) of a static table
+  of 192-byte records: the name (32 bytes), `#path0`/`#cost0`/`#path1`/`#cost1` (int16), two
+  battle-buff words, up to 7 (monster ability, value) effects and 4 (scale, value) bytes ended
+  by 0xff. The scale commands jump to one setter with the scale's number (`#chaosscale` 0,
+  `#slothscale` 1, `#coldscale` 2, `#deathscale` 3, `#misfortscale` 4, `#drainscale` 5,
+  `#orderscale` 6, `#prodscale` 7, `#heatscale` 8, `#growthscale` 9, `#luckscale` 10,
+  `#magicscale` 11; the parser compares `prodscale` twice). No command adds an effect
+  (`#clearfx` only empties them), so effects and buffs are `-- ro:` lines: 138 effects (32
+  named by the monster command that stores that ability and value, e.g. `#heat 3`; the rest,
+  bless-only numbers like 550 and 551, as "ability N") and 11 buff words. `#cost1` also raises
+  `#path1` to at least 0, so a bless without a second path gets neither. The record after the
+  last is named "end". (The inspector has no bless data.)
+- **Poptypes** (82, numbers 25-106): `#selectpoptype N` (0-249) picks entry N of two tables:
+  recruitment (42 int32: units, -2, commanders, -1; `#addrecunit` inserts before -2,
+  `#addreccom` before -1, `#clearrec` leaves -2, -1) and defenders (8 (key, value) int32 pairs
+  ended by key 0: `#defunit1` 215, `#defmult1` 216, `#defcom1` 217, `#defunit1b` 218,
+  `#defmult1b` 219, `#defunit1c` 220, `#defmult1c` 221). The game reads the first pair with a
+  key (0x1402e9760), so a repeated key is `-- ro:` (5); keys 230 and 235 have no poptype
+  command (3). Checked: Barbarians (25) recruit 139 and 140 with commander 141. Poptypes have
+  no name in the game. (No inspector data.)
+- **Nametypes** (67 lists, 14,532 names, numbers 100-168): `#selectnametype N` takes 100-499;
+  each list is 1,500 name pointers ended by a pointer to "end" (`#addname` appends, `#clear`
+  empties). The first `#selectnametype` a game reads empties lists 169 on, so 169-499 are free
+  for mods; 127 and 128 are empty. The inspector's `nametypes.csv` has only labels (200 ids,
+  from the manual's table): every exe list has an id there.
+- **Mercenaries** (78): a table of 300 bands of 312 bytes; the vanilla ones are the records
+  before the first whose `#level` byte is 99 (named "end"). There is no `#selectmerc`: a mod
+  can't change a vanilla band. `#clearmercs` (in a parser chunk the context anchor misses, so
+  the catalog lacks it) marks record 0 as the end, and `#newmerc` takes the first free record
+  (`#eramask 7`, `#minpay 100` by default). So the vanilla bands are written as the `#newmerc`
+  blocks that would make them; the editor shows them read-only. `#unit` sets `#nrunits` 10
+  when it is 0, so `#nrunits` follows it. Up to 7 (nation, percent) pairs no command writes
+  set a band's minimum pay for that nation (the hire price, 0x140224a00: `#minpay` x percent /
+  100; other nations pay 100%, or the nation's `#merccost`): 90 `-- ro: minimum pay for nation
+  N` lines on 50 bands (holy orders cost Ermor, Sceleria and Lemuria 300%, monkey bands cost
+  the monkey nations 75%, ...). Against the inspector's `Mercenary.csv` (78 bands): all
+  1,092 fields agree (name, boss, commander, unit, counts, level, pay, xp, equipment, rate,
+  items, era mask).
 
 ## Events (6.37)
 
@@ -243,8 +304,8 @@ and GNU `objdump`. The exe is never copied into the repo.
 
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 
-`vanilla` writes 4,138 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
-command can set is written; 1,605 stored values have no command (read-only: 311 body shapes,
+`vanilla` writes 4,136 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
+command can set is written; 1,603 stored values have no command (read-only: 309 body shapes,
 262 vanilla unmounted sprites, 122 leadership bonuses, 153 aura flags, 46 flags2 bits, and
 abilities). Where the two files differ, by cause:
 
@@ -259,7 +320,6 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- Dom5Parser reads the `-- ro:` lines (`IDEntity.GameValues`); the monster view lists them.
-  Other views, and switching the editor's vanilla base to this file, are next.
-- The editor showing the game's events from `data/events-6.37.dm` (E-6 in
-  `docs/EVENT_EDITOR.md`).
+- Dom5Parser reads the `-- ro:` lines (`IDEntity.GameValues`); every page lists them.
+- Bless effects and buff bits by name (they are battle buffs and monster abilities the bless
+  gives sacred units); poptype defender keys 230 and 235; the nation abbreviation.

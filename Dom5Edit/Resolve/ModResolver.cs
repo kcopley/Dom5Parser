@@ -245,8 +245,14 @@ namespace Dom5Edit.Resolve
         {
             var type = entity.GetEntityType();
             foreach (var dep in _mod.Dependencies)
-                if (dep.Database.TryGetValue(type, out var set) && set.TryGet(entity.ID, null, out var found))
-                    return found;
+                if (dep.Database.TryGetValue(type, out var set))
+                {
+                    if (set.TryGet(entity.ID, null, out var found))
+                        return found;
+                    // number 0 (nation 0, bless 0, event 0) isn't kept by number
+                    if (entity.ID == 0 && entity.Selected && set.Unnumbered.FirstOrDefault(e => e.ID == 0 && e.Selected) is IDEntity zero)
+                        return zero;
+                }
             return null;
         }
 

@@ -81,6 +81,12 @@
                                Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="NotePart">
+            <Grid>
+                    <!-- why the page can't be edited (the game's own mercenaries) -->
+                    <TextBlock Text="{Binding ReadOnlyNote}" Foreground="{DynamicResource WarningBrush}" TextWrapping="Wrap" Margin="0,0,0,8"/>
+            </Grid>
+        </DataTemplate>
         <DataTemplate x:Key="DescriptionPart">
             <Grid>
                     <!-- description -->
@@ -240,6 +246,9 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Kind}" Value="Error">
                                 <Setter Property="ContentTemplate" Value="{StaticResource ErrorPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Note">
+                                <Setter Property="ContentTemplate" Value="{StaticResource NotePart}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Kind}" Value="Description">
                                 <Setter Property="ContentTemplate" Value="{StaticResource DescriptionPart}"/>
