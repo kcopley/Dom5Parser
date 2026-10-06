@@ -16,6 +16,20 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Nations from the exe: step 4 done for every type
+
+111 nations added; `data/vanilla-6.37.dm` now holds every vanilla entity type (887 weapons,
+298 armor, 4,138 monsters, 1,475 spells, 531 items, 1,407 sites, 111 nations). Nation parsers
+branch on "name or number" and "-1 removes", so the directly-set abilities are found by
+following the code to the first setter call (both ways at a conditional jump). Read-only:
+4,891 values in all, about a third of them sprite numbers and frame counts.
+
+Step 4 comparison summary (details per type in tools/dom6exe/README.md): wherever the two
+disagree, the exe's version is the one the game's parser would produce. The inspector's data
+lacks a lot (body shapes, sounds, sprites, start units and defenders, ~300 abilities) and in
+places names a different command than the one that stores an ability, or a command the game
+doesn't read at all.
+
 ### Sites from the exe (step 4)
 
 1,407 sites added (the inspector has 1,253). Generic-handler arguments are now read by

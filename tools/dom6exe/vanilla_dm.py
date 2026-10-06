@@ -374,7 +374,8 @@ def monster_commands(exe):
 
 def write(exe, path):
     sections = [('weapon', weapon_commands), ('armor', armor_commands), ('monster', monster_commands),
-                ('spell', spell_commands), ('item', item_commands), ('site', site_commands)]
+                ('spell', spell_commands), ('item', item_commands), ('site', site_commands),
+                ('nation', nation_commands)]
     text = ['-- Dominions %s vanilla data, written from Dominions6.exe by tools/dom6exe (exe %s).' % (exe.version, exe.sha),
             '-- "-- ro:" lines are stored values no command can set (shown read-only).', '']
     res = {'game_version': exe.version}
@@ -515,7 +516,7 @@ def setter_of(p, ctx, key_cmd):
             for k in range(i, i + 150):
                 a, op, args, tgt = p.ins[k]
                 if op == 'mov' and re.match(r'edx,0x[0-9a-f]+$', args):
-                    for a2, op2, args2, t2 in p.ins[k + 1:k + 4]:
+                    for a2, op2, args2, t2 in p.ins[k + 1:k + 9]:
                         if op2 == 'call':
                             return args2.split()[0]
                         if op2 == 'jmp':
@@ -821,6 +822,139 @@ def site_commands(exe):
             seen.add(key)
             if key in SITE_GEMS:
                 lines.append('#gems %d %d' % (key - 1, val))
+                continue
+            more, left = generic_lines(gen.get(key, []), val)
+            lines += more
+            if left:
+                ro.append((generic_label(gen.get(key, []), key), left))
+        out[i] = {'lines': lines, 'readonly': ro}
+    return out
+
+
+# nation record (6.37): name, epithet +0x24, era +0xac, 200 abilities (int32 numbers from
+# +0xb0, int64 values from +0x3d0), the recruitment list +0xa10 (int32; sections end with -2
+# commanders, -3 foreign units, -4 foreign commanders, -1 end: #addreccom etc. insert with
+# those markers), the god list +0xab8 (#addgod N appends N, #delgod N appends -N).
+N_EPITHET, N_ERA, N_AB_KEYS, N_AB_VALS, N_AB_COUNT, N_REC, N_GODS = 0x24, 0xac, 0xb0, 0x3d0, 200, 0xa10, 0xab8
+N_REC_CMDS = ['addrecunit', 'addreccom', 'addforeignunit', 'addforeigncom']
+N_GOD_SLOTS = 100
+
+
+def nation_direct_keys(p, setter, ctx='nation'):
+    """Nation commands that call the nation ability setter themselves: the ability number at
+    the first setter call reachable from the command's code (both ways at a conditional jump;
+    the parsers branch on 'name or number' and on -1 meaning remove)."""
+    fs = p.contexts[ctx]
+    order = sorted(k for k, (f, s) in p.refs.items() if f in fs)
+    jumps = collections.Counter(x[2].split()[0] for k in order for x in p.ins[k:k + 120] if x[1] == 'jmp')
+    loop = jumps.most_common(1)[0][0]       # back to the parser's line loop
+
+    def search(k, const, seen, depth):
+        while depth < 120:
+            depth += 1
+            a, op, args, t = p.ins[k]
+            if op == 'call':
+                if args.split()[0] == setter:
+                    return const.get('rdx')
+                for r in ('rax', 'rcx', 'rdx', 'r8', 'r9', 'r10', 'r11'):
+                    const.pop(r, None)
+            elif op == 'ret':
+                return None
+            elif op.startswith('j'):
+                tgt = args.split()[0]
+                if tgt == loop or tgt in seen or not tgt.startswith('0x'):
+                    if op == 'jmp':
+                        return None
+                else:
+                    seen.add(tgt)
+                    if op == 'jmp':
+                        k = p.index[num(tgt)]
+                        continue
+                    found = search(p.index[num(tgt)], dict(const), seen, depth)
+                    if found is not None:
+                        return found
+            else:
+                d = reg64(args.split(',')[0])
+                m = re.match(r'(\w+),(0x[0-9a-f]+)$', args)
+                m2 = re.match(r'\w+,\[(\w+)([+-])(0x[0-9a-f]+)\]$', args)
+                if op == 'mov' and m and d:
+                    const[d] = num(m.group(2))
+                elif op == 'lea' and m2 and d and reg64(m2.group(1)) in const:
+                    const[d] = const[reg64(m2.group(1))] + (1 if m2.group(2) == '+' else -1) * num(m2.group(3))
+                elif d and op not in ('cmp', 'test', 'push'):
+                    const.pop(d, None)
+            k += 1
+        return None
+
+    keys = {}
+    for n, i in enumerate(order):
+        cmd = p.refs[i][1]
+        if cmd in keys:
+            continue
+        # the command's own code starts where the parser advances past its name
+        k = next((j for j in range(i, i + 60) if p.ins[j][1] == 'add' and p.ins[j][2].split(',')[0] in ('edi', 'ebx', 'r15d', 'esi')), None)
+        if k is not None:
+            key = search(k + 1, {}, set(), 0)
+            if key is not None:
+                keys[cmd] = key
+    return keys
+
+
+def nation_commands(exe):
+    p = Parser(exe)
+    setter = setter_of(p, 'nation', 'startunitnbrs1')
+    direct = collections.defaultdict(list)
+    for cmd, key in nation_direct_keys(p, setter).items():
+        direct[key].append(cmd)
+    # #startsite's number comes from a register; #clearsites removes it by number (edx = 0x34
+    # built as lea edx,[rax+0x34] with eax 0 after the name check)
+    for i, (f, s_) in sorted(p.refs.items()):
+        if s_ == 'clearsites' and f in p.contexts['nation']:
+            for a, op, args, t in p.ins[i:i + 60]:
+                m = re.match(r'edx,(?:\[rax\+)?(0x[0-9a-f]+)\]?$', args)
+                if op in ('mov', 'lea') and m:
+                    direct[num(m.group(1))].append('startsite')
+                    break
+            break
+    gen = collections.defaultdict(list)
+    for c in p.generic_call_args():
+        if c['context'] == 'nation' and c['key'] is not None:
+            gen[c['key']].append(c)
+    repeatable = {k for k, cs in gen.items() if any(c['repeat'] == 1 for c in cs)} | \
+        {k for k, cmds in direct.items() if 'startsite' in cmds}
+    out = {}
+    for i, r in sorted(records(exe, 'nation').items()):
+        lines, ro = ['#name "%s"' % name_of(r).replace('"', "'")], []
+        ep = text(r[N_EPITHET:N_EPITHET + 36].split(b'\0')[0])
+        if ep:
+            lines.append('#epithet "%s"' % ep.replace('"', "'"))
+        lines.append('#era %d' % struct.unpack_from('<h', r, N_ERA)[0])
+        section = 0
+        for k in range(N_GODS - N_REC >> 2):
+            m = struct.unpack_from('<i', r, N_REC + 4 * k)[0]
+            if m == -1 or m == 0:
+                break
+            if m < 0:
+                section = {-2: 1, -3: 2, -4: 3}.get(m, section)
+                continue
+            lines.append('#%s %d' % (N_REC_CMDS[section], m))
+        for k in range(N_GOD_SLOTS):
+            g = struct.unpack_from('<i', r, N_GODS + 4 * k)[0]
+            if not g:
+                break
+            lines.append('#addgod %d' % g if g > 0 else '#delgod %d' % -g)
+        seen = set()
+        for k in range(N_AB_COUNT):
+            key = struct.unpack_from('<i', r, N_AB_KEYS + 4 * k)[0]
+            val = struct.unpack_from('<q', r, N_AB_VALS + 8 * k)[0]
+            if not key:
+                break
+            if key in seen and key not in repeatable:
+                ro.append(('ability %d repeated (the game reads the first)' % key, val))
+                continue
+            seen.add(key)
+            if key in direct:
+                lines.append('#%s %d' % (sorted(direct[key])[0], val))
                 continue
             more, left = generic_lines(gen.get(key, []), val)
             lines += more
