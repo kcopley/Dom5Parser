@@ -374,7 +374,7 @@ namespace Dom5Edit.Events
                 if (lines.Any(p => EventInfo.Delays.Contains(p.Command) && _ownLines.Contains(p)) && NextRecord(e) == null)
                     _problems.Add(new EventProblem(e, lines.First(p => EventInfo.Delays.Contains(p.Command)), e.Selected
                         ? $"#delay plans event {e.ID + 1}, and there's no such event"
-                        : "#delay plans the next #newevent in the file, and there's none after this one", isError: true));
+                        : "#delay plans the next #newevent, and this mod has none after this one (with other mods loaded, the game runs the next mod's first new event)", isError: e.Selected));
                 var (reqs, effs) = EventInfo.Slots(lines);
                 if (reqs > EventInfo.MaxRequirements)
                     _problems.Add(new EventProblem(e, null, $"{reqs} requirements: the game keeps the first {EventInfo.MaxRequirements} and drops the rest", isError: true));

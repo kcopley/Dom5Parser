@@ -118,7 +118,10 @@ namespace Dom5Editor.UI.ViewModels
             [Command.BERSERK] = "att", [Command.MAGICBOOST] = "mr",
         };
 
-        private static string? IconOf(Command c) => Icons.TryGetValue(c, out var k) ? k : null;
+        /// <summary>The game's icon for the ability (keyed by its command, Data/game_icons.json) when the game is installed, else ours.</summary>
+        private static string? IconOf(Command c) =>
+            CommandsMap.TryGetString(c, out var s) && Sprites.GameArt.Icon(s.TrimStart('#')) != null ? s.TrimStart('#')
+            : Icons.TryGetValue(c, out var k) ? k : null;
 
         private string Tooltip(string? description, ResolvedValue? value, Command command)
         {

@@ -147,7 +147,7 @@ From an event's Chain section:
 New events go through `ModEditor` like every edit (one undo step); a delayed follow-up is
 placed after its event in the file (`SavePlan` order).
 
-### E-6. The game's own events (read-only) **(data now; editor next)**
+### E-6. The game's own events (read-only) **(now)**
 The exe stores vanilla events in a table: per event the message, the rarity, up to 12
 requirement and 20 effect (code, value) pairs. Requirements and effects are numbered
 separately (`#req_code` stores requirement 59, `#code` effect 93, `#decscale3` effect 59).
@@ -163,6 +163,20 @@ reproduce carry a comment (the same non-repeatable code twice, a value outside t
 range). Dom5Parser parses the file (`Dom5Tests events` on it: 3,302 events, 4,808 links, 63
 chains). For browsing and for `#selectevent N`: shown read-only, with a mod's `#selectevent`
 changes on top. Not editable directly.
+
+In the editor (d648482): the file loads with vanilla.dm (shipped next to the editor as
+`vanilla-events.dm`), and `Dom5Edit.Events.VanillaEventMessages` reads the messages from the
+player's exe (`DOM6_EXE`, or the usual Steam folders) as display assets, only if the record
+after the last event reads "end" where the header says (another game version reads nothing).
+The Events list has all 5,000 (DomEnhanced: its 1,700 and the game's 3,300 it doesn't change),
+titled from their messages, numbered, and searchable by message text. The event graph links
+the game's events too (DomEnhanced: 5,729 links, 89 chains; the game's code chains such as
+"The natives are complaining" -> "unruly" -> ... read as in game), with `#delay` to the next
+record. A game event's page shows its message (with a note that it isn't saved), its lines
+and chain; lines that stack (the catalog: commands that add a pair, most effects) are
+read-only and none can be removed (only `#clear` empties an event, and that drops the
+message too); lines that replace (most requirements) can be changed, and lines can be added
+(`#selectevent N` with the mod's lines). Checks look only at the mod's lines.
 
 From the code (`tools/dom6exe/README.md`, Events):
 - `#selectevent N` is record N. Mod events (`#newevent`) are records 3500, 3501, ... in the
