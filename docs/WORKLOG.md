@@ -56,6 +56,12 @@ Later the same day:
 - Every entity type checked in scripted sessions (monsters, weapons, armor, spells, items,
   sites, nations, events, mercenaries, poptypes, nametypes, blesses, templates): each edits and
   saves exactly.
+- **Typing:** value boxes commit on Enter or leaving them (not after a pause mid-number); Tab to
+  the next value keeps the cursor there after the page rebuilds.
+- **Sweep** (`--sweep`): every mod entity's page on DomEnhanced opens (383 pages, none fail;
+  fixed monster-tag references, nametype pages as one names box, lazy picker filtering). The
+  slowest page is a big nation at ~2 s (many reference badges): a candidate for later.
+- Full suite 34/34; DomEnhanced saves byte-identical.
 
 ## 2026-10-05: game data from Dominions6.exe
 
