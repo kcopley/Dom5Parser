@@ -62,7 +62,7 @@ namespace Dom5Editor.UI.ViewModels
         private bool _spriteDone;
 
         /// <summary>The second line: ID and key stats (a monster's HP, attack, ...; a weapon's damage).</summary>
-        public string Detail => _detail ??= $"#{ID}" + (DetailProvider?.Invoke(this) is string d && d.Length > 0 ? "   " + d : "");
+        public string Detail => _detail ??= (ID > 0 ? $"#{ID}" : "") + (DetailProvider?.Invoke(this) is string d && d.Length > 0 ? (ID > 0 ? "   " : "") + d : "");
 
         /// <summary>A small sprite (monsters, items), or null.</summary>
         public System.Windows.Media.ImageSource? Sprite

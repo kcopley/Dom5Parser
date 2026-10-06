@@ -36,6 +36,9 @@ namespace Dom5Tests
                 case "resolve-dump":
                     ResolveDump(basePath, args);
                     break;
+                case "events":
+                    Events(basePath, args);
+                    break;
                 case "all":
                 default:
                     TestVanilla(basePath, null);
@@ -386,6 +389,43 @@ namespace Dom5Tests
         /// Dumps every mod monster's resolved stats, weapons, armor and magic paths as JSON, to
         /// compare with another parser. Usage: Dom5Tests resolve-dump &lt;mod.dm&gt; &lt;out.json&gt;
         /// </summary>
+        /// <summary>
+        /// Dom5Tests events MOD.dm [--all]: the mod's events as the editor links them
+        /// (Dom5Edit.Events): counts by link kind, every chain with its links, and the problems found.
+        /// </summary>
+        static void Events(string basePath, string[] args)
+        {
+            LoadVanillaBase(basePath);
+            var mod = new Mod { FullFilePath = args[1] };
+            mod.Parse(args[1]);
+            mod.ResolveDependencies();
+            mod.Resolve();
+            var resolver = Dom5Edit.Resolve.ModResolver.For(mod);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            var g = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla);
+            Console.WriteLine($"{g.Events.Count} events, {g.Links.Count} links, {g.Chains.Count} chains, {g.Problems.Count} problems ({watch.ElapsedMilliseconds} ms)");
+            Console.WriteLine("  first events: " + string.Join(", ", g.Events.Take(4).Select(e => $"id {e.ID}{(e.Selected ? " (select)" : "")}")));
+            foreach (var k in g.Links.GroupBy(l => l.Kind))
+                Console.WriteLine($"  {k.Key}: {k.Count()}");
+            string Title(IDEntity e) => $"[{g.IndexOf(e)}] {Dom5Edit.Events.EventInfo.Title(g.LinesOf(e))}";
+            string Name(IDEntity e) => e.Kind == EntityType.EVENT ? Title(e)
+                : $"spell #{e.ID} {(resolver.Resolve(e).Get(Command.NAME)?.Property as Dom5Edit.Props.NameProperty)?.Value}";
+            bool all = args.Contains("--all");
+            foreach (var chain in all ? g.Chains : g.Chains.Take(8))
+            {
+                Console.WriteLine($"\nchain {chain.Number}: {chain.Events.Count} events");
+                foreach (var t in chain.Triggers)
+                    Console.WriteLine($"  started by {Name(t)}");
+                foreach (var l in chain.Links.Take(12))
+                    Console.WriteLine($"  {Title(l.From)}  --{l.Label}-->  {Title(l.To)}");
+            }
+            Console.WriteLine();
+            foreach (var p in g.Problems.GroupBy(p => System.Text.RegularExpressions.Regex.Replace(p.Message, @"-?\d+", "N")))
+                Console.WriteLine($"{p.Count(),4} x {p.First()}   e.g. {Title(p.First().Event)}");
+            var enchanted = g.Links.Where(l => l.Kind == Dom5Edit.Events.EventLinkKind.Enchantment).Select(l => l.To).Distinct().Count();
+            Console.WriteLine($"\nevents started by an enchantment spell: {enchanted}; by a cause-event spell: {g.Links.Count(l => l.Kind == Dom5Edit.Events.EventLinkKind.SpellEvent)}");
+        }
+
         static void ResolveDump(string basePath, string[] args)
         {
             LoadVanillaBase(basePath);

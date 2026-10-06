@@ -231,7 +231,8 @@ namespace Dom5Edit.Entities
                     }
                     else
                     {
-                        writer.WriteLine(s2 + " " + endStr);
+                        // (#newevent takes no number)
+                        writer.WriteLine(endStr.Length > 0 ? s2 + endStr : s2);
                     }
                 }
             }
@@ -723,6 +724,38 @@ namespace Dom5Edit.Entities
             _properties.Add(p);
             _properties = _properties.OrderBy(sort_properties).ToList();
         }
+
+        /// <summary>Moves one of the lines to a place in the list (an entity with no parsed block is saved in list order).</summary>
+        internal bool MoveLive(Property p, int index)
+        {
+            int i = _properties.FindIndex(q => ReferenceEquals(q, p));
+            if (i < 0)
+                return false;
+            MarkEdited();
+            _properties.RemoveAt(i);
+            _properties.Insert(Math.Clamp(index, 0, _properties.Count), p);
+            return true;
+        }
+
+        /// <summary>
+        /// An entity made in the editor that's saved right after this other one (SavePlan): an
+        /// event's delayed follow-up, which the game takes to be the next event in the file.
+        /// </summary>
+        public IDEntity? PlacedAfter
+        {
+            get => _placedAfter;
+            internal set
+            {
+                _placedAfter = value;
+                PlacedOrder = System.Threading.Interlocked.Increment(ref _placedCounter);
+            }
+        }
+
+        private IDEntity? _placedAfter;
+        private static long _placedCounter;
+
+        /// <summary>When it was placed (a later one goes nearer its anchor).</summary>
+        internal long PlacedOrder { get; private set; }
 
         /// <summary>Puts a new line where an old one is (by reference).</summary>
         internal bool ReplaceLive(Property old, Property replacement)

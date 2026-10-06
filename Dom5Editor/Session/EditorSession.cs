@@ -41,6 +41,10 @@ namespace Dom5Editor.Session
                 // the touched entities' names (or existence) may have changed: update their rows
                 foreach (var entity in e.Entities)
                     UpdateReference(entity);
+                if (e.Entities.Any(x => x.Kind == EntityType.EVENT || x.Kind == EntityType.SPELL))
+                    _events = null;
+                if (e.Entities.Any(x => x.Kind == EntityType.SPELL))
+                    _spells = null;
                 Usage.OnChanged(e);
                 Changed?.Invoke(e);
             };
@@ -50,6 +54,29 @@ namespace Dom5Editor.Session
         public UsageIndex Usage { get; }
 
         public void Navigate(EntityType type, int id) => NavigationRequested?.Invoke(type, id);
+
+        /// <summary>Raised to show an entity by itself (events have no number).</summary>
+        public event Action<IDEntity>? EntityNavigationRequested;
+
+        /// <summary>Shows an entity: by ID when it has one, else by itself.</summary>
+        public void Navigate(IDEntity entity)
+        {
+            if (entity.ID > 0)
+                NavigationRequested?.Invoke(entity.Kind, entity.ID);
+            else
+                EntityNavigationRequested?.Invoke(entity);
+        }
+
+        private Dom5Edit.Events.EventGraph? _events;
+        private Dom5Edit.Events.SpellIndex? _spells;
+
+        /// <summary>
+        /// The mod's events as the game links them (codes, delays, variables, choices, spells),
+        /// worked out when first asked for after an edit (the spells only after a spell edit).
+        /// </summary>
+        public Dom5Edit.Events.EventGraph Events =>
+            _events ??= Dom5Edit.Events.EventGraph.Build(Mod, Resolve, VanillaLoader.Vanilla,
+                _spells ??= Dom5Edit.Events.SpellIndex.Build(Mod, Resolve, VanillaLoader.Vanilla));
 
         /// <summary>Every entity of a type (vanilla and the mod's), for reference pickers: ID and name in game.</summary>
         public IReadOnlyList<ReferenceItem> References(EntityType type)

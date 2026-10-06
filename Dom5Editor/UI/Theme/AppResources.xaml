@@ -6,6 +6,7 @@
         <ResourceDictionary Source="AppTheme.xaml"/>
         <ResourceDictionary Source="Converters.xaml"/>
         <ResourceDictionary Source="../Views/PanelTemplates.xaml"/>
+        <ResourceDictionary Source="../Views/EventTemplates.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
