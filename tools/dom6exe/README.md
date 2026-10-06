@@ -23,7 +23,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `ability_keys` | For monster and item commands: the numbered ability each one sets (`#xpshape` = 1145). Monsters and items share the numbering. |
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
-| `vanilla` | Vanilla weapons, armor, monsters, spells, items and sites as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `vanilla` | All vanilla weapons, armor, monsters, spells, items, sites and nations as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
 
 ## How it finds things (no hard-coded addresses)
 
@@ -145,6 +145,24 @@ and GNU `objdump`. The exe is never copied into the repo.
 - Compared with the inspector: it lacks `#look`, `#claim`, `#gold`/`#minegold` on some, the
   per-path ranges, and 154 sites; it writes `#incunrest -50` for `#decunrest 5`.
 
+## Nations (6.37)
+
+- Nation record: name, epithet +0x24, era +0xac, 200 abilities (int32 numbers from +0xb0,
+  int64 values from +0x3d0), the recruitment list +0xa10, the god list +0xab8.
+- `#addreccom`/`#addforeignunit`/`#addforeigncom` insert into one int32 list with section
+  markers -2/-3/-4 (`#addrecunit` before -2; -1 ends it). `#addgod N` appends N to the god
+  list, `#delgod N` appends -N.
+- Nation ability setter 0x14022a300; 0x140258820 removes an ability (`#startcom` first removes
+  start units 91-96; `#clearsites` removes 52). `#startcom` 90, `#startunittype1-3` /
+  `#startunitnbrs1-3` 91-96, `#startscout` 97, `#hero1-10` 139-148 (-1 removes), `#startsite`
+  52 (appends), the rest through the generic handler.
+- Not read yet: `#color`/`#secondarycolor` (floats, set through a helper), `#flag`, and the
+  texts (`#descr`, `#summary`, `#brief` live outside the record).
+- Compared with the inspector, which exports names, recruitment, heroes, start sites, home
+  realms and cheap gods: the exe adds start units, defenders, wall and guard units, temple
+  picture, fort era, god lists, AI and dominion settings (~100 commands per nation). The
+  inspector's 25 extra nations are empty slots it names `nation_35` etc.
+
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 
 `vanilla` writes 4,138 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
@@ -163,6 +181,5 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- `vanilla` for nations.
 - Give Dom5Parser the command catalog: commands the game doesn't read in a context, and stored
   abilities no command sets (read-only in the editor).
