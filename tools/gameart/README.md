@@ -92,6 +92,16 @@ only some exist as files) and the code that picks which image to draw. Draw call
 archive by its place in that list (res.trs = 10, misc.trs = 27) and an image index, which is how
 `game_icons.json` was built.
 
+## Unit, item and site sprites
+
+Not compiled in: the editor reads them from the player's install when a list row or page shows
+them, and caches them while shown. Which image each vanilla monster and item is comes from the
+numbers the game stores (`tools/dom6exe sprites`, `tools/dom6exe/data/sprites-6.37.json`,
+shipped as `vanilla-sprites.json`): below 1000 an image index, else the first image of the
+(n / 1000)-th group label plus n % 1000; the attack frame is the next image. A site's picture is
+worked out from its `#path`, `#level` and `#look` (sites.trs groups fire, air, ...), so a mod's
+own sites show one too. Details: tools/dom6exe/README.md, "Sprites".
+
 ## game_icons.json
 
 `{"version": "6.37", "icons": {key: {"archive", "index"}}}`. Each entry was found in the exe and

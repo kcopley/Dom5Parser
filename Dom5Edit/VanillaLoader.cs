@@ -197,6 +197,8 @@ namespace Dom5Edit
 
             // Load sprite paths and descriptions from asset files
             VanillaAssetLoader.LoadAssets(m);
+            // the game's own sprites (read from the player's install) where no file gives one
+            VanillaSprites.Load(m, dmPath);
 
             return m;
         }

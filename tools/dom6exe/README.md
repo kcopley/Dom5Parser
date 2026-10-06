@@ -11,6 +11,7 @@ python3 tools/dom6exe/dom6exe.py monsters  --out monsters.json      # ~3 MB, not
 python3 tools/dom6exe/dom6exe.py vanilla   --out vanilla.dm    # the editor's vanilla base
 python3 tools/dom6exe/dom6exe.py catalog   --out Dom5Edit/GameData/game-commands-6.37.json
 python3 tools/dom6exe/dom6exe.py events    --out tools/dom6exe/data/events-6.37.dm
+python3 tools/dom6exe/dom6exe.py sprites   --out tools/dom6exe/data/sprites-6.37.json
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
 `/mnt/c/Games/Steam/steamapps/common/Dominions6/Dominions6.exe`), `--inspector DIR` (a
@@ -27,6 +28,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
 | `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern); and per command, what it writes (`effects`: fields and abilities it sets, appends to, ORs into or removes, flag bits it sets or clears, and the argument range of generic-handler commands). Dom5Parser's resolver (Dom5Edit/Resolve) uses the effects to tell whether a line replaces an earlier one. |
 | `vanilla` | All vanilla weapons, armor, monsters, spells, items, sites and nations as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `sprites` | Which picture the game draws for each vanilla monster (and its attack frame and unmounted sprite) and item: the sprite numbers it stores, and the archive (`sprites.py`). Numbers only; the editor reads the pictures from the player's install (`Dom5Edit/VanillaSprites.cs`, `Dom5Editor/Sprites/GameArt.cs`). Also the rule for a site's picture. |
 | `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
 
 ## How it finds things (no hard-coded addresses)
@@ -240,6 +242,29 @@ and GNU `objdump`. The exe is never copied into the repo.
   the inspector writes its first value each time (750 pairs). Messages agree except its
   Latin-1 reading of UTF-8 (25) and newlines (3). Some of its names are from an older
   numbering (effect 183 "16d6units", effect 91 "holyboost": 91 is `#bloodboost`).
+
+## Sprites (6.37)
+
+- A monster's sprite is the int at record +0x24 (written by `#newmonster`), an item's the int16
+  at +0x2a (`#spr`, `#copyspr`). At start the game converts both tables in place (0x1401e2ad8
+  for monsters, up to the -1 end marker; 0x140195449 for items, up to constlevel 99): a number
+  below 1000 is an image index; n of 1000 or more becomes start(n / 1000) + n % 1000, where
+  start(g) is the first image of the g-th group label in the archive (0x1400791a0 walks the
+  labels; start(0) = 0). Monsters use `monster.trs` (archive 33 in the game's list), items
+  `item.trs` (2). Monster 1, Logrian Slinger, 24036: group 24 is "man 2" (image 2863), so image
+  2899.
+- The unit draw code adds 1 for the attack frame. A vanilla unmounted sprite (ability 1017,
+  262 monsters; `#unmountedspr1` removes it and sets 1135 to a mod image) is converted the same
+  way when drawn (0x1401e3840).
+- A site's picture (0x1401edf90): `sites.trs` group path + 1 (path clamped to 0-9: fire, air,
+  water, earth, astral, death, nature, glamour, blood, holy), image look if look is 0-99, else
+  image level (clamped to 0-3). Vanilla sites without `#look` have -1; `#newsite` zeroes the
+  record (look 0, path 0, level 0; rarity -1, loc 0x303ff).
+- `sprites.py` finds all of this from the code: the archive name list, the functions that
+  subtract 1000 * (n / 1000) and the table field and archive each one uses, the single-number
+  converter and the ability read before it, the site function by its clamps. Checked by contact
+  sheets of decoded pictures against names (Moloch, Serpent, Elephant Rider, Fire Sword, Ice
+  Lance, The Smouldercone, Swamps of Pythia, ...).
 
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 

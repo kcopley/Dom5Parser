@@ -28,6 +28,9 @@ namespace Dom5Edit.Resolve
                     return PropertyGroupMap.GetMonsterGroup(c);
                 case EntityType.NATION:
                     return PropertyGroupMap.GetNationGroup(c);
+                case EntityType.ITEM:
+                    // an item's #copyspr copies its sprite (the catalog: #spr and #copyspr write the same field)
+                    return c == Command.SPR ? PropertyGroup.Sprites : PropertyGroup.None;
                 case EntityType.POPTYPE:
                     if (c == Command.ADDRECUNIT || c == Command.ADDRECCOM)
                         return PropertyGroup.Recruitment;
