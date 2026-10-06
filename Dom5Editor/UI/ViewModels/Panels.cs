@@ -92,10 +92,9 @@ namespace Dom5Editor.UI.ViewModels
                     RefId = id, Cells = cells,
                     OpenTip = $"Open the {Nouns.Of(refType)} {it}",
                     RemoveTip = v.Source == ValueSource.Own
-                        ? $"Take {it} away from {page.DisplayName} (removes the mod's line). Undo brings it back."
-                        : $"Take {it} away from {page.DisplayName}. It's inherited (vanilla or a copy), so the mod removes it the game's way (a clear, then the others added back). Undo brings it back.",
-                    CopyTip = $"Copy {it} to a new {Nouns.Of(refType)} in the mod, give the copy to {page.DisplayName} in place of {text}, and open the copy to edit. "
-                              + $"Other {Nouns.Plural(page.Type)} that use {text} keep the original.",
+                        ? $"Remove {it} from {page.DisplayName}"
+                        : $"Remove {it} from {page.DisplayName} (inherited: the mod clears the list and adds the rest back)",
+                    CopyTip = $"Make a copy of {it} for {page.DisplayName} to use instead, and open it. Other {Nouns.Plural(page.Type)} keep {text}.",
                 });
             }
             Candidates = page.Session.References(refType);
@@ -111,8 +110,8 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>"New weapon" (armor, ...): makes a new one, gives it to this entity, and opens it.</summary>
         public bool CanMakeNew => RefType == EntityType.WEAPON || RefType == EntityType.ARMOR;
         public string NewLabel => $"+ New {RefType.ToString().ToLowerInvariant()}";
-        public string NewTip => $"Make a new {Nouns.Of(RefType)} in the mod, give it to {_page.DisplayName}, and open it to edit";
-        public string AddTip => $"Give {_page.DisplayName} another {Nouns.Of(RefType)}: type a name or ID to search";
+        public string NewTip => $"Make a new {Nouns.Of(RefType)} for {_page.DisplayName} and open it";
+        public string AddTip => $"Add a {Nouns.Of(RefType)} to {_page.DisplayName} (type a name or ID)";
         public ICommand NewCommand { get; }
 
         private void MakeNew()

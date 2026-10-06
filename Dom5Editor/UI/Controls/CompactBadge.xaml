@@ -78,7 +78,7 @@
                 <ContentControl VerticalAlignment="Center" Focusable="False" IsTabStop="False" Loaded="OnReferenceHostLoaded">
                     <Button Click="OnReferenceEditClick" MinWidth="150" MaxWidth="250" Height="20" Padding="5,0"
                             HorizontalContentAlignment="Left" Cursor="Hand"
-                            ToolTip="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource Format}, ConverterParameter='{}{0}: click to pick another (type a name or ID to search)'}"
+                            ToolTip="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource Format}, ConverterParameter='{}{0}: click to pick another'}"
                             Background="#1AFFFFFF" BorderBrush="#40FFFFFF" BorderThickness="0,0,0,1">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -141,7 +141,7 @@
 
         <DataTemplate x:Key="RemovePart">
             <Button Content="&#x00D7;" FontSize="8" Padding="1,0" Margin="3,0,0,0" MinWidth="12" Height="12" VerticalAlignment="Center"
-                    ToolTip="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource Format}, ConverterParameter='Remove {0} (an inherited one is removed the game\'s way: #x 0 or a clear; Undo brings it back)'}"
+                    ToolTip="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource Format}, ConverterParameter='Remove {0}'}"
                     Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                     CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}">
                 <Button.Style>

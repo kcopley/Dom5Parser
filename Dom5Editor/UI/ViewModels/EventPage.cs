@@ -720,8 +720,8 @@ namespace Dom5Editor.UI.ViewModels
         public IReadOnlyList<ReferenceItem> Addable { get; }
         public string AddPlaceholder => IsRequirements ? "+ Add a requirement..." : "+ Add an effect...";
         public string AddTip => IsRequirements
-            ? "Add a requirement: the event can only happen when all of them hold. Type to search them by what they do or by command."
-            : "Add an effect: what the event does, in this order (some effects act on the ones after them). Type to search them by what they do or by command.";
+            ? "Add a requirement (the event happens only when all hold); type to search"
+            : "Add an effect (they run in order); type to search";
         public bool IsEmpty => Count == 0;
         public string EmptyText => IsRequirements ? "No requirements: it can happen anywhere its rarity allows." : "No effects yet.";
 

@@ -185,7 +185,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type vm:PathToggle}">
-                    <ToggleButton IsChecked="{Binding IsOn, Mode=TwoWay}" Style="{StaticResource PathToggle}" ToolTip="{Binding Name, Converter={StaticResource Format}, ConverterParameter='{}{0}: lit, this random path can be {0}. Click to switch it.'}"/>
+                    <ToggleButton IsChecked="{Binding IsOn, Mode=TwoWay}" Style="{StaticResource PathToggle}" ToolTip="{Binding Name, Converter={StaticResource Format}, ConverterParameter='{}{0}: lit means this random path can be {0}'}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
@@ -214,7 +214,7 @@
                                              Width="26" TextAlignment="Center" Style="{StaticResource InlineBox}"
                                              ToolTip="{Binding Text, Converter={StaticResource Format}, ConverterParameter='{}{0} level (0 removes the path)'}"/>
                                     <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                                            ToolTip="{Binding Text, Converter={StaticResource Format}, ConverterParameter='Remove {0} magic (an inherited path is removed with #clearmagic and the others added back)'}"
+                                            ToolTip="{Binding Text, Converter={StaticResource Format}, ConverterParameter='Remove {0} magic'}"
                                             Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                             CommandParameter="{Binding}"/>
                                 </StackPanel>

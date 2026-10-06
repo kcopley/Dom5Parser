@@ -51,7 +51,7 @@
                             Click="RecentButton_Click"/>
                     <Button x:Name="SaveButton"
                             Content="Save"
-                            ToolTip="Save the mod to its file (Ctrl+S). Lines you didn't change are written exactly as they were read."
+                            ToolTip="Save the mod (Ctrl+S)"
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,4,0"
                             IsEnabled="{Binding HasMod}"
@@ -119,12 +119,12 @@
                                                           IsEnabled="{Binding HasMod}"
                                                           ItemsSource="{Binding JumpTargets}"
                                                           Placeholder="Go to any entity... (Ctrl+P)"
-                                                          ToolTip="Go to anything in the mod or the game: type a name or ID of any monster, weapon, spell, nation, event, ... (Ctrl+P)"
+                                                          ToolTip="Go to any monster, weapon, spell, nation, event... by name or ID (Ctrl+P)"
                                                           GotKeyboardFocus="JumpBox_GotKeyboardFocus"
                                                           SelectionChanged="JumpBox_SelectionChanged"/>
                     <Button x:Name="ValidateButton"
                             Content="Validate"
-                            ToolTip="Check the whole mod for problems and list them: lines the game won't read, references to things that don't exist, IDs outside the modding ranges, the same ID used twice"
+                            ToolTip="Check the mod for problems (unread lines, missing references, ID clashes)"
                             Style="{StaticResource ButtonBase}"
                             IsEnabled="{Binding HasMod}"
                             Click="ValidateButton_Click"/>

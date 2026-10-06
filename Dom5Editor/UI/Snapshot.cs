@@ -478,6 +478,18 @@ namespace Dom5Editor.UI
                                 Log("   | " + line);
                             break;
                         }
+                        case "--sprite":
+                        {
+                            // --sprite COMMAND FILE: a header image set from a file (as picking it or dropping it does)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var file = args[++i];
+                            page.SetImage(c, Path.GetFullPath(file));
+                            var now = Selected(vm)!;
+                            Log($"sprite {args[i - 1]}: {(now.Error != null ? "error: " + now.Error : now.Notice)}");
+                            Log($"   slots: {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.PixelWidth}x{x.Image.PixelHeight}" : "none")}"))}");
+                            break;
+                        }
                         case "--icons":
                         {
                             // where the game's icons come from: compiled in, and the install found (or not)
