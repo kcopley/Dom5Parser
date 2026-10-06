@@ -3,6 +3,43 @@
 Running log of the autonomous work sessions: what was done, what was found, what's next.
 Newest entries at the top. Commits are local unless noted; the user pushes.
 
+## 2026-10-06: pages like the game's, hints from the manuals, events
+
+The user's review: the editor is "90% there"; streamline the monster page (stats grouped
+like the game's unit window, easier random magic), icons with text, better hover hints,
+then the big one: events, which chain. Done:
+
+- **Monster page** (f85281d): stats in the game's three columns with icons and hints (normal
+  values from the manual), leadership as class + bonus, a reset to the inherited value on
+  every panel field; magic paths as chips with the game's path icons, add a path by clicking
+  it; random paths as toggle rows with a chance (over 100% is a linked random: the manual);
+  weapons, armor and nation recruits as tables; "+ New weapon/armor".
+- **Icons** (`GameIcon`): the game's path and gem icons already shipped with the editor,
+  vector drawings for stats and costs, in path/gem choices everywhere.
+- **Hover hints** (717c266): `tools/command_hints.py` reads both manuals column by column
+  (the old extraction ran the columns together, garbling badge descriptions) into
+  `command_hints.json`: 1,874 commands with arguments, text and value tables. Badges show
+  what a value means next to it. Six badge types fixed (#dragonlord was a monster link).
+- **Events** (8bc5e6d, e59c2a3; design and analysis in `docs/EVENT_EDITOR.md`): the chain
+  model (`Dom5Edit.Events`: codes, delays, variables, choices, enchantment and cause-event
+  spells; checks), an event page that reads as a script (rarity, owner, message with tags,
+  requirements by group and effects in order as sentences with values edited in place,
+  links to the other end of every code/variable/enchantment), a chain map, follow-up /
+  delayed follow-up / player-choice buttons, list filters. Save plan: line order (move
+  up/down) and an entity placed after another (a delayed follow-up is the next event).
+
+Found in DomEnhanced: codes -310, -311, -312, -315 are required by events but never set (those
+events can't happen); a message `[Mountain of the Mystics` lacks its closing bracket; the
+Serpent Cult events require monsters #7731, #7516, #7734, #7736 that exist nowhere.
+
+Checks: quick suite 26/26 after the save-plan changes; sweep of 543 pages, 0 failures; edits
+on DomEnhanced's event pages 120-140 ms (the event graph is rebuilt after each event edit; spells
+only after spell edits).
+
+Next: the game's own events decoded from the exe (read-only browsing, `#selectevent` on top);
+review the other entity pages; group monster abilities by the manual's sections; nation
+pages are slow (1.8-2.9 s).
+
 ## 2026-10-05 (later): a complete editor, rebuilt on the resolver
 
 The user asked for a complete mod editor (every entity editable, real panels for the

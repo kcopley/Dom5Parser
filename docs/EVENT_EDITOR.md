@@ -90,7 +90,7 @@ What can go wrong (and the editor checks):
 
 ## The editor
 
-### E-1. The model: `Dom5Edit.Events`
+### E-1. The model: `Dom5Edit.Events` **(now)**
 - `EventGraph.Build(mod, vanilla)`: every link above as `EventLink(from, to, kind, key, via)`
   (event-to-event for L1-L3 and L6, spell-to-event for L4-L5), the chains (connected
   groups of events through L1-L3/L6), and the problems list.
@@ -100,15 +100,15 @@ What can go wrong (and the editor checks):
 - Checked by `Dom5Tests events <mod.dm>` (chains, links and problems listed; DomEnhanced as the
   fixture).
 
-### E-2. One description per command: `Dom5Editor/Data/event_commands.json`
+### E-2. One description per command: `Dom5Editor/Data/event_commands.json` **(now)**
 Every event command the game reads: its group (the manual's sections), whether it's a
-requirement or an effect, a sentence ("Province must have event code {0}"), its argument kind
+requirement or an effect, a sentence ("The province has code {v}"), its argument kind
 (number, percent, 0/1 yes-no, nation, monster, site, item, code, variable, enchantment, path,
 gem, scale, school, season, month, era, order, order mask, affliction mask, terrain mask, fort,
-rarity) and value names, and the manual's text for the hover hint. Generated from the manual by
-`tools/event_commands.py`, checked against the exe catalog (every read command present).
+rarity) and value names. Written by hand from the manual; the hover hints are the manual's
+own text (`command_hints.json`, `tools/command_hints.py`).
 
-### E-3. The event page: a script you can read
+### E-3. The event page: a script you can read **(now)**
 - **Header**: the title (from the message), kind (rarity as words), owner (`#nation`: province
   owner, random enemy, independents, a nation), and a one-line summary.
 - **When**: requirements as sentences grouped like the manual (time, nation, province, sites,
@@ -123,18 +123,20 @@ rarity) and value names, and the manual's text for the hover hint. Generated fro
   opens*", "2 turns later → *Celebrations complete*", "spell *Gaia's Vengeance* (enchantment
   233)"), each a link; the event's problems.
 
-### E-4. Browsing
+### E-4. Browsing **(now)**
 - The event list shows titles and kinds, with filters: kind (good/bad/always/global), chains
   only, by enchantment or spell, by nation; search covers message text.
-- **Chains view**: a chain as a flow graph (events as cards, links as labelled arrows:
-  code, delay, variable, choice), laid out left to right; clicking a card opens the event.
-  Spells that trigger the chain are shown at its start.
+- **Chain map** (on the event page): the chain as a flow graph (events as cards, links as
+  labelled arrows: code, delay, variable, choice, blocks), laid out left to right; clicking a
+  card opens the event. Spells that start it are cards on the left. A chain over 40 events
+  shows the events within two links of this one.
 
-### E-5. Making chains
+### E-5. Making chains **(now)**
 From an event's Chain section:
-- **Follow-up when the code is set**: picks the next free code in -300..-5000, adds `#code X`
-  (and `#req_code 0` if missing) here, and makes a new event with `#rarity 5`, `#req_code X`,
-  `#code 0`.
+- **Follow-up when the code is set**: picks the next free code in -300..-5000 (or the one this
+  event already sets), adds `#code X` (and `#req_code 0` if it requires no code) here, and
+  makes a new event at the end of the file with `#rarity 0`, `#req_code X`, `#code 0` (not
+  next to this one: there it could become a `#delay`'s next event).
 - **Delayed follow-up (N turns)**: adds `#delay N` here and makes a new event placed right after
   this one in the file (the game picks the next event).
 - **Player choice**: `#order` with the chosen orders and a code here; one new event per choice
@@ -144,7 +146,7 @@ From an event's Chain section:
 New events go through `ModEditor` like every edit (one undo step); a delayed follow-up is
 placed after its event in the file (`SavePlan` order).
 
-### E-6. The game's own events (read-only)
+### E-6. The game's own events (read-only) **(target)**
 The exe stores vanilla events as lists of (requirement/effect code, value) pairs, the same codes
 the parser writes (`tools/dom6exe` catalog: e.g. `#req_code` appends ability 59, `#code` 93).
 Decoding them (`tools/dom6exe events`) gives the game's events for browsing and for
