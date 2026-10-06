@@ -206,6 +206,9 @@ missing-vanilla error, data beside the exe, self-contained publish (`tools/publi
 README. Open for the user: renaming the exe (Dom5Editor.exe), an icon, a release workflow.
 
 **E6. Pages that are quick to read and edit** (2026-10-06, from the user's review: "90% there").
+Done: icons, the monster stat block, magic, tables, hover hints from the manuals (with value
+names next to values). Still to do: the other pages' review, monster abilities grouped by the
+manual's sections, nation page speed.
 - Icons with text for what modders recognize at a glance: magic paths and gems, the monster
   stats, costs. Our own vector icons (the game's art isn't ours to ship).
 - Monster stats laid out like the game's unit window (body: HP, size, protection, MR, morale,
@@ -221,7 +224,7 @@ README. Open for the user: renaming the exe (Dom5Editor.exe), an icon, a release
 - Every page reviewed in renders (weapon, armor, spell, item, site, nation, mercenary, poptype,
   nametype, bless, template) for layout and wording.
 
-**E7. Events** (docs/EVENT_EDITOR.md): events read as scripts (when / then / message), chains
+**E7. Events** (docs/EVENT_EDITOR.md; E-1 to E-5 done 2026-10-06, E-6 next): events read as scripts (when / then / message), chains
 browsed and drawn (codes, delays, variables, enchantments, spell events, player choices),
 follow-ups made from an event, problems flagged. Then the game's own events decoded from the
 exe for browsing (read-only; `#selectevent` changes shown on top).
