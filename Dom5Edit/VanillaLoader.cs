@@ -193,16 +193,23 @@ namespace Dom5Edit
                 EventMessagesStatus = Events.VanillaEventMessages.Load(m, eventsPath);
             }
 
+            // the game's descriptions, nation summaries, ... from the player's exe
+            int texts = GameData.VanillaTexts.Load(m, out var textsStatus);
+            TextsStatus = textsStatus;
+
             MarkAllEntitiesAsVanilla(m);
 
-            // Load sprite paths and descriptions from asset files
-            VanillaAssetLoader.LoadAssets(m);
+            // Load sprite paths from asset files, and descriptions too when the exe gave none
+            VanillaAssetLoader.LoadAssets(m, descriptions: texts == 0);
 
             return m;
         }
 
         /// <summary>How the vanilla events' messages were read (or why not), for the status bar.</summary>
         public static string? EventMessagesStatus { get; private set; }
+
+        /// <summary>How the game's texts (descriptions, summaries, ...) were read (or why not), for the status bar.</summary>
+        public static string? TextsStatus { get; private set; }
 
         /// <summary>The vanilla events file: next to vanilla.dm (vanilla-events.dm, as the editor ships it), or the repo's tools/dom6exe/data.</summary>
         private static string? FindVanillaEventsPath(string dmPath)

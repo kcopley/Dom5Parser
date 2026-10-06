@@ -29,7 +29,9 @@ namespace Dom5Edit
         /// Call this after parsing vanilla.dm.
         /// </summary>
         /// <param name="mod">The mod containing vanilla entities</param>
-        public static void LoadAssets(Mod mod)
+        /// <param name="descriptions">Whether to load descriptions from the Data/*descr folders: only
+        /// when the game's own texts weren't read from its exe (GameData.VanillaTexts)</param>
+        public static void LoadAssets(Mod mod, bool descriptions = true)
         {
             string basePath = FindAssetsBasePath();
             if (string.IsNullOrEmpty(basePath))
@@ -38,9 +40,10 @@ namespace Dom5Edit
                 return;
             }
 
-            LoadMonsterAssets(mod, basePath);
-            LoadItemAssets(mod, basePath);
-            LoadSpellAssets(mod, basePath);
+            LoadMonsterAssets(mod, basePath, descriptions);
+            LoadItemAssets(mod, basePath, descriptions);
+            if (descriptions)
+                LoadSpellAssets(mod, basePath);
             // Sites use #look which should already be in vanilla.dm - no separate loading needed
         }
 
@@ -79,7 +82,7 @@ namespace Dom5Edit
         /// <summary>
         /// Loads sprite paths and descriptions for all monsters.
         /// </summary>
-        private static void LoadMonsterAssets(Mod mod, string basePath)
+        private static void LoadMonsterAssets(Mod mod, string basePath, bool descriptions)
         {
             string spritesPath = Path.Combine(basePath, "icons", "sprites");
             string descrPath = Path.Combine(basePath, "Data", "unitdescr");
@@ -114,7 +117,7 @@ namespace Dom5Edit
                 }
 
                 // Load description (only if entity doesn't already have it)
-                if (!HasProperty(monster, Command.DESCR))
+                if (descriptions && !HasProperty(monster, Command.DESCR))
                 {
                     string descrFile = Path.Combine(descrPath, $"{id:D4}.txt");
                     if (File.Exists(descrFile))
@@ -132,7 +135,7 @@ namespace Dom5Edit
         /// <summary>
         /// Loads sprite paths and descriptions for all items.
         /// </summary>
-        private static void LoadItemAssets(Mod mod, string basePath)
+        private static void LoadItemAssets(Mod mod, string basePath, bool descriptions)
         {
             string spritesPath = Path.Combine(basePath, "icons", "items");
             string descrPath = Path.Combine(basePath, "Data", "itemdescr");
@@ -158,7 +161,7 @@ namespace Dom5Edit
                 }
 
                 // Load description by name (only if entity doesn't already have it)
-                if (!HasProperty(item, Command.DESCR))
+                if (descriptions && !HasProperty(item, Command.DESCR))
                 {
                     if (item.TryGetName(out string name) && !string.IsNullOrEmpty(name))
                     {

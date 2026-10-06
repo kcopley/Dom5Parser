@@ -67,6 +67,7 @@ namespace Dom5Editor.UI
                 if (!args.Contains("--mod"))
                     vm.CreateNewMod();
                 Pump();
+                Log("game texts: " + Dom5Edit.VanillaLoader.TextsStatus);
 
                 for (int i = 1; i < args.Length; i++)
                 {
