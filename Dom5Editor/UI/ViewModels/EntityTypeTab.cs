@@ -230,7 +230,7 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>Selects an entity's row by the entity itself (or its ID).</summary>
         public bool Select(IDEntity entity)
         {
-            var item = Items.FirstOrDefault(i => ReferenceEquals(i.Entity, entity)) ?? (entity.ID > 0 ? Items.FirstOrDefault(i => i.ID == entity.ID) : null);
+            var item = Items.FirstOrDefault(i => ReferenceEquals(i.Entity, entity)) ?? (HasNumber(entity) ? Items.FirstOrDefault(i => i.ID == entity.ID) : null);
             if (item == null)
                 return false;
             SelectedItem = item;
@@ -308,8 +308,9 @@ namespace Dom5Editor.UI.ViewModels
                 }
             }
             var listed = new HashSet<int>(list.Select(i => i.ID));
-            // the mod's own; a #select of one the loaded vanilla data lacks (poptypes, events) is
-            // still the game's: listed as vanilla, changed
+            // the mod's own; a #select of a type the loaded vanilla data lacks is still the game's:
+            // listed as vanilla, changed. (The game's mercenaries have no number: a mod's #newmerc
+            // bands are listed after them.)
             foreach (var e in own)
                 if (!HasNumber(e) || !listed.Contains(e.ID))
                 {
@@ -327,9 +328,10 @@ namespace Dom5Editor.UI.ViewModels
         }
 
         /// <summary>
-        /// Whether the vanilla data has this type (vanilla.dm has monsters, weapons, armor, spells,
-        /// items, sites and nations). A mod's #select of an ID it doesn't have makes a new entity; for
-        /// a type it lacks (poptypes, events, ...) the #select changes a game entity we can't show.
+        /// Whether the vanilla data has this type (vanilla.dm has every type but AI templates, which
+        /// the game only reads from mods; the events come from their own file). A mod's #select of an
+        /// ID it doesn't have makes a new entity; for a type it lacks the #select changes a game
+        /// entity we can't show.
         /// </summary>
         public static bool HasVanillaData(EntityType type) =>
             VanillaLoader.Vanilla?.Database.TryGetValue(type, out var set) == true && set.GetFullList().Count > 0;
@@ -361,6 +363,8 @@ namespace Dom5Editor.UI.ViewModels
             };
             if (Type == EntityType.EVENT)
                 return EventDetail(item);
+            if (Type is EntityType.MERCENARY or EntityType.POPTYPE or EntityType.NAMETYPE or EntityType.BLESS)
+                return ListDetail(item);
             if (fields.Length == 0)
                 return "";
             var r = _session.Resolve(item.Entity);
@@ -375,6 +379,44 @@ namespace Dom5Editor.UI.ViewModels
                     detail += "   " + paths + (random > 0 ? $" +{random}" : "");
             }
             return detail;
+        }
+
+        /// <summary>
+        /// A row of a type without stats to show: a band's commander and size, a poptype's
+        /// recruits, a nametype's first names, a bless's paths and cost (poptypes and nametypes
+        /// have no name in game, so this is what tells them apart).
+        /// </summary>
+        private string ListDetail(EntityListItem item)
+        {
+            var r = _session.Resolve(item.Entity);
+            long N(Command c) => Dom5Edit.Events.EventInfo.Number(r.Get(c)?.Property) ?? 0;
+            string Monster(Dom5Edit.Resolve.ResolvedValue v)
+            {
+                int id = v.Property is MonsterOrMontagRef m && m.MonsterRef != null && m.MonsterRef.HasValue ? m.MonsterRef.ID
+                    : int.TryParse(v.Arguments.Split(' ')[0], out var n) ? n : 0;
+                return id > 0 && _session.Mod.TryGet(EntityType.MONSTER, id, null, out var e)
+                    && _session.Resolve(e).Get(Command.NAME)?.Property is StringProperty s ? s.Value ?? $"#{id}" : $"#{id}";
+            }
+            string Names(IEnumerable<string> names, int shown)
+            {
+                var list = names.ToList();
+                return string.Join(", ", list.Take(shown)) + (list.Count > shown ? $" +{list.Count - shown}" : "");
+            }
+            switch (Type)
+            {
+                case EntityType.MERCENARY:
+                    var com = r.Get(Command.COM);
+                    return (com != null ? Monster(com) : "") + $"   level {N(Command.LEVEL)}, {N(Command.NRUNITS)} men, {N(Command.MINPAY)} gold";
+                case EntityType.POPTYPE:
+                    return Names(r.GetAll(Command.ADDRECUNIT).Select(Monster), 3);
+                case EntityType.NAMETYPE:
+                    var names = r.GetAll(Command.ADDNAME).Select(v => v.Property is StringProperty s ? s.Value ?? "" : v.Arguments).ToList();
+                    return names.Count == 0 ? "" : $"{names.Count} names: " + Names(names, 4);
+                case EntityType.BLESS:
+                    string Path(Command path, Command cost) => r.Get(path) is { } && N(path) is >= 0 and <= 9 ? $"{"FAWESDNGBH"[(int)N(path)]}{N(cost)}" : "";
+                    return (Path(Command.PATH0, Command.COST0) + " " + Path(Command.PATH1, Command.COST1)).Trim();
+            }
+            return "";
         }
 
         /// <summary>An event's row: how it's rolled, and what starts it (an enchantment, a code, a spell).</summary>
@@ -399,13 +441,22 @@ namespace Dom5Editor.UI.ViewModels
             return string.Join(" · ", parts.Distinct().Take(4));
         }
 
-        private IDEntity? VanillaOf(int id) =>
-            (Type == EntityType.EVENT ? id >= 0 : id > 0) && VanillaLoader.Vanilla?.Database.TryGetValue(Type, out var set) == true && set.TryGetValue(id, out var v) ? v : null;
+        private IDEntity? VanillaOf(int id)
+        {
+            var db = VanillaLoader.Vanilla?.Database;
+            if (id < 0 || id == 0 && !NumberedFromZero(Type) || db == null || !db.TryGetValue(Type, out var set))
+                return null;
+            // (an entity set doesn't keep number 0 by its number)
+            return id > 0 ? set.TryGetValue(id, out var v) ? v : null : set.GetFullList().FirstOrDefault(e => e.ID == 0 && e.Selected);
+        }
 
         private object Key(IDEntity e) => HasNumber(e) ? e.ID : e;
 
+        /// <summary>Types whose game numbers start at 0: event 0, nation 0 (the Independents), bless 0.</summary>
+        public static bool NumberedFromZero(EntityType type) => type is EntityType.EVENT or EntityType.NATION or EntityType.BLESS;
+
         /// <summary>Whether the entity has a number in game: an ID, or a game event's number (from 0; a #newevent has none).</summary>
-        private bool HasNumber(IDEntity e) => Type == EntityType.EVENT ? e.ID >= 0 && e.Selected : e.ID > 0;
+        private bool HasNumber(IDEntity e) => Type == EntityType.EVENT ? e.ID >= 0 && e.Selected : e.ID > 0 || e.ID == 0 && e.Selected && NumberedFromZero(Type);
 
         /// <summary>The entity's name in game (a copy's may come from its source).</summary>
         private string NameOf(IDEntity entity)

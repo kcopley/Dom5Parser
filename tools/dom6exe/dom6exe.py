@@ -826,7 +826,7 @@ def cmd_catalog(exe, args):
 
 
 def cmd_vanilla(exe, args):
-    """Vanilla monsters as .dm commands (vanilla_dm.py); --out names the .dm file."""
+    """Vanilla data as .dm commands (vanilla_dm.py, vanilla_other.py); --out names the .dm file."""
     import vanilla_dm
     res = vanilla_dm.write(exe, args.out)
     args.out = None
