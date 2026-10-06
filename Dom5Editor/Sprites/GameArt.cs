@@ -1,15 +1,19 @@
 using System.IO;
 using System.Text.Json;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Dom5Editor.Sprites
 {
     /// <summary>
     /// The game's own icons (unit-window stats, magic paths and gems, gold and resources, ability
-    /// icons), read at run time from the user's Dominions 6 install: the art isn't ours to ship.
+    /// icons): compiled into the editor (Resources/game-icons.pack, tools/gameart/trs.py pack; the
+    /// developers allow it for game tools), else read from the user's Dominions 6 install.
     /// Which archive and index each key is comes from Data/game_icons.json (keys: "hp", "mr",
     /// "path:F", "gem:S", "gold", ability commands like "fireres", ...). <see cref="Icon"/> is null
     /// when the game isn't found or the key isn't mapped, so callers keep their own fallback.
+    /// Vanilla units', items' and sites' pictures (<see cref="Sprite"/>, <see cref="SitePicture"/>)
+    /// are only ever read from the install.
     /// </summary>
     public static class GameArt
     {
@@ -76,8 +80,8 @@ namespace Dom5Editor.Sprites
             {
                 if (_icons.TryGetValue(key, out var cached))
                     return cached;
-                ImageSource? image = null;
-                if (Map().TryGetValue(key, out var where))
+                ImageSource? image = Packed(key);
+                if (image == null && Map().TryGetValue(key, out var where))
                 {
                     var archive = Archive(where.Archive);
                     image = archive?.Image(where.Index);
@@ -85,6 +89,106 @@ namespace Dom5Editor.Sprites
                 _icons[key] = image;
                 return image;
             }
+        }
+
+        /// <summary>
+        /// A unit's or item's picture from the install, by the sprite number the game stores
+        /// (Dom5Edit.GameSprite: monster.trs for monsters, item.trs for items) and a frame (1: the
+        /// attack frame, the next image). Null when the game or the image isn't there. Decoded on
+        /// first use and cached; nothing of it is shipped with the editor.
+        /// </summary>
+        public static BitmapSource? Sprite(string archive, int number, int frame = 0)
+        {
+            TrsArchive? a;
+            lock (_lock)
+                a = Archive(archive);
+            if (a == null)
+                return null;
+            int index = a.SpriteIndex(number);
+            return index < 0 ? null : a.Image(index + frame);
+        }
+
+        /// <summary>
+        /// A site's picture from the install, as the game picks it (6.37, tools/dom6exe/sprites.py):
+        /// sites.trs group path + 1 (path 0-9: fire, air, water, earth, astral, death, nature,
+        /// glamour, blood, holy), image <paramref name="look"/> when it is 0-99, else image
+        /// <paramref name="level"/> (0-3). A vanilla site without #look has look -1; a new site 0.
+        /// </summary>
+        public static BitmapSource? SitePicture(int path, int level, int look)
+        {
+            TrsArchive? a;
+            lock (_lock)
+                a = Archive("sites.trs");
+            if (a == null)
+                return null;
+            int start = a.GroupStart(Math.Clamp(path, 0, 9) + 1);
+            if (start < 0)
+                return null;
+            return a.Image(start + (look >= 0 && look < 100 ? look : Math.Clamp(level, 0, 3)));
+        }
+
+        // the icons compiled into the editor (tools/gameart/trs.py pack): key -> (width, height, half size, zlib BGRA)
+        private static Dictionary<string, (int Width, int Height, bool Half, byte[] Data)>? _pack;
+
+        /// <summary>How many icons are compiled into the editor.</summary>
+        public static int PackedCount
+        {
+            get
+            {
+                lock (_lock)
+                    return (_pack ??= ReadPack()).Count;
+            }
+        }
+
+        /// <summary>The icon from the pack compiled into the editor, or null (not in it, or no pack).</summary>
+        private static ImageSource? Packed(string key)
+        {
+            _pack ??= ReadPack();
+            if (!_pack.TryGetValue(key, out var icon))
+                return null;
+            try
+            {
+                using var z = new System.IO.Compression.ZLibStream(new MemoryStream(icon.Data), System.IO.Compression.CompressionMode.Decompress);
+                var pixels = new byte[icon.Width * icon.Height * 4];
+                int read = 0, n;
+                while (read < pixels.Length && (n = z.Read(pixels, read, pixels.Length - read)) > 0)
+                    read += n;
+                double dpi = icon.Half ? 192 : 96;
+                var image = System.Windows.Media.Imaging.BitmapSource.Create(icon.Width, icon.Height, dpi, dpi, PixelFormats.Bgra32, null, pixels, icon.Width * 4);
+                image.Freeze();
+                return image;
+            }
+            catch (Exception)
+            {
+                return null; // a broken entry: the install's, or none
+            }
+        }
+
+        private static Dictionary<string, (int, int, bool, byte[])> ReadPack()
+        {
+            var pack = new Dictionary<string, (int, int, bool, byte[])>();
+            try
+            {
+                using var stream = typeof(GameArt).Assembly.GetManifestResourceStream("game-icons.pack");
+                if (stream == null)
+                    return pack;
+                using var r = new BinaryReader(stream);
+                if (new string(r.ReadChars(4)) != "D6IP" || r.ReadUInt16() != 1)
+                    return pack;
+                int count = r.ReadUInt16();
+                for (int i = 0; i < count; i++)
+                {
+                    var key = System.Text.Encoding.UTF8.GetString(r.ReadBytes(r.ReadByte()));
+                    int w = r.ReadUInt16(), h = r.ReadUInt16();
+                    bool half = (r.ReadByte() & 1) != 0;
+                    pack[key] = (w, h, half, r.ReadBytes(r.ReadInt32()));
+                }
+            }
+            catch (Exception)
+            {
+                // a broken pack: the install's icons, or none
+            }
+            return pack;
         }
 
         private static string? Resolve()

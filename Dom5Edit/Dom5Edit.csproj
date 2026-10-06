@@ -9,6 +9,8 @@
     <ItemGroup>
         <!-- The commands the game reads per entity type (tools/dom6exe catalog) -->
         <EmbeddedResource Include="GameData\game-commands-6.37.json" LogicalName="Dom5Edit.GameData.game-commands.json" />
+        <!-- Where the game's texts are in Dominions6.exe (tools/dom6exe texts): read from the player's exe -->
+        <EmbeddedResource Include="..\tools\dom6exe\data\texts-6.37.json" LogicalName="Dom5Edit.GameData.game-texts.json" />
     </ItemGroup>
 
 </Project>

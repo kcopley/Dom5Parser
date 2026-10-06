@@ -395,7 +395,7 @@ namespace Dom5Editor.UI.ViewModels
             Label = label;
             Title = title;
             OpenCommand = new RelayCommand(open);
-            Tooltip = tooltip;
+            Tooltip = tooltip.Length > 0 ? tooltip : $"{label}: {title}. Click to open it.";
         }
 
         public string Label { get; }
@@ -566,6 +566,9 @@ namespace Dom5Editor.UI.ViewModels
         }
 
         public ICommand? OpenCommand { get; }
+        public string OpenTip => RefType is EntityType t && _refId is int id && id > 0
+            ? $"Open the {Nouns.Of(t)} {Nouns.Named(Candidates?.FirstOrDefault(c => c.ID == id)?.DisplayName, id)}"
+            : "Nothing picked to open";
 
         public IReadOnlyList<MaskOption>? MaskOptions { get; }
         public string MaskWords => _number is long m ? EventCommands.Words(Arg, m) : "";
@@ -716,6 +719,9 @@ namespace Dom5Editor.UI.ViewModels
         public ObservableCollection<EventLineGroup> Groups { get; } = new ObservableCollection<EventLineGroup>();
         public IReadOnlyList<ReferenceItem> Addable { get; }
         public string AddPlaceholder => IsRequirements ? "+ Add a requirement..." : "+ Add an effect...";
+        public string AddTip => IsRequirements
+            ? "Add a requirement (the event happens only when all hold); type to search"
+            : "Add an effect (they run in order); type to search";
         public bool IsEmpty => Count == 0;
         public string EmptyText => IsRequirements ? "No requirements: it can happen anywhere its rarity allows." : "No effects yet.";
 

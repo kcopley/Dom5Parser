@@ -71,6 +71,7 @@
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <CheckBox x:Name="ShowErrorsCheck"
                               Content="Errors"
+                              ToolTip="Show problems that break the mod in game (a line the game rejects, a reference to nothing)"
                               Style="{DynamicResource CheckBoxBase}"
                               IsChecked="True"
                               Checked="Filter_Changed"
@@ -78,6 +79,7 @@
                               Margin="0,0,16,0"/>
                     <CheckBox x:Name="ShowWarningsCheck"
                               Content="Warnings"
+                              ToolTip="Show likely mistakes (an ID outside the modding range, the same ID twice, ...)"
                               Style="{DynamicResource CheckBoxBase}"
                               IsChecked="True"
                               Checked="Filter_Changed"
@@ -85,6 +87,7 @@
                               Margin="0,0,16,0"/>
                     <CheckBox x:Name="ShowInfoCheck"
                               Content="Info"
+                              ToolTip="Show notes that need no action"
                               Style="{DynamicResource CheckBoxBase}"
                               IsChecked="False"
                               Checked="Filter_Changed"
@@ -95,7 +98,7 @@
                 <TextBox x:Name="SearchBox"
                          Grid.Column="1"
                          Style="{DynamicResource TextBoxBase}"
-                         Margin="24,0,0,0"
+                         Margin="24,0,0,0" ToolTip="Show only the problems whose text contains this"
                          TextChanged="SearchBox_TextChanged"/>
             </Grid>
         </Border>
@@ -165,7 +168,7 @@
                         <!-- Navigate Button -->
                         <Button x:Name="NavigateButton"
                                 Grid.Column="2"
-                                Content="Go To"
+                                Content="Go To" ToolTip="Open the entity this problem is about"
                                 Style="{DynamicResource ButtonSmall}"
                                 VerticalAlignment="Center"
                                 Visibility="{Binding CanNavigate, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -197,13 +200,13 @@
                            Style="{DynamicResource MutedText}"
                            VerticalAlignment="Center"
                            DockPanel.Dock="Left"/>
-                <Button Content="Close"
+                <Button Content="Close" ToolTip="Close this report"
                         Style="{DynamicResource ButtonBase}"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
                         Click="CloseButton_Click"
                         IsCancel="True"/>
-                <Button Content="Export"
+                <Button Content="Export" ToolTip="Save the report as a text file"
                         Style="{DynamicResource ButtonBase}"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"

@@ -11,6 +11,8 @@ python3 tools/dom6exe/dom6exe.py monsters  --out monsters.json      # ~3 MB, not
 python3 tools/dom6exe/dom6exe.py vanilla   --out vanilla.dm    # the editor's vanilla base
 python3 tools/dom6exe/dom6exe.py catalog   --out Dom5Edit/GameData/game-commands-6.37.json
 python3 tools/dom6exe/dom6exe.py events    --out tools/dom6exe/data/events-6.37.dm
+python3 tools/dom6exe/dom6exe.py sprites   --out tools/dom6exe/data/sprites-6.37.json
+python3 tools/dom6exe/dom6exe.py texts     --out tools/dom6exe/data/texts-6.37.json
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
 `/mnt/c/Games/Steam/steamapps/common/Dominions6/Dominions6.exe`), `--inspector DIR` (a
@@ -27,6 +29,8 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
 | `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern); and per command, what it writes (`effects`: fields and abilities it sets, appends to, ORs into or removes, flag bits it sets or clears, and the argument range of generic-handler commands). Dom5Parser's resolver (Dom5Edit/Resolve) uses the effects to tell whether a line replaces an earlier one. |
 | `vanilla` | All vanilla weapons, armor, monsters, spells, items, sites and nations as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `sprites` | Which picture the game draws for each vanilla monster (and its attack frame and unmounted sprite) and item: the sprite numbers it stores, and the archive (`sprites.py`). Numbers only; the editor reads the pictures from the player's install (`Dom5Edit/VanillaSprites.cs`, `Dom5Editor/Sprites/GameArt.cs`). Also the rule for a site's picture. |
+| `texts` | Where the game keeps its texts (`texts.py`): monster, item and spell descriptions, a spell's details, portent and cure, a nation's description, summary and brief. Only locations: the two lists of string pointers, how each kind's key is made, and a checksum of the bytes read. The editor reads the texts from the player's own exe (Dom5Edit/GameData/VanillaTexts.cs). See Texts below. |
 | `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
 
 ## How it finds things (no hard-coded addresses)
@@ -176,12 +180,67 @@ and GNU `objdump`. The exe is never copied into the repo.
   start units 91-96; `#clearsites` removes 52). `#startcom` 90, `#startunittype1-3` /
   `#startunitnbrs1-3` 91-96, `#startscout` 97, `#hero1-10` 139-148 (-1 removes), `#startsite`
   52 (appends), the rest through the generic handler.
-- Not read yet: `#color`/`#secondarycolor` (floats, set through a helper), `#flag`, and the
-  texts (`#descr`, `#summary`, `#brief` live outside the record).
+- Not read yet: `#color`/`#secondarycolor` (floats, set through a helper) and `#flag`. The
+  texts (`#descr`, `#summary`, `#brief`) live outside the record (Texts below).
 - Compared with the inspector, which exports names, recruitment, heroes, start sites, home
   realms and cheap gods: the exe adds start units, defenders, wall and guard units, temple
   picture, fort era, god lists, AI and dominion settings (~100 commands per nation). The
   inspector's 25 extra nations are empty slots it names `nation_35` etc.
+
+## Texts (6.37)
+
+- The game's texts aren't in the entity records. Two lists of string pointers in .data hold
+  them: one for spells (0x1404fbb90, room for 16,000 entries, 3,379 used) and one for
+  everything else (0x14051b3a0, 40,000, 8,707 used). Each text follows one or more key entries
+  (`:Heavy Cavalry`, `:mon1712`, `:era1 Abysia`, `:details Encase in Ice`, `:portent Wild
+  Hunt`); the list ends with `:end`. Some entries point past the file's bytes into the
+  zero-filled part of .data: empty strings.
+- Lookup (0x1401080d0, spells 0x1401084a0): build the key (with a prefix: `"%s %s"`, prefix and
+  name), find the end key, then search back from it for a `::` key, then for a `:` key,
+  ignoring ASCII case; the text is the first entry after the key's run of `:` entries. So the
+  last of equal keys wins (21 keys repeat in the general list, 5 in the spell list), and a key
+  shared by several entities (a name) gives them all the same text.
+- Keys tried, in order: monster `mon<n>` then its name (the list has 475 `mon` keys, all for
+  vanilla monsters, e.g. 208 War Shambler, whose name key has another text); item `item<n>` then its name (no
+  vanilla item has an `item` key); nation `era<era> nation<n>` then `era<era> <name>`, and the
+  same with `summary` and `brief`; spell its name, `details <name>`, `portent <name>`, `cure
+  <name>`. A nation's era is the record's +0xac. An empty text means none.
+- A mod's `#descr` (and `#summary`, `#brief`, a spell's `#details`, `#portent`, `#cure`)
+  appends a `::` key and the text before `:end` (0x140228670, spells 0x1402288e0; the first
+  one backs up the list; the key is copied into 52 bytes, the text into 2,000, so a longer mod
+  text is cut), so a mod's text beats vanilla's and a later one beats an earlier one:
+  `::mon%d`, `::item%d`, `::era%d nation%d`, `::summary%d %s`, `::brief%d %s` (a nation's
+  summary and brief are keyed by its name, not its number), `::%s`, `::details %s`,
+  `::portent %s`, `::cure %s` (spells: by name).
+- `#copystats` copies the description: it looks up the source monster's and appends `:mon<n>`
+  (one colon) with that text for the target.
+- Sites have no texts (no site command writes one; no lookup reads one by a site).
+- The game also looks up keys no entity command writes in the general list: `ab <...>`
+  (abilities), `bless <...>`, `fort <...>`, `brief <...>`, `start story 1`, the age names and
+  province values (`Unrest`, `Income`, ...).
+- Found in vanilla (the exe's own tables): 4,104 monster descriptions, 528 item, 1,251 spell,
+  346 details, 32 portents and 32 cures; 103 nation descriptions, summaries and briefs (the
+  other 8 named nation records: Independents, the 4 Special Monsters slots, two unfinished
+  nations, 114 and 122, and the table's end marker, 135).
+- How it was found (`texts.py`), with nothing searched for by text: the `#descr`, `#summary`,
+  `#brief`, `#details`, `#portent` and `#cure` branches of the parsers give each mod key format
+  (a sprintf into a stack buffer) and the function they pass it to; that function loads the
+  list, and the one other function that loads the list and checks entries for a second `:` is
+  the lookup (its end key, capacity and `"%s %s"` come from it). Then every call of the lookup
+  (directly, or through a name-only wrapper or a printf-like one) is followed back a few dozen
+  instructions to see what it passes: a format (`mon%d`), a prefix (`details`), or a table
+  record (an index times the record size plus the table's address: which table says whose
+  name, +0xac in a nation record its era). A call whose result is tested and is followed by
+  another lookup is a fallback. The lookups for a command are the ones in the same entity's
+  table that also try the mod command's key without its colons.
+- Compared with the dom6inspector's text folders (`unitdescr`, `itemdescr`, `spelldescr`): items
+  all agree (528); monsters 4,017 of 4,033 shared agree (16 differ: older wording in the
+  inspector's, or the name key's text where the `mon` key wins), the exe has
+  71 more and the inspector 2 the exe doesn't (2192, 2193 Draugherse); spells 1,243 of 1,244.
+- `texts-6.37.json` has the locations, never the texts: the .data section's mapping, each
+  list's address, capacity, count and end key, each kind's keys, and the span of the file the
+  editor reads (both lists and every string they point to, 2.5 MB) with its sha256. The editor
+  uses the texts only if that checksum matches, so any other exe reads nothing.
 
 ## Events (6.37)
 
@@ -240,6 +299,29 @@ and GNU `objdump`. The exe is never copied into the repo.
   the inspector writes its first value each time (750 pairs). Messages agree except its
   Latin-1 reading of UTF-8 (25) and newlines (3). Some of its names are from an older
   numbering (effect 183 "16d6units", effect 91 "holyboost": 91 is `#bloodboost`).
+
+## Sprites (6.37)
+
+- A monster's sprite is the int at record +0x24 (written by `#newmonster`), an item's the int16
+  at +0x2a (`#spr`, `#copyspr`). At start the game converts both tables in place (0x1401e2ad8
+  for monsters, up to the -1 end marker; 0x140195449 for items, up to constlevel 99): a number
+  below 1000 is an image index; n of 1000 or more becomes start(n / 1000) + n % 1000, where
+  start(g) is the first image of the g-th group label in the archive (0x1400791a0 walks the
+  labels; start(0) = 0). Monsters use `monster.trs` (archive 33 in the game's list), items
+  `item.trs` (2). Monster 1, Logrian Slinger, 24036: group 24 is "man 2" (image 2863), so image
+  2899.
+- The unit draw code adds 1 for the attack frame. A vanilla unmounted sprite (ability 1017,
+  262 monsters; `#unmountedspr1` removes it and sets 1135 to a mod image) is converted the same
+  way when drawn (0x1401e3840).
+- A site's picture (0x1401edf90): `sites.trs` group path + 1 (path clamped to 0-9: fire, air,
+  water, earth, astral, death, nature, glamour, blood, holy), image look if look is 0-99, else
+  image level (clamped to 0-3). Vanilla sites without `#look` have -1; `#newsite` zeroes the
+  record (look 0, path 0, level 0; rarity -1, loc 0x303ff).
+- `sprites.py` finds all of this from the code: the archive name list, the functions that
+  subtract 1000 * (n / 1000) and the table field and archive each one uses, the single-number
+  converter and the ability read before it, the site function by its clamps. Checked by contact
+  sheets of decoded pictures against names (Moloch, Serpent, Elephant Rider, Fire Sword, Ice
+  Lance, The Smouldercone, Swamps of Pythia, ...).
 
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 

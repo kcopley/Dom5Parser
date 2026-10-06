@@ -33,11 +33,13 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                     <Button x:Name="NewButton"
                             Content="New"
+                            ToolTip="Start a new, empty mod (Ctrl+N)"
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,4,0"
                             Click="NewButton_Click"/>
                     <Button x:Name="LoadButton"
                             Content="Load"
+                            ToolTip="Open a .dm mod file (Ctrl+O)"
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,0,0"
                             Click="LoadButton_Click"/>
@@ -45,16 +47,18 @@
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,4,0"
                             Padding="6,0"
-                            ToolTip="Recent mods"
+                            ToolTip="Open a mod you worked on recently"
                             Click="RecentButton_Click"/>
                     <Button x:Name="SaveButton"
                             Content="Save"
+                            ToolTip="Save the mod (Ctrl+S)"
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,4,0"
                             IsEnabled="{Binding HasMod}"
                             Click="SaveButton_Click"/>
                     <Button x:Name="SaveAsButton"
                             Content="Save As"
+                            ToolTip="Save the mod to a new file (Ctrl+Shift+S)"
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,16,0"
                             IsEnabled="{Binding HasMod}"
@@ -67,14 +71,14 @@
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,4,0"
                             IsEnabled="{Binding CanUndo}"
-                            ToolTip="{Binding UndoDescription}"
+                            ToolTip="{Binding UndoTip}"
                             Click="UndoButton_Click"/>
                     <Button x:Name="RedoButton"
                             Content="Redo"
                             Style="{StaticResource ButtonBase}"
                             Margin="0,0,16,0"
                             IsEnabled="{Binding CanRedo}"
-                            ToolTip="{Binding RedoDescription}"
+                            ToolTip="{Binding RedoTip}"
                             Click="RedoButton_Click"/>
 
                     <Border Width="1" Background="{StaticResource BorderBrush}" Margin="0,2,16,2"/>
@@ -115,11 +119,12 @@
                                                           IsEnabled="{Binding HasMod}"
                                                           ItemsSource="{Binding JumpTargets}"
                                                           Placeholder="Go to any entity... (Ctrl+P)"
-                                                          ToolTip="Type a name or ID of any monster, weapon, spell, nation, ..."
+                                                          ToolTip="Go to any monster, weapon, spell, nation, event... by name or ID (Ctrl+P)"
                                                           GotKeyboardFocus="JumpBox_GotKeyboardFocus"
                                                           SelectionChanged="JumpBox_SelectionChanged"/>
                     <Button x:Name="ValidateButton"
                             Content="Validate"
+                            ToolTip="Check the mod for problems (unread lines, missing references, ID clashes)"
                             Style="{StaticResource ButtonBase}"
                             IsEnabled="{Binding HasMod}"
                             Click="ValidateButton_Click"/>
@@ -216,10 +221,12 @@
                            Margin="0,0,0,24"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="New Mod"
+                            ToolTip="Start a new, empty mod (Ctrl+N)"
                             Style="{StaticResource ButtonAccent}"
                             Margin="0,0,8,0"
                             Click="NewButton_Click"/>
                     <Button Content="Load Mod"
+                            ToolTip="Open a .dm mod file (Ctrl+O)"
                             Style="{StaticResource ButtonBase}"
                             Click="LoadButton_Click"/>
                 </StackPanel>

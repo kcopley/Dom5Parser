@@ -31,7 +31,7 @@
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Mod Name:" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"
                                VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ToolTip="#modname: the name in the game&apos;s mod list. Leave the box to save it."
                              Style="{DynamicResource TextBoxBase}" FontSize="12"/>
 
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="A short name displayed in the mod preferences screen."
@@ -53,7 +53,7 @@
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Description:" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"
                                VerticalAlignment="Top" Margin="0,0,8,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModDescription, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModDescription, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ToolTip="#description: shown in the game&apos;s mod list. Leave the box to save it."
                              Style="{DynamicResource TextBoxBase}" FontSize="12"
                              TextWrapping="Wrap" AcceptsReturn="True" MinHeight="80" MaxHeight="200"
                              VerticalScrollBarVisibility="Auto"/>
@@ -77,7 +77,7 @@
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Version:" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"
                                VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModVersion, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModVersion, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ToolTip="#version: your mod&apos;s version number"
                              Style="{DynamicResource TextBoxBase}" FontSize="12" Width="100" HorizontalAlignment="Left"/>
 
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="The version number of your mod (e.g., 1.00 or 1.10)."
@@ -99,7 +99,7 @@
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Dom Version:" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"
                                VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModDomVersion, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModDomVersion, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ToolTip="#domversion: the lowest Dominions version the mod needs (the game won&apos;t load it on older versions)"
                              Style="{DynamicResource TextBoxBase}" FontSize="12" Width="100" HorizontalAlignment="Left"/>
 
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="Minimum required version of Dominions (e.g., 6.00). Leave empty if unsure."
@@ -121,7 +121,7 @@
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Icon:" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"
                                VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModIcon, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModIcon, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ToolTip="#icon: path of the banner image, relative to the .dm file (a 128x32 or 256x64 .tga)"
                              Style="{DynamicResource TextBoxBase}" FontSize="12"/>
 
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="A banner image for your mod (128x32 or 256x64 TGA file)."

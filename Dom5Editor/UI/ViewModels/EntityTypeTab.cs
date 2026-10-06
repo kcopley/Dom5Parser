@@ -151,6 +151,21 @@ namespace Dom5Editor.UI.ViewModels
                 SelectedItem = Items.FirstOrDefault(i => ReferenceEquals(i.Entity, made));
         }
 
+        /// <summary>The list's "+ New" tooltip: what it makes.</summary>
+        public string NewTip => Type switch
+        {
+            EntityType.EVENT => "Make a new event (#newevent, at the end of the file) and open it",
+            EntityType.MERCENARY => "Make a new mercenary band (#newmerc) and open it",
+            EntityType.BLESS or EntityType.TEMPLATE => $"New {Nouns.Plural(Type)} aren't made here: a {Nouns.Of(Type)} belongs to {(Type == EntityType.BLESS ? "the game (select one to change it)" : "a nation")}",
+            _ => $"Make a new {Nouns.Of(Type)} (next free ID) and open it",
+        };
+
+        /// <summary>The list's "Delete" tooltip: what it does to the selected row.</summary>
+        public string DeleteTip => _selected == null ? $"Select a {Nouns.Of(Type)} to delete it"
+            : _selected.IsNew ? $"Delete {Nouns.Named(_selected.DisplayName, _selected.ID)} from the mod"
+            : _selected.IsModified ? $"Drop the mod's changes to {Nouns.Named(_selected.DisplayName, _selected.ID)}"
+            : $"{Nouns.Named(_selected.DisplayName, _selected.ID)} is unchanged: nothing to delete";
+
         /// <summary>Asks the user to confirm something (set by the window; with none, the answer is yes).</summary>
         public static Func<string, bool>? Confirm { get; set; }
 
@@ -193,6 +208,7 @@ namespace Dom5Editor.UI.ViewModels
                 _selected = value;
                 Page = value == null ? null : EntityPages.Create(_session, value);
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(DeleteTip));
                 if (value != null)
                     Selected?.Invoke(this, value);
             }
@@ -326,14 +342,8 @@ namespace Dom5Editor.UI.ViewModels
             if (Type == EntityType.EVENT)
                 item.TextMatcher = (i, text) => Dom5Edit.Events.EventInfo.Message(_session.Events.LinesOf(_session.Editor.OwnEntity(i.Entity) ?? i.Entity)) is string msg
                     && msg.Contains(text, StringComparison.OrdinalIgnoreCase);
-            if (Type == EntityType.MONSTER || Type == EntityType.ITEM)
-                item.SpriteProvider = i =>
-                {
-                    var r = _session.Resolve(i.Entity);
-                    var c = Type == EntityType.MONSTER ? Command.SPR1 : Command.SPR;
-                    var p = r.Get(c)?.Property ?? r.Assets.GetValueOrDefault(c);
-                    return p is FilePathProperty f ? Sprites.SpriteLoader.Load(f.Value, _session.Mod.FullFilePath) : null;
-                };
+            if (Type == EntityType.MONSTER || Type == EntityType.ITEM || Type == EntityType.SITE)
+                item.SpriteProvider = i => Sprites.SpriteLoader.Thumbnail(Sprites.SpriteLoader.Of(_session.Resolve(i.Entity), Type, _session.Mod.FullFilePath));
         }
 
         /// <summary>A row's key stats, by type.</summary>

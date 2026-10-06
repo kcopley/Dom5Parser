@@ -26,7 +26,10 @@ namespace Dom5Editor.Sprites
         }
 
         private readonly ImageInfo[] _images;
-        private readonly Dictionary<int, BitmapSource?> _cache = new Dictionary<int, BitmapSource?>();
+        private readonly int[] _groups;
+        // decoded images, kept while something shows them (a unit list scrolled to the end would
+        // otherwise hold every sprite at full size); null: the image can't be decoded
+        private readonly Dictionary<int, WeakReference<BitmapSource>?> _cache = new Dictionary<int, WeakReference<BitmapSource>?>();
         private readonly object _lock = new object();
 
         public string Path { get; }
@@ -34,15 +37,36 @@ namespace Dom5Editor.Sprites
         public int Pitch { get; }
         public int Count => _images.Length;
 
-        private TrsArchive(string path, int version, int pitch, ImageInfo[] images)
+        private TrsArchive(string path, int version, int pitch, ImageInfo[] images, int[] groups)
         {
             Path = path;
             Version = version;
             Pitch = pitch;
             _images = images;
+            _groups = groups;
         }
 
         public ImageInfo Info(int index) => _images[index];
+
+        /// <summary>
+        /// Where group <paramref name="group"/> begins: 0 for group 0, else the first image of the
+        /// archive's group-th label (monster.trs: nation art; item.trs: 1h, 2h, ...; sites.trs: fire,
+        /// air, ...); -1 past the last label. The game's lookup (version 3+ archives) does the same.
+        /// </summary>
+        public int GroupStart(int group) => group <= 0 ? 0 : group <= _groups.Length ? _groups[group - 1] : -1;
+
+        /// <summary>
+        /// The image the game draws for a sprite number: below 1000 the number itself, else
+        /// GroupStart(n / 1000) + n % 1000 (how the game converts the monster and item tables at
+        /// start, tools/dom6exe/sprites.py). -1 if the group isn't there.
+        /// </summary>
+        public int SpriteIndex(int number)
+        {
+            if (number < 1000)
+                return number;
+            int start = GroupStart(number / 1000);
+            return start < 0 ? -1 : start + number % 1000;
+        }
 
         /// <summary>Reads a .trs file's index. Throws if the file isn't a .trs archive.</summary>
         public static TrsArchive Open(string path)
@@ -87,12 +111,32 @@ namespace Dom5Editor.Sprites
                     Length = (int)Math.Max(0, end - start),
                 };
             }
-            return new TrsArchive(path, version, pitch, images);
+            // group labels, between the index and the first image: (u32 first image, NUL-terminated
+            // name) pairs, ended by FF FF FF FF
+            var groups = new List<int>();
+            long labelsEnd = offsets.Min;
+            if (labelsEnd > f.Position)
+            {
+                var labels = ReadExactly(f, (int)Math.Min(labelsEnd - f.Position, 1 << 20));
+                for (int p = 0; p + 4 <= labels.Length;)
+                {
+                    long start = U32(labels, p);
+                    p += 4;
+                    if (start == 0xFFFFFFFF)
+                        break;
+                    groups.Add((int)start);
+                    while (p < labels.Length && labels[p] != 0)
+                        p++;
+                    p++;
+                }
+            }
+            return new TrsArchive(path, version, pitch, images, groups.ToArray());
         }
 
         /// <summary>
         /// Image <paramref name="index"/>, frozen; null if the index is out of range or the image
         /// can't be decoded. A half-size image gets 192 dpi, so WPF shows it at the size the game does.
+        /// Decoded again only if nothing kept it since.
         /// </summary>
         public BitmapSource? Image(int index)
         {
@@ -101,7 +145,12 @@ namespace Dom5Editor.Sprites
             lock (_lock)
             {
                 if (_cache.TryGetValue(index, out var cached))
-                    return cached;
+                {
+                    if (cached == null)
+                        return null;
+                    if (cached.TryGetTarget(out var alive))
+                        return alive;
+                }
                 BitmapSource? image = null;
                 try
                 {
@@ -118,7 +167,7 @@ namespace Dom5Editor.Sprites
                 {
                     image = null; // a damaged or unexpected image: no icon
                 }
-                _cache[index] = image;
+                _cache[index] = image != null ? new WeakReference<BitmapSource>(image) : null;
                 return image;
             }
         }
