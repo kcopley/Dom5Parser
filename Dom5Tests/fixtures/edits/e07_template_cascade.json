@@ -1,11 +1,36 @@
 {
-  "description": "Edit a mod template that two monsters copy. Per docs/COPY_INHERITANCE_REDESIGN.md ('Inherit from a mod entity -> normal: reflects all edits'), both copies should follow.",
+  "description": "Edit a template two monsters copy: both follow (rule C: the edit is saved in the template's block, before the copies). Copy Three sets hp itself and keeps 15 (any other change fails the stage).",
   "base": "base_edits.dm",
-  "edits": [ { "op": "set", "entity": "monster", "id": 7400, "command": "#hp", "value": "30" } ],
-  "expect": [
-    { "type": "unit", "id": "7400", "field": "hp", "from": "10", "to": "30" },
-    { "type": "unit", "id": "7401", "field": "hp", "from": "10", "to": "30" },
-    { "type": "unit", "id": "7402", "field": "hp", "from": "10", "to": "30" }
+  "edits": [
+    {
+      "op": "set",
+      "entity": "monster",
+      "id": 7400,
+      "command": "#hp",
+      "value": "30"
+    }
   ],
-  "knownFailing": "Copy snapshots are captured at parse time, so re-derive bakes the old hp into the copies instead of letting them follow the template. Live-template cascade is not implemented yet."
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7400",
+      "field": "hp",
+      "from": "10",
+      "to": "30"
+    },
+    {
+      "type": "unit",
+      "id": "7401",
+      "field": "hp",
+      "from": "10",
+      "to": "30"
+    },
+    {
+      "type": "unit",
+      "id": "7402",
+      "field": "hp",
+      "from": "10",
+      "to": "30"
+    }
+  ]
 }

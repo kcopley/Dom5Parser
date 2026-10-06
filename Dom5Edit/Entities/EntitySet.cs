@@ -170,8 +170,25 @@ namespace Dom5Edit.Entities
             }
         }
 
-        internal void Export(StreamWriter writer)
+        /// <summary>
+        /// Writes each entity as one block: mod-range IDs, then vanilla-range, then entities with no
+        /// ID. With a filter, only the entities it accepts (the original-order writer uses this for
+        /// entities that have no block in the parsed file).
+        /// </summary>
+        internal void Export(StreamWriter writer, Func<T, bool>? include = null)
         {
+            if (include != null)
+            {
+                foreach (var m in Entities.OrderBy(x => x.Key).Where(x => x.Key >= START_ID).Concat(
+                             Entities.OrderBy(x => x.Key).Where(x => x.Key < START_ID)).Select(x => x.Value)
+                             .Concat(UnIDdEntities).Where(include))
+                {
+                    if (m.ID < VANILLA_END_ID && m.ID != -1) m.Selected = true;
+                    m.Export(writer);
+                    writer.WriteLine();
+                }
+                return;
+            }
             foreach (var m in DisabledEntities.OrderBy(x => x.Key).Where(x => x.Key >= START_ID))
             {
                 if (m.Key < VANILLA_END_ID && m.Value.ID != -1) m.Value.Selected = true;
@@ -203,6 +220,9 @@ namespace Dom5Edit.Entities
                 writer.WriteLine();
             }
         }
+
+        /// <summary>Whether entities were disabled (DisableMages; a merge feature).</summary>
+        internal bool HasDisabled => DisabledEntities.Count > 0;
 
         internal void Disable(EntityType t, int id, Mod mod)
         {

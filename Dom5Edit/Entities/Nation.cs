@@ -270,7 +270,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.KELPFORTCOM, MonsterOrMontagRef.Create); //#kelpfortcom <monster name> | <monster nbr>
             // Additional Dom6 additions
             _propertyMap.Add(Command.CLEAR, CommandProperty.Create); //#clear
-            _propertyMap.Add(Command.BLESSBONUS, IntIntProperty.Create); //#blessbonus <bless id> <bonus>
+            _propertyMap.Add(Command.BLESSBONUS, IntProperty.Create); //#blessbonus <bonus> (one number, -9..9, in the game's parser)
             _propertyMap.Add(Command.PLAINFORTREC, MonsterOrMontagRef.Create); //#plainfortrec <monster name> | <monster nbr>
             _propertyMap.Add(Command.PLAINFORTCOM, MonsterOrMontagRef.Create); //#plainfortcom <monster name> | <monster nbr>
             _propertyMap.Add(Command.FOREIGNFORTREC, MonsterOrMontagRef.Create); //#foreignfortrec <monster name> | <monster nbr>

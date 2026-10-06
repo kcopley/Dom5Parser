@@ -16,6 +16,41 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Original-order saving (step 6): DomEnhanced saves byte-identical
+
+The flow map the user asked for is `docs/SAVE_FLOW.md`: parse → source blocks → live model →
+edits → save, with the placement rules, the reasons, code locations and tests.
+
+- Parse records each `#new`/`#select` block with the properties it parsed, in order
+  (`SourceBlock`), plus every line that gives the entity nothing (comments, blank lines,
+  `#dependency`, unknown commands, commands the entity doesn't accept) where it was, and each
+  command's text as read (`Property.RawText`). Multi-line strings keep their trailing spaces.
+- Save (`ModExporter.WriteInSourceOrder`, the default for a mod read from a file) writes the
+  blocks in file order. An unedited line is written as read (`Property.SaveText`: still equal to
+  its export text at the first `Resolve()`); an edited value stays where it was; a removed one
+  is dropped; a replacement goes in its slot; an added property goes at the end of the entity's
+  first block, or its last if a later block sets the command, clears its group or copies over
+  it. Properties a later clear or copy took out at parse are still written (the game reads them).
+- Rule C comes from this: a template edit is saved in the template's block, before its copies,
+  so the game carries it to copies that don't set the field. `Mod.NormalizeCopies` is now only
+  for the canonical writer (`PreserveSourceOrder = false`, `roundtrip ... canonical`).
+- The editor's Save (`ChangesModExporter`) now writes the loaded mod this way, then vanilla
+  overrides and new entities (old merge kept as a fallback when entities were removed).
+  `Dom5Tests edit ... editorsave` exercises it; it writes the same files as `Mod.Export` on all
+  edit cases.
+- Type fixes found on the way: `#portent` is text, `#blessbonus` one number (the exe), negative
+  bitmasks (`#nextingeo -1`) kept.
+
+Results: DomEnhanced 2.13 load → save is byte-identical to the file (130k lines); stage 3 on it
+873 → 0. `name_before_copy` and `e07_template_cascade` pass (no known failures left). New stage-4
+cases: e09 replacement in place, e10 added ability after a later `#clearspec`, e11 added ability
+on a template reaching its copies; the base gained a copy that sets hp itself (e07 checks it
+keeps 15). e09 and e10 fail when their rule is broken.
+
+Not done: the editor still edits vanilla entities on the shared vanilla object (saved after the
+mod's blocks via `ChangesMod`); its display of copies walks live values rather than replaying
+the file. Both are in SAVE_FLOW.md's known gaps.
+
 ### Read-only game values in Dom5Parser (step 5, second part)
 
 - The parser reads the exe-written vanilla data's `-- ro: label = value` lines into

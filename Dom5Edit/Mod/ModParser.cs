@@ -13,6 +13,11 @@ namespace Dom5Edit
         private readonly string commentDelimiter = "--";
         private const string GameValuePrefix = "-- ro:";
 
+        // the physical line (or multi-line string) being processed, and its text for a command
+        // that is the only one on it
+        private string? _wholeLine;
+        private string? _segmentText;
+
         /// <summary>
         /// Represents a parsed command from a .dm file.
         /// </summary>
@@ -22,12 +27,20 @@ namespace Dom5Edit
             public string Value;
             public string Comment;
             public int LineNumber;
+            /// <summary>The command's text as read (its line, or its part of a line with several).</summary>
+            public string RawText;
         }
 
         /// <summary>
         /// Callback invoked for each parsed command.
         /// </summary>
         public Action<ParsedCommand> OnCommand { get; set; }
+
+        /// <summary>
+        /// Callback invoked with the text of a line that holds no command the parser reads: blank
+        /// and comment lines, #dependency lines, unknown commands. Saving writes them back in place.
+        /// </summary>
+        public Action<string> OnTrivia { get; set; }
 
         /// <summary>
         /// Callback invoked for a read-only game value line ("-- ro: label = value"), with the
@@ -69,17 +82,24 @@ namespace Dom5Edit
             string s = "";
             bool isMultiLine = false;
             string prevLine = "";
+            string rawPrev = ""; // the multi-line string's lines as read
             LineNumber = 0;
 
             while ((s = sr.ReadLine()) != null)
             {
                 LineNumber++;
+                string raw = s; // as in the file
                 s = s.Trim(); //remove whitespaces
                 s = s.Replace('\t', ' ');
                 if (s.Length < 1)
                 {
                     // a blank line inside a multi-line string is a paragraph break, keep it
-                    if (isMultiLine) prevLine = prevLine + Environment.NewLine;
+                    if (isMultiLine)
+                    {
+                        prevLine = prevLine + Environment.NewLine;
+                        rawPrev = rawPrev + Environment.NewLine + raw;
+                    }
+                    else OnTrivia?.Invoke(raw);
                     continue;
                 }
 
@@ -98,6 +118,7 @@ namespace Dom5Edit
 
                 if (ind != -1)
                 {
+                    if (!isMultiLine) OnTrivia?.Invoke(raw);
                     continue; //skip these lines, grabbed above
                 }
 
@@ -115,11 +136,14 @@ namespace Dom5Edit
                         if (!hasAnotherCommand)
                         {
                             isMultiLine = true;
-                            prevLine = s;
+                            prevLine = raw.TrimStart(); // keep trailing spaces: they're part of the text
+                            rawPrev = raw;
                             continue;
                         } //if it has another command on that line, the quote was just forgotten
                     }
+                    _wholeLine = raw;
                     ProcessStringToLine(s);
+                    _wholeLine = null;
                 }
                 else if (isMultiLine && !string.IsNullOrEmpty(prevLine))
                 {
@@ -129,8 +153,10 @@ namespace Dom5Edit
 
                     if (endQuote != -1 && !anotherCommand) //ends on this line
                     {
-                        string endLine = prevLine + Environment.NewLine + s;
+                        string endLine = prevLine + Environment.NewLine + raw.TrimEnd();
+                        _wholeLine = rawPrev + Environment.NewLine + raw;
                         ProcessStringToLine(endLine);
+                        _wholeLine = null;
                         prevLine = "";
                         isMultiLine = false;
                     }
@@ -153,12 +179,19 @@ namespace Dom5Edit
                     else
                     {
                         //no command, no end quote... it must continue as part of the string
-                        prevLine = prevLine + Environment.NewLine + s;
+                        prevLine = prevLine + Environment.NewLine + raw;
+                        rawPrev = rawPrev + Environment.NewLine + raw;
                     }
+                }
+                else if (s.StartsWith("--") || GetNextCommandIndex(s) == -1)
+                {
+                    OnTrivia?.Invoke(raw); // a comment, or text with no command
                 }
                 else
                 {
+                    _wholeLine = raw;
                     ProcessStringToLine(s);
+                    _wholeLine = null;
                 }
             }
             LineWasTrimmed = false;
@@ -287,6 +320,8 @@ namespace Dom5Edit
                     nextIndex = s.IndexOf('#', nextIndex + 1);
                 }
 
+                // a line with one command keeps its exact text; parts of a line with several, their own
+                _segmentText = commandIndexes.Count == 1 ? _wholeLine : null;
                 for (int i = 0; i < commandIndexes.Count; i++)
                 {
                     int nextCommand = i + 1;
@@ -301,6 +336,7 @@ namespace Dom5Edit
                     }
                     ProcessLine(line);
                 }
+                _segmentText = null;
             }
         }
 
@@ -387,12 +423,14 @@ namespace Dom5Edit
                     Command = c,
                     Value = value,
                     Comment = comment,
-                    LineNumber = LineNumber
+                    LineNumber = LineNumber,
+                    RawText = _segmentText ?? s.Trim()
                 });
             }
             else
             {
                 OnLog?.Invoke(LineNumber, $"Invalid or unknown command: {command}");
+                OnTrivia?.Invoke(_segmentText ?? s.Trim()); // kept as written
             }
         }
 

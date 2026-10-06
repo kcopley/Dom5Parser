@@ -1,0 +1,42 @@
+{
+  "description": "Add an ability to a template: saved in its first block, so every copy made after it gets it (rule C); Copy Three sets hp itself, which doesn't matter here.",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "add",
+      "entity": "monster",
+      "id": 7400,
+      "command": "#flying"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7400",
+      "field": "flying",
+      "from": null,
+      "to": "1"
+    },
+    {
+      "type": "unit",
+      "id": "7401",
+      "field": "flying",
+      "from": null,
+      "to": "1"
+    },
+    {
+      "type": "unit",
+      "id": "7402",
+      "field": "flying",
+      "from": null,
+      "to": "1"
+    },
+    {
+      "type": "unit",
+      "id": "7403",
+      "field": "flying",
+      "from": null,
+      "to": "1"
+    }
+  ]
+}

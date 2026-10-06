@@ -677,8 +677,12 @@ namespace Dom5Edit.Entities
             _properties.Clear();
         }
 
+        /// <summary>The property the last Parse call created (null if it rejected the command).</summary>
+        internal Property? LastParsedProperty { get; private set; }
+
         public override void Parse(Command command, string value, string comment)
         {
+            LastParsedProperty = null;
             if (GetPropertyMap().TryGetValue(command, out Func<Property> create))
             {
                 Property prop = create.Invoke();
@@ -686,6 +690,7 @@ namespace Dom5Edit.Entities
                 prop.LineNumber = ParentMod.LineNumber;
                 prop.Parse(command, value, comment);
                 AddProperty(prop);
+                LastParsedProperty = prop;
                 if (GameCommandCatalog.IsRead(GetEntityType(), command) == false)
                 {
                     var commandStr = CommandsMap.TryGetString(command, out var cmdStr) ? cmdStr : command.ToString();

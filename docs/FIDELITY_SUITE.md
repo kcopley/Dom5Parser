@@ -139,22 +139,19 @@ Dom5Parser loads it with the same 127 warnings as before.
      `#uwrec`/`#coastrec` forms now used;
    - no defaults or display tags written as data;
    - no `%` or `NaN` in values.
-2. **Live templates (stage 4 `e07`).** Editing a mod template doesn't reach the
-   monsters that copy it (copy snapshots are taken at parse). Decide together with the
-   original-file-order export design.
-3. **`name_before_copy` (stage 3).** `#name` declared above a `#copy*` is dropped on
-   save. An in-game check settles it.
-4. **Game attributes with no mod command.** About 120 fields (`stage1Expected`). A few may
-   have a command under another name; candidates to confirm in game: `aboleth`
-   (`#mindslime`?), `tightrein` (`#undisleader`?), `popspy` (`#spy`?), `landenc`
-   (`#landdamage`?).
+2. ~~Live templates (stage 4 `e07`)~~ **Resolved 2026-10-05** by original-order saving
+   (`SAVE_FLOW.md`): the edit is saved in the template's block, so copies made after it carry
+   it. e09-e11 test where edited and added properties are saved.
+3. ~~`name_before_copy` (stage 3)~~ **Resolved 2026-10-05** the same way: saved in place.
+4. **Game attributes with no mod command.** About 120 fields (`stage1Expected`). Settled from
+   the game's parser (tools/dom6exe): `tightrein` is `#undisleader`; `aboleth`, `popspy` and
+   `landenc` are other abilities than `#mindslime`, `#spy` and `#landdamage`.
 5. ~~Inspector: copies don't inherit attributes~~ **Resolved 2026-10-05.** Game attributes are
    applied before mods are read.
-6. **Dom5Parser: read-only vanilla lines.** About 94 of the 127 warnings when loading
-   `vanilla.dm` are the informational read-only commands (`#flammable`,
-   `#nofirebless`, ...). Dom5Parser should know the list (`ModExport.readOnlyCommands`)
-   and show them read-only. About 25 more come from `##placeholders##` in event
-   message text being parsed as commands.
+6. ~~Dom5Parser: read-only vanilla lines~~ **Resolved 2026-10-05.** Dom5Parser knows from the
+   game's parser which commands each entity type reads (`GameCommandCatalog`); others are
+   flagged `NotReadByGame` and shown read-only. About 25 warnings still come from
+   `##placeholders##` in event message text being parsed as commands.
 7. **Upstream candidates** for larzm42/dom6inspector (all fixed in the fork):
    - the `#uwcom`/`#coastcom`/`#coastrec`/`#uwrec` crashes and overrides;
    - `#dt_aff` double decoding;
