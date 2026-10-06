@@ -86,7 +86,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SPEEDMULT, IntProperty.Create); //#speedmult <1-3>
             // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
             _propertyMap.Add(Command.AIASSMOD, IntProperty.Create);
-            _propertyMap.Add(Command.CURE, CommandProperty.Create);
+            _propertyMap.Add(Command.CURE, StringProperty.Create); //#cure "<message>"
             _propertyMap.Add(Command.REQNOSEDUCE, CommandProperty.Create);
             _propertyMap.Add(Command.REQNOSPELLSINGER, CommandProperty.Create);
             _propertyMap.Add(Command.REQNOTASKMASTER, CommandProperty.Create);

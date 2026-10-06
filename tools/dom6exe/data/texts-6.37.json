@@ -1,0 +1,126 @@
+{
+ "game_version": "6.37",
+ "exe_sha256_16": "d77cd364fe447e85",
+ "note": "Written by tools/dom6exe (texts). Where Dominions6.exe keeps its texts; the texts themselves stay in the game. The editor reads the \"read\" span from the player's exe and uses it only if its sha256 matches.",
+ "read": {
+  "file_offset": 3959120,
+  "length": 2560602,
+  "sha256": "2460cd2548046c07a84fdea71dd5c91f067dcb110502ad0174d1ecc45ca6ea89"
+ },
+ "data_section": {
+  "address": "0x14036b000",
+  "file_offset": 3576832,
+  "file_size": 72164352,
+  "memory_size": 1426046528
+ },
+ "lists": {
+  "spell": {
+   "address": "0x1404fbb90",
+   "file_offset": 5218192,
+   "capacity": 16000,
+   "count": 3379,
+   "end": ":end",
+   "lookup_function": "0x1401084a0",
+   "append_function": "0x1402288e0"
+  },
+  "general": {
+   "address": "0x14051b3a0",
+   "file_offset": 5347232,
+   "capacity": 40000,
+   "count": 8707,
+   "end": ":end",
+   "lookup_function": "0x1401080d0",
+   "append_function": "0x140228670"
+  }
+ },
+ "match": "A key is an entry starting with \":\"; the text is the first entry after the key's run of \":\" entries (an empty one: no text); the list ends at the end key. \"::\" keys (a mod's) are found before \":\" keys, the last of equal keys wins, and case is ignored (ASCII). Each kind tries its keys in order: {id} is the entity's number, {name} its name, {era} a nation's era.",
+ "texts": {
+  "monster": {
+   "descr": {
+    "list": "general",
+    "keys": [
+     "mon{id}",
+     "{name}"
+    ],
+    "mod_key": "::mon%d"
+   }
+  },
+  "item": {
+   "descr": {
+    "list": "general",
+    "keys": [
+     "item{id}",
+     "{name}"
+    ],
+    "mod_key": "::item%d"
+   }
+  },
+  "nation": {
+   "brief": {
+    "list": "general",
+    "keys": [
+     "brief{era} nation{id}",
+     "brief{era} {name}"
+    ],
+    "mod_key": "::brief%d %s"
+   },
+   "descr": {
+    "list": "general",
+    "keys": [
+     "era{era} nation{id}",
+     "era{era} {name}"
+    ],
+    "mod_key": "::era%d nation%d"
+   },
+   "summary": {
+    "list": "general",
+    "keys": [
+     "summary{era} nation{id}",
+     "summary{era} {name}"
+    ],
+    "mod_key": "::summary%d %s"
+   }
+  },
+  "spell": {
+   "cure": {
+    "list": "spell",
+    "keys": [
+     "cure {name}"
+    ],
+    "mod_key": "::cure %s"
+   },
+   "descr": {
+    "list": "spell",
+    "keys": [
+     "{name}"
+    ],
+    "mod_key": "::%s"
+   },
+   "details": {
+    "list": "spell",
+    "keys": [
+     "details {name}"
+    ],
+    "mod_key": "::details %s"
+   },
+   "portent": {
+    "list": "spell",
+    "keys": [
+     "portent {name}"
+    ],
+    "mod_key": "::portent %s"
+   }
+  }
+ },
+ "found": {
+  "item descr": 528,
+  "monster descr": 4104,
+  "nation brief": 103,
+  "nation descr": 103,
+  "nation summary": 103,
+  "spell cure": 32,
+  "spell descr": 1251,
+  "spell details": 346,
+  "spell portent": 32
+ }
+}
