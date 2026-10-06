@@ -121,9 +121,11 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>Other long texts, each in its own box: an event's message, a nation's summary and brief, a spell's details.</summary>
         public ObservableCollection<LongText> LongTexts { get; } = new ObservableCollection<LongText>();
 
-        private static readonly (Command Command, string Label)[] LongTextCommands =
+        /// <summary>The long texts, in order; an optional one (a spell's portent and cure) gets a box only when it has a text.</summary>
+        private static readonly (Command Command, string Label, bool Optional)[] LongTextCommands =
         {
-            (Command.MSG, "Message"), (Command.SUMMARY, "Summary"), (Command.BRIEF, "Brief"), (Command.DETAILS, "Details"),
+            (Command.MSG, "Message", false), (Command.SUMMARY, "Summary", false), (Command.BRIEF, "Brief", false),
+            (Command.DETAILS, "Details", false), (Command.PORTENT, "Portent", true), (Command.CURE, "Cure", true),
         };
 
         /// <summary>Every command that can still be added, across the sections ("Section: command"), for the add box at the top.</summary>
@@ -148,6 +150,14 @@ namespace Dom5Editor.UI.ViewModels
                     SetValue(Command.DESCR, Quote(value));
             }
         }
+
+        public string DescriptionTooltip => TextTooltip(Command.DESCR, Resolved.Get(Command.DESCR));
+
+        /// <summary>A text box's tooltip: the command and where the text shown comes from.</summary>
+        public string TextTooltip(Command c, ResolvedValue? value) => CommandName(c) + "\n" +
+            (value != null ? SourceText(value)
+             : Resolved.Assets.ContainsKey(c) ? $"The game's own text: shown, not saved. Editing it writes {CommandName(c)} into the mod."
+             : "Not set");
 
         /// <summary>The entity's sprite (#spr1, an item's #spr), from the mod's folder or the vanilla assets; null if none.</summary>
         public System.Windows.Media.Imaging.BitmapSource? Sprite
@@ -317,8 +327,9 @@ namespace Dom5Editor.UI.ViewModels
             Resolved = Session.Resolve(Entity);
             var covered = new HashSet<Command> { Command.NAME, Command.DESCR };
             LongTexts.Clear();
-            foreach (var (c, label) in LongTextCommands)
-                if (Entity.GetPropertyMap().ContainsKey(c) && ShowsLongText(c))
+            foreach (var (c, label, optional) in LongTextCommands)
+                if (Entity.GetPropertyMap().ContainsKey(c) && ShowsLongText(c)
+                    && (!optional || Resolved.Get(c) != null || Resolved.Assets.ContainsKey(c)))
                 {
                     LongTexts.Add(new LongText(this, c, label));
                     covered.Add(c);
@@ -698,11 +709,12 @@ namespace Dom5Editor.UI.ViewModels
         public string Label { get; }
         public ResolvedValue? Value { get; }
         public bool IsInherited => Value == null || Value.Source != ValueSource.Own;
-        public string Tooltip => EntityPageViewModel.CommandName(Command) + (Value != null ? "\n" + _page.SourceText(Value) : "\nNot set");
+        public string Tooltip => _page.TextTooltip(Command, Value);
 
+        /// <summary>The text, or the game's own one (a display asset) when nothing sets it.</summary>
         public string Text
         {
-            get => Value?.Property is StringProperty s ? s.Value ?? "" : "";
+            get => (Value?.Property ?? _page.Resolved.Assets.GetValueOrDefault(Command)) is StringProperty s ? s.Value ?? "" : "";
             set
             {
                 if (value == Text)

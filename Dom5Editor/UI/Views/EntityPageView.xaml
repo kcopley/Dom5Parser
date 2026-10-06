@@ -83,11 +83,13 @@
         </DataTemplate>
         <DataTemplate x:Key="DescriptionPart">
             <Grid>
-                    <!-- description -->
-                    <TextBox Text="{Binding Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="False"
-                             MinHeight="40" MaxHeight="120" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"
-                             Margin="0,0,0,8" ToolTip="Description (#descr)"
-                             Visibility="{Binding HasDescription, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <!-- description (the game's own when nothing sets it) -->
+                    <StackPanel Margin="0,0,0,8" ToolTip="{Binding DescriptionTooltip}"
+                                Visibility="{Binding HasDescription, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Text="Description" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                        <TextBox Text="{Binding Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="False"
+                                 MinHeight="40" MaxHeight="120" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"/>
+                    </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="LongTextsPart">
