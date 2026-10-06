@@ -3,6 +3,40 @@
 Running log of the autonomous work sessions: what was done, what was found, what's next.
 Newest entries at the top. Commits are local unless noted; the user pushes.
 
+## 2026-10-05 (later): a complete editor, rebuilt on the resolver
+
+The user asked for a complete mod editor (every entity editable, real panels for the
+structured parts), with every existing view verified and rewritten where needed, plus
+browsing and navigation (lists, links between entities, hiding vanilla). Roadmap:
+`docs/EDIT_FLOW.md`, "Roadmap: a complete editor" (E1-E5). Done, in order:
+
+- **Resolver** (`Dom5Edit.Resolve`, cf7d0e6): what each entity is in game, every value with
+  its source (own line, vanilla, copied from X). Replays the save's lines (`SavePlan`, shared
+  with the exporter) with the game's rules; replace-or-append per command from the exe
+  (`tools/dom6exe` catalog now exports each command's effects: fields, abilities, flag bits,
+  argument ranges, stored constants). Checked against the inspector on 5,946 DomEnhanced units:
+  agrees except where ours follows the exe (#clearmagic, #morale not read). Found and fixed a
+  parser bug: `#weapon 474 "Golden Sword"` was read as a name.
+- **Core edit layer** (`Dom5Edit.Editing.ModEditor`, b206a29): every change an undoable edit
+  with exact undo/redo; copy-on-write for vanilla; removing an inherited value writes `#x 0`
+  or the group's clear plus the rest of the group; added copies/clears saved before the
+  entity's own lines. Fixtures e12-e17.
+- **GUI rebuilt** (0ee2316, 3bcbad5): session, tabs, light list rows, one generic entity page
+  from the JSON badge sections + type panels (monster weapons/armor/magic/cost/leadership/
+  body/item slots; spell paths/cost/effect with the summoned monster; item type/paths;
+  site path/level/rarity/gems), "other lines", game values, removed abilities. The old
+  per-type views, view models, EditCommands and ChangesMod are gone (-13k lines).
+- **Speed** (bd463c1, 68bbe28): per-edit cost on DomEnhanced from 2.1 s to 50-85 ms end to end
+  (cached rules; save-plan fast path; lazy per-entity resolver; picker lists updated in place).
+- **Browsing** (094bced): used by, go to (Ctrl+P), Ctrl+F, filters kept per tab, back/forward
+  (Alt+arrows, mouse buttons), list follows navigation.
+- **Coverage** (25dffb3): every command the game reads has a badge or a panel
+  (`tools/badge_fill.py`, `tools/editor_coverage.py`).
+
+Verified with `Dom5Editor --snapshot` renders and scripted sessions (set, add, remove, field,
+new, delete, undo/redo, jump, dump, save) and the fidelity suite: full 34/34, quick 26/26.
+DomEnhanced still saves byte-identical.
+
 ## 2026-10-05: game data from Dominions6.exe
 
 Plan agreed with the user:

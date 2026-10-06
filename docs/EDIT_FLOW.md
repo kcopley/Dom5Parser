@@ -169,14 +169,20 @@ mod the way the game reads it (vanilla, then each block in file order: copies, c
 replace-or-append per command, from tools/dom6exe), and says where each value came from (the
 source table above). Views read it instead of each doing its own vanilla/copy lookups.
 
-**E3. Every entity, every command.** Verify and rewrite each view; real panels for the
+**E3. Every entity, every command.** In progress (2026-10-05): every command the game reads has
+a badge or a panel; panels for monsters (weapons, armor, magic, cost, leadership, body, item
+slots), spells (paths, cost, effect), items (type, paths), sites (path, level, rarity, gems).
+Still to do: nation recruitment as lists, event requirements/effects, armor type, derived
+values (map move from #teleport), readable labels for game values. The plan: verify and rewrite each view; real panels for the
 structured parts: monster weapons and armor, magic paths and random magic, leadership, item
 slots, shapes, summons; nation recruitment, start units, sites, pretenders; spell effects,
 damage and requirements; item effects; site specifics; events. Spell and gold costs shown
 decoded; game values with readable labels. Remove-inherited writes the group rewrite (above).
 `tools/editor_coverage.py` reaches zero missing.
 
-**E4. Browsing and navigation.**
+**E4. Browsing and navigation.** Done (2026-10-05): links on every reference, back/forward,
+used by, go to (Ctrl+P), Ctrl+F, hide vanilla/changed/new kept per tab. Still to do: sortable
+stat columns, sprites in lists, create-from-reference, remembered window layout. The plan:
 - Entity lists: search by name or ID; toggles to show/hide vanilla, mod-edited and mod-new
   entries (hiding vanilla makes the list just the mod's work), remembered per tab; sortable
   stat columns per type (weapons: damage, attack; armor: protection, defence, encumbrance;
