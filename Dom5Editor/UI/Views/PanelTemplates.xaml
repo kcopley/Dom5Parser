@@ -38,6 +38,21 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+    <!-- what the game makes of a value (a unit's defence with its gear): after the box, in brackets; its hint says how -->
+    <Style x:Key="DerivedText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource AccentHighlightBrush}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="ToolTip" Value="{Binding DerivedTip}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding HasDerived}" Value="False">
+                <Setter Property="ToolTip" Value="{x:Null}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="RowText" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
         <Style.Triggers>
@@ -64,7 +79,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Width="58" ToolTip="{Binding Tooltip}" Background="Transparent" HorizontalAlignment="Right">
+                                <StackPanel Orientation="Horizontal" Width="{Binding Width}" ToolTip="{Binding Tooltip}" Background="Transparent" HorizontalAlignment="Right">
                                     <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
                                         <controls:GameIcon Kind="{Binding Icon}" Width="12" Height="12" Margin="0,0,3,0"/>
                                         <TextBlock Text="{Binding Header}" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}"/>
@@ -97,9 +112,10 @@
                                         <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding}" Width="58" Padding="8,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                                                       FontFamily="{DynamicResource MonospaceFont}" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <DataTemplate DataType="{x:Type vm:TableCell}">
+                                            <TextBlock Text="{Binding Text}" Width="{Binding Width}" Padding="8,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                                       FontFamily="{DynamicResource MonospaceFont}" Foreground="{DynamicResource TextPrimaryBrush}"
+                                                       Background="Transparent" ToolTip="{Binding Tooltip}"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -356,6 +372,8 @@
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
             <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="80" Style="{StaticResource InlineBox}"/>
+            <TextBlock Text="{Binding Derived}" Style="{StaticResource DerivedText}"
+                       Visibility="{Binding HasDerived, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <Button Style="{StaticResource ResetButton}"/>
             <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
@@ -370,6 +388,8 @@
             <Button Style="{StaticResource ResetButton}"/>
             <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"
                        Visibility="{Binding HasNote, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Text="{Binding Derived}" Style="{StaticResource DerivedText}" Margin="8,0,0,0"
+                       Visibility="{Binding HasDerived, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </StackPanel>
     </DataTemplate>
 
@@ -449,6 +469,8 @@
         <DockPanel Height="26" ToolTip="{Binding Tooltip}" Background="Transparent">
             <controls:GameIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
             <Button DockPanel.Dock="Right" Style="{StaticResource ResetButton}"/>
+            <TextBlock DockPanel.Dock="Right" Text="{Binding Derived}" Width="{Binding DerivedWidth}" Style="{StaticResource DerivedText}"
+                       Visibility="{Binding HasDerivedSlot, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <TextBox DockPanel.Dock="Right" Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
                      Width="56" TextAlignment="Right" FontSize="12" Style="{StaticResource InlineBox}"/>
             <TextBlock DockPanel.Dock="Right" Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="6,0"
@@ -509,6 +531,24 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                <!-- values the game works out that have no box: leadership with paths, resistances, casting encumbrance -->
+                <DockPanel Margin="0,2,0,0" Visibility="{Binding HasNotes, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock DockPanel.Dock="Left" Text="IN GAME" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"
+                               VerticalAlignment="Top" Margin="0,3,10,0"
+                               ToolTip="What the game makes of the values above with its gear, paths and age (the dom6inspector's formulas)"/>
+                    <ItemsControl ItemsSource="{Binding Notes}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:DerivedNote}">
+                                <Border Background="#14FFFFFF" CornerRadius="3" Padding="6,1" Margin="0,1,6,1" ToolTip="{Binding Tooltip}">
+                                    <TextBlock Text="{Binding Text}" FontSize="11" Foreground="{DynamicResource AccentHighlightBrush}"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DockPanel>
                 <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,4,0,0" Padding="0,4,0,0">
                     <ItemsControl ItemsSource="{Binding Footer}">
                         <ItemsControl.ItemsPanel>
@@ -521,6 +561,8 @@
                                     <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" Width="NaN" FontSize="12" Margin="0,0,8,0"/>
                                     <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
                                              Width="56" TextAlignment="Right" FontSize="12" Style="{StaticResource InlineBox}"/>
+                                    <TextBlock Text="{Binding Derived}" Style="{StaticResource DerivedText}"
+                                               Visibility="{Binding HasDerived, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                     <Button Style="{StaticResource ResetButton}"/>
                                     <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="4,0,0,0" VerticalAlignment="Center"/>
                                 </StackPanel>

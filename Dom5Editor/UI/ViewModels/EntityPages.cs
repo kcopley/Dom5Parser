@@ -2,7 +2,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Dom5Editor.UI.Controls;
 using Dom5Edit.Commands;
+using Dom5Edit.Derived;
 using Dom5Edit.Entities;
+using Dom5Edit.Resolve;
 using Dom5Editor.Session;
 
 namespace Dom5Editor.UI.ViewModels
@@ -37,22 +39,36 @@ namespace Dom5Editor.UI.ViewModels
 
         protected override void BuildPanels(HashSet<Command> covered)
         {
-            NumberField Stat(string label, Command c, string icon, Func<string, string>? note = null)
+            // how a unit uses it (the inspector's notes): the strength its damage gets, precision for a missile weapon
+            var w = WeaponStats.Of(Resolved);
+            NumberField Stat(string label, Command c, string icon, Func<string, string>? note = null, string derived = "", string tip = "")
             {
                 covered.Add(c);
-                return new NumberField(this, label, c, note: note) { Icon = icon };
+                return new NumberField(this, label, c, note: note) { Icon = icon, Derived = derived, DerivedTip = tip, DerivedWidth = 72 };
             }
+            var (strength, strengthTip) = w.Dmg == null ? ("", "")
+                : w.Strength switch
+                {
+                    StrengthAdded.None => ("(no str)", "The wielder's strength isn't added to its damage (#nostr)"),
+                    StrengthAdded.Half => ("(+str/2)", $"In battle half the wielder's strength is added: a strength 10 soldier does {w.Dmg + 5}"),
+                    StrengthAdded.Third => ("(+str/3)", $"In battle a third of the wielder's strength is added: a strength 10 soldier does {w.Dmg + 3}"),
+                    _ when w.TwoHanded && !w.Missile => ("(+str x1.25)", $"Two-handed: in battle the wielder's strength x1.25 is added: a strength 10 soldier does {w.Dmg + 12}"),
+                    _ => ("(+str)", $"In battle the wielder's strength is added: a strength 10 soldier does {w.Dmg + 10}"),
+                };
             var stats = new StatsPanel();
             var a = new StatsPanel.Column();
-            a.Cells.Add(Stat("Damage", Command.DMG, "dmg"));
+            a.Cells.Add(Stat("Damage", Command.DMG, "dmg", derived: strength, tip: strengthTip));
             a.Cells.Add(Stat("Attacks", Command.NRATT, "nratt", t => int.TryParse(t, out var n) && n < 0 ? $"one every {-n} rounds" : ""));
             a.Cells.Add(Stat("Length", Command.LEN, "len"));
             var b = new StatsPanel.Column();
-            b.Cells.Add(Stat("Attack", Command.ATT, "att"));
+            b.Cells.Add(Stat("Attack", Command.ATT, "att", derived: w.Missile ? "(precision)" : "",
+                tip: w.Missile ? "A missile weapon (it has a range): its #att is added to the unit's precision, not attack" : ""));
             b.Cells.Add(Stat("Defence", Command.DEF, "def"));
             b.Cells.Add(Stat("Resources", Command.RCOST, "res"));
             var c = new StatsPanel.Column();
-            c.Cells.Add(Stat("Range", Command.RANGE, "range", t => t.Length == 0 || t == "0" ? "melee" : ""));
+            c.Cells.Add(Stat("Range", Command.RANGE, "range", t => t.Length == 0 || t == "0" ? "melee" : "",
+                derived: w.Range is <= -1 and >= -5 ? (w.Range == -1 ? "(str)" : $"(str/{-w.Range})") : "",
+                tip: w.Range < 0 ? $"A negative range is the wielder's strength{(w.Range < -1 ? $" divided by {-w.Range}" : "")}: {10 / -w.Range} for a strength 10 soldier" : ""));
             c.Cells.Add(Stat("Ammunition", Command.AMMO, "ammo"));
             c.Cells.Add(Stat("Area", Command.AOE, "aoe"));
             stats.Columns.Add(a);
@@ -265,17 +281,50 @@ namespace Dom5Editor.UI.ViewModels
 
         protected override void BuildPanels(HashSet<Command> covered)
         {
+            // what it costs to forge (gems by path level) and what its weapon and armor are (the inspector's notes)
+            int? Int(Command c) => UnitStats.Int(Resolved, c);
+            (string Text, string Tip) Gems(int? path, int level, Command cost)
+            {
+                int pct = Int(cost) ?? 0;
+                if (path is not int p || p < 0 || p >= MagicPanel.PathNames.Length || ItemCost.Gems(level, pct) is not int g)
+                    return ("", "");
+                string what = p == 8 ? "blood slaves" : MagicPanel.PathNames[p].ToLowerInvariant() + " gems";
+                return ($"({g} {what})", $"Forging it costs {g} {what} for this path: 5, 10, 15, 25, 40, 60, 80, 100, 120 for levels 1 to 9"
+                    + (pct != 0 ? $", {(pct > 0 ? "+" : "")}{pct}% ({EntityPageViewModel.CommandName(cost)})" : ""));
+            }
+            var main = Gems(Int(Command.MAINPATH) ?? 0, Math.Max(Int(Command.MAINLEVEL) ?? 1, 1), Command.ITEMCOST1);
+            var second = Int(Command.SECONDARYPATH) is int sp && sp >= 0 ? Gems(sp, Int(Command.SECONDARYLEVEL) ?? 0, Command.ITEMCOST2) : ("", "");
+            ResolvedEntity? Ref(Command c, EntityType t) =>
+                UnitStats.RefId(Resolved.Get(c)?.Property) is int id && id > 0 && Session.Mod.TryGet(t, id, null, out var e) ? Session.Resolve(e) : null;
+            var weapon = Ref(Command.WEAPON, EntityType.WEAPON) is ResolvedEntity rw ? WeaponStats.Of(rw) : null;
+            var armorGiven = Ref(Command.ARMOR, EntityType.ARMOR) is ResolvedEntity ra ? ArmorStats.Of(ra) : null;
+            string Signed(int n) => n > 0 ? "+" + n : n.ToString();
+
             var item = new FieldsPanel("ITEM");
             item.Fields.Add(new ChoiceField(this, "Type", Command.TYPE, null, Data.GameTables.ItemTypes));
             item.Fields.Add(new NumberField(this, "Construction", Command.CONSTLEVEL,
                 tooltip: "#constlevel: the Construction research level needed to forge it"));
             item.Fields.Add(new ChoiceField(this, "Main path", Command.MAINPATH, null, Data.GameTables.Paths));
             item.Fields.Add(new NumberField(this, "Main level", Command.MAINLEVEL, defaultValue: "1",
-                tooltip: "#mainlevel: the main path level needed (the game uses at least 1)"));
+                tooltip: "#mainlevel: the main path level needed (the game uses at least 1)") { Derived = main.Text, DerivedTip = main.Tip });
             item.Fields.Add(new ChoiceField(this, "Second path", Command.SECONDARYPATH, null, Data.GameTables.PathsOrNone, -1));
-            item.Fields.Add(new NumberField(this, "Second level", Command.SECONDARYLEVEL));
-            item.Fields.Add(new RefField(this, "Weapon", Command.WEAPON, EntityType.WEAPON, tooltip: "#weapon: the weapon its bearer gets"));
-            item.Fields.Add(new RefField(this, "Armor", Command.ARMOR, EntityType.ARMOR, tooltip: "#armor: the armor its bearer gets"));
+            item.Fields.Add(new NumberField(this, "Second level", Command.SECONDARYLEVEL) { Derived = second.Item1, DerivedTip = second.Item2 });
+            item.Fields.Add(new RefField(this, "Weapon", Command.WEAPON, EntityType.WEAPON, tooltip: "#weapon: the weapon its bearer gets")
+            {
+                Derived = weapon == null ? "" : $"(dmg {weapon.Dmg?.ToString() ?? "-"}, {(weapon.Missile ? "prec" : "att")} {Signed(weapon.Att)}, {(weapon.Missile ? $"range {weapon.Range}" : $"len {weapon.Len}")})",
+                DerivedTip = weapon == null ? "" : $"{weapon.Name}: damage {weapon.Dmg?.ToString() ?? "(an effect)"}" + (weapon.Strength switch
+                {
+                    StrengthAdded.None => ", no strength added", StrengthAdded.Half => " + half the bearer's strength",
+                    StrengthAdded.Third => " + a third of the bearer's strength", _ => " + the bearer's strength",
+                }) + $"; {(weapon.Missile ? "precision" : "attack")} {Signed(weapon.Att)}, defence {Signed(weapon.Def)}",
+            });
+            item.Fields.Add(new RefField(this, "Armor", Command.ARMOR, EntityType.ARMOR, tooltip: "#armor: the armor its bearer gets")
+            {
+                Derived = armorGiven == null ? "" : $"(prot {(armorGiven.Type == ArmorStats.Shield ? armorGiven.Prot : Math.Max(armorGiven.ProtBody, armorGiven.ProtHead))}, def {Signed(armorGiven.Def)}, enc {armorGiven.Enc})",
+                DerivedTip = armorGiven == null ? "" : $"{armorGiven.Name}: protection head {armorGiven.ProtHead}, body {armorGiven.ProtBody}"
+                    + (armorGiven.Type == ArmorStats.Shield ? $"; a shield: parry {armorGiven.Parry}, {armorGiven.DefShown} defence" : $"; defence {Signed(armorGiven.Def)}")
+                    + $", encumbrance {armorGiven.Enc}",
+            });
             Panels.Add(item);
             covered.UnionWith(new[] { Command.TYPE, Command.CONSTLEVEL, Command.MAINPATH, Command.MAINLEVEL,
                 Command.SECONDARYPATH, Command.SECONDARYLEVEL, Command.WEAPON, Command.ARMOR });
@@ -385,17 +434,33 @@ namespace Dom5Editor.UI.ViewModels
                 tooltip: "#type: which slot it's worn in; #prot protects the parts of that type"));
             Panels.Add(armor);
             covered.Add(Command.TYPE);
-            NumberField Stat(string label, Command c, string icon)
+            // what a unit gets from it (the inspector's notes): a shield's parry, protection by part, body armor's map move penalty
+            var s = ArmorStats.Of(Resolved);
+            NumberField Stat(string label, Command c, string icon, string derived = "", string tip = "")
             {
                 covered.Add(c);
-                return new NumberField(this, label, c) { Icon = icon };
+                return new NumberField(this, label, c) { Icon = icon, Derived = derived, DerivedTip = tip, DerivedWidth = 84 };
             }
+            // by part, when the box doesn't say it (#protparts, or parts no command sets)
+            string part = Resolved.Has(Command.PROT) && s.General == 0 ? ""
+                : s.ProtHead != 0 && s.ProtBody != 0 ? $"(h{s.ProtHead} b{s.ProtBody})"
+                : s.ProtHead != 0 ? $"(head {s.ProtHead})" : s.ProtBody != 0 ? $"(body {s.ProtBody})" : "";
+            string partTip = $"Protection by part: head {s.ProtHead}, body {s.ProtBody}"
+                + (s.General != 0 ? $"\n{s.General} of it protects every part (the game's data; no command sets it)" : "")
+                + "\nA unit's protection: (body x4 + head) / 5, each part's armor a over natural protection p as p + a - p x a / 40";
             var stats = new StatsPanel();
             var a = new StatsPanel.Column();
-            a.Cells.Add(Stat("Protection", Command.PROT, "prot"));
-            a.Cells.Add(Stat("Defence", Command.DEF, "def"));
+            a.Cells.Add(Stat("Protection", Command.PROT, "prot", part, part.Length > 0 ? partTip : ""));
+            a.Cells.Add(Stat("Defence", Command.DEF, "def", s.Type == ArmorStats.Shield ? $"(parry {s.Parry})" : "",
+                s.Type == ArmorStats.Shield
+                    ? $"A shield's #def is its parry less its encumbrance: parry {s.Parry} = {s.Def} + {s.Enc}.\nA unit gets +{s.Parry} shield parry and {s.DefShown} for its encumbrance (net {s.Def})."
+                    : ""));
             var b = new StatsPanel.Column();
-            b.Cells.Add(Stat("Encumbrance", Command.ENC, "enc"));
+            b.Cells.Add(Stat("Encumbrance", Command.ENC, "enc", s.MovePen > 0 ? $"(map move -{s.MovePen})" : "",
+                s.MovePen > 0
+                    ? $"Body armor slows a unit on the map: -{s.MovePen}" + (s.MovePenAbility != null ? " (the game's own value)" : $": twice its encumbrance{(s.Magic ? " less one (magic armor)" : "")}, at most 6")
+                      + ".\nHalf for a unit with no encumbrance of its own; none with #nomovepen. In battle a unit's combat speed drops by its armor's encumbrance (half when mounted)."
+                    : ""));
             b.Cells.Add(Stat("Resources", Command.RCOST, "res"));
             stats.Columns.Add(a);
             stats.Columns.Add(b);
@@ -498,7 +563,10 @@ namespace Dom5Editor.UI.ViewModels
 
     /// <summary>
     /// A monster: its stats laid out like the game's unit window, weapons and armor as tables, magic,
-    /// cost, body and item slots in panels; the rest in its badge sections.
+    /// cost, body and item slots in panels; the rest in its badge sections. Next to a stat, in
+    /// brackets, what the game makes of it with the monster's gear, paths and age (Dom5Edit.Derived:
+    /// the dom6inspector's formulas), and in the weapon table each weapon's attack and damage as
+    /// this unit wields it.
     /// </summary>
     public sealed class MonsterPageViewModel : EntityPageViewModel
     {
@@ -506,23 +574,95 @@ namespace Dom5Editor.UI.ViewModels
 
         protected override IEnumerable<string> PanelSections => new[] { "magicpaths", "magic" };
 
-        public static readonly IReadOnlyList<ReferenceListPanel.TableColumn> WeaponColumns = new ReferenceListPanel.TableColumn[]
-        {
-            new("Dmg", "dmg", r => r.Get(Command.DMG)?.Arguments ?? "", "#dmg: damage (strength is added for melee)"),
-            new("Att", "att", r => Signed(r.Get(Command.ATT)?.Arguments), "#att: attack bonus"),
-            new("Def", "def", r => Signed(r.Get(Command.DEF)?.Arguments), "#def: defence bonus"),
-            new("Len", "len", r => r.Get(Command.LEN)?.Arguments ?? "", "#len: length"),
-            new("×", "nratt", r => r.Get(Command.NRATT)?.Arguments ?? "1", "#nratt: attacks per round (negative: one attack every N rounds)"),
-            new("Range", null, r => r.Get(Command.RANGE)?.Arguments ?? "", "#range: missile range (blank: melee)"),
-        };
+        /// <summary>What the game makes of the monster's stats (worked out on each rebuild of the page).</summary>
+        public UnitTotals? Totals { get; private set; }
 
-        public static readonly IReadOnlyList<ReferenceListPanel.TableColumn> ArmorColumns = new ReferenceListPanel.TableColumn[]
+        /// <summary>Why the totals take it as a commander or a unit (map move, path resistances, gold).</summary>
+        public string RoleNote { get; private set; } = "";
+
+        private IReadOnlyList<ReferenceListPanel.TableColumn> WeaponColumns()
         {
-            new("Prot", "prot", r => r.Get(Command.PROT)?.Arguments ?? "", "#prot: protection"),
-            new("Def", "def", r => Signed(r.Get(Command.DEF)?.Arguments), "#def: defence modifier (shields: parry)"),
-            new("Enc", "enc", r => r.Get(Command.ENC)?.Arguments ?? "", "#enc: encumbrance"),
-            new("Type", null, r => ArmorType(r.Get(Command.TYPE)?.Arguments), "#type: shield, body armor, helmet, barding"),
-        };
+            WeaponTotals? Of(ResolvedValue v) => Totals?.Weapons.FirstOrDefault(w => ReferenceEquals(w.Weapon.Line, v));
+            return new ReferenceListPanel.TableColumn[]
+            {
+                new("Dmg", "dmg", r => r.Get(Command.DMG)?.Arguments ?? "", "#dmg: damage. In brackets: with the strength the game adds, as this unit wields it")
+                {
+                    Width = 72,
+                    ForRow = (v, r) =>
+                    {
+                        var dmg = r.Get(Command.DMG)?.Arguments ?? "";
+                        if (Of(v) is not WeaponTotals w || w.Damage is not int total || w.StrengthAdded == 0)
+                            return (dmg, null);
+                        return ($"{dmg} ({total})", $"Damage {total}: {w.Weapon.Dmg} + {w.StrengthAdded} ({w.StrengthNote}, strength {Totals!.Str.Value})");
+                    },
+                },
+                new("Att", "att", r => Signed(r.Get(Command.ATT)?.Arguments), "#att: attack bonus (a missile weapon's: precision). In brackets: this unit's attack (precision) with it")
+                {
+                    Width = 72,
+                    ForRow = (v, r) =>
+                    {
+                        var att = Signed(r.Get(Command.ATT)?.Arguments);
+                        if (Of(v) is not WeaponTotals w)
+                            return (att, null);
+                        string what = w.Weapon.Missile ? "Precision" : "Attack";
+                        return ($"{(att.Length > 0 ? att : "0")} ({w.Attack})", $"{what} with it: {w.Attack} ({Parts(w.AttackParts)})" +
+                            (w.Weapon.Missile ? "\nA missile weapon: its #att is precision" : ""));
+                    },
+                },
+                new("Def", "def", r => Signed(r.Get(Command.DEF)?.Arguments), "#def: defence bonus (added to the unit's defence)"),
+                new("Len", "len", r => r.Get(Command.LEN)?.Arguments ?? "", "#len: length. In brackets: the length this unit fights at, when it isn't")
+                {
+                    ForRow = (v, r) =>
+                    {
+                        var len = r.Get(Command.LEN)?.Arguments ?? "";
+                        if (Of(v) is not WeaponTotals w || w.Weapon.Missile || len == w.Reach.ToString())
+                            return (len, null);
+                        return ($"{len} ({w.Reach})", w.ReachNote.Length > 0 ? $"Length {w.Reach}: {w.ReachNote}" : $"Length {w.Reach} (never below 0)");
+                    },
+                },
+                new("×", "nratt", r => r.Get(Command.NRATT)?.Arguments ?? "1", "#nratt: attacks per round (negative: one attack every N rounds)"),
+                new("Range", null, r => r.Get(Command.RANGE)?.Arguments ?? "", "#range: missile range (blank: melee). In brackets: this unit's range, when it depends on its strength")
+                {
+                    ForRow = (v, r) =>
+                    {
+                        var range = r.Get(Command.RANGE)?.Arguments ?? "";
+                        if (Of(v) is not WeaponTotals w || !w.Weapon.Missile || range == w.Reach.ToString())
+                            return (range, null);
+                        return ($"{range} ({w.Reach})", $"Range {w.Reach}" + (w.ReachNote.Length > 0 ? $": {w.ReachNote} ({Totals!.Str.Value})" : ""));
+                    },
+                },
+            };
+        }
+
+        private IReadOnlyList<ReferenceListPanel.TableColumn> ArmorColumns()
+        {
+            ArmorStats? Of(ResolvedValue v) => Totals?.Unit.Armor.FirstOrDefault(a => ReferenceEquals(a.Line, v));
+            return new ReferenceListPanel.TableColumn[]
+            {
+                new("Prot", "prot", r => r.Get(Command.PROT)?.Arguments ?? "", "#prot: protection (#protparts: head and body)")
+                {
+                    ForRow = (v, r) =>
+                    {
+                        var prot = r.Get(Command.PROT)?.Arguments ?? "";
+                        if (prot.Length > 0 || Of(v) is not ArmorStats a || a.ProtBody == 0 && a.ProtHead == 0)
+                            return (prot, null);
+                        return ($"h{a.ProtHead} b{a.ProtBody}", $"Head {a.ProtHead}, body {a.ProtBody}" + (a.General != 0 ? $" ({a.General} of it for both, from the game's data)" : ""));
+                    },
+                },
+                new("Def", "def", r => Signed(r.Get(Command.DEF)?.Arguments), "#def: defence modifier (a shield's: its parry less its encumbrance)")
+                {
+                    ForRow = (v, r) =>
+                    {
+                        var def = Signed(r.Get(Command.DEF)?.Arguments);
+                        if (Of(v) is not ArmorStats a || a.Type != ArmorStats.Shield)
+                            return (def, null);
+                        return (def, $"A shield: parry {a.Parry} (#def {a.Def} + encumbrance {a.Enc}), and its encumbrance counts against defence: {a.DefShown}");
+                    },
+                },
+                new("Enc", "enc", r => r.Get(Command.ENC)?.Arguments ?? "", "#enc: encumbrance"),
+                new("Type", null, r => ArmorType(r.Get(Command.TYPE)?.Arguments), "#type: shield, body armor, helmet, barding"),
+            };
+        }
 
         private static string Signed(string? v) => int.TryParse(v, out var n) && n > 0 ? "+" + n : v ?? "";
 
@@ -531,11 +671,50 @@ namespace Dom5Editor.UI.ViewModels
             "4" => "Shield", "5" => "Body", "6" => "Helmet", "8" => "Misc", "9" => "Barding", null => "", _ => v,
         };
 
+        // how a nation (or a site) uses a monster: as a commander or as a unit
+        private static readonly HashSet<Command> CommanderUses = new HashSet<Command>
+        {
+            Command.ADDRECCOM, Command.ADDFOREIGNCOM, Command.STARTCOM, Command.DEFCOM1, Command.DEFCOM2, Command.WALLCOM, Command.GUARDCOM,
+            Command.UWDEFCOM1, Command.UWDEFCOM2, Command.UWWALLCOM, Command.UWGUARDCOM, Command.FOREIGNWALLCOM, Command.FOREIGNGUARDCOM,
+            Command.ADDGOD, Command.COM, Command.HOMECOM,
+        };
+        private static readonly HashSet<Command> UnitUses = new HashSet<Command>
+        {
+            Command.ADDRECUNIT, Command.ADDFOREIGNUNIT, Command.STARTUNITTYPE1, Command.STARTUNITTYPE2, Command.STARTUNITTYPE3,
+            Command.DEFUNIT1, Command.DEFUNIT1B, Command.DEFUNIT1C, Command.DEFUNIT1D, Command.DEFUNIT2, Command.DEFUNIT2B,
+            Command.WALLUNIT, Command.GUARDUNIT, Command.UWDEFUNIT1, Command.UWDEFUNIT1B, Command.UWDEFUNIT1C, Command.UWDEFUNIT1D,
+            Command.UWDEFUNIT2, Command.UWDEFUNIT2B, Command.UWWALLUNIT, Command.UWGUARDUNIT, Command.FOREIGNWALLUNIT, Command.FOREIGNGUARDUNIT,
+            Command.MON, Command.HOMEMON,
+        };
+
+        /// <summary>
+        /// Works out what the game makes of the monster (Dom5Edit.Derived). Whether it counts as a
+        /// commander isn't in its data but in how it's recruited: as one by a nation or a site, or,
+        /// recruited as nothing, a mage (the inspector's rule); a pretender pays design points.
+        /// </summary>
+        private UnitTotals WorkOutTotals()
+        {
+            ResolvedEntity? Find(EntityType t, int id) => id > 0 && Session.Mod.TryGet(t, id, null, out var e) ? Session.Resolve(e) : null;
+            var stats = UnitStats.Of(Resolved, Find);
+            var uses = ID > 0 ? Session.Usage.UsedBy(EntityType.MONSTER, ID) : Array.Empty<UsageIndex.Use>();
+            var asCommander = uses.FirstOrDefault(u => CommanderUses.Contains(u.Via));
+            var asUnit = uses.FirstOrDefault(u => UnitUses.Contains(u.Via));
+            stats.Pretender = uses.Any(u => u.Via == Command.ADDGOD) || Resolved.Has(Command.PATHCOST) || Resolved.Has(Command.STARTDOM);
+            stats.Commander = asCommander != null || asUnit == null && stats.IsMage;
+            stats.CommanderCost = stats.Commander;
+            string Use(UsageIndex.Use u) => $"{CommandName(u.Via)} in {NameOf(u.Type, u.Id)} #{u.Id}";
+            RoleNote = asCommander != null ? Use(asCommander)
+                : stats.Commander ? "a mage no one recruits as a unit"
+                : asUnit != null ? Use(asUnit) : "no one recruits it, and it's no mage";
+            return UnitTotals.Compute(stats, id => Find(EntityType.MONSTER, id) is ResolvedEntity m ? UnitStats.Of(m, Find) : null);
+        }
+
         protected override void BuildPanels(HashSet<Command> covered)
         {
+            Totals = WorkOutTotals();
             Panels.Add(BuildStats(covered));
-            Panels.Add(new ReferenceListPanel(this, "WEAPONS", Command.WEAPON, EntityType.WEAPON, columns: WeaponColumns));
-            Panels.Add(new ReferenceListPanel(this, "ARMOR", Command.ARMOR, EntityType.ARMOR, columns: ArmorColumns));
+            Panels.Add(new ReferenceListPanel(this, "WEAPONS", Command.WEAPON, EntityType.WEAPON, columns: WeaponColumns()));
+            Panels.Add(new ReferenceListPanel(this, "ARMOR", Command.ARMOR, EntityType.ARMOR, columns: ArmorColumns()));
             Panels.Add(new MagicPanel(this));
             var body = new FieldsPanel("BODY");
             body.Fields.Add(new CommandChoiceField(this, "Body", new[]
@@ -555,10 +734,36 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>The game's unit window: body, combat, movement and age; leadership at the foot of each; cost below.</summary>
         private StatsPanel BuildStats(HashSet<Command> covered)
         {
+            var t = Totals!;
+            // what the game makes of each stat (shown in brackets when it isn't the box's value)
+            var derived = new Dictionary<Command, (DerivedValue Value, string What)>
+            {
+                { Command.HP, (t.Hp, "Hit points") }, { Command.PROT, (t.Prot, "Protection") }, { Command.STR, (t.Str, "Strength") },
+                { Command.ATT, (t.Att, "Attack") }, { Command.DEF, (t.Def, "Defence") }, { Command.PREC, (t.Prec, "Precision") },
+                { Command.AP, (t.Ap, "Combat speed") }, { Command.MAPMOVE, (t.MapMove, "Map move") }, { Command.ENC, (t.Enc, "Encumbrance") },
+                { Command.STARTAGE, (t.StartAge, "Start age") }, { Command.MAXAGE, (t.MaxAge, "Max age") },
+            };
+            if (t.Rcost != null)
+                derived[Command.RCOST] = (t.Rcost, "Resources");
             NumberField Stat(string label, Command c, string icon, string tip, Func<string, string>? note = null)
             {
                 covered.Add(c);
-                return new NumberField(this, label, c, defaultValue: GameDefault(c), note: note, tooltip: tip) { Icon = icon };
+                string text = "", hint = "";
+                if (derived.TryGetValue(c, out var d))
+                {
+                    if (d.Value.Differs)
+                        text = $"({d.Value.Value})";
+                    hint = DerivedHint(d.What, d.Value, Extra(c));
+                }
+                else if (c == Command.GCOST && t.Gold is int gold && gold != (int.TryParse(Resolved.Get(Command.GCOST)?.Arguments, out var g) ? g : 0))
+                {
+                    text = $"({gold})";
+                    hint = string.Join("\n", new[] { $"Gold in game: {gold} (worked out {Role})" }.Concat(t.GoldNotes));
+                }
+                return new NumberField(this, label, c, defaultValue: GameDefault(c), note: note, tooltip: tip)
+                {
+                    Icon = icon, Derived = text, DerivedTip = hint, DerivedWidth = 46,
+                };
             }
             LeaderField Leader(string label, string icon, Command bonus, int? dflt, string tip, params Command[] tiers)
             {
@@ -601,8 +806,89 @@ namespace Dom5Editor.UI.ViewModels
             stats.Footer.Add(Stat("Gold", Command.GCOST, "gold", "#gcost: gold cost (design points for pretenders). Most human troops cost 10. Add 10000 to the base price to have the game work it out (age, magic, skills): 10010 is a base of 10.", GoldNote));
             stats.Footer.Add(Stat("Resources", Command.RCOST, "res", "#rcost: resource cost; its weapons' and armor's costs are added. Most human troops have 1."));
             stats.Footer.Add(Stat("Recruit points", Command.RPCOST, "rp", "#rpcost: recruitment points. 1 is standard for a simple commander, about 10 for a soldier. A base times 1000 has the game work it out (10000: base 10).",
-                t => int.TryParse(t, out var rp) && rp >= 1000 ? $"worked out by the game (base {rp / 1000})" : ""));
+                text => int.TryParse(text, out var rp) && rp >= 1000 ? $"worked out by the game (base {rp / 1000})" : ""));
+            AddNotes(stats, t);
             return stats;
+        }
+
+        /// <summary>"as a commander (#addreccom in Ulm #33)": what the totals take the monster for.</summary>
+        private string Role => Totals?.Unit.Pretender == true ? "as a pretender"
+            : $"as a {(Totals?.Unit.Commander == true ? "commander" : "unit")} ({RoleNote})";
+
+        /// <summary>"11 unit's attack, -3 dual wield, +0 weapon": a sum's parts, the first as it is.</summary>
+        private static string Parts(IEnumerable<Contribution> parts) =>
+            string.Join(", ", parts.Select((p, i) => i == 0 ? $"{p.Amount} {p.Label}" : p.ToString()));
+
+        /// <summary>A derived value's tooltip: the value in game, where it starts, what changes it.</summary>
+        private static string DerivedHint(string what, DerivedValue v, IEnumerable<string>? extra = null) =>
+            string.Join("\n", new[] { $"{what} in game: {v.Value}" }.Concat(v.Breakdown().Select(l => "   " + l)).Concat(extra ?? Array.Empty<string>()));
+
+        /// <summary>More lines for a stat's tooltip: per-weapon attack and precision, dual wield, protection by part, why it's a commander.</summary>
+        private IEnumerable<string> Extra(Command c)
+        {
+            var t = Totals!;
+            switch (c)
+            {
+                case Command.ATT:
+                    foreach (var w in t.Weapons.Where(w => !w.Weapon.Missile))
+                        yield return $"With {w.Weapon.Name}: {w.Attack} ({Parts(w.AttackParts)})";
+                    break;
+                case Command.PREC:
+                    foreach (var w in t.Weapons.Where(w => w.Weapon.Missile))
+                        yield return $"With {w.Weapon.Name}: {w.Attack} ({Parts(w.AttackParts)})";
+                    break;
+                case Command.MAPMOVE:
+                    yield return $"Worked out {Role}";
+                    break;
+                case Command.PROT:
+                    if (t.Armor.Any(a => a.ProtBody != 0 || a.ProtHead != 0))
+                        yield return "Armor over natural protection p: p + armor - p x armor / 40";
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Values the game works out that have no box of their own: leadership with what paths add,
+        /// resistances commanders get from paths, auras, casting encumbrance, old age.
+        /// </summary>
+        private void AddNotes(StatsPanel stats, UnitTotals t)
+        {
+            void Note(string text, string tip) => stats.Notes.Add(new DerivedNote(text, tip));
+            // (a unit is what's assumed; a commander or pretender is said)
+            if (t.Unit.Commander || t.Unit.Pretender)
+                Note(t.Unit.Pretender ? "a pretender" : "a commander",
+                    $"Worked out {Role}.\nCommanders move 2 more on the map, get resistances from their paths and pay for leadership and magic."
+                    + (t.Unit.Pretender ? "\nA pretender's #gcost is its design point cost: no gold or resources are worked out." : ""));
+            int ClassPlusBonus(Command bonus, params Command[] tiers)
+            {
+                var v = Resolved.Values.LastOrDefault(x => Array.IndexOf(tiers, x.Command) >= 0);
+                int cls = v == null ? (tiers[0] == Command.NOLEADER ? 50 : 0) : LeaderField.TierValues[Array.IndexOf(tiers, v.Command)];
+                return cls + (int.TryParse(Resolved.Get(bonus)?.Arguments, out var b) ? b : 0);
+            }
+            void Leader(string what, DerivedValue v, int shown)
+            {
+                if (v.Value != shown)
+                    Note($"{what} {v.Value}", DerivedHint(what, v, new[] { $"(the class and bonus above: {shown})" }));
+            }
+            Leader("leadership", t.Leader, ClassPlusBonus(Command.COMMAND, Command.NOLEADER, Command.POORLEADER, Command.OKLEADER, Command.GOODLEADER, Command.EXPERTLEADER, Command.SUPERIORLEADER));
+            Leader("magic leadership", t.MagicLeader, ClassPlusBonus(Command.MAGICCOMMAND, Command.NOMAGICLEADER, Command.POORMAGICLEADER, Command.OKMAGICLEADER, Command.GOODMAGICLEADER, Command.EXPERTMAGICLEADER, Command.SUPERIORMAGICLEADER));
+            Leader("undead leadership", t.UndeadLeader, ClassPlusBonus(Command.UNDCOMMAND, Command.NOUNDEADLEADER, Command.POORUNDEADLEADER, Command.OKUNDEADLEADER, Command.GOODUNDEADLEADER, Command.EXPERTUNDEADLEADER, Command.SUPERIORUNDEADLEADER));
+            foreach (var (what, v) in new[]
+            {
+                ("fire resistance", t.FireRes), ("cold resistance", t.ColdRes), ("shock resistance", t.ShockRes), ("poison resistance", t.PoisonRes),
+                ("supply", t.SupplyBonus), ("fear", t.Fear), ("heat aura", t.Heat), ("cold aura", t.Cold), ("fire shield", t.FireShield),
+            })
+                if (v.Parts.Count > 0)
+                    Note($"{what} {v.Value}", DerivedHint(what, v));
+            if (t.CastingEnc is int cast && t.Unit.IsMage)
+            {
+                int armor = t.Armor.Sum(a => a.Enc);
+                Note($"casting encumbrance {cast}", $"Encumbrance when casting spells: {cast}\n   {cast - 2 * armor} its own\n   +{2 * armor} twice its armor's");
+            }
+            if (t.DualWield != 0)
+                Note($"dual wield {t.DualWield}", "Attack with each melee weapon:\n" + string.Join("\n", t.DualWieldNotes.Select(n => "   " + n)));
+            if (t.IsOld)
+                Note("old", $"Start age {t.StartAge.Value} is past max age {t.MaxAge.Value}: old age lowers strength, attack, defence, precision, hit points and combat speed and raises encumbrance (in brackets)");
         }
 
         private static string GoldNote(string text)
