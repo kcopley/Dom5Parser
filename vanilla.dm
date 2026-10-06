@@ -211957,7 +211957,7 @@
 #cost0 1
 #path1 5
 #cost1 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 423: 1
 #end
 
@@ -211981,9 +211981,9 @@
 #name "Inspirational Presence"
 #path0 0
 #cost0 3
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #inspirational 1
--- ro: effect = ability 160: 50
+-- ro: effect = leadership bonus (ability 160): 50
 -- ro: effect = ability 551: 1
 #end
 
@@ -212076,7 +212076,7 @@
 #name "Wind Walker"
 #path0 1
 #cost0 5
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 426: 6
 #end
 
@@ -212124,7 +212124,7 @@
 #path0 2
 #cost0 1
 #coldscale 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 576: 1
 #end
 
@@ -212134,7 +212134,7 @@
 #cost0 1
 #path1 6
 #cost1 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 424: 1
 #end
 
@@ -212150,7 +212150,7 @@
 #name "Swimming"
 #path0 2
 #cost0 2
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 571: 1
 #end
 
@@ -212190,7 +212190,7 @@
 #name "Water Breathing"
 #path0 2
 #cost0 6
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 110: 1
 #end
 
@@ -212214,7 +212214,7 @@
 #name "Mountain Survival"
 #path0 3
 #cost0 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 421: 1
 #end
 
@@ -212263,7 +212263,7 @@
 #path1 6
 #cost1 3
 -- ro: battle buffs = 0x80000000
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 #end
 
 #selectbless 41
@@ -212284,7 +212284,7 @@
 #name "Arcane Command"
 #path0 4
 #cost0 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #magiccommand 25
 -- ro: effect = ability 551: 1
 #end
@@ -212303,7 +212303,7 @@
 #cost0 3
 #path1 5
 #cost1 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #spiritsight
 #end
 
@@ -212372,7 +212372,7 @@
 #name "Undead Command"
 #path0 5
 #cost0 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #undcommand 50
 -- ro: effect = ability 551: 1
 #end
@@ -212382,7 +212382,7 @@
 #path0 5
 #cost0 2
 #deathscale 2
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 537: 1
 -- ro: effect = #diseaseres 80
 #end
@@ -212391,7 +212391,7 @@
 #name "Mending Bones"
 #path0 5
 #cost0 3
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 569: 1
 #end
 
@@ -212421,7 +212421,7 @@
 #path0 5
 #cost0 7
 -- ro: effect = #raiseonkill 50
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #undcommand 5
 #end
 
@@ -212467,7 +212467,7 @@
 #name "Forest Survival"
 #path0 6
 #cost0 2
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 422: 1
 #end
 
@@ -212476,7 +212476,7 @@
 #path0 6
 #cost0 3
 #magicscale 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 479: 75
 #end
 
@@ -212492,7 +212492,7 @@
 #name "Recuperation"
 #path0 6
 #cost0 5
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 568: 1
 #end
 
@@ -212500,7 +212500,7 @@
 #name "Berserker"
 #path0 6
 #cost0 5
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #berserk 2
 #end
 
@@ -212522,7 +212522,7 @@
 #name "Undreaming"
 #path0 7
 #cost0 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #sleepres 4
 #end
 
@@ -212530,7 +212530,7 @@
 #name "Quiet Stride"
 #path0 7
 #cost0 2
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 390: 20
 #end
 
@@ -212538,7 +212538,7 @@
 #name "True Sight"
 #path0 7
 #cost0 3
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #truesight
 #end
 
@@ -212553,7 +212553,7 @@
 #name "Obfuscate"
 #path0 7
 #cost0 6
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 108 (#stealthy): 40
 #end
 
@@ -212609,7 +212609,7 @@
 #name "Strong Blood"
 #path0 8
 #cost0 3
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = ability 200 (#poisonres): 5
 -- ro: effect = #diseaseres 80
 #end
@@ -212669,7 +212669,7 @@
 #name "Heroism"
 #path0 7
 #cost0 1
--- ro: effect = ability 550: 1
+-- ro: effect = incarnate only: the effects after this need the god incarnated
 -- ro: effect = #xpgain 35
 -- ro: effect = ability 551: 1
 #end

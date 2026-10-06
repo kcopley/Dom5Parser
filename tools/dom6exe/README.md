@@ -218,7 +218,11 @@ known value on every run.
   `#magicscale` 11; the parser compares `prodscale` twice). No command adds an effect
   (`#clearfx` only empties them), so effects and buffs are `-- ro:` lines: 138 effects (32
   named by the monster command that stores that ability and value, e.g. `#heat 3`; the rest,
-  bless-only numbers like 550 and 551, as "ability N") and 11 buff words. `#cost1` also raises
+  bless-only numbers, as "ability N") and 11 buff words. 550 is a marker: the effects after it
+  apply only while the god is incarnated (the bless describer, 0x1400fe940, prints "(incarnate
+  only)" for them; the effect lookup 0x1400fd7e0 can require an effect to come after it). 551
+  isn't known: a bless with it goes on a nation-level list while a count (0x1400fec10) is
+  below 5. `#cost1` also raises
   `#path1` to at least 0, so a bless without a second path gets neither. The record after the
   last is named "end". (The inspector has no bless data.)
 - **Poptypes** (82, numbers 25-106): `#selectpoptype N` (0-249) picks entry N of two tables:
