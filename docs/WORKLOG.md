@@ -16,6 +16,13 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Sites from the exe (step 4)
+
+1,407 sites added (the inspector has 1,253). Generic-handler arguments are now read by
+following register constants from the previous call, including registers a parser only ever
+sets to one value; this resolved every monster command's minimum and the item restriction bits
+(`#nofemale` is 0x80000000). Earlier sections unchanged apart from line order on one item.
+
 ### Spells from the exe (step 4)
 
 1,475 spells added (345 read-only values, mostly sprite frame counts the sprite commands

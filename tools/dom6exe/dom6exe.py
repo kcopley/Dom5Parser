@@ -379,43 +379,81 @@ class Parser:
         """(context, command, ability key) for every call to a generic handler."""
         return [(c['context'], c['command'], c['key']) for c in self.generic_call_args()]
 
+    def const_registers(self, f):
+        """Callee-saved registers a function only ever sets to one constant (the compiler keeps
+        0 or 1 in them and builds other constants from them: lea r9d,[rdi+0x2])."""
+        if not hasattr(self, '_const_regs'):
+            self._const_regs = {}
+        if f not in self._const_regs:
+            end = next(e for b, e in self.exe.functions() if b == f)
+            writes = collections.defaultdict(set)
+            for a, oo, rr, tt in self.ins[self.index[f]:]:
+                if a >= end:
+                    break
+                d = reg64(rr.split(',')[0])
+                if d in ('rbx', 'rbp', 'rsi', 'rdi', 'r12', 'r13', 'r14', 'r15') and oo not in ('push', 'pop', 'cmp', 'test') \
+                        and not oo.startswith('j') and ',' in rr:
+                    src = rr.split(',', 1)[1]
+                    if oo == 'xor' and reg64(src) == d:
+                        writes[d].add(0)
+                    elif oo == 'mov' and re.match(r'0x[0-9a-f]+$', src):
+                        writes[d].add(num(src))
+                    else:
+                        writes[d].add(None)
+            self._const_regs[f] = {r: w.pop() for r, w in writes.items() if len(w) == 1 and None not in w}
+        return self._const_regs[f]
+
     def generic_call_args(self):
         """Every call to a generic handler with its arguments: ability key (r8d), minimum (r9),
         maximum ([rsp+0x20]), kind ([rsp+0x28]: % 10 = 0 number, 1 monster, 2 spell, 3 item,
         4 site, 6 nation; the tens look like repeatability) and an offset added to the stored
         value ([rsp+0x30]). A command whose minimum equals its maximum takes no argument and
-        stores that value."""
+        stores that value. Values come from following register constants from the previous
+        call (plus registers the function keeps at 0); unknown ones are None."""
         ctx_of = {f: c for c, fs in self.contexts.items() for f in fs}
+        starts = sorted(ctx_of)
         res = []
         for i, (a, op, args, tgt) in enumerate(self.ins):
             if op != 'call' or args.split()[0] not in self.generic:
                 continue
             j = i - 1
-            while j > 0 and self.ins[j][1] != 'call' and i - j < 40:
+            while j > 0 and self.ins[j][1] != 'call' and i - j < 60:
                 j -= 1
-            reg, cmd, fn = {}, None, None
+            fn = cmd = None
             for k in range(j + 1, i):
-                aa, oo, rr, tt = self.ins[k]
-                if k in self.refs and rr.startswith('rdx,'):
+                if k in self.refs and self.ins[k][2].startswith('rdx,'):
                     fn, cmd = self.refs[k]
-                if oo == 'xor' and rr in ('r9d,r9d', 'r8d,r8d'):
-                    reg[rr[:2]] = 0
-                m = re.match(r'(r8d?|r9d?),(0x[0-9a-f]+|\d+)$', rr)
-                if oo == 'mov' and m:
-                    reg[m.group(1)[:2]] = num(m.group(2)) if m.group(1).endswith('d') else signed(num(m.group(2)))
-                m = re.match(r'(r8d|r9d),\[(r8|r9)\+(0x[0-9a-f]+)\]$', rr)
-                if oo == 'lea' and m and m.group(2) in reg:
-                    reg[m.group(1)[:2]] = reg[m.group(2)] + num(m.group(3))
             if not cmd:
                 continue
+            reg = dict(self.const_registers(fn)) if fn in ctx_of else {}
             stack = {}
-            for k in range(i - 1, max(i - 160, 0), -1):
+            for k in range(j + 1, i):
                 aa, oo, rr, tt = self.ins[k]
-                m = re.match(r'(?:QWORD|DWORD) PTR \[rsp\+(0x20|0x28|0x30)\],(0x[0-9a-f]+|\d+)$', rr)
-                if oo == 'mov' and m and m.group(1) not in stack:
-                    stack[m.group(1)] = signed(num(m.group(2)), 64 if rr.startswith('QWORD') else 32)
-                if len(stack) == 3:
-                    break
+                dst = rr.split(',')[0]
+                d = reg64(dst)
+                m = re.match(r'(\w+),(0x[0-9a-f]+|\d+)$', rr)
+                m2 = re.match(r'(\w+),\[(\w+)([+-])(0x[0-9a-f]+)\]$', rr)
+                m3 = re.match(r'(\w+),(\w+)$', rr)
+                ms = re.match(r'(?:QWORD|DWORD) PTR \[rsp\+(0x20|0x28|0x30)\],(\w+)$', rr)
+                if oo == 'mov' and ms:
+                    v = ms.group(2)
+                    if re.match(r'0x[0-9a-f]+$|\d+$', v):
+                        stack[ms.group(1)] = signed(num(v), 64 if rr.startswith('QWORD') else 32)
+                    else:
+                        stack[ms.group(1)] = reg.get(reg64(v))
+                elif oo in ('mov', 'movabs') and m and d:
+                    reg[d] = num(m.group(2)) if dst != d else signed(num(m.group(2)))
+                elif oo == 'xor' and m3 and reg64(m3.group(2)) == d and d:
+                    reg[d] = 0
+                elif oo == 'mov' and m3 and d and reg64(m3.group(2)) in reg:
+                    reg[d] = reg[reg64(m3.group(2))]
+                elif oo == 'lea' and m2 and d and reg64(m2.group(2)) in reg:
+                    reg[d] = reg[reg64(m2.group(2))] + (1 if m2.group(3) == '+' else -1) * num(m2.group(4))
+                elif oo == 'or' and m and d and m.group(2) in ('0xffffffffffffffff', '0xffffffff'):
+                    reg[d] = -1
+                elif d and oo not in ('cmp', 'test', 'push') and not oo.startswith('j'):
+                    reg.pop(d, None)
+            reg = {'r8': reg.get('r8'), 'r9': reg.get('r9')}
             kind = stack.get('0x28')
             res.append({'context': ctx_of.get(fn), 'command': cmd, 'key': reg.get('r8'), 'min': reg.get('r9'),
                         'max': stack.get('0x20'), 'kind': None if kind is None else kind % 10,
