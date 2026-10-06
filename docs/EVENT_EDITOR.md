@@ -9,7 +9,8 @@ with `EDIT_FLOW.md` (editing in general) and `SAVE_FLOW.md` (the file).
 
 An event is a script: **when** (requirements) and **then** (effects), plus a message. It has no
 name and no number of its own: a mod writes `#newevent ... #end`, and the editor numbers events in
-file order. `#selectevent N` changes one of the game's own events.
+file order (the game gives them records 3500, 3501, ... in the order it reads them).
+`#selectevent N` changes one of the game's own events (0-3301 in 6.37).
 
 ```mermaid
 flowchart LR
@@ -54,7 +55,7 @@ Six mechanisms connect an event to others. DomEnhanced 2.13 (1,700 events) uses 
 | # | Link | Sets (in the earlier event) | Checks (in the later event) | DomEnhanced |
 |---|---|---|---|---|
 | L1 | **Province event code** | `#code`, `#code2` (globals: when executed), `#codedelay`/`#codedelay2` (after this/next turn's events); `#code 0` ends a chain; `#resetcode*` clears a code from the world | `#req_code` (any of), `#req_notcode`, `#req_anycode`/`#req_notanycode` (anywhere in the world), `#req_nearbycode`, `#req_nearowncode` | 17 codes (-300..-315, -540) |
-| L2 | **Delayed follow-up** | `#delay`/`#delay25`/`#delay50 N`: the **next event in the file** happens N turns later (and never on its own); `#delayskip p`: p% chance the one after it instead | (position in the file) | 51 delays, chains up to 4 long |
+| L2 | **Delayed follow-up** | `#delay`/`#delay25`/`#delay50 N`: the **next event in the file** (the next record number: the next `#newevent`) happens N turns later (and never on its own); `#delayskip p`: p% chance the one after it instead | (position in the file) | 51 delays, chains up to 4 long |
 | L3 | **Event variable** (global, 0-9999; -1..-4 = per nation / player / province) | `#clearvar`, `#incvar`, `#decvar`, `#inc10var`, `#dec10var`, `#invvar`, `#togglevar` | `#req_varpos`, `#req_varneg`, `#req_varzero`, `#req_varone`; `#var0units` reads var 0 | 11 counters |
 | L4 | **Enchantment** | a spell: global/province enchantment effects (81, 82, 84, 85 and 10081...) with `#damage` = enchantment number | `#req_ench`, `#req_noench`, `#req_myench`, `#req_friendlyench`, `#req_hostileench`, `#req_enchdom`, `#req_enchtarget`, `#req_enchnearby`; owner: `#nationench`, `#assownerench` | 96 enchantments, 1,000+ events |
 | L5 | **Spell-caused event** | a spell with effect 42 / 10042, `#damage` = the event's `#id` | `#id N` on the event | 66 events, 22 spells |
@@ -146,16 +147,38 @@ From an event's Chain section:
 New events go through `ModEditor` like every edit (one undo step); a delayed follow-up is
 placed after its event in the file (`SavePlan` order).
 
-### E-6. The game's own events (read-only) **(target)**
-The exe stores vanilla events as lists of (requirement/effect code, value) pairs, the same codes
-the parser writes (`tools/dom6exe` catalog: e.g. `#req_code` appends ability 59, `#code` 93).
-Decoding them (`tools/dom6exe events`) gives the game's events for browsing and for
-`#selectevent N`: shown read-only, with a mod's `#selectevent` changes on top. Not editable
-directly.
+### E-6. The game's own events (read-only) **(data now; editor next)**
+The exe stores vanilla events in a table: per event the message, the rarity, up to 12
+requirement and 20 effect (code, value) pairs. Requirements and effects are numbered
+separately (`#req_code` stores requirement 59, `#code` effect 93, `#decscale3` effect 59).
+`tools/dom6exe events` writes them to `tools/dom6exe/data/events-6.37.dm`: 3,302 events
+(0-3301) as `#selectevent N` blocks, rarity, requirements and effects in stored order. The
+messages are the game's text, so they aren't in the file (as vanilla.dm has no descriptions):
+its header says where they are in this exe (checksum, file offset, record and message size),
+and the editor reads them from the player's own Dominions6.exe (`--messages` writes them in,
+for local use).
+97.4% of the 20,095 pairs are written as the command that stores them; the rest are codes no
+command writes (`-- ro: effect 190 (gold) = 300`), shown read-only. Lines a mod couldn't
+reproduce carry a comment (the same non-repeatable code twice, a value outside the command's
+range). Dom5Parser parses the file (`Dom5Tests events` on it: 3,302 events, 4,808 links, 63
+chains). For browsing and for `#selectevent N`: shown read-only, with a mod's `#selectevent`
+changes on top. Not editable directly.
+
+From the code (`tools/dom6exe/README.md`, Events):
+- `#selectevent N` is record N. Mod events (`#newevent`) are records 3500, 3501, ... in the
+  order the game reads them.
+- `#delay` plans the next record number (+2 with a successful `#delayskip`), not the next block
+  in the file.
+- A list holds 12 requirements and 20 effects; further lines are dropped. A non-repeatable
+  command replaces the pair with its code; repeatable ones append.
+- `#clear` sets the rarity to 98 (free): the event never happens until a new `#rarity`, and the
+  next `#newevent` takes the record again. So does a `#newevent` block without `#rarity`.
 
 ## Open questions (in-game checks)
-- Which event is "next" for `#delay` when the next block is a `#selectevent`, or the event is
-  the last of a mod with another mod loaded after it.
+- Answered from the code: the "next" event for `#delay` is the next record. After a
+  `#newevent` that is the next `#newevent` the game reads (a `#selectevent` block in between
+  doesn't count; after a mod's last event, the next mod's first); after `#selectevent N`, event
+  N + 1. Still to confirm in game.
 - Whether `#code` in a non-global event is set before or after the other effects (matters for
   `#req_code` in another event the same month).
 - Whether the order of requirement lines matters beyond `#req_path`/`#req_school`.
