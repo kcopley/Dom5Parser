@@ -299,7 +299,8 @@ namespace Dom5Edit.Resolve
                 for (int i = state.Values.Count - 1; i >= 0; i--)
                 {
                     var v = state.Values[i];
-                    bool replaced = rule.Replaces.Contains(v.Command) && (!rule.Keyed || v.Selector == value.Selector);
+                    bool replaced = rule.Replaces.Contains(v.Command)
+                                    && (!rule.Keyed || v.Selector == value.Selector && !GameRules.AddsEach(type, c, value.Selector));
                     if (replaced || rule.Cancels.Contains(v.Command))
                     {
                         state.Values.RemoveAt(i);

@@ -313,10 +313,13 @@ namespace Dom5Editor.UI.ViewModels
             {
                 var p = v.Property as IntIntProperty;
                 int path = p?.Value1 ?? -1, level = p?.Value2 ?? 0;
-                string name = path >= 0 && path < PathNames.Length ? PathNames[path] : $"path {path}";
+                // 50-53: a random pick each (manual, "Magic path numbers")
+                string name = path >= 0 && path < PathNames.Length ? PathNames[path]
+                    : path switch { 50 => "Random", 51 => "Random elemental", 52 => "Random sorcery", 53 => "Random, any path", _ => $"path {path}" };
                 var row = new PanelRow(v, name, level.ToString(), page.SourceText(v), true)
                 {
-                    RefId = path, EditText = level.ToString(), Icon = path >= 0 && path < PathLetters.Length ? "path:" + PathLetters[path] : null,
+                    RefId = path, EditText = level.ToString(),
+                    Icon = path >= 0 && path < PathLetters.Length ? "path:" + PathLetters[path] : path >= 50 && path <= 53 ? "path:R" : null,
                 };
                 row.Edited = CommitLevel;
                 Paths.Add(row);

@@ -211,6 +211,14 @@ namespace Dom5Edit.Resolve
             return p is Props.IntProperty ip ? ip.Value == 0 : ResolvedValue.ArgumentsOf(p) == "0";
         }
 
+        /// <summary>
+        /// A keyed line that adds rather than replaces: a random magic skill (#magicskill 50-53:
+        /// random, elemental, sorcery, all). The manual: a #magicskill replaces the old level of
+        /// that path "unless it is a random skill"; each random one is another pick.
+        /// </summary>
+        public static bool AddsEach(EntityType type, Command c, string? selector) =>
+            type == EntityType.MONSTER && c == Command.MAGICSKILL && int.TryParse(selector, out int path) && path >= 50;
+
         /// <summary>Whether the command's first argument picks which value it sets (#magicskill path level).</summary>
         public static bool IsKeyedByFirstArgument(EntityType? type, Command c) =>
             type is EntityType t && _keyedByFirstArgument.TryGetValue(t, out var set) && set.Contains(c);
@@ -227,7 +235,7 @@ namespace Dom5Edit.Resolve
             if (IsRepeatable(type, c))
                 return false;
             if (IsKeyedByFirstArgument(type, c) || IsKeyedByFirstArgument(type, earlier.Command))
-                return c == earlier.Command && later.Selector == earlier.Selector;
+                return c == earlier.Command && later.Selector == earlier.Selector && !AddsEach(type, c, later.Selector);
             if (c == earlier.Command)
                 return true;
             if (_exclusive.TryGetValue(c, out int g) && _exclusive.TryGetValue(earlier.Command, out int g2) && g == g2)
