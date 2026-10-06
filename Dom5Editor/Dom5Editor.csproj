@@ -48,6 +48,10 @@
       <Content Include="Data\command_hints.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <!-- which of the game's own icons (read from the user's install) each key is (tools/gameart) -->
+      <Content Include="Data\game_icons.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <!-- Magic path and gem icons -->
