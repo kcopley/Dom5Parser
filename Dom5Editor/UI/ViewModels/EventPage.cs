@@ -231,6 +231,35 @@ namespace Dom5Editor.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// The message as a player would read it: the header line (unless #header says otherwise),
+        /// tags filled with sample names, the bracketed site or item name left out.
+        /// </summary>
+        public string Preview
+        {
+            get
+            {
+                if (NoText)
+                    return "(no message: #notext)";
+                var body = System.Text.RegularExpressions.Regex.Replace(_text, @"\[([^\[\]]+)\]\s*$", "").TrimEnd();
+                foreach (var (tag, sample) in Samples)
+                    body = body.Replace(tag, sample, StringComparison.OrdinalIgnoreCase);
+                return _header switch
+                {
+                    0 => "An unexpected event has occured in Ancient Forest.\n\n" + body,
+                    1 => body,
+                    _ => body,
+                };
+            }
+        }
+
+        private static readonly (string Tag, string Sample)[] Samples =
+        {
+            ("##landname##", "Ancient Forest"), ("##fullgodname##", "Ulla the Great Mother, Queen of the Forest"), ("##godname##", "Ulla the Great Mother"),
+            ("##goddisname##", "Ulla"), ("##disname##", "Ulla"), ("##fulltargname##", "Hrothgar the Warrior Chief"), ("##targname##", "Hrothgar"),
+            ("##targhis##", "his"), ("##natname##", "Ulm"), ("##profname##", "Thorgrim"),
+        };
+
         public int Length => _text.Length;
         public string LengthText => $"{_text.Length} / 2399";
         public bool IsTooLong => _text.Length > 2399;
