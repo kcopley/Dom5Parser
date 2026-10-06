@@ -90,8 +90,20 @@
                                                 </ControlTemplate>
                                             </Button.Template>
                                             <Grid>
-                                                <Image Source="{Binding Image}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                                       Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                <Image Source="{Binding Image}" Stretch="Uniform"
+                                                       Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <!-- pixel art stays crisp; a big picture shown smaller (a 128 px flag) is smoothed -->
+                                                            <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSmooth}" Value="True">
+                                                                    <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
                                                 <TextBlock Text="+" FontSize="16" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                            Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
                                             </Grid>

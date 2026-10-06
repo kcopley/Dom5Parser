@@ -986,6 +986,9 @@ namespace Dom5Editor.UI.ViewModels
         public bool HasImage => Image != null;
         public bool IsMain { get; }
         public double Size => IsMain ? 64 : 40;
+
+        /// <summary>Smoothed when shown smaller than it is (a 128 px flag in a 64 px slot); pixel art stays crisp.</summary>
+        public bool IsSmooth => Image != null && Math.Max(Image.PixelWidth, Image.PixelHeight) > Size;
         public string Tooltip { get; }
         public ICommand PickCommand { get; }
 
