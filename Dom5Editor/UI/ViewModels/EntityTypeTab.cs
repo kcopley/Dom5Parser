@@ -39,6 +39,8 @@ namespace Dom5Editor.UI.ViewModels
         public bool ShowVanilla { get => _showVanilla; set { _showVanilla = value; OnPropertyChanged(); } }
         public bool ShowModified { get => _showModified; set { _showModified = value; OnPropertyChanged(); } }
         public bool ShowNew { get => _showNew; set { _showNew = value; OnPropertyChanged(); } }
+        private string _sortBy = "ID";
+        public string SortBy { get => _sortBy; set { _sortBy = value ?? "ID"; OnPropertyChanged(); } }
 
         public System.Windows.Input.ICommand NewCommand { get; }
         public System.Windows.Input.ICommand DeleteCommand { get; }
@@ -155,12 +157,14 @@ namespace Dom5Editor.UI.ViewModels
                 item.Entity = held ? entity : vanilla!;
                 item.IsModified = item.IsVanilla && held;
                 item.DisplayName = NameOf(item.Entity);
+                item.Refresh();
                 return;
             }
             if (held)
             {
                 bool game = vanilla != null || entity.Selected && !HasVanillaData(Type);
                 var added = new EntityListItem(Type, entity, NameOf(entity), isVanilla: game, isModified: game);
+                Equip(added);
                 _byKey[key] = added;
                 _items!.Add(added);
             }
@@ -192,7 +196,10 @@ namespace Dom5Editor.UI.ViewModels
                     list.Add(new EntityListItem(Type, e, NameOf(e), isVanilla: game, isModified: game));
                 }
             foreach (var item in list)
+            {
+                Equip(item);
                 _byKey[Key(item.Entity)] = item;
+            }
             return new ObservableCollection<EntityListItem>(list);
         }
 
@@ -203,6 +210,39 @@ namespace Dom5Editor.UI.ViewModels
         /// </summary>
         public static bool HasVanillaData(EntityType type) =>
             VanillaLoader.Vanilla?.Database.TryGetValue(type, out var set) == true && set.GetFullList().Count > 0;
+
+        /// <summary>Gives a row its detail line (key stats) and sprite, worked out when the row is shown.</summary>
+        private void Equip(EntityListItem item)
+        {
+            item.DetailProvider = Detail;
+            if (Type == EntityType.MONSTER || Type == EntityType.ITEM)
+                item.SpriteProvider = i =>
+                {
+                    var r = _session.Resolve(i.Entity);
+                    var c = Type == EntityType.MONSTER ? Command.SPR1 : Command.SPR;
+                    var p = r.Get(c)?.Property ?? r.Assets.GetValueOrDefault(c);
+                    return p is FilePathProperty f ? Sprites.SpriteLoader.Load(f.Value, _session.Mod.FullFilePath) : null;
+                };
+        }
+
+        /// <summary>A row's key stats, by type.</summary>
+        private string Detail(EntityListItem item)
+        {
+            (Command, string)[] fields = Type switch
+            {
+                EntityType.MONSTER => new[] { (Command.HP, "hp"), (Command.ATT, "att"), (Command.DEF, "def"), (Command.PROT, "prot"), (Command.SIZE, "size") },
+                EntityType.WEAPON => new[] { (Command.DMG, "dmg"), (Command.ATT, "att"), (Command.DEF, "def"), (Command.LEN, "len") },
+                EntityType.ARMOR => new[] { (Command.PROT, "prot"), (Command.DEF, "def"), (Command.ENC, "enc") },
+                EntityType.SPELL => new[] { (Command.RESEARCHLEVEL, "research") },
+                EntityType.ITEM => new[] { (Command.CONSTLEVEL, "const") },
+                EntityType.SITE => new[] { (Command.LEVEL, "level") },
+                _ => Array.Empty<(Command, string)>(),
+            };
+            if (fields.Length == 0)
+                return "";
+            var r = _session.Resolve(item.Entity);
+            return string.Join("  ", fields.Select(f => r.Get(f.Item1) is { } v ? $"{f.Item2} {v.Arguments}" : null).Where(x => x != null));
+        }
 
         private IDEntity? VanillaOf(int id) =>
             id > 0 && VanillaLoader.Vanilla?.Database.TryGetValue(Type, out var set) == true && set.TryGetValue(id, out var v) ? v : null;

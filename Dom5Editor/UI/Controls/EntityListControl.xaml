@@ -67,6 +67,12 @@
                           ToolTip="Entities the mod adds"
                           Style="{DynamicResource CheckBoxBase}"
                           IsChecked="{Binding ShowNew, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <ComboBox x:Name="SortBox" Width="70" Margin="12,0,0,0" Style="{DynamicResource ComboBoxBase}" Padding="4,1"
+                          SelectedValue="{Binding SortBy, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                          SelectedValuePath="Tag" ToolTip="Sort by">
+                    <ComboBoxItem Content="ID" Tag="ID"/>
+                    <ComboBoxItem Content="Name" Tag="DisplayName"/>
+                </ComboBox>
             </StackPanel>
         </Border>
 
@@ -81,50 +87,35 @@
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBase}">
-                    <Setter Property="Padding" Value="8,6"/>
+                    <Setter Property="Padding" Value="6,3"/>
                 </Style>
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid ToolTip="{Binding SourceLabel}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- State Indicator -->
-                        <Border x:Name="StateIndicator"
-                                Grid.Column="0"
-                                Width="4"
-                                CornerRadius="2"
-                                Margin="0,0,8,0"
+                        <!-- vanilla / changed / new -->
+                        <Border x:Name="StateIndicator" Grid.Column="0" Width="4" CornerRadius="2" Margin="0,0,6,0"
                                 Background="{DynamicResource VanillaBrush}"/>
 
-                        <!-- Entity Name and ID -->
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding DisplayName}"
-                                       Style="{DynamicResource TextBlockBase}"
-                                       FontSize="12"
-                                       TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Text="{Binding ID, StringFormat='#{0}'}"
-                                       Style="{DynamicResource MutedText}"
-                                       FontSize="10"/>
-                        </StackPanel>
+                        <!-- sprite (monsters, items) -->
+                        <Image Grid.Column="1" Source="{Binding Sprite}" Width="28" Height="28" Stretch="Uniform" Margin="0,0,6,0"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Visibility="{Binding Sprite, Converter={StaticResource NullToVisibilityConverter}}"/>
 
-                        <!-- Vanilla/Modified indicator -->
-                        <TextBlock x:Name="VanillaLabel"
-                                   Grid.Column="2"
-                                   Text="V"
-                                   Style="{DynamicResource MutedText}"
-                                   FontSize="9"
-                                   VerticalAlignment="Center"
-                                   ToolTip="Vanilla entity"
-                                   Visibility="Collapsed"/>
+                        <!-- name; ID and key stats -->
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource TextBlockBase}" FontSize="12" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding Detail}" Style="{DynamicResource MutedText}" FontSize="10" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
                     </Grid>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsVanilla}" Value="True">
-                            <Setter TargetName="VanillaLabel" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="StateIndicator" Property="Background" Value="{DynamicResource VanillaBrush}"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsModified}" Value="True">
