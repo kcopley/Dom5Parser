@@ -152432,6 +152432,27492 @@
 -- ro: body shape = 0x0
 #end
 
+#selectspell 0
+#name "Nothing"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 0
+#range 0
+#precision 0
+#damage 0
+#nreff 0
+#spec 0
+#end
+
+#selectspell 1
+#name "Minor Area Shock"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 109
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 2176
+#end
+
+#selectspell 2
+#name "Major Area Shock"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 2176
+#end
+
+#selectspell 3
+#name "Large Area Heat Shock"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 10
+#effect 3
+#range 0
+#precision 0
+#damage 2010
+#nreff 1
+#spec 160
+#end
+
+#selectspell 4
+#name "Mark"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 600
+#range 0
+#precision 0
+#damage 261
+#nreff 1
+#spec 147456
+#end
+
+#selectspell 5
+#name "Thunder Shock"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 10
+#effect 2
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 2176
+#end
+
+#selectspell 6
+#name "rain stone"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 0
+#range 0
+#precision 0
+#damage 5
+#nreff 1
+#spec 563499711332352
+#flightspr 453
+-- ro: ability 720 = 1
+#end
+
+#selectspell 7
+#name "Minor Fear"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 4
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 128
+#end
+
+#selectspell 8
+#name "Area Weak Poison"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 7
+#range 0
+#precision 0
+#damage 1004
+#nreff 1
+#spec 8320
+#end
+
+#selectspell 9
+#name "Minor Chill Stun"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 3
+#range 0
+#precision 0
+#damage 2010
+#nreff 1
+#spec 640
+#end
+
+#selectspell 10
+#name "Army of Zombies"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 1015
+#precision 0
+#damage -2
+#nreff 2010
+#spec 8388608
+#end
+
+#selectspell 11
+#name "Area Decay"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 256
+#nreff 1
+#spec 4224
+#end
+
+#selectspell 12
+#name "Court of Flame Childs"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 640
+#nreff 15
+#spec 0
+#end
+
+#selectspell 13
+#name "Area Rust"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 2199023255552
+#nreff 1
+#spec 8405120
+#end
+
+#selectspell 14
+#name "Returning"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 15
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 12599424
+#end
+
+#selectspell 15
+#name "Area Paralyze"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 66
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 537002112
+#end
+
+#selectspell 16
+#name "Court of Undines"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 360
+#nreff 15
+#spec 0
+#end
+
+#selectspell 17
+#name "Summon Longdeads"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage -2
+#nreff 5
+#spec 0
+#end
+
+#selectspell 18
+#name "Summon Devil"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 304
+#nreff 1
+#spec 0
+#end
+
+#selectspell 19
+#name "Fire Resistance"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 1024
+#nreff 1
+#spec 8404992
+#end
+
+#selectspell 20
+#name "Large Area Decay"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 12
+#effect 11
+#range 0
+#precision 0
+#damage 256
+#nreff 1
+#spec 4224
+#end
+
+#selectspell 21
+#name "Major Fear"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 4
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 128
+#end
+
+#selectspell 22
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 23
+#name "Summon Vine Man"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 361
+#nreff 1
+#spec 0
+#end
+
+#selectspell 24
+#name "Area Feeble Mind"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 33554432
+#nreff 1
+#spec 4224
+#end
+
+#selectspell 25
+#name "10 Trolls"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 518
+#nreff 10
+#spec 0
+#nextspell 60
+#end
+
+#selectspell 26
+#name "40 imps"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 303
+#nreff 40
+#spec 0
+#end
+
+#selectspell 27
+#name "Strength, Barkskin and Regeneration"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 176
+#nreff 1
+#spec 16384
+#end
+
+#selectspell 28
+#name "Court of Gnomes"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 561
+#nreff 15
+#spec 0
+#end
+
+#selectspell 29
+#name "Court of Sylphs"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 562
+#nreff 15
+#spec 0
+#end
+
+#selectspell 30
+#name "Archer Illusions"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10038
+#range 0
+#precision 0
+#damage 3233
+#nreff 40
+#spec 8388608
+#explspr 0
+#farsumcom 3637
+#end
+
+#selectspell 31
+#name "Meteor Shower"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 150
+#nreff 1
+#spec 549755813888
+#nextspell 107
+#sound 108
+#flightspr 10280
+#explspr 10282
+#strikesound 89
+#makecrater 1
+-- ro: flightspr frames = 5
+-- ro: explspr frames = 5
+-- ro: ability 720 = 1
+#end
+
+#selectspell 32
+#name "Mummification"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 625
+#nreff 1
+#spec 0
+#end
+
+#selectspell 33
+#name "Summon Jinn"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 490
+#nreff 1
+#spec 0
+#end
+
+#selectspell 34
+#name "Ark"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 58
+#nreff 1
+#spec 0
+#end
+
+#selectspell 35
+#name "Area Chest Wound"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 8388608
+#nreff 1
+#spec 536875136
+#end
+
+#selectspell 36
+#name "15 Sea Trolls"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 564
+#nreff 15
+#spec 8388608
+#nextspell 72
+#end
+
+#selectspell 37
+#name "30 Draconians"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 593
+#nreff 30
+#spec 0
+#end
+
+#selectspell 38
+#name "Court of Sprites"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 592
+#nreff 10
+#spec 0
+#nextspell 124
+-- ro: ability 1701 = 3998
+#end
+
+#selectspell 39
+#name "Heat Stun"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 3
+#range 0
+#precision 0
+#damage 2010
+#nreff 1
+#spec 160
+#end
+
+#selectspell 40
+#name "Extra feeble mind battle field"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 33554432
+#nreff 1
+#spec 16777344
+#end
+
+#selectspell 41
+#name "Extra cold immunity"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 2305843009213693952
+#nreff 1
+#spec 8404992
+#end
+
+#selectspell 42
+#name "Minor Paralysis"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 66
+#range 0
+#precision 0
+#damage 5
+#nreff 1
+#spec 8933504
+#end
+
+#selectspell 43
+#name "extra limp"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 262144
+#nreff 1
+#spec 10485888
+#nextspell 44
+#end
+
+#selectspell 44
+#name "extra cripple"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 16777216
+#nreff 1
+#spec 10489984
+#end
+
+#selectspell 45
+#name "15 Ether Warriors"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 736
+#nreff 15
+#spec 0
+#end
+
+#selectspell 46
+#name "Extra Soulless"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage -3
+#nreff 150
+#spec 0
+#farsumcom 190
+-- ro: ability 791 = -75
+#end
+
+#selectspell 47
+#name "Entangle"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 64
+#nreff 1
+#spec 10502272
+#spec2 4
+#end
+
+#selectspell 48
+#name "ormflock"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 403
+#nreff 5
+#spec 0
+#end
+
+#selectspell 49
+#name "impflock"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 303
+#nreff 10
+#spec 0
+#end
+
+#selectspell 50
+#name "7 shades"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 676
+#nreff 7
+#spec 0
+#end
+
+#selectspell 51
+#name "3 beast bats"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 1357
+#nreff 3
+#spec 0
+#end
+
+#selectspell 52
+#name "4 lions"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 628
+#nreff 4
+#spec 0
+#end
+
+#selectspell 53
+#name "10 wolves"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 284
+#nreff 10
+#spec 0
+#end
+
+#selectspell 54
+#name "cast returning"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10023
+#range 0
+#precision 0
+#damage 8388608
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 55
+#name "Grow Knight"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 959
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 56
+#name "Grow Lich"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 21
+#range 0
+#precision 0
+#damage 960
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 57
+#name "Scrying"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 8388608
+#hiddenench 1
+#end
+
+#selectspell 58
+#name "Summon Qarin"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 21
+#range 0
+#precision 0
+#damage 3471
+#nreff 1
+#spec 0
+#end
+
+#selectspell 59
+#name "Grow Headless Hoburg"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 1139
+#nreff 1
+#spec 0
+#end
+
+#selectspell 60
+#name "5 War Trolls"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1037
+#nreff 5
+#spec 0
+#nextspell 61
+#end
+
+#selectspell 61
+#name "2 Troll Moose Knights"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1086
+#nreff 2
+#spec 0
+#end
+
+#selectspell 62
+#name "Telkhine Malediction"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 45
+#nreff 1
+#spec 8388608
+#explspr 10039
+#end
+
+#selectspell 63
+#name "Minor Paralysis"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 66
+#range 0
+#precision 0
+#damage 5
+#nreff 1
+#spec 8933504
+#end
+
+#selectspell 64
+#name "1 Ether Lord"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 737
+#nreff 1
+#spec 8388608
+#nextspell 45
+#explspr 0
+-- ro: ability 475 = 105
+#end
+
+#selectspell 65
+#name "Wolves"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 284
+#nreff 3
+#spec 0
+#end
+
+#selectspell 66
+#name "Battle Darkness"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 77
+#nreff 1
+#spec 0
+#end
+
+#selectspell 67
+#name "Beast Bats"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1357
+#nreff 8
+#spec 0
+#explspr 0
+#end
+
+#selectspell 68
+#name "Angels of the Choir"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1367
+#nreff 9
+#spec 0
+#nextspell 69
+#explspr 0
+#end
+
+#selectspell 69
+#name "Harbingers of the Choir"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3869
+#nreff 3
+#spec 0
+#explspr 0
+#end
+
+#selectspell 70
+#name "Heat of Buer"
+#school -1
+#researchlevel 1
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 6
+#nreff 1
+#spec 0
+#sound 16
+#explspr 10034
+#end
+
+#selectspell 71
+#name "Disbelieve"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 666
+#effect 105
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 4224
+#end
+
+#selectspell 72
+#name "5 Troll Guards"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1425
+#nreff 5
+#spec 0
+#end
+
+#selectspell 73
+#name "Gate Summon Fire"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 304
+#nreff 1
+#spec 0
+#nextspell 74
+#end
+
+#selectspell 74
+#name "Gate Summon Ice"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 449
+#nreff 1
+#spec 0
+#nextspell 75
+#end
+
+#selectspell 75
+#name "Gate Summon Storm"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 632
+#nreff 1
+#spec 0
+#nextspell 76
+#end
+
+#selectspell 76
+#name "Gate Summon Iron"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 489
+#nreff 1
+#spec 0
+#end
+
+#selectspell 77
+#name "13 Tengu Warriors"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1481
+#nreff 13
+#spec 0
+#nextspell 78
+#end
+
+#selectspell 78
+#name "20 Karasu Tengus"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1478
+#nreff 20
+#spec 0
+#end
+
+#selectspell 79
+#name "Natural Rain"
+#school -1
+#researchlevel 1
+#path 0 2
+#pathlevel 0 0
+#fatiguecost 0
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 7
+#nreff 1
+#spec 0
+#end
+
+#selectspell 80
+#name "Open Soul Trap"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 21
+#range 0
+#precision 0
+#damage -18
+#nreff 4
+#spec 0
+#end
+
+#selectspell 81
+#name "area10 cold dmg3"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 10
+#effect 2
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 640
+#end
+
+#selectspell 82
+#name "Cleansing Chime"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 15
+#precision 100
+#damage 20
+#nreff 1
+#spec 524424
+#sound 30
+#explspr 10135
+#end
+
+#selectspell 83
+#name "Astral Geyser Blast"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 12
+#effect 2
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 4224
+#end
+
+#selectspell 84
+#name "Chastisement"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 28
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 4240
+#end
+
+#selectspell 85
+#name "age ten years"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10101
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 0
+#end
+
+#selectspell 86
+#name "age three years"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10101
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 0
+#end
+
+#selectspell 87
+#name "6 Maenads"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 435
+#nreff 6
+#spec 0
+#end
+
+#selectspell 88
+#name "10 False Horrors"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 448
+#nreff 10
+#spec 8388608
+#end
+
+#selectspell 89
+#name "4 Wheels"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2051
+#nreff 4
+#spec 0
+#end
+
+#selectspell 90
+#name "4 Ditanu"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2045
+#nreff 4
+#spec 0
+#nextspell 91
+#end
+
+#selectspell 91
+#name "Kill Caster"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10112
+#range 0
+#precision 0
+#damage 9999
+#nreff 1
+#spec 36028797018964096
+#end
+
+#selectspell 92
+#name "1 Horse-face"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2090
+#nreff 1
+#spec 0
+#end
+
+#selectspell 93
+#name "Natural Storm"
+#school -1
+#researchlevel 1
+#path 0 2
+#pathlevel 0 0
+#fatiguecost 0
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#end
+
+#selectspell 94
+#name "Astral Harpoon"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10113
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 8392704
+#provrange 5
+#end
+
+#selectspell 95
+#name "Swarm"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage -9
+#nreff 30
+#spec 8388608
+#end
+
+#selectspell 96
+#name "Sounder of Boars"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 2136
+#nreff 5
+#spec 0
+#end
+
+#selectspell 97
+#name "Pack of Wolves"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 1224
+#nreff 5
+#spec 0
+#end
+
+#selectspell 98
+#name "Grow Monster"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage -5
+#nreff 1
+#spec 0
+#end
+
+#selectspell 99
+#name "15 Forest Trolls"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2219
+#nreff 15
+#spec 0
+#end
+
+#selectspell 100
+#name "earth grip"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 16384
+#nreff 1
+#spec 70368744177792
+#spec2 4
+#end
+
+#selectspell 101
+#name "Disease"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 4224
+#spec2 4096
+#end
+
+#selectspell 102
+#name "Disease All Friendly"
+#school -1
+#researchlevel 1
+#path 0 5
+#pathlevel 0 0
+#fatiguecost 0
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 140737492553856
+#spec2 4096
+#end
+
+#selectspell 103
+#name "Cripple"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 16777216
+#nreff 1
+#spec 17592196530304
+#end
+
+#selectspell 104
+#name "Earthquake Knockdown Stun"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 666
+#effect 128
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 70368745226240
+#spec2 4
+#sound 17
+#explspr 0
+#end
+
+#selectspell 105
+#name "Entrancement"
+#school -1
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 5
+#effect 128
+#range 1
+#precision 100
+#damage 100
+#nreff 1
+#spec 8802432
+#explspr 10207
+#end
+
+#selectspell 106
+#name "Record of Creation"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 55
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 107
+#name "Area Fire"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 8
+#effect 2
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 96
+#explspr 10356
+#end
+
+#selectspell 108
+#name "Battlefield Limp"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 663
+#effect 11
+#range 0
+#precision 0
+#damage 262144
+#nreff 1
+#spec 10489984
+#nextspell 109
+#end
+
+#selectspell 109
+#name "Battlefield Cripple"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 663
+#effect 11
+#range 0
+#precision 0
+#damage 16777216
+#nreff 1
+#spec 27263104
+#end
+
+#selectspell 110
+#name "15 Great Olms"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2528
+#nreff 15
+#spec 0
+#end
+
+#selectspell 111
+#name "Summon Predatory Birds"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 517
+#nreff 3
+#spec 0
+#sound 32
+#end
+
+#selectspell 112
+#name "Burning"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 512
+#nreff 1
+#spec 16416
+#end
+
+#selectspell 113
+#name "Large Fireball"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 8
+#effect 2
+#range 0
+#precision 0
+#damage 16
+#nreff 1
+#spec 96
+#explspr 10356
+#end
+
+#selectspell 114
+#name "Decay"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 256
+#nreff 1
+#spec 4224
+#end
+
+#selectspell 115
+#name "Area Flames"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 6
+#effect 2
+#range 0
+#precision 0
+#damage 6
+#nreff 1
+#spec 96
+#explspr 10376
+-- ro: explspr frames = 5
+#end
+
+#selectspell 116
+#name "Acid Splash"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 6
+#effect 2
+#range 0
+#precision 0
+#damage 6
+#nreff 1
+#spec 2199023255616
+#end
+
+#selectspell 117
+#name "Bane Flame Area"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 6
+#effect 2
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 64
+#nextspell 20
+#explspr 10391
+-- ro: explspr frames = 5
+#end
+
+#selectspell 118
+#name "Astral Fires Area"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 6
+#effect 2
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 8392832
+#explspr 10132
+#end
+
+#selectspell 119
+#name "The Missing Tune"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 127
+#nreff 1
+#spec 0
+#sound 29
+#explspr 10390
+#end
+
+#selectspell 120
+#name "Minor Blunt Damage"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 109
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 549757911040
+#end
+
+#selectspell 121
+#name "15 Giants of the Lost Tribe"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3878
+#nreff 15
+#spec 0
+#end
+
+#selectspell 122
+#name "Area False Flames"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 6
+#effect 2
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 17179873376
+#explspr 10403
+-- ro: explspr frames = 5
+#end
+
+#selectspell 123
+#name "Stun Magic Being"
+#school -1
+#researchlevel 1
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 0
+#effect 128
+#range 1
+#precision 100
+#damage 100
+#nreff 1
+#spec 17592194449552
+#explspr 10207
+#end
+
+#selectspell 124
+#name "Fay Folk Court"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage -26
+#nreff 10
+#spec 0
+#nextspell 125
+-- ro: ability 756 = 145
+#end
+
+#selectspell 125
+#name "Fay Folk Court Soldiers"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3903
+#nreff 3
+#spec 0
+#nextspell 126
+-- ro: ability 1701 = 3906
+#end
+
+#selectspell 126
+#name "Fay Folk Court Knights"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3901
+#nreff 2
+#spec 0
+-- ro: ability 1701 = 3907
+#end
+
+#selectspell 127
+#name "Vine Fatigue"
+#school -1
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 3
+#range 0
+#precision 0
+#damage 33
+#nreff 1
+#spec 545263616
+#end
+
+#selectspell 128
+#name "Carrion Poison"
+#school -1
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 7
+#range 0
+#precision 0
+#damage 2008
+#nreff 1
+#spec 8320
+#nextspell 129
+#end
+
+#selectspell 129
+#name "Carrion Seed"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 0
+#precision 0
+#damage 144115188075855872
+#nreff 1
+#spec 17592186044544
+#end
+
+#selectspell 130
+#name "Pillar of Truths"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 144
+#nreff 1
+#spec 0
+#end
+
+#selectspell 131
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 132
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 133
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 134
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 135
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 136
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 137
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 138
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 139
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 140
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 141
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 142
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 143
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 144
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 145
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 146
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 147
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 148
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 149
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 150
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 151
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 152
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 153
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 154
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 155
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 156
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 157
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 158
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 159
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 160
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 161
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 162
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 163
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 164
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 165
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 166
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 167
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 168
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 169
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 170
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 171
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 172
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 173
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 174
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 175
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 176
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 177
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 178
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 179
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 180
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 181
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 182
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 183
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 184
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 185
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 186
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 187
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 188
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 189
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 190
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 191
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 192
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 193
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 194
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 195
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 196
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 197
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 198
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 199
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 200
+#name "Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 5000
+#effect 10
+#range 10005
+#precision 100
+#damage 1
+#nreff 1
+#spec 12632064
+#sound 30
+#explspr 10217
+#aibadlvl 3
+#end
+
+#selectspell 201
+#name "Banishment"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 2002
+#effect 2
+#range 5020
+#precision 0
+#damage 3001
+#nreff 1
+#spec 276828296
+#sound 105
+#explspr 10243
+#godpathspell -1
+-- ro: ability 750 repeated (the game reads the first) = 8
+#end
+
+#selectspell 202
+#name "Ashes to Ashes"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 2002
+#effect 2
+#range 5020
+#precision 0
+#damage 3001
+#nreff 1
+#spec 1152921504883675272
+#sound 105
+#explspr 10243
+#godpathspell 0
+#end
+
+#selectspell 203
+#name "Burning"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 512
+#nreff 1
+#spec 16544
+#sound 30
+#end
+
+#selectspell 204
+#name "Purifying Water"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 3003
+#effect 2
+#range 5020
+#precision 0
+#damage 1001
+#nreff 1
+#spec 1152921504883675272
+#sound 105
+#explspr 10243
+#godpathspell 2
+#end
+
+#selectspell 205
+#name "Cleansing"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 0
+#precision 0
+#damage 3001
+#nreff 1
+#spec 16448
+#sound 30
+#end
+
+#selectspell 206
+#name "Pull from the Grave"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 2002
+#effect 2
+#range 5020
+#precision 0
+#damage 3001
+#nreff 1
+#spec 1152921504883675272
+#sound 105
+#explspr 10243
+#godpathspell 3
+#end
+
+#selectspell 207
+#name "Grip"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 16384
+#nreff 1
+#spec 70368754683904
+#sound 30
+#end
+
+#selectspell 208
+#name "Sacred Wind"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 5010
+#effect 2
+#range 5025
+#precision 0
+#damage 1
+#nreff 1
+#spec 276828296
+#sound 105
+#explspr 10243
+#godpathspell 1
+#end
+
+#selectspell 209
+#name "Final Rest"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1001
+#effect 2
+#range 5020
+#precision 0
+#damage 999
+#nreff 1
+#spec 293601416
+#sound 105
+#explspr 10243
+#godpathspell 6
+#end
+
+#selectspell 210
+#name "Decree of the Underworld"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 2002
+#effect 2
+#range 5020
+#precision 0
+#damage 3001
+#nreff 1
+#spec 1152921504883675272
+#sound 105
+#explspr 10243
+#godpathspell 5
+#end
+
+#selectspell 211
+#name "Bewilderment"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 0
+#damage 17179869184
+#nreff 1
+#spec 8540160
+#sound 30
+#end
+
+#selectspell 212
+#name "Stellar Decree"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 4004
+#effect 2
+#range 5030
+#precision 0
+#damage 1001
+#nreff 1
+#spec 1152921504883675272
+#sound 105
+#explspr 10243
+#godpathspell 4
+#end
+
+#selectspell 213
+#name "Halt"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 128
+#range 0
+#precision 0
+#damage 100
+#nreff 1
+#spec 8540160
+#sound 30
+#end
+
+#selectspell 214
+#name "Return of the Past"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 4004
+#effect 2
+#range 5025
+#precision 0
+#damage 1001
+#nreff 1
+#spec 1152921504883675272
+#sound 105
+#explspr 10243
+#godpathspell 7
+#end
+
+#selectspell 215
+#name "Memories of Life"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 0
+#precision 0
+#damage 3003
+#nreff 1
+#spec 8540288
+#sound 30
+#end
+
+#selectspell 216
+#name "Sermon of Courage"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 5000
+#effect 17
+#range 5015
+#precision 100
+#damage 1
+#nreff 1
+#spec 12583040
+#sound 30
+#explspr 10218
+#aibadlvl 4
+#end
+
+#selectspell 217
+#name "Smite Demon"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 5020
+#precision 100
+#damage 5005
+#nreff 1
+#spec 8933512
+#sound 41
+#explspr 10322
+#end
+
+#selectspell 218
+#name "Holy Word"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 0
+#effect 128
+#range 25
+#precision 100
+#damage 100
+#nreff 1
+#spec 8425472
+#sound 30
+#explspr 10302
+#end
+
+#selectspell 219
+#name "Holy Avenger"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 4194304
+#nreff 1
+#spec 8404992
+#sound 30
+#explspr 10022
+#end
+
+#selectspell 220
+#name "Divine Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 666
+#effect 10
+#range 0
+#precision 100
+#damage 1
+#nreff 1
+#spec 12615680
+#sound 30
+#explspr 10217
+#notindoors -1
+#end
+
+#selectspell 221
+#name "Smite"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 30
+#precision 100
+#damage 10
+#nreff 1
+#spec 8409216
+#sound 30
+#explspr 10302
+#godpathspell -1
+-- ro: explspr frames = 5
+#end
+
+#selectspell 222
+#name "Heavenly Fire"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 30
+#precision 100
+#damage 10
+#nreff 1
+#spec 1152921504615256192
+#sound 30
+#explspr 10302
+#godpathspell 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 223
+#name "Fiery Death"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 0
+#precision 100
+#damage 10
+#nreff 1
+#spec 8405152
+#sound 30
+#end
+
+#selectspell 224
+#name "Watery Death"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 25
+#precision 100
+#damage 10
+#nreff 1
+#spec 1152921504615256192
+#sound 30
+#explspr 10302
+#godpathspell 2
+-- ro: explspr frames = 5
+#end
+
+#selectspell 225
+#name "Drowning"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 0
+#precision 100
+#damage 10
+#nreff 1
+#spec 537477248
+#sound 30
+#end
+
+#selectspell 226
+#name "Word of Stone"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 25
+#precision 100
+#damage 10
+#nreff 1
+#spec 1152921504615256192
+#sound 30
+#explspr 10302
+#godpathspell 3
+-- ro: explspr frames = 5
+#end
+
+#selectspell 227
+#name "Petrification"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 99
+#range 0
+#precision 100
+#damage 999
+#nreff 1
+#spec 8409220
+#sound 30
+#end
+
+#selectspell 228
+#name "Heavenly Strike"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 50
+#precision 100
+#damage 10
+#nreff 1
+#spec 1152921504615256192
+#sound 30
+#explspr 10302
+#godpathspell 1
+-- ro: explspr frames = 5
+#end
+
+#selectspell 229
+#name "Lightning Death"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 0
+#precision 100
+#damage 5
+#nreff 1
+#spec 8407168
+#sound 30
+#end
+
+#selectspell 230
+#name "Word of Power"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 100
+#precision 100
+#damage 10
+#nreff 1
+#spec 1152921504615256192
+#sound 30
+#explspr 10302
+#godpathspell 4
+-- ro: explspr frames = 5
+#end
+
+#selectspell 231
+#name "Paralyzation"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 66
+#range 0
+#precision 100
+#damage 10
+#nreff 1
+#spec 8540288
+#sound 30
+#end
+
+#selectspell 232
+#name "Syllable of Death"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 25
+#precision 100
+#damage 10
+#nreff 1
+#spec 1152921504615256192
+#sound 30
+#explspr 10302
+#godpathspell 5
+-- ro: explspr frames = 5
+#end
+
+#selectspell 233
+#name "Death"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 0
+#precision 100
+#damage 999
+#nreff 1
+#spec 576460752849227904
+#sound 30
+#end
+
+#selectspell 234
+#name "Exhaustion"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 3
+#range 0
+#precision 100
+#damage 20
+#nreff 1
+#spec 545804416
+#sound 30
+#end
+
+#selectspell 235
+#name "Word of Thorns"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 30
+#precision 100
+#damage 5
+#nreff 1
+#spec 1152921504615256192
+#sound 30
+#explspr 10302
+#godpathspell 6
+-- ro: explspr frames = 5
+#end
+
+#selectspell 236
+#name "Tangles"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 100
+#damage 64
+#nreff 1
+#spec 576460752311828608
+#spec2 4
+#sound 30
+#end
+
+#selectspell 237
+#name "Bleeding"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 100
+#damage 8192
+#nreff 1
+#spec 545800320
+#sound 30
+#end
+
+#selectspell 238
+#name "Word of Bewilderment"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 30
+#precision 100
+#damage 10
+#nreff 1
+#spec 1152921505152651392
+#sound 30
+#explspr 10302
+#godpathspell 7
+-- ro: explspr frames = 5
+#end
+
+#selectspell 239
+#name "Confusion"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 100
+#damage 17179869184
+#nreff 1
+#spec 17592195104896
+#sound 30
+#end
+
+#selectspell 240
+#name "Claim Life"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 30
+#precision 100
+#damage 20
+#nreff 1
+#spec 1152921505152651392
+#sound 30
+#explspr 10302
+#godpathspell 8
+-- ro: explspr frames = 5
+#end
+
+#selectspell 241
+#name "Chestwound"
+#school -1
+#researchlevel 0
+#fatiguecost 0
+#aoe 0
+#effect 11
+#range 0
+#precision 100
+#damage 8388608
+#nreff 1
+#spec 545800320
+#sound 30
+#end
+
+#selectspell 242
+#name "Fanaticism"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 4
+#fatiguecost 0
+#aoe 666
+#effect 17
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 12583040
+#sound 30
+#explspr 10218
+#notindoors -1
+#end
+
+#selectspell 243
+#name "Divine Channeling"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 5
+#fatiguecost 90
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 91
+#nreff 1
+#spec 8404992
+#sound 41
+#explspr 10191
+#end
+
+#selectspell 244
+#name "Fire Flies"
+#school 2
+#researchlevel 0
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5025
+#precision -1
+#damage 8
+#nreff 6
+#spec 96
+#sound 118
+#flightspr 10146
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 245
+#name "Air Shield"
+#school 1
+#researchlevel 0
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 16384
+#sound 31
+#explspr 10224
+#end
+
+#selectspell 246
+#name "Freezing Touch"
+#school 2
+#researchlevel 0
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 2
+#range 1
+#precision 1
+#damage 1008
+#nreff 1
+#spec 640
+#sound 21
+#explspr 10068
+#casttime 50
+#end
+
+#selectspell 247
+#name "Flying Shards"
+#school 2
+#researchlevel 0
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 30
+#aoe 0
+#effect 2
+#range 5025
+#precision 0
+#damage 1006
+#nreff 2002
+#spec 1649269538816
+#sound 45
+#flightspr 443
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 248
+#name "Twist Fate"
+#school 1
+#researchlevel 0
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10046
+#end
+
+#selectspell 249
+#name "Hand of Dust"
+#school 1
+#researchlevel 0
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 2
+#range 1
+#precision 0
+#damage 1005
+#nreff 1
+#spec 8405120
+#explspr 165
+#casttime 50
+-- ro: explspr frames = 3
+#end
+
+#selectspell 250
+#name "Poison Touch"
+#school 1
+#researchlevel 0
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 7
+#range 1
+#precision 0
+#damage 5005
+#nreff 1
+#spec 8396928
+#sound 29
+#explspr 10039
+#casttime 50
+#end
+
+#selectspell 251
+#name "Sleep Ray"
+#school 5
+#researchlevel 0
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 1
+#precision 0
+#damage 1024
+#nreff 1
+#spec 277483648
+#sound 29
+#explspr 10028
+#casttime 50
+#end
+
+#selectspell 252
+#name "Bleed"
+#school 6
+#researchlevel 0
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 11
+#range 5025
+#precision 0
+#damage 8192
+#nreff 1
+#spec 537415808
+#sound 32
+#explspr 10123
+#end
+
+#selectspell 253
+#name "Monster Boar"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 11
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 12
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 7
+#restricted 52
+#restricted 97
+#provrange 5
+#nogeodst 4
+#end
+
+#selectspell 254
+#name "Summon Hound of Twilight"
+#school 0
+#researchlevel 5
+#path 0 3
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3168
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 42
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 6
+#restricted 51
+#restricted 96
+#restricted 77
+#restricted 125
+#end
+
+#selectspell 255
+#name "Sow Dragon Teeth"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3119
+#nreff 10
+#spec 0
+#sound 45
+#explspr 0
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 42
+#restricted 6
+#restricted 51
+#restricted 96
+#restricted 77
+#restricted 125
+#end
+
+#selectspell 256
+#name "Bind Keres"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3127
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 42
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 6
+#restricted 51
+#restricted 96
+#restricted 77
+#end
+
+#selectspell 257
+#name "Rhapsody of Life"
+#school 5
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 13
+#range 5010
+#precision 5
+#damage 1009
+#nreff 1
+#spec 576460752840441984
+#sound 31
+#explspr 10330
+#restricted 95
+#reqspellsinger
+#end
+
+#selectspell 258
+#name "Minor Reinvigoration"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 8
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 537018496
+#end
+
+#selectspell 259
+#name "Rhapsody of the Dead"
+#school 5
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 2002
+#effect 2
+#range 5010
+#precision 0
+#damage 1003
+#nreff 1
+#spec 576460752571994248
+#sound 105
+#explspr 10330
+#restricted 95
+#reqspellsinger
+#end
+
+#selectspell 260
+#name "Scare Spirits"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 4
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 147584
+#sound 22
+#end
+
+#selectspell 261
+#name "From Death Comes Life"
+#school 1
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 94
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 95
+#onlymnr 3200
+#hiddenench 1
+-- ro: ability 765 = -2
+#end
+
+#selectspell 262
+#name "Curse Tablet"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 300
+#aoe 0
+#effect 10136
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 17592194433024
+#restricted 95
+#provrange 2
+#end
+
+#selectspell 263
+#name "Blessing of the God-slayer"
+#school 4
+#researchlevel 0
+#path 0 2
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10511
+#range 0
+#precision 0
+#damage 654
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 6
+-- ro: ability 737 = 3112
+-- ro: ability 736 = 654
+#end
+
+#selectspell 264
+#name "Gigantomachia"
+#school 5
+#researchlevel 7
+#path 0 3
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 4
+#fatiguecost 6000
+#aoe 666
+#effect 10081
+#range 0
+#precision 0
+#damage 107
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 6
+#restricted 51
+#restricted 96
+#end
+
+#selectspell 265
+#name "Contact Hesperide"
+#school 0
+#researchlevel 6
+#path 0 0
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3160
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 77
+#restricted 125
+#end
+
+#selectspell 266
+#name "Call Ladon"
+#school 0
+#researchlevel 6
+#path 0 0
+#pathlevel 0 3
+#path 1 6
+#pathlevel 1 2
+#fatiguecost 1500
+#aoe 0
+#effect 10137
+#range 0
+#precision 0
+#damage 3167
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 77
+#restricted 125
+#end
+
+#selectspell 267
+#name "Dogs of Gold and Silver"
+#school 3
+#researchlevel 4
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3169
+#nreff 1
+#spec 576460752311812096
+#explspr 0
+#restricted 77
+#end
+
+#selectspell 268
+#name "Dog of Gold"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3170
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 77
+#end
+
+#selectspell 269
+#name "Craft Keledone"
+#school 3
+#researchlevel 6
+#path 0 3
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3164
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 77
+#restricted 125
+#end
+
+#selectspell 270
+#name "Forge Brass Bull"
+#school 3
+#researchlevel 6
+#path 0 0
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 3
+#fatiguecost 2500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3171
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 42
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 6
+#restricted 51
+#restricted 96
+#restricted 77
+#restricted 125
+#end
+
+#selectspell 271
+#name "Orgy"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1881
+#nreff 1
+#spec 0
+#nextspell 87
+#explspr 0
+#restricted 98
+#end
+
+#selectspell 272
+#name "Daughter of Typhon"
+#school 0
+#researchlevel 8
+#path 0 6
+#pathlevel 0 5
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 3000
+#aoe 0
+#effect 10093
+#range 0
+#precision 0
+#damage 1822
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 9
+#restricted 98
+#end
+
+#selectspell 273
+#name "Gift of the Sacred Swamp"
+#school 4
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 2003
+#effect 10
+#range 15
+#precision 0
+#damage 288230376151711744
+#nreff 1
+#spec 12599296
+#sound 31
+#explspr 10017
+#restricted 98
+#end
+
+#selectspell 274
+#name "Awaken Hamadryad"
+#school 4
+#researchlevel 5
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3066
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 128
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 7
+#restricted 52
+#restricted 97
+#restricted 56
+#restricted 98
+#end
+
+#selectspell 275
+#name "Contact Lar"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 1600
+#aoe 0
+#effect 10021
+#range 0
+#precision -2
+#damage 3087
+#nreff 1
+#spec 0
+#restricted 8
+#restricted 56
+#restricted 98
+#end
+
+#selectspell 276
+#name "Katabasis"
+#school 4
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10023
+#range 0
+#precision 0
+#damage 2199023255552
+#nreff 1
+#spec 805830656
+#explspr 0
+#sethome 1
+#restricted 98
+#onlymnr 1877
+#onlymnr 1878
+#end
+
+#selectspell 277
+#name "Epopteia"
+#school 4
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 1200
+#aoe 0
+#effect 10085
+#range 0
+#precision 0
+#damage 94
+#nreff 1
+#spec 0
+#explspr 0
+#hiddenench 1
+#restricted 98
+#onlymnr 1875
+-- ro: ability 740 = -3
+-- ro: ability 765 = -2
+#end
+
+#selectspell 278
+#name "Taurobolium"
+#school 5
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 600
+#aoe 0
+#effect 10511
+#range 0
+#precision 0
+#damage 651
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 98
+#onlymnr 1873
+-- ro: ability 736 = 651
+#end
+
+#selectspell 279
+#name "xxx"
+#school -1
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1881
+#nreff 1
+#spec 0
+#nextspell 87
+#explspr 0
+#restricted 98
+#end
+
+#selectspell 280
+#name "Awaken Tattoos"
+#school 4
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 2003
+#effect 23
+#range 2018
+#precision 100
+#damage 549755813888
+#nreff 1
+#spec 12599296
+#sound 30
+#explspr 10217
+#restricted 12
+#restricted 9
+#end
+
+#selectspell 281
+#name "Sounder of Boars"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1807
+#nreff 20
+#spec 0
+#explspr 0
+#restricted 12
+#end
+
+#selectspell 282
+#name "Contact Boar of Carnutes"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 700
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1809
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 12
+#end
+
+#selectspell 283
+#name "Herd of Unicorns"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3899
+#nreff 10
+#spec 0
+#explspr 0
+#onlygeosrc 128
+#restricted 57
+#restricted 100
+#end
+
+#selectspell 284
+#name "Chorus Master"
+#school 5
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 2305843009213693952
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10274
+#ainocast 1
+#reqspellsinger
+#restricted 57
+-- ro: explspr frames = 5
+#end
+
+#selectspell 285
+#name "Chorus Slave"
+#school 5
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 4611686018427387904
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10273
+#ainocast 1
+#reqspellsinger
+#restricted 57
+-- ro: explspr frames = 5
+#end
+
+#selectspell 286
+#name "Celestial Chastisement"
+#school 2
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 20
+#precision 100
+#damage 1005
+#nreff 1
+#spec 8405136
+#nextspell 84
+#sound 41
+#explspr 10254
+#restricted 69
+#restricted 109
+#restricted 22
+#end
+
+#selectspell 287
+#name "Contact Huli Jing"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1908
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 69
+#restricted 22
+#end
+
+#selectspell 288
+#name "Thousand Year Ginseng"
+#school 3
+#researchlevel 4
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10101
+#range 0
+#precision 0
+#damage -5
+#nreff 1
+#spec 545783808
+#explspr 55
+#restricted 69
+-- ro: explspr frames = 5
+#end
+
+#selectspell 289
+#name "Internal Alchemy"
+#school 1
+#researchlevel 5
+#path 0 2
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10111
+#range 0
+#precision 0
+#damage 15
+#nreff 1
+#spec 545783808
+#explspr 55
+#restricted 69
+#restricted 109
+#restricted 22
+-- ro: explspr frames = 5
+#end
+
+#selectspell 290
+#name "Hannya Pact"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 600
+#aoe 0
+#effect 10130
+#range 0
+#precision 0
+#damage 3070
+#nreff 1
+#spec 545783808
+#explspr 0
+#restricted 23
+#onlymnr 3069
+#polygetmagic 1
+#end
+
+#selectspell 291
+#name "Greater Hannya Pact"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10130
+#range 0
+#precision 0
+#damage 1432
+#nreff 1
+#spec 545783808
+#explspr 0
+#restricted 23
+#onlymnr 3070
+#polygetmagic 1
+#end
+
+#selectspell 292
+#name "End of Culture"
+#school 5
+#researchlevel 6
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 666
+#effect 10081
+#range 0
+#precision 0
+#damage 106
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 23
+#end
+
+#selectspell 293
+#name "End of Weakness"
+#school 1
+#researchlevel 6
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 17179869184
+#nreff 1
+#spec 4718600
+#sound 32
+#explspr 10173
+#restricted 23
+#end
+
+#selectspell 294
+#name "Teaching Sign"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 0
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 128
+#nreff 1
+#spec 8404992
+#sound 41
+#explspr 10190
+#restricted 110
+#end
+
+#selectspell 295
+#name "Fear-not Sign"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 0
+#aoe 2000
+#effect 10
+#range 15
+#precision 100
+#damage 32776
+#nreff 1
+#spec 12599296
+#sound 30
+#explspr 10218
+#restricted 110
+#end
+
+#selectspell 296
+#name "Welcome Sign"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 0
+#aoe 0
+#effect 29
+#range 5
+#precision 100
+#damage 999
+#nreff 1
+#spec 25182208
+#sound 22
+#explspr 10007
+#restricted 110
+#end
+
+#selectspell 297
+#name "Earth-touching Sign"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 0
+#aoe 0
+#effect 2
+#range 20
+#precision 100
+#damage 999
+#nreff 1
+#spec 25706632
+#sound 41
+#explspr 10322
+#restricted 110
+#end
+
+#selectspell 298
+#name "Meditation Sign"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 0
+#aoe 0
+#effect 8
+#range 0
+#precision 0
+#damage 15
+#nreff 1
+#spec 8404992
+#sound 41
+#explspr 10190
+#restricted 110
+#end
+
+#selectspell 299
+#name "Summon Okami"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3264
+#nreff 1009
+#spec 0
+#explspr 0
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 300
+#name "Contact Bakeneko"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3268
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 301
+#name "Summon Shikome"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2100
+#nreff 10
+#spec 0
+#explspr 0
+#restricted 23
+#end
+
+#selectspell 302
+#name "Contact Jigami"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 1000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2089
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#end
+
+#selectspell 303
+#name "Summon Omukade"
+#school 0
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3269
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 70
+#end
+
+#selectspell 304
+#name "Contact Mori-no-kami"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 2100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2093
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#onlygeosrc 128
+#end
+
+#selectspell 305
+#name "Summon Ujigami"
+#school 0
+#researchlevel 5
+#path 0 3
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2095
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#end
+
+#selectspell 306
+#name "Contact Kaijin"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2106
+#nreff 1
+#spec 41943040
+#explspr 0
+#restricted 110
+#end
+
+#selectspell 307
+#name "Contact Mujina"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 2100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3273
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 308
+#name "Contact Tanuki"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 2600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3266
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 309
+#name "Contact Tatsu"
+#school 0
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 1900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2099
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#end
+
+#selectspell 310
+#name "Summon Kenzoku"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2096
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#end
+
+#selectspell 311
+#name "Summon Gozu Mezu"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2091
+#nreff 1
+#spec 0
+#nextspell 92
+#explspr 0
+#restricted 110
+#restricted 70
+#restricted 23
+#end
+
+#selectspell 312
+#name "Contact Jorogumo"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 3200
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3263
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 70
+#end
+
+#selectspell 313
+#name "Summon Araburu-kami"
+#school 0
+#researchlevel 7
+#path 0 5
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3270
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 23
+#end
+
+#selectspell 314
+#name "Contact Yama-no-kami"
+#school 0
+#researchlevel 7
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 2800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2097
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#onlygeosrc 8388624
+#end
+
+#selectspell 315
+#name "Summon Abysian Ancestors"
+#school 0
+#researchlevel 2
+#path 0 5
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1971
+#nreff 7
+#spec 0
+#explspr 0
+#restricted 104
+#end
+
+#selectspell 316
+#name "Reawaken Fossil"
+#school 4
+#researchlevel 5
+#path 0 3
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1977
+#nreff 505
+#spec 8388608
+#explspr 0
+#restricted 104
+#end
+
+#selectspell 317
+#name "Summon Spectral Infantry"
+#school 0
+#researchlevel 2
+#path 0 5
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1656
+#nreff 7
+#spec 0
+#explspr 0
+#restricted 63
+#restricted 16
+#end
+
+#selectspell 318
+#name "Contact Scorpion Man"
+#school 0
+#researchlevel 8
+#path 0 3
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1649
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 16
+#restricted 63
+#restricted 104
+#restricted 27
+#restricted 75
+#restricted 113
+#restricted 19
+#restricted 66
+#end
+
+#selectspell 319
+#name "Inner Furnace"
+#school 4
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 16384
+#nreff 1
+#spec 4325376
+#spec2 16
+#sound 22
+#explspr 10142
+#restricted 63
+#restricted 104
+#restricted 16
+#end
+
+#selectspell 320
+#name "Infernal Breeding"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 2500
+#aoe 0
+#effect 10127
+#range 0
+#precision 0
+#damage 1
+#nreff 1014
+#spec 0
+#explspr 0
+#restricted 16
+#restricted 63
+#restricted 104
+#end
+
+#selectspell 321
+#name "Summon Bears"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3003
+#nreff 10
+#spec 0
+#explspr 0
+#restricted 32
+#end
+
+#selectspell 322
+#name "Summon Simargl"
+#school 0
+#researchlevel 2
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1947
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 323
+#name "Summon Firebird"
+#school 0
+#researchlevel 3
+#path 0 0
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1946
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 324
+#name "Send Lady Midday"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10050
+#range 0
+#precision 0
+#damage 1956
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#provrange 5
+#nogeodst 4
+#end
+
+#selectspell 325
+#name "Contact Sirin"
+#school 0
+#researchlevel 3
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1945
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 326
+#name "Send Vodyanoy"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 2000
+#aoe 0
+#effect 10119
+#range 0
+#precision 0
+#damage 1953
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#provrange 4
+#onlygeodst 4
+#end
+
+#selectspell 327
+#name "Summon Rusalka"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 1600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1954
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 328
+#name "Summon Likho"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 1000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1952
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 329
+#name "Contact Alkonost"
+#school 0
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 1500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1943
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 330
+#name "Summon Zmey"
+#school 0
+#researchlevel 5
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1940
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 331
+#name "Send Bukavac"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 500
+#aoe 0
+#effect 10038
+#range 0
+#precision 0
+#damage 1948
+#nreff 1
+#spec 8388608
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#provrange 4
+#onlygeodst 4
+#end
+
+#selectspell 332
+#name "Contact Gamayun"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1944
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 333
+#name "Contact Beregina"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1955
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#end
+
+#selectspell 334
+#name "Contact Mountain Vila"
+#school 0
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1942
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#onlygeosrc 8388624
+#end
+
+#selectspell 335
+#name "Contact Cloud Vila"
+#school 0
+#researchlevel 7
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1941
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#onlygeosrc 8388624
+#end
+
+#selectspell 336
+#name "Contact Leshiy"
+#school 0
+#researchlevel 8
+#path 0 6
+#pathlevel 0 6
+#fatiguecost 6000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1949
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 32
+#restricted 79
+#restricted 116
+#restricted 124
+#onlygeosrc 128
+#end
+
+#selectspell 337
+#name "Grow Fortress"
+#school 1
+#researchlevel 0
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 3500
+#aoe 0
+#effect 10063
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 8388608
+#restricted 7
+#restricted 41
+#restricted 87
+#onlygeosrc 132
+#nogeosrc 2048
+#end
+
+#selectspell 338
+#name "Fort of the Ancients"
+#school 1
+#researchlevel 5
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 3500
+#aoe 0
+#effect 10063
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 8388608
+#restricted 52
+#restricted 97
+#onlygeosrc 132
+#nogeosrc 2048
+#end
+
+#selectspell 339
+#name "Sacred Crocodile"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2186
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 27
+#restricted 75
+#restricted 113
+#end
+
+#selectspell 340
+#name "Herd of Elephants"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 2000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2398
+#nreff 505
+#spec 0
+#explspr 0
+#homerealm 8
+#restricted 28
+#restricted 76
+#restricted 29
+#restricted 105
+#end
+
+#selectspell 341
+#name "God Brood"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 888
+#nreff 6
+#spec 0
+#explspr 0
+#restricted 76
+#onlyatsite 60
+#end
+
+#selectspell 342
+#name "xxx"
+#school -1
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3980
+#nreff 10
+#spec 0
+#explspr 0
+#restricted 76
+#end
+
+#selectspell 343
+#name "Weavers of the Wood"
+#school 4
+#researchlevel 5
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 600
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 119
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 28
+#restricted 76
+#ainocast 1
+#onlygeosrc 128
+-- ro: ability 760 = 1
+-- ro: ability 709 = 3
+#end
+
+#selectspell 344
+#name "Call Melqart"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 9900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2267
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 29
+#end
+
+#selectspell 345
+#name "Strange Fire"
+#school 2
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 3
+#effect 25
+#range 5030
+#precision 1
+#damage 1006
+#nreff 1
+#spec 64
+#sound 16
+#explspr 10128
+#restricted 64
+#restricted 107
+#end
+
+#selectspell 346
+#name "Memories of Stone"
+#school 4
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1998
+#nreff 505
+#spec 8388608
+#explspr 0
+#restricted 107
+#onlygeosrc 64
+#end
+
+#selectspell 347
+#name "Dirge for the Dead"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2045
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 64
+#end
+
+#selectspell 348
+#name "Banquet for the Dead"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 4
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 5500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2039
+#nreff 1
+#spec 0
+#nextspell 90
+#explspr 0
+#restricted 64
+#end
+
+#selectspell 349
+#name "Scapegoats"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2074
+#nreff 2
+#spec 0
+#explspr 0
+#restricted 107
+#restricted 29
+#onlygeosrc 64
+#end
+
+#selectspell 350
+#name "Summon Se'irim"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 2300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2074
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 64
+#restricted 17
+#onlygeosrc 64
+#end
+
+#selectspell 351
+#name "Summon Shedim"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 2800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2073
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 107
+#restricted 64
+#restricted 17
+#restricted 29
+#onlygeosrc 64
+#end
+
+#selectspell 352
+#name "Call Malakh"
+#school 0
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2056
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 107
+#restricted 64
+#restricted 67
+#restricted 120
+#end
+
+#selectspell 353
+#name "Call Hashmal"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 2100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2057
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 107
+#restricted 64
+#restricted 67
+#restricted 120
+#end
+
+#selectspell 354
+#name "Call Arel"
+#school 0
+#researchlevel 7
+#path 0 4
+#pathlevel 0 4
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 3900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2058
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 107
+#restricted 64
+#restricted 67
+#restricted 120
+#end
+
+#selectspell 355
+#name "Call Ophan"
+#school 0
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 4900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2051
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 64
+#restricted 107
+#restricted 67
+#restricted 120
+#end
+
+#selectspell 356
+#name "Call Merkavah"
+#school 0
+#researchlevel 9
+#path 0 4
+#pathlevel 0 7
+#path 1 0
+#pathlevel 1 3
+#fatiguecost 22200
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2052
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 64
+#restricted 107
+#restricted 67
+#restricted 120
+#end
+
+#selectspell 357
+#name "Release Lord of Civilization"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 8
+#fatiguecost 17700
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 14
+#nreff 1
+#spec 0
+#nextspell 85
+#restricted 17
+#restricted 67
+#restricted 119
+#end
+
+#selectspell 358
+#name "Summon Mazzikim"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2072
+#nreff 10
+#spec 0
+#explspr 0
+#restricted 107
+#restricted 64
+#restricted 17
+#restricted 29
+#end
+
+#selectspell 359
+#name "Summon Lilot"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 1500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2071
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 107
+#restricted 64
+#restricted 17
+#restricted 29
+#end
+
+#selectspell 360
+#name "Summon Kusarikkus"
+#school 0
+#researchlevel 4
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3068
+#nreff 2
+#spec 0
+#explspr 0
+#restricted 19
+#restricted 66
+#end
+
+#selectspell 361
+#name "Summon Ugallu"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 2400
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3095
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 19
+#restricted 66
+#end
+
+#selectspell 362
+#name "Call Anzus"
+#school 0
+#researchlevel 7
+#path 0 2
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3064
+#nreff 2
+#spec 0
+#explspr 0
+#restricted 19
+#restricted 66
+#end
+
+#selectspell 363
+#name "Call Apkallu"
+#school 0
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2966
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 19
+#restricted 66
+#end
+
+#selectspell 364
+#name "Call Ephor"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 700
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2845
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 42
+#end
+
+#selectspell 365
+#name "Call Spectral Philosopher"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 1100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2846
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 42
+#end
+
+#selectspell 366
+#name "Summon Telkhine"
+#school 0
+#researchlevel 8
+#path 0 2
+#pathlevel 0 5
+#path 1 1
+#pathlevel 1 2
+#fatiguecost 6900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2874
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 42
+#restricted 29
+#end
+
+#selectspell 367
+#name "Summon Hekateride"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2834
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 86
+#restricted 125
+#end
+
+#selectspell 368
+#name "Summon Daktyl"
+#school 0
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2836
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 86
+#restricted 125
+#end
+
+#selectspell 369
+#name "Procession of the Underworld"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 1300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3210
+#nreff 15
+#spec 0
+#explspr 0
+#restricted 42
+#restricted 5
+#restricted 50
+#restricted 95
+#restricted 6
+#restricted 51
+#restricted 96
+#end
+
+#selectspell 370
+#name "Summon Monster Fish"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1664
+#nreff 1
+#spec 41943040
+#explspr 0
+#restricted 43
+#restricted 88
+#restricted 126
+#end
+
+#selectspell 371
+#name "Send Tupilak"
+#school 4
+#researchlevel 5
+#path 0 5
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10050
+#range 0
+#precision 0
+#damage 1624
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 126
+#provrange 5
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 372
+#name "Unholy Command"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 0
+#effect 28
+#range 10
+#precision 0
+#damage 999
+#nreff 1
+#spec 293863560
+#sound 22
+#explspr 10042
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 373
+#name "Unholy Protection"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 10
+#range 20
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 374
+#name "Unholy Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 10
+#range 20
+#precision 100
+#damage 1
+#nreff 1
+#spec 281067528
+#sound 30
+#explspr 10049
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 375
+#name "Unholy Power"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 23
+#range 20
+#precision 100
+#damage 33554432
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 376
+#name "Unholy Protection"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 10
+#effect 10
+#range 10
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 377
+#name "Unholy Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 10
+#effect 10
+#range 10
+#precision 100
+#damage 1
+#nreff 1
+#spec 281067528
+#sound 30
+#explspr 10049
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 378
+#name "Apostasy"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 29
+#range 30
+#precision 100
+#damage 999
+#nreff 1
+#spec 25214976
+#spec2 256
+#sound 22
+#explspr 10007
+#restricted 55
+#end
+
+#selectspell 379
+#name "Unholy Power"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 5
+#effect 23
+#range 10
+#precision 100
+#damage 33554432
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10142
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 380
+#name "Unholy Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 666
+#effect 10
+#range 0
+#precision 100
+#damage 1
+#nreff 1
+#spec 281051144
+#sound 30
+#explspr 10142
+#notindoors -1
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 381
+#name "Protection of the Sepulchre"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 666
+#effect 10
+#range 0
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 297795592
+#sound 22
+#explspr 10142
+#notindoors -1
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 382
+#name "Power of the Sepulchre"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 4
+#fatiguecost 0
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 33554432
+#nreff 1
+#spec 281018376
+#sound 22
+#explspr 10142
+#notindoors -1
+#restricted 54
+#restricted 55
+#end
+
+#selectspell 383
+#name "Revive Lictor"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 259
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 384
+#name "Revive Censor"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 400
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 260
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 385
+#name "Revive Acolyte"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 256
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 386
+#name "Revive Bishop"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 257
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 387
+#name "Revive Arch Bishop"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2300
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 258
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 388
+#name "Revive Spectator"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 254
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 389
+#name "Revive Dusk Elder"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 253
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 390
+#name "Revive Wailing Lady"
+#school 0
+#researchlevel 2
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 255
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 391
+#name "Lictorian Guard"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 259
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 392
+#name "Lamentation"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 255
+#nreff 5
+#spec 8388608
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 393
+#name "Great Lamentation"
+#school 0
+#researchlevel 7
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 3300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 255
+#nreff 14
+#spec 8388608
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 394
+#name "Lictorian Legion"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 3500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 259
+#nreff 25
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 395
+#name "Ermorian Legion"
+#school 4
+#researchlevel 6
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 187
+#nreff 50
+#spec 0
+#explspr 0
+#restricted 54
+#end
+
+#selectspell 396
+#name "Revive Shadow Tribune"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 681
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 99
+#end
+
+#selectspell 397
+#name "Revive Lemur Centurion"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 678
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 99
+#end
+
+#selectspell 398
+#name "Revive Lemur Senator"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 680
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 99
+#end
+
+#selectspell 399
+#name "Revive Lemur Consul"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 679
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 99
+#end
+
+#selectspell 400
+#name "Revive Lemur Acolyte"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2333
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 99
+#end
+
+#selectspell 401
+#name "Revive Lemur Thaumaturg"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2334
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 99
+#end
+
+#selectspell 402
+#name "Revive Grand Lemur"
+#school 0
+#researchlevel 0
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 5000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2335
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 99
+#end
+
+#selectspell 403
+#name "Unholy Command"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 0
+#effect 28
+#range 10
+#precision 0
+#damage 999
+#nreff 1
+#spec 293863560
+#sound 22
+#explspr 10042
+#restricted 99
+#end
+
+#selectspell 404
+#name "Unholy Protection"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 10
+#range 20
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 99
+#end
+
+#selectspell 405
+#name "Unholy Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 10
+#range 20
+#precision 100
+#damage 1
+#nreff 1
+#spec 281067528
+#sound 30
+#explspr 10049
+#restricted 99
+#end
+
+#selectspell 406
+#name "Unholy Power"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 23
+#range 20
+#precision 100
+#damage 33554432
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 99
+#end
+
+#selectspell 407
+#name "Anathema"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 1
+#effect 11
+#range 50
+#precision 100
+#damage 2
+#nreff 1
+#spec 8421376
+#sound 22
+#explspr 10009
+#restricted 99
+#end
+
+#selectspell 408
+#name "Unholy Protection"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 10
+#effect 10
+#range 10
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 99
+#end
+
+#selectspell 409
+#name "Unholy Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 10
+#effect 10
+#range 10
+#precision 100
+#damage 1
+#nreff 1
+#spec 281067528
+#sound 30
+#explspr 10049
+#restricted 99
+#end
+
+#selectspell 410
+#name "Apostasy"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 0
+#effect 29
+#range 30
+#precision 100
+#damage 999
+#nreff 1
+#spec 25214976
+#spec2 256
+#sound 22
+#explspr 10007
+#restricted 99
+#end
+
+#selectspell 411
+#name "Unholy Power"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 5
+#effect 23
+#range 10
+#precision 100
+#damage 33554432
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10142
+#restricted 99
+#end
+
+#selectspell 412
+#name "Unholy Blessing"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 666
+#effect 10
+#range 0
+#precision 100
+#damage 1
+#nreff 1
+#spec 281051144
+#sound 30
+#explspr 10142
+#notindoors -1
+#restricted 99
+#end
+
+#selectspell 413
+#name "Protection of the Shadelands"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 666
+#effect 10
+#range 0
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 297795592
+#sound 22
+#explspr 10142
+#notindoors -1
+#restricted 99
+#end
+
+#selectspell 414
+#name "Power of the Shadelands"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 4
+#fatiguecost 0
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 33554432
+#nreff 1
+#spec 281018376
+#sound 22
+#explspr 10142
+#notindoors -1
+#restricted 99
+#end
+
+#selectspell 415
+#name "Revive Grave Consort"
+#school 4
+#researchlevel 0
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 1000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 690
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 113
+#end
+
+#selectspell 416
+#name "Revive Tomb Priest"
+#school 4
+#researchlevel 0
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 691
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 113
+#end
+
+#selectspell 417
+#name "Revive Tomb King"
+#school 4
+#researchlevel 0
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2300
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 692
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 113
+#end
+
+#selectspell 418
+#name "Protection of the Grave"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 10
+#range 20
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 113
+#end
+
+#selectspell 419
+#name "Power of the Grave"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1
+#effect 23
+#range 20
+#precision 100
+#damage 33554432
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 113
+#end
+
+#selectspell 420
+#name "Protection of the Grave"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 10
+#effect 10
+#range 10
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 113
+#end
+
+#selectspell 421
+#name "Royal Power"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 5
+#effect 23
+#range 10
+#precision 100
+#damage 33554432
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 113
+#end
+
+#selectspell 422
+#name "Royal Protection"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 666
+#effect 10
+#range 0
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 297795592
+#sound 22
+#explspr 10049
+#notindoors -1
+#restricted 113
+#end
+
+#selectspell 423
+#name "Power of the Reborn King"
+#school 7
+#researchlevel 0
+#path 0 9
+#pathlevel 0 4
+#fatiguecost 0
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 33554432
+#nreff 1
+#spec 281018376
+#sound 22
+#explspr 10049
+#notindoors -1
+#restricted 113
+#end
+
+#selectspell 424
+#name "Tune of Fear"
+#school 4
+#researchlevel 0
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 25
+#effect 4
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 393344
+#sound 22
+#explspr 10164
+#restricted 7
+#restricted 52
+#restricted 97
+#end
+
+#selectspell 425
+#name "Tune of Growth"
+#school 4
+#researchlevel 0
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 25
+#effect 11
+#range 0
+#precision 0
+#damage 64
+#nreff 1
+#spec 262144
+#spec2 4
+#sound 44
+#explspr 10164
+#restricted 7
+#restricted 52
+#restricted 97
+#end
+
+#selectspell 426
+#name "Tune of Dancing Death"
+#school 4
+#researchlevel 0
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 25
+#effect 3
+#range 0
+#precision 0
+#damage 1030
+#nreff 1
+#spec 397440
+#sound 44
+#explspr 10164
+#restricted 7
+#restricted 52
+#restricted 97
+#end
+
+#selectspell 427
+#name "Carrion Centaur"
+#school 4
+#researchlevel 0
+#path 0 6
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 714
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 53
+#end
+
+#selectspell 428
+#name "Carrion Lady"
+#school 4
+#researchlevel 0
+#path 0 6
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 1600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 711
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 53
+#end
+
+#selectspell 429
+#name "Carrion Lord"
+#school 4
+#researchlevel 0
+#path 0 6
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 710
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 53
+#end
+
+#selectspell 430
+#name "Quick Roots"
+#school 4
+#researchlevel 0
+#path 0 9
+#pathlevel 0 1
+#fatiguecost 0
+#aoe 1000
+#effect 23
+#range 5025
+#precision 100
+#damage 4
+#nreff 1
+#spec 281018504
+#sound 22
+#explspr 10047
+#restricted 53
+#end
+
+#selectspell 431
+#name "Regrowth"
+#school 4
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 1000
+#effect 23
+#range 5020
+#precision 100
+#damage 536870912
+#nreff 1
+#spec 281034888
+#sound 22
+#explspr 10047
+#restricted 53
+#end
+
+#selectspell 432
+#name "Mend the Dead"
+#school 4
+#researchlevel 0
+#path 0 9
+#pathlevel 0 2
+#fatiguecost 0
+#aoe 0
+#effect 13
+#range 5015
+#precision 100
+#damage 10020
+#nreff 1
+#spec 276840584
+#sound 22
+#explspr 10047
+#restricted 53
+#end
+
+#selectspell 433
+#name "Puppet Mastery"
+#school 4
+#researchlevel 0
+#path 0 9
+#pathlevel 0 3
+#fatiguecost 0
+#aoe 666
+#effect 23
+#range 0
+#precision 100
+#damage 4
+#nreff 1
+#spec 281022600
+#sound 22
+#explspr 10047
+#notindoors -1
+#restricted 53
+#end
+
+#selectspell 434
+#name "Carrion Growth"
+#school 4
+#researchlevel 0
+#path 0 9
+#pathlevel 0 4
+#fatiguecost 0
+#aoe 666
+#effect 23
+#range 0
+#precision 100
+#damage 536870912
+#nreff 1
+#spec 297795720
+#sound 22
+#explspr 10047
+#notindoors -1
+#restricted 53
+#end
+
+#selectspell 435
+#name "Dark Slumber"
+#school 4
+#researchlevel 4
+#path 0 6
+#pathlevel 0 4
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 1500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 17
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#onlygeodst 128
+#restricted 53
+#end
+
+#selectspell 436
+#name "Sleep Vines"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 20
+#precision 2
+#damage 64
+#nreff 1
+#spec 8404992
+#spec2 4
+#nextspell 127
+#explspr 10189
+#restricted 53
+#end
+
+#selectspell 437
+#name "Vengeful Vines"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 20
+#precision 2
+#damage 64
+#nreff 1
+#spec 8404992
+#spec2 4
+#nextspell 128
+#explspr 10189
+#restricted 53
+#end
+
+#selectspell 438
+#name "Summon Black Dogs"
+#school 0
+#researchlevel 2
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1769
+#nreff 20
+#spec 0
+#explspr 0
+#restricted 10
+#restricted 57
+#restricted 100
+#end
+
+#selectspell 439
+#name "Summon Cu Sidhe"
+#school 0
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1770
+#nreff 10
+#spec 0
+#explspr 0
+#restricted 11
+#restricted 58
+#restricted 57
+#restricted 100
+#end
+
+#selectspell 440
+#name "Summon Barghests"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1768
+#nreff 14
+#spec 0
+#explspr 0
+#restricted 10
+#restricted 57
+#restricted 100
+#end
+
+#selectspell 441
+#name "Summon Bean Sidhe"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1776
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 100
+#end
+
+#selectspell 442
+#name "Summon Morrigan"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 1
+#precision 0
+#damage 1821
+#nreff 1
+#spec 0
+#restricted 10
+#end
+
+#selectspell 443
+#name "Dance of the Morrigans"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#path 1 1
+#pathlevel 1 2
+#fatiguecost 400
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 86
+#nreff 1
+#spec 0
+#sound 42
+#explspr 10001
+#restricted 10
+#end
+
+#selectspell 444
+#name "Curse of Balor"
+#school 4
+#researchlevel 7
+#path 0 7
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 1008
+#effect 11
+#range 20
+#precision 100
+#damage 4096
+#nreff 1
+#spec 8409088
+#sound 40
+#explspr 10036
+#restricted 10
+#end
+
+#selectspell 445
+#name "xxx"
+#school -1
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3899
+#nreff 10
+#spec 0
+#explspr 0
+#onlygeosrc 128
+#restricted 11
+#restricted 58
+#end
+
+#selectspell 446
+#name "xxx"
+#school -1
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3899
+#nreff 10
+#spec 0
+#explspr 0
+#onlygeosrc 128
+#restricted 10
+#restricted 58
+#end
+
+#selectspell 447
+#name "Herd of Morvarc'h"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3980
+#nreff 10
+#spec 41943040
+#explspr 0
+#restricted 85
+#end
+
+#selectspell 448
+#name "Holy Pyre"
+#school 2
+#researchlevel 4
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 10003
+#effect 25
+#range 5030
+#precision 1
+#damage 1005
+#nreff 1
+#spec 96
+#sound 16
+#explspr 10327
+#restricted 61
+#restricted 103
+#end
+
+#selectspell 449
+#name "Send Aatxe"
+#school 0
+#researchlevel 6
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 600
+#aoe 0
+#effect 10050
+#range 0
+#precision 0
+#damage 3629
+#nreff 1
+#spec 0
+#explspr 0
+#nogeodst 4
+#restricted 14
+#restricted 62
+#provrange 4
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 450
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 0
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 451
+#name "Summon Incubus"
+#school 6
+#researchlevel 0
+#path 0 8
+#pathlevel 0 3
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 6600
+#aoe 0
+#effect 10021
+#range 0
+#precision -2
+#damage 4053
+#nreff 1
+#spec 0
+#restricted 123
+#end
+
+#selectspell 452
+#name "Summon Succubus"
+#school 6
+#researchlevel 0
+#path 0 8
+#pathlevel 0 3
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 6600
+#aoe 0
+#effect 10021
+#range 0
+#precision -2
+#damage 811
+#nreff 1
+#spec 0
+#restricted 123
+#end
+
+#selectspell 453
+#name "Iron Darts"
+#school 2
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 10
+#aoe 0
+#effect 73
+#range 40
+#precision 5
+#damage 13
+#nreff 2001
+#spec 274945015872
+#sound 45
+#flightspr 441
+#casttime 100
+#restricted 60
+#restricted 101
+#end
+
+#selectspell 454
+#name "Iron Blizzard"
+#school 2
+#researchlevel 6
+#path 0 3
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 50
+#aoe 0
+#effect 73
+#range 30
+#precision 3
+#damage 10
+#nreff 2018
+#spec 274945015872
+#sound 45
+#flightspr 441
+#casttime 100
+#restricted 60
+#restricted 101
+#end
+
+#selectspell 455
+#name "Contact Iron Angel"
+#school 0
+#researchlevel 8
+#path 0 3
+#pathlevel 0 5
+#path 1 4
+#pathlevel 1 2
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1975
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 60
+#end
+
+#selectspell 456
+#name "Tempering the Will"
+#school 5
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 666
+#effect 10
+#range 0
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 29491200
+#sound 22
+#explspr 10142
+#restricted 60
+#restricted 101
+#end
+
+#selectspell 457
+#name "Gift of the Moon"
+#school 4
+#researchlevel 4
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 5025
+#precision 100
+#damage 1099511627776
+#nreff 1
+#spec 281474989309952
+#sound 26
+#explspr 10331
+#restricted 101
+#restricted 124
+#end
+
+#selectspell 458
+#name "Sanguine Heritage"
+#school 6
+#researchlevel 0
+#path 0 8
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 3
+#fatiguecost 4400
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 19
+#nreff 1
+#spec 0
+#restricted 101
+#end
+
+#selectspell 459
+#name "Summon Monster Toads"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1358
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 27
+#restricted 75
+#end
+
+#selectspell 460
+#name "Contact Couatl"
+#school 0
+#researchlevel 7
+#path 0 6
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 525
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 27
+#restricted 113
+#restricted 75
+#end
+
+#selectspell 461
+#name "Parting of the Soul"
+#school 5
+#researchlevel 6
+#path 0 5
+#pathlevel 0 1
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 40
+#aoe 0
+#effect 66
+#range 30
+#precision 100
+#damage 5010
+#nreff 1
+#spec 8540288
+#nextspell 111
+#sound 41
+#explspr 10205
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 462
+#name "Call Ahurani"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10021
+#range 0
+#precision -2
+#damage 2637
+#nreff 1
+#spec 0
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 463
+#name "Call Celestial Yazad"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage -16
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 464
+#name "Call Fravashi"
+#school 0
+#researchlevel 7
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2563
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 465
+#name "Call Amesha Spenta"
+#school 0
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 12
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 466
+#name "Summon Yazatas"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1607
+#nreff 6
+#spec 0
+#explspr 0
+#restricted 71
+#restricted 24
+#restricted 106
+#restricted 105
+#end
+
+#selectspell 467
+#name "Call Daevas"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2630
+#nreff 6
+#spec 0
+#explspr 0
+#restricted 71
+#restricted 24
+#restricted 106
+#restricted 105
+#end
+
+#selectspell 468
+#name "Call Jahi"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10021
+#range 0
+#precision -2
+#damage 2631
+#nreff 1
+#spec 0
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 469
+#name "Call Yata"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage -17
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 470
+#name "Call of the Drugvant"
+#school 5
+#researchlevel 7
+#path 0 5
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 15
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 4
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#nogeodst 4
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 471
+#name "Call Greater Daeva"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 6000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 16
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 71
+#restricted 106
+#restricted 24
+#restricted 105
+#end
+
+#selectspell 472
+#name "Geoglyphs"
+#school 4
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 1800
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 100
+#nreff 1
+#spec 0
+#explspr 0
+#spellreqfly 1
+#restricted 72
+#onlygeosrc 64
+-- ro: ability 767 = -2
+#end
+
+#selectspell 473
+#name "Eyes of the Condors"
+#school 4
+#researchlevel 2
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 36
+#nreff 1
+#spec 0
+#provrange 4
+#hiddenench 1
+#restricted 72
+#nogeodst 4
+#end
+
+#selectspell 474
+#name "Summon Condors"
+#school 0
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2694
+#nreff 1008
+#spec 0
+#explspr 0
+#restricted 72
+#end
+
+#selectspell 475
+#name "Summon Huacas"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2697
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 72
+#end
+
+#selectspell 476
+#name "Summon Supayas"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2700
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 72
+#end
+
+#selectspell 477
+#name "Contact Angel of the Host"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3870
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 61
+#restricted 103
+#restricted 56
+#end
+
+#selectspell 478
+#name "Contact Harbinger"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 464
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 61
+#restricted 103
+#restricted 56
+#end
+
+#selectspell 479
+#name "Angelic Choir"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1367
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 61
+#restricted 103
+#restricted 56
+#end
+
+#selectspell 480
+#name "Angelic Host"
+#school 0
+#researchlevel 7
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage 3870
+#nreff 7
+#spec 0
+#explspr 0
+#restricted 61
+#restricted 103
+#restricted 56
+#provrange 5
+#farsumcom 465
+#nogeodst 4
+#end
+
+#selectspell 481
+#name "Heavenly Wrath"
+#school 0
+#researchlevel 7
+#path 0 4
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1369
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 61
+#restricted 103
+#restricted 56
+#end
+
+#selectspell 482
+#name "Heavenly Choir"
+#school 0
+#researchlevel 9
+#path 0 4
+#pathlevel 0 7
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 14400
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1368
+#nreff 1
+#spec 0
+#nextspell 68
+#explspr 0
+#restricted 61
+#restricted 103
+#restricted 56
+#end
+
+#selectspell 483
+#name "Bind Harlequin"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1000
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 103
+#end
+
+#selectspell 484
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 0
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 485
+#name "Reascendance"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 4
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 8800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 626
+#nreff 1
+#spec 0
+#restricted 103
+#end
+
+#selectspell 486
+#name "Amalgamation of Fire and Flesh"
+#school 1
+#researchlevel 4
+#path 0 0
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3864
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 103
+#onlymnr 3861
+#end
+
+#selectspell 487
+#name "Amalgamation of Air and Flesh"
+#school 1
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3865
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 103
+#onlymnr 3861
+#end
+
+#selectspell 488
+#name "Amalgamation of Water and Flesh"
+#school 1
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3866
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 103
+#onlymnr 3861
+#end
+
+#selectspell 489
+#name "Amalgamation of Earth and Flesh"
+#school 1
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3867
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 103
+#onlymnr 3861
+#end
+
+#selectspell 490
+#name "Mirror Walk"
+#school 5
+#researchlevel 4
+#path 0 7
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10019
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 0
+#provrange 7
+#restricted 103
+-- ro: ability 788 = 1
+-- ro: ability 1704 = 1
+#end
+
+#selectspell 491
+#name "Summon Dwarf of the Four Directions"
+#school 0
+#researchlevel 8
+#path 0 1
+#pathlevel 0 4
+#path 1 3
+#pathlevel 1 3
+#fatiguecost 6200
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage -21
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 30
+#restricted 31
+#restricted 78
+#restricted 115
+#restricted 33
+#restricted 34
+#restricted 80
+#restricted 117
+#restricted 118
+#restricted 81
+#end
+
+#selectspell 492
+#name "Summon Valkyries"
+#school 0
+#researchlevel 6
+#path 0 1
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 261
+#nreff 7
+#spec 0
+#restricted 31
+#restricted 30
+#restricted 78
+#restricted 115
+#end
+
+#selectspell 493
+#name "Awaken Draugar"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2190
+#nreff 4
+#spec 0
+#explspr 0
+#restricted 31
+#restricted 30
+#restricted 78
+#restricted 79
+#restricted 115
+#end
+
+#selectspell 494
+#name "Seith Curse"
+#school 5
+#researchlevel 5
+#path 0 5
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10136
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 17592186044416
+#restricted 33
+#restricted 34
+#restricted 80
+#restricted 117
+#restricted 118
+#restricted 81
+#provrange 5
+-- ro: ability 734 = 1
+#end
+
+#selectspell 495
+#name "Summon Glosos"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2363
+#nreff 9
+#spec 0
+#explspr 0
+#restricted 117
+#restricted 80
+#restricted 118
+#end
+
+#selectspell 496
+#name "Brood of Garm"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1309
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 80
+#restricted 117
+#restricted 33
+#restricted 34
+#restricted 31
+#restricted 118
+#end
+
+#selectspell 497
+#name "Awaken Jotun Draugar"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3193
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 33
+#restricted 34
+#restricted 80
+#restricted 117
+#end
+
+#selectspell 498
+#name "Summon Rimvaettir"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3420
+#nreff 1003
+#spec 0
+#explspr 0
+#restricted 80
+#restricted 33
+#end
+
+#selectspell 499
+#name "Winter's Call"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 8600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 844
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 80
+#restricted 118
+-- ro: ability 746 = 44
+#end
+
+#selectspell 500
+#name "Illwinter"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 5
+#path 1 2
+#pathlevel 1 3
+#fatiguecost 12000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 44
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 80
+#restricted 117
+#restricted 33
+#restricted 118
+#end
+
+#selectspell 501
+#name "Summon Glosos"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2363
+#nreff 9
+#spec 0
+#explspr 0
+#restricted 34
+#end
+
+#selectspell 502
+#name "xxx"
+#school -1
+#researchlevel 6
+#path 0 8
+#pathlevel 0 5
+#path 1 2
+#pathlevel 1 3
+#fatiguecost 12000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 44
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 34
+#end
+
+#selectspell 503
+#name "Command Draugar"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2190
+#nreff 4
+#spec 0
+#explspr 0
+#restricted 81
+#end
+
+#selectspell 504
+#name "Summon Jaguar Toads"
+#school 0
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1359
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 25
+#restricted 73
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 505
+#name "Summon Jaguars"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 2000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 859
+#nreff 25
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 25
+#restricted 73
+#restricted 26
+#restricted 112
+#end
+
+#selectspell 506
+#name "Summon Jade Serpents"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1889
+#nreff 2
+#spec 8388608
+#explspr 0
+#restricted 111
+#restricted 25
+#restricted 73
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 507
+#name "Summon Monster Toad"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1358
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 25
+#restricted 73
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 508
+#name "Contact Couatl"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 525
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#end
+
+#selectspell 509
+#name "Summon Tlaloque"
+#school 0
+#researchlevel 7
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 6000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 13
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#end
+
+#selectspell 510
+#name "Bind Beast Bats"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1357
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#restricted 26
+#restricted 112
+#end
+
+#selectspell 511
+#name "Bind Jaguar Fiends"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 1600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1356
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#restricted 26
+#restricted 112
+#end
+
+#selectspell 512
+#name "Contact Civateteo"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 3600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1422
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#end
+
+#selectspell 513
+#name "Bind Tzitzimitl"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1483
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#end
+
+#selectspell 514
+#name "Contact Tlahuelpuchi"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 3
+#fatiguecost 4200
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1558
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#end
+
+#selectspell 515
+#name "Contact Onaqui"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 4
+#fatiguecost 10100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1360
+#nreff 1
+#spec 0
+#nextspell 67
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#restricted 26
+#restricted 112
+#end
+
+#selectspell 516
+#name "Rain of Jaguars"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 6
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 4000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1356
+#nreff 1008
+#spec 0
+#explspr 0
+#restricted 111
+#restricted 73
+#restricted 25
+#restricted 26
+#restricted 112
+#end
+
+#selectspell 517
+#name "Theft of the Sun"
+#school 4
+#researchlevel 8
+#path 0 5
+#pathlevel 0 6
+#path 1 0
+#pathlevel 1 3
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 101
+#nreff 1
+#spec 0
+#restricted 26
+#onlyatsite 174
+#localglobal 1
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 518
+#name "Summon Sacred Scorpion"
+#school 0
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2690
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 26
+#restricted 112
+#end
+
+#selectspell 519
+#name "Break the First Soul"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 30
+#precision 5
+#damage 8192
+#nreff 1
+#spec 537411712
+#nextspell 101
+#sound 52
+#explspr 10200
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 520
+#name "Break the Second Soul"
+#school 5
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 30
+#precision 5
+#damage 262144
+#nreff 1
+#spec 2113664
+#sound 52
+#explspr 10200
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 521
+#name "Break the Third Soul"
+#school 5
+#researchlevel 2
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 3
+#range 30
+#precision 5
+#damage 5015
+#nreff 1
+#spec 537477248
+#sound 52
+#explspr 10200
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 522
+#name "Break the Fourth Soul"
+#school 5
+#researchlevel 2
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 30
+#precision 5
+#damage 2
+#nreff 1
+#spec 2113664
+#sound 23
+#explspr 10200
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 523
+#name "Gift of the First Soul"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 20
+#precision 0
+#damage 32
+#nreff 1
+#spec 545800192
+#sound 31
+#explspr 10015
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 524
+#name "Gift of the Second Soul"
+#school 5
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 20
+#precision 0
+#damage 137438953472
+#nreff 1
+#spec 10502144
+#sound 31
+#explspr 10015
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 525
+#name "Gift of the Third Soul"
+#school 5
+#researchlevel 3
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 20
+#precision 0
+#damage 68719476736
+#nreff 1
+#spec 545865728
+#sound 31
+#explspr 10015
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 526
+#name "Gift of the Fourth Soul"
+#school 5
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 20
+#precision 2
+#damage 2
+#nreff 1
+#spec 4305453056
+#sound 31
+#explspr 10001
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 527
+#name "Summon Balam"
+#school 0
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 6000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 17
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 528
+#name "Summon Chaac"
+#school 0
+#researchlevel 8
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 7500
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 18
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 26
+#restricted 74
+#restricted 112
+#end
+
+#selectspell 529
+#name "Celestial Servant"
+#school 0
+#researchlevel 1
+#path 0 3
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 903
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 69
+#restricted 109
+#restricted 22
+#end
+
+#selectspell 530
+#name "Heavenly Rivers"
+#school 0
+#researchlevel 3
+#path 0 2
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 904
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 22
+#end
+
+#selectspell 531
+#name "Celestial Hounds"
+#school 0
+#researchlevel 4
+#path 0 1
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1338
+#nreff 2
+#spec 0
+#explspr 0
+#restricted 69
+#restricted 22
+#restricted 109
+#end
+
+#selectspell 532
+#name "Heavenly Fires"
+#school 0
+#researchlevel 5
+#path 0 0
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 926
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 22
+#end
+
+#selectspell 533
+#name "Call Celestial Soldiers"
+#school 0
+#researchlevel 6
+#path 0 1
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 902
+#nreff 6
+#spec 0
+#explspr 0
+#restricted 69
+#restricted 109
+#restricted 22
+#end
+
+#selectspell 534
+#name "Call Ancestor"
+#school 0
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 1363
+#nreff 1
+#spec 8388608
+#sound 43
+#explspr 10232
+#restricted 9
+#restricted 22
+#restricted 109
+#end
+
+#selectspell 535
+#name "Wrath of the Ancestors"
+#school 0
+#researchlevel 7
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 1363
+#nreff 2018
+#spec 8388608
+#sound 43
+#explspr 10232
+#restricted 9
+#restricted 22
+#restricted 109
+#end
+
+#selectspell 536
+#name "Call Cyclops Tribe"
+#school 0
+#researchlevel 3
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3381
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 67
+#restricted 120
+#end
+
+#selectspell 537
+#name "Call the Birds of Splendor"
+#school 0
+#researchlevel 6
+#path 0 0
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 700
+#aoe 0
+#effect 10141
+#range 0
+#precision 0
+#damage 3382
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 67
+#restricted 119
+#sumhealaffs 100
+#end
+
+#selectspell 538
+#name "Deceive the Decree of the Lost"
+#school 5
+#researchlevel 6
+#path 0 7
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 4500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3879
+#nreff 1
+#spec 0
+#nextspell 121
+#explspr 0
+#restricted 119
+#end
+
+#selectspell 539
+#name "Contact Jinn"
+#school 0
+#researchlevel 4
+#path 0 0
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 1800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3353
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 65
+#end
+
+#selectspell 540
+#name "Summon Jinn Warriors"
+#school 0
+#researchlevel 5
+#path 0 0
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 1300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3354
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 65
+#end
+
+#selectspell 541
+#name "Contact Houri"
+#school 0
+#researchlevel 6
+#path 0 1
+#pathlevel 0 2
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 2600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3375
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 65
+#end
+
+#selectspell 542
+#name "Summon Hinn"
+#school 0
+#researchlevel 6
+#path 0 1
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3367
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 65
+#restricted 18
+#onlygeosrc 64
+#end
+
+#selectspell 543
+#name "Summon Ifrit"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 3
+#fatiguecost 5800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3372
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 65
+#end
+
+#selectspell 544
+#name "Summon Shaytan"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 3
+#fatiguecost 7300
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3373
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 65
+#end
+
+#selectspell 545
+#name "Summon Marid"
+#school 0
+#researchlevel 8
+#path 0 0
+#pathlevel 0 4
+#path 1 1
+#pathlevel 1 2
+#fatiguecost 6600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3374
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 65
+#end
+
+#selectspell 546
+#name "Contact Marid"
+#school 0
+#researchlevel 8
+#path 0 2
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 4
+#fatiguecost 6000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3376
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 18
+#end
+
+#selectspell 547
+#name "Scorching Wind"
+#school 2
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 30
+#aoe 1004
+#effect 501
+#range 40
+#precision 0
+#damage 250
+#nreff 1
+#spec 537399456
+#sound 23
+#explspr 10339
+#restricted 18
+#restricted 65
+#end
+
+#selectspell 548
+#name "Smokeless Flame"
+#school 2
+#researchlevel 6
+#path 0 0
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 30
+#aoe 1
+#effect 2
+#range 5020
+#precision 1
+#damage 1042
+#nreff 1
+#spec 576460752303423584
+#sound 16
+#explspr 10340
+#restricted 18
+#restricted 65
+-- ro: ability 918 = 8
+#end
+
+#selectspell 549
+#name "Large Area Combustion"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 10
+#effect 11
+#range 0
+#precision 0
+#damage 512
+#nreff 1
+#spec 1048736
+#end
+
+#selectspell 550
+#name "Awaken Jinn Block"
+#school 5
+#researchlevel 5
+#path 0 3
+#pathlevel 0 1
+#path 1 9
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3389
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 65
+#end
+
+#selectspell 551
+#name "Feast for Ghuls"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 1600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3479
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 65
+#restricted 18
+#onlygeosrc 64
+#end
+
+#selectspell 552
+#name "Summon Ghulah"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 3100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3481
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 65
+#restricted 18
+#onlygeosrc 64
+#end
+
+#selectspell 553
+#name "Summon Binn"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 1
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3476
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 65
+#restricted 18
+#onlygeosrc 64
+#end
+
+#selectspell 554
+#name "Summon Si'lat"
+#school 0
+#researchlevel 6
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 2100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3483
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 65
+#restricted 18
+#onlygeosrc 64
+#end
+
+#selectspell 555
+#name "Summon Angiri"
+#school 0
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3666
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 556
+#name "Summon Nagas"
+#school 0
+#researchlevel 3
+#path 0 2
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1319
+#nreff 9
+#spec 0
+#explspr 0
+#restricted 68
+#end
+
+#selectspell 557
+#name "Summon Apsaras"
+#school 0
+#researchlevel 3
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1332
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 558
+#name "Summon Vidyadhara"
+#school 0
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 1500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3668
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 559
+#name "Contact Yaksha"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1329
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 560
+#name "Contact Yakshini"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1330
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 561
+#name "Contact Nagini"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1322
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#end
+
+#selectspell 562
+#name "Summon Gandharvas"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1335
+#nreff 6
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 563
+#name "Summon Kimpurushas"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3665
+#nreff 6
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 564
+#name "Contact Nagaraja"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1320
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#end
+
+#selectspell 565
+#name "Summon Garudas"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 2100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3664
+#nreff 6
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#end
+
+#selectspell 566
+#name "Summon Maruts"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 1800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3667
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 567
+#name "Summon Kinnara"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1331
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 568
+#name "Contact Nagarishi"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1321
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#end
+
+#selectspell 569
+#name "Summon Siddha"
+#school 0
+#researchlevel 7
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1337
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 570
+#name "Summon Devata"
+#school 0
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 4500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1336
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 571
+#name "Summon Devala"
+#school 0
+#researchlevel 9
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 5500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1713
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 572
+#name "Summon Rudra"
+#school 0
+#researchlevel 9
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 5500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1906
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 20
+#restricted 108
+#end
+
+#selectspell 573
+#name "Celestial Music"
+#school 5
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 1
+#precision 0
+#damage 262144
+#nreff 1
+#spec 4227088
+#sound 31
+#explspr 10025
+#restricted 20
+#restricted 68
+-- ro: explspr frames = 5
+#end
+
+#selectspell 574
+#name "Summon Rakshasas"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1736
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 575
+#name "Feast of Flesh"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 5000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1742
+#nreff 18
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 576
+#name "Summon Asrapas"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1741
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 577
+#name "Summon Rakshasa Warriors"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 2100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1737
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 578
+#name "Summon Sandhyabalas"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 2500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1743
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 579
+#name "Summon Dakini"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 4
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 8100
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1714
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 580
+#name "Summon Samanishada"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1744
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 581
+#name "Summon Mandeha"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 5
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 13300
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 20
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 582
+#name "Summon Danavas"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 7000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1767
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 583
+#name "Summon Daitya"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 4500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3663
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 584
+#name "Host of Ganas"
+#school 0
+#researchlevel 2
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1764
+#nreff 2018
+#spec 0
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 585
+#name "Summon Vetalas"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1765
+#nreff 15
+#spec 8388608
+#explspr 0
+#restricted 68
+#restricted 21
+#restricted 108
+#end
+
+#selectspell 586
+#name "Summon Ko-Oni"
+#school 0
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1260
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 110
+#restricted 70
+#end
+
+#selectspell 587
+#name "Summon Kappa"
+#school 0
+#researchlevel 1
+#path 0 2
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1482
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 23
+#restricted 110
+#end
+
+#selectspell 588
+#name "Summon Ao-Oni"
+#school 0
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1264
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 110
+#restricted 70
+#end
+
+#selectspell 589
+#name "Summon Karasu Tengus"
+#school 0
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1478
+#nreff 3
+#spec 0
+#explspr 0
+#restricted 23
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 590
+#name "Summon Aka-Oni"
+#school 0
+#researchlevel 3
+#path 0 0
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1266
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 110
+#restricted 70
+#end
+
+#selectspell 591
+#name "Summon Konoha Tengus"
+#school 0
+#researchlevel 3
+#path 0 1
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1479
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 23
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 592
+#name "Ghost General"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1256
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 110
+#restricted 23
+#restricted 70
+#end
+
+#selectspell 593
+#name "Summon Oni"
+#school 0
+#researchlevel 4
+#path 0 3
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1272
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 110
+#restricted 70
+#end
+
+#selectspell 594
+#name "Contact Dai Tengu"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 5500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1480
+#nreff 1
+#spec 0
+#nextspell 77
+#explspr 0
+#restricted 23
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 595
+#name "Contact Nushi"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1431
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 23
+#restricted 70
+#restricted 110
+#onlygeosrc 32
+#end
+
+#selectspell 596
+#name "Summon Kuro-Oni"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1274
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 110
+#restricted 70
+#end
+
+#selectspell 597
+#name "Summon Oni General"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 2000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1276
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#restricted 70
+#end
+
+#selectspell 598
+#name "Contact Kitsune"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1434
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 70
+#restricted 110
+#end
+
+#selectspell 599
+#name "Summon Dai Oni"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 4500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1316
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 110
+#restricted 70
+#end
+
+#selectspell 600
+#name "Bind Penumbral"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2497
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 15
+#end
+
+#selectspell 601
+#name "Summon Penumbrals"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2497
+#nreff 6
+#spec 8388608
+#explspr 0
+#restricted 59
+#restricted 102
+#end
+
+#selectspell 602
+#name "Summon Umbrals"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1490
+#nreff 6
+#spec 8388608
+#explspr 0
+#restricted 59
+#restricted 102
+#end
+
+#selectspell 603
+#name "Olm Conclave"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 2000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2527
+#nreff 1
+#spec 8388608
+#nextspell 110
+#explspr 0
+#restricted 59
+#onlygeosrc 4096
+#end
+
+#selectspell 604
+#name "Hall of Statues"
+#school 4
+#researchlevel 8
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 3000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1496
+#nreff 4000
+#spec 8388608
+#explspr 0
+#restricted 59
+#end
+
+#selectspell 605
+#name "Revive Cavern Wights"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1501
+#nreff 5
+#spec 0
+#explspr 0
+#restricted 15
+#end
+
+#selectspell 606
+#name "Bind Umbral"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1490
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 15
+#end
+
+#selectspell 607
+#name "Unleash Imprisoned Ones"
+#school 1
+#researchlevel 8
+#path 0 3
+#pathlevel 0 6
+#path 1 5
+#pathlevel 1 4
+#fatiguecost 10000
+#aoe 0
+#effect 10116
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#restricted 15
+#onlyatsite 112
+#end
+
+#selectspell 608
+#name "Rhuax Pact"
+#school 0
+#researchlevel 3
+#path 0 0
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 640
+#nreff 3
+#spec 8388608
+#explspr 0
+#restricted 15
+#restricted 59
+#onlyatsite 110
+#end
+
+#selectspell 609
+#name "Barathrus Pact"
+#school 0
+#researchlevel 3
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3741
+#nreff 2
+#spec 8388608
+#explspr 0
+#restricted 15
+#restricted 59
+#onlyatsite 110
+#end
+
+#selectspell 610
+#name "Mirror of Earth's Memories"
+#school 5
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 500
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 5760
+#nreff 1
+#spec 8388608
+#onlyfriendlydst 1
+#provrange 10
+#restricted 15
+#onlyatsite 167
+#onlygeodst 4096
+#end
+
+#selectspell 611
+#name "Attentive Statues"
+#school 4
+#researchlevel 1
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1497
+#nreff 2
+#spec 8388608
+#explspr 0
+#restricted 59
+#end
+
+#selectspell 612
+#name "Enliven Sentinel"
+#school 4
+#researchlevel 3
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1496
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 59
+#end
+
+#selectspell 613
+#name "Enliven Granite Guard"
+#school 4
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1498
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 59
+#end
+
+#selectspell 614
+#name "Enliven Marble Oracle"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1499
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 59
+#end
+
+#selectspell 615
+#name "Animate Mercury"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 2515
+#nreff 1
+#spec 8388608
+#sound 31
+#explspr 0
+#end
+
+#selectspell 616
+#name "Living Mercury"
+#school 4
+#researchlevel 5
+#path 0 2
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 1
+#precision 0
+#damage 3762
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 15
+#restricted 59
+#restricted 69
+#end
+
+#selectspell 617
+#name "Nightmare Construction"
+#school 4
+#researchlevel 5
+#path 0 0
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2520
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 618
+#name "Iron Corpse Reanimation"
+#school 4
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1439
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 619
+#name "Reanimate Ancestor"
+#school 4
+#researchlevel 2
+#path 0 3
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 300
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1440
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 620
+#name "Flame Corpse Construction"
+#school 4
+#researchlevel 4
+#path 0 0
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1441
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 621
+#name "Ktonian Legion"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1439
+#nreff 5020
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 622
+#name "Awaken Shard Wights"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2509
+#nreff 505
+#spec 0
+#explspr 0
+#restricted 59
+#restricted 102
+#end
+
+#selectspell 623
+#name "Awaken Sepulchral"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1500
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 624
+#name "Awaken Tomb Oracle"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1476
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 625
+#name "Hall of the Dead"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 2500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2509
+#nreff 4000
+#spec 0
+#explspr 0
+#restricted 102
+#end
+
+#selectspell 626
+#name "Iron Marionettes"
+#school 1
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 25
+#effect 23
+#range 30
+#precision 100
+#damage 33554432
+#nreff 1
+#spec 281034760
+#sound 22
+#explspr 10049
+#restricted 102
+#end
+
+#selectspell 627
+#name "Contact Void Spectre"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1562
+#nreff 1
+#spec 8388608
+#explspr 0
+#restricted 127
+#end
+
+#selectspell 628
+#name "Mind Vessel"
+#school 5
+#researchlevel 3
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 1500
+#aoe 1
+#effect 10125
+#range 0
+#precision 0
+#damage 100
+#nreff 1
+#spec 8388608
+#provrange 2
+#restricted 44
+-- ro: ability 718 (#reqspellsinger stores 616, #reqtaskmaster stores 379, #reqseduce stores 298, #reqplant stores 500) = 530
+-- ro: ability 784 = 1
+#end
+
+#selectspell 629
+#name "Enslave Sea Trolls"
+#school 5
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1529
+#nreff 505
+#spec 8388608
+#explspr 0
+#restricted 44
+#end
+
+#selectspell 630
+#name "Dreams of R'lyeh"
+#school 5
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 400
+#aoe 0
+#effect 10110
+#range 0
+#precision -1
+#damage 2052
+#nreff 1
+#spec 8392704
+#spec2 1024
+#provrange 10
+#restricted 127
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 631
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 0
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 632
+#name "..."
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 0
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#end
+
+#selectspell 633
+#name "Burning Hands"
+#school 2
+#researchlevel 1
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 1
+#effect 2
+#range 1
+#precision 0
+#damage 1014
+#nreff 1
+#spec 96
+#sound 16
+#explspr 10133
+#casttime 50
+#end
+
+#selectspell 634
+#name "Fire Darts"
+#school 2
+#researchlevel 1
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5025
+#precision 1
+#damage 10
+#nreff 1003
+#spec 96
+#sound 102
+#flightspr 10143
+#explspr 10146
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+-- ro: ability 723 = 123
+#end
+
+#selectspell 635
+#name "Flame Bolt"
+#school 2
+#researchlevel 1
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5035
+#precision 2
+#damage 2011
+#nreff 1
+#spec 96
+#sound 127
+#flightspr 10073
+#explspr 10146
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 636
+#name "Shocking Grasp"
+#school 2
+#researchlevel 1
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 2
+#range 1
+#precision 0
+#damage 3015
+#nreff 1
+#spec 8390784
+#nextspell 1
+#sound 24
+#explspr 10219
+#casttime 50
+#end
+
+#selectspell 637
+#name "Gust of Winds"
+#school 2
+#researchlevel 1
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 2
+#effect 128
+#range 5030
+#precision 2
+#damage 2013
+#nreff 1
+#spec 4398048608256
+#nextspell 120
+#sound 108
+#explspr 10394
+#end
+
+#selectspell 638
+#name "Slime"
+#school 2
+#researchlevel 1
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 5025
+#precision 2
+#damage 134217728
+#nreff 1
+#spec 20480
+#sound 106
+#flightspr 10256
+#strikesound 107
+-- ro: flightspr frames = 9
+#end
+
+#selectspell 639
+#name "Water Strike"
+#school 2
+#researchlevel 1
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5030
+#precision 2
+#damage 2011
+#nreff 1
+#spec 41959424
+#sound 54
+#explspr 10325
+#end
+
+#selectspell 640
+#name "Cold Bolt"
+#school 2
+#researchlevel 1
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5040
+#precision 3
+#damage 1011
+#nreff 1
+#spec 576
+#sound 21
+#flightspr 10068
+#explspr 10380
+#strikesound 106
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 641
+#name "Geyser"
+#school 2
+#researchlevel 1
+#path 0 2
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 10
+#aoe 3
+#effect 2
+#range 5015
+#precision 3
+#damage 1005
+#nreff 1
+#spec 8388704
+#sound 42
+#flightspr 10065
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 642
+#name "Acid Spray"
+#school 2
+#researchlevel 1
+#path 0 2
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 5
+#effect 2
+#range 2
+#precision 0
+#damage 10
+#nreff 1
+#spec 2199023255616
+#sound 16
+#flightspr 10070
+#explspr 10130
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 643
+#name "Astral Projection"
+#school 2
+#researchlevel 1
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 200
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 37
+#nreff 1
+#spec 8388608
+#flightspr 0
+#explspr 0
+#provrange 7
+#hiddenench 1
+#nocastmindless 1
+#ainocast 1
+#end
+
+#selectspell 644
+#name "Star Fires"
+#school 2
+#researchlevel 1
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 35
+#precision 2
+#damage 1004
+#nreff 3
+#spec 128
+#sound 16
+#explspr 10306
+-- ro: explspr frames = 5
+#end
+
+#selectspell 645
+#name "Arcane Bolt"
+#school 2
+#researchlevel 1
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5030
+#precision 3
+#damage 1008
+#nreff 1
+#spec 8388752
+#sound 21
+#flightspr 10068
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 646
+#name "Vine Arrow"
+#school 2
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5025
+#precision 0
+#damage 1013
+#nreff 1
+#spec 274877906944
+#nextspell 47
+#sound 14
+#flightspr 419
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 647
+#name "Bewitching Lights"
+#school 2
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 3
+#effect 128
+#range 30
+#precision 1
+#damage 100
+#nreff 1
+#spec 17170560
+#sound 39
+#explspr 10341
+#end
+
+#selectspell 648
+#name "Fire Blast"
+#school 2
+#researchlevel 2
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 3
+#effect 2
+#range 1005
+#precision 0
+#damage 2011
+#nreff 1
+#spec 96
+#sound 127
+#flightspr 10073
+#explspr 10113
+-- ro: flightspr frames = 0
+-- ro: ability 917 = 8
+#end
+
+#selectspell 649
+#name "Flare"
+#school 2
+#researchlevel 2
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 50
+#aoe 1
+#effect 2
+#range 5030
+#precision 1
+#damage 2016
+#nreff 1
+#spec 96
+#sound 127
+#flightspr 10238
+#explspr 10133
+#strikesound 16
+-- ro: flightspr frames = 0
+-- ro: ability 918 = 8
+#end
+
+#selectspell 650
+#name "Sulphur Haze"
+#school 2
+#researchlevel 2
+#path 0 0
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1002
+#effect 148
+#range 30
+#precision 0
+#damage 4096
+#nreff 1
+#spec 128
+#nextspell 39
+#sound 16
+#explspr 10367
+#end
+
+#selectspell 651
+#name "Cold Blast"
+#school 2
+#researchlevel 2
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 3
+#effect 2
+#range 1005
+#precision 0
+#damage 2008
+#nreff 1
+#spec 576
+#sound 21
+#flightspr 10068
+#explspr 10108
+-- ro: flightspr frames = 0
+-- ro: ability 917 = 1
+#end
+
+#selectspell 652
+#name "Lightning Bolt"
+#school 2
+#researchlevel 2
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 0
+#effect 2
+#range 5030
+#precision 4
+#damage 1012
+#nreff 1
+#spec 8598341760
+#nextspell 1
+#sound 24
+#explspr 10219
+#end
+
+#selectspell 653
+#name "Shock Wave"
+#school 2
+#researchlevel 2
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 6
+#effect 2
+#range 2
+#precision 0
+#damage 1007
+#nreff 1
+#spec 8390784
+#sound 24
+#explspr 10219
+#end
+
+#selectspell 654
+#name "Rust Mist"
+#school 2
+#researchlevel 2
+#path 0 3
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 30
+#aoe 1007
+#effect 148
+#range 30
+#precision 0
+#damage 32768
+#nreff 1
+#spec 16384
+#sound 42
+#explspr 10367
+#end
+
+#selectspell 655
+#name "Solar Rays"
+#school 2
+#researchlevel 2
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5030
+#precision 100
+#damage 1012
+#nreff 1
+#spec 268435528
+#sound 41
+#explspr 10323
+#reqsun 1
+#end
+
+#selectspell 656
+#name "Web"
+#school 2
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 3
+#effect 11
+#range 2023
+#precision 2
+#damage 536870912
+#nreff 1
+#spec 4398057013248
+#sound 42
+#flightspr 10278
+#explspr 10279
+-- ro: flightspr frames = 9
+#end
+
+#selectspell 657
+#name "Ephemeral Bolt"
+#school 2
+#researchlevel 2
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 1
+#effect 2
+#range 5025
+#precision 2
+#damage 1002
+#nreff 1
+#spec 17188262016
+#sound 16
+#flightspr 10081
+#explspr 10146
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 658
+#name "Warrior Illusion"
+#school 2
+#researchlevel 2
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 1
+#range 5
+#precision 0
+#damage 297
+#nreff 1
+#spec 8388608
+#sound 42
+#explspr 10275
+-- ro: explspr frames = 5
+#end
+
+#selectspell 659
+#name "Fireball"
+#school 2
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5025
+#precision 1
+#damage 2012
+#nreff 1
+#spec 96
+#nextspell 115
+#sound 127
+#flightspr 10073
+#explspr 10113
+#strikesound 123
+-- ro: flightspr frames = 0
+-- ro: ability 916 = 8
+#end
+
+#selectspell 660
+#name "Storm Wind"
+#school 2
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 2004
+#effect 128
+#range 5030
+#precision 3
+#damage 2013
+#nreff 1
+#spec 4398048608256
+#nextspell 120
+#sound 108
+#explspr 10394
+#end
+
+#selectspell 661
+#name "Rain"
+#school 2
+#researchlevel 3
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 7
+#nreff 1
+#spec 0
+#sound 27
+#explspr 10406
+#nogeosrc 4096
+#end
+
+#selectspell 662
+#name "Freezing Mist"
+#school 2
+#researchlevel 3
+#path 0 2
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1007
+#effect 147
+#range 30
+#precision 1
+#damage 1
+#nreff 1
+#spec 640
+#sound 39
+#explspr 10367
+#end
+
+#selectspell 663
+#name "Acid Bolt"
+#school 2
+#researchlevel 3
+#path 0 2
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 30
+#aoe 1
+#effect 2
+#range 5025
+#precision 3
+#damage 1014
+#nreff 1
+#spec 2199023255616
+#nextspell 116
+#sound 16
+#flightspr 10070
+#explspr 10130
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 664
+#name "Magma Bolts"
+#school 2
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5025
+#precision 2
+#damage 2023
+#nreff 5
+#spec 549755813888
+#nextspell 112
+#sound 16
+#flightspr 10080
+#explspr 10144
+#strikesound 107
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 665
+#name "Arcane Probing"
+#school 2
+#researchlevel 3
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 300
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 4
+#nreff 1
+#spec 8388608
+#onlyfriendlydst 1
+#provrange 4
+#end
+
+#selectspell 666
+#name "Magic Duel"
+#school 2
+#researchlevel 3
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 27
+#range 100
+#precision 100
+#damage 999
+#nreff 1
+#spec 8536192
+#sound 41
+#explspr 10225
+#nocastmindless 1
+-- ro: ability 405 = 1
+#end
+
+#selectspell 667
+#name "Healing Light"
+#school 2
+#researchlevel 3
+#path 0 4
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 13
+#range 5025
+#precision 100
+#damage 15
+#nreff 1
+#spec 537526400
+#sound 29
+#explspr 10303
+-- ro: explspr frames = 5
+#end
+
+#selectspell 668
+#name "Shadow Bolt"
+#school 2
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5025
+#precision 3
+#damage 1005
+#nreff 1
+#spec 2305843009222623360
+#nextspell 42
+#sound 42
+#flightspr 10080
+#explspr 10149
+#strikesound 107
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 669
+#name "Poison Darts"
+#school 2
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 109
+#range 5025
+#precision 3
+#damage 9
+#nreff 1004
+#spec 274877907008
+#sound 14
+#flightspr 419
+-- ro: flightspr frames = 0
+-- ro: ability 910 = 5
+#end
+
+#selectspell 670
+#name "False Fire"
+#school 2
+#researchlevel 3
+#path 0 7
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5025
+#precision 1
+#damage 2012
+#nreff 1
+#spec 17179873376
+#nextspell 122
+#sound 127
+#flightspr 10401
+#explspr 10402
+#strikesound 123
+-- ro: flightspr frames = 0
+-- ro: ability 916 = 16777216
+#end
+
+#selectspell 671
+#name "Elf Shot"
+#school 2
+#researchlevel 3
+#path 0 7
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 3
+#range 5025
+#precision 4
+#damage 100
+#nreff 1
+#spec 4224
+#sound 14
+#flightspr 10271
+#explspr 10272
+#casttime 50
+-- ro: flightspr frames = 5
+-- ro: explspr frames = 5
+#end
+
+#selectspell 672
+#name "Dance of Ephemeral Swords"
+#school 2
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 72057594037927936
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 673
+#name "Cloud of Dreamless Slumber"
+#school 2
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1001
+#effect 147
+#range 30
+#precision 3
+#damage 2097152
+#nreff 1
+#spec 545919104
+#sound 29
+#explspr 10367
+#end
+
+#selectspell 674
+#name "Fire Cloud"
+#school 2
+#researchlevel 4
+#path 0 0
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1005
+#effect 147
+#range 30
+#precision 1
+#damage 8
+#nreff 1
+#spec 96
+#sound 16
+#explspr 10411
+#end
+
+#selectspell 675
+#name "Fate of Oedipus"
+#school 2
+#researchlevel 4
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 7500
+#aoe 0
+#effect 10022
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 676
+#name "Breath of the Desert"
+#school 2
+#researchlevel 4
+#path 0 0
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 13
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#nogeodst 4
+-- ro: ability 725 = 1
+#end
+
+#selectspell 677
+#name "Thunder Strike"
+#school 2
+#researchlevel 4
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 50
+#aoe 1
+#effect 2
+#range 100
+#precision -2
+#damage 2020
+#nreff 1
+#spec 2176
+#nextspell 5
+#sound 27
+#explspr 10241
+-- ro: ability 579 = 1
+#end
+
+#selectspell 678
+#name "Hurricane"
+#school 2
+#researchlevel 4
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 7
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#nogeodst 4100
+-- ro: ability 725 = 1
+#end
+
+#selectspell 679
+#name "Acid Rain"
+#school 2
+#researchlevel 4
+#path 0 2
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 30
+#aoe 1003
+#effect 2
+#range 30
+#precision -1
+#damage 12
+#nreff 1
+#spec 2199023255616
+#nextspell 13
+#sound 16
+#flightspr 10387
+#explspr 10388
+#strikesound 118
+-- ro: flightspr frames = 9
+-- ro: ability 720 = 1
+-- ro: ability 579 = 1
+#end
+
+#selectspell 680
+#name "Blade Wind"
+#school 2
+#researchlevel 4
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 80
+#aoe 0
+#effect 2
+#range 5020
+#precision 0
+#damage 14
+#nreff 3041
+#spec 1099580833792
+#sound 45
+#flightspr 304
+-- ro: flightspr frames = 4
+#end
+
+#selectspell 681
+#name "Nether Bolt"
+#school 2
+#researchlevel 4
+#path 0 4
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 15
+#aoe 1
+#effect 2
+#range 5030
+#precision 2
+#damage 1019
+#nreff 1
+#spec 17592194433088
+#nextspell 24
+#sound 41
+#flightspr 10080
+#explspr 10107
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 682
+#name "Bolt of Unlife"
+#school 2
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 74
+#range 1028
+#precision 1
+#damage 1013
+#nreff 1
+#spec 9064576
+#sound 42
+#flightspr 10076
+#explspr 10149
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 683
+#name "Bane Fire Dart"
+#school 2
+#researchlevel 4
+#path 0 5
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5025
+#precision 4
+#damage 2013
+#nreff 1
+#spec 64
+#nextspell 11
+#sound 16
+#flightspr 10262
+#explspr 10262
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 684
+#name "Breath of the Dragon"
+#school 2
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1002
+#effect 7
+#range 5010
+#precision -1
+#damage 2003
+#nreff 1
+#spec 8320
+#sound 16
+#flightspr 10079
+#explspr 10177
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 685
+#name "Ephemeral Blast"
+#school 2
+#researchlevel 4
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 10
+#aoe 1001
+#effect 2
+#range 5025
+#precision 2
+#damage 2001
+#nreff 1
+#spec 17188262016
+#sound 16
+#flightspr 10081
+#explspr 10101
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 686
+#name "Ghost Wolves"
+#school 2
+#researchlevel 4
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 10
+#aoe 0
+#effect 1
+#range 5
+#precision 0
+#damage 298
+#nreff 2
+#spec 8388608
+#sound 42
+#explspr 10275
+-- ro: explspr frames = 5
+#end
+
+#selectspell 687
+#name "Falling Fires"
+#school 2
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1003
+#effect 2
+#range 50
+#precision -3
+#damage 15
+#nreff 1
+#spec 96
+#sound 127
+#flightspr 10382
+#explspr 10383
+#strikesound 123
+#casttime 125
+-- ro: flightspr frames = 9
+-- ro: ability 916 = 8
+-- ro: ability 720 = 1
+-- ro: ability 579 = 1
+#end
+
+#selectspell 688
+#name "Fires from Afar"
+#school 2
+#researchlevel 5
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10091
+#range 0
+#precision 0
+#damage 2012
+#nreff 20
+#spec 96
+#provrange 3
+#nogeodst 4100
+#end
+
+#selectspell 689
+#name "farkill: Fires from Afar"
+#school -1
+#researchlevel 1
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5025
+#precision 1
+#damage 2012
+#nreff 1
+#spec 96
+#nextspell 3
+#sound 118
+#flightspr 10073
+#explspr 10113
+#strikesound 89
+-- ro: flightspr frames = 0
+-- ro: ability 720 = 2
+-- ro: ability 722 = 16
+#end
+
+#selectspell 690
+#name "Liquid Flames of Rhuax"
+#school 2
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5015
+#precision 0
+#damage 2018
+#nreff 1
+#spec 576460752303423584
+#sound 16
+#flightspr 10308
+#explspr 10310
+#restricted 16
+#restricted 63
+#restricted 104
+#restricted 15
+-- ro: flightspr frames = 9
+#end
+
+#selectspell 691
+#name "Splash of Molten Metal"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 6
+#effect 2
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 96
+#sound -1
+#explspr 10311
+-- ro: ability 918 = 8
+#end
+
+#selectspell 692
+#name "Hidden Flame"
+#school 2
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5025
+#precision 0
+#damage 3016
+#nreff 1
+#spec 2882303761517117616
+#sound 16
+#flightspr 10308
+#explspr 10310
+-- ro: flightspr frames = 9
+#end
+
+#selectspell 693
+#name "Astral Conflagration"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 9
+#effect 2
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 135328
+#sound -1
+#explspr 10311
+#end
+
+#selectspell 694
+#name "Falling Frost"
+#school 2
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1007
+#effect 2
+#range 50
+#precision -2
+#damage 1007
+#nreff 1
+#spec 576
+#sound 39
+#flightspr 10385
+#explspr 10386
+#strikesound 40
+#casttime 125
+-- ro: flightspr frames = 9
+-- ro: ability 916 = 1
+-- ro: ability 720 = 1
+-- ro: ability 579 = 1
+#end
+
+#selectspell 695
+#name "Orb Lightning"
+#school 2
+#researchlevel 5
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 134
+#range 20
+#precision 0
+#damage 5
+#nreff 1
+#spec 8598325376
+#sound 24
+#flightspr 10307
+#maxbounces 7
+-- ro: flightspr frames = 9
+#end
+
+#selectspell 696
+#name "Earthquake"
+#school 2
+#researchlevel 5
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 300
+#aoe 666
+#effect 2
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 70368747323456
+#spec2 4
+#nextspell 104
+#sound 17
+#explspr -2
+#nextingeo 4096
+-- ro: explspr frames = 0
+-- ro: ability 745 = 1
+#end
+
+#selectspell 697
+#name "Cave Collapse"
+#school 0
+#researchlevel 0
+#fatiguecost 0
+#aoe 664
+#effect 2
+#range 0
+#precision 0
+#damage 20
+#nreff 1
+#spec 3145792
+#nextspell 104
+#explspr 10384
+-- ro: explspr frames = 5
+#end
+
+#selectspell 698
+#name "Gifts from Heaven"
+#school 2
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 50
+#aoe 1
+#effect 2
+#range 100
+#precision -3
+#damage 150
+#nreff 3
+#spec 549755813888
+#nextspell 107
+#sound 108
+#flightspr 10280
+#explspr 10282
+#strikesound 89
+#nogeosrc 4096
+#makecrater 1
+#casttime 125
+-- ro: flightspr frames = 5
+-- ro: explspr frames = 5
+-- ro: ability 720 = 1
+-- ro: ability 579 = 1
+#end
+
+#selectspell 699
+#name "Stellar Cascades"
+#school 2
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 7
+#effect 3
+#range 35
+#precision 100
+#damage 25
+#nreff 1
+#spec 2305843009213694016
+#sound 41
+#explspr 10250
+#end
+
+#selectspell 700
+#name "Astral Geyser"
+#school 2
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1
+#effect 601
+#range 5035
+#precision 0
+#damage 261
+#nreff 1
+#spec 8519808
+#nextspell 83
+#sound 41
+#explspr 10251
+-- ro: explspr frames = 5
+#end
+
+#selectspell 701
+#name "Shadow Blast"
+#school 2
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1007
+#effect 2
+#range 5025
+#precision 0
+#damage 1006
+#nreff 1
+#spec 2305843009222623360
+#nextspell 42
+#sound 42
+#flightspr 10080
+#explspr 10120
+#strikesound 106
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 702
+#name "Poison Arrows"
+#school 2
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5025
+#precision 3
+#damage 1013
+#nreff 1002
+#spec 274877906944
+#sound 14
+#flightspr 419
+-- ro: flightspr frames = 0
+-- ro: ability 910 = 5
+#end
+
+#selectspell 703
+#name "Poison Cloud"
+#school 2
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1003
+#effect 147
+#range 30
+#precision -1
+#damage 64
+#nreff 1
+#spec 8396928
+#sound 42
+#explspr 10367
+#end
+
+#selectspell 704
+#name "Illusory Army"
+#school 2
+#researchlevel 5
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1000
+#precision 0
+#damage 297
+#nreff 5005
+#spec 8388608
+#sound 42
+#explspr 10275
+-- ro: explspr frames = 5
+#end
+
+#selectspell 705
+#name "Project Self"
+#school 2
+#researchlevel 5
+#path 0 7
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10168
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 706
+#name "Flame Eruption"
+#school 2
+#researchlevel 6
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 30
+#aoe 15
+#effect 2
+#range 1005
+#precision 0
+#damage 1011
+#nreff 1
+#spec 96
+#sound 16
+#flightspr 10093
+#explspr 10133
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 707
+#name "Wrathful Skies"
+#school 2
+#researchlevel 6
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 34
+#nreff 1
+#spec 0
+#sound 27
+#explspr 10226
+#end
+
+#selectspell 708
+#name "Perpetual Storm"
+#school 2
+#researchlevel 6
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 16
+#nreff 1
+#spec 8388608
+#flightspr 0
+#explspr 0
+#end
+
+#selectspell 709
+#name "Cleansing Water"
+#school 2
+#researchlevel 6
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1003
+#effect 2
+#range 5020
+#precision 0
+#damage 1003
+#nreff 1
+#spec 136
+#sound 30
+#flightspr 10065
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 710
+#name "Magma Eruption"
+#school 2
+#researchlevel 6
+#path 0 3
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 50
+#aoe 1004
+#effect 2
+#range 30
+#precision 0
+#damage 1020
+#nreff 1
+#spec 549764202496
+#sound 16
+#explspr 10194
+-- ro: ability 919 = 8
+#end
+
+#selectspell 711
+#name "Mind Hunt"
+#school 2
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 0
+#effect 10057
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 8405120
+#explspr 0
+#provrange 6
+#nocastmindless 1
+#end
+
+#selectspell 712
+#name "Astral Fires"
+#school 2
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5025
+#precision 100
+#damage 10
+#nreff 1
+#spec 17592194433152
+#nextspell 118
+#sound 16
+#explspr 10378
+#end
+
+#selectspell 713
+#name "The Wrath of God"
+#school 2
+#researchlevel 6
+#path 0 4
+#pathlevel 0 5
+#path 1 1
+#pathlevel 1 3
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 14
+#nreff 1
+#spec 8388608
+#flightspr 0
+#explspr 0
+#end
+
+#selectspell 714
+#name "Blast of Unlife"
+#school 2
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 2
+#effect 74
+#range 1027
+#precision 0
+#damage 1017
+#nreff 1
+#spec 9048192
+#sound 42
+#flightspr 10077
+#explspr 10263
+-- ro: flightspr frames = 0
+-- ro: explspr frames = 5
+#end
+
+#selectspell 715
+#name "Bane Fire"
+#school 2
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 5030
+#precision 1
+#damage 1052
+#nreff 1
+#spec 8388672
+#nextspell 117
+#sound 16
+#explspr 10127
+#end
+
+#selectspell 716
+#name "Stream of Life"
+#school 2
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1
+#effect 72
+#range 5025
+#precision 2
+#damage 5025
+#nreff 1
+#spec 36028797564752000
+#sound 41
+#explspr 10067
+-- ro: explspr frames = 5
+#end
+
+#selectspell 717
+#name "False Horror"
+#school 2
+#researchlevel 6
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 10
+#aoe 0
+#effect 1
+#range 5
+#precision 0
+#damage 448
+#nreff 1
+#spec 8388608
+#sound 28
+#end
+
+#selectspell 718
+#name "Fire Storm"
+#school 2
+#researchlevel 7
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 25
+#nreff 1
+#spec 0
+#sound 16
+#explspr 10034
+#end
+
+#selectspell 719
+#name "Elemental Opposition of Water"
+#school 2
+#researchlevel 7
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10153
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 720
+#name "Thunderstorm"
+#school 2
+#researchlevel 7
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 3000
+#aoe 0
+#effect 10091
+#range 0
+#precision 0
+#damage 2020
+#nreff 5020
+#spec 2176
+#provrange 3
+#nogeodst 4100
+-- ro: ability 753 = 1
+-- ro: ability 771 = 10
+#end
+
+#selectspell 721
+#name "farkill: Thunderstorm"
+#school -1
+#researchlevel 1
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 100
+#precision 0
+#damage 2020
+#nreff 1
+#spec 2176
+#nextspell 5
+#sound 27
+#explspr 10241
+#end
+
+#selectspell 722
+#name "Elemental Opposition of Earth"
+#school 2
+#researchlevel 7
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10153
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 723
+#name "Ice Strike"
+#school 2
+#researchlevel 7
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 12000
+#effect 2
+#range 30
+#precision 1
+#damage 18
+#nreff 1
+#spec 1099511627776
+#sound 21
+#flightspr 10068
+#explspr 10108
+-- ro: flightspr frames = 0
+-- ro: ability 916 = 1
+#end
+
+#selectspell 724
+#name "Murdering Winter"
+#school 2
+#researchlevel 7
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 4000
+#aoe 0
+#effect 10041
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 8405632
+#explspr 0
+#provrange 4
+#nogeodst 4
+-- ro: ability 725 = 1
+-- ro: ability 726 = 75
+#end
+
+#selectspell 725
+#name "Elemental Opposition of Fire"
+#school 2
+#researchlevel 7
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10153
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 726
+#name "Acid Storm"
+#school 2
+#researchlevel 7
+#path 0 2
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 11
+#nreff 1
+#spec 0
+#sound 16
+#explspr 10027
+#end
+
+#selectspell 727
+#name "Elemental Opposition of Air"
+#school 2
+#researchlevel 7
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10153
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 728
+#name "Rain of Stones"
+#school 2
+#researchlevel 7
+#path 0 3
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 102
+#nreff 1
+#spec 563499711332352
+#sound 17
+#explspr 10042
+#end
+
+#selectspell 729
+#name "Nether Darts"
+#school 2
+#researchlevel 7
+#path 0 4
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 15
+#aoe 0
+#effect 2
+#range 5025
+#precision 0
+#damage 1014
+#nreff 1014
+#spec 17592194433088
+#nextspell 24
+#sound 41
+#flightspr 10147
+#explspr 10148
+-- ro: flightspr frames = 0
+-- ro: ability 723 = 123
+#end
+
+#selectspell 730
+#name "Cloud of Death"
+#school 2
+#researchlevel 7
+#path 0 5
+#pathlevel 0 4
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 2007
+#effect 146
+#range 30
+#precision -3
+#damage 262144
+#nreff 1
+#spec 528512
+#sound 23
+#explspr 10367
+#end
+
+#selectspell 731
+#name "Wind of Death"
+#school 2
+#researchlevel 7
+#path 0 5
+#pathlevel 0 4
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 256
+#nreff 1
+#spec 16777216
+#sound 27
+#explspr -4
+#casttime 200
+-- ro: explspr frames = 0
+-- ro: ability 745 = 1
+#end
+
+#selectspell 732
+#name "Stygian Rains"
+#school 2
+#researchlevel 7
+#path 0 5
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 200
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 17179869184
+#nreff 1
+#spec 536887300
+#nextspell 79
+#sound 45
+#explspr 10168
+#end
+
+#selectspell 733
+#name "Storm of Thorns"
+#school 2
+#researchlevel 7
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5025
+#precision 0
+#damage 1013
+#nreff 2006
+#spec 274877906944
+#nextspell 47
+#sound 14
+#flightspr 419
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 734
+#name "Poison Mist"
+#school 2
+#researchlevel 7
+#path 0 6
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 40
+#aoe 3006
+#effect 146
+#range 30
+#precision -1
+#damage 64
+#nreff 1
+#spec 8396928
+#sound 42
+#explspr 10367
+#end
+
+#selectspell 735
+#name "Miasma"
+#school 2
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 2500
+#aoe 0
+#effect 10091
+#range 0
+#precision 0
+#damage 1001
+#nreff 150
+#spec 8396928
+#provrange 4
+#onlygeodst 32
+-- ro: ability 753 = 1
+#end
+
+#selectspell 736
+#name "farkill: Miasma"
+#school -1
+#researchlevel 1
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 0
+#aoe 1
+#effect 7
+#range 100
+#precision 0
+#damage 1001
+#nreff 1
+#spec 8320
+#sound 88
+#explspr 10369
+#end
+
+#selectspell 737
+#name "Illusory Attack"
+#school 2
+#researchlevel 7
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 800
+#aoe 0
+#effect 10038
+#range 0
+#precision 0
+#damage 297
+#nreff 10015
+#spec 8388608
+#nextspell 30
+#explspr 0
+#provrange 4
+#farsumcom 3637
+-- ro: ability 727 = 1
+#end
+
+#selectspell 738
+#name "Shimmering Fields"
+#school 2
+#researchlevel 7
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 200
+#aoe 50
+#effect 2
+#range 25
+#precision 0
+#damage 1004
+#nreff 1
+#spec 17188262016
+#sound 106
+#flightspr 10095
+#explspr 10135
+#strikesound 106
+-- ro: flightspr frames = 0
+-- ro: ability 916 = 16777216
+#end
+
+#selectspell 739
+#name "Wailing Winds"
+#school 2
+#researchlevel 7
+#path 0 7
+#pathlevel 0 4
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 12
+#nreff 1
+#spec 0
+#sound 28
+#explspr 10028
+#end
+
+#selectspell 740
+#name "Pillar of Fire"
+#school 2
+#researchlevel 8
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 100
+#precision 0
+#damage 3029
+#nreff 1
+#spec 96
+#sound 27
+#explspr 10242
+-- ro: ability 923 = 10
+-- ro: ability 917 = 8
+#end
+
+#selectspell 741
+#name "Second Sun"
+#school 2
+#researchlevel 8
+#path 0 0
+#pathlevel 0 8
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 41
+#nreff 1
+#spec 8388608
+#explspr 0
+-- ro: ability 769 = 2
+-- ro: ability 703 (#nogeosrc 0..2147483647) = 34359744512
+#end
+
+#selectspell 742
+#name "Maelstrom"
+#school 2
+#researchlevel 8
+#path 0 2
+#pathlevel 0 6
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 47
+#nreff 1
+#spec 41943040
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#worldvisible 1
+#hiddenench 1
+#end
+
+#selectspell 743
+#name "Chain Lightning"
+#school 2
+#researchlevel 8
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 30
+#aoe 0
+#effect 134
+#range 25
+#precision 0
+#damage 1003
+#nreff 1
+#spec 8598325376
+#sound 24
+#flightspr 10307
+#maxbounces 20
+-- ro: flightspr frames = 5
+#end
+
+#selectspell 744
+#name "Meteor Shower"
+#school 2
+#researchlevel 8
+#path 0 3
+#pathlevel 0 5
+#path 1 4
+#pathlevel 1 4
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 103
+#nreff 1
+#spec 0
+#sound 110
+#explspr 10042
+#nogeosrc 4096
+#end
+
+#selectspell 745
+#name "Astral Tempest"
+#school 2
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 10035
+#end
+
+#selectspell 746
+#name "Vortex of Unlife"
+#school 2
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 20
+#aoe 1003
+#effect 74
+#range 2020
+#precision 0
+#damage 1011
+#nreff 1
+#spec 9048192
+#sound 23
+#explspr 10264
+-- ro: explspr frames = 5
+#end
+
+#selectspell 747
+#name "Aurora Borealis"
+#school 2
+#researchlevel 8
+#path 0 7
+#pathlevel 0 5
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 1
+#effect 81
+#range 1
+#precision -1
+#damage 122
+#nreff 1
+#spec 0
+#sound 39
+#explspr 10341
+#nogeosrc 6144
+-- ro: ability 741 (#reqsun 0..298) = -2
+#end
+
+#selectspell 748
+#name "Flames from the Sky"
+#school 2
+#researchlevel 9
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 3000
+#aoe 664
+#effect 10091
+#range 0
+#precision 0
+#damage 1015
+#nreff 1
+#spec 16480
+#explspr 0
+#provrange 4
+#nogeodst 4100
+-- ro: ability 753 = 1
+-- ro: ability 771 = 25
+#end
+
+#selectspell 749
+#name "farkill: Flames from the Sky"
+#school -1
+#researchlevel 1
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 0
+#precision 0
+#damage 1015
+#nreff 1
+#spec 96
+#nextspell 113
+#flightspr 10352
+#explspr 10354
+#strikesound 16
+-- ro: flightspr frames = 0
+-- ro: ability 720 = 2
+-- ro: ability 722 = 89
+-- ro: ability 917 = 8
+#end
+
+#selectspell 750
+#name "Flame Storm"
+#school 2
+#researchlevel 9
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 100
+#aoe 50
+#effect 2
+#range 5015
+#precision 0
+#damage 2005
+#nreff 1
+#spec 96
+#sound 127
+#flightspr 10093
+#explspr 10133
+#strikesound 123
+-- ro: flightspr frames = 0
+-- ro: ability 918 = 8
+#end
+
+#selectspell 751
+#name "Volcanic Eruption"
+#school 2
+#researchlevel 9
+#path 0 0
+#pathlevel 0 4
+#path 1 3
+#pathlevel 1 3
+#fatiguecost 2500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 4
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 6
+#end
+
+#selectspell 752
+#name "Lightning Field"
+#school 2
+#researchlevel 9
+#path 0 1
+#pathlevel 0 6
+#fatiguecost 100
+#aoe 100
+#effect 134
+#range 30
+#precision 0
+#damage 1
+#nreff 1
+#spec 8598325376
+#sound 24
+#maxbounces 8
+#end
+
+#selectspell 753
+#name "Niefel Flames"
+#school 2
+#researchlevel 9
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 100
+#aoe 5050
+#effect 2
+#range 5015
+#precision 0
+#damage 1007
+#nreff 1
+#spec 576
+#sound 16
+#flightspr 10368
+#explspr 10134
+-- ro: flightspr frames = 0
+-- ro: ability 918 = 1
+#end
+
+#selectspell 754
+#name "Tidal Wave"
+#school 2
+#researchlevel 8
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 6
+-- ro: ability 712 = 1
+#end
+
+#selectspell 755
+#name "Lost Land"
+#school 2
+#researchlevel 9
+#path 0 3
+#pathlevel 0 6
+#path 1 2
+#pathlevel 1 5
+#fatiguecost 10000
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 20
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 3
+-- ro: ability 712 = 1
+-- ro: ability 704 (#nogeodst 0..2147483647) = 34368126992
+#end
+
+#selectspell 756
+#name "Strands of Arcane Power"
+#school 2
+#researchlevel 9
+#path 0 4
+#pathlevel 0 7
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 79
+#nreff 1
+#spec 8388608
+#flightspr 0
+#explspr 0
+#nocastmindless 1
+#end
+
+#selectspell 757
+#name "Stellar Strike"
+#school 2
+#researchlevel 9
+#path 0 4
+#pathlevel 0 5
+#path 1 3
+#pathlevel 1 3
+#fatiguecost 2000
+#aoe 0
+#effect 10091
+#range 0
+#precision 0
+#damage 150
+#nreff 40
+#spec 549764202496
+#provrange 5
+#nogeodst 4100
+-- ro: ability 753 = 1
+-- ro: ability 772 = 15
+#end
+
+#selectspell 758
+#name "farkill: Stellar Strike"
+#school -1
+#researchlevel 1
+#path 0 4
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 50
+#aoe 1
+#effect 2
+#range 100
+#precision -3
+#damage 150
+#nreff 3
+#spec 549755813888
+#nextspell 107
+#sound 108
+#flightspr 10280
+#explspr 10282
+#strikesound 89
+#makecrater 1
+-- ro: flightspr frames = 5
+-- ro: explspr frames = 5
+-- ro: ability 720 = 1
+-- ro: ability 579 = 1
+#end
+
+#selectspell 759
+#name "Distill Gold"
+#school 1
+#researchlevel 1
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 1000
+#aoe 0
+#effect 10164
+#range 0
+#precision 0
+#damage 250
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 760
+#name "Charge Body"
+#school 1
+#researchlevel 1
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 16384
+#nreff 1
+#spec 8404992
+#sound 24
+#explspr 10028
+#end
+
+#selectspell 761
+#name "Fists of Iron"
+#school 1
+#researchlevel 1
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 1
+#precision 100
+#damage 15
+#nreff 1000
+#spec 549831311361
+#sound 45
+#explspr 39
+#casttime 50
+-- ro: explspr frames = 5
+#end
+
+#selectspell 762
+#name "Earth Grip"
+#school 1
+#researchlevel 1
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 11
+#range 20
+#precision 5
+#damage 16384
+#nreff 1
+#spec 70368752582656
+#spec2 4
+#sound 45
+#explspr 270
+-- ro: explspr frames = 4
+#end
+
+#selectspell 763
+#name "Hand of Death"
+#school 1
+#researchlevel 1
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 5
+#aoe 0
+#effect 2
+#range 1
+#precision 0
+#damage 5030
+#nreff 1
+#spec 8405120
+#sound 42
+#explspr 165
+#casttime 50
+-- ro: explspr frames = 3
+#end
+
+#selectspell 764
+#name "Skeletal Body"
+#school 1
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 274877906944
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 765
+#name "Eagle Eyes"
+#school 1
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 4
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10027
+#end
+
+#selectspell 766
+#name "Cat Eyes"
+#school 1
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 35184372088832
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10027
+#end
+
+#selectspell 767
+#name "Personal Poison Resistance"
+#school 1
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 288230376151711744
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10024
+#end
+
+#selectspell 768
+#name "Personal Barkskin"
+#school 1
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 16
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10037
+#end
+
+#selectspell 769
+#name "Blurred Body"
+#school 1
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 4398046511104
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 770
+#name "Burn"
+#school 1
+#researchlevel 2
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 11
+#range 30
+#precision 100
+#damage 512
+#nreff 1
+#spec 16416
+#sound 16
+#end
+
+#selectspell 771
+#name "Resist Cold"
+#school 1
+#researchlevel 2
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 4096
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 772
+#name "Resist Fire"
+#school 1
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 1024
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10025
+#end
+
+#selectspell 773
+#name "Quicken Self"
+#school 1
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 262144
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10025
+-- ro: explspr frames = 5
+#end
+
+#selectspell 774
+#name "Ice Shield"
+#school 1
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 549755813888
+#nreff 1
+#spec 41959424
+#sound 31
+#explspr 10005
+#end
+
+#selectspell 775
+#name "Gooey Water"
+#school 1
+#researchlevel 2
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1003
+#effect 11
+#range 5025
+#precision 2
+#damage 134217728
+#nreff 1
+#spec 41947136
+#sound 106
+#explspr 10379
+#strikesound 107
+#end
+
+#selectspell 776
+#name "Personal Mistform"
+#school 1
+#researchlevel 2
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 65536
+#nreff 1
+#spec 8404992
+#sound 23
+#explspr 10022
+-- ro: explspr frames = 5
+#end
+
+#selectspell 777
+#name "Resist Lightning"
+#school 1
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 2048
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 778
+#name "Alchemical Transmutation"
+#school 1
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 1000
+#aoe 0
+#effect 10164
+#range 0
+#precision 0
+#damage 200
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 779
+#name "Personal Stoneskin"
+#school 1
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 65536
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10038
+-- ro: explspr frames = 5
+#end
+
+#selectspell 780
+#name "Armor of Achilles"
+#school 1
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 40
+#aoe 1
+#effect 138
+#range 15
+#precision 3
+#damage 10
+#nreff 1
+#spec 8388736
+#sound 45
+#explspr 10058
+#end
+
+#selectspell 781
+#name "Gift of Cheated Fate"
+#school 1
+#researchlevel 2
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 10
+#precision 0
+#damage 1
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10046
+#end
+
+#selectspell 782
+#name "Weakness"
+#school 1
+#researchlevel 2
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 67
+#range 25
+#precision 3
+#damage 3
+#nreff 1
+#spec 8409216
+#sound 23
+#flightspr 339
+#explspr 10197
+-- ro: flightspr frames = 3
+#end
+
+#selectspell 783
+#name "Enlarge"
+#school 1
+#researchlevel 2
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 0
+#damage 2147483648
+#nreff 1
+#spec 12599300
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 784
+#name "Mirror Image"
+#school 1
+#researchlevel 2
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 162
+#range 0
+#precision 0
+#damage 2000
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 785
+#name "Blur"
+#school 1
+#researchlevel 2
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 20
+#precision 0
+#damage 4398046511104
+#nreff 1
+#spec 12599424
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 786
+#name "Fire Resistance"
+#school 1
+#researchlevel 3
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 1024
+#nreff 1
+#spec 12582912
+#explspr 10014
+#end
+
+#selectspell 787
+#name "Immolation"
+#school 1
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 7
+#effect 2
+#range 0
+#precision 0
+#damage 1010
+#nreff 1
+#spec 140737488355424
+#sound 16
+#explspr 10136
+#end
+
+#selectspell 788
+#name "Inner Sun"
+#school 1
+#researchlevel 3
+#path 0 0
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10023
+#range 0
+#precision 0
+#damage 67108864
+#nreff 1
+#spec 8929280
+#sound 41
+#explspr 55
+-- ro: explspr frames = 5
+#end
+
+#selectspell 789
+#name "Protective Winds"
+#school 1
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1001
+#effect 10
+#range 15
+#precision 0
+#damage 8
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10224
+#end
+
+#selectspell 790
+#name "Mist"
+#school 1
+#researchlevel 3
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 71
+#nreff 1
+#spec 0
+#sound 27
+#explspr 141
+-- ro: explspr frames = 8
+#end
+
+#selectspell 791
+#name "Cold Resistance"
+#school 1
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 4096
+#nreff 1
+#spec 12582912
+#explspr 10014
+#end
+
+#selectspell 792
+#name "Freeze"
+#school 1
+#researchlevel 3
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 25
+#precision 100
+#damage 268435456
+#nreff 1
+#spec 8405504
+#sound 21
+#explspr 10134
+#end
+
+#selectspell 793
+#name "Lightning Resistance"
+#school 1
+#researchlevel 3
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 2048
+#nreff 1
+#spec 12582912
+#explspr 10003
+#end
+
+#selectspell 794
+#name "Personal Ironskin"
+#school 1
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 268435456
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10031
+-- ro: explspr frames = 5
+#end
+
+#selectspell 795
+#name "Earth Meld"
+#school 1
+#researchlevel 3
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 60
+#aoe 5
+#effect 11
+#range 25
+#precision 3
+#damage 16384
+#nreff 1
+#spec 70368752582656
+#spec2 4
+#sound 45
+#explspr 270
+-- ro: explspr frames = 4
+#end
+
+#selectspell 796
+#name "Body Ethereal"
+#school 1
+#researchlevel 3
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 30
+#aoe 1
+#effect 10
+#range 10
+#precision 0
+#damage 134217728
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10002
+#end
+
+#selectspell 797
+#name "Gift of Cat Eyes"
+#school 1
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1001
+#effect 23
+#range 15
+#precision 0
+#damage 35184372088832
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 798
+#name "Barkskin"
+#school 1
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 100
+#damage 16
+#nreff 1
+#spec 8388612
+#sound 31
+#explspr 10004
+#end
+
+#selectspell 799
+#name "Animate Tree"
+#school 1
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 166
+#range 10
+#precision 100
+#damage 361
+#nreff 1
+#spec 536870912
+#spec2 64
+#sound 45
+#explspr 10044
+#end
+
+#selectspell 800
+#name "Torpor"
+#school 1
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 3
+#range 35
+#precision 100
+#damage 5010
+#nreff 1
+#spec 545935488
+#sound 29
+#explspr 10016
+-- ro: ability 915 = 1024
+#end
+
+#selectspell 801
+#name "Mossbody"
+#school 1
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 10
+#precision 0
+#damage 8
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10005
+#end
+
+#selectspell 802
+#name "Displace Body"
+#school 1
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 8796093022208
+#nreff 1
+#spec 4303372416
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 803
+#name "Group Blur"
+#school 1
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1001
+#effect 23
+#range 20
+#precision 0
+#damage 4398046511104
+#nreff 1
+#spec 12599424
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 804
+#name "Combustion"
+#school 1
+#researchlevel 4
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 30
+#precision 100
+#damage 512
+#nreff 1
+#spec 16416
+#sound 16
+#end
+
+#selectspell 805
+#name "Lacerating Winds"
+#school 1
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1003
+#effect 2
+#range 5030
+#precision 1
+#damage 1003
+#nreff 1
+#spec 1649267441664
+#sound 108
+#explspr 10394
+#end
+
+#selectspell 806
+#name "Liquid Body"
+#school 1
+#researchlevel 4
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 2680059592704
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 807
+#name "Quickness"
+#school 1
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 1
+#damage 262144
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10025
+-- ro: explspr frames = 5
+#end
+
+#selectspell 808
+#name "Slow"
+#school 1
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 30
+#precision 100
+#damage 68719476736
+#nreff 1
+#spec 8392704
+#sound 114
+#explspr 10304
+#end
+
+#selectspell 809
+#name "Encase in Ice"
+#school 1
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 609
+#range 25
+#precision 100
+#damage 299
+#nreff 1
+#spec 41959424
+#sound 21
+#explspr 10134
+#end
+
+#selectspell 810
+#name "Wolven Winter"
+#school 1
+#researchlevel 4
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+#nogeodst 4
+-- ro: ability 725 = 1
+#end
+
+#selectspell 811
+#name "Mistform"
+#school 1
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 10
+#precision 0
+#damage 65536
+#nreff 1
+#spec 12582912
+#sound 23
+#explspr 10009
+#end
+
+#selectspell 812
+#name "Stoneskin"
+#school 1
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 65536
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10038
+-- ro: explspr frames = 5
+#end
+
+#selectspell 813
+#name "Temper Flesh"
+#school 1
+#researchlevel 4
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 481036338176
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 814
+#name "Destruction"
+#school 1
+#researchlevel 4
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 40
+#aoe 6
+#effect 138
+#range 30
+#precision 3
+#damage 5
+#nreff 1
+#spec 8388736
+#sound 45
+#explspr 10060
+#end
+
+#selectspell 815
+#name "Curse of Stones"
+#school 1
+#researchlevel 4
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 300
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 32
+#nreff 1
+#spec 25427968
+#sound 42
+#explspr -7
+-- ro: explspr frames = 0
+-- ro: ability 745 = 1
+#end
+
+#selectspell 816
+#name "Blight"
+#school 1
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 9
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+#nogeodst 4
+-- ro: ability 725 = 1
+#end
+
+#selectspell 817
+#name "Arouse Hunger"
+#school 1
+#researchlevel 4
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 800
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage -4
+#nreff 5025
+#spec 0
+#explspr 0
+#provrange 3
+#nogeodst 4
+#end
+
+#selectspell 818
+#name "Elemental Fortitude"
+#school 1
+#researchlevel 4
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 7168
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10266
+#end
+
+#selectspell 819
+#name "Group Barkskin"
+#school 1
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1001
+#effect 10
+#range 15
+#precision 100
+#damage 16
+#nreff 1
+#spec 8388612
+#sound 31
+#explspr 10004
+#end
+
+#selectspell 820
+#name "Swarm"
+#school 1
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage -9
+#nreff 2016
+#spec 8388608
+#sound 44
+#explspr 0
+#end
+
+#selectspell 821
+#name "Stygian Skin"
+#school 1
+#researchlevel 4
+#path 0 5
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 17179869184
+#nreff 1
+#spec 545275908
+#sound 45
+#explspr 10168
+#end
+
+#selectspell 822
+#name "Shrink"
+#school 1
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 2016
+#precision 0
+#damage 4294967296
+#nreff 1
+#spec 8409092
+#sound 31
+#explspr 10041
+#end
+
+#selectspell 823
+#name "Eagle-eyed Warriors"
+#school 1
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 4
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 824
+#name "Twilight"
+#school 1
+#researchlevel 4
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 115
+#nreff 1
+#spec 0
+#sound 31
+#explspr 0
+-- ro: ability 1707 = -1
+#end
+
+#selectspell 825
+#name "Transmute Fire"
+#school 1
+#researchlevel 5
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10164
+#range 0
+#precision 0
+#damage 350
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 826
+#name "Cold Resistant Warriors"
+#school 1
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 4096
+#nreff 1
+#spec 12582912
+#explspr 10014
+#end
+
+#selectspell 827
+#name "Incinerate"
+#school 1
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 30
+#precision 100
+#damage 2012
+#nreff 1
+#spec 36028797027369120
+#sound 16
+#explspr 10167
+#end
+
+#selectspell 828
+#name "Solar Eclipse"
+#school 1
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 97
+#nreff 1
+#spec 0
+#sound 31
+#explspr 0
+#end
+
+#selectspell 829
+#name "Arrow Ward"
+#school 1
+#researchlevel 5
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 8
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10224
+#end
+
+#selectspell 830
+#name "Storm"
+#school 1
+#researchlevel 5
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#sound 27
+#explspr 10247
+#nogeosrc 4096
+#end
+
+#selectspell 831
+#name "Gift of Formlessness"
+#school 1
+#researchlevel 5
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1
+#effect 10
+#range 10
+#precision 0
+#damage 2680059592704
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 832
+#name "Winter's Chill"
+#school 1
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1002
+#effect 11
+#range 25
+#precision 100
+#damage 268435456
+#nreff 1
+#spec 8651264
+#sound 21
+#explspr 10134
+#end
+
+#selectspell 833
+#name "Fire Resistant Warriors"
+#school 1
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 1024
+#nreff 1
+#spec 12582912
+#explspr 10014
+#end
+
+#selectspell 834
+#name "Bone Melter"
+#school 1
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#path 1 6
+#pathlevel 1 2
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 25
+#precision 3
+#damage 999
+#nreff 1
+#spec 10489860
+#sound 40
+#explspr 10132
+#end
+
+#selectspell 835
+#name "Group Stoneskin"
+#school 1
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 40
+#aoe 1000
+#effect 10
+#range 15
+#precision 0
+#damage 65536
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10038
+-- ro: explspr frames = 5
+#end
+
+#selectspell 836
+#name "Lightning Resistant Warriors"
+#school 1
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 2048
+#nreff 1
+#spec 12582912
+#explspr 10003
+#end
+
+#selectspell 837
+#name "Maws of the Earth"
+#school 1
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1004
+#effect 2
+#range 5015
+#precision 3
+#damage 1012
+#nreff 1
+#spec 70368752566336
+#nextspell 100
+#sound 45
+#explspr 270
+-- ro: explspr frames = 4
+#end
+
+#selectspell 838
+#name "Ironskin"
+#school 1
+#researchlevel 5
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1
+#effect 10
+#range 10
+#precision 2
+#damage 268435456
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10031
+#end
+
+#selectspell 839
+#name "Shatter"
+#school 1
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 0
+#effect 96
+#range 15
+#precision 100
+#damage 5020
+#nreff 1
+#spec 8405120
+#nextspell 43
+#sound 40
+#explspr 10214
+#end
+
+#selectspell 840
+#name "Baleful Star"
+#school 1
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 700
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 5
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 7
+-- ro: ability 725 = 1
+#end
+
+#selectspell 841
+#name "Enfeeble"
+#school 1
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 2002
+#effect 67
+#range 25
+#precision 3
+#damage 2
+#nreff 1
+#spec 8392832
+#sound 23
+#flightspr 339
+#explspr 10197
+-- ro: flightspr frames = 3
+#end
+
+#selectspell 842
+#name "Invulnerability"
+#school 1
+#researchlevel 5
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 8404992
+#sound 45
+#explspr 10168
+#end
+
+#selectspell 843
+#name "Drain Life"
+#school 1
+#researchlevel 5
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 10
+#aoe 0
+#effect 103
+#range 30
+#precision 100
+#damage 1010
+#nreff 1
+#spec 545276032
+#sound 18
+#flightspr 10332
+#explspr 10333
+-- ro: flightspr frames = 0
+-- ro: ability 739 = 1
+#end
+
+#selectspell 844
+#name "Blood Poisoning"
+#school 1
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 7
+#range 30
+#precision 100
+#damage 2011
+#nreff 1
+#spec 36028797027377280
+#sound 16
+#explspr 10167
+#end
+
+#selectspell 845
+#name "Cat-eyed Warriors"
+#school 1
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 23
+#range 15
+#precision 0
+#damage 35184372088832
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 846
+#name "Mother Oak"
+#school 1
+#researchlevel 5
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 46
+#nreff 1
+#spec 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#worldvisible 1
+#hiddenench 1
+-- ro: ability 765 = -2
+#end
+
+#selectspell 847
+#name "Nightfall"
+#school 1
+#researchlevel 5
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 97
+#nreff 1
+#spec 0
+#sound 31
+#explspr 0
+-- ro: ability 1707 = 1
+#end
+
+#selectspell 848
+#name "Shadow Warriors"
+#school 1
+#researchlevel 5
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 23
+#range 20
+#precision 0
+#damage 4398046511104
+#nreff 1
+#spec 12599424
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 849
+#name "Blindness"
+#school 1
+#researchlevel 6
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 20
+#precision 100
+#damage 4096
+#nreff 1
+#spec 8409088
+#sound 40
+#explspr 10036
+#end
+
+#selectspell 850
+#name "Hellscape"
+#school 1
+#researchlevel 6
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 16
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#restricted 16
+#restricted 63
+#restricted 104
+#nogeodst 4
+#end
+
+#selectspell 851
+#name "Boil"
+#school 1
+#researchlevel 6
+#path 0 0
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 30
+#precision 100
+#damage 1006
+#nreff 1
+#spec 41959584
+#sound 16
+#explspr 10042
+#end
+
+#selectspell 852
+#name "Blizzard"
+#school 1
+#researchlevel 6
+#path 0 1
+#pathlevel 0 4
+#path 1 2
+#pathlevel 1 3
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 81
+#nreff 1
+#spec 0
+#sound 27
+#explspr 10247
+#nogeosrc 4096
+-- ro: ability 1706 = 1
+#end
+
+#selectspell 853
+#name "Frozen Heart"
+#school 1
+#researchlevel 6
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5020
+#precision 100
+#damage 2008
+#nreff 1
+#spec 36028797564240512
+#sound 21
+#explspr 10170
+#end
+
+#selectspell 854
+#name "Manifest Vitriol"
+#school 1
+#researchlevel 6
+#path 0 2
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1983
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 855
+#name "Group Ironskin"
+#school 1
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 60
+#aoe 1000
+#effect 10
+#range 15
+#precision 2
+#damage 268435456
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10031
+#end
+
+#selectspell 856
+#name "Earth Gem Alchemy"
+#school 1
+#researchlevel 6
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10164
+#range 0
+#precision 0
+#damage 300
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 857
+#name "Iron Bane"
+#school 1
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 2199023255552
+#nreff 1
+#spec 8388608
+#sound 22
+#explspr -5
+-- ro: explspr frames = 0
+#end
+
+#selectspell 858
+#name "Petrify"
+#school 1
+#researchlevel 6
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 40
+#aoe 1
+#effect 99
+#range 30
+#precision 100
+#damage 999
+#nreff 1
+#spec 8388740
+#sound 45
+#explspr 10121
+#end
+
+#selectspell 859
+#name "Iron Pigs"
+#school 1
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 924
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 860
+#name "Rewrite Fate"
+#school 1
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1016
+#effect 23
+#range 15
+#precision 5
+#damage 1
+#nreff 1
+#spec 12599296
+#sound 31
+#explspr 10001
+#end
+
+#selectspell 861
+#name "Control"
+#school 1
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 28
+#range 25
+#precision 100
+#damage 999
+#nreff 1
+#spec 8409232
+#sound 41
+#explspr 10171
+#end
+
+#selectspell 862
+#name "Skeletal Legion"
+#school 1
+#researchlevel 6
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 274877906944
+#nreff 1
+#spec 140737500954624
+#nextspell 102
+#sound 31
+#explspr 10023
+#ainocast 1
+#end
+
+#selectspell 863
+#name "Soul Vortex"
+#school 1
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 40
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 2048
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10122
+#end
+
+#selectspell 864
+#name "Darkness"
+#school 1
+#researchlevel 6
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 400
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 77
+#nreff 1
+#spec 0
+#sound 31
+#explspr 0
+#end
+
+#selectspell 865
+#name "Wooden Warriors"
+#school 1
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 16
+#nreff 1
+#spec 12582916
+#sound 31
+#explspr 10184
+#end
+
+#selectspell 866
+#name "Transformation"
+#school 1
+#researchlevel 6
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10044
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 545783812
+#explspr 0
+-- ro: ability 752 = 1
+#end
+
+#selectspell 867
+#name "Giant Warriors"
+#school 1
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 10
+#effect 10
+#range 10
+#precision 0
+#damage 2147483648
+#nreff 1
+#spec 12599300
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 868
+#name "Venomous Death"
+#school 1
+#researchlevel 6
+#path 0 6
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 7
+#range 30
+#precision 100
+#damage 3019
+#nreff 1
+#spec 36028797027377280
+#nextspell 114
+#sound 16
+#explspr 10167
+#end
+
+#selectspell 869
+#name "Gift of Displacement"
+#school 1
+#researchlevel 6
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 10
+#precision 0
+#damage 8796093022208
+#nreff 1
+#spec 4307566720
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 870
+#name "Invisibility"
+#school 1
+#researchlevel 6
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 10
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 1073741824
+#nreff 1
+#spec 4303372416
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 871
+#name "Fay-eyed Warriors"
+#school 4
+#researchlevel 6
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 23
+#range 15
+#precision 0
+#damage 70368744177664
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 872
+#name "Mirage"
+#school 1
+#researchlevel 6
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 2000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 139
+#nreff 1
+#spec 0
+#explspr 0
+#onlyfriendlydst 1
+#provrange 4
+#hiddenench 1
+-- ro: ability 709 = 3
+-- ro: ability 794 = 1
+-- ro: ability 795 = 1
+#end
+
+#selectspell 873
+#name "Phoenix Pyre"
+#school 1
+#researchlevel 7
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 134217728
+#nreff 1
+#spec 4294983680
+#spec2 256
+#sound 16
+#explspr 10034
+#end
+
+#selectspell 874
+#name "Arrow Fend"
+#school 1
+#researchlevel 7
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10224
+#end
+
+#selectspell 875
+#name "Fog Warriors"
+#school 1
+#researchlevel 7
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1016
+#effect 23
+#range 15
+#precision 0
+#damage 65536
+#nreff 1
+#spec 12582912
+#sound 23
+#explspr 10009
+#end
+
+#selectspell 876
+#name "Prison of Sedna"
+#school 1
+#researchlevel 7
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 2000
+#effect 609
+#range 25
+#precision 100
+#damage 299
+#nreff 1
+#spec 41959424
+#sound 21
+#explspr 10134
+#end
+
+#selectspell 877
+#name "Crawl"
+#school 1
+#researchlevel 7
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 2000
+#effect 11
+#range 30
+#precision 100
+#damage 68719476736
+#nreff 1
+#spec 8392704
+#sound 114
+#explspr 10304
+#end
+
+#selectspell 878
+#name "Wave Warriors"
+#school 1
+#researchlevel 7
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 2680059592704
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 879
+#name "Ice Walls"
+#school 1
+#researchlevel 7
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10084
+#range 0
+#precision 0
+#damage 129
+#nreff 1
+#spec 0
+#explspr 0
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 730 = 1
+-- ro: ability 774 = 2
+-- ro: ability 775 = 2
+#end
+
+#selectspell 880
+#name "Sea of Ice"
+#school 1
+#researchlevel 7
+#path 0 2
+#pathlevel 0 6
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 28
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 881
+#name "Marble Warriors"
+#school 1
+#researchlevel 7
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 65536
+#nreff 1
+#spec 12582916
+#sound 31
+#explspr 10185
+#end
+
+#selectspell 882
+#name "Iron Walls"
+#school 1
+#researchlevel 7
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 113
+#nreff 1
+#spec 8388608
+#explspr 0
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 730 = 1
+-- ro: ability 1718 = 5
+#end
+
+#selectspell 883
+#name "Doom"
+#school 1
+#researchlevel 7
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 8650752
+#sound 23
+#explspr -6
+-- ro: explspr frames = 0
+#end
+
+#selectspell 884
+#name "Will of the Fates"
+#school 1
+#researchlevel 7
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 200
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 12582912
+#sound 47
+#explspr 10001
+#end
+
+#selectspell 885
+#name "Enchanted Walls"
+#school 1
+#researchlevel 7
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 1200
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 142
+#nreff 1
+#spec 8388608
+#explspr 0
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 730 = 1
+-- ro: ability 709 = 3
+-- ro: ability 1718 = 5
+#end
+
+#selectspell 886
+#name "Bone Grinding"
+#school 1
+#researchlevel 7
+#path 0 5
+#pathlevel 0 7
+#fatiguecost 100
+#aoe 666
+#effect 2
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 10485888
+#nextspell 108
+#sound 31
+#explspr 10122
+-- ro: ability 745 = 1
+#end
+
+#selectspell 887
+#name "Curse of the Frog Prince"
+#school 1
+#researchlevel 7
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 54
+#range 25
+#precision 100
+#damage 2222
+#nreff 1
+#spec 546197508
+#sound 29
+#flightspr 10081
+#explspr 10001
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 888
+#name "Creeping Doom"
+#school 1
+#researchlevel 7
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage -9
+#nreff 5055
+#spec 8388608
+#sound 44
+#explspr 0
+#end
+
+#selectspell 889
+#name "Oaken Army"
+#school 1
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 16
+#nreff 1
+#spec 12582916
+#sound 31
+#explspr 10184
+#end
+
+#selectspell 890
+#name "Army of Shades"
+#school 1
+#researchlevel 7
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 4398046511104
+#nreff 1
+#spec 12599424
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 891
+#name "Immaculate Fort"
+#school 1
+#researchlevel 7
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 130
+#nreff 1
+#spec 8388608
+#explspr 0
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 730 = 1
+#end
+
+#selectspell 892
+#name "Conflagration"
+#school 1
+#researchlevel 8
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 10
+#effect 11
+#range 30
+#precision 100
+#damage 512
+#nreff 1
+#spec 16416
+#sound 16
+#end
+
+#selectspell 893
+#name "Flameflesh Army"
+#school 1
+#researchlevel 8
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 4096
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10003
+#end
+
+#selectspell 894
+#name "All-consuming Pyre"
+#school 1
+#researchlevel 8
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 100
+#aoe 40
+#effect 2
+#range 0
+#precision 0
+#damage 2010
+#nreff 1
+#spec 140737488355424
+#sound 16
+#explspr 10136
+#end
+
+#selectspell 895
+#name "Army of Mist"
+#school 1
+#researchlevel 8
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 300
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 65536
+#nreff 1
+#spec 12582912
+#sound 23
+#explspr 10009
+#end
+
+#selectspell 896
+#name "Quickening"
+#school 1
+#researchlevel 8
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1007
+#effect 10
+#range 20
+#precision 0
+#damage 262144
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10025
+-- ro: explspr frames = 5
+#end
+
+#selectspell 897
+#name "Liquify"
+#school 1
+#researchlevel 8
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 20
+#aoe 3
+#effect 2
+#range 30
+#precision 100
+#damage 999
+#nreff 1
+#spec 25165828
+#nextspell 103
+#sound 45
+#explspr 10121
+#end
+
+#selectspell 898
+#name "Frostflesh Army"
+#school 1
+#researchlevel 8
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 1024
+#nreff 1
+#spec 12582912
+#explspr 10005
+#end
+
+#selectspell 899
+#name "Iron Warriors"
+#school 1
+#researchlevel 8
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 1016
+#effect 10
+#range 15
+#precision 2
+#damage 268435456
+#nreff 1
+#spec 8404996
+#sound 31
+#explspr 10031
+#end
+
+#selectspell 900
+#name "Marble Army"
+#school 1
+#researchlevel 8
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 65536
+#nreff 1
+#spec 12582916
+#sound 31
+#explspr 10185
+#end
+
+#selectspell 901
+#name "Wizard's Tower"
+#school 1
+#researchlevel 8
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 5000
+#aoe 0
+#effect 10063
+#range 0
+#precision 0
+#damage 24
+#nreff 1
+#spec 8388608
+#onlyfriendlydst 1
+#provrange 4
+#end
+
+#selectspell 902
+#name "Crumble"
+#school 1
+#researchlevel 6
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10070
+#range 0
+#precision 0
+#damage -50150
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 4
+#end
+
+#selectspell 903
+#name "Ground Army"
+#school 1
+#researchlevel 8
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 2048
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10003
+#end
+
+#selectspell 904
+#name "Arcane Domination"
+#school 1
+#researchlevel 8
+#path 0 4
+#pathlevel 0 7
+#fatiguecost 700
+#aoe 666
+#effect 28
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 25428112
+#sound 47
+#explspr 165
+-- ro: explspr frames = 3
+-- ro: ability 745 = 1
+#end
+
+#selectspell 905
+#name "Disintegrate"
+#school 1
+#researchlevel 8
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 0
+#effect 36
+#range 30
+#precision 100
+#damage 999
+#nreff 1
+#spec 36028797027373184
+#sound 40
+#explspr 10186
+#end
+
+#selectspell 906
+#name "Polymorph"
+#school 1
+#researchlevel 8
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 200
+#aoe 2004
+#effect 54
+#range 25
+#precision 5
+#damage 549
+#nreff 1
+#spec 546197508
+#sound 29
+#flightspr 10081
+#explspr 10001
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 907
+#name "Army of Giants"
+#school 1
+#researchlevel 8
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 2147483648
+#nreff 1
+#spec 12599300
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 908
+#name "Eternal Twilight"
+#school 1
+#researchlevel 8
+#path 0 7
+#pathlevel 0 8
+#fatiguecost 9000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 118
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 909
+#name "Displaced Warriors"
+#school 1
+#researchlevel 8
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1016
+#effect 23
+#range 15
+#precision 0
+#damage 8796093022208
+#nreff 1
+#spec 4307566720
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 910
+#name "Army of Bronze"
+#school 1
+#researchlevel 9
+#path 0 3
+#pathlevel 0 6
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 268435584
+#nreff 1
+#spec 12582916
+#sound 47
+#explspr 10187
+#end
+
+#selectspell 911
+#name "Army of Gold"
+#school 1
+#researchlevel 9
+#path 0 3
+#pathlevel 0 5
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 268436480
+#nreff 1
+#spec 12582916
+#sound 47
+#explspr 10187
+#end
+
+#selectspell 912
+#name "Army of Lead"
+#school 1
+#researchlevel 9
+#path 0 3
+#pathlevel 0 5
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 335544320
+#nreff 1
+#spec 12582916
+#sound 47
+#explspr 10188
+#end
+
+#selectspell 913
+#name "Arcane Decree"
+#school 1
+#researchlevel 9
+#path 0 4
+#pathlevel 0 6
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 126
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 914
+#name "Time Stop"
+#school 1
+#researchlevel 9
+#path 0 4
+#pathlevel 0 6
+#fatiguecost 100
+#aoe 0
+#effect 133
+#range 0
+#precision 0
+#damage 104
+#nreff 1
+#spec 8392704
+#sound 114
+#explspr 10305
+#end
+
+#selectspell 915
+#name "Wish"
+#school 1
+#researchlevel 9
+#path 0 4
+#pathlevel 0 9
+#fatiguecost 10000
+#aoe 0
+#effect 10034
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 916
+#name "Utterdark"
+#school 1
+#researchlevel 9
+#path 0 5
+#pathlevel 0 9
+#fatiguecost 10000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 56
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 917
+#name "Army of Rats"
+#school 1
+#researchlevel 9
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 400
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 4297064448
+#nreff 1
+#spec 17592194711556
+#sound 31
+#explspr 10041
+-- ro: ability 745 = 1
+#end
+
+#selectspell 918
+#name "Awaken Forest"
+#school 1
+#researchlevel 9
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 200
+#aoe 663
+#effect 166
+#range 0
+#precision 100
+#damage 361
+#nreff 1
+#spec 536887296
+#spec2 64
+#sound 45
+#explspr 10044
+#end
+
+#selectspell 919
+#name "Summon Cave Grubs"
+#school 0
+#researchlevel 1
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2526
+#nreff 510
+#spec 0
+#explspr 0
+#onlygeosrc 4096
+#end
+
+#selectspell 920
+#name "Tangle Vines"
+#school 0
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 20
+#precision 2
+#damage 64
+#nreff 1
+#spec 8404992
+#spec2 4
+#explspr 10189
+#end
+
+#selectspell 921
+#name "Summon Animals"
+#school 0
+#researchlevel 1
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10068
+#range 0
+#precision 0
+#damage 403
+#nreff 2026
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 922
+#name "Summon Sea Dogs"
+#school 0
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1064
+#nreff 510
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 923
+#name "Summon Crocodiles"
+#school 0
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2185
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 924
+#name "Spirit Curse"
+#school 0
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 11
+#range 50
+#precision 100
+#damage 2
+#nreff 1
+#spec 8404992
+#sound 23
+#explspr 10200
+#end
+
+#selectspell 925
+#name "Shadow Servant"
+#school 0
+#researchlevel 1
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 434
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 926
+#name "Summon Fire Ants"
+#school 0
+#researchlevel 2
+#path 0 0
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2225
+#nreff 1008
+#spec 0
+#explspr 0
+#end
+
+#selectspell 927
+#name "Summon Hawk"
+#school 0
+#researchlevel 2
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 43
+#range 5
+#precision 0
+#damage 517
+#nreff 1
+#spec 0
+#explspr 0
+#nogeosrc 4096
+#end
+
+#selectspell 928
+#name "Summon Storm Power"
+#school 0
+#researchlevel 2
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 8192
+#nreff 1
+#spec 16384
+#spec2 256
+#explspr 10246
+#end
+
+#selectspell 929
+#name "Summon Water Power"
+#school 0
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 524288
+#nreff 1
+#spec 41959424
+#spec2 256
+#explspr 10025
+#end
+
+#selectspell 930
+#name "Summon Ogres"
+#school 0
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2135
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 931
+#name "Summon Shades"
+#school 0
+#researchlevel 2
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 676
+#nreff 505
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 932
+#name "Awaken Vine Men"
+#school 0
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 361
+#nreff 4
+#spec 0
+#explspr 0
+#end
+
+#selectspell 933
+#name "Awaken Algae Men"
+#school 0
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2976
+#nreff 4
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 934
+#name "Summon Killer Mantis"
+#school 0
+#researchlevel 2
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2226
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 935
+#name "Pack of Wolves"
+#school 0
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 284
+#nreff 1014
+#spec 0
+#explspr 0
+#end
+
+#selectspell 936
+#name "Summon Horned Serpents"
+#school 0
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 403
+#nreff 510
+#spec 0
+#explspr 0
+#onlygeosrc 64
+#end
+
+#selectspell 937
+#name "Tapestry of Dreams"
+#school 0
+#researchlevel 2
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 400
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 138
+#nreff 1
+#spec 8388608
+#provrange 4
+#hiddenench 1
+#end
+
+#selectspell 938
+#name "Phoenix Power"
+#school 0
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 262144
+#nreff 1
+#spec 16384
+#spec2 256
+#nextspell 19
+#sound 16
+#explspr 10034
+#end
+
+#selectspell 939
+#name "Summon Lesser Fire Elemental"
+#school 0
+#researchlevel 3
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3719
+#nreff 1
+#spec 0
+#sound 16
+#explspr 0
+#end
+
+#selectspell 940
+#name "Bind Scorpion Beast"
+#school 0
+#researchlevel 3
+#path 0 0
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 524
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 941
+#name "Summon Lesser Air Elemental"
+#school 0
+#researchlevel 3
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3727
+#nreff 1
+#spec 0
+#sound 52
+#explspr 0
+#end
+
+#selectspell 942
+#name "Call of the Winds"
+#school 0
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage 517
+#nreff 51
+#spec 0
+#explspr 0
+#provrange 5
+#nowatertrace 1
+#farsumcom 1380
+#nogeodst 4
+#end
+
+#selectspell 943
+#name "Summon Amphiptere"
+#school 0
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1412
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 944
+#name "Summon Lesser Water Elemental"
+#school 0
+#researchlevel 3
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3735
+#nreff 1
+#spec 8388608
+#sound 31
+#explspr 0
+#end
+
+#selectspell 945
+#name "Call Krakens"
+#school 0
+#researchlevel 3
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 438
+#nreff 505
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 946
+#name "Summon Yetis"
+#school 0
+#researchlevel 3
+#path 0 2
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2231
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 947
+#name "Summon Cave Cows"
+#school 0
+#researchlevel 3
+#path 0 2
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2512
+#nreff 510
+#spec 0
+#explspr 0
+#onlygeosrc 4096
+#end
+
+#selectspell 948
+#name "Summon Earthpower"
+#school 0
+#researchlevel 3
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 4096
+#nreff 1
+#spec 8404992
+#spec2 256
+#sound 45
+#explspr 10192
+#end
+
+#selectspell 949
+#name "Summon Lesser Earth Elemental"
+#school 0
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3743
+#nreff 1
+#spec 8388608
+#sound 45
+#explspr 0
+#end
+
+#selectspell 950
+#name "Summon Cave Crab"
+#school 0
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2514
+#nreff 1
+#spec 8388608
+#explspr 0
+#onlygeosrc 4096
+#end
+
+#selectspell 951
+#name "Power of the Spheres"
+#school 0
+#researchlevel 3
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 128
+#nreff 1
+#spec 8404992
+#sound 41
+#explspr 10190
+#end
+
+#selectspell 952
+#name "Dark Knowledge"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 5
+#nreff 1
+#spec 8388608
+#onlyfriendlydst 1
+#provrange 3
+#end
+
+#selectspell 953
+#name "Revive Wights"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 2000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 533
+#nreff 5
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 954
+#name "Revive Bane"
+#school 0
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 700
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 185
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 955
+#name "Sloth of Bears"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 694
+#nreff 1013
+#spec 0
+#explspr 0
+#homerealm 1
+#restricted 12
+#notfornation 32
+#end
+
+#selectspell 956
+#name "Pride of Lions"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 628
+#nreff 1013
+#spec 0
+#explspr 0
+#homerealm 7
+#end
+
+#selectspell 957
+#name "Ambush of Tigers"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1140
+#nreff 1013
+#spec 0
+#explspr 0
+#homerealm 8
+#restricted 23
+#restricted 70
+#restricted 110
+#restricted 22
+#restricted 69
+#end
+
+#selectspell 958
+#name "Herd of Buffaloes"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3009
+#nreff 505
+#spec 0
+#explspr 0
+#homerealm 8
+#restricted 19
+#restricted 66
+#restricted 22
+#restricted 69
+#restricted 109
+#end
+
+#selectspell 959
+#name "Call of the Wild"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 900
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage 284
+#nreff 40
+#spec 0
+#explspr 0
+#provrange 4
+#nowatertrace 1
+#farsumcom 633
+#nogeodst 4
+#end
+
+#selectspell 960
+#name "Summon Sea Lions"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1063
+#nreff 1014
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 961
+#name "Summon Bog Beasts"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 578
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 962
+#name "Summon Fay Folk"
+#school 0
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage -26
+#nreff 10
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 756 = 145
+#end
+
+#selectspell 963
+#name "Conjure Phantasmal Wolves"
+#school 0
+#researchlevel 3
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 5
+#precision 0
+#damage 3625
+#nreff 2
+#spec 8388608
+#sound 42
+#explspr 10275
+-- ro: explspr frames = 5
+-- ro: ability 1700 = 3983
+#end
+
+#selectspell 964
+#name "Nest of Salamanders"
+#school 0
+#researchlevel 4
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 3658
+#nreff 1008
+#spec 0
+#sound 44
+#explspr 0
+#end
+
+#selectspell 965
+#name "Summon Fire Drake"
+#school 0
+#researchlevel 4
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 523
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 966
+#name "Summon Flame Jellies"
+#school 0
+#researchlevel 4
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2854
+#nreff 1008
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 967
+#name "Summon Wyverns"
+#school 0
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 520
+#nreff 2
+#spec 0
+#explspr 0
+#end
+
+#selectspell 968
+#name "Summon Storm Drake"
+#school 0
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3991
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 969
+#name "Summon Gryphons"
+#school 0
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2131
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 970
+#name "School of Sharks"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 43
+#range 0
+#precision 0
+#damage 815
+#nreff 2006
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 971
+#name "Voice of Apsu"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 8388608
+#provrange 3
+#nogeodst 4
+#end
+
+#selectspell 972
+#name "Summon Ice Drake"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 579
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 973
+#name "Summon Sea Serpent"
+#school 0
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 565
+#nreff 1
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 974
+#name "Summon Cave Drake"
+#school 0
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 522
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 975
+#name "Light of the Northern Star"
+#school 0
+#researchlevel 4
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 40
+#nreff 1
+#spec 8404992
+#sound 41
+#explspr 10191
+#end
+
+#selectspell 976
+#name "Summon Shade Beasts"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 442
+#nreff 3021
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 977
+#name "Summon Lammashtas"
+#school 0
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 126
+#range 0
+#precision 0
+#damage 393
+#nreff 2
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 978
+#name "Maggots"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 7
+#range 25
+#precision 100
+#damage 50
+#nreff 1
+#spec 278937736
+#sound 23
+#explspr 10039
+#end
+
+#selectspell 979
+#name "Summon Spine Frog"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3712
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 980
+#name "Summon Leogryphs"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2132
+#nreff 2016
+#spec 0
+#explspr 0
+#end
+
+#selectspell 981
+#name "Awaken Vine Ogres"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 362
+#nreff 3
+#spec 0
+#explspr 0
+#end
+
+#selectspell 982
+#name "Summon Swamp Drake"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2196
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 32
+#end
+
+#selectspell 983
+#name "Summon Kithaironic Lion"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 514
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 984
+#name "Strength of Gaia"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 1048576
+#nreff 1
+#spec 8404992
+#nextspell 27
+#sound 29
+#explspr 10024
+#end
+
+#selectspell 985
+#name "Nest of Asps"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 0
+#precision 0
+#damage 3657
+#nreff 1008
+#spec 0
+#sound 44
+#explspr 0
+#end
+
+#selectspell 986
+#name "At the End of the Rainbow"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 7
+#nreff 1
+#spec 0
+#onlyfriendlydst 1
+#provrange 3
+#nowatertrace 1
+#nogeodst 4
+#end
+
+#selectspell 987
+#name "Conjure Phantasmal Warriors"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 5
+#precision 0
+#damage 3624
+#nreff 2
+#spec 8388608
+#sound 42
+#explspr 10275
+-- ro: explspr frames = 5
+-- ro: ability 1700 = 3984
+#end
+
+#selectspell 988
+#name "Summon Water Kobold"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 1
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3911
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 989
+#name "Summon Cave Kobolds"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3890
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 990
+#name "Summon Fay Footfolk"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3903
+#nreff 505
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 1701 = 3906
+#end
+
+#selectspell 991
+#name "Will o' the Wisp"
+#school 0
+#researchlevel 5
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 43
+#range 0
+#precision 0
+#damage 527
+#nreff 2
+#spec 0
+#explspr 0
+#end
+
+#selectspell 992
+#name "Summon Fire Elemental"
+#school 0
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3716
+#nreff 1
+#spec 0
+#sound 16
+#explspr 0
+#end
+
+#selectspell 993
+#name "Summon Summer Lions"
+#school 0
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 1300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 515
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 994
+#name "Summon Air Elemental"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3724
+#nreff 1
+#spec 0
+#sound 52
+#explspr 0
+#end
+
+#selectspell 995
+#name "Summon Spring Hawks"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 1300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 513
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 996
+#name "Wind Ride"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 1000
+#aoe 0
+#effect 10049
+#range 0
+#precision 0
+#damage 100
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 3
+#nogeodst 4
+#end
+
+#selectspell 997
+#name "Raven Feast"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 300
+#aoe 0
+#effect 10135
+#range 0
+#precision 0
+#damage 100
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#nogeodst 4
+#end
+
+#selectspell 998
+#name "Contact Draconians"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 2000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 620
+#nreff 1
+#spec 0
+#nextspell 37
+#explspr 0
+#end
+
+#selectspell 999
+#name "Voice of Tiamat"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 51
+#nreff 1
+#spec 41943040
+#onlyfriendlydst 1
+#provrange 4
+#nolandtrace 1
+#onlygeodst 4
+#end
+
+#selectspell 1000
+#name "Summon Water Elemental"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3732
+#nreff 1
+#spec 8388608
+#sound 31
+#explspr 0
+#end
+
+#selectspell 1001
+#name "Contact Sea Trolls"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 564
+#nreff 510
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1002
+#name "Summon Winter Wolves"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 511
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1003
+#name "Contact Naiad"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1226
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1004
+#name "Naiad Warriors"
+#school 0
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1227
+#nreff 25
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1005
+#name "Summon Earth Elemental"
+#school 0
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3740
+#nreff 1
+#spec 8388608
+#sound 45
+#explspr 0
+#end
+
+#selectspell 1006
+#name "Summon Fall Bears"
+#school 0
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 1300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 512
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1007
+#name "Contact Trolls"
+#school 0
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 518
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1008
+#name "Spirit Mastery"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 674
+#nreff 1024
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1009
+#name "Ghost Grip"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 3
+#range 25
+#precision 3
+#damage 2023
+#nreff 5
+#spec 8404992
+#explspr 165
+-- ro: explspr frames = 3
+#end
+
+#selectspell 1010
+#name "Corpse Candle"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 43
+#range 0
+#precision 0
+#damage 528
+#nreff 3
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1011
+#name "Revive Bane Lord"
+#school 0
+#researchlevel 5
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 1200
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 998
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1012
+#name "Acashic Record"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10115
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 8388608
+#provrange 10
+#end
+
+#selectspell 1013
+#name "Summon Ether Warriors"
+#school 0
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 736
+#nreff 3
+#spec 8388608
+#explspr 0
+-- ro: ability 755 = 117
+#end
+
+#selectspell 1014
+#name "Howl"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 88
+#nreff 1
+#spec 0
+#sound 26
+#end
+
+#selectspell 1015
+#name "Spirits of the Wood"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 932
+#nreff 1012
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1016
+#name "Contact Forest Trolls"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2219
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1017
+#name "Winged Monkeys"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 2
+#fatiguecost 1000
+#aoe 0
+#effect 10098
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#provrange 5
+#nowatertrace 1
+#walkable 1
+#nogeodst 4
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1018
+#name "Summon Manticores"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2130
+#nreff 3
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1019
+#name "Vermin Feast"
+#school 0
+#researchlevel 5
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 600
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 99
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 4
+#ainocast 1
+#end
+
+#selectspell 1020
+#name "Messenger Crows"
+#school 0
+#researchlevel 5
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 600
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 120
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 4
+#ainocast 1
+-- ro: ability 709 = 3
+#end
+
+#selectspell 1021
+#name "Conjure Phantasmal Beast"
+#school 0
+#researchlevel 5
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 5
+#precision 0
+#damage 3626
+#nreff 1
+#spec 8388608
+#sound 42
+#explspr 10275
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1022
+#name "Summon Bluecap"
+#school 0
+#researchlevel 5
+#path 0 7
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 2000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3891
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1023
+#name "Summon Fay Knights"
+#school 0
+#researchlevel 5
+#path 0 7
+#pathlevel 0 3
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3901
+#nreff 3
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 1701 = 3907
+#end
+
+#selectspell 1024
+#name "Awaken Sleeper"
+#school 0
+#researchlevel 5
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 559
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1025
+#name "Summon Fire Snakes"
+#school 0
+#researchlevel 6
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 814
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1026
+#name "Summon Flame Spirit"
+#school 0
+#researchlevel 6
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2626
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1027
+#name "Summon Great Eagles"
+#school 0
+#researchlevel 6
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 800
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1381
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1028
+#name "Summon Bishop Fish"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 1500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1040
+#nreff 1
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 1029
+#name "Shark Attack"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 1
+#precision 0
+#damage 78
+#nreff 1
+#spec 41943040
+#sound 29
+#explspr 0
+#end
+
+#selectspell 1030
+#name "Sea King's Court"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 5500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 580
+#nreff 1
+#spec 8388608
+#nextspell 36
+#explspr 0
+#end
+
+#selectspell 1031
+#name "Streams from Hades"
+#school 0
+#researchlevel 6
+#path 0 2
+#pathlevel 0 4
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1477
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1032
+#name "Contact Hill Giant"
+#school 0
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2230
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1033
+#name "Troll King's Court"
+#school 0
+#researchlevel 6
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 6500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 519
+#nreff 1
+#spec 0
+#nextspell 25
+#explspr 0
+#end
+
+#selectspell 1034
+#name "Acashic Knowledge"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 2500
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 55
+#nreff 1
+#spec 8388608
+#onlyfriendlydst 1
+#provrange 10
+#end
+
+#selectspell 1035
+#name "Ether Gate"
+#school 0
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 9000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 117
+#nreff 1
+#spec 8388608
+#nextspell 64
+#explspr 0
+-- ro: ability 767 = -2
+#end
+
+#selectspell 1036
+#name "Summon Spectre"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2200
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 329
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1037
+#name "Summon Ghosts"
+#school 0
+#researchlevel 6
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 566
+#nreff 505
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1038
+#name "Forest Troll Tribe"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 3700
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2220
+#nreff 1
+#spec 0
+#nextspell 99
+#explspr 0
+#end
+
+#selectspell 1039
+#name "Contact Forest Giants"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2229
+#nreff 2
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1040
+#name "Summon Sprites"
+#school 0
+#researchlevel 6
+#path 0 7
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 592
+#nreff 6
+#spec 0
+#sound 29
+#explspr 0
+#end
+
+#selectspell 1041
+#name "Contact Lamias"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 394
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1042
+#name "Locust Swarms"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 800
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#nogeodst 1
+#end
+
+#selectspell 1043
+#name "Contact Lamia Queen"
+#school 0
+#researchlevel 6
+#path 0 6
+#pathlevel 0 5
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 2500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 609
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1044
+#name "Summon Fay Prince"
+#school 0
+#researchlevel 6
+#path 0 7
+#pathlevel 0 4
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3904
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 1701 = 3909
+#end
+
+#selectspell 1045
+#name "Summon Gnome"
+#school 0
+#researchlevel 6
+#path 0 7
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 345
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1046
+#name "Living Fire"
+#school 0
+#researchlevel 7
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3717
+#nreff 1000
+#spec 0
+#sound 16
+#explspr 0
+#end
+
+#selectspell 1047
+#name "Living Clouds"
+#school 0
+#researchlevel 7
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3725
+#nreff 1000
+#spec 0
+#sound 52
+#explspr 0
+#end
+
+#selectspell 1048
+#name "Summon Asp Turtle"
+#school 0
+#researchlevel 7
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1234
+#nreff 1
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 1049
+#name "Living Water"
+#school 0
+#researchlevel 7
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3733
+#nreff 1000
+#spec 8388608
+#sound 31
+#explspr 0
+#end
+
+#selectspell 1050
+#name "Summon Catoblepas"
+#school 0
+#researchlevel 7
+#path 0 2
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1290
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1051
+#name "Living Earth"
+#school 0
+#researchlevel 7
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3741
+#nreff 1000
+#spec 8388608
+#sound 45
+#explspr 0
+#end
+
+#selectspell 1052
+#name "Summon Mound Fiend"
+#school 0
+#researchlevel 7
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 2800
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 439
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1053
+#name "Harvester of Sorrows"
+#school 0
+#researchlevel 7
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 2000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 491
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1054
+#name "Call Wraith Lord"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 4000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 181
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1055
+#name "Animal Horde"
+#school 0
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10068
+#range 0
+#precision 0
+#damage 403
+#nreff 100
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1056
+#name "Awaken Ivy King"
+#school 0
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 931
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1057
+#name "Summon Calydonian Boar"
+#school 0
+#researchlevel 7
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3684
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1058
+#name "Wild Hunt"
+#school 0
+#researchlevel 7
+#path 0 7
+#pathlevel 0 5
+#path 1 6
+#pathlevel 1 3
+#fatiguecost 5000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 75
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1059
+#name "Living Castle"
+#school 0
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 4000
+#aoe 0
+#effect 10063
+#range 0
+#precision 0
+#damage 9
+#nreff 1
+#spec 41943040
+#onlyfriendlydst 1
+#provrange 4
+#end
+
+#selectspell 1060
+#name "Conjure Phantasmal Knight"
+#school 0
+#researchlevel 7
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 5
+#precision 0
+#damage 3627
+#nreff 1
+#spec 8388608
+#sound 42
+#explspr 10275
+-- ro: explspr frames = 5
+-- ro: ability 1700 = 3985
+#end
+
+#selectspell 1061
+#name "Lore of Legends"
+#school 0
+#researchlevel 7
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 2000
+#aoe 0
+#effect 10501
+#range 0
+#precision 0
+#damage 1086
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1062
+#name "King of Elemental Fire"
+#school 0
+#researchlevel 8
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1063
+#name "The Kindly Ones"
+#school 0
+#researchlevel 8
+#path 0 0
+#pathlevel 0 6
+#path 1 6
+#pathlevel 1 4
+#fatiguecost 4000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 80
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1064
+#name "Queen of Elemental Air"
+#school 0
+#researchlevel 8
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 7
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1065
+#name "Queen of Elemental Water"
+#school 0
+#researchlevel 8
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 6
+#nreff 1
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 1066
+#name "Guardians of the Deep"
+#school 0
+#researchlevel 8
+#path 0 2
+#pathlevel 0 6
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 52
+#nreff 1
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 1067
+#name "Earth Attack"
+#school 0
+#researchlevel 8
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 500
+#aoe 0
+#effect 10050
+#range 0
+#precision 0
+#damage 3741
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 4
+-- ro: ability 710 = 1
+#end
+
+#selectspell 1068
+#name "King of Elemental Earth"
+#school 0
+#researchlevel 8
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 4
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1069
+#name "Manifestation"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 400
+#aoe 0
+#effect 10062
+#range 0
+#precision 0
+#damage 392
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 4
+#end
+
+#selectspell 1070
+#name "Well of Misery"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 6
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 33
+#nreff 1
+#spec 8388608
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#worldvisible 1
+#hiddenench 1
+#end
+
+#selectspell 1071
+#name "King of Banefires"
+#school 0
+#researchlevel 8
+#path 0 5
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 4
+#fatiguecost 5000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 9
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1072
+#name "Call the Eater of the Dead"
+#school 0
+#researchlevel 8
+#path 0 4
+#pathlevel 0 4
+#path 1 5
+#pathlevel 1 4
+#fatiguecost 5000
+#aoe 0
+#effect 10093
+#range 0
+#precision 0
+#damage 994
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1073
+#name "Dragon Master"
+#school 4
+#researchlevel 8
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 3000
+#aoe 0
+#effect 10023
+#range 0
+#precision 0
+#damage 1073741824
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1074
+#name "Wild Growth"
+#school 0
+#researchlevel 8
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 40
+#aoe 2002
+#effect 11
+#range 20
+#precision 0
+#damage 64
+#nreff 1
+#spec 8650752
+#spec2 4
+#explspr 10189
+#end
+
+#selectspell 1075
+#name "Faerie Court"
+#school 0
+#researchlevel 8
+#path 0 7
+#pathlevel 0 4
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 6000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 627
+#nreff 1
+#spec 0
+#nextspell 38
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 1701 = 3997
+#end
+
+#selectspell 1076
+#name "Call Ancient Presence"
+#school 0
+#researchlevel 9
+#path 0 2
+#pathlevel 0 5
+#path 1 6
+#pathlevel 1 4
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2251
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 32
+#end
+
+#selectspell 1077
+#name "Call Abomination"
+#school 0
+#researchlevel 9
+#path 0 4
+#pathlevel 0 5
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 521
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1078
+#name "Ghost Riders"
+#school 0
+#researchlevel 9
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 500
+#aoe 0
+#effect 10038
+#range 0
+#precision 0
+#damage 189
+#nreff 75
+#spec 8388608
+#provrange 4
+#farsumcom 182
+#end
+
+#selectspell 1079
+#name "Legion of Wights"
+#school 0
+#researchlevel 9
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 533
+#nreff 3002
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1080
+#name "Tartarian Gate"
+#school 0
+#researchlevel 9
+#path 0 5
+#pathlevel 0 7
+#fatiguecost 700
+#aoe 0
+#effect 10076
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1081
+#name "Awaken Tarrasque"
+#school 0
+#researchlevel 9
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 925
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1082
+#name "Enchanted Forests"
+#school 0
+#researchlevel 9
+#path 0 6
+#pathlevel 0 7
+#fatiguecost 9000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 24
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1083
+#name "Celestial Rainbow"
+#school 2
+#researchlevel 9
+#path 0 7
+#pathlevel 0 7
+#path 1 2
+#pathlevel 1 5
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 90
+#nreff 1
+#spec 0
+#explspr 0
+#nogeosrc 4096
+#end
+
+#selectspell 1084
+#name "Corpse Man Construction"
+#school 3
+#researchlevel 2
+#path 0 1
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 534
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1085
+#name "Clockwork Soldiers"
+#school 3
+#researchlevel 2
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2321
+#nreff 510
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1086
+#name "Temper Armors"
+#school 3
+#researchlevel 2
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 30
+#aoe 1003
+#effect 10
+#range 15
+#precision 0
+#damage 64
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10193
+#end
+
+#selectspell 1087
+#name "Construct Manikin"
+#school 3
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 313
+#nreff 2014
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1088
+#name "Clockwork Horrors"
+#school 3
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 982
+#nreff 1013
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1089
+#name "Crusher Construction"
+#school 3
+#researchlevel 4
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 475
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1090
+#name "Soldiers of Steel"
+#school 3
+#researchlevel 4
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 60
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 64
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10193
+#end
+
+#selectspell 1091
+#name "Wooden Construction"
+#school 3
+#researchlevel 4
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 476
+#nreff 4
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1092
+#name "Construct Mandragora"
+#school 3
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 314
+#nreff 2006
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1093
+#name "Iron Gryphon"
+#school 3
+#researchlevel 6
+#path 0 0
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 600
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3831
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1094
+#name "Legions of Steel"
+#school 3
+#researchlevel 6
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 64
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10193
+#end
+
+#selectspell 1095
+#name "Forge of the Ancients"
+#school 3
+#researchlevel 6
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 20
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1096
+#name "Mechanical Men"
+#school 3
+#researchlevel 6
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 532
+#nreff 1013
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1097
+#name "Golem Construction"
+#school 3
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 471
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1098
+#name "Siege Golem"
+#school 3
+#researchlevel 8
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 760
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1099
+#name "Iron Dragon"
+#school 3
+#researchlevel 8
+#path 0 3
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 2500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 531
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1100
+#name "Mechanical Militia"
+#school 3
+#researchlevel 8
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 51
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1101
+#name "Juggernaut Construction"
+#school 3
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 2500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 781
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1102
+#name "Poison Golem"
+#school 3
+#researchlevel 8
+#path 0 5
+#pathlevel 0 4
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 1099
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1103
+#name "Protection from Fire"
+#school 4
+#researchlevel 1
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 36028797018963968
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10023
+#end
+
+#selectspell 1104
+#name "Levitate"
+#school 4
+#researchlevel 1
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 4503599627370496
+#nreff 1
+#spec 16384
+#sound 31
+#explspr 10025
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1105
+#name "Trueshot"
+#school 4
+#researchlevel 1
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 1
+#effect 10
+#range 10
+#precision 5
+#damage 4
+#nreff 1
+#spec 16384
+#sound 31
+#explspr 10012
+#end
+
+#selectspell 1106
+#name "Windrunner"
+#school 4
+#researchlevel 1
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 4
+#nreff 1
+#spec 12583040
+#sound 31
+#explspr 10231
+#end
+
+#selectspell 1107
+#name "Protection from Lightning"
+#school 4
+#researchlevel 1
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 72057594037927936
+#nreff 1
+#spec 8404992
+#sound 24
+#explspr 10028
+#end
+
+#selectspell 1108
+#name "Protection from Cold"
+#school 4
+#researchlevel 1
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 144115188075855872
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10025
+#end
+
+#selectspell 1109
+#name "Strength of Giants"
+#school 4
+#researchlevel 1
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 5
+#precision 0
+#damage 128
+#nreff 1
+#spec 8388608
+#sound 31
+#explspr 10058
+#end
+
+#selectspell 1110
+#name "Resist Magic"
+#school 4
+#researchlevel 1
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 67108864
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1111
+#name "Animate Skeleton"
+#school 4
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 30
+#aoe 0
+#effect 1
+#range 5
+#precision -2
+#damage -2
+#nreff 1
+#spec 8388608
+#sound 43
+#explspr 10232
+#end
+
+#selectspell 1112
+#name "Animate Dead"
+#school 4
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 1
+#range 5
+#precision -2
+#damage -3
+#nreff 1
+#spec 8388608
+#sound 43
+#explspr 10232
+#end
+
+#selectspell 1113
+#name "Reanimation"
+#school 4
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage -2
+#nreff 1009
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1114
+#name "Protection from Poison"
+#school 4
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 4611686018427387904
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10024
+#end
+
+#selectspell 1115
+#name "Healing Touch"
+#school 4
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 13
+#range 1
+#precision 1
+#damage 10020
+#nreff 1
+#spec 545259648
+#sound 29
+#explspr 10004
+#casttime 50
+#end
+
+#selectspell 1116
+#name "True Sight"
+#school 4
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 70368744177664
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10027
+#end
+
+#selectspell 1117
+#name "False Fetters"
+#school 4
+#researchlevel 1
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 1000
+#effect 11
+#range 15
+#precision 0
+#damage 131072
+#nreff 1
+#spec 8409088
+#sound 42
+#explspr 10045
+#end
+
+#selectspell 1118
+#name "Ignite Arrows"
+#school 4
+#researchlevel 2
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 0
+#damage 8388608
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10051
+#end
+
+#selectspell 1119
+#name "Personal Flight"
+#school 4
+#researchlevel 2
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 131072
+#nreff 1
+#spec 16384
+#sound 31
+#explspr 10025
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1120
+#name "Water Shield"
+#school 4
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 32
+#nreff 1
+#spec 41959424
+#sound 31
+#explspr 10005
+#end
+
+#selectspell 1121
+#name "Breath of Winter"
+#school 4
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 8192
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10022
+#end
+
+#selectspell 1122
+#name "Flying Shield"
+#school 4
+#researchlevel 2
+#path 0 3
+#pathlevel 0 1
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 549755813888
+#nreff 1
+#spec 16384
+#sound 31
+#explspr 10224
+#end
+
+#selectspell 1123
+#name "Revive King"
+#school 4
+#researchlevel 2
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 300
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 188
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1124
+#name "Proud Steed"
+#school 4
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 2
+#damage 536870912
+#nreff 1
+#spec 2533274803109888
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1125
+#name "Gift of the Hare"
+#school 4
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1000
+#effect 23
+#range 15
+#precision 0
+#damage 4
+#nreff 1
+#spec 12583040
+#sound 31
+#explspr 10231
+#end
+
+#selectspell 1126
+#name "Personal Regeneration"
+#school 4
+#researchlevel 2
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 32
+#nreff 1
+#spec 545275904
+#sound 29
+#explspr 10027
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1127
+#name "Envenom Arrows"
+#school 4
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 0
+#damage 1125899906842624
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10051
+#end
+
+#selectspell 1128
+#name "Gift of the Serpent"
+#school 4
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 288230376151711744
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10024
+#end
+
+#selectspell 1129
+#name "Shroud of Splendor"
+#school 4
+#researchlevel 2
+#path 0 7
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 36028797018963968
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1130
+#name "Lesser Flame Ward"
+#school 4
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 1024
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10014
+#end
+
+#selectspell 1131
+#name "Fire Shield"
+#school 4
+#researchlevel 3
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 32768
+#nreff 1
+#spec 16384
+#sound 16
+#explspr 10034
+#end
+
+#selectspell 1132
+#name "Arrow of the Western Wind"
+#school 4
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5040
+#precision 25
+#damage 1018
+#nreff 1
+#spec 274877906944
+#sound 14
+#flightspr 419
+#casttime 50
+#speedmult 3
+-- ro: flightspr frames = 0
+#end
+
+#selectspell 1133
+#name "Farflight"
+#school 4
+#researchlevel 3
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 0
+#damage 562949953421312
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 1134
+#name "Gift of Flight"
+#school 4
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 0
+#damage 131072
+#nreff 1
+#spec 16384
+#sound 31
+#explspr 10025
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1135
+#name "Lesser Thunder Ward"
+#school 4
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 2048
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10014
+#end
+
+#selectspell 1136
+#name "Seeking Arrow"
+#school 4
+#researchlevel 3
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 400
+#aoe 0
+#effect 10040
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 8405120
+#explspr 0
+#provrange 3
+#end
+
+#selectspell 1137
+#name "Lesser Winter Ward"
+#school 4
+#researchlevel 3
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 4096
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10014
+#end
+
+#selectspell 1138
+#name "Claymen"
+#school 4
+#researchlevel 3
+#path 0 2
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 817
+#nreff 510
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1139
+#name "Gift of Giant Strength"
+#school 4
+#researchlevel 3
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1001
+#effect 10
+#range 15
+#precision 0
+#damage 128
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10058
+#end
+
+#selectspell 1140
+#name "Astral Shield"
+#school 4
+#researchlevel 3
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 268435456
+#nreff 1
+#spec 8404992
+#sound 41
+#explspr 10022
+#end
+
+#selectspell 1141
+#name "Second Sight"
+#school 4
+#researchlevel 3
+#path 0 4
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 137438953472
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10027
+#end
+
+#selectspell 1142
+#name "Raise Skeletons"
+#school 4
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 0
+#effect 1
+#range 5
+#precision -2
+#damage -2
+#nreff 3
+#spec 8388608
+#sound 43
+#explspr 10232
+#end
+
+#selectspell 1143
+#name "Create Revenant"
+#school 4
+#researchlevel 3
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 900
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 396
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1144
+#name "Regeneration"
+#school 4
+#researchlevel 3
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 40
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 32
+#nreff 1
+#spec 549470208
+#sound 31
+#explspr 10015
+#end
+
+#selectspell 1145
+#name "Heal"
+#school 4
+#researchlevel 3
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 13
+#range 15
+#precision 5
+#damage 10020
+#nreff 1
+#spec 545259648
+#sound 29
+#explspr 10015
+#end
+
+#selectspell 1146
+#name "Gift of True Sight"
+#school 4
+#researchlevel 3
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 10
+#precision 0
+#damage 70368744177664
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 1147
+#name "Shroud of Bewilderment"
+#school 4
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 16777216
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1148
+#name "Horrible Visage"
+#school 4
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 10
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 16
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1149
+#name "Terracotta Army"
+#school 4
+#researchlevel 4
+#path 0 0
+#pathlevel 0 1
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 900
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2134
+#nreff 1014
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1150
+#name "Levitate Soldiers"
+#school 4
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1001
+#effect 10
+#range 15
+#precision 0
+#damage 4503599627370496
+#nreff 1
+#spec 4194432
+#sound 31
+#explspr 10231
+#end
+
+#selectspell 1151
+#name "Trueshot Warriors"
+#school 4
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 0
+#damage 4
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 1152
+#name "Cloud Trapeze"
+#school 4
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10095
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#walkable 1
+#end
+
+#selectspell 1153
+#name "Earth Shatter Hammers"
+#school 4
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 2251799813685248
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10270
+#end
+
+#selectspell 1154
+#name "Shroud of Flying Shards"
+#school 4
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 18014398509481984
+#nreff 1
+#spec 16384
+#sound 31
+#explspr 10224
+#end
+
+#selectspell 1155
+#name "Vile Water"
+#school 4
+#researchlevel 4
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2159
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1156
+#name "Spell Ward"
+#school 4
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 0
+#damage 67108864
+#nreff 1
+#spec 12582912
+#sound 41
+#explspr 10236
+#end
+
+#selectspell 1157
+#name "Astral Healing"
+#school 4
+#researchlevel 4
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 666
+#effect 13
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 549585024
+#sound 41
+#explspr 10237
+#end
+
+#selectspell 1158
+#name "Raise Dead"
+#school 4
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 0
+#effect 1
+#range 5
+#precision -2
+#damage -3
+#nreff 2006
+#spec 8388608
+#sound 43
+#explspr 10232
+#end
+
+#selectspell 1159
+#name "Twiceborn"
+#school 4
+#researchlevel 4
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 1000
+#aoe 0
+#effect 10023
+#range 0
+#precision 0
+#damage 4194304
+#nreff 1
+#spec 814219268
+#explspr 0
+#sethome 1
+#twiceborncost 3
+#reqnoplant
+-- ro: ability 752 = 1
+#end
+
+#selectspell 1160
+#name "Behemoth"
+#school 4
+#researchlevel 4
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 452
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1161
+#name "Immaculate Mounts"
+#school 4
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1001
+#effect 10
+#range 10
+#precision 2
+#damage 536870912
+#nreff 1
+#spec 2533274803109888
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1162
+#name "Haste"
+#school 4
+#researchlevel 4
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 23
+#range 15
+#precision 0
+#damage 4
+#nreff 1
+#spec 549453952
+#sound 31
+#explspr 10231
+#end
+
+#selectspell 1163
+#name "Poison Ward"
+#school 4
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 0
+#damage 288230376151711744
+#nreff 1
+#spec 12599296
+#sound 31
+#explspr 10017
+#end
+
+#selectspell 1164
+#name "Serpent Fang Arrows"
+#school 4
+#researchlevel 4
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 1125899906842624
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10051
+#end
+
+#selectspell 1165
+#name "Simulacrum"
+#school 4
+#researchlevel 4
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 2000
+#aoe 0
+#effect 10010
+#range 0
+#precision 0
+#damage 9007199254740992
+#nreff 1
+#spec 8388608
+#explspr 0
+#sethome 1
+#nocastmindless 1
+-- ro: ability 776 = 9007199254740992
+-- ro: ability 780 = 1
+#end
+
+#selectspell 1166
+#name "Gift of Splendor"
+#school 4
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 10
+#precision 0
+#damage 36028797018963968
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1167
+#name "Flaming Arrows"
+#school 4
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 8388608
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10051
+#end
+
+#selectspell 1168
+#name "Flame Ward"
+#school 4
+#researchlevel 5
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 0
+#damage 1024
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10014
+#end
+
+#selectspell 1169
+#name "Farflight Arrows"
+#school 4
+#researchlevel 5
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 0
+#damage 562949953421312
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 1170
+#name "Thunder Ward"
+#school 4
+#researchlevel 5
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 0
+#damage 2048
+#nreff 1
+#spec 12599296
+#sound 24
+#explspr 10015
+#end
+
+#selectspell 1171
+#name "Watcher"
+#school 4
+#researchlevel 5
+#path 0 1
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 768
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1172
+#name "Trade Wind"
+#school 4
+#researchlevel 5
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 95
+#nreff 1
+#spec 0
+#explspr 0
+#onlycoastsrc 1
+#hiddenench 1
+#friendlyench 1
+#end
+
+#selectspell 1173
+#name "Winter Ward"
+#school 4
+#researchlevel 5
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 0
+#damage 4096
+#nreff 1
+#spec 12582912
+#explspr 10230
+#end
+
+#selectspell 1174
+#name "Friendly Currents"
+#school 4
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 41943040
+#sound 31
+#explspr 10028
+#end
+
+#selectspell 1175
+#name "Quagmire"
+#school 4
+#researchlevel 5
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 85
+#nreff 1
+#spec 0
+#sound 31
+#explspr 10028
+#end
+
+#selectspell 1176
+#name "Giant Strength Warriors"
+#school 4
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 0
+#damage 128
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10058
+#end
+
+#selectspell 1177
+#name "Weapons of Sharpness"
+#school 4
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 40
+#aoe 1
+#effect 10
+#range 15
+#precision 0
+#damage 524288
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10270
+#end
+
+#selectspell 1178
+#name "Enliven Gargoyles"
+#school 4
+#researchlevel 5
+#path 0 3
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2368
+#nreff 510
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1179
+#name "Ritual of Returning"
+#school 4
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10023
+#range 0
+#precision 0
+#damage 8388608
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1180
+#name "Dispel"
+#school 4
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 3000
+#aoe 0
+#effect 10030
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 1181
+#name "The Eyes of God"
+#school 4
+#researchlevel 5
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 15
+#nreff 1
+#spec 8388608
+#flightspr 0
+#explspr 0
+#end
+
+#selectspell 1182
+#name "Gift of Spirit Sight"
+#school 4
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1
+#effect 23
+#range 15
+#precision 0
+#damage 137438953472
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10027
+#end
+
+#selectspell 1183
+#name "Pale Riders"
+#school 4
+#researchlevel 5
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision -2
+#damage 189
+#nreff 2019
+#spec 0
+#flightspr 0
+#explspr 0
+#end
+
+#selectspell 1184
+#name "Horde of Skeletons"
+#school 4
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 0
+#effect 1
+#range 5
+#precision -2
+#damage -2
+#nreff 505
+#spec 8388608
+#sound 43
+#explspr 10232
+#end
+
+#selectspell 1185
+#name "Group Regeneration"
+#school 4
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 60
+#aoe 1000
+#effect 10
+#range 15
+#precision 0
+#damage 32
+#nreff 1
+#spec 549470208
+#sound 31
+#explspr 10015
+#end
+
+#selectspell 1186
+#name "Faery Trod"
+#school 4
+#researchlevel 5
+#path 0 6
+#pathlevel 0 4
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 2000
+#aoe 0
+#effect 10079
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#sound 41
+#flightspr 0
+#explspr 0
+#provrange 10
+#onlygeosrc 128
+#onlygeodst 128
+#end
+
+#selectspell 1187
+#name "Dreamwild Demesne"
+#school 4
+#researchlevel 5
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 140
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 709 = 3
+#end
+
+#selectspell 1188
+#name "Eternal Pyre"
+#school 4
+#researchlevel 6
+#path 0 0
+#pathlevel 0 6
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 17
+#nreff 1
+#spec 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#worldvisible 1
+#hiddenench 1
+-- ro: ability 764 = -3
+-- ro: ability 768 = 1
+#end
+
+#selectspell 1189
+#name "Heat from Hell"
+#school 4
+#researchlevel 6
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 6
+#nreff 1
+#spec 0
+#sound 16
+#explspr 10034
+#end
+
+#selectspell 1190
+#name "Vafur Flames"
+#school 4
+#researchlevel 6
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 73
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 2
+-- ro: ability 730 = 1
+-- ro: ability 709 = 3
+-- ro: ability 1702 = 4
+#end
+
+#selectspell 1191
+#name "Wind Guide"
+#school 4
+#researchlevel 6
+#path 0 1
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 666
+#effect 23
+#range 0
+#precision 0
+#damage 256
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 1192
+#name "Greater Farflight"
+#school 4
+#researchlevel 6
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 562949953421312
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10008
+#end
+
+#selectspell 1193
+#name "Dome of Solid Air"
+#school 4
+#researchlevel 6
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10084
+#range 0
+#precision 0
+#damage 61
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1194
+#name "Water Ward"
+#school 4
+#researchlevel 6
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 25
+#effect 23
+#range 15
+#precision 0
+#damage 32
+#nreff 1
+#spec 46153728
+#sound 31
+#explspr 10005
+#end
+
+#selectspell 1195
+#name "Grip of Winter"
+#school 4
+#researchlevel 6
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 9
+#nreff 1
+#spec 8388608
+#explspr 10028
+#end
+
+#selectspell 1196
+#name "Frost Dome"
+#school 4
+#researchlevel 6
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 62
+#nreff 1
+#spec 8388608
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1197
+#name "Hidden in Snow"
+#school 4
+#researchlevel 6
+#path 0 2
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 6500
+#aoe 0
+#effect 10100
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 8388624
+#end
+
+#selectspell 1198
+#name "Earthquake Warriors"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1016
+#effect 10
+#range 15
+#precision 0
+#damage 2251799813685248
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10270
+#end
+
+#selectspell 1199
+#name "Riches from Beneath"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 35
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1200
+#name "Enliven Statues"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#fatiguecost 2000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 474
+#nreff 1007
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1201
+#name "Hidden in Sand"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 6500
+#aoe 0
+#effect 10100
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 64
+#end
+
+#selectspell 1202
+#name "Hidden Underneath"
+#school 4
+#researchlevel 6
+#path 0 3
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 6500
+#aoe 0
+#effect 10100
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 4096
+#end
+
+#selectspell 1203
+#name "Opposition"
+#school 4
+#researchlevel 6
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 25
+#precision 100
+#damage 999
+#nreff 1
+#spec 8409104
+#nextspell 123
+#explspr 10233
+#end
+
+#selectspell 1204
+#name "Dome of Arcane Warding"
+#school 4
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 64
+#nreff 1
+#spec 8388608
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1205
+#name "Rigor Mortis"
+#school 4
+#researchlevel 6
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 4
+#nreff 1
+#spec 17592731828352
+#explspr 10040
+#end
+
+#selectspell 1206
+#name "Reanimate Archers"
+#school 4
+#researchlevel 6
+#path 0 5
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 535
+#nreff 10
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1207
+#name "Ziz"
+#school 4
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#path 1 1
+#pathlevel 1 2
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1388
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1208
+#name "Hail of Serpent Fangs"
+#school 4
+#researchlevel 6
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 1125899906842624
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10051
+#end
+
+#selectspell 1209
+#name "Relief"
+#school 4
+#researchlevel 6
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 84
+#nreff 1
+#spec 8388608
+#sound 31
+#explspr 10047
+#end
+
+#selectspell 1210
+#name "Forest Dome"
+#school 4
+#researchlevel 6
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 1000
+#aoe 0
+#effect 10084
+#range 0
+#precision 0
+#damage 66
+#nreff 1
+#spec 8388608
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1211
+#name "Foul Vapors"
+#school 4
+#researchlevel 6
+#path 0 6
+#pathlevel 0 4
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 45
+#nreff 1
+#spec 8388608
+#sound 18
+#explspr 10039
+#end
+
+#selectspell 1212
+#name "Steal Sight"
+#school 4
+#researchlevel 6
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 20
+#precision 100
+#damage 4096
+#nreff 1
+#spec 8409088
+#sound 40
+#explspr 10036
+#end
+
+#selectspell 1213
+#name "Aura of Splendor"
+#school 4
+#researchlevel 6
+#path 0 7
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 40
+#aoe 1002
+#effect 23
+#range 15
+#precision 0
+#damage 36028797018963968
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1214
+#name "Dome of Misdirection"
+#school 4
+#researchlevel 6
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 67
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1215
+#name "Hail of Burning Embers"
+#school 4
+#researchlevel 7
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 8388608
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10051
+#end
+
+#selectspell 1216
+#name "Dome of Flaming Death"
+#school 4
+#researchlevel 7
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 800
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 60
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 1702 = 4
+#end
+
+#selectspell 1217
+#name "Mass Flight"
+#school 4
+#researchlevel 7
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1016
+#effect 10
+#range 15
+#precision 0
+#damage 131072
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10005
+#end
+
+#selectspell 1218
+#name "Thetis' Blessing"
+#school 4
+#researchlevel 7
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 59
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1219
+#name "Ghost Ship Armada"
+#school 4
+#researchlevel 7
+#path 0 2
+#pathlevel 0 5
+#path 1 5
+#pathlevel 1 3
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 43
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1220
+#name "Steel Slice Warriors"
+#school 4
+#researchlevel 7
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1016
+#effect 10
+#range 15
+#precision 0
+#damage 524288
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10270
+#end
+
+#selectspell 1221
+#name "Lion Sentinels"
+#school 4
+#researchlevel 7
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 3000
+#aoe 0
+#effect 10084
+#range 0
+#precision 0
+#damage 105
+#nreff 1
+#spec 8388608
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 730 = 1
+-- ro: ability 762 = -1
+#end
+
+#selectspell 1222
+#name "Earth Blood Deep Well"
+#school 4
+#researchlevel 7
+#path 0 3
+#pathlevel 0 6
+#fatiguecost 8000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 48
+#nreff 1
+#spec 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#hiddenench 1
+#worldvisible 1
+-- ro: ability 703 (#nogeosrc 0..2147483647) = 34359738368
+#end
+
+#selectspell 1223
+#name "Antimagic"
+#school 4
+#researchlevel 7
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 67108864
+#nreff 1
+#spec 12582912
+#sound 41
+#explspr 10236
+#end
+
+#selectspell 1224
+#name "Solar Brilliance"
+#school 4
+#researchlevel 7
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 21
+#nreff 1
+#spec 0
+#sound 41
+#explspr 55
+#reqsun 1
+-- ro: explspr frames = 5
+-- ro: ability 768 = 1
+#end
+
+#selectspell 1225
+#name "Stellar Focus"
+#school 4
+#researchlevel 7
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 54
+#nreff 1
+#spec 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#worldvisible 1
+#hiddenench 1
+-- ro: ability 703 (#nogeosrc 0..2147483647) = 34359742464
+-- ro: ability 1702 = 4
+#end
+
+#selectspell 1226
+#name "Disenchantment"
+#school 4
+#researchlevel 7
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10152
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 1227
+#name "Carrion Reanimation"
+#school 4
+#researchlevel 7
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage -3
+#nreff 200
+#spec 8388608
+#explspr 0
+#onlyowndst 1
+#provrange 5
+-- ro: ability 791 = -50
+#end
+
+#selectspell 1228
+#name "Life after Death"
+#school 4
+#researchlevel 7
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 400
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 2097152
+#nreff 1
+#spec 12713984
+#sound 31
+#explspr 10317
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1229
+#name "Ritual of Rebirth"
+#school 4
+#researchlevel 7
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 1500
+#aoe 0
+#effect 10026
+#range 0
+#precision 0
+#damage 398
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1230
+#name "Leviathan"
+#school 4
+#researchlevel 7
+#path 0 5
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1235
+#nreff 1
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 1231
+#name "Mass Regeneration"
+#school 4
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1016
+#effect 10
+#range 15
+#precision 0
+#damage 32
+#nreff 1
+#spec 545275904
+#sound 31
+#explspr 10015
+#end
+
+#selectspell 1232
+#name "Serpent's Blessing"
+#school 4
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 16777216
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10004
+#end
+
+#selectspell 1233
+#name "Awaken Treelord"
+#school 4
+#researchlevel 7
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 3500
+#aoe 0
+#effect 10114
+#range 0
+#precision 0
+#damage 11
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 4
+#onlygeodst 128
+#nogeodst 4
+#end
+
+#selectspell 1234
+#name "Gift of Health"
+#school 4
+#researchlevel 7
+#path 0 6
+#pathlevel 0 6
+#fatiguecost 5000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 30
+#nreff 1
+#spec 8388608
+#flightspr 0
+#explspr 0
+#end
+
+#selectspell 1235
+#name "Aura of Bewilderment"
+#school 4
+#researchlevel 7
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1001
+#effect 23
+#range 15
+#precision 0
+#damage 16777216
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1236
+#name "Veil of Perpetual Mists"
+#school 4
+#researchlevel 7
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 3000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 114
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1237
+#name "Nightmare Masks"
+#school 4
+#researchlevel 7
+#path 0 7
+#pathlevel 0 4
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 1001
+#effect 23
+#range 15
+#precision 0
+#damage 16
+#nreff 1
+#spec 12599424
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1238
+#name "Warriors of the Dawn"
+#school 4
+#researchlevel 7
+#path 0 7
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 1016
+#effect 23
+#range 20
+#precision 0
+#damage 36028797018963968
+#nreff 1
+#spec 8405120
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1239
+#name "Land of the Ever Young"
+#school 4
+#researchlevel 7
+#path 0 7
+#pathlevel 0 5
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 141
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1240
+#name "Fire Fend"
+#school 4
+#researchlevel 8
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 1024
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10003
+#end
+
+#selectspell 1241
+#name "Frost Fend"
+#school 4
+#researchlevel 8
+#path 0 2
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 4096
+#nreff 1
+#spec 12582912
+#explspr 10005
+#end
+
+#selectspell 1242
+#name "Soaring Army"
+#school 4
+#researchlevel 8
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 131072
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10005
+#end
+
+#selectspell 1243
+#name "Thunder Fend"
+#school 4
+#researchlevel 8
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 2048
+#nreff 1
+#spec 12582912
+#sound 24
+#explspr 10008
+#end
+
+#selectspell 1244
+#name "Wrath of the Sea"
+#school 4
+#researchlevel 8
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 18
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1245
+#name "Lichcraft"
+#school 4
+#researchlevel 9
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 2500
+#aoe 0
+#effect 10167
+#range 0
+#precision 0
+#damage 178
+#nreff 1
+#spec 814219268
+#explspr 0
+#sethome 1
+#sizecost 5
+#reqnoplant
+-- ro: ability 752 = 1
+-- ro: ability 796 = -1
+#end
+
+#selectspell 1246
+#name "Fields of the Dead"
+#school 4
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 96
+#nreff 1
+#spec 8388608
+#sound 43
+#explspr 10005
+#end
+
+#selectspell 1247
+#name "Void Pattern Labyrinth"
+#school 4
+#researchlevel 8
+#path 0 4
+#pathlevel 0 4
+#path 1 7
+#pathlevel 1 3
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 69
+#nreff 1
+#spec 8388608
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1248
+#name "Unraveling"
+#school 4
+#researchlevel 8
+#path 0 4
+#pathlevel 0 6
+#fatiguecost 600
+#aoe 666
+#effect 11
+#range 0
+#precision 0
+#damage 256
+#nreff 1
+#spec 8392720
+#nextspell 40
+#sound 32
+#explspr -4
+-- ro: explspr frames = 0
+#end
+
+#selectspell 1249
+#name "Army Regeneration"
+#school 4
+#researchlevel 8
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 32
+#nreff 1
+#spec 549453824
+#sound 31
+#explspr 10027
+#end
+
+#selectspell 1250
+#name "Haunted Forest"
+#school 4
+#researchlevel 8
+#path 0 6
+#pathlevel 0 5
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 55
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1251
+#name "Fata Morgana"
+#school 4
+#researchlevel 8
+#path 0 7
+#pathlevel 0 7
+#fatiguecost 9000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 53
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1252
+#name "Mists of Deception"
+#school 4
+#researchlevel 8
+#path 0 7
+#pathlevel 0 5
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 72
+#nreff 1
+#spec 0
+#sound 42
+#explspr 10001
+#end
+
+#selectspell 1253
+#name "Earth Shatter Army"
+#school 4
+#researchlevel 9
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 2251799813685248
+#nreff 1
+#spec 12582912
+#sound 31
+#explspr 10270
+#end
+
+#selectspell 1254
+#name "Demon Cleansing"
+#school 4
+#researchlevel 9
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 83
+#nreff 1
+#spec 8388608
+#sound 42
+#explspr 10005
+#end
+
+#selectspell 1255
+#name "Dome of Seven Seals"
+#school 4
+#researchlevel 9
+#path 0 4
+#pathlevel 0 4
+#path 1 3
+#pathlevel 1 4
+#fatiguecost 1400
+#aoe 0
+#effect 10084
+#range 0
+#precision 0
+#damage 132
+#nreff 1
+#spec 8388608
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1256
+#name "Arcane Nexus"
+#school 4
+#researchlevel 9
+#path 0 4
+#pathlevel 0 8
+#fatiguecost 15000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 19
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1257
+#name "Army of the Dead"
+#school 4
+#researchlevel 9
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 1000
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage -2
+#nreff 5075
+#spec 8388608
+#nextspell 46
+#explspr 0
+#provrange 5
+#farsumcom 190
+-- ro: ability 791 = -75
+#end
+
+#selectspell 1258
+#name "Gaia's Blessing"
+#school 4
+#researchlevel 9
+#path 0 6
+#pathlevel 0 5
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 16784384
+#nreff 1
+#spec 12599296
+#sound 31
+#explspr 10266
+#end
+
+#selectspell 1259
+#name "Gift of Nature's Bounty"
+#school 4
+#researchlevel 9
+#path 0 6
+#pathlevel 0 7
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 27
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1260
+#name "Desiccation"
+#school 5
+#researchlevel 1
+#path 0 2
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 500
+#range 30
+#precision 100
+#damage 250
+#nreff 1
+#spec 537399424
+#sound 23
+#explspr 10196
+#end
+
+#selectspell 1261
+#name "Farstrike"
+#school 5
+#researchlevel 1
+#path 0 3
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 5
+#aoe 0
+#effect 2
+#range 50
+#precision 5
+#damage 1015
+#nreff 1
+#spec 549764202497
+#sound 41
+#explspr 10195
+#end
+
+#selectspell 1262
+#name "Blink"
+#school 5
+#researchlevel 1
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 10
+#aoe 0
+#effect 20
+#range 0
+#precision 0
+#damage 30
+#nreff 1
+#spec 8404992
+#sound 31
+#flightspr 0
+#explspr 10277
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1263
+#name "Communion Master"
+#school 5
+#researchlevel 1
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 144115188075855872
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10274
+#ainocast 1
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1264
+#name "Communion Slave"
+#school 5
+#researchlevel 1
+#path 0 4
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 288230376151711744
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10273
+#ainocast 1
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1265
+#name "Horror Mark"
+#school 5
+#researchlevel 1
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 600
+#range 50
+#precision 100
+#damage 261
+#nreff 1
+#spec 8536064
+#sound 28
+#explspr 10201
+#end
+
+#selectspell 1266
+#name "Dust to Dust"
+#school 5
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 30
+#precision 0
+#damage 2020
+#nreff 1
+#spec 2305843009490518152
+#sound 84
+#explspr 10209
+#end
+
+#selectspell 1267
+#name "Decay"
+#school 5
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 25
+#precision 3
+#damage 256
+#nreff 1
+#spec 8392704
+#sound 23
+#flightspr 339
+#explspr 10197
+-- ro: flightspr frames = 3
+#end
+
+#selectspell 1268
+#name "Frighten"
+#school 5
+#researchlevel 1
+#path 0 5
+#pathlevel 0 1
+#fatiguecost 5
+#aoe 1
+#effect 97
+#range 50
+#precision 5
+#damage 5
+#nreff 1
+#spec 8388736
+#sound 22
+#explspr 10198
+#end
+
+#selectspell 1269
+#name "Seven Year Fever"
+#school 5
+#researchlevel 1
+#path 0 6
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 30
+#aoe 1
+#effect 11
+#range 25
+#precision 2
+#damage 1
+#nreff 1
+#spec 545796096
+#spec2 4096
+#sound 42
+#explspr 10199
+#end
+
+#selectspell 1270
+#name "Fascination"
+#school 5
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 128
+#range 15
+#precision 100
+#damage 100
+#nreff 1
+#spec 8540288
+#explspr 10207
+#end
+
+#selectspell 1271
+#name "Personal Luck"
+#school 5
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 4840767488
+#sound 31
+#explspr 10021
+#end
+
+#selectspell 1272
+#name "Curse"
+#school 5
+#researchlevel 1
+#path 0 7
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 30
+#aoe 0
+#effect 11
+#range 50
+#precision 100
+#damage 2
+#nreff 1
+#spec 8404992
+#sound 23
+#explspr 10200
+#end
+
+#selectspell 1273
+#name "Bonds of Fire"
+#school 5
+#researchlevel 2
+#path 0 0
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 20
+#precision 3
+#damage 65536
+#nreff 1
+#spec 16416
+#explspr 10202
+#end
+
+#selectspell 1274
+#name "Battle Fury"
+#school 5
+#researchlevel 2
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 2
+#damage 281474976710656
+#nreff 1
+#spec 144115188088569856
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1275
+#name "Steal Breath"
+#school 5
+#researchlevel 2
+#path 0 1
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 3
+#range 30
+#precision 5
+#damage 5035
+#nreff 1
+#spec 537481344
+#sound 52
+#explspr 10265
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1276
+#name "Calm Emotions"
+#school 5
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 10
+#precision 100
+#damage 36028797018963968
+#nreff 1
+#spec 8540160
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1277
+#name "Scrying Pool"
+#school 5
+#researchlevel 2
+#path 0 2
+#pathlevel 0 1
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 36
+#nreff 1
+#spec 0
+#provrange 5
+#hiddenench 1
+#end
+
+#selectspell 1278
+#name "Returning"
+#school 5
+#researchlevel 2
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 15
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 12599424
+#sound 31
+#explspr 10021
+#end
+
+#selectspell 1279
+#name "Mind Burn"
+#school 5
+#researchlevel 2
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 100
+#precision 100
+#damage 1010
+#nreff 1
+#spec 8540288
+#sound 41
+#explspr 10204
+#end
+
+#selectspell 1280
+#name "Beast Fury"
+#school 5
+#researchlevel 2
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 2
+#damage 281474976710656
+#nreff 1
+#spec 281474989424640
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1281
+#name "Sleep"
+#school 5
+#researchlevel 2
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 35
+#precision 100
+#damage 1024
+#nreff 1
+#spec 277500032
+#sound 29
+#explspr 10016
+#end
+
+#selectspell 1282
+#name "Rage"
+#school 5
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 30
+#precision 100
+#damage 128
+#nreff 1
+#spec 8540160
+#explspr 10023
+#end
+
+#selectspell 1283
+#name "Augury"
+#school 5
+#researchlevel 3
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 0
+#nreff 1
+#spec 0
+#onlyfriendlydst 1
+#provrange 5
+#end
+
+#selectspell 1284
+#name "Carrier Birds"
+#school 5
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10160
+#range 0
+#precision 0
+#damage 15
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 4
+#onlyfriendlydst 2
+#nogeodst 4
+-- ro: ability 784 = 1
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1285
+#name "Carrier Eagle"
+#school 5
+#researchlevel 3
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10161
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 4
+#onlyfriendlydst 2
+#nogeodst 4
+-- ro: ability 785 = 2
+-- ro: ability 784 = 1
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1286
+#name "Sailors' Death"
+#school 5
+#researchlevel 3
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1
+#effect 2
+#range 30
+#precision 1
+#damage 3005
+#nreff 1
+#spec 36028797556428928
+#explspr 10125
+#end
+
+#selectspell 1287
+#name "Iron Will"
+#school 5
+#researchlevel 3
+#path 0 3
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 25
+#precision 100
+#damage 67108864
+#nreff 1
+#spec 8536064
+#sound 31
+#explspr 10011
+#end
+
+#selectspell 1288
+#name "Teleport Gems"
+#school 5
+#researchlevel 3
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 200
+#aoe 0
+#effect 10160
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 6
+#onlyfriendlydst 2
+-- ro: ability 784 = 1
+#end
+
+#selectspell 1289
+#name "Haruspex"
+#school 5
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 6
+#nreff 1
+#spec 8388608
+#onlyfriendlydst 1
+#provrange 3
+#end
+
+#selectspell 1290
+#name "Panic"
+#school 5
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 2001
+#effect 97
+#range 30
+#precision 1
+#damage 1
+#nreff 1
+#spec 8650880
+#sound 22
+#explspr 10150
+#end
+
+#selectspell 1291
+#name "Whispers of the Wild"
+#school 5
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 36
+#nreff 1
+#spec 8388608
+#provrange 4
+#onlygeodst 128
+#hiddenench 1
+#end
+
+#selectspell 1292
+#name "Luck"
+#school 5
+#researchlevel 3
+#path 0 7
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 1
+#effect 10
+#range 10
+#precision 2
+#damage 2
+#nreff 1
+#spec 4840751104
+#sound 31
+#explspr 10001
+#end
+
+#selectspell 1293
+#name "Despair"
+#school 5
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 1003
+#effect 97
+#range 30
+#precision 1
+#damage 4
+#nreff 1
+#spec 8654976
+#sound 22
+#explspr 10140
+#end
+
+#selectspell 1294
+#name "Geas"
+#school 5
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 11
+#range 25
+#precision 100
+#damage 18014398509481984
+#nreff 1
+#spec 17592194580480
+#spec2 256
+#sound 23
+#explspr 10407
+#restricted 11
+#restricted 58
+#restricted 10
+#restricted 57
+#restricted 85
+#end
+
+#selectspell 1295
+#name "Prison of Fire"
+#school 5
+#researchlevel 4
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 30
+#aoe 1000
+#effect 11
+#range 30
+#precision 2
+#damage 65536
+#nreff 1
+#spec 16416
+#explspr 10203
+#end
+
+#selectspell 1296
+#name "Furious Warriors"
+#school 5
+#researchlevel 4
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1001
+#effect 10
+#range 15
+#precision 2
+#damage 281474976710656
+#nreff 1
+#spec 144115188088569856
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1297
+#name "Auspex"
+#school 5
+#researchlevel 4
+#path 0 1
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#onlyfriendlydst 1
+#provrange 2
+#nowatertrace 1
+#nogeodst 4
+#end
+
+#selectspell 1298
+#name "Curse of the Desert"
+#school 5
+#researchlevel 4
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 30
+#aoe 5
+#effect 500
+#range 30
+#precision 100
+#damage 250
+#nreff 1
+#spec 537399424
+#sound 23
+#explspr 10196
+#end
+
+#selectspell 1299
+#name "Gnome Lore"
+#school 5
+#researchlevel 4
+#path 0 3
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 8388608
+#onlyfriendlydst 1
+#provrange 3
+#end
+
+#selectspell 1300
+#name "Paralyze"
+#school 5
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 66
+#range 100
+#precision 100
+#damage 9042
+#nreff 1
+#spec 8540288
+#sound 41
+#explspr 10205
+#end
+
+#selectspell 1301
+#name "Telestic Animation"
+#school 5
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 473
+#nreff 1
+#spec 8388608
+#explspr 0
+-- ro: ability 793 = 4
+#end
+
+#selectspell 1302
+#name "Astral Window"
+#school 5
+#researchlevel 4
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 36
+#nreff 1
+#spec 8388608
+#provrange 6
+#hiddenench 1
+#end
+
+#selectspell 1303
+#name "Teleport"
+#school 5
+#researchlevel 4
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 200
+#aoe 0
+#effect 10019
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 0
+#provrange 6
+#end
+
+#selectspell 1304
+#name "Vengeance of the Dead"
+#school 5
+#researchlevel 4
+#path 0 7
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 0
+#effect 10053
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 8523776
+#spec2 1024
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 1305
+#name "Terror"
+#school 5
+#researchlevel 4
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1002
+#effect 4
+#range 30
+#precision 1
+#damage 3
+#nreff 1
+#spec 8388736
+#sound 22
+#explspr 10140
+#end
+
+#selectspell 1306
+#name "Ferocity"
+#school 5
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1001
+#effect 10
+#range 15
+#precision 2
+#damage 281474976710656
+#nreff 1
+#spec 281474989424640
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1307
+#name "Touch of Madness"
+#school 5
+#researchlevel 4
+#path 0 6
+#pathlevel 0 1
+#fatiguecost 30
+#aoe 1
+#effect 10
+#range 20
+#precision 0
+#damage 256
+#nreff 1
+#spec 140738037940352
+#sound 31
+#explspr 10017
+#end
+
+#selectspell 1308
+#name "Rage of the Cornered Rat"
+#school 5
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1001
+#effect 10
+#range 20
+#precision 0
+#damage 256
+#nreff 1
+#spec 281474989293696
+#sound 31
+#explspr 10017
+#end
+
+#selectspell 1309
+#name "Wildness"
+#school 5
+#researchlevel 4
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1
+#effect 11
+#range 30
+#precision 3
+#damage 17179869184
+#nreff 1
+#spec 281474985119744
+#explspr 10207
+#end
+
+#selectspell 1310
+#name "Cure Disease"
+#school 5
+#researchlevel 4
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 500
+#aoe 0
+#effect 10131
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 545259520
+#explspr 0
+#end
+
+#selectspell 1311
+#name "Slumber"
+#school 5
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1001
+#effect 11
+#range 35
+#precision 100
+#damage 1024
+#nreff 1
+#spec 277500032
+#sound 29
+#explspr 10016
+#end
+
+#selectspell 1312
+#name "Mind Blank"
+#school 5
+#researchlevel 4
+#path 0 7
+#pathlevel 0 1
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 140737488355328
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1313
+#name "Visions of Death"
+#school 5
+#researchlevel 4
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 5020
+#precision 100
+#damage 5010
+#nreff 1
+#spec 17188278400
+#sound 41
+#explspr 10370
+#end
+
+#selectspell 1314
+#name "Gift of the Furies"
+#school 5
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 1017
+#effect 10
+#range 15
+#precision 2
+#damage 281474976710656
+#nreff 1
+#spec 144115188088569856
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1315
+#name "Pyre of Catharsis"
+#school 5
+#researchlevel 5
+#path 0 0
+#pathlevel 0 3
+#fatiguecost 400
+#aoe 0
+#effect 10132
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 576460752840294400
+#explspr 0
+#end
+
+#selectspell 1316
+#name "Purifying Flames"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10112
+#range 0
+#precision 0
+#damage 20
+#nreff 1
+#spec 160
+#end
+
+#selectspell 1317
+#name "Raging Hearts"
+#school 5
+#researchlevel 5
+#path 0 0
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 1318
+#name "Serenity"
+#school 5
+#researchlevel 5
+#path 0 2
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1000
+#effect 11
+#range 15
+#precision 100
+#damage 36028797018963968
+#nreff 1
+#spec 8540160
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1319
+#name "Earth Sense"
+#school 5
+#researchlevel 5
+#path 0 3
+#pathlevel 0 4
+#fatiguecost 600
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 121
+#nreff 1
+#spec 8388608
+#explspr 0
+-- ro: ability 760 = 1
+-- ro: ability 709 = 3
+#end
+
+#selectspell 1320
+#name "Teleport Item"
+#school 5
+#researchlevel 5
+#path 0 4
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10161
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 6
+#onlyfriendlydst 2
+-- ro: ability 785 = 2
+-- ro: ability 784 = 1
+#end
+
+#selectspell 1321
+#name "Soul Slay"
+#school 5
+#researchlevel 5
+#path 0 4
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 0
+#effect 2
+#range 100
+#precision 100
+#damage 999
+#nreff 1
+#spec 8540544
+#sound 41
+#explspr 10206
+#end
+
+#selectspell 1322
+#name "Leeching Darkness"
+#school 5
+#researchlevel 5
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 20
+#aoe 1000
+#effect 146
+#range 30
+#precision 1
+#damage 134217728
+#nreff 1
+#spec 4160
+#sound 16
+#explspr 10367
+#end
+
+#selectspell 1323
+#name "Control the Dead"
+#school 5
+#researchlevel 5
+#path 0 5
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 1
+#effect 28
+#range 25
+#precision 0
+#damage 999
+#nreff 1
+#spec 277090440
+#sound 22
+#explspr 10042
+#end
+
+#selectspell 1324
+#name "Charm Animal"
+#school 5
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 29
+#range 20
+#precision 100
+#damage 999
+#nreff 1
+#spec 281475001892864
+#sound 41
+#explspr 10171
+#end
+
+#selectspell 1325
+#name "Pack Ferocity"
+#school 5
+#researchlevel 5
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 1018
+#effect 10
+#range 15
+#precision 2
+#damage 281474976710656
+#nreff 1
+#spec 281474989424640
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1326
+#name "The Ravenous Swarm"
+#school 5
+#researchlevel 5
+#path 0 6
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 1
+#precision 0
+#damage 92
+#nreff 1
+#spec 0
+#sound 23
+#explspr 0
+#end
+
+#selectspell 1327
+#name "Gift of Reason"
+#school 5
+#researchlevel 5
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 2000
+#aoe 0
+#effect 10039
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8519680
+#explspr 0
+#end
+
+#selectspell 1328
+#name "Confusion"
+#school 5
+#researchlevel 5
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 10
+#aoe 1
+#effect 11
+#range 30
+#precision 3
+#damage 17179869184
+#nreff 1
+#spec 8540160
+#explspr 10207
+#end
+
+#selectspell 1329
+#name "Group Luck"
+#school 5
+#researchlevel 5
+#path 0 7
+#pathlevel 0 2
+#fatiguecost 40
+#aoe 1001
+#effect 10
+#range 15
+#precision 2
+#damage 2
+#nreff 1
+#spec 4840751104
+#sound 31
+#explspr 10001
+#end
+
+#selectspell 1330
+#name "Choleria"
+#school 5
+#researchlevel 6
+#path 0 0
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 134
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+-- ro: ability 709 = 3
+#end
+
+#selectspell 1331
+#name "Sanguinia"
+#school 5
+#researchlevel 6
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 135
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+-- ro: ability 709 = 3
+#end
+
+#selectspell 1332
+#name "Phlegmatia"
+#school 5
+#researchlevel 6
+#path 0 2
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10083
+#range 0
+#precision 0
+#damage 136
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 1333
+#name "Melancholia"
+#school 5
+#researchlevel 6
+#path 0 3
+#pathlevel 0 5
+#fatiguecost 2000
+#aoe 0
+#effect 10083
+#range 0
+#precision 0
+#damage 137
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 1334
+#name "Enslave Mind"
+#school 5
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 20
+#aoe 0
+#effect 28
+#range 100
+#precision 100
+#damage 999
+#nreff 1
+#spec 8540288
+#sound 41
+#explspr 10208
+#end
+
+#selectspell 1335
+#name "Imprint Souls"
+#school 5
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 1500
+#aoe 0
+#effect 10092
+#range 0
+#precision -1
+#damage 2052
+#nreff 1
+#spec 8388608
+#provrange 5
+#end
+
+#selectspell 1336
+#name "Gateway"
+#school 5
+#researchlevel 6
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 1000
+#aoe 0
+#effect 10077
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 0
+#provrange 6
+-- ro: ability 788 = 1
+#end
+
+#selectspell 1337
+#name "Wither Bones"
+#school 5
+#researchlevel 6
+#path 0 5
+#pathlevel 0 3
+#fatiguecost 50
+#aoe 2000
+#effect 2
+#range 30
+#precision -1
+#damage 2010
+#nreff 1
+#spec 2305843009490518152
+#sound 84
+#explspr 10209
+#end
+
+#selectspell 1338
+#name "Leprosy"
+#school 5
+#researchlevel 6
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 1000
+#aoe 0
+#effect 10064
+#range 0
+#precision -1
+#damage 1
+#nreff 1
+#spec 545263616
+#spec2 4096
+#provrange 4
+#end
+
+#selectspell 1339
+#name "Foul Air"
+#school 5
+#researchlevel 6
+#path 0 5
+#pathlevel 0 5
+#path 1 1
+#pathlevel 1 1
+#fatiguecost 7500
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1340
+#name "Growing Fury"
+#school 5
+#researchlevel 6
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 13
+#nreff 1
+#spec 8388608
+#sound 31
+#explspr 10024
+#end
+
+#selectspell 1341
+#name "Mirror Mind"
+#school 5
+#researchlevel 6
+#path 0 7
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1001
+#effect 10
+#range 15
+#precision 0
+#damage 140737488355328
+#nreff 1
+#spec 8404992
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1342
+#name "Unending Nightmare"
+#school 5
+#researchlevel 6
+#path 0 7
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 20
+#aoe 1000
+#effect 11
+#range 35
+#precision 100
+#damage 17179870208
+#nreff 1
+#spec 277500032
+#sound 29
+#explspr 10016
+#end
+
+#selectspell 1343
+#name "Beckoning"
+#school 5
+#researchlevel 6
+#path 0 7
+#pathlevel 0 4
+#path 1 6
+#pathlevel 1 2
+#fatiguecost 2000
+#aoe 0
+#effect 10094
+#range 0
+#precision 0
+#damage 999
+#nreff 5055
+#spec 8392704
+#explspr 0
+#provrange 4
+#onlygeodst 128
+#nogeodst 4
+#end
+
+#selectspell 1344
+#name "Sandman's Blessing"
+#school 5
+#researchlevel 6
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 20
+#aoe 25
+#effect 11
+#range 30
+#precision 0
+#damage 1024
+#nreff 1
+#spec 277483648
+#sound 29
+#explspr 10016
+#end
+
+#selectspell 1345
+#name "Forgotten Palace"
+#school 5
+#researchlevel 6
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10084
+#range 0
+#precision 0
+#damage 111
+#nreff 1
+#spec 0
+#friendlyench 1
+#hiddenench 1
+#provrange 3
+#end
+
+#selectspell 1346
+#name "Purgatory"
+#school 5
+#researchlevel 7
+#path 0 0
+#pathlevel 0 6
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 26
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1347
+#name "Dark Skies"
+#school 5
+#researchlevel 7
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 5000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 32
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1348
+#name "Vengeful Water"
+#school 5
+#researchlevel 7
+#path 0 2
+#pathlevel 0 7
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 93
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1349
+#name "Divine Name"
+#school 5
+#researchlevel 7
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 2500
+#aoe 0
+#effect 10039
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1350
+#name "Vortex of Returning"
+#school 5
+#researchlevel 7
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 300
+#aoe 666
+#effect 15
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 12583040
+#sound 41
+#explspr 10159
+#ainocast 1
+#end
+
+#selectspell 1351
+#name "Plague"
+#school 5
+#researchlevel 7
+#path 0 5
+#pathlevel 0 4
+#fatiguecost 100
+#aoe 1
+#effect 11
+#range 25
+#precision 0
+#damage 8
+#nreff 1
+#spec 545787904
+#explspr 10211
+#end
+
+#selectspell 1352
+#name "Burden of Time"
+#school 5
+#researchlevel 7
+#path 0 5
+#pathlevel 0 7
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 29
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1353
+#name "Fury of the Wild"
+#school 5
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 281474976710656
+#nreff 1
+#spec 281474989424640
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1354
+#name "Charm"
+#school 5
+#researchlevel 7
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 30
+#aoe 0
+#effect 29
+#range 25
+#precision 100
+#damage 999
+#nreff 1
+#spec 8540288
+#explspr 10213
+#end
+
+#selectspell 1355
+#name "Mass Confusion"
+#school 5
+#researchlevel 7
+#path 0 7
+#pathlevel 0 3
+#fatiguecost 10
+#aoe 1002
+#effect 11
+#range 30
+#precision 3
+#damage 17179869184
+#nreff 1
+#spec 8540160
+#explspr 10207
+#end
+
+#selectspell 1356
+#name "Gates of Horn and Ivory"
+#school 5
+#researchlevel 7
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 116
+#nreff 1
+#spec 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#hiddenench 1
+#end
+
+#selectspell 1357
+#name "Hydrophobia"
+#school 5
+#researchlevel 8
+#path 0 0
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 5
+#effect 11
+#range 30
+#precision 100
+#damage 128
+#nreff 1
+#spec 545927168
+#explspr 10023
+#end
+
+#selectspell 1358
+#name "Ordeal by Fire"
+#school 5
+#researchlevel 8
+#path 0 0
+#pathlevel 0 6
+#path 1 4
+#pathlevel 1 6
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 131
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 1359
+#name "Gale Gate"
+#school 5
+#researchlevel 8
+#path 0 1
+#pathlevel 0 5
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 49
+#nreff 1
+#spec 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#hiddenench 1
+-- ro: ability 703 (#nogeosrc 0..2147483647) = 34359742464
+-- ro: ability 1702 = 4
+#end
+
+#selectspell 1360
+#name "Lure of the Deep"
+#school 5
+#researchlevel 8
+#path 0 7
+#pathlevel 0 5
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 7000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 50
+#nreff 1
+#spec 41943040
+#explspr 0
+#end
+
+#selectspell 1361
+#name "Astral Travel"
+#school 5
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#fatiguecost 2500
+#aoe 0
+#effect 10077
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 1362
+#name "Soul Drain"
+#school 5
+#researchlevel 8
+#path 0 4
+#pathlevel 0 5
+#path 1 5
+#pathlevel 1 5
+#fatiguecost 500
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 5
+#nreff 1
+#spec 8519680
+#sound 47
+#explspr 10022
+#end
+
+#selectspell 1363
+#name "Stygian Paths"
+#school 5
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10090
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 0
+#provrange 10
+#end
+
+#selectspell 1364
+#name "Black Death"
+#school 5
+#researchlevel 8
+#path 0 5
+#pathlevel 0 5
+#fatiguecost 1500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 1365
+#name "Undead Mastery"
+#school 5
+#researchlevel 8
+#path 0 5
+#pathlevel 0 7
+#fatiguecost 700
+#aoe 666
+#effect 28
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 293863560
+#sound 47
+#explspr 165
+-- ro: explspr frames = 3
+-- ro: ability 745 = 1
+#end
+
+#selectspell 1366
+#name "Call the Worm That Walks"
+#school 5
+#researchlevel 8
+#path 0 6
+#pathlevel 0 5
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2217
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1367
+#name "Battle Fortune"
+#school 5
+#researchlevel 8
+#path 0 7
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 1016
+#effect 10
+#range 15
+#precision 5
+#damage 2
+#nreff 1
+#spec 4844961792
+#sound 31
+#explspr 10001
+#end
+
+#selectspell 1368
+#name "Winds of Arcane Drought"
+#school 5
+#researchlevel 9
+#path 0 1
+#pathlevel 0 7
+#path 1 4
+#pathlevel 1 6
+#fatiguecost 9000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 133
+#nreff 1
+#spec 0
+#flightspr 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#worldvisible 1
+#hiddenench 1
+-- ro: ability 703 (#nogeosrc 0..2147483647) = 34359738368
+-- ro: ability 1702 = 4
+#end
+
+#selectspell 1369
+#name "Elemental Dampening"
+#school 5
+#researchlevel 9
+#path 0 3
+#pathlevel 0 7
+#path 1 4
+#pathlevel 1 3
+#fatiguecost 6000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 123
+#nreff 1
+#spec 8388608
+#flightspr 0
+#explspr 0
+#end
+
+#selectspell 1370
+#name "Arcane Analysis"
+#school 5
+#researchlevel 9
+#path 0 4
+#pathlevel 0 4
+#fatiguecost 2500
+#aoe 0
+#effect 10156
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#end
+
+#selectspell 1371
+#name "Astral Disruption"
+#school 5
+#researchlevel 9
+#path 0 4
+#pathlevel 0 6
+#fatiguecost 6000
+#aoe 0
+#effect 10157
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+-- ro: ability 748 = 150
+-- ro: ability 773 = 1
+-- ro: ability 1719 = 1
+#end
+
+#selectspell 1372
+#name "Master Enslave"
+#school 5
+#researchlevel 9
+#path 0 4
+#pathlevel 0 8
+#fatiguecost 800
+#aoe 666
+#effect 28
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 25559168
+#sound 47
+#explspr 10208
+-- ro: ability 745 = 1
+-- ro: ability 770 = 1
+#end
+
+#selectspell 1373
+#name "Nexus Gate"
+#school 5
+#researchlevel 9
+#path 0 4
+#pathlevel 0 5
+#path 1 3
+#pathlevel 1 3
+#fatiguecost 4000
+#aoe 0
+#effect 10163
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 8388608
+#sound 41
+#explspr 0
+#end
+
+#selectspell 1374
+#name "Remnants in the Depths"
+#school 5
+#researchlevel 9
+#path 0 5
+#pathlevel 0 6
+#path 1 2
+#pathlevel 1 4
+#fatiguecost 9000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 124
+#nreff 1
+#spec 41943040
+#flightspr 0
+#explspr 0
+#end
+
+#selectspell 1375
+#name "Beast Mastery"
+#school 5
+#researchlevel 9
+#path 0 6
+#pathlevel 0 6
+#fatiguecost 400
+#aoe 666
+#effect 28
+#range 0
+#precision 0
+#damage 999
+#nreff 1
+#spec 281475002269824
+#sound 47
+#explspr 10412
+-- ro: explspr frames = 5
+-- ro: ability 745 = 1
+#end
+
+#selectspell 1376
+#name "Dreamwild Legion"
+#school 5
+#researchlevel 9
+#path 0 7
+#pathlevel 0 5
+#fatiguecost 400
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 4844945408
+#sound 47
+#explspr 10001
+#end
+
+#selectspell 1377
+#name "Legion's Demise"
+#school 5
+#researchlevel 9
+#path 0 7
+#pathlevel 0 7
+#fatiguecost 400
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 143
+#nreff 1
+#spec 17188524160
+#sound 41
+#explspr 10370
+-- ro: ability 745 = 1
+-- ro: ability 770 = 1
+#end
+
+#selectspell 1378
+#name "Dreams of the Awakening God"
+#school 5
+#researchlevel 9
+#path 0 7
+#pathlevel 0 8
+#fatiguecost 9000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 125
+#nreff 1
+#spec 8388608
+#explspr 0
+#end
+
+#selectspell 1379
+#name "Blood Burst"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 200
+#aoe 1
+#effect 2
+#range 35
+#precision 5
+#damage 1010
+#nreff 1
+#spec 537411712
+#sound 32
+#explspr 10118
+#end
+
+#selectspell 1380
+#name "Blood Heal"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 13
+#range 0
+#precision 3
+#damage 50
+#nreff 1
+#spec 537411712
+#sound 32
+#explspr 10172
+#end
+
+#selectspell 1381
+#name "Sabbath Master"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 576460752303423488
+#nreff 1
+#spec 16384
+#sound 32
+#explspr 10172
+#end
+
+#selectspell 1382
+#name "Sabbath Slave"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 1152921504606846976
+#nreff 1
+#spec 16384
+#sound 32
+#explspr 10172
+#end
+
+#selectspell 1383
+#name "Reinvigoration"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 8
+#range 0
+#precision 0
+#damage 200
+#nreff 1
+#spec 16512
+#sound 32
+#explspr 10172
+#end
+
+#selectspell 1384
+#name "Bind Shadow Imp"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 2287
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1385
+#name "Summon Imps"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 303
+#nreff 5
+#spec 0
+#sound 32
+#end
+
+#selectspell 1386
+#name "Bind Fiery Imps"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 2286
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1387
+#name "Blood Boil"
+#school 6
+#researchlevel 1
+#path 0 8
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 50
+#aoe 0
+#effect 2
+#range 25
+#precision 100
+#damage 1010
+#nreff 1
+#spec 36028797564768416
+#sound 16
+#explspr 10255
+#end
+
+#selectspell 1388
+#name "Bowl of Blood"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 500
+#aoe 0
+#effect 10048
+#range 0
+#precision 0
+#damage 8
+#nreff 1
+#spec 0
+#onlyfriendlydst 1
+#provrange 5
+#nogeodst 4
+#end
+
+#selectspell 1389
+#name "Agony"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 2000
+#effect 2
+#range 40
+#precision 2
+#damage 1
+#nreff 1
+#spec 537399424
+#nextspell 21
+#sound 32
+#explspr 10043
+#end
+
+#selectspell 1390
+#name "Banish Demon"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 2
+#range 30
+#precision 100
+#damage 999
+#nreff 1
+#spec 544776
+#sound 41
+#explspr 222
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1391
+#name "Bind Spine Devil"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 638
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1392
+#name "Bind Fiend"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 300
+#aoe 0
+#effect 10001
+#range 1
+#precision -2
+#damage 88
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1393
+#name "Bind Bone Fiends"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 1
+#path 1 5
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 433
+#nreff 505
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1394
+#name "Hell Power"
+#school 6
+#researchlevel 2
+#path 0 8
+#pathlevel 0 3
+#fatiguecost 300
+#aoe 0
+#effect 23
+#range 0
+#precision 0
+#damage 131072
+#nreff 1
+#spec 16384
+#nextspell 4
+#sound 16
+#explspr 10172
+#end
+
+#selectspell 1395
+#name "Leeching Touch"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 20
+#aoe 0
+#effect 103
+#range 1
+#precision 0
+#damage 1014
+#nreff 1
+#spec 545259648
+#sound 18
+#explspr 10172
+#casttime 50
+#end
+
+#selectspell 1396
+#name "Pain Transfer"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 20
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 512
+#nreff 1
+#spec 16384
+#sound 32
+#explspr 10172
+#end
+
+#selectspell 1397
+#name "Infernal Circle"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 500
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 89
+#nreff 1
+#spec 0
+#hiddenench 1
+#friendlyench 1
+#end
+
+#selectspell 1398
+#name "Bind Devil"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 2
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 304
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1399
+#name "Bind Frost Fiend"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 700
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 449
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1400
+#name "Cross Breeding"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10035
+#range 0
+#precision 0
+#damage 1
+#nreff 1029
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1401
+#name "Blood Feast"
+#school 6
+#researchlevel 3
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10118
+#range 0
+#precision 0
+#damage 50
+#nreff 1
+#spec 536870912
+#explspr 0
+#end
+
+#selectspell 1402
+#name "Bind Serpent Fiends"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 400
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 526
+#nreff 3
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1403
+#name "Blood Lust"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 128
+#nreff 1
+#spec 4718600
+#sound 32
+#explspr 10173
+#end
+
+#selectspell 1404
+#name "Hell Ride"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 3
+#fatiguecost 1000
+#aoe 0
+#effect 10095
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 3
+#walkable 1
+-- ro: ability 797 = 3
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1405
+#name "Hellfire"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 1
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 100
+#aoe 3
+#effect 2
+#range 5020
+#precision 0
+#damage 1008
+#nreff 2
+#spec 96
+#sound 16
+#explspr 10176
+#end
+
+#selectspell 1406
+#name "Bind Storm Demon"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 2
+#path 1 1
+#pathlevel 1 2
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 632
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1407
+#name "Call Lesser Horror"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 2
+#path 1 4
+#pathlevel 1 2
+#fatiguecost 200
+#aoe 0
+#effect 126
+#range 5
+#precision -2
+#damage -6
+#nreff 1
+#spec 0
+#sound 28
+#end
+
+#selectspell 1408
+#name "Blood Fecundity"
+#school 6
+#researchlevel 4
+#path 0 8
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 2
+#fatiguecost 1000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 94
+#nreff 1
+#spec 0
+#explspr 0
+#hiddenench 1
+-- ro: ability 765 = -2
+#end
+
+#selectspell 1409
+#name "Hellbind Heart"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 0
+#effect 29
+#range 30
+#precision 100
+#damage 999
+#nreff 1
+#spec 151680
+#sound 32
+#explspr 10172
+#end
+
+#selectspell 1410
+#name "Horde from Hell"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 4
+#fatiguecost 4400
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage 303
+#nreff 40
+#spec 0
+#explspr 0
+#provrange 4
+#farsumcom 304
+#nogeodst 4
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1411
+#name "Bloodletting"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 4
+#fatiguecost 400
+#aoe 666
+#effect 103
+#range 0
+#precision 0
+#damage 1
+#nreff 1
+#spec 537399424
+#sound 18
+#explspr 10174
+#end
+
+#selectspell 1412
+#name "Bind Succubus"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 4
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 6600
+#aoe 0
+#effect 10021
+#range 0
+#precision -2
+#damage 811
+#nreff 1
+#spec 0
+#notfornation 123
+#end
+
+#selectspell 1413
+#name "Wrath of Pazuzu"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 1
+#path 1 1
+#pathlevel 1 3
+#fatiguecost 1500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 14
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#nogeodst 4
+#end
+
+#selectspell 1414
+#name "Bind Demon Knight"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision -2
+#damage 489
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1415
+#name "Awaken Dark Vines"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 1
+#path 1 6
+#pathlevel 1 3
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 330
+#nreff 2
+#spec 0
+#end
+
+#selectspell 1416
+#name "Send Lesser Horror"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 3
+#fatiguecost 1400
+#aoe 0
+#effect 10038
+#range 0
+#precision 0
+#damage -6
+#nreff 1
+#spec 0
+#provrange 4
+-- ro: ability 748 = 10
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1417
+#name "Summon Illearth"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 2
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 200
+#aoe 0
+#effect 1
+#range 1
+#precision 0
+#damage 3756
+#nreff 1
+#spec 0
+#sound 45
+#explspr 0
+#end
+
+#selectspell 1418
+#name "Rain of Toads"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 3
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 2000
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 6
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#nogeodst 4
+-- ro: ability 725 = 1
+#end
+
+#selectspell 1419
+#name "Harm"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 2
+#fatiguecost 100
+#aoe 2000
+#effect 2
+#range 50
+#precision 5
+#damage 1000
+#nreff 1
+#spec 536875136
+#nextspell 35
+#sound 32
+#explspr 10118
+#end
+
+#selectspell 1420
+#name "Rejuvenate"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 1000
+#aoe 0
+#effect 10101
+#range 0
+#precision 0
+#damage -10
+#nreff 1
+#spec 537395200
+#explspr 55
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1421
+#name "Blood Rain"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 3
+#fatiguecost 300
+#aoe 0
+#effect 81
+#range 0
+#precision 0
+#damage 112
+#nreff 1
+#spec 0
+#sound 22
+#end
+
+#selectspell 1422
+#name "Infernal Disease"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 500
+#aoe 0
+#effect 10050
+#range 0
+#precision 0
+#damage 1662
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 5
+#end
+
+#selectspell 1423
+#name "Ritual of Five Gates"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 3300
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 88
+#nreff 1
+#spec 0
+#nextspell 73
+-- ro: ability 727 = 1
+#end
+
+#selectspell 1424
+#name "Bind Ice Devil"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 3
+#fatiguecost 8800
+#aoe 0
+#effect 10089
+#range 0
+#precision -2
+#damage 1
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1425
+#name "Blood Rite"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 2
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 1100
+#aoe 0
+#effect 10001
+#range 1
+#precision -2
+#damage 405
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1426
+#name "Call Horror"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 3
+#fatiguecost 300
+#aoe 0
+#effect 126
+#range 5
+#precision -2
+#damage -7
+#nreff 1
+#spec 0
+#sound 28
+#explspr 10276
+-- ro: explspr frames = 5
+#end
+
+#selectspell 1427
+#name "Leech"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 1
+#effect 103
+#range 30
+#precision 25
+#damage 1024
+#nreff 1
+#spec 536871040
+#sound 18
+#flightspr 10334
+#explspr 10334
+-- ro: flightspr frames = 9
+-- ro: ability 739 = 1
+#end
+
+#selectspell 1428
+#name "Plague of Locusts"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 8800
+#aoe 0
+#effect 10037
+#range 0
+#precision 0
+#damage 2794
+#nreff 11
+#spec 0
+#explspr 0
+#provrange 4
+#nogeodst 4
+#end
+
+#selectspell 1429
+#name "Bind Arch Devil"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 4
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 9900
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 2
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1430
+#name "Father Illearth"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 3
+#path 1 3
+#pathlevel 1 4
+#fatiguecost 10500
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 5
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1431
+#name "Send Dream Horror"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 4
+#fatiguecost 1500
+#aoe 0
+#effect 10042
+#range 0
+#precision 0
+#damage 12
+#nreff 1
+#spec 0
+#explspr 0
+#provrange 6
+-- ro: ability 748 = 20
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1432
+#name "Dome of Corruption"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 4
+#path 1 4
+#pathlevel 1 4
+#fatiguecost 2000
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 68
+#nreff 1
+#spec 0
+#hiddenench 1
+-- ro: ability 767 = -2
+#end
+
+#selectspell 1433
+#name "Blood Moon"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 7
+#path 1 4
+#pathlevel 1 5
+#fatiguecost 9000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 128
+#nreff 1
+#spec 0
+#nogeosrc 4096
+#end
+
+#selectspell 1434
+#name "Purify Blood"
+#school 6
+#researchlevel 7
+#path 0 8
+#pathlevel 0 4
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 300
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 288230376151711744
+#nreff 1
+#spec 4194304
+#sound 31
+#explspr 10004
+#end
+
+#selectspell 1435
+#name "Damage Reversal"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 1
+#fatiguecost 100
+#aoe 0
+#effect 500
+#range 0
+#precision 0
+#damage 1064
+#nreff 1
+#spec 16384
+#sound 32
+#explspr 10216
+#end
+
+#selectspell 1436
+#name "Rush of Strength"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 3
+#fatiguecost 100
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 128
+#nreff 1
+#spec 4194304
+#sound 32
+#explspr 10003
+#end
+
+#selectspell 1437
+#name "Life for a Life"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 3
+#fatiguecost 199
+#aoe 0
+#effect 2
+#range 100
+#precision 100
+#damage 5025
+#nreff 1
+#spec 536887424
+#sound 41
+#flightspr 10410
+-- ro: flightspr frames = 9
+-- ro: ability 739 = 1
+#end
+
+#selectspell 1438
+#name "Bind Heliophagus"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 11100
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 3
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1439
+#name "Three Red Seconds"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 5
+#fatiguecost 12000
+#aoe 0
+#effect 10063
+#range 0
+#precision 0
+#damage 25
+#nreff 1
+#spec 0
+#provrange 4
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1440
+#name "Blood Vortex"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 7
+#fatiguecost 16600
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 87
+#nreff 1
+#spec 0
+#explspr 0
+#localglobal 1
+#friendlyench 1
+#worldvisible 1
+#hiddenench 1
+-- ro: ability 717 = 1
+-- ro: ability 1702 = 4
+#end
+
+#selectspell 1441
+#name "Infernal Prison"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 3
+#path 1 0
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 108
+#range 35
+#precision 100
+#damage -12
+#nreff 1
+#spec 16512
+#sound 32
+#explspr 10252
+#end
+
+#selectspell 1442
+#name "Claws of Kokytos"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 200
+#aoe 0
+#effect 108
+#range 35
+#precision 100
+#damage -13
+#nreff 1
+#spec 16512
+#sound 32
+#explspr 10253
+#end
+
+#selectspell 1443
+#name "Horror Seed"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 3
+#path 1 4
+#pathlevel 1 4
+#fatiguecost 2500
+#aoe 0
+#effect 10102
+#range 0
+#precision 0
+#damage 9
+#nreff 1
+#spec 0
+#provrange 6
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1444
+#name "Curse of Blood"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 4
+#fatiguecost 9600
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 404
+#nreff 1
+#spec 0
+#end
+
+#selectspell 1445
+#name "Improved Cross Breeding"
+#school 6
+#researchlevel 8
+#path 0 8
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 2
+#fatiguecost 2000
+#aoe 0
+#effect 10035
+#range 0
+#precision 0
+#damage 1
+#nreff 3034
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1446
+#name "Infernal Fumes"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 4
+#path 1 3
+#pathlevel 1 3
+#fatiguecost 4000
+#aoe 663
+#effect 10091
+#range 0
+#precision 0
+#damage 1006
+#nreff 1
+#spec 96
+#provrange 4
+#onlygeodst 4
+-- ro: ability 753 = 1
+-- ro: ability 918 = 64
+#end
+
+#selectspell 1447
+#name "farkill: Infernal Fumes"
+#school -1
+#researchlevel 1
+#path 0 3
+#pathlevel 0 4
+#path 1 8
+#pathlevel 1 3
+#fatiguecost 0
+#aoe 1
+#effect 2
+#range 100
+#precision 0
+#damage 1006
+#nreff 1
+#spec 96
+#sound 88
+#explspr 10396
+-- ro: ability 918 = 64
+#end
+
+#selectspell 1448
+#name "Forces of Darkness"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 6
+#fatiguecost 5000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 88
+#nreff 1016
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1449
+#name "The Looming Hell"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 8
+#fatiguecost 15000
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 42
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1450
+#name "Bind Demon Lord"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 8
+#fatiguecost 15000
+#aoe 0
+#effect 10089
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 0
+#nextspell 85
+#end
+
+#selectspell 1451
+#name "Infernal Forces"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 5
+#path 1 0
+#pathlevel 1 2
+#fatiguecost 5000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 304
+#nreff 1013
+#spec 0
+#nextspell 26
+#explspr 0
+#end
+
+#selectspell 1452
+#name "Infernal Tempest"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 5
+#path 1 1
+#pathlevel 1 2
+#fatiguecost 5000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 632
+#nreff 1007
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1453
+#name "Forces of Ice"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 5
+#path 1 2
+#pathlevel 1 2
+#fatiguecost 5000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 449
+#nreff 1010
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1454
+#name "Infernal Crusade"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 5
+#path 1 3
+#pathlevel 1 2
+#fatiguecost 5000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 489
+#nreff 1005
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1455
+#name "Send Horror"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 4
+#path 1 4
+#pathlevel 1 4
+#fatiguecost 3000
+#aoe 0
+#effect 10038
+#range 0
+#precision 0
+#damage -7
+#nreff 1
+#spec 0
+#provrange 6
+-- ro: ability 748 = 40
+-- ro: ability 1717 = 1
+#end
+
+#selectspell 1456
+#name "Astral Corruption"
+#school 6
+#researchlevel 9
+#path 0 8
+#pathlevel 0 6
+#path 1 4
+#pathlevel 1 6
+#fatiguecost 16600
+#aoe 0
+#effect 10081
+#range 0
+#precision 0
+#damage 57
+#nreff 1
+#spec 0
+#explspr 0
+#end
+
+#selectspell 1457
+#name "Tangle Thicket"
+#school 0
+#researchlevel 4
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 30
+#aoe 1001
+#effect 11
+#range 20
+#precision 2
+#damage 64
+#nreff 1
+#spec 8404992
+#spec2 4
+#explspr 10189
+#end
+
+#selectspell 1458
+#name "Carrion Fortress"
+#school 1
+#researchlevel 0
+#path 0 6
+#pathlevel 0 3
+#path 1 5
+#pathlevel 1 2
+#fatiguecost 4500
+#aoe 0
+#effect 10063
+#range 0
+#precision 0
+#damage 10
+#nreff 1
+#spec 8388608
+#restricted 53
+#onlygeosrc 132
+#nogeosrc 2048
+#end
+
+#selectspell 1459
+#name "Bind Incubus"
+#school 6
+#researchlevel 5
+#path 0 8
+#pathlevel 0 4
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 6600
+#aoe 0
+#effect 10021
+#range 0
+#precision -2
+#damage 4053
+#nreff 1
+#spec 0
+#notfornation 123
+#end
+
+#selectspell 1460
+#name "Soul Transaction"
+#school 6
+#researchlevel 6
+#path 0 8
+#pathlevel 0 1
+#path 1 7
+#pathlevel 1 1
+#fatiguecost 100
+#aoe 0
+#effect 29
+#range 20
+#precision 100
+#damage 999
+#nreff 1
+#spec 1152947892886061184
+#sound 32
+#explspr 10172
+#end
+
+#selectspell 1461
+#name "Infernal Invisibility"
+#school -1
+#researchlevel 1
+#fatiguecost 0
+#aoe 0
+#effect 10
+#range 0
+#precision 0
+#damage 1073741824
+#nreff 1
+#spec 4294983808
+#sound 31
+#explspr 10035
+#end
+
+#selectspell 1462
+#name "Featherweight Army"
+#school 4
+#researchlevel 7
+#path 0 1
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 4503599627370496
+#nreff 1
+#spec 4194432
+#sound 31
+#explspr 10231
+#end
+
+#selectspell 1463
+#name "Army of Immaculate Mounts"
+#school 4
+#researchlevel 7
+#path 0 6
+#pathlevel 0 4
+#fatiguecost 200
+#aoe 666
+#effect 10
+#range 0
+#precision 0
+#damage 536870912
+#nreff 1
+#spec 2533274803109888
+#sound 31
+#explspr 10374
+#end
+
+#selectspell 1464
+#name "Summon Lauma"
+#school 0
+#researchlevel 6
+#path 0 7
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 2
+#fatiguecost 3500
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 4092
+#nreff 1
+#spec 0
+#explspr 0
+#restricted 124
+#onlygeosrc 128
+#end
+
+#selectspell 1465
+#name "Awaken the Dreamwild"
+#school 4
+#researchlevel 5
+#path 0 7
+#pathlevel 0 4
+#path 1 6
+#pathlevel 1 2
+#fatiguecost 1800
+#aoe 0
+#effect 10082
+#range 0
+#precision 0
+#damage 145
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 767 = -2
+-- ro: ability 762 = 2
+#end
+
+#selectspell 1466
+#name "Herd of Moose"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 1084
+#nreff 1013
+#spec 0
+#explspr 0
+#homerealm 1
+#end
+
+#selectspell 1467
+#name "Summon Fay Archers"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 6
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 4116
+#nreff 505
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 1701 = 4117
+#end
+
+#selectspell 1468
+#name "Summon Unseelie Folk"
+#school 0
+#researchlevel 3
+#path 0 7
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage -26
+#nreff 10
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 775 = 2
+-- ro: ability 756 = 145
+#end
+
+#selectspell 1469
+#name "Summon Unseelie Soldiers"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1200
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3906
+#nreff 505
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 775 = 2
+#end
+
+#selectspell 1470
+#name "Summon Unseelie Archers"
+#school 0
+#researchlevel 4
+#path 0 7
+#pathlevel 0 2
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1000
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 4117
+#nreff 505
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 775 = 2
+#end
+
+#selectspell 1471
+#name "Summon Unseelie Knights"
+#school 0
+#researchlevel 5
+#path 0 7
+#pathlevel 0 3
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 1500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 3907
+#nreff 3
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 775 = 2
+#end
+
+#selectspell 1472
+#name "Summon Unseelie Prince"
+#school 0
+#researchlevel 6
+#path 0 7
+#pathlevel 0 4
+#path 1 2
+#pathlevel 1 1
+#fatiguecost 3000
+#aoe 0
+#effect 10021
+#range 0
+#precision 0
+#damage 3909
+#nreff 1
+#spec 0
+#explspr 0
+#onlygeosrc 128
+-- ro: ability 775 = 2
+#end
+
+#selectspell 1473
+#name "Herd of Gnus"
+#school 0
+#researchlevel 3
+#path 0 6
+#pathlevel 0 2
+#fatiguecost 500
+#aoe 0
+#effect 10001
+#range 0
+#precision 0
+#damage 4132
+#nreff 1018
+#spec 0
+#explspr 0
+#restricted 28
+#restricted 76
+#end
+
+#selectspell 1474
+#name "end"
+#school -1
+#researchlevel -1
+#fatiguecost -1
+#aoe -1
+#effect -1
+#range -1
+#precision -1
+#damage -1
+#nreff -1
+#spec 0
+#end
+
 #selectitem 0
 #name "No Item"
 #constlevel 197

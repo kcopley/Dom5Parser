@@ -23,7 +23,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `ability_keys` | For monster and item commands: the numbered ability each one sets (`#xpshape` = 1145). Monsters and items share the numbering. |
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
-| `vanilla` | Vanilla weapons, armor, monsters and items as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `vanilla` | Vanilla weapons, armor, monsters, spells and items as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
 
 ## How it finds things (no hard-coded addresses)
 
@@ -116,6 +116,22 @@ and GNU `objdump`. The exe is never copied into the repo.
   `#nationrebate`s; it expands `#magicboost 51` and `#elementrange`/`#allrange` into one line
   per path; it writes `#bers` for `#autoberserk` and `#type 9` where the record has 6 + 1423.
 
+## Spells (6.37)
+
+- Spell `#clear` (0x140258af0): school -1, path 0 (fire) level 1, no second path, fatigue
+  20, effect 2, range 5025, damage 10, nreff 1. `#path n p` / `#pathlevel n l` store at
+  +0x26 + n / +0x28 + n. `#flightspr`/`#explspr` also store 1 / 9 frames. Abilities: 15 int32
+  numbers at +0x64 with int64 values at +0xa0; `#restricted N` appends ability 278 = N.
+- `#reqspellsinger`/`#reqtaskmaster`/`#reqseduce`/`#reqplant` append ability 718 = 616 / 379 /
+  298 / 500 (`#reqno...` the same on 719).
+- `#nogeosrc`/`#nogeodst`/`#onlygeosrc`/`#onlygeodst` clamp to 2^31 - 1: terrain bits above 31
+  (vanilla Second Sun's 34359744512) can't be set by a mod.
+- Compared with the inspector: it omits zero fields and `#sound`, `#flightspr`, `#strikesound`,
+  `#spec2` and ~20 abilities; it writes commands the spell parser doesn't have
+  (`#coldsummon`, `#uwsummon`, `#uniquetarget`, `#requiresench`) and other names for some
+  abilities (`#onlyowndst` for `#onlyfriendlydst`, `#preventcast` for `#reqnoplant`,
+  `#extraeffectgeo` for `#nextingeo`); `#casttime 100` where the record has no value.
+
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 
 `vanilla` writes 4,138 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
@@ -134,6 +150,6 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- `vanilla` for spells, sites and nations.
+- `vanilla` for sites and nations.
 - Give Dom5Parser the command catalog: commands the game doesn't read in a context, and stored
   abilities no command sets (read-only in the editor).

@@ -16,6 +16,12 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Spells from the exe (step 4)
+
+1,475 spells added (345 read-only values, mostly sprite frame counts the sprite commands
+don't store). Facts in tools/dom6exe/README.md; one worth knowing: `#nogeosrc`/`#nogeodst`
+clamp to 2^31 - 1, so a mod can't set terrain bits above 31 the way vanilla spells have them.
+
 ### Items from the exe (step 4)
 
 531 items added to `data/vanilla-6.37.dm`. Items use the generic handler and the monster
