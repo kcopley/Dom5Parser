@@ -584,6 +584,21 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.REGEN, IntProperty.Create); //#regen <value>
             _propertyMap.Add(Command.COLRES, IntProperty.Create); //#colres <value>
             _propertyMap.Add(Command.AMPHIBIOUS, CommandProperty.Create); //#amphibious
+            // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
+            _propertyMap.Add(Command.BATTLESUM1D2, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATTLESUM1D3, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATTLESUMWARM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BEAUTY, IntProperty.Create);
+            _propertyMap.Add(Command.BUGSHAPE, ShapechangeRef.Create);
+            _propertyMap.Add(Command.BUGSWARMSHAPE, ShapechangeRef.Create);
+            _propertyMap.Add(Command.BUGSWARMUWSHAPE, ShapechangeRef.Create);
+            _propertyMap.Add(Command.BUGUWSHAPE, ShapechangeRef.Create);
+            _propertyMap.Add(Command.FAYSUMMON, IntProperty.Create);
+            _propertyMap.Add(Command.GRANDCOM, IntProperty.Create);
+            _propertyMap.Add(Command.SABBATHMASTER, CommandProperty.Create);
+            _propertyMap.Add(Command.SABBATHSLAVE, CommandProperty.Create);
+            _propertyMap.Add(Command.STATSIEGE, IntProperty.Create);
+            _propertyMap.Add(Command.TOLERATEUND, CommandProperty.Create);
         }
 
         internal override Command GetNewCommand()

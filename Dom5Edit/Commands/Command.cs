@@ -1648,6 +1648,66 @@ namespace Dom5Edit.Commands
         SCALE,
         RESEARCHGOAL,
         FAVRIT,
+        // Read by the Dominions 6.37 parser (tools/dom6exe catalog), new in Dom5Parser
+        ARENA1,
+        ARENA2,
+        BATTLESUM1D2,
+        BATTLESUM1D3,
+        BATTLESUMWARM,
+        BEAUTY,
+        BUGSHAPE,
+        BUGSWARMSHAPE,
+        BUGSWARMUWSHAPE,
+        BUGUWSHAPE,
+        CORPSEHEALER,
+        FAYSUMMON,
+        FOREIGNGUARDCOM,
+        FOREIGNGUARDMULT,
+        FOREIGNGUARDUNIT,
+        FOREIGNWALLCOM,
+        FOREIGNWALLMULT,
+        FOREIGNWALLUNIT,
+        FORESTSURV,
+        GAINAFFMOUNT,
+        GLAMOURBLESSBONUS,
+        GRANDCOM,
+        HEALAFFMOUNT,
+        HOMECOLDSCALERES,
+        MAGICONLY,
+        MAKECRATER,
+        MAYBEADDSITE,
+        MAYBEHIDDENSITE,
+        MOUNTSURV,
+        MRHALF,
+        NEWNBOR,
+        NOTINDOORS,
+        ONLYSLEEPERS,
+        PLAINCOM,
+        REMNBOR,
+        REQ_CAVEFOREST,
+        REQ_DEEPSEA,
+        REQ_MINRESEARCH,
+        REQ_MNRBS,
+        REQ_MONSTERBS,
+        REQ_NOREALMNR,
+        REQ_PATH,
+        REQ_PATHGEMS,
+        REQ_PROVNBR,
+        REQ_REALMNR,
+        REQ_SCHOOL,
+        REQ_TARGNOREALMNR,
+        SABBATHMASTER,
+        SABBATHSLAVE,
+        SIZECOST,
+        SPEC2,
+        STARTUNITNBRS3,
+        STARTUNITTYPE3,
+        STATSIEGE,
+        SWAMPSURV,
+        TOLERATEUND,
+        TWICEBORNCOST,
+        VAR0UNITS,
+        WASTESURV,
     }
 
     public class CommandsMap
@@ -3282,6 +3342,70 @@ namespace Dom5Edit.Commands
             _commandMap.Add("#req_targrealmnr", Command.REQ_TARGREALMNR);
             _commandMap.Add("#selectevent", Command.SELECTEVENT);
 
+            // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
+            _commandMap.Add("#arena1", Command.ARENA1);
+            _commandMap.Add("#arena2", Command.ARENA2);
+            _commandMap.Add("#battlesum1d2", Command.BATTLESUM1D2);
+            _commandMap.Add("#battlesum1d3", Command.BATTLESUM1D3);
+            _commandMap.Add("#battlesumwarm", Command.BATTLESUMWARM);
+            _commandMap.Add("#beauty", Command.BEAUTY);
+            _commandMap.Add("#bugshape", Command.BUGSHAPE);
+            _commandMap.Add("#bugswarmshape", Command.BUGSWARMSHAPE);
+            _commandMap.Add("#bugswarmuwshape", Command.BUGSWARMUWSHAPE);
+            _commandMap.Add("#buguwshape", Command.BUGUWSHAPE);
+            _commandMap.Add("#corpsehealer", Command.CORPSEHEALER);
+            _commandMap.Add("#faysummon", Command.FAYSUMMON);
+            _commandMap.Add("#foreignguardcom", Command.FOREIGNGUARDCOM);
+            _commandMap.Add("#foreignguardmult", Command.FOREIGNGUARDMULT);
+            _commandMap.Add("#foreignguardunit", Command.FOREIGNGUARDUNIT);
+            _commandMap.Add("#foreignwallcom", Command.FOREIGNWALLCOM);
+            _commandMap.Add("#foreignwallmult", Command.FOREIGNWALLMULT);
+            _commandMap.Add("#foreignwallunit", Command.FOREIGNWALLUNIT);
+            _commandMap.Add("#forestsurv", Command.FORESTSURV);
+            _commandMap.Add("#gainaffmount", Command.GAINAFFMOUNT);
+            _commandMap.Add("#glamourblessbonus", Command.GLAMOURBLESSBONUS);
+            _commandMap.Add("#grandcom", Command.GRANDCOM);
+            _commandMap.Add("#healaffmount", Command.HEALAFFMOUNT);
+            _commandMap.Add("#homecoldscaleres", Command.HOMECOLDSCALERES);
+            _commandMap.Add("#magiconly", Command.MAGICONLY);
+            _commandMap.Add("#makecrater", Command.MAKECRATER);
+            _commandMap.Add("#maybeaddsite", Command.MAYBEADDSITE);
+            _commandMap.Add("#maybehiddensite", Command.MAYBEHIDDENSITE);
+            _commandMap.Add("#mountsurv", Command.MOUNTSURV);
+            _commandMap.Add("#mrhalf", Command.MRHALF);
+            _commandMap.Add("#newnbor", Command.NEWNBOR);
+            _commandMap.Add("#notindoors", Command.NOTINDOORS);
+            _commandMap.Add("#onlysleepers", Command.ONLYSLEEPERS);
+            _commandMap.Add("#plaincom", Command.PLAINCOM);
+            _commandMap.Add("#remnbor", Command.REMNBOR);
+            _commandMap.Add("#req_caveforest", Command.REQ_CAVEFOREST);
+            _commandMap.Add("#req_deepsea", Command.REQ_DEEPSEA);
+            _commandMap.Add("#req_minresearch", Command.REQ_MINRESEARCH);
+            _commandMap.Add("#req_mnrbs", Command.REQ_MNRBS);
+            _commandMap.Add("#req_monsterbs", Command.REQ_MONSTERBS);
+            _commandMap.Add("#req_norealmnr", Command.REQ_NOREALMNR);
+            _commandMap.Add("#req_path", Command.REQ_PATH);
+            _commandMap.Add("#req_pathgems", Command.REQ_PATHGEMS);
+            _commandMap.Add("#req_provnbr", Command.REQ_PROVNBR);
+            _commandMap.Add("#req_realmnr", Command.REQ_REALMNR);
+            _commandMap.Add("#req_school", Command.REQ_SCHOOL);
+            _commandMap.Add("#req_targnorealmnr", Command.REQ_TARGNOREALMNR);
+            _commandMap.Add("#sabbathmaster", Command.SABBATHMASTER);
+            _commandMap.Add("#sabbathslave", Command.SABBATHSLAVE);
+            _commandMap.Add("#sizecost", Command.SIZECOST);
+            _commandMap.Add("#spec2", Command.SPEC2);
+            _commandMap.Add("#startunitnbrs3", Command.STARTUNITNBRS3);
+            _commandMap.Add("#startunittype3", Command.STARTUNITTYPE3);
+            _commandMap.Add("#statsiege", Command.STATSIEGE);
+            _commandMap.Add("#swampsurv", Command.SWAMPSURV);
+            _commandMap.Add("#tolerateund", Command.TOLERATEUND);
+            _commandMap.Add("#twiceborncost", Command.TWICEBORNCOST);
+            _commandMap.Add("#var0units", Command.VAR0UNITS);
+            _commandMap.Add("#wastesurv", Command.WASTESURV);
+
+            // Inspector-era list of commands the game doesn't read; GameData/GameCommandCatalog
+            // (from the game's own parser) is authoritative. #unseen, #plaguedoctor and #mindcollar
+            // were here but the game reads them.
             _nonEditable.Add(Command.CORRUPT);
             _nonEditable.Add(Command.REINCARNATION);
             _nonEditable.Add(Command.PETRIFY);
@@ -3311,18 +3435,15 @@ namespace Dom5Edit.Commands
             _nonEditable.Add(Command.CLOCKWORKLORD);
             _nonEditable.Add(Command.STUPID);
             _nonEditable.Add(Command.HEATHENSUMMON);
-            _nonEditable.Add(Command.UNSEEN);
             _nonEditable.Add(Command.ILLUSIONARY);
             _nonEditable.Add(Command.WOLF);
             _nonEditable.Add(Command.ABOLETH);
             _nonEditable.Add(Command.DEFILER);
             _nonEditable.Add(Command.MOUNTEDBERSERK);
             _nonEditable.Add(Command.LANDENC);
-            _nonEditable.Add(Command.PLAGUEDOCTOR);
             _nonEditable.Add(Command.PATHBOOSTUW);
             _nonEditable.Add(Command.PATHBOOSTLAND);
             _nonEditable.Add(Command.PERCENTPATHREDUCTION);
-            _nonEditable.Add(Command.MINDCOLLAR);
             _nonEditable.Add(Command.LABPROMOTION);
             _nonEditable.Add(Command.UNDYING);
             _nonEditable.Add(Command.MORALEBONUS);

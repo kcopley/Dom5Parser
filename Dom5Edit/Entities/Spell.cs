@@ -84,6 +84,17 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.WORLDVISIBLE, IntProperty.Create); //#worldvisible <0|1>
             _propertyMap.Add(Command.GLOBALLOOK, IntProperty.Create); //#globallook <1-9>
             _propertyMap.Add(Command.SPEEDMULT, IntProperty.Create); //#speedmult <1-3>
+            // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
+            _propertyMap.Add(Command.AIASSMOD, IntProperty.Create);
+            _propertyMap.Add(Command.CURE, CommandProperty.Create);
+            _propertyMap.Add(Command.REQNOSEDUCE, CommandProperty.Create);
+            _propertyMap.Add(Command.REQNOSPELLSINGER, CommandProperty.Create);
+            _propertyMap.Add(Command.REQNOTASKMASTER, CommandProperty.Create);
+            _propertyMap.Add(Command.MAKECRATER, IntProperty.Create);
+            _propertyMap.Add(Command.NOTINDOORS, IntProperty.Create);
+            _propertyMap.Add(Command.SIZECOST, IntProperty.Create);
+            _propertyMap.Add(Command.SPEC2, BitmaskProperty.Create);
+            _propertyMap.Add(Command.TWICEBORNCOST, IntProperty.Create);
         }
 
         public override void Export(StreamWriter writer)

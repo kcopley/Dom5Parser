@@ -378,6 +378,28 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.REMGEO, BitmaskProperty.Create); //#remgeo <terrain bitmask>
             // Additional Dom6 additions
             _propertyMap.Add(Command.REQ_TARGREALMNR, IntProperty.Create); //#req_targrealmnr <value>
+            // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
+            _propertyMap.Add(Command.ARENA1, CommandProperty.Create);
+            _propertyMap.Add(Command.ARENA2, CommandProperty.Create);
+            _propertyMap.Add(Command.GAINAFFMOUNT, IntProperty.Create);
+            _propertyMap.Add(Command.HEALAFFMOUNT, IntProperty.Create);
+            _propertyMap.Add(Command.MAYBEADDSITE, SiteRef.Create);
+            _propertyMap.Add(Command.MAYBEHIDDENSITE, SiteRef.Create);
+            _propertyMap.Add(Command.NEWNBOR, IntProperty.Create);
+            _propertyMap.Add(Command.REMNBOR, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_CAVEFOREST, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_DEEPSEA, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_MINRESEARCH, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_MNRBS, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.REQ_MONSTERBS, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.REQ_NOREALMNR, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.REQ_PATH, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_PATHGEMS, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_PROVNBR, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_REALMNR, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.REQ_SCHOOL, IntProperty.Create);
+            _propertyMap.Add(Command.REQ_TARGNOREALMNR, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.VAR0UNITS, MonsterOrMontagRef.Create);
         }
 
 

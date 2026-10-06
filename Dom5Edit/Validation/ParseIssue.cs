@@ -64,6 +64,9 @@ namespace Dom5Edit.Validation
         Error,
 
         /// <summary>Properties were cleared by a subsequent clear command in the same entity.</summary>
-        PropertiesClearedBySubsequentClear
+        PropertiesClearedBySubsequentClear,
+
+        /// <summary>A command the game doesn't read for this entity type (kept, but it changes nothing in game).</summary>
+        NotReadByGame
     }
 }

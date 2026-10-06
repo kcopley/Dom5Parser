@@ -33,8 +33,10 @@ CONTEXT_ANCHORS = {
     'monster': 'copystats', 'item': 'copyitem', 'weapon': 'copyweapon', 'armor': 'copyarmor',
     'spell': 'copyspell', 'site': 'copysite', 'nation': 'clearnation', 'merc': 'bossname',
     'poptype': 'cleardef', 'nametype': 'addname', 'event': 'req_lab', 'global': 'gemlongevity',
-    'bless': 'researchgoal', 'sound': 'selectsound', 'top': 'newmonster',
+    'bless': 'clearfx', 'template': 'researchgoal', 'sound': 'selectsound', 'top': 'newmonster',
 }
+# ('template' reads #bless, #domstr, #form, #magic, #prison, #scale, #favrit, #researchgoal:
+# AI pretender designs, Dom5Parser's Template entity.)
 
 
 class Exe:
@@ -728,6 +730,26 @@ def cmd_layout(exe, args):
     return out
 
 
+# Contexts whose parser compares every command name it reads; the event parser also reads
+# commands by pattern (#2d6units, #3com), so its list is incomplete.
+CATALOG_COMPLETE = {'monster', 'item', 'weapon', 'armor', 'spell', 'site', 'nation', 'merc', 'poptype',
+                    'nametype', 'bless', 'template'}
+
+
+def cmd_catalog(exe, args):
+    """The commands Dominions reads, per entity type, for Dom5Parser (Dom5Edit/GameData)."""
+    p = Parser(exe)
+    ctx = p.context_commands()
+    top = set(ctx.pop('top', []))
+    return {
+        'game_version': exe.version, 'exe_sha256_16': exe.sha,
+        'note': 'Written by tools/dom6exe (catalog). A command missing from a complete context is '
+                'not read by the game for that entity type.',
+        'top': sorted(top),
+        'contexts': {c: {'complete': c in CATALOG_COMPLETE, 'commands': sorted(v)} for c, v in sorted(ctx.items())},
+    }
+
+
 def cmd_vanilla(exe, args):
     """Vanilla monsters as .dm commands (vanilla_dm.py); --out names the .dm file."""
     import vanilla_dm
@@ -798,7 +820,7 @@ def cmd_readonly(exe, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['commands', 'layout', 'monsters', 'readonly', 'tables', 'vanilla'])
+    ap.add_argument('what', choices=['catalog', 'commands', 'layout', 'monsters', 'readonly', 'tables', 'vanilla'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
@@ -806,7 +828,7 @@ def main():
     args = ap.parse_args()
     exe = Exe(args.exe)
     res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
-           'tables': cmd_tables, 'vanilla': cmd_vanilla}[args.what](exe, args)
+           'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog}[args.what](exe, args)
     text = json.dumps(res, indent=1, default=str)
     if args.out:
         open(args.out, 'w').write(text + '\n')

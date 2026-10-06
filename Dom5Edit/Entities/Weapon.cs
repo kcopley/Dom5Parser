@@ -121,6 +121,9 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.DEFROLL, IntProperty.Create); //#defroll <roll modifier>
             _propertyMap.Add(Command.DMGINSPECTOR, BitmaskProperty.Create); //#dmginspector <bitmask> - can exceed int.MaxValue
             _propertyMap.Add(Command.MORROLL, IntProperty.Create); //#morroll <roll modifier>
+            // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
+            _propertyMap.Add(Command.MAGICONLY, CommandProperty.Create);
+            _propertyMap.Add(Command.MRHALF, CommandProperty.Create);
         }
 
         internal override Command GetNewCommand()

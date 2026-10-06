@@ -249,7 +249,18 @@ namespace Dom5Editor.UI.Controls
         /// <summary>
         /// True if this reference badge can be edited (has available references and is not inherited).
         /// </summary>
-        public bool IsReferenceEditable => IsReference && CanRemove && !IsInherited && AvailableReferences != null;
+        public bool IsReferenceEditable => IsReference && CanRemove && !IsInherited && !IsNotReadByGame && AvailableReferences != null;
+
+        private bool _isNotReadByGame;
+        /// <summary>
+        /// True if the game doesn't read this command for this entity type (from the game's own
+        /// parser): shown, but its value can't be edited.
+        /// </summary>
+        public bool IsNotReadByGame
+        {
+            get => _isNotReadByGame;
+            set { _isNotReadByGame = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsReferenceEditable)); }
+        }
 
         /// <summary>
         /// Display string for reference badges showing name or ID.

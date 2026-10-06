@@ -1,4 +1,5 @@
 using Dom5Edit.Commands;
+using Dom5Edit.GameData;
 using Dom5Edit.Props;
 using Dom5Edit.Validation;
 
@@ -679,6 +680,12 @@ namespace Dom5Edit.Entities
                 prop.LineNumber = ParentMod.LineNumber;
                 prop.Parse(command, value, comment);
                 AddProperty(prop);
+                if (GameCommandCatalog.IsRead(GetEntityType(), command) == false)
+                {
+                    var commandStr = CommandsMap.TryGetString(command, out var cmdStr) ? cmdStr : command.ToString();
+                    ParentMod.AddParseIssue(ParseIssueType.NotReadByGame,
+                        $"Dominions {GameCommandCatalog.GameVersion} doesn't read '{commandStr}' for {GetType().Name}; kept, but it changes nothing in game");
+                }
             }
             else
             {
