@@ -3866,6 +3866,436 @@
           "description": "Takes extra damage from iron weapons."
         }
       ]
+    },
+    {
+      "id": "more",
+      "displayName": "MORE",
+      "description": "Other commands the game reads for this type",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "addrandomage",
+          "display": "Addrandomage",
+          "type": "int"
+        },
+        {
+          "name": "addupkeep",
+          "display": "Addupkeep",
+          "type": "int"
+        },
+        {
+          "name": "airelementals",
+          "display": "Airelementals",
+          "type": "int"
+        },
+        {
+          "name": "airrange",
+          "display": "Airrange",
+          "type": "int"
+        },
+        {
+          "name": "allrange",
+          "display": "Allrange",
+          "type": "int"
+        },
+        {
+          "name": "assencloc",
+          "display": "Assencloc",
+          "type": "int"
+        },
+        {
+          "name": "astralattuned",
+          "display": "Astralattuned",
+          "type": "int"
+        },
+        {
+          "name": "autocompete",
+          "display": "Autocompete",
+          "type": "flag"
+        },
+        {
+          "name": "batstartsum1",
+          "display": "Batstartsum1",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum1d6",
+          "display": "Batstartsum1d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum2",
+          "display": "Batstartsum2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum2d6",
+          "display": "Batstartsum2d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum3",
+          "display": "Batstartsum3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum3d6",
+          "display": "Batstartsum3d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum4",
+          "display": "Batstartsum4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum4d6",
+          "display": "Batstartsum4d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum5",
+          "display": "Batstartsum5",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum5d6",
+          "display": "Batstartsum5d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum6d6",
+          "display": "Batstartsum6d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum7d6",
+          "display": "Batstartsum7d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum8d6",
+          "display": "Batstartsum8d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "batstartsum9d6",
+          "display": "Batstartsum9d6",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum2",
+          "display": "Battlesum2",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum3",
+          "display": "Battlesum3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "battlesum4",
+          "display": "Battlesum4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "beauty",
+          "display": "Beauty",
+          "type": "int"
+        },
+        {
+          "name": "blessbers",
+          "display": "Blessbers",
+          "type": "flag"
+        },
+        {
+          "name": "blessfly",
+          "display": "Blessfly",
+          "type": "flag"
+        },
+        {
+          "name": "bloodattuned",
+          "display": "Bloodattuned",
+          "type": "int"
+        },
+        {
+          "name": "deathattuned",
+          "display": "Deathattuned",
+          "type": "int"
+        },
+        {
+          "name": "deathrange",
+          "display": "Deathrange",
+          "type": "int"
+        },
+        {
+          "name": "domsummon",
+          "display": "Domsummon",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "earthattuned",
+          "display": "Earthattuned",
+          "type": "int"
+        },
+        {
+          "name": "earthrange",
+          "display": "Earthrange",
+          "type": "int"
+        },
+        {
+          "name": "enchantedblood",
+          "display": "Enchantedblood",
+          "type": "int"
+        },
+        {
+          "name": "fixforgebonus",
+          "display": "Fixforgebonus",
+          "type": "int"
+        },
+        {
+          "name": "forgebonus",
+          "display": "Forgebonus",
+          "type": "int"
+        },
+        {
+          "name": "glamourattuned",
+          "display": "Glamourattuned",
+          "type": "int"
+        },
+        {
+          "name": "godsite",
+          "display": "Godsite",
+          "type": "ref",
+          "refType": "site"
+        },
+        {
+          "name": "gold",
+          "display": "Gold",
+          "type": "int"
+        },
+        {
+          "name": "grandcom",
+          "display": "Grandcom",
+          "type": "int"
+        },
+        {
+          "name": "guardspiritbonus",
+          "display": "Guardspiritbonus",
+          "type": "int"
+        },
+        {
+          "name": "homerealm",
+          "display": "Homerealm",
+          "type": "int"
+        },
+        {
+          "name": "homeshape",
+          "display": "Homeshape",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "homesick",
+          "display": "Homesick",
+          "type": "int"
+        },
+        {
+          "name": "incscale",
+          "display": "Incscale",
+          "type": "int"
+        },
+        {
+          "name": "infernoret",
+          "display": "Infernoret",
+          "type": "int"
+        },
+        {
+          "name": "lamialord",
+          "display": "Lamialord",
+          "type": "int"
+        },
+        {
+          "name": "makemonsters3",
+          "display": "Makemonsters3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "makemonsters4",
+          "display": "Makemonsters4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "maxprison",
+          "display": "Maxprison",
+          "type": "int"
+        },
+        {
+          "name": "minprison",
+          "display": "Minprison",
+          "type": "int"
+        },
+        {
+          "name": "minsizeleader",
+          "display": "Minsizeleader",
+          "type": "int"
+        },
+        {
+          "name": "moreheat",
+          "display": "Moreheat",
+          "type": "int"
+        },
+        {
+          "name": "moreorder",
+          "display": "Moreorder",
+          "type": "int"
+        },
+        {
+          "name": "moreprod",
+          "display": "Moreprod",
+          "type": "int"
+        },
+        {
+          "name": "mountiscom",
+          "display": "Mountiscom",
+          "type": "int"
+        },
+        {
+          "name": "natureattuned",
+          "display": "Natureattuned",
+          "type": "int"
+        },
+        {
+          "name": "naturerange",
+          "display": "Naturerange",
+          "type": "int"
+        },
+        {
+          "name": "nomovepen",
+          "display": "Nomovepen",
+          "type": "flag"
+        },
+        {
+          "name": "notsacred",
+          "display": "Notsacred",
+          "type": "flag"
+        },
+        {
+          "name": "onebattlespell",
+          "display": "Onebattlespell",
+          "type": "ref",
+          "refType": "spell"
+        },
+        {
+          "name": "onisummon",
+          "display": "Onisummon",
+          "type": "int"
+        },
+        {
+          "name": "randomspell",
+          "display": "Randomspell",
+          "type": "int"
+        },
+        {
+          "name": "sailsize",
+          "display": "Sailsize",
+          "type": "int"
+        },
+        {
+          "name": "saltvul",
+          "display": "Saltvul",
+          "type": "int"
+        },
+        {
+          "name": "secondshape",
+          "display": "Secondshape",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "skirmisher",
+          "display": "Skirmisher",
+          "type": "int"
+        },
+        {
+          "name": "startdom",
+          "display": "Startdom",
+          "type": "int"
+        },
+        {
+          "name": "statsiege",
+          "display": "Statsiege",
+          "type": "int"
+        },
+        {
+          "name": "summon3",
+          "display": "Summon3",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "summon4",
+          "display": "Summon4",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "tmpastralgems",
+          "display": "Tmpastralgems",
+          "type": "int"
+        },
+        {
+          "name": "tmpbloodslaves",
+          "display": "Tmpbloodslaves",
+          "type": "int"
+        },
+        {
+          "name": "tmpnaturegems",
+          "display": "Tmpnaturegems",
+          "type": "int"
+        },
+        {
+          "name": "triplegod",
+          "display": "Triplegod",
+          "type": "int"
+        },
+        {
+          "name": "triplegodmag",
+          "display": "Triplegodmag",
+          "type": "int"
+        },
+        {
+          "name": "undcommand",
+          "display": "Undcommand",
+          "type": "int"
+        },
+        {
+          "name": "waterattuned",
+          "display": "Waterattuned",
+          "type": "int"
+        }
+      ]
     }
   ],
   "layout": {

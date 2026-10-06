@@ -113,6 +113,25 @@
           "description": "Requires Drain scale of this value or higher."
         }
       ]
+    },
+    {
+      "id": "more",
+      "displayName": "MORE",
+      "description": "Other commands the game reads for this type",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "clearfx",
+          "display": "Clearfx",
+          "type": "flag"
+        },
+        {
+          "name": "clearscales",
+          "display": "Clearscales",
+          "type": "flag"
+        }
+      ]
     }
   ]
 }

@@ -91,6 +91,21 @@
           "description": "Override protection display value."
         }
       ]
+    },
+    {
+      "id": "more",
+      "displayName": "MORE",
+      "description": "Other commands the game reads for this type",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "protparts",
+          "display": "Protparts",
+          "type": "intint",
+          "description": "Sets the protection value of an armor that has both head and."
+        }
+      ]
     }
   ]
 }

@@ -2143,6 +2143,101 @@
           "description": "Independent flag file path."
         }
       ]
+    },
+    {
+      "id": "more",
+      "displayName": "MORE",
+      "description": "Other commands the game reads for this type",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "blessbonus",
+          "display": "Blessbonus",
+          "type": "int",
+          "description": "Gods of this nation will get extra bless design points."
+        },
+        {
+          "name": "color",
+          "display": "Color",
+          "type": "int",
+          "description": "Library of Time 4 astral pearls Each of the three colors is a number between."
+        },
+        {
+          "name": "foreignguardcom",
+          "display": "Foreignguardcom",
+          "type": "ref",
+          "refType": "monster",
+          "description": "Will yield 2 units per point of defense, which is also the default."
+        },
+        {
+          "name": "foreignguardmult",
+          "display": "Foreignguardmult",
+          "type": "int"
+        },
+        {
+          "name": "foreignguardunit",
+          "display": "Foreignguardunit",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "foreignwallcom",
+          "display": "Foreignwallcom",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "foreignwallmult",
+          "display": "Foreignwallmult",
+          "type": "int"
+        },
+        {
+          "name": "foreignwallunit",
+          "display": "Foreignwallunit",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "glamourblessbonus",
+          "display": "Glamourblessbonus",
+          "type": "int"
+        },
+        {
+          "name": "homecoldscaleres",
+          "display": "Homecoldscaleres",
+          "type": "int",
+          "description": "#aiastralnation Reduces the killing effect of cold scales in the capital by this Hint to AI that Astral magic is used a lot in this nation and that many scale steps."
+        },
+        {
+          "name": "nametype",
+          "display": "Nametype",
+          "type": "int"
+        },
+        {
+          "name": "plaincom",
+          "display": "Plaincom",
+          "type": "ref",
+          "refType": "monster"
+        },
+        {
+          "name": "secondarycolor",
+          "display": "Secondarycolor",
+          "type": "int",
+          "description": "Wild Forest 1 nature gem The animated background is made up of two colors, the Ancient Forest 2 nature gems primary color (from #color) and this one."
+        },
+        {
+          "name": "startunitnbrs3",
+          "display": "Startunitnbrs3",
+          "type": "int"
+        },
+        {
+          "name": "startunittype3",
+          "display": "Startunittype3",
+          "type": "ref",
+          "refType": "monster"
+        }
+      ]
     }
   ]
 }

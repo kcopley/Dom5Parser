@@ -475,6 +475,79 @@
           "description": "Clears the current spell."
         }
       ]
+    },
+    {
+      "id": "more",
+      "displayName": "MORE",
+      "description": "Other commands the game reads for this type",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "aiassmod",
+          "display": "Aiassmod",
+          "type": "int"
+        },
+        {
+          "name": "cure",
+          "display": "Cure",
+          "type": "flag",
+          "description": "Afflictions healed."
+        },
+        {
+          "name": "details",
+          "display": "Details",
+          "type": "string",
+          "description": "Therodos"
+        },
+        {
+          "name": "homerealm",
+          "display": "Homerealm",
+          "type": "int"
+        },
+        {
+          "name": "makecrater",
+          "display": "Makecrater",
+          "type": "int",
+          "description": "= ritual range cannot trace through water provinces."
+        },
+        {
+          "name": "notindoors",
+          "display": "Notindoors",
+          "type": "int",
+          "description": "##fullgodname## 1 = cannot be cast indoors, -1 = can be cast indoors, even it it ##godname## usually should not be castable there."
+        },
+        {
+          "name": "reqnoseduce",
+          "display": "Reqnoseduce",
+          "type": "flag"
+        },
+        {
+          "name": "reqnospellsinger",
+          "display": "Reqnospellsinger",
+          "type": "flag"
+        },
+        {
+          "name": "reqnotaskmaster",
+          "display": "Reqnotaskmaster",
+          "type": "flag"
+        },
+        {
+          "name": "sizecost",
+          "display": "Sizecost",
+          "type": "int"
+        },
+        {
+          "name": "spec2",
+          "display": "Spec2",
+          "type": "int"
+        },
+        {
+          "name": "twiceborncost",
+          "display": "Twiceborncost",
+          "type": "int"
+        }
+      ]
     }
   ]
 }
