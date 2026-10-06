@@ -251,6 +251,20 @@ namespace Dom5Editor.UI.ViewModels
 
         public bool HasUsedBy => UsedBy.Count > 0;
 
+        private const int UsedByShown = 24;
+        private bool _showAllUsedBy;
+
+        /// <summary>The first users, or all once asked for (a common weapon is used by hundreds).</summary>
+        public IEnumerable<UsageRow> UsedByShownRows => _showAllUsedBy ? UsedBy : UsedBy.Take(UsedByShown);
+        public bool HasMoreUsedBy => !_showAllUsedBy && UsedBy.Count > UsedByShown;
+        public string ShowAllUsedByText => $"Show all {UsedBy.Count}";
+        public ICommand ShowAllUsedByCommand => new RelayCommand(() =>
+        {
+            _showAllUsedBy = true;
+            OnPropertyChanged(nameof(UsedByShownRows));
+            OnPropertyChanged(nameof(HasMoreUsedBy));
+        });
+
         private static bool _showFile;
 
         /// <summary>Whether the "in the file" box is open (remembered across pages; the text is only worked out while it is).</summary>
@@ -481,6 +495,9 @@ namespace Dom5Editor.UI.ViewModels
         public void RemoveValue(ResolvedValue v) => Edit(ed => ed.Remove(Entity, v));
         public void ResetValue(Command c) => Edit(ed => ed.Reset(Entity, c));
 
+        /// <summary>Turns a flag on or off (off for an inherited one: the game's way, see ModEditor.Remove).</summary>
+        public void SetFlag(Command c, bool on) => Edit(ed => ed.SetFlag(Entity, c, on));
+
         /// <summary>Moves one of the entity's lines to just before (or after) another (order matters in events).</summary>
         public void MoveLine(Property line, Property target, bool after) => Edit(ed => ed.MoveLine(Entity, line, target, after));
 
@@ -610,7 +627,7 @@ namespace Dom5Editor.UI.ViewModels
             return s.EndsWith("s") ? s + "es" : s.EndsWith("y") ? s[..^1] + "ies" : s + "s";
         }
 
-        private static string ConfigName(EntityType t) => t switch
+        protected static string ConfigName(EntityType t) => t switch
         {
             EntityType.MERCENARY => "mercenary",
             _ => t.ToString().ToLowerInvariant(),

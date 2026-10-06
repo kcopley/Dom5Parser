@@ -365,7 +365,17 @@ namespace Dom5Edit.Editing
         {
             var set = Mod.Database[type];
             var made = (IDEntity)Activator.CreateInstance(Mod.TypeOf(type))!;
-            made.Assign(type == EntityType.EVENT ? "" : set.NextFreeID().ToString(), "", Mod, selected: false);
+            // events and mercenaries take no number (#newevent, #newmerc); poptypes and nametypes
+            // have no #new: a new one is a #select of a number the game doesn't use (the manual:
+            // poptypes 1-249, the game's go to 106; nametypes 170-399 are free for mods)
+            bool selectOnly = type == EntityType.POPTYPE || type == EntityType.NAMETYPE;
+            if (type == EntityType.BLESS || type == EntityType.TEMPLATE)
+                throw new EditException(type == EntityType.BLESS ? "Blesses can only be changed (#selectbless), not made"
+                    : "A template is made for a nation (#newtemplate <nation>): add it in the file");
+            string id = type == EntityType.EVENT || type == EntityType.MERCENARY ? ""
+                : type == EntityType.POPTYPE ? Enumerable.Range(150, 100).First(n => !set.TryGetValue(n, out _)).ToString()
+                : set.NextFreeID().ToString();
+            made.Assign(id, "", Mod, selected: selectOnly);
             if (placeAfter != null)
                 made.PlacedAfter = _editor.OwnEntity(placeAfter) ?? placeAfter;
             _created.Add(made);
