@@ -145,6 +145,7 @@ namespace Dom5Tests
 
                 PrintModStats(mod, "Mod");
                 CheckLogFile(modPath);
+                PrintParseIssues(mod);
                 PrintSampleEntities(mod);
 
                 Console.WriteLine("\n=== Mod Test Complete ===");
@@ -153,6 +154,24 @@ namespace Dom5Tests
             {
                 Console.WriteLine($"\nERROR during loading: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Parse issues by type, and the commands the game doesn't read (from the game's parser).
+        /// </summary>
+        static void PrintParseIssues(Mod mod)
+        {
+            Console.WriteLine($"\n=== Parse Issues ({mod.ParseIssues.Count} total) ===");
+            foreach (var g in mod.ParseIssues.GroupBy(i => i.IssueType).OrderByDescending(g => g.Count()))
+                Console.WriteLine($"  {g.Key}: {g.Count()}");
+            var notRead = mod.ParseIssues.Where(i => i.IssueType == Dom5Edit.Validation.ParseIssueType.NotReadByGame)
+                .GroupBy(i => i.Message).OrderByDescending(g => g.Count()).ToList();
+            if (notRead.Count > 0)
+            {
+                Console.WriteLine("\n  Commands the game doesn't read:");
+                foreach (var g in notRead)
+                    Console.WriteLine($"    [{g.Count()}x] {g.Key}");
             }
         }
 

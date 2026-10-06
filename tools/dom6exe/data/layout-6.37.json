@@ -964,6 +964,37 @@
   "abilities_direct": {}
  },
  "bless": {
+  "record_base": "0x1403bfef0",
+  "fields": {
+   "0x20/2": [
+    "path0"
+   ],
+   "0x22/2": [
+    "cost0"
+   ],
+   "0x24/2": [
+    "path1"
+   ],
+   "0x26/2": [
+    "cost1"
+   ],
+   "0x28/8": [
+    "clearfx"
+   ],
+   "0x30/8": [
+    "clearfx"
+   ],
+   "0x38/8": [
+    "clearfx"
+   ],
+   "0xb0/1": [
+    "clearscales"
+   ]
+  },
+  "flag_bits": {},
+  "abilities_direct": {}
+ },
+ "template": {
   "record_base": "0x18b5371e0",
   "fields": {
    "0x2/2": [

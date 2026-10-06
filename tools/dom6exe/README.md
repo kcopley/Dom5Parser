@@ -9,6 +9,7 @@ python3 tools/dom6exe/dom6exe.py commands  --out tools/dom6exe/data/commands-6.3
 python3 tools/dom6exe/dom6exe.py readonly  --out tools/dom6exe/data/readonly-monster-abilities-6.37.json
 python3 tools/dom6exe/dom6exe.py monsters  --out monsters.json      # ~3 MB, not committed
 python3 tools/dom6exe/dom6exe.py vanilla   --out tools/dom6exe/data/vanilla-6.37.dm
+python3 tools/dom6exe/dom6exe.py catalog   --out Dom5Edit/GameData/game-commands-6.37.json
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
 `/mnt/c/Games/Steam/steamapps/common/Dominions6/Dominions6.exe`), `--inspector DIR` (a
@@ -23,6 +24,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `ability_keys` | For monster and item commands: the numbered ability each one sets (`#xpshape` = 1145). Monsters and items share the numbering. |
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
+| `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern). |
 | `vanilla` | All vanilla weapons, armor, monsters, spells, items, sites and nations as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
 
 ## How it finds things (no hard-coded addresses)
@@ -181,5 +183,4 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- Give Dom5Parser the command catalog: commands the game doesn't read in a context, and stored
-  abilities no command sets (read-only in the editor).
+- Show the vanilla file's read-only values (`-- ro:` lines) in the editor.

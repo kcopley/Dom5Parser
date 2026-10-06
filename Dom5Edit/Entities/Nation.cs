@@ -285,6 +285,19 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.CAVEINC, IntProperty.Create); //#caveinc <value>
             _propertyMap.Add(Command.CAVERES, IntProperty.Create); //#caveres <value>
             _propertyMap.Add(Command.CAVERECPT, IntProperty.Create); //#caverecpt <value>
+            // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
+            _propertyMap.Add(Command.FOREIGNGUARDCOM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.FOREIGNGUARDMULT, IntProperty.Create);
+            _propertyMap.Add(Command.FOREIGNGUARDUNIT, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.FOREIGNWALLCOM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.FOREIGNWALLMULT, IntProperty.Create);
+            _propertyMap.Add(Command.FOREIGNWALLUNIT, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.GLAMOURBLESSBONUS, IntProperty.Create);
+            _propertyMap.Add(Command.HOMECOLDSCALERES, IntProperty.Create);
+            _propertyMap.Add(Command.PLAINCOM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.STARTUNITNBRS3, IntProperty.Create);
+            _propertyMap.Add(Command.STARTUNITTYPE3, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.NAMETYPE, NametypeIDRef.Create);
         }
 
         public override void Parse(Command command, string value, string comment)

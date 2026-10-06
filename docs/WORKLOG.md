@@ -16,6 +16,30 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Command catalog in Dom5Parser (step 5, first part)
+
+- `dom6exe.py catalog` writes `Dom5Edit/GameData/game-commands-6.37.json` (embedded resource):
+  per entity type, the commands the game's parser compares against, and whether the list is
+  complete. `GameCommandCatalog.IsRead(entity type, command)` answers true / false / unknown.
+  Context fix: the bless parser is the one with `#selectbless`/`#clearfx`; the function I had
+  called bless reads `#form`/`#domstr`/`#prison`/`#favrit`/`#researchgoal`, i.e. Templates.
+- Dom5Parser now knows the 59 commands the game reads that it didn't (`#grandcom`, `#spec2`,
+  `#mrhalf`, `#startunittype3`, `#sabbathmaster`, `#statsiege`, `#bugshape`, `#req_school`, ...)
+  and accepts on items the commands the item parser reads (`#patience`, `#spikes`, `#dread`,
+  ...), plus `#cure`/`#reqno*`/`#aiassmod` on spells and `#nametype` on nations. The exe-written
+  vanilla file now loads with no unknown commands (49 warnings left: poptype references, which
+  vanilla doesn't define as entities, and one vanilla monster pointing at nonexistent armor 502).
+- Parsing a command the game doesn't read for that entity type adds a `NotReadByGame` parse
+  issue; the command is kept. DomEnhanced 2.13 has 223: mostly inspector display hints
+  (`#mountedinspector`, `#iceprotinspector`, `#protinspector`), and also `#morale`, `#regen`,
+  `#amphibious`, `#colres`, `#hpoverslow`, `#uwguard*` and `#clear` on nations,
+  `#batstartsum8d6`/`9d6` on items, `#prec`/`#nreff`/`#damage` on a weapon. `Dom5Tests mod` prints them.
+- Editor: badges for those commands show "n/r", their value and reference can't be edited (they
+  can still be removed), and they aren't offered in the Add list. Built, not run (no display
+  here). `#unseen`, `#plaguedoctor`, `#mindcollar` were on the old hand-made read-only list but
+  the game reads them.
+- Quick suite unchanged: 14 pass, 2 known failures, DomEnhanced stage 3 at 873.
+
 ### Nations from the exe: step 4 done for every type
 
 111 nations added; `data/vanilla-6.37.dm` now holds every vanilla entity type (887 weapons,

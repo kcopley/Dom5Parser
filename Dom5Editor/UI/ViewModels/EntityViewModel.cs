@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
+using Dom5Edit.GameData;
 using Dom5Edit.Props;
 using Dom5Editor.Data;
 using Dom5Editor.EditCommands;
@@ -691,6 +692,7 @@ namespace Dom5Editor.UI.Views
                     // Also allow removal if it's a session edit (user added it this session)
                     badge.CanRemove = !section.ReadOnly && entityHasDirect && !usingDefault && (canRemoveBasedOnSource || isSessionEdit);
                     badge.IsInherited = section.ReadOnly || isInherited;
+                    badge.IsNotReadByGame = GameCommandCatalog.IsRead(_entity, command) == false;
 
                     if (valueChangedHandler != null && cmdDef.IsInt)
                     {
@@ -710,6 +712,9 @@ namespace Dom5Editor.UI.Views
                 {
                     if (BadgeConfigLoader.TryGetCommand(cmdDef, out var command))
                     {
+                        // Commands the game doesn't read for this entity type aren't offered
+                        if (GameCommandCatalog.IsRead(_entity, command) == false)
+                            continue;
                         // For ref types or AllowMultiple: always show in available list (can add multiple)
                         // For other types: only show if not already used
                         if (cmdDef.IsRef || cmdDef.AllowMultiple || !usedCommands.Contains(command))
@@ -842,6 +847,9 @@ namespace Dom5Editor.UI.Views
                 AddRefsFromCopystatsChain(_entity, cmdDef, command, entityType, sectionReadOnly, badges, seenIds, new HashSet<IDEntity> { _entity, vanillaEntity }, availableRefs);
             }
 
+            bool notRead = GameCommandCatalog.IsRead(_entity, command) == false;
+            foreach (var badge in badges)
+                badge.IsNotReadByGame = notRead;
             return badges;
         }
 

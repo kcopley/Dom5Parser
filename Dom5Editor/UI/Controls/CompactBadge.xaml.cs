@@ -267,6 +267,19 @@ namespace Dom5Editor.UI.Controls
         /// <summary>
         /// True if reference is editable (has available refs, not inherited, can remove).
         /// </summary>
+        public static readonly DependencyProperty IsLockedProperty =
+            DependencyProperty.Register(nameof(IsLocked), typeof(bool), typeof(CompactBadge),
+                new PropertyMetadata(false));
+
+        /// <summary>
+        /// The game doesn't read this command for this entity type: the value is shown read-only.
+        /// </summary>
+        public bool IsLocked
+        {
+            get => (bool)GetValue(IsLockedProperty);
+            set => SetValue(IsLockedProperty, value);
+        }
+
         public static readonly DependencyProperty IsReferenceEditableProperty =
             DependencyProperty.Register(nameof(IsReferenceEditable), typeof(bool), typeof(CompactBadge),
                 new PropertyMetadata(false, OnReferenceStateChanged));

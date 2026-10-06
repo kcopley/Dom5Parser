@@ -390,6 +390,37 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.SKILLEDRIDER, IntProperty.Create); //#skilledrider <value>
             _propertyMap.Add(Command.AUTOBERSERK, IntProperty.Create); //#autoberserk <value>
             _propertyMap.Add(Command.ONEBATTLESPELL, SpellRef.Create); //#onebattlespell <spell name> | <spell nbr>
+            // Read by the Dominions 6.37 parser (tools/dom6exe catalog)
+            _propertyMap.Add(Command.BATTLESUM1D2, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATTLESUM1D3, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BATTLESUMWARM, MonsterOrMontagRef.Create);
+            _propertyMap.Add(Command.BEAUTY, IntProperty.Create);
+            _propertyMap.Add(Command.CORPSEHEALER, IntProperty.Create);
+            _propertyMap.Add(Command.FAYSUMMON, IntProperty.Create);
+            _propertyMap.Add(Command.FORESTSURV, CommandProperty.Create);
+            _propertyMap.Add(Command.GRANDCOM, IntProperty.Create);
+            _propertyMap.Add(Command.MOUNTSURV, CommandProperty.Create);
+            _propertyMap.Add(Command.ONLYSLEEPERS, CommandProperty.Create);
+            _propertyMap.Add(Command.SABBATHMASTER, CommandProperty.Create);
+            _propertyMap.Add(Command.SABBATHSLAVE, CommandProperty.Create);
+            _propertyMap.Add(Command.STATSIEGE, IntProperty.Create);
+            _propertyMap.Add(Command.SWAMPSURV, CommandProperty.Create);
+            _propertyMap.Add(Command.WASTESURV, CommandProperty.Create);
+            _propertyMap.Add(Command.BRAVEMOUNT, IntProperty.Create);
+            _propertyMap.Add(Command.CHORUSMASTER, IntProperty.Create);
+            _propertyMap.Add(Command.CHORUSSLAVE, IntProperty.Create);
+            _propertyMap.Add(Command.DEATHGRAB, IntProperty.Create);
+            _propertyMap.Add(Command.DEATHSHOCK, IntProperty.Create);
+            _propertyMap.Add(Command.DEATHSLIME, IntProperty.Create);
+            _propertyMap.Add(Command.DREAD, IntProperty.Create);
+            _propertyMap.Add(Command.ENCHANTEDBLOOD, IntProperty.Create);
+            _propertyMap.Add(Command.FALSEREGEN, IntProperty.Create);
+            _propertyMap.Add(Command.GROWTHPOWER, IntProperty.Create);
+            _propertyMap.Add(Command.PATIENCE, IntProperty.Create);
+            _propertyMap.Add(Command.PRAISE, IntProperty.Create);
+            _propertyMap.Add(Command.REGAINMOUNT, IntProperty.Create);
+            _propertyMap.Add(Command.SMARTMOUNT, IntProperty.Create);
+            _propertyMap.Add(Command.SPIKES, IntProperty.Create);
         }
 
         public override void Export(StreamWriter writer)
