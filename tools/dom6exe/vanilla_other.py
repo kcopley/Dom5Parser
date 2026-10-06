@@ -185,6 +185,17 @@ class BlessTable:
         return out
 
 
+# Bless-only effect numbers (no monster command stores them). 550 is a marker: the effects after
+# it apply only while the god is incarnated (the bless describer, 0x1400fe940, looks for 550 and
+# prints "(incarnate only)" for the effects past it; the effect lookup 0x1400fd7e0 can require an
+# effect to come after it). 551's meaning isn't known: a bless with it is put on a nation-level
+# list while a count (0x1400fec10) is below 5 (0x1400fe206).
+BLESS_MARKERS = {550: 'incarnate only: the effects after this need the god incarnated'}
+# abilities no monster command sets, by what they do (tools/dom6exe README: leadership is class +
+# abilities 157-160; no command sets 160)
+BLESS_NAMES = {160: 'leadership bonus (ability 160)'}
+
+
 def bless_commands(exe, p, monster_model):
     t = BlessTable(exe, p)
     out = {}
@@ -214,8 +225,9 @@ def bless_commands(exe, p, monster_model):
             if not key:
                 break
             # (monster ability numbers: named by the monster command that stores the value)
-            line = monster_model.ability_line(key, val)
-            ro.append(('effect', line if line else '%s: %d' % (monster_model.ability_label(key), val)))
+            line = BLESS_MARKERS.get(key) or monster_model.ability_line(key, val)
+            label = BLESS_NAMES.get(key) or monster_model.ability_label(key)
+            ro.append(('effect', line if line else '%s: %d' % (label, val)))
         out[i] = {'lines': lines, 'readonly': ro}
     return out, t
 

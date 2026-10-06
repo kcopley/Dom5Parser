@@ -114,6 +114,18 @@ namespace Dom5Edit.Derived
         public DerivedValue Leader { get; }
         public DerivedValue MagicLeader { get; }
         public DerivedValue UndeadLeader { get; }
+        /// <summary>A resistance: its value, or for 100 the intrinsic flag (15, +10 with the bonus that applies).</summary>
+        private static DerivedValue Resistance(int value, string? bonus)
+        {
+            if (value != 100)
+                return new DerivedValue(value, value);
+            var r = new DerivedValue(100, 0, "100: the intrinsic flag, not a value");
+            r.Add("intrinsic", 15);
+            if (bonus != null)
+                r.Add(bonus, 10);
+            return r;
+        }
+
         public DerivedValue FireRes { get; }
         public DerivedValue ColdRes { get; }
         public DerivedValue ShockRes { get; }
@@ -155,10 +167,14 @@ namespace Dom5Edit.Derived
             Leader = new DerivedValue(u.Leader, u.Leader, "class");
             MagicLeader = new DerivedValue(u.MagicLeader, u.MagicLeader, "class");
             UndeadLeader = new DerivedValue(u.UndeadLeader, u.UndeadLeader, "class");
-            FireRes = new DerivedValue(u.FireRes, u.FireRes);
-            ColdRes = new DerivedValue(u.ColdRes, u.ColdRes);
-            ShockRes = new DerivedValue(u.ShockRes, u.ShockRes);
-            PoisonRes = new DerivedValue(u.PoisonRes, u.PoisonRes);
+            // #fireres 100 (and cold, shock, poison) sets the intrinsic flag, not a value: the game's
+            // ability getter counts the flag 15, +10 for fire with a heat aura, cold with a cold
+            // aura, poison for undead or inanimate or with a poison cloud (tools/dom6exe README,
+            // "Intrinsic resistances"); vanilla.dm's values already include it
+            FireRes = Resistance(u.FireRes, u.Heat > 0 ? "heat aura" : null);
+            ColdRes = Resistance(u.ColdRes, u.Cold > 0 ? "cold aura" : null);
+            ShockRes = Resistance(u.ShockRes, null);
+            PoisonRes = Resistance(u.PoisonRes, u.Undead ? "undead" : u.Inanimate ? "inanimate" : u.PoisonCloud > 0 ? "poison cloud" : null);
             SupplyBonus = new DerivedValue(u.SupplyBonus, u.SupplyBonus);
             Fear = new DerivedValue(u.Fear, u.Fear);
             FireShield = new DerivedValue(u.FireShield, u.FireShield);

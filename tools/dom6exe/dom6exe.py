@@ -813,6 +813,12 @@ def cmd_catalog(exe, args):
     p = Parser(exe)
     ctx = p.context_commands()
     top = set(ctx.pop('top', []))
+    # a parser's entry chunk can read a mod-level command besides its #new: the merc parser's
+    # compares "newmerc" and "clearmercs" (#clearmercs removes every vanilla band), in a chunk
+    # without the dispatcher's anchors
+    for names in p.by_func.values():
+        if 'newmerc' in names:
+            top |= {n for n in names if n.startswith('clear')}
     effects = command_effects(p)
     return {
         'game_version': exe.version, 'exe_sha256_16': exe.sha,

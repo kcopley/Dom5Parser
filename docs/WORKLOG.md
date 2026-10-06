@@ -106,6 +106,17 @@ into the mod, saying so). Four background agents (worktrees) and the lead:
 - **Fixes:** a window handler kept every closed page alive (~1.5 MB each; a full sweep reached
   5 GB) (ada0c30); random magic skills (#magicskill 50-53) each add a pick (9d6de32).
 
+Loose ends after the user's answers (random skills stack; descriptions.dm stays; commander +2
+map move, earth protection and path resistances confirmed):
+- Vanilla mercenary pages read-only throughout, with "New band from this one" (#newmerc
+  copy) (e9edcff).
+- #clearmercs in the catalog (a mod-level command in the merc parser's entry chunk).
+- Intrinsic resistances: #fireres/#coldres/#shockres/#poisonres 100 = 15 (+10 with the aura,
+  undead/inanimate/poison cloud for poison), from the exe's getter; vanilla.dm already has
+  totals, so the inspector's +10 on Summer Lion etc. is its Dom5 rule.
+- Bless effect 550 is the "incarnate only" marker (09fd570); 551 still unknown.
+- Full fidelity suite 36/36; full sweep 12,747 pages, 0 failures, 260 MB.
+
 Worktree note: a worktree checks out docs/DomEnhanced2_13.dm with LF endings, which makes
 DomEnhanced stage 3 fail with hundreds of diffs (multi-line descriptions); use main's CRLF copy.
 

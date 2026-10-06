@@ -215,7 +215,7 @@ namespace Dom5Edit.Derived
         /// <summary>The leadership bonus some vanilla monsters have that no command sets (ability 160; not for #noleader).</summary>
         public int GameLeaderBonus;
 
-        public int Fear, FireShield, Heat, Cold, FireRes, ColdRes, ShockRes, PoisonRes, SupplyBonus;
+        public int Fear, FireShield, Heat, Cold, FireRes, ColdRes, ShockRes, PoisonRes, SupplyBonus, PoisonCloud;
         public int Inspirational, SailingShipSize, ForgeBonus, ResearchBonus, Assassin, Spy, Seduce, AutoHealer, AutoDisHealer, Stealthy;
 
         /// <summary>
@@ -332,6 +332,7 @@ namespace Dom5Edit.Derived
             u.ColdRes = Int(m, Command.COLDRES) ?? 0;
             u.ShockRes = Int(m, Command.SHOCKRES) ?? 0;
             u.PoisonRes = Int(m, Command.POISONRES) ?? 0;
+            u.PoisonCloud = Int(m, Command.POISONCLOUD) ?? 0;
             u.SupplyBonus = Int(m, Command.SUPPLYBONUS) ?? 0;
             u.Inspirational = Int(m, Command.INSPIRATIONAL) ?? 0;
             // #sailing a b; some vanilla units carry a ship size no command writes (read-only "sailing (abilities 112, 410) = 5 0")

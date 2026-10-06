@@ -36,6 +36,14 @@
         <Setter Property="Padding" Value="2,0"/>
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style.Triggers>
+            <!-- a read-only value (a read-only page): no box, muted -->
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- what the game makes of a value (a unit's defence with its gear): after the box, in brackets; its hint says how -->
@@ -97,6 +105,7 @@
                         <Border Padding="2,1" CornerRadius="3" Background="Transparent" x:Name="RowBorder" ToolTip="{Binding Source}">
                             <DockPanel>
                                 <Button DockPanel.Dock="Right" Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                        Visibility="{Binding DataContext.CanEdit, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource BoolToVisibilityConverter}}"
                                         ToolTip="{Binding RemoveTip}" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         CommandParameter="{Binding}"/>
                                 <Button DockPanel.Dock="Right" Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
@@ -133,7 +142,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+            <StackPanel Orientation="Horizontal" Margin="0,3,0,0" Visibility="{Binding CanEdit, Converter={StaticResource BoolToVisibilityConverter}}">
                 <controls:SearchableReferenceComboBox Width="260" Height="22" HorizontalAlignment="Left"
                                                       ItemsSource="{Binding Candidates}" SelectedId="{Binding AddPick, Mode=TwoWay}"
                                                       Placeholder="+ Add..." ToolTip="{Binding AddTip}"/>
@@ -345,7 +354,7 @@
     <DataTemplate DataType="{x:Type vm:ChoiceField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
-            <ComboBox Width="220" ItemsSource="{Binding Options}" SelectedValuePath="Value"
+            <ComboBox Width="220" ItemsSource="{Binding Options}" SelectedValuePath="Value" IsEnabled="{Binding IsEditable}"
                       SelectedValue="{Binding Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,2">
                 <ComboBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:ChoiceOption}">
@@ -364,7 +373,7 @@
     <DataTemplate DataType="{x:Type vm:CommandChoiceField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
-            <ComboBox Width="220" ItemsSource="{Binding Options}" DisplayMemberPath="Name" SelectedValuePath="Value"
+            <ComboBox Width="220" ItemsSource="{Binding Options}" DisplayMemberPath="Name" SelectedValuePath="Value" IsEnabled="{Binding IsEditable}"
                       SelectedValue="{Binding Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,2"/>
             <Button Style="{StaticResource ResetButton}"/>
         </StackPanel>
@@ -373,7 +382,8 @@
     <DataTemplate DataType="{x:Type vm:NumberField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
-            <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="80" Style="{StaticResource InlineBox}"/>
+            <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="80" Style="{StaticResource InlineBox}"
+                     IsReadOnly="{Binding IsReadOnly, Mode=OneWay}"/>
             <TextBlock Text="{Binding Derived}" Style="{StaticResource DerivedText}"
                        Visibility="{Binding HasDerived, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <Button Style="{StaticResource ResetButton}"/>
@@ -385,7 +395,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
             <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding Candidates}"
-                                                  SelectedId="{Binding SelectedId, Mode=TwoWay}" Placeholder="(none)"/>
+                                                  SelectedId="{Binding SelectedId, Mode=TwoWay}" Placeholder="(none)" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}"/>
             <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding OpenCommand}" ToolTip="{Binding OpenTip}"/>
             <Button Style="{StaticResource ResetButton}"/>
             <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"

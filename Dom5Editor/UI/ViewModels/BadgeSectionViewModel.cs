@@ -62,7 +62,7 @@ namespace Dom5Editor.UI.ViewModels
         internal PropertyItem AddBadge(ResolvedValue? value, Command command, string label, string kind, string? tooltip, Brush? background, Brush? border, string? refType, string? defaultText = null)
         {
             var r = _page.Resolved;
-            var badge = new PropertyItem { Command = command, DisplayName = label, Tag = value, IconKind = IconOf(command) };
+            var badge = new PropertyItem { Command = command, DisplayName = label, Tag = value, IconKind = IconOf(command), IsPageReadOnly = _page.IsReadOnly };
             if (background != null) badge.Background = background;
             if (border != null) badge.BorderBrush = border;
             bool own = value != null && r.IsEditableInPlace(value);
@@ -93,7 +93,7 @@ namespace Dom5Editor.UI.ViewModels
                 badge.ValueNote = note.Length > 0 ? note : null;
                 badge.PropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName != nameof(PropertyItem.Value))
+                    if (e.PropertyName != nameof(PropertyItem.Value) || badge.IsLocked)
                         return;
                     var text = badge.Value ?? "";
                     if (value != null)

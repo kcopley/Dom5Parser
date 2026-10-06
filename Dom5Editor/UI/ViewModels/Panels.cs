@@ -127,7 +127,7 @@ namespace Dom5Editor.UI.ViewModels
         public bool IsTable => Columns.Count > 0;
 
         /// <summary>"New weapon" (armor, ...): makes a new one, gives it to this entity, and opens it.</summary>
-        public bool CanMakeNew => RefType == EntityType.WEAPON || RefType == EntityType.ARMOR;
+        public bool CanMakeNew => (RefType == EntityType.WEAPON || RefType == EntityType.ARMOR) && !_page.IsReadOnly;
         public string NewLabel => $"+ New {RefType.ToString().ToLowerInvariant()}";
         public string NewTip => $"Make a new {Nouns.Of(RefType)} for {_page.DisplayName} and open it";
         public string AddTip => $"Add a {Nouns.Of(RefType)} to {_page.DisplayName} (type a name or ID)";
@@ -158,7 +158,10 @@ namespace Dom5Editor.UI.ViewModels
             _ => null,
         };
 
-        public bool CanCopyEdit => CopyCommand != null;
+        public bool CanCopyEdit => CopyCommand != null && !_page.IsReadOnly;
+
+        /// <summary>Whether lines can be added and removed here (not on a read-only page).</summary>
+        public bool CanEdit => !_page.IsReadOnly;
 
         /// <summary>
         /// The usual way to give a unit a changed weapon: a new weapon copying this one, used here in
