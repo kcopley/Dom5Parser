@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
@@ -23,6 +24,84 @@ namespace Dom5Editor.UI.Views
             // deleting something others use asks first
             ViewModels.EntityTypeTab.Confirm = message =>
                 MessageBox.Show(this, message, "Delete", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK;
+
+            RestoreLayout();
+        }
+
+        private readonly Session.Settings _settings = Session.Settings.Load();
+
+        /// <summary>Not remembering the layout (the snapshot mode sizes the window itself).</summary>
+        public bool KeepLayout { get; set; } = true;
+
+        /// <summary>The window where it was last time (if that's still on a screen).</summary>
+        private void RestoreLayout()
+        {
+            if (_settings.Width is double w && _settings.Height is double h && w > 200 && h > 200)
+            {
+                Width = w;
+                Height = h;
+            }
+            if (_settings.Left is double l && _settings.Top is double t
+                && l > SystemParameters.VirtualScreenLeft - 50 && t > SystemParameters.VirtualScreenTop - 50
+                && l < SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - 100
+                && t < SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - 100)
+            {
+                WindowStartupLocation = WindowStartupLocation.Manual;
+                Left = l;
+                Top = t;
+            }
+            if (_settings.Maximized)
+                WindowState = WindowState.Maximized;
+        }
+
+        private void RememberLayout()
+        {
+            if (!KeepLayout)
+                return;
+            var bounds = WindowState == WindowState.Normal ? new Rect(Left, Top, Width, Height) : RestoreBounds;
+            _settings.Left = bounds.Left;
+            _settings.Top = bounds.Top;
+            _settings.Width = bounds.Width;
+            _settings.Height = bounds.Height;
+            _settings.Maximized = WindowState == WindowState.Maximized;
+            _settings.LastTab = (_viewModel.SelectedTab as ViewModels.EntityTypeTab)?.Title;
+            _settings.Save();
+        }
+
+        /// <summary>Opens a mod file (from the dialog or the recent list) and remembers it.</summary>
+        private void Open(string path)
+        {
+            try
+            {
+                _viewModel.LoadMod(path);
+                _settings.AddRecent(path);
+                _settings.Save();
+                if (_settings.LastTab is string tab && _viewModel.Tabs.OfType<ViewModels.EntityTypeTab>().FirstOrDefault(t => t.Title == tab) is { } found)
+                    _viewModel.SelectedTab = found;
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Failed to load mod:\n\n{ex.Message}", "Load Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void RecentButton_Click(object sender, RoutedEventArgs e)
+        {
+            var menu = new System.Windows.Controls.ContextMenu();
+            foreach (var path in _settings.RecentFiles)
+            {
+                var item = new System.Windows.Controls.MenuItem { Header = System.IO.Path.GetFileName(path), ToolTip = path };
+                item.Click += (s, a) =>
+                {
+                    if (ConfirmDiscardChanges())
+                        Open(path);
+                };
+                menu.Items.Add(item);
+            }
+            if (menu.Items.Count == 0)
+                menu.Items.Add(new System.Windows.Controls.MenuItem { Header = "(no recent mods)", IsEnabled = false });
+            menu.PlacementTarget = (UIElement)sender;
+            menu.IsOpen = true;
         }
 
         private void SetupKeyboardShortcuts()
@@ -164,20 +243,7 @@ namespace Dom5Editor.UI.Views
             };
 
             if (dialog.ShowDialog() == true)
-            {
-                try
-                {
-                    _viewModel.LoadMod(dialog.FileName);
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(
-                        $"Failed to load mod:\n\n{ex.Message}",
-                        "Load Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                }
-            }
+                Open(dialog.FileName);
         }
 
         private void SaveMod()
@@ -260,6 +326,10 @@ namespace Dom5Editor.UI.Views
             if (!ConfirmDiscardChanges())
             {
                 e.Cancel = true;
+            }
+            else
+            {
+                RememberLayout();
             }
             base.OnClosing(e);
         }

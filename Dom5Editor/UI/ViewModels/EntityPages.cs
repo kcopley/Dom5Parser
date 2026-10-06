@@ -178,7 +178,7 @@ namespace Dom5Editor.UI.ViewModels
         {
             Command.RESSIZE => Resolved.Get(Command.SIZE)?.Arguments,
             Command.SPIRITSIGHT => Resolved.Has(Command.HORROR) ? "1" : null,
-            _ => null,
+            _ => DerivedValue(c),
         };
 
         private string WeaponSummary(int id) => Summary(EntityType.WEAPON, id,

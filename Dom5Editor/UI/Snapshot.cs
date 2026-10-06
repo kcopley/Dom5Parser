@@ -54,7 +54,7 @@ namespace Dom5Editor.UI
                 {
                     WindowStartupLocation = WindowStartupLocation.Manual,
                     Left = -30000, Top = -30000, Width = width, Height = height,
-                    ShowInTaskbar = false, ShowActivated = false, SkipCloseConfirmation = true,
+                    ShowInTaskbar = false, ShowActivated = false, SkipCloseConfirmation = true, KeepLayout = false, WindowState = WindowState.Normal,
                 };
                 app.MainWindow = window;
                 EntityTypeTab.Confirm = null; // no dialogs off-screen: deletes go ahead (and say so in the log)

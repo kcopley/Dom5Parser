@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Windows;
 using Dom5Edit;
 
@@ -23,6 +23,20 @@ namespace Dom5Editor
             // Force load vanilla data immediately on startup
             // This ensures vanilla.dm is parsed before any mod is loaded
             LoadVanillaData();
+
+            // an error the editor doesn't expect: say so, log it, and keep running (unsaved edits stay)
+            DispatcherUnhandledException += (s, args) =>
+            {
+                try
+                {
+                    Directory.CreateDirectory(Session.Settings.Folder);
+                    File.AppendAllText(Path.Combine(Session.Settings.Folder, "errors.log"), $"{DateTime.Now:u}\n{args.Exception}\n\n");
+                }
+                catch (Exception) { }
+                MessageBox.Show($"Something went wrong:\n\n{args.Exception.Message}\n\nThe editor keeps running; your edits are still there (save to keep them). Details are in {Path.Combine(Session.Settings.Folder, "errors.log")}.",
+                    "Dom6 Mod Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                args.Handled = true;
+            };
 
             MainWindow = new UI.Views.MainWindow();
             MainWindow.Show();
