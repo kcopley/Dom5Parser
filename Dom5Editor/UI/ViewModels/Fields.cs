@@ -62,7 +62,11 @@ namespace Dom5Editor.UI.ViewModels
         protected virtual ResolvedValue? OwnValue => Value != null && Value.Source == ValueSource.Own ? Value : null;
 
         /// <summary>Whether the mod sets this value itself (so it can go back to what it inherits).</summary>
-        public bool CanReset => OwnValue != null;
+        public bool CanReset => OwnValue != null && !IsReadOnly;
+
+        /// <summary>The page can't be edited (the game's own mercenary bands): shown, not editable.</summary>
+        public bool IsReadOnly => Page.IsReadOnly;
+        public bool IsEditable => !Page.IsReadOnly;
 
         /// <summary>Drops the mod's own line for this value, back to what it inherits (vanilla, the copy source, the default).</summary>
         public ICommand ResetCommand => new RelayCommand(() => { if (OwnValue is ResolvedValue v) Page.ResetLine(v); });

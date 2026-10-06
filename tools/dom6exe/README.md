@@ -236,8 +236,8 @@ known value on every run.
   from the manual's table): every exe list has an id there.
 - **Mercenaries** (78): a table of 300 bands of 312 bytes; the vanilla ones are the records
   before the first whose `#level` byte is 99 (named "end"). There is no `#selectmerc`: a mod
-  can't change a vanilla band. `#clearmercs` (in a parser chunk the context anchor misses, so
-  the catalog lacks it) marks record 0 as the end, and `#newmerc` takes the first free record
+  can't change a vanilla band. `#clearmercs` (a mod-level command read in the merc parser's
+  entry chunk, with `#newmerc`; the catalog takes it from there) marks record 0 as the end, and `#newmerc` takes the first free record
   (`#eramask 7`, `#minpay 100` by default). So the vanilla bands are written as the `#newmerc`
   blocks that would make them; the editor shows them read-only. `#unit` sets `#nrunits` 10
   when it is 0, so `#nrunits` follows it. Up to 7 (nation, percent) pairs no command writes

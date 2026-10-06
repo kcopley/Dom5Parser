@@ -122,6 +122,27 @@ namespace Dom5Editor.UI.ViewModels
 
         public bool IsReadOnly => ReadOnlyNote != null;
 
+        /// <summary>
+        /// For a read-only page (the game's own band): a new entity of the type with its values,
+        /// made in the mod and opened (#newmerc with the same lines).
+        /// </summary>
+        public ICommand CopyToNewCommand => new RelayCommand(() =>
+        {
+            IDEntity? made = null;
+            var lines = Resolved.Values.Where(v => v.Command != Command.NAME).Select(v => (v.Command, Args: DisplayArgumentsForCopy(v.Property))).ToList();
+            // (a new entity of the mod: allowed though this page is read-only)
+            Error = Session.Edit($"New {Nouns.Of(Type)} from {DisplayName}", tx =>
+            {
+                made = tx.Create(Type, $"{DisplayName} (copy)");
+                foreach (var (c, args) in lines)
+                    tx.Add(made, c, args);
+            });
+            if (made != null && Error == null)
+                Session.Navigate(made);
+        });
+
+        private static string DisplayArgumentsForCopy(Property p) => ResolvedValue.ArgumentsOf(p);
+
         public bool HasDescription => Entity.GetPropertyMap().ContainsKey(Command.DESCR);
 
         /// <summary>Other long texts, each in its own box: an event's message, a nation's summary and brief, a spell's details.</summary>
@@ -613,7 +634,7 @@ namespace Dom5Editor.UI.ViewModels
                 if (commands.Count == 0 || skip.Contains(section.Id) || section.HasCustomRenderer && !section.IsGridLayout)
                     continue;
                 var vm = new BadgeSectionViewModel(this, section.Id, section.DisplayName ?? section.Id,
-                    section.IsGridLayout, section.Columns, section.ReadOnly);
+                    section.IsGridLayout, section.Columns, section.ReadOnly || IsReadOnly);
                 foreach (var (def, _, c) in commands)
                 {
                     if (!covered.Add(c))
@@ -676,7 +697,7 @@ namespace Dom5Editor.UI.ViewModels
 
         private BadgeSectionViewModel BuildOther(HashSet<Command> covered)
         {
-            var vm = new BadgeSectionViewModel(this, "other", "OTHER LINES", false, 3, false);
+            var vm = new BadgeSectionViewModel(this, "other", "OTHER LINES", false, 3, IsReadOnly);
             foreach (var v in Resolved.Values.Where(v => !covered.Contains(v.Command)))
                 vm.AddBadge(v, v.Command, CommandName(v.Command).TrimStart('#'),
                     v.Property is CommandProperty ? "flag" : "text", null, null, null, null);

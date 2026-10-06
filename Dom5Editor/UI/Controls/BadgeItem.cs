@@ -273,8 +273,16 @@ namespace Dom5Editor.UI.Controls
             set { _isGameValue = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsLocked)); OnPropertyChanged(nameof(IsReferenceEditable)); }
         }
 
-        /// <summary>The value can't be edited (not read by the game, or a game value no command sets).</summary>
-        public bool IsLocked => IsNotReadByGame || IsGameValue;
+        private bool _isPageReadOnly;
+        /// <summary>The whole page can't be edited (the game's own mercenary bands).</summary>
+        public bool IsPageReadOnly
+        {
+            get => _isPageReadOnly;
+            set { _isPageReadOnly = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsLocked)); OnPropertyChanged(nameof(IsReferenceEditable)); }
+        }
+
+        /// <summary>The value can't be edited (not read by the game, a game value no command sets, or a read-only page).</summary>
+        public bool IsLocked => IsNotReadByGame || IsGameValue || IsPageReadOnly;
 
         /// <summary>
         /// Display string for reference badges showing name or ID.
