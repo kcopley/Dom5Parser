@@ -93,6 +93,25 @@ namespace Dom5Editor.UI.Controls
         public static readonly DependencyProperty ShowModifiedProperty = FilterProperty(nameof(ShowModified), true);
         public static readonly DependencyProperty ShowNewProperty = FilterProperty(nameof(ShowNew), true);
 
+        /// <summary>The type's own filter ("Rituals", "In a chain"); "All" for none.</summary>
+        public static readonly DependencyProperty FacetProperty = FilterProperty(nameof(Facet), "All");
+
+        public string Facet
+        {
+            get => (string)GetValue(FacetProperty) ?? "All";
+            set => SetValue(FacetProperty, value ?? "All");
+        }
+
+        /// <summary>The type's own filters, or null (no filter box).</summary>
+        public static readonly DependencyProperty FacetsProperty =
+            DependencyProperty.Register(nameof(Facets), typeof(IEnumerable<string>), typeof(EntityListControl), new PropertyMetadata(null));
+
+        public IEnumerable<string>? Facets
+        {
+            get => (IEnumerable<string>?)GetValue(FacetsProperty);
+            set => SetValue(FacetsProperty, value);
+        }
+
         /// <summary>Sort by "ID" or "DisplayName".</summary>
         public static readonly DependencyProperty SortByProperty =
             DependencyProperty.Register(nameof(SortBy), typeof(string), typeof(EntityListControl),
@@ -109,7 +128,7 @@ namespace Dom5Editor.UI.Controls
             if (_entitiesView == null)
                 return;
             _entitiesView.SortDescriptions.Clear();
-            _entitiesView.SortDescriptions.Add(new SortDescription(SortBy == "DisplayName" ? "DisplayName" : "ID", ListSortDirection.Ascending));
+            _entitiesView.SortDescriptions.Add(new SortDescription(SortBy == "DisplayName" ? "DisplayName" : "SortKey", ListSortDirection.Ascending));
             RefreshFilter();
         }
 
@@ -185,7 +204,7 @@ namespace Dom5Editor.UI.Controls
             _entitiesView.Filter = FilterEntity;
 
             _entitiesView.SortDescriptions.Clear();
-            _entitiesView.SortDescriptions.Add(new SortDescription(SortBy == "DisplayName" ? "DisplayName" : "ID", ListSortDirection.Ascending));
+            _entitiesView.SortDescriptions.Add(new SortDescription(SortBy == "DisplayName" ? "DisplayName" : "SortKey", ListSortDirection.Ascending));
 
             OnPropertyChanged(nameof(FilteredEntities));
             OnPropertyChanged(nameof(FilteredCount));
@@ -216,6 +235,9 @@ namespace Dom5Editor.UI.Controls
 
             // If it's new, check ShowNew
             if (isNew && !ShowNew) return false;
+
+            // the type's own filter
+            if (item is UI.ViewModels.EntityListItem row && !row.InFacet(Facet)) return false;
 
             // Filter by search text
             if (!string.IsNullOrEmpty(SearchText))

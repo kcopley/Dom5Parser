@@ -401,6 +401,8 @@ namespace Dom5Editor.UI.ViewModels
                     _refId = id;
                     Candidates = page.Session.References(rt);
                     OpenCommand = new RelayCommand(() => { if (_refId is int i && i > 0) page.Session.Navigate(rt, i); });
+                    if (id > 0 && !Candidates.Any(c => c.ID == id))
+                        _missing = $"there's no {rt.ToString().ToLowerInvariant()} #{id} in the mod or the game's data";
                 }
                 else if (EventCommands.IsMask(Arg))
                 {
@@ -515,8 +517,12 @@ namespace Dom5Editor.UI.ViewModels
         public string Info { get; private set; } = "";
         public bool HasInfo => Info.Length > 0;
 
+        private readonly string? _missing;
+
         private void AddLinks(EventGraph graph)
         {
+            if (_missing != null)
+                Note = _missing;
             var e = _page.Entity;
             var own = _page.Session.Editor.OwnEntity(e) ?? e;
             string Title(IDEntity x) => x.Kind == EntityType.EVENT ? EventInfo.Title(graph.LinesOf(x)) : SpellName(x);
@@ -708,6 +714,7 @@ namespace Dom5Editor.UI.ViewModels
                 (chain.Triggers.Count > 0 ? $", started by {chain.Triggers.Count} spell{(chain.Triggers.Count == 1 ? "" : "s")}" : "") + ".";
             int index = graph.IndexOf(_event);
             Position = index >= 0 ? $"Event {index + 1} of {graph.Events.Count} in the file" : "";
+            BuildMap(chain, Title);
             FollowUpCommand = new RelayCommand(MakeFollowUp);
             DelayedCommand = new RelayCommand(MakeDelayed);
             ChoiceCommand = new RelayCommand(MakeChoice);
@@ -715,6 +722,67 @@ namespace Dom5Editor.UI.ViewModels
 
         public string ChainText { get; }
         public string Position { get; }
+
+        // ---- the chain map ----
+
+        public IReadOnlyList<ChainNode> MapNodes { get; private set; } = Array.Empty<ChainNode>();
+        public IReadOnlyList<ChainEdge> MapEdges { get; private set; } = Array.Empty<ChainEdge>();
+        public bool HasMap => MapNodes.Count > 1;
+        public bool MapOpen { get; private set; }
+        public string MapTitle { get; private set; } = "MAP";
+
+        /// <summary>
+        /// The chain as cards and arrows; for a big chain, the events within two links of this one.
+        /// Spells that start its events are cards too.
+        /// </summary>
+        private void BuildMap(EventChain? chain, Func<IDEntity, string> title)
+        {
+            var events = chain?.Events.ToList() ?? new List<IDEntity> { _event };
+            const int max = 40;
+            if (events.Count > max)
+            {
+                var near = new HashSet<IDEntity>(ReferenceEqualityComparer.Instance) { _event };
+                for (int step = 0; step < 2; step++)
+                    foreach (var e in near.ToList())
+                        foreach (var l in _graph.From(e).Concat(_graph.To(e)).Where(l => l.IsEventToEvent))
+                        {
+                            near.Add(l.From);
+                            near.Add(l.To);
+                        }
+                events = events.Where(near.Contains).ToList();
+                MapTitle = $"MAP (the {events.Count} events within two links of this one, of {chain!.Events.Count})";
+            }
+            else
+                MapTitle = $"MAP ({events.Count} events)";
+            var set = new HashSet<IDEntity>(events, ReferenceEqualityComparer.Instance);
+            var nodes = new Dictionary<IDEntity, ChainNode>(ReferenceEqualityComparer.Instance);
+            ChainNode Node(IDEntity e)
+            {
+                if (nodes.TryGetValue(e, out var n))
+                    return n;
+                bool spell = e.Kind != EntityType.EVENT;
+                int at = spell ? -1 : _graph.IndexOf(e);
+                var sub = spell ? $"spell #{e.ID}" : $"{EventInfo.RarityName(EventInfo.Rarity(_graph.LinesOf(e)))} · event {at + 1}";
+                return nodes[e] = new ChainNode(e, title(e), sub, ReferenceEquals(e, _event), spell, () => _page.Session.Navigate(e)) { Order = at };
+            }
+            foreach (var e in events)
+                Node(e);
+            var edges = new List<ChainEdge>();
+            foreach (var group in _graph.Links.Where(l => set.Contains(l.To) && (set.Contains(l.From) || !l.IsEventToEvent))
+                         .GroupBy(l => (l.From, l.To, l.Kind)))
+            {
+                var l = group.First();
+                string kind = l.Kind switch
+                {
+                    EventLinkKind.Code => "code", EventLinkKind.CodeExcludes => "excludes", EventLinkKind.Delay => "delay",
+                    EventLinkKind.DelaySkip => "skip", EventLinkKind.Variable => "variable", EventLinkKind.Choice => "choice", _ => "spell",
+                };
+                edges.Add(new ChainEdge(Node(l.From), Node(l.To), string.Join(", ", group.Select(x => x.Label).Distinct()), kind));
+            }
+            MapNodes = nodes.Values.ToList();
+            MapEdges = edges;
+            MapOpen = events.Count <= 25;
+        }
         public ObservableCollection<LinkChip> ComesFrom { get; } = new ObservableCollection<LinkChip>();
         public ObservableCollection<LinkChip> LeadsTo { get; } = new ObservableCollection<LinkChip>();
         public ObservableCollection<LinkChip> StartedBy { get; } = new ObservableCollection<LinkChip>();

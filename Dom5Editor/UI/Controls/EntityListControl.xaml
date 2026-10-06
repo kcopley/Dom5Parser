@@ -49,7 +49,7 @@
                 Padding="8,6"
                 BorderBrush="{DynamicResource BorderBrush}"
                 BorderThickness="0,0,0,1">
-            <StackPanel Orientation="Horizontal">
+            <WrapPanel Orientation="Horizontal">
                 <CheckBox x:Name="ShowVanillaCheck"
                           Content="Vanilla"
                           ToolTip="Vanilla entities the mod doesn't change"
@@ -73,7 +73,14 @@
                     <ComboBoxItem Content="ID" Tag="ID"/>
                     <ComboBoxItem Content="Name" Tag="DisplayName"/>
                 </ComboBox>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0"
+                            Visibility="{Binding Facets, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}">
+                    <TextBlock Text="Show" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <ComboBox Width="170" Style="{DynamicResource ComboBoxBase}" Padding="4,1" ToolTip="Show only these"
+                              ItemsSource="{Binding Facets, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              SelectedItem="{Binding Facet, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </StackPanel>
+            </WrapPanel>
         </Border>
 
         <!-- Entity List -->

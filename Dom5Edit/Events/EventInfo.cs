@@ -114,14 +114,14 @@ namespace Dom5Edit.Events
 
         private static readonly IReadOnlyDictionary<string, string> Tags = new Dictionary<string, string>
         {
-            ["landname"] = "the province", ["godname"] = "the god", ["fullgodname"] = "the god", ["disname"] = "the god",
-            ["goddisname"] = "the god", ["targname"] = "the commander", ["fulltargname"] = "the commander",
-            ["targhis"] = "his", ["natname"] = "the nation", ["profname"] = "the prophet",
+            ["landname"] = "[province]", ["godname"] = "[god]", ["fullgodname"] = "[god]", ["disname"] = "[god]",
+            ["goddisname"] = "[god]", ["targname"] = "[commander]", ["fulltargname"] = "[commander]",
+            ["targhis"] = "[his]", ["natname"] = "[nation]", ["profname"] = "[prophet]",
         };
 
         /// <summary>
         /// A short title for an event, from its message: the header line (#header 2) or the first
-        /// sentence, tags as words ("the province"), without the bracketed name; else what it does.
+        /// sentence, tags as words ("[province]"), without the bracketed name; else what it does.
         /// </summary>
         public static string Title(IReadOnlyList<Property> lines)
         {

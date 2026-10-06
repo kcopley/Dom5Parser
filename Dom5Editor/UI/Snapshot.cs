@@ -396,6 +396,18 @@ namespace Dom5Editor.UI
                             Log($"   chain: {ch.ChainText} {ch.Position}; problems: {string.Join("; ", ch.Problems)}");
                             break;
                         }
+                        case "--facet":
+                        {
+                            // --facet TYPE NAME: a list's own filter; logs how many rows it shows
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            var facet = args[++i];
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            int n = tab.Items.Count(x => x.InFacet(facet));
+                            tab.Facet = facet;
+                            Log($"facet {t} {facet}: {n} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
+                            break;
+                        }
                         case "--tooltip":
                         {
                             // --tooltip COMMAND: log a badge's hover hint and value note

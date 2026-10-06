@@ -291,6 +291,20 @@
                         <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </StackPanel>
+                <Expander IsExpanded="{Binding MapOpen, Mode=OneTime}" Margin="0,6,0,0" Foreground="{DynamicResource TextSecondaryBrush}"
+                          FontSize="9" FontWeight="Bold" Visibility="{Binding HasMap, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Expander.Header>
+                        <TextBlock>
+                            <Run Text="{Binding MapTitle, Mode=OneWay}"/>
+                            <Run Text="  code" Foreground="#E0A040" FontWeight="Normal"/><Run Text="  delay" Foreground="#5BA8F5" FontWeight="Normal"/>
+                            <Run Text="  variable" Foreground="#4CC38A" FontWeight="Normal"/><Run Text="  choice" Foreground="#B07CF7" FontWeight="Normal"/>
+                            <Run Text="  blocks" Foreground="#E5484D" FontWeight="Normal"/><Run Text="  spell" Foreground="#9CA3AF" FontWeight="Normal"/>
+                        </TextBlock>
+                    </Expander.Header>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="520" Margin="0,4,0,0">
+                        <controls:ChainGraph Nodes="{Binding MapNodes}" Edges="{Binding MapEdges}" HorizontalAlignment="Left"/>
+                    </ScrollViewer>
+                </Expander>
                 <ItemsControl ItemsSource="{Binding Problems}" Margin="0,4,0,0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type events:EventProblem}">
