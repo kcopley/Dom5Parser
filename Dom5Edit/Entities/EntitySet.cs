@@ -358,6 +358,9 @@ namespace Dom5Edit.Entities
             return UnIDdEntities;
         }
 
+        /// <summary>The entities without an ID: #newevent, #newmerc, a #select by name, number 0.</summary>
+        internal IReadOnlyList<T> Unnumbered => UnIDdEntities;
+
         public List<T> GetFullList()
         {
             List<T> ret = new List<T>();

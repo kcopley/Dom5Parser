@@ -1,4 +1,6 @@
-"""Vanilla monsters as .dm commands, written straight from Dominions6.exe.
+"""Vanilla monsters (and weapons, armor, spells, items, sites and nations) as .dm commands,
+written straight from Dominions6.exe. Blesses, poptypes, nametypes and mercenaries are in
+vanilla_other.py; write() puts them all in one file.
 
 Each value in a vanilla monster record is written as the command the game's own .dm parser
 stores it with: the parser read backwards. Some stored values no command can produce exactly;
@@ -279,6 +281,8 @@ class MonsterModel:
 def monster_commands(exe):
     model = MonsterModel(exe)
     mons = monsters(exe)
+    if mons[max(mons)]['name'] == 'end':     # the table's end marker
+        del mons[max(mons)]
     magic = magic_table(exe, model.p)
     fixed = fixed_names(exe, model.p)
     out = {}
@@ -373,25 +377,52 @@ def monster_commands(exe):
 
 
 def write(exe, path):
+    import vanilla_other
     sections = [('weapon', weapon_commands), ('armor', armor_commands), ('monster', monster_commands),
                 ('spell', spell_commands), ('item', item_commands), ('site', site_commands),
                 ('nation', nation_commands)]
     text = ['-- Dominions %s vanilla data, written from Dominions6.exe by tools/dom6exe (exe %s).' % (exe.version, exe.sha),
             '-- "-- ro:" lines are stored values no command can set (shown read-only).', '']
     res = {'game_version': exe.version}
+
+    def block(header, e):
+        text.append(header)
+        text.extend(e['lines'])
+        text.extend('-- ro: %s = %s' % (what, val) for what, val in e['readonly'])
+        text.append('#end')
+        text.append('')
+
+    def summary(kind, entries):
+        ro = collections.Counter(w for e in entries for w, v in e['readonly'])
+        res[kind] = {'count': len(entries), 'readonly_values': sum(ro.values()), 'readonly_kinds': dict(ro.most_common())}
+
     for kind, fn in sections:
         cmds = fn(exe)
         # record 0 is a placeholder ("no one", "Nothing") except for nations (0 = Independents)
         if kind != 'nation':
             cmds.pop(0, None)
         for i, e in cmds.items():
-            text.append('#select%s %d' % (kind, i))
-            text.extend(e['lines'])
-            text.extend('-- ro: %s = %s' % (what, val) for what, val in e['readonly'])
-            text.append('#end')
-            text.append('')
-        ro = collections.Counter(w for e in cmds.values() for w, v in e['readonly'])
-        res[kind] = {'count': len(cmds), 'readonly_values': sum(ro.values()), 'readonly_kinds': dict(ro.most_common())}
+            block('#select%s %d' % (kind, i), e)
+        summary(kind, list(cmds.values()))
+    # blesses, poptypes, nametypes and mercenaries (vanilla_other.py); bless effects are monster
+    # abilities, named by the monster commands
+    model = MonsterModel(exe)
+    p = model.p
+    p._setter = None
+    nations = {i: name_of(r) for i, r in records(exe, 'nation').items()}
+    for kind, (cmds, t) in (('bless', vanilla_other.bless_commands(exe, p, model)),
+                            ('poptype', vanilla_other.poptype_commands(exe, p)),
+                            ('nametype', vanilla_other.nametype_commands(exe, p))):
+        for i, e in cmds.items():
+            block('#select%s %d' % (kind, i), e)
+        summary(kind, list(cmds.values()))
+    bands, t = vanilla_other.merc_commands(exe, p, nations, set(monsters(exe)))
+    text.extend(["-- Mercenaries: the game's own bands, in its order. A mod can't select or change them (there",
+                 '-- is no #selectmerc): #clearmercs removes them all, and #newmerc adds a band after them. Each',
+                 '-- is written as the #newmerc block that would make it.', ''])
+    for e in bands:
+        block('#newmerc', e)
+    summary('merc', bands)
     if path:
         open(path, 'w', encoding='utf-8').write('\n'.join(text))
     return res
@@ -530,7 +561,11 @@ def setter_of(p, ctx, key_cmd):
 
 def records(exe, kind):
     start, size, recs = table_records(exe, TABLES[kind])
-    return {i: r for i, r in recs.items() if r[:1] != b'\0'}
+    out = {i: r for i, r in recs.items() if r[:1] != b'\0'}
+    # the table's end marker: a record named "end" after the last vanilla one
+    if out and name_of(out[max(out)]) == 'end':
+        del out[max(out)]
+    return out
 
 
 def name_of(r):
@@ -840,10 +875,67 @@ def site_commands(exe):
 # nation record (6.37): name, epithet +0x24, era +0xac, 200 abilities (int32 numbers from
 # +0xb0, int64 values from +0x3d0), the recruitment list +0xa10 (int32; sections end with -2
 # commanders, -3 foreign units, -4 foreign commanders, -1 end: #addreccom etc. insert with
-# those markers), the god list +0xab8 (#addgod N appends N, #delgod N appends -N).
+# those markers), the god list +0xab8 to the record's end (#addgod N appends N, #delgod N
+# appends -N). Found from the parser: #color/#secondarycolor (three floats each, 0-1), the
+# status word #name checks (-998: an unused slot, which #name makes a nation); and from the code
+# that names pretender files (newlords/<name>_N.2h), the nation's file name (no command).
 N_EPITHET, N_ERA, N_AB_KEYS, N_AB_VALS, N_AB_COUNT, N_REC, N_GODS = 0x24, 0xac, 0xb0, 0x3d0, 200, 0xa10, 0xab8
 N_REC_CMDS = ['addrecunit', 'addreccom', 'addforeignunit', 'addforeigncom']
-N_GOD_SLOTS = 100
+SAVE_NAME_FORMAT = '%s/newlords/%s_%d.2h'
+
+
+def f32(x):
+    """The shortest decimal that reads back as this float32 (the parser reads "%f")."""
+    for n in range(1, 10):
+        t = '%.*g' % (n, x)
+        if struct.unpack('<f', struct.pack('<f', float(t)))[0] == x:
+            return t
+    return repr(x)
+
+
+def nation_fields(exe, p, base, size):
+    """Record offsets the nation parser writes outside the abilities: the colors (movss stores
+    in #color / #secondarycolor), the status word #name compares with the unused marker, and
+    the save file name the game formats with SAVE_NAME_FORMAT."""
+    import vanilla_other
+    out = {}
+    for cmd in ('color', 'secondarycolor'):
+        offs = sorted(num(m.group(1)) for k in vanilla_other.branch(p, 'nation', cmd)
+                      for m in [re.match(r'DWORD PTR \[\w+\+\w+\*1\+(0x[0-9a-f]+)\],xmm\d+$', p.ins[k][2])]
+                      if p.ins[k][1] == 'movss' and m)
+        if len(offs) != 3:
+            raise SystemExit('nation #%s: expected three float stores, found %s' % (cmd, offs))
+        out[cmd] = offs[0]
+    eax = None
+    for k in vanilla_other.branch(p, 'nation', 'name'):
+        a, o, args, t = p.ins[k]
+        m = re.match(r'WORD PTR \[\w+\+\w+\*1\+(0x[0-9a-f]+)\],ax$', args)
+        if o == 'mov' and re.match(r'eax,0x[0-9a-f]+$', args):
+            eax = num(args.split(',')[1])
+        elif o == 'cmp' and m and eax is not None:
+            out['status'] = (num(m.group(1)), struct.unpack('<h', struct.pack('<H', eax & 0xffff))[0])
+            break
+    # the epithet: as long as the parser reads it (it runs past the 36 bytes after the name)
+    regs = {}
+    for k in vanilla_other.branch(p, 'nation', 'epithet'):
+        a, o, args, t = p.ins[k]
+        m = re.match(r'(\w+),(0x[0-9a-f]+)$', args)
+        m2 = re.match(r'r8d,\[(\w+)\+(0x[0-9a-f]+)\]$', args)
+        if o == 'mov' and m and reg64(m.group(1)):
+            regs[reg64(m.group(1))] = num(m.group(2))
+        if o == 'lea' and m2 and reg64(m2.group(1)) in regs:
+            out['epithet'] = regs[reg64(m2.group(1))] + num(m2.group(2))
+            break
+    found = collections.Counter()
+    for k, (a, o, args, t) in enumerate(p.ins):
+        if o == 'lea' and t is not None and exe.cstr(t) == SAVE_NAME_FORMAT:
+            for x in p.ins[k - 12:k + 12]:
+                if x[1] == 'lea' and x[3] is not None and base <= x[3] < base + size:
+                    found[x[3] - base] += 1
+    if 'status' not in out or 'epithet' not in out or not found:
+        raise SystemExit('nation status word, epithet length or file name not found')
+    out['file'] = found.most_common(1)[0][0]
+    return out
 
 
 def nation_direct_keys(p, setter, ctx='nation'):
@@ -908,6 +1000,8 @@ def nation_direct_keys(p, setter, ctx='nation'):
 
 def nation_commands(exe):
     p = Parser(exe)
+    start, size, _ = table_records(exe, TABLES['nation'])
+    nf = nation_fields(exe, p, exe.address(start), size)
     setter = setter_of(p, 'nation', 'startunitnbrs1')
     direct = collections.defaultdict(list)
     for cmd, key in nation_direct_keys(p, setter).items():
@@ -929,12 +1023,23 @@ def nation_commands(exe):
     repeatable = {k for k, cs in gen.items() if any(c['repeat'] == 1 for c in cs)} | \
         {k for k, cmds in direct.items() if 'startsite' in cmds}
     out = {}
-    for i, r in sorted(records(exe, 'nation').items()):
+    recs = records(exe, 'nation')
+    file_name = lambda r: text(r[nf['file']:nf['file'] + 36].split(b'\0')[0])
+    if file_name(recs[0]) != 'ind0':
+        raise SystemExit('nation save file name not where expected (Independents: %r)' % file_name(recs[0]))
+    for i, r in sorted(recs.items()):
         lines, ro = ['#name "%s"' % name_of(r).replace('"', "'")], []
-        ep = text(r[N_EPITHET:N_EPITHET + 36].split(b'\0')[0])
+        ep = text(r[N_EPITHET:N_EPITHET + nf['epithet']].split(b'\0')[0])
         if ep:
             lines.append('#epithet "%s"' % ep.replace('"', "'"))
         lines.append('#era %d' % struct.unpack_from('<h', r, N_ERA)[0])
+        for cmd in ('color', 'secondarycolor'):
+            lines.append('#%s %s' % (cmd, ' '.join(f32(x) for x in struct.unpack_from('<3f', r, nf[cmd]))))
+        off, unused = nf['status']
+        if struct.unpack_from('<h', r, off)[0] == unused:
+            ro.append(('status', 'unused slot (a mod\'s #name makes it a nation)'))
+        if file_name(r):
+            ro.append(('file name', file_name(r)))
         section = 0
         for k in range(N_GODS - N_REC >> 2):
             m = struct.unpack_from('<i', r, N_REC + 4 * k)[0]
@@ -944,7 +1049,7 @@ def nation_commands(exe):
                 section = {-2: 1, -3: 2, -4: 3}.get(m, section)
                 continue
             lines.append('#%s %d' % (N_REC_CMDS[section], m))
-        for k in range(N_GOD_SLOTS):
+        for k in range((len(r) - N_GODS) // 4):
             g = struct.unpack_from('<i', r, N_GODS + 4 * k)[0]
             if not g:
                 break

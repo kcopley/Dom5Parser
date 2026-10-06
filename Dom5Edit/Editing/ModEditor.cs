@@ -29,6 +29,10 @@ namespace Dom5Edit.Editing
             Mod = mod;
         }
 
+        /// <summary>Why a vanilla mercenary can't be edited (tools/dom6exe: the merc parser has no #select).</summary>
+        public const string VanillaMercenaryNote =
+            "The game's own band: a mod can't change it (there is no #selectmerc). #clearmercs removes all the game's bands; #newmerc adds a band.";
+
         public Mod Mod { get; }
 
         public ModResolver Resolver => ModResolver.For(Mod);
@@ -44,7 +48,14 @@ namespace Dom5Edit.Editing
             if (entity.ParentMod == Mod)
                 return entity;
             var type = entity.GetEntityType();
-            return Mod.Database.TryGetValue(type, out var set) && set.TryGet(entity.ID, null, out var own) ? own : null;
+            if (!Mod.Database.TryGetValue(type, out var set))
+                return null;
+            if (set.TryGet(entity.ID, null, out var own))
+                return own;
+            // number 0 (nation 0, bless 0, event 0) isn't kept by number: the mod's #select of it;
+            // and a #select by name ("#selectbless \"Fear\"") is linked to the game's entity
+            return set.Unnumbered.FirstOrDefault(e => e.Selected && (entity.ID == 0 && entity.Selected && e.ID == 0
+                                                                     || ReferenceEquals(e.DependentEntity, entity)));
         }
 
         /// <summary>
@@ -196,6 +207,9 @@ namespace Dom5Edit.Editing
             var own = _editor.OwnEntity(entity);
             if (own != null)
                 return own;
+            // the game's mercenaries have no #select: a mod can only remove them all (#clearmercs)
+            if (entity.GetEntityType() == EntityType.MERCENARY)
+                throw new EditException(ModEditor.VanillaMercenaryNote);
             var made = (IDEntity)Activator.CreateInstance(entity.GetType())!;
             made.Assign(entity.ID.ToString(), "", Mod, selected: true);
             made.Resolve();

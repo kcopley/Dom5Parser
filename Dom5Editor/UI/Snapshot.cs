@@ -30,6 +30,8 @@ namespace Dom5Editor.UI
     ///   --toggle-random N D      toggles path D on the Nth random path
     ///   --dump                   log the selected entity's values and where each comes from
     ///   --derived                log what the game makes of its stats (the bracketed values, "in game" notes, table rows)
+    ///   --sweep N                open up to N of the mod's entities of every type (0: all); --sweep-vanilla N
+    ///                            the same for the game's own entities
     ///   --undo / --redo          undo or redo the last edit
     ///   --save FILE.dm           save the mod (the editor's Save)
     ///   --png FILE.png           render the window
@@ -667,9 +669,12 @@ namespace Dom5Editor.UI
                             break;
                         }
                         case "--sweep":
+                        case "--sweep-vanilla":
                         {
                             // --sweep N: open the page of up to N of the mod's entities of every type (all if
-                            // N is 0); log any that fails, and the slowest
+                            // N is 0); log any that fails, and the slowest. --sweep-vanilla N: the same for
+                            // the game's entities the mod doesn't change
+                            bool vanilla = args[i] == "--sweep-vanilla";
                             int limit = int.Parse(args[++i]);
                             int opened = 0, failed = 0;
                             long slowest = 0;
@@ -678,7 +683,7 @@ namespace Dom5Editor.UI
                             foreach (var tab in vm.Tabs.OfType<EntityTypeTab>())
                             {
                                 vm.SelectedTab = tab;
-                                var items = tab.Items.Where(x => !x.IsVanilla || x.IsModified).ToList();
+                                var items = tab.Items.Where(x => vanilla ? x.IsVanilla && !x.IsModified : !x.IsVanilla || x.IsModified).ToList();
                                 foreach (var item in limit > 0 ? items.Take(limit) : items)
                                 {
                                     var watch = System.Diagnostics.Stopwatch.StartNew();

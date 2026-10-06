@@ -116,6 +116,12 @@ namespace Dom5Editor.UI.ViewModels
 
         public bool HasError => !string.IsNullOrEmpty(_error);
 
+        /// <summary>Why the page can't be edited, or null: the game's own mercenaries, which no command selects.</summary>
+        public string? ReadOnlyNote => Type == EntityType.MERCENARY && Entity.ParentMod != Session.Mod
+            ? ModEditor.VanillaMercenaryNote : null;
+
+        public bool IsReadOnly => ReadOnlyNote != null;
+
         public bool HasDescription => Entity.GetPropertyMap().ContainsKey(Command.DESCR);
 
         /// <summary>Other long texts, each in its own box: an event's message, a nation's summary and brief, a spell's details.</summary>
@@ -521,6 +527,8 @@ namespace Dom5Editor.UI.ViewModels
         private void BuildParts()
         {
             var parts = new List<object> { Part("Header"), Part("Error") };
+            if (IsReadOnly)
+                parts.Add(Part("Note"));
             if (HasDescription)
                 parts.Add(Part("Description"));
             if (LongTexts.Count > 0)
@@ -552,10 +560,10 @@ namespace Dom5Editor.UI.ViewModels
         }
 
         /// <summary>Whether the page has the add box for any command (an event adds lines in its own panels).</summary>
-        public virtual bool ShowsAddBox => true;
+        public virtual bool ShowsAddBox => !IsReadOnly;
 
         /// <summary>Whether the header shows the ID (events have none).</summary>
-        public bool HasId => ID > 0;
+        public bool HasId => ID > 0 || ID == 0 && Type is EntityType.NATION or EntityType.BLESS;
 
         /// <summary>Whether a long text (#msg, #summary, ...) gets the generic box (an event's message has its own panel).</summary>
         protected virtual bool ShowsLongText(Command c) => true;
@@ -687,7 +695,7 @@ namespace Dom5Editor.UI.ViewModels
 
         // ---- edits (all through the session: undoable, and the page refreshes) ----
 
-        protected void Edit(Func<ModEditor, IModEdit?> edit) => Error = Session.Edit(edit);
+        protected void Edit(Func<ModEditor, IModEdit?> edit) => Error = IsReadOnly ? ReadOnlyNote : Session.Edit(edit);
 
         /// <summary>Several changes as one undo step.</summary>
         public void EditRun(string description, Action<ModEditor, Transaction> body) =>
@@ -885,7 +893,7 @@ namespace Dom5Editor.UI.ViewModels
             Page = page;
         }
 
-        /// <summary>Which part: Header, Error, Description, LongTexts, Copies, AddBox, Removals, UsedBy, File, GameValues.</summary>
+        /// <summary>Which part: Header, Error, Note, Description, LongTexts, Copies, AddBox, Removals, UsedBy, File, GameValues.</summary>
         public string Kind { get; }
         public EntityPageViewModel Page { get; }
     }
