@@ -1,3 +1,6 @@
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Dom5Editor.UI.Controls;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Editor.Session;
@@ -147,6 +150,10 @@ namespace Dom5Editor.UI.ViewModels
             stats.Columns.Add(left);
             stats.Columns.Add(right);
             Panels.Add(stats);
+
+            // a global/province enchantment or a cause-event spell: the events it drives
+            if (effect is int fx && (Dom5Edit.Events.EventInfo.IsEnchantmentEffect(fx) || Dom5Edit.Events.EventInfo.IsCauseEventEffect(fx)))
+                Panels.Add(new SpellEventsPanel(this, fx));
             covered.UnionWith(new[] { Command.SCHOOL, Command.RESEARCHLEVEL, Command.PATH, Command.PATHLEVEL, Command.FATIGUECOST, Command.EFFECT, Command.DAMAGE });
         }
 
@@ -190,6 +197,64 @@ namespace Dom5Editor.UI.ViewModels
             if (type?.ArgumentType != "damage" || !int.TryParse(text, out var v) || Math.Abs(v) < 1000)
                 return "";
             return $"{v % 1000} + {v / 1000} per caster level";
+        }
+    }
+
+    /// <summary>
+    /// The events a spell drives: for an enchantment (its #damage is the enchantment number) the
+    /// events that require it; for a cause-event spell, the events with its #id. And a button
+    /// that makes a new one.
+    /// </summary>
+    public sealed class SpellEventsPanel
+    {
+        private readonly EntityPageViewModel _page;
+        private readonly bool _enchantment;
+        private readonly long _number;
+
+        public SpellEventsPanel(EntityPageViewModel page, int effect)
+        {
+            _page = page;
+            _enchantment = Dom5Edit.Events.EventInfo.IsEnchantmentEffect(effect);
+            _number = Dom5Edit.Events.EventInfo.Number(page.Resolved.Get(Command.DAMAGE)?.Property) ?? 0;
+            var graph = page.Session.Events;
+            var spell = page.Session.Editor.OwnEntity(page.Entity) ?? page.Entity;
+            // one link per event, with the lines it checks the spell with
+            foreach (var g in graph.From(spell).Where(l => !l.IsEventToEvent).GroupBy(l => l.To, ReferenceEqualityComparer.Instance))
+            {
+                var e = (IDEntity)g.Key!;
+                Events.Add(new LinkChip(string.Join(", ", g.Select(l => EventPageViewModel.Name(l.Checker?.Command ?? Command.ID)).Distinct()),
+                    Dom5Edit.Events.EventInfo.Title(graph.LinesOf(e)), () => page.Session.Navigate(e)));
+            }
+            NewCommand = new RelayCommand(MakeEvent);
+        }
+
+        public string Title => _enchantment ? $"EVENTS OF ENCHANTMENT {_number}" : $"EVENTS IT CAUSES (EVENT ID {_number})";
+        public string Hint => Events.Count == 0
+            ? (_enchantment ? $"No event checks enchantment {_number} (#req_ench and the like)." : $"No event has #id {_number}.")
+            : "";
+        public bool HasHint => Hint.Length > 0;
+        public ObservableCollection<LinkChip> Events { get; } = new ObservableCollection<LinkChip>();
+        public ICommand NewCommand { get; }
+        public string NewLabel => _enchantment ? "+ New event while it's active" : "+ New event it causes";
+
+        private void MakeEvent()
+        {
+            IDEntity? made = null;
+            _page.EditRun(_enchantment ? $"New event for enchantment {_number}" : $"New event with id {_number}", (ed, tx) =>
+            {
+                made = tx.Create(EntityType.EVENT, null);
+                tx.Add(made, Command.RARITY, "5");
+                if (_enchantment)
+                {
+                    tx.Add(made, Command.REQ_ENCH, _number.ToString());
+                    tx.Add(made, Command.REQ_PERMONTH, "1");
+                }
+                else
+                    tx.Add(made, Command.ID, _number.ToString());
+                tx.Add(made, Command.MSG, $"\"{_page.DisplayName.Replace("\"", "'")}: what happens.\"");
+            });
+            if (made != null && _page.Error == null)
+                _page.Session.Navigate(made);
         }
     }
 
