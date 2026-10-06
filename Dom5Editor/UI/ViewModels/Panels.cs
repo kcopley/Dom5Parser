@@ -117,7 +117,13 @@ namespace Dom5Editor.UI.ViewModels
         public string Hint => HasInherited
             ? $"Grey entries are inherited. Removing one writes {ClearName} and adds the others back."
             : "";
-        private string ClearName => Command == Command.WEAPON ? "#clearweapons" : Command == Command.ARMOR ? "#cleararmor" : "a clear";
+        private string ClearName => Command switch
+        {
+            Command.WEAPON => "#clearweapons",
+            Command.ARMOR => "#cleararmor",
+            Command.ADDRECUNIT or Command.ADDRECCOM or Command.ADDFOREIGNUNIT or Command.ADDFOREIGNCOM => "#clearrec",
+            _ => "a clear",
+        };
 
         /// <summary>The add picker's choice: picking an entity adds it.</summary>
         public int? AddPick

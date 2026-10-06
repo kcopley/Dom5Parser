@@ -57,6 +57,8 @@ namespace Dom5Edit.Resolve
                 return false;
             if (clear == Command.CLEAR)
                 return type != EntityType.MONSTER || GroupOf(type, c) != PropertyGroup.Sprites;
+            if (type == EntityType.NATION && clear == Command.CLEARNATION)
+                return ClearedByClearNation(c);
             var group = ClearedGroup(clear);
             return group.HasValue && GroupOf(type, c) == group.Value;
         }
@@ -98,6 +100,22 @@ namespace Dom5Edit.Resolve
             if (group == PropertyGroup.None || group == PropertyGroup.All || group == PropertyGroup.Sprites)
                 return null;
             return PropertyGroupMap.GetClearCommand(group);
+        }
+
+        /// <summary>
+        /// #clearnation empties the nation's abilities and its god list (tools/dom6exe: the record's
+        /// ability arrays and god list), not its fields (name, epithet, era), texts or recruitment list:
+        /// so a command is cleared if what it writes is abilities, or it's a god or start site line.
+        /// </summary>
+        private static bool ClearedByClearNation(Command c)
+        {
+            if (c == Command.ADDGOD || c == Command.DELGOD || c == Command.STARTSITE)
+                return true;
+            var e = GameCommandCatalog.EffectOf(EntityType.NATION, c);
+            if (e == null)
+                return false;
+            var keys = e.Set.Concat(e.Add).Concat(e.Or).ToList();
+            return keys.Count > 0 && keys.All(k => k.StartsWith("a"));
         }
 
         private static bool IsIdentity(Command c) =>
