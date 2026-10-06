@@ -163,6 +163,8 @@
                                                     ShowModified="{Binding ShowModified}"
                                                     ShowNew="{Binding ShowNew}"
                                                     SortBy="{Binding SortBy}"
+                                                    Facets="{Binding Facets}"
+                                                    Facet="{Binding Facet}"
                                                     NewCommand="{Binding NewCommand}"
                                                     DeleteCommand="{Binding DeleteCommand}"/>
                         <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Center"

@@ -42,6 +42,56 @@ namespace Dom5Editor.UI.ViewModels
         private string _sortBy = "ID";
         public string SortBy { get => _sortBy; set { _sortBy = value ?? "ID"; OnPropertyChanged(); } }
 
+        private string _facet = "All";
+
+        /// <summary>A type's own filter ("Rituals", "In a chain"), "All" for none; see <see cref="Facets"/>.</summary>
+        public string Facet { get => _facet; set { _facet = value ?? "All"; OnPropertyChanged(); } }
+
+        /// <summary>The type's own filters, or null: events by kind and chain, spells by kind.</summary>
+        public IReadOnlyList<string>? Facets => Type switch
+        {
+            EntityType.EVENT => new[] { "All", "Good", "Bad", "Always", "Global", "In a chain", "Started by a spell", "With problems" },
+            EntityType.SPELL => new[] { "All", "Combat spells", "Rituals", "Global enchantments", "Summons" },
+            _ => null,
+        };
+
+        /// <summary>Whether a row is in one of the type's own filters.</summary>
+        private bool InFacet(EntityListItem item, string facet)
+        {
+            if (Type == EntityType.EVENT)
+            {
+                var graph = _session.Events;
+                var e = _session.Editor.OwnEntity(item.Entity) ?? item.Entity;
+                var rarity = Dom5Edit.Events.EventInfo.Rarity(graph.LinesOf(e)) ?? 0;
+                return facet switch
+                {
+                    "Good" => Dom5Edit.Events.EventInfo.IsGood(rarity),
+                    "Bad" => Dom5Edit.Events.EventInfo.IsBad(rarity),
+                    "Always" => rarity == 0 || rarity == 5,
+                    "Global" => Dom5Edit.Events.EventInfo.IsGlobal(rarity),
+                    "In a chain" => graph.ChainOf(e) != null,
+                    "Started by a spell" => graph.To(e).Any(l => !l.IsEventToEvent),
+                    "With problems" => graph.ProblemsOf(e).Any(),
+                    _ => true,
+                };
+            }
+            if (Type == EntityType.SPELL)
+            {
+                var r = _session.Resolve(item.Entity);
+                long effect = Dom5Edit.Events.EventInfo.Number(r.Get(Command.EFFECT)?.Property) ?? 0;
+                var kind = Data.GameTables.EffectOf((int)effect);
+                return facet switch
+                {
+                    "Combat spells" => effect < 10000,
+                    "Rituals" => effect >= 10000,
+                    "Global enchantments" => Dom5Edit.Events.EventInfo.IsEnchantmentEffect(effect),
+                    "Summons" => kind?.ArgumentType == "unit_id",
+                    _ => true,
+                };
+            }
+            return true;
+        }
+
         public System.Windows.Input.ICommand NewCommand { get; }
         public System.Windows.Input.ICommand DeleteCommand { get; }
 
@@ -178,6 +228,8 @@ namespace Dom5Editor.UI.ViewModels
                 bool game = vanilla != null || entity.Selected && !HasVanillaData(Type);
                 var added = new EntityListItem(Type, entity, NameOf(entity), isVanilla: game, isModified: game);
                 Equip(added);
+                // (an event made next to another is sorted there: its place in the file)
+                added.Order = Type == EntityType.EVENT && _session.Events.IndexOf(entity) is int at && at >= 0 ? at : _items!.Count;
                 _byKey[key] = added;
                 _items!.Add(added);
             }
@@ -208,9 +260,11 @@ namespace Dom5Editor.UI.ViewModels
                     bool game = e.Selected && !HasVanillaData(Type);
                     list.Add(new EntityListItem(Type, e, NameOf(e), isVanilla: game, isModified: game));
                 }
+            int order = 0;
             foreach (var item in list)
             {
                 Equip(item);
+                item.Order = order++;
                 _byKey[Key(item.Entity)] = item;
             }
             return new ObservableCollection<EntityListItem>(list);
@@ -228,6 +282,7 @@ namespace Dom5Editor.UI.ViewModels
         private void Equip(EntityListItem item)
         {
             item.DetailProvider = Detail;
+            item.FacetMatcher = InFacet;
             if (Type == EntityType.MONSTER || Type == EntityType.ITEM)
                 item.SpriteProvider = i =>
                 {

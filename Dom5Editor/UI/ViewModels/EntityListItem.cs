@@ -32,6 +32,12 @@ namespace Dom5Editor.UI.ViewModels
 
         public int ID => Entity.ID;
 
+        /// <summary>Where the list sorts it "by ID": its ID, or for entities with none (events), after them in file order.</summary>
+        public int SortKey => ID > 0 ? ID : int.MaxValue / 2 + Order;
+
+        /// <summary>Its place among the entities without an ID (their order in the file).</summary>
+        internal int Order { get; set; }
+
         public string DisplayName
         {
             get => _displayName;
@@ -56,6 +62,10 @@ namespace Dom5Editor.UI.ViewModels
         // worked out when a row is first shown (the list is virtualized), again after an edit
 
         internal Func<EntityListItem, string>? DetailProvider { get; set; }
+        internal Func<EntityListItem, string, bool>? FacetMatcher { get; set; }
+
+        /// <summary>Whether the row is in one of its type's own filters ("Rituals", "In a chain"); "All" always.</summary>
+        public bool InFacet(string facet) => facet == "All" || FacetMatcher?.Invoke(this, facet) != false;
         internal Func<EntityListItem, System.Windows.Media.ImageSource?>? SpriteProvider { get; set; }
         private string? _detail;
         private System.Windows.Media.ImageSource? _sprite;
