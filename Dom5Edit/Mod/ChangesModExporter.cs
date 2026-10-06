@@ -23,6 +23,14 @@ namespace Dom5Edit
         /// </summary>
         public void Export(StreamWriter writer, string modName, string description = null)
         {
+            var loaded = _changes.LoadedMod;
+            if (loaded != null && loaded.PreserveSourceOrder && loaded.SourceBlocks.Count > 0
+                && !_changes.GetRemovedEntities().Any())
+            {
+                ExportInSourceOrder(writer, loaded, modName, description);
+                return;
+            }
+
             // Write mod header
             WriteHeader(writer, modName, description);
 
@@ -36,6 +44,29 @@ namespace Dom5Edit
                 // Changes only mode: export vanilla overrides and new entities
                 ExportChangesOnly(writer);
             }
+        }
+
+        /// <summary>
+        /// Saves a loaded mod in its file's block order (docs/SAVE_FLOW.md). The editor's edits
+        /// to the mod's own entities are already in its entities, so the mod's writer saves them
+        /// in place; edits to vanilla entities the mod doesn't select, and entities new in the
+        /// session, follow as #select / #new blocks.
+        /// </summary>
+        private void ExportInSourceOrder(StreamWriter writer, Mod loaded, string modName, string description)
+        {
+            loaded.ModName = modName;
+            if (description != null)
+                loaded.Description = description;
+            loaded.Export(writer);
+
+            var vanillaOverrides = _changes.GetAllChanges().Where(c => c.IsVanillaOverride && c.HasChanges).ToList();
+            if (vanillaOverrides.Count > 0)
+            {
+                writer.WriteLine();
+                foreach (var changes in vanillaOverrides.OrderBy(c => c.EntityType).ThenBy(c => c.EntityId))
+                    ExportVanillaOverride(writer, changes);
+            }
+            ExportNewEntities(writer);
         }
 
         private void WriteHeader(StreamWriter writer, string modName, string description)

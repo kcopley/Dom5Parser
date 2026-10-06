@@ -6,6 +6,13 @@ clear semantics are **order-dependent**, without breaking game behavior.
 **Status:** Design agreed 2026-05-31 (kurtcop, with Bluefire & Dracolich).
 Implementation in progress. See `ROUND_TRIP_TESTING.md` for the verification harness.
 
+> **2026-10-05: superseded for saving by original-order saving (`SAVE_FLOW.md`).** Saving the
+> file's blocks in file order makes copies replay as written, so the re-derive / flatten /
+> canonical re-sort below are only used by the canonical writer (`PreserveSourceOrder = false`,
+> `Dom5Tests roundtrip ... canonical`). An unedited DomEnhanced save is now byte-identical, and a
+> template edit reaches its copies (rule C) because it's saved in the template's block. The
+> snapshot capture still runs at parse; the editor's display of copies doesn't use it yet.
+
 ---
 
 ## The problem

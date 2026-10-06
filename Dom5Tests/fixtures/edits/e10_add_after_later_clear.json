@@ -1,0 +1,21 @@
+{
+  "description": "Add an ability to a unit whose later block clears special abilities: it must be saved after that clear to take effect (placement rule 2).",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "add",
+      "entity": "monster",
+      "id": 7420,
+      "command": "#flying"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7420",
+      "field": "flying",
+      "from": null,
+      "to": "1"
+    }
+  ]
+}

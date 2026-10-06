@@ -20,6 +20,13 @@
 #prot 3
 #end
 
+-- A copy that sets hp itself: a template edit to hp must not reach it.
+#newmonster 7403
+#name "Copy Three"
+#copystats 7400
+#hp 15
+#end
+
 -- Standalone unit with two weapons.
 #newmonster 7410
 #name "Two Weapons"
@@ -31,4 +38,16 @@
 -- A vanilla unit this mod already edits.
 #selectmonster 3 -- Serpent Cataphract
 #mor 15
+#end
+
+-- A unit edited again later in the file: the later block clears its special abilities, so an
+-- ability added in the editor must go after that clear to take effect.
+#newmonster 7420
+#name "Cleared Later"
+#hp 9
+#flying
+#end
+
+#selectmonster 7420
+#clearspec
 #end

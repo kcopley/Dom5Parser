@@ -1,0 +1,35 @@
+{
+  "description": "Remove a weapon and add another: the new one is saved where the old one was (docs/SAVE_FLOW.md, placement rule 1), so the weapon order is kept.",
+  "base": "base_edits.dm",
+  "edits": [
+    {
+      "op": "remove",
+      "entity": "monster",
+      "id": 7410,
+      "command": "#weapon",
+      "value": "1"
+    },
+    {
+      "op": "add",
+      "entity": "monster",
+      "id": 7410,
+      "command": "#weapon",
+      "value": "8"
+    }
+  ],
+  "expect": [
+    {
+      "type": "unit",
+      "id": "7410",
+      "field": "weapons",
+      "from": [
+        "1",
+        "23"
+      ],
+      "to": [
+        "8",
+        "23"
+      ]
+    }
+  ]
+}

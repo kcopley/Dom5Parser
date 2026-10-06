@@ -71,7 +71,7 @@ namespace Dom5Edit.Entities
             _propertyMap.Add(Command.REQPLANT, CommandProperty.Create);
             _propertyMap.Add(Command.REQNOPLANT, CommandProperty.Create);
             // Additional Dom6 additions
-            _propertyMap.Add(Command.PORTENT, IntProperty.Create); //#portent <value>
+            _propertyMap.Add(Command.PORTENT, StringProperty.Create); //#portent "<message>"
             _propertyMap.Add(Command.PREC, IntProperty.Create); //#prec <value>
             _propertyMap.Add(Command.ONLYSITEDST, SiteRef.Create); //#onlysitedst <site name> | <site nbr>
             _propertyMap.Add(Command.AOEINSPECTOR, IntProperty.Create); //#aoeinspector <value>

@@ -187,6 +187,56 @@ namespace Dom5Edit
 		internal static int NATION_END_ID = 499; // Dom5: 249
 
         private Entity _currentEntity = null;
+        private SourceBlock? _currentBlock = null;
+
+        /// <summary>
+        /// The parsed file's entity blocks in file order (see SourceBlock). Saving writes them back
+        /// in this order; entities with no block (new in the session) follow.
+        /// </summary>
+        public List<SourceBlock> SourceBlocks { get; } = new List<SourceBlock>();
+
+        /// <summary>
+        /// The properties live in entities when parsing finished. A block property that was live
+        /// then and isn't any more was removed by an edit; one that wasn't live then was taken out
+        /// by a later clear or copy in the file, and is still written.
+        /// </summary>
+        internal HashSet<Property> PropertiesAfterParse { get; private set; } = new HashSet<Property>(ReferenceEqualityComparer.Instance);
+
+        /// <summary>
+        /// Lines before the first block, as read: header commands (#modname, ...) and lines with no
+        /// command. Written as read while the header fields are unchanged.
+        /// </summary>
+        internal List<(string Text, bool IsHeaderCommand)> Preamble { get; } = new List<(string, bool)>();
+
+        /// <summary>Lines with no command after the last block, as read.</summary>
+        internal List<string> TrailingTrivia { get; } = new List<string>();
+
+        /// <summary>The header fields when parsing finished (see HeaderUnchanged).</summary>
+        private (string?, string?, string?, string?, string?) _headerAtParse;
+
+        /// <summary>Whether #modname/#description/#icon/#version/#domversion are as parsed.</summary>
+        internal bool HeaderUnchanged => _headerAtParse == (ModName, Description, Icon, Version, DomVersion);
+
+        private string _currentRawText = "";
+        private bool _baselineTaken;
+        private readonly List<string> _pendingTrivia = new List<string>();
+
+        /// <summary>A line with no command: kept where it was (block, before a block, or end of file).</summary>
+        private void AddTrivia(string text)
+        {
+            if (_currentBlock != null)
+                _currentBlock.Trivia.Add((_currentBlock.Properties.Count, text));
+            else if (SourceBlocks.Count == 0)
+                Preamble.Add((text, false));
+            else
+                _pendingTrivia.Add(text);
+        }
+
+        /// <summary>
+        /// Save in the parsed file's block order (the default). False writes each entity as one
+        /// block, by type and ID.
+        /// </summary>
+        public bool PreserveSourceOrder { get; set; } = true;
 
         public bool LineWasTrimmed { get; set; }
 
@@ -220,8 +270,10 @@ namespace Dom5Edit
 
         private void SetupParserCallbacks()
         {
+            _parser.OnTrivia = AddTrivia;
             _parser.OnCommand = cmd =>
             {
+                _currentRawText = cmd.RawText ?? "";
                 LineNumber = cmd.LineNumber;
                 LineWasTrimmed = _parser.LineWasTrimmed;
                 HandleParsedCommand(cmd.Command, cmd.Value, cmd.Comment);
@@ -287,6 +339,11 @@ namespace Dom5Edit
             _parser.Parse(sr);
             LineWasTrimmed = false;
             LineNumber = -1;
+            PropertiesAfterParse = new HashSet<Property>(
+                Database.Values.SelectMany(set => set.GetFullList()).SelectMany(e => e.Properties), ReferenceEqualityComparer.Instance);
+            TrailingTrivia.AddRange(_pendingTrivia);
+            _pendingTrivia.Clear();
+            _headerAtParse = (ModName, Description, Icon, Version, DomVersion);
         }
 
         /// <summary>
@@ -294,6 +351,14 @@ namespace Dom5Edit
         /// </summary>
         private void HandleParsedCommand(Command c, string value, string comment)
         {
+            if (c == Command.MODNAME || c == Command.DESCRIPTION || c == Command.VERSION || c == Command.DOMVERSION || c == Command.ICON)
+            {
+                // mod header: part of the preamble before the first block, else kept in place
+                if (SourceBlocks.Count == 0 && _currentBlock == null)
+                    Preamble.Add((_currentRawText, true));
+                else
+                    AddTrivia(_currentRawText);
+            }
             switch (c)
             {
                 case Command.MODNAME:
@@ -414,11 +479,37 @@ namespace Dom5Edit
                 case Command.END:
                     _currentEntity?.SetEndComment(comment);
                     _currentEntity = null;
+                    if (_currentBlock != null)
+                        _currentBlock.RawEnd = _currentRawText;
+                    else
+                        AddTrivia(_currentRawText); // a stray #end
+                    _currentBlock = null;
                     break;
                 default:
                     if (_currentEntity != null) _currentEntity.Parse(c, val, comment); //assume the command is relevant for the current entity
-                    //else build list of pre-entity comments, to restore before the next entity on export?
+                    if (_currentBlock != null && _currentEntity is IDEntity parsedInto && parsedInto.LastParsedProperty != null)
+                    {
+                        parsedInto.LastParsedProperty.RawText = _currentRawText;
+                        _currentBlock.Properties.Add(parsedInto.LastParsedProperty);
+                    }
+                    else
+                    {
+                        AddTrivia(_currentRawText); // not taken by the entity (or outside a block): kept as written
+                    }
                     break; //nothing
+            }
+            // a #new.../#select... line starts a block of the entity it named
+            if (CommandEntityMap.ContainsKey(c) && _currentEntity is IDEntity blockEntity)
+            {
+                bool selected = CommandsMap.TryGetString(c, out var header) && header.StartsWith("#select");
+                _currentBlock = new SourceBlock(blockEntity, selected, val, comment)
+                {
+                    RawHeader = _currentRawText,
+                    IdAtParse = blockEntity.ID,
+                };
+                _currentBlock.LeadingTrivia.AddRange(_pendingTrivia);
+                _pendingTrivia.Clear();
+                SourceBlocks.Add(_currentBlock);
             }
         }
 
@@ -449,6 +540,14 @@ namespace Dom5Edit
             foreach (var set in Database.Values)
             {
                 set.Resolve();
+            }
+            // what an unedited property exports as (docs/SAVE_FLOW.md, "Original text"); taken
+            // once, after references resolve and before any edit
+            if (!_baselineTaken)
+            {
+                foreach (var p in SourceBlocks.SelectMany(b => b.Properties))
+                    p.BaselineExport = p.ToExportString();
+                _baselineTaken = true;
             }
 
             foreach (var kvp in Events)

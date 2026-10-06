@@ -24,10 +24,7 @@
     {
       "name": "copy-name_before_copy",
       "path": "Dom5Tests/fixtures/copy/name_before_copy.dm",
-      "expect": "pass",
-      "knownFailing": {
-        "3": "#name declared before #copyweapon is dropped on save (docs/PROJECT_EVALUATION.md 4b)"
-      }
+      "expect": "pass"
     },
     {
       "name": "names-duplicate_names",

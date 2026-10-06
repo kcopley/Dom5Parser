@@ -14,6 +14,22 @@ namespace Dom5Edit.Props
 
         public Command Command { get; set; }
 
+        /// <summary>The line's text as read from the file (null for a property made in the session).</summary>
+        internal string? RawText { get; set; }
+
+        /// <summary>
+        /// ToExportString() when the mod was first resolved. While it still matches, the property
+        /// is unedited and saving writes RawText (docs/SAVE_FLOW.md, "Original text").
+        /// </summary>
+        internal string? BaselineExport { get; set; }
+
+        /// <summary>The text to save: the original line if unedited, else the regenerated one.</summary>
+        internal string SaveText()
+        {
+            var text = ToExportString();
+            return RawText != null && BaselineExport != null && text == BaselineExport ? RawText : text;
+        }
+
         internal abstract Property GetDefault();
 
         internal abstract bool EqualsProperty<T>(T copyFrom) where T : Property, new();
@@ -30,7 +46,10 @@ namespace Dom5Edit.Props
         /// </summary>
         internal virtual Property Clone()
         {
-            return (Property)this.MemberwiseClone();
+            var clone = (Property)this.MemberwiseClone();
+            clone.RawText = null; // a clone is a new line, not the one read from the file
+            clone.BaselineExport = null;
+            return clone;
         }
     }
 }

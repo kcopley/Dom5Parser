@@ -12,14 +12,26 @@ namespace Dom5Edit.Props
         public ulong Value { get; set; }
         public bool HasValue { get; set; }
 
+        /// <summary>A negative argument (#nextingeo -1), kept as written; Value holds its bits.</summary>
+        public long? Negative { get; set; }
+
         public override void Parse(Command c, string s, string comment)
         {
             this.Command = c;
             this.Comment = comment;
             HasValue = s.TryRetrieveUlongFromString(out ulong val, out string remainder);
             if (HasValue) Value = val;
+            else if (s.TrimStart().StartsWith("-") && s.Trim().TryRetrieveNumericFromString(out int neg, out string negRemainder))
+            {
+                HasValue = true;
+                Negative = neg;
+                Value = unchecked((ulong)(long)neg);
+                remainder = negRemainder;
+            }
             if (remainder.Length > 0) Comment += remainder;
         }
+
+        private string ValueText => Negative.HasValue && unchecked((ulong)Negative.Value) == Value ? Negative.Value.ToString() : Value.ToString();
 
         //Preliminary Example only for now, not optimal
         public override string ToExportString()
@@ -30,7 +42,7 @@ namespace Dom5Edit.Props
                 {
                     if (HasValue)
                     {
-                        return s + " " + Value + " -- " + Comment;
+                        return s + " " + ValueText + " -- " + Comment;
                     }
                     else
                     {
@@ -39,7 +51,7 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    return s + " " + Value;
+                    return HasValue ? s + " " + ValueText : s;
                 }
             }
             else return "";
