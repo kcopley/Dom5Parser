@@ -37,25 +37,33 @@ namespace Dom5Editor.UI.Controls
 
             FilteredItems = new ObservableCollection<ReferenceItem>();
 
-            // Handle clicks outside the control to close dropdown
+            // Handle clicks outside the control to close dropdown. The window is remembered: once
+            // unloaded the control is out of it (GetWindow is null), and a handler left on the window
+            // keeps the control, and the page it was on, alive.
             Loaded += (s, e) =>
             {
                 var window = Window.GetWindow(this);
-                if (window != null)
+                if (window != null && !ReferenceEquals(window, _window))
                 {
+                    if (_window != null)
+                        _window.PreviewMouseDown -= OnWindowPreviewMouseDown;
+                    _window = window;
                     window.PreviewMouseDown += OnWindowPreviewMouseDown;
                 }
             };
 
             Unloaded += (s, e) =>
             {
-                var window = Window.GetWindow(this);
-                if (window != null)
+                if (_window != null)
                 {
-                    window.PreviewMouseDown -= OnWindowPreviewMouseDown;
+                    _window.PreviewMouseDown -= OnWindowPreviewMouseDown;
+                    _window = null;
                 }
+                _filterDebounceTimer.Stop();
             };
         }
+
+        private Window? _window;
 
         private void OnWindowPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {

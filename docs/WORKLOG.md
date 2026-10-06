@@ -52,6 +52,20 @@ Later the same day:
 - Two background jobs: vanilla events decoded from the exe (E-6), and the game's own icons
   read from its .trs archives at runtime (not shipped).
 
+Then:
+- **Vanilla events** (75b8b22, d648482): `tools/dom6exe events` writes the game's 3,302
+  events; the editor lists them with the mod's (titled, numbered, searchable by message text:
+  "comet" finds 8 of 5,000 in 0.3 s), messages read from the player's exe. The event graph
+  links them (the game's chains read as in game) and `#delay` goes to the next record (the
+  next `#newevent`, or N+1 after `#selectevent N`). A game event's page is read-only where a
+  change would stack on the game's line. New checks from the exe: a `#newevent` without
+  `#rarity` is lost (14 in DomEnhanced), more than 12 requirements / 20 effects are dropped (5
+  DomEnhanced werewolf events have 14-15 requirements).
+- **Game icons** (2443f60, merged): `tools/gameart/trs.py` and `Sprites/TrsArchive.cs` decode
+  the game's .trs archives; `Data/game_icons.json` maps 151 keys (stats, costs, paths, gems,
+  damage types, abilities by command) found in the exe's draw code. `GameIcon` uses the game's
+  icon when the game is installed, the vector drawing otherwise. Read at run time, not shipped.
+
 ## 2026-10-05 (later): a complete editor, rebuilt on the resolver
 
 The user asked for a complete mod editor (every entity editable, real panels for the

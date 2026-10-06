@@ -25,6 +25,9 @@ namespace Dom5Editor.Session
         /// <summary>Raised after every edit, undo and redo, with the edit.</summary>
         public event Action<IModEdit>? Changed;
 
+        /// <summary>How many listen to <see cref="Changed"/> (the snapshot harness checks closed pages let go).</summary>
+        internal int ChangedListeners => Changed?.GetInvocationList().Length ?? 0;
+
         /// <summary>Raised when a page asks to show another entity (a reference was clicked).</summary>
         public event Action<EntityType, int>? NavigationRequested;
 

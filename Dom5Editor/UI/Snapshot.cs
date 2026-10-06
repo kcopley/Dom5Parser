@@ -408,6 +408,18 @@ namespace Dom5Editor.UI
                             Log($"facet {t} {facet}: {n} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
                             break;
                         }
+                        case "--pause":
+                        {
+                            // --pause SECONDS: keep running (for a memory dump of the process)
+                            Log($"pausing {args[i + 1]} s (process {Environment.ProcessId})");
+                            var until = DateTime.Now.AddSeconds(int.Parse(args[++i]));
+                            while (DateTime.Now < until)
+                            {
+                                Pump();
+                                System.Threading.Thread.Sleep(100);
+                            }
+                            break;
+                        }
                         case "--search":
                         {
                             // --search TYPE TEXT: the list's search box; logs how many rows match and a few of them
@@ -536,6 +548,7 @@ namespace Dom5Editor.UI
                             int limit = int.Parse(args[++i]);
                             int opened = 0, failed = 0;
                             long slowest = 0;
+                            var pages = new List<WeakReference>(); // pages left alive after they're closed: a leak
                             string slowestName = "";
                             foreach (var tab in vm.Tabs.OfType<EntityTypeTab>())
                             {
@@ -549,6 +562,8 @@ namespace Dom5Editor.UI
                                         tab.SelectedItem = item;
                                         Pump();
                                         _ = tab.Page?.Sections.Count;
+                                        if (tab.Page != null)
+                                            pages.Add(new WeakReference(tab.Page));
                                     }
                                     catch (Exception ex)
                                     {
@@ -563,7 +578,16 @@ namespace Dom5Editor.UI
                                     }
                                 }
                             }
-                            Log($"sweep: {opened} pages, {failed} failed; slowest {slowest} ms ({slowestName})");
+                            GC.Collect();
+                            GC.WaitForPendingFinalizers();
+                            vm.SelectedTab = vm.Tabs.OfType<EntityTypeTab>().First();
+                            foreach (var tab in vm.Tabs.OfType<EntityTypeTab>())
+                                tab.SelectedItem = null;
+                            Pump();
+                            GC.Collect();
+                            GC.WaitForPendingFinalizers();
+                            GC.Collect();
+                            Log($"sweep: {opened} pages, {failed} failed; slowest {slowest} ms ({slowestName}); memory {GC.GetTotalMemory(true) / (1 << 20)} MB managed, {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1 << 20)} MB working set; {pages.Count(w => w.IsAlive)} of {pages.Count} pages still alive; {vm.Session!.ChangedListeners} session listeners");
                             break;
                         }
                         case "--dump":

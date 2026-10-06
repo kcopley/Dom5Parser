@@ -5,7 +5,8 @@ namespace Dom5Editor.UI.Controls
 {
     /// <summary>
     /// A small icon for something modders recognize at a glance: a magic path or gem, a monster
-    /// stat, a cost. Drawn from vector shapes (GameIcons), so it scales and needs no game art.
+    /// stat, a cost, an ability. The game's own icon when the game is installed (GameArt), else a
+    /// vector shape (GameIcons).
     /// Shown next to its text, not instead of it. Kind: "path:F" (F A W E S D N G B H, R random),
     /// "gem:F", or a stat ("hp", "att", "gold", ...). An unknown kind draws nothing.
     /// </summary>
@@ -33,7 +34,7 @@ namespace Dom5Editor.UI.Controls
         }
 
         protected override Size MeasureOverride(Size availableSize) =>
-            GameIcons.Get(Kind) == null ? new Size(0, 0) : new Size(double.IsNaN(Width) ? 16 : Width, double.IsNaN(Height) ? 16 : Height);
+            !Known(Kind) ? new Size(0, 0) : new Size(double.IsNaN(Width) ? 16 : Width, double.IsNaN(Height) ? 16 : Height);
 
         protected override void OnRender(DrawingContext dc)
         {
@@ -74,15 +75,20 @@ namespace Dom5Editor.UI.Controls
         private static readonly Dictionary<string, ImageSource?> _bitmaps = new Dictionary<string, ImageSource?>();
 
         /// <summary>
-        /// The game's own icon for a path or gem, when it's next to the editor (icons/magicicons/Path_F.png,
-        /// Gem_F.png): the ones players know from the game. Null otherwise (the vector shape is used).
+        /// The game's own icon: from the player's install (Sprites.GameArt: stats, paths, gems,
+        /// costs, abilities by command), else for a path or gem the copies next to the editor
+        /// (icons/magicicons/Path_F.png, Gem_F.png). Null otherwise (the vector shape is used).
         /// </summary>
         public static ImageSource? Bitmap(string? kind)
         {
-            if (string.IsNullOrEmpty(kind) || !(kind.StartsWith("path:") || kind.StartsWith("gem:") || kind.Length == 1))
+            if (string.IsNullOrEmpty(kind))
                 return null;
             if (_bitmaps.TryGetValue(kind, out var cached))
                 return cached;
+            if (Sprites.GameArt.Icon(kind.Length == 1 ? "path:" + kind : kind) is ImageSource game)
+                return _bitmaps[kind] = game;
+            if (!(kind.StartsWith("path:") || kind.StartsWith("gem:") || kind.Length == 1))
+                return _bitmaps[kind] = null;
             string file = kind.StartsWith("gem:") ? "Gem_" + kind.Substring(4) : "Path_" + (kind.StartsWith("path:") ? kind.Substring(5) : kind);
             ImageSource? image = null;
             try

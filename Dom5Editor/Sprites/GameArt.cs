@@ -99,6 +99,9 @@ namespace Dom5Editor.Sprites
                 candidates.Add(Path.Combine(_configured, "data"));
             }
             candidates.AddRange(DefaultFolders);
+            // where the game's exe is (the one the vanilla events' messages are read from)
+            if (Dom5Edit.Events.GameInstall.Exe() is string exe && Path.GetDirectoryName(exe) is string game)
+                candidates.Add(Path.Combine(game, "data"));
             foreach (var c in candidates)
             {
                 try
