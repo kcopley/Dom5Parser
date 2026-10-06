@@ -278,7 +278,26 @@ namespace Dom5Editor.UI.ViewModels
         protected virtual IEnumerable<string> PanelSections => Array.Empty<string>();
 
         /// <summary>The value the game uses for a command the entity doesn't set, when it isn't "none" (a monster's resource size is its size).</summary>
-        protected virtual string? GameDefault(Command c) => null;
+        protected virtual string? GameDefault(Command c) => DerivedValue(c);
+
+        /// <summary>
+        /// A value another line stores as a constant (the catalog's "values"): #teleport stores map
+        /// move 100, #quadruped stores its item slots. Shown when nothing sets the command itself.
+        /// </summary>
+        protected string? DerivedValue(Command c)
+        {
+            var own = GameCommandCatalog.EffectOf(Type, c);
+            if (own == null || own.Set.Count != 1)
+                return null;
+            var key = own.Set.First();
+            for (int i = Resolved.Values.Count - 1; i >= 0; i--)
+            {
+                var e = GameCommandCatalog.EffectOf(Type, Resolved.Values[i].Command);
+                if (e != null && e.Values.TryGetValue(key, out var v))
+                    return v.ToString();
+            }
+            return null;
+        }
 
         private void BuildSections(HashSet<Command> covered)
         {
