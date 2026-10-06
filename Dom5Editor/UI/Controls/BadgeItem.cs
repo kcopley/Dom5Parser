@@ -372,7 +372,7 @@ namespace Dom5Editor.UI.Controls
             {
                 var possibleBasePaths = new[]
                 {
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    AppContext.BaseDirectory, // (the assembly location is empty in a single-file app)
                     AppDomain.CurrentDomain.BaseDirectory,
                     Directory.GetCurrentDirectory()
                 };

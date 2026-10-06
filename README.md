@@ -1,12 +1,60 @@
-# Dom5Parser
+# Dom6 Mod Editor (Dom5Parser)
 
-This is a C# project primarily aimed at merging mods together. End-usage is for a large mod project to allow merging many nations together.
-This tackles that by building in features to bypass dominions limitations - such as the notorious mage limitation, but also remapping ID's.
-It has many tacked on features for private usage, but as I go I will build a more polished version for usage.
+An editor for Dominions 6 mod files (`.dm`). Open a mod, see what every monster, weapon,
+armor, spell, item, site, nation, event and the rest *are in game* after the mod, edit any of
+it, and save without losing anything the file had.
 
-# Usage
-* Download the latest release and run the exe included.
-* Follow the instructions inside - primarily give it the mod folder, import mods, customize nations you want to cut, merge and export.
+- **What the game sees:** every value shows where it comes from: set by the mod, vanilla, or
+  copied from another entity (`#copystats`, `#copyweapon`, ...). Copies, clears and repeated
+  lines are combined the way the game's own parser does it (read from `Dominions6.exe`).
+- **Every command editable:** each command the game reads for a type has a badge or a panel:
+  weapons and armor, magic paths and random magic, leadership, body and item slots, spell
+  paths, cost and effect (with the summoned monster), item slots and paths, site gems, nation
+  recruitment, and the rest. Commands the game ignores are marked "n/r"; values no command can
+  set are shown read-only.
+- **Edits that mean what you expect:** changing a vanilla unit adds a `#select` block for it
+  (vanilla data is never changed); removing an inherited value writes what the game needs
+  (`#fear 0`, or a group clear plus the rest of the group); a change to a template reaches the
+  copies that don't set the value themselves. Full undo and redo.
+- **Saves without losing anything:** the file keeps its order, comments and formatting;
+  unedited lines are written exactly as read. The previous file is kept as `.bak`.
+- **Browsing:** links between entities (a unit's weapons, a nation's recruits, a summon spell's
+  monster), back and forward (Alt+arrows, mouse buttons), "used by" on every page, go to any
+  entity (Ctrl+P), list search (Ctrl+F), lists filtered to vanilla / changed / new, sprites and
+  key stats in the lists. "Copy & edit" gives a unit its own changed copy of a weapon or armor.
 
-# License
-* MIT license / public domain but just give me some credit somewhere for politeness!
+## Running it
+
+Download a release, unzip, run `Dom5Editor.exe` (Windows, no install). `vanilla.dm` (the
+game's data, written from the game by `tools/dom6exe`) must stay next to the exe.
+
+Vanilla sprites and descriptions are optional: put a folder with `icons/sprites` and
+`Data/unitdescr` (`itemdescr`, `spelldescr`) next to the exe. They aren't distributed (they're
+the game's art).
+
+## Building
+
+.NET 8 SDK; Windows for the editor (WPF).
+
+```
+dotnet build Dom5Edit.sln
+dotnet run --project Dom5Editor/Dom5Editor.csproj
+./tools/publish.sh        # one self-contained exe in publish/Dom6ModEditor (from WSL)
+```
+
+## Project layout
+
+- `Dom5Edit`: the core library: parsing, the model, the resolver (`Resolve/`: what an entity is
+  in game), edits (`Editing/`: every change as an undoable edit), saving (`Mod/SavePlan`,
+  `ModExporter`). Also older merge code, not used by the editor.
+- `Dom5Editor`: the WPF editor.
+- `Dom5Tests`: command-line checks (`resolve`, `roundtrip`, `edit`).
+- `tools/dom6exe`: reads the game's data and parser rules from `Dominions6.exe`; writes
+  `vanilla.dm` and the command catalog the core uses.
+- `tools/fidelity`: the test suite (load, edit, save and compare with an independent parser).
+- `docs/`: how saving and editing work (`SAVE_FLOW.md`, `EDIT_FLOW.md`), the work log and
+  roadmap.
+
+## License
+
+MIT license / public domain, but please give credit somewhere.

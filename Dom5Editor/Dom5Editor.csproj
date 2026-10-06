@@ -6,7 +6,25 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <Version>0.9.0</Version>
+        <Product>Dom6 Mod Editor</Product>
+        <Description>Editor for Dominions 6 mod files (.dm)</Description>
     </PropertyGroup>
+
+    <!-- The game data the editor needs, next to the exe (vanilla.dm is written from the game by tools/dom6exe) -->
+    <ItemGroup>
+      <Content Include="..\vanilla.dm" Link="vanilla.dm">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Include="..\spell_effects_mapping.json" Link="spell_effects_mapping.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\spell_effect_types.json" Link="spell_effect_types.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Dom5Edit\Dom5Edit.csproj" />
