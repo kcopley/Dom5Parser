@@ -45,7 +45,8 @@ Results: DomEnhanced 2.13 load → save is byte-identical to the file (130k line
 873 → 0. `name_before_copy` and `e07_template_cascade` pass (no known failures left). New stage-4
 cases: e09 replacement in place, e10 added ability after a later `#clearspec`, e11 added ability
 on a template reaching its copies; the base gained a copy that sets hp itself (e07 checks it
-keeps 15). e09 and e10 fail when their rule is broken.
+keeps 15). e09 and e10 fail when their rule is broken. Full suite: 30 checks, 30 pass,
+no known failures; DomEnhanced stage-3 baseline now 0.
 
 Not done: the editor still edits vanilla entities on the shared vanilla object (saved after the
 mod's blocks via `ChangesMod`); its display of copies walks live values rather than replaying
