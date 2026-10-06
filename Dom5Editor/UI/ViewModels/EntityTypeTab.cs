@@ -396,7 +396,7 @@ namespace Dom5Editor.UI.ViewModels
         {
             // an event has no name: its title comes from its message
             if (Type == EntityType.EVENT)
-                return Dom5Edit.Events.EventInfo.Title(_session.Resolve(entity).Values.Select(v => v.Property).ToList());
+                return EventPageViewModel.TitleOf(entity, _session.Resolve(entity).Values.Select(v => v.Property).ToList());
             var name = _session.Resolve(entity).Get(Command.NAME)?.Property is StringProperty s ? s.Value : null;
             if (string.IsNullOrEmpty(name))
                 name = entity.HeaderName;
