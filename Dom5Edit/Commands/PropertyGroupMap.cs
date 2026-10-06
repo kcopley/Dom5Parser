@@ -334,7 +334,8 @@ namespace Dom5Edit.Commands
         }
 
         /// <summary>
-        /// Nation: Commands cleared by #cleargods
+        /// Nation: Commands cleared by #cleargods (the god list; #cheapgod20/40 are abilities,
+        /// which #clearnation clears)
         /// </summary>
         private static bool IsNationGodsCommand(Command command)
         {
@@ -342,8 +343,6 @@ namespace Dom5Edit.Commands
             {
                 Command.ADDGOD => true,
                 Command.DELGOD => true,
-                Command.CHEAPGOD20 => true,
-                Command.CHEAPGOD40 => true,
                 _ => false
             };
         }
@@ -361,7 +360,9 @@ namespace Dom5Edit.Commands
         }
 
         /// <summary>
-        /// Nation: Commands cleared by #clearrec
+        /// Nation: Commands cleared by #clearrec. The game's #clearrec empties one list (the nation
+        /// record's recruitment list, tools/dom6exe), which these four fill; terrain recruits and
+        /// start units are abilities, which #clearnation clears.
         /// </summary>
         private static bool IsNationRecruitmentCommand(Command command)
         {
@@ -371,24 +372,6 @@ namespace Dom5Edit.Commands
                 Command.ADDRECCOM => true,
                 Command.ADDFOREIGNUNIT => true,
                 Command.ADDFOREIGNCOM => true,
-                Command.FORESTREC => true,
-                Command.FORESTCOM => true,
-                Command.MOUNTAINREC => true,
-                Command.MOUNTAINCOM => true,
-                Command.SWAMPREC => true,
-                Command.SWAMPCOM => true,
-                Command.WASTEREC => true,
-                Command.WASTECOM => true,
-                Command.CAVEREC => true,
-                Command.CAVECOM => true,
-                Command.COASTREC => true,
-                Command.COASTCOM => true,
-                Command.STARTUNITTYPE1 => true,
-                Command.STARTUNITTYPE2 => true,
-                Command.STARTUNITNBRS1 => true,
-                Command.STARTUNITNBRS2 => true,
-                Command.STARTCOM => true,
-                Command.STARTSCOUT => true,
                 _ => false
             };
         }

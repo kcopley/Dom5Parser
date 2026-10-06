@@ -14,6 +14,7 @@ namespace Dom5Editor.UI.ViewModels
             EntityType.ITEM => new ItemPageViewModel(session, item),
             EntityType.SITE => new SitePageViewModel(session, item),
             EntityType.ARMOR => new ArmorPageViewModel(session, item),
+            EntityType.NATION => new NationPageViewModel(session, item),
             _ => new EntityPageViewModel(session, item),
         };
     }
@@ -88,6 +89,31 @@ namespace Dom5Editor.UI.ViewModels
             Panels.Add(item);
             covered.UnionWith(new[] { Command.TYPE, Command.CONSTLEVEL, Command.MAINPATH, Command.MAINLEVEL,
                 Command.SECONDARYPATH, Command.SECONDARYLEVEL, Command.WEAPON, Command.ARMOR });
+        }
+    }
+
+    /// <summary>A nation: its recruits and commanders (home and foreign) as lists; the rest in its badge sections.</summary>
+    public sealed class NationPageViewModel : EntityPageViewModel
+    {
+        public NationPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
+
+        protected override void BuildPanels(HashSet<Command> covered)
+        {
+            Panels.Add(new ReferenceListPanel(this, "RECRUITS", Command.ADDRECUNIT, EntityType.MONSTER, UnitSummary));
+            Panels.Add(new ReferenceListPanel(this, "COMMANDERS", Command.ADDRECCOM, EntityType.MONSTER, UnitSummary));
+            Panels.Add(new ReferenceListPanel(this, "FOREIGN RECRUITS", Command.ADDFOREIGNUNIT, EntityType.MONSTER, UnitSummary));
+            Panels.Add(new ReferenceListPanel(this, "FOREIGN COMMANDERS", Command.ADDFOREIGNCOM, EntityType.MONSTER, UnitSummary));
+            covered.UnionWith(new[] { Command.ADDRECUNIT, Command.ADDRECCOM, Command.ADDFOREIGNUNIT, Command.ADDFOREIGNCOM });
+        }
+
+        private string UnitSummary(int id)
+        {
+            if (id <= 0 || !Session.Mod.TryGet(EntityType.MONSTER, id, null, out var e))
+                return "";
+            var r = Session.Resolve(e);
+            string V(Command c) => r.Get(c)?.Arguments ?? "-";
+            var gold = int.TryParse(V(Command.GCOST), out var g) && g >= 5000 ? $"auto{(g - 10000 >= 0 ? "+" : "")}{g - 10000}" : V(Command.GCOST);
+            return $"hp {V(Command.HP)}  att {V(Command.ATT)}  def {V(Command.DEF)}  prot {V(Command.PROT)}  gold {gold}";
         }
     }
 
