@@ -1,18 +1,6 @@
 -- Dominions 6.37 vanilla data, written from Dominions6.exe by tools/dom6exe (exe d77cd364fe447e85).
 -- "-- ro:" lines are stored values no command can set (shown read-only).
 
-#selectweapon 0
-#name "Nothing"
-#dmg 0
-#att 0
-#def 0
-#len 0
-#nratt 0
-#sound 0
-#rcost 0
-#nostr
-#end
-
 #selectweapon 1
 #name "Spear"
 #dmg 3
@@ -14009,14 +13997,6 @@
 #magic
 #end
 
-#selectarmor 0
-#name "Nothing"
-#type 0
-#def 0
-#rcost 0
-#enc 0
-#end
-
 #selectarmor 1
 #name "Buckler"
 #type 4
@@ -16943,31 +16923,6 @@
 #def -999
 #rcost 0
 #enc -999
-#end
-
-#selectmonster 0
-#name "no one"
-#okleader
-#ap 12
-#mapmove 2
-#size 2
-#hp 12
-#prot 0
-#str 10
-#enc 3
-#prec 10
-#att 11
-#def 11
-#mr 10
-#mor 12
-#gcost 30
-#rcost 1
-#rpcost 10000
-#itemslots 991750
-#weapon 6
-#armor 9
-#armor 20
--- ro: body shape = 0x0
 #end
 
 #selectmonster 1
@@ -152432,20 +152387,6 @@
 -- ro: body shape = 0x0
 #end
 
-#selectspell 0
-#name "Nothing"
-#school -1
-#researchlevel 1
-#fatiguecost 0
-#aoe 0
-#effect 0
-#range 0
-#precision 0
-#damage 0
-#nreff 0
-#spec 0
-#end
-
 #selectspell 1
 #name "Minor Area Shock"
 #school -1
@@ -179918,14 +179859,6 @@
 #spec 0
 #end
 
-#selectitem 0
-#name "No Item"
-#constlevel 197
-#mainpath 255
-#mainlevel 0
-#type 0
-#end
-
 #selectitem 1
 #name "Fire Sword"
 #constlevel 1
@@ -187032,14 +186965,6 @@
 #mainpath 255
 #mainlevel 0
 #type 0
-#end
-
-#selectsite 0
-#name "None"
-#path 0
-#level 0
-#rarity 5
-#loc 0
 #end
 
 #selectsite 1

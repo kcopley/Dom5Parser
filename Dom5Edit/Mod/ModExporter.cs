@@ -22,10 +22,8 @@ namespace Dom5Edit
                 return;
             }
 
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                Export(mod, writer);
-            }
+            // temp file, then swap; the previous file is kept as .bak
+            SafeFile.Write(filePath, writer => Export(mod, writer));
         }
 
         /// <summary>
