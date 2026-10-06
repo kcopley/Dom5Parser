@@ -51,6 +51,20 @@
         </Button>
     </DataTemplate>
 
+    <!-- a spell's events (its enchantment's, or the ones it causes) -->
+    <DataTemplate DataType="{x:Type vm:SpellEventsPanel}">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource EventTitle}"/>
+            <ItemsControl ItemsSource="{Binding Events}">
+                <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" Margin="0,2,0,2"
+                       Visibility="{Binding HasHint, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Button Content="{Binding NewLabel}" Command="{Binding NewCommand}" Style="{DynamicResource ButtonSmall}" HorizontalAlignment="Left" Margin="0,4,0,0"
+                    ToolTip="Makes an event (always, unlimited) that requires this enchantment, once a month, or that has this spell's event id; opens it"/>
+        </StackPanel>
+    </DataTemplate>
+
     <!-- how it's rolled and who owns it -->
     <DataTemplate DataType="{x:Type vm:EventHeaderPanel}">
         <Border Style="{StaticResource EventBox}">
