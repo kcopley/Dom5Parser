@@ -32,6 +32,21 @@ namespace Dom5Editor.UI.Views
             };
         }
 
+        /// <summary>Scrolls a part of the page (a badge section, a panel) into view, making it if it isn't yet.</summary>
+        public void ShowPart(object part)
+        {
+            int index = PageParts.Items.IndexOf(part);
+            if (index < 0)
+                return;
+            var panel = FindChildren<VirtualizingStackPanel>(PageParts).FirstOrDefault();
+            if (panel != null)
+            {
+                // (BringIndexIntoView is protected: the public one is on VirtualizingStackPanel)
+                panel.BringIndexIntoViewPublic(index);
+                UpdateLayout();
+            }
+        }
+
         /// <summary>Enter in a text box saves it (as leaving it does).</summary>
         private void CommitOnEnter(object sender, KeyEventArgs e)
         {

@@ -344,7 +344,51 @@ namespace Dom5Editor.UI.ViewModels
                         Tooltip = a.Tooltip,
                     });
             BuildUsedBy();
+            BuildParts();
             OnPropertyChanged(string.Empty);
+        }
+
+        // ---- the page as parts (EntityPageView shows them as they scroll into view) ----
+
+        /// <summary>The page's parts in order: its own (header, copies, ...), the panels, the badge sections, used by, ...</summary>
+        public ObservableCollection<object> Parts { get; } = new ObservableCollection<object>();
+
+        private readonly Dictionary<string, PagePart> _parts = new Dictionary<string, PagePart>();
+
+        private PagePart Part(string kind) => _parts.TryGetValue(kind, out var p) ? p : _parts[kind] = new PagePart(kind, this);
+
+        /// <summary>Puts the parts in place, replacing only the ones that changed (the scroll position stays).</summary>
+        private void BuildParts()
+        {
+            var parts = new List<object> { Part("Header"), Part("Error") };
+            if (HasDescription)
+                parts.Add(Part("Description"));
+            if (LongTexts.Count > 0)
+                parts.Add(Part("LongTexts"));
+            if (HasCopy || HasClears)
+                parts.Add(Part("Copies"));
+            parts.AddRange(Panels);
+            if (ShowsAddBox)
+                parts.Add(Part("AddBox"));
+            parts.AddRange(Sections.Where(x => x.IsVisible));
+            if (Other != null && Other.IsVisible)
+                parts.Add(Other);
+            if (HasRemovals)
+                parts.Add(Part("Removals"));
+            if (HasUsedBy)
+                parts.Add(Part("UsedBy"));
+            parts.Add(Part("File"));
+            if (HasGameValues)
+                parts.Add(Part("GameValues"));
+            for (int i = 0; i < parts.Count; i++)
+            {
+                if (i >= Parts.Count)
+                    Parts.Add(parts[i]);
+                else if (!ReferenceEquals(Parts[i], parts[i]))
+                    Parts[i] = parts[i];
+            }
+            while (Parts.Count > parts.Count)
+                Parts.RemoveAt(Parts.Count - 1);
         }
 
         /// <summary>Whether the page has the add box for any command (an event adds lines in its own panels).</summary>
@@ -669,6 +713,20 @@ namespace Dom5Editor.UI.ViewModels
                     _page.SetValue(Command, _page.CommitArguments(Command, value));
             }
         }
+    }
+
+    /// <summary>One of a page's own parts (its header, copies, used by, ...), shown with the page as its data.</summary>
+    public sealed class PagePart
+    {
+        public PagePart(string kind, EntityPageViewModel page)
+        {
+            Kind = kind;
+            Page = page;
+        }
+
+        /// <summary>Which part: Header, Error, Description, LongTexts, Copies, AddBox, Removals, UsedBy, File, GameValues.</summary>
+        public string Kind { get; }
+        public EntityPageViewModel Page { get; }
     }
 
     /// <summary>One entity that refers to the page's entity.</summary>

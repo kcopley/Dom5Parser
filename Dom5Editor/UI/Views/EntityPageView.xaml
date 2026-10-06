@@ -54,160 +54,249 @@
                 </ContentControl>
             </StackPanel>
         </DataTemplate>
-    </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="4,0,8,16">
-            <!-- header: name (editable), ID, where it comes from -->
-            <DockPanel Margin="0,0,0,6">
-                <Image DockPanel.Dock="Left" Source="{Binding Sprite}" MaxHeight="64" MaxWidth="64" Stretch="Uniform" Margin="0,0,8,0"
-                       RenderOptions.BitmapScalingMode="NearestNeighbor"
-                       Visibility="{Binding HasSprite, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock DockPanel.Dock="Right" Text="{Binding SourceLabel}" Style="{StaticResource MutedText}"
-                           VerticalAlignment="Center" Margin="8,0,0,0"/>
-                <TextBlock DockPanel.Dock="Right" Text="{Binding ID, StringFormat='#{0}'}" Style="{StaticResource SubHeaderText}"
-                           VerticalAlignment="Center" Margin="8,0,0,0" Visibility="{Binding HasId, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Style="{StaticResource HeaderText}" VerticalAlignment="Center"
-                           Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
-                <TextBox x:Name="NameBox" Text="{Binding Name, UpdateSourceTrigger=LostFocus}" FontSize="16" FontWeight="SemiBold"
-                         Style="{DynamicResource TextBoxBase}" KeyDown="CommitOnEnter" ToolTip="Name (#name). Enter or leave the box to save it."
-                         Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            </DockPanel>
-            <TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" Margin="0,0,0,6"
-                       Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <!-- description -->
-            <TextBox Text="{Binding Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="False"
-                     MinHeight="40" MaxHeight="120" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"
-                     Margin="0,0,0,8" ToolTip="Description (#descr)"
-                     Visibility="{Binding HasDescription, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-            <!-- other long texts (an event's message, a nation's summary and brief, ...) -->
-            <ItemsControl ItemsSource="{Binding LongTexts}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vm:LongText}">
-                        <StackPanel Margin="0,0,0,8" ToolTip="{Binding Tooltip}">
-                            <TextBlock Text="{Binding Label}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
-                            <TextBox Text="{Binding Text, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True"
-                                     MinHeight="40" MaxHeight="160" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
-            <!-- copy source, and the entity's own copy/clear lines, in one row -->
-            <WrapPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <StackPanel Orientation="Horizontal" Margin="0,0,16,4" Visibility="{Binding HasCopy, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <TextBlock Text="COPIES" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
-                               VerticalAlignment="Center" Margin="0,0,8,0"
-                               ToolTip="Copy command (#copystats, #copyweapon, ...): this entity starts as a copy of another, then its own lines apply."/>
-                    <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding CopyCandidates}"
-                                                          SelectedId="{Binding CopySourceId, Mode=TwoWay}" Placeholder="(no copy)"/>
-                    <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding NavigateToCopyCommand}"
-                            ToolTip="Open the copied entity"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,4" Visibility="{Binding HasClears, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <TextBlock Text="CLEARS" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
-                               VerticalAlignment="Center" Margin="0,0,8,0"
-                               ToolTip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
-                    <ItemsControl ItemsSource="{Binding Structure}" VerticalAlignment="Center">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+        <!-- the page's own parts (header, copies, used by, ...): each a template on the page itself -->
+        <DataTemplate x:Key="HeaderPart">
+            <Grid>
+                    <!-- header: name (editable), ID, where it comes from -->
+                    <DockPanel Margin="0,0,0,6">
+                        <Image DockPanel.Dock="Left" Source="{Binding Sprite}" MaxHeight="64" MaxWidth="64" Stretch="Uniform" Margin="0,0,8,0"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Visibility="{Binding HasSprite, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding SourceLabel}" Style="{StaticResource MutedText}"
+                                   VerticalAlignment="Center" Margin="8,0,0,0"/>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding ID, StringFormat='#{0}'}" Style="{StaticResource SubHeaderText}"
+                                   VerticalAlignment="Center" Margin="8,0,0,0" Visibility="{Binding HasId, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Style="{StaticResource HeaderText}" VerticalAlignment="Center"
+                                   Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=LostFocus}" FontSize="16" FontWeight="SemiBold"
+                                 Style="{DynamicResource TextBoxBase}" KeyDown="CommitOnEnter" ToolTip="Name (#name). Enter or leave the box to save it."
+                                 Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </DockPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ErrorPart">
+            <Grid>
+                    <TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" Margin="0,0,0,6"
+                               Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DescriptionPart">
+            <Grid>
+                    <!-- description -->
+                    <TextBox Text="{Binding Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="False"
+                             MinHeight="40" MaxHeight="120" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"
+                             Margin="0,0,0,8" ToolTip="Description (#descr)"
+                             Visibility="{Binding HasDescription, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="LongTextsPart">
+            <Grid>
+                    <!-- other long texts (an event's message, a nation's summary and brief, ...) -->
+                    <ItemsControl ItemsSource="{Binding LongTexts}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type vm:StructureLine}">
-                                <Border Background="#18FFFFFF" CornerRadius="3" Padding="6,1,2,1" Margin="0,0,6,0" ToolTip="{Binding Target}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Text}" FontFamily="{DynamicResource MonospaceFont}" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
-                                        <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove this line"
-                                                Command="{Binding DataContext.RemoveStructureCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                CommandParameter="{Binding}"/>
-                                    </StackPanel>
-                                </Border>
+                            <DataTemplate DataType="{x:Type vm:LongText}">
+                                <StackPanel Margin="0,0,0,8" ToolTip="{Binding Tooltip}">
+                                    <TextBlock Text="{Binding Label}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                                    <TextBox Text="{Binding Text, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True"
+                                             MinHeight="40" MaxHeight="160" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"/>
+                                </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <controls:SearchableReferenceComboBox Width="150" Height="22" ItemsSource="{Binding AddableClears}"
-                                                          SelectedId="{Binding AddClearPick, Mode=TwoWay}" Placeholder="+ Clear..."
-                                                          ToolTip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
-                </StackPanel>
-            </WrapPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="CopiesPart">
+            <Grid>
+                    <!-- copy source, and the entity's own copy/clear lines, in one row -->
+                    <WrapPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,16,4" Visibility="{Binding HasCopy, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="COPIES" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"
+                                       ToolTip="Copy command (#copystats, #copyweapon, ...): this entity starts as a copy of another, then its own lines apply."/>
+                            <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding CopyCandidates}"
+                                                                  SelectedId="{Binding CopySourceId, Mode=TwoWay}" Placeholder="(no copy)"/>
+                            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding NavigateToCopyCommand}"
+                                    ToolTip="Open the copied entity"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4" Visibility="{Binding HasClears, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="CLEARS" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"
+                                       ToolTip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
+                            <ItemsControl ItemsSource="{Binding Structure}" VerticalAlignment="Center">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type vm:StructureLine}">
+                                        <Border Background="#18FFFFFF" CornerRadius="3" Padding="6,1,2,1" Margin="0,0,6,0" ToolTip="{Binding Target}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Text}" FontFamily="{DynamicResource MonospaceFont}" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                                <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove this line"
+                                                        Command="{Binding DataContext.RemoveStructureCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <controls:SearchableReferenceComboBox Width="150" Height="22" ItemsSource="{Binding AddableClears}"
+                                                                  SelectedId="{Binding AddClearPick, Mode=TwoWay}" Placeholder="+ Clear..."
+                                                                  ToolTip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
+                        </StackPanel>
+                    </WrapPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="AddBoxPart">
+            <Grid>
+                    <!-- add any command the game reads for this type (it shows in its section) -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8" Visibility="{Binding ShowsAddBox, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Text="ADD" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   VerticalAlignment="Center" Width="60" ToolTip="Any command the game reads for this type; it shows in its section below"/>
+                        <controls:BadgeWrapPanel AvailableItems="{Binding AllAvailable}" AddCommand="{Binding AddAnyCommand}" ShowAddButton="True"/>
+                    </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="RemovalsPart">
+            <Grid>
+                    <!-- inherited abilities this entity removes (#x 0) -->
+                    <StackPanel Visibility="{Binding HasRemovals, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,10">
+                        <TextBlock Text="REMOVED" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                        <ItemsControl ItemsSource="{Binding Removals}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="{DynamicResource TextMutedBrush}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="UsedByPart">
+            <Grid>
+                    <!-- what refers to this entity -->
+                    <StackPanel Visibility="{Binding HasUsedBy, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,10">
+                        <TextBlock Text="{Binding UsedByTitle}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                        <ItemsControl ItemsSource="{Binding UsedByShownRows}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:UsageRow}">
+                                    <Button Command="{Binding OpenCommand}" Style="{DynamicResource ButtonSmall}" Margin="0,0,4,4"
+                                            ToolTip="{Binding Via, StringFormat='Refers to it with {0}'}">
+                                        <TextBlock>
+                                            <Run Text="{Binding TypeLabel, Mode=OneWay}" Foreground="{DynamicResource TextMutedBrush}"/>
+                                            <Run Text="{Binding Name, Mode=OneWay}"/>
+                                            <Run Text="{Binding Id, Mode=OneWay, StringFormat='#{0}'}" Foreground="{DynamicResource TextMutedBrush}"/>
+                                        </TextBlock>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button Content="{Binding ShowAllUsedByText}" Command="{Binding ShowAllUsedByCommand}" Style="{DynamicResource ButtonSmall}"
+                                HorizontalAlignment="Left" Visibility="{Binding HasMoreUsedBy, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="FilePart">
+            <Grid>
+                    <!-- the entity's lines as the save writes them -->
+                    <Expander Header="IN THE FILE (as saved)" IsExpanded="{Binding ShowFile}" Margin="0,0,0,10" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="9" FontWeight="Bold">
+                        <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{DynamicResource MonospaceFont}" FontSize="11" FontWeight="Normal"
+                                 TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" MaxHeight="400" VerticalScrollBarVisibility="Auto"
+                                 Style="{DynamicResource TextBoxBase}" Margin="0,4,0,0"/>
+                    </Expander>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="GameValuesPart">
+            <Grid>
+                    <!-- values in the game data no command sets -->
+                    <StackPanel Visibility="{Binding HasGameValues, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Text="GAME DATA (read-only: no mod command sets these)" FontSize="9" FontWeight="Bold"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                        <ItemsControl ItemsSource="{Binding GameValues}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Foreground="{DynamicResource TextMutedBrush}">
+                                        <Run Text="{Binding Label, Mode=OneWay}"/><Run Text=" = "/><Run Text="{Binding Value, Mode=OneWay}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+            </Grid>
+        </DataTemplate>
 
-            <!-- type panels (weapons, armor, magic, ...) -->
-            <ItemsControl ItemsSource="{Binding Panels}"/>
+        <DataTemplate DataType="{x:Type vm:PagePart}">
+            <ContentControl Content="{Binding Page}" Focusable="False" IsTabStop="False">
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Kind}" Value="Header">
+                                <Setter Property="ContentTemplate" Value="{StaticResource HeaderPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Error">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ErrorPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Description">
+                                <Setter Property="ContentTemplate" Value="{StaticResource DescriptionPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="LongTexts">
+                                <Setter Property="ContentTemplate" Value="{StaticResource LongTextsPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Copies">
+                                <Setter Property="ContentTemplate" Value="{StaticResource CopiesPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="AddBox">
+                                <Setter Property="ContentTemplate" Value="{StaticResource AddBoxPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Removals">
+                                <Setter Property="ContentTemplate" Value="{StaticResource RemovalsPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="UsedBy">
+                                <Setter Property="ContentTemplate" Value="{StaticResource UsedByPart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="File">
+                                <Setter Property="ContentTemplate" Value="{StaticResource FilePart}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="GameValues">
+                                <Setter Property="ContentTemplate" Value="{StaticResource GameValuesPart}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+        </DataTemplate>
 
-            <!-- add any command the game reads for this type (it shows in its section) -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8" Visibility="{Binding ShowsAddBox, Converter={StaticResource BoolToVisibilityConverter}}">
-                <TextBlock Text="ADD" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
-                           VerticalAlignment="Center" Width="60" ToolTip="Any command the game reads for this type; it shows in its section below"/>
-                <controls:BadgeWrapPanel AvailableItems="{Binding AllAvailable}" AddCommand="{Binding AddAnyCommand}" ShowAddButton="True"/>
-            </StackPanel>
+        <!-- a badge section as a part of the page -->
+        <DataTemplate DataType="{x:Type vm:BadgeSectionViewModel}">
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource SectionTemplate}"/>
+        </DataTemplate>
+    </UserControl.Resources>
 
-            <!-- the JSON badge sections -->
-            <ItemsControl ItemsSource="{Binding Sections}" ItemTemplate="{StaticResource SectionTemplate}"/>
-
-            <!-- everything else the entity has, and any other command the game reads -->
-            <ContentControl Content="{Binding Other}" ContentTemplate="{StaticResource SectionTemplate}"/>
-
-            <!-- inherited abilities this entity removes (#x 0) -->
-            <StackPanel Visibility="{Binding HasRemovals, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,10">
-                <TextBlock Text="REMOVED" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
-                <ItemsControl ItemsSource="{Binding Removals}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" Foreground="{DynamicResource TextMutedBrush}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-
-            <!-- what refers to this entity -->
-            <StackPanel Visibility="{Binding HasUsedBy, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,10">
-                <TextBlock Text="{Binding UsedByTitle}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
-                <ItemsControl ItemsSource="{Binding UsedByShownRows}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vm:UsageRow}">
-                            <Button Command="{Binding OpenCommand}" Style="{DynamicResource ButtonSmall}" Margin="0,0,4,4"
-                                    ToolTip="{Binding Via, StringFormat='Refers to it with {0}'}">
-                                <TextBlock>
-                                    <Run Text="{Binding TypeLabel, Mode=OneWay}" Foreground="{DynamicResource TextMutedBrush}"/>
-                                    <Run Text="{Binding Name, Mode=OneWay}"/>
-                                    <Run Text="{Binding Id, Mode=OneWay, StringFormat='#{0}'}" Foreground="{DynamicResource TextMutedBrush}"/>
-                                </TextBlock>
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <Button Content="{Binding ShowAllUsedByText}" Command="{Binding ShowAllUsedByCommand}" Style="{DynamicResource ButtonSmall}"
-                        HorizontalAlignment="Left" Visibility="{Binding HasMoreUsedBy, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            </StackPanel>
-
-            <!-- the entity's lines as the save writes them -->
-            <Expander Header="IN THE FILE (as saved)" IsExpanded="{Binding ShowFile}" Margin="0,0,0,10" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="9" FontWeight="Bold">
-                <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{DynamicResource MonospaceFont}" FontSize="11" FontWeight="Normal"
-                         TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" MaxHeight="400" VerticalScrollBarVisibility="Auto"
-                         Style="{DynamicResource TextBoxBase}" Margin="0,4,0,0"/>
-            </Expander>
-
-            <!-- values in the game data no command sets -->
-            <StackPanel Visibility="{Binding HasGameValues, Converter={StaticResource BoolToVisibilityConverter}}">
-                <TextBlock Text="GAME DATA (read-only: no mod command sets these)" FontSize="9" FontWeight="Bold"
-                           Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
-                <ItemsControl ItemsSource="{Binding GameValues}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Foreground="{DynamicResource TextMutedBrush}">
-                                <Run Text="{Binding Label, Mode=OneWay}"/><Run Text=" = "/><Run Text="{Binding Value, Mode=OneWay}"/>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </StackPanel>
-    </ScrollViewer>
+    <!--
+        The page as a list of parts (header, panels, badge sections, used by, ...), built as they
+        scroll into view: a big page (a nation with a hundred badges) shows at once. An edit
+        replaces only the parts it changes, so the place on the page stays.
+    -->
+    <ItemsControl x:Name="PageParts" ItemsSource="{Binding Parts}" Focusable="False"
+                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Standard"
+                  VirtualizingPanel.ScrollUnit="Pixel" ScrollViewer.CanContentScroll="True">
+        <ItemsControl.Template>
+            <ControlTemplate TargetType="ItemsControl">
+                <ScrollViewer x:Name="Scroller" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                              CanContentScroll="True" Padding="4,0,8,16" Focusable="False">
+                    <ItemsPresenter/>
+                </ScrollViewer>
+            </ControlTemplate>
+        </ItemsControl.Template>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <VirtualizingStackPanel/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
 </UserControl>

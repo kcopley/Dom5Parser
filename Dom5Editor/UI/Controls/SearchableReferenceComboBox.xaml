@@ -54,6 +54,7 @@
                 <!-- Editable text box for filtering (shows name only) -->
                 <TextBox x:Name="FilterTextBox"
                          Grid.Column="0"
+                         Template="{DynamicResource LightTextBoxTemplate}"
                          Text="{Binding FilterText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Background="Transparent"
                          BorderThickness="0"

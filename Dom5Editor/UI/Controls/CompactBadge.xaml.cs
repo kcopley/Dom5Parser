@@ -418,10 +418,63 @@ namespace Dom5Editor.UI.Controls
             }
         }
 
+        private SearchableReferenceComboBox? _picker;
+        private ContentControl? _host;
+        private bool _wantPicker;
+
+        /// <summary>The editable reference part was made: where its picker goes.</summary>
+        private void OnReferenceHostLoaded(object sender, RoutedEventArgs e)
+        {
+            _host = (ContentControl)sender;
+            if (_picker != null)
+                _host.Content = _picker;
+            else if (_wantPicker)
+                ShowPicker(focus: false);
+        }
+
+        /// <summary>Makes the reference's picker (the first click on the name), opened for typing.</summary>
+        private void OnReferenceEditClick(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            ShowPicker(focus: true);
+        }
+
+        private void ShowPicker(bool focus)
+        {
+            if (_host == null)
+            {
+                _wantPicker = true; // when the part is made
+                return;
+            }
+            if (_picker == null)
+            {
+                _picker = new SearchableReferenceComboBox
+                {
+                    MinWidth = 150, MaxWidth = 250, Height = 20, VerticalAlignment = VerticalAlignment.Center, Placeholder = "Select...",
+                };
+                _picker.SetBinding(SearchableReferenceComboBox.ItemsSourceProperty,
+                    new System.Windows.Data.Binding(nameof(AvailableReferences)) { Source = this });
+                _picker.SetBinding(SearchableReferenceComboBox.SelectedIdProperty,
+                    new System.Windows.Data.Binding(nameof(ReferenceId)) { Source = this, Mode = System.Windows.Data.BindingMode.TwoWay });
+                _picker.SelectionChanged += OnReferenceSelectionChanged;
+                _host.Content = _picker;
+            }
+            if (focus)
+                _picker.Dispatcher.BeginInvoke(new Action(_picker.FocusInput), System.Windows.Threading.DispatcherPriority.Loaded);
+        }
+
+        /// <summary>A reference still to be picked (just added) gets its picker at once.</summary>
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if ((e.Property == IsReferenceEditableProperty || e.Property == ReferenceIdProperty) && IsReferenceEditable && ReferenceId == 0 && _picker == null)
+                ShowPicker(focus: false);
+        }
+
         /// <summary>
         /// Handles selection change from the SearchableReferenceComboBox.
         /// </summary>
-        private void OnReferenceSelectionChanged(object sender, ReferenceSelectionChangedEventArgs e)
+        private void OnReferenceSelectionChanged(object? sender, ReferenceSelectionChangedEventArgs e)
         {
             // Raise the ReferenceChanged routed event
             RaiseEvent(new ReferenceChangedRoutedEventArgs(ReferenceChangedEvent, this)
