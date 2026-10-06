@@ -325,6 +325,9 @@ namespace Dom5Editor.UI.Controls
         /// <summary>What the value means, shown after it ("Fire", "always (unlimited)"); null if nothing to say.</summary>
         public string ValueNote { get; set; }
 
+        /// <summary>A GameIcon kind shown before the label (fire resistance's flame, flying's wing), or null.</summary>
+        public string IconKind { get; set; }
+
         private string _iconPath;
         /// <summary>
         /// Optional icon path (relative to icons folder, e.g., "magicicons/Path_F.png").

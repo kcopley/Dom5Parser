@@ -13,14 +13,18 @@ namespace Dom5Editor.UI.Controls
     {
         public static readonly DependencyProperty KindProperty = DependencyProperty.Register(
             nameof(Kind), typeof(string), typeof(GameIcon),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                (d, e) => ((GameIcon)d).Visibility = Known((string?)e.NewValue) ? Visibility.Visible : Visibility.Collapsed));
 
         public GameIcon()
         {
             Width = 16;
             Height = 16;
             SnapsToDevicePixels = true;
+            Visibility = Visibility.Collapsed; // (until it has a kind it can draw: no gap where there's no icon)
         }
+
+        private static bool Known(string? kind) => GameIcons.Get(kind) != null || GameIcons.Bitmap(kind) != null;
 
         public string? Kind
         {
@@ -302,6 +306,49 @@ namespace Dom5Editor.UI.Controls
                 case "aoe":
                     Stroke("M8,1.6 A6.4,6.4 0 1 1 8,14.4 A6.4,6.4 0 1 1 8,1.6 Z", "#F97316", 1.1);
                     Fill("M8,4.2 L9.1,6.9 L11.8,8 L9.1,9.1 L8,11.8 L6.9,9.1 L4.2,8 L6.9,6.9 Z", "#FDBA74");
+                    break;
+                // ---- abilities ----
+                case "cold":
+                    Stroke("M8,1 V15 M2,4.5 L14,11.5 M2,11.5 L14,4.5 M6.4,2.2 L8,3.6 L9.6,2.2 M6.4,13.8 L8,12.4 L9.6,13.8", "#9AD8FF", 1.3);
+                    break;
+                case "shock":
+                    Fill("M9.6,0.8 L2.8,9 H7.4 L6.4,15.2 L13.2,7 H8.6 Z", "#FDE047");
+                    break;
+                case "poison":
+                    Fill(Drop, "#65C466");
+                    Fill("M6.3,9.4 A0.9,0.9 0 1 1 6.3,11.2 A0.9,0.9 0 1 1 6.3,9.4 Z M9.7,9.4 A0.9,0.9 0 1 1 9.7,11.2 A0.9,0.9 0 1 1 9.7,9.4 Z", Dark);
+                    break;
+                case "wing":
+                    Fill("M1,12 C2,6 6,2.5 15,1.5 C13.5,4 12,5 9.8,5.6 C12,5.8 13,6.2 13.4,6.8 C11.4,8.2 9.6,8.6 7.6,8.4 C9,9.4 9.4,10.2 9.4,11 C6.4,12 3.6,12.4 1,12 Z", "#E5E7EB");
+                    break;
+                case "stealth":
+                    Stroke("M1,8 C3.4,4.4 5.8,3.4 8,3.4 C10.2,3.4 12.6,4.4 15,8 C12.6,11.6 10.2,12.6 8,12.6 C5.8,12.6 3.4,11.6 1,8 Z", "#9CA3AF", 1.2);
+                    Fill("M8,5.8 A2.2,2.2 0 1 1 8,10.2 A2.2,2.2 0 1 1 8,5.8 Z", "#9CA3AF");
+                    Stroke("M2,14 L14,2", "#E5484D", 1.4);
+                    break;
+                case "ghost":
+                    Fill("M3,15 V7 C3,3.6 5.2,1.2 8,1.2 C10.8,1.2 13,3.6 13,7 V15 L11,13.2 L9.6,15 L8,13.2 L6.4,15 L5,13.2 Z", "#C7D2FE");
+                    Fill("M6,6 A1,1 0 1 1 6,8 A1,1 0 1 1 6,6 Z M10,6 A1,1 0 1 1 10,8 A1,1 0 1 1 10,6 Z", Dark);
+                    break;
+                case "regen":
+                    Fill("M8,14.6 C8,14.6 1.4,10.2 1.4,5.5 C1.4,3.3 3.1,1.8 5.1,1.8 C6.4,1.8 7.4,2.5 8,3.6 C8.6,2.5 9.6,1.8 10.9,1.8 C12.9,1.8 14.6,3.3 14.6,5.5 C14.6,10.2 8,14.6 8,14.6 Z", "#E5484D");
+                    Stroke("M8,5.2 V10.4 M5.4,7.8 H10.6", "#FFFFFF", 1.5);
+                    break;
+                case "fear":
+                    Fill(Skull, "#E5E7EB");
+                    Fill(SkullHoles, Dark);
+                    Stroke("M6.5,12.2 V14.4 M8,12.2 V14.4 M9.5,12.2 V14.4", Dark, 0.8);
+                    break;
+                case "awe":
+                    Fill("M8,4.4 A3.6,3.6 0 1 1 8,11.6 A3.6,3.6 0 1 1 8,4.4 Z", "#FDE68A");
+                    Stroke("M8,0.8 V2.8 M8,13.2 V15.2 M0.8,8 H2.8 M13.2,8 H15.2 M2.9,2.9 L4.3,4.3 M11.7,11.7 L13.1,13.1 M2.9,13.1 L4.3,11.7 M11.7,4.3 L13.1,2.9", "#FDE68A", 1.3);
+                    break;
+                case "sight":
+                    Fill("M0.8,8 C3.4,4 5.8,3 8,3 C10.2,3 12.6,4 15.2,8 C12.6,12 10.2,13 8,13 C5.8,13 3.4,12 0.8,8 Z", "#93C5FD");
+                    Fill("M8,5.6 A2.4,2.4 0 1 1 8,10.4 A2.4,2.4 0 1 1 8,5.6 Z", Dark);
+                    break;
+                case "water":
+                    Fill(Drop, "#3B82F6");
                     break;
                 case "len":
                     Stroke("M1.5,8 H14.5 M4,5.5 L1.5,8 L4,10.5 M12,5.5 L14.5,8 L12,10.5", "#A1A1AA", 1.4);

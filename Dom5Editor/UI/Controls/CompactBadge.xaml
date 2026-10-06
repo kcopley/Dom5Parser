@@ -170,6 +170,7 @@
                    Visibility="{Binding HasIcon, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
                    RenderOptions.BitmapScalingMode="NearestNeighbor"/>
 
+            <local:GameIcon Kind="{Binding IconKind, ElementName=Root}" Width="12" Height="12" Margin="0,0,3,0" VerticalAlignment="Center"/>
             <TextBlock Text="{Binding Label, ElementName=Root}" FontSize="9" VerticalAlignment="Center"
                        Foreground="{Binding LabelForeground, ElementName=Root}"/>
 
