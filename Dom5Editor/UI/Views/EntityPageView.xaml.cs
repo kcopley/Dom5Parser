@@ -10,9 +10,10 @@ namespace Dom5Editor.UI.Views
 {
     public partial class EntityPageView : UserControl
     {
-        // the value box the cursor is in (badge command and which of its badges), so it can be put
-        // back there after an edit rebuilds the page (Tab from one value to the next keeps working)
-        private (Command Command, int Index)? _focus;
+        // the value box the cursor is in (a badge's command and which of its badges, a panel field's
+        // label, a panel row), so it can be put back there after an edit rebuilds the page (Tab from
+        // one value to the next keeps working)
+        private string? _focus;
         private INotifyPropertyChanged? _page;
 
         public EntityPageView()
@@ -43,30 +44,43 @@ namespace Dom5Editor.UI.Views
 
         private void OnGotFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (e.NewFocus is TextBox box && FindParent<CompactBadge>(box) is { DataContext: PropertyItem item } badge)
-                _focus = (item.Command, IndexOf(badge, item));
+            if (e.NewFocus is TextBox box && KeyOf(box) is string key)
+                _focus = key;
             else if (e.NewFocus is DependencyObject d && IsDescendant(d))
                 _focus = null;
+        }
+
+        /// <summary>Which value a text box edits, in terms that survive a rebuild; null for other boxes.</summary>
+        private string? KeyOf(TextBox box)
+        {
+            if (FindParent<CompactBadge>(box) is { DataContext: PropertyItem item } badge)
+            {
+                var same = FindChildren<CompactBadge>(this).Where(b => b.DataContext is PropertyItem p && p.Command == item.Command).ToList();
+                return $"badge:{item.Command}:{same.IndexOf(badge)}";
+            }
+            return box.DataContext switch
+            {
+                ViewModels.PanelField f => $"field:{f.Label}",
+                ViewModels.PanelRow r => $"row:{r.Value.Command}:{r.Text}:{r.RefId}",
+                ViewModels.ItemSlotsPanel => $"slots:{box.GetBindingExpression(TextBox.TextProperty)?.ParentBinding.Path.Path}",
+                _ => null,
+            };
         }
 
         /// <summary>After the page rebuilt (PropertyChanged with no name), focus the same value's new box.</summary>
         private void OnPageChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.PropertyName) || _focus is not { } focus)
+            if (!string.IsNullOrEmpty(e.PropertyName) || _focus is not string focus)
                 return;
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                var badges = FindChildren<CompactBadge>(this).Where(b => b.DataContext is PropertyItem p && p.Command == focus.Command).ToList();
-                if (focus.Index < badges.Count && FindChildren<TextBox>(badges[focus.Index]).FirstOrDefault(t => t.IsVisible) is TextBox box)
+                if (FindChildren<TextBox>(this).FirstOrDefault(t => t.IsVisible && KeyOf(t) == focus) is TextBox box)
                 {
                     box.Focus();
                     box.SelectAll();
                 }
             }), System.Windows.Threading.DispatcherPriority.Loaded);
         }
-
-        private int IndexOf(CompactBadge badge, PropertyItem item) =>
-            FindChildren<CompactBadge>(this).Where(b => b.DataContext is PropertyItem p && p.Command == item.Command).ToList().IndexOf(badge);
 
         private bool IsDescendant(DependencyObject d)
         {
