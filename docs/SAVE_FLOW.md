@@ -60,22 +60,36 @@ flowchart TD
 So every property appears in exactly one block, in file order, and those taken out of the live
 list by a later clear or copy are still in their block.
 
-## Edit (code: `IDEntity.Set<T>`, `Create<T>`, `Remove<T>`, `RemoveProperty`; editor `EditCommands/`)
+## Edit (code: `Dom5Edit.Editing.ModEditor` / `Transaction`; docs/EDIT_FLOW.md for what each edit means)
+
+Every editor change goes through `ModEditor`, which changes the entity's live list directly
+(`IDEntity.InsertLive` / `ReplaceLive` / `RemoveLive`, no copy/clear side effects) and records
+an undoable `IModEdit` (snapshots of the touched entities' lists). Older code paths
+(`IDEntity.Set<T>`, `Create<T>`, `Remove<T>`) still exist for the merge tool.
 
 | Edit | What happens to the model | What the save writes |
 |---|---|---|
-| Change a value the entity sets itself | `Set<T>` changes the existing `Property` in place | the new value, **where the old one was** |
+| Change a value the entity sets itself | a new `Property` takes the old one's place in the live list | the new value, **where the old one was** |
 | Remove a property | taken out of the live list | nothing in its place |
 | Replace (remove + add the same command) | old out, new `Property` with no block | the new one **in the old one's place** |
 | Add a property the entity didn't set | new `Property` with no block | see placement below |
 | New entity | entity with no block | after all blocks, as one block |
-| First edit of a vanilla entity | `SelectForEdit` makes a `#select` entity with no block | after all blocks, as one block |
+| First edit of a vanilla entity | `Transaction.Editable` makes a `#select` entity with no block (copy-on-write) | after all blocks, as one block |
 | Delete an entity | gone from `Database` | none of its blocks |
 
-**Placement of an added property** (one with no block; `ModExporter.PlacementBlock`):
+**Placement of an added property** (one with no block; `SavePlan`, shared by the save and the
+resolver, so what the editor shows is what the file says):
 1. If an edit removed a block property of the same command from this entity, put it there.
-2. Otherwise at the end of the entity's **first** block, unless a later block of the entity sets
+2. An added copy or clear line, and lines added back after one (removing an inherited entry
+   rewrites its group: `Property.PlaceFirst`), go **before the entity's own lines**: right after
+   the last copy or clear line of its blocks that touches the same group, else right after the
+   first block's header. Added at the end, the game would read the entity's own lines first and
+   the copy or clear would then undo them.
+3. Otherwise at the end of the entity's **first** block, unless a later block of the entity sets
    the same command, clears its group, or copies over it; then at the end of its **last** block.
+
+Only entities changed since the file was read (`IDEntity.EditedSinceLoad`) are worked out; the
+rest are written as read.
 
 Why the first block: copies of a template are usually made after its first block, so an added
 or changed value there reaches every copy that doesn't set the field itself. That is rule C (an
@@ -100,7 +114,7 @@ spacing inside multi-line strings, and comments.
   unless a header field changed; then the header is regenerated and the preamble's other lines
   follow. A clone of a property (`Property.Clone`) is a new line: no `RawText`.
 
-## Save (code: `ModExporter.WriteInSourceOrder`; editor: `ChangesModExporter.ExportInSourceOrder`)
+## Save (code: `ModExporter.WriteInSourceOrder` over a `SavePlan`; the editor's Save is the same, `EditorSession.Save`)
 
 The preamble, then for each block in file order, unless its entity was deleted:
 - its leading lines, then the header;
