@@ -33,7 +33,10 @@ namespace Dom5Editor.UI.ViewModels
         public int ID => Entity.ID;
 
         /// <summary>Where the list sorts it "by ID": its ID, or for entities with none (events), after them in file order.</summary>
-        public int SortKey => ID > 0 ? ID : int.MaxValue / 2 + Order;
+        public int SortKey => HasNumber ? ID : int.MaxValue / 2 + Order;
+
+        /// <summary>Whether it has a number in game: an ID, or a game event's number (event 0 is one; a new event has none).</summary>
+        public bool HasNumber => Type == EntityType.EVENT ? ID >= 0 : ID > 0;
 
         /// <summary>Its place among the entities without an ID (their order in the file).</summary>
         internal int Order { get; set; }
@@ -63,6 +66,10 @@ namespace Dom5Editor.UI.ViewModels
 
         internal Func<EntityListItem, string>? DetailProvider { get; set; }
         internal Func<EntityListItem, string, bool>? FacetMatcher { get; set; }
+        internal Func<EntityListItem, string, bool>? TextMatcher { get; set; }
+
+        /// <summary>Whether the search text is in more than its name: an event's message.</summary>
+        public bool MatchesText(string text) => TextMatcher?.Invoke(this, text) == true;
 
         /// <summary>Whether the row is in one of its type's own filters ("Rituals", "In a chain"); "All" always.</summary>
         public bool InFacet(string facet) => facet == "All" || FacetMatcher?.Invoke(this, facet) != false;
@@ -72,7 +79,7 @@ namespace Dom5Editor.UI.ViewModels
         private bool _spriteDone;
 
         /// <summary>The second line: ID and key stats (a monster's HP, attack, ...; a weapon's damage).</summary>
-        public string Detail => _detail ??= (ID > 0 ? $"#{ID}" : "") + (DetailProvider?.Invoke(this) is string d && d.Length > 0 ? (ID > 0 ? "   " : "") + d : "");
+        public string Detail => _detail ??= (HasNumber ? $"#{ID}" : "") + (DetailProvider?.Invoke(this) is string d && d.Length > 0 ? (HasNumber ? "   " : "") + d : "");
 
         /// <summary>A small sprite (monsters, items), or null.</summary>
         public System.Windows.Media.ImageSource? Sprite

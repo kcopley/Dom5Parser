@@ -248,7 +248,7 @@ namespace Dom5Editor.UI.Controls
                 bool matchesName = displayName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
                 bool matchesId = id?.ToString().Contains(SearchText) ?? false;
 
-                if (!matchesName && !matchesId) return false;
+                if (!matchesName && !matchesId && !(item is UI.ViewModels.EntityListItem r && r.MatchesText(SearchText))) return false;
             }
 
             return true;

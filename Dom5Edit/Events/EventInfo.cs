@@ -93,6 +93,44 @@ namespace Dom5Edit.Events
             return long.TryParse(first, out var n) ? n : null;
         }
 
+        /// <summary>The slots an event has: requirements and effects are two lists of (code, value) pairs (tools/dom6exe README, Events).</summary>
+        public const int MaxRequirements = 12, MaxEffects = 20;
+
+        /// <summary>Whether a line goes in the requirement list (the #req_ commands) rather than the effect list.</summary>
+        public static bool IsRequirement(Command c) => Name(c).StartsWith("#req_");
+
+        /// <summary>
+        /// How many requirement and effect slots these lines take in the game: a repeatable command
+        /// (the catalog: it adds) takes one per line; any other replaces its earlier line. #clear
+        /// empties both lists; #rarity and #msg aren't pairs.
+        /// </summary>
+        public static (int Requirements, int Effects) Slots(IEnumerable<Property> lines)
+        {
+            var once = new HashSet<Command>();
+            int req = 0, eff = 0;
+            foreach (var p in lines)
+            {
+                if (p.Command == Command.CLEAR)
+                {
+                    once.Clear();
+                    req = eff = 0;
+                    continue;
+                }
+                if (p.IsDisplayAsset || p.Command == Command.RARITY || p.Command == Command.MSG
+                    || GameData.GameCommandCatalog.IsRead(Entities.EntityType.EVENT, p.Command) != true)
+                    continue;
+                var effect = GameData.GameCommandCatalog.EffectOf(Entities.EntityType.EVENT, p.Command);
+                bool repeats = effect != null && (effect.Add.Count > 0 || effect.Or.Count > 0);
+                if (!repeats && !once.Add(p.Command))
+                    continue;
+                if (IsRequirement(p.Command))
+                    req++;
+                else
+                    eff++;
+            }
+            return (req, eff);
+        }
+
         public static long? Rarity(IEnumerable<Property> lines) => Number(lines.LastOrDefault(p => p.Command == Command.RARITY));
 
         /// <summary>The event's message (#msg), or null.</summary>

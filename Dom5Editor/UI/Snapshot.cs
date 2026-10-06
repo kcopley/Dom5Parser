@@ -408,6 +408,22 @@ namespace Dom5Editor.UI
                             Log($"facet {t} {facet}: {n} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
                             break;
                         }
+                        case "--search":
+                        {
+                            // --search TYPE TEXT: the list's search box; logs how many rows match and a few of them
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            var text = args[++i];
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            var hits = tab.Items.Where(x => x.DisplayName.Contains(text, StringComparison.OrdinalIgnoreCase) || x.MatchesText(text)).ToList();
+                            Log($"search {t} \"{text}\": {hits.Count} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
+                            foreach (var x in hits.Take(6))
+                                Log($"   {x.SourceLabel} #{x.ID} {x.DisplayName}");
+                            tab.SearchText = text;
+                            Pump();
+                            break;
+                        }
                         case "--time-view":
                         {
                             // --time-view TYPE NAME: how long selecting a page takes until it's laid out; and how many visuals it has
