@@ -408,6 +408,13 @@ namespace Dom5Editor.UI
                             Log($"facet {t} {facet}: {n} of {tab.Items.Count} ({watch.ElapsedMilliseconds} ms)");
                             break;
                         }
+                        case "--icons":
+                        {
+                            // where the game's icons come from: compiled in, and the install found (or not)
+                            var hp = Sprites.GameArt.Icon("hp");
+                            Log($"icons: {Sprites.GameArt.PackedCount} compiled in; install: {Sprites.GameArt.DataFolder ?? "not found"}; hp icon {(hp == null ? "missing" : $"{hp.Width}x{hp.Height}")}");
+                            break;
+                        }
                         case "--pause":
                         {
                             // --pause SECONDS: keep running (for a memory dump of the process)
