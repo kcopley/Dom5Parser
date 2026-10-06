@@ -238,6 +238,12 @@ namespace Dom5Edit
         /// </summary>
         public bool PreserveSourceOrder { get; set; } = true;
 
+        /// <summary>
+        /// Write unedited lines as read (the default). False regenerates every line, still in file
+        /// order: a test of the export itself, which the original text would otherwise hide.
+        /// </summary>
+        public bool KeepOriginalText { get; set; } = true;
+
         public bool LineWasTrimmed { get; set; }
 
         public Mod()

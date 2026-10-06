@@ -17,6 +17,13 @@ namespace Dom5Editor.UI.Views
     /// </summary>
     public class SpellViewModel : EntityViewModel
     {
+        /// <summary>Game defaults for spells: the cast time is 100 (percent) unless #casttime sets it.</summary>
+        protected override bool TryGetGameDefault(Command command, out int value)
+        {
+            value = command == Command.CASTTIME ? 100 : 0;
+            return command == Command.CASTTIME;
+        }
+
         public SpellViewModel(Spell entity, CommandHistory history, EntitySource source = EntitySource.Vanilla)
             : base(entity, history, source)
         {

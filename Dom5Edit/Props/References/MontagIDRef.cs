@@ -68,7 +68,7 @@ namespace Dom5Edit.Props
                 }
                 else
                 {
-                    return s + " " + _exportID;
+                    return HasValue ? s + " " + _exportID : s; // no value given, none written
                 }
             }
             else return "";

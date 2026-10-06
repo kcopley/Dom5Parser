@@ -5,15 +5,14 @@
 //   1. Inspector self-check: load a mod in the inspector, export what it read, reload the
 //      export -> the inspector's data must be functionally the same (compared after its
 //      full post-processing). Validates the oracle itself.
-//   2. Vanilla data: (a) the exporter round-trips the CSV gamedata; (b) the committed
-//      vanilla.dm matches what the pinned oracle generates; (c) audit of vanilla.dm values
-//      that differ from the raw game data (e.g. display values instead of base values).
+//   2. (Retired 2026-10-05: the inspector's vanilla.dm export. vanilla.dm is now written from
+//      Dominions6.exe by tools/dom6exe.)
 //   3. Save fidelity: Dom5Parser load -> save -> the inspector's parse of the saved file must
 //      equal its parse of the original (strict: compared right after parsing).
 //   4. Edits: Dom5Parser load -> scripted edits -> save -> must differ from an unedited save
 //      by exactly the expected changes.
 //
-// Usage: node tools/fidelity/run.mjs [--oracle DIR] [--stages 1,2,3,4] [--only TEXT]
+// Usage: node tools/fidelity/run.mjs [--oracle DIR] [--stages 1,3,4] [--only TEXT]
 //                                    [--quick] [--update-baselines] [--json summary.json]
 // --quick = stages 3-4 only (about 1-2 min); the default runs all stages (~15 min).
 // Needs: Node 18+, a built Dom5Tests (Dom5Tests/bin/Debug/net8.0), and a checkout of the
@@ -41,9 +40,9 @@ for (let i = 2; i < process.argv.length; i++) {
 	else if (a === '--json') opt.json = process.argv[++i];
 	else { console.error('unknown argument ' + a); process.exit(2); }
 }
-// --quick: the everyday loop. Skips the oracle self-checks (stages 1-2 need the inspector's
-// full post-processing, ~50s per load); run those in CI or after oracle/vanilla.dm changes.
-if (!opt.stages) opt.stages = opt.quick ? [3, 4] : [1, 2, 3, 4];
+// --quick: the everyday loop. Skips the oracle self-check (stage 1 needs the inspector's full
+// post-processing, ~50s per load); run it in CI or after oracle changes.
+if (!opt.stages) opt.stages = opt.quick ? [3, 4] : [1, 3, 4];
 const ORACLE = [opt.oracle, path.join(ROOT, '..', 'dom6inspector'), '/mnt/c/Projects/dom6inspector', 'C:\\Projects\\dom6inspector']
 	.filter(Boolean).map((p) => path.resolve(ROOT, p)).find((p) => fs.existsSync(path.join(p, 'scripts/headless/roundtrip_check.js')));
 if (!ORACLE) { console.error('dom6inspector oracle not found; pass --oracle DIR or set DOM6INSPECTOR'); process.exit(2); }
@@ -143,12 +142,13 @@ const mods = SUITE.mods
 	.map((m) => ({ ...m, abs: path.join(ROOT, m.path) }));
 const saveCache = new Map(); // base .dm -> Dom5Parser save of it
 
-function dom5Save(abs, tag) {
-	if (saveCache.has(abs)) return saveCache.get(abs);
+function dom5Save(abs, tag, extra = []) {
+	const key = abs + ' ' + extra.join(' ');
+	if (saveCache.has(key)) return saveCache.get(key);
 	const out = path.join(WORK, tag + '.save.dm');
-	const r = dom5tests(['roundtrip', abs, out]);
+	const r = dom5tests(['roundtrip', abs, out, ...extra]);
 	if (r.code !== 0 || !fs.existsSync(out)) throw new Error('Dom5Tests roundtrip failed: ' + r.out.trim().split('\n').slice(-2).join(' | '));
-	saveCache.set(abs, out);
+	saveCache.set(key, out);
 	return out;
 }
 
@@ -161,7 +161,7 @@ console.log(`oracle: ${ORACLE}\nwork:   ${WORK}\n`);
 
 if (opt.stages.includes(1)) {
 	console.log('Stage 1: inspector loads mod -> exports -> reloads (functional, after post-processing)');
-	for (const m of mods) run(1, m.name, () => {
+	for (const m of mods.filter((m) => !m.stages || m.stages.includes(1))) run(1, m.name, () => {
 		const out = path.join(WORK, m.name + '.inspector.dm');
 		const r = oracle('export-mod.js', [m.abs, out]);
 		if (r.code !== 0) throw new Error('export-mod failed: ' + r.out.trim().split('\n').slice(-2).join(' | '));
@@ -171,63 +171,13 @@ if (opt.stages.includes(1)) {
 	});
 }
 
-if (opt.stages.includes(2) && !opt.only) {
-	console.log('\nStage 2: vanilla data');
-	run(2, 'exporter-roundtrip', () => {
-		const r = oracle('verify-export.js', []);
-		const failing = [...r.out.matchAll(/^FAIL (\w+)/gm)].map((x) => x[1]);
-		const known = SUITE.vanillaKnownFailing || {};
-		const unexpected = failing.filter((t) => !known[t]);
-		if (unexpected.length) record(2, 'exporter-roundtrip', 'FAIL', 'failing types: ' + unexpected.join(', '));
-		else record(2, 'exporter-roundtrip', failing.length ? 'XFAIL' : 'PASS', failing.length ? 'known: ' + failing.map((t) => `${t} (${known[t]})`).join('; ') : '');
-	});
-	run(2, 'vanilla.dm-current', () => {
-		const out = path.join(WORK, 'vanilla.generated.dm');
-		const r = oracle('export-vanilla.js', [out]);
-		if (r.code !== 0) throw new Error('export-vanilla failed');
-		const norm = (p) => fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
-		const same = norm(out) === norm(path.join(ROOT, 'vanilla.dm'));
-		record(2, 'vanilla.dm-current', same ? 'PASS' : 'FAIL', same ? '' : 'committed vanilla.dm differs from what the oracle generates; regenerate with scripts/headless/export-vanilla.js');
-	});
-	run(2, 'vanilla-base-values', () => {
-		// Apply vanilla.dm on top of the raw game data; single-valued fields whose value
-		// changes are places where vanilla.dm does not carry the game's base value.
-		const empty = path.join(WORK, 'empty.dm');
-		fs.writeFileSync(empty, '#modname "empty"\n');
-		const rep = compare(empty, path.join(ROOT, 'vanilla.dm'), 'parse', 'vanilla-base');
-		const norm = (f, v) => {
-			let s = String(v).replace(/%$/, '');
-			if (f === 'type') s = { 4: 'shield', 5: 'armor', 6: 'helm', 8: 'misc' }[s] || s; // armor type spelling
-			return s;
-		};
-		// Differences listed in suite.json "vanillaExpected" are representation or limits of the
-		// mod command language (documented there); anything else is a real discrepancy.
-		const expected = SUITE.vanillaExpected || {};
-		const fieldCounts = {}, expectedCounts = {};
-		let dataDiffs = 0;
-		for (const e of rep.entities) {
-			let differs = false;
-			for (const [f, [a, b]] of Object.entries(e.fields)) {
-				if (f === '(entity)' || a == null || typeof a === 'object' || typeof b === 'object' || b == null) continue;
-				if (norm(f, a) === norm(f, b)) continue;
-				const k = e.type + '.' + f;
-				if (expected[k]) { expectedCounts[k] = (expectedCounts[k] || 0) + 1; continue; }
-				fieldCounts[k] = (fieldCounts[k] || 0) + 1;
-				differs = true;
-			}
-			if (differs) dataDiffs++;
-		}
-		const exp = Object.entries(expectedCounts).map(([k, n]) => k + ' ' + n).join(', ');
-		if (exp) console.log('      expected (suite.json vanillaExpected): ' + exp);
-		if (!dataDiffs) record(2, 'vanilla-base-values', 'PASS', 'only expected differences');
-		else judgeBaseline(2, 'vanilla-base-values', { dataDiffs, diagnosticDiffs: 0, fieldCounts });
-	});
-}
+// Stage 2 (the inspector's vanilla.dm export) was retired on 2026-10-05: vanilla data now comes
+// from Dominions6.exe (tools/dom6exe), and the inspector is only an independent parser here.
 
 if (opt.stages.includes(3)) {
 	console.log('\nStage 3: Dom5Parser load -> save -> inspector sees the same data (strict, after parsing)');
-	for (const m of mods) run(3, m.name, () => {
-		const rep = compare(m.abs, dom5Save(m.abs, m.name), 'parse', m.name + '.stage3');
+	for (const m of mods.filter((m) => !m.stages || m.stages.includes(3))) run(3, m.name, () => {
+		const rep = compare(m.abs, dom5Save(m.abs, m.name, m.roundtripArgs || []), 'parse', m.name + '.stage3');
 		if (m.expect === 'baseline') judgeBaseline(3, m.name, baselineOf(rep));
 		else judgePass(3, m.name, rep, m.knownFailing?.['3']);
 	});

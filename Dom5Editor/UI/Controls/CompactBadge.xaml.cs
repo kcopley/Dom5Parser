@@ -272,12 +272,23 @@ namespace Dom5Editor.UI.Controls
                 new PropertyMetadata(false));
 
         /// <summary>
-        /// The game doesn't read this command for this entity type: the value is shown read-only.
+        /// The value is shown read-only (the game doesn't read the command, or no command sets it).
         /// </summary>
         public bool IsLocked
         {
             get => (bool)GetValue(IsLockedProperty);
             set => SetValue(IsLockedProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowNotReadProperty =
+            DependencyProperty.Register(nameof(ShowNotRead), typeof(bool), typeof(CompactBadge),
+                new PropertyMetadata(false));
+
+        /// <summary>Show the "n/r" marker: the game doesn't read this command for this entity type.</summary>
+        public bool ShowNotRead
+        {
+            get => (bool)GetValue(ShowNotReadProperty);
+            set => SetValue(ShowNotReadProperty, value);
         }
 
         public static readonly DependencyProperty IsReferenceEditableProperty =

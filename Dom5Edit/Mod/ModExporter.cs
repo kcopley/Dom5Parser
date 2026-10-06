@@ -90,9 +90,13 @@ namespace Dom5Edit
         /// </summary>
         private void WriteInSourceOrder(Mod mod, StreamWriter writer)
         {
+            // a property's line: as read if unedited (unless the mod asks for regenerated text)
+            string Text(Property p) => mod.KeepOriginalText ? p.SaveText() : p.ToExportString();
+            bool keep = mod.KeepOriginalText;
+
             // preamble: as read while the header fields are unchanged, else a regenerated header
             // and the preamble's other lines
-            if (mod.HeaderUnchanged)
+            if (keep && mod.HeaderUnchanged)
             {
                 foreach (var (text, _) in mod.Preamble)
                     writer.WriteLine(text);
@@ -145,7 +149,7 @@ namespace Dom5Edit
                     continue; // deleted in the session (its comments go with it)
                 foreach (var text in block.LeadingTrivia)
                     writer.WriteLine(text);
-                writer.WriteLine(block.RawHeader != null && entity.ID == block.IdAtParse ? block.RawHeader : Header(block));
+                writer.WriteLine(keep && block.RawHeader != null && entity.ID == block.IdAtParse ? block.RawHeader : Header(block));
                 int t = 0;
                 for (int i = 0; i < block.Properties.Count; i++)
                 {
@@ -156,17 +160,17 @@ namespace Dom5Edit
                     // not live after parse: a later clear or copy in the file took it out,
                     // and the game still reads it here
                     if (live[entity].Contains(p) || !mod.PropertiesAfterParse.Contains(p))
-                        writer.WriteLine(p.SaveText());
+                        writer.WriteLine(Text(p));
                     if (inSlot.TryGetValue(p, out var replacements))
                         foreach (var r in replacements)
-                            writer.WriteLine(r.SaveText());
+                            writer.WriteLine(Text(r));
                 }
                 for (; t < block.Trivia.Count; t++)
                     writer.WriteLine(block.Trivia[t].Text);
                 if (atEnd.TryGetValue(block, out var added))
                     foreach (var p in added)
-                        writer.WriteLine(p.SaveText());
-                if (block.RawEnd != null)
+                        writer.WriteLine(Text(p));
+                if (keep && block.RawEnd != null)
                     writer.WriteLine(block.RawEnd);
                 else if (CommandsMap.TryGetString(Command.END, out var end))
                     writer.WriteLine(end);

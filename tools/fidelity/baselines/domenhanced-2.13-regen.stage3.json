@@ -1,0 +1,12 @@
+{
+ "dataDiffs": 6,
+ "diagnosticDiffs": 3,
+ "fieldCounts": {
+  "unit.moreorder": 1,
+  "unit.moregrowth": 1,
+  "unit.immortal": 1,
+  "item.autospell": 1,
+  "item.weapon": 1,
+  "event.req_targmnr": 1
+ }
+}

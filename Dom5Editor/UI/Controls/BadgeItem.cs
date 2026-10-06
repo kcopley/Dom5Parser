@@ -249,7 +249,7 @@ namespace Dom5Editor.UI.Controls
         /// <summary>
         /// True if this reference badge can be edited (has available references and is not inherited).
         /// </summary>
-        public bool IsReferenceEditable => IsReference && CanRemove && !IsInherited && !IsNotReadByGame && AvailableReferences != null;
+        public bool IsReferenceEditable => IsReference && CanRemove && !IsInherited && !IsLocked && AvailableReferences != null;
 
         private bool _isNotReadByGame;
         /// <summary>
@@ -259,8 +259,22 @@ namespace Dom5Editor.UI.Controls
         public bool IsNotReadByGame
         {
             get => _isNotReadByGame;
-            set { _isNotReadByGame = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsReferenceEditable)); }
+            set { _isNotReadByGame = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsLocked)); OnPropertyChanged(nameof(IsReferenceEditable)); }
         }
+
+        private bool _isGameValue;
+        /// <summary>
+        /// A value the game stores that no command sets (e.g. a vanilla monster's leadership
+        /// bonus): shown, can't be edited.
+        /// </summary>
+        public bool IsGameValue
+        {
+            get => _isGameValue;
+            set { _isGameValue = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsLocked)); OnPropertyChanged(nameof(IsReferenceEditable)); }
+        }
+
+        /// <summary>The value can't be edited (not read by the game, or a game value no command sets).</summary>
+        public bool IsLocked => IsNotReadByGame || IsGameValue;
 
         /// <summary>
         /// Display string for reference badges showing name or ID.

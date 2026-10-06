@@ -17,7 +17,7 @@ differ only in ways we've explicitly listed as expected.
 | Stage | Question | How | Compared at |
 |---|---|---|---|
 | **1. Inspector self-check** | Can the oracle write back out everything it read from a mod? | Inspector loads vanilla + mod, exports every entity the mod touched in full, after `#clear` (`export-mod.js`), reloads the export | **final**: after the inspector's full post-processing (functional equality) |
-| **2. Vanilla data** | Is `vanilla.dm` faithful to the game data? | (a) exporter round-trips the CSV data (`verify-export.js`); (b) committed `vanilla.dm` = what the pinned oracle generates; (c) audit of `vanilla.dm` values that differ from the raw game data | parse |
+| ~~**2. Vanilla data**~~ | Retired 2026-10-05: `vanilla.dm` is written from Dominions6.exe by `tools/dom6exe` (README there compares it with the inspector's), so the inspector's own export isn't checked any more | — | — |
 | **3. Save fidelity** | Does saving in Dom5Parser change any data? | `Dom5Tests roundtrip` (load → save) → oracle compares original vs saved | **parse**: strict, right after parsing (catches even a dropped command that only restated a default) |
 | **4. Edits** | Does an edit change exactly what it should, and nothing else? | `Dom5Tests edit` applies scripted edits → oracle compares an unedited save vs the edited save → must match the case's `expect` list exactly | parse |
 

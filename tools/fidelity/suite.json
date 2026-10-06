@@ -40,20 +40,21 @@
       "name": "domenhanced-2.13",
       "path": "docs/DomEnhanced2_13.dm",
       "expect": "baseline"
+    },
+    {
+      "name": "domenhanced-2.13-regen",
+      "path": "docs/DomEnhanced2_13.dm",
+      "expect": "baseline",
+      "roundtripArgs": [
+        "regen"
+      ],
+      "stages": [
+        3
+      ],
+      "description": "Every line regenerated (Dom5Tests roundtrip regen), still in file order: tests the export itself, which saving unedited lines as read would hide (docs/SAVE_FLOW.md)."
     }
   ],
   "edits": "Dom5Tests/fixtures/edits",
-  "vanillaExpected": {
-    "site.lab": "game data stores 'lab'; the command is the #lab flag",
-    "unit.gemprod": "artifact of this check: #gemprod appends when vanilla.dm is applied on top of the game data",
-    "unit.eyeloss": "game data holds a strength (e.g. 5); #eyeloss takes no argument",
-    "unit.horrormark": "game data holds a strength (3-7); #horrormark takes no argument",
-    "unit.entangle": "game data holds a strength; #entangle takes no argument",
-    "unit.blessbers": "game data holds a level; #blessbers takes no argument",
-    "spell.name": "literal quote characters in game data names cannot be written inside a quoted argument",
-    "nation.epithet": "literal quote characters in game data names cannot be written inside a quoted argument",
-    "armor.prothead": "the game data's per-zone protection (head plus general) is written as #protparts with the resolved values; the inspector compares equal after post-processing"
-  },
   "stage1Expected": {
     "unit.unmountedspr": "numeric rider sprite from the game data; mods can only give an image file (#unmountedspr1). Lost for new units that copied a mounted unit",
     "unit.eyeloss": "game data holds a strength or level; the command takes no argument",
