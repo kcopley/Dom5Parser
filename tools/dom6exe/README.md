@@ -23,7 +23,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `ability_keys` | For monster and item commands: the numbered ability each one sets (`#xpshape` = 1145). Monsters and items share the numbering. |
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
-| `vanilla` | Vanilla weapons, armor, monsters, spells and items as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `vanilla` | Vanilla weapons, armor, monsters, spells, items and sites as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
 
 ## How it finds things (no hard-coded addresses)
 
@@ -52,6 +52,10 @@ and GNU `objdump`. The exe is never copied into the repo.
 - `#djinn`, `#humanoid`, `#quadruped` and the other body types are read (they set item slots).
 - Documented commands the parser never compares against: `#limitedregen`, `#statbreak`,
   `#domversion`. `#stunimmunity` (which the inspector exports) isn't a monster command.
+- Generic handler arguments are read by following register constants from the previous call,
+  including callee-saved registers a parser only ever sets to one value. Where the kind is
+  kept in a register the parser also uses otherwise (sites, some spell and nation commands),
+  it stays unknown and the command is treated as taking a plain number.
 - Generic handler: a command with min = max takes no argument; kind 5 takes an optional one
   (default = the handler's last parameter); otherwise the argument is clamped and an offset
   added (`#incscale 1` stores 101, `#coldrec 2` stores 12). Tens digit 1: the command appends
@@ -132,6 +136,15 @@ and GNU `objdump`. The exe is never copied into the repo.
   abilities (`#onlyowndst` for `#onlyfriendlydst`, `#preventcast` for `#reqnoplant`,
   `#extraeffectgeo` for `#nextingeo`); `#casttime 100` where the record has no value.
 
+## Sites (6.37)
+
+- Site record: look +0x28, path +0x2a, level +0x2c, rarity +0x2e, 16 (ability, value) pairs
+  from +0x30, terrain mask +0x130. `#gems p n` stores ability p + 1 = n.
+- Vanilla sites use abilities no site command writes: 551/552/554/555 (the inspector writes
+  them as `#summon`, which is 550) and 100-106 (written as `#decscale`, which is 102).
+- Compared with the inspector: it lacks `#look`, `#claim`, `#gold`/`#minegold` on some, the
+  per-path ranges, and 154 sites; it writes `#incunrest -50` for `#decunrest 5`.
+
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 
 `vanilla` writes 4,138 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
@@ -150,6 +163,6 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- `vanilla` for sites and nations.
+- `vanilla` for nations.
 - Give Dom5Parser the command catalog: commands the game doesn't read in a context, and stored
   abilities no command sets (read-only in the editor).

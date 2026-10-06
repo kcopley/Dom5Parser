@@ -100,6 +100,9 @@
     "0x40": [
      "coldres"
     ],
+    "0x80": [
+     "heat (clears)"
+    ],
     "0x100": [
      "neednoteat"
     ],
@@ -125,6 +128,9 @@
     ],
     "0x8000": [
      "immortal"
+    ],
+    "0x10000": [
+     "cold (clears)"
     ],
     "0x20000": [
      "forestsurvival"
@@ -605,6 +611,9 @@
     ],
     "0x100000": [
      "defroll"
+    ],
+    "0x200000": [
+     "magic (clears)"
     ],
     "0x400000": [
      "enemyimmune"

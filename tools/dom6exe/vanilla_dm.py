@@ -374,7 +374,7 @@ def monster_commands(exe):
 
 def write(exe, path):
     sections = [('weapon', weapon_commands), ('armor', armor_commands), ('monster', monster_commands),
-                ('spell', spell_commands), ('item', item_commands)]
+                ('spell', spell_commands), ('item', item_commands), ('site', site_commands)]
     text = ['-- Dominions %s vanilla data, written from Dominions6.exe by tools/dom6exe (exe %s).' % (exe.version, exe.sha),
             '-- "-- ro:" lines are stored values no command can set (shown read-only).', '']
     res = {'game_version': exe.version}
@@ -777,6 +777,50 @@ def spell_commands(exe):
             seen.add(key)
             if key == RESTRICTED:
                 lines.append('#restricted %d' % val)
+                continue
+            more, left = generic_lines(gen.get(key, []), val)
+            lines += more
+            if left:
+                ro.append((generic_label(gen.get(key, []), key), left))
+        out[i] = {'lines': lines, 'readonly': ro}
+    return out
+
+
+# site record (6.37): look +0x28, path +0x2a, level +0x2c, rarity +0x2e, 16 (ability, value)
+# int64 pairs from +0x30, terrain mask +0x130. #gems p n stores ability p + 1 = n.
+T_LOOK, T_PATH, T_LEVEL, T_RARITY, T_ABILITIES, T_LOC, T_AB_COUNT = 0x28, 0x2a, 0x2c, 0x2e, 0x30, 0x130, 16
+SITE_GEMS = range(1, 10)
+
+
+def site_commands(exe):
+    model = ContextModel(exe, 'site')
+    for cmd, off, size in (('look', T_LOOK, 2), ('path', T_PATH, 2), ('level', T_LEVEL, 2), ('rarity', T_RARITY, 2),
+                           ('loc', T_LOC, 4)):
+        model.check(cmd, off, size)
+    gen = collections.defaultdict(list)
+    for c in model.p.generic_call_args():
+        if c['context'] == 'site' and c['key'] is not None:
+            gen[c['key']].append(c)
+    repeatable = {k for k, cs in gen.items() if any(c['repeat'] == 1 for c in cs)}
+    out = {}
+    for i, r in sorted(records(exe, 'site').items()):
+        h = lambda o: struct.unpack_from('<h', r, o)[0]
+        lines, ro = ['#name "%s"' % name_of(r).replace('"', "'")], []
+        lines += ['#path %d' % h(T_PATH), '#level %d' % h(T_LEVEL), '#rarity %d' % h(T_RARITY),
+                  '#loc %d' % struct.unpack_from('<i', r, T_LOC)[0]]
+        if h(T_LOOK) != -1:
+            lines.append('#look %d' % h(T_LOOK))
+        seen = set()
+        for k in range(T_AB_COUNT):
+            key, val = struct.unpack_from('<qq', r, T_ABILITIES + 16 * k)
+            if not key:
+                break
+            if key in seen and key not in repeatable and key not in SITE_GEMS:
+                ro.append(('ability %d repeated (the game reads the first)' % key, val))
+                continue
+            seen.add(key)
+            if key in SITE_GEMS:
+                lines.append('#gems %d %d' % (key - 1, val))
                 continue
             more, left = generic_lines(gen.get(key, []), val)
             lines += more

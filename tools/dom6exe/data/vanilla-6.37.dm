@@ -166403,7 +166403,7 @@
 #sound 39
 #explspr 10341
 #nogeosrc 6144
--- ro: ability 741 (#reqsun 0..298) = -2
+-- ro: ability 741 (#reqsun 0..None) = -2
 #end
 
 #selectspell 748
@@ -184173,8 +184173,8 @@
 #nofind
 #cursed
 #prec 8
-#loseeye 1
-#reqeyes
+#loseeye
+#reqeyes 1
 #itemdrawsize -20
 -- ro: sprite = 292
 #end
@@ -184765,9 +184765,9 @@
 #spiritsight
 #pen 2
 #mr -2
-#loseeye 1
+#loseeye
 #tainted 3
-#reqeyes
+#reqeyes 1
 #itemdrawsize -15
 -- ro: sprite = 334
 #end
@@ -185368,8 +185368,8 @@
 #nofind
 #cursed
 #stealthboost 40
-#loseeye 1
-#reqeyes
+#loseeye
+#reqeyes 1
 #itemdrawsize -20
 -- ro: sprite = 370
 #end
@@ -185397,8 +185397,8 @@
 #type 8
 #nofind
 #cursed
-#loseeye 1
-#reqeyes
+#loseeye
+#reqeyes 1
 #itemdrawsize -20
 #warning 80
 #nobadevents 40
@@ -185495,8 +185495,8 @@
 #cursed
 #magicboost 0 1
 #gemprod 2 2
-#loseeye 1
-#reqeyes
+#loseeye
+#reqeyes 1
 #itemdrawsize -20
 -- ro: sprite = 291
 #end
@@ -185926,8 +185926,8 @@
 #cursed
 #autospellrepeat 1
 #pen 2
-#loseeye 1
-#reqeyes
+#loseeye
+#reqeyes 1
 #itemdrawsize -20
 -- ro: sprite = 222
 #end
@@ -186315,8 +186315,8 @@
 #mainpath 5
 #mainlevel 1
 #type 8
-#loseeye 1
-#reqeyes
+#loseeye
+#reqeyes 1
 #spiritsight
 #unique
 -- ro: sprite = 6046
@@ -187032,4 +187032,15710 @@
 #mainpath 255
 #mainlevel 0
 #type 0
+#end
+
+#selectsite 0
+#name "None"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#end
+
+#selectsite 1
+#name "The Smouldercone"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#homecom 923
+#homecom 89
+#homecom 87
+#gems 0 4
+-- ro: ability 106 = 2
+#end
+
+#selectsite 2
+#name "The Coral Towers"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 104
+#homemon 209
+#gems 2 5
+#end
+
+#selectsite 3
+#name "Cathedral of the Spheres"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 41
+#homemon 51
+#gems 4 5
+#gems 1 2
+#gems 2 1
+#end
+
+#selectsite 4
+#name "Swamps of Pythia"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#mon 1840
+#homemon 1831
+#homecom 296
+#end
+
+#selectsite 5
+#name "Forest of Avalon"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 212
+#homemon 65
+#homecom 2128
+#homemon 64
+#gems 6 3
+-- ro: ability 100 = 5
+#end
+
+#selectsite 6
+#name "Tower of Avalon"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 153
+#gems 7 2
+#end
+
+#selectsite 7
+#name "The Keep of Ulm"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 748
+#homecom 1973
+#homecom 1982
+#homecom 113
+#homemon 66
+#end
+
+#selectsite 8
+#name "The Forges of Ulm"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#gems 3 5
+-- ro: ability 635 = 2
+#end
+
+#selectsite 9
+#name "The Temple City"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 177
+#homecom 1366
+#homemon 783
+#gems 5 4
+#gems 6 2
+#end
+
+#selectsite 10
+#name "Tower of a Thousand Stars"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 301
+#homemon 747
+#gems 4 4
+#gems 6 1
+#end
+
+#selectsite 11
+#name "The Citadel of Frozen Crystal"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#incscale 2
+#homemon 2547
+#homemon 358
+#gems 1 3
+#gems 2 2
+#end
+
+#selectsite 12
+#name "Empoisoners Guild"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homemon 503
+#homecom 502
+#end
+
+#selectsite 13
+#name "The House of Fiery Justice"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 222
+#homecom 223
+#holyfire 50
+#gems 0 4
+#gems 4 1
+#end
+
+#selectsite 14
+#name "The Grove of Gaia"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#decscale 3
+#gems 6 5
+#homemon 769
+#end
+
+#selectsite 15
+#name "The Halls of Andvare"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 323
+#homemon 463
+#gems 3 3
+#end
+
+#selectsite 16
+#name "Iron Woods"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homecom 3398
+#homemon 1310
+#gems 5 2
+#gems 4 1
+#gems 7 1
+#end
+
+#selectsite 17
+#name "The Sunken City"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 4 3
+#gems 2 2
+#end
+
+#selectsite 18
+#name "Ravens Vale"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 414
+#end
+
+#selectsite 19
+#name "Hidden Grove"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 516
+#end
+
+#selectsite 20
+#name "Surakid's Tower"
+#path 4
+#level 1
+#rarity 5
+#loc 0
+#look 3
+#gems 4 4
+#gems 5 2
+#end
+
+#selectsite 21
+#name "Mine of the Cyclops"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#gems 3 2
+#gems 5 2
+-- ro: ability 635 = 2
+#end
+
+#selectsite 22
+#name "Bolivar's Tower of Reflections"
+#path 7
+#level 3
+#rarity 5
+#loc 0
+#look 7
+#com 341
+#gems 7 4
+#end
+
+#selectsite 23
+#name "The Unholy Sepulchre"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 5 5
+#end
+
+#selectsite 24
+#name "The Unholy Sepulchre"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 5 9
+#end
+
+#selectsite 25
+#name "The Unholy Sepulchre"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 5 13
+#end
+
+#selectsite 26
+#name "Starke's Ice Cave"
+#path 2
+#level 1
+#rarity 5
+#loc 0
+#look 6
+#gems 2 4
+#incscale 2
+#end
+
+#selectsite 27
+#name "The Queen's Galley"
+#path 5
+#level 1
+#rarity 5
+#loc 0
+#gems 5 3
+#end
+
+#selectsite 28
+#name "Hoburg"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#supply 75
+#gems 6 1
+#end
+
+#selectsite 29
+#name "The Ruined Keep"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#gems 5 2
+#homemon 1020
+#homecom 2477
+#end
+
+#selectsite 30
+#name "Temple of the Land"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 732
+#homemon 726
+#gems 6 1
+#end
+
+#selectsite 31
+#name "Temple of the Rain"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 733
+#gems 2 1
+#end
+
+#selectsite 32
+#name "Temple of the Moon"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 734
+#gems 4 1
+#end
+
+#selectsite 33
+#name "High Temple of the Sun"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 725
+#homecom 735
+#gems 8 3
+#gems 0 2
+#end
+
+#selectsite 34
+#name "House of Fiery Justice"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 135
+#gems 0 4
+#gems 4 1
+#holypower 50
+#end
+
+#selectsite 35
+#name "Vanhalla"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 262
+#homemon 261
+#homecom 948
+#gems 1 1
+#gems 7 1
+#end
+
+#selectsite 36
+#name "Oleg's Alchemical Device"
+#path 0
+#level 1
+#rarity 5
+#loc 0
+#look 5
+#gold 150
+#end
+
+#selectsite 37
+#name "The Deepest Cave of the Province"
+#path 3
+#level 2
+#rarity 5
+#loc 0
+#look 6
+#gems 3 1
+#end
+
+#selectsite 38
+#name "Temple of the Everburning Pyre"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1970
+#homecom 1966
+#homemon 990
+#gems 0 1
+#end
+
+#selectsite 39
+#name "The Smouldercone"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 923
+#homecom 89
+#gems 0 3
+-- ro: ability 104 = 2
+#end
+
+#selectsite 40
+#name "The Citadel of Frozen Crystal"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1004
+#homemon 2576
+#gems 1 1
+#gems 2 1
+#end
+
+#selectsite 41
+#name "Ravens Vale"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homecom 1003
+#homemon 2548
+#homemon 1280
+#gems 3 1
+#gems 5 1
+#end
+
+#selectsite 42
+#name "Black Forest"
+#path 7
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#gems 7 1
+#gems 4 1
+#homecom 1028
+#homecom 1011
+#end
+
+#selectsite 43
+#name "The Sacred Swamp"
+#path 6
+#level 1
+#rarity 5
+#loc 0
+#look 2
+#gems 6 3
+#homecom 761
+#homemon 1859
+#homemon 1850
+#end
+
+#selectsite 44
+#name "The Black Temple"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 738
+#homecom 1237
+#end
+
+#selectsite 45
+#name "The Void Gate"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#voidgate 20
+#homecom 332
+#end
+
+#selectsite 46
+#name "Niefelheim"
+#path 1
+#level 2
+#rarity 5
+#loc 0
+#look 8
+#homemon 845
+#homecom 844
+#gems 2 4
+#gems 5 2
+-- ro: ability 377 = 999
+#end
+
+#selectsite 47
+#name "Well of Urd"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 5 1
+#gems 4 2
+#gems 7 1
+#homecom 281
+#homemon 784
+#end
+
+#selectsite 48
+#name "The Grove of Gaia"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#decscale 3
+#gems 6 5
+#homemon 787
+#end
+
+#selectsite 49
+#name "The Grove of Gaia"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 6 3
+#gems 3 1
+#homemon 704
+-- ro: ability 100 = 3
+#end
+
+#selectsite 50
+#name "The Heavenly Gate"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homecom 803
+#gems 4 2
+#gems 1 1
+#astralrange 1
+#end
+
+#selectsite 51
+#name "The Celestial City"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 791
+#homecom 793
+#homecom 1892
+#gems 3 1
+#gems 2 1
+#end
+
+#selectsite 52
+#name "The Celestial City"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 1577
+#gems 5 1
+#gems 3 1
+#end
+
+#selectsite 53
+#name "The Bamboo Grove"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 940
+#homemon 1544
+#end
+
+#selectsite 54
+#name "The Gate of Spring and Autumn"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homecom 941
+#gems 4 2
+#gems 0 1
+#gems 2 2
+#gems 5 1
+#astralrange 1
+#end
+
+#selectsite 55
+#name "Temple of the Dead"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homemon 1654
+#homecom 1655
+#gems 5 3
+#end
+
+#selectsite 56
+#name "..."
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 57
+#name "Swamps of Pythia"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#mon 1840
+#homemon 1831
+#homecom 3660
+#end
+
+#selectsite 58
+#name "Vanhalla"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 262
+#homecom 263
+#homecom 264
+#gems 1 2
+#gems 3 1
+#gems 7 1
+#end
+
+#selectsite 59
+#name "Helhalla"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homemon 855
+#homemon 1503
+#homecom 1507
+#homecom 847
+#gems 7 1
+#end
+
+#selectsite 60
+#name "God Forest"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 890
+#homemon 889
+#homemon 3097
+#gems 6 1
+#gems 0 1
+#end
+
+#selectsite 61
+#name "God Mountain"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 894
+#homecom 3652
+#homecom 891
+#homecom 877
+#homemon 876
+#gems 3 2
+#gems 7 1
+#allrange 1
+#end
+
+#selectsite 62
+#name "The Temple Marsh"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homemon 164
+#homecom 2238
+#homemon 2236
+#homemon 2237
+#gems 5 2
+#gems 6 2
+#gems 2 1
+#end
+
+#selectsite 63
+#name "The City of Tombs"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 5 3
+#gems 0 1
+#homecom 1095
+#homemon 1166
+#homemon 3850
+#end
+
+#selectsite 64
+#name "Temple of the Spheres"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 670
+#gems 4 1
+#end
+
+#selectsite 65
+#name "The Desert Eye"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#enchcost 40
+#gems 4 3
+#end
+
+#selectsite 66
+#name "Gold Mine"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#minegold 100
+#end
+
+#selectsite 67
+#name "Silver Mine"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#minegold 60
+#end
+
+#selectsite 68
+#name "Copper Mine"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#minegold 30
+#end
+
+#selectsite 69
+#name "Iron Mine"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+-- ro: ability 384 = 60
+#end
+
+#selectsite 70
+#name "The Royal Academy"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 3011
+#homecom 1030
+#homecom 3861
+#gems 4 1
+#gems 1 1
+#end
+
+#selectsite 71
+#name "House of Justice"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 2114
+#homemon 3868
+#homecom 2199
+#homecom 745
+#gems 0 1
+#holypower 25
+#end
+
+#selectsite 72
+#name "Palace of Pearls"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 2397
+#homemon 2387
+#homecom 2805
+#gems 2 4
+#gems 6 2
+#end
+
+#selectsite 73
+#name "Mount Cephalos"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 1650
+#homecom 1075
+#homemon 1074
+#gems 1 2
+#gems 4 2
+#end
+
+#selectsite 74
+#name "Lykeion"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#gems 3 2
+#homecom 1606
+#end
+
+#selectsite 75
+#name "Akademeia"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#homecom 1070
+#end
+
+#selectsite 76
+#name "Temple Sanguine"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1967
+#end
+
+#selectsite 77
+#name "Temple of the Shroud"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 1108
+#homecom 3691
+#homecom 1111
+#gems 0 3
+#gems 4 3
+#end
+
+#selectsite 78
+#name "The Lotus Gardens"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 1144
+#homemon 1141
+#gems 6 2
+#gems 4 3
+#end
+
+#selectsite 79
+#name "The Carrion Grove"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#gems 6 4
+#gems 5 1
+#homemon 787
+#homemon 4026
+-- ro: ability 106 = 3
+#end
+
+#selectsite 80
+#name "The Carrion Grove"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#gems 6 6
+#gems 5 1
+#homemon 787
+#homemon 4026
+-- ro: ability 106 = 3
+#end
+
+#selectsite 81
+#name "The Carrion Grove"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#gems 6 9
+#gems 5 1
+#homemon 787
+#homemon 4026
+-- ro: ability 106 = 3
+#end
+
+#selectsite 82
+#name "The Wheel of Pain"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#homemon 1157
+#end
+
+#selectsite 83
+#name "Irminsul"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#gems 5 1
+#gems 6 2
+#gems 3 3
+#homecom 1161
+#end
+
+#selectsite 84
+#name "The Great Cauldron"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homemon 1183
+#homemon 1176
+#homecom 1177
+#homecom 1178
+#gems 8 2
+#end
+
+#selectsite 85
+#name "The Bitter Stream"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 1185
+#gems 5 3
+#gems 2 1
+#end
+
+#selectsite 86
+#name "Steppes of Sauromatia"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 1185
+#end
+
+#selectsite 87
+#name "High Temple of the Land"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homemon 727
+#homecom 1190
+#homecom 1194
+#gems 6 1
+#end
+
+#selectsite 88
+#name "High Temple of the Sky and the Rain"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1191
+#homecom 1907
+#gems 2 1
+#gems 1 1
+#end
+
+#selectsite 89
+#name "Temple of the Moon"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1192
+#gems 4 1
+#end
+
+#selectsite 90
+#name "Temple of the Sun"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homemon 725
+#homecom 1193
+#gems 0 1
+#end
+
+#selectsite 91
+#name "Carnutes"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 1222
+#homecom 1223
+#homecom 1204
+#gems 4 3
+#gems 3 2
+#gems 6 1
+#end
+
+#selectsite 92
+#name "Temple of the Pure War"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 1247
+#gems 1 1
+#end
+
+#selectsite 93
+#name "Mountain of the Mystics"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 1248
+#gems 3 1
+#gems 6 1
+#gems 0 1
+#end
+
+#selectsite 94
+#name "Palace of the Eagle Kings"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1286
+#homemon 127
+#homemon 1289
+#gems 1 3
+#gems 2 1
+#end
+
+#selectsite 95
+#name "Mountain of the Oni Kings"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 1316
+#gems 5 3
+#gems 0 1
+#gems 3 1
+#gems 1 1
+-- ro: ability 633 = 1
+#end
+
+#selectsite 96
+#name "Patala"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#homemon 1318
+#homemon 1319
+#gems 3 1
+#gems 2 2
+#end
+
+#selectsite 97
+#name "The Jeweled City"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 1320
+#homecom 1321
+#homecom 1322
+#gems 4 1
+#end
+
+#selectsite 98
+#name "Mount Kailasa"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#homemon 1327
+#homemon 1328
+#gems 3 2
+#end
+
+#selectsite 99
+#name "The Lotus Garden"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 1329
+#homecom 1330
+#gems 6 1
+#gems 4 2
+#gems 7 1
+#end
+
+#selectsite 100
+#name "Augurs' Circle"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#homecom 1115
+#gems 5 1
+#end
+
+#selectsite 101
+#name "The Grove of Aphros"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 10
+#homecom 2399
+#homemon 2401
+#gems 6 4
+#gems 2 1
+#gems 7 1
+#end
+
+#selectsite 102
+#name "Temple of the Land"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 732
+#homemon 726
+#gems 6 1
+#end
+
+#selectsite 103
+#name "High Temple of the Rain"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 1423
+#homecom 1421
+#homecom 1420
+#gems 2 1
+#end
+
+#selectsite 104
+#name "Temple of the Moon"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 734
+#gems 4 1
+#end
+
+#selectsite 105
+#name "Temple of the Sun"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 1424
+#gems 8 1
+#gems 0 1
+#end
+
+#selectsite 106
+#name "Mount Shinuyama"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 5 2
+#gems 0 1
+#gems 3 1
+#gems 2 1
+-- ro: ability 633 = 1
+#end
+
+#selectsite 107
+#name "Tombs of the Oracles"
+#path 5
+#level 3
+#rarity 5
+#loc 0
+#look 6
+#homecom 1438
+#gems 5 2
+#end
+
+#selectsite 108
+#name "Mines of the Pale Ones"
+#path 3
+#level 3
+#rarity 5
+#loc 0
+#look 6
+#gems 3 1
+#gems 0 1
+-- ro: ability 384 = 75
+#end
+
+#selectsite 109
+#name "Halls of the Oracles"
+#path 3
+#level 3
+#rarity 5
+#loc 0
+#look 6
+#scry 1
+#homecom 1457
+#homecom 1467
+#homecom 1468
+#end
+
+#selectsite 110
+#name "Roots of the Earth"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 3 3
+#gems 0 1
+#end
+
+#selectsite 111
+#name "Halls of the Oracles"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#scry 1
+#homecom 2506
+#homecom 1459
+#homemon 2189
+#homemon 2188
+#end
+
+#selectsite 112
+#name "The Chamber of the Seal"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 5 1
+#homemon 1456
+#end
+
+#selectsite 113
+#name "Gnipahålan"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 5 4
+#gems 3 1
+#homecom 1010
+#end
+
+#selectsite 114
+#name "Vanhalla"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 1513
+#homecom 948
+#gems 1 2
+#gems 7 1
+#end
+
+#selectsite 115
+#name "The Halls of Andvare"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 463
+#homecom 323
+#gems 3 3
+#end
+
+#selectsite 116
+#name "The Gorge of Ancient Cities"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#homecom 1521
+#homecom 2883
+#homemon 1522
+#gems 4 3
+#gems 2 2
+#gems 3 1
+#end
+
+#selectsite 117
+#name "The Carrion Grove"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 787
+#homecom 901
+#homecom 709
+#gems 5 1
+-- ro: ability 106 = 3
+#end
+
+#selectsite 118
+#name "The Grove of Gaia"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 6 6
+#homemon 769
+-- ro: ability 104 = 3
+#end
+
+#selectsite 119
+#name "The Smouldercone"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 1661
+#homecom 1542
+#homecom 1538
+#homecom 1537
+#gems 0 5
+-- ro: ability 108 = 2
+#end
+
+#selectsite 120
+#name "Temple of the All-Consuming Flame"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1536
+#homemon 1543
+#gems 0 1
+#end
+
+#selectsite 121
+#name "Temple of the All-Consuming Flame"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homemon 90
+#gems 0 1
+#end
+
+#selectsite 122
+#name "The Sibylline Caves"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#scry 1
+#homecom 1557
+#gems 4 3
+#gems 6 1
+#end
+
+#selectsite 123
+#name "The Cerulean Tower"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homemon 1556
+#homecom 3172
+#end
+
+#selectsite 124
+#name "Gymnasium"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homemon 747
+#end
+
+#selectsite 125
+#name "The Enchanted Isle"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 7
+#gems 6 1
+#end
+
+#selectsite 126
+#name "The Coast of Ice and Bones"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 1618
+#homemon 1630
+#gems 2 3
+#gems 5 1
+#end
+
+#selectsite 127
+#name "The Forest of Avalon"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 1666
+#homemon 1648
+#gems 6 1
+#gems 7 1
+#end
+
+#selectsite 128
+#name "The Basalt City"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 1695
+#homemon 1690
+#gems 3 3
+#gems 0 1
+#end
+
+#selectsite 129
+#name "The Dark Crystal"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#homecom 1702
+#gems 2 2
+#end
+
+#selectsite 130
+#name "The Heavenly Gate"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homecom 1712
+#gems 4 1
+#gems 1 1
+#end
+
+#selectsite 131
+#name "Sri Pada"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 1739
+#homecom 1738
+#gems 5 3
+#gems 1 1
+#end
+
+#selectsite 132
+#name "Lanka"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 1745
+#homemon 1746
+#homemon 1747
+#gems 6 2
+#end
+
+#selectsite 133
+#name "Tir na n'Og"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 1753
+#homecom 1754
+#homecom 1773
+#gems 7 3
+#end
+
+#selectsite 134
+#name "Mag Mor"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#gems 6 2
+#gems 3 1
+#end
+
+#selectsite 135
+#name "Mound of Ancient Kings"
+#path 7
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homemon 849
+#homecom 856
+#gems 7 3
+#gems 6 2
+#end
+
+#selectsite 136
+#name "Isle of Balor"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 7
+#homemon 1817
+#homemon 1801
+#homecom 1802
+#gems 2 1
+#gems 1 2
+#end
+
+#selectsite 137
+#name "Rath Chimbaith"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homemon 1790
+#homecom 1791
+#homecom 1792
+#gems 7 1
+#gems 5 2
+#end
+
+#selectsite 138
+#name "The Imperial Capital"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 763
+#homecom 765
+#end
+
+#selectsite 139
+#name "Temple of the Spheres"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1874
+#gems 4 1
+#end
+
+#selectsite 140
+#name "Grand Cathedral"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 1961
+#gems 4 1
+#end
+
+#selectsite 141
+#name "Hall of Elders"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1937
+#gems 4 1
+#gems 1 1
+#gems 0 1
+#end
+
+#selectsite 142
+#name "Palace of the Sage King"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 2001
+#homemon 2000
+#end
+
+#selectsite 143
+#name "Temple of the Sage King"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#homecom 1987
+#gems 4 2
+#gems 0 1
+#gems 3 1
+#end
+
+#selectsite 144
+#name "The Twin Cities"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 2011
+#homecom 2027
+#homecom 2028
+#homemon 2025
+#homemon 2026
+#gems 5 1
+#end
+
+#selectsite 145
+#name "Mount Seir"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#gems 3 2
+#gems 0 1
+#gems 4 1
+#end
+
+#selectsite 146
+#name "Gomorrah"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 2031
+#homecom 2032
+#homemon 2030
+#gems 8 2
+#end
+
+#selectsite 147
+#name "Mount Hermon"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#gems 3 2
+#gems 0 2
+#gems 4 1
+#end
+
+#selectsite 148
+#name "Campus Sceleris"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#homemon 809
+#gems 5 1
+#end
+
+#selectsite 149
+#name "The House of Water"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homemon 2176
+#gems 2 2
+#gems 3 1
+#end
+
+#selectsite 150
+#name "The First City"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 2269
+#homecom 2181
+#end
+
+#selectsite 151
+#name "The Swamps of Ur"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#gems 6 3
+#homemon 2962
+#end
+
+#selectsite 152
+#name "Temple of Storms and Flames"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 2266
+#homemon 2262
+#gems 8 2
+#gems 0 2
+#gems 1 3
+#end
+
+#selectsite 153
+#name "Forest of Spider"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 2295
+#homemon 2301
+#homemon 2302
+#homemon 2308
+#gems 6 1
+#gems 5 1
+#gems 7 1
+#end
+
+#selectsite 154
+#name "Great Mababwe"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 2297
+#homecom 2296
+#homemon 2309
+#gems 3 2
+#gems 0 1
+#end
+
+#selectsite 155
+#name "Novgård"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homemon 2349
+#homecom 2342
+#gems 1 1
+#gems 0 1
+#gems 7 1
+#end
+
+#selectsite 156
+#name "Pine of Skulls"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homemon 2352
+#gems 6 1
+#gems 5 1
+#end
+
+#selectsite 157
+#name "Campus Sceleris"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#gems 5 5
+#end
+
+#selectsite 158
+#name "Campus Sceleris"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#gems 5 9
+#end
+
+#selectsite 159
+#name "Campus Sceleris"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#gems 5 13
+#end
+
+#selectsite 160
+#name "Palace of Pearls"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 1061
+#homecom 1088
+#homemon 1059
+#homecom 2865
+#homemon 2863
+#gems 2 4
+#gems 6 1
+#end
+
+#selectsite 161
+#name "Palace of the Setting Sun"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3043
+#homecom 3045
+#gems 0 1
+#gems 4 1
+#end
+
+#selectsite 162
+#name "The Grove of Aphros"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homecom 2399
+#homemon 2401
+#gems 6 3
+#gems 2 1
+#gems 7 1
+#end
+
+#selectsite 163
+#name "The Grove of Aphros"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homecom 2399
+#homemon 2401
+#gems 6 2
+#gems 2 2
+#end
+
+#selectsite 164
+#name "The City of Unfullfilled Dreams"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 4 3
+#gems 7 1
+#end
+
+#selectsite 165
+#name "The Chamber of the Broken Seal"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 5 5
+#incscale 3
+#end
+
+#selectsite 166
+#name "The Chamber of the Broken Seal"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 5 1
+#homemon 2508
+#end
+
+#selectsite 167
+#name "The Womb of the Earth"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 2 1
+#homecom 2493
+#homemon 2492
+#end
+
+#selectsite 168
+#name "Spire Horn Mountain"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#homemon 2558
+#gems 1 1
+#end
+
+#selectsite 169
+#name "Ravens Vale"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#homecom 2560
+#homemon 2559
+#gems 3 1
+#end
+
+#selectsite 170
+#name "Lake Urmia"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 2592
+#gems 1 1
+#gems 2 1
+#gems 4 1
+#end
+
+#selectsite 171
+#name "Mountain of the Everburning Caverns"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 2629
+#homemon 2587
+#gems 0 1
+#end
+
+#selectsite 172
+#name "Palace of the Sun Kings"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#gems 0 1
+#gems 1 1
+#gems 4 1
+#homecom 2658
+#homecom 2659
+#homemon 2653
+#end
+
+#selectsite 173
+#name "Tombs of the Sun Kings"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 5 1
+#gems 3 1
+#homecom 2663
+#homemon 2667
+#end
+
+#selectsite 174
+#name "Cavern of the Sun"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 0 3
+#gems 3 1
+#homecom 2684
+#homemon 2672
+#end
+
+#selectsite 175
+#name "House of Knives"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#gems 5 2
+#homecom 2736
+#end
+
+#selectsite 176
+#name "House of Jaguars"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 2736
+#end
+
+#selectsite 177
+#name "The Sacred Cenote"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homecom 2732
+#homemon 2730
+#homemon 2731
+#gems 2 1
+#end
+
+#selectsite 178
+#name "The Flooded City"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 2714
+#homemon 2729
+#gems 2 2
+#gems 3 1
+#end
+
+#selectsite 179
+#name "The Cave of Perpetual Darkness"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#homecom 2719
+#gems 5 1
+#end
+
+#selectsite 180
+#name "The Flooded City"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 2749
+#homemon 2747
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 181
+#name "The Obsidian Cavern"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#homecom 2754
+#homemon 2743
+#gems 5 2
+#end
+
+#selectsite 182
+#name "Telkhinis"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 7
+#homecom 2833
+#homecom 2834
+#homecom 2836
+#homemon 2839
+#gems 3 3
+#gems 1 1
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 183
+#name "Telkhinis"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 7
+#homecom 2833
+#homecom 2834
+#homecom 2836
+#homemon 2839
+#gems 3 6
+#gems 1 1
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 184
+#name "Telkhinis"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 7
+#homecom 2833
+#homecom 2834
+#homecom 2836
+#homemon 2839
+#gems 3 9
+#gems 1 1
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 185
+#name "Ker-Ys"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 2 1
+#gems 3 2
+#gems 7 2
+#homecom 2917
+#homecom 2919
+#homecom 2921
+#homemon 2915
+#end
+
+#selectsite 186
+#name "Great Temple of the Moon"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#gems 4 2
+#homecom 2948
+#homecom 2952
+#homemon 2953
+#end
+
+#selectsite 187
+#name "The Swamps of Ur"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 2
+#gems 6 1
+#homemon 2963
+#end
+
+#selectsite 188
+#name "The House of Water"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 189
+#name "Pine of Skulls"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homemon 2992
+#homemon 2997
+#gems 6 1
+#gems 4 1
+#end
+
+#selectsite 190
+#name "Oak of Storms"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homecom 2999
+#gems 1 1
+#gems 6 1
+#end
+
+#selectsite 191
+#name "Hall of the Dawn"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 3000
+#homecom 3001
+#gems 1 1
+#gems 0 1
+#end
+
+#selectsite 192
+#name "The Royal Academy"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 3010
+#end
+
+#selectsite 193
+#name "The Red River"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homemon 3052
+#gems 0 1
+#gems 2 1
+#end
+
+#selectsite 194
+#name "City of Gold and Marble"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3112
+#homecom 3117
+#gems 1 1
+#gems 3 1
+-- ro: ability 377 = 4
+#end
+
+#selectsite 195
+#name "Forge of the Cyclopes"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3118
+#gems 0 2
+#gems 3 2
+#res 150
+#end
+
+#selectsite 196
+#name "The Burning Fields"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homecom 3139
+#gems 0 1
+#gems 3 1
+#gems 5 1
+-- ro: ability 377 = 2
+#end
+
+#selectsite 197
+#name "Fortress of the Cyclopes"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#gems 0 1
+#gems 3 1
+#homecom 3138
+#end
+
+#selectsite 198
+#name "The Orichalcum Palace"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3158
+#homecom 3157
+#homemon 3159
+#gems 1 1
+#gems 7 1
+#end
+
+#selectsite 199
+#name "Black Korkyra"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 7
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 200
+#name "Gold Apple Tree"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 9
+#gems 0 1
+#decunrest 5
+-- ro: ability 382 = 50
+#end
+
+#selectsite 201
+#name "Orichalcum Mine"
+#path 0
+#level 0
+#rarity 5
+#loc 516
+#look 0
+#minegold 200
+-- ro: ability 384 = 150
+#end
+
+#selectsite 202
+#name "Shattered Volcano"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#nat 96
+#natcom 3226
+#natmon 3227
+#gems 0 1
+#gems 5 1
+#end
+
+#selectsite 203
+#name "Telepylos"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 3225
+#homecom 3228
+#homemon 3216
+#gems 3 1
+#end
+
+#selectsite 204
+#name "The Burning Mountain"
+#path 0
+#level 0
+#rarity 5
+#loc 223
+#look 0
+#decscale 2
+#gems 0 3
+#end
+
+#selectsite 205
+#name "Sublime Palace"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3289
+#homemon 3281
+#gems 4 1
+#gems 0 1
+#end
+
+#selectsite 206
+#name "The Great Mirror"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 5
+#homecom 3286
+#homecom 3285
+#scry 1
+#scryrange 3
+#homemon 3280
+#gems 4 1
+#end
+
+#selectsite 207
+#name "The Onyx Court"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homecom 3288
+#homecom 3287
+#homemon 3282
+#homemon 3283
+#xp 4
+#gems 3 1
+#end
+
+#selectsite 208
+#name "Fountain of Youth"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#gems 2 1
+#decunrest 5
+-- ro: ability 382 = 50
+#end
+
+#selectsite 209
+#name "Jannah"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3341
+#homemon 3342
+#gems 1 1
+#gems 3 1
+#gems 0 1
+#end
+
+#selectsite 210
+#name "Great Dam"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 2 1
+#decscale 3
+#end
+
+#selectsite 211
+#name "The Vault of Incense and Marvels"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gold 150
+#gems 7 1
+#end
+
+#selectsite 212
+#name "Thrymsheim"
+#path 1
+#level 2
+#rarity 5
+#loc 0
+#look 8
+#homecom 3399
+#homemon 3400
+#gems 2 1
+-- ro: ability 377 = 1
+#end
+
+#selectsite 213
+#name "The Iron Wood"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homecom 3409
+#homecom 3414
+#homemon 3406
+#homemon 3421
+#homemon 3422
+#gems 5 1
+#gems 4 1
+#gems 6 2
+#end
+
+#selectsite 214
+#name "The Three Deserts"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#gems 0 1
+#gems 1 1
+#gems 5 1
+-- ro: ability 100 = 2
+-- ro: ability 630 = 2
+#end
+
+#selectsite 215
+#name "Iram of a Thousand Pillars"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3468
+#homecom 3469
+#homemon 3463
+#homemon 3477
+#gems 7 1
+#gems 0 1
+#end
+
+#selectsite 216
+#name "Jannah"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3466
+#homemon 3467
+#gems 6 1
+-- ro: ability 104 = 3
+#end
+
+#selectsite 217
+#name "City of Brass"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 3465
+#homecom 3472
+#homemon 3464
+#gems 0 1
+#end
+
+#selectsite 218
+#name "Seminary of Magisters"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#gems 1 1
+#gems 3 1
+#end
+
+#selectsite 219
+#name "The Cathedral Cavern"
+#path 3
+#level 3
+#rarity 5
+#loc 0
+#look 9
+#gems 3 1
+#homecom 3606
+#homecom 3595
+#homemon 3593
+#end
+
+#selectsite 220
+#name "Grand Dolmen"
+#path 3
+#level 3
+#rarity 5
+#loc 0
+#look 1
+#homecom 3602
+#homecom 3599
+#homemon 3597
+#homemon 3598
+#homecom 3605
+#gems 3 2
+#end
+
+#selectsite 221
+#name "Mount Anboto"
+#path 1
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3603
+#gems 1 2
+#gems 6 1
+#end
+
+#selectsite 222
+#name "The Cathedral of the Emerald"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#homecom 3616
+#homemon 3613
+#gems 0 1
+#end
+
+#selectsite 223
+#name "The Caves of Pyrene"
+#path 3
+#level 3
+#rarity 5
+#loc 0
+#look 9
+#homemon 3633
+#homemon 3587
+#homemon 3588
+#homecom 3589
+#homecom 3590
+#gems 3 1
+#end
+
+#selectsite 224
+#name "The Pleasure Orchard"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3622
+#gems 6 1
+#gems 1 1
+#gems 8 2
+#end
+
+#selectsite 225
+#name "Fir Bolg Highlands"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 2469
+#homecom 1788
+#homemon 1785
+#homemon 1786
+#homemon 1787
+#homemon 3630
+#homemon 3634
+#end
+
+#selectsite 226
+#name "Nidakettil"
+#path 5
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homecom 3681
+#homecom 3685
+#homemon 3677
+#gems 5 3
+#gems 1 1
+#gems 4 1
+#end
+
+#selectsite 227
+#name "The Sublime Palace"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3795
+#gems 4 1
+#gems 3 1
+#end
+
+#selectsite 228
+#name "The Cerulean Cathedral"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3801
+#homemon 3789
+#homemon 3790
+#homemon 3791
+#gems 4 1
+#gems 0 1
+#end
+
+#selectsite 229
+#name "The Veiled City"
+#path 7
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 3816
+#homecom 3820
+#homemon 3819
+#gems 7 2
+#gems 0 1
+#gems 4 1
+#end
+
+#selectsite 230
+#name "The Senate Palace"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3923
+#homecom 3924
+#homecom 3925
+#gems 0 1
+#gems 3 1
+#gems 6 1
+#gems 4 1
+#end
+
+#selectsite 231
+#name "The Void Gate"
+#path 4
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#voidgate 20
+#homecom 3857
+#end
+
+#selectsite 232
+#name "The Hall of Mirrors"
+#path 7
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 3860
+#gems 7 1
+#scry 1
+#scryrange 3
+#end
+
+#selectsite 233
+#name "Great Mine of the Deep"
+#path 0
+#level 0
+#rarity 5
+#loc 516
+#look 0
+#minegold 150
+-- ro: ability 384 = 100
+#end
+
+#selectsite 234
+#name "Great Mine of the Deep"
+#path 0
+#level 0
+#rarity 5
+#loc 516
+#look 0
+#minegold 75
+-- ro: ability 384 = 50
+#end
+
+#selectsite 235
+#name "Bhuva Loka"
+#path 1
+#level 0
+#rarity 5
+#loc 16607
+#look 0
+#summon 3668
+#gems 4 2
+#gems 1 1
+#end
+
+#selectsite 236
+#name "Muspelheim"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#homemon 3969
+#homemon 3970
+#homecom 3958
+#homecom 3959
+#homecom 3960
+#gems 0 1
+#gems 1 1
+#end
+
+#selectsite 237
+#name "The Rift of Surtr"
+#path 0
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homemon 3971
+#homecom 3961
+#gems 0 2
+#gems 5 1
+-- ro: ability 112 = 2
+#end
+
+#selectsite 238
+#name "The Meltwater Gorge"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 1
+#gems 2 1
+#end
+
+#selectsite 239
+#name "The Shrine Serene"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#homecom 3975
+#homemon 3974
+#end
+
+#selectsite 240
+#name "The Cambion Estates"
+#path 8
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 4048
+#homecom 4051
+#homemon 4050
+#gems 8 2
+#gems 7 1
+#end
+
+#selectsite 241
+#name "Cathedral of the Crimson Emerald"
+#path 9
+#level 0
+#rarity 5
+#loc 0
+#look 8
+#gems 0 1
+#gems 3 1
+#end
+
+#selectsite 242
+#name "The Moonwood"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#homecom 4087
+#homecom 4086
+#homecom 4084
+#homemon 4077
+#homemon 4079
+#homemon 4073
+#gems 6 2
+#gems 7 1
+#end
+
+#selectsite 243
+#name "Fort Vedun"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 3
+#homecom 4089
+#homemon 4090
+#gems 3 1
+#end
+
+#selectsite 244
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 245
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 246
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 247
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 248
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 249
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 250
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 251
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 252
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 253
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 254
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 255
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 256
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 257
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 258
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 259
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 260
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 261
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 262
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 263
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 264
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 265
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 266
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 267
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 268
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 269
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 270
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 271
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 272
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 273
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 274
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 275
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 276
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 277
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 278
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 279
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 280
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 281
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 282
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 283
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 284
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 285
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 286
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 287
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 288
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 289
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 290
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 291
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 292
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 293
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 294
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 295
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 296
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 297
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 298
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 299
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 300
+#name "The Cave of Storms"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 6
+#gems 1 1
+#end
+
+#selectsite 301
+#name "The Healing Spring"
+#path 2
+#level 0
+#rarity 5
+#loc 0
+#look 4
+#gems 6 1
+#heal 10
+#end
+
+#selectsite 302
+#name "The Sacred Mountain"
+#path 3
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 3 1
+#end
+
+#selectsite 303
+#name "The Grove of Irminsul"
+#path 6
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 6 1
+#end
+
+#selectsite 304
+#name "The Crystal Cavern"
+#path 7
+#level 0
+#rarity 5
+#loc 0
+#look 0
+#gems 7 1
+#end
+
+#selectsite 305
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 306
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 307
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 308
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 309
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 310
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 311
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 312
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 313
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 314
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 315
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 316
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 317
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 318
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 319
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 320
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 321
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 322
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 323
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 324
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 325
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 326
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 327
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 328
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 329
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 330
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 331
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 332
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 333
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 334
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 335
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 336
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 337
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 338
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 339
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 340
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 341
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 342
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 343
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 344
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 345
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 346
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 347
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 348
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 349
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 350
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 351
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 352
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 353
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 354
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 355
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 356
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 357
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 358
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 359
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 360
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 361
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 362
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 363
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 364
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 365
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 366
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 367
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 368
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 369
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 370
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 371
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 372
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 373
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 374
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 375
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 376
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 377
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 378
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 379
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 380
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 381
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 382
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 383
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 384
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 385
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 386
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 387
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 388
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 389
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 390
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 391
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 392
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 393
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 394
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 395
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 396
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 397
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 398
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 399
+#name "The Empty Slot"
+#path -1
+#level 6
+#rarity 6
+#loc 0
+#end
+
+#selectsite 400
+#name "Lava Lake"
+#path 0
+#level 0
+#rarity 1
+#loc 735
+#look 4
+#gems 0 1
+#gems 2 1
+#end
+
+#selectsite 401
+#name "Tar Pits"
+#path 0
+#level 1
+#rarity 0
+#loc 219
+#look 4
+#gems 0 1
+#end
+
+#selectsite 402
+#name "Sun Ridge"
+#path 0
+#level 1
+#rarity 0
+#loc 223
+#look 2
+#gems 0 2
+#end
+
+#selectsite 403
+#name "Gold-Leafed Tree"
+#path 0
+#level 2
+#rarity 1
+#loc 223
+#look 9
+#gems 0 2
+#end
+
+#selectsite 404
+#name "Bronze Pillar"
+#path 0
+#level 3
+#rarity 0
+#loc 735
+#look 2
+#gems 0 1
+#end
+
+#selectsite 405
+#name "Smoking Mountain"
+#path 0
+#level 0
+#rarity 1
+#loc 223
+#look 0
+#gems 0 1
+#end
+
+#selectsite 406
+#name "Plain of Perpetual Drought"
+#path 0
+#level 0
+#rarity 0
+#loc 8
+#look 1
+#gems 0 1
+#decscale 2
+#end
+
+#selectsite 407
+#name "Magus Temple"
+#path 0
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#com 480
+#lab
+#gems 0 1
+#gems 4 1
+#end
+
+#selectsite 408
+#name "Alchemists Guild"
+#path 0
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#com 551
+#gems 0 1
+#gems 3 1
+#end
+
+#selectsite 409
+#name "Smoke Forest"
+#path 0
+#level 1
+#rarity 1
+#loc 2
+#look 2
+#gems 1 1
+#gems 0 1
+#end
+
+#selectsite 410
+#name "Rage Wind Heath"
+#path 0
+#level 1
+#rarity 1
+#loc 9
+#look 1
+#gems 1 1
+#gems 0 1
+#end
+
+#selectsite 411
+#name "Candle Marsh"
+#path 0
+#level 1
+#rarity 1
+#loc 134
+#look 2
+#gems 2 1
+#gems 0 1
+#end
+
+#selectsite 412
+#name "Copper Cliff"
+#path 0
+#level 1
+#rarity 1
+#loc 197631
+#gems 3 1
+#gems 0 1
+#end
+
+#selectsite 413
+#name "Stargazers Cliff"
+#path 0
+#level 1
+#rarity 1
+#loc 223
+#gems 4 1
+#gems 0 1
+#end
+
+#selectsite 414
+#name "Desert of Bones"
+#path 0
+#level 1
+#rarity 0
+#loc 8
+#look 1
+#com 2245
+#gems 5 1
+#gems 0 1
+#decscale 2
+#end
+
+#selectsite 415
+#name "Lantern Forest"
+#path 0
+#level 1
+#rarity 1
+#loc 2
+#look 2
+#gems 6 1
+#gems 0 1
+#end
+
+#selectsite 416
+#name "Shimmering Haze"
+#path 0
+#level 1
+#rarity 1
+#loc 262169
+#look 2
+#gems 7 1
+#gems 0 1
+#end
+
+#selectsite 417
+#name "Orichalcum Mine"
+#path 0
+#level 2
+#rarity 1
+#loc 516
+#look 0
+#minegold 200
+#nat 77
+#natmon 3159
+-- ro: ability 384 = 150
+#end
+
+#selectsite 418
+#name "Volcano"
+#path 0
+#level 0
+#rarity 2
+#loc 223
+#look 0
+#gems 0 3
+-- ro: ability 100 = 2
+#end
+
+#selectsite 419
+#name "Solar Lens"
+#path 0
+#level 1
+#rarity 2
+#loc 223
+#look 4
+#firerange 3
+#gems 0 1
+#end
+
+#selectsite 420
+#name "Solar Circle"
+#path 0
+#level 2
+#rarity 2
+#loc 223
+#look 4
+#evocost 20
+#gems 0 1
+#end
+
+#selectsite 421
+#name "Tower of the Golden Order"
+#path 0
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 101
+#lab
+#gems 0 3
+#gems 4 2
+#end
+
+#selectsite 422
+#name "Tower of the Golden Order"
+#path 0
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 101
+#lab
+#gems 0 2
+#gems 4 3
+#end
+
+#selectsite 423
+#name "Tower of the Golden Order"
+#path 0
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 101
+#lab
+#gems 0 2
+#gems 4 2
+#end
+
+#selectsite 424
+#name "Academy of Magic"
+#path 0
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3493
+#com 3492
+#lab
+#gems 0 1
+#end
+
+#selectsite 425
+#name "Academy of High Magics"
+#path 0
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 3502
+#com 3493
+#com 3492
+#lab
+#gems 0 2
+#gems 4 1
+#end
+
+#selectsite 426
+#name "Ashen Fields"
+#path 0
+#level 1
+#rarity 2
+#loc 9
+#look 1
+#conjcost 20
+#gems 0 1
+#end
+
+#selectsite 427
+#name "Fountain of Fire"
+#path 0
+#level 1
+#rarity 2
+#loc 735
+#look 4
+#gems 0 3
+#decscale 2
+#end
+
+#selectsite 428
+#name "The Steel Ovens"
+#path 0
+#level 0
+#rarity 1
+#loc 17119
+#look 0
+#res 125
+#constcost 20
+#end
+
+#selectsite 429
+#name "High Temple of the Magii"
+#path 0
+#level 1
+#rarity 1
+#loc 16607
+#look 3
+#com 480
+#com 481
+#lab
+#gems 0 2
+#gems 4 2
+#end
+
+#selectsite 430
+#name "The Citadel of Pyriphlegeton"
+#path 0
+#level 2
+#rarity 1
+#loc 17119
+#look 3
+#com 98
+#com 99
+#gems 0 4
+#lab
+#end
+
+#selectsite 431
+#name "The Fire Prison"
+#path 0
+#level 2
+#rarity 1
+#loc 279263
+#look 6
+#gems 0 4
+#enchcost 20
+#end
+
+#selectsite 432
+#name "The Temple of the Raging God"
+#path 0
+#level 2
+#rarity 1
+#loc 16607
+#look 5
+#com 389
+#com 98
+#com 241
+#gems 0 2
+#incscale 0
+#end
+
+#selectsite 433
+#name "The Brass Door Hill"
+#path 0
+#level 3
+#rarity 1
+#loc 16607
+#look 2
+#gems 0 2
+#gems 7 1
+#end
+
+#selectsite 434
+#name "Prison of the Desert Sun"
+#path 0
+#level 4
+#rarity 2
+#loc 16392
+#look 5
+#decscale 2
+#decscale 2
+#gems 0 5
+#end
+
+#selectsite 435
+#name "The Desert of Ptah"
+#path 0
+#level 0
+#rarity 5
+#loc 16392
+#look 1
+#gems 0 2
+#gems 3 2
+#gems 5 2
+#end
+
+#selectsite 436
+#name "Fountain of Rubies"
+#path 0
+#level 2
+#rarity 2
+#loc 735
+#look 4
+#gems 0 3
+#gold 300
+#end
+
+#selectsite 437
+#name "Dragon Forest"
+#path 0
+#level 2
+#rarity 2
+#loc 16386
+#look 2
+#gems 0 2
+#gems 1 1
+#end
+
+#selectsite 438
+#name "Enchanted Pyre"
+#path 0
+#level 1
+#rarity 0
+#loc 262367
+#look 4
+#gems 0 1
+#end
+
+#selectsite 439
+#name "Rageflame Tower"
+#path 0
+#level 1
+#rarity 1
+#loc 262367
+#look 3
+#gems 0 1
+#end
+
+#selectsite 440
+#name "Steam Swamp"
+#path 0
+#level 2
+#rarity 1
+#loc 128
+#look 4
+#gems 0 1
+#gems 2 1
+#end
+
+#selectsite 441
+#name "Smoke Gorge"
+#path 0
+#level 2
+#rarity 1
+#loc 8
+#look 4
+#gems 0 1
+#gems 1 1
+#end
+
+#selectsite 442
+#name "Magma Pit"
+#path 0
+#level 2
+#rarity 1
+#loc 516
+#look 4
+#gems 0 1
+#gems 3 1
+#end
+
+#selectsite 443
+#name "Starfire Crystals"
+#path 0
+#level 2
+#rarity 1
+#loc 262148
+#gems 0 1
+#gems 4 1
+#end
+
+#selectsite 444
+#name "Ash Valley"
+#path 0
+#level 2
+#rarity 1
+#loc 8
+#look 1
+#gems 0 1
+#gems 5 1
+#end
+
+#selectsite 445
+#name "Flame Forest"
+#path 0
+#level 2
+#rarity 1
+#loc 2
+#look 2
+#gems 0 1
+#gems 6 1
+#end
+
+#selectsite 446
+#name "Fiery Mirage"
+#path 0
+#level 3
+#rarity 2
+#loc 8
+#look 1
+#gems 0 1
+#gems 7 1
+#end
+
+#selectsite 447
+#name "City of Ashes"
+#path 0
+#level 2
+#rarity 2
+#loc 16392
+#look 5
+#com 2245
+#gems 0 1
+#gems 5 1
+#end
+
+#selectsite 448
+#name "Temple of the Solar Bull"
+#path 0
+#level 2
+#rarity 2
+#loc 223
+#look 5
+#gems 0 2
+#com 1873
+#end
+
+#selectsite 449
+#name "Smoulderstone"
+#path 0
+#level 1
+#rarity 0
+#loc 223
+#look 4
+#gems 0 1
+#end
+
+#selectsite 450
+#name "Wildfire Glade"
+#path 0
+#level 1
+#rarity 0
+#loc 2
+#look 2
+#gems 0 1
+#end
+
+#selectsite 451
+#name "Caverns of Glowing Moss"
+#path 0
+#level 1
+#rarity 0
+#loc 516
+#look 6
+#gems 0 1
+#end
+
+#selectsite 452
+#name "Glowing Fissure"
+#path 0
+#level 1
+#rarity 1
+#loc 4
+#look 4
+#gems 0 1
+#end
+
+#selectsite 453
+#name "Smouldering Maze"
+#path 0
+#level 1
+#rarity 1
+#loc 223
+#look 4
+#gems 0 1
+#firerange 2
+#end
+
+#selectsite 454
+#name "Scorched Tower"
+#path 0
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#gems 0 2
+#horrormark 3
+#end
+
+#selectsite 455
+#name "House of Embers"
+#path 0
+#level 1
+#rarity 2
+#loc 278751
+#look 3
+#gems 0 1
+#end
+
+#selectsite 456
+#name "Heart of the Desert"
+#path 0
+#level 3
+#rarity 2
+#loc 16392
+#look 4
+#gems 0 2
+#decscale 2
+#firerange 2
+#end
+
+#selectsite 457
+#name "Egg of the Phoenix"
+#path 0
+#level 3
+#rarity 2
+#loc 262367
+#look 2
+#gems 0 2
+#end
+
+#selectsite 458
+#name "House of Aratron"
+#path 0
+#level 2
+#rarity 2
+#loc 16607
+#look 5
+#gems 3 1
+#gems 0 2
+#com 551
+#end
+
+#selectsite 459
+#name "Rune of Fire"
+#path 0
+#level 2
+#rarity 1
+#loc 223
+#look 4
+#firerange 2
+#end
+
+#selectsite 460
+#name "Maze of Frozen Flames"
+#path 0
+#level 2
+#rarity 2
+#loc 16591
+#look 4
+#waterrange 2
+#firerange 2
+#end
+
+#selectsite 461
+#name "Devil's Furnace"
+#path 0
+#level 3
+#rarity 1
+#loc 16607
+#look 0
+#gems 0 1
+-- ro: ability 554 = 2286
+#end
+
+#selectsite 462
+#name "Isle of Rebirth"
+#path 0
+#level 3
+#rarity 2
+#loc 16416
+#gems 0 1
+#gems 5 1
+#heal 10
+#end
+
+#selectsite 463
+#name "Dragon Lair"
+#path 0
+#level 3
+#rarity 2
+#loc 16388
+#look 6
+#gems 0 2
+#gems 7 1
+#end
+
+#selectsite 464
+#name "Altar of Catharsis"
+#path 0
+#level 4
+#rarity 5
+#loc 16607
+#look 5
+#summon 3714
+#end
+
+#selectsite 465
+#name "Wind Spire"
+#path 1
+#level 0
+#rarity 0
+#loc 223
+#look 3
+#gems 1 1
+#end
+
+#selectsite 466
+#name "Thunder Oak"
+#path 1
+#level 1
+#rarity 0
+#loc 223
+#look 4
+#gems 1 1
+#nat 32
+#natcom 2988
+#end
+
+#selectsite 467
+#name "Canyon of Wild Winds"
+#path 1
+#level 1
+#rarity 0
+#loc 95
+#look 0
+#gems 1 2
+#end
+
+#selectsite 468
+#name "Blasted Heath"
+#path 1
+#level 2
+#rarity 1
+#loc 223
+#look 1
+#gems 1 2
+#end
+
+#selectsite 469
+#name "Cave of Clouds"
+#path 1
+#level 3
+#rarity 0
+#loc 524
+#look 6
+#gems 1 1
+#end
+
+#selectsite 470
+#name "Mist Covered Highlands"
+#path 1
+#level 0
+#rarity 0
+#loc 4
+#look 0
+#gems 1 1
+#end
+
+#selectsite 471
+#name "Desert of Sighs"
+#path 1
+#level 1
+#rarity 0
+#loc 8
+#look 1
+#com 2245
+#gems 5 1
+#gems 1 1
+#end
+
+#selectsite 472
+#name "Cypress Forest"
+#path 1
+#level 1
+#rarity 0
+#loc 32770
+#look 4
+#gems 6 1
+#gems 1 1
+#end
+
+#selectsite 473
+#name "Howling Gorge"
+#path 1
+#level 1
+#rarity 1
+#loc 223
+#look 6
+#gems 1 1
+#end
+
+#selectsite 474
+#name "Canyon of Playful Winds"
+#path 1
+#level 1
+#rarity 1
+#loc 95
+#gems 1 1
+#end
+
+#selectsite 475
+#name "Elusive Lights"
+#path 1
+#level 1
+#rarity 1
+#loc 262879
+#look 1
+#gems 0 1
+#gems 1 1
+#end
+
+#selectsite 476
+#name "Ice Mists"
+#path 1
+#level 1
+#rarity 1
+#loc 223
+#look 0
+#gems 2 1
+#gems 1 1
+#end
+
+#selectsite 477
+#name "Thunder Stones"
+#path 1
+#level 1
+#rarity 1
+#loc 223
+#look 1
+#gems 3 1
+#gems 1 1
+#end
+
+#selectsite 478
+#name "Cloud Pillars"
+#path 1
+#level 1
+#rarity 1
+#loc 223
+#look 2
+#gems 4 1
+#gems 1 1
+#end
+
+#selectsite 479
+#name "Singing Stones"
+#path 1
+#level 1
+#rarity 1
+#loc 262879
+#look 1
+#gems 3 1
+#gems 7 1
+#end
+
+#selectsite 480
+#name "Lake of Perpetual Mists"
+#path 7
+#level 2
+#rarity 1
+#loc 223
+#look 1
+#com 341
+#gems 7 1
+#gems 2 2
+#end
+
+#selectsite 481
+#name "Dragon Cliff"
+#path 1
+#level 1
+#rarity 2
+#loc 223
+#look 0
+#conjcost 20
+#gems 1 1
+#end
+
+#selectsite 482
+#name "Tower of the Silver Order"
+#path 1
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 100
+#lab
+#gems 1 3
+#gems 4 2
+#end
+
+#selectsite 483
+#name "Tower of the Silver Order"
+#path 1
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 100
+#lab
+#gems 1 2
+#gems 4 3
+#end
+
+#selectsite 484
+#name "Tower of the Silver Order"
+#path 1
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 100
+#lab
+#gems 1 2
+#gems 4 2
+#end
+
+#selectsite 485
+#name "Academy of Magic"
+#path 1
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3496
+#com 3492
+#lab
+#gems 1 1
+#end
+
+#selectsite 486
+#name "Academy of High Magics"
+#path 1
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 3505
+#com 3496
+#com 3492
+#lab
+#gems 1 2
+#gems 4 1
+#end
+
+#selectsite 487
+#name "Cloud Abode"
+#path 1
+#level 2
+#rarity 2
+#loc 223
+#look 2
+#com 93
+#com 92
+#lab
+#gems 1 2
+#end
+
+#selectsite 488
+#name "Stone Spires"
+#path 1
+#level 1
+#rarity 2
+#loc 8
+#look 3
+#gems 1 2
+#airrange 2
+#end
+
+#selectsite 489
+#name "Tempest Spire"
+#path 1
+#level 1
+#rarity 2
+#loc 4
+#look 3
+#com 93
+#evocost 20
+#gems 1 1
+#end
+
+#selectsite 490
+#name "Blizzard Valley"
+#path 1
+#level 1
+#rarity 2
+#loc 4
+#look 0
+#evocost 20
+#gems 1 1
+#gems 2 1
+#incscale 2
+#end
+
+#selectsite 491
+#name "Forest of Joy"
+#path 1
+#level 1
+#rarity 1
+#loc 49154
+#look 4
+#decunrest 5
+#gems 1 1
+#end
+
+#selectsite 492
+#name "The Cloven Mountain"
+#path 1
+#level 1
+#rarity 1
+#loc 16388
+#look 0
+#gems 1 3
+#gems 3 1
+#end
+
+#selectsite 493
+#name "Stairway Mountain"
+#path 1
+#level 1
+#rarity 1
+#loc 16388
+#look 0
+#gems 1 2
+#gems 3 1
+#end
+
+#selectsite 494
+#name "The Flailing Forest"
+#path 1
+#level 2
+#rarity 1
+#loc 16386
+#look 4
+#gems 1 2
+#gems 6 1
+#end
+
+#selectsite 495
+#name "The Whirlwind of Cyclon"
+#path 1
+#level 2
+#rarity 1
+#loc 16607
+#look 2
+#gems 1 4
+#end
+
+#selectsite 496
+#name "The Doom Cloud"
+#path 1
+#level 2
+#rarity 1
+#loc 16607
+#look 5
+#gems 1 2
+#gems 5 2
+#incscale 4
+#end
+
+#selectsite 497
+#name "Dragon Mountain"
+#path 1
+#level 0
+#rarity 2
+#loc 16388
+#look 0
+#gems 1 1
+-- ro: ability 552 = 593
+#end
+
+#selectsite 498
+#name "Silver Forest"
+#path 1
+#level 1
+#rarity 2
+#loc 2
+#look 4
+#gems 1 1
+#gems 3 1
+#gold 60
+#end
+
+#selectsite 499
+#name "Valley of the Roc"
+#path 1
+#level 3
+#rarity 2
+#loc 16388
+#look 0
+#gold 300
+#gems 3 1
+#gems 0 1
+#gems 1 1
+#end
+
+#selectsite 500
+#name "Enchanted Windmill"
+#path 1
+#level 1
+#rarity 0
+#loc 223
+#look 1
+#gems 1 1
+#supply 75
+#popgrowth 20
+#end
+
+#selectsite 501
+#name "Whisperwind Tower"
+#path 1
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#gems 1 1
+#end
+
+#selectsite 502
+#name "Scorchwind Waste"
+#path 1
+#level 2
+#rarity 1
+#loc 8
+#look 1
+#gems 1 1
+#gems 0 1
+#end
+
+#selectsite 503
+#name "Saltspray Cliffs"
+#path 1
+#level 2
+#rarity 1
+#loc 64
+#look 0
+#gems 1 1
+#gems 2 1
+#end
+
+#selectsite 504
+#name "Copper Mists"
+#path 1
+#level 2
+#rarity 1
+#loc 8
+#look 0
+#gems 1 1
+#gems 3 1
+#end
+
+#selectsite 505
+#name "Moonwind Marsh"
+#path 1
+#level 2
+#rarity 1
+#loc 128
+#look 4
+#gems 1 1
+#gems 4 1
+#end
+
+#selectsite 506
+#name "Plaguewind Waste"
+#path 1
+#level 2
+#rarity 1
+#loc 8
+#look 1
+#gems 1 1
+#gems 5 1
+#end
+
+#selectsite 507
+#name "Thunder Woods"
+#path 1
+#level 2
+#rarity 1
+#loc 223
+#look 4
+#gems 1 1
+#gems 6 1
+#end
+
+#selectsite 508
+#name "Shrieking Skies"
+#path 1
+#level 3
+#rarity 2
+#loc 262156
+#look 1
+#gems 1 1
+#gems 7 1
+#end
+
+#selectsite 509
+#name "Dragon Jaws"
+#path 1
+#level 0
+#rarity 2
+#loc 16388
+#look 0
+#gems 1 1
+#gems 0 1
+#gems 3 1
+-- ro: ability 551 = 593
+#end
+
+#selectsite 510
+#name "Tempest Hall"
+#path 1
+#level 2
+#rarity 2
+#loc 223
+#look 3
+#gems 1 3
+#end
+
+#selectsite 511
+#name "Copper Idol"
+#path 1
+#level 2
+#rarity 0
+#loc 223
+#look 1
+#gems 1 1
+#end
+
+#selectsite 512
+#name "Sparkling Fields"
+#path 1
+#level 1
+#rarity 0
+#loc 223
+#look 1
+#gems 1 1
+#end
+
+#selectsite 513
+#name "Skysplit Oak"
+#path 1
+#level 1
+#rarity 0
+#loc 87
+#look 4
+#gems 1 1
+#end
+
+#selectsite 514
+#name "Wailing Woods"
+#path 1
+#level 1
+#rarity 1
+#loc 16386
+#look 4
+#gems 1 1
+#gems 5 1
+#decunrest -3
+#end
+
+#selectsite 515
+#name "Nest of Obsidian Snakes"
+#path 1
+#level 3
+#rarity 1
+#loc 223
+#look 6
+#gems 1 2
+#end
+
+#selectsite 516
+#name "Black Hawk Nest"
+#path 1
+#level 2
+#rarity 1
+#loc 6
+#look 4
+#gems 1 1
+-- ro: ability 557 = 517
+#end
+
+#selectsite 517
+#name "Ziggurat of Thunder"
+#path 1
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#gems 1 2
+-- ro: ability 398 = 1
+#end
+
+#selectsite 518
+#name "The Highest Peak"
+#path 1
+#level 2
+#rarity 1
+#loc 16388
+#look 0
+#gems 1 1
+#airrange 2
+#nat 71
+#natcom 1286
+-- ro: ability 373 repeated (the game reads the first) = 24
+#end
+
+#selectsite 519
+#name "Pinnacle of Power"
+#path 1
+#level 3
+#rarity 2
+#loc 16607
+#look 3
+#gems 1 1
+#airrange 3
+#end
+
+#selectsite 520
+#name "Rune of Air"
+#path 1
+#level 2
+#rarity 1
+#loc 255
+#look 2
+#airrange 2
+#end
+
+#selectsite 521
+#name "Translucent Tower"
+#path 1
+#level 3
+#rarity 5
+#loc 16607
+#look 3
+#com 93
+#lab
+#airrange 2
+#end
+
+#selectsite 522
+#name "Well of White Water"
+#path 2
+#level 1
+#rarity 0
+#loc 735
+#look 4
+#gems 2 1
+#end
+
+#selectsite 523
+#name "Mercury Pond"
+#path 2
+#level 1
+#rarity 0
+#loc 735
+#look 4
+#gems 2 2
+#end
+
+#selectsite 524
+#name "Reverse Stream"
+#path 2
+#level 2
+#rarity 1
+#loc 735
+#look 1
+#gems 2 2
+#end
+
+#selectsite 525
+#name "Weeping Stone"
+#path 2
+#level 3
+#rarity 0
+#loc 735
+#look 1
+#gems 2 1
+#end
+
+#selectsite 526
+#name "Boiling Bog"
+#path 2
+#level 1
+#rarity 0
+#loc 134
+#look 2
+#gems 0 1
+#gems 2 1
+#end
+
+#selectsite 527
+#name "Lake of Mists"
+#path 2
+#level 0
+#rarity 1
+#loc 223
+#look 0
+#gems 2 1
+#end
+
+#selectsite 528
+#name "Sinkmarsh"
+#path 2
+#level 1
+#rarity 0
+#loc 130
+#look 2
+#gems 2 1
+#end
+
+#selectsite 529
+#name "Lantern Fens"
+#path 2
+#level 1
+#rarity 0
+#loc 130
+#look 2
+#gems 0 1
+#end
+
+#selectsite 530
+#name "Geyser"
+#path 2
+#level 1
+#rarity 1
+#loc 223
+#look 4
+#gems 2 1
+#gems 0 1
+#end
+
+#selectsite 531
+#name "Pearl Beach"
+#path 2
+#level 1
+#rarity 1
+#loc 64
+#look 0
+#gold 75
+#gems 4 1
+#end
+
+#selectsite 532
+#name "Waterfall"
+#path 2
+#level 1
+#rarity 1
+#loc 735
+#look 1
+#gems 1 1
+#gems 2 1
+#end
+
+#selectsite 533
+#name "Rockside Spring"
+#path 2
+#level 1
+#rarity 0
+#loc 4
+#look 1
+#gems 3 1
+#gems 2 1
+#end
+
+#selectsite 534
+#name "Well of Yesterdays Waters"
+#path 2
+#level 1
+#rarity 1
+#loc 735
+#look 4
+#gems 4 1
+#gems 2 1
+#end
+
+#selectsite 535
+#name "Corpse Candles' Marsh"
+#path 2
+#level 1
+#rarity 0
+#loc 130
+#look 2
+#gems 5 1
+#gems 2 1
+#end
+
+#selectsite 536
+#name "Overgrown Lake"
+#path 2
+#level 1
+#rarity 1
+#loc 223
+#look 2
+#gems 6 1
+#gems 2 1
+#end
+
+#selectsite 537
+#name "Glittering Stream"
+#path 2
+#level 1
+#rarity 1
+#loc 223
+#look 0
+#gems 7 1
+#gems 2 1
+#end
+
+#selectsite 538
+#name "Lifeless Lake"
+#path 2
+#level 1
+#rarity 1
+#loc 262879
+#look 0
+#gems 5 1
+#end
+
+#selectsite 539
+#name "River Fortress"
+#path 2
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#fort 3
+#gems 2 1
+#end
+
+#selectsite 540
+#name "Bottomless Lake"
+#path 2
+#level 1
+#rarity 2
+#loc 735
+#look 0
+#conjcost 20
+#gems 2 1
+#end
+
+#selectsite 541
+#name "Mist Swamps"
+#path 2
+#level 1
+#rarity 1
+#loc 130
+#look 2
+#gems 2 1
+#gems 1 1
+#end
+
+#selectsite 542
+#name "Academy of Magic"
+#path 2
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3495
+#com 3492
+#lab
+#gems 2 1
+#end
+
+#selectsite 543
+#name "Academy of High Magics"
+#path 2
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 3504
+#com 3495
+#com 3492
+#lab
+#gems 2 2
+#gems 3 1
+#end
+
+#selectsite 544
+#name "Frost Vale"
+#path 2
+#level 2
+#rarity 2
+#loc 4
+#look 4
+#com 309
+#gems 2 1
+#incscale 2
+#end
+
+#selectsite 545
+#name "Azure Academy"
+#path 2
+#level 1
+#rarity 1
+#loc 16607
+#look 3
+#com 97
+#com 96
+#lab
+#gems 2 1
+#fort 3
+#end
+
+#selectsite 546
+#name "Rustwater"
+#path 2
+#level 1
+#rarity 1
+#loc 16607
+#look 2
+#gems 2 1
+#gems 3 1
+#gems 0 1
+#end
+
+#selectsite 547
+#name "The Ferry"
+#path 2
+#level 1
+#rarity 1
+#loc 16607
+#look 0
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 548
+#name "Mount Frost"
+#path 2
+#level 1
+#rarity 1
+#loc 16388
+#look 4
+#gems 2 2
+#incscale 2
+-- ro: ability 554 = 511
+#end
+
+#selectsite 549
+#name "The Forest of the Lake"
+#path 2
+#level 1
+#rarity 1
+#loc 16386
+#look 2
+#gems 2 2
+#gems 6 1
+#end
+
+#selectsite 550
+#name "Stony Swamps"
+#path 2
+#level 1
+#rarity 1
+#loc 16514
+#look 2
+#gems 3 1
+#end
+
+#selectsite 551
+#name "The Frozen Forest"
+#path 2
+#level 2
+#rarity 1
+#loc 16386
+#look 2
+#com 309
+#gems 2 3
+#gems 6 1
+#incscale 2
+#end
+
+#selectsite 552
+#name "The Sea of the Tears of Men"
+#path 2
+#level 2
+#rarity 2
+#loc 16607
+#look 0
+#gems 5 2
+#gems 2 2
+#end
+
+#selectsite 553
+#name "The Water Sphere"
+#path 2
+#level 3
+#rarity 1
+#loc 16607
+#look 4
+#gems 2 3
+#waterrange 2
+#end
+
+#selectsite 554
+#name "The Sea Underneath"
+#path 2
+#level 4
+#rarity 2
+#loc 17119
+#look 6
+#gems 2 5
+#end
+
+#selectsite 555
+#name "Temple of the Turning Tide"
+#path 2
+#level 1
+#rarity 2
+#loc 64
+#look 5
+#altcost 20
+#gems 2 1
+#com 529
+#end
+
+#selectsite 556
+#name "Black Ice Valley"
+#path 2
+#level 1
+#rarity 2
+#loc 4
+#look 0
+#evocost 20
+#gems 5 1
+#gems 2 1
+#end
+
+#selectsite 557
+#name "Frozen Fountain"
+#path 2
+#level 2
+#rarity 2
+#loc 735
+#look 1
+#gems 2 3
+#end
+
+#selectsite 558
+#name "Frozen Lands"
+#path 2
+#level 0
+#rarity 2
+#loc 223
+#look 4
+#gems 2 1
+#incscale 2
+#end
+
+#selectsite 559
+#name "Academy of the Crescent Moon"
+#path 2
+#level 3
+#rarity 2
+#loc 16607
+#look 3
+#com 999
+#lab
+#gems 2 2
+#gems 4 2
+#end
+
+#selectsite 560
+#name "Well of All Waters"
+#path 2
+#level 3
+#rarity 2
+#loc 16607
+#look 4
+#scry 1
+#gems 2 3
+#end
+
+#selectsite 561
+#name "The Swamp of Dread"
+#path 2
+#level 1
+#rarity 2
+#loc 16512
+#look 2
+#gems 5 2
+#gems 2 1
+#end
+
+#selectsite 562
+#name "The Sunless Sea"
+#path 2
+#level 3
+#rarity 2
+#loc 16904
+#look 6
+#gems 2 3
+#end
+
+#selectsite 563
+#name "Healing Spring"
+#path 2
+#level 2
+#rarity 2
+#loc 262367
+#look 4
+#gems 2 1
+#gems 6 1
+#heal 10
+#end
+
+#selectsite 564
+#name "Enchanted Well"
+#path 2
+#level 1
+#rarity 0
+#loc 262879
+#look 4
+#gems 2 1
+#end
+
+#selectsite 565
+#name "Icebrick Tower"
+#path 2
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#gems 2 1
+#end
+
+#selectsite 566
+#name "Steam Fountain"
+#path 2
+#level 2
+#rarity 1
+#loc 16
+#look 4
+#gems 2 1
+#gems 0 1
+#end
+
+#selectsite 567
+#name "Rain Ridge"
+#path 2
+#level 2
+#rarity 1
+#loc 4
+#look 0
+#gems 2 1
+#gems 1 1
+#end
+
+#selectsite 568
+#name "Meltwater Stream"
+#path 2
+#level 2
+#rarity 1
+#loc 4
+#look 1
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 569
+#name "Moonlit Lake"
+#path 2
+#level 2
+#rarity 1
+#loc 4
+#look 0
+#gems 2 1
+#gems 4 1
+#end
+
+#selectsite 570
+#name "Oasis of the Dead"
+#path 2
+#level 2
+#rarity 1
+#loc 8
+#look 0
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 571
+#name "Double Bottom Lake"
+#path 2
+#level 2
+#rarity 1
+#loc 2
+#look 0
+#gems 2 1
+#gems 7 1
+#end
+
+#selectsite 572
+#name "Rainbow Fountain"
+#path 2
+#level 3
+#rarity 2
+#loc 16
+#look 1
+#gems 2 1
+#gems 7 1
+#end
+
+#selectsite 573
+#name "Merman Village"
+#path 2
+#level 0
+#rarity 0
+#loc 64
+#look 0
+#mon 1065
+#com 1067
+#end
+
+#selectsite 574
+#name "Turtle Village"
+#path 2
+#level 0
+#rarity 0
+#loc 64
+#look 0
+#mon 1292
+#com 1294
+#end
+
+#selectsite 575
+#name "Ichtyid Enclave"
+#path 4
+#level 1
+#rarity 2
+#loc 96
+#look 0
+#gems 2 1
+#gems 4 1
+#mon 974
+#com 2805
+#end
+
+#selectsite 576
+#name "Mermage Coven"
+#path 2
+#level 1
+#rarity 2
+#loc 96
+#look 0
+#gems 2 2
+#mon 1065
+#com 2815
+#end
+
+#selectsite 577
+#name "Isle of the Saoi"
+#path 3
+#level 1
+#rarity 2
+#loc 32
+#look 7
+#gems 3 1
+#gems 2 1
+#com 2832
+#mon 2838
+#end
+
+#selectsite 578
+#name "Temple of the Sacred River"
+#path 2
+#level 2
+#rarity 2
+#loc 223
+#look 5
+#gems 2 1
+#gems 5 1
+#com 1877
+#com 1878
+#end
+
+#selectsite 579
+#name "Garden of Frozen Flowers"
+#path 2
+#level 1
+#rarity 0
+#loc 223
+#look 2
+#gems 2 1
+#nat 71
+#natcom 204
+#end
+
+#selectsite 580
+#name "Wellspring of Secrets"
+#path 2
+#level 3
+#rarity 0
+#loc 223
+#look 1
+#gems 2 1
+#end
+
+#selectsite 581
+#name "Lake of Living Water"
+#path 2
+#level 3
+#rarity 0
+#loc 223
+#look 0
+#gems 2 1
+#end
+
+#selectsite 582
+#name "Subterranean Lake"
+#path 2
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#gems 2 1
+#end
+
+#selectsite 583
+#name "Forgotten Oasis"
+#path 2
+#level 1
+#rarity 1
+#loc 8
+#gems 2 1
+#supply 15
+#end
+
+#selectsite 584
+#name "Plaguewater Oasis"
+#path 2
+#level 1
+#rarity 1
+#loc 8
+#gems 5 1
+#disease 5
+#end
+
+#selectsite 585
+#name "Frozen Glen"
+#path 2
+#level 1
+#rarity 1
+#loc 2
+#look 2
+#gems 2 1
+#end
+
+#selectsite 586
+#name "Melting Cliffs"
+#path 2
+#level 2
+#rarity 1
+#loc 223
+#look 1
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 587
+#name "Pool of Perpetual Night"
+#path 2
+#level 3
+#rarity 1
+#loc 16607
+#look 0
+#gems 2 1
+#end
+
+#selectsite 588
+#name "Enchanted Glacier"
+#path 2
+#level 1
+#rarity 1
+#loc 4
+#look 0
+#gems 2 1
+-- ro: ability 552 = 2231
+#end
+
+#selectsite 589
+#name "Wellspring of the Virgins"
+#path 2
+#level 1
+#rarity 2
+#loc 16607
+#look 1
+#gems 2 1
+#heal 3
+#end
+
+#selectsite 590
+#name "Sign of Nodens"
+#path 2
+#level 3
+#rarity 2
+#loc 16450
+#look 4
+#gems 2 2
+#heal 3
+#end
+
+#selectsite 591
+#name "Rune of Water"
+#path 2
+#level 2
+#rarity 1
+#loc 255
+#look 4
+#waterrange 2
+#end
+
+#selectsite 592
+#name "Pharos"
+#path 2
+#level 1
+#rarity 2
+#loc 16448
+#look 3
+#scry 2
+#allrange 2
+#scryrange 8
+#end
+
+#selectsite 593
+#name "Tower of Ice"
+#path 2
+#level 3
+#rarity 2
+#loc 16396
+#look 6
+#lab
+#waterrange 2
+#gems 2 2
+#end
+
+#selectsite 594
+#name "Tomb of Ice"
+#path 2
+#level 3
+#rarity 5
+#loc 16607
+#look 6
+#gems 2 1
+#incscale 2
+#end
+
+#selectsite 595
+#name "Wellspring of Abundance"
+#path 2
+#level 4
+#rarity 5
+#loc 16607
+#look 1
+#gems 2 2
+#decscale 3
+#gold 30
+#res 30
+#end
+
+#selectsite 596
+#name "The Golden City"
+#path 2
+#level 0
+#rarity 2
+#loc 17440
+#look 5
+#gold 100
+#res 30
+#mon 1056
+#end
+
+#selectsite 597
+#name "Mineral Cave"
+#path 3
+#level 1
+#rarity 0
+#loc 607
+#look 6
+#gems 3 1
+#end
+
+#selectsite 598
+#name "Earth Blood Seepage"
+#path 3
+#level 1
+#rarity 0
+#loc 735
+#look 6
+#gems 3 2
+#end
+
+#selectsite 599
+#name "Firbolg Fortress"
+#path 3
+#level 2
+#rarity 1
+#loc 223
+#look 3
+#fort 4
+#gems 3 2
+#end
+
+#selectsite 600
+#name "Iron Cliff"
+#path 3
+#level 3
+#rarity 0
+#loc 197631
+#look 0
+#gems 3 1
+#end
+
+#selectsite 601
+#name "Canyon of Sand"
+#path 3
+#level 0
+#rarity 1
+#loc 197631
+#look 4
+#gems 3 1
+#end
+
+#selectsite 602
+#name "Mine of Superior Iron"
+#path 3
+#level 0
+#rarity 0
+#loc 4
+#look 0
+-- ro: ability 635 = 1
+-- ro: ability 384 = 100
+#end
+
+#selectsite 603
+#name "Great Iron Mine"
+#path 3
+#level 0
+#rarity 0
+#loc 516
+#look 0
+-- ro: ability 384 = 150
+#end
+
+#selectsite 604
+#name "Great Gold Mine"
+#path 3
+#level 0
+#rarity 0
+#loc 516
+#look 0
+#minegold 150
+#end
+
+#selectsite 605
+#name "Great Silver Mine"
+#path 3
+#level 0
+#rarity 0
+#loc 516
+#look 0
+#minegold 100
+#end
+
+#selectsite 606
+#name "Hidden Gold Mine"
+#path 3
+#level 1
+#rarity 0
+#loc 516
+#look 0
+#minegold 150
+#end
+
+#selectsite 607
+#name "Gem Deposits"
+#path 3
+#level 1
+#rarity 0
+#loc 262879
+#look 0
+#minegold 125
+#end
+
+#selectsite 608
+#name "Gorge"
+#path 3
+#level 1
+#rarity 0
+#loc 516
+#look 4
+#gems 3 1
+#end
+
+#selectsite 609
+#name "Magma Cave"
+#path 3
+#level 1
+#rarity 0
+#loc 516
+#look 6
+#gems 0 1
+#gems 3 1
+#end
+
+#selectsite 610
+#name "Standing Stones"
+#path 3
+#level 1
+#rarity 1
+#loc 262367
+#look 1
+#gems 1 1
+#gems 3 1
+#end
+
+#selectsite 611
+#name "Water Filled Cave"
+#path 3
+#level 1
+#rarity 1
+#loc 223
+#look 6
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 612
+#name "Starlight Chasm"
+#path 3
+#level 1
+#rarity 0
+#loc 516
+#look 4
+#gems 4 1
+#gems 3 1
+#end
+
+#selectsite 613
+#name "Chasm of Strange Lights"
+#path 3
+#level 1
+#rarity 0
+#loc 516
+#look 4
+#gems 7 1
+#gems 3 1
+#end
+
+#selectsite 614
+#name "Cave of the Pale Ones"
+#path 3
+#level 1
+#rarity 1
+#loc 735
+#look 6
+#gems 5 1
+#gems 3 1
+#mon 1465
+#end
+
+#selectsite 615
+#name "Forest of Truffles"
+#path 3
+#level 1
+#rarity 0
+#loc 2
+#look 2
+#gems 6 1
+#gems 3 1
+#end
+
+#selectsite 616
+#name "Entrance"
+#path 3
+#level 1
+#rarity 2
+#loc 262879
+#look 4
+#conjcost 20
+#gems 3 1
+#end
+
+#selectsite 617
+#name "Tower of the Iron Order"
+#path 3
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 477
+#lab
+#gems 3 3
+#gems 4 2
+#end
+
+#selectsite 618
+#name "Tower of the Iron Order"
+#path 3
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 477
+#lab
+#gems 3 2
+#gems 4 3
+#end
+
+#selectsite 619
+#name "Tower of the Iron Order"
+#path 3
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 477
+#lab
+#gems 3 2
+#gems 4 2
+#end
+
+#selectsite 620
+#name "Academy of Magic"
+#path 3
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3494
+#com 3492
+#lab
+#gems 3 1
+#end
+
+#selectsite 621
+#name "Academy of High Magics"
+#path 3
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 3503
+#com 3494
+#com 3492
+#lab
+#gems 3 2
+#gems 0 1
+#end
+
+#selectsite 622
+#name "Twice Walled Tower"
+#path 3
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 344
+#gems 3 1
+#gems 4 1
+#end
+
+#selectsite 623
+#name "Archaic Fortress"
+#path 3
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#fort 3
+#end
+
+#selectsite 624
+#name "Lost Vale of the Elders"
+#path 3
+#level 2
+#rarity 2
+#loc 4
+#look 2
+#com 411
+#gems 3 1
+#gems 6 1
+#end
+
+#selectsite 625
+#name "Troll Pit"
+#path 3
+#level 2
+#rarity 2
+#loc 735
+#look 6
+#mon 518
+#end
+
+#selectsite 626
+#name "Troglodyte Den"
+#path 3
+#level 3
+#rarity 2
+#loc 735
+#look 6
+#mon 447
+#gems 3 1
+#end
+
+#selectsite 627
+#name "Runaway Pit"
+#path 3
+#level 3
+#rarity 2
+#loc 735
+#look 6
+#gems 4 2
+#gems 3 1
+#end
+
+#selectsite 628
+#name "Steel Swamps"
+#path 3
+#level 0
+#rarity 1
+#loc 16512
+#look 2
+#res 50
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 629
+#name "White Man Hill"
+#path 3
+#level 0
+#rarity 1
+#loc 16607
+#look 1
+#supply 150
+#gems 6 1
+#decscale 3
+#end
+
+#selectsite 630
+#name "The Forgotten Fortress"
+#path 3
+#level 2
+#rarity 1
+#loc 16607
+#look 3
+#fort 3
+#gems 3 2
+#gems 7 1
+#gems 5 1
+#end
+
+#selectsite 631
+#name "The Jervellan Wall"
+#path 3
+#level 1
+#rarity 1
+#loc 16607
+#look 3
+#fort 3
+#end
+
+#selectsite 632
+#name "Ten Thousand Things"
+#path 3
+#level 1
+#rarity 1
+#loc 279263
+#look 2
+#gems 3 1
+#gems 0 1
+#gems 1 1
+#gems 2 1
+#gems 6 1
+#end
+
+#selectsite 633
+#name "The Broken Maze"
+#path 3
+#level 2
+#rarity 1
+#loc 278751
+#look 4
+#gems 3 2
+#gems 4 1
+#end
+
+#selectsite 634
+#name "The Labyrinth"
+#path 3
+#level 2
+#rarity 1
+#loc 16607
+#look 4
+#mon 234
+#gems 4 2
+#gems 3 2
+#end
+
+#selectsite 635
+#name "The Chasm of Black Roses"
+#path 3
+#level 3
+#rarity 1
+#loc 16388
+#look 4
+#gems 5 2
+#gems 3 1
+#gems 6 1
+#end
+
+#selectsite 636
+#name "The Underworld"
+#path 3
+#level 3
+#rarity 1
+#loc 17119
+#look 6
+#gems 3 3
+#mon 447
+#com 411
+#end
+
+#selectsite 637
+#name "The Statues of the Overlords"
+#path 3
+#level 0
+#rarity 2
+#loc 16607
+#look 1
+#decscale 0
+#decscale 1
+#earthrange 2
+#end
+
+#selectsite 638
+#name "The Cornerstone"
+#path 3
+#level 3
+#rarity 2
+#loc 278751
+#look 5
+#gems 3 4
+#gems 4 1
+#decscale 0
+#end
+
+#selectsite 639
+#name "The Factory"
+#path 3
+#level 4
+#rarity 2
+#loc 278751
+#look 3
+#gems 3 3
+-- ro: ability 552 = 532
+#end
+
+#selectsite 640
+#name "Castle Arcanum"
+#path 3
+#level 1
+#rarity 1
+#loc 16477
+#look 3
+#com 312
+#com 875
+#gems 3 1
+#gems 0 1
+#fort 4
+#end
+
+#selectsite 641
+#name "Ancient Forge"
+#path 3
+#level 1
+#rarity 2
+#loc 262879
+#look 0
+#constcost 20
+#gems 3 1
+#end
+
+#selectsite 642
+#name "Chamber of Changes"
+#path 3
+#level 1
+#rarity 2
+#loc 262879
+#look 6
+#altcost 20
+#gems 3 1
+#end
+
+#selectsite 643
+#name "Circle of Standing Stones"
+#path 3
+#level 1
+#rarity 2
+#loc 262879
+#look 1
+#enchcost 20
+#gems 3 1
+#end
+
+#selectsite 644
+#name "Conjurer's Cave"
+#path 3
+#level 3
+#rarity 2
+#loc 516
+#look 6
+#conjcost 30
+#gems 3 1
+#end
+
+#selectsite 645
+#name "The Statue of the Sitting God"
+#path 3
+#level 2
+#rarity 0
+#loc 16607
+#look 5
+#decscale 0
+#enchcost 20
+#gems 4 1
+#end
+
+#selectsite 646
+#name "The Jade Pagoda"
+#path 3
+#level 1
+#rarity 2
+#loc 16607
+#look 3
+#com 1894
+#com 808
+#gems 3 1
+#gems 4 1
+#gems 2 1
+#end
+
+#selectsite 647
+#name "The Imperial Quarry"
+#path 3
+#level 1
+#rarity 0
+#loc 214015
+#look 0
+#gems 3 1
+#end
+
+#selectsite 648
+#name "Dolmen"
+#path 3
+#level 1
+#rarity 1
+#loc 17119
+#look 1
+#gems 3 1
+#end
+
+#selectsite 649
+#name "Forest of Golden Leaves"
+#path 3
+#level 0
+#rarity 2
+#loc 16386
+#look 2
+#gems 6 1
+#gems 0 1
+#gems 3 1
+#end
+
+#selectsite 650
+#name "The Vaults Beneath"
+#path 3
+#level 3
+#rarity 2
+#loc 16607
+#look 6
+#gems 3 1
+#res 250
+#end
+
+#selectsite 651
+#name "The Deepest Mine"
+#path 3
+#level 2
+#rarity 2
+#loc 16900
+#look 6
+#gems 3 4
+#end
+
+#selectsite 652
+#name "The Sun Below"
+#path 3
+#level 4
+#rarity 2
+#loc 16904
+#look 6
+#gems 0 4
+#nat 26
+#natmon 2672
+#end
+
+#selectsite 653
+#name "Endless Caverns"
+#path 3
+#level 2
+#rarity 2
+#loc 516
+#look 6
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 654
+#name "Glowing Caverns"
+#path 3
+#level 2
+#rarity 2
+#loc 516
+#look 6
+#gems 7 1
+#gems 6 1
+#gems 2 1
+#end
+
+#selectsite 655
+#name "The Mosaic Desert"
+#path 3
+#level 2
+#rarity 2
+#loc 16392
+#look 1
+#com 2245
+#gems 3 1
+#gems 0 1
+#gems 1 1
+#gems 7 1
+#end
+
+#selectsite 656
+#name "Villa of Ever Changing Fresques"
+#path 3
+#level 2
+#rarity 2
+#loc 16400
+#look 3
+#gems 3 1
+#gems 0 1
+#gems 1 1
+#gems 4 1
+#gems 6 1
+#gems 7 1
+#end
+
+#selectsite 657
+#name "Bear Mountain"
+#path 3
+#level 0
+#rarity 2
+#loc 16388
+#look 0
+#gems 3 2
+#end
+
+#selectsite 658
+#name "The Cliff of Seven Directions"
+#path 3
+#level 3
+#rarity 2
+#loc 16388
+#look 5
+#gems 3 1
+#gems 4 1
+#decscale 5
+#end
+
+#selectsite 659
+#name "Enchanted Tower"
+#path 3
+#level 1
+#rarity 0
+#loc 262367
+#look 3
+#gems 3 1
+#end
+
+#selectsite 660
+#name "Earthroot Tower"
+#path 3
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#gems 3 1
+#end
+
+#selectsite 661
+#name "Sulphur Cliffs"
+#path 3
+#level 2
+#rarity 1
+#loc 8
+#look 1
+#gems 3 1
+#gems 0 1
+#end
+
+#selectsite 662
+#name "Snowcap Mountain"
+#path 3
+#level 2
+#rarity 1
+#loc 4
+#look 0
+#gems 3 1
+#gems 2 1
+#end
+
+#selectsite 663
+#name "Thundertop Mountain"
+#path 3
+#level 2
+#rarity 1
+#loc 4
+#look 0
+#gems 3 1
+#gems 1 1
+#end
+
+#selectsite 664
+#name "Meteorite Cliffs"
+#path 3
+#level 2
+#rarity 1
+#loc 223
+#look 0
+#gems 3 1
+#gems 4 1
+#end
+
+#selectsite 665
+#name "Iron Tomb"
+#path 3
+#level 2
+#rarity 1
+#loc 262660
+#look 5
+#gems 3 1
+#gems 5 1
+#end
+
+#selectsite 666
+#name "Rock Forest"
+#path 3
+#level 2
+#rarity 1
+#loc 2
+#look 2
+#gems 3 1
+#gems 6 1
+#end
+
+#selectsite 667
+#name "Ctonian Gate"
+#path 3
+#level 2
+#rarity 2
+#loc 735
+#look 4
+#gems 3 3
+#end
+
+#selectsite 668
+#name "Ravine of Perpetual Echoes"
+#path 3
+#level 3
+#rarity 2
+#loc 4
+#look 4
+#gems 3 1
+#gems 7 1
+#end
+
+#selectsite 669
+#name "Deep Crevasse"
+#path 3
+#level 1
+#rarity 0
+#loc 255
+#look 4
+#gems 3 1
+#end
+
+#selectsite 670
+#name "Mud Field"
+#path 3
+#level 1
+#rarity 0
+#loc 223
+#look 1
+#gems 3 1
+#end
+
+#selectsite 671
+#name "Quicksand"
+#path 3
+#level 1
+#rarity 0
+#loc 223
+#look 1
+#gems 3 1
+#end
+
+#selectsite 672
+#name "Stone Tree Grove"
+#path 3
+#level 2
+#rarity 1
+#loc 18
+#look 2
+#gems 3 1
+#end
+
+#selectsite 673
+#name "Flooded Mines"
+#path 3
+#level 1
+#rarity 2
+#loc 215
+#gems 3 1
+#gems 5 1
+#end
+
+#selectsite 674
+#name "Underworld Entrance"
+#path 3
+#level 3
+#rarity 2
+#loc 223
+#look 4
+#gems 3 2
+#res 30
+#end
+
+#selectsite 675
+#name "Abyss"
+#path 3
+#level 1
+#rarity 2
+#loc 255
+#look 6
+#gems 3 1
+#end
+
+#selectsite 676
+#name "Heart of the Mountain"
+#path 3
+#level 3
+#rarity 2
+#loc 16388
+#look 6
+#gems 3 2
+#earthrange 3
+#end
+
+#selectsite 677
+#name "Basilisk Cave"
+#path 3
+#level 2
+#rarity 2
+#loc 223
+#look 6
+#gems 3 1
+#altcost 20
+#end
+
+#selectsite 678
+#name "Rune of Earth"
+#path 3
+#level 2
+#rarity 1
+#loc 255
+#look 5
+#earthrange 2
+#end
+
+#selectsite 679
+#name "Cavern of Marble Spheres"
+#path 3
+#level 3
+#rarity 2
+#loc 16900
+#gems 3 1
+#gems 4 2
+#end
+
+#selectsite 680
+#name "Halls of the Mountain King"
+#path 3
+#level 4
+#rarity 5
+#loc 16388
+#look 6
+#gems 3 1
+#minegold 75
+#end
+
+#selectsite 681
+#name "Ruined Halls of the Mountain King"
+#path 3
+#level 4
+#rarity 5
+#loc 16388
+#look 6
+#end
+
+#selectsite 682
+#name "City of the Ancients"
+#path 3
+#level 2
+#rarity 5
+#loc 16607
+#look 3
+#adventureruin 10
+#end
+
+#selectsite 683
+#name "The World Pillar"
+#path 3
+#level 0
+#rarity 2
+#loc 16388
+#look 5
+#gems 3 4
+#gems 1 1
+#end
+
+#selectsite 684
+#name "Library"
+#path 4
+#level 0
+#rarity 1
+#loc 223
+#look 3
+#com 478
+#end
+
+#selectsite 685
+#name "Painted Cave"
+#path 4
+#level 1
+#rarity 0
+#loc 735
+#look 6
+#gems 4 1
+#end
+
+#selectsite 686
+#name "Maze"
+#path 4
+#level 1
+#rarity 0
+#loc 262879
+#look 6
+#gems 4 2
+#end
+
+#selectsite 687
+#name "Monolith"
+#path 4
+#level 2
+#rarity 1
+#loc 262367
+#look 1
+#gems 4 2
+#end
+
+#selectsite 688
+#name "Starflower Garden"
+#path 4
+#level 3
+#rarity 0
+#loc 262879
+#look 1
+#gems 4 1
+#end
+
+#selectsite 689
+#name "Lake of Reflected Time"
+#path 4
+#level 0
+#rarity 1
+#loc 262367
+#look 2
+#gems 4 1
+#end
+
+#selectsite 690
+#name "Strange Opening"
+#path 4
+#level 1
+#rarity 1
+#loc 262879
+#look 4
+#gems 4 2
+#incscale 4
+#end
+
+#selectsite 691
+#name "Sages Guild"
+#path 4
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#com 478
+#lab
+#gems 4 1
+#end
+
+#selectsite 692
+#name "Abandoned Laboratory"
+#path 4
+#level 1
+#rarity 1
+#loc 262879
+#look 3
+#lab
+#end
+
+#selectsite 693
+#name "Crystal Flames"
+#path 4
+#level 1
+#rarity 1
+#loc 262879
+#look 1
+#gems 0 1
+#gems 4 1
+#end
+
+#selectsite 694
+#name "Mirror Palace"
+#path 4
+#level 1
+#rarity 1
+#loc 278751
+#look 3
+#gems 1 1
+#gems 4 1
+#supply 40
+#gold 40
+#end
+
+#selectsite 695
+#name "Caves of Passing Time"
+#path 4
+#level 1
+#rarity 1
+#loc 262879
+#look 6
+#gems 3 1
+#gems 4 1
+#end
+
+#selectsite 696
+#name "Scrying Pool"
+#path 4
+#level 1
+#rarity 2
+#loc 262879
+#look 2
+#scry 1
+#scryrange 4
+#gems 2 1
+#gems 4 1
+#end
+
+#selectsite 697
+#name "Pyramid of Life"
+#path 4
+#level 1
+#rarity 1
+#loc 262367
+#look 5
+#gems 5 1
+#gems 4 1
+#end
+
+#selectsite 698
+#name "Totem Collection"
+#path 4
+#level 1
+#rarity 1
+#loc 223
+#look 1
+#gems 6 1
+#gems 4 1
+#decscale 4
+#end
+
+#selectsite 699
+#name "Dream Collection"
+#path 4
+#level 1
+#rarity 1
+#loc 459775
+#look 1
+#gems 7 1
+#gems 4 1
+#end
+
+#selectsite 700
+#name "Gateway"
+#path 4
+#level 1
+#rarity 2
+#loc 262879
+#look 4
+#conjcost 20
+#gems 4 1
+#end
+
+#selectsite 701
+#name "Distortion"
+#path 4
+#level 1
+#rarity 2
+#loc 262879
+#look 1
+#thaucost 20
+#gems 4 1
+#allrange 2
+#end
+
+#selectsite 702
+#name "Void Alignment"
+#path 4
+#level 1
+#rarity 2
+#loc 262879
+#look 1
+#enchcost 20
+#gems 4 1
+#astralrange 1
+#end
+
+#selectsite 703
+#name "Village of Strange Men"
+#path 4
+#level 1
+#rarity 2
+#loc 262367
+#look 0
+#altcost 20
+#gems 4 1
+#end
+
+#selectsite 704
+#name "The Ancient Master"
+#path 4
+#level 1
+#rarity 1
+#loc 16607
+#look 0
+#xp 8
+#end
+
+#selectsite 705
+#name "Citadel of the Lore Masters"
+#path 4
+#level 2
+#rarity 1
+#loc 16607
+#look 5
+#com 479
+#com 478
+#lab
+#gems 4 2
+#end
+
+#selectsite 706
+#name "The Metal Spires"
+#path 4
+#level 3
+#rarity 2
+#loc 16607
+#look 1
+#com 101
+#com 100
+#com 477
+#lab
+#gems 4 3
+#end
+
+#selectsite 707
+#name "Academy of Magic"
+#path 4
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3497
+#com 3509
+#lab
+#gems 4 1
+#end
+
+#selectsite 708
+#name "Academy of High Magics"
+#path 4
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 3506
+#com 3497
+#com 3509
+#lab
+#gems 4 2
+#gems 7 1
+#end
+
+#selectsite 709
+#name "The Council of Sages"
+#path 4
+#level 1
+#rarity 2
+#loc 16607
+#look 5
+#com 479
+#gems 4 1
+#gems 1 1
+#gems 3 1
+#gems 2 1
+#end
+
+#selectsite 710
+#name "Moon Mages Circle"
+#path 4
+#level 2
+#rarity 2
+#loc 16607
+#look 0
+#com 342
+#gems 4 2
+#gems 5 1
+#end
+
+#selectsite 711
+#name "The Hidden Kingdom of Elludia"
+#path 4
+#level 2
+#rarity 2
+#loc 16607
+#look 5
+#com 630
+#com 629
+#gems 4 2
+#gems 7 1
+#gems 5 1
+#end
+
+#selectsite 712
+#name "The Grey Tower of Nexus"
+#path 4
+#level 3
+#rarity 5
+#loc 278528
+#look 3
+#mon 390
+#com 391
+#com 106
+#gems 4 1
+#end
+
+#selectsite 713
+#name "The Ultimate Gateway"
+#path 4
+#level 3
+#rarity 2
+#loc 279263
+#look 4
+#conjcost 40
+#end
+
+#selectsite 714
+#name "Library of Time"
+#path 4
+#level 4
+#rarity 2
+#loc 278751
+#look 5
+#com 106
+#gems 4 4
+-- ro: ability 262 = 999
+#end
+
+#selectsite 715
+#name "Temple of the All-Seeing Eye"
+#path 4
+#level 3
+#rarity 2
+#loc 17119
+#look 5
+#scry 1
+#end
+
+#selectsite 716
+#name "Hall of Enlightenment"
+#path 4
+#level 4
+#rarity 2
+#loc 278532
+#look 5
+#gems 4 2
+#enchcost 30
+#end
+
+#selectsite 717
+#name "Moonlit Pond of Pearls"
+#path 4
+#level 2
+#rarity 2
+#loc 223
+#look 2
+#gems 4 3
+#end
+
+#selectsite 718
+#name "Strange House in the Mist"
+#path 4
+#level 3
+#rarity 2
+#loc 16607
+#look 1
+#voidgate 20
+#gems 4 1
+#end
+
+#selectsite 719
+#name "The Cave of Souls"
+#path 4
+#level 1
+#rarity 2
+#loc 16900
+#look 6
+#gems 4 2
+#gems 5 1
+#end
+
+#selectsite 720
+#name "The Mountain of the Past"
+#path 4
+#level 4
+#rarity 2
+#loc 16392
+#look 1
+#gems 4 4
+#end
+
+#selectsite 721
+#name "The Endless Field of Cubes"
+#path 4
+#level 4
+#rarity 2
+#loc 278536
+#look 1
+#gems 4 4
+#horrormark 2
+#end
+
+#selectsite 722
+#name "Enchanted Gate"
+#path 4
+#level 1
+#rarity 0
+#loc 262879
+#look 4
+#gems 4 1
+#end
+
+#selectsite 723
+#name "Skywatch Tower"
+#path 4
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#gems 4 1
+#end
+
+#selectsite 724
+#name "Nightlight Fen"
+#path 4
+#level 2
+#rarity 1
+#loc 128
+#look 1
+#gems 4 1
+#gems 0 1
+#end
+
+#selectsite 725
+#name "Moon Mirror"
+#path 4
+#level 2
+#rarity 1
+#loc 223
+#look 0
+#gems 4 1
+#gems 7 1
+#end
+
+#selectsite 726
+#name "Voidwind Plain"
+#path 4
+#level 2
+#rarity 1
+#loc 262367
+#look 0
+#gems 4 1
+#gems 1 1
+#end
+
+#selectsite 727
+#name "Mooncatch Lake"
+#path 4
+#level 2
+#rarity 1
+#loc 223
+#look 2
+#gems 4 1
+#gems 2 1
+#end
+
+#selectsite 728
+#name "Mountain Crater"
+#path 4
+#level 2
+#rarity 1
+#loc 4
+#gems 4 1
+#gems 3 1
+#end
+
+#selectsite 729
+#name "Painted Crypt"
+#path 4
+#level 2
+#rarity 1
+#loc 262879
+#look 5
+#gems 4 1
+#gems 5 1
+#end
+
+#selectsite 730
+#name "Moonvine Forest"
+#path 4
+#level 2
+#rarity 1
+#loc 2
+#look 2
+#gems 4 1
+#gems 6 1
+#end
+
+#selectsite 731
+#name "Huge Crater"
+#path 4
+#level 0
+#rarity 5
+#loc 197119
+#look 1
+#gems 4 1
+#gems 3 1
+#end
+
+#selectsite 732
+#name "The Forgotten City"
+#path 4
+#level 3
+#rarity 2
+#loc 278751
+#look 5
+#adventureruin 10
+#horrormark 2
+#end
+
+#selectsite 733
+#name "Unfound Door"
+#path 4
+#level 4
+#rarity 0
+#loc 262399
+#look 4
+#gems 4 1
+#end
+
+#selectsite 734
+#name "Starlit Pond"
+#path 4
+#level 1
+#rarity 0
+#loc 215
+#look 2
+#gems 4 1
+#end
+
+#selectsite 735
+#name "Garden of Pearls"
+#path 4
+#level 2
+#rarity 0
+#loc 262359
+#gems 4 2
+#end
+
+#selectsite 736
+#name "Impossible Angle"
+#path 4
+#level 2
+#rarity 1
+#loc 262367
+#look 4
+#gems 4 1
+#horrormark 4
+#end
+
+#selectsite 737
+#name "Moonlit Halls"
+#path 4
+#level 1
+#rarity 1
+#loc 223
+#look 0
+#gems 4 1
+#end
+
+#selectsite 738
+#name "Brook of Glimmering Pearls"
+#path 4
+#level 1
+#rarity 1
+#loc 262359
+#look 2
+#gems 4 1
+#gems 2 1
+#end
+
+#selectsite 739
+#name "Seer's Grave"
+#path 4
+#level 2
+#rarity 2
+#loc 262911
+#look 1
+#gems 4 1
+-- ro: ability 262 = 3
+#end
+
+#selectsite 740
+#name "Dreaming Stone"
+#path 4
+#level 2
+#rarity 2
+#loc 262911
+#look 1
+#astralrange 2
+-- ro: ability 262 = 3
+#end
+
+#selectsite 741
+#name "Sorcerer's Circle"
+#path 4
+#level 2
+#rarity 2
+#loc 262367
+#look 3
+#thaucost 20
+#sorceryrange 2
+#end
+
+#selectsite 742
+#name "Archaic Diagram"
+#path 4
+#level 2
+#rarity 2
+#loc 262399
+#look 1
+#evocost 20
+#end
+
+#selectsite 743
+#name "Chamber of Enchantment"
+#path 4
+#level 2
+#rarity 2
+#loc 262367
+#look 4
+#enchcost 20
+#lab
+#end
+
+#selectsite 744
+#name "Unsettling Pattern"
+#path 4
+#level 2
+#rarity 2
+#loc 262399
+#look 1
+#thaucost 20
+#horrormark 5
+#end
+
+#selectsite 745
+#name "Basalt Mirror"
+#path 4
+#level 2
+#rarity 2
+#loc 255
+#look 1
+#scry 1
+#end
+
+#selectsite 746
+#name "Moonshimmer Swamp"
+#path 4
+#level 3
+#rarity 2
+#loc 128
+#look 2
+#gems 4 1
+#gems 7 1
+#end
+
+#selectsite 747
+#name "The Gnomon"
+#path 4
+#level 2
+#rarity 2
+#loc 16607
+#look 1
+#gems 4 1
+#astralrange 3
+#end
+
+#selectsite 748
+#name "Seventh House on the Left"
+#path 4
+#level 3
+#rarity 2
+#loc 16607
+#look 1
+#bloodcost 20
+#gems 5 1
+#end
+
+#selectsite 749
+#name "The Halfway Inn"
+#path 4
+#level 0
+#rarity 1
+#loc 16607
+#look 3
+#gold 10
+#end
+
+#selectsite 750
+#name "The Forgotten Astrolabium"
+#path 4
+#level 3
+#rarity 2
+#loc 16607
+#gems 4 2
+#astralrange 3
+#end
+
+#selectsite 751
+#name "Citadel of the Mage King"
+#path 4
+#level 6
+#rarity 2
+#loc 16398
+#look 5
+#lab
+#fort 1
+#sorceryrange 2
+#gems 4 1
+#end
+
+#selectsite 752
+#name "Horror Cult"
+#path 4
+#level 5
+#rarity 5
+#loc 223
+#look 4
+#horrormark 3
+#end
+
+#selectsite 753
+#name "Ancient Scriptorium"
+#path 4
+#level 2
+#rarity 5
+#loc 16607
+#look 3
+#lab
+#end
+
+#selectsite 754
+#name "Secluded Village"
+#path 4
+#level 1
+#rarity 5
+#loc 223
+#look 0
+-- ro: ability 552 = 971
+-- ro: ability 555 = 970
+-- ro: ability 552 repeated (the game reads the first) = 968
+-- ro: ability 552 repeated (the game reads the first) = 969
+#end
+
+#selectsite 755
+#name "Guild of the Merchant Princes"
+#path 4
+#level 0
+#rarity 2
+#loc 17472
+#look 0
+#gold 50
+#end
+
+#selectsite 756
+#name "Dragon Rune"
+#path 4
+#level 2
+#rarity 2
+#loc 16639
+#look 4
+#gems 4 1
+-- ro: ability 399 = 1
+#end
+
+#selectsite 757
+#name "Starfall Tower"
+#path 4
+#level 3
+#rarity 2
+#loc 223
+#look 3
+#com 3893
+#gems 4 1
+#gems 3 1
+#end
+
+#selectsite 758
+#name "Starfall Waste"
+#path 4
+#level 1
+#rarity 2
+#loc 16392
+#look 1
+#com 3893
+#gems 4 1
+#gems 3 1
+#end
+
+#selectsite 759
+#name "Battlefield"
+#path 5
+#level 1
+#rarity 0
+#loc 262879
+#look 1
+#gems 5 1
+#end
+
+#selectsite 760
+#name "Burial Mound"
+#path 5
+#level 1
+#rarity 0
+#loc 262367
+#gems 5 1
+#end
+
+#selectsite 761
+#name "Graveyard of the Damned"
+#path 5
+#level 1
+#rarity 0
+#loc 223
+#gems 5 2
+#end
+
+#selectsite 762
+#name "Cave of Ghouls"
+#path 5
+#level 2
+#rarity 1
+#loc 735
+#look 6
+#gems 5 2
+-- ro: ability 554 = 198
+#end
+
+#selectsite 763
+#name "Well of Pestilence"
+#path 5
+#level 3
+#rarity 0
+#loc 223
+#look 6
+#disease 5
+#gems 5 1
+#incscale 3
+#deathrange 2
+#end
+
+#selectsite 764
+#name "Haunted Village"
+#path 5
+#level 0
+#rarity 1
+#loc 223
+#look 0
+#gems 5 1
+#end
+
+#selectsite 765
+#name "Gallows"
+#path 5
+#level 1
+#rarity 1
+#loc 223
+#look 0
+#gems 5 1
+#end
+
+#selectsite 766
+#name "Broken Tower"
+#path 5
+#level 1
+#rarity 1
+#loc 262367
+#look 3
+#gems 5 2
+#end
+
+#selectsite 767
+#name "Forest of the Dead"
+#path 5
+#level 1
+#rarity 0
+#loc 2
+#look 2
+#gems 5 1
+#end
+
+#selectsite 768
+#name "Ashen Forest"
+#path 5
+#level 2
+#rarity 1
+#loc 10
+#look 2
+#gems 5 1
+#end
+
+#selectsite 769
+#name "Banefire Braziers"
+#path 5
+#level 1
+#rarity 1
+#loc 735
+#look 5
+#gems 0 1
+#gems 5 1
+#incscale 3
+#decscale 2
+#nat 113
+#natcom 1095
+#end
+
+#selectsite 770
+#name "Windswept Catacombs"
+#path 5
+#level 1
+#rarity 1
+#loc 223
+#gems 1 1
+#gems 5 1
+#end
+
+#selectsite 771
+#name "Crypt in the Sand"
+#path 5
+#level 1
+#rarity 1
+#loc 223
+#look 5
+#gems 3 1
+#gems 5 1
+#end
+
+#selectsite 772
+#name "Witches Bog"
+#path 5
+#level 1
+#rarity 0
+#loc 134
+#look 2
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 773
+#name "Catacombs"
+#path 5
+#level 1
+#rarity 1
+#loc 262879
+#look 5
+#gems 4 1
+#gems 5 1
+#end
+
+#selectsite 774
+#name "Overgrown Graveyard"
+#path 5
+#level 1
+#rarity 1
+#loc 223
+#look 5
+#gems 6 1
+#gems 5 1
+#end
+
+#selectsite 775
+#name "Nightmare Meadow"
+#path 5
+#level 1
+#rarity 1
+#loc 17
+#look 1
+#gems 7 1
+#gems 5 1
+#decunrest -5
+#end
+
+#selectsite 776
+#name "Marble Mausoleum"
+#path 5
+#level 1
+#rarity 2
+#loc 735
+#look 5
+#conjcost 20
+#gems 5 1
+#end
+
+#selectsite 777
+#name "Raven Oak"
+#path 5
+#level 1
+#rarity 2
+#loc 223
+#gems 5 1
+#gems 6 1
+#end
+
+#selectsite 778
+#name "Black Tower"
+#path 5
+#level 2
+#rarity 2
+#loc 223
+#look 3
+#com 95
+#com 94
+#lab
+#gems 5 3
+#end
+
+#selectsite 779
+#name "Academy of Magic"
+#path 5
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3508
+#com 3499
+#gems 5 1
+-- ro: ability 15 (#lab stores 1) = 3492
+#end
+
+#selectsite 780
+#name "Academy of Dark Magics"
+#path 5
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 3508
+#com 3499
+#com 3492
+#lab
+#gems 5 2
+#gems 8 1
+#end
+
+#selectsite 781
+#name "Death Mound Downs"
+#path 5
+#level 2
+#rarity 2
+#loc 223
+#look 5
+#com 310
+#gems 5 2
+#end
+
+#selectsite 782
+#name "Statue of Death"
+#path 5
+#level 3
+#rarity 2
+#loc 735
+#gems 5 2
+#end
+
+#selectsite 783
+#name "Chillsick Swamp"
+#path 5
+#level 1
+#rarity 1
+#loc 16514
+#look 2
+#disease 5
+#gems 2 1
+#gems 5 1
+#gems 6 1
+#end
+
+#selectsite 784
+#name "Leper Fens"
+#path 5
+#level 1
+#rarity 1
+#loc 16513
+#look 2
+#disease 10
+#gems 2 1
+#gems 5 2
+#end
+
+#selectsite 785
+#name "Grayshade Forest"
+#path 5
+#level 1
+#rarity 1
+#loc 16386
+#look 2
+#com 3490
+#gems 5 3
+#end
+
+#selectsite 786
+#name "Litter Skull"
+#path 5
+#level 2
+#rarity 1
+#loc 17119
+#look 1
+#com 310
+#gems 5 4
+-- ro: ability 554 = 197
+#end
+
+#selectsite 787
+#name "The Crypt Underneath"
+#path 5
+#level 2
+#rarity 1
+#loc 17119
+#look 6
+#gems 5 3
+#conjcost 20
+#end
+
+#selectsite 788
+#name "Flesh Garden of Mortal Remains"
+#path 5
+#level 3
+#rarity 1
+#loc 16607
+#look 1
+#gems 5 2
+#gems 6 1
+#end
+
+#selectsite 789
+#name "The Bowl of the Lost"
+#path 5
+#level 3
+#rarity 1
+#loc 16607
+#look 5
+#gems 5 1
+-- ro: ability 551 = 185
+#end
+
+#selectsite 790
+#name "Skull Temple"
+#path 5
+#level 0
+#rarity 2
+#loc 16607
+#look 5
+#gems 5 1
+-- ro: ability 553 = 535
+-- ro: ability 551 = 189
+#end
+
+#selectsite 791
+#name "Tomb of the Ancients"
+#path 5
+#level 3
+#rarity 2
+#loc 278532
+#look 6
+#gems 5 4
+#end
+
+#selectsite 792
+#name "The Shaded Lands"
+#path 5
+#level 0
+#rarity 2
+#loc 16607
+#look 4
+#decunrest -10
+#gems 5 3
+-- ro: ability 552 = 676
+#end
+
+#selectsite 793
+#name "The Shattered Lands"
+#path 5
+#level 0
+#rarity 2
+#loc 16392
+#look 4
+#gems 5 2
+#incscale 3
+-- ro: ability 552 = 3477
+#end
+
+#selectsite 794
+#name "The City of a Thousand Wonders"
+#path 5
+#level 1
+#rarity 2
+#loc 278751
+#look 5
+#fort 4
+#gems 5 2
+#gems 0 1
+#incscale 3
+#adventureruin 10
+#end
+
+#selectsite 795
+#name "The Mausoleum of the Great Sarlah"
+#path 5
+#level 2
+#rarity 2
+#loc 16607
+#look 5
+#gems 5 3
+-- ro: ability 554 = 433
+#end
+
+#selectsite 796
+#name "The Charnel House"
+#path 5
+#level 3
+#rarity 2
+#loc 16607
+#look 5
+#gems 5 2
+#gems 4 1
+#gems 1 1
+#incscale 0
+#end
+
+#selectsite 797
+#name "The Shadow Furnace"
+#path 5
+#level 4
+#rarity 2
+#loc 17119
+#look 5
+#gems 5 4
+#gems 0 1
+#end
+
+#selectsite 798
+#name "Halls of the Dead"
+#path 5
+#level 1
+#rarity 2
+#loc 735
+#look 5
+#enchcost 20
+#gems 5 1
+#end
+
+#selectsite 799
+#name "Banefire Forge"
+#path 5
+#level 1
+#rarity 2
+#loc 735
+#look 5
+#constcost 20
+#gems 5 1
+#gems 0 1
+#end
+
+#selectsite 800
+#name "Crown of Darkness"
+#path 5
+#level 4
+#rarity 2
+#loc 16388
+#look 3
+#thaucost 40
+#gems 5 3
+#disease 10
+#end
+
+#selectsite 801
+#name "The Obsidian Sphere"
+#path 5
+#level 3
+#rarity 2
+#loc 16396
+#look 3
+#scry 1
+#end
+
+#selectsite 802
+#name "The Draining Stone"
+#path 5
+#level 3
+#rarity 2
+#loc 16392
+#look 4
+#gems 5 3
+#gems 3 1
+#incscale 5
+#incscale 3
+#end
+
+#selectsite 803
+#name "Well of Darkness"
+#path 5
+#level 2
+#rarity 2
+#loc 262879
+#look 4
+#gems 5 3
+#end
+
+#selectsite 804
+#name "Enchanted Tomb"
+#path 5
+#level 1
+#rarity 0
+#loc 735
+#look 5
+#gems 5 1
+#end
+
+#selectsite 805
+#name "Bonedoor Tower"
+#path 5
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#gems 5 1
+#end
+
+#selectsite 806
+#name "Flaming Tomb"
+#path 5
+#level 2
+#rarity 1
+#loc 735
+#look 5
+#gems 5 1
+#gems 0 1
+#end
+
+#selectsite 807
+#name "Shademist Swamp"
+#path 5
+#level 2
+#rarity 1
+#loc 128
+#look 2
+#gems 5 1
+#gems 1 1
+#end
+
+#selectsite 808
+#name "Plaguewater Stream"
+#path 5
+#level 2
+#rarity 1
+#loc 735
+#look 2
+#gems 5 1
+#gems 2 1
+#disease 3
+#end
+
+#selectsite 809
+#name "Valley of the Dead"
+#path 5
+#level 2
+#rarity 1
+#loc 8
+#look 1
+#gems 5 1
+#gems 3 1
+-- ro: ability 552 = 625
+#end
+
+#selectsite 810
+#name "Silver Sarcophagus"
+#path 5
+#level 2
+#rarity 1
+#loc 735
+#look 5
+#gems 5 1
+#gems 4 1
+#end
+
+#selectsite 811
+#name "Carrion Thicket"
+#path 5
+#level 2
+#rarity 1
+#loc 2
+#look 1
+#gems 5 1
+#gems 6 1
+-- ro: ability 552 = 715
+-- ro: ability 552 repeated (the game reads the first) = 716
+#end
+
+#selectsite 812
+#name "The City of the Damned"
+#path 5
+#level 2
+#rarity 2
+#loc 16607
+#look 5
+#adventureruin 7
+#curse 1
+#end
+
+#selectsite 813
+#name "The Bleak Lands"
+#path 5
+#level 2
+#rarity 2
+#loc 16385
+#look 3
+#com 3490
+#gems 7 1
+#gems 5 2
+#incscale 3
+#end
+
+#selectsite 814
+#name "Labyrinth of Skulls"
+#path 5
+#level 1
+#rarity 0
+#loc 223
+#look 5
+#gems 5 1
+#end
+
+#selectsite 815
+#name "Garden of Bones"
+#path 5
+#level 1
+#rarity 0
+#loc 223
+#look 1
+#gems 5 1
+#end
+
+#selectsite 816
+#name "Lilium Vale"
+#path 5
+#level 2
+#rarity 0
+#loc 95
+#look 2
+#gems 5 1
+#end
+
+#selectsite 817
+#name "Murder Bog"
+#path 5
+#level 2
+#rarity 1
+#loc 130
+#look 2
+#gems 5 1
+#end
+
+#selectsite 818
+#name "Swamp of Shadows"
+#path 5
+#level 1
+#rarity 1
+#loc 128
+#look 2
+#gems 5 1
+#end
+
+#selectsite 819
+#name "Murdering Mire"
+#path 5
+#level 2
+#rarity 1
+#loc 223
+#look 2
+#gems 5 1
+#end
+
+#selectsite 820
+#name "Animal Cemetery"
+#path 5
+#level 2
+#rarity 1
+#loc 219
+#look 1
+-- ro: ability 554 = 715
+-- ro: ability 551 = 716
+#end
+
+#selectsite 821
+#name "Gloom Gate"
+#path 5
+#level 3
+#rarity 1
+#loc 255
+#look 6
+#gems 5 2
+#gems 7 1
+#deathrange 2
+#end
+
+#selectsite 822
+#name "Tomb of the Grand Thaumathurg"
+#path 5
+#level 3
+#rarity 2
+#loc 16479
+#look 5
+#gems 5 1
+#deathrange 2
+#end
+
+#selectsite 823
+#name "Sigil of the Ancients"
+#path 5
+#level 3
+#rarity 2
+#loc 16639
+#look 4
+#deathrange 3
+#end
+
+#selectsite 824
+#name "Circle of Sending"
+#path 5
+#level 2
+#rarity 2
+#loc 223
+#allrange 2
+#horrormark 2
+#end
+
+#selectsite 825
+#name "Nidus of Power"
+#path 5
+#level 2
+#rarity 2
+#loc 255
+#thaucost 20
+#end
+
+#selectsite 826
+#name "Conjurer's Circle"
+#path 5
+#level 2
+#rarity 2
+#loc 223
+#conjcost 20
+#end
+
+#selectsite 827
+#name "Plague Barrow"
+#path 5
+#level 1
+#rarity 2
+#loc 223
+#look 1
+#disease 2
+#gems 5 1
+#end
+
+#selectsite 828
+#name "Nightmare Swamp"
+#path 5
+#level 3
+#rarity 2
+#loc 128
+#look 2
+#gems 5 1
+#gems 7 1
+#end
+
+#selectsite 829
+#name "Pit of Despair"
+#path 5
+#level 1
+#rarity 2
+#loc 16607
+#look 6
+#decunrest -5
+#gems 5 1
+#gems 7 1
+#end
+
+#selectsite 830
+#name "Imperial Tomb"
+#path 5
+#level 2
+#rarity 5
+#loc 1247
+#look 5
+#gems 5 1
+#end
+
+#selectsite 831
+#name "Blackrose Tower"
+#path 5
+#level 1
+#rarity 1
+#loc 16386
+#look 3
+#com 2362
+#gems 5 1
+#gems 6 1
+#end
+
+#selectsite 832
+#name "Dusk Spiral"
+#path 5
+#level 1
+#rarity 1
+#loc 16386
+#look 3
+#com 2361
+#gems 5 1
+#gems 6 1
+#end
+
+#selectsite 833
+#name "The Three Towers of Despair"
+#path 5
+#level 3
+#rarity 2
+#loc 214015
+#gems 5 2
+#gems 7 1
+-- ro: ability 555 = 2125
+#end
+
+#selectsite 834
+#name "Necromancer's Lair"
+#path 5
+#level 3
+#rarity 2
+#loc 16398
+#look 3
+#lab
+#deathrange 2
+#gems 5 2
+#end
+
+#selectsite 835
+#name "Oath Stone"
+#path 5
+#level 2
+#rarity 2
+#loc 278751
+#look 6
+#defcom 2192
+#defunit 2190
+#end
+
+#selectsite 836
+#name "Withered Land"
+#path 5
+#level 1
+#rarity 5
+#loc 16607
+#look 2
+#gems 5 1
+#incscale 3
+#end
+
+#selectsite 837
+#name "Hall of the Draugadrott"
+#path 5
+#level 2
+#rarity 5
+#loc 223
+#look 5
+#end
+
+#selectsite 838
+#name "Cult of Death"
+#path 5
+#level 5
+#rarity 5
+#loc 16607
+#look 0
+#incscale 3
+#end
+
+#selectsite 839
+#name "Spirit Pact"
+#path 5
+#level 3
+#rarity 5
+#loc 223
+#look 6
+#defcom 843
+#defunit 674
+-- ro: ability 224 repeated (the game reads the first) = 675
+#end
+
+#selectsite 840
+#name "Ruins of the Old Empire"
+#path 5
+#level 0
+#rarity 1
+#loc 1247
+#look 5
+#gems 5 1
+#end
+
+#selectsite 841
+#name "Ancient Temple of C'tis"
+#path 5
+#level 0
+#rarity 1
+#loc 1152
+#look 5
+#gems 5 1
+#end
+
+#selectsite 842
+#name "Cave of Dark Rites"
+#path 5
+#level 2
+#rarity 1
+#loc 735
+#look 6
+#gems 5 2
+#end
+
+#selectsite 843
+#name "Temple of Darkness"
+#path 5
+#level 2
+#rarity 1
+#loc 735
+#look 5
+#gems 5 1
+-- ro: ability 551 = 675
+-- ro: ability 551 repeated (the game reads the first) = 676
+#end
+
+#selectsite 844
+#name "Inkpot End"
+#path 5
+#level 0
+#rarity 1
+#loc 16607
+#look 2
+#disease 5
+#decunrest -5
+#end
+
+#selectsite 845
+#name "Flesh Eater's Isle"
+#path 5
+#level 2
+#rarity 1
+#loc 16607
+#look 7
+-- ro: ability 559 = 198
+#end
+
+#selectsite 846
+#name "Tower of Seven Tombs"
+#path 5
+#level 3
+#rarity 1
+#loc 16607
+#look 3
+#summon 1981
+#gems 5 2
+#end
+
+#selectsite 847
+#name "Tenebrous Tower"
+#path 5
+#level 2
+#rarity 1
+#loc 16388
+#look 3
+#com 3491
+#gems 7 2
+#gems 5 1
+#end
+
+#selectsite 848
+#name "Tenebrous Cavern"
+#path 5
+#level 2
+#rarity 1
+#loc 16388
+#look 6
+#com 3491
+#gems 7 1
+#gems 5 1
+#gems 3 1
+#end
+
+#selectsite 849
+#name "Glen of Verdant Greenery"
+#path 6
+#level 1
+#rarity 0
+#loc 223
+#look 0
+#gems 6 1
+#end
+
+#selectsite 850
+#name "Forest of Delights"
+#path 6
+#level 1
+#rarity 0
+#loc 2
+#look 0
+#gems 6 2
+#end
+
+#selectsite 851
+#name "Farm of Plenty"
+#path 6
+#level 1
+#rarity 0
+#loc 223
+#look 1
+#supply 75
+#popgrowth 20
+#end
+
+#selectsite 852
+#name "Garden of Weeping Roses"
+#path 6
+#level 2
+#rarity 1
+#loc 223
+#look 0
+#gems 6 2
+#end
+
+#selectsite 853
+#name "Grove of Evergreens"
+#path 6
+#level 3
+#rarity 0
+#loc 223
+#look 0
+#gems 6 1
+#end
+
+#selectsite 854
+#name "Wild Forest"
+#path 6
+#level 0
+#rarity 0
+#loc 2
+#look 0
+#gems 6 1
+#end
+
+#selectsite 855
+#name "Bile Marsh"
+#path 6
+#level 1
+#rarity 0
+#loc 128
+#look 2
+#mon 1840
+#nat 98
+#natmon 1859
+#end
+
+#selectsite 856
+#name "Hidden Forest"
+#path 6
+#level 1
+#rarity 1
+#loc 2
+#look 1
+#com 154
+#gems 6 1
+#end
+
+#selectsite 857
+#name "Stone Circle"
+#path 6
+#level 1
+#rarity 0
+#loc 223
+#look 1
+#com 105
+#gems 6 1
+#end
+
+#selectsite 858
+#name "Woodhenge"
+#path 6
+#level 1
+#rarity 1
+#loc 223
+#look 1
+#com 105
+#gems 6 1
+#end
+
+#selectsite 859
+#name "Animist's Hut"
+#path 6
+#level 1
+#rarity 1
+#loc 2
+#look 8
+#com 552
+#gems 6 1
+#end
+
+#selectsite 860
+#name "Fields of the Fire Flies"
+#path 6
+#level 1
+#rarity 1
+#loc 223
+#look 1
+#gems 0 1
+#gems 6 1
+#end
+
+#selectsite 861
+#name "Whisperwoods"
+#path 6
+#level 1
+#rarity 2
+#loc 2
+#look 1
+#gems 7 1
+#gems 6 1
+#com 363
+#end
+
+#selectsite 862
+#name "Hidden Valley"
+#path 6
+#level 1
+#rarity 1
+#loc 223
+#look 1
+#gems 3 1
+#gems 6 1
+#end
+
+#selectsite 863
+#name "Forest of a Thousand Streams"
+#path 6
+#level 1
+#rarity 2
+#loc 223
+#look 0
+#gems 2 1
+#gems 6 1
+#com 364
+#end
+
+#selectsite 864
+#name "Endless Forest"
+#path 6
+#level 1
+#rarity 0
+#loc 2
+#look 0
+#gems 4 1
+#gems 6 1
+#end
+
+#selectsite 865
+#name "Dying Forest"
+#path 6
+#level 1
+#rarity 0
+#loc 2
+#look 1
+#gems 5 1
+#gems 6 1
+#incscale 3
+#end
+
+#selectsite 866
+#name "Straywild Forest"
+#path 6
+#level 1
+#rarity 0
+#loc 2
+#look 1
+#gems 7 1
+#gems 6 1
+#end
+
+#selectsite 867
+#name "Cottage in the Woods"
+#path 6
+#level 2
+#rarity 1
+#loc 2
+#look 8
+#com 1182
+#gems 6 1
+#end
+
+#selectsite 868
+#name "Wormwood Marsh"
+#path 6
+#level 0
+#rarity 1
+#loc 130
+#look 2
+#gems 6 1
+#end
+
+#selectsite 869
+#name "Hall of Ancient Oaks"
+#path 6
+#level 1
+#rarity 2
+#loc 223
+#look 4
+#enchcost 20
+#gems 6 1
+#end
+
+#selectsite 870
+#name "Flower Swamp"
+#path 6
+#level 1
+#rarity 1
+#loc 128
+#look 2
+#gems 6 1
+#com 363
+#end
+
+#selectsite 871
+#name "Mandrake Gallows"
+#path 6
+#level 2
+#rarity 2
+#loc 223
+#look 4
+#gems 6 2
+#gems 5 1
+#end
+
+#selectsite 872
+#name "Jungle Temple"
+#path 6
+#level 2
+#rarity 2
+#loc 2
+#look 5
+#gems 6 2
+#gems 3 1
+-- ro: ability 551 = 394
+#end
+
+#selectsite 873
+#name "Maze of Thorn Hedges"
+#path 6
+#level 3
+#rarity 2
+#loc 223
+#look 1
+#gems 6 1
+#gems 4 2
+#end
+
+#selectsite 874
+#name "Horses Vale"
+#path 6
+#level 0
+#rarity 1
+#loc 49375
+#look 0
+#com 451
+#mon 450
+#defunit 450
+#defmult 10
+#end
+
+#selectsite 875
+#name "The Cedar Pillars"
+#path 6
+#level 1
+#rarity 1
+#loc 16607
+#look 0
+#enchcost 30
+#gems 6 2
+#gems 1 1
+#end
+
+#selectsite 876
+#name "The Mammoth Forest"
+#path 6
+#level 0
+#rarity 1
+#loc 16386
+#look 0
+#gems 6 3
+#end
+
+#selectsite 877
+#name "The Flowering Forest"
+#path 6
+#level 1
+#rarity 1
+#loc 16386
+#look 0
+#supply 150
+#gems 6 1
+#com 363
+#end
+
+#selectsite 878
+#name "The Cedar Forest"
+#path 6
+#level 1
+#rarity 1
+#loc 49154
+#look 0
+#res 60
+#gems 6 2
+#end
+
+#selectsite 879
+#name "Dreamwood Circle"
+#path 6
+#level 2
+#rarity 1
+#loc 16607
+#look 8
+#com 338
+#gems 6 1
+#gems 7 1
+#end
+
+#selectsite 880
+#name "The Crown Woods"
+#path 6
+#level 1
+#rarity 1
+#loc 16386
+#look 0
+#gems 6 1
+#res 60
+#end
+
+#selectsite 881
+#name "Gateward Valley"
+#path 6
+#level 1
+#rarity 1
+#loc 16607
+#look 0
+#holypower 10
+#mon 365
+#end
+
+#selectsite 882
+#name "The Motheroak"
+#path 6
+#level 1
+#rarity 1
+#loc 16607
+#look 4
+#com 154
+#gems 6 2
+#naturerange 2
+#end
+
+#selectsite 883
+#name "Forest of Avendron"
+#path 6
+#level 2
+#rarity 1
+#loc 16386
+#look 0
+#com 154
+#gems 6 3
+#gems 3 2
+#end
+
+#selectsite 884
+#name "Animist's Tower"
+#path 6
+#level 2
+#rarity 1
+#loc 16386
+#look 3
+#com 552
+#gems 6 2
+#end
+
+#selectsite 885
+#name "Vale of the Silver Cattle"
+#path 6
+#level 2
+#rarity 1
+#loc 278751
+#look 1
+#supply 200
+#gold 100
+#decscale 3
+#end
+
+#selectsite 886
+#name "Forest of the Ape King"
+#path 6
+#level 3
+#rarity 1
+#loc 16386
+#look 0
+#gems 6 1
+#gold 75
+#end
+
+#selectsite 887
+#name "The Sacred Glen"
+#path 6
+#level 3
+#rarity 1
+#loc 16607
+#look 1
+#holyfire 20
+#gems 6 1
+#end
+
+#selectsite 888
+#name "The Shrouded Lands"
+#path 6
+#level 3
+#rarity 1
+#loc 16607
+#look 8
+#supply 150
+#gems 7 2
+#gems 6 2
+#gems 4 2
+#decscale 3
+#end
+
+#selectsite 889
+#name "The Land of Pleasures Unattained"
+#path 6
+#level 3
+#rarity 2
+#loc 278751
+#look 1
+#incscale 0
+#gems 7 1
+#gems 3 1
+#gems 6 1
+#end
+
+#selectsite 890
+#name "Soul of the Wild"
+#path 6
+#level 4
+#rarity 2
+#loc 16607
+#look 1
+#gems 6 5
+#thaucost 20
+#end
+
+#selectsite 891
+#name "Wolven Gate"
+#path 6
+#level 1
+#rarity 2
+#loc 223
+#look 1
+#conjcost 20
+#gems 6 1
+#end
+
+#selectsite 892
+#name "Twisting Woods"
+#path 6
+#level 1
+#rarity 2
+#loc 2
+#look 1
+#altcost 20
+#gems 6 1
+#end
+
+#selectsite 893
+#name "Ancient Forest"
+#path 6
+#level 1
+#rarity 2
+#loc 2
+#look 0
+#gems 6 2
+#end
+
+#selectsite 894
+#name "The Vale of Unicorns"
+#path 6
+#level 4
+#rarity 2
+#loc 16386
+#look 1
+#gems 6 2
+#gems 7 1
+#nat 57
+#natcom 2128
+#natmon 64
+#end
+
+#selectsite 895
+#name "Forest of Splendor"
+#path 6
+#level 2
+#rarity 2
+#loc 16386
+#look 0
+#gems 6 1
+#gems 7 1
+#decunrest 5
+#end
+
+#selectsite 896
+#name "The Snake Collector"
+#path 6
+#level 3
+#rarity 2
+#loc 16512
+#look 5
+#gems 5 1
+#gems 6 1
+#end
+
+#selectsite 897
+#name "Shrine of the Wild"
+#path 6
+#level 2
+#rarity 2
+#loc 223
+#look 5
+#gems 6 3
+#end
+
+#selectsite 898
+#name "Oak of Ages"
+#path 6
+#level 3
+#rarity 2
+#loc 16607
+#look 4
+#enchcost 40
+#gems 6 3
+#end
+
+#selectsite 899
+#name "The Valley of Shame"
+#path 6
+#level 1
+#rarity 2
+#loc 16607
+#look 1
+#gems 6 1
+#incscale 0
+#incscale 1
+#end
+
+#selectsite 900
+#name "The Previous Forest"
+#path 6
+#level 4
+#rarity 2
+#loc 278536
+#look 1
+#gems 6 4
+#end
+
+#selectsite 901
+#name "Thorn Wood Heights"
+#path 6
+#level 1
+#rarity 1
+#loc 16386
+#look 1
+#gems 6 2
+#com 1182
+#end
+
+#selectsite 902
+#name "Poison Glades"
+#path 6
+#level 1
+#rarity 1
+#loc 16386
+#look 2
+#gems 6 1
+#gems 5 2
+#com 1182
+#com 310
+#end
+
+#selectsite 903
+#name "Lyfjaberg"
+#path 6
+#level 0
+#rarity 5
+#loc 16388
+#look 1
+#gems 6 1
+#gems 3 1
+#heal 50
+#end
+
+#selectsite 904
+#name "Enchanted Field"
+#path 6
+#level 1
+#rarity 0
+#loc 262367
+#look 1
+#gems 6 1
+#supply 75
+-- ro: ability 26 = 50
+#end
+
+#selectsite 905
+#name "Oakwood Tower"
+#path 6
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#gems 6 1
+#end
+
+#selectsite 906
+#name "Grove of Revelry"
+#path 6
+#level 2
+#rarity 2
+#loc 2
+#look 1
+#gems 6 1
+#com 1880
+#end
+
+#selectsite 907
+#name "Tinderwood Forest"
+#path 6
+#level 2
+#rarity 1
+#loc 2
+#look 0
+#gems 6 1
+#gems 0 1
+#end
+
+#selectsite 908
+#name "Mist Forest"
+#path 6
+#level 2
+#rarity 1
+#loc 2
+#look 1
+#gems 6 1
+#gems 1 1
+#end
+
+#selectsite 909
+#name "Flowering Bog"
+#path 6
+#level 2
+#rarity 1
+#loc 128
+#look 2
+#gems 6 1
+#gems 2 1
+#end
+
+#selectsite 910
+#name "Evergreen Mountain"
+#path 6
+#level 2
+#rarity 1
+#loc 4
+#look 1
+#gems 6 1
+#gems 3 1
+#end
+
+#selectsite 911
+#name "Oak of Memories"
+#path 6
+#level 2
+#rarity 1
+#loc 2
+#look 4
+#gems 6 1
+#gems 4 1
+#end
+
+#selectsite 912
+#name "Maggot Woods"
+#path 6
+#level 2
+#rarity 1
+#loc 2
+#look 1
+#gems 6 1
+#gems 5 1
+#end
+
+#selectsite 913
+#name "Telesterion"
+#path 6
+#level 2
+#rarity 2
+#loc 2
+#look 5
+#gems 6 1
+#gems 3 1
+#com 1875
+#com 1876
+#end
+
+#selectsite 914
+#name "Unfound Paths"
+#path 6
+#level 3
+#rarity 2
+#loc 262146
+#look 1
+#gems 6 1
+#gems 7 1
+#end
+
+#selectsite 915
+#name "Wolf Oak"
+#path 6
+#level 1
+#rarity 0
+#loc 223
+#look 4
+#gems 6 1
+#end
+
+#selectsite 916
+#name "Grove of Fertility"
+#path 6
+#level 1
+#rarity 0
+#loc 215
+#look 1
+#gems 6 1
+#end
+
+#selectsite 917
+#name "Druid's Grave"
+#path 6
+#level 2
+#rarity 0
+#loc 223
+#look 4
+#gems 6 1
+#end
+
+#selectsite 918
+#name "Lair of Spiders"
+#path 6
+#level 1
+#rarity 2
+#loc 2
+#look 5
+#gems 6 1
+-- ro: ability 555 = 782
+#end
+
+#selectsite 919
+#name "Skin Shifter's Barrow"
+#path 6
+#level 1
+#rarity 2
+#loc 223
+#look 8
+#gems 6 1
+#end
+
+#selectsite 920
+#name "The Frogmarch"
+#path 6
+#level 1
+#rarity 1
+#loc 16512
+#look 2
+#gems 6 1
+-- ro: ability 555 = 2222
+#end
+
+#selectsite 921
+#name "Heart of the Forest"
+#path 6
+#level 3
+#rarity 2
+#loc 16386
+#look 4
+#gems 6 2
+#naturerange 3
+#end
+
+#selectsite 922
+#name "Field of Golden Rye"
+#path 6
+#level 1
+#rarity 1
+#loc 16
+#look 1
+#gems 6 1
+#gold 30
+#end
+
+#selectsite 923
+#name "Withering Woods"
+#path 6
+#level 1
+#rarity 2
+#loc 2
+#look 2
+#gems 5 1
+#gems 6 1
+#end
+
+#selectsite 924
+#name "Grove of Hooded Spirits"
+#path 6
+#level 3
+#rarity 2
+#loc 2
+#look 4
+#gems 6 1
+#decscale 3
+#heal 3
+#end
+
+#selectsite 925
+#name "Fungus Forest"
+#path 6
+#level 1
+#rarity 1
+#loc 719
+#look 6
+#gems 6 1
+#end
+
+#selectsite 926
+#name "The Crone"
+#path 6
+#level 2
+#rarity 2
+#loc 16607
+#look 8
+#curse 1
+#end
+
+#selectsite 927
+#name "Thorn Maze"
+#path 6
+#level 2
+#rarity 1
+#loc 95
+#look 1
+#gems 6 1
+#naturerange 2
+#end
+
+#selectsite 928
+#name "Earthroot Grove"
+#path 6
+#level 1
+#rarity 2
+#loc 18
+#look 6
+#gems 6 1
+#naturerange 2
+#end
+
+#selectsite 929
+#name "Starsong Grove"
+#path 6
+#level 3
+#rarity 2
+#loc 16386
+#look 1
+#gems 4 1
+#astralrange 2
+#end
+
+#selectsite 930
+#name "Tree of Life"
+#path 6
+#level 2
+#rarity 2
+#loc 16599
+#look 4
+#heal 3
+#end
+
+#selectsite 931
+#name "Tree of Knowledge"
+#path 6
+#level 2
+#rarity 2
+#loc 16607
+#look 4
+#xp 8
+#curse 4
+#end
+
+#selectsite 932
+#name "Tower of the Moon"
+#path 6
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+-- ro: ability 551 = 1224
+#end
+
+#selectsite 933
+#name "Vale of Healing Herbs"
+#path 6
+#level 2
+#rarity 2
+#loc 199
+#look 1
+#heal 2
+#end
+
+#selectsite 934
+#name "Moonvine Circle"
+#path 6
+#level 2
+#rarity 1
+#loc 16607
+#look 8
+#com 3999
+#gems 6 1
+#gems 4 1
+#end
+
+#selectsite 935
+#name "Hoburg Holdfast"
+#path 6
+#level 0
+#rarity 2
+#loc 3088
+#defunit 273
+#com 272
+#mon 271
+#mon 273
+#end
+
+#selectsite 936
+#name "Hoburg Settlement"
+#path 6
+#level 0
+#rarity 2
+#loc 16
+#com 1198
+#mon 483
+#decscale 3
+#end
+
+#selectsite 937
+#name "Barbarian Warcamp"
+#path 6
+#level 0
+#rarity 5
+#loc 14
+#com 147
+#com 141
+#mon 139
+#mon 140
+#end
+
+#selectsite 938
+#name "Ancient Ruin"
+#path 6
+#level 0
+#rarity 1
+#loc 223
+#look 8
+-- ro: ability 555 = 2223
+#end
+
+#selectsite 939
+#name "Dusk Spiral"
+#path 6
+#level 1
+#rarity 1
+#loc 16386
+#look 3
+#com 2361
+#gems 5 1
+#gems 6 1
+#end
+
+#selectsite 940
+#name "Tower of Thorns"
+#path 6
+#level 3
+#rarity 2
+#loc 16386
+#look 8
+#lab
+#naturerange 2
+#gems 6 2
+#end
+
+#selectsite 941
+#name "Toad Tribe Settlement"
+#path 6
+#level 0
+#rarity 5
+#loc 128
+#look 5
+#defunit 1613
+#com 1614
+#mon 1613
+#end
+
+#selectsite 942
+#name "The Primal Forest"
+#path 6
+#level 0
+#rarity 5
+#loc 16386
+#look 1
+#summon 932
+#gems 6 3
+#end
+
+#selectsite 943
+#name "Grove Unpleasant"
+#path 6
+#level 2
+#rarity 2
+#loc 223
+#look 1
+#gems 5 1
+#gems 6 1
+-- ro: ability 551 = 716
+-- ro: ability 551 repeated (the game reads the first) = 715
+-- ro: ability 551 repeated (the game reads the first) = 313
+#end
+
+#selectsite 944
+#name "Cursed Land"
+#path 6
+#level 0
+#rarity 5
+#loc 223
+#look 2
+#curse 2
+#decscale 5
+#end
+
+#selectsite 945
+#name "Ivy Grove"
+#path 6
+#level 2
+#rarity 1
+#loc 2
+#look 2
+#gems 6 1
+-- ro: ability 397 = 1
+#end
+
+#selectsite 946
+#name "Hall of the Ivy King"
+#path 6
+#level 3
+#rarity 2
+#loc 16386
+#look 8
+#gems 6 2
+#decscale 3
+-- ro: ability 397 = 2
+#end
+
+#selectsite 947
+#name "Dancing Lights"
+#path 7
+#level 0
+#rarity 0
+#loc 262367
+#look 0
+#gems 7 1
+#end
+
+#selectsite 948
+#name "Mist Shrouded Ruins"
+#path 7
+#level 1
+#rarity 0
+#loc 223
+#look 4
+#gems 7 1
+#end
+
+#selectsite 949
+#name "Song of Birds"
+#path 7
+#level 1
+#rarity 0
+#loc 223
+#look 2
+#gems 7 1
+#end
+
+#selectsite 950
+#name "Veiled Valley"
+#path 7
+#level 1
+#rarity 0
+#loc 223
+#look 5
+#gems 7 1
+#end
+
+#selectsite 951
+#name "Gorge of Echoes"
+#path 7
+#level 1
+#rarity 0
+#loc 262367
+#look 5
+#gems 7 1
+#end
+
+#selectsite 952
+#name "Shimmering Waterfall"
+#path 7
+#level 1
+#rarity 0
+#loc 223
+#look 0
+#gems 7 1
+#end
+
+#selectsite 953
+#name "Fairy Circle"
+#path 7
+#level 2
+#rarity 0
+#loc 223
+#look 9
+#gems 7 1
+#end
+
+#selectsite 954
+#name "Dreamlight"
+#path 7
+#level 3
+#rarity 0
+#loc 262367
+#look 0
+#gems 7 1
+#end
+
+#selectsite 955
+#name "Crystal Garden"
+#path 7
+#level 3
+#rarity 0
+#loc 262879
+#look 1
+#gems 7 1
+#gems 3 1
+#end
+
+#selectsite 956
+#name "Perpetual Rainbow"
+#path 7
+#level 0
+#rarity 0
+#loc 16
+#look 0
+#gems 7 1
+#end
+
+#selectsite 957
+#name "Mirage"
+#path 7
+#level 1
+#rarity 0
+#loc 8
+#look 1
+#gems 7 1
+#end
+
+#selectsite 958
+#name "Singing Tree"
+#path 7
+#level 1
+#rarity 0
+#loc 223
+#look 6
+#gems 7 2
+#end
+
+#selectsite 959
+#name "Crossroad"
+#path 7
+#level 0
+#rarity 1
+#loc 223
+#look 9
+#gems 7 1
+#end
+
+#selectsite 960
+#name "Shop of Strange Items"
+#path 7
+#level 0
+#rarity 1
+#loc 262367
+#look 8
+#gems 7 1
+#end
+
+#selectsite 961
+#name "Veiled Willow"
+#path 7
+#level 1
+#rarity 1
+#loc 223
+#look 6
+#gems 7 1
+#end
+
+#selectsite 962
+#name "Hall of Merriment"
+#path 7
+#level 1
+#rarity 1
+#loc 223
+#look 3
+#gems 7 1
+#end
+
+#selectsite 963
+#name "House of Otherworld Windows"
+#path 7
+#level 1
+#rarity 1
+#loc 223
+#look 8
+#gems 7 1
+#end
+
+#selectsite 964
+#name "Circle of Strange Stones"
+#path 7
+#level 1
+#rarity 1
+#loc 223
+#look 4
+#gems 7 1
+#end
+
+#selectsite 965
+#name "Cracked Tower"
+#path 7
+#level 1
+#rarity 1
+#loc 262367
+#look 3
+#gems 7 2
+#end
+
+#selectsite 966
+#name "Inn of Strange Travelers"
+#path 7
+#level 2
+#rarity 1
+#loc 16
+#look 8
+#gems 7 1
+#end
+
+#selectsite 967
+#name "Dream Roses"
+#path 7
+#level 2
+#rarity 1
+#loc 262367
+#look 5
+#gems 7 2
+#end
+
+#selectsite 968
+#name "Mirrorlake"
+#path 7
+#level 2
+#rarity 1
+#loc 223
+#look 1
+#com 341
+#gems 7 1
+#gems 2 2
+#end
+
+#selectsite 969
+#name "Rune of Images"
+#path 7
+#level 2
+#rarity 1
+#loc 255
+#look 4
+#glamourrange 2
+#end
+
+#selectsite 970
+#name "Stardust Meadow"
+#path 7
+#level 2
+#rarity 1
+#loc 223
+#look 9
+#gems 7 1
+#gems 4 1
+#end
+
+#selectsite 971
+#name "Rainbow Tower"
+#path 7
+#level 2
+#rarity 1
+#loc 223
+#look 7
+#gems 7 1
+#gems 2 1
+#end
+
+#selectsite 972
+#name "Singing Stream"
+#path 7
+#level 2
+#rarity 1
+#loc 735
+#look 1
+#gems 2 1
+#gems 7 1
+#end
+
+#selectsite 973
+#name "Caer"
+#path 7
+#level 2
+#rarity 1
+#loc 262367
+#look 7
+#gems 7 2
+#fort 4
+#end
+
+#selectsite 974
+#name "The Gray Lodge"
+#path 7
+#level 2
+#rarity 1
+#loc 16385
+#look 3
+#com 3490
+#gems 7 1
+#gems 5 1
+#end
+
+#selectsite 975
+#name "Twin Spire Tower"
+#path 7
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 343
+#gems 7 1
+#gems 4 1
+#end
+
+#selectsite 976
+#name "Rainbow Roses"
+#path 7
+#level 1
+#rarity 2
+#loc 223
+#look 5
+#gems 7 1
+#gems 2 1
+#gems 6 1
+#end
+
+#selectsite 977
+#name "The Dream Gate"
+#path 7
+#level 3
+#rarity 2
+#loc 214015
+#gems 7 2
+#glamourrange 3
+#end
+
+#selectsite 978
+#name "Ivory Tower"
+#path 7
+#level 2
+#rarity 2
+#loc 223
+#look 3
+#com 3489
+#lab
+#gems 7 3
+#gems 4 1
+#end
+
+#selectsite 979
+#name "Tower of the Hidden Order"
+#path 7
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3486
+#com 3487
+#com 3488
+#lab
+#gems 7 3
+#gems 4 1
+#end
+
+#selectsite 980
+#name "Tower of the Hidden Order"
+#path 7
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3486
+#com 3487
+#com 3488
+#lab
+#gems 7 2
+#gems 4 2
+#end
+
+#selectsite 981
+#name "Tower of the Hidden Order"
+#path 7
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3486
+#com 3487
+#com 3488
+#lab
+#gems 7 2
+#gems 4 1
+#end
+
+#selectsite 982
+#name "Academy of Magic"
+#path 7
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 3498
+#com 3509
+#lab
+#gems 7 1
+#end
+
+#selectsite 983
+#name "Academy of High Magics"
+#path 7
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 3507
+#com 3498
+#com 3509
+#lab
+#gems 7 2
+#gems 1 1
+#end
+
+#selectsite 984
+#name "Sprite Woods"
+#path 7
+#level 2
+#rarity 2
+#loc 2
+#look 5
+#gems 7 1
+#gems 6 1
+#summon 592
+#end
+
+#selectsite 985
+#name "Mirror Wall Palace"
+#path 7
+#level 1
+#rarity 1
+#loc 16607
+#look 3
+#com 343
+#gems 7 3
+#end
+
+#selectsite 986
+#name "Fernglow Forest"
+#path 7
+#level 2
+#rarity 1
+#loc 16386
+#look 5
+#gems 7 1
+#gems 6 1
+#end
+
+#selectsite 987
+#name "Cedar of Seven Songs"
+#path 7
+#level 2
+#rarity 1
+#loc 16607
+#look 6
+#gems 7 2
+#end
+
+#selectsite 988
+#name "The Glowing Hill"
+#path 7
+#level 2
+#rarity 1
+#loc 16607
+#look 4
+#mon 849
+#gems 7 2
+#end
+
+#selectsite 989
+#name "The Crystal Oak"
+#path 7
+#level 2
+#rarity 2
+#loc 16896
+#look 6
+#gems 7 1
+#gems 3 1
+#gems 4 1
+#end
+
+#selectsite 990
+#name "Dreamscape Downs"
+#path 7
+#level 2
+#rarity 2
+#loc 278751
+#look 9
+#gems 7 2
+#incscale 1
+#decunrest 5
+#end
+
+#selectsite 991
+#name "Maze of Undreamt Dreams"
+#path 7
+#level 2
+#rarity 2
+#loc 278751
+#look 4
+#gems 7 3
+#end
+
+#selectsite 992
+#name "Castle of the Sleeping Beauty"
+#path 7
+#level 2
+#rarity 2
+#loc 16386
+#look 7
+#gems 7 2
+#gems 6 1
+#incscale 1
+#decscale 3
+#end
+
+#selectsite 993
+#name "Mistwinter"
+#path 7
+#level 2
+#rarity 2
+#loc 16607
+#look 1
+#gems 7 1
+#gems 1 1
+#gems 2 1
+#incscale 2
+#end
+
+#selectsite 994
+#name "Shimmerfall"
+#path 7
+#level 2
+#rarity 2
+#loc 16607
+#look 0
+#gems 7 2
+#gems 2 1
+#end
+
+#selectsite 995
+#name "Dreamtravel Grove"
+#path 7
+#level 2
+#rarity 2
+#loc 16386
+#look 2
+#gems 7 1
+#gems 4 1
+#astralrange 2
+-- ro: ability 262 = 3
+#end
+
+#selectsite 996
+#name "The Good Faery"
+#path 7
+#level 3
+#rarity 2
+#loc 16607
+#look 8
+#end
+
+#selectsite 997
+#name "The Wormwood Tower"
+#path 7
+#level 3
+#rarity 1
+#loc 16386
+#look 7
+#com 2358
+#gems 5 1
+#gems 6 1
+#gems 7 1
+#end
+
+#selectsite 998
+#name "The Gate of Deeper Slumber"
+#path 7
+#level 1
+#rarity 2
+#loc 278751
+#look 4
+#incscale 1
+#gems 7 2
+#end
+
+#selectsite 999
+#name "Cave of the Sleepers"
+#path 7
+#level 4
+#rarity 2
+#loc 16607
+#look 6
+#gems 7 1
+#end
+
+#selectsite 1000
+#name "Glowing Mound"
+#path 7
+#level 1
+#rarity 1
+#loc 223
+#look 4
+#gems 0 1
+#end
+
+#selectsite 1001
+#name "Elusive Mountain"
+#path 7
+#level 1
+#rarity 1
+#loc 4
+#look 5
+#gems 3 1
+#end
+
+#selectsite 1002
+#name "Bog of Strange Lights"
+#path 7
+#level 1
+#rarity 1
+#loc 134
+#look 2
+#gems 2 1
+#gems 7 1
+#end
+
+#selectsite 1003
+#name "Rainbow Mist"
+#path 7
+#level 1
+#rarity 1
+#loc 128
+#look 0
+#gems 1 1
+#end
+
+#selectsite 1004
+#name "Moon Mirror Moor"
+#path 7
+#level 1
+#rarity 1
+#loc 223
+#look 9
+#gems 4 1
+#end
+
+#selectsite 1005
+#name "Shimmering Forest"
+#path 7
+#level 1
+#rarity 0
+#loc 2
+#look 2
+#gems 6 1
+#end
+
+#selectsite 1006
+#name "Nightmare Tower"
+#path 7
+#level 1
+#rarity 1
+#loc 262367
+#look 7
+#gems 5 1
+#end
+
+#selectsite 1007
+#name "Invisible Flame"
+#path 7
+#level 2
+#rarity 1
+#loc 262367
+#look 0
+#gems 7 1
+#gems 0 1
+#end
+
+#selectsite 1008
+#name "Mist Coast"
+#path 7
+#level 2
+#rarity 1
+#loc 64
+#look 1
+#gems 7 1
+#gems 2 1
+#end
+
+#selectsite 1009
+#name "Invisible Tower"
+#path 7
+#level 2
+#rarity 1
+#loc 262367
+#look 9
+#gems 7 1
+#gems 3 1
+#end
+
+#selectsite 1010
+#name "Mountain of Playful Sylphs"
+#path 7
+#level 2
+#rarity 1
+#loc 4
+#look 5
+#gems 7 1
+#gems 1 1
+#end
+
+#selectsite 1011
+#name "Slumber Woods"
+#path 7
+#level 2
+#rarity 1
+#loc 2
+#look 2
+#gems 7 1
+#gems 6 1
+#end
+
+#selectsite 1012
+#name "Nightmare Marsh"
+#path 7
+#level 2
+#rarity 1
+#loc 128
+#look 2
+#gems 7 1
+#gems 5 1
+#end
+
+#selectsite 1013
+#name "Leper Dreams"
+#path 7
+#level 1
+#rarity 2
+#loc 262367
+#look 2
+#disease 2
+#gems 5 1
+#end
+
+#selectsite 1014
+#name "Desert of Dreams"
+#path 7
+#level 2
+#rarity 1
+#loc 262152
+#look 0
+#gems 7 1
+#gems 4 1
+#end
+
+#selectsite 1015
+#name "House of Dreams"
+#path 7
+#level 1
+#rarity 2
+#loc 262879
+#look 8
+#conjcost 20
+#gems 7 1
+#end
+
+#selectsite 1016
+#name "Dreams Unleashed"
+#path 7
+#level 1
+#rarity 2
+#loc 262879
+#look 0
+#evocost 20
+#gems 7 1
+#end
+
+#selectsite 1017
+#name "Everchanging Fields"
+#path 7
+#level 1
+#rarity 2
+#loc 262879
+#look 9
+#altcost 20
+#gems 7 1
+#end
+
+#selectsite 1018
+#name "Gossamer Weaver"
+#path 7
+#level 1
+#rarity 2
+#loc 262879
+#look 8
+#constcost 20
+#gems 7 1
+#end
+
+#selectsite 1019
+#name "Twisted Mirror"
+#path 7
+#level 1
+#rarity 2
+#loc 262367
+#look 4
+#thaucost 20
+#gems 7 1
+#end
+
+#selectsite 1020
+#name "Shrouded Glen"
+#path 7
+#level 1
+#rarity 2
+#loc 223
+#look 1
+#enchcost 20
+#gems 7 1
+#end
+
+#selectsite 1021
+#name "Elusive Birdsong"
+#path 7
+#level 2
+#rarity 2
+#loc 215
+#look 1
+#gems 7 1
+#gems 1 1
+#end
+
+#selectsite 1022
+#name "Twin Bottom Lake"
+#path 7
+#level 2
+#rarity 2
+#loc 215
+#look 1
+#gems 7 1
+#gems 2 1
+#end
+
+#selectsite 1023
+#name "The Crystal Citadel"
+#path 7
+#level 2
+#rarity 1
+#loc 16607
+#look 5
+#com 340
+#lab
+#gems 7 1
+#gems 3 1
+#fort 29
+#end
+
+#selectsite 1024
+#name "The Inverted Tower"
+#path 7
+#level 3
+#rarity 1
+#loc 17119
+#look 3
+#com 341
+#lab
+#gems 7 4
+#end
+
+#selectsite 1025
+#name "The Rainbow Shroud"
+#path 7
+#level 3
+#rarity 1
+#loc 16607
+#look 1
+#gems 7 2
+#gems 2 2
+#holypower 20
+#end
+
+#selectsite 1026
+#name "Birdsong Tower"
+#path 7
+#level 1
+#rarity 2
+#loc 17119
+#look 3
+#glamourrange 2
+#end
+
+#selectsite 1027
+#name "Hall of Horrible Memories"
+#path 7
+#level 1
+#rarity 2
+#loc 278751
+#look 0
+#gems 7 1
+#decunrest -5
+#end
+
+#selectsite 1028
+#name "Dusk Spire"
+#path 7
+#level 2
+#rarity 2
+#loc 16607
+#look 7
+#enchcost 20
+#gems 7 1
+#gems 5 1
+#end
+
+#selectsite 1029
+#name "Bard's College"
+#path 7
+#level 2
+#rarity 2
+#loc 16400
+#look 7
+#com 3694
+#gems 7 2
+#end
+
+#selectsite 1030
+#name "Memory Collector"
+#path 7
+#level 2
+#rarity 2
+#loc 278751
+#look 8
+#gems 7 1
+#gems 4 1
+#end
+
+#selectsite 1031
+#name "House of Lies"
+#path 7
+#level 3
+#rarity 2
+#loc 16607
+#look 8
+#bloodcost 20
+#gems 7 1
+#end
+
+#selectsite 1032
+#name "Twilight Academy"
+#path 7
+#level 3
+#rarity 2
+#loc 16607
+#look 3
+#com 3683
+#lab
+#gems 7 1
+#gems 5 1
+#end
+
+#selectsite 1033
+#name "The Crystal Academy"
+#path 7
+#level 3
+#rarity 2
+#loc 17119
+#look 3
+#com 340
+#lab
+#gems 7 1
+#gems 3 1
+#end
+
+#selectsite 1034
+#name "The Great Mirror of Maaki"
+#path 7
+#level 3
+#rarity 2
+#loc 16607
+#look 4
+#gems 7 1
+#gems 4 1
+#gems 2 1
+#allrange 1
+#end
+
+#selectsite 1035
+#name "Palace of Dreams"
+#path 7
+#level 4
+#rarity 2
+#loc 278529
+#look 3
+#gems 7 4
+#gems 4 1
+#end
+
+#selectsite 1036
+#name "Arena"
+#path 8
+#level 0
+#rarity 0
+#loc 223
+#look 0
+#gold 40
+#end
+
+#selectsite 1037
+#name "Brigand Lair"
+#path 8
+#level 1
+#rarity 0
+#loc 223
+#look 0
+#decunrest -5
+#mon 482
+#end
+
+#selectsite 1038
+#name "Academy of War"
+#path 8
+#level 0
+#rarity 1
+#loc 223
+#look 5
+#xp 4
+#end
+
+#selectsite 1039
+#name "Damned Merchant"
+#path 8
+#level 1
+#rarity 1
+#loc 223
+#look 0
+#gems 8 1
+#end
+
+#selectsite 1040
+#name "Fields of Blood"
+#path 8
+#level 1
+#rarity 1
+#loc 1
+#look 4
+#gems 5 1
+#end
+
+#selectsite 1041
+#name "Blood Henge"
+#path 8
+#level 1
+#rarity 2
+#loc 223
+#look 4
+#com 122
+#gems 6 1
+#end
+
+#selectsite 1042
+#name "Ebony Tower"
+#path 8
+#level 2
+#rarity 2
+#loc 223
+#look 3
+#com 339
+#lab
+#gems 5 3
+#gems 4 1
+#end
+
+#selectsite 1043
+#name "Summoning Circle"
+#path 8
+#level 3
+#rarity 2
+#loc 735
+#look 4
+#bloodcost 30
+#end
+
+#selectsite 1044
+#name "Gore Swamps"
+#path 8
+#level 1
+#rarity 1
+#loc 16512
+#look 2
+#gems 6 1
+#gems 5 1
+#end
+
+#selectsite 1045
+#name "Mount Chaining"
+#path 8
+#level 1
+#rarity 1
+#loc 16607
+#look 1
+#bloodcost 30
+#end
+
+#selectsite 1046
+#name "The Vale of Infinite Horror"
+#path 8
+#level 1
+#rarity 1
+#loc 278751
+#look 1
+#horrormark 1
+#decunrest -5
+#incscale 4
+#end
+
+#selectsite 1047
+#name "The Blood Keep"
+#path 8
+#level 1
+#rarity 1
+#loc 16388
+#look 3
+#com 1389
+#mon 1353
+#gems 8 1
+#fort 4
+#end
+
+#selectsite 1048
+#name "Devil's Den"
+#path 8
+#level 2
+#rarity 1
+#loc 16607
+#look 6
+#summon 304
+#decunrest -15
+#end
+
+#selectsite 1049
+#name "The Ebony Circle"
+#path 8
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#com 339
+#lab
+#gems 5 3
+#gems 4 1
+#bloodrange 2
+#end
+
+#selectsite 1050
+#name "The Demon Gate"
+#path 8
+#level 3
+#rarity 1
+#loc 16607
+#look 6
+#summon 88
+#decunrest -10
+#end
+
+#selectsite 1051
+#name "The Prison of Hearts"
+#path 8
+#level 3
+#rarity 1
+#loc 16607
+#look 3
+#decunrest -5
+#gold 60
+#end
+
+#selectsite 1052
+#name "The Mountain of Power"
+#path 8
+#level 2
+#rarity 2
+#loc 16392
+#look 1
+#evocost 30
+#allrange 2
+#gems 8 3
+-- ro: ability 552 = 403
+#end
+
+#selectsite 1053
+#name "Hall of Flayed Skins"
+#path 8
+#level 4
+#rarity 2
+#loc 278751
+#look 3
+#gems 4 2
+#gems 5 2
+#horrormark 5
+#end
+
+#selectsite 1054
+#name "Assassins Guild"
+#path 8
+#level 1
+#rarity 2
+#loc 223
+#look 3
+#com 428
+#end
+
+#selectsite 1055
+#name "Haunted Torture Chamber"
+#path 8
+#level 2
+#rarity 2
+#loc 735
+#look 3
+#gems 5 1
+#curse 5
+#end
+
+#selectsite 1056
+#name "The Blood Rock"
+#path 8
+#level 3
+#rarity 2
+#loc 16388
+#look 1
+#bloodcost 30
+#end
+
+#selectsite 1057
+#name "Forest of Pain"
+#path 8
+#level 2
+#rarity 2
+#loc 16386
+#look 2
+#gems 6 1
+#decunrest -5
+#horrormark 1
+#end
+
+#selectsite 1058
+#name "Red Forest"
+#path 8
+#level 1
+#rarity 2
+#loc 16386
+#look 2
+#gems 6 1
+#gems 0 1
+#end
+
+#selectsite 1059
+#name "Bloodleaf Forest"
+#path 8
+#level 1
+#rarity 1
+#loc 2
+#look 2
+#gems 6 1
+#end
+
+#selectsite 1060
+#name "Bloodstone Mountain"
+#path 8
+#level 1
+#rarity 1
+#loc 4
+#look 1
+#gems 3 1
+#end
+
+#selectsite 1061
+#name "Bloodwind Waste"
+#path 8
+#level 1
+#rarity 1
+#loc 8
+#look 4
+#gems 1 1
+#end
+
+#selectsite 1062
+#name "Bloodsucker Fens"
+#path 8
+#level 1
+#rarity 1
+#loc 128
+#look 2
+#gems 2 1
+#end
+
+#selectsite 1063
+#name "Bloodmarble Mausoleum"
+#path 8
+#level 1
+#rarity 1
+#loc 735
+#look 5
+#gems 5 1
+#end
+
+#selectsite 1064
+#name "Bloodsplatter Pattern"
+#path 8
+#level 1
+#rarity 1
+#loc 735
+#look 4
+#gems 4 1
+#end
+
+#selectsite 1065
+#name "Torture Tower"
+#path 8
+#level 1
+#rarity 1
+#loc 262160
+#look 3
+#fort 2
+#horrormark 3
+#end
+
+#selectsite 1066
+#name "Bloodshade Glen"
+#path 8
+#level 2
+#rarity 2
+#loc 16514
+#look 2
+#bloodcost 20
+#conjcost 20
+#gems 6 1
+#end
+
+#selectsite 1067
+#name "The Slaughterhouse"
+#path 8
+#level 2
+#rarity 2
+#loc 16607
+#look 0
+#summon 460
+#summon 198
+#summon 435
+#end
+
+#selectsite 1068
+#name "The Lodge"
+#path 8
+#level 2
+#rarity 2
+#loc 16607
+#look 0
+#com 428
+#com 94
+#com 95
+#gems 8 1
+#end
+
+#selectsite 1069
+#name "Pool of Unhealthy Rites"
+#path 8
+#level 2
+#rarity 2
+#loc 735
+#look 4
+#gems 2 1
+#gems 5 1
+#altcost 20
+#disease 3
+#end
+
+#selectsite 1070
+#name "Bloodstone Mirror"
+#path 8
+#level 2
+#rarity 2
+#loc 223
+#look 4
+#scry 1
+#thaucost 20
+#end
+
+#selectsite 1071
+#name "Palace of Wicked Dreams"
+#path 8
+#level 3
+#rarity 2
+#loc 16
+#look 3
+#gems 8 1
+#gems 7 1
+#end
+
+#selectsite 1072
+#name "Tower of the Devil's Bride"
+#path 8
+#level 1
+#rarity 1
+#loc 16607
+#look 3
+#summon 303
+#summon 2286
+#summon 2287
+#decunrest -5
+#end
+
+#selectsite 1073
+#name "Slave Market"
+#path 8
+#level 0
+#rarity 1
+#loc 735
+#look 0
+#gems 8 3
+#decunrest -2
+#end
+
+#selectsite 1074
+#name "Forgotten Village"
+#path 8
+#level 1
+#rarity 0
+#loc 2
+#look 0
+#gems 8 1
+#end
+
+#selectsite 1075
+#name "Sacrificial Grove"
+#path 8
+#level 1
+#rarity 1
+#loc 18
+#look 2
+#bloodcost 20
+#end
+
+#selectsite 1076
+#name "Bleeding Tree"
+#path 8
+#level 1
+#rarity 2
+#loc 2
+#look 2
+#gems 6 1
+#end
+
+#selectsite 1077
+#name "Stained Altar"
+#path 8
+#level 1
+#rarity 2
+#loc 16607
+#look 4
+#bloodcost 20
+#summon 1736
+#end
+
+#selectsite 1078
+#name "Pentagram"
+#path 8
+#level 2
+#rarity 1
+#loc 223
+#look 4
+#bloodrange 2
+#end
+
+#selectsite 1079
+#name "The First Gate"
+#path 8
+#level 1
+#rarity 1
+#loc 17119
+#look 6
+#bloodcost 10
+#end
+
+#selectsite 1080
+#name "The Second Gate"
+#path 8
+#level 2
+#rarity 1
+#loc 17119
+#look 6
+#bloodcost 15
+#end
+
+#selectsite 1081
+#name "The Third Gate"
+#path 8
+#level 4
+#rarity 2
+#loc 17119
+#look 6
+#bloodcost 25
+#end
+
+#selectsite 1082
+#name "Tower of the Deformer"
+#path 8
+#level 2
+#rarity 2
+#loc 16607
+#look 3
+#altcost 20
+-- ro: ability 551 = 468
+-- ro: ability 551 repeated (the game reads the first) = 460
+-- ro: ability 551 repeated (the game reads the first) = 455
+#end
+
+#selectsite 1083
+#name "House of Disfigurement"
+#path 8
+#level 2
+#rarity 2
+#loc 16607
+#look 0
+#altcost 20
+-- ro: ability 552 = 460
+#end
+
+#selectsite 1084
+#name "Statue of Hideous Visage"
+#path 8
+#level 1
+#rarity 5
+#loc 223
+#look 3
+#horrormark 4
+#thaucost 20
+#end
+
+#selectsite 1085
+#name "Demon Gate"
+#path 8
+#level 0
+#rarity 5
+#loc 223
+#look 6
+#summon 88
+#decunrest -10
+#end
+
+#selectsite 1086
+#name "Cliffside Abattoir"
+#path 8
+#level 1
+#rarity 1
+#loc 16388
+#look 1
+#gems 1 1
+-- ro: ability 398 = 2
+#end
+
+#selectsite 1087
+#name "Redcap Feeding Ground"
+#path 8
+#level 1
+#rarity 2
+#loc 223
+#look 4
+#decunrest -5
+#gems 8 2
+#gems 7 1
+#end
+
+#selectsite 1088
+#name "Ancient Temple"
+#path 9
+#level 1
+#rarity 0
+#loc 262879
+#look 2
+#gems 4 1
+#end
+
+#selectsite 1089
+#name "Pool of Sanctity"
+#path 9
+#level 2
+#rarity 1
+#loc 735
+#look 4
+#holyfire 5
+#gems 2 1
+#end
+
+#selectsite 1090
+#name "Hidden Monastery"
+#path 9
+#level 3
+#rarity 1
+#loc 223
+#look 5
+#decunrest 5
+#com 240
+#end
+
+#selectsite 1091
+#name "Monastery of Light"
+#path 9
+#level 0
+#rarity 2
+#loc 223
+#look 5
+#decunrest 5
+#com 240
+#com 241
+#end
+
+#selectsite 1092
+#name "Convent"
+#path 9
+#level 1
+#rarity 1
+#loc 223
+#look 5
+#decunrest 5
+#com 2248
+#com 2249
+#end
+
+#selectsite 1093
+#name "Abbey"
+#path 9
+#level 1
+#rarity 2
+#loc 223
+#look 5
+#decunrest 5
+#com 2248
+#com 2249
+#com 2250
+#end
+
+#selectsite 1094
+#name "Temple of Time"
+#path 9
+#level 4
+#rarity 2
+#loc 262367
+#look 4
+#gems 4 2
+#com 240
+#com 241
+#end
+
+#selectsite 1095
+#name "The Marble Temple"
+#path 9
+#level 2
+#rarity 1
+#loc 16607
+#look 0
+#decunrest 5
+#gold 75
+#com 241
+#end
+
+#selectsite 1096
+#name "The Empty Grave"
+#path 9
+#level 3
+#rarity 1
+#loc 279263
+#look 6
+#decunrest 5
+#gems 5 1
+#end
+
+#selectsite 1097
+#name "The Forgotten Crypt"
+#path 9
+#level 3
+#rarity 1
+#loc 279263
+#look 6
+#decunrest 5
+#gems 7 1
+#gems 3 1
+#gems 2 1
+#end
+
+#selectsite 1098
+#name "The Ward"
+#path 9
+#level 4
+#rarity 2
+#loc 16607
+#look 4
+#holyfire 30
+#decunrest 10
+#end
+
+#selectsite 1099
+#name "The Records of Mankind"
+#path 9
+#level 3
+#rarity 2
+#loc 278751
+#look 1
+#com 479
+-- ro: ability 262 = 999
+#end
+
+#selectsite 1100
+#name "Order of the Secret Light"
+#path 9
+#level 1
+#rarity 2
+#loc 17631
+#look 4
+#com 478
+#com 23
+#mon 22
+#defunit 22
+#gems 4 1
+#end
+
+#selectsite 1101
+#name "Order of the Undying"
+#path 9
+#level 1
+#rarity 2
+#loc 17631
+#look 5
+-- ro: ability 555 = 189
+#end
+
+#selectsite 1102
+#name "Shrine of the Outcast"
+#path 9
+#level 1
+#rarity 1
+#loc 735
+#look 2
+-- ro: ability 551 = 456
+-- ro: ability 551 repeated (the game reads the first) = 459
+#end
+
+#selectsite 1103
+#name "Temple of the Spider God"
+#path 9
+#level 1
+#rarity 2
+#loc 735
+#look 3
+#nat 76
+#natcom 890
+#natmon 889
+-- ro: ability 555 = 782
+-- ro: ability 559 = 2223
+#end
+
+#selectsite 1104
+#name "Temple of the Hidden Flame"
+#path 9
+#level 2
+#rarity 2
+#loc 735
+#look 2
+#gems 0 1
+-- ro: ability 551 = 527
+#end
+
+#selectsite 1105
+#name "Temple of Flying Monkeys"
+#path 9
+#level 1
+#rarity 2
+#loc 16607
+#look 1
+#temple
+-- ro: ability 551 = 1199
+#end
+
+#selectsite 1106
+#name "The Martyr's Grave"
+#path 9
+#level 1
+#rarity 2
+#loc 767
+#look 6
+#dominion 1
+#end
+
+#selectsite 1107
+#name "Cradle of Faith"
+#path 9
+#level 1
+#rarity 2
+#loc 262911
+#look 4
+#dominion 2
+#end
+
+#selectsite 1108
+#name "Pillar of Life"
+#path 9
+#level 1
+#rarity 2
+#loc 17151
+#look 4
+#holypower 10
+#end
+
+#selectsite 1109
+#name "The Prophet's Sigil"
+#path 9
+#level 1
+#rarity 2
+#loc 262911
+#look 4
+-- ro: ability 262 = 5
+#end
+
+#selectsite 1110
+#name "Oracle's Lair"
+#path 9
+#level 1
+#rarity 2
+#loc 262911
+#look 6
+-- ro: ability 262 = 3
+#end
+
+#selectsite 1111
+#name "Mountain of Revelation"
+#path 9
+#level 1
+#rarity 2
+#loc 4
+#look 5
+#scry 1
+#end
+
+#selectsite 1112
+#name "Place of Prophecy"
+#path 9
+#level 1
+#rarity 2
+#loc 767
+#look 5
+-- ro: ability 262 = 5
+#end
+
+#selectsite 1113
+#name "Stele of Law"
+#path 9
+#level 1
+#rarity 2
+#loc 255
+#look 3
+#decunrest 10
+#end
+
+#selectsite 1114
+#name "Temple of Life and Death"
+#path 9
+#level 1
+#rarity 2
+#loc 16607
+#look 1
+#gems 6 1
+#gems 5 1
+#temple
+#end
+
+#selectsite 1115
+#name "Garden of Longevity"
+#path 9
+#level 2
+#rarity 2
+#loc 16599
+#look 5
+#heal 7
+#end
+
+#selectsite 1116
+#name "The Holy Crypt of Anre"
+#path 9
+#level 0
+#rarity 5
+#loc 16607
+#look 6
+#decunrest 10
+#gems 1 1
+#gems 0 1
+#gems 6 1
+#nat 61
+#natmon 366
+-- ro: ability 373 repeated (the game reads the first) = 103
+#end
+
+#selectsite 1117
+#name "Knightly Order"
+#path 9
+#level 0
+#rarity 5
+#loc 223
+#look 8
+#com 23
+#mon 22
+#decscale 0
+#defunit 22
+#end
+
+#selectsite 1118
+#name "Gorge of Glowing Fish"
+#path 0
+#level 1
+#rarity 0
+#loc 32
+#look 6
+#gems 0 1
+#end
+
+#selectsite 1119
+#name "Glowing Sands"
+#path 0
+#level 1
+#rarity 0
+#loc 256
+#look 4
+#gems 0 1
+#end
+
+#selectsite 1120
+#name "Sparkling Current"
+#path 0
+#level 1
+#rarity 0
+#loc 32
+#look 4
+#gems 0 1
+#end
+
+#selectsite 1121
+#name "Crust of Molten Sulphur"
+#path 0
+#level 1
+#rarity 0
+#loc 256
+#look 4
+#gems 0 1
+#end
+
+#selectsite 1122
+#name "Underwater Volcano"
+#path 0
+#level 1
+#rarity 0
+#loc 256
+#look 0
+#gems 0 1
+#end
+
+#selectsite 1123
+#name "Smoldering Starfish Colony"
+#path 0
+#level 1
+#rarity 0
+#loc 32
+#look 4
+#gems 0 1
+#end
+
+#selectsite 1124
+#name "Pond of Lava"
+#path 0
+#level 1
+#rarity 1
+#loc 256
+#look 4
+#gems 0 1
+#end
+
+#selectsite 1125
+#name "Steaming Stone"
+#path 0
+#level 1
+#rarity 1
+#loc 256
+#look 4
+#gems 0 1
+#gems 1 1
+#end
+
+#selectsite 1126
+#name "Boiling Current"
+#path 0
+#level 1
+#rarity 1
+#loc 32
+#look 4
+#gems 0 1
+#gems 1 1
+#decscale 2
+#end
+
+#selectsite 1127
+#name "Fire Rift"
+#path 0
+#level 1
+#rarity 1
+#loc 256
+#look 4
+#gems 0 2
+#end
+
+#selectsite 1128
+#name "Magma River"
+#path 0
+#level 1
+#rarity 2
+#loc 768
+#look 4
+#gems 0 3
+#end
+
+#selectsite 1129
+#name "Thermal Vent"
+#path 0
+#level 1
+#rarity 0
+#loc 256
+#look 4
+#gems 0 1
+#end
+
+#selectsite 1130
+#name "Underwater Cave"
+#path 1
+#level 1
+#rarity 1
+#loc 32
+#look 6
+#gems 1 1
+#end
+
+#selectsite 1131
+#name "Imprisoned Zephyr"
+#path 1
+#level 3
+#rarity 2
+#loc 32
+#look 6
+#gems 1 2
+#end
+
+#selectsite 1132
+#name "Pocket of Air"
+#path 1
+#level 1
+#rarity 2
+#loc 32
+#look 6
+#gems 1 2
+#end
+
+#selectsite 1133
+#name "Diamond Corals"
+#path 1
+#level 2
+#rarity 2
+#loc 32
+#look 6
+#gems 1 2
+#end
+
+#selectsite 1134
+#name "Floating Rock"
+#path 1
+#level 1
+#rarity 0
+#loc 131072
+#look 2
+#gems 1 1
+#end
+
+#selectsite 1135
+#name "Bubbling Fissure"
+#path 1
+#level 1
+#rarity 0
+#loc 32
+#look 6
+#gems 1 1
+#end
+
+#selectsite 1136
+#name "Foaming Waves"
+#path 1
+#level 1
+#rarity 1
+#loc 64
+#look 6
+#gems 1 1
+#end
+
+#selectsite 1137
+#name "Island of Floating Stone"
+#path 1
+#level 1
+#rarity 1
+#loc 131072
+#gems 1 1
+#gems 3 1
+#end
+
+#selectsite 1138
+#name "Scoriatic Cliffs"
+#path 1
+#level 1
+#rarity 2
+#loc 256
+#look 6
+#gems 1 1
+#end
+
+#selectsite 1139
+#name "Coral Reef"
+#path 2
+#level 0
+#rarity 0
+#loc 131072
+#look 8
+#res 40
+#gems 2 1
+#end
+
+#selectsite 1140
+#name "Clam Field"
+#path 2
+#level 1
+#rarity 0
+#loc 32
+#look 8
+#gold 50
+#gems 4 1
+#end
+
+#selectsite 1141
+#name "Coral Statue"
+#path 2
+#level 1
+#rarity 1
+#loc 32
+#look 8
+#gems 2 1
+#end
+
+#selectsite 1142
+#name "Sunken Island"
+#path 2
+#level 2
+#rarity 2
+#loc 32
+#look 7
+#gems 2 2
+#gems 3 2
+#end
+
+#selectsite 1143
+#name "Man'o'War Breeding Ground"
+#path 2
+#level 2
+#rarity 2
+#loc 32
+#look 8
+#gems 2 2
+#end
+
+#selectsite 1144
+#name "Sunken Tower"
+#path 2
+#level 2
+#rarity 1
+#loc 32
+#look 3
+#gems 2 1
+#end
+
+#selectsite 1145
+#name "Troll Pit"
+#path 2
+#level 2
+#rarity 2
+#loc 32
+#look 6
+#mon 564
+#end
+
+#selectsite 1146
+#name "Shrine of the Shark Lords"
+#path 2
+#level 0
+#rarity 2
+#loc 32
+#look 5
+#mon 545
+#end
+
+#selectsite 1147
+#name "Tower of Pearls"
+#path 2
+#level 3
+#rarity 2
+#loc 32
+#look 5
+#gems 2 1
+#gems 4 2
+#com 103
+#mon 545
+#end
+
+#selectsite 1148
+#name "Isle of Ice"
+#path 2
+#level 1
+#rarity 1
+#loc 16416
+#look 7
+#gems 2 3
+#end
+
+#selectsite 1149
+#name "Academy Underneath"
+#path 2
+#level 1
+#rarity 1
+#loc 16416
+#look 5
+#fort 6
+#lab
+#com 103
+#com 529
+#mon 577
+#gems 2 2
+#waterrange 1
+#end
+
+#selectsite 1150
+#name "The Hippocampoi Fields"
+#path 2
+#level 2
+#rarity 2
+#loc 16416
+#look 0
+#gems 6 1
+#gems 2 1
+-- ro: ability 551 = 1058
+#end
+
+#selectsite 1151
+#name "Sentient Current"
+#path 2
+#level 2
+#rarity 2
+#loc 32
+#look 8
+#conjcost 20
+#gems 2 1
+#end
+
+#selectsite 1152
+#name "Kraken Pit"
+#path 2
+#level 2
+#rarity 2
+#loc 256
+#look 6
+#summon 438
+#end
+
+#selectsite 1153
+#name "Cold Currents"
+#path 2
+#level 0
+#rarity 0
+#loc 256
+#look 8
+#gems 2 1
+#end
+
+#selectsite 1154
+#name "Depths Unnamed"
+#path 2
+#level 1
+#rarity 0
+#loc 256
+#look 8
+#gems 2 2
+#end
+
+#selectsite 1155
+#name "Whispering Waters"
+#path 2
+#level 1
+#rarity 1
+#loc 256
+#look 0
+#gems 2 1
+#end
+
+#selectsite 1156
+#name "Glowing Depths"
+#path 2
+#level 1
+#rarity 1
+#loc 256
+#look 6
+#gems 2 1
+#gems 0 1
+#end
+
+#selectsite 1157
+#name "Falling Depths"
+#path 2
+#level 1
+#rarity 1
+#loc 256
+#look 8
+#gems 2 2
+#end
+
+#selectsite 1158
+#name "Dark Waters"
+#path 2
+#level 1
+#rarity 1
+#loc 256
+#look 8
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 1159
+#name "The Darkness"
+#path 2
+#level 2
+#rarity 2
+#loc 16640
+#look 6
+#thaucost 20
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 1160
+#name "The Gate in the Deep"
+#path 2
+#level 2
+#rarity 2
+#loc 16640
+#look 6
+#conjcost 20
+#gems 2 2
+#end
+
+#selectsite 1161
+#name "Cavern of Underwater Ice"
+#path 2
+#level 1
+#rarity 0
+#loc 256
+#look 6
+#gems 2 1
+#end
+
+#selectsite 1162
+#name "Charmed Current"
+#path 2
+#level 1
+#rarity 0
+#loc 32
+#look 6
+#gems 2 1
+#end
+
+#selectsite 1163
+#name "Sweet Water Current"
+#path 2
+#level 1
+#rarity 0
+#loc 32
+#look 6
+#gems 2 1
+#end
+
+#selectsite 1164
+#name "Frozen Deeps"
+#path 2
+#level 1
+#rarity 0
+#loc 256
+#look 6
+#gems 2 1
+#incscale 2
+#end
+
+#selectsite 1165
+#name "Tears of the Ancients"
+#path 2
+#level 2
+#rarity 1
+#loc 256
+#look 6
+#gems 2 1
+#gems 4 1
+#end
+
+#selectsite 1166
+#name "Ridge of Ice"
+#path 2
+#level 1
+#rarity 0
+#loc 288
+#look 6
+#gems 2 1
+#end
+
+#selectsite 1167
+#name "Fathoms Deep"
+#path 2
+#level 1
+#rarity 0
+#loc 16640
+#look 6
+#gems 2 1
+#decscale 5
+#end
+
+#selectsite 1168
+#name "Maelstrom"
+#path 2
+#level 1
+#rarity 1
+#loc 32
+#look 6
+#gems 2 2
+#end
+
+#selectsite 1169
+#name "The Sunken Observatory"
+#path 2
+#level 3
+#rarity 2
+#loc 16672
+#gems 2 2
+#gems 4 1
+#end
+
+#selectsite 1170
+#name "Underwater Cliff"
+#path 3
+#level 1
+#rarity 0
+#loc 288
+#look 11
+#gems 3 1
+#end
+
+#selectsite 1171
+#name "Moving Sand Banks"
+#path 3
+#level 1
+#rarity 0
+#loc 32
+#look 10
+#gems 3 1
+#end
+
+#selectsite 1172
+#name "Basalt Statue"
+#path 3
+#level 2
+#rarity 1
+#loc 288
+#look 11
+#gems 3 2
+#end
+
+#selectsite 1173
+#name "Isle of the Sea Fathers"
+#path 3
+#level 2
+#rarity 1
+#loc 147456
+#look 7
+#gems 2 2
+#com 529
+#end
+
+#selectsite 1174
+#name "Basalt Halls"
+#path 3
+#level 2
+#rarity 2
+#loc 256
+#look 11
+#gems 3 3
+#end
+
+#selectsite 1175
+#name "City of Stones"
+#path 3
+#level 2
+#rarity 1
+#loc 16640
+#look 11
+#gems 3 4
+#end
+
+#selectsite 1176
+#name "Caves in the Deep"
+#path 3
+#level 0
+#rarity 0
+#loc 256
+#look 6
+#gems 3 1
+#end
+
+#selectsite 1177
+#name "Copper Clams"
+#path 3
+#level 1
+#rarity 1
+#loc 256
+#look 10
+#gems 3 1
+#end
+
+#selectsite 1178
+#name "Mineral Fingers"
+#path 3
+#level 1
+#rarity 1
+#loc 256
+#look 2
+#gems 3 2
+#end
+
+#selectsite 1179
+#name "Plateau of Shards"
+#path 3
+#level 1
+#rarity 1
+#loc 256
+#look 10
+#gems 3 2
+#end
+
+#selectsite 1180
+#name "Long Lost Circle"
+#path 3
+#level 2
+#rarity 2
+#loc 256
+#gems 3 1
+#gems 4 1
+#end
+
+#selectsite 1181
+#name "The Basalt Forge"
+#path 3
+#level 2
+#rarity 2
+#loc 16640
+#constcost 20
+#gems 3 1
+#end
+
+#selectsite 1182
+#name "Rock Crab Colony"
+#path 3
+#level 1
+#rarity 0
+#loc 32
+#look 10
+#gems 3 1
+#end
+
+#selectsite 1183
+#name "Underwater Stalagmite"
+#path 3
+#level 1
+#rarity 0
+#loc 256
+#look 11
+#gems 3 1
+#end
+
+#selectsite 1184
+#name "Ridge of Volcanic Glass"
+#path 3
+#level 1
+#rarity 0
+#loc 256
+#look 11
+#gems 3 1
+#gold 50
+#end
+
+#selectsite 1185
+#name "Meteorite Rock"
+#path 3
+#level 1
+#rarity 0
+#loc 256
+#look 11
+#gems 3 1
+#end
+
+#selectsite 1186
+#name "Basalt Plateau"
+#path 3
+#level 1
+#rarity 0
+#loc 256
+#look 11
+#gems 3 1
+#end
+
+#selectsite 1187
+#name "Mountain Underneath"
+#path 3
+#level 1
+#rarity 1
+#loc 256
+#look 11
+#gems 3 1
+-- ro: ability 384 = 50
+#end
+
+#selectsite 1188
+#name "Fossilized Conch"
+#path 3
+#level 1
+#rarity 1
+#loc 32
+#look 10
+#gems 3 1
+#end
+
+#selectsite 1189
+#name "Forgotten Crevasse"
+#path 3
+#level 2
+#rarity 1
+#loc 256
+#look 10
+#gems 3 1
+#end
+
+#selectsite 1190
+#name "Glowing Kelp Forest"
+#path 6
+#level 0
+#rarity 0
+#loc 65536
+#look 10
+#gems 6 1
+#end
+
+#selectsite 1191
+#name "Kelp Fortress"
+#path 6
+#level 1
+#rarity 0
+#loc 131072
+#look 9
+#fort 6
+#gems 6 1
+#end
+
+#selectsite 1192
+#name "Amber Beach Island"
+#path 6
+#level 1
+#rarity 2
+#loc 131072
+#look 7
+#gems 6 1
+#gems 3 1
+#gold 75
+#end
+
+#selectsite 1193
+#name "Floating Forest"
+#path 6
+#level 1
+#rarity 2
+#loc 131072
+#look 10
+#gems 6 2
+#end
+
+#selectsite 1194
+#name "Kelp Grove"
+#path 6
+#level 2
+#rarity 0
+#loc 131072
+#look 10
+#gems 6 1
+#end
+
+#selectsite 1195
+#name "Coral Garden"
+#path 6
+#level 1
+#rarity 1
+#loc 32
+#look 9
+#gems 6 1
+#end
+
+#selectsite 1196
+#name "Sea Oak"
+#path 6
+#level 2
+#rarity 1
+#loc 32
+#look 9
+#gems 6 2
+#gems 1 1
+#end
+
+#selectsite 1197
+#name "The Amber Halls"
+#path 6
+#level 2
+#rarity 2
+#loc 16416
+#look 10
+#com 575
+#com 576
+#mon 573
+#gems 6 2
+#gems 0 1
+#end
+
+#selectsite 1198
+#name "The Forest Beneath the Waves"
+#path 6
+#level 2
+#rarity 2
+#loc 16416
+#look 10
+#gems 6 2
+-- ro: ability 552 = 1062
+#end
+
+#selectsite 1199
+#name "Kelp Sea"
+#path 6
+#level 0
+#rarity 2
+#loc 65536
+#look 10
+#gems 6 2
+#gems 2 1
+#summon 1062
+#end
+
+#selectsite 1200
+#name "Forest of Amber Kelp"
+#path 6
+#level 2
+#rarity 2
+#loc 81920
+#look 10
+#gems 6 1
+#gems 0 1
+#gems 2 1
+#com 575
+#end
+
+#selectsite 1201
+#name "Fields of Glowing Algae"
+#path 6
+#level 1
+#rarity 0
+#loc 32
+#look 9
+#gems 6 1
+#end
+
+#selectsite 1202
+#name "Giant Anemone"
+#path 6
+#level 1
+#rarity 0
+#loc 32
+#look 9
+#gems 6 1
+#end
+
+#selectsite 1203
+#name "Ridge of Empty Shells"
+#path 6
+#level 1
+#rarity 0
+#loc 256
+#look 9
+#gems 6 1
+#end
+
+#selectsite 1204
+#name "Wall of Living Kelp"
+#path 6
+#level 1
+#rarity 0
+#loc 65536
+#look 10
+#gems 6 1
+#end
+
+#selectsite 1205
+#name "Monstrous Conch"
+#path 6
+#level 1
+#rarity 0
+#loc 32
+#look 9
+#gems 6 1
+#end
+
+#selectsite 1206
+#name "Living Sediment"
+#path 6
+#level 1
+#rarity 0
+#loc 32
+#look 9
+#gems 6 1
+#end
+
+#selectsite 1207
+#name "Lair of the Eel-King"
+#path 6
+#level 1
+#rarity 1
+#loc 256
+#look 10
+#gems 6 1
+#end
+
+#selectsite 1208
+#name "Breeding Ground of Eels"
+#path 6
+#level 1
+#rarity 1
+#loc 256
+#look 9
+#gems 6 1
+#end
+
+#selectsite 1209
+#name "Sunken Galley"
+#path 5
+#level 1
+#rarity 0
+#loc 32
+#look 8
+#gems 5 1
+#end
+
+#selectsite 1210
+#name "Reef of Sunken Ships"
+#path 5
+#level 1
+#rarity 1
+#loc 131072
+#look 8
+#gems 5 2
+#end
+
+#selectsite 1211
+#name "Dying Ground of the Whales"
+#path 5
+#level 2
+#rarity 1
+#loc 16416
+#look 8
+#gems 5 1
+#gems 2 2
+#gems 6 1
+#end
+
+#selectsite 1212
+#name "Isle of Death"
+#path 5
+#level 1
+#rarity 1
+#loc 16416
+#look 7
+#gems 5 3
+#end
+
+#selectsite 1213
+#name "Dark Depths"
+#path 5
+#level 1
+#rarity 1
+#loc 256
+#look 6
+#gems 2 1
+#gems 5 1
+#end
+
+#selectsite 1214
+#name "Ghoul Fish Cave"
+#path 5
+#level 1
+#rarity 1
+#loc 256
+#look 6
+#gems 5 1
+#gems 2 1
+#end
+
+#selectsite 1215
+#name "The Wasted Sea"
+#path 5
+#level 0
+#rarity 1
+#loc 16640
+#look 8
+#gems 5 2
+-- ro: ability 558 = 318
+#end
+
+#selectsite 1216
+#name "The Sea of Dead Memories"
+#path 5
+#level 1
+#rarity 1
+#loc 16640
+#look 8
+#gems 5 1
+#gems 7 1
+#gems 2 1
+-- ro: ability 551 = 676
+#end
+
+#selectsite 1217
+#name "Black Sands"
+#path 5
+#level 1
+#rarity 0
+#loc 32
+#look 1
+#gems 5 1
+#end
+
+#selectsite 1218
+#name "Basalt Ruins"
+#path 5
+#level 1
+#rarity 0
+#loc 256
+#look 3
+#gems 5 1
+#end
+
+#selectsite 1219
+#name "Submerged Catacombs"
+#path 5
+#level 1
+#rarity 0
+#loc 32
+#look 6
+#gems 5 1
+#end
+
+#selectsite 1220
+#name "Stale Current"
+#path 5
+#level 1
+#rarity 0
+#loc 32
+#look 6
+#gems 5 1
+#incscale 3
+#end
+
+#selectsite 1221
+#name "Black Coral Reef"
+#path 5
+#level 1
+#rarity 0
+#loc 32
+#look 8
+#gems 5 1
+#end
+
+#selectsite 1222
+#name "Field of Undead Clams"
+#path 5
+#level 1
+#rarity 1
+#loc 32
+#look 8
+#gems 5 1
+#end
+
+#selectsite 1223
+#name "Halls of the Drowned"
+#path 5
+#level 1
+#rarity 1
+#loc 16416
+#gems 5 1
+-- ro: ability 552 = 619
+-- ro: ability 552 repeated (the game reads the first) = 618
+#end
+
+#selectsite 1224
+#name "Sunken Ship of Dread"
+#path 5
+#level 2
+#rarity 2
+#loc 17440
+#look 8
+#gems 5 1
+-- ro: ability 558 = 2241
+#end
+
+#selectsite 1225
+#name "Pearl Stairway"
+#path 4
+#level 1
+#rarity 2
+#loc 32
+#look 1
+#gems 4 1
+#end
+
+#selectsite 1226
+#name "Arcane Gateway"
+#path 4
+#level 3
+#rarity 2
+#loc 288
+#look 4
+#gems 4 1
+#conjcost 20
+#end
+
+#selectsite 1227
+#name "The Water Solstice"
+#path 4
+#level 2
+#rarity 2
+#loc 16416
+#look 1
+#enchcost 40
+#gems 4 2
+#gems 2 4
+#end
+
+#selectsite 1228
+#name "Basalt Pillars"
+#path 4
+#level 1
+#rarity 1
+#loc 256
+#look 1
+#gems 4 1
+#end
+
+#selectsite 1229
+#name "Labyrinth of the Deeps"
+#path 4
+#level 2
+#rarity 2
+#loc 256
+#look 1
+#gems 4 3
+#end
+
+#selectsite 1230
+#name "Gorge of Mystery"
+#path 4
+#level 2
+#rarity 2
+#loc 256
+#look 6
+#gems 4 1
+#altcost 20
+#end
+
+#selectsite 1231
+#name "The Crater"
+#path 4
+#level 3
+#rarity 1
+#loc 16640
+#look 1
+#com 445
+#mon 331
+#gems 4 2
+#end
+
+#selectsite 1232
+#name "The Last Void"
+#path 4
+#level 3
+#rarity 2
+#loc 16640
+#look 1
+#thaucost 30
+#decscale 5
+#gems 4 2
+#end
+
+#selectsite 1233
+#name "The Iron Caverns"
+#path 4
+#level 2
+#rarity 1
+#loc 17152
+#look 6
+#gems 3 1
+#gems 2 1
+#gems 4 1
+#end
+
+#selectsite 1234
+#name "Submerged Labyrinth"
+#path 4
+#level 1
+#rarity 0
+#loc 32
+#look 6
+#gems 4 1
+#end
+
+#selectsite 1235
+#name "Displaced Tunnel"
+#path 4
+#level 1
+#rarity 0
+#loc 256
+#look 6
+#gems 4 1
+#end
+
+#selectsite 1236
+#name "Arcane Vent"
+#path 4
+#level 1
+#rarity 0
+#loc 256
+#look 6
+#gems 4 1
+#end
+
+#selectsite 1237
+#name "Shimmering Conches"
+#path 4
+#level 1
+#rarity 0
+#loc 32
+#look 0
+#gems 4 1
+#end
+
+#selectsite 1238
+#name "Pearl Farm"
+#path 4
+#level 1
+#rarity 0
+#loc 32
+#look 0
+#gems 4 1
+#end
+
+#selectsite 1239
+#name "Eye Pebble Plain"
+#path 4
+#level 1
+#rarity 1
+#loc 32
+#look 0
+#gems 4 1
+#end
+
+#selectsite 1240
+#name "Abyss to the Beyond"
+#path 4
+#level 2
+#rarity 1
+#loc 256
+#look 1
+#gems 4 2
+#end
+
+#selectsite 1241
+#name "Blasphemous Presence"
+#path 4
+#level 1
+#rarity 1
+#loc 256
+#look 1
+#gems 4 1
+#end
+
+#selectsite 1242
+#name "Enchanted Current"
+#path 4
+#level 1
+#rarity 1
+#loc 16416
+#look 1
+#gems 4 2
+#decscale 5
+#end
+
+#selectsite 1243
+#name "Shimmerfish Reef"
+#path 7
+#level 1
+#rarity 0
+#loc 32
+#look 12
+#gems 7 1
+#end
+
+#selectsite 1244
+#name "Dream Kelp"
+#path 7
+#level 1
+#rarity 0
+#loc 32
+#look 13
+#gems 7 1
+#end
+
+#selectsite 1245
+#name "Singing Sands"
+#path 7
+#level 1
+#rarity 1
+#loc 32
+#look 0
+#gems 7 1
+#gems 3 1
+#end
+
+#selectsite 1246
+#name "Lingering Corpusants"
+#path 7
+#level 1
+#rarity 1
+#loc 32
+#look 0
+#gems 7 1
+#end
+
+#selectsite 1247
+#name "Slumbering Seaweeds"
+#path 7
+#level 2
+#rarity 1
+#loc 32
+#look 13
+#gems 7 1
+#gems 6 1
+#end
+
+#selectsite 1248
+#name "Witchfire Fog"
+#path 7
+#level 2
+#rarity 0
+#loc 32
+#look 0
+#gems 7 1
+#gems 1 1
+#end
+
+#selectsite 1249
+#name "Drowned Dreams"
+#path 7
+#level 2
+#rarity 2
+#loc 32
+#look 0
+#gems 7 1
+#gems 5 1
+#end
+
+#selectsite 1250
+#name "Isle of the Unaging"
+#path 7
+#level 2
+#rarity 2
+#loc 16416
+#look 0
+#gems 7 1
+#gems 2 1
+#end
+
+#selectsite 1251
+#name "Siren Cliffs"
+#path 7
+#level 2
+#rarity 2
+#loc 16416
+#look 12
+#com 1054
+#gems 7 1
+#gems 2 1
+#end
+
+#selectsite 1252
+#name "Faces Beneath the Waves"
+#path 7
+#level 2
+#rarity 2
+#loc 32
+#look 0
+#gems 7 1
+#gems 4 1
+#horrormark 1
+#end
+
+#selectsite 1253
+#name "Whale Song Forest"
+#path 7
+#level 1
+#rarity 1
+#loc 32
+#look 13
+#gems 7 1
+#gems 6 1
+#end
+
+#selectsite 1254
+#name "Pearl Sphere"
+#path 7
+#level 1
+#rarity 1
+#loc 32
+#look 13
+#gems 7 1
+#gems 4 1
+#scry 1
+#end
+
+#selectsite 1255
+#name "Dreamlands"
+#path 7
+#level 3
+#rarity 2
+#loc 16416
+#look 12
+#incscale 1
+#gems 7 3
+#end
+
+#selectsite 1256
+#name "Ancient Temple of the Deeps"
+#path 9
+#level 1
+#rarity 0
+#loc 288
+#look 4
+#gems 4 1
+#gems 2 1
+#end
+
+#selectsite 1257
+#name "Knightly Order of the Deep"
+#path 9
+#level 0
+#rarity 5
+#loc 32
+#look 4
+#com 406
+#mon 1060
+#decscale 0
+#defunit 1060
+#end
+
+#selectsite 1258
+#name "Shambler Reef"
+#path 2
+#level 0
+#rarity 0
+#loc 64
+#look 0
+#com 207
+#mon 206
+#end
+
+#selectsite 1259
+#name "Navigators Guild"
+#path 2
+#level 0
+#rarity 2
+#loc 64
+#look 5
+#com 869
+#gems 2 2
+#end
+
+#selectsite 1260
+#name "Wailwind Shores"
+#path 1
+#level 1
+#rarity 1
+#loc 64
+#look 2
+#gems 7 1
+#gems 1 1
+#end
+
+#selectsite 1261
+#name "Rain Forest"
+#path 6
+#level 0
+#rarity 5
+#loc 2
+#look 0
+#decscale 2
+#decscale 3
+#end
+
+#selectsite 1262
+#name "Tundra"
+#path 2
+#level 0
+#rarity 5
+#loc 8
+#incscale 2
+#end
+
+#selectsite 1263
+#name "Desert"
+#path 0
+#level 0
+#rarity 5
+#loc 8
+#look 1
+#decscale 2
+#incscale 3
+#end
+
+#selectsite 1264
+#name "Oasis"
+#path 2
+#level 1
+#rarity 0
+#loc 8
+#supply 75
+#gems 2 1
+#end
+
+#selectsite 1265
+#name "Great Oasis"
+#path 2
+#level 1
+#rarity 2
+#loc 8
+#supply 125
+#gems 6 1
+#gems 2 1
+#end
+
+#selectsite 1266
+#name "Date Oasis"
+#path 6
+#level 1
+#rarity 1
+#loc 8
+#supply 75
+#gold 40
+#gems 6 1
+-- ro: ability 26 = 50
+#end
+
+#selectsite 1267
+#name "City of Dates"
+#path 6
+#level 0
+#rarity 2
+#loc 16392
+#supply 250
+#fort 1
+#gold 75
+#gems 2 1
+#gems 6 1
+-- ro: ability 26 = 100
+#end
+
+#selectsite 1268
+#name "Oasis of Verdant Greenery"
+#path 6
+#level 3
+#rarity 2
+#loc 16392
+#supply 150
+#gems 2 1
+#gems 6 2
+#end
+
+#selectsite 1269
+#name "Chitterpalm Oasis"
+#path 2
+#level 1
+#rarity 0
+#loc 8
+#supply 75
+#gems 2 1
+#mon 1116
+#end
+
+#selectsite 1270
+#name "Cavern of Flames"
+#path 0
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 0 1
+#end
+
+#selectsite 1271
+#name "Underground Lake"
+#path 2
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 2 1
+#end
+
+#selectsite 1272
+#name "Air Shaft"
+#path 1
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 1 1
+#end
+
+#selectsite 1273
+#name "Basalt Wall"
+#path 3
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 3 1
+#end
+
+#selectsite 1274
+#name "Painted Cavern"
+#path 4
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 4 1
+#end
+
+#selectsite 1275
+#name "Bone Filled Cave"
+#path 5
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 5 1
+#end
+
+#selectsite 1276
+#name "Mushroom Forest"
+#path 6
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 6 1
+#end
+
+#selectsite 1277
+#name "Cave of Glowing Mushrooms"
+#path 7
+#level 0
+#rarity 1
+#loc 512
+#look 6
+#gems 7 1
+#end
+
+#selectsite 1278
+#name "Trapped Lights"
+#path 0
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 0 1
+#end
+
+#selectsite 1279
+#name "Dripping Stones"
+#path 2
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 2 1
+#end
+
+#selectsite 1280
+#name "Trapped Wind"
+#path 1
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 1 1
+#end
+
+#selectsite 1281
+#name "Mineral Deposit"
+#path 3
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 3 1
+#end
+
+#selectsite 1282
+#name "Spiral Shaft"
+#path 4
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 4 1
+#end
+
+#selectsite 1283
+#name "Cavern Tomb"
+#path 5
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 5 1
+#end
+
+#selectsite 1284
+#name "Moss Covered Cavern"
+#path 6
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 6 1
+#end
+
+#selectsite 1285
+#name "Cavern of Dreams"
+#path 7
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#gems 7 1
+#end
+
+#selectsite 1286
+#name "Cavern of Rubies"
+#path 0
+#level 1
+#rarity 2
+#loc 512
+#look 6
+#minegold 150
+#gems 3 1
+#gems 0 1
+#end
+
+#selectsite 1287
+#name "Cavern of Magma"
+#path 0
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#gems 3 1
+#gems 0 1
+#decscale 2
+#end
+
+#selectsite 1288
+#name "Magma Halls"
+#path 0
+#level 2
+#rarity 2
+#loc 512
+#look 6
+#gems 3 1
+#gems 0 2
+#summon 640
+#end
+
+#selectsite 1289
+#name "Dripping Caverns"
+#path 2
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#gems 2 1
+#end
+
+#selectsite 1290
+#name "Mud Caverns"
+#path 2
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 1291
+#name "Ice Caverns"
+#path 2
+#level 0
+#rarity 2
+#loc 512
+#look 6
+#gems 2 1
+#incscale 2
+#end
+
+#selectsite 1292
+#name "Stalagmite Cavern"
+#path 2
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#gems 2 1
+#gems 3 1
+#end
+
+#selectsite 1293
+#name "Mist Caverns"
+#path 2
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#gems 2 1
+#gems 1 1
+#end
+
+#selectsite 1294
+#name "Gold Deposit"
+#path 3
+#level 0
+#rarity 0
+#loc 512
+#look 6
+#minegold 100
+#end
+
+#selectsite 1295
+#name "Silver Deposit"
+#path 3
+#level 0
+#rarity 0
+#loc 512
+#look 6
+#minegold 60
+#end
+
+#selectsite 1296
+#name "Copper Deposit"
+#path 3
+#level 0
+#rarity 0
+#loc 512
+#look 6
+#minegold 30
+-- ro: ability 384 = 30
+#end
+
+#selectsite 1297
+#name "Iron Deposit"
+#path 3
+#level 0
+#rarity 0
+#loc 512
+#look 6
+-- ro: ability 384 = 60
+#end
+
+#selectsite 1298
+#name "Hidden Gold Deposit"
+#path 3
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#minegold 150
+#end
+
+#selectsite 1299
+#name "Hidden Gem Deposits"
+#path 3
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#minegold 125
+#end
+
+#selectsite 1300
+#name "Mammoth Cave"
+#path 3
+#level 0
+#rarity 2
+#loc 512
+#look 6
+#gems 3 2
+#end
+
+#selectsite 1301
+#name "Earth Blood Vein"
+#path 3
+#level 2
+#rarity 1
+#loc 512
+#look 6
+#gems 3 2
+#end
+
+#selectsite 1302
+#name "Crystal Cavern"
+#path 3
+#level 1
+#rarity 0
+#loc 512
+#look 6
+#minegold 40
+#gems 3 1
+#gems 7 1
+#end
+
+#selectsite 1303
+#name "Crystal Forest"
+#path 3
+#level 2
+#rarity 1
+#loc 512
+#look 5
+#gems 3 1
+#gems 7 1
+#gems 4 1
+#end
+
+#selectsite 1304
+#name "Glittering Cavern"
+#path 3
+#level 2
+#rarity 1
+#loc 512
+#look 6
+#minegold 125
+#gems 3 1
+#gems 7 1
+#end
+
+#selectsite 1305
+#name "Buried Temple"
+#path 3
+#level 2
+#rarity 2
+#loc 512
+#look 9
+#gems 4 1
+#end
+
+#selectsite 1306
+#name "Gemwall Cavern"
+#path 3
+#level 3
+#rarity 2
+#loc 512
+#look 6
+#minegold 150
+#gems 3 2
+#end
+
+#selectsite 1307
+#name "Troglodyte Cave"
+#path 3
+#level 3
+#rarity 2
+#loc 512
+#look 6
+#mon 447
+#gems 3 1
+#end
+
+#selectsite 1308
+#name "The Storm Underneath"
+#path 1
+#level 3
+#rarity 2
+#loc 16896
+#look 6
+#gems 1 3
+#end
+
+#selectsite 1309
+#name "Ancient Tomb"
+#path 5
+#level 1
+#rarity 1
+#loc 512
+#look 5
+#gems 5 1
+#end
+
+#selectsite 1310
+#name "Opulent Tomb"
+#path 5
+#level 2
+#rarity 2
+#loc 512
+#look 5
+#gems 5 2
+#end
+
+#selectsite 1311
+#name "Umbral Cave"
+#path 5
+#level 3
+#rarity 2
+#loc 512
+#look 6
+#gems 5 1
+#end
+
+#selectsite 1312
+#name "Caveman Cavern"
+#path 6
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#mon 1615
+#supply 40
+#end
+
+#selectsite 1313
+#name "Cavern of Ancient Mushrooms"
+#path 6
+#level 0
+#rarity 0
+#loc 512
+#look 6
+#gems 6 1
+#gems 3 1
+#end
+
+#selectsite 1314
+#name "Gemsparkle Gorge"
+#path 7
+#level 1
+#rarity 1
+#loc 512
+#look 6
+#gems 7 1
+#end
+
+#selectsite 1315
+#name "Gorge of Silent Songs"
+#path 7
+#level 2
+#rarity 2
+#loc 512
+#look 5
+#gems 7 2
+#end
+
+#selectsite 1316
+#name "Hidden Halls of Crystal"
+#path 7
+#level 2
+#rarity 2
+#loc 512
+#look 5
+#gems 7 2
+#gems 3 1
+#gems 4 1
+#end
+
+#selectsite 1317
+#name "The Howling Abyss"
+#path 7
+#level 2
+#rarity 1
+#loc 16896
+#look 5
+#gems 7 2
+#gems 5 2
+#end
+
+#selectsite 1318
+#name "Nest of Bats"
+#path 8
+#level 1
+#rarity 2
+#loc 512
+#look 6
+#gems 5 1
+-- ro: ability 551 = 1357
+#end
+
+#selectsite 1319
+#name "The Lesser Abyss"
+#path 8
+#level 1
+#rarity 2
+#loc 16896
+#look 6
+#summon 88
+#decunrest -10
+#end
+
+#selectsite 1320
+#name "Splattermaid Gorge"
+#path 8
+#level 2
+#rarity 2
+#loc 16896
+#look 6
+#gems 1 1
+-- ro: ability 553 = 1357
+#end
+
+#selectsite 1321
+#name "Tomb of Seven Oracles"
+#path 5
+#level 3
+#rarity 2
+#loc 16896
+#look 5
+#summon 1501
+#gems 5 2
+#gems 3 1
+#end
+
+#selectsite 1322
+#name "Infinite Cavern"
+#path 3
+#level 3
+#rarity 2
+#loc 16896
+#look 6
+#conjcost 20
+#gems 3 2
+#end
+
+#selectsite 1323
+#name "Riddle Dark"
+#path 3
+#level 3
+#rarity 2
+#loc 16896
+#look 6
+#gems 5 2
+#gems 3 2
+#end
+
+#selectsite 1324
+#name "The Umbral Conclave"
+#path 5
+#level 3
+#rarity 2
+#loc 16896
+#look 6
+#conjcost 20
+#gems 5 3
+#end
+
+#selectsite 1325
+#name "Subterranean City"
+#path 3
+#level 0
+#rarity 2
+#loc 17920
+#look 6
+#gold 50
+#res 30
+#end
+
+#selectsite 1326
+#name "The Silent Sea"
+#path 2
+#level 2
+#rarity 2
+#loc 16896
+#look 6
+#gems 2 3
+#end
+
+#selectsite 1327
+#name "The Olm Cavern"
+#path 2
+#level 2
+#rarity 2
+#loc 16896
+#look 6
+#gems 2 1
+#gems 3 1
+#gems 6 1
+#end
+
+#selectsite 1328
+#name "Halls of Stalagmitic Splendor"
+#path 2
+#level 2
+#rarity 2
+#loc 512
+#look 6
+#gems 2 2
+#gems 3 1
+#end
+
+#selectsite 1329
+#name "Halls of Imprisoned Sunlight"
+#path 0
+#level 3
+#rarity 2
+#loc 16896
+#look 6
+#gems 0 3
+#gems 4 1
+#end
+
+#selectsite 1330
+#name "Undermirks"
+#path 6
+#level 2
+#rarity 2
+#loc 16896
+#look 6
+#gems 6 2
+#gems 5 1
+#end
+
+#selectsite 1331
+#name "Nexus"
+#path 4
+#level 0
+#rarity 5
+#loc 214015
+#look 1
+#gems 4 4
+#altcost 20
+-- ro: ability 652 = 1
+-- ro: ability 651 = 2
+-- ro: ability 653 = 1
+#end
+
+#selectsite 1332
+#name "The Throne of the Second Age"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#cluster 3
+#claim
+#dominion 2
+#blessstr 1
+#end
+
+#selectsite 1333
+#name "The Throne of War"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 1
+#blessatt 1
+#blessmor 1
+-- ro: ability 365 = 5
+#end
+
+#selectsite 1334
+#name "The Throne of Night"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#evil
+#claim
+#dominion 1
+#blessdarkvis 50
+#end
+
+#selectsite 1335
+#name "The Throne of Beasts"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#wild
+#claim
+#dominion 1
+#blessanimawe 1
+#gems 6 2
+#end
+
+#selectsite 1336
+#name "The Throne of Thorns"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#wild
+#claim
+#dominion 1
+#blesspoisres 10
+#gems 6 2
+#end
+
+#selectsite 1337
+#name "The Throne of Flames"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#gems 0 1
+#claim
+#dominion 1
+#blessfireres 5
+#gems 0 2
+#end
+
+#selectsite 1338
+#name "The Throne of Ice"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#gems 2 1
+#claim
+#dominion 1
+#blesscoldres 5
+#gems 2 2
+#end
+
+#selectsite 1339
+#name "The Throne of Storms"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#wild
+#gems 1 1
+#claim
+#dominion 1
+#blessshockres 5
+#gems 1 2
+#end
+
+#selectsite 1340
+#name "The Throne of Might"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 1
+#blessstr 2
+#end
+
+#selectsite 1341
+#name "The Throne of the Stars"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#cluster 4
+#claim
+#dominion 1
+#gems 4 2
+#astralrange 2
+#end
+
+#selectsite 1342
+#name "The Throne of Stability"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 1
+#blessmr 1
+#end
+
+#selectsite 1343
+#name "The Throne of the Deeps"
+#path 9
+#level 0
+#rarity 11
+#loc 16640
+#look 4
+#claim
+#dominion 1
+#summon 438
+#blessdarkvis 50
+#end
+
+#selectsite 1344
+#name "The Throne of Pearls"
+#path 9
+#level 0
+#rarity 11
+#loc 16640
+#look 4
+#claim
+#dominion 1
+#gems 4 3
+#com 2805
+#end
+
+#selectsite 1345
+#name "The Throne of Bones"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#evil
+#claim
+#dominion 1
+#blessdtv 3
+#end
+
+#selectsite 1346
+#name "The High Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 3
+#end
+
+#selectsite 1347
+#name "The Throne of Zeal"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 2
+#blessmor 2
+-- ro: ability 365 = 10
+#end
+
+#selectsite 1348
+#name "The Brass Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 1
+#gems 0 1
+#gems 3 1
+#gold 100
+#end
+
+#selectsite 1349
+#name "The Coral Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 16640
+#look 4
+#claim
+#dominion 1
+#gems 2 1
+#gems 6 1
+#gold 100
+#res 75
+#mon 577
+#end
+
+#selectsite 1350
+#name "The Throne of Pestilence"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#evil
+#incscale 3
+#claim
+#dominion 1
+#goddomdeath 1
+#gems 5 3
+#end
+
+#selectsite 1351
+#name "The Lower Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#evil
+#claim
+#dominion 1
+#gems 8 5
+#end
+
+#selectsite 1352
+#name "The Mirror Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 17119
+#look 4
+#claim
+#dominion 1
+#glamourrange 1
+#gems 7 3
+#end
+
+#selectsite 1353
+#name "The Throne of Twilight"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#evil
+#claim
+#dominion 1
+#blessdef 1
+#gems 7 2
+#end
+
+#selectsite 1354
+#name "The Rainbow Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#decscale 4
+#claim
+#dominion 1
+#gems 7 1
+#gems 2 1
+-- ro: ability 659 = 100
+#end
+
+#selectsite 1355
+#name "The Throne of Spring"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#decscale 3
+#claim
+#dominion 1
+#goddomdeath -1
+#gems 1 1
+#com 2543
+#cluster 1
+#end
+
+#selectsite 1356
+#name "The Throne of Summer"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#decscale 2
+#claim
+#dominion 1
+#goddomcold -1
+#gems 0 1
+#com 2544
+#cluster 1
+#end
+
+#selectsite 1357
+#name "The Throne of Autumn"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#incscale 3
+#claim
+#dominion 1
+#goddomdeath 1
+#gems 3 1
+#com 2545
+#cluster 1
+#end
+
+#selectsite 1358
+#name "The Throne of Winter"
+#path 9
+#level 0
+#rarity 11
+#loc 16607
+#look 4
+#incscale 2
+#claim
+#dominion 1
+#goddomcold 1
+#gems 2 1
+#com 2546
+#cluster 1
+#end
+
+#selectsite 1359
+#name "The Throne of the First Age"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#cluster 3
+#claim
+#dominion 3
+#decscale 5
+#blessmr 1
+#end
+
+#selectsite 1360
+#name "The Throne of Law"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#decscale 0
+#claim
+#dominion 1
+#goddomchaos -1
+-- ro: ability 365 = 10
+#end
+
+#selectsite 1361
+#name "The Throne of Gaia"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#wild
+#claim
+#dominion 2
+#goddomdeath -2
+#gems 6 2
+#end
+
+#selectsite 1362
+#name "The Crystal Throne"
+#path 9
+#level 0
+#rarity 12
+#loc 17119
+#look 4
+#claim
+#dominion 2
+#gems 3 1
+#gems 7 1
+#com 340
+#end
+
+#selectsite 1363
+#name "The Iron Throne"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#claim
+#dominion 2
+#res 200
+#com 477
+#end
+
+#selectsite 1364
+#name "The Silver Throne"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#claim
+#dominion 2
+#com 100
+-- ro: ability 659 = 200
+#end
+
+#selectsite 1365
+#name "The Golden Throne"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#claim
+#dominion 2
+#com 101
+-- ro: ability 659 = 400
+#end
+
+#selectsite 1366
+#name "The Throne of Bureaucracy"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#claim
+#dominion 5
+#goddomchaos -1
+#domwar 1
+-- ro: ability 659 = -200
+-- ro: ability 365 = 10
+#end
+
+#selectsite 1367
+#name "The Throne of Knowledge"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#claim
+#dominion 2
+#com 479
+#com 478
+#end
+
+#selectsite 1368
+#name "The Throne of Life"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#decscale 3
+#claim
+#dominion 2
+#goddomdeath -1
+#gems 6 3
+#end
+
+#selectsite 1369
+#name "The Throne of Death"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#evil
+#incscale 3
+#claim
+#dominion 2
+#goddomdeath 1
+#gems 5 5
+#end
+
+#selectsite 1370
+#name "The Throne of Fortune"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#decscale 4
+#claim
+#dominion 2
+#goddommisfortune -1
+#gems 7 2
+#end
+
+#selectsite 1371
+#name "The Throne of Misfortune"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#incscale 4
+#claim
+#dominion 2
+#goddommisfortune 1
+#gems 4 4
+#end
+
+#selectsite 1372
+#name "The Throne of Chains"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#evil
+#claim
+#dominion 3
+#decunrest 5
+#goddomchaos -1
+#goddommisfortune 1
+#gems 8 4
+-- ro: ability 1018 = 25
+-- ro: ability 1019 = 15
+#end
+
+#selectsite 1373
+#name "The Inner Throne"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#claim
+#dominion 2
+#goddomchaos -1
+#gems 8 3
+#gems 3 1
+#end
+
+#selectsite 1374
+#name "The Outer Throne"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#claim
+#dominion 2
+#goddomdrain -1
+#gems 4 3
+#end
+
+#selectsite 1375
+#name "The Throne of the Moon"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#cluster 4
+#claim
+#dominion 2
+#goddomdeath -1
+#blessprec 3
+#gems 2 1
+#gems 4 1
+#end
+
+#selectsite 1376
+#name "The Throne of Dreams"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#claim
+#dominion 2
+#goddomlazy 1
+#goddomdrain -1
+#gems 7 3
+#gems 4 1
+-- ro: ability 105 = 1
+#end
+
+#selectsite 1377
+#name "The Throne of the Churning Ocean"
+#path 9
+#level 0
+#rarity 12
+#loc 16416
+#look 4
+#wild
+#incscale 0
+#claim
+#dominion 2
+#gems 2 3
+#gems 1 1
+#conjcost 20
+#end
+
+#selectsite 1378
+#name "The Throne of the Artificer"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#claim
+#dominion 2
+#gems 0 2
+#gems 3 1
+#constcost 20
+-- ro: ability 657 = 1
+#end
+
+#selectsite 1379
+#name "The Throne of Fire"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#wild
+#gems 0 1
+#claim
+#dominion 2
+#blessatt 3
+#gems 0 2
+#cluster 2
+#com 99
+#firerange 1
+#end
+
+#selectsite 1380
+#name "The Throne of Earth"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#wild
+#gems 3 1
+#claim
+#dominion 2
+#blessreinvig 1
+#gems 3 2
+#cluster 2
+#com 411
+#earthrange 1
+#end
+
+#selectsite 1381
+#name "The Throne of Water"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#wild
+#gems 2 1
+#claim
+#dominion 2
+#blessdef 3
+#gems 2 2
+#cluster 2
+#com 103
+#waterrange 1
+#end
+
+#selectsite 1382
+#name "The Throne of Air"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#wild
+#gems 1 1
+#claim
+#dominion 2
+#blessairshld 40
+#gems 1 2
+#cluster 2
+#com 93
+#airrange 1
+#end
+
+#selectsite 1383
+#name "The Throne of Splendour"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#claim
+#dominion 3
+#blessawe 1
+#end
+
+#selectsite 1384
+#name "The Throne of the Pantokrator"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#claim
+#dominion 7
+#domwar 2
+#recallgod 2
+#end
+
+#selectsite 1385
+#name "The Throne of Abundance"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#claim
+#dominion 3
+#gems 0 1
+#gems 1 1
+#gems 2 1
+#gems 3 1
+#gems 4 1
+#gems 5 1
+#gems 6 1
+#gems 7 1
+#goddomlazy 2
+-- ro: ability 659 = 500
+#end
+
+#selectsite 1386
+#name "The Throne of Eternal Suffering"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#evil
+#claim
+#dominion 3
+#goddomchaos -1
+#goddomlazy -1
+#goddommisfortune 1
+#blessmor 2
+#end
+
+#selectsite 1387
+#name "The Throne of the Sun"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#cluster 4
+#claim
+#dominion 5
+#goddomcold -1
+#goddomchaos -1
+#goddomdeath -1
+#gems 0 5
+#blessfireres 5
+#end
+
+#selectsite 1388
+#name "The Throne of Sorcery"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#claim
+#dominion 3
+#decscale 5
+#sorceryrange 2
+#thaucost 30
+#gems 5 1
+#gems 6 1
+#gems 4 1
+#gems 7 1
+#end
+
+#selectsite 1389
+#name "The Throne of Elements"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#wild
+#claim
+#dominion 3
+#elementrange 2
+#evocost 30
+#gems 0 1
+#gems 3 1
+#gems 2 1
+#gems 1 1
+#end
+
+#selectsite 1390
+#name "The Shattered Throne"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#evil
+#decunrest -10
+#horrormark 5
+#curse 1
+#decscale 5
+#incscale 4
+#claim
+#goddommisfortune 1
+#dominion 3
+#gems 8 4
+#gems 4 2
+#bloodcost 30
+#end
+
+#selectsite 1391
+#name "The Throne of Creation"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#incscale 0
+#claim
+#dominion 3
+#goddomchaos 1
+#conjcost 30
+#constcost 20
+#res 150
+-- ro: ability 362 = 1
+-- ro: ability 657 = 1
+#end
+
+#selectsite 1392
+#name "The Throne of Destiny"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#claim
+#dominion 3
+#goddommisfortune -2
+#goddomchaos -1
+#end
+
+#selectsite 1393
+#name "The Throne of Power"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#claim
+#dominion 3
+#allrange 2
+#blessreinvig 2
+#gems 4 6
+#end
+
+#selectsite 1394
+#name "The Throne of Time"
+#path 9
+#level 0
+#rarity 13
+#loc 214015
+#look 4
+#claim
+#dominion 3
+#gems 4 5
+#goddomdrain -1
+-- ro: ability 104 = 5
+-- ro: ability 711 = 100
+-- ro: ability 712 = 100
+-- ro: ability 713 = 100
+-- ro: ability 1020 = 75
+#end
+
+#selectsite 1395
+#name "The Throne of Lies"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#evil
+#gems 7 1
+#incscale 0
+#claim
+#dominion 1
+#goddomchaos 1
+#gems 7 3
+#end
+
+#selectsite 1396
+#name "The Throne of Vitality"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#wild
+#decscale 3
+#claim
+#dominion 1
+#gems 6 1
+#blesshp 3
+#end
+
+#selectsite 1397
+#name "The Throne of Gates and Conjunctions"
+#path 9
+#level 0
+#rarity 12
+#loc 16607
+#look 4
+#decscale 5
+#claim
+#dominion 2
+#gems 4 2
+#thaucost 20
+#end
+
+#selectsite 1398
+#name "The Throne of the Fool"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#incscale 0
+#claim
+#dominion 1
+#gems 7 3
+#blessmor -1
+#end
+
+#selectsite 1399
+#name "The Throne of Pride"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 1
+#gems 0 1
+#blessmor 1
+#blesshp 2
+#end
+
+#selectsite 1400
+#name "The White Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#cluster 5
+#claim
+#dominion 1
+#gems 6 1
+#heal 20
+#end
+
+#selectsite 1401
+#name "The Black Throne"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#evil
+#cluster 5
+#claim
+#dominion 1
+#disease 10
+#gems 5 3
+#end
+
+#selectsite 1402
+#name "The Throne of Deeper Fires"
+#path 9
+#level 0
+#rarity 11
+#loc 16896
+#look 4
+#gems 0 1
+#claim
+#dominion 1
+#gems 3 1
+#gems 0 1
+#end
+
+#selectsite 1403
+#name "The Throne of Deeper Waters"
+#path 9
+#level 0
+#rarity 11
+#loc 16896
+#look 4
+#gems 2 1
+#claim
+#dominion 1
+#gems 3 1
+#gems 2 1
+#end
+
+#selectsite 1404
+#name "The Throne of Secrets"
+#path 9
+#level 0
+#rarity 12
+#loc 214015
+#look 4
+#claim
+#dominion 2
+#decscale 5
+#gems 4 1
+#gems 7 1
+#gems 8 2
+-- ro: ability 262 = 3
+#end
+
+#selectsite 1405
+#name "The Throne of Violence"
+#path 9
+#level 0
+#rarity 11
+#loc 214015
+#look 4
+#claim
+#dominion 1
+#blessstr 1
+#blessdtv 1
+#decunrest -5
+#end
+
+#selectsite 1406
+#name "end"
+#path 99
+#level 99
+#rarity 99
+#loc 0
 #end
