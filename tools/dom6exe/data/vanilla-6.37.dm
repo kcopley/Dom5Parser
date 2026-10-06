@@ -152431,3 +152431,7119 @@
 #itemslots 991750
 -- ro: body shape = 0x0
 #end
+
+#selectitem 0
+#name "No Item"
+#constlevel 197
+#mainpath 255
+#mainlevel 0
+#type 0
+#end
+
+#selectitem 1
+#name "Fire Sword"
+#constlevel 1
+#mainpath 0
+#mainlevel 1
+#type 1
+#weapon 76
+-- ro: sprite = 1002
+#end
+
+#selectitem 2
+#name "Ice Sword"
+#constlevel 1
+#mainpath 2
+#mainlevel 1
+#type 1
+#weapon 77
+#nationrebate 71
+-- ro: sprite = 1003
+#end
+
+#selectitem 3
+#name "Ice Lance"
+#constlevel 1
+#mainpath 2
+#mainlevel 1
+#type 1
+#weapon 693
+#nationrebate 71
+#itemdrawsize -30
+#islance
+-- ro: sprite = 1015
+#end
+
+#selectitem 4
+#name "Blacksteel Sword"
+#constlevel 1
+#mainpath 3
+#mainlevel 1
+#type 1
+#weapon 691
+#nationrebate 60
+-- ro: sprite = 1004
+#end
+
+#selectitem 5
+#name "Enchanted Sword"
+#constlevel 1
+#mainpath 4
+#mainlevel 1
+#type 1
+#weapon 75
+-- ro: sprite = 1001
+#end
+
+#selectitem 6
+#name "Enchanted Spear"
+#constlevel 1
+#mainpath 4
+#mainlevel 1
+#type 1
+#weapon 120
+-- ro: sprite = 71
+#end
+
+#selectitem 7
+#name "Enchanted Pike"
+#constlevel 1
+#mainpath 4
+#mainlevel 1
+#type 2
+#weapon 220
+-- ro: sprite = 243
+#end
+
+#selectitem 8
+#name "Hardwood Club"
+#constlevel 1
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 692
+-- ro: sprite = 1013
+#end
+
+#selectitem 9
+#name "Sceptre of Authority"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 1
+#weapon 172
+#spell "Burn"
+#command 50
+-- ro: sprite = 116
+#end
+
+#selectitem 10
+#name "Burning Blade"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 1
+#weapon 681
+-- ro: sprite = 1008
+#end
+
+#selectitem 11
+#name "Holy Scourge"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 2
+#weapon 402
+#nationrebate 61
+-- ro: sprite = 312
+#end
+
+#selectitem 12
+#name "Mace of Eruption"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 1
+#weapon 682
+#itemdrawsize -20
+-- ro: sprite = 1009
+#end
+
+#selectitem 13
+#name "Staff of Flame Focus"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 2
+#weapon 238
+#firerange 1
+-- ro: sprite = 350
+#end
+
+#selectitem 14
+#name "Flambeau"
+#constlevel 5
+#mainpath 0
+#mainlevel 3
+#type 2
+#weapon 95
+#spell "Holy Pyre"
+#fireres 5
+#nationrebate 61
+-- ro: sprite = 78
+#end
+
+#selectitem 15
+#name "Thunder Whip"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 1
+#weapon 208
+#shockres 5
+-- ro: sprite = 235
+#end
+
+#selectitem 16
+#name "Ice Pebble Staff"
+#constlevel 5
+#mainpath 2
+#mainlevel 3
+#type 2
+#weapon 238
+#spell "Winter's Chill"
+#coldres 5
+-- ro: sprite = 254
+#end
+
+#selectitem 17
+#name "Ice Mist Scimitar"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 1
+#weapon 685
+#coldres 10
+-- ro: sprite = 1011
+#end
+
+#selectitem 18
+#name "Coral Blade"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#type 1
+#weapon 689
+#hp 8
+#nationrebate 88
+#nationrebate 40
+#nationrebate 86
+-- ro: sprite = 1012
+#end
+
+#selectitem 19
+#name "Stinger"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 1
+#weapon 78
+-- ro: sprite = 68
+#end
+
+#selectitem 20
+#name "Sword of Sharpness"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 1
+#weapon 74
+-- ro: sprite = 5
+#end
+
+#selectitem 21
+#name "Axe of Sharpness"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 1
+#weapon 245
+-- ro: sprite = 143
+#end
+
+#selectitem 22
+#name "Greatsword of Sharpness"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 2
+#weapon 108
+#itemdrawsize -20
+-- ro: sprite = 2001
+#end
+
+#selectitem 23
+#name "Main Gauche of Parrying"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 1
+#weapon 99
+-- ro: sprite = 86
+#end
+
+#selectitem 24
+#name "Halberd of Might"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 2
+#weapon 107
+#str 4
+#itemdrawsize -20
+-- ro: sprite = 2013
+#end
+
+#selectitem 25
+#name "Smasher"
+#constlevel 3
+#mainpath 3
+#mainlevel 2
+#type 1
+#weapon 327
+-- ro: sprite = 321
+#end
+
+#selectitem 26
+#name "Hammer of the Mountains"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 2
+#weapon 130
+-- ro: sprite = 92
+#end
+
+#selectitem 27
+#name "Lightning Rod"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 2
+#weapon 238
+#corpselord 4
+#shockres 15
+-- ro: sprite = 64
+#end
+
+#selectitem 28
+#name "Star of Heroes"
+#constlevel 3
+#mainpath 3
+#mainlevel 2
+#type 1
+#weapon 173
+-- ro: sprite = 152
+#end
+
+#selectitem 29
+#name "Dwarven Hammer"
+#constlevel 3
+#mainpath 3
+#mainlevel 3
+#type 1
+#weapon 115
+#fixforgebonus 2
+#nationrebate 30
+#nationrebate 78
+-- ro: sprite = 91
+#end
+
+#selectitem 30
+#name "Eyecatcher"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#secondarypath 2
+#secondarylevel 1
+#type 1
+#weapon 548
+-- ro: sprite = 371
+#end
+
+#selectitem 31
+#name "Faithful"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#secondarypath 7
+#secondarylevel 1
+#type 1
+#weapon 102
+#luck
+#woundfend 1
+-- ro: sprite = 10
+#end
+
+#selectitem 32
+#name "Rod of the Leper King"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#type 1
+#weapon 172
+#disease
+#undcommand 100
+-- ro: sprite = 172
+#end
+
+#selectitem 33
+#name "Duskdagger"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 1
+#weapon 129
+#nationrebate 80
+-- ro: sprite = 84
+#end
+
+#selectitem 34
+#name "Bane Blade"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#type 1
+#weapon 42
+#nationrebate 76
+-- ro: sprite = 17
+#end
+
+#selectitem 35
+#name "Bane Blade"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#type 2
+#weapon 41
+#nationrebate 76
+#itemdrawsize -20
+-- ro: sprite = 18
+#end
+
+#selectitem 36
+#name "Doom Glaive"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 2
+#weapon 430
+-- ro: sprite = 82
+#end
+
+#selectitem 37
+#name "Hunter's Knife"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 242
+-- ro: sprite = 85
+#end
+
+#selectitem 38
+#name "Thorn Spear"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 79
+#nationrebate 7
+#nationrebate 53
+-- ro: sprite = 24
+#end
+
+#selectitem 39
+#name "Thorn Staff"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 2
+#weapon 81
+#nationrebate 7
+#nationrebate 53
+-- ro: sprite = 25
+#end
+
+#selectitem 40
+#name "Vine Whip"
+#constlevel 3
+#mainpath 6
+#mainlevel 2
+#type 1
+#weapon 136
+#nationrebate 53
+-- ro: sprite = 119
+#end
+
+#selectitem 41
+#name "Gloves of the Gladiator"
+#constlevel 3
+#mainpath 6
+#mainlevel 2
+#type 2
+#weapon 128
+#str 3
+#mr 1
+#nationrebate 56
+#nationrebate 98
+-- ro: sprite = 158
+#end
+
+#selectitem 42
+#name "Knife of the Damned"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 1
+#weapon 117
+#curse
+#cursed
+-- ro: sprite = 135
+#end
+
+#selectitem 43
+#name "Jade Knife"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#secondarypath 8
+#secondarylevel 1
+#type 1
+#weapon 309
+#adeptsacr 2
+#restricted 111
+#restricted 73
+#restricted 25
+-- ro: sprite = 88
+#end
+
+#selectitem 44
+#name "Pixie Spear"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#type 1
+#weapon 789
+#itemdrawsize -25
+-- ro: sprite = 1027
+#end
+
+#selectitem 45
+#name "Toy Sword"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#type 1
+#weapon 793
+#glamourmanip 1
+-- ro: sprite = 1028
+#end
+
+#selectitem 46
+#name "Shillelagh"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 1
+#weapon 701
+#luck
+#batstartsum1 592
+#restricted 58
+#restricted 11
+#itemcost1 -40
+#itemcost2 -60
+-- ro: sprite = 1014
+#end
+
+#selectitem 47
+#name "Blade of Grass"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 1
+#weapon 816
+-- ro: sprite = 1031
+#end
+
+#selectitem 48
+#name "Wand of Wild Fire"
+#constlevel 5
+#mainpath 0
+#mainlevel 3
+#type 1
+#weapon 172
+#spell "Fireball"
+-- ro: sprite = 198
+#end
+
+#selectitem 49
+#name "Fire Brand"
+#constlevel 7
+#mainpath 0
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 1
+#weapon 80
+#fireres 5
+#morale 2
+-- ro: sprite = 1010
+#end
+
+#selectitem 50
+#name "Lightning Spear"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#type 1
+#weapon 278
+#shockres 5
+-- ro: sprite = 301
+#end
+
+#selectitem 51
+#name "Shock Trident"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#type 2
+#weapon 853
+#shockres 5
+#itemdrawsize -20
+-- ro: sprite = 2015
+#end
+
+#selectitem 52
+#name "Staff of Corrosion"
+#constlevel 5
+#mainpath 2
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 1
+#type 2
+#weapon 238
+#spell "Acid Bolt"
+-- ro: sprite = 174
+#end
+
+#selectitem 53
+#name "Rune Smasher"
+#constlevel 5
+#mainpath 2
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 2
+#type 1
+#weapon 233
+#pen 2
+-- ro: sprite = 255
+#end
+
+#selectitem 54
+#name "Frost Brand"
+#constlevel 5
+#mainpath 2
+#mainlevel 1
+#type 1
+#weapon 82
+#coldres 5
+-- ro: sprite = 114
+#end
+
+#selectitem 55
+#name "Sword of Swiftness"
+#constlevel 5
+#mainpath 2
+#mainlevel 2
+#type 1
+#weapon 106
+-- ro: sprite = 12
+#end
+
+#selectitem 56
+#name "Midget Masher"
+#constlevel 5
+#mainpath 3
+#mainlevel 1
+#type 2
+#weapon 133
+-- ro: sprite = 93
+#end
+
+#selectitem 57
+#name "Elf Bane"
+#constlevel 5
+#mainpath 3
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 1
+#weapon 246
+-- ro: sprite = 144
+#end
+
+#selectitem 58
+#name "Implementor Axe"
+#constlevel 5
+#mainpath 3
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 2
+#weapon 181
+#pillagebonus 25
+#fear 10
+-- ro: sprite = 141
+#end
+
+#selectitem 59
+#name "Starfire Staff"
+#constlevel 5
+#mainpath 4
+#mainlevel 2
+#type 1
+#weapon 172
+#spell "Star Fires"
+#astralrange 1
+-- ro: sprite = 374
+#end
+
+#selectitem 60
+#name "Herald Lance"
+#constlevel 5
+#mainpath 4
+#mainlevel 2
+#type 1
+#weapon 109
+#spell "Solar Rays"
+#inspirational 1
+-- ro: sprite = 73
+#end
+
+#selectitem 61
+#name "Wraith Sword"
+#constlevel 5
+#mainpath 5
+#mainlevel 2
+#type 2
+#weapon 110
+-- ro: sprite = 115
+#end
+
+#selectitem 62
+#name "Skull Staff"
+#constlevel 5
+#mainpath 5
+#mainlevel 2
+#type 2
+#weapon 238
+#magicboost 5 1
+-- ro: sprite = 62
+#end
+
+#selectitem 63
+#name "Serpent Kryss"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 297
+#poisonres 5
+#nationrebate 98
+#nationrebate 108
+-- ro: sprite = 306
+#end
+
+#selectitem 64
+#name "Snake Bladder Stick"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 183
+-- ro: sprite = 232
+#end
+
+#selectitem 65
+#name "Thistle Mace"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#type 1
+#weapon 163
+#magicboost 6 1
+-- ro: sprite = 176
+#end
+
+#selectitem 66
+#name "Whip of Command"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 140
+#command 150
+#inspirational -2
+#taskmaster 3
+-- ro: sprite = 120
+#end
+
+#selectitem 67
+#name "Rat Tail"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 138
+#animalawe 4
+#taskmaster 1
+-- ro: sprite = 118
+#end
+
+#selectitem 68
+#name "Skull Standard"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#secondarypath 5
+#secondarylevel 1
+#type 2
+#weapon 100
+#spell "Panic"
+#fear 5
+#nationrebate 53
+-- ro: sprite = 60
+#end
+
+#selectitem 69
+#name "Summer Sword"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 1
+#weapon 178
+#spell "Tangle Vines"
+#supplybonus 150
+-- ro: sprite = 163
+#end
+
+#selectitem 70
+#name "Unseen Sword"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#type 1
+#weapon 764
+#patience 2
+-- ro: sprite = 1020
+#end
+
+#selectitem 71
+#name "Flesh Eater"
+#constlevel 5
+#mainpath 8
+#mainlevel 1
+#type 1
+#weapon 149
+#berserk 3
+-- ro: sprite = 142
+#end
+
+#selectitem 72
+#name "Heart Finder Sword"
+#constlevel 5
+#mainpath 8
+#mainlevel 2
+#type 1
+#weapon 111
+-- ro: sprite = 14
+#end
+
+#selectitem 73
+#name "Twilight Glaive"
+#constlevel 5
+#mainpath 7
+#mainlevel 2
+#type 2
+#weapon 791
+#itemdrawsize -25
+-- ro: sprite = 2014
+#end
+
+#selectitem 74
+#name "Dragon Sceptre"
+#constlevel 7
+#mainpath 0
+#mainlevel 2
+#type 1
+#weapon 151
+#spell "Flame Bolt"
+#dragonlord 1
+-- ro: sprite = 437
+#end
+
+#selectitem 75
+#name "Rod of the Phoenix"
+#constlevel 7
+#mainpath 0
+#mainlevel 4
+#type 1
+#weapon 151
+#spell "Incinerate"
+-- ro: sprite = 147
+#end
+
+#selectitem 76
+#name "Staff of Elemental Mastery"
+#constlevel 7
+#mainpath 0
+#mainlevel 4
+#secondarypath 2
+#secondarylevel 4
+#type 2
+#weapon 238
+#magicboost 51 1
+#fireres 5
+#coldres 5
+#elementrange 1
+-- ro: sprite = 175
+#end
+
+#selectitem 77
+#name "Carmine Cleaver"
+#constlevel 7
+#mainpath 0
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 2
+#weapon 570
+#fireres 5
+-- ro: sprite = 403
+-- ro: flag bit 0x200 = 0x8000
+#end
+
+#selectitem 78
+#name "Evening Star"
+#constlevel 7
+#mainpath 0
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 1
+#weapon 304
+-- ro: sprite = 1022
+#end
+
+#selectitem 79
+#name "Demon Whip"
+#constlevel 7
+#mainpath 0
+#mainlevel 1
+#secondarypath 8
+#secondarylevel 1
+#type 1
+#weapon 277
+#infernoret 10
+-- ro: sprite = 300
+#end
+
+#selectitem 80
+#name "Staff of Storms"
+#constlevel 7
+#mainpath 1
+#mainlevel 5
+#type 2
+#weapon 105
+#spell "Lightning Bolt"
+#autospell "Storm"
+#corpselord 8
+-- ro: sprite = 173
+#end
+
+#selectitem 81
+#name "Star of Thraldom"
+#constlevel 7
+#mainpath 7
+#mainlevel 1
+#type 1
+#weapon 218
+-- ro: sprite = 72
+#end
+
+#selectitem 82
+#name "Staff of Elemental Mastery"
+#constlevel 7
+#mainpath 1
+#mainlevel 4
+#secondarypath 3
+#secondarylevel 4
+#type 2
+#weapon 238
+#stoneskin
+#magicboost 51 1
+#shockres 5
+#elementrange 1
+-- ro: sprite = 179
+#end
+
+#selectitem 83
+#name "Demon Bane"
+#constlevel 7
+#mainpath 2
+#mainlevel 1
+#type 2
+#weapon 436
+#fireres 15
+#hp 5
+-- ro: sprite = 341
+#end
+
+#selectitem 84
+#name "Wave Breaker"
+#constlevel 7
+#mainpath 2
+#mainlevel 3
+#type 2
+#weapon 83
+#autospell "Friendly Currents"
+#waterbreathing
+-- ro: sprite = 76
+#end
+
+#selectitem 85
+#name "Rime Hammer"
+#constlevel 7
+#mainpath 2
+#mainlevel 2
+#secondarypath 1
+#secondarylevel 1
+#type 2
+#weapon 687
+#coldres 10
+#itemdrawsize -30
+-- ro: sprite = 2002
+#end
+
+#selectitem 86
+#name "Gate Cleaver"
+#constlevel 7
+#mainpath 3
+#mainlevel 3
+#type 2
+#weapon 169
+#siegebonus 100
+-- ro: sprite = 139
+#end
+
+#selectitem 87
+#name "Moon Blade"
+#constlevel 5
+#mainpath 4
+#mainlevel 1
+#type 2
+#weapon 289
+-- ro: sprite = 314
+#end
+
+#selectitem 88
+#name "Shadow Brand"
+#constlevel 7
+#mainpath 5
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 1
+#weapon 395
+-- ro: sprite = 331
+#end
+
+#selectitem 89
+#name "Standard of the Damned"
+#constlevel 7
+#mainpath 5
+#mainlevel 4
+#type 2
+#weapon 100
+#spell "Drain Life"
+#fear 5
+-- ro: sprite = 219
+#end
+
+#selectitem 90
+#name "Banner of the Northern Star"
+#constlevel 7
+#mainpath 4
+#mainlevel 4
+#type 2
+#weapon 100
+#autospell "Light of the Northern Star"
+#mr -2
+-- ro: sprite = 102
+#end
+
+#selectitem 91
+#name "Axe of Hate"
+#constlevel 7
+#mainpath 6
+#mainlevel 1
+#type 1
+#weapon 412
+#poisonres -15
+-- ro: sprite = 320
+#end
+
+#selectitem 92
+#name "Treelord's Staff"
+#constlevel 7
+#mainpath 6
+#mainlevel 5
+#type 2
+#weapon 238
+#magicboost 6 2
+#ivylord 2
+#naturerange 1
+#forestsurv
+-- ro: sprite = 67
+#end
+
+#selectitem 93
+#name "Singing Sword"
+#constlevel 7
+#mainpath 7
+#mainlevel 2
+#type 1
+#weapon 775
+#autospell "Entrancement"
+#autospellrepeat 1
+#nationrebate 11
+#nationrebate 58
+#nationrebate 57
+-- ro: sprite = 1026
+#end
+
+#selectitem 94
+#name "Blood Thorn"
+#constlevel 7
+#mainpath 8
+#mainlevel 3
+#type 1
+#weapon 688
+#magicboost 8 1
+#nationrebate 104
+-- ro: sprite = 87
+#end
+
+#selectitem 95
+#name "Hell Sword"
+#constlevel 7
+#mainpath 8
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 2
+#type 2
+#weapon 241
+#berserk 3
+#fireres 10
+-- ro: sprite = 259
+#end
+
+#selectitem 96
+#name "Master's Athame"
+#constlevel 7
+#mainpath 8
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 1
+#type 1
+#weapon 686
+-- ro: sprite = 1029
+-- ro: flag bit 0x200 = 0x800000000000000
+#end
+
+#selectitem 97
+#name "O'al Kan's Sceptre"
+#constlevel 9
+#mainpath 0
+#mainlevel 3
+#type 1
+#weapon 410
+#spell "Flare"
+#command 100
+#coldres 10
+#firerange 2
+#nationrebate 16
+#nationrebate 63
+#nationrebate 104
+-- ro: sprite = 168
+#end
+
+#selectitem 98
+#name "Unquenched Sword"
+#constlevel 9
+#mainpath 0
+#mainlevel 5
+#type 1
+#weapon 84
+#autospell "Heat from Hell"
+#berserk 1
+-- ro: sprite = 23
+#end
+
+#selectitem 99
+#name "Ember"
+#constlevel 9
+#mainpath 0
+#mainlevel 2
+#secondarypath 2
+#secondarylevel 2
+#type 1
+#weapon 191
+#fireres 10
+#coldres 10
+-- ro: sprite = 221
+#end
+
+#selectitem 100
+#name "Sword of Justice"
+#constlevel 9
+#mainpath 0
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 3
+#type 2
+#weapon 170
+#spell "Prison of Fire"
+#magicboost 9 1
+#fireres 15
+#infernoret 100
+#kokytosret 100
+#nationrebate 61
+#nationrebate 103
+-- ro: sprite = 79
+#end
+
+#selectitem 101
+#name "Tempest"
+#constlevel 9
+#mainpath 1
+#mainlevel 5
+#type 2
+#weapon 113
+#spell "Thunder Strike"
+#autospell "Storm"
+#shockres 15
+#itemdrawsize -25
+-- ro: sprite = 19
+#end
+
+#selectitem 102
+#name "Winter Bringer"
+#constlevel 9
+#mainpath 2
+#mainlevel 3
+#type 1
+#weapon 844
+#spell "Falling Frost"
+#coldres 15
+#batstartsum1d6 511
+-- ro: sprite = 148
+#end
+
+#selectitem 103
+#name "Trident from Beyond"
+#constlevel 9
+#mainpath 2
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 2
+#type 2
+#weapon 193
+#magicboost 2 1
+-- ro: sprite = 223
+#end
+
+#selectitem 104
+#name "Dawn Fang"
+#constlevel 9
+#mainpath 3
+#mainlevel 2
+#secondarypath 4
+#secondarylevel 1
+#type 1
+#weapon 555
+#awe 1
+#woundfend 1
+#mr 1
+#nationrebate 19
+#nationrebate 66
+-- ro: sprite = 380
+#end
+
+#selectitem 105
+#name "The Summit"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#type 1
+#weapon 162
+-- ro: sprite = 146
+#end
+
+#selectitem 106
+#name "The Stone Sword"
+#constlevel 9
+#mainpath 3
+#mainlevel 5
+#type 2
+#weapon 103
+#mr 4
+-- ro: sprite = 7
+#end
+
+#selectitem 107
+#name "Mage Bane"
+#constlevel 9
+#mainpath 3
+#mainlevel 6
+#type 1
+#weapon 87
+#mr 5
+#tainted 10
+-- ro: sprite = 6
+#end
+
+#selectitem 108
+#name "Hammer of the Forge Lord"
+#constlevel 9
+#mainpath 3
+#mainlevel 5
+#secondarypath 0
+#secondarylevel 3
+#type 2
+#weapon 184
+#fixforgebonus 4
+-- ro: sprite = 92
+#end
+
+#selectitem 109
+#name "The Tartarian Chains"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#secondarypath 0
+#secondarylevel 2
+#type 1
+#weapon 188
+-- ro: sprite = 214
+-- ro: ability 137 = 392
+#end
+
+#selectitem 110
+#name "The Sword of Many Colors"
+#constlevel 9
+#mainpath 7
+#mainlevel 4
+#secondarypath 0
+#secondarylevel 2
+#type 2
+#weapon 195
+#magicboost 7 1
+#tmpglamourgems 2
+#glamourmanip 1
+#awe 3
+-- ro: sprite = 224
+#end
+
+#selectitem 111
+#name "Twin Spear"
+#constlevel 9
+#mainpath 4
+#mainlevel 1
+#secondarypath 8
+#secondarylevel 1
+#type 1
+#weapon 295
+#spell "Call Lesser Horror"
+#luck
+#command 100
+-- ro: sprite = 307
+#end
+
+#selectitem 112
+#name "Twin Spear"
+#constlevel 9
+#mainpath 4
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 1
+#weapon 296
+#luck
+#command 100
+-- ro: sprite = 307
+#end
+
+#selectitem 113
+#name "The Oath Rod of Kurgi"
+#constlevel 9
+#mainpath 4
+#mainlevel 3
+#secondarypath 8
+#secondarylevel 3
+#type 2
+#weapon 157
+#spell "Horror Mark"
+#magicboost 4 1
+#magicboost 8 1
+#allrange 1
+-- ro: sprite = 169
+-- ro: ability 263 = 5
+#end
+
+#selectitem 114
+#name "The Sword of Aurgelmer"
+#constlevel 9
+#mainpath 7
+#mainlevel 6
+#type 1
+#weapon 179
+#autospell "Dreamwild Legion"
+#luck
+#curse
+#morale 4
+#nationrebate 33
+#nationrebate 80
+#nationrebate 117
+-- ro: sprite = 164
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 115
+#name "Rod of Death"
+#constlevel 9
+#mainpath 5
+#mainlevel 3
+#type 1
+#weapon 59
+#spell "Control the Dead"
+#undcommand 100
+-- ro: sprite = 166
+-- ro: ability 145 = -2
+#end
+
+#selectitem 116
+#name "The Flailing Hands"
+#constlevel 9
+#mainpath 5
+#mainlevel 2
+#type 2
+#weapon 158
+#magicboost 5 1
+#pen 1
+#mr 1
+-- ro: sprite = 159
+#end
+
+#selectitem 117
+#name "The Sickle whose Crop is Pain"
+#constlevel 9
+#mainpath 5
+#mainlevel 6
+#type 1
+#weapon 187
+-- ro: sprite = 213
+-- ro: ability 134 = 1
+#end
+
+#selectitem 118
+#name "Sceptre of Dark Regency"
+#constlevel 9
+#mainpath 5
+#mainlevel 6
+#type 1
+#weapon 386
+#magicboost 5 2
+#deathrange 2
+#yearaging 3
+-- ro: sprite = 167
+#end
+
+#selectitem 119
+#name "Sword of Injustice"
+#constlevel 9
+#mainpath 5
+#mainlevel 4
+#type 1
+#weapon 205
+#autospell "Protection of the Sepulchre"
+#magicboost 9 1
+#nationrebate 54
+-- ro: sprite = 17
+#end
+
+#selectitem 120
+#name "Woundflame"
+#constlevel 9
+#mainpath 5
+#mainlevel 4
+#type 1
+#weapon 97
+#disease
+-- ro: sprite = 77
+#end
+
+#selectitem 121
+#name "Sun Slayer"
+#constlevel 9
+#mainpath 5
+#mainlevel 6
+#type 2
+#weapon 72
+#spell "Drain Life"
+#autospell "Darkness"
+#magicboost 5 1
+#fear 5
+#nationrebate 99
+-- ro: sprite = 16
+#end
+
+#selectitem 122
+#name "Picus's Axe of Rulership"
+#constlevel 9
+#mainpath 5
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 1
+#weapon 341
+-- ro: sprite = 328
+-- ro: ability 227 = 1
+#end
+
+#selectitem 123
+#name "The Sharpest Tooth"
+#constlevel 9
+#mainpath 6
+#mainlevel 2
+#secondarypath 4
+#secondarylevel 1
+#type 1
+#weapon 336
+#poisonres 25
+#patience 2
+-- ro: sprite = 326
+#end
+
+#selectitem 124
+#name "Sceptre of Corruption"
+#constlevel 9
+#mainpath 8
+#mainlevel 4
+#type 1
+#weapon 843
+#spell "Bane Fire"
+#cursed
+#command 100
+#tainted 10
+-- ro: sprite = 165
+#end
+
+#selectitem 125
+#name "Procas's Axe of Rulership"
+#constlevel 9
+#mainpath 8
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 1
+#weapon 340
+-- ro: sprite = 327
+-- ro: ability 227 = 1
+#end
+
+#selectitem 126
+#name "Harvest Blade"
+#constlevel 9
+#mainpath 8
+#mainlevel 3
+#secondarypath 6
+#secondarylevel 1
+#type 2
+#weapon 122
+#cursed
+#fear 5
+#morale 2
+#berserk 2
+#autoberserk 1
+-- ro: sprite = 160
+#end
+
+#selectitem 127
+#name "Dimensional Rod"
+#constlevel 9
+#mainpath 4
+#mainlevel 3
+#type 1
+#weapon 443
+#quickness
+#cursed
+#magicboost 4 1
+#tainted 20
+#astralrange 1
+-- ro: sprite = 343
+-- ro: ability 312 = 1
+#end
+
+#selectitem 128
+#name "Infernal Sword"
+#constlevel 9
+#mainpath 8
+#mainlevel 1
+#secondarypath 0
+#secondarylevel 1
+#type 2
+#weapon 444
+#fireres 5
+-- ro: sprite = 342
+#end
+
+#selectitem 129
+#name "The Staff from the Sun"
+#constlevel 9
+#mainpath 4
+#mainlevel 5
+#secondarypath 0
+#secondarylevel 1
+#type 2
+#weapon 540
+#magicboost 0 1
+#firerange 2
+#fireres 15
+#tmpfiregems 1
+-- ro: sprite = 358
+#end
+
+#selectitem 130
+#name "Star of Darkness"
+#constlevel 5
+#mainpath 5
+#mainlevel 1
+#type 1
+#weapon 787
+-- ro: sprite = 1030
+#end
+
+#selectitem 131
+#name "Shaman's Staff"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 2
+#weapon 238
+#naturerange 1
+#pen 1
+#reinvigoration 1
+#itemdrawsize -35
+-- ro: sprite = 2011
+#end
+
+#selectitem 132
+#name "Black Halberd"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 2
+#weapon 508
+#restricted 60
+#restricted 101
+#itemdrawsize -20
+-- ro: sprite = 2012
+#end
+
+#selectitem 133
+#name "God-Slayer Spear"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 1
+#weapon 722
+#restricted 6
+#restricted 51
+#itemdrawsize -30
+-- ro: sprite = 1019
+#end
+
+#selectitem 134
+#name "Anemone Mace"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#type 1
+#weapon 653
+#restricted 44
+#restricted 89
+#restricted 127
+-- ro: sprite = 429
+#end
+
+#selectitem 135
+#name "Mercybrand"
+#constlevel 3
+#mainpath 0
+#mainlevel 2
+#type 1
+#weapon 661
+#fear 5
+#patrolbonus 10
+#inquisitor
+#restricted 61
+-- ro: sprite = 432
+#end
+
+#selectitem 136
+#name "Cockerel Scepter"
+#constlevel 5
+#mainpath 0
+#mainlevel 2
+#type 1
+#weapon 659
+#spell "Holy Pyre"
+#restricted 61
+-- ro: sprite = 431
+#end
+
+#selectitem 137
+#name "Jellyberd"
+#constlevel 7
+#mainpath 4
+#mainlevel 1
+#secondarypath 0
+#secondarylevel 1
+#type 2
+#weapon 656
+#restricted 89
+#restricted 127
+-- ro: sprite = 430
+-- ro: ability 383 = 20
+#end
+
+#selectitem 138
+#name "Sword of the Five Elements"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#secondarypath 2
+#secondarylevel 1
+#type 1
+#weapon 700
+#reinvigoration 2
+#restricted 22
+#restricted 69
+#restricted 109
+#itemcost1 -60
+#itemcost2 -60
+-- ro: sprite = 1016
+#end
+
+#selectitem 139
+#name "Spear of the Morrigan"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 1
+#weapon 487
+#restricted 10
+-- ro: sprite = 307
+#end
+
+#selectitem 140
+#name "Vajra"
+#constlevel 5
+#mainpath 4
+#mainlevel 2
+#type 1
+#weapon 705
+#spell "Lightning Bolt"
+#shockres 10
+#restricted 20
+#restricted 68
+-- ro: sprite = 1017
+#end
+
+#selectitem 141
+#name "Flail of Misfortune"
+#constlevel 11
+#mainpath 5
+#mainlevel 2
+#type 1
+#weapon 365
+#pen 2
+-- ro: sprite = 1023
+#end
+
+#selectitem 142
+#name "Sling of Accuracy"
+#constlevel 1
+#mainpath 1
+#mainlevel 1
+#type 3
+#weapon 697
+#itemdrawsize -30
+-- ro: sprite = 3001
+#end
+
+#selectitem 143
+#name "Just Man's Cross"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 3
+#weapon 161
+#itemdrawsize -20
+#nationrebate 61
+-- ro: sprite = 153
+#end
+
+#selectitem 144
+#name "Trueshot Longbow"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 3
+#weapon 152
+-- ro: sprite = 103
+#end
+
+#selectitem 145
+#name "The Pebble Pouch"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 3
+#weapon 546
+#minsize 6
+-- ro: sprite = 367
+-- ro: ability 1414 = 20
+#end
+
+#selectitem 146
+#name "Piercer"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 3
+#weapon 168
+#itemdrawsize -20
+-- ro: sprite = 106
+#end
+
+#selectitem 147
+#name "Black Bow of Botulf"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#type 3
+#weapon 155
+-- ro: sprite = 105
+#end
+
+#selectitem 148
+#name "Mirage Bola"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#type 3
+#weapon 809
+-- ro: sprite = 3002
+#end
+
+#selectitem 149
+#name "Fire Bola"
+#constlevel 5
+#mainpath 0
+#mainlevel 1
+#type 3
+#weapon 301
+-- ro: sprite = 310
+#end
+
+#selectitem 150
+#name "Thunder Bow"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 3
+#weapon 243
+-- ro: sprite = 273
+#end
+
+#selectitem 151
+#name "Golden Arbalest"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 3
+#weapon 565
+#itemdrawsize -20
+-- ro: sprite = 397
+#end
+
+#selectitem 152
+#name "Vision's Foe"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 3
+#weapon 332
+#itemdrawsize -20
+-- ro: sprite = 324
+#end
+
+#selectitem 153
+#name "Vine Bow"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 3
+#weapon 303
+#nationrebate 53
+-- ro: sprite = 311
+#end
+
+#selectitem 154
+#name "Sling of Crystal Shards"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 3
+#weapon 814
+#glamourmanip 1
+#itemdrawsize -30
+-- ro: sprite = 3003
+#end
+
+#selectitem 155
+#name "Bow of War"
+#constlevel 7
+#mainpath 1
+#mainlevel 1
+#type 3
+#weapon 154
+-- ro: sprite = 104
+#end
+
+#selectitem 156
+#name "Ethereal Crossbow"
+#constlevel 7
+#mainpath 4
+#mainlevel 1
+#type 3
+#weapon 180
+#itemdrawsize -20
+-- ro: sprite = 106
+#end
+
+#selectitem 157
+#name "Ivory Bow"
+#constlevel 7
+#mainpath 5
+#mainlevel 3
+#secondarypath 1
+#secondarylevel 1
+#type 3
+#weapon 566
+#undcommand 15
+-- ro: sprite = 398
+#end
+
+#selectitem 158
+#name "Banefire Crossbow"
+#constlevel 7
+#mainpath 5
+#mainlevel 1
+#type 3
+#weapon 434
+#curse
+#itemdrawsize -20
+#nationrebate 113
+-- ro: sprite = 339
+#end
+
+#selectitem 159
+#name "Bow of the Titans"
+#constlevel 9
+#mainpath 1
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 2
+#type 3
+#weapon 678
+#spell "Seeking Arrow"
+#airrange 1
+-- ro: sprite = 451
+-- ro: ability 1414 = 18
+#end
+
+#selectitem 160
+#name "Blacksteel Tower Shield"
+#constlevel 1
+#mainpath 3
+#mainlevel 1
+#type 4
+#armor 41
+#nomounted
+#nationrebate 60
+-- ro: sprite = 130
+#end
+
+#selectitem 161
+#name "Blacksteel Kite Shield"
+#constlevel 1
+#mainpath 3
+#mainlevel 1
+#type 4
+#armor 69
+#nationrebate 60
+-- ro: sprite = 186
+#end
+
+#selectitem 162
+#name "Enchanted Shield"
+#constlevel 1
+#mainpath 4
+#mainlevel 1
+#type 4
+#armor 92
+-- ro: sprite = 154
+#end
+
+#selectitem 163
+#name "Raw Hide Shield"
+#constlevel 1
+#mainpath 6
+#mainlevel 1
+#type 4
+#armor 235
+-- ro: sprite = 187
+#end
+
+#selectitem 164
+#name "Weightless Tower Shield"
+#constlevel 3
+#mainpath 1
+#mainlevel 2
+#type 4
+#armor 65
+#nomounted
+-- ro: sprite = 184
+#end
+
+#selectitem 165
+#name "Weightless Kite Shield"
+#constlevel 3
+#mainpath 1
+#mainlevel 2
+#type 4
+#armor 66
+-- ro: sprite = 155
+#end
+
+#selectitem 166
+#name "Lead Shield"
+#constlevel 3
+#mainpath 3
+#mainlevel 2
+#type 4
+#armor 42
+#mr 4
+-- ro: sprite = 95
+#end
+
+#selectitem 167
+#name "Shield of Valor"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 4
+#armor 57
+#airshield 80
+-- ro: sprite = 156
+#end
+
+#selectitem 168
+#name "Lucky Coin"
+#constlevel 3
+#mainpath 7
+#mainlevel 2
+#type 4
+#armor 67
+#luck
+-- ro: sprite = 261
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 169
+#name "Shield of Meteoritic Iron"
+#constlevel 3
+#mainpath 4
+#mainlevel 3
+#secondarypath 3
+#secondarylevel 2
+#type 4
+#armor 73
+#autospell "Power of the Spheres"
+#itemdrawsize -20
+#nomounted
+-- ro: sprite = 4034
+#end
+
+#selectitem 170
+#name "Eye Shield"
+#constlevel 3
+#mainpath 6
+#mainlevel 2
+#type 4
+#armor 61
+#eyeloss
+-- ro: sprite = 185
+#end
+
+#selectitem 171
+#name "Ice Aegis"
+#constlevel 3
+#mainpath 2
+#mainlevel 2
+#type 4
+#armor 225
+#iceprot 1
+#coldres 5
+#nationrebate 71
+-- ro: sprite = 4005
+#end
+
+#selectitem 172
+#name "Golden Hoplon"
+#constlevel 5
+#mainpath 0
+#mainlevel 2
+#type 4
+#armor 71
+#fireres 15
+#nationrebate 6
+-- ro: sprite = 387
+#end
+
+#selectitem 173
+#name "Charcoal Shield"
+#constlevel 5
+#mainpath 3
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 1
+#type 4
+#armor 60
+#fireres 10
+-- ro: sprite = 201
+-- ro: flag bit 0x200 = 0x8000
+#end
+
+#selectitem 174
+#name "Mirror of Long Lost Battles"
+#constlevel 5
+#mainpath 7
+#mainlevel 2
+#type 4
+#armor 262
+#glamourmanip 1
+#itemdrawsize -25
+#nomounted
+-- ro: sprite = 4033
+-- ro: ability 1050 = 297
+#end
+
+#selectitem 175
+#name "Shield of the Accursed"
+#constlevel 5
+#mainpath 4
+#mainlevel 2
+#secondarypath 8
+#secondarylevel 1
+#type 4
+#armor 62
+#def 3
+-- ro: sprite = 248
+-- ro: ability 127 = 5
+#end
+
+#selectitem 176
+#name "Vine Shield"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#type 4
+#armor 63
+-- ro: sprite = 242
+-- ro: ability 1052 = 64
+-- ro: ability 1053 = 2
+#end
+
+#selectitem 177
+#name "Totem Shield"
+#constlevel 5
+#mainpath 5
+#mainlevel 1
+#secondarypath 7
+#secondarylevel 1
+#type 4
+#armor 235
+#nationrebate 76
+#nationrebate 28
+-- ro: sprite = 246
+-- ro: ability 271 = 5
+#end
+
+#selectitem 178
+#name "Shield of Gleaming Gold"
+#constlevel 7
+#mainpath 0
+#mainlevel 1
+#secondarypath 7
+#secondarylevel 1
+#type 4
+#armor 71
+#awe 1
+-- ro: sprite = 189
+#end
+
+#selectitem 179
+#name "Scutata Volturnus"
+#constlevel 7
+#mainpath 1
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 4
+#armor 87
+#autospell "Shocking Grasp"
+#autospellrepeat 1
+#nomounted
+#shockres 5
+-- ro: sprite = 157
+#end
+
+#selectitem 180
+#name "Lantern Shield"
+#constlevel 7
+#mainpath 5
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 1
+#type 4
+#armor 88
+#magiccommand 1
+#fear 5
+#batstartsum3 528
+-- ro: sprite = 247
+#end
+
+#selectitem 181
+#name "Immaculate Shield"
+#constlevel 9
+#mainpath 0
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 2
+#type 4
+#armor 182
+#bless
+#awe 2
+#magicboost 9 1
+#nationrebate 67
+#nationrebate 120
+-- ro: sprite = 388
+#end
+
+#selectitem 182
+#name "Barrier"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#type 4
+#armor 68
+#str 4
+#fireres 15
+#shockres 15
+#nomounted
+-- ro: sprite = 190
+#end
+
+#selectitem 183
+#name "The Aegis"
+#constlevel 9
+#mainpath 3
+#mainlevel 5
+#type 4
+#armor 64
+#fear 5
+-- ro: sprite = 188
+-- ro: ability 104 = 1
+#end
+
+#selectitem 184
+#name "Shield of the Dawn"
+#constlevel 9
+#mainpath 3
+#mainlevel 2
+#secondarypath 4
+#secondarylevel 1
+#type 4
+#armor 178
+#fireres 5
+#mr 1
+#woundfend 1
+#awe 1
+#nationrebate 19
+#nationrebate 66
+-- ro: sprite = 381
+#end
+
+#selectitem 185
+#name "Blacksteel Helmet"
+#constlevel 1
+#mainpath 3
+#mainlevel 1
+#type 6
+#armor 40
+#nationrebate 60
+-- ro: sprite = 6001
+#end
+
+#selectitem 186
+#name "Enchanted Helmet"
+#constlevel 1
+#mainpath 4
+#mainlevel 1
+#type 6
+#armor 223
+-- ro: sprite = 6002
+#end
+
+#selectitem 187
+#name "Dragon Helmet"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 6
+#armor 227
+#fireres 5
+#morale 4
+#darkvision 50
+#itemdrawsize -20
+-- ro: sprite = 181
+#end
+
+#selectitem 188
+#name "Crown of Lead"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 9
+#armor 278
+#mr 1
+-- ro: sprite = 6042
+#end
+
+#selectitem 189
+#name "Ivy Crown"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 9
+#ivylord 1
+#forestsurv
+-- ro: sprite = 6014
+#end
+
+#selectitem 190
+#name "Horned Helmet"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 6
+#weapon 334
+#armor 227
+-- ro: sprite = 325
+#end
+
+#selectitem 191
+#name "Ice Helmet"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#type 6
+#armor 226
+#coldres 5
+#nationrebate 71
+-- ro: sprite = 6003
+#end
+
+#selectitem 192
+#name "Flame Helmet"
+#constlevel 5
+#mainpath 0
+#mainlevel 4
+#type 6
+#armor 80
+#reinvigoration -3
+#magicboost 0 1
+-- ro: sprite = 218
+#end
+
+#selectitem 193
+#name "Helmet of Heroes"
+#constlevel 5
+#mainpath 0
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 6
+#armor 174
+#inspirational 2
+-- ro: sprite = 363
+#end
+
+#selectitem 194
+#name "Dragon Crown"
+#constlevel 5
+#mainpath 2
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 9
+#armor 212
+#dragonlord 1
+#itemdrawsize -40
+-- ro: sprite = 6059
+#end
+
+#selectitem 195
+#name "Winged Helmet"
+#constlevel 5
+#mainpath 1
+#mainlevel 4
+#type 6
+#armor 227
+#magicboost 1 1
+-- ro: sprite = 125
+#end
+
+#selectitem 196
+#name "Crown of Command"
+#constlevel 5
+#mainpath 4
+#mainlevel 2
+#type 9
+#armor 212
+#command 100
+#magiccommand 50
+#inspirational 1
+-- ro: sprite = 206
+-- ro: ability 1060 = 5
+#end
+
+#selectitem 197
+#name "Spirit Mask"
+#constlevel 5
+#mainpath 5
+#mainlevel 2
+#secondarypath 6
+#secondarylevel 1
+#type 6
+#armor 187
+#autospell "Frighten"
+#spiritsight
+#mr 1
+#autospellrepeat 1
+#nationrebate 76
+#nationrebate 28
+-- ro: sprite = 375
+#end
+
+#selectitem 198
+#name "Mistletoe Garland"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#type 9
+#luck
+#poisonres 5
+-- ro: sprite = 386
+#end
+
+#selectitem 199
+#name "Horror Helmet"
+#constlevel 5
+#mainpath 5
+#mainlevel 2
+#type 6
+#armor 227
+#fear 5
+#itemdrawsize -15
+-- ro: sprite = 6017
+#end
+
+#selectitem 200
+#name "Crown of Bones"
+#constlevel 5
+#mainpath 5
+#mainlevel 2
+#type 9
+#armor 212
+#undcommand 150
+#inspirational -1
+#itemdrawsize -40
+-- ro: sprite = 6038
+#end
+
+#selectitem 201
+#name "Gossamer Veil"
+#constlevel 5
+#mainpath 7
+#mainlevel 3
+#type 9
+#magicboost 7 1
+#sneakunit 20
+-- ro: sprite = 6062
+-- ro: flag bit 0x200 = 0x40000000000
+#end
+
+#selectitem 202
+#name "Crown of the Whispering Dead"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 9
+#armor 212
+#nightmareaura 24
+#sleepres 4
+#glamourmanip 1
+-- ro: sprite = 6060
+-- ro: ability 1421 = 1
+#end
+
+#selectitem 203
+#name "Scorpion Crown"
+#constlevel 7
+#mainpath 0
+#mainlevel 3
+#secondarypath 5
+#secondarylevel 2
+#type 9
+#armor 212
+#magiccommand 5
+#battlesumwarm -23
+#poisonres 5
+#nationrebate 26
+-- ro: sprite = 6057
+#end
+
+#selectitem 204
+#name "Spirit Helmet"
+#constlevel 7
+#mainpath 1
+#mainlevel 3
+#type 6
+#armor 79
+#autospell "Lightning Bolt"
+#autospellrepeat 1
+-- ro: sprite = 217
+#end
+
+#selectitem 205
+#name "Iron Face"
+#constlevel 7
+#mainpath 3
+#mainlevel 3
+#type 6
+#armor 173
+#ironskin
+-- ro: sprite = 362
+#end
+
+#selectitem 206
+#name "Crown of the Titans"
+#constlevel 7
+#mainpath 3
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 1
+#type 9
+#armor 212
+#inspirational 1
+#command 100
+-- ro: sprite = 6032
+-- ro: flag bit 0x1f8 = 0x80000000
+#end
+
+#selectitem 207
+#name "Starshine Skullcap"
+#constlevel 7
+#mainpath 4
+#mainlevel 2
+#type 6
+#armor 83
+#magicboost 4 1
+#mr 2
+-- ro: sprite = 6012
+#end
+
+#selectitem 208
+#name "Crown of the Magi"
+#constlevel 7
+#mainpath 4
+#mainlevel 4
+#secondarypath 2
+#secondarylevel 2
+#type 9
+#armor 212
+#magiccommand 25
+#fastcast 30
+-- ro: sprite = 6033
+#end
+
+#selectitem 209
+#name "Skullface"
+#constlevel 7
+#mainpath 5
+#mainlevel 5
+#type 6
+#armor 228
+#spell "Horde of Skeletons"
+#spiritsight
+#magicboost 5 1
+#undcommand 25
+-- ro: sprite = 6019
+#end
+
+#selectitem 210
+#name "Wraith Crown"
+#constlevel 7
+#mainpath 5
+#mainlevel 5
+#type 9
+#armor 212
+#ethereal
+#spiritsight
+#undcommand 100
+#batstartsum5d6 -2
+-- ro: sprite = 6020
+#end
+
+#selectitem 211
+#name "Mask of Face-borrowing"
+#constlevel 7
+#mainpath 7
+#mainlevel 2
+#type 9
+#sneakunit 30
+-- ro: sprite = 6063
+-- ro: ability 214 = 1
+#end
+
+#selectitem 212
+#name "Headband of Woven Dreams"
+#constlevel 7
+#mainpath 7
+#mainlevel 2
+#type 9
+#armor 278
+#sleepaura 4
+#sleepres 4
+-- ro: sprite = 6056
+-- ro: ability 1421 = 1
+#end
+
+#selectitem 213
+#name "Crown of Overmight"
+#constlevel 9
+#mainpath 0
+#mainlevel 5
+#secondarypath 3
+#secondarylevel 3
+#type 9
+#armor 55
+#autospell "Charm"
+#cursed
+#command 150
+#str 5
+#inspirational 1
+#autospellrepeat 1
+#mr 4
+-- ro: sprite = 239
+-- ro: ability 383 = 30
+-- ro: ability 1060 = 5
+#end
+
+#selectitem 214
+#name "Amon Hotep"
+#constlevel 9
+#mainpath 0
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 4
+#type 9
+#armor 212
+#spell "Mummification"
+#cursed
+#awe 5
+#mr 5
+#invulnerable 25
+#fireres 15
+-- ro: sprite = 226
+-- ro: flag bit 0x200 = 0x2
+#end
+
+#selectitem 215
+#name "Helmet of Perfection"
+#constlevel 9
+#mainpath 2
+#mainlevel 3
+#secondarypath 1
+#secondarylevel 3
+#type 6
+#armor 175
+#hp 5
+#awe 5
+#inspirational 3
+#eyeloss
+-- ro: sprite = 364
+#end
+
+#selectitem 216
+#name "Helmet of the Dawn"
+#constlevel 9
+#mainpath 3
+#mainlevel 2
+#secondarypath 4
+#secondarylevel 1
+#type 6
+#armor 180
+#awe 1
+#mr 2
+#woundfend 1
+#nationrebate 19
+#nationrebate 66
+-- ro: sprite = 383
+#end
+
+#selectitem 217
+#name "Crown of the Ivy King"
+#constlevel 9
+#mainpath 6
+#mainlevel 2
+#type 9
+#spell "Awaken Vine Men"
+#barkskin
+#ivylord 3
+#animalawe 5
+#regeneration 5
+#forestsurv
+#poisonres 15
+-- ro: sprite = 260
+#end
+
+#selectitem 218
+#name "The Crown of Despair"
+#constlevel 9
+#mainpath 5
+#mainlevel 2
+#type 9
+#armor 212
+#cursed
+#deathrange 1
+#gemprod 5 1
+#fear 10
+#darkvision 100
+-- ro: sprite = 356
+-- ro: ability 364 = 2
+-- ro: ability 365 = 4
+#end
+
+#selectitem 219
+#name "Crown of the Fire King"
+#constlevel 9
+#mainpath 0
+#mainlevel 4
+#type 9
+#armor 212
+#cursed
+#magiccommand 50
+#fireres 25
+#heat 3
+#reinvigoration -1
+#batstartsum2 3717
+#itemdrawsize -40
+-- ro: sprite = 6039
+-- ro: flag bit 0x200 = 0x8000
+#end
+
+#selectitem 220
+#name "Crown of the Frost King"
+#constlevel 9
+#mainpath 2
+#mainlevel 4
+#type 9
+#armor 212
+#cursed
+#magiccommand 50
+#coldres 25
+#cold 25
+#batstartsum2 3749
+#itemdrawsize -40
+-- ro: sprite = 6040
+#end
+
+#selectitem 221
+#name "The First Crown"
+#constlevel 9
+#mainpath 4
+#mainlevel 4
+#secondarypath 0
+#secondarylevel 4
+#type 9
+#armor 212
+#cursed
+#awe 5
+#masterrit 2
+#tainted 50
+-- ro: sprite = 6037
+-- ro: ability 120 = 10
+#end
+
+#selectitem 222
+#name "The Crown of Pure Blood"
+#constlevel 9
+#mainpath 8
+#mainlevel 4
+#secondarypath 5
+#secondarylevel 2
+#type 9
+#armor 212
+#cursed
+#fear 10
+#gemprod 8 5
+-- ro: sprite = 6047
+-- ro: ability 50 = 34359738372
+#end
+
+#selectitem 223
+#name "Crown of the Elements"
+#constlevel 9
+#mainpath 0
+#mainlevel 4
+#secondarypath 2
+#secondarylevel 4
+#type 9
+#armor 212
+#magicboost 51 1
+#battlesum1d3 -22
+#fireres 10
+#coldres 10
+#shockres 10
+#hp 5
+#elementgems 1
+-- ro: sprite = 6048
+#end
+
+#selectitem 224
+#name "Oppressors Headband"
+#constlevel 1
+#mainpath 3
+#mainlevel 3
+#type 9
+#armor 278
+#mr -2
+#restricted 51
+#restricted 96
+-- ro: sprite = 6045
+-- ro: flag bit 0x200 = 0x200000000000000
+#end
+
+#selectitem 225
+#name "Crown of the Shah"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 9
+#armor 212
+#autospell "Fanaticism"
+#nofind
+#cursed
+#magicboost 9 1
+#command 150
+#magiccommand 50
+#undcommand 50
+#inspirational 1
+#restricteditem 1
+#restricted 105
+#unique
+#itemdrawsize -20
+-- ro: sprite = 436
+#end
+
+#selectitem 226
+#name "The Jade Mask"
+#constlevel 9
+#mainpath 5
+#mainlevel 6
+#secondarypath 6
+#secondarylevel 3
+#type 6
+#armor 45
+#spell "Rigor Mortis"
+#magicboost 5 2
+#fear 10
+#mr 3
+#darkvision 50
+#poisonres 15
+#regeneration 5
+#onlycoldblood
+#restricted 27
+#restricted 75
+#restricted 113
+-- ro: sprite = 27
+#end
+
+#selectitem 227
+#name "Headdress of the Bull"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 9
+#armor 234
+#str 2
+#batstartsum1 3009
+#itemdrawsize -30
+#restricted 19
+#restricted 66
+#restricted 68
+#restricted 20
+#restricted 21
+#restricted 108
+-- ro: sprite = 6041
+#end
+
+#selectitem 228
+#name "Huaca Headdress"
+#constlevel 5
+#mainpath 0
+#mainlevel 2
+#type 9
+#armor 212
+#command 25
+#magiccommand 25
+#undcommand 25
+#inspirational 1
+#restricted 72
+#itemdrawsize 10
+-- ro: sprite = 449
+-- ro: ability 521 = 2
+#end
+
+#selectitem 229
+#name "Black Laurel"
+#constlevel 3
+#mainpath 5
+#mainlevel 2
+#type 9
+#restricted 54
+-- ro: sprite = 6018
+-- ro: ability 102 = 3
+#end
+
+#selectitem 230
+#name "Blacksteel Plate"
+#constlevel 1
+#mainpath 3
+#mainlevel 1
+#type 5
+#armor 39
+#hp 4
+#nationrebate 60
+-- ro: sprite = 193
+#end
+
+#selectitem 231
+#name "Blacksteel Full Plate"
+#constlevel 1
+#mainpath 3
+#mainlevel 2
+#type 5
+#armor 38
+#hp 4
+#nationrebate 60
+-- ro: sprite = 100
+#end
+
+#selectitem 232
+#name "Enchanted Ring Mail Armor"
+#constlevel 1
+#mainpath 4
+#mainlevel 1
+#type 5
+#armor 194
+#hp 4
+-- ro: sprite = 423
+#end
+
+#selectitem 233
+#name "Berserker Pelt"
+#constlevel 1
+#mainpath 6
+#mainlevel 1
+#type 5
+#armor 192
+#hp 4
+#berserk 1
+#autoberserk 1
+-- ro: sprite = 177
+#end
+
+#selectitem 234
+#name "Fire Plate"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 5
+#armor 75
+#hp 4
+#fireres 5
+#morale 2
+-- ro: sprite = 209
+#end
+
+#selectitem 235
+#name "Robe of Missile Protection"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 5
+#armor 230
+#hp 2
+-- ro: sprite = 279
+-- ro: flag bit 0x1f8 = 0x8
+#end
+
+#selectitem 236
+#name "Lightweight Scale Mail"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 5
+#armor 49
+#hp 4
+#nationrebate 78
+#nationrebate 30
+-- ro: sprite = 112
+#end
+
+#selectitem 237
+#name "Mirror Armor"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 5
+#armor 177
+#hp 4
+#mr 3
+-- ro: sprite = 366
+#end
+
+#selectitem 238
+#name "Shambler Skin Armor"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#type 5
+#armor 37
+#hp 4
+#waterbreathing
+-- ro: sprite = 96
+-- ro: ability 129 = 1
+#end
+
+#selectitem 239
+#name "Dire Wolf Pelt"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 5
+#armor 176
+#hp 4
+#coldres 5
+#att 1
+#def 1
+-- ro: sprite = 365
+#end
+
+#selectitem 240
+#name "Kithaironic Lion Pelt"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 5
+#armor 184
+#hp 4
+#invulnerable 18
+#itemdrawsize -30
+#nationrebate 28
+#nationrebate 76
+#itemcost1 -40
+#itemcost2 -60
+-- ro: sprite = 5060
+#end
+
+#selectitem 241
+#name "Ranger's Cloak"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 5
+#armor 232
+#hp 4
+#stealthboost 30
+-- ro: sprite = 369
+#end
+
+#selectitem 242
+#name "Gossamer Gown"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#type 5
+#armor 296
+#hp 2
+#awe 1
+#itemdrawsize -25
+-- ro: sprite = 5071
+#end
+
+#selectitem 243
+#name "Red Dragon Scale Mail"
+#constlevel 5
+#mainpath 0
+#mainlevel 2
+#type 5
+#armor 36
+#hp 6
+#fireres 15
+#morale 4
+-- ro: sprite = 122
+#end
+
+#selectitem 244
+#name "Copper Plate"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#type 5
+#armor 89
+#autospell "Charge Body"
+#hp 6
+#shockres 10
+-- ro: sprite = 191
+#end
+
+#selectitem 245
+#name "Silver Hauberk"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 5
+#armor 48
+#hp 6
+-- ro: sprite = 108
+-- ro: flag bit 0x1f8 = 0x8
+#end
+
+#selectitem 246
+#name "Brightmail Haubergeon"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 5
+#armor 185
+#hp 6
+#reinvigoration 1
+-- ro: sprite = 5039
+#end
+
+#selectitem 247
+#name "Brightmail Hauberk"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 5
+#armor 265
+#hp 6
+#reinvigoration 2
+-- ro: sprite = 5065
+#end
+
+#selectitem 248
+#name "Armor of Meteoritic Iron"
+#constlevel 5
+#mainpath 3
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 5
+#armor 279
+#hp 6
+#mr 3
+#itemdrawsize -35
+#nationrebate 89
+#nationrebate 127
+-- ro: sprite = 5072
+#end
+
+#selectitem 249
+#name "Elemental Armor"
+#constlevel 5
+#mainpath 3
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 1
+#type 5
+#armor 59
+#hp 6
+#fireres 10
+#shockres 10
+#coldres 10
+#nationrebate 6
+-- ro: sprite = 183
+#end
+
+#selectitem 250
+#name "Blue Dragon Scale Mail"
+#constlevel 5
+#mainpath 2
+#mainlevel 2
+#type 5
+#armor 36
+#hp 6
+#coldres 15
+#morale 4
+-- ro: sprite = 121
+#end
+
+#selectitem 251
+#name "Robe of the Sea"
+#constlevel 5
+#mainpath 2
+#mainlevel 3
+#type 5
+#armor 230
+#hp 2
+#magicboost 2 1
+#waterbreathing
+-- ro: sprite = 277
+-- ro: ability 129 = 1
+#end
+
+#selectitem 252
+#name "Shroud of the Battle Saint"
+#constlevel 5
+#mainpath 4
+#mainlevel 1
+#type 5
+#armor 54
+#bless
+#nofind
+#cursed
+#hp 2
+#nationrebate 8
+-- ro: sprite = 253
+#end
+
+#selectitem 253
+#name "Robe of Shadows"
+#constlevel 5
+#mainpath 4
+#mainlevel 2
+#type 5
+#armor 230
+#ethereal
+#hp 2
+#stealthboost 20
+-- ro: sprite = 278
+#end
+
+#selectitem 254
+#name "Shademail Haubergeon"
+#constlevel 5
+#mainpath 7
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 5
+#armor 186
+#hp 6
+#sneakunit 20
+-- ro: sprite = 401
+#end
+
+#selectitem 255
+#name "Green Dragon Scale Mail"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#type 5
+#armor 36
+#hp 6
+#poisonres 15
+#morale 4
+-- ro: sprite = 123
+#end
+
+#selectitem 256
+#name "Chain Mail of Displacement"
+#constlevel 5
+#mainpath 7
+#mainlevel 2
+#type 5
+#armor 81
+#hp 6
+-- ro: sprite = 98
+-- ro: flag bit 0x200 = 0x80000000000
+#end
+
+#selectitem 257
+#name "Armor of Souls"
+#constlevel 5
+#mainpath 8
+#mainlevel 5
+#type 5
+#armor 56
+#hp 10
+#invulnerable 15
+#magicboost 8 1
+#mr 5
+-- ro: sprite = 207
+#end
+
+#selectitem 258
+#name "Armor of Twisted Thorns"
+#constlevel 11
+#mainpath 8
+#mainlevel 3
+#secondarypath 6
+#secondarylevel 2
+#type 5
+#armor 34
+#nofind
+#cursed
+#magicboost 6 1
+#magicboost 8 1
+#poisonres 5
+#poisonarmor 10
+-- ro: sprite = 283
+#end
+
+#selectitem 259
+#name "Armor of Knights"
+#constlevel 7
+#mainpath 3
+#mainlevel 1
+#type 5
+#armor 201
+#hp 6
+-- ro: sprite = 414
+#end
+
+#selectitem 260
+#name "Marble Armor"
+#constlevel 7
+#mainpath 3
+#mainlevel 2
+#type 5
+#armor 109
+#stoneskin
+#hp 8
+-- ro: sprite = 317
+#end
+
+#selectitem 261
+#name "Stymphalian Wings"
+#constlevel 7
+#mainpath 3
+#mainlevel 4
+#type 5
+#armor 74
+#fly
+#trample
+#hp 10
+#att -4
+#fear 5
+#nomounted
+#nationrebate 5
+-- ro: sprite = 200
+#end
+
+#selectitem 262
+#name "Weightless Scale Mail"
+#constlevel 7
+#mainpath 1
+#mainlevel 1
+#type 5
+#armor 50
+#hp 6
+#nationrebate 78
+#nationrebate 30
+#nationrebate 31
+-- ro: sprite = 110
+#end
+
+#selectitem 263
+#name "Rainbow Armor"
+#constlevel 7
+#mainpath 7
+#mainlevel 1
+#secondarypath 2
+#secondarylevel 1
+#type 5
+#armor 90
+#hp 8
+#mr 2
+#reinvigoration 3
+-- ro: sprite = 256
+#end
+
+#selectitem 264
+#name "Robe of the Magi"
+#constlevel 7
+#mainpath 1
+#mainlevel 5
+#secondarypath 8
+#secondarylevel 5
+#type 5
+#armor 230
+#hp 2
+#magicboost 53 1
+#reinvigoration 5
+#tainted 5
+-- ro: sprite = 275
+#end
+
+#selectitem 265
+#name "Robe of Invulnerability"
+#constlevel 7
+#mainpath 5
+#mainlevel 2
+#type 5
+#armor 231
+#hp 8
+#invulnerable 25
+-- ro: sprite = 276
+#end
+
+#selectitem 266
+#name "Rime Hauberk"
+#constlevel 7
+#mainpath 2
+#mainlevel 2
+#type 5
+#armor 46
+#hp 8
+#cold 8
+#coldres 10
+#iceprot 1
+-- ro: sprite = 109
+#end
+
+#selectitem 267
+#name "Jade Armor"
+#constlevel 7
+#mainpath 2
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 5
+#armor 107
+#quickness
+#hp 8
+#nationrebate 69
+-- ro: sprite = 315
+#end
+
+#selectitem 268
+#name "Bone Armor"
+#constlevel 7
+#mainpath 5
+#mainlevel 4
+#type 5
+#armor 51
+#hp 8
+#invulnerable 15
+#coldres 5
+-- ro: sprite = 245
+-- ro: flag bit 0x200 = 0x800
+#end
+
+#selectitem 269
+#name "Hydra Skin Armor"
+#constlevel 7
+#mainpath 6
+#mainlevel 2
+#type 5
+#armor 43
+#hp 8
+#regeneration 10
+#poisonres 15
+#nationrebate 9
+#nationrebate 56
+#nationrebate 98
+-- ro: sprite = 138
+#end
+
+#selectitem 270
+#name "Cloak of Invisibility"
+#constlevel 7
+#mainpath 7
+#mainlevel 3
+#type 5
+#armor 230
+#hp 2
+#sneakunit 20
+#unseen
+-- ro: sprite = 5064
+#end
+
+#selectitem 271
+#name "Bloodstone Armor"
+#constlevel 7
+#mainpath 8
+#mainlevel 3
+#secondarypath 3
+#secondarylevel 2
+#type 5
+#armor 258
+#hp 16
+#str 2
+#regeneration 10
+#heavyitem 1
+-- ro: sprite = 5006
+#end
+
+#selectitem 272
+#name "Abominable Arms"
+#constlevel 7
+#mainpath 8
+#mainlevel 4
+#secondarypath 6
+#secondarylevel 2
+#type 8
+#cursed
+#chestwound
+#att -3
+#def -3
+#noinanim
+#tainted 5
+-- ro: sprite = 10010
+-- ro: ability 1432 = 2
+-- ro: ability 1417 bits no command sets = 0x180000000000
+#end
+
+#selectitem 273
+#name "Aseftik's Armor"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#type 5
+#armor 35
+#cursed
+#hp 15
+#mr 4
+#morale 8
+-- ro: sprite = 101
+#end
+
+#selectitem 274
+#name "Monolith Armor"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#type 5
+#armor 47
+#hp 20
+#regeneration 10
+#nomounted
+#morale 10
+#heavyitem 1
+-- ro: sprite = 129
+#end
+
+#selectitem 275
+#name "Armor of the Dawn"
+#constlevel 9
+#mainpath 3
+#mainlevel 2
+#secondarypath 4
+#secondarylevel 1
+#type 5
+#armor 179
+#hp 10
+#fireres 15
+#awe 1
+#woundfend 2
+#mr 1
+#nationrebate 19
+#nationrebate 66
+-- ro: sprite = 382
+#end
+
+#selectitem 276
+#name "Robe of Calius the Druid"
+#constlevel 9
+#mainpath 6
+#mainlevel 3
+#type 5
+#armor 231
+#hp 2
+#waterbreathing
+#mr 3
+#fireres 10
+#coldres 10
+#shockres 10
+#stealthboost 20
+-- ro: sprite = 274
+#end
+
+#selectitem 277
+#name "Fenris' Pelt"
+#constlevel 9
+#mainpath 6
+#mainlevel 4
+#type 5
+#armor 72
+#autospell "Howl"
+#hp 10
+#coldres 10
+#mountsurv
+#swift 50
+#berserk 4
+#autoberserk 1
+-- ro: sprite = 177
+#end
+
+#selectitem 278
+#name "Armor of Virtue"
+#constlevel 9
+#mainpath 4
+#mainlevel 3
+#type 5
+#armor 110
+#bless
+#hp 10
+#awe 4
+-- ro: sprite = 318
+-- ro: ability 393 = 1
+#end
+
+#selectitem 279
+#name "Flesh Ward"
+#constlevel 9
+#mainpath 8
+#mainlevel 4
+#type 5
+#armor 82
+#nofind
+#cursed
+#hp 16
+#reinvigoration 2
+#str 4
+#damagerev 2
+#noinanim
+#magicboost 8 1
+#tainted 10
+-- ro: sprite = 230
+#end
+
+#selectitem 280
+#name "Pebble Skin Suit"
+#constlevel 9
+#mainpath 8
+#mainlevel 4
+#secondarypath 3
+#secondarylevel 1
+#type 5
+#stoneskin
+#cursed
+#hp 10
+#regeneration 10
+#magicboost 3 1
+#str 2
+#noinanim
+#nationrebate 30
+#nationrebate 78
+-- ro: sprite = 330
+-- ro: ability 257 = 518
+#end
+
+#selectitem 281
+#name "Purple Silk Garments"
+#constlevel 3
+#mainpath 4
+#mainlevel 1
+#secondarypath 2
+#secondarylevel 1
+#type 5
+#armor 244
+#hp 2
+#mr 1
+#def 2
+#twistfate
+#itemdrawsize -30
+#itemcost1 -40
+#itemcost2 -60
+#restricted 77
+-- ro: sprite = 5062
+#end
+
+#selectitem 282
+#name "Salamander Silk Garments"
+#constlevel 5
+#mainpath 0
+#mainlevel 1
+#type 5
+#armor 244
+#hp 2
+#mr 1
+#fireres 15
+#awe 1
+#itemdrawsize -30
+#restricted 67
+-- ro: sprite = 5063
+#end
+
+#selectitem 283
+#name "Silver Silk Garments"
+#constlevel 7
+#mainpath 4
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 5
+#armor 244
+#hp 2
+#mr 2
+#reinvigoration 2
+#twistfate
+#itemdrawsize -30
+#itemcost1 -40
+#itemcost2 -60
+#restricted 77
+-- ro: sprite = 5061
+#end
+
+#selectitem 284
+#name "Armor of the Five Elements"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 5
+#armor 233
+#hp 4
+#fireres 5
+#shockres 5
+#coldres 5
+#mr 1
+#restricted 22
+#restricted 69
+#restricted 109
+#itemcost1 -60
+#itemcost2 -60
+#itemdrawsize -30
+-- ro: sprite = 5052
+#end
+
+#selectitem 285
+#name "Boots of Long Strides"
+#constlevel 1
+#mainpath 6
+#mainlevel 1
+#type 7
+#mapspeed 6
+#swift 100
+-- ro: sprite = 7012
+#end
+
+#selectitem 286
+#name "Fish Scale Boots"
+#constlevel 1
+#mainpath 2
+#mainlevel 1
+#type 7
+#swimming
+-- ro: sprite = 7006
+#end
+
+#selectitem 287
+#name "Silent Boots"
+#constlevel 1
+#mainpath 7
+#mainlevel 1
+#type 7
+#stealthboost 20
+-- ro: sprite = 7005
+#end
+
+#selectitem 288
+#name "Chi Shoes"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 7
+#weapon 175
+#nationrebate 69
+#nationrebate 22
+#nationrebate 109
+-- ro: sprite = 7008
+#end
+
+#selectitem 289
+#name "Boots of the Behemoth"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 7
+#trample
+#heavyitem 1
+-- ro: sprite = 7011
+#end
+
+#selectitem 290
+#name "Boots of Giant Strength"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 7
+#str 5
+-- ro: sprite = 7010
+#end
+
+#selectitem 291
+#name "Birch Boots"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 7
+#coldres 10
+#mountsurv
+-- ro: sprite = 7003
+-- ro: ability 576 = 1
+#end
+
+#selectitem 292
+#name "Ranger's Boots"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 7
+#stealthboost 20
+#reinvigoration 2
+#forestsurv
+-- ro: sprite = 7004
+#end
+
+#selectitem 293
+#name "Brimstone Boots"
+#constlevel 5
+#mainpath 0
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 7
+#fireres 15
+#str 4
+#wastesurv
+-- ro: sprite = 7018
+#end
+
+#selectitem 294
+#name "Winged Shoes"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 7
+#fly
+-- ro: sprite = 7028
+-- ro: ability 230 = 20
+#end
+
+#selectitem 295
+#name "Earth Boots"
+#constlevel 5
+#mainpath 3
+#mainlevel 2
+#type 7
+#magicboost 3 1
+-- ro: sprite = 7001
+#end
+
+#selectitem 296
+#name "Boots of Stone"
+#constlevel 5
+#mainpath 3
+#mainlevel 2
+#type 7
+#stoneskin
+#mountsurv
+-- ro: sprite = 7029
+#end
+
+#selectitem 297
+#name "Boots of the Messenger"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 7
+#reinvigoration 3
+#mapspeed 9
+-- ro: sprite = 7025
+#end
+
+#selectitem 298
+#name "Pixie Shoes"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 7
+#luck
+#def 2
+#mapspeed 6
+-- ro: sprite = 7007
+#end
+
+#selectitem 299
+#name "Boots of Quickness"
+#constlevel 7
+#mainpath 2
+#mainlevel 2
+#type 7
+#quickness
+#mapspeed 12
+-- ro: sprite = 7014
+#end
+
+#selectitem 300
+#name "Boots of Grasping Earth"
+#constlevel 7
+#mainpath 3
+#mainlevel 2
+#type 7
+-- ro: sprite = 7020
+-- ro: ability 1052 = 16384
+-- ro: ability 1053 = 2
+#end
+
+#selectitem 301
+#name "Boots of Youth"
+#constlevel 7
+#mainpath 8
+#mainlevel 2
+#type 7
+#reinvigoration 3
+#noaging 90
+-- ro: sprite = 7000
+#end
+
+#selectitem 302
+#name "Boots of the Spider"
+#constlevel 7
+#mainpath 1
+#mainlevel 1
+#type 7
+#mountsurv
+#swampsurv
+#forestsurv
+#scalewalls
+-- ro: sprite = 7019
+-- ro: ability 576 = 1
+-- ro: ability 577 = 75
+#end
+
+#selectitem 303
+#name "Boots of Seven Mile Strides"
+#constlevel 7
+#mainpath 6
+#mainlevel 2
+#type 7
+#mapspeed 18
+-- ro: sprite = 7012
+#end
+
+#selectitem 304
+#name "Boots of Antaeus"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#secondarypath 6
+#secondarylevel 1
+#type 7
+#reinvigoration 5
+#magicboost 3 1
+#regeneration 10
+#mapspeed 6
+-- ro: sprite = 7002
+#end
+
+#selectitem 305
+#name "Sandals of the Crane"
+#constlevel 9
+#mainpath 4
+#mainlevel 2
+#type 7
+#autospell "Blink"
+#autospellrepeat 1
+-- ro: sprite = 7015
+#end
+
+#selectitem 306
+#name "Boots of the Planes"
+#constlevel 9
+#mainpath 4
+#mainlevel 5
+#type 7
+#spell "Teleport"
+#ethereal
+#tainted 50
+#infernoret 20
+#kokytosret 20
+-- ro: sprite = 7013
+-- ro: ability 311 = 1
+#end
+
+#selectitem 307
+#name "The Boots of Calius the Druid"
+#constlevel 9
+#mainpath 6
+#mainlevel 4
+#type 7
+#reinvigoration 10
+#mapspeed 9
+#forestsurv
+-- ro: sprite = 7024
+#end
+
+#selectitem 308
+#name "Wyrmskin Boots"
+#constlevel 9
+#mainpath 2
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 2
+#type 7
+#cursed
+#hp 10
+#regeneration 20
+#waterbreathing
+#poisonres 15
+#mr 2
+#swampsurv
+-- ro: sprite = 7022
+#end
+
+#selectitem 309
+#name "Ring of Fire"
+#constlevel 1
+#mainpath 0
+#mainlevel 1
+#type 8
+#bestowtomount
+#fireres 15
+-- ro: sprite = 8091
+#end
+
+#selectitem 310
+#name "Ring of Tamed Lightning"
+#constlevel 1
+#mainpath 1
+#mainlevel 1
+#type 8
+#bestowtomount
+#shockres 15
+-- ro: sprite = 8087
+#end
+
+#selectitem 311
+#name "Ring of Frost"
+#constlevel 1
+#mainpath 2
+#mainlevel 1
+#type 8
+#bestowtomount
+#coldres 15
+-- ro: sprite = 8084
+#end
+
+#selectitem 312
+#name "Bear Claw Talisman"
+#constlevel 1
+#mainpath 3
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 8
+#bestowtomount
+#str 5
+#beauty -1
+#morale 2
+-- ro: sprite = 39
+-- ro: ability 179 = -1
+#end
+
+#selectitem 313
+#name "Rabbit Foot Charm"
+#constlevel 1
+#mainpath 4
+#mainlevel 1
+#type 8
+#bestowtomount
+#twistfate
+-- ro: sprite = 8001
+#end
+
+#selectitem 314
+#name "Skull Talisman"
+#constlevel 1
+#mainpath 5
+#mainlevel 1
+#type 8
+#undcommand 5
+#batstartsum1 -2
+-- ro: sprite = 199
+#end
+
+#selectitem 315
+#name "Snake Ring"
+#constlevel 1
+#mainpath 6
+#mainlevel 1
+#type 8
+#spell "Poison Touch"
+#bestowtomount
+#poisonres 30
+-- ro: sprite = 54
+#end
+
+#selectitem 316
+#name "Slave Collar"
+#constlevel 1
+#mainpath 8
+#mainlevel 1
+#type 8
+#nofind
+#cursed
+#feeblemind
+#itemdrawsize -20
+#morale 20
+#patience 1
+-- ro: sprite = 8059
+-- ro: ability 567 = 6
+#end
+
+#selectitem 317
+#name "Pendant of Courage"
+#constlevel 1
+#mainpath 0
+#mainlevel 1
+#type 8
+#bestowtomount
+#morale 5
+-- ro: sprite = 8006
+#end
+
+#selectitem 318
+#name "Burning Pearl"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 8
+#att 4
+#fireres 5
+#patience -1
+-- ro: sprite = 233
+#end
+
+#selectitem 319
+#name "Fire in a Jar"
+#constlevel 3
+#mainpath 0
+#mainlevel 1
+#type 8
+#tmpfiregems 1
+#bestowtomount
+#coldres 5
+-- ro: sprite = 425
+#end
+
+#selectitem 320
+#name "Ring of Warning"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 8
+#warning 60
+#patrolbonus 10
+-- ro: sprite = 8113
+#end
+
+#selectitem 321
+#name "Ring of Levitation"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 8
+#float
+-- ro: sprite = 8090
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 322
+#name "Owl Quill"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 8
+#researchbonus 6
+-- ro: sprite = 194
+#end
+
+#selectitem 323
+#name "Eye of Aiming"
+#constlevel 3
+#mainpath 1
+#mainlevel 1
+#type 8
+#nofind
+#cursed
+#prec 8
+#loseeye 1
+#reqeyes
+#itemdrawsize -20
+-- ro: sprite = 292
+#end
+
+#selectitem 324
+#name "Amulet of Missile Protection"
+#constlevel 3
+#mainpath 1
+#mainlevel 2
+#type 8
+-- ro: sprite = 32
+-- ro: flag bit 0x1f8 = 0x8
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 325
+#name "Amulet of Breathing"
+#constlevel 3
+#mainpath 1
+#mainlevel 2
+#type 8
+#waterbreathing
+-- ro: sprite = 36
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 326
+#name "Flying Ointment"
+#constlevel 3
+#mainpath 1
+#mainlevel 2
+#secondarypath 6
+#secondarylevel 1
+#type 8
+#fly
+#stormimmune
+#restricted 14
+-- ro: sprite = 9008
+-- ro: ability 230 = 20
+#end
+
+#selectitem 327
+#name "Ring of Water Breathing"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#type 8
+#waterbreathing
+-- ro: sprite = 8111
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 328
+#name "Flask of Holy Water"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#type 8
+#bestowtomount
+#autobless
+-- ro: sprite = 9002
+#end
+
+#selectitem 329
+#name "Clam of Pearls"
+#constlevel 3
+#mainpath 2
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 8
+#tmpastralgems 2
+#nationrebate 86
+#nationrebate 40
+-- ro: sprite = 136
+#end
+
+#selectitem 330
+#name "Bracers of Protection"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 8
+#armor 76
+-- ro: sprite = 266
+#end
+
+#selectitem 331
+#name "Lodestone Amulet"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 8
+#bestowtomount
+#mr 2
+-- ro: sprite = 385
+#end
+
+#selectitem 332
+#name "Wound Fend Amulet"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 8
+#bestowtomount
+#woundfend 2
+-- ro: sprite = 379
+#end
+
+#selectitem 333
+#name "Stone Birds"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 8
+#danceweapon 176
+#dancenratt 8
+#dancespr 448
+#dancenof 4
+#dancesize 30
+-- ro: sprite = 268
+#end
+
+#selectitem 334
+#name "Cat's Eye Amulet"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 8
+#bestowtomount
+#darkvision 50
+#stealthboost 20
+-- ro: sprite = 399
+#end
+
+#selectitem 335
+#name "Clockwork Bird"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 8
+#warning 60
+#itemdrawsize -40
+-- ro: sprite = 8127
+#end
+
+#selectitem 336
+#name "Champion's Skull"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#type 8
+-- ro: sprite = 29
+-- ro: ability 114 = 3
+#end
+
+#selectitem 337
+#name "Effigy of War"
+#constlevel 3
+#mainpath 5
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 8
+#falsearmy 50
+-- ro: sprite = 402
+#end
+
+#selectitem 338
+#name "Handful of Acorns"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 8
+#magiccommand 1
+#batstartsum3 361
+-- ro: sprite = 376
+#end
+
+#selectitem 339
+#name "Barkskin Amulet"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 8
+#barkskin
+-- ro: sprite = 33
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 340
+#name "Cat Charm"
+#constlevel 3
+#mainpath 6
+#mainlevel 2
+#type 8
+#bestowtomount
+#def 4
+#beauty 1
+-- ro: sprite = 215
+-- ro: ability 179 = 1
+#end
+
+#selectitem 341
+#name "Enormous Cauldron of Broth"
+#constlevel 3
+#mainpath 6
+#mainlevel 3
+#type 8
+#supplybonus 150
+#heavyitem 1
+-- ro: sprite = 229
+#end
+
+#selectitem 342
+#name "Pendant of Luck"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#type 8
+#luck
+-- ro: sprite = 38
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 343
+#name "Amulet of Clarity"
+#constlevel 3
+#mainpath 7
+#mainlevel 1
+#type 8
+#truesight
+#falseregen 2
+-- ro: sprite = 8019
+#end
+
+#selectitem 344
+#name "Tablecloth of Marvelous Feasts"
+#constlevel 3
+#mainpath 7
+#mainlevel 3
+#type 8
+#itemdrawsize -50
+#falsesupply 400
+-- ro: sprite = 8126
+#end
+
+#selectitem 345
+#name "Gossamer Cloth"
+#constlevel 3
+#mainpath 7
+#mainlevel 2
+#secondarypath 6
+#secondarylevel 1
+#type 8
+#falsearmy -25
+#nationrebate 11
+#nationrebate 58
+-- ro: sprite = 410
+#end
+
+#selectitem 346
+#name "Ring of the Warrior"
+#constlevel 3
+#mainpath 8
+#mainlevel 1
+#type 8
+#bestowtomount
+#att 5
+#morale 2
+-- ro: sprite = 8083
+#end
+
+#selectitem 347
+#name "Imp Familiar"
+#constlevel 3
+#mainpath 8
+#mainlevel 1
+#type 8
+#nofind
+#cursed
+#researchbonus 3
+#undcommand 1
+#tainted 1
+#noforgebonus
+#batstartsum1 2287
+#nationrebate 103
+-- ro: sprite = 391
+#end
+
+#selectitem 348
+#name "Soul Contract"
+#constlevel 3
+#mainpath 8
+#mainlevel 3
+#secondarypath 0
+#secondarylevel 1
+#type 8
+#nofind
+#cursed
+#summon1 304
+#undcommand 10
+#tainted 10
+#noforgebonus
+#itemcost1 400
+#itemdrawsize -10
+#nationrebate 103
+-- ro: sprite = 225
+-- ro: ability 1421 = 1
+#end
+
+#selectitem 349
+#name "Witches' Ointment"
+#constlevel 3
+#mainpath 8
+#mainlevel 2
+#secondarypath 1
+#secondarylevel 1
+#type 8
+#fly
+#stormimmune
+#restricted 62
+-- ro: sprite = 9009
+-- ro: ability 230 = 20
+#end
+
+#selectitem 350
+#name "Medallion of Vengeance"
+#constlevel 5
+#mainpath 0
+#mainlevel 1
+#type 8
+-- ro: sprite = 228
+-- ro: ability 135 = 10
+#end
+
+#selectitem 351
+#name "Pills of Water Breathing"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 8
+#giftofwater 75
+-- ro: sprite = 305
+#end
+
+#selectitem 352
+#name "Dancing Trident"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#type 8
+#danceweapon 121
+#dancenratt 2
+#dancespr 447
+#dancenof 1
+#dancesize 75
+-- ro: sprite = 74
+#end
+
+#selectitem 353
+#name "Storm Spool"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#type 8
+#shockres 10
+#corpselord 2
+#overcharged 1
+-- ro: sprite = 433
+#end
+
+#selectitem 354
+#name "Bag of Winds"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 8
+#batstartsum1 3727
+#tmpairgems 1
+#magiccommand 1
+-- ro: sprite = 286
+#end
+
+#selectitem 355
+#name "Wall Shaker"
+#constlevel 5
+#mainpath 1
+#mainlevel 3
+#type 8
+#spell "Panic"
+#siegebonus 50
+#nationrebate 17
+-- ro: sprite = 161
+#end
+
+#selectitem 356
+#name "Flying Carpet"
+#constlevel 5
+#mainpath 1
+#mainlevel 3
+#type 8
+#nationrebate 65
+#nationrebate 18
+-- ro: sprite = 107
+-- ro: ability 229 = 30
+-- ro: ability 230 = 20
+#end
+
+#selectitem 357
+#name "Horn of Storms"
+#constlevel 5
+#mainpath 1
+#mainlevel 5
+#type 8
+#spell "Storm Wind"
+#magicboost 1 1
+-- ro: sprite = 464
+#end
+
+#selectitem 358
+#name "Dancing Shield"
+#constlevel 5
+#mainpath 1
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 8
+#dancespr 450
+-- ro: sprite = 361
+-- ro: ability 383 = 20
+#end
+
+#selectitem 359
+#name "Mirror of Trapped Images"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#type 8
+#spell "Warrior Illusion"
+#glamourmanip 1
+-- ro: sprite = 8080
+#end
+
+#selectitem 360
+#name "Enchanted Mirror"
+#constlevel 5
+#mainpath 7
+#mainlevel 2
+#type 8
+#falsearmy 75
+#glamourmanip 1
+-- ro: sprite = 405
+#end
+
+#selectitem 361
+#name "Cauldron of the Elven Halls"
+#constlevel 5
+#mainpath 7
+#mainlevel 3
+#type 8
+#heavyitem 1
+#falsearmy -75
+#nationrebate 30
+#nationrebate 78
+#nationrebate 31
+#nationrebate 115
+-- ro: sprite = 424
+#end
+
+#selectitem 362
+#name "Water Lens"
+#constlevel 5
+#mainpath 2
+#mainlevel 1
+#type 8
+#waterrange 1
+#tmpwatergems 1
+-- ro: sprite = 353
+#end
+
+#selectitem 363
+#name "Amulet of the Fish"
+#constlevel 5
+#mainpath 2
+#mainlevel 1
+#secondarypath 1
+#secondarylevel 1
+#type 8
+#bestowtomount
+-- ro: sprite = 287
+-- ro: ability 129 = 1
+#end
+
+#selectitem 364
+#name "Manual of Water Breathing"
+#constlevel 5
+#mainpath 6
+#mainlevel 3
+#secondarypath 2
+#secondarylevel 1
+#type 8
+#giftofwater 150
+-- ro: sprite = 304
+#end
+
+#selectitem 365
+#name "Enchanted Salt"
+#constlevel 3
+#mainpath 3
+#mainlevel 1
+#type 8
+#weapon 761
+#itemdrawsize -20
+-- ro: sprite = 8068
+#end
+
+#selectitem 366
+#name "Girdle of Might"
+#constlevel 5
+#mainpath 3
+#mainlevel 1
+#type 8
+#reinvigoration 3
+#str 3
+#itemdrawsize -15
+-- ro: sprite = 134
+#end
+
+#selectitem 367
+#name "Sky Metal Matrix"
+#constlevel 5
+#mainpath 3
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 8
+-- ro: sprite = 8129
+-- ro: flag bit 0x200 = 0x200000000000000
+#end
+
+#selectitem 368
+#name "Slave Matrix"
+#constlevel 5
+#mainpath 3
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 8
+-- ro: sprite = 8130
+-- ro: flag bit 0x200 = 0x400000000000000
+#end
+
+#selectitem 369
+#name "Amulet of Antimagic"
+#constlevel 5
+#mainpath 4
+#mainlevel 1
+#type 8
+#bestowtomount
+#mr 4
+-- ro: sprite = 90
+#end
+
+#selectitem 370
+#name "Spell Focus"
+#constlevel 5
+#mainpath 4
+#mainlevel 1
+#type 8
+#pen 1
+-- ro: sprite = 252
+-- ro: flag bit 0x200 = 0x100000000
+#end
+
+#selectitem 371
+#name "Eye of the Void"
+#constlevel 5
+#mainpath 4
+#mainlevel 1
+#type 8
+#nofind
+#cursed
+#spiritsight
+#pen 2
+#mr -2
+#loseeye 1
+#tainted 3
+#reqeyes
+#itemdrawsize -15
+-- ro: sprite = 334
+#end
+
+#selectitem 372
+#name "Coin of Meteoritic Iron"
+#constlevel 5
+#mainpath 4
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 2
+#type 8
+#magicboost 4 1
+#bestowtomount
+#mr 1
+-- ro: sprite = 8128
+#end
+
+#selectitem 373
+#name "Amulet of the Dead"
+#constlevel 5
+#mainpath 5
+#mainlevel 1
+#type 8
+#spell "Animate Skeleton"
+#undcommand 5
+-- ro: sprite = 355
+-- ro: ability 364 = 2
+-- ro: ability 365 = 2
+#end
+
+#selectitem 374
+#name "Skull Mentor"
+#constlevel 5
+#mainpath 5
+#mainlevel 2
+#type 8
+#researchbonus 14
+#itemdrawsize -10
+-- ro: sprite = 28
+#end
+
+#selectitem 375
+#name "Bane Venom Charm"
+#constlevel 5
+#mainpath 5
+#mainlevel 2
+#type 8
+#disease
+#leper 5
+-- ro: sprite = 35
+#end
+
+#selectitem 376
+#name "Spider Amulet"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 8
+#scalewalls
+#bestowtomount
+#poisonres 15
+-- ro: sprite = 8025
+#end
+
+#selectitem 377
+#name "Horn of Valor"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 8
+#inspirational 1
+-- ro: sprite = 162
+#end
+
+#selectitem 378
+#name "Acorn Necklace"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 8
+#luck
+#bestowtomount
+#shockres 15
+-- ro: sprite = 377
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 379
+#name "Endless Bag of Wine"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 8
+#supplybonus 75
+-- ro: sprite = 178
+#end
+
+#selectitem 380
+#name "Amulet of Giants"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 8
+#itemdrawsize -20
+-- ro: sprite = 359
+-- ro: flag bit 0x1f8 = 0x10000000000
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 381
+#name "Lychantropos' Amulet"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#type 8
+#cursed
+#regeneration 10
+#darkvision 50
+#str 4
+#berserk 1
+#autoberserk 1
+-- ro: sprite = 89
+-- ro: ability 119 = 2
+#end
+
+#selectitem 382
+#name "Ring of Regeneration"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#type 8
+#bestowtomount
+#regeneration 10
+-- ro: sprite = 8095
+#end
+
+#selectitem 383
+#name "Amulet of Resilience"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#type 8
+#bestowtomount
+#reinvigoration 5
+-- ro: sprite = 126
+#end
+
+#selectitem 384
+#name "Homunculus"
+#constlevel 5
+#mainpath 6
+#mainlevel 2
+#type 8
+#nofind
+#cursed
+#researchbonus 11
+#magiccommand 1
+#batstartsum1 3659
+#itemdrawsize -50
+-- ro: sprite = 8101
+#end
+
+#selectitem 385
+#name "Cornucopia"
+#constlevel 5
+#mainpath 6
+#mainlevel 3
+#type 8
+#itemdrawsize -50
+#tmpnaturegems 2
+#supplybonus 75
+-- ro: sprite = 8060
+#end
+
+#selectitem 386
+#name "Miraculous Cure All Elixir"
+#constlevel 5
+#mainpath 6
+#mainlevel 5
+#type 8
+#autodishealer 1
+-- ro: sprite = 348
+#end
+
+#selectitem 387
+#name "Astral Serpent"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 8
+#danceweapon 177
+#dancenratt 2
+#dancespr 449
+#dancenof 1
+#dancesize 50
+#nationrebate 98
+#nationrebate 108
+#bestowtomount
+#poisonres 5
+-- ro: sprite = 271
+#end
+
+#selectitem 388
+#name "Pendant of Beauty"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#type 8
+#beauty 2
+-- ro: sprite = 8014
+#end
+
+#selectitem 389
+#name "Dream Spool"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#type 8
+#tmpglamourgems 1
+#batstartsum2 297
+-- ro: sprite = 463
+#end
+
+#selectitem 390
+#name "Dreamstone"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#type 8
+#researchbonus 9
+#mr -2
+#onlysleepers
+-- ro: sprite = 8137
+-- ro: ability 1420 = 7
+#end
+
+#selectitem 391
+#name "Stone Sphere"
+#constlevel 5
+#mainpath 7
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 1
+#type 8
+#spell "Astral Window"
+#tainted 3
+-- ro: sprite = 196
+#end
+
+#selectitem 392
+#name "Neverending Keg of Mead"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#secondarypath 2
+#secondarylevel 1
+#type 8
+#supplybonus 50
+#falsesupply 150
+-- ro: sprite = 9038
+#end
+
+#selectitem 393
+#name "Sanguine Dowsing Rod"
+#constlevel 5
+#mainpath 8
+#mainlevel 1
+#type 8
+#douse 1
+-- ro: sprite = 31
+#end
+
+#selectitem 394
+#name "Brazen Vessel"
+#constlevel 5
+#mainpath 8
+#mainlevel 5
+#type 8
+#magicboost 8 1
+#infernoret 20
+#kokytosret 20
+#itemdrawsize -10
+-- ro: sprite = 151
+#end
+
+#selectitem 395
+#name "The Heart of Life"
+#constlevel 5
+#mainpath 8
+#mainlevel 3
+#type 8
+#nofind
+#cursed
+#chestwound
+#reinvigoration 10
+#poisonres 5
+#noforgebonus
+#noinanim
+#noaging 50
+-- ro: sprite = 26
+#end
+
+#selectitem 396
+#name "Lifelong Protection"
+#constlevel 5
+#mainpath 8
+#mainlevel 2
+#type 8
+#nofind
+#cursed
+#battlesum1d2 303
+#undcommand 5
+#tainted 5
+#noforgebonus
+#infernoret 10
+#itemcost1 300
+#itemdrawsize -10
+#nationrebate 103
+-- ro: sprite = 225
+-- ro: ability 1421 = 1
+#end
+
+#selectitem 397
+#name "Blood Stone"
+#constlevel 5
+#mainpath 8
+#mainlevel 3
+#secondarypath 3
+#secondarylevel 2
+#type 8
+#magicboost 3 1
+#tmpearthgems 1
+-- ro: sprite = 231
+#end
+
+#selectitem 398
+#name "Slave's Heart"
+#constlevel 5
+#mainpath 8
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 1
+#type 8
+#nofind
+#cursed
+#chestwound
+#morale 10
+#noinanim
+-- ro: sprite = 10014
+-- ro: flag bit 0x200 = 0x1000000000000000
+#end
+
+#selectitem 399
+#name "Lightless Lantern"
+#constlevel 7
+#mainpath 0
+#mainlevel 1
+#type 8
+#researchbonus 12
+#tainted 3
+#voidret 10
+#bestowtomount
+#darkvision 100
+-- ro: sprite = 264
+#end
+
+#selectitem 400
+#name "Skull of Fire"
+#constlevel 7
+#mainpath 0
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 8
+#magicboost 0 1
+#coldres -5
+-- ro: sprite = 61
+#end
+
+#selectitem 401
+#name "Barrel of Air"
+#constlevel 7
+#mainpath 1
+#mainlevel 4
+#type 8
+#giftofwater 450
+#heavyitem 1
+-- ro: sprite = 265
+#end
+
+#selectitem 402
+#name "Mirror of False Impressions"
+#constlevel 7
+#mainpath 7
+#mainlevel 4
+#type 8
+#foolscouts
+#command -50
+#glamourmanip 1
+-- ro: sprite = 406
+#end
+
+#selectitem 403
+#name "Water Bracelet"
+#constlevel 7
+#mainpath 2
+#mainlevel 1
+#type 8
+#magicboost 2 1
+-- ro: sprite = 258
+#end
+
+#selectitem 404
+#name "Bottle of Living Water"
+#constlevel 7
+#mainpath 2
+#mainlevel 2
+#type 8
+#magiccommand 1
+#batstartsum1 3732
+-- ro: sprite = 270
+#end
+
+#selectitem 405
+#name "Sea King's Goblet"
+#constlevel 7
+#mainpath 2
+#mainlevel 3
+#type 8
+#giftofwater 300
+-- ro: sprite = 41
+#end
+
+#selectitem 406
+#name "Chains of Reconstruction"
+#constlevel 7
+#mainpath 3
+#mainlevel 1
+#type 8
+#bestowtomount
+#reconst 5
+#reinvigoration 1
+-- ro: sprite = 8125
+#end
+
+#selectitem 407
+#name "The Copper Arm"
+#constlevel 7
+#mainpath 3
+#mainlevel 3
+#secondarypath 0
+#secondarylevel 1
+#type 8
+#cursed
+#nationrebate 60
+-- ro: sprite = 10003
+-- ro: ability 1432 = 1
+-- ro: ability 1431 = 1
+#end
+
+#selectitem 408
+#name "Crystal Heart"
+#constlevel 7
+#mainpath 3
+#mainlevel 1
+#secondarypath 7
+#secondarylevel 1
+#type 8
+#luck
+#nofind
+#cursed
+#chestwound
+#extralife
+#noinanim
+-- ro: sprite = 40
+#end
+
+#selectitem 409
+#name "Stone Idol"
+#constlevel 7
+#mainpath 3
+#mainlevel 2
+#secondarypath 4
+#secondarylevel 2
+#type 8
+#heretic 3
+#nationrebate 65
+#heavyitem 1
+-- ro: sprite = 302
+#end
+
+#selectitem 410
+#name "Eye Pendant"
+#constlevel 7
+#mainpath 3
+#mainlevel 3
+#secondarypath 5
+#secondarylevel 3
+#type 8
+#warning 80
+#patrolbonus 10
+#autodishealer 1
+-- ro: sprite = 378
+#end
+
+#selectitem 411
+#name "Arcane Lens"
+#constlevel 7
+#mainpath 4
+#mainlevel 3
+#type 8
+#allrange 1
+-- ro: sprite = 357
+#end
+
+#selectitem 412
+#name "Ring of Returning"
+#constlevel 7
+#mainpath 4
+#mainlevel 3
+#type 8
+-- ro: sprite = 8088
+-- ro: ability 393 = 1
+#end
+
+#selectitem 413
+#name "Ring of Wizardry"
+#constlevel 7
+#mainpath 4
+#mainlevel 7
+#type 8
+#magicboost 53 1
+#pen 1
+-- ro: sprite = 8135
+#end
+
+#selectitem 414
+#name "Ring of Sorcery"
+#constlevel 7
+#mainpath 4
+#mainlevel 6
+#type 8
+#magicboost 52 1
+#pen 1
+-- ro: sprite = 8136
+#end
+
+#selectitem 415
+#name "Elixir of Life"
+#constlevel 7
+#mainpath 6
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 2
+#type 8
+#extralife
+#noaging 80
+-- ro: sprite = 43
+#end
+
+#selectitem 416
+#name "Pocket Ship"
+#constlevel 7
+#mainpath 6
+#mainlevel 3
+#secondarypath 1
+#secondarylevel 2
+#type 8
+-- ro: sprite = 59
+-- ro: ability 112 = 600
+-- ro: ability 410 = 7
+#end
+
+#selectitem 417
+#name "Moonvine Bracelet"
+#constlevel 7
+#mainpath 6
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 1
+#type 8
+#magicboost 6 1
+#batstartsum1 361
+-- ro: sprite = 212
+#end
+
+#selectitem 418
+#name "Eye of Innocence"
+#constlevel 7
+#mainpath 7
+#mainlevel 2
+#type 8
+#nofind
+#cursed
+#stealthboost 40
+#loseeye 1
+#reqeyes
+#itemdrawsize -20
+-- ro: sprite = 370
+#end
+
+#selectitem 419
+#name "Mirage Crystal"
+#constlevel 7
+#mainpath 7
+#mainlevel 3
+#secondarypath 3
+#secondarylevel 2
+#type 8
+#magicboost 7 1
+#falsearmy -50
+#nationrebate 18
+#nationrebate 65
+-- ro: sprite = 8072
+#end
+
+#selectitem 420
+#name "Eye of the Oracle"
+#constlevel 9
+#mainpath 7
+#mainlevel 4
+#type 8
+#nofind
+#cursed
+#loseeye 1
+#reqeyes
+#itemdrawsize -20
+#warning 80
+#nobadevents 40
+#att 5
+#def 5
+#prec 4
+#tainted 5
+-- ro: sprite = 10013
+#end
+
+#selectitem 421
+#name "Ring of Invisibility"
+#constlevel 7
+#mainpath 7
+#mainlevel 5
+#type 8
+#bestowtomount
+#invisible
+#sneakunit 20
+-- ro: sprite = 8089
+#end
+
+#selectitem 422
+#name "Ring of the False Prophet"
+#constlevel 7
+#mainpath 7
+#mainlevel 4
+#secondarypath 0
+#secondarylevel 2
+#type 8
+#cursed
+#magicboost 9 1
+#morale 5
+-- ro: sprite = 8107
+#end
+
+#selectitem 423
+#name "The Black Heart"
+#constlevel 7
+#mainpath 8
+#mainlevel 2
+#type 8
+#nofind
+#cursed
+#chestwound
+#assassin
+#noforgebonus
+#noinanim
+#morale 2
+-- ro: sprite = 426
+#end
+
+#selectitem 424
+#name "Blood Pendant"
+#constlevel 7
+#mainpath 8
+#mainlevel 2
+#type 8
+#bloodrange 1
+#bestowtomount
+#str 2
+#darkvision 50
+-- ro: sprite = 354
+#end
+
+#selectitem 425
+#name "The Heart of Quickness"
+#constlevel 7
+#mainpath 8
+#mainlevel 2
+#secondarypath 0
+#secondarylevel 1
+#type 8
+#quickness
+#nofind
+#cursed
+#chestwound
+#poisonres -5
+#noinanim
+#mapspeed 12
+#yearaging 2
+#reinvigoration 2
+#coldres 5
+-- ro: sprite = 10008
+#end
+
+#selectitem 426
+#name "The Ruby Eye"
+#constlevel 9
+#mainpath 0
+#mainlevel 3
+#type 8
+#nofind
+#cursed
+#magicboost 0 1
+#gemprod 2 2
+#loseeye 1
+#reqeyes
+#itemdrawsize -20
+-- ro: sprite = 291
+#end
+
+#selectitem 427
+#name "Fever Fetish"
+#constlevel 9
+#mainpath 0
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 8
+#disease
+#gemprod 0 2
+#nationrebate 76
+#nationrebate 28
+-- ro: sprite = 37
+#end
+
+#selectitem 428
+#name "The Ark"
+#constlevel 9
+#mainpath 0
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 5
+#type 8
+#autospell "Ark"
+#heavyitem 1
+#spreaddom 2
+#infernoret 100
+#kokytosret 100
+#nationrebate 67
+-- ro: sprite = 250
+#end
+
+#selectitem 429
+#name "Amulet of the Doppelganger"
+#constlevel 9
+#mainpath 7
+#mainlevel 2
+#type 8
+#seduce 9
+#bestowtomount
+#sneakunit 50
+-- ro: sprite = 384
+#end
+
+#selectitem 430
+#name "The Flying Ship"
+#constlevel 9
+#mainpath 1
+#mainlevel 5
+#type 8
+#heavyitem 1
+-- ro: sprite = 249
+-- ro: ability 229 = 1000
+-- ro: ability 230 = 26
+#end
+
+#selectitem 431
+#name "Igor Könhelm's Tome"
+#constlevel 9
+#mainpath 1
+#mainlevel 2
+#secondarypath 5
+#secondarylevel 2
+#type 8
+#corpselord 20
+#stormpower 5
+#corpsehealer 3
+-- ro: sprite = 12002
+#end
+
+#selectitem 432
+#name "Tome of High Power"
+#constlevel 9
+#mainpath 1
+#mainlevel 2
+#secondarypath 4
+#secondarylevel 2
+#type 8
+#magicboost 1 1
+#magicboost 4 1
+#tainted 5
+#allrange 2
+-- ro: sprite = 12001
+#end
+
+#selectitem 433
+#name "The Magic Lamp"
+#constlevel 9
+#mainpath 1
+#mainlevel 5
+#secondarypath 0
+#secondarylevel 4
+#type 8
+#spell "Summon Jinn"
+#nationrebate 65
+-- ro: sprite = 272
+-- ro: ability 1430 = 1
+#end
+
+#selectitem 434
+#name "Krupp's Bracers"
+#constlevel 9
+#mainpath 3
+#mainlevel 2
+#type 8
+#armor 78
+#reinvigoration 3
+#nationrebate 60
+-- ro: sprite = 267
+#end
+
+#selectitem 435
+#name "Draupnir"
+#constlevel 9
+#mainpath 3
+#mainlevel 5
+#type 8
+#gold 400
+#nationrebate 30
+#nationrebate 78
+-- ro: sprite = 409
+#end
+
+#selectitem 436
+#name "The First Anvil"
+#constlevel 9
+#mainpath 3
+#mainlevel 6
+#type 8
+#mastersmith 1
+-- ro: sprite = 352
+#end
+
+#selectitem 437
+#name "Holger the Head"
+#constlevel 9
+#mainpath 3
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 8
+#autospell "Grow Headless Hoburg"
+#supplybonus -3
+-- ro: sprite = 329
+-- ro: ability 144 = 3391
+#end
+
+#selectitem 438
+#name "Percival the Pocket Knight"
+#constlevel 9
+#mainpath 3
+#mainlevel 1
+#secondarypath 6
+#secondarylevel 1
+#type 8
+#autospell "Grow Knight"
+-- ro: sprite = 322
+#end
+
+#selectitem 439
+#name "Alchemist's Stone"
+#constlevel 9
+#mainpath 3
+#mainlevel 1
+#secondarypath 0
+#secondarylevel 1
+#type 8
+#alchemy 50
+#fireres 15
+#coldres 15
+#acidres 15
+#nationrebate 103
+#nationrebate 102
+-- ro: sprite = 205
+#end
+
+#selectitem 440
+#name "Gate Stone"
+#constlevel 9
+#mainpath 3
+#mainlevel 7
+#secondarypath 4
+#secondarylevel 7
+#type 8
+#spell "Astral Travel"
+#heavyitem 1
+-- ro: sprite = 208
+#end
+
+#selectitem 441
+#name "Atlas of Creation"
+#constlevel 9
+#mainpath 3
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 5
+#type 8
+#spell "Record of Creation"
+#magicboost 3 1
+#magicboost 4 1
+#magicboost 6 1
+#tainted 5
+-- ro: sprite = 12003
+#end
+
+#selectitem 442
+#name "Bell of Cleansing"
+#constlevel 9
+#mainpath 2
+#mainlevel 2
+#type 8
+#autospell "Cleansing Chime"
+#autospellrepeat 1
+#fireres 5
+-- ro: sprite = 340
+#end
+
+#selectitem 443
+#name "Orb of Atlantis"
+#constlevel 9
+#mainpath 2
+#mainlevel 4
+#secondarypath 3
+#secondarylevel 1
+#type 8
+#spell "Summon Lesser Water Elemental"
+#autospell "Friendly Currents"
+#giftofwater 600
+#magicboost 2 1
+#magiccommand 25
+#nationrebate 43
+#nationrebate 88
+-- ro: sprite = 303
+#end
+
+#selectitem 444
+#name "Dome of the Ancients"
+#constlevel 9
+#mainpath 4
+#mainlevel 5
+#type 8
+#heavyitem 1
+#bestowtomount
+#mr 6
+-- ro: sprite = 8081
+-- ro: ability 1055 = 50
+#end
+
+#selectitem 445
+#name "The Astral Harpoon"
+#constlevel 9
+#mainpath 4
+#mainlevel 5
+#secondarypath 8
+#secondarylevel 1
+#type 8
+#spell "Astral Harpoon"
+-- ro: sprite = 351
+#end
+
+#selectitem 446
+#name "The Forbidden Light"
+#constlevel 9
+#mainpath 4
+#mainlevel 5
+#secondarypath 0
+#secondarylevel 5
+#type 8
+#autospell "Solar Brilliance"
+#cursed
+#localsun
+#tainted 50
+#voidret 25
+#gemprod 0 1
+#magicboost 0 2
+#magicboost 4 2
+#bestowtomount
+#yearaging 1
+#fireres 5
+#coldres 5
+-- ro: sprite = 216
+-- ro: ability 120 = 20
+#end
+
+#selectitem 447
+#name "Nethgul"
+#constlevel 9
+#mainpath 4
+#mainlevel 3
+#secondarypath 2
+#secondarylevel 2
+#type 8
+#autospell "Nethgul"
+#autospellrepeat 2
+#nationrebate 127
+-- ro: sprite = 220
+-- ro: ability 333 (#voidret 0..100) = -4
+#end
+
+#selectitem 448
+#name "The Black Mirror"
+#constlevel 9
+#mainpath 4
+#mainlevel 4
+#secondarypath 8
+#secondarylevel 2
+#type 8
+#spell "Mind Hunt"
+#curse
+#heavyitem 1
+#magicboost 7 1
+#incscale 4
+#mr -4
+#itemdrawsize -20
+-- ro: sprite = 333
+-- ro: ability 714 = 4
+#end
+
+#selectitem 449
+#name "The Horror Harmonica"
+#constlevel 9
+#mainpath 4
+#mainlevel 5
+#secondarypath 7
+#secondarylevel 4
+#type 8
+#spell "Call Horror"
+#autospell "Wailing Winds"
+#tainted 30
+#morale -2
+-- ro: sprite = 280
+#end
+
+#selectitem 450
+#name "Tome of the Lower Planes"
+#constlevel 9
+#mainpath 4
+#mainlevel 3
+#secondarypath 8
+#secondarylevel 2
+#type 8
+#magicboost 8 1
+#infernoret 50
+#kokytosret 50
+-- ro: sprite = 12005
+#end
+
+#selectitem 451
+#name "The Death Globes"
+#constlevel 9
+#mainpath 5
+#mainlevel 2
+#type 8
+#danceweapon 772
+#dancenratt 6
+#dancespr 451
+#dancenof 3
+#dancesize 25
+-- ro: sprite = 8079
+-- ro: ability 1420 = 5
+#end
+
+#selectitem 452
+#name "Carcator the Pocket Lich"
+#constlevel 9
+#mainpath 5
+#mainlevel 4
+#type 8
+#autospell "Grow Lich"
+#undcommand 50
+#researchbonus 4
+-- ro: sprite = 323
+-- ro: ability 225 = 3
+#end
+
+#selectitem 453
+#name "The Ankh"
+#constlevel 9
+#mainpath 5
+#mainlevel 5
+#type 8
+#autospell "Life after Death"
+#shockres 5
+#tainted 3
+#nationrebate 113
+-- ro: sprite = 197
+#end
+
+#selectitem 454
+#name "Disease Grinder"
+#constlevel 9
+#mainpath 5
+#mainlevel 3
+#secondarypath 0
+#secondarylevel 1
+#type 8
+#autodisgrinder 1
+-- ro: sprite = 347
+#end
+
+#selectitem 455
+#name "The Black Book of Secrets"
+#constlevel 9
+#mainpath 5
+#mainlevel 2
+#secondarypath 8
+#secondarylevel 2
+#type 8
+#magicboost 5 1
+#magicboost 8 1
+#fear 5
+-- ro: sprite = 12004
+#end
+
+#selectitem 456
+#name "The Green Eye"
+#constlevel 9
+#mainpath 6
+#mainlevel 2
+#type 8
+#autospell "Sleep"
+#nofind
+#cursed
+#autospellrepeat 1
+#pen 2
+#loseeye 1
+#reqeyes
+#itemdrawsize -20
+-- ro: sprite = 222
+#end
+
+#selectitem 457
+#name "Wondrous Box of Monsters"
+#constlevel 9
+#mainpath 6
+#mainlevel 4
+#type 8
+#autospell "Grow Monster"
+#heavyitem 1
+#autospellrepeat 1
+-- ro: sprite = 372
+#end
+
+#selectitem 458
+#name "Fountain of Youth"
+#constlevel 9
+#mainpath 6
+#mainlevel 3
+#secondarypath 0
+#secondarylevel 3
+#type 8
+#noagingland 75
+-- ro: sprite = 346
+#end
+
+#selectitem 459
+#name "Midget's Revenge"
+#constlevel 9
+#mainpath 6
+#mainlevel 1
+#secondarypath 2
+#secondarylevel 1
+#type 8
+#att 3
+#def 3
+#str 2
+#maxsize 2
+#hp 10
+#invulnerable 20
+#itemdrawsize -30
+-- ro: sprite = 360
+-- ro: flag bit 0x1f8 = 0x80000000
+#end
+
+#selectitem 460
+#name "Soulstone of the Wolves"
+#constlevel 9
+#mainpath 6
+#mainlevel 6
+#secondarypath 3
+#secondarylevel 1
+#type 8
+#spell "Call of the Wild"
+#autospell "Howl"
+#nationrebate 81
+-- ro: sprite = 195
+#end
+
+#selectitem 461
+#name "The Chalice"
+#constlevel 9
+#mainpath 6
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 3
+#type 8
+#spell "Banishment"
+#autohealer 5
+#noaging 100
+#nationrebate 61
+-- ro: sprite = 42
+-- ro: ability 136 = 10
+#end
+
+#selectitem 462
+#name "The Tome of Gaia"
+#constlevel 9
+#mainpath 6
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 2
+#type 8
+#magicboost 6 1
+#magicboost 3 1
+-- ro: sprite = 12009
+#end
+
+#selectitem 463
+#name "The Protection of Geryon"
+#constlevel 9
+#mainpath 8
+#mainlevel 3
+#type 8
+#nofind
+#cursed
+#deathbanish -12
+#itemcost1 100
+#itemdrawsize -10
+#noforgebonus
+-- ro: sprite = 407
+-- ro: ability 433 = 2277
+-- ro: ability 1421 = 1
+#end
+
+#selectitem 464
+#name "The Manual of Cross Breeding"
+#constlevel 9
+#mainpath 8
+#mainlevel 3
+#secondarypath 6
+#secondarylevel 3
+#type 8
+#crossbreeder 20
+#tainted 5
+-- ro: sprite = 12010
+#end
+
+#selectitem 465
+#name "The Gift of Kurgi"
+#constlevel 9
+#mainpath 8
+#mainlevel 5
+#type 8
+#armor 94
+#spell "Send Lesser Horror"
+#autospell "Call Lesser Horror"
+#fly
+#ethereal
+#curse
+#cursed
+#stormimmune
+#fear 30
+#tainted 20
+#voidret 5
+#bestowtomount
+-- ro: sprite = 290
+-- ro: ability 137 = 307
+-- ro: ability 311 = 2
+-- ro: ability 309 = 10
+-- ro: ability 312 = 2
+-- ro: ability 1421 = 1
+-- ro: ability 1436 = 1
+-- ro: ability 383 = 20
+#end
+
+#selectitem 466
+#name "Ardmon's Soul Trap"
+#constlevel 9
+#mainpath 8
+#mainlevel 3
+#secondarypath 4
+#secondarylevel 1
+#type 8
+#autospell "Open Soul Trap"
+#str -2
+#reinvigoration -1
+#itemdrawsize -20
+-- ro: sprite = 335
+#end
+
+#selectitem 467
+#name "Tome of the Forgotten Masons"
+#constlevel 9
+#mainpath 3
+#mainlevel 5
+#secondarypath 8
+#secondarylevel 1
+#type 8
+#cursed
+#mason
+#tainted 10
+-- ro: sprite = 12008
+#end
+
+#selectitem 468
+#name "The Silver Arms"
+#constlevel 9
+#mainpath 3
+#mainlevel 3
+#secondarypath 0
+#secondarylevel 3
+#type 8
+#cursed
+#str 4
+#hp 10
+-- ro: sprite = 10012
+-- ro: ability 1432 = 2
+#end
+
+#selectitem 469
+#name "Tome of Legends"
+#constlevel 9
+#mainpath 7
+#mainlevel 5
+#type 8
+#magicboost 7 2
+#batstartsum1 3626
+#glamourmanip 1
+-- ro: sprite = 12011
+#end
+
+#selectitem 470
+#name "The Missing Tune"
+#constlevel 9
+#mainpath 7
+#mainlevel 5
+#type 8
+#autospell "The Missing Tune"
+#morale 4
+#mr -2
+#gemprod 7 1
+-- ro: sprite = 8102
+#end
+
+#selectitem 471
+#name "The Trapped Dreams of Hruvur"
+#constlevel 9
+#mainpath 7
+#mainlevel 4
+#secondarypath 4
+#secondarylevel 4
+#type 8
+#cursed
+#magicboost 4 1
+#magicboost 7 1
+#magicboost 8 1
+#hp 15
+#str 2
+#pen 2
+#morale -2
+#tainted 50
+-- ro: sprite = 8105
+-- ro: ability 1077 = 1913
+#end
+
+#selectitem 472
+#name "Orb of Elemental Fire"
+#constlevel 9
+#mainpath 0
+#mainlevel 4
+#type 8
+#magicboost 0 1
+#gemprod 0 1
+#fireelementals 1
+#bestowtomount
+#fireres 25
+#heat 3
+-- ro: sprite = 8116
+#end
+
+#selectitem 473
+#name "Orb of Elemental Air"
+#constlevel 9
+#mainpath 1
+#mainlevel 4
+#type 8
+#magicboost 1 1
+#gemprod 1 1
+#airelementals 1
+#bestowtomount
+#shockres 25
+#overcharged 1
+-- ro: sprite = 8117
+#end
+
+#selectitem 474
+#name "Orb of Elemental Water"
+#constlevel 9
+#mainpath 2
+#mainlevel 4
+#type 8
+#magicboost 2 1
+#gemprod 2 1
+#waterelementals 1
+#bestowtomount
+#coldres 25
+-- ro: sprite = 8118
+#end
+
+#selectitem 475
+#name "Orb of Elemental Earth"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#type 8
+#heavyitem 1
+#magicboost 3 1
+#gemprod 3 1
+#earthelementals 1
+#bestowtomount
+#reinvigoration 2
+-- ro: sprite = 8119
+-- ro: ability 1414 = 16
+#end
+
+#selectitem 476
+#name "The Void Sphere"
+#constlevel 9
+#mainpath 4
+#mainlevel 6
+#secondarypath 8
+#secondarylevel 1
+#type 8
+#cursed
+#magicboost 4 2
+#tainted 75
+#tmpastralgems 3
+#gemprod 4 2
+-- ro: sprite = 8123
+-- ro: ability 312 = 4
+#end
+
+#selectitem 477
+#name "Windcatcher Sail"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 8
+#farsail 1
+#restricted 77
+#itemdrawsize -20
+-- ro: sprite = 8061
+#end
+
+#selectitem 478
+#name "Companion Bracelet"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 8
+#autospell "Summon Qarin"
+#luck
+#cursed
+#researchbonus 4
+#restricted 18
+#restricted 65
+-- ro: sprite = 8069
+#end
+
+#selectitem 479
+#name "Ring of Dwarven Gold"
+#constlevel 11
+#mainpath 3
+#mainlevel 5
+#secondarypath 0
+#secondarylevel 5
+#type 8
+#cursed
+-- ro: sprite = 8108
+-- ro: ability 567 = 4
+#end
+
+#selectitem 480
+#name "Jinn Bottle"
+#constlevel 7
+#mainpath 1
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 8
+#magiccommand 1
+#batstartsum1 3354
+#wastesurv
+#restricted 65
+-- ro: sprite = 10011
+#end
+
+#selectitem 481
+#name "Golden Apple"
+#constlevel 13
+#mainpath 0
+#mainlevel 1
+#type 8
+#morale 2
+-- ro: sprite = 8062
+-- ro: ability 1439 = 10
+#end
+
+#selectitem 482
+#name "Eye of the Grey Ones"
+#constlevel 15
+#mainpath 5
+#mainlevel 1
+#type 8
+#loseeye 1
+#reqeyes
+#spiritsight
+#unique
+-- ro: sprite = 6046
+-- ro: ability 661 = 1
+-- ro: ability 567 = 7
+#end
+
+#selectitem 483
+#name "Holy Thing"
+#constlevel 13
+#mainpath 4
+#mainlevel 4
+#type 8
+#autospell "Divine Blessing"
+#luck
+#morale 4
+-- ro: sprite = 8015
+#end
+
+#selectitem 484
+#name "Mercury Barrel"
+#constlevel 7
+#mainpath 2
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 8
+#magiccommand 1
+#restricted 102
+#batstartsum1 3762
+#heavyitem 1
+-- ro: sprite = 265
+#end
+
+#selectitem 485
+#name "Enchanted Saddle"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 10
+#hp 2
+-- ro: sprite = 11001
+-- ro: flag bit 0x1f8 = 0x20000000
+#end
+
+#selectitem 486
+#name "Enchanted Barding"
+#constlevel 3
+#mainpath 6
+#mainlevel 1
+#type 10
+#armor 270
+#hp 4
+-- ro: sprite = 11003
+#end
+
+#selectitem 487
+#name "Boar Leather Barding"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#type 10
+#armor 271
+#hp 6
+-- ro: sprite = 11004
+-- ro: flag bit 0x1f8 = 0x1000000000000
+#end
+
+#selectitem 488
+#name "Knight's Barding"
+#constlevel 7
+#mainpath 1
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 10
+#armor 272
+#hp 8
+-- ro: sprite = 11005
+-- ro: flag bit 0x1f8 = 0x8
+#end
+
+#selectitem 489
+#name "Blacksteel Barding"
+#constlevel 3
+#mainpath 3
+#mainlevel 2
+#type 10
+#armor 273
+#hp 4
+#nationrebate 60
+-- ro: sprite = 11006
+#end
+
+#selectitem 490
+#name "Gossamer Barding"
+#constlevel 5
+#mainpath 7
+#mainlevel 1
+#type 10
+#armor 274
+#hp 6
+-- ro: sprite = 11007
+-- ro: flag bit 0x200 = 0x40000000000
+#end
+
+#selectitem 491
+#name "Fay Steed Barding"
+#constlevel 7
+#mainpath 7
+#mainlevel 1
+#secondarypath 3
+#secondarylevel 1
+#type 10
+#armor 275
+#hp 8
+#awe 2
+-- ro: sprite = 11008
+#end
+
+#selectitem 492
+#name "Lightweight Cataphract Barding"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 10
+#armor 276
+#hp 6
+#itemdrawsize -20
+-- ro: sprite = 11009
+#end
+
+#selectitem 493
+#name "Golden Barding"
+#constlevel 5
+#mainpath 0
+#mainlevel 1
+#secondarypath 4
+#secondarylevel 1
+#type 10
+#armor 277
+#hp 6
+#fireres 5
+#nationrebate 61
+-- ro: sprite = 11010
+-- ro: flag bit 0x1f8 = 0x20000000
+#end
+
+#selectitem 494
+#name "Sunrise Barding"
+#constlevel 9
+#mainpath 0
+#mainlevel 2
+#secondarypath 3
+#secondarylevel 2
+#type 10
+#armor 290
+#hp 20
+#fireres 15
+#shockres 15
+#mr 4
+#itemdrawsize -20
+-- ro: sprite = 11011
+#end
+
+#selectitem 495
+#name "Shortsword"
+#constlevel 13
+#mainpath 3
+#mainlevel 3
+#type 2
+#weapon 132
+-- ro: sprite = 8
+-- ro: flag bit 0x1f8 = 0x8
+#end
+
+#selectitem 496
+#name "Hammer of the Cyclops"
+#constlevel 13
+#mainpath 3
+#mainlevel 6
+#type 2
+#weapon 119
+#mastersmith 1
+-- ro: sprite = 149
+#end
+
+#selectitem 497
+#name "The Admiral's Sword"
+#constlevel 13
+#mainpath 5
+#mainlevel 3
+#type 1
+#weapon 186
+#fear 5
+-- ro: sprite = 211
+#end
+
+#selectitem 498
+#name "Precious"
+#constlevel 13
+#mainpath 0
+#mainlevel 2
+#type 8
+#att 4
+#str 4
+-- ro: sprite = 44
+#end
+
+#selectitem 499
+#name "Vial of Frozen Tears"
+#constlevel 13
+#mainpath 2
+#mainlevel 4
+#secondarypath 5
+#secondarylevel 3
+#type 8
+#magicboost 2 1
+#magicboost 5 1
+-- ro: sprite = 299
+#end
+
+#selectitem 500
+#name "Crown of Katafagus"
+#constlevel 13
+#mainpath 5
+#mainlevel 6
+#type 9
+#armor 212
+#cursed
+#summon1 398
+#magicboost 5 1
+#fear 5
+#fireres 15
+#shockres 15
+-- ro: sprite = 293
+#end
+
+#selectitem 501
+#name "Crown of Ptah"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#secondarypath 5
+#secondarylevel 6
+#type 9
+#armor 212
+#spell "Control the Dead"
+#autospell "Power of the Sepulchre"
+#curse
+#cursed
+#fear 10
+#mr 3
+#morale 4
+-- ro: sprite = 226
+#end
+
+#selectitem 502
+#name "Robe of the Sorceress"
+#constlevel 13
+#mainpath 3
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 5
+#type 5
+#armor 98
+#hp 2
+#magicboost 52 1
+-- ro: sprite = 298
+#end
+
+#selectitem 503
+#name "Sun Armor"
+#constlevel 13
+#mainpath 0
+#mainlevel 4
+#type 5
+#armor 95
+#hp 10
+#awe 3
+#morale 4
+-- ro: sprite = 294
+#end
+
+#selectitem 504
+#name "Sun Helmet"
+#constlevel 13
+#mainpath 0
+#mainlevel 4
+#type 6
+#armor 96
+#mr 5
+#awe 1
+-- ro: sprite = 296
+#end
+
+#selectitem 505
+#name "Sun Sword"
+#constlevel 13
+#mainpath 0
+#mainlevel 4
+#type 1
+#weapon 275
+#bless
+#command 50
+#berserk 2
+#autoberserk 1
+-- ro: sprite = 295
+#end
+
+#selectitem 506
+#name "Sun Shield"
+#constlevel 13
+#mainpath 0
+#mainlevel 4
+#type 4
+#armor 97
+#awe 1
+#fireres 15
+#shockres 15
+-- ro: sprite = 297
+#end
+
+#selectitem 507
+#name "Greenstone Armor"
+#constlevel 13
+#mainpath 3
+#mainlevel 3
+#type 5
+#armor 108
+#hp 10
+#acidres 10
+#heavyitem 1
+-- ro: sprite = 316
+#end
+
+#selectitem 508
+#name "Dragon Pearl"
+#constlevel 11
+#mainpath 2
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 5
+#type 8
+#cursed
+#magicboost 2 1
+#tmpwatergems 1
+#itemdrawsize -35
+#bestowtomount
+#waterbreathing
+-- ro: sprite = 8132
+-- ro: ability 567 = 1
+#end
+
+#selectitem 509
+#name "Dragon Pearl"
+#constlevel 11
+#mainpath 1
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 5
+#type 8
+#cursed
+#magicboost 4 1
+#tmpastralgems 1
+#itemdrawsize -35
+#bestowtomount
+#waterbreathing
+-- ro: sprite = 8131
+-- ro: ability 567 = 2
+#end
+
+#selectitem 510
+#name "Dragon Pearl"
+#constlevel 11
+#mainpath 6
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 5
+#type 8
+#cursed
+#magicboost 6 1
+#waterbreathing
+#tmpnaturegems 1
+#itemdrawsize -35
+-- ro: sprite = 8131
+-- ro: ability 567 = 9
+#end
+
+#selectitem 511
+#name "Pearl of Light"
+#constlevel 13
+#mainpath 2
+#mainlevel 5
+#secondarypath 4
+#secondarylevel 5
+#type 8
+#fly
+#cursed
+#magicboost 51 1
+#pen 1
+#itemdrawsize -35
+#bestowtomount
+#waterbreathing
+-- ro: sprite = 8134
+-- ro: ability 567 = 3
+#end
+
+#selectitem 512
+#name "Helmet of Invisibility"
+#constlevel 11
+#mainpath 5
+#mainlevel 3
+#type 6
+#armor 191
+#cursed
+#invisible
+#spiritsight
+-- ro: sprite = 6043
+-- ro: ability 567 = 5
+#end
+
+#selectitem 513
+#name "Crown of Ohya"
+#constlevel 11
+#mainpath 7
+#mainlevel 3
+#secondarypath 0
+#secondarylevel 2
+#type 9
+#armor 266
+#awe 2
+#itemdrawsize -20
+-- ro: sprite = 6058
+-- ro: ability 567 = 8
+-- ro: ability 253 (#homesick 0..1000) = -100
+#end
+
+#selectitem 514
+#name "Champion's Trident"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#type 2
+#weapon 135
+#luck
+#quickness
+#nofind
+#cursed
+#command 50
+#champprize
+#autocompete
+-- ro: sprite = 75
+#end
+
+#selectitem 515
+#name "Champion's Cuirass"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#type 5
+#armor 200
+#luck
+#quickness
+#nofind
+#cursed
+#champprize
+#hp 10
+#awe 1
+#regeneration 5
+#autocompete
+-- ro: sprite = 415
+#end
+
+#selectitem 516
+#name "Champion's Helmet"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#type 6
+#armor 174
+#luck
+#quickness
+#nofind
+#cursed
+#inspirational 2
+#champprize
+#autocompete
+#awe 1
+#morale 4
+-- ro: sprite = 421
+#end
+
+#selectitem 517
+#name "Champion's Gladius"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#type 1
+#weapon 588
+#luck
+#quickness
+#nofind
+#cursed
+#woundfend 2
+#inspirational 1
+#champprize
+#autocompete
+-- ro: sprite = 422
+#end
+
+#selectitem 518
+#name "Golden Sandals"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#type 7
+#luck
+#quickness
+#nofind
+#cursed
+#champprize
+#autocompete
+#command 50
+#def 5
+#mapspeed 6
+-- ro: sprite = 7017
+#end
+
+#selectitem 519
+#name "Champion's Medal"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#type 8
+#luck
+#quickness
+#nofind
+#cursed
+#champprize
+#autocompete
+#command 50
+#inspirational 1
+#spiritsight
+-- ro: sprite = 8013
+-- ro: ability 1436 = 1
+#end
+
+#selectitem 520
+#name "Champion's Headband"
+#constlevel 13
+#mainpath 0
+#mainlevel 5
+#type 9
+#armor 240
+#luck
+#quickness
+#nofind
+#cursed
+#inspirational 3
+#command 50
+#champprize
+#autocompete
+#awe 1
+-- ro: sprite = 6044
+#end
+
+#selectitem 521
+#name "Storm Armor"
+#constlevel 13
+#mainpath 1
+#mainlevel 3
+#type 5
+#armor 292
+#hp 6
+#bestowtomount
+#stormimmune
+#shockres 15
+-- ro: sprite = 99
+#end
+
+#selectitem 522
+#name "Carrion Seed"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 8
+#nofind
+#disease
+#cursed
+#restricted 53
+-- ro: sprite = 10015
+-- ro: flag bit 0x208 = 0x100000000000000
+#end
+
+#selectitem 523
+#name "Carrion Bow"
+#constlevel 5
+#mainpath 6
+#mainlevel 1
+#secondarypath 5
+#secondarylevel 1
+#type 3
+#weapon 869
+#restricted 53
+#itemcost1 -40
+#itemcost2 -60
+-- ro: sprite = 311
+#end
+
+#selectitem 524
+#name "Soul Scales"
+#constlevel 5
+#mainpath 8
+#mainlevel 1
+#secondarypath 7
+#secondarylevel 1
+#type 8
+#itemdrawsize -40
+-- ro: sprite = 8138
+-- ro: ability 1159 = 2
+#end
+
+#selectitem 525
+#name "White Dragon Scale Mail"
+#constlevel 5
+#mainpath 1
+#mainlevel 2
+#type 5
+#armor 36
+#hp 6
+#shockres 15
+#morale 4
+-- ro: sprite = 5073
+#end
+
+#selectitem 526
+#name "Black Dragon Scale Mail"
+#constlevel 5
+#mainpath 3
+#mainlevel 2
+#type 5
+#armor 36
+#hp 6
+#acidres 15
+#morale 4
+-- ro: sprite = 5074
+#end
+
+#selectitem 527
+#name "The Quintessence Chest"
+#constlevel 9
+#mainpath 4
+#mainlevel 3
+#secondarypath 3
+#secondarylevel 2
+#type 8
+#heavyitem 1
+#itemdrawsize -25
+#tmpfiregems 2
+#tmpairgems 2
+#tmpwatergems 2
+#tmpearthgems 2
+#tmpastralgems 2
+#tmpdeathgems 2
+#tmpnaturegems 2
+#tmpglamourgems 2
+-- ro: sprite = 8139
+#end
+
+#selectitem 528
+#name "Armor of Twisting Thorns"
+#constlevel 5
+#mainpath 8
+#mainlevel 3
+#secondarypath 6
+#secondarylevel 2
+#type 5
+#armor 34
+#nofind
+#cursed
+#magicboost 6 1
+#magicboost 8 1
+#poisonres 5
+#poisonarmor 10
+#noinanim
+#noundead
+-- ro: sprite = 283
+#end
+
+#selectitem 529
+#name "Pillar of Truths"
+#constlevel 9
+#mainpath 3
+#mainlevel 4
+#secondarypath 4
+#secondarylevel 4
+#type 2
+#weapon 874
+#autospell "Pillar of Truths"
+#heavyitem 1
+#itemdrawsize -25
+#mr 4
+-- ro: sprite = 2016
+-- ro: ability 1414 = 20
+#end
+
+#selectitem 530
+#name "end"
+#constlevel 199
+#mainpath 255
+#mainlevel 0
+#type 0
+#end

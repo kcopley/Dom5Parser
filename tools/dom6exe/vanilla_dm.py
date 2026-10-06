@@ -130,6 +130,49 @@ def number_scanner(exe, p):
     return fmt.most_common(1)[0][0]
 
 
+def generic_lines(calls, val):
+    """The generic-handler commands that store this value, and what's left over: one command,
+    or for an ability commands OR into (kind 2x: item restrictions, each a fixed bit) one per
+    bit, leaving bits no command sets."""
+    ors = [c for c in calls if c['repeat'] == 2 and c['max'] is not None]
+    if ors and len(ors) == len(calls):
+        lines, left = [], val
+        # (min is often a register the analysis doesn't follow; these take no argument)
+        for c in sorted(ors, key=lambda c: -c['max']):
+            if c['max'] and left & c['max'] == c['max']:
+                lines.append('#' + c['command'])
+                left &= ~c['max']
+        return lines, left
+    line = generic_line(calls, val)
+    return ([line], 0) if line else ([], val)
+
+
+def generic_line(calls, val):
+    """The generic-handler command (of those storing one ability) that stores this value."""
+    for c in calls:
+        kind = c['kind'] if c['kind'] is not None else 0
+        extra = c['offset'] or 0
+        if c['min'] is not None and c['min'] == c['max']:
+            if val == c['min'] + (0 if kind == 5 else extra):
+                return '#' + c['command']
+            continue
+        arg = val if kind == 5 else val - extra
+        if c['max'] is not None and arg > c['max'] or c['min'] is not None and arg < c['min']:
+            continue
+        return '#%s %d' % (c['command'], arg)
+    return None
+
+
+def generic_label(calls, key):
+    why = []
+    for c in calls:
+        if c['min'] is not None and c['min'] == c['max']:
+            why.append('#%s stores %d' % (c['command'], c['min'] + (0 if c['kind'] == 5 else c['offset'] or 0)))
+        else:
+            why.append('#%s %s..%s' % (c['command'], c['min'], c['max']))
+    return 'ability %d' % key + (' (%s)' % ', '.join(why) if why else '')
+
+
 class MonsterModel:
     """What each monster command stores, from the parser's code."""
 
@@ -176,17 +219,9 @@ class MonsterModel:
 
     def ability_line(self, key, val):
         """The command that stores this value under this ability, or None."""
-        for c in self.generic.get(key, []):
-            kind = c['kind'] if c['kind'] is not None else 0
-            extra = c['offset'] or 0
-            if c['min'] is not None and c['min'] == c['max']:
-                if val == c['min'] + (0 if kind == 5 else extra):
-                    return '#' + c['command']
-                continue
-            arg = val if kind == 5 else val - extra
-            if c['max'] is not None and arg > c['max'] or c['min'] is not None and arg < c['min']:
-                continue
-            return '#%s %d' % (c['command'], arg)
+        line = generic_line(self.generic.get(key, []), val)
+        if line:
+            return line
         for cmd, spec in self.direct.get(key, []):
             e = self.effects[cmd]
             if e['bits'] or e['stores']:
@@ -338,7 +373,8 @@ def monster_commands(exe):
 
 
 def write(exe, path):
-    sections = [('weapon', weapon_commands), ('armor', armor_commands), ('monster', monster_commands)]
+    sections = [('weapon', weapon_commands), ('armor', armor_commands), ('monster', monster_commands),
+                ('item', item_commands)]
     text = ['-- Dominions %s vanilla data, written from Dominions6.exe by tools/dom6exe (exe %s).' % (exe.version, exe.sha),
             '-- "-- ro:" lines are stored values no command can set (shown read-only).', '']
     res = {'game_version': exe.version}
@@ -597,5 +633,86 @@ def armor_commands(exe):
         al, aro = model.ability_lines(ab, set())
         lines += al
         ro += aro
+        out[i] = {'lines': lines, 'readonly': ro}
+    return out
+
+
+# item record (6.37): defaults from #clear (0x1402290d0): main path 0 level 1, no second path,
+# type 8. #constlevel N stores N / 2 (the manual's levels are 1, 3, 5, ...), #mainpath also
+# raises the main level to 1, #restricted N appends ability 278 = N. Abilities share the
+# monster numbering and the generic handler.
+I_CONST, I_MAINPATH, I_SECPATH, I_MAINLEVEL, I_SECLEVEL, I_TYPE, I_SPR = 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2a
+I_WEAPON, I_ARMOR, I_SPELL, I_AUTOSPELL, I_ABILITIES = 0x2c, 0x2e, 0x30, 0x54, 0x78
+I_FLAGS = (0x1f8, 0x200, 0x208)
+RESTRICTED, TYPE9 = 278, 1423
+
+
+def item_commands(exe):
+    model = ContextModel(exe, 'item')
+    gen = collections.defaultdict(list)
+    for c in model.p.generic_call_args():
+        if c['context'] == 'item' and c['key'] is not None:
+            gen[c['key']].append(c)
+    repeatable = {k for k, cs in gen.items() if any(c['repeat'] == 1 for c in cs)} | {RESTRICTED}
+    out = {}
+    for i, r in sorted(records(exe, 'item').items()):
+        b = lambda o: r[o]
+        lines, ro = ['#name "%s"' % name_of(r).replace('"', "'")], []
+        lines.append('#constlevel %d' % (2 * b(I_CONST) + 1))
+        lines.append('#mainpath %d' % b(I_MAINPATH))
+        lines.append('#mainlevel %d' % b(I_MAINLEVEL))
+        if b(I_SECPATH) != 255:
+            lines += ['#secondarypath %d' % b(I_SECPATH), '#secondarylevel %d' % b(I_SECLEVEL)]
+        ab0 = {}
+        for k in range(24):
+            key, val = struct.unpack_from('<qq', r, I_ABILITIES + 16 * k)
+            if not key:
+                break
+            ab0.setdefault(key, val)
+        typ, skip = b(I_TYPE), set()
+        if typ == 6 and ab0.get(TYPE9) == 1:
+            lines.append('#type 9')         # #type 9 stores type 6 and ability 1423 = 1
+            skip.add(TYPE9)
+        else:
+            lines.append('#type %d' % (10 if typ == 9 else typ))     # #type 10 stores 9
+        w, a = struct.unpack_from('<hh', r, I_WEAPON)
+        if w:
+            lines.append('#weapon %d' % w)
+        if a:
+            lines.append('#armor %d' % a)
+        for cmd, off in (('spell', I_SPELL), ('autospell', I_AUTOSPELL)):
+            sp = text(r[off:off + 36].split(b'\0')[0])
+            if sp:
+                lines.append('#%s "%s"' % (cmd, sp))
+        spr = struct.unpack_from('<h', r, I_SPR)[0]
+        if spr:
+            ro.append(('sprite', spr))
+        for off in I_FLAGS:
+            fl, covered, unmatched = model.flag_lines(off, struct.unpack_from('<Q', r, off)[0], 0, {})
+            lines += fl
+            ro += [('flag bit 0x%x' % off, hex(x)) for x in bits_of(unmatched)]
+        seen = set()
+        for k in range(24):
+            key, val = struct.unpack_from('<qq', r, I_ABILITIES + 16 * k)
+            if not key:
+                break
+            if key in seen and key not in repeatable:
+                ro.append(('ability %d repeated (the game reads the first)' % key, val))
+                continue
+            seen.add(key)
+            if key in skip:
+                continue
+            if key in MAGICBOOST:
+                lines.append('#magicboost %d %d' % (key - 10 if key < 20 else 51 + key - 20, val))
+            elif key in GEMPROD:
+                lines.append('#gemprod %d %d' % (key - 30, val))
+            elif key == RESTRICTED:
+                lines.append('#restricted %d' % val)
+            else:
+                more, left = generic_lines(gen.get(key, []), val)
+                lines += more
+                if left:
+                    ro.append((generic_label(gen.get(key, []), key) if not more else
+                               'ability %d bits no command sets' % key, hex(left) if more else left))
         out[i] = {'lines': lines, 'readonly': ro}
     return out
