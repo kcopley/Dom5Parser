@@ -53,12 +53,329 @@
       ]
     },
     {
-      "id": "properties",
-      "displayName": "PROPERTIES",
-      "description": "All item properties and effects",
+      "id": "itemmagic",
+      "displayName": "MAGIC & SPELLS",
+      "description": "Magic & Spells (the modding manual's sections)",
       "renderer": "badge",
       "readOnly": false,
       "commands": [
+        {
+          "name": "airrange",
+          "display": "Air Range",
+          "type": "int",
+          "description": "Air spell range bonus.",
+          "icon": "magicicons/Path_A.png"
+        },
+        {
+          "name": "allrange",
+          "display": "All Range",
+          "type": "int",
+          "description": "All spell range bonus."
+        },
+        {
+          "name": "allret",
+          "display": "All Return",
+          "type": "int",
+          "description": "Return from all planes."
+        },
+        {
+          "name": "astralrange",
+          "display": "Astral Range",
+          "type": "int",
+          "description": "Astral spell range bonus.",
+          "icon": "magicicons/Path_S.png"
+        },
+        {
+          "name": "autospellrepeat",
+          "display": "Auto Spell Repeat",
+          "type": "int",
+          "description": "Auto spell repetition."
+        },
+        {
+          "name": "autospell",
+          "display": "Autospell",
+          "type": "ref",
+          "refType": "spell"
+        },
+        {
+          "name": "bloodrange",
+          "display": "Blood Range",
+          "type": "int",
+          "description": "Blood spell range bonus.",
+          "icon": "magicicons/Path_B.png"
+        },
+        {
+          "name": "bonusspells",
+          "display": "Bonus Spells",
+          "type": "int",
+          "description": "Bonus spells per turn."
+        },
+        {
+          "name": "carcasscollector",
+          "display": "Carcass Collector",
+          "type": "int",
+          "description": "Carcass collection ability."
+        },
+        {
+          "name": "chaospower",
+          "display": "Chaos Power",
+          "type": "int",
+          "description": "Power bonus in turmoil."
+        },
+        {
+          "name": "chorusmaster",
+          "display": "Chorusmaster",
+          "type": "int"
+        },
+        {
+          "name": "chorusslave",
+          "display": "Chorusslave",
+          "type": "int"
+        },
+        {
+          "name": "coldpower",
+          "display": "Cold Power",
+          "type": "int",
+          "description": "Power bonus in cold."
+        },
+        {
+          "name": "combatcaster",
+          "display": "Combat Caster",
+          "type": "flag",
+          "description": "Combat casting ability."
+        },
+        {
+          "name": "commaster",
+          "display": "Communion Master",
+          "type": "flag",
+          "description": "Communion master ability."
+        },
+        {
+          "name": "comslave",
+          "display": "Communion Slave",
+          "type": "flag",
+          "description": "Communion slave ability."
+        },
+        {
+          "name": "crossbreeder",
+          "display": "Cross Breeder",
+          "type": "int",
+          "description": "Cross breeding ability."
+        },
+        {
+          "name": "darkpower",
+          "display": "Dark Power",
+          "type": "int",
+          "description": "Power bonus in darkness."
+        },
+        {
+          "name": "deathbanish",
+          "display": "Death Banish",
+          "type": "int",
+          "description": "Death banishment ability."
+        },
+        {
+          "name": "deathpower",
+          "display": "Death Power",
+          "type": "int",
+          "description": "Power bonus in death."
+        },
+        {
+          "name": "deathrange",
+          "display": "Death Range",
+          "type": "int",
+          "description": "Death spell range bonus.",
+          "icon": "magicicons/Path_D.png"
+        },
+        {
+          "name": "divineins",
+          "display": "Divine Inspiration",
+          "type": "flag",
+          "description": "Divine inspiration ability."
+        },
+        {
+          "name": "dompower",
+          "display": "Dom Power",
+          "type": "int",
+          "description": "Power in friendly dominion."
+        },
+        {
+          "name": "douse",
+          "display": "Douse",
+          "type": "int",
+          "description": "Douse fire ability."
+        },
+        {
+          "name": "drainimmune",
+          "display": "Drain Immune",
+          "type": "flag",
+          "description": "Immunity to drain effects."
+        },
+        {
+          "name": "earthrange",
+          "display": "Earth Range",
+          "type": "int",
+          "description": "Earth spell range bonus.",
+          "icon": "magicicons/Path_E.png"
+        },
+        {
+          "name": "elementgems",
+          "display": "Element Gems",
+          "type": "int",
+          "description": "Elemental gem production."
+        },
+        {
+          "name": "elementrange",
+          "display": "Element Range",
+          "type": "int",
+          "description": "Elemental spell range bonus.",
+          "icon": "magicicons/Path_E.png"
+        },
+        {
+          "name": "fallpower",
+          "display": "Fall Power",
+          "type": "int",
+          "description": "Power bonus in fall."
+        },
+        {
+          "name": "fastcast",
+          "display": "Fast Cast",
+          "type": "int",
+          "description": "Fast casting bonus."
+        },
+        {
+          "name": "firepower",
+          "display": "Fire Power",
+          "type": "int",
+          "description": "Power bonus in heat."
+        },
+        {
+          "name": "firerange",
+          "display": "Fire Range",
+          "type": "int",
+          "description": "Fire spell range bonus.",
+          "icon": "magicicons/Path_F.png"
+        },
+        {
+          "name": "fixforgebonus",
+          "display": "Fix Forge Bonus",
+          "type": "int",
+          "description": "Fixed forge bonus."
+        },
+        {
+          "name": "forgebonus",
+          "display": "Forge Bonus",
+          "type": "int",
+          "description": "Forging cost reduction."
+        },
+        {
+          "name": "bringeroffortune",
+          "display": "Fortune Bringer",
+          "type": "int",
+          "description": "Fortune bringing ability."
+        },
+        {
+          "name": "gemprod",
+          "display": "Gem Prod",
+          "type": "intInt",
+          "description": "Gem production (type, amount)."
+        },
+        {
+          "name": "glamourmanip",
+          "display": "Glamour Manip",
+          "type": "int",
+          "description": "Glamour manipulation."
+        },
+        {
+          "name": "glamourrange",
+          "display": "Glamour Range",
+          "type": "int",
+          "description": "Glamour spell range bonus.",
+          "icon": "magicicons/Path_G.png"
+        },
+        {
+          "name": "grandcom",
+          "display": "Grandcom",
+          "type": "int"
+        },
+        {
+          "name": "growthpower",
+          "display": "Growthpower",
+          "type": "int"
+        },
+        {
+          "name": "holyrange",
+          "display": "Holy Range",
+          "type": "int",
+          "description": "Holy spell range bonus.",
+          "icon": "magicicons/Path_H.png"
+        },
+        {
+          "name": "infernoret",
+          "display": "Inferno Return",
+          "type": "int",
+          "description": "Return from Inferno."
+        },
+        {
+          "name": "inspiringres",
+          "display": "Inspiring Res",
+          "type": "int",
+          "description": "Inspiring research bonus."
+        },
+        {
+          "name": "kokytosret",
+          "display": "Kokytos Return",
+          "type": "int",
+          "description": "Return from Kokytos."
+        },
+        {
+          "name": "magicimmune",
+          "display": "Magic Immune",
+          "type": "flag",
+          "description": "Immunity to magic."
+        },
+        {
+          "name": "magicpower",
+          "display": "Magic Power",
+          "type": "int",
+          "description": "Power bonus in magic."
+        },
+        {
+          "name": "magicstudy",
+          "display": "Magic Study",
+          "type": "int",
+          "description": "Magic study bonus."
+        },
+        {
+          "name": "magicboost",
+          "display": "Magicboost",
+          "type": "intint"
+        },
+        {
+          "name": "makepearls",
+          "display": "Make Pearls",
+          "type": "int",
+          "description": "Pearl production."
+        },
+        {
+          "name": "masterrit",
+          "display": "Master Ritualist",
+          "type": "int",
+          "description": "Master ritualist ability."
+        },
+        {
+          "name": "mastersmith",
+          "display": "Master Smith",
+          "type": "int",
+          "description": "Master smith ability."
+        },
+        {
+          "name": "naturerange",
+          "display": "Nature Range",
+          "type": "int",
+          "description": "Nature spell range bonus.",
+          "icon": "magicicons/Path_N.png"
+        },
         {
           "name": "pen",
           "display": "Penetration",
@@ -66,184 +383,198 @@
           "description": "Magic penetration bonus."
         },
         {
-          "name": "unique",
-          "display": "Unique",
-          "type": "flag",
-          "description": "Item is unique (only one can exist)."
-        },
-        {
-          "name": "cursed",
-          "display": "Cursed",
-          "type": "flag",
-          "description": "Item is cursed and cannot be removed."
-        },
-        {
-          "name": "curse",
-          "display": "Curse",
-          "type": "flag",
-          "description": "Inflicts curse on wearer."
-        },
-        {
-          "name": "tainted",
-          "display": "Tainted",
+          "name": "randomspell",
+          "display": "Random Spell",
           "type": "int",
-          "description": "Item has horror mark chance."
+          "description": "Random spell level."
         },
         {
-          "name": "nofind",
-          "display": "No Find",
-          "type": "flag",
-          "description": "Item cannot be found randomly."
-        },
-        {
-          "name": "noforgebonus",
-          "display": "No Forge Bonus",
-          "type": "flag",
-          "description": "Item doesn't benefit from forge bonuses."
-        },
-        {
-          "name": "champprize",
-          "display": "Champ Prize",
-          "type": "flag",
-          "description": "Item can be won as championship prize."
-        },
-        {
-          "name": "autocompete",
-          "display": "Auto Compete",
-          "type": "flag",
-          "description": "Owner automatically enters championship."
-        },
-        {
-          "name": "singlebattle",
-          "display": "Single Battle",
-          "type": "flag",
-          "description": "Item only works for one battle."
-        },
-        {
-          "name": "heavyitem",
-          "display": "Heavy",
+          "name": "researchbonus",
+          "display": "Research Bonus",
           "type": "int",
-          "description": "Item is heavy and affects movement."
+          "description": "Research bonus."
         },
         {
-          "name": "islance",
-          "display": "Is Lance",
-          "type": "flag",
-          "description": "Item is a lance weapon."
+          "name": "sabbathslave",
+          "display": "Sabbathslave",
+          "type": "flag"
         },
         {
-          "name": "minsize",
-          "display": "Min Size",
+          "name": "skirmisher",
+          "display": "Skirmisher",
           "type": "int",
-          "description": "Minimum size to use item."
+          "description": "Skirmisher ability."
         },
         {
-          "name": "maxsize",
-          "display": "Max Size",
+          "name": "slothpower",
+          "display": "Sloth Power",
           "type": "int",
-          "description": "Maximum size to use item."
+          "description": "Power bonus in sloth."
         },
         {
-          "name": "nomounted",
-          "display": "No Mounted",
-          "type": "flag",
-          "description": "Item cannot be used while mounted."
-        },
-        {
-          "name": "onlymounted",
-          "display": "Only Mounted",
-          "type": "flag",
-          "description": "Item can only be used while mounted."
-        },
-        {
-          "name": "reqeyes",
-          "display": "Req Eyes",
-          "type": "flag",
-          "description": "Item requires eyes to use."
-        },
-        {
-          "name": "nofemale",
-          "display": "No Female",
-          "type": "flag",
-          "description": "Item cannot be used by females."
-        },
-        {
-          "name": "onlyfemale",
-          "display": "Only Female",
-          "type": "flag",
-          "description": "Item can only be used by females."
-        },
-        {
-          "name": "nocoldblood",
-          "display": "No Cold Blood",
-          "type": "flag",
-          "description": "Item cannot be used by cold-blooded units."
-        },
-        {
-          "name": "onlycoldblood",
-          "display": "Only Cold Blood",
-          "type": "flag",
-          "description": "Item can only be used by cold-blooded units."
-        },
-        {
-          "name": "nodemon",
-          "display": "No Demon",
-          "type": "flag",
-          "description": "Item cannot be used by demons."
-        },
-        {
-          "name": "onlydemon",
-          "display": "Only Demon",
-          "type": "flag",
-          "description": "Item can only be used by demons."
-        },
-        {
-          "name": "noundead",
-          "display": "No Undead",
-          "type": "flag",
-          "description": "Item cannot be used by undead."
-        },
-        {
-          "name": "onlyundead",
-          "display": "Only Undead",
-          "type": "flag",
-          "description": "Item can only be used by undead."
-        },
-        {
-          "name": "noinanim",
-          "display": "No Inanimate",
-          "type": "flag",
-          "description": "Item cannot be used by inanimates."
-        },
-        {
-          "name": "onlyinanim",
-          "display": "Only Inanimate",
-          "type": "flag",
-          "description": "Item can only be used by inanimates."
-        },
-        {
-          "name": "noimmobile",
-          "display": "No Immobile",
-          "type": "flag",
-          "description": "Item cannot be used by immobile units."
-        },
-        {
-          "name": "onlyimmobile",
-          "display": "Only Immobile",
-          "type": "flag",
-          "description": "Item can only be used by immobile units."
-        },
-        {
-          "name": "hp",
-          "display": "HP",
+          "name": "slothresearch",
+          "display": "Sloth Research",
           "type": "int",
-          "description": "Hit point bonus to wearer."
+          "description": "Research bonus in sloth."
         },
         {
-          "name": "str",
-          "display": "STR",
+          "name": "sorcerygems",
+          "display": "Sorcery Gems",
           "type": "int",
-          "description": "Strength bonus to wearer."
+          "description": "Sorcery gem production."
+        },
+        {
+          "name": "sorceryrange",
+          "display": "Sorcery Range",
+          "type": "int",
+          "description": "Sorcery spell range bonus.",
+          "icon": "magicicons/Path_S.png"
+        },
+        {
+          "name": "spell",
+          "display": "Spell",
+          "type": "ref",
+          "refType": "spell"
+        },
+        {
+          "name": "spellsinger",
+          "display": "Spell Singer",
+          "type": "flag",
+          "description": "Spell singer ability."
+        },
+        {
+          "name": "springpower",
+          "display": "Spring Power",
+          "type": "int",
+          "description": "Power bonus in spring."
+        },
+        {
+          "name": "stormpower",
+          "display": "Storm Power",
+          "type": "int",
+          "description": "Power bonus in storms."
+        },
+        {
+          "name": "summerpower",
+          "display": "Summer Power",
+          "type": "int",
+          "description": "Power bonus in summer."
+        },
+        {
+          "name": "tmpairgems",
+          "display": "Tmp Air Gems",
+          "type": "int",
+          "description": "Temporary air gems per turn.",
+          "icon": "magicicons/Gem_A.png"
+        },
+        {
+          "name": "tmpastralgems",
+          "display": "Tmp Astral Gems",
+          "type": "int",
+          "description": "Temporary astral gems per turn.",
+          "icon": "magicicons/Gem_S.png"
+        },
+        {
+          "name": "tmpbloodslaves",
+          "display": "Tmp Blood Slaves",
+          "type": "int",
+          "description": "Temporary blood slaves per turn.",
+          "icon": "magicicons/Gem_B.png"
+        },
+        {
+          "name": "tmpdeathgems",
+          "display": "Tmp Death Gems",
+          "type": "int",
+          "description": "Temporary death gems per turn.",
+          "icon": "magicicons/Gem_D.png"
+        },
+        {
+          "name": "tmpearthgems",
+          "display": "Tmp Earth Gems",
+          "type": "int",
+          "description": "Temporary earth gems per turn.",
+          "icon": "magicicons/Gem_E.png"
+        },
+        {
+          "name": "tmpfiregems",
+          "display": "Tmp Fire Gems",
+          "type": "int",
+          "description": "Temporary fire gems per turn.",
+          "icon": "magicicons/Gem_F.png"
+        },
+        {
+          "name": "tmpglamourgems",
+          "display": "Tmp Glamour Gems",
+          "type": "int",
+          "description": "Temporary glamour gems per turn."
+        },
+        {
+          "name": "tmpnaturegems",
+          "display": "Tmp Nature Gems",
+          "type": "int",
+          "description": "Temporary nature gems per turn.",
+          "icon": "magicicons/Gem_N.png"
+        },
+        {
+          "name": "tmpwatergems",
+          "display": "Tmp Water Gems",
+          "type": "int",
+          "description": "Temporary water gems per turn.",
+          "icon": "magicicons/Gem_W.png"
+        },
+        {
+          "name": "unsurr",
+          "display": "Unsurr",
+          "type": "int",
+          "description": "Unsurrenderable."
+        },
+        {
+          "name": "voidret",
+          "display": "Void Return",
+          "type": "int",
+          "description": "Return from Void."
+        },
+        {
+          "name": "waterrange",
+          "display": "Water Range",
+          "type": "int",
+          "description": "Water spell range bonus.",
+          "icon": "magicicons/Path_W.png"
+        },
+        {
+          "name": "winterpower",
+          "display": "Winter Power",
+          "type": "int",
+          "description": "Power bonus in winter."
+        },
+        {
+          "name": "yearturn",
+          "display": "Year Turn",
+          "type": "int",
+          "description": "Active only on this turn of year."
+        }
+      ]
+    },
+    {
+      "id": "itemattributes",
+      "displayName": "ATTRIBUTES & RESISTANCES",
+      "description": "Attributes & Resistances (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "acidres",
+          "display": "Acid Res",
+          "type": "int",
+          "description": "Acid resistance bonus.",
+          "color": "#2E322A",
+          "borderColor": "#455030"
+        },
+        {
+          "name": "airshield",
+          "display": "Air Shield",
+          "type": "int",
+          "description": "Air shield protection."
         },
         {
           "name": "att",
@@ -252,40 +583,22 @@
           "description": "Attack bonus to wearer."
         },
         {
-          "name": "def",
-          "display": "DEF",
-          "type": "int",
-          "description": "Defense bonus to wearer."
-        },
-        {
-          "name": "prec",
-          "display": "PREC",
-          "type": "int",
-          "description": "Precision bonus to wearer."
-        },
-        {
-          "name": "mr",
-          "display": "MR",
-          "type": "int",
-          "description": "Magic resistance bonus to wearer."
-        },
-        {
-          "name": "morale",
-          "display": "Morale",
-          "type": "int",
-          "description": "Morale bonus to wearer."
-        },
-        {
-          "name": "luck",
-          "display": "Luck",
+          "name": "autobless",
+          "display": "Auto Bless",
           "type": "flag",
-          "description": "Grants luck ability."
+          "description": "Auto-blesses at battle start."
         },
         {
-          "name": "quickness",
-          "display": "Quickness",
+          "name": "barkskin",
+          "display": "Bark Skin",
           "type": "flag",
-          "description": "Grants quickness ability."
+          "description": "Grants bark skin protection."
+        },
+        {
+          "name": "bers",
+          "display": "Berserk",
+          "type": "flag",
+          "description": "Grants berserk ability."
         },
         {
           "name": "bless",
@@ -294,18 +607,10 @@
           "description": "Grants blessed status."
         },
         {
-          "name": "autobless",
-          "display": "Auto Bless",
+          "name": "bluntres",
+          "display": "Blunt Res",
           "type": "flag",
-          "description": "Auto-blesses at battle start."
-        },
-        {
-          "name": "fireres",
-          "display": "Fire Res",
-          "type": "int",
-          "description": "Fire resistance bonus.",
-          "color": "#322D2A",
-          "borderColor": "#6B4030"
+          "description": "Resistance to blunt damage."
         },
         {
           "name": "coldres",
@@ -316,76 +621,28 @@
           "borderColor": "#4A5A6A"
         },
         {
-          "name": "shockres",
-          "display": "Shock Res",
-          "type": "int",
-          "description": "Shock resistance bonus.",
-          "color": "#32302A",
-          "borderColor": "#5A5540"
-        },
-        {
-          "name": "poisonres",
-          "display": "Poison Res",
-          "type": "int",
-          "description": "Poison resistance bonus.",
-          "color": "#2A322A",
-          "borderColor": "#3A5A3A"
-        },
-        {
-          "name": "acidres",
-          "display": "Acid Res",
-          "type": "int",
-          "description": "Acid resistance bonus.",
-          "color": "#2E322A",
-          "borderColor": "#455030"
-        },
-        {
           "name": "decayres",
           "display": "Decay Res",
           "type": "int",
           "description": "Decay resistance."
         },
         {
-          "name": "diseaseres",
-          "display": "Disease Res",
+          "name": "def",
+          "display": "DEF",
           "type": "int",
-          "description": "Disease resistance bonus."
+          "description": "Defense bonus to wearer."
         },
         {
-          "name": "slashres",
-          "display": "Slash Res",
+          "name": "doheal",
+          "display": "Do Heal",
           "type": "flag",
-          "description": "Resistance to slashing damage."
+          "description": "Enables healing."
         },
         {
-          "name": "pierceres",
-          "display": "Pierce Res",
-          "type": "flag",
-          "description": "Resistance to piercing damage."
-        },
-        {
-          "name": "bluntres",
-          "display": "Blunt Res",
-          "type": "flag",
-          "description": "Resistance to blunt damage."
-        },
-        {
-          "name": "invulnerable",
-          "display": "Invuln",
+          "name": "enchantedblood",
+          "display": "Enchantedblood",
           "type": "int",
-          "description": "Invulnerability protection."
-        },
-        {
-          "name": "iceprot",
-          "display": "Ice Prot",
-          "type": "int",
-          "description": "Ice protection bonus."
-        },
-        {
-          "name": "icenatprot",
-          "display": "Ice Nat Prot",
-          "type": "int",
-          "description": "Ice natural protection bonus."
+          "description": "#noforgebonus Gets points bonus to MR and heals about."
         },
         {
           "name": "ethereal",
@@ -394,22 +651,53 @@
           "description": "Grants ethereal ability."
         },
         {
-          "name": "airshield",
-          "display": "Air Shield",
+          "name": "extralife",
+          "display": "Extra Life",
+          "type": "flag",
+          "description": "Grants an extra life."
+        },
+        {
+          "name": "falseregen",
+          "display": "Falseregen",
+          "type": "int"
+        },
+        {
+          "name": "fireres",
+          "display": "Fire Res",
           "type": "int",
-          "description": "Air shield protection."
+          "description": "Fire resistance bonus.",
+          "color": "#322D2A",
+          "borderColor": "#6B4030"
         },
         {
-          "name": "barkskin",
-          "display": "Bark Skin",
-          "type": "flag",
-          "description": "Grants bark skin protection."
+          "name": "guardspiritbonus",
+          "display": "Guard Spirit Bonus",
+          "type": "int",
+          "description": "Guardian spirit bonus."
         },
         {
-          "name": "stoneskin",
-          "display": "Stone Skin",
-          "type": "flag",
-          "description": "Grants stone skin protection."
+          "name": "hp",
+          "display": "HP",
+          "type": "int",
+          "description": "Hit point bonus to wearer."
+        },
+        {
+          "name": "icenatprot",
+          "display": "Ice Nat Prot",
+          "type": "int",
+          "description": "Ice natural protection bonus."
+        },
+        {
+          "name": "iceprot",
+          "display": "Ice Prot",
+          "type": "int",
+          "description": "Ice protection bonus."
+        },
+        {
+          "name": "invulnerable",
+          "display": "Invuln",
+          "type": "int",
+          "description": "Invulnerability protection."
         },
         {
           "name": "ironskin",
@@ -424,148 +712,60 @@
           "description": "Vulnerability to iron weapons."
         },
         {
-          "name": "saltvul",
-          "display": "Salt Vuln",
-          "type": "int",
-          "description": "Vulnerability to salt."
-        },
-        {
-          "name": "mapspeed",
-          "display": "Map Speed",
-          "type": "int",
-          "description": "Strategic movement bonus."
-        },
-        {
-          "name": "fly",
-          "display": "Fly",
-          "type": "flag",
-          "description": "Grants flying ability."
-        },
-        {
-          "name": "float",
-          "display": "Float",
-          "type": "flag",
-          "description": "Grants floating ability."
-        },
-        {
-          "name": "waterbreathing",
-          "display": "Water Breath",
-          "type": "flag",
-          "description": "Grants water breathing."
-        },
-        {
-          "name": "stormimmune",
-          "display": "Storm Immune",
-          "type": "flag",
-          "description": "Immunity to storm effects."
-        },
-        {
-          "name": "run",
-          "display": "Run",
-          "type": "flag",
-          "description": "Grants running ability."
-        },
-        {
-          "name": "swift",
-          "display": "Swift",
-          "type": "int",
-          "description": "Combat speed bonus."
-        },
-        {
-          "name": "sneakunit",
-          "display": "Sneak",
-          "type": "int",
-          "description": "Stealth ability level."
-        },
-        {
-          "name": "stealthboost",
-          "display": "Stealth Boost",
-          "type": "int",
-          "description": "Stealth bonus."
-        },
-        {
-          "name": "assassin",
-          "display": "Assassin",
-          "type": "flag",
-          "description": "Grants assassin ability."
-        },
-        {
-          "name": "scalewalls",
-          "display": "Scale Walls",
-          "type": "flag",
-          "description": "Can scale walls in sieges."
-        },
-        {
-          "name": "sailing",
-          "display": "Sailing",
-          "type": "intInt",
-          "description": "Sailing capacity (max size, capacity)."
-        },
-        {
-          "name": "farsail",
-          "display": "Far Sail",
-          "type": "int",
-          "description": "Extended sailing range."
-        },
-        {
-          "name": "noriverpass",
-          "display": "No River Pass",
-          "type": "flag",
-          "description": "Cannot cross rivers."
-        },
-        {
-          "name": "unteleportable",
-          "display": "No Teleport",
-          "type": "flag",
-          "description": "Cannot be teleported."
-        },
-        {
-          "name": "giftofwater",
-          "display": "Gift of Water",
-          "type": "int",
-          "description": "Water gift ability level."
-        },
-        {
-          "name": "nomovepen",
-          "display": "No Move Pen",
-          "type": "flag",
-          "description": "Ignores movement penalties."
-        },
-        {
-          "name": "regeneration",
-          "display": "Regen",
-          "type": "int",
-          "description": "Regeneration rate."
-        },
-        {
           "name": "limitedregen",
           "display": "Limited Regen",
           "type": "int",
           "description": "Limited regeneration."
         },
         {
-          "name": "reinvigoration",
-          "display": "Reinvig",
-          "type": "int",
-          "description": "Reinvigoration rate."
-        },
-        {
-          "name": "recuperation",
-          "display": "Recuperation",
+          "name": "luck",
+          "display": "Luck",
           "type": "flag",
-          "description": "Grants recuperation ability."
+          "description": "Grants luck ability."
         },
         {
-          "name": "woundfend",
-          "display": "Wound Fend",
+          "name": "morale",
+          "display": "Morale",
           "type": "int",
-          "description": "Wound fending ability."
+          "description": "Morale bonus to wearer."
         },
         {
-          "name": "reform",
-          "display": "Reform",
+          "name": "mr",
+          "display": "MR",
           "type": "int",
-          "description": "Reform chance after death."
+          "description": "Magic resistance bonus to wearer."
+        },
+        {
+          "name": "pierceres",
+          "display": "Pierce Res",
+          "type": "flag",
+          "description": "Resistance to piercing damage."
+        },
+        {
+          "name": "poisonres",
+          "display": "Poison Res",
+          "type": "int",
+          "description": "Poison resistance bonus.",
+          "color": "#2A322A",
+          "borderColor": "#3A5A3A"
+        },
+        {
+          "name": "polyimmune",
+          "display": "Poly Immune",
+          "type": "flag",
+          "description": "Immunity to transformation."
+        },
+        {
+          "name": "prec",
+          "display": "PREC",
+          "type": "int",
+          "description": "Precision bonus to wearer."
+        },
+        {
+          "name": "quickness",
+          "display": "Quickness",
+          "type": "flag",
+          "description": "Grants quickness ability."
         },
         {
           "name": "reconst",
@@ -574,40 +774,54 @@
           "description": "Reconstruction chance."
         },
         {
-          "name": "extralife",
-          "display": "Extra Life",
+          "name": "reform",
+          "display": "Reform",
+          "type": "int",
+          "description": "Reform chance after death."
+        },
+        {
+          "name": "regeneration",
+          "display": "Regen",
+          "type": "int",
+          "description": "Regeneration rate."
+        },
+        {
+          "name": "reinvigoration",
+          "display": "Reinvig",
+          "type": "int",
+          "description": "Reinvigoration rate."
+        },
+        {
+          "name": "shockres",
+          "display": "Shock Res",
+          "type": "int",
+          "description": "Shock resistance bonus.",
+          "color": "#32302A",
+          "borderColor": "#5A5540"
+        },
+        {
+          "name": "slashres",
+          "display": "Slash Res",
           "type": "flag",
-          "description": "Grants an extra life."
+          "description": "Resistance to slashing damage."
         },
         {
-          "name": "hpoverflow",
-          "display": "HP Overflow",
-          "type": "int",
-          "description": "HP overflow healing."
-        },
-        {
-          "name": "hpoverslow",
-          "display": "HP Over Slow",
-          "type": "int",
-          "description": "Slow HP overflow healing."
-        },
-        {
-          "name": "deadhp",
-          "display": "Dead HP",
-          "type": "int",
-          "description": "HP threshold for death."
-        },
-        {
-          "name": "maxdeadhp",
-          "display": "Max Dead HP",
-          "type": "int",
-          "description": "Maximum dead HP threshold."
-        },
-        {
-          "name": "doheal",
-          "display": "Do Heal",
+          "name": "stoneskin",
+          "display": "Stone Skin",
           "type": "flag",
-          "description": "Enables healing."
+          "description": "Grants stone skin protection."
+        },
+        {
+          "name": "str",
+          "display": "STR",
+          "type": "int",
+          "description": "Strength bonus to wearer."
+        },
+        {
+          "name": "twistfate",
+          "display": "Twist Fate",
+          "type": "flag",
+          "description": "Grants twist fate ability."
         },
         {
           "name": "undregen",
@@ -622,112 +836,81 @@
           "description": "Underwater regeneration rate."
         },
         {
-          "name": "healer",
-          "display": "Healer",
+          "name": "voidsanity",
+          "display": "Void Sanity",
           "type": "int",
-          "description": "Healing ability level."
+          "description": "Void sanity protection."
+        }
+      ]
+    },
+    {
+      "id": "itemcombat",
+      "displayName": "MOVEMENT & COMBAT",
+      "description": "Movement & Combat (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "aciddigest",
+          "display": "Acid Digest",
+          "type": "int",
+          "description": "Acid digestion damage."
         },
         {
-          "name": "autohealer",
-          "display": "Auto Healer",
+          "name": "acidshield",
+          "display": "Acid Shield",
           "type": "int",
-          "description": "Auto-healing ability."
+          "description": "Acid shield damage.",
+          "color": "#2E322A",
+          "borderColor": "#455030"
         },
         {
-          "name": "autodishealer",
-          "display": "Auto Dis Healer",
+          "name": "ambidextrous",
+          "display": "Ambidextrous",
           "type": "int",
-          "description": "Auto disease healing."
+          "description": "Ambidextrous ability level."
         },
         {
-          "name": "autodisgrinder",
-          "display": "Auto Dis Grinder",
+          "name": "animalawe",
+          "display": "Animal Awe",
           "type": "int",
-          "description": "Disease grinding ability."
+          "description": "Awe against animals."
         },
         {
-          "name": "plaguedoctor",
-          "display": "Plague Doctor",
-          "type": "int",
-          "description": "Plague doctor ability."
-        },
-        {
-          "name": "yearaging",
-          "display": "Year Aging",
-          "type": "int",
-          "description": "Yearly aging effect."
-        },
-        {
-          "name": "noaging",
-          "display": "No Aging",
-          "type": "int",
-          "description": "Prevents aging."
-        },
-        {
-          "name": "noagingland",
-          "display": "No Age Land",
-          "type": "int",
-          "description": "No aging on land."
-        },
-        {
-          "name": "darkvision",
-          "display": "Dark Vision",
-          "type": "int",
-          "description": "Dark vision range."
-        },
-        {
-          "name": "spiritsight",
-          "display": "Spirit Sight",
+          "name": "assassin",
+          "display": "Assassin",
           "type": "flag",
-          "description": "Can see spirits."
-        },
-        {
-          "name": "truesight",
-          "display": "True Sight",
-          "type": "flag",
-          "description": "Can see through illusions."
-        },
-        {
-          "name": "invisible",
-          "display": "Invisible",
-          "type": "flag",
-          "description": "Grants invisibility."
-        },
-        {
-          "name": "magicimmune",
-          "display": "Magic Immune",
-          "type": "flag",
-          "description": "Immunity to magic."
-        },
-        {
-          "name": "drainimmune",
-          "display": "Drain Immune",
-          "type": "flag",
-          "description": "Immunity to drain effects."
-        },
-        {
-          "name": "polyimmune",
-          "display": "Poly Immune",
-          "type": "flag",
-          "description": "Immunity to transformation."
-        },
-        {
-          "name": "bers",
-          "display": "Berserk",
-          "type": "flag",
-          "description": "Grants berserk ability."
-        },
-        {
-          "name": "berserk",
-          "display": "Berserk",
-          "type": "int",
-          "description": "Berserk threshold."
+          "description": "Grants assassin ability."
         },
         {
           "name": "autoberserk",
           "display": "Auto Berserk",
           "type": "int",
           "description": "Auto-berserk trigger."
+        },
+        {
+          "name": "awe",
+          "display": "Awe",
+          "type": "int",
+          "description": "Awe ability level."
+        },
+        {
+          "name": "banefireshield",
+          "display": "Banefire Shield",
+          "type": "int",
+          "description": "Banefire shield damage."
+        },
+        {
+          "name": "beckon",
+          "display": "Beckon",
+          "type": "int",
+          "description": "Beckoning ability."
+        },
+        {
+          "name": "berserk",
+          "display": "Berserk",
+          "type": "int",
+          "description": "Berserk threshold."
         },
         {
           "name": "blessbers",
@@ -742,103 +925,34 @@
           "description": "Fly when blessed."
         },
         {
-          "name": "ambidextrous",
-          "display": "Ambidextrous",
+          "name": "bloodvengeance",
+          "display": "Blood Vengeance",
           "type": "int",
-          "description": "Ambidextrous ability level."
+          "description": "Blood vengeance effect."
         },
         {
-          "name": "trample",
-          "display": "Trample",
-          "type": "flag",
-          "description": "Grants trample ability."
-        },
-        {
-          "name": "trampswallow",
-          "display": "Tramp Swallow",
-          "type": "flag",
-          "description": "Trample and swallow."
-        },
-        {
-          "name": "digest",
-          "display": "Digest",
+          "name": "clumsy",
+          "display": "Clumsy",
           "type": "int",
-          "description": "Digestion damage."
+          "description": "Clumsy penalty."
         },
         {
-          "name": "aciddigest",
-          "display": "Acid Digest",
+          "name": "cold",
+          "display": "Cold",
           "type": "int",
-          "description": "Acid digestion damage."
+          "description": "Cold aura damage."
         },
         {
-          "name": "incorporate",
-          "display": "Incorporate",
+          "name": "corruptor",
+          "display": "Corruptor",
           "type": "int",
-          "description": "Incorporation ability."
+          "description": "Corruption effect."
         },
         {
-          "name": "raiseonkill",
-          "display": "Raise on Kill",
+          "name": "curseluckshield",
+          "display": "Curse Luck Shield",
           "type": "int",
-          "description": "Raises undead on kill."
-        },
-        {
-          "name": "guardspiritbonus",
-          "display": "Guard Spirit Bonus",
-          "type": "int",
-          "description": "Guardian spirit bonus."
-        },
-        {
-          "name": "awe",
-          "display": "Awe",
-          "type": "int",
-          "description": "Awe ability level."
-        },
-        {
-          "name": "animalawe",
-          "display": "Animal Awe",
-          "type": "int",
-          "description": "Awe against animals."
-        },
-        {
-          "name": "sunawe",
-          "display": "Sun Awe",
-          "type": "int",
-          "description": "Awe in sunlight."
-        },
-        {
-          "name": "fear",
-          "display": "Fear",
-          "type": "int",
-          "description": "Fear ability level."
-        },
-        {
-          "name": "fireshield",
-          "display": "Fire Shield",
-          "type": "int",
-          "description": "Fire shield damage.",
-          "icon": "magicicons/Path_F.png"
-        },
-        {
-          "name": "uwfireshield",
-          "display": "UW Fire Shield",
-          "type": "int",
-          "description": "Underwater fire shield."
-        },
-        {
-          "name": "banefireshield",
-          "display": "Banefire Shield",
-          "type": "int",
-          "description": "Banefire shield damage."
-        },
-        {
-          "name": "acidshield",
-          "display": "Acid Shield",
-          "type": "int",
-          "description": "Acid shield damage.",
-          "color": "#2E322A",
-          "borderColor": "#455030"
+          "description": "Curse luck shield effect."
         },
         {
           "name": "damagerev",
@@ -847,16 +961,10 @@
           "description": "Damage reversal chance."
         },
         {
-          "name": "bloodvengeance",
-          "display": "Blood Vengeance",
+          "name": "darkvision",
+          "display": "Dark Vision",
           "type": "int",
-          "description": "Blood vengeance effect."
-        },
-        {
-          "name": "slimer",
-          "display": "Slimer",
-          "type": "int",
-          "description": "Slime coating effect."
+          "description": "Dark vision range."
         },
         {
           "name": "deathcurse",
@@ -883,10 +991,191 @@
           "description": "Paralyzes on death."
         },
         {
-          "name": "poisonskin",
-          "display": "Poison Skin",
+          "name": "deathgrab",
+          "display": "Deathgrab",
+          "type": "int"
+        },
+        {
+          "name": "deathshock",
+          "display": "Deathshock",
+          "type": "int"
+        },
+        {
+          "name": "deathslime",
+          "display": "Deathslime",
+          "type": "int"
+        },
+        {
+          "name": "digest",
+          "display": "Digest",
           "type": "int",
-          "description": "Poison skin contact damage."
+          "description": "Digestion damage."
+        },
+        {
+          "name": "diseasecloud",
+          "display": "Disease Cloud",
+          "type": "int",
+          "description": "Disease cloud on death."
+        },
+        {
+          "name": "dread",
+          "display": "Dread",
+          "type": "int"
+        },
+        {
+          "name": "eyeloss",
+          "display": "Eye Loss",
+          "type": "flag",
+          "description": "Eye loss affliction."
+        },
+        {
+          "name": "falsearmy",
+          "display": "False Army",
+          "type": "int",
+          "description": "False army illusion."
+        },
+        {
+          "name": "farsail",
+          "display": "Far Sail",
+          "type": "int",
+          "description": "Extended sailing range."
+        },
+        {
+          "name": "fear",
+          "display": "Fear",
+          "type": "int",
+          "description": "Fear ability level."
+        },
+        {
+          "name": "fearofflood",
+          "display": "Fear of Flood",
+          "type": "int",
+          "description": "Fear of flood effect."
+        },
+        {
+          "name": "fireshield",
+          "display": "Fire Shield",
+          "type": "int",
+          "description": "Fire shield damage.",
+          "icon": "magicicons/Path_F.png"
+        },
+        {
+          "name": "float",
+          "display": "Float",
+          "type": "flag",
+          "description": "Grants floating ability."
+        },
+        {
+          "name": "fly",
+          "display": "Fly",
+          "type": "flag",
+          "description": "Grants flying ability."
+        },
+        {
+          "name": "foolscouts",
+          "display": "Fool Scouts",
+          "type": "int",
+          "description": "Fools enemy scouts."
+        },
+        {
+          "name": "giftofwater",
+          "display": "Gift of Water",
+          "type": "int",
+          "description": "Water gift ability level."
+        },
+        {
+          "name": "haltheretic",
+          "display": "Halt Heretic",
+          "type": "int",
+          "description": "Halts heretics."
+        },
+        {
+          "name": "heat",
+          "display": "Heat",
+          "type": "int",
+          "description": "Heat aura damage."
+        },
+        {
+          "name": "incorporate",
+          "display": "Incorporate",
+          "type": "int",
+          "description": "Incorporation ability."
+        },
+        {
+          "name": "invisible",
+          "display": "Invisible",
+          "type": "flag",
+          "description": "Grants invisibility."
+        },
+        {
+          "name": "mapspeed",
+          "display": "Map Speed",
+          "type": "int",
+          "description": "Strategic movement bonus."
+        },
+        {
+          "name": "mindcollar",
+          "display": "Mind Collar",
+          "type": "int",
+          "description": "Mind collar effect."
+        },
+        {
+          "name": "mindslime",
+          "display": "Mind Slime",
+          "type": "int",
+          "description": "Mind slime effect."
+        },
+        {
+          "name": "mobilearcher",
+          "display": "Mobile Archer",
+          "type": "int",
+          "description": "Mobile archer ability."
+        },
+        {
+          "name": "nightmareaura",
+          "display": "Nightmareaura",
+          "type": "int"
+        },
+        {
+          "name": "nomovepen",
+          "display": "No Move Pen",
+          "type": "flag",
+          "description": "Ignores movement penalties."
+        },
+        {
+          "name": "norange",
+          "display": "No Range",
+          "type": "flag",
+          "description": "Cannot cast ranged spells."
+        },
+        {
+          "name": "noriverpass",
+          "display": "No River Pass",
+          "type": "flag",
+          "description": "Cannot cross rivers."
+        },
+        {
+          "name": "unteleportable",
+          "display": "No Teleport",
+          "type": "flag",
+          "description": "Cannot be teleported."
+        },
+        {
+          "name": "overcharged",
+          "display": "Overcharged",
+          "type": "int",
+          "description": "Overcharged effect."
+        },
+        {
+          "name": "patience",
+          "display": "Patience",
+          "type": "int"
+        },
+        {
+          "name": "plaguedoctor",
+          "display": "Plague Doctor",
+          "type": "int",
+          "description": "Plague doctor ability."
         },
         {
           "name": "poisonarmor",
@@ -901,178 +1190,10 @@
           "description": "Poison cloud on death."
         },
         {
-          "name": "diseasecloud",
-          "display": "Disease Cloud",
+          "name": "poisonskin",
+          "display": "Poison Skin",
           "type": "int",
-          "description": "Disease cloud on death."
-        },
-        {
-          "name": "heat",
-          "display": "Heat",
-          "type": "int",
-          "description": "Heat aura damage."
-        },
-        {
-          "name": "cold",
-          "display": "Cold",
-          "type": "int",
-          "description": "Cold aura damage."
-        },
-        {
-          "name": "uwheat",
-          "display": "UW Heat",
-          "type": "int",
-          "description": "Underwater heat aura."
-        },
-        {
-          "name": "sleepaura",
-          "display": "Sleep Aura",
-          "type": "int",
-          "description": "Sleep aura effect."
-        },
-        {
-          "name": "mindslime",
-          "display": "Mind Slime",
-          "type": "int",
-          "description": "Mind slime effect."
-        },
-        {
-          "name": "curseluckshield",
-          "display": "Curse Luck Shield",
-          "type": "int",
-          "description": "Curse luck shield effect."
-        },
-        {
-          "name": "seduce",
-          "display": "Seduce",
-          "type": "int",
-          "description": "Seduction ability."
-        },
-        {
-          "name": "succubus",
-          "display": "Succubus",
-          "type": "int",
-          "description": "Succubus seduction."
-        },
-        {
-          "name": "beckon",
-          "display": "Beckon",
-          "type": "int",
-          "description": "Beckoning ability."
-        },
-        {
-          "name": "falsearmy",
-          "display": "False Army",
-          "type": "int",
-          "description": "False army illusion."
-        },
-        {
-          "name": "foolscouts",
-          "display": "Fool Scouts",
-          "type": "int",
-          "description": "Fools enemy scouts."
-        },
-        {
-          "name": "haltheretic",
-          "display": "Halt Heretic",
-          "type": "int",
-          "description": "Halts heretics."
-        },
-        {
-          "name": "unsurr",
-          "display": "Unsurr",
-          "type": "int",
-          "description": "Unsurrenderable."
-        },
-        {
-          "name": "springpower",
-          "display": "Spring Power",
-          "type": "int",
-          "description": "Power bonus in spring."
-        },
-        {
-          "name": "summerpower",
-          "display": "Summer Power",
-          "type": "int",
-          "description": "Power bonus in summer."
-        },
-        {
-          "name": "fallpower",
-          "display": "Fall Power",
-          "type": "int",
-          "description": "Power bonus in fall."
-        },
-        {
-          "name": "winterpower",
-          "display": "Winter Power",
-          "type": "int",
-          "description": "Power bonus in winter."
-        },
-        {
-          "name": "chaospower",
-          "display": "Chaos Power",
-          "type": "int",
-          "description": "Power bonus in turmoil."
-        },
-        {
-          "name": "slothpower",
-          "display": "Sloth Power",
-          "type": "int",
-          "description": "Power bonus in sloth."
-        },
-        {
-          "name": "coldpower",
-          "display": "Cold Power",
-          "type": "int",
-          "description": "Power bonus in cold."
-        },
-        {
-          "name": "deathpower",
-          "display": "Death Power",
-          "type": "int",
-          "description": "Power bonus in death."
-        },
-        {
-          "name": "magicpower",
-          "display": "Magic Power",
-          "type": "int",
-          "description": "Power bonus in magic."
-        },
-        {
-          "name": "firepower",
-          "display": "Fire Power",
-          "type": "int",
-          "description": "Power bonus in heat."
-        },
-        {
-          "name": "stormpower",
-          "display": "Storm Power",
-          "type": "int",
-          "description": "Power bonus in storms."
-        },
-        {
-          "name": "darkpower",
-          "display": "Dark Power",
-          "type": "int",
-          "description": "Power bonus in darkness."
-        },
-        {
-          "name": "dompower",
-          "display": "Dom Power",
-          "type": "int",
-          "description": "Power in friendly dominion."
-        },
-        {
-          "name": "yearturn",
-          "display": "Year Turn",
-          "type": "int",
-          "description": "Active only on this turn of year."
-        },
-        {
-          "name": "overcharged",
-          "display": "Overcharged",
-          "type": "int",
-          "description": "Overcharged effect."
+          "description": "Poison skin contact damage."
         },
         {
           "name": "powerofdeath",
@@ -1081,268 +1202,184 @@
           "description": "Power from death."
         },
         {
-          "name": "voidsanity",
-          "display": "Void Sanity",
+          "name": "raiseonkill",
+          "display": "Raise on Kill",
           "type": "int",
-          "description": "Void sanity protection."
+          "description": "Raises undead on kill."
         },
         {
-          "name": "shatteredsoul",
-          "display": "Shattered Soul",
-          "type": "int",
-          "description": "Shattered soul effect."
+          "name": "raiseshape",
+          "display": "Raiseshape",
+          "type": "ref",
+          "refType": "monster"
         },
         {
-          "name": "corruptor",
-          "display": "Corruptor",
-          "type": "int",
-          "description": "Corruption effect."
-        },
-        {
-          "name": "taint",
-          "display": "Taint",
-          "type": "int",
-          "description": "Taint effect level."
-        },
-        {
-          "name": "stonebeing",
-          "display": "Stone Being",
+          "name": "run",
+          "display": "Run",
           "type": "flag",
-          "description": "Grants stone being properties."
+          "description": "Grants running ability."
         },
         {
-          "name": "disease",
-          "display": "Disease",
+          "name": "sailing",
+          "display": "Sailing",
+          "type": "intInt",
+          "description": "Sailing capacity (max size, capacity)."
+        },
+        {
+          "name": "scalewalls",
+          "display": "Scale Walls",
           "type": "flag",
-          "description": "Causes disease."
+          "description": "Can scale walls in sieges."
         },
         {
-          "name": "chestwound",
-          "display": "Chest Wound",
+          "name": "seduce",
+          "display": "Seduce",
+          "type": "int",
+          "description": "Seduction ability."
+        },
+        {
+          "name": "sleepaura",
+          "display": "Sleep Aura",
+          "type": "int",
+          "description": "Sleep aura effect."
+        },
+        {
+          "name": "sleepres",
+          "display": "Sleepres",
+          "type": "int",
+          "description": "MAGIC ABILITIES NON-COMBAT ABILITIES #douse."
+        },
+        {
+          "name": "slimer",
+          "display": "Slimer",
+          "type": "int",
+          "description": "Slime coating effect."
+        },
+        {
+          "name": "sneakunit",
+          "display": "Sneak",
+          "type": "int",
+          "description": "Stealth ability level."
+        },
+        {
+          "name": "spikes",
+          "display": "Spikes",
+          "type": "int"
+        },
+        {
+          "name": "spiritsight",
+          "display": "Spirit Sight",
           "type": "flag",
-          "description": "Causes chest wound."
+          "description": "Can see spirits."
         },
         {
-          "name": "feeblemind",
-          "display": "Feeble Mind",
+          "name": "statbreak",
+          "display": "Stat Break",
+          "type": "int",
+          "description": "Stat break effect."
+        },
+        {
+          "name": "statstorm",
+          "display": "Stat Storm",
+          "type": "int",
+          "description": "Stat storm effect."
+        },
+        {
+          "name": "stealthboost",
+          "display": "Stealth Boost",
+          "type": "int",
+          "description": "Stealth bonus."
+        },
+        {
+          "name": "stormimmune",
+          "display": "Storm Immune",
           "type": "flag",
-          "description": "Causes feeblemind."
+          "description": "Immunity to storm effects."
         },
         {
-          "name": "mute",
-          "display": "Mute",
+          "name": "succubus",
+          "display": "Succubus",
+          "type": "int",
+          "description": "Succubus seduction."
+        },
+        {
+          "name": "sunawe",
+          "display": "Sun Awe",
+          "type": "int",
+          "description": "Awe in sunlight."
+        },
+        {
+          "name": "swift",
+          "display": "Swift",
+          "type": "int",
+          "description": "Combat speed bonus."
+        },
+        {
+          "name": "swimming",
+          "display": "Swimming",
+          "type": "flag"
+        },
+        {
+          "name": "trampswallow",
+          "display": "Tramp Swallow",
           "type": "flag",
-          "description": "Causes muteness."
+          "description": "Trample and swallow."
         },
         {
-          "name": "nhwound",
-          "display": "Never Heal Wound",
+          "name": "trample",
+          "display": "Trample",
           "type": "flag",
-          "description": "Causes never-healing wound."
+          "description": "Grants trample ability."
         },
         {
-          "name": "crippled",
-          "display": "Crippled",
+          "name": "truesight",
+          "display": "True Sight",
           "type": "flag",
-          "description": "Causes crippling."
+          "description": "Can see through illusions."
         },
         {
-          "name": "loseeye",
-          "display": "Lose Eye",
+          "name": "unseen",
+          "display": "Unseen",
+          "type": "flag"
+        },
+        {
+          "name": "uwfireshield",
+          "display": "UW Fire Shield",
+          "type": "int",
+          "description": "Underwater fire shield."
+        },
+        {
+          "name": "uwheat",
+          "display": "UW Heat",
+          "type": "int",
+          "description": "Underwater heat aura."
+        },
+        {
+          "name": "waterbreathing",
+          "display": "Water Breath",
           "type": "flag",
-          "description": "Causes eye loss."
-        },
+          "description": "Grants water breathing."
+        }
+      ]
+    },
+    {
+      "id": "itemleadership",
+      "displayName": "LEADERSHIP & MORALE",
+      "description": "Leadership & Morale (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
         {
-          "name": "eyeloss",
-          "display": "Eye Loss",
-          "type": "flag",
-          "description": "Eye loss affliction."
-        },
-        {
-          "name": "twistfate",
-          "display": "Twist Fate",
-          "type": "flag",
-          "description": "Grants twist fate ability."
-        },
-        {
-          "name": "homesick",
-          "display": "Homesick",
+          "name": "beastmaster",
+          "display": "Beast Master",
           "type": "int",
-          "description": "Homesick effect level."
+          "description": "Beast mastery bonus."
         },
         {
-          "name": "uwdamage",
-          "display": "UW Damage",
+          "name": "bodyguard",
+          "display": "Bodyguard",
           "type": "int",
-          "description": "Underwater damage penalty."
-        },
-        {
-          "name": "landdamage",
-          "display": "Land Damage",
-          "type": "int",
-          "description": "Land damage penalty."
-        },
-        {
-          "name": "fearofflood",
-          "display": "Fear of Flood",
-          "type": "int",
-          "description": "Fear of flood effect."
-        },
-        {
-          "name": "castledef",
-          "display": "Castle Def",
-          "type": "int",
-          "description": "Castle defense bonus."
-        },
-        {
-          "name": "siegebonus",
-          "display": "Siege Bonus",
-          "type": "int",
-          "description": "Siege bonus."
-        },
-        {
-          "name": "patrolbonus",
-          "display": "Patrol Bonus",
-          "type": "int",
-          "description": "Patrol bonus."
-        },
-        {
-          "name": "pillagebonus",
-          "display": "Pillage Bonus",
-          "type": "int",
-          "description": "Pillage bonus."
-        },
-        {
-          "name": "supplybonus",
-          "display": "Supply Bonus",
-          "type": "int",
-          "description": "Supply bonus."
-        },
-        {
-          "name": "resources",
-          "display": "Resources",
-          "type": "int",
-          "description": "Resource production bonus."
-        },
-        {
-          "name": "incprovdef",
-          "display": "Inc Prov Def",
-          "type": "int",
-          "description": "Increases province defense."
-        },
-        {
-          "name": "incunrest",
-          "display": "Inc Unrest",
-          "type": "int",
-          "description": "Increases unrest."
-        },
-        {
-          "name": "popkill",
-          "display": "Pop Kill",
-          "type": "int",
-          "description": "Population kill rate."
-        },
-        {
-          "name": "leper",
-          "display": "Leper",
-          "type": "int",
-          "description": "Leper disease spreading."
-        },
-        {
-          "name": "fortkill",
-          "display": "Fort Kill",
-          "type": "int",
-          "description": "Fort damage rate."
-        },
-        {
-          "name": "thronekill",
-          "display": "Throne Kill",
-          "type": "int",
-          "description": "Throne damage rate."
-        },
-        {
-          "name": "farthronekill",
-          "display": "Far Throne Kill",
-          "type": "int",
-          "description": "Far throne damage."
-        },
-        {
-          "name": "insanify",
-          "display": "Insanify",
-          "type": "int",
-          "description": "Causes insanity."
-        },
-        {
-          "name": "inquisitor",
-          "display": "Inquisitor",
-          "type": "flag",
-          "description": "Inquisitor ability."
-        },
-        {
-          "name": "heretic",
-          "display": "Heretic",
-          "type": "int",
-          "description": "Heretic level."
-        },
-        {
-          "name": "spreaddom",
-          "display": "Spread Dom",
-          "type": "int",
-          "description": "Dominion spreading."
-        },
-        {
-          "name": "elegist",
-          "display": "Elegist",
-          "type": "int",
-          "description": "Elegist ability."
-        },
-        {
-          "name": "nobadevents",
-          "display": "No Bad Events",
-          "type": "int",
-          "description": "Reduces bad events."
-        },
-        {
-          "name": "incscale",
-          "display": "Inc Scale",
-          "type": "int",
-          "description": "Increases scale."
-        },
-        {
-          "name": "decscale",
-          "display": "Dec Scale",
-          "type": "int",
-          "description": "Decreases scale."
-        },
-        {
-          "name": "localsun",
-          "display": "Local Sun",
-          "type": "flag",
-          "description": "Creates local sun effect."
-        },
-        {
-          "name": "gold",
-          "display": "Gold",
-          "type": "int",
-          "description": "Gold income bonus."
-        },
-        {
-          "name": "addupkeep",
-          "display": "Add Upkeep",
-          "type": "int",
-          "description": "Additional upkeep cost."
-        },
-        {
-          "name": "taxcollector",
-          "display": "Tax Collector",
-          "type": "flag",
-          "description": "Tax collection ability."
-        },
-        {
-          "name": "iceforging",
-          "display": "Ice Forging",
-          "type": "int",
-          "description": "Ice forging bonus."
+          "description": "Bodyguard ability level."
         },
         {
           "name": "command",
@@ -1351,10 +1388,34 @@
           "description": "Leadership bonus."
         },
         {
+          "name": "formationfighter",
+          "display": "Formation Fighter",
+          "type": "int",
+          "description": "Formation fighting bonus."
+        },
+        {
+          "name": "inspirational",
+          "display": "Inspirational",
+          "type": "int",
+          "description": "Inspirational bonus."
+        },
+        {
           "name": "magiccommand",
           "display": "Magic Command",
           "type": "int",
           "description": "Magic leadership bonus."
+        },
+        {
+          "name": "standard",
+          "display": "Standard",
+          "type": "int",
+          "description": "Standard bearer bonus."
+        },
+        {
+          "name": "taskmaster",
+          "display": "Task Master",
+          "type": "int",
+          "description": "Taskmaster bonus."
         },
         {
           "name": "undcommand",
@@ -1369,591 +1430,31 @@
           "description": "Undisciplined leadership."
         },
         {
-          "name": "inspirational",
-          "display": "Inspirational",
-          "type": "int",
-          "description": "Inspirational bonus."
-        },
-        {
-          "name": "beastmaster",
-          "display": "Beast Master",
-          "type": "int",
-          "description": "Beast mastery bonus."
-        },
-        {
-          "name": "taskmaster",
-          "display": "Task Master",
-          "type": "int",
-          "description": "Taskmaster bonus."
-        },
-        {
           "name": "undisciplined",
           "display": "Undisciplined",
           "type": "flag",
           "description": "Unit is undisciplined."
         },
         {
-          "name": "formationfighter",
-          "display": "Formation Fighter",
-          "type": "int",
-          "description": "Formation fighting bonus."
-        },
-        {
-          "name": "bodyguard",
-          "display": "Bodyguard",
-          "type": "int",
-          "description": "Bodyguard ability level."
-        },
-        {
-          "name": "standard",
-          "display": "Standard",
-          "type": "int",
-          "description": "Standard bearer bonus."
-        },
-        {
-          "name": "skirmisher",
-          "display": "Skirmisher",
-          "type": "int",
-          "description": "Skirmisher ability."
-        },
-        {
           "name": "warning",
           "display": "Warning",
           "type": "int",
           "description": "Warning ability."
-        },
-        {
-          "name": "douse",
-          "display": "Douse",
-          "type": "int",
-          "description": "Douse fire ability."
-        },
-        {
-          "name": "adeptsacr",
-          "display": "Adept Sacrifice",
-          "type": "int",
-          "description": "Adept sacrificing bonus."
-        },
-        {
-          "name": "researchbonus",
-          "display": "Research Bonus",
-          "type": "int",
-          "description": "Research bonus."
-        },
-        {
-          "name": "slothresearch",
-          "display": "Sloth Research",
-          "type": "int",
-          "description": "Research bonus in sloth."
-        },
-        {
-          "name": "inspiringres",
-          "display": "Inspiring Res",
-          "type": "int",
-          "description": "Inspiring research bonus."
-        },
-        {
-          "name": "divineins",
-          "display": "Divine Inspiration",
-          "type": "flag",
-          "description": "Divine inspiration ability."
-        },
-        {
-          "name": "forgebonus",
-          "display": "Forge Bonus",
-          "type": "int",
-          "description": "Forging cost reduction."
-        },
-        {
-          "name": "fixforgebonus",
-          "display": "Fix Forge Bonus",
-          "type": "int",
-          "description": "Fixed forge bonus."
-        },
-        {
-          "name": "crossbreeder",
-          "display": "Cross Breeder",
-          "type": "int",
-          "description": "Cross breeding ability."
-        },
-        {
-          "name": "bonusspells",
-          "display": "Bonus Spells",
-          "type": "int",
-          "description": "Bonus spells per turn."
-        },
-        {
-          "name": "spellsinger",
-          "display": "Spell Singer",
-          "type": "flag",
-          "description": "Spell singer ability."
-        },
-        {
-          "name": "fastcast",
-          "display": "Fast Cast",
-          "type": "int",
-          "description": "Fast casting bonus."
-        },
-        {
-          "name": "combatcaster",
-          "display": "Combat Caster",
-          "type": "flag",
-          "description": "Combat casting ability."
-        },
-        {
-          "name": "magicstudy",
-          "display": "Magic Study",
-          "type": "int",
-          "description": "Magic study bonus."
-        },
-        {
-          "name": "mastersmith",
-          "display": "Master Smith",
-          "type": "int",
-          "description": "Master smith ability."
-        },
-        {
-          "name": "masterrit",
-          "display": "Master Ritualist",
-          "type": "int",
-          "description": "Master ritualist ability."
-        },
-        {
-          "name": "alchemy",
-          "display": "Alchemy",
-          "type": "int",
-          "description": "Alchemy conversion rate."
-        },
-        {
-          "name": "mason",
-          "display": "Mason",
-          "type": "flag",
-          "description": "Mason building ability."
-        },
-        {
-          "name": "comslave",
-          "display": "Communion Slave",
-          "type": "flag",
-          "description": "Communion slave ability."
-        },
-        {
-          "name": "commaster",
-          "display": "Communion Master",
-          "type": "flag",
-          "description": "Communion master ability."
-        },
-        {
-          "name": "bringeroffortune",
-          "display": "Fortune Bringer",
-          "type": "int",
-          "description": "Fortune bringing ability."
-        },
-        {
-          "name": "xploss",
-          "display": "XP Loss",
-          "type": "int",
-          "description": "Experience loss rate."
-        },
-        {
-          "name": "xpgain",
-          "display": "XP Gain",
-          "type": "int",
-          "description": "Experience gain rate."
-        },
-        {
-          "name": "clumsy",
-          "display": "Clumsy",
-          "type": "int",
-          "description": "Clumsy penalty."
-        },
-        {
-          "name": "skilledrider",
-          "display": "Skilled Rider",
-          "type": "int",
-          "description": "Skilled rider bonus."
-        },
-        {
-          "name": "firerange",
-          "display": "Fire Range",
-          "type": "int",
-          "description": "Fire spell range bonus.",
-          "icon": "magicicons/Path_F.png"
-        },
-        {
-          "name": "airrange",
-          "display": "Air Range",
-          "type": "int",
-          "description": "Air spell range bonus.",
-          "icon": "magicicons/Path_A.png"
-        },
-        {
-          "name": "waterrange",
-          "display": "Water Range",
-          "type": "int",
-          "description": "Water spell range bonus.",
-          "icon": "magicicons/Path_W.png"
-        },
-        {
-          "name": "earthrange",
-          "display": "Earth Range",
-          "type": "int",
-          "description": "Earth spell range bonus.",
-          "icon": "magicicons/Path_E.png"
-        },
-        {
-          "name": "astralrange",
-          "display": "Astral Range",
-          "type": "int",
-          "description": "Astral spell range bonus.",
-          "icon": "magicicons/Path_S.png"
-        },
-        {
-          "name": "deathrange",
-          "display": "Death Range",
-          "type": "int",
-          "description": "Death spell range bonus.",
-          "icon": "magicicons/Path_D.png"
-        },
-        {
-          "name": "naturerange",
-          "display": "Nature Range",
-          "type": "int",
-          "description": "Nature spell range bonus.",
-          "icon": "magicicons/Path_N.png"
-        },
-        {
-          "name": "bloodrange",
-          "display": "Blood Range",
-          "type": "int",
-          "description": "Blood spell range bonus.",
-          "icon": "magicicons/Path_B.png"
-        },
-        {
-          "name": "glamourrange",
-          "display": "Glamour Range",
-          "type": "int",
-          "description": "Glamour spell range bonus.",
-          "icon": "magicicons/Path_G.png"
-        },
-        {
-          "name": "holyrange",
-          "display": "Holy Range",
-          "type": "int",
-          "description": "Holy spell range bonus.",
-          "icon": "magicicons/Path_H.png"
-        },
-        {
-          "name": "elementrange",
-          "display": "Element Range",
-          "type": "int",
-          "description": "Elemental spell range bonus.",
-          "icon": "magicicons/Path_E.png"
-        },
-        {
-          "name": "sorceryrange",
-          "display": "Sorcery Range",
-          "type": "int",
-          "description": "Sorcery spell range bonus.",
-          "icon": "magicicons/Path_S.png"
-        },
-        {
-          "name": "allrange",
-          "display": "All Range",
-          "type": "int",
-          "description": "All spell range bonus."
-        },
-        {
-          "name": "norange",
-          "display": "No Range",
-          "type": "flag",
-          "description": "Cannot cast ranged spells."
-        },
-        {
-          "name": "makepearls",
-          "display": "Make Pearls",
-          "type": "int",
-          "description": "Pearl production."
-        },
-        {
-          "name": "gemprod",
-          "display": "Gem Prod",
-          "type": "intInt",
-          "description": "Gem production (type, amount)."
-        },
-        {
-          "name": "tmpfiregems",
-          "display": "Tmp Fire Gems",
-          "type": "int",
-          "description": "Temporary fire gems per turn.",
-          "icon": "magicicons/Gem_F.png"
-        },
-        {
-          "name": "tmpairgems",
-          "display": "Tmp Air Gems",
-          "type": "int",
-          "description": "Temporary air gems per turn.",
-          "icon": "magicicons/Gem_A.png"
-        },
-        {
-          "name": "tmpwatergems",
-          "display": "Tmp Water Gems",
-          "type": "int",
-          "description": "Temporary water gems per turn.",
-          "icon": "magicicons/Gem_W.png"
-        },
-        {
-          "name": "tmpearthgems",
-          "display": "Tmp Earth Gems",
-          "type": "int",
-          "description": "Temporary earth gems per turn.",
-          "icon": "magicicons/Gem_E.png"
-        },
-        {
-          "name": "tmpastralgems",
-          "display": "Tmp Astral Gems",
-          "type": "int",
-          "description": "Temporary astral gems per turn.",
-          "icon": "magicicons/Gem_S.png"
-        },
-        {
-          "name": "tmpdeathgems",
-          "display": "Tmp Death Gems",
-          "type": "int",
-          "description": "Temporary death gems per turn.",
-          "icon": "magicicons/Gem_D.png"
-        },
-        {
-          "name": "tmpnaturegems",
-          "display": "Tmp Nature Gems",
-          "type": "int",
-          "description": "Temporary nature gems per turn.",
-          "icon": "magicicons/Gem_N.png"
-        },
-        {
-          "name": "tmpbloodslaves",
-          "display": "Tmp Blood Slaves",
-          "type": "int",
-          "description": "Temporary blood slaves per turn.",
-          "icon": "magicicons/Gem_B.png"
-        },
-        {
-          "name": "tmpglamourgems",
-          "display": "Tmp Glamour Gems",
-          "type": "int",
-          "description": "Temporary glamour gems per turn."
-        },
-        {
-          "name": "elementgems",
-          "display": "Element Gems",
-          "type": "int",
-          "description": "Elemental gem production."
-        },
-        {
-          "name": "sorcerygems",
-          "display": "Sorcery Gems",
-          "type": "int",
-          "description": "Sorcery gem production."
-        },
-        {
-          "name": "carcasscollector",
-          "display": "Carcass Collector",
-          "type": "int",
-          "description": "Carcass collection ability."
-        },
-        {
-          "name": "deathbanish",
-          "display": "Death Banish",
-          "type": "int",
-          "description": "Death banishment ability."
-        },
-        {
-          "name": "kokytosret",
-          "display": "Kokytos Return",
-          "type": "int",
-          "description": "Return from Kokytos."
-        },
-        {
-          "name": "infernoret",
-          "display": "Inferno Return",
-          "type": "int",
-          "description": "Return from Inferno."
-        },
-        {
-          "name": "voidret",
-          "display": "Void Return",
-          "type": "int",
-          "description": "Return from Void."
-        },
-        {
-          "name": "allret",
-          "display": "All Return",
-          "type": "int",
-          "description": "Return from all planes."
-        },
-        {
-          "name": "fireelementals",
-          "display": "Fire Elementals",
-          "type": "int",
-          "description": "Fire elemental summoning bonus."
-        },
+        }
+      ]
+    },
+    {
+      "id": "itemsummoning",
+      "displayName": "SUMMONING & SHAPES",
+      "description": "Summoning & Shapes (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
         {
           "name": "airelementals",
           "display": "Air Elementals",
           "type": "int",
           "description": "Air elemental summoning bonus."
-        },
-        {
-          "name": "earthelementals",
-          "display": "Earth Elementals",
-          "type": "int",
-          "description": "Earth elemental summoning bonus."
-        },
-        {
-          "name": "waterelementals",
-          "display": "Water Elementals",
-          "type": "int",
-          "description": "Water elemental summoning bonus."
-        },
-        {
-          "name": "ivylord",
-          "display": "Ivy Lord",
-          "type": "int",
-          "description": "Ivy lord summoning bonus."
-        },
-        {
-          "name": "dragonlord",
-          "display": "Dragon Lord",
-          "type": "int",
-          "description": "Dragon lord summoning bonus."
-        },
-        {
-          "name": "lamialord",
-          "display": "Lamia Lord",
-          "type": "int",
-          "description": "Lamia lord summoning bonus."
-        },
-        {
-          "name": "corpselord",
-          "display": "Corpse Lord",
-          "type": "int",
-          "description": "Corpse lord summoning bonus."
-        },
-        {
-          "name": "onisummon",
-          "display": "Oni Summon",
-          "type": "int",
-          "description": "Oni summoning ability."
-        },
-        {
-          "name": "reanimpriest",
-          "display": "Reanim Priest",
-          "type": "int",
-          "description": "Reanimation priest ability."
-        },
-        {
-          "name": "glamourmanip",
-          "display": "Glamour Manip",
-          "type": "int",
-          "description": "Glamour manipulation."
-        },
-        {
-          "name": "mindcollar",
-          "display": "Mind Collar",
-          "type": "int",
-          "description": "Mind collar effect."
-        },
-        {
-          "name": "falsesupply",
-          "display": "False Supply",
-          "type": "int",
-          "description": "False supply effect."
-        },
-        {
-          "name": "statstorm",
-          "display": "Stat Storm",
-          "type": "int",
-          "description": "Stat storm effect."
-        },
-        {
-          "name": "statbreak",
-          "display": "Stat Break",
-          "type": "int",
-          "description": "Stat break effect."
-        },
-        {
-          "name": "mobilearcher",
-          "display": "Mobile Archer",
-          "type": "int",
-          "description": "Mobile archer ability."
-        },
-        {
-          "name": "bestowtomount",
-          "display": "Bestow to Mount",
-          "type": "flag",
-          "description": "Bestows effects to mount."
-        },
-        {
-          "name": "aoe",
-          "display": "AOE",
-          "type": "int",
-          "description": "Area of effect modifier."
-        },
-        {
-          "name": "chaosrec",
-          "display": "Chaos Rec",
-          "type": "int",
-          "description": "Chaos recruitment bonus."
-        },
-        {
-          "name": "shapechance",
-          "display": "Shape Chance",
-          "type": "int",
-          "description": "Shape change chance."
-        },
-        {
-          "name": "autospellrepeat",
-          "display": "Auto Spell Repeat",
-          "type": "int",
-          "description": "Auto spell repetition."
-        },
-        {
-          "name": "randomspell",
-          "display": "Random Spell",
-          "type": "int",
-          "description": "Random spell level."
-        },
-        {
-          "name": "itemcost1",
-          "display": "Item Cost 1",
-          "type": "int",
-          "description": "Primary gem cost."
-        },
-        {
-          "name": "itemcost2",
-          "display": "Item Cost 2",
-          "type": "int",
-          "description": "Secondary gem cost."
-        },
-        {
-          "name": "itemdrawsize",
-          "display": "Item Draw Size",
-          "type": "int",
-          "description": "Item draw size modifier."
-        }
-      ]
-    },
-    {
-      "id": "more",
-      "displayName": "MORE",
-      "description": "Other commands the game reads for this type",
-      "renderer": "badge",
-      "readOnly": false,
-      "commands": [
-        {
-          "name": "autospell",
-          "display": "Autospell",
-          "type": "ref",
-          "refType": "spell"
         },
         {
           "name": "batstartsum1",
@@ -2070,69 +1571,10 @@
           "refType": "monster"
         },
         {
-          "name": "beauty",
-          "display": "Beauty",
-          "type": "int"
-        },
-        {
-          "name": "bravemount",
-          "display": "Bravemount",
-          "type": "int"
-        },
-        {
-          "name": "chorusmaster",
-          "display": "Chorusmaster",
-          "type": "int"
-        },
-        {
-          "name": "chorusslave",
-          "display": "Chorusslave",
-          "type": "int"
-        },
-        {
-          "name": "corpsehealer",
-          "display": "Corpsehealer",
-          "type": "int"
-        },
-        {
-          "name": "dancenof",
-          "display": "Dancenof",
-          "type": "int"
-        },
-        {
-          "name": "dancenratt",
-          "display": "Dancenratt",
-          "type": "int"
-        },
-        {
-          "name": "dancesize",
-          "display": "Dancesize",
-          "type": "int"
-        },
-        {
-          "name": "dancespr",
-          "display": "Dancespr",
-          "type": "int"
-        },
-        {
-          "name": "danceweapon",
-          "display": "Danceweapon",
-          "type": "weaponRef"
-        },
-        {
-          "name": "deathgrab",
-          "display": "Deathgrab",
-          "type": "int"
-        },
-        {
-          "name": "deathshock",
-          "display": "Deathshock",
-          "type": "int"
-        },
-        {
-          "name": "deathslime",
-          "display": "Deathslime",
-          "type": "int"
+          "name": "corpselord",
+          "display": "Corpse Lord",
+          "type": "int",
+          "description": "Corpse lord summoning bonus."
         },
         {
           "name": "domsummon",
@@ -2153,20 +1595,16 @@
           "refType": "monster"
         },
         {
-          "name": "dread",
-          "display": "Dread",
-          "type": "int"
-        },
-        {
-          "name": "enchantedblood",
-          "display": "Enchantedblood",
+          "name": "dragonlord",
+          "display": "Dragon Lord",
           "type": "int",
-          "description": "#noforgebonus Gets points bonus to MR and heals about."
+          "description": "Dragon lord summoning bonus."
         },
         {
-          "name": "falseregen",
-          "display": "Falseregen",
-          "type": "int"
+          "name": "earthelementals",
+          "display": "Earth Elementals",
+          "type": "int",
+          "description": "Earth elemental summoning bonus."
         },
         {
           "name": "faysummon",
@@ -2174,24 +1612,22 @@
           "type": "int"
         },
         {
-          "name": "forestsurv",
-          "display": "Forestsurv",
-          "type": "flag"
+          "name": "fireelementals",
+          "display": "Fire Elementals",
+          "type": "int",
+          "description": "Fire elemental summoning bonus."
         },
         {
-          "name": "grandcom",
-          "display": "Grandcom",
-          "type": "int"
+          "name": "ivylord",
+          "display": "Ivy Lord",
+          "type": "int",
+          "description": "Ivy lord summoning bonus."
         },
         {
-          "name": "growthpower",
-          "display": "Growthpower",
-          "type": "int"
-        },
-        {
-          "name": "magicboost",
-          "display": "Magicboost",
-          "type": "intint"
+          "name": "lamialord",
+          "display": "Lamia Lord",
+          "type": "int",
+          "description": "Lamia lord summoning bonus."
         },
         {
           "name": "makemonsters1",
@@ -2224,48 +1660,10 @@
           "refType": "monster"
         },
         {
-          "name": "mountsurv",
-          "display": "Mountsurv",
-          "type": "flag"
-        },
-        {
-          "name": "nationrebate",
-          "display": "Nationrebate",
-          "type": "ref",
-          "refType": "nation",
-          "description": "\"nation name\" Increases the chance of receiving a guardian spirit with +value The item is 20% cheaper to forge for this nation."
-        },
-        {
-          "name": "nightmareaura",
-          "display": "Nightmareaura",
-          "type": "int"
-        },
-        {
-          "name": "notfornation",
-          "display": "Notfornation",
-          "type": "ref",
-          "refType": "nation"
-        },
-        {
-          "name": "onlysleepers",
-          "display": "Onlysleepers",
-          "type": "flag"
-        },
-        {
-          "name": "patience",
-          "display": "Patience",
-          "type": "int"
-        },
-        {
-          "name": "praise",
-          "display": "Praise",
-          "type": "int"
-        },
-        {
-          "name": "raiseshape",
-          "display": "Raiseshape",
-          "type": "ref",
-          "refType": "monster"
+          "name": "onisummon",
+          "display": "Oni Summon",
+          "type": "int",
+          "description": "Oni summoning ability."
         },
         {
           "name": "raredomsummon",
@@ -2274,32 +1672,16 @@
           "refType": "monster"
         },
         {
-          "name": "regainmount",
-          "display": "Regainmount",
-          "type": "int"
-        },
-        {
-          "name": "restricted",
-          "display": "Restricted",
-          "type": "ref",
-          "refType": "nation",
-          "description": "\"nation name\"."
-        },
-        {
-          "name": "restricteditem",
-          "display": "Restricteditem",
+          "name": "reanimpriest",
+          "display": "Reanim Priest",
           "type": "int",
-          "description": "Be healed until the item is removed."
+          "description": "Reanimation priest ability."
         },
         {
-          "name": "sabbathmaster",
-          "display": "Sabbathmaster",
-          "type": "flag"
-        },
-        {
-          "name": "sabbathslave",
-          "display": "Sabbathslave",
-          "type": "flag"
+          "name": "shapechance",
+          "display": "Shape Chance",
+          "type": "int",
+          "description": "Shape change chance."
         },
         {
           "name": "slaver",
@@ -2310,38 +1692,6 @@
         {
           "name": "slaverbonus",
           "display": "Slaverbonus",
-          "type": "int"
-        },
-        {
-          "name": "sleepres",
-          "display": "Sleepres",
-          "type": "int",
-          "description": "MAGIC ABILITIES NON-COMBAT ABILITIES #douse."
-        },
-        {
-          "name": "smartmount",
-          "display": "Smartmount",
-          "type": "int"
-        },
-        {
-          "name": "spell",
-          "display": "Spell",
-          "type": "ref",
-          "refType": "spell"
-        },
-        {
-          "name": "spikes",
-          "display": "Spikes",
-          "type": "int"
-        },
-        {
-          "name": "spr",
-          "display": "Spr",
-          "type": "string"
-        },
-        {
-          "name": "statsiege",
-          "display": "Statsiege",
           "type": "int"
         },
         {
@@ -2375,25 +1725,756 @@
           "refType": "monster"
         },
         {
-          "name": "swampsurv",
-          "display": "Swampsurv",
-          "type": "flag"
-        },
-        {
-          "name": "swimming",
-          "display": "Swimming",
-          "type": "flag"
-        },
-        {
           "name": "templetrainer",
           "display": "Templetrainer",
           "type": "ref",
           "refType": "monster"
         },
         {
-          "name": "unseen",
-          "display": "Unseen",
+          "name": "waterelementals",
+          "display": "Water Elementals",
+          "type": "int",
+          "description": "Water elemental summoning bonus."
+        },
+        {
+          "name": "xploss",
+          "display": "XP Loss",
+          "type": "int",
+          "description": "Experience loss rate."
+        }
+      ]
+    },
+    {
+      "id": "itemnoncombat",
+      "displayName": "NON-COMBAT",
+      "description": "Non-Combat (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "addupkeep",
+          "display": "Add Upkeep",
+          "type": "int",
+          "description": "Additional upkeep cost."
+        },
+        {
+          "name": "adeptsacr",
+          "display": "Adept Sacrifice",
+          "type": "int",
+          "description": "Adept sacrificing bonus."
+        },
+        {
+          "name": "alchemy",
+          "display": "Alchemy",
+          "type": "int",
+          "description": "Alchemy conversion rate."
+        },
+        {
+          "name": "castledef",
+          "display": "Castle Def",
+          "type": "int",
+          "description": "Castle defense bonus."
+        },
+        {
+          "name": "decscale",
+          "display": "Dec Scale",
+          "type": "int",
+          "description": "Decreases scale."
+        },
+        {
+          "name": "elegist",
+          "display": "Elegist",
+          "type": "int",
+          "description": "Elegist ability."
+        },
+        {
+          "name": "falsesupply",
+          "display": "False Supply",
+          "type": "int",
+          "description": "False supply effect."
+        },
+        {
+          "name": "farthronekill",
+          "display": "Far Throne Kill",
+          "type": "int",
+          "description": "Far throne damage."
+        },
+        {
+          "name": "fortkill",
+          "display": "Fort Kill",
+          "type": "int",
+          "description": "Fort damage rate."
+        },
+        {
+          "name": "gold",
+          "display": "Gold",
+          "type": "int",
+          "description": "Gold income bonus."
+        },
+        {
+          "name": "heretic",
+          "display": "Heretic",
+          "type": "int",
+          "description": "Heretic level."
+        },
+        {
+          "name": "iceforging",
+          "display": "Ice Forging",
+          "type": "int",
+          "description": "Ice forging bonus."
+        },
+        {
+          "name": "incprovdef",
+          "display": "Inc Prov Def",
+          "type": "int",
+          "description": "Increases province defense."
+        },
+        {
+          "name": "incscale",
+          "display": "Inc Scale",
+          "type": "int",
+          "description": "Increases scale."
+        },
+        {
+          "name": "incunrest",
+          "display": "Inc Unrest",
+          "type": "int",
+          "description": "Increases unrest."
+        },
+        {
+          "name": "inquisitor",
+          "display": "Inquisitor",
+          "type": "flag",
+          "description": "Inquisitor ability."
+        },
+        {
+          "name": "insanify",
+          "display": "Insanify",
+          "type": "int",
+          "description": "Causes insanity."
+        },
+        {
+          "name": "leper",
+          "display": "Leper",
+          "type": "int",
+          "description": "Leper disease spreading."
+        },
+        {
+          "name": "localsun",
+          "display": "Local Sun",
+          "type": "flag",
+          "description": "Creates local sun effect."
+        },
+        {
+          "name": "mason",
+          "display": "Mason",
+          "type": "flag",
+          "description": "Mason building ability."
+        },
+        {
+          "name": "nobadevents",
+          "display": "No Bad Events",
+          "type": "int",
+          "description": "Reduces bad events."
+        },
+        {
+          "name": "patrolbonus",
+          "display": "Patrol Bonus",
+          "type": "int",
+          "description": "Patrol bonus."
+        },
+        {
+          "name": "pillagebonus",
+          "display": "Pillage Bonus",
+          "type": "int",
+          "description": "Pillage bonus."
+        },
+        {
+          "name": "popkill",
+          "display": "Pop Kill",
+          "type": "int",
+          "description": "Population kill rate."
+        },
+        {
+          "name": "praise",
+          "display": "Praise",
+          "type": "int"
+        },
+        {
+          "name": "resources",
+          "display": "Resources",
+          "type": "int",
+          "description": "Resource production bonus."
+        },
+        {
+          "name": "shatteredsoul",
+          "display": "Shattered Soul",
+          "type": "int",
+          "description": "Shattered soul effect."
+        },
+        {
+          "name": "siegebonus",
+          "display": "Siege Bonus",
+          "type": "int",
+          "description": "Siege bonus."
+        },
+        {
+          "name": "spreaddom",
+          "display": "Spread Dom",
+          "type": "int",
+          "description": "Dominion spreading."
+        },
+        {
+          "name": "supplybonus",
+          "display": "Supply Bonus",
+          "type": "int",
+          "description": "Supply bonus."
+        },
+        {
+          "name": "taxcollector",
+          "display": "Tax Collector",
+          "type": "flag",
+          "description": "Tax collection ability."
+        },
+        {
+          "name": "thronekill",
+          "display": "Throne Kill",
+          "type": "int",
+          "description": "Throne damage rate."
+        }
+      ]
+    },
+    {
+      "id": "itemcurses",
+      "displayName": "CURSES & AFFLICTIONS",
+      "description": "Curses & Afflictions (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "autodisgrinder",
+          "display": "Auto Dis Grinder",
+          "type": "int",
+          "description": "Disease grinding ability."
+        },
+        {
+          "name": "autodishealer",
+          "display": "Auto Dis Healer",
+          "type": "int",
+          "description": "Auto disease healing."
+        },
+        {
+          "name": "autohealer",
+          "display": "Auto Healer",
+          "type": "int",
+          "description": "Auto-healing ability."
+        },
+        {
+          "name": "chestwound",
+          "display": "Chest Wound",
+          "type": "flag",
+          "description": "Causes chest wound."
+        },
+        {
+          "name": "crippled",
+          "display": "Crippled",
+          "type": "flag",
+          "description": "Causes crippling."
+        },
+        {
+          "name": "curse",
+          "display": "Curse",
+          "type": "flag",
+          "description": "Inflicts curse on wearer."
+        },
+        {
+          "name": "cursed",
+          "display": "Cursed",
+          "type": "flag",
+          "description": "Item is cursed and cannot be removed."
+        },
+        {
+          "name": "deadhp",
+          "display": "Dead HP",
+          "type": "int",
+          "description": "HP threshold for death."
+        },
+        {
+          "name": "disease",
+          "display": "Disease",
+          "type": "flag",
+          "description": "Causes disease."
+        },
+        {
+          "name": "diseaseres",
+          "display": "Disease Res",
+          "type": "int",
+          "description": "Disease resistance bonus."
+        },
+        {
+          "name": "feeblemind",
+          "display": "Feeble Mind",
+          "type": "flag",
+          "description": "Causes feeblemind."
+        },
+        {
+          "name": "healer",
+          "display": "Healer",
+          "type": "int",
+          "description": "Healing ability level."
+        },
+        {
+          "name": "homesick",
+          "display": "Homesick",
+          "type": "int",
+          "description": "Homesick effect level."
+        },
+        {
+          "name": "hpoverflow",
+          "display": "HP Overflow",
+          "type": "int",
+          "description": "HP overflow healing."
+        },
+        {
+          "name": "landdamage",
+          "display": "Land Damage",
+          "type": "int",
+          "description": "Land damage penalty."
+        },
+        {
+          "name": "loseeye",
+          "display": "Lose Eye",
+          "type": "flag",
+          "description": "Causes eye loss."
+        },
+        {
+          "name": "maxdeadhp",
+          "display": "Max Dead HP",
+          "type": "int",
+          "description": "Maximum dead HP threshold."
+        },
+        {
+          "name": "mute",
+          "display": "Mute",
+          "type": "flag",
+          "description": "Causes muteness."
+        },
+        {
+          "name": "nhwound",
+          "display": "Never Heal Wound",
+          "type": "flag",
+          "description": "Causes never-healing wound."
+        },
+        {
+          "name": "noagingland",
+          "display": "No Age Land",
+          "type": "int",
+          "description": "No aging on land."
+        },
+        {
+          "name": "noaging",
+          "display": "No Aging",
+          "type": "int",
+          "description": "Prevents aging."
+        },
+        {
+          "name": "nocoldblood",
+          "display": "No Cold Blood",
+          "type": "flag",
+          "description": "Item cannot be used by cold-blooded units."
+        },
+        {
+          "name": "nodemon",
+          "display": "No Demon",
+          "type": "flag",
+          "description": "Item cannot be used by demons."
+        },
+        {
+          "name": "nofemale",
+          "display": "No Female",
+          "type": "flag",
+          "description": "Item cannot be used by females."
+        },
+        {
+          "name": "noimmobile",
+          "display": "No Immobile",
+          "type": "flag",
+          "description": "Item cannot be used by immobile units."
+        },
+        {
+          "name": "noinanim",
+          "display": "No Inanimate",
+          "type": "flag",
+          "description": "Item cannot be used by inanimates."
+        },
+        {
+          "name": "nomounted",
+          "display": "No Mounted",
+          "type": "flag",
+          "description": "Item cannot be used while mounted."
+        },
+        {
+          "name": "noundead",
+          "display": "No Undead",
+          "type": "flag",
+          "description": "Item cannot be used by undead."
+        },
+        {
+          "name": "onlycoldblood",
+          "display": "Only Cold Blood",
+          "type": "flag",
+          "description": "Item can only be used by cold-blooded units."
+        },
+        {
+          "name": "onlydemon",
+          "display": "Only Demon",
+          "type": "flag",
+          "description": "Item can only be used by demons."
+        },
+        {
+          "name": "onlyfemale",
+          "display": "Only Female",
+          "type": "flag",
+          "description": "Item can only be used by females."
+        },
+        {
+          "name": "onlyimmobile",
+          "display": "Only Immobile",
+          "type": "flag",
+          "description": "Item can only be used by immobile units."
+        },
+        {
+          "name": "onlyinanim",
+          "display": "Only Inanimate",
+          "type": "flag",
+          "description": "Item can only be used by inanimates."
+        },
+        {
+          "name": "onlymounted",
+          "display": "Only Mounted",
+          "type": "flag",
+          "description": "Item can only be used while mounted."
+        },
+        {
+          "name": "onlyundead",
+          "display": "Only Undead",
+          "type": "flag",
+          "description": "Item can only be used by undead."
+        },
+        {
+          "name": "recuperation",
+          "display": "Recuperation",
+          "type": "flag",
+          "description": "Grants recuperation ability."
+        },
+        {
+          "name": "tainted",
+          "display": "Tainted",
+          "type": "int",
+          "description": "Item has horror mark chance."
+        },
+        {
+          "name": "uwdamage",
+          "display": "UW Damage",
+          "type": "int",
+          "description": "Underwater damage penalty."
+        },
+        {
+          "name": "woundfend",
+          "display": "Wound Fend",
+          "type": "int",
+          "description": "Wound fending ability."
+        },
+        {
+          "name": "xpgain",
+          "display": "XP Gain",
+          "type": "int",
+          "description": "Experience gain rate."
+        },
+        {
+          "name": "yearaging",
+          "display": "Year Aging",
+          "type": "int",
+          "description": "Yearly aging effect."
+        }
+      ]
+    },
+    {
+      "id": "itemrestrictions",
+      "displayName": "RESTRICTIONS",
+      "description": "Restrictions (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "heavyitem",
+          "display": "Heavy",
+          "type": "int",
+          "description": "Item is heavy and affects movement."
+        },
+        {
+          "name": "islance",
+          "display": "Is Lance",
+          "type": "flag",
+          "description": "Item is a lance weapon."
+        },
+        {
+          "name": "maxsize",
+          "display": "Max Size",
+          "type": "int",
+          "description": "Maximum size to use item."
+        },
+        {
+          "name": "minsize",
+          "display": "Min Size",
+          "type": "int",
+          "description": "Minimum size to use item."
+        },
+        {
+          "name": "nationrebate",
+          "display": "Nationrebate",
+          "type": "ref",
+          "refType": "nation",
+          "description": "\"nation name\" Increases the chance of receiving a guardian spirit with +value The item is 20% cheaper to forge for this nation."
+        },
+        {
+          "name": "nofind",
+          "display": "No Find",
+          "type": "flag",
+          "description": "Item cannot be found randomly."
+        },
+        {
+          "name": "noforgebonus",
+          "display": "No Forge Bonus",
+          "type": "flag",
+          "description": "Item doesn't benefit from forge bonuses."
+        },
+        {
+          "name": "notfornation",
+          "display": "Notfornation",
+          "type": "ref",
+          "refType": "nation"
+        },
+        {
+          "name": "reqeyes",
+          "display": "Req Eyes",
+          "type": "flag",
+          "description": "Item requires eyes to use."
+        },
+        {
+          "name": "restricted",
+          "display": "Restricted",
+          "type": "ref",
+          "refType": "nation",
+          "description": "\"nation name\"."
+        },
+        {
+          "name": "restricteditem",
+          "display": "Restricteditem",
+          "type": "int",
+          "description": "Be healed until the item is removed."
+        },
+        {
+          "name": "unique",
+          "display": "Unique",
+          "type": "flag",
+          "description": "Item is unique (only one can exist)."
+        }
+      ]
+    },
+    {
+      "id": "itemdancing",
+      "displayName": "DANCING WEAPON",
+      "description": "Dancing Weapon (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "dancenof",
+          "display": "Dancenof",
+          "type": "int"
+        },
+        {
+          "name": "dancenratt",
+          "display": "Dancenratt",
+          "type": "int"
+        },
+        {
+          "name": "dancesize",
+          "display": "Dancesize",
+          "type": "int"
+        },
+        {
+          "name": "dancespr",
+          "display": "Dancespr",
+          "type": "int"
+        },
+        {
+          "name": "danceweapon",
+          "display": "Danceweapon",
+          "type": "weaponRef"
+        }
+      ]
+    },
+    {
+      "id": "itemcreature",
+      "displayName": "BODY & TYPE",
+      "description": "Body & Type (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "autocompete",
+          "display": "Auto Compete",
+          "type": "flag",
+          "description": "Owner automatically enters championship."
+        },
+        {
+          "name": "bravemount",
+          "display": "Bravemount",
+          "type": "int"
+        },
+        {
+          "name": "chaosrec",
+          "display": "Chaos Rec",
+          "type": "int",
+          "description": "Chaos recruitment bonus."
+        },
+        {
+          "name": "itemcost1",
+          "display": "Item Cost 1",
+          "type": "int",
+          "description": "Primary gem cost."
+        },
+        {
+          "name": "itemcost2",
+          "display": "Item Cost 2",
+          "type": "int",
+          "description": "Secondary gem cost."
+        },
+        {
+          "name": "regainmount",
+          "display": "Regainmount",
+          "type": "int"
+        },
+        {
+          "name": "singlebattle",
+          "display": "Single Battle",
+          "type": "flag",
+          "description": "Item only works for one battle."
+        },
+        {
+          "name": "skilledrider",
+          "display": "Skilled Rider",
+          "type": "int",
+          "description": "Skilled rider bonus."
+        },
+        {
+          "name": "smartmount",
+          "display": "Smartmount",
+          "type": "int"
+        },
+        {
+          "name": "stonebeing",
+          "display": "Stone Being",
+          "type": "flag",
+          "description": "Grants stone being properties."
+        }
+      ]
+    },
+    {
+      "id": "more",
+      "displayName": "OTHER ABILITIES",
+      "description": "Other Abilities (the modding manual's sections)",
+      "renderer": "badge",
+      "readOnly": false,
+      "commands": [
+        {
+          "name": "aoe",
+          "display": "AOE",
+          "type": "int",
+          "description": "Area of effect modifier."
+        },
+        {
+          "name": "beauty",
+          "display": "Beauty",
+          "type": "int"
+        },
+        {
+          "name": "bestowtomount",
+          "display": "Bestow to Mount",
+          "type": "flag",
+          "description": "Bestows effects to mount."
+        },
+        {
+          "name": "champprize",
+          "display": "Champ Prize",
+          "type": "flag",
+          "description": "Item can be won as championship prize."
+        },
+        {
+          "name": "corpsehealer",
+          "display": "Corpsehealer",
+          "type": "int"
+        },
+        {
+          "name": "forestsurv",
+          "display": "Forestsurv",
           "type": "flag"
+        },
+        {
+          "name": "hpoverslow",
+          "display": "HP Over Slow",
+          "type": "int",
+          "description": "Slow HP overflow healing."
+        },
+        {
+          "name": "itemdrawsize",
+          "display": "Item Draw Size",
+          "type": "int",
+          "description": "Item draw size modifier."
+        },
+        {
+          "name": "mountsurv",
+          "display": "Mountsurv",
+          "type": "flag"
+        },
+        {
+          "name": "onlysleepers",
+          "display": "Onlysleepers",
+          "type": "flag"
+        },
+        {
+          "name": "sabbathmaster",
+          "display": "Sabbathmaster",
+          "type": "flag"
+        },
+        {
+          "name": "saltvul",
+          "display": "Salt Vuln",
+          "type": "int",
+          "description": "Vulnerability to salt."
+        },
+        {
+          "name": "spr",
+          "display": "Spr",
+          "type": "string"
+        },
+        {
+          "name": "statsiege",
+          "display": "Statsiege",
+          "type": "int"
+        },
+        {
+          "name": "swampsurv",
+          "display": "Swampsurv",
+          "type": "flag"
+        },
+        {
+          "name": "taint",
+          "display": "Taint",
+          "type": "int",
+          "description": "Taint effect level."
         },
         {
           "name": "wastesurv",
