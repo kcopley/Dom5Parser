@@ -37,9 +37,9 @@ namespace Dom5Editor.Session
             Editor = new ModEditor(mod);
             Editor.Changed += e =>
             {
-                // names and the set of entities may have changed
-                foreach (var t in e.Entities.Select(x => x.Kind).Distinct())
-                    _references.Remove(t);
+                // the touched entities' names (or existence) may have changed: update their rows
+                foreach (var entity in e.Entities)
+                    UpdateReference(entity);
                 Changed?.Invoke(e);
             };
         }
@@ -55,8 +55,7 @@ namespace Dom5Editor.Session
             var unnumbered = new List<ReferenceItem>();
             void Add(IDEntity e)
             {
-                var name = Resolve(e).Get(Command.NAME)?.Property is StringProperty s ? s.Value : null;
-                var item = new ReferenceItem { ID = e.ID, DisplayName = string.IsNullOrEmpty(name) ? $"#{e.ID}" : name!, Tag = e };
+                var item = ReferenceOf(e);
                 if (e.ID > 0) byId[e.ID] = item; else unnumbered.Add(item);
             }
             if (VanillaLoader.Vanilla?.Database.TryGetValue(type, out var vanilla) == true)
@@ -66,6 +65,36 @@ namespace Dom5Editor.Session
                 foreach (var e in own.GetFullList())
                     Add(e);
             return _references[type] = byId.Values.Concat(unnumbered).ToList();
+        }
+
+        private ReferenceItem ReferenceOf(IDEntity e)
+        {
+            var name = Resolve(e).Get(Command.NAME)?.Property is StringProperty s ? s.Value : null;
+            return new ReferenceItem { ID = e.ID, DisplayName = string.IsNullOrEmpty(name) ? $"#{e.ID}" : name!, Tag = e };
+        }
+
+        /// <summary>Keeps a cached reference list in step with one entity (renamed, created, deleted).</summary>
+        private void UpdateReference(IDEntity entity)
+        {
+            if (!_references.TryGetValue(entity.Kind, out var list))
+                return;
+            int i = list.FindIndex(r => entity.ID > 0 ? r.ID == entity.ID : ReferenceEquals(r.Tag, entity));
+            bool held = Mod.Database[entity.Kind].GetFullList().Contains(entity)
+                        || entity.ID > 0 && VanillaLoader.Vanilla?.Database[entity.Kind].TryGetValue(entity.ID, out _) == true;
+            if (!held)
+            {
+                if (i >= 0)
+                    list.RemoveAt(i);
+                return;
+            }
+            var item = ReferenceOf(entity);
+            if (i >= 0)
+                list[i] = item;
+            else
+            {
+                int at = list.FindIndex(r => r.ID > entity.ID || r.ID <= 0);
+                list.Insert(at < 0 ? list.Count : at, item);
+            }
         }
 
         /// <summary>References by the JSON configs' type names ("monster", "weapon", ...).</summary>

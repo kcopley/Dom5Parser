@@ -117,7 +117,9 @@ namespace Dom5Editor.UI.ViewModels
         private void Update(IDEntity entity)
         {
             var key = Key(entity);
-            bool held = _session.Mod.Database[Type].GetFullList().Any(e => ReferenceEquals(e, entity));
+            var set = _session.Mod.Database[Type];
+            bool held = entity.ID > 0 && set.TryGetValue(entity.ID, out var byId) ? ReferenceEquals(byId, entity)
+                : set.GetFullList().Any(e => ReferenceEquals(e, entity));
             var vanilla = VanillaOf(entity.ID);
             if (_byKey.TryGetValue(key, out var item))
             {
