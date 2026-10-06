@@ -89,6 +89,8 @@ namespace Dom5Editor.UI.ViewModels
                 badge.HasValue = true;
                 // set before wiring the commit, so it doesn't count as an edit
                 badge.Value = value != null ? _page.DisplayArguments(value.Property) : defaultText ?? "";
+                var note = CommandHints.ValueNote(_page.Type, command, badge.Value ?? "");
+                badge.ValueNote = note.Length > 0 ? note : null;
                 badge.PropertyChanged += (s, e) =>
                 {
                     if (e.PropertyName != nameof(PropertyItem.Value))
@@ -107,7 +109,10 @@ namespace Dom5Editor.UI.ViewModels
         private string Tooltip(string? description, ResolvedValue? value, Command command)
         {
             var lines = new List<string>();
-            if (!string.IsNullOrEmpty(description))
+            // the manual's description (the badge config's own text is the fallback)
+            if (CommandHints.Tooltip(_page.Type, command) is string hint)
+                lines.Add(hint + "\n");
+            else if (!string.IsNullOrEmpty(description))
                 lines.Add(description!);
             var cmd = CommandsMap.TryGetString(command, out var s) ? s : command.ToString();
             if (value == null)

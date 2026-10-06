@@ -160,6 +160,16 @@ namespace Dom5Editor.UI.Controls
 
         #region Tooltip
 
+        public static readonly DependencyProperty ValueNoteProperty =
+            DependencyProperty.Register(nameof(ValueNote), typeof(string), typeof(CompactBadge), new PropertyMetadata(null));
+
+        /// <summary>What the value means ("Fire", "always (unlimited)"), shown after it; null for nothing.</summary>
+        public string ValueNote
+        {
+            get => (string)GetValue(ValueNoteProperty);
+            set => SetValue(ValueNoteProperty, value);
+        }
+
         public static readonly DependencyProperty TooltipProperty =
             DependencyProperty.Register(nameof(Tooltip), typeof(string), typeof(CompactBadge),
                 new PropertyMetadata(null));

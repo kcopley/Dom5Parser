@@ -41,6 +41,10 @@
       <Content Include="Data\*_badges.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <!-- hover hints from the manuals (tools/command_hints.py) -->
+      <Content Include="Data\command_hints.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <!-- Magic path and gem icons -->

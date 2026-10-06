@@ -1370,9 +1370,8 @@
         {
           "name": "cleanshape",
           "display": "Cleanshape",
-          "type": "ref",
-          "description": "Home province.",
-          "refType": "monster"
+          "type": "flag",
+          "description": "Home province."
         },
         {
           "name": "coridermnr",
@@ -1390,9 +1389,8 @@
         {
           "name": "corpselord",
           "display": "Corpselord",
-          "type": "ref",
-          "description": "Creates a sprite that is used when the rider loses his mount.",
-          "refType": "monster"
+          "type": "int",
+          "description": "Creates a sprite that is used when the rider loses his mount."
         },
         {
           "name": "dancenof",
@@ -1512,9 +1510,8 @@
         {
           "name": "dragonlord",
           "display": "Dragonlord",
-          "type": "ref",
-          "description": "Here are the commands that are used to pair riders and This monster will receive extra units when summoning Drakes mounts.",
-          "refType": "monster"
+          "type": "int",
+          "description": "Here are the commands that are used to pair riders and This monster will receive extra units when summoning Drakes mounts."
         },
         {
           "name": "drawsize",
@@ -1635,9 +1632,8 @@
         {
           "name": "faysummon",
           "display": "Faysummon",
-          "type": "ref",
-          "description": "But e",
-          "refType": "monster"
+          "type": "int",
+          "description": "But e"
         },
         {
           "name": "fire",
@@ -1820,9 +1816,8 @@
         {
           "name": "ivylord",
           "display": "Ivylord",
-          "type": "ref",
-          "description": "This monster will receive extra units when summoning Vine Mounts & Riders Men of different kind.",
-          "refType": "monster"
+          "type": "int",
+          "description": "This monster will receive extra units when summoning Vine Mounts & Riders Men of different kind."
         },
         {
           "name": "kokytosret",
@@ -2188,9 +2183,8 @@
         {
           "name": "reanimator",
           "display": "Reanimator",
-          "type": "ref",
-          "description": "Can be used up to 3 times on one monster.",
-          "refType": "monster"
+          "type": "int",
+          "description": "Can be used up to 3 times on one monster."
         },
         {
           "name": "reclimit",

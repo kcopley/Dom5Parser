@@ -43,6 +43,7 @@
                             RemoveCommand="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=local:BadgeWrapPanel}}"
                             CommandParameter="{Binding}"
                             Tooltip="{Binding Tooltip}"
+                            ValueNote="{Binding ValueNote}"
                             HasIcon="{Binding HasIcon}"
                             IconSource="{Binding IconSource}"
                             IsReference="{Binding IsReference}"

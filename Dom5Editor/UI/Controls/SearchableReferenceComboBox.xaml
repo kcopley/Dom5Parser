@@ -152,7 +152,7 @@
                              PreviewMouseLeftButtonUp="OnListBoxItemClick">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding Tooltip}" ToolTipService.InitialShowDelay="250">
                                     <TextBlock Text="{Binding DisplayName}"
                                                FontWeight="Normal"
                                                VerticalAlignment="Center"/>
@@ -160,11 +160,13 @@
                                                Foreground="{DynamicResource TextSecondaryBrush}"
                                                FontSize="9"
                                                VerticalAlignment="Center"
-                                               Margin="4,0,0,0"/>
+                                               Margin="4,0,0,0"
+                                               Visibility="{Binding ShowId, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                     <TextBlock Text="{Binding ID}"
                                                Foreground="{DynamicResource TextSecondaryBrush}"
                                                FontSize="9"
-                                               VerticalAlignment="Center"/>
+                                               VerticalAlignment="Center"
+                                               Visibility="{Binding ShowId, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
