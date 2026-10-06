@@ -154,7 +154,7 @@ namespace Dom5Editor.Data
                 // Try multiple base paths since Assembly.Location can be empty in .NET 8+
                 var possibleBasePaths = new[]
                 {
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    AppContext.BaseDirectory, // (the assembly location is empty in a single-file app)
                     AppDomain.CurrentDomain.BaseDirectory,
                     Directory.GetCurrentDirectory()
                 };

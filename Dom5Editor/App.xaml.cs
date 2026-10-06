@@ -16,6 +16,16 @@ namespace Dom5Editor
             // Configure VanillaLoader before any UI loads
             ConfigureVanillaLoader();
 
+            // without the vanilla data the editor can't show or check anything: say where it looks
+            if (string.IsNullOrEmpty(VanillaLoader.VanillaDmPath) || !File.Exists(VanillaLoader.VanillaDmPath))
+            {
+                MessageBox.Show("vanilla.dm wasn't found. It holds the game's own data, which the editor builds on.\n\n" +
+                    $"Put vanilla.dm next to the editor ({AppDomain.CurrentDomain.BaseDirectory}).",
+                    "Dom6 Mod Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown(1);
+                return;
+            }
+
             // Dom5Editor --snapshot ...: render the editor off-screen for checking (UI/Snapshot.cs)
             if (UI.Snapshot.TryRun(e.Args, this))
                 return;
