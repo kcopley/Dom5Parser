@@ -765,10 +765,13 @@ namespace Dom5Edit
             {
                 return entity;
             }
-            else
+            // a second #select "Name" block continues the entity the first one selected
+            if (!int.TryParse(val, out _) && !string.IsNullOrEmpty(val)
+                && Database[et].GetFullList().FirstOrDefault(e => e.Selected && e.Named && string.Equals(e.HeaderName, val, StringComparison.OrdinalIgnoreCase)) is IDEntity same)
             {
-                return NewEntity<T>(val, comment, true);
+                return same;
             }
+            return NewEntity<T>(val, comment, true);
         }
 
         /// <summary>
