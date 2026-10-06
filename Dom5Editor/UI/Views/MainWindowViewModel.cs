@@ -83,7 +83,13 @@ namespace Dom5Editor.UI.Views
 
         public void CreateNewMod() => Open(EditorSession.New(), "Created a new mod");
 
-        public void LoadMod(string filePath) => Open(EditorSession.Load(filePath), $"Loaded {System.IO.Path.GetFileName(filePath)}");
+        public void LoadMod(string filePath)
+        {
+            var session = EditorSession.Load(filePath);
+            int issues = session.Mod.ParseIssues.Count;
+            Open(session, $"Loaded {System.IO.Path.GetFileName(filePath)}" +
+                (issues > 0 ? $": {issues} notes from reading it (commands the game ignores, duplicates, ...): Validate lists them" : ""));
+        }
 
         public void SaveMod(string filePath)
         {
