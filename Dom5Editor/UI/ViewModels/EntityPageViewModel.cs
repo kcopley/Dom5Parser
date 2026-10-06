@@ -310,7 +310,9 @@ namespace Dom5Editor.UI.ViewModels
                     covered.Add(c);
                 }
             Structure.Clear();
-            foreach (var p in Resolved.Structure)
+            // (the last copy line is the copy picker's)
+            var copyLine = CopyCommand is Command cc ? Resolved.Structure.LastOrDefault(p => p.Command == cc) : null;
+            foreach (var p in Resolved.Structure.Where(p => !ReferenceEquals(p, copyLine)))
                 Structure.Add(new StructureLine(p, $"{CommandName(p.Command)} {DisplayArguments(p)}".Trim(),
                     GameRules.IsCopy(p.Command) && ReferenceOf(p, RefTypeName(Type)) is var (id, _) && id > 0 ? $"{NameOf(Type, id)} #{id}" : ""));
             Panels.Clear();
@@ -467,6 +469,38 @@ namespace Dom5Editor.UI.ViewModels
         public void ChangeValue(ResolvedValue v, string args) => Edit(ed => ed.Change(Entity, v, args));
         public void RemoveValue(ResolvedValue v) => Edit(ed => ed.Remove(Entity, v));
         public void ResetValue(Command c) => Edit(ed => ed.Reset(Entity, c));
+
+        /// <summary>Drops one of the mod's own values, so the entity has what it inherits again (not a removal: an inherited value stays).</summary>
+        public void ResetLine(ResolvedValue v) => Edit(ed => ed.Run($"Reset {CommandName(v.Command)}", tx =>
+        {
+            var own = ed.OwnEntity(Entity) ?? throw new EditException("Not one of the mod's lines");
+            tx.RemoveLine(own, v.Property);
+        }));
+
+        /// <summary>
+        /// What the entity would have for a command without its own line, as text for a hint: the
+        /// copy source's value when it copies, else vanilla's ("12 from vanilla"); null if neither has one.
+        /// </summary>
+        public string? InheritedText(Command c, string? key = null)
+        {
+            ResolvedValue? Find(ResolvedEntity r) => key == null ? r.Get(c) : r.GetAll(c).LastOrDefault(v => v.Selector == key);
+            string Args(Property p)
+            {
+                var args = DisplayArguments(p);
+                return key != null && args.StartsWith(key + " ") ? args.Substring(key.Length + 1) : args;
+            }
+            if (Resolved.CopyLine is Property copy && ReferenceOf(copy, RefTypeName(Type)).Id is int id && id > 0
+                && Session.Mod.TryGet(Type, id, null, out var source))
+                return Find(Session.Resolve(source)) is ResolvedValue sv ? $"{Args(sv.Property)} from {NameOf(Type, id)} #{id}" : null;
+            if (Resolved.Vanilla != null)
+            {
+                // vanilla's own lines (resolving the vanilla entity would give the mod's state: same key)
+                var line = Resolved.Vanilla.Properties.LastOrDefault(p => p.Command == c
+                    && (key == null || ResolvedValue.ArgumentsOf(p).Split(' ')[0] == key));
+                return line != null ? $"{Args(line)} from vanilla" : null;
+            }
+            return null;
+        }
 
         /// <summary>Removes one of the entity's own lines (a copy or clear line).</summary>
         public void RemoveLine(Property line) => Edit(ed => ed.Run($"Remove {CommandName(line.Command)}", tx =>

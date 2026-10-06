@@ -38,8 +38,22 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>For a keyed command, the first argument this field edits.</summary>
         public string? Key { get; }
         public ResolvedValue? Value { get; }
-        public string Tooltip { get; }
+        public string Tooltip { get; init; }
         public virtual bool IsInherited => Value == null || Value.Source != ValueSource.Own;
+
+        /// <summary>An icon shown with the label (a GameIcon kind: "hp", "path:F", ...), or null.</summary>
+        public string? Icon { get; init; }
+
+        /// <summary>The value the mod sets here (its own line), which Reset drops.</summary>
+        protected virtual ResolvedValue? OwnValue => Value != null && Value.Source == ValueSource.Own ? Value : null;
+
+        /// <summary>Whether the mod sets this value itself (so it can go back to what it inherits).</summary>
+        public bool CanReset => OwnValue != null;
+
+        /// <summary>Drops the mod's own line for this value, back to what it inherits (vanilla, the copy source, the default).</summary>
+        public ICommand ResetCommand => new RelayCommand(() => { if (OwnValue is ResolvedValue v) Page.ResetLine(v); });
+
+        public string ResetTip => "Back to what it inherits" + (Page.InheritedText(Command, Key) is string t ? $": {t}" : "");
 
         /// <summary>The value's arguments, without the key.</summary>
         protected string Arguments
@@ -68,6 +82,8 @@ namespace Dom5Editor.UI.ViewModels
 
         public int Value { get; }
         public string Name { get; }
+        /// <summary>An icon shown with the name (a magic path's), or null.</summary>
+        public string? Icon { get; init; }
         public override string ToString() => Name;
     }
 
@@ -170,6 +186,7 @@ namespace Dom5Editor.UI.ViewModels
         public IReadOnlyList<ChoiceOption> Options { get; }
         public ResolvedValue? Current { get; }
         public override bool IsInherited => Current == null || Current.Source != ValueSource.Own;
+        protected override ResolvedValue? OwnValue => Current != null && Current.Source == ValueSource.Own ? Current : null;
 
         public int? Selected
         {
@@ -190,6 +207,57 @@ namespace Dom5Editor.UI.ViewModels
                 });
             }
         }
+    }
+
+    /// <summary>
+    /// A monster's leadership of one kind (units, magic beings, undead): the class (#goodleader,
+    /// ...) and the bonus on top (#command, #magiccommand, #undcommand), shown as the game shows
+    /// the total.
+    /// </summary>
+    public sealed class LeaderField
+    {
+        public static readonly int[] TierValues = { 0, 10, 50, 100, 150, 200 };
+        private static readonly string[] TierNames = { "None", "Poor", "OK", "Good", "Expert", "Superior" };
+
+        public LeaderField(EntityPageViewModel page, string label, string icon, Command[] tiers, Command bonus, int? defaultTier, string tooltip)
+        {
+            Label = label;
+            Icon = icon;
+            Class = new CommandChoiceField(page, label, tiers.Select((c, i) => (c, $"{TierNames[i]} ({TierValues[i]})")).ToList(),
+                tooltip: tooltip, defaultIndex: defaultTier) { Icon = icon };
+            Bonus = new NumberField(page, label + " bonus", bonus, defaultValue: "0",
+                tooltip: $"{EntityPageViewModel.CommandName(bonus)}: added to the class's {label.ToLowerInvariant()}");
+        }
+
+        public string Label { get; }
+        public string Icon { get; }
+        public CommandChoiceField Class { get; }
+        public NumberField Bonus { get; }
+        public bool IsInherited => Class.IsInherited && Bonus.IsInherited;
+
+        /// <summary>The hint: the class's, and the total the game shows.</summary>
+        public string Hint => $"{Label} in game: {Total} (class + bonus)\n{Class.Tooltip}";
+
+        /// <summary>The leadership in game: the class's value plus the bonus.</summary>
+        public string Total => (Class.Selected is int i && i >= 0 && i < TierValues.Length ? TierValues[i] : 0)
+                               + (int.TryParse(Bonus.Text, out var b) ? b : 0) is int t ? t.ToString() : "";
+    }
+
+    /// <summary>
+    /// A monster's stats as the game's unit window lays them out: three columns (body, combat,
+    /// movement and age), each value with its icon, then its cost.
+    /// </summary>
+    public sealed class StatsPanel
+    {
+        public sealed class Column
+        {
+            public ObservableCollection<object> Cells { get; } = new ObservableCollection<object>();
+        }
+
+        public string Title { get; init; } = "STATS";
+        public ObservableCollection<Column> Columns { get; } = new ObservableCollection<Column>();
+        /// <summary>A row under the columns (cost).</summary>
+        public ObservableCollection<PanelField> Footer { get; } = new ObservableCollection<PanelField>();
     }
 
     /// <summary>A panel of fields: a spell's paths and cost, an item's slot and paths, a site's path and rarity.</summary>
@@ -230,8 +298,8 @@ namespace Dom5Editor.UI.ViewModels
                 var args = ResolvedValue.ArgumentsOf(v.Property).Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 int key = args.Length > 0 && int.TryParse(args[0], out var k) ? k : 0;
                 string rest = string.Join(" ", args.Skip(1));
-                var name = keys.FirstOrDefault(o => o.Value == key)?.Name ?? key.ToString();
-                var row = new PanelRow(v, name, rest, page.SourceText(v), true) { RefId = key, EditText = rest };
+                var option = keys.FirstOrDefault(o => o.Value == key);
+                var row = new PanelRow(v, option?.Name ?? key.ToString(), rest, page.SourceText(v), true) { RefId = key, EditText = rest, Icon = option?.Icon };
                 row.Edited = r =>
                 {
                     if (string.IsNullOrWhiteSpace(r.EditText) || r.EditText == r.Detail)
@@ -242,8 +310,15 @@ namespace Dom5Editor.UI.ViewModels
             }
             var have = new HashSet<int>(Rows.Select(r => r.RefId));
             Addable = keys.Where(o => !have.Contains(o.Value)).Select(o => new ReferenceItem { ID = o.Value, DisplayName = o.Name }).ToList();
+            AddableKeys = keys.Where(o => !have.Contains(o.Value) && o.Icon != null).ToList();
             RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
+            AddKeyCommand = new RelayCommand<ChoiceOption>(o => { if (o != null) AddPick = o.Value; });
         }
+
+        /// <summary>Keys with icons (paths, gems) to add by clicking; the picker covers the rest.</summary>
+        public IReadOnlyList<ChoiceOption> AddableKeys { get; }
+        public bool HasIconKeys => AddableKeys.Count > 0 || Rows.Any(r => r.Icon != null);
+        public ICommand AddKeyCommand { get; }
 
         public string Title { get; }
         public string ValueLabel { get; }

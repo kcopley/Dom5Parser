@@ -45,86 +45,229 @@
         </Style.Triggers>
     </Style>
 
-    <!-- a list of references: weapons, armor, recruits -->
+    <!-- a list of references: weapons, armor, recruits; with columns, a small table -->
     <DataTemplate DataType="{x:Type vm:ReferenceListPanel}">
         <StackPanel Margin="0,0,0,10">
-            <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitle}"/>
+            <!-- the title, and the column headers laid out like a row (hidden copies of its buttons keep them aligned) -->
+            <Border Padding="2,0">
+                <DockPanel>
+                    <Button DockPanel.Dock="Right" Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Visibility="Hidden" Height="1"/>
+                    <Button DockPanel.Dock="Right" Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Visibility="Hidden" Height="1"/>
+                    <Button DockPanel.Dock="Right" Content="Copy &amp; edit" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Height="1"
+                            Visibility="{Binding CanCopyEdit, Converter={StaticResource BoolToVisibilityConverter}}" Opacity="0" IsHitTestVisible="False"/>
+                    <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding Columns}" VerticalAlignment="Bottom"
+                                  Visibility="{Binding IsTable, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Width="58" ToolTip="{Binding Tooltip}" Background="Transparent" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
+                                        <controls:GameIcon Kind="{Binding Icon}" Width="12" Height="12" Margin="0,0,3,0"/>
+                                        <TextBlock Text="{Binding Header}" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitle}" VerticalAlignment="Bottom"/>
+                </DockPanel>
+            </Border>
             <ItemsControl ItemsSource="{Binding Rows}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:PanelRow}">
-                        <DockPanel Margin="0,1" ToolTip="{Binding Source}">
-                            <Button DockPanel.Dock="Right" Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                                    ToolTip="Remove" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"/>
-                            <Button DockPanel.Dock="Right" Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                                    ToolTip="Open" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"/>
-                            <Button DockPanel.Dock="Right" Content="Copy &amp; edit" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                                    ToolTip="Make a new one copying this, use it here instead, and open it (other users keep the old one)"
-                                    Command="{Binding DataContext.CopyEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"
-                                    Visibility="{Binding DataContext.CanCopyEdit, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <TextBlock DockPanel.Dock="Right" Text="{Binding Detail}" Foreground="{DynamicResource TextMutedBrush}"
-                                       FontFamily="{DynamicResource MonospaceFont}" Margin="8,0,0,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding RefId, StringFormat='#{0}'}" Width="48" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding Text}" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <controls:SearchableReferenceComboBox Width="260" Height="22" HorizontalAlignment="Left" Margin="0,3,0,0"
-                                                  ItemsSource="{Binding Candidates}" SelectedId="{Binding AddPick, Mode=TwoWay}"
-                                                  Placeholder="+ Add..."/>
-            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
-        </StackPanel>
-    </DataTemplate>
-
-    <!-- a monster's magic paths and random paths -->
-    <DataTemplate DataType="{x:Type vm:MagicPanel}">
-        <StackPanel Margin="0,0,0,10">
-            <TextBlock Text="MAGIC" Style="{StaticResource PanelTitle}"/>
-            <ItemsControl ItemsSource="{Binding Paths}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vm:PanelRow}">
-                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
-                            <TextBlock Text="{Binding Text}" Width="70" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
-                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="34" Style="{StaticResource InlineBox}"
-                                     ToolTip="Level (0 removes the path)"/>
-                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove"
-                                    Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <controls:SearchableReferenceComboBox Width="160" Height="22" HorizontalAlignment="Left" Margin="0,3,0,6"
-                                                  ItemsSource="{Binding AddablePaths}" SelectedId="{Binding AddPathPick, Mode=TwoWay}"
-                                                  Placeholder="+ Add path..."/>
-            <TextBlock Text="RANDOM PATHS" Style="{StaticResource PanelTitle}"/>
-            <ItemsControl ItemsSource="{Binding Random}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vm:PanelRow}">
-                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
-                            <TextBlock Text="{Binding Text}" Width="70" Style="{StaticResource RowText}" VerticalAlignment="Center"
-                                       FontFamily="{DynamicResource MonospaceFont}"/>
-                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="40" Style="{StaticResource InlineBox}"
-                                     ToolTip="Chance in percent"/>
-                            <TextBlock Text="%" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove"
-                                    Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"/>
-                        </StackPanel>
+                        <Border Padding="2,1" CornerRadius="3" Background="Transparent" x:Name="RowBorder" ToolTip="{Binding Source}">
+                            <DockPanel>
+                                <Button DockPanel.Dock="Right" Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                        ToolTip="Remove" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"/>
+                                <Button DockPanel.Dock="Right" Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                        ToolTip="Open it" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"/>
+                                <Button DockPanel.Dock="Right" Content="Copy &amp; edit" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                        ToolTip="Make a new one copying this, use it here instead, and open it (other users keep the old one)"
+                                        Command="{Binding DataContext.CopyEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Visibility="{Binding DataContext.CanCopyEdit, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding Cells}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" Width="58" Padding="8,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                                       FontFamily="{DynamicResource MonospaceFont}" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <TextBlock DockPanel.Dock="Right" Text="{Binding Detail}" Foreground="{DynamicResource TextMutedBrush}"
+                                           FontFamily="{DynamicResource MonospaceFont}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding RefId, StringFormat='#{0}'}" Width="48" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Text}" Style="{StaticResource RowText}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </DockPanel>
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <Trigger SourceName="RowBorder" Property="IsMouseOver" Value="True">
+                                <Setter TargetName="RowBorder" Property="Background" Value="#14FFFFFF"/>
+                            </Trigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
-                <TextBox x:Name="NewRandom" Width="90" Style="{StaticResource InlineBox}" ToolTip="Paths as letters: F A W E S D N G B H (e.g. FAWE)"/>
-                <Button Content="+ Add random" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
-                        Command="{Binding AddRandomCommand}" CommandParameter="{Binding Text, ElementName=NewRandom}"/>
+                <controls:SearchableReferenceComboBox Width="260" Height="22" HorizontalAlignment="Left"
+                                                      ItemsSource="{Binding Candidates}" SelectedId="{Binding AddPick, Mode=TwoWay}"
+                                                      Placeholder="+ Add..."/>
+                <Button Content="{Binding NewLabel}" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" Command="{Binding NewCommand}"
+                        ToolTip="Make a new one, give it to this entity, and open it to edit"
+                        Visibility="{Binding CanMakeNew, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
             <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
         </StackPanel>
     </DataTemplate>
+
+    <!-- a magic path as an icon button: on/off for a random path's mask -->
+    <Style x:Key="PathToggle" TargetType="ToggleButton">
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="B" CornerRadius="4" BorderThickness="1" BorderBrush="Transparent" Background="Transparent" Padding="2">
+                        <controls:GameIcon x:Name="I" Kind="{Binding Icon}" Width="18" Height="18" Opacity="0.25"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="I" Property="Opacity" Value="1"/>
+                            <Setter TargetName="B" Property="Background" Value="#22FFFFFF"/>
+                            <Setter TargetName="B" Property="BorderBrush" Value="#55FFFFFF"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="B" Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- a path to add: its icon, faint until pointed at -->
+    <Style x:Key="PathAddButton" TargetType="Button">
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="B" CornerRadius="4" BorderThickness="1" BorderBrush="Transparent" Background="Transparent" Padding="2">
+                        <controls:GameIcon x:Name="I" Kind="{Binding Icon}" Width="18" Height="18" Opacity="0.45"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="I" Property="Opacity" Value="1"/>
+                            <Setter TargetName="B" Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- the ten path toggles of one random path -->
+    <DataTemplate x:Key="PathTogglesTemplate">
+        <ItemsControl ItemsSource="{Binding Toggles}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:PathToggle}">
+                    <ToggleButton IsChecked="{Binding IsOn, Mode=TwoWay}" Style="{StaticResource PathToggle}" ToolTip="{Binding Name}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DataTemplate>
+
+    <!-- a monster's magic: paths as icon chips, paths to add, random paths as toggle rows -->
+    <DataTemplate DataType="{x:Type vm:MagicPanel}">
+        <StackPanel Margin="0,0,0,10" x:Name="MagicRoot">
+            <DockPanel>
+                <TextBlock Text="MAGIC" Style="{StaticResource PanelTitle}"/>
+                <TextBlock Text="{Binding Summary}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="10,0,0,3"
+                           FontFamily="{DynamicResource MonospaceFont}"/>
+            </DockPanel>
+            <WrapPanel Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding Paths}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:PanelRow}">
+                            <Border Background="#18FFFFFF" CornerRadius="4" Padding="4,2" Margin="0,0,6,4" ToolTip="{Binding Source}">
+                                <StackPanel Orientation="Horizontal">
+                                    <controls:GameIcon Kind="{Binding Icon}" Width="20" Height="20" Margin="0,0,4,0"/>
+                                    <TextBlock Text="{Binding Text}" Style="{StaticResource RowText}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
+                                             Width="26" TextAlignment="Center" Style="{StaticResource InlineBox}" ToolTip="Level (0 removes the path)"/>
+                                    <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove this path"
+                                            Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </WrapPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,2,0,6">
+                <TextBlock Text="Add a path:" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <ItemsControl ItemsSource="{Binding AddablePaths}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:PathToggle}">
+                            <Button Style="{StaticResource PathAddButton}" ToolTip="{Binding Name, StringFormat='Add {0} magic (level 1)'}"
+                                    Command="{Binding DataContext.AddPathCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <TextBlock Text="RANDOM PATHS (each line: one more level in one of the lit paths, at that chance)" Style="{StaticResource PanelTitle}"/>
+            <ItemsControl ItemsSource="{Binding Random}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:RandomPathRow}">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
+                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource PathTogglesTemplate}"/>
+                            <TextBox Text="{Binding Chance, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
+                                     Width="34" TextAlignment="Right" Margin="8,0,0,0" Style="{StaticResource InlineBox}" ToolTip="Chance in percent (1-100)"/>
+                            <TextBlock Text="%" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="8,0,0,0" ToolTip="Remove this random path"
+                                    Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                            <TextBlock Text="{Binding Warning}" Foreground="{DynamicResource WarningBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,4,0,0" Padding="0,4,0,0" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" DataContext="{Binding NewRandom}">
+                    <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource PathTogglesTemplate}"
+                                      ToolTip="Light the paths it can roll among"/>
+                    <TextBox Text="{Binding Chance, UpdateSourceTrigger=PropertyChanged}" Width="34" TextAlignment="Right" Margin="8,0,0,0"
+                             Style="{StaticResource InlineBox}" ToolTip="Chance in percent (1-100)"/>
+                    <TextBlock Text="%" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                    <Button Content="+ Add random path" Style="{DynamicResource ButtonSmall}" Margin="8,0,0,0"
+                            Command="{Binding DataContext.AddRandomCommand, ElementName=MagicRoot}"
+                            ToolTip="Adds #custommagic with the lit paths and the chance"/>
+                </StackPanel>
+            </Border>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+    </DataTemplate>
+
     <!-- a field's label: grey while the value is inherited -->
     <Style x:Key="FieldLabel" TargetType="TextBlock">
         <Setter Property="Width" Value="110"/>
@@ -137,37 +280,179 @@
         </Style.Triggers>
     </Style>
 
+    <!-- back to what it inherits: only while the mod sets the value itself -->
+    <Style x:Key="ResetButton" TargetType="Button">
+        <Setter Property="Content" Value="↺"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="3,0,0,0"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+        <Setter Property="Command" Value="{Binding ResetCommand}"/>
+        <Setter Property="ToolTip" Value="{Binding ResetTip}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="B" Background="Transparent" CornerRadius="3">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="B" Property="Background" Value="#22FFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding CanReset}" Value="False">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- a label with its icon (none: just the label) -->
+    <DataTemplate x:Key="FieldLabelTemplate">
+        <StackPanel Orientation="Horizontal" Width="130">
+            <controls:GameIcon Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,5,0" VerticalAlignment="Center"
+                               Visibility="{Binding Icon, Converter={StaticResource NullToVisibilityConverter}}"/>
+            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" Width="NaN"/>
+        </StackPanel>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:ChoiceField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
-            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
-            <ComboBox Width="220" ItemsSource="{Binding Options}" DisplayMemberPath="Name" SelectedValuePath="Value"
-                      SelectedValue="{Binding Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,2"/>
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
+            <ComboBox Width="220" ItemsSource="{Binding Options}" SelectedValuePath="Value"
+                      SelectedValue="{Binding Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,2">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:ChoiceOption}">
+                        <StackPanel Orientation="Horizontal">
+                            <controls:GameIcon Kind="{Binding Icon}" Width="14" Height="14" Margin="0,0,5,0"
+                                               Visibility="{Binding Icon, Converter={StaticResource NullToVisibilityConverter}}"/>
+                            <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Style="{StaticResource ResetButton}"/>
         </StackPanel>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:CommandChoiceField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
-            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
             <ComboBox Width="220" ItemsSource="{Binding Options}" DisplayMemberPath="Name" SelectedValuePath="Value"
                       SelectedValue="{Binding Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="6,2"/>
+            <Button Style="{StaticResource ResetButton}"/>
         </StackPanel>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:NumberField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
-            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
             <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="80" Style="{StaticResource InlineBox}"/>
+            <Button Style="{StaticResource ResetButton}"/>
             <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:RefField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
-            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}"/>
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
             <controls:SearchableReferenceComboBox Width="260" Height="22" ItemsSource="{Binding Candidates}"
                                                   SelectedId="{Binding SelectedId, Mode=TwoWay}" Placeholder="(none)"/>
             <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding OpenCommand}" ToolTip="Open"/>
+            <Button Style="{StaticResource ResetButton}"/>
         </StackPanel>
+    </DataTemplate>
+
+    <!-- one stat of the unit window: icon, label, value (right-aligned), reset -->
+    <DataTemplate x:Key="StatCell" DataType="{x:Type vm:NumberField}">
+        <DockPanel Height="26" ToolTip="{Binding Tooltip}" Background="Transparent">
+            <controls:GameIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right" Style="{StaticResource ResetButton}"/>
+            <TextBox DockPanel.Dock="Right" Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
+                     Width="56" TextAlignment="Right" FontSize="12" Style="{StaticResource InlineBox}"/>
+            <TextBlock DockPanel.Dock="Right" Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="6,0"
+                       VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" Width="NaN" FontSize="12"/>
+        </DockPanel>
+    </DataTemplate>
+
+    <!-- one leadership of the unit window: class and bonus, the total as the game shows it -->
+    <DataTemplate x:Key="LeaderCell" DataType="{x:Type vm:LeaderField}">
+        <DockPanel Height="26" Background="Transparent" ToolTip="{Binding Hint}">
+            <controls:GameIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right" Style="{StaticResource ResetButton}" DataContext="{Binding Bonus}"/>
+            <TextBox DockPanel.Dock="Right" Text="{Binding Bonus.Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
+                     Width="30" TextAlignment="Right" FontSize="12" Style="{StaticResource InlineBox}" ToolTip="{Binding Bonus.Tooltip}"/>
+            <TextBlock DockPanel.Dock="Right" Text="+" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="3,0"/>
+            <Button DockPanel.Dock="Right" Style="{StaticResource ResetButton}" DataContext="{Binding Class}"/>
+            <ComboBox DockPanel.Dock="Right" Width="104" ItemsSource="{Binding Class.Options}" DisplayMemberPath="Name" SelectedValuePath="Value"
+                      SelectedValue="{Binding Class.Selected, Mode=TwoWay}" Style="{DynamicResource ComboBoxBase}" Padding="4,1" FontSize="11"/>
+            <TextBlock VerticalAlignment="Center" FontSize="12">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsInherited}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+                <Run Text="{Binding Label, Mode=OneWay}"/>
+            </TextBlock>
+        </DockPanel>
+    </DataTemplate>
+
+    <!-- a monster's stats as the game's unit window: three columns, then cost -->
+    <DataTemplate DataType="{x:Type vm:StatsPanel}">
+        <Border Background="#10FFFFFF" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="5" Padding="10,6,6,6" Margin="0,0,0,12">
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding Columns}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding Cells}" Width="318" Margin="0,0,14,0">
+                                <ItemsControl.Resources>
+                                    <DataTemplate DataType="{x:Type vm:NumberField}">
+                                        <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource StatCell}"/>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:LeaderField}">
+                                        <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LeaderCell}"/>
+                                    </DataTemplate>
+                                </ItemsControl.Resources>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,4,0,0" Padding="0,4,0,0">
+                    <ItemsControl ItemsSource="{Binding Footer}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:NumberField}">
+                                <StackPanel Orientation="Horizontal" Height="26" Margin="0,0,28,0" ToolTip="{Binding Tooltip}" Background="Transparent">
+                                    <controls:GameIcon Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" Width="NaN" FontSize="12" Margin="0,0,8,0"/>
+                                    <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
+                                             Width="56" TextAlignment="Right" FontSize="12" Style="{StaticResource InlineBox}"/>
+                                    <Button Style="{StaticResource ResetButton}"/>
+                                    <TextBlock Text="{Binding Note}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+            </StackPanel>
+        </Border>
     </DataTemplate>
 
     <!-- a nametype's names, one per line -->
@@ -223,7 +508,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:PanelRow}">
                         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
-                            <TextBlock Text="{Binding Text}" Width="110" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
+                            <controls:GameIcon Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Text}" Width="90" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
                             <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="50" Style="{StaticResource InlineBox}"/>
                             <TextBlock Text="{Binding DataContext.ValueLabel, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                        Foreground="{DynamicResource TextMutedBrush}" Margin="6,0,0,0" VerticalAlignment="Center"/>
@@ -234,8 +520,23 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <controls:SearchableReferenceComboBox Width="160" Height="22" HorizontalAlignment="Left" Margin="0,3,0,0"
-                                                  ItemsSource="{Binding Addable}" SelectedId="{Binding AddPick, Mode=TwoWay}" Placeholder="+ Add..."/>
+            <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                <ItemsControl ItemsSource="{Binding AddableKeys}" Visibility="{Binding HasIconKeys, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:ChoiceOption}">
+                            <Button Style="{StaticResource PathAddButton}" ToolTip="{Binding Name, StringFormat='Add {0}'}"
+                                    Command="{Binding DataContext.AddKeyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <controls:SearchableReferenceComboBox Width="160" Height="22" HorizontalAlignment="Left"
+                                                      ItemsSource="{Binding Addable}" SelectedId="{Binding AddPick, Mode=TwoWay}" Placeholder="+ Add..."
+                                                      Visibility="{Binding HasIconKeys, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
+            </StackPanel>
             <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"
                        Visibility="{Binding HasHint, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </StackPanel>
