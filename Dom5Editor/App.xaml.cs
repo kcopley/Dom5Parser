@@ -16,9 +16,16 @@ namespace Dom5Editor
             // Configure VanillaLoader before any UI loads
             ConfigureVanillaLoader();
 
+            // Dom5Editor --snapshot ...: render the editor off-screen for checking (UI/Snapshot.cs)
+            if (UI.Snapshot.TryRun(e.Args, this))
+                return;
+
             // Force load vanilla data immediately on startup
             // This ensures vanilla.dm is parsed before any mod is loaded
             LoadVanillaData();
+
+            MainWindow = new UI.Views.MainWindow();
+            MainWindow.Show();
         }
 
         private void LoadVanillaData()

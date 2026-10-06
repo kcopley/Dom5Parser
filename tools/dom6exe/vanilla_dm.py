@@ -381,6 +381,9 @@ def write(exe, path):
     res = {'game_version': exe.version}
     for kind, fn in sections:
         cmds = fn(exe)
+        # record 0 is a placeholder ("no one", "Nothing") except for nations (0 = Independents)
+        if kind != 'nation':
+            cmds.pop(0, None)
         for i, e in cmds.items():
             text.append('#select%s %d' % (kind, i))
             text.extend(e['lines'])
