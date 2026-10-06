@@ -124,6 +124,9 @@
             <TextBox x:Name="MessageBox" Text="{Binding Text, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True"
                      MinHeight="70" MaxHeight="220" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxBase}"
                      ToolTip="{Binding Tooltip}"/>
+            <TextBlock Text="The game's own message, read from your Dominions6.exe (not saved in the mod). A change writes the mod's own #msg."
+                       FontSize="10" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap" Margin="0,2,0,0"
+                       Visibility="{Binding IsGameText, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <WrapPanel Orientation="Horizontal" Margin="0,3,0,0">
                 <TextBlock Text="Insert:" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,4,0"/>
                 <ItemsControl ItemsSource="{x:Static vm:EventMessagePanel.Tags}">
@@ -179,7 +182,8 @@
         <Border x:Name="Row" Padding="4,1" CornerRadius="3" Background="Transparent" ToolTip="{Binding Tooltip}" ToolTipService.InitialShowDelay="600">
             <DockPanel>
                 <Button DockPanel.Dock="Right" Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove this line"
-                        Command="{Binding RemoveCommand}" VerticalAlignment="Center"/>
+                        Command="{Binding RemoveCommand}" VerticalAlignment="Center"
+                        Visibility="{Binding CanRemove, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 <Button DockPanel.Dock="Right" Content="↓" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Move down (order matters: some lines act on the ones after them)"
                         Command="{Binding MoveDownCommand}" IsEnabled="{Binding CanMoveDown}" VerticalAlignment="Center"
                         Visibility="{Binding DataContext.IsRequirements, RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=2}, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
@@ -193,12 +197,12 @@
                     <!-- a number -->
                     <StackPanel Orientation="Horizontal" Visibility="{Binding IsText, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBox Text="{Binding EditText, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True"
-                                 MinWidth="40" TextAlignment="Center" Margin="3,0" Style="{StaticResource EventBoxText}"/>
+                                 IsEnabled="{Binding CanEdit}" MinWidth="40" TextAlignment="Center" Margin="3,0" Style="{StaticResource EventBoxText}"/>
                         <TextBlock Text="{Binding Suffix}" VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}"/>
                     </StackPanel>
                     <!-- one of a list -->
                     <ComboBox ItemsSource="{Binding Options}" SelectedValuePath="Value" SelectedValue="{Binding Selected, Mode=TwoWay}"
-                              Style="{DynamicResource ComboBoxBase}" Padding="5,0" Margin="3,0" MinWidth="90" Height="22"
+                              IsEnabled="{Binding CanEdit}" Style="{DynamicResource ComboBoxBase}" Padding="5,0" Margin="3,0" MinWidth="90" Height="22"
                               Visibility="{Binding IsChoice, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type vm:ChoiceOption}">
@@ -212,17 +216,18 @@
                     </ComboBox>
                     <!-- yes or no: the two sentences -->
                     <ComboBox ItemsSource="{Binding Options}" DisplayMemberPath="Name" SelectedValuePath="Value" SelectedValue="{Binding Selected, Mode=TwoWay}"
-                              Style="{DynamicResource ComboBoxBase}" Padding="5,0" Height="22" MinWidth="200"
+                              IsEnabled="{Binding CanEdit}" Style="{DynamicResource ComboBoxBase}" Padding="5,0" Height="22" MinWidth="200"
                               Visibility="{Binding IsBool, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <!-- an entity -->
                     <StackPanel Orientation="Horizontal" Margin="3,0" Visibility="{Binding IsRef, Converter={StaticResource BoolToVisibilityConverter}}">
                         <controls:SearchableReferenceComboBox Width="220" Height="22" ItemsSource="{Binding Candidates}" SelectedId="{Binding RefId, Mode=TwoWay}"
+                                                              IsEnabled="{Binding CanEdit}"
                                                               Placeholder="(pick)"/>
                         <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="3,0,0,0" Command="{Binding OpenCommand}" ToolTip="Open it"/>
                     </StackPanel>
                     <!-- flags (orders, afflictions, terrain) -->
                     <Grid Margin="3,0" Visibility="{Binding IsMask, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <ToggleButton x:Name="MaskToggle" Padding="6,0" Height="22" MinWidth="120" HorizontalContentAlignment="Left"
+                        <ToggleButton x:Name="MaskToggle" Padding="6,0" Height="22" MinWidth="120" HorizontalContentAlignment="Left" IsEnabled="{Binding CanEdit}"
                                       Background="#1AFFFFFF" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="#40FFFFFF" ToolTip="Pick which">
                             <TextBlock Text="{Binding MaskWords}" TextTrimming="CharacterEllipsis" MaxWidth="360"/>
                         </ToggleButton>
@@ -350,7 +355,8 @@
                     <Button Content="+ Follow-up when this happens" Style="{DynamicResource ButtonSmall}" Command="{Binding FollowUpCommand}" Margin="0,0,6,0"
                             ToolTip="Sets a province code here (#code, with #req_code 0 if this event requires none) and makes an event that requires it and ends the chain (#code 0)"/>
                     <Button Content="+ Delayed follow-up" Style="{DynamicResource ButtonSmall}" Command="{Binding DelayedCommand}" Margin="0,0,6,0"
-                            ToolTip="Adds #delay 1 here and makes an event right after this one in the file: the game runs it a turn later"/>
+                            ToolTip="Adds #delay 1 here and makes an event right after this one in the file: the game runs it a turn later. (Not for a game event: its #delay runs the game's next event.)"
+                            ToolTipService.ShowOnDisabled="True"/>
                     <Button Content="+ Player choice (accept / decline)" Style="{DynamicResource ButtonSmall}" Command="{Binding ChoiceCommand}"
                             ToolTip="Offers Accept and Decline in the province (#order 12) with a code, and makes an event for each answer (#req_targorder 102 / 103)"/>
                 </WrapPanel>

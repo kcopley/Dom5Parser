@@ -44,7 +44,14 @@ namespace Dom5Edit.GameData
                     context.Commands.Add(c.GetString()!);
                 if (ctx.Value.TryGetProperty("effects", out var effects))
                     foreach (var e in effects.EnumerateObject())
-                        context.Effects[e.Name] = CommandEffect.Read(e.Value);
+                    {
+                        var effect = CommandEffect.Read(e.Value);
+                        // an event keeps requirements and effects in two lists with their own numbers
+                        // (tools/dom6exe README, Events): #req_code's 59 isn't #decscale3's 59
+                        if (ctx.Name == "event" && e.Name.StartsWith("req_"))
+                            effect = effect.Renamed(k => k.StartsWith("a") ? "r" + k.Substring(1) : k);
+                        context.Effects[e.Name] = effect;
+                    }
                 _contexts[ctx.Name] = context;
             }
         }
@@ -165,6 +172,13 @@ namespace Dom5Edit.GameData
 
         /// <summary>A repeatable command: each line adds an entry rather than replacing the last.</summary>
         public bool Appends => Set.Count == 0 && Bits.Count == 0 && (Add.Count > 0 || Or.Count > 0);
+
+        /// <summary>The same effect with its ability keys renamed (an event's requirement list: "a59" -> "r59").</summary>
+        internal CommandEffect Renamed(Func<string, string> rename) => new CommandEffect
+        {
+            Set = Set.Select(rename).ToHashSet(), Add = Add.Select(rename).ToHashSet(), Or = Or.Select(rename).ToHashSet(),
+            Del = Del.Select(rename).ToHashSet(), Bits = Bits, Clears = Clears, Min = Min, Max = Max, Optional = Optional, Values = Values,
+        };
 
         internal static CommandEffect Read(JsonElement e)
         {

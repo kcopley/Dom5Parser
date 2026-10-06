@@ -111,6 +111,13 @@ namespace Dom5Edit.Events
     public sealed class EventGraph
     {
         private readonly List<IDEntity> _events = new List<IDEntity>();
+        private readonly List<IDEntity> _modEvents = new List<IDEntity>();
+        private readonly List<IDEntity> _gameEvents = new List<IDEntity>();
+        private readonly Dictionary<int, IDEntity> _byNumber = new Dictionary<int, IDEntity>();
+        /// <summary>The lines the mod writes (a changed game event's other lines are the game's).</summary>
+        private readonly HashSet<Property> _ownLines = new HashSet<Property>(ReferenceEqualityComparer.Instance);
+        private readonly Dictionary<IDEntity, int> _modIndex = new(ReferenceEqualityComparer.Instance);
+        private HashSet<IDEntity> _own = new HashSet<IDEntity>(ReferenceEqualityComparer.Instance);
         private readonly Dictionary<IDEntity, List<Property>> _lines = new(ReferenceEqualityComparer.Instance);
         private readonly List<EventLink> _links = new List<EventLink>();
         private readonly List<EventProblem> _problems = new List<EventProblem>();
@@ -121,7 +128,14 @@ namespace Dom5Edit.Events
         private Dictionary<long, List<IDEntity>> _enchantmentSpells => Spells.Enchantments;
         private Dictionary<long, List<IDEntity>> _eventSpells => Spells.EventCauses;
 
+        /// <summary>Every event: the mod's in file order, then the game's own that the mod doesn't change.</summary>
         public IReadOnlyList<IDEntity> Events => _events;
+
+        /// <summary>The mod's events, in the order the game reads them.</summary>
+        public IReadOnlyList<IDEntity> ModEvents => _modEvents;
+
+        /// <summary>Whether an event is the mod's (a #newevent or a #selectevent), not one of the game's it leaves alone.</summary>
+        public bool IsModEvent(IDEntity e) => _own.Contains(e);
         public IReadOnlyList<EventLink> Links => _links;
         public IReadOnlyList<EventProblem> Problems => _problems;
         public IReadOnlyList<EventChain> Chains => _chains;
@@ -129,16 +143,35 @@ namespace Dom5Edit.Events
         /// <summary>An event's lines as saved, in order.</summary>
         public IReadOnlyList<Property> LinesOf(IDEntity e) => _lines.TryGetValue(e, out var l) ? l : (IReadOnlyList<Property>)Array.Empty<Property>();
 
-        public IEnumerable<EventLink> From(IDEntity e) => _links.Where(l => ReferenceEquals(l.From, e));
-        public IEnumerable<EventLink> To(IDEntity e) => _links.Where(l => ReferenceEquals(l.To, e));
+        public IEnumerable<EventLink> From(IDEntity e) => LinksBy(ref _from, l => l.From, e);
+        public IEnumerable<EventLink> To(IDEntity e) => LinksBy(ref _to, l => l.To, e);
+        private ILookup<IDEntity, EventLink>? _from, _to;
+        private IEnumerable<EventLink> LinksBy(ref ILookup<IDEntity, EventLink>? index, Func<EventLink, IDEntity> key, IDEntity e) =>
+            (index ??= _links.ToLookup<EventLink, IDEntity>(key, ReferenceEqualityComparer.Instance))[e];
         public IEnumerable<EventProblem> ProblemsOf(IDEntity e) => _problems.Where(p => ReferenceEquals(p.Event, e));
         public EventChain? ChainOf(IDEntity e) => _chainOf.TryGetValue(e, out var c) ? c : null;
 
         /// <summary>The spells that make this enchantment (their #damage), mod's and vanilla's.</summary>
         public IReadOnlyList<IDEntity> SpellsOfEnchantment(long ench) => _enchantmentSpells.TryGetValue(ench, out var l) ? l : (IReadOnlyList<IDEntity>)Array.Empty<IDEntity>();
 
-        /// <summary>The position of an event in the file (0 first), or -1.</summary>
-        public int IndexOf(IDEntity e) => _events.FindIndex(x => ReferenceEquals(x, e));
+        /// <summary>The position of one of the mod's events in its file (0 first), or -1.</summary>
+        public int IndexOf(IDEntity e) => _modIndex.TryGetValue(e, out var i) ? i : -1;
+
+        /// <summary>
+        /// The event #delay plans after this one: the next record number (tools/dom6exe README,
+        /// Events). After a #newevent that's the mod's next #newevent (a #selectevent block in
+        /// between doesn't count); after #selectevent N (or the game's event N), event N + 1.
+        /// <paramref name="steps"/> 2 is the one after it (#delayskip).
+        /// </summary>
+        public IDEntity? NextRecord(IDEntity e, int steps = 1)
+        {
+            if (e.Selected || !_own.Contains(e))
+                return _byNumber.TryGetValue(e.ID + steps, out var next) ? next : null;
+            for (int j = IndexOf(e) + 1; j < _modEvents.Count; j++)
+                if (!_modEvents[j].Selected && --steps == 0)
+                    return _modEvents[j];
+            return null;
+        }
 
         /// <summary>Every province code the mod's events set or check.</summary>
         public IEnumerable<long> CodesUsed => _events.SelectMany(LinesOf)
@@ -166,6 +199,8 @@ namespace Dom5Edit.Events
             var g = new EventGraph();
             g.Spells = spells ?? SpellIndex.Build(mod, resolve, vanilla);
             var plan = new SavePlan(mod);
+            // the mod's events in the order the game reads them (its #newevents get records 3500,
+            // 3501, ... in this order)
             foreach (var block in plan.Blocks())
             {
                 if (block.Entity.GetEntityType() != EntityType.EVENT)
@@ -173,10 +208,37 @@ namespace Dom5Edit.Events
                 if (!g._lines.TryGetValue(block.Entity, out var lines))
                 {
                     g._lines[block.Entity] = lines = new List<Property>();
-                    g._events.Add(block.Entity);
+                    g._modEvents.Add(block.Entity);
                 }
                 lines.AddRange(block.Lines);
+                g._ownLines.UnionWith(block.Lines);
             }
+            // a #selectevent of a game event: what it is in game (the game's lines and the mod's)
+            foreach (var e in g._modEvents.Where(e => e.Selected))
+            {
+                var r = resolve(e);
+                var lines = r.Values.Select(v => v.Property).ToList();
+                if (!lines.Any(p => p.Command == Command.MSG) && r.Assets.TryGetValue(Command.MSG, out var msg))
+                    lines.Add(msg);
+                g._lines[e] = lines;
+                if (e.ID >= 0)
+                    g._byNumber[e.ID] = e;
+            }
+            // the game's own events the mod doesn't change (their messages are display assets)
+            if (vanilla != null && vanilla.Database.TryGetValue(EntityType.EVENT, out var gameEvents))
+                foreach (var v in gameEvents.GetFullList().OrderBy(v => v.ID))
+                {
+                    if (v.ID < 0 || g._byNumber.ContainsKey(v.ID))
+                        continue;
+                    g._byNumber[v.ID] = v;
+                    g._lines[v] = v.Properties.ToList();
+                    g._gameEvents.Add(v);
+                }
+            g._events.AddRange(g._modEvents);
+            g._events.AddRange(g._gameEvents);
+            for (int i = 0; i < g._modEvents.Count; i++)
+                g._modIndex[g._modEvents[i]] = i;
+            g._own = new HashSet<IDEntity>(g._modEvents, ReferenceEqualityComparer.Instance);
             g.Link();
             g.Group();
             g.Check();
@@ -239,13 +301,13 @@ namespace Dom5Edit.Events
                     }
                 }
 
-                // #delay: the next event in the file; #delayskip: the one after it
+                // #delay: the next record; #delayskip: the one after it
                 var delay = lines.LastOrDefault(p => EventInfo.Delays.Contains(p.Command));
-                if (delay != null && i + 1 < _events.Count)
-                    _links.Add(new EventLink(EventLinkKind.Delay, e, _events[i + 1], EventInfo.Number(delay) ?? 0, delay, null));
+                if (delay != null && NextRecord(e) is IDEntity next)
+                    _links.Add(new EventLink(EventLinkKind.Delay, e, next, EventInfo.Number(delay) ?? 0, delay, null));
                 var skip = lines.LastOrDefault(p => p.Command == Command.DELAYSKIP);
-                if (skip != null && i + 2 < _events.Count)
-                    _links.Add(new EventLink(EventLinkKind.DelaySkip, e, _events[i + 2], EventInfo.Number(skip) ?? 0, skip, null));
+                if (skip != null && NextRecord(e, 2) is IDEntity after)
+                    _links.Add(new EventLink(EventLinkKind.DelaySkip, e, after, EventInfo.Number(skip) ?? 0, skip, null));
             }
         }
 
@@ -284,12 +346,12 @@ namespace Dom5Edit.Events
             var codesChecked = new HashSet<long>(_events.SelectMany(LinesOf)
                 .Where(p => EventInfo.CodeCheckers.Contains(p.Command) || EventInfo.CodeExcluders.Contains(p.Command) || EventInfo.CodeResetters.Contains(p.Command))
                 .Select(EventInfo.Number).Where(n => n.HasValue).Select(n => n!.Value));
-            for (int i = 0; i < _events.Count; i++)
+            // the mod's events only, and of a changed game event the mod's lines: the game's own are as they are
+            foreach (var e in _modEvents)
             {
-                var e = _events[i];
                 var lines = LinesOf(e);
                 var rarity = EventInfo.Rarity(lines);
-                foreach (var p in lines)
+                foreach (var p in lines.Where(_ownLines.Contains))
                 {
                     long? n = EventInfo.Number(p);
                     if (EventInfo.CodeSetters.Contains(p.Command) && n is long set && set != 0)
@@ -306,19 +368,26 @@ namespace Dom5Edit.Events
                     if (p.Command == Command.REQ_PREGAME && rarity is long r && !EventInfo.IsAlways(r))
                         _problems.Add(new EventProblem(e, p, "#req_pregame needs an always rarity (0, 5, 10 or 13): no other events happen before the first turn"));
                 }
-                if (lines.Any(p => EventInfo.CodeSetters.Contains(p.Command) && EventInfo.Number(p) is long c && c != 0)
+                if (lines.Any(p => EventInfo.CodeSetters.Contains(p.Command) && EventInfo.Number(p) is long c && c != 0 && _ownLines.Contains(p))
                     && !lines.Any(p => EventInfo.CodeCheckers.Contains(p.Command)))
                     _problems.Add(new EventProblem(e, null, "Sets a code without requiring one (#req_code 0): it can break another chain going on in the province (manual)"));
-                if (lines.Any(p => EventInfo.Delays.Contains(p.Command)) && i + 1 >= _events.Count)
-                    _problems.Add(new EventProblem(e, lines.First(p => EventInfo.Delays.Contains(p.Command)), "#delay: there's no next event in the file for it to delay", isError: true));
+                if (lines.Any(p => EventInfo.Delays.Contains(p.Command) && _ownLines.Contains(p)) && NextRecord(e) == null)
+                    _problems.Add(new EventProblem(e, lines.First(p => EventInfo.Delays.Contains(p.Command)), e.Selected
+                        ? $"#delay plans event {e.ID + 1}, and there's no such event"
+                        : "#delay plans the next #newevent in the file, and there's none after this one", isError: true));
+                var (reqs, effs) = EventInfo.Slots(lines);
+                if (reqs > EventInfo.MaxRequirements)
+                    _problems.Add(new EventProblem(e, null, $"{reqs} requirements: the game keeps the first {EventInfo.MaxRequirements} and drops the rest", isError: true));
+                if (effs > EventInfo.MaxEffects)
+                    _problems.Add(new EventProblem(e, null, $"{effs} effects: the game keeps the first {EventInfo.MaxEffects} and drops the rest", isError: true));
                 var msg = EventInfo.Message(lines);
-                if (msg != null && msg.Length > 2399)
+                if (msg != null && msg.Length > 2399 && lines.Any(p => p.Command == Command.MSG && _ownLines.Contains(p)))
                     _problems.Add(new EventProblem(e, null, $"The message is {msg.Length} characters: the game takes at most 2399", isError: true));
-                var needsName = lines.FirstOrDefault(EventInfo.NeedsBracketName);
+                var needsName = lines.Where(_ownLines.Contains).FirstOrDefault(EventInfo.NeedsBracketName);
                 if (needsName != null && EventInfo.BracketName(msg) == null)
                     _problems.Add(new EventProblem(e, needsName, $"{EventInfo.Name(needsName.Command)} uses the site or item named in brackets at the end of the message ([Name]), and the message has none", isError: true));
                 if (rarity == null && e.Selected == false)
-                    _problems.Add(new EventProblem(e, null, "No #rarity: set how the event is rolled"));
+                    _problems.Add(new EventProblem(e, null, "No #rarity: the game counts the event as a free slot, so the next #newevent takes it again and this one is lost", isError: true));
             }
         }
 

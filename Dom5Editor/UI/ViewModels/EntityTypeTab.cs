@@ -243,7 +243,7 @@ namespace Dom5Editor.UI.ViewModels
         {
             var key = Key(entity);
             var set = _session.Mod.Database[Type];
-            bool held = entity.ID > 0 && set.TryGetValue(entity.ID, out var byId) ? ReferenceEquals(byId, entity)
+            bool held = HasNumber(entity) && set.TryGetValue(entity.ID, out var byId) ? ReferenceEquals(byId, entity)
                 : set.GetFullList().Any(e => ReferenceEquals(e, entity));
             var vanilla = VanillaOf(entity.ID);
             if (_byKey.TryGetValue(key, out var item))
@@ -280,7 +280,7 @@ namespace Dom5Editor.UI.ViewModels
             var list = new List<EntityListItem>();
             var mod = _session.Mod;
             var own = mod.Database.TryGetValue(Type, out var set) ? set.GetFullList() : new List<IDEntity>();
-            var ownById = own.Where(e => e.ID > 0).GroupBy(e => e.ID).ToDictionary(g => g.Key, g => g.First());
+            var ownById = own.Where(HasNumber).GroupBy(e => e.ID).ToDictionary(g => g.Key, g => g.First());
             if (VanillaLoader.Vanilla?.Database.TryGetValue(Type, out var vanillaSet) == true)
             {
                 foreach (var v in vanillaSet.GetFullList())
@@ -288,14 +288,14 @@ namespace Dom5Editor.UI.ViewModels
                     if (ownById.TryGetValue(v.ID, out var changed))
                         list.Add(new EntityListItem(Type, changed, NameOf(changed), isVanilla: true, isModified: true));
                     else
-                        list.Add(new EntityListItem(Type, v, string.IsNullOrEmpty(v.Name) ? $"#{v.ID}" : v.Name, isVanilla: true, isModified: false));
+                        list.Add(new EntityListItem(Type, v, Type == EntityType.EVENT ? NameOf(v) : string.IsNullOrEmpty(v.Name) ? $"#{v.ID}" : v.Name, isVanilla: true, isModified: false));
                 }
             }
             var listed = new HashSet<int>(list.Select(i => i.ID));
             // the mod's own; a #select of one the loaded vanilla data lacks (poptypes, events) is
             // still the game's: listed as vanilla, changed
             foreach (var e in own)
-                if (e.ID <= 0 || !listed.Contains(e.ID))
+                if (!HasNumber(e) || !listed.Contains(e.ID))
                 {
                     bool game = e.Selected && !HasVanillaData(Type);
                     list.Add(new EntityListItem(Type, e, NameOf(e), isVanilla: game, isModified: game));
@@ -323,6 +323,9 @@ namespace Dom5Editor.UI.ViewModels
         {
             item.DetailProvider = Detail;
             item.FacetMatcher = InFacet;
+            if (Type == EntityType.EVENT)
+                item.TextMatcher = (i, text) => Dom5Edit.Events.EventInfo.Message(_session.Events.LinesOf(_session.Editor.OwnEntity(i.Entity) ?? i.Entity)) is string msg
+                    && msg.Contains(text, StringComparison.OrdinalIgnoreCase);
             if (Type == EntityType.MONSTER || Type == EntityType.ITEM)
                 item.SpriteProvider = i =>
                 {
@@ -387,16 +390,19 @@ namespace Dom5Editor.UI.ViewModels
         }
 
         private IDEntity? VanillaOf(int id) =>
-            id > 0 && VanillaLoader.Vanilla?.Database.TryGetValue(Type, out var set) == true && set.TryGetValue(id, out var v) ? v : null;
+            (Type == EntityType.EVENT ? id >= 0 : id > 0) && VanillaLoader.Vanilla?.Database.TryGetValue(Type, out var set) == true && set.TryGetValue(id, out var v) ? v : null;
 
-        private static object Key(IDEntity e) => e.ID > 0 ? e.ID : e;
+        private object Key(IDEntity e) => HasNumber(e) ? e.ID : e;
+
+        /// <summary>Whether the entity has a number in game: an ID, or a game event's number (from 0; a #newevent has none).</summary>
+        private bool HasNumber(IDEntity e) => Type == EntityType.EVENT ? e.ID >= 0 && e.Selected : e.ID > 0;
 
         /// <summary>The entity's name in game (a copy's may come from its source).</summary>
         private string NameOf(IDEntity entity)
         {
             // an event has no name: its title comes from its message
             if (Type == EntityType.EVENT)
-                return EventPageViewModel.TitleOf(entity, _session.Resolve(entity).Values.Select(v => v.Property).ToList());
+                return EventPageViewModel.TitleOf(entity, EventPageViewModel.LinesOf(_session.Resolve(entity)));
             var name = _session.Resolve(entity).Get(Command.NAME)?.Property is StringProperty s ? s.Value : null;
             if (string.IsNullOrEmpty(name))
                 name = entity.HeaderName;

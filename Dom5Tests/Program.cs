@@ -403,11 +403,15 @@ namespace Dom5Tests
             var resolver = Dom5Edit.Resolve.ModResolver.For(mod);
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var g = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla);
-            Console.WriteLine($"{g.Events.Count} events, {g.Links.Count} links, {g.Chains.Count} chains, {g.Problems.Count} problems ({watch.ElapsedMilliseconds} ms)");
+            Console.WriteLine($"{g.Events.Count} events ({g.ModEvents.Count} the mod's), {g.Links.Count} links, {g.Chains.Count} chains, {g.Problems.Count} problems ({watch.ElapsedMilliseconds} ms)");
+            Console.WriteLine("  vanilla event messages: " + VanillaLoader.EventMessagesStatus);
+            watch.Restart();
+            Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla, g.Spells);
+            Console.WriteLine($"  rebuilt after an edit (spells kept): {watch.ElapsedMilliseconds} ms");
             Console.WriteLine("  first events: " + string.Join(", ", g.Events.Take(4).Select(e => $"id {e.ID}{(e.Selected ? " (select)" : "")}")));
             foreach (var k in g.Links.GroupBy(l => l.Kind))
                 Console.WriteLine($"  {k.Key}: {k.Count()}");
-            string Title(IDEntity e) => $"[{g.IndexOf(e)}] {Dom5Edit.Events.EventInfo.Title(g.LinesOf(e))}";
+            string Title(IDEntity e) => (g.IsModEvent(e) ? $"[{g.IndexOf(e)}] " : $"[game {e.ID}] ") + Dom5Edit.Events.EventInfo.Title(g.LinesOf(e));
             string Name(IDEntity e) => e.Kind == EntityType.EVENT ? Title(e)
                 : $"spell #{e.ID} {(resolver.Resolve(e).Get(Command.NAME)?.Property as Dom5Edit.Props.NameProperty)?.Value}";
             bool all = args.Contains("--all");

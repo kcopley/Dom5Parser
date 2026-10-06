@@ -24,6 +24,12 @@
       <Content Include="..\spell_effect_types.json" Link="spell_effect_types.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <!-- the vanilla events (tools/dom6exe events): their messages are read from the player's exe -->
+      <Content Include="..\tools\dom6exe\data\events-6.37.dm" Link="vanilla-events.dm">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

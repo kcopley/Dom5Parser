@@ -34,11 +34,20 @@ namespace Dom5Editor.UI.ViewModels
         public override bool ShowsAddBox => false;
 
         /// <summary>An event's name: its title, from the message.</summary>
-        public override string DisplayName => TitleOf(Entity, Resolved.Values.Select(v => v.Property).ToList());
+        public override string DisplayName => TitleOf(Entity, LinesOf(Resolved));
 
-        /// <summary>An event's title: from its message; a game event the mod changes (#selectevent N) without one is "Game event N".</summary>
+        /// <summary>An event's title: from its message; a game event without one we can show (no exe to read it from) is "Game event N".</summary>
         public static string TitleOf(IDEntity e, IReadOnlyList<Property> lines) =>
-            e.Selected && e.ID > 0 && EventInfo.Message(lines) == null ? $"Game event {e.ID}" : EventInfo.Title(lines);
+            e.Selected && e.ID >= 0 && EventInfo.Message(lines) == null ? $"Game event {e.ID}" : EventInfo.Title(lines);
+
+        /// <summary>An event's lines in game, with a game event's message (read from the exe, kept apart as a display asset) when it has none of its own.</summary>
+        public static IReadOnlyList<Property> LinesOf(ResolvedEntity r)
+        {
+            var lines = r.Values.Select(v => v.Property).ToList();
+            if (!lines.Any(p => p.Command == Command.MSG) && r.Assets.TryGetValue(Command.MSG, out var msg))
+                lines.Add(msg);
+            return lines;
+        }
 
         protected override void BuildPanels(HashSet<Command> covered)
         {
@@ -187,6 +196,12 @@ namespace Dom5Editor.UI.ViewModels
             _page = page;
             _msg = page.Resolved.Get(Command.MSG);
             _text = _msg?.Property is StringProperty s ? s.Value ?? "" : "";
+            // a game event's own message (read from the exe): shown; a change writes the mod's #msg
+            if (_msg == null && page.Resolved.Assets.TryGetValue(Command.MSG, out var game) && game is StringProperty g)
+            {
+                _text = g.Value ?? "";
+                IsGameText = true;
+            }
             HeaderOptions = new[] { new ChoiceOption(0, "\"An unexpected event has occurred in...\"") }.Concat(EventCommands.Options("header")).ToList();
             _header = EventInfo.Number(page.Resolved.Get(Command.HEADER)?.Property) is long h ? (int)h : 0;
             NoText = page.Resolved.Has(Command.NOTEXT);
@@ -217,6 +232,9 @@ namespace Dom5Editor.UI.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>The text shown is the game's own message (from the player's Dominions6.exe), not a line of the mod.</summary>
+        public bool IsGameText { get; }
+
         private string _text;
 
         /// <summary>The message; leaving the box saves it.</summary>
@@ -227,9 +245,15 @@ namespace Dom5Editor.UI.ViewModels
             {
                 if (value == _text)
                     return;
+                if (string.IsNullOrEmpty(value) && _msg == null)
+                {
+                    // the game's own text can't be removed (#notext hides it): show it again
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Text)));
+                    return;
+                }
                 _text = value;
-                if (string.IsNullOrEmpty(value) && _msg != null)
-                    _page.RemoveValue(_msg);
+                if (string.IsNullOrEmpty(value))
+                    _page.RemoveValue(_msg!);
                 else
                     _page.SetValue(Command.MSG, _page.CommitArguments(Command.MSG, value));
             }
@@ -471,6 +495,21 @@ namespace Dom5Editor.UI.ViewModels
         public string Tooltip { get; }
         public bool IsInherited => Value.Source != ValueSource.Own;
 
+        /// <summary>
+        /// Whether the line can be removed: the mod's own. A game event's line can't be taken out
+        /// one at a time (only #clear empties an event, and that drops its message too).
+        /// </summary>
+        public bool CanRemove => !IsInherited;
+
+        /// <summary>
+        /// Whether the value can be changed here: the mod's own line, or a game line the game
+        /// replaces (most requirements). A line that adds (most effects) can't: the mod's would be
+        /// added to the game's, not replace it.
+        /// </summary>
+        public bool CanEdit => !IsInherited || !Stacks(Command);
+
+        private static bool Stacks(Command c) => Dom5Edit.GameData.GameCommandCatalog.EffectOf(EntityType.EVENT, c) is { } e && e.Add.Count > 0;
+
         /// <summary>How the value is edited: text, choice, bool (the two sentences), ref, mask, none.</summary>
         public string Kind { get; }
         public bool IsText => Kind == "text";
@@ -585,6 +624,8 @@ namespace Dom5Editor.UI.ViewModels
                 Info = "0: no code, so no other chain is going on here (the manual asks this of events that set a code)";
             if (EventInfo.EnchantmentCheckers.Contains(Command) && Links.Count == 0 && _number is long ench)
                 Note = graph.SpellsOfEnchantment(ench).Count == 0 ? "no spell makes this enchantment" : "";
+            if (!CanEdit && Info.Length == 0)
+                Info = "the game's line: a changed value would be added to it, not replace it";
         }
 
         private string SpellName(IDEntity spell) => _page.NameOf(EntityType.SPELL, spell.ID) is { Length: > 0 } s ? $"{s} #{spell.ID}" : $"spell #{spell.ID}";
@@ -746,10 +787,11 @@ namespace Dom5Editor.UI.ViewModels
             ChainText = chain == null ? "Not chained with other events." : $"Part of a chain of {chain.Events.Count} events" +
                 (chain.Triggers.Count > 0 ? $", started by {chain.Triggers.Count} spell{(chain.Triggers.Count == 1 ? "" : "s")}" : "") + ".";
             int index = graph.IndexOf(_event);
-            Position = index >= 0 ? $"Event {index + 1} of {graph.Events.Count} in the file" : "";
+            Position = index >= 0 ? $"Event {index + 1} of {graph.ModEvents.Count} in the file" : _event.ID >= 0 ? $"The game's event {_event.ID}" : "";
             BuildMap(chain, Title);
             FollowUpCommand = new RelayCommand(MakeFollowUp);
-            DelayedCommand = new RelayCommand(MakeDelayed);
+            // a game event's #delay runs the game's next event (N + 1): a new one can't follow it
+            DelayedCommand = new RelayCommand(MakeDelayed, () => !_page.Entity.Selected);
             ChoiceCommand = new RelayCommand(MakeChoice);
         }
 
@@ -795,8 +837,11 @@ namespace Dom5Editor.UI.ViewModels
                     return n;
                 bool spell = e.Kind != EntityType.EVENT;
                 int at = spell ? -1 : _graph.IndexOf(e);
-                var sub = spell ? $"spell #{e.ID}" : $"{EventInfo.RarityName(EventInfo.Rarity(_graph.LinesOf(e)))} · event {at + 1}";
-                return nodes[e] = new ChainNode(e, title(e), sub, ReferenceEquals(e, _event), spell, () => _page.Session.Navigate(e)) { Order = at };
+                // the mod's events by their place in the file, the game's by number (after the mod's)
+                var where = e.Selected ? $"game event {e.ID}" : $"event {at + 1}";
+                var sub = spell ? $"spell #{e.ID}" : $"{EventInfo.RarityName(EventInfo.Rarity(_graph.LinesOf(e)))} · {where}";
+                return nodes[e] = new ChainNode(e, title(e), sub, ReferenceEquals(e, _event), spell, () => _page.Session.Navigate(e))
+                    { Order = at >= 0 || spell ? at : _graph.ModEvents.Count + e.ID };
             }
             foreach (var e in events)
                 Node(e);

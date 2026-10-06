@@ -185,12 +185,38 @@ namespace Dom5Edit
 
             m.Parse(dmPath);
 
+            // the game's own events (tools/dom6exe events), their messages from the player's exe
+            var eventsPath = FindVanillaEventsPath(dmPath);
+            if (eventsPath != null)
+            {
+                m.Parse(eventsPath);
+                EventMessagesStatus = Events.VanillaEventMessages.Load(m, eventsPath);
+            }
+
             MarkAllEntitiesAsVanilla(m);
 
             // Load sprite paths and descriptions from asset files
             VanillaAssetLoader.LoadAssets(m);
 
             return m;
+        }
+
+        /// <summary>How the vanilla events' messages were read (or why not), for the status bar.</summary>
+        public static string? EventMessagesStatus { get; private set; }
+
+        /// <summary>The vanilla events file: next to vanilla.dm (vanilla-events.dm, as the editor ships it), or the repo's tools/dom6exe/data.</summary>
+        private static string? FindVanillaEventsPath(string dmPath)
+        {
+            var dir = Path.GetDirectoryName(Path.GetFullPath(dmPath)) ?? "";
+            foreach (var path in new[]
+            {
+                Path.Combine(dir, "vanilla-events.dm"),
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "vanilla-events.dm"),
+                Path.Combine(dir, "tools", "dom6exe", "data", "events-6.37.dm"),
+            })
+                if (File.Exists(path))
+                    return path;
+            return null;
         }
 
         /// <summary>
