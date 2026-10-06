@@ -27,7 +27,10 @@ namespace Dom5Editor.UI.Views
 
         private EditorSession? _session;
         private object? _selectedTab;
-        private string _statusMessage = "Ready";
+        // (without the game the editor still works: only the game's texts, sprites and messages are missing)
+        private string _statusMessage = Dom5Edit.Events.GameInstall.Exe() == null
+            ? "Dominions 6 wasn't found: the game's texts, sprites and event messages aren't shown (▾ next to Load: Dominions 6 folder...)"
+            : "Ready";
         private readonly List<(EntityTypeTab Tab, EntityListItem Item)> _back = new();
         private readonly List<(EntityTypeTab Tab, EntityListItem Item)> _forward = new();
         private (EntityTypeTab Tab, EntityListItem Item)? _current;

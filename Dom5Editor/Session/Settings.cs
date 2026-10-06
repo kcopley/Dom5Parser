@@ -18,6 +18,9 @@ namespace Dom5Editor.Session
         public string? LastTab { get; set; }
         public List<string> RecentFiles { get; set; } = new List<string>();
 
+        /// <summary>The Dominions 6 folder the user picked (when the editor doesn't find it in Steam's).</summary>
+        public string? GameFolder { get; set; }
+
         public static string Folder => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dom5Editor");
         private static string FilePath => Path.Combine(Folder, "settings.json");
 

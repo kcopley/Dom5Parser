@@ -7,7 +7,8 @@ namespace Dom5Edit.Events
 {
     /// <summary>
     /// Where the player's Dominions 6 is installed, for what the editor reads from the game itself
-    /// (the vanilla events' messages). A configured folder first, else the usual Steam places.
+    /// (texts, event messages, sprites): DOM6_EXE, a configured folder, the usual Steam places,
+    /// then every Steam library (Steam's own libraryfolders.vdf, found from the registry).
     /// </summary>
     public static class GameInstall
     {
@@ -29,7 +30,7 @@ namespace Dom5Edit.Events
             var env = Environment.GetEnvironmentVariable("DOM6_EXE");
             if (!string.IsNullOrEmpty(env) && File.Exists(env))
                 return env;
-            foreach (var folder in new[] { Folder }.Concat(Usual))
+            foreach (var folder in new[] { Folder }.Concat(Usual).Concat(SteamLibraries().Select(l => Path.Combine(l, "steamapps", "common", "Dominions6"))))
             {
                 if (string.IsNullOrEmpty(folder))
                     continue;
@@ -38,6 +39,31 @@ namespace Dom5Edit.Events
                     return path;
             }
             return null;
+        }
+
+        /// <summary>Steam's library folders ("path" entries of steamapps/libraryfolders.vdf), Steam itself first.</summary>
+        private static IEnumerable<string> SteamLibraries()
+        {
+            var libraries = new List<string>();
+            try
+            {
+                if (!OperatingSystem.IsWindows())
+                    return libraries;
+                var steam = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null) as string
+                            ?? Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null) as string;
+                if (string.IsNullOrEmpty(steam))
+                    return libraries;
+                libraries.Add(steam.Replace('/', '\\'));
+                var vdf = Path.Combine(steam, "steamapps", "libraryfolders.vdf");
+                if (File.Exists(vdf))
+                    foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(File.ReadAllText(vdf), "\"path\"\\s+\"([^\"]+)\""))
+                        libraries.Add(m.Groups[1].Value.Replace("\\\\", "\\"));
+            }
+            catch (Exception)
+            {
+                // no registry or an unreadable file: the usual places only
+            }
+            return libraries.Distinct(StringComparer.OrdinalIgnoreCase);
         }
     }
 
