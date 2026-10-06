@@ -15,6 +15,7 @@ namespace Dom5Editor.UI.ViewModels
             EntityType.SITE => new SitePageViewModel(session, item),
             EntityType.ARMOR => new ArmorPageViewModel(session, item),
             EntityType.NATION => new NationPageViewModel(session, item),
+            EntityType.NAMETYPE => new NametypePageViewModel(session, item),
             _ => new EntityPageViewModel(session, item),
         };
     }
@@ -114,6 +115,18 @@ namespace Dom5Editor.UI.ViewModels
             string V(Command c) => r.Get(c)?.Arguments ?? "-";
             var gold = int.TryParse(V(Command.GCOST), out var g) && g >= 5000 ? $"auto{(g - 10000 >= 0 ? "+" : "")}{g - 10000}" : V(Command.GCOST);
             return $"hp {V(Command.HP)}  att {V(Command.ATT)}  def {V(Command.DEF)}  prot {V(Command.PROT)}  gold {gold}";
+        }
+    }
+
+    /// <summary>A name list (nametype): the names, one per line, edited as text.</summary>
+    public sealed class NametypePageViewModel : EntityPageViewModel
+    {
+        public NametypePageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
+
+        protected override void BuildPanels(HashSet<Command> covered)
+        {
+            Panels.Add(new NamesPanel(this));
+            covered.Add(Command.ADDNAME);
         }
     }
 

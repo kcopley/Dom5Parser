@@ -271,7 +271,10 @@ namespace Dom5Editor.UI.Controls
         private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (SearchableReferenceComboBox)d;
-            control.ApplyFilter();
+            // the list is filtered when the dropdown opens: a page has dozens of pickers over
+            // thousands of entities, and filtering each up front made pages slow
+            if (control.IsDropdownOpen)
+                control.ApplyFilter();
             control.RestoreDisplayText();
         }
 
