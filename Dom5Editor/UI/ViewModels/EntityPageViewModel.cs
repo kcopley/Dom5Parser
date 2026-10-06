@@ -250,6 +250,30 @@ namespace Dom5Editor.UI.ViewModels
         public ObservableCollection<UsageRow> UsedBy { get; } = new ObservableCollection<UsageRow>();
 
         public bool HasUsedBy => UsedBy.Count > 0;
+
+        private static bool _showFile;
+
+        /// <summary>Whether the "in the file" box is open (remembered across pages; the text is only worked out while it is).</summary>
+        public bool ShowFile
+        {
+            get => _showFile;
+            set { _showFile = value; OnPropertyChanged(); OnPropertyChanged(nameof(FileText)); }
+        }
+
+        /// <summary>The entity's lines as the save writes them (the mod's own blocks), or a note when the mod has none.</summary>
+        public string FileText
+        {
+            get
+            {
+                if (!_showFile)
+                    return "";
+                var own = Session.Editor.OwnEntity(Entity);
+                if (own == null)
+                    return "(not in the mod: vanilla as it is)";
+                var lines = Dom5Edit.ModExporter.EntityLines(Session.Mod, own);
+                return lines.Count > 0 ? string.Join("\n", lines) : "(not in the mod)";
+            }
+        }
         public string UsedByTitle { get; private set; } = "";
 
         private void BuildUsedBy()

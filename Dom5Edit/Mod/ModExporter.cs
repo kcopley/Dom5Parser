@@ -153,6 +153,37 @@ namespace Dom5Edit
                 });
         }
 
+        /// <summary>
+        /// The lines a save writes for one entity (all its blocks, in order: header, lines, #end), as
+        /// they'd be in the file; for showing in the editor. Lines without a command (comments) are
+        /// left out.
+        /// </summary>
+        public static IReadOnlyList<string> EntityLines(Mod mod, IDEntity entity)
+        {
+            var plan = new SavePlan(mod);
+            var lines = new List<string>();
+            if (!plan.Holds(entity))
+                return lines;
+            string Text(Property p) => mod.KeepOriginalText ? p.SaveText() : p.ToExportString();
+            foreach (var (_, block) in plan.BlocksOf(entity))
+            {
+                if (lines.Count > 0)
+                    lines.Add("");
+                if (block.Source != null)
+                    lines.Add(mod.KeepOriginalText && block.Source.RawHeader != null && entity.ID == block.Source.IdAtParse ? block.Source.RawHeader : Header(block.Source));
+                else
+                {
+                    using var sw = new StringWriter();
+                    var w = new StreamWriter(new MemoryStream());
+                    CommandsMap.TryGetString(entity.Selected ? entity.GetSelectCommand() : entity.GetNewCommand(), out var command);
+                    lines.Add(entity.Named ? $"{command} \"{entity.HeaderName}\"" : entity.ID > 0 ? $"{command} {entity.ID}" : command);
+                }
+                lines.AddRange(block.Lines.Select(Text));
+                lines.Add(block.Source?.RawEnd != null && mod.KeepOriginalText ? block.Source.RawEnd : "#end");
+            }
+            return lines;
+        }
+
         /// <summary>The block's #new.../#select... line as parsed (a numeric ID as the entity's current ID).</summary>
         private static string Header(SourceBlock block)
         {
