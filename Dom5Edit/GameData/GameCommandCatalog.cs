@@ -77,12 +77,33 @@ namespace Dom5Edit.GameData
         /// </summary>
         public static CommandEffect? EffectOf(EntityType type, Command command)
         {
-            if (GameVersion == null || !CommandsMap.TryGetString(command, out var s))
-                return null;
+            return _effectCache.GetOrAdd(((int)type << 16) ^ (int)command, _ =>
+            {
+                CommandEffect? effect = null;
+                if (GameVersion != null && CommandsMap.TryGetString(command, out var s))
+                {
+                    var ctx = ContextOf(type);
+                    if (ctx != null && _contexts.TryGetValue(ctx, out var context))
+                        context.Effects.TryGetValue(s.TrimStart('#'), out effect);
+                }
+                return effect;
+            });
+        }
+
+        // (type, command) -> effect: the resolver asks for every line against every value
+        private static readonly System.Collections.Concurrent.ConcurrentDictionary<int, CommandEffect?> _effectCache = new();
+
+        /// <summary>The commands of this type the catalog has effects for.</summary>
+        public static IReadOnlyList<Command> CommandsWithEffects(EntityType type)
+        {
             var ctx = ContextOf(type);
             if (ctx == null || !_contexts.TryGetValue(ctx, out var context))
-                return null;
-            return context.Effects.TryGetValue(s.TrimStart('#'), out var effect) ? effect : null;
+                return Array.Empty<Command>();
+            var list = new List<Command>();
+            foreach (var name in context.Effects.Keys)
+                if (CommandsMap.TryGetCommand("#" + name, out var c))
+                    list.Add(c);
+            return list;
         }
 
         /// <summary>Whether the game reads this command for this entity (see the overload by type).</summary>

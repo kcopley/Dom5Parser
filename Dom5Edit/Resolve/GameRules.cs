@@ -144,11 +144,36 @@ namespace Dom5Edit.Resolve
             return GameCommandCatalog.EffectOf(type, c)?.Appends == true;
         }
 
+        // set and bit keys of an effect as sets, for the replace test (built once per effect)
+        private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<CommandEffect, Keys> _keys = new();
+
+        private sealed class Keys
+        {
+            public HashSet<string> Covers = new HashSet<string>();   // what a later line overwrites: set + del + clears + bits
+            public HashSet<string> Clears = new HashSet<string>();
+        }
+
+        private static Keys KeysOf(CommandEffect e) => _keys.GetValue(e, x =>
+        {
+            var k = new Keys();
+            k.Covers.UnionWith(x.Set);
+            k.Covers.UnionWith(x.Del);
+            k.Covers.UnionWith(x.Clears.Select(b => "b" + b));
+            k.Covers.UnionWith(x.Bits.Select(b => "b" + b));
+            k.Clears.UnionWith(x.Clears);
+            return k;
+        });
+
         /// <summary>
         /// An ability the game removes when a line sets it to 0 (#fear 0): the ability setter
         /// removes on 0, and the command's range allows 0.
         /// </summary>
-        public static bool RemovesWithZero(EntityType type, Command c)
+        public static bool RemovesWithZero(EntityType type, Command c) =>
+            _removesWithZero.GetOrAdd((type, c), static k => RemovesWithZeroUncached(k.Item1, k.Item2));
+
+        private static readonly System.Collections.Concurrent.ConcurrentDictionary<(EntityType, Command), bool> _removesWithZero = new();
+
+        private static bool RemovesWithZeroUncached(EntityType type, Command c)
         {
             if (IsRepeatable(type, c) || IsKeyedByFirstArgument(type, c))
                 return false;
@@ -158,8 +183,12 @@ namespace Dom5Edit.Resolve
         }
 
         /// <summary>A line that removes an ability rather than setting it (#fear 0).</summary>
-        public static bool IsRemoval(EntityType type, Props.Property p) =>
-            RemovesWithZero(type, p.Command) && ResolvedValue.ArgumentsOf(p) == "0";
+        public static bool IsRemoval(EntityType type, Props.Property p)
+        {
+            if (p is Props.CommandProperty || !RemovesWithZero(type, p.Command))
+                return false;
+            return p is Props.IntProperty ip ? ip.Value == 0 : ResolvedValue.ArgumentsOf(p) == "0";
+        }
 
         /// <summary>Whether the command's first argument picks which value it sets (#magicskill path level).</summary>
         public static bool IsKeyedByFirstArgument(EntityType? type, Command c) =>
@@ -188,8 +217,74 @@ namespace Dom5Edit.Resolve
                 return false;
             if (x.Set.Count == 0 && x.Bits.Count == 0)
                 return false;
+            var covers = KeysOf(n).Covers;
+            foreach (var k in x.Set)
+                if (!covers.Contains(k))
+                    return false;
+            foreach (var b in x.Bits)
+                if (!covers.Contains("b" + b))
+                    return false;
+            return true;
+        }
+
+        /// <summary>For one command of one type: which earlier commands a line of it replaces or cancels.</summary>
+        internal sealed class LineRule
+        {
+            public bool Repeatable;
+            public bool Keyed;
+            public readonly HashSet<Command> Replaces = new HashSet<Command>();
+            public readonly HashSet<Command> Cancels = new HashSet<Command>();
+        }
+
+        private static readonly System.Collections.Concurrent.ConcurrentDictionary<(EntityType, Command), LineRule> _lineRules = new();
+
+        /// <summary>
+        /// <see cref="Replaces"/> and <see cref="Cancels"/> worked out once per command against every
+        /// command of the type (the resolver checks every line against every value).
+        /// </summary>
+        internal static LineRule RuleOf(EntityType type, Command c) => _lineRules.GetOrAdd((type, c), static key => BuildRule(key.Item1, key.Item2));
+
+        private static LineRule BuildRule(EntityType type, Command c)
+        {
+            var rule = new LineRule { Repeatable = IsRepeatable(type, c), Keyed = IsKeyedByFirstArgument(type, c) };
+            var candidates = new HashSet<Command>(GameCommandCatalog.CommandsWithEffects(type)) { c };
+            if (_exclusive.TryGetValue(c, out int g))
+                candidates.UnionWith(_exclusive.Where(x => x.Value == g).Select(x => x.Key));
+            foreach (var x in candidates)
+            {
+                if (!rule.Repeatable && ReplacesCommand(type, c, x))
+                    rule.Replaces.Add(x);
+                if (CancelsCommand(type, c, x))
+                    rule.Cancels.Add(x);
+            }
+            return rule;
+        }
+
+        private static bool ReplacesCommand(EntityType type, Command c, Command earlier)
+        {
+            if (IsKeyedByFirstArgument(type, c) || IsKeyedByFirstArgument(type, earlier))
+                return c == earlier; // and the same first argument, checked per line
+            if (c == earlier)
+                return true;
+            if (_exclusive.TryGetValue(c, out int g) && _exclusive.TryGetValue(earlier, out int g2) && g == g2)
+                return true;
+            var n = GameCommandCatalog.EffectOf(type, c);
+            var x = GameCommandCatalog.EffectOf(type, earlier);
+            if (n == null || x == null || x.Appends || IsRepeatable(type, earlier))
+                return false;
+            if (x.Set.Count == 0 && x.Bits.Count == 0)
+                return false;
             return x.Set.All(k => n.Set.Contains(k) || n.Del.Contains(k))
                    && x.Bits.All(b => n.Clears.Contains(b) || n.Bits.Contains(b));
+        }
+
+        private static bool CancelsCommand(EntityType type, Command c, Command earlier)
+        {
+            var n = GameCommandCatalog.EffectOf(type, c);
+            var x = GameCommandCatalog.EffectOf(type, earlier);
+            if (n == null || x == null || n.Clears.Count == 0 || x.Bits.Count == 0 || x.Set.Count > 0)
+                return false;
+            return x.Bits.All(b => n.Clears.Contains(b));
         }
 
         /// <summary>
@@ -199,10 +294,16 @@ namespace Dom5Edit.Resolve
         public static bool Cancels(EntityType type, ResolvedValue later, ResolvedValue earlier)
         {
             var n = GameCommandCatalog.EffectOf(type, later.Command);
-            var x = GameCommandCatalog.EffectOf(type, earlier.Command);
-            if (n == null || x == null || n.Clears.Count == 0 || x.Bits.Count == 0 || x.Set.Count > 0)
+            if (n == null || n.Clears.Count == 0)
                 return false;
-            return x.Bits.All(b => n.Clears.Contains(b));
+            var x = GameCommandCatalog.EffectOf(type, earlier.Command);
+            if (x == null || x.Bits.Count == 0 || x.Set.Count > 0)
+                return false;
+            var clears = KeysOf(n).Clears;
+            foreach (var b in x.Bits)
+                if (!clears.Contains(b))
+                    return false;
+            return true;
         }
     }
 }

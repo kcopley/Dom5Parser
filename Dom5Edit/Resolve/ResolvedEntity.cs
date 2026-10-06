@@ -37,7 +37,8 @@ namespace Dom5Edit.Resolve
             Source = source;
             CopiedFrom = copiedFrom;
             Via = via;
-            Selector = GameRules.IsKeyedByFirstArgument(KindOf(property.Parent), property.Command) ? FirstArgument(property) : null;
+            Selector = via != null ? via.Selector
+                : GameRules.IsKeyedByFirstArgument(KindOf(property.Parent), property.Command) ? FirstArgument(property) : null;
         }
 
         private static EntityType? KindOf(IDEntity? e)

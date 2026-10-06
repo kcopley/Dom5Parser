@@ -208,19 +208,24 @@ namespace Dom5Edit.Resolve
                 state.Assets[c] = p;
                 return;
             }
-            state.Assets.Remove(c); // a line of the data replaces the shown asset
+            if (state.Assets.Count > 0)
+                state.Assets.Remove(c); // a line of the data replaces the shown asset
             var value = new ResolvedValue(p, _lineSource);
+            var rule = GameRules.RuleOf(type, c);
             int at = -1;
-            for (int i = state.Values.Count - 1; i >= 0; i--)
-            {
-                var v = state.Values[i];
-                if (GameRules.Replaces(type, value, v) || GameRules.Cancels(type, value, v))
+            if (rule.Replaces.Count > 0 || rule.Cancels.Count > 0)
+                for (int i = state.Values.Count - 1; i >= 0; i--)
                 {
-                    state.Values.RemoveAt(i);
-                    at = i;
+                    var v = state.Values[i];
+                    bool replaced = rule.Replaces.Contains(v.Command) && (!rule.Keyed || v.Selector == value.Selector);
+                    if (replaced || rule.Cancels.Contains(v.Command))
+                    {
+                        state.Values.RemoveAt(i);
+                        at = i;
+                    }
                 }
-            }
-            state.Removals.RemoveAll(x => x.Command == c);
+            if (state.Removals.Count > 0)
+                state.Removals.RemoveAll(x => x.Command == c);
             // a line setting an ability to 0 removes it: no value, but kept to show as removed
             if (GameRules.IsRemoval(type, p))
             {

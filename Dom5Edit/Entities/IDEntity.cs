@@ -257,6 +257,7 @@ namespace Dom5Edit.Entities
 
         public void AddProperty(Property property)
         {
+            MarkEdited();
             property.Parent = this;
 
             // Check if this is a clear command - if so, remove affected properties
@@ -662,6 +663,7 @@ namespace Dom5Edit.Entities
 
         public void AddProperties(List<Property> props)
         {
+            MarkEdited();
             foreach (var p in props)
             {
                 p.Parent = this;
@@ -672,11 +674,13 @@ namespace Dom5Edit.Entities
 
         public void RemoveProperty(Property property)
         {
+            MarkEdited();
             _properties.Remove(property);
         }
 
         public void ClearProperties()
         {
+            MarkEdited();
             _properties.Clear();
         }
 
@@ -684,13 +688,30 @@ namespace Dom5Edit.Entities
         // effects of AddProperty: where an added line takes effect is decided by its place in the
         // saved file (SavePlan), and an undo restores the list exactly.
 
+        /// <summary>
+        /// Whether the entity's lines may differ from what the file gave it (an edit touched them):
+        /// the save plan works out placement only for these.
+        /// </summary>
+        internal bool EditedSinceLoad { get; private set; }
+
+        private void MarkEdited()
+        {
+            if (ParentMod?.IsLoaded == true)
+                EditedSinceLoad = true;
+        }
+
         internal List<Property> SnapshotProperties() => new List<Property>(_properties);
 
-        internal void RestoreProperties(List<Property> properties) => _properties = new List<Property>(properties);
+        internal void RestoreProperties(List<Property> properties)
+        {
+            MarkEdited();
+            _properties = new List<Property>(properties);
+        }
 
         /// <summary>Adds a line (kept in order: copies and clears first, then the rest as added).</summary>
         internal void InsertLive(Property p)
         {
+            MarkEdited();
             p.Parent = this;
             _properties.Add(p);
             _properties = _properties.OrderBy(sort_properties).ToList();
@@ -702,6 +723,7 @@ namespace Dom5Edit.Entities
             int i = _properties.FindIndex(q => ReferenceEquals(q, old));
             if (i < 0)
                 return false;
+            MarkEdited();
             replacement.Parent = this;
             _properties[i] = replacement;
             return true;
@@ -713,6 +735,7 @@ namespace Dom5Edit.Entities
             int i = _properties.FindIndex(q => ReferenceEquals(q, p));
             if (i < 0)
                 return false;
+            MarkEdited();
             _properties.RemoveAt(i);
             return true;
         }
@@ -947,6 +970,7 @@ namespace Dom5Edit.Entities
             var propertyToRemove = _properties.FirstOrDefault(p => p.Command == command);
             if (propertyToRemove != null)
             {
+                MarkEdited();
                 _properties.Remove(propertyToRemove);
             }
         }
