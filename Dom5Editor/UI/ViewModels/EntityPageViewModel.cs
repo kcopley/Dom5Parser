@@ -56,7 +56,30 @@ namespace Dom5Editor.UI.ViewModels
 
         public void Detach() => Session.Changed -= OnSessionChanged;
 
-        private void OnSessionChanged(IModEdit edit) => Refresh();
+        private bool _isActive = true;
+        private bool _stale;
+
+        /// <summary>Whether the page is on screen; a hidden page catches up when it's shown again.</summary>
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                _isActive = value;
+                if (value && _stale)
+                    Refresh();
+            }
+        }
+
+        private void OnSessionChanged(IModEdit edit)
+        {
+            if (!_isActive)
+            {
+                _stale = true;
+                return;
+            }
+            Refresh();
+        }
 
         // ---- header ----
 
@@ -206,6 +229,7 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>Rebuilds the page from what the entity is in game now.</summary>
         public void Refresh()
         {
+            _stale = false;
             Resolved = Session.Resolve(Entity);
             var covered = new HashSet<Command> { Command.NAME, Command.DESCR };
             Structure.Clear();

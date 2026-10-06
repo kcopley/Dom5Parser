@@ -46,7 +46,16 @@ namespace Dom5Editor.UI.Views
         public object? SelectedTab
         {
             get => _selectedTab;
-            set { _selectedTab = value; OnPropertyChanged(); OnPropertyChanged(nameof(SelectedPage)); }
+            set
+            {
+                _selectedTab = value;
+                // only the page on screen refreshes after each edit; the others when shown again
+                foreach (var tab in Tabs.OfType<EntityTypeTab>())
+                    if (tab.Page != null)
+                        tab.Page.IsActive = ReferenceEquals(tab, value);
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedPage));
+            }
         }
 
         /// <summary>The page shown on the selected tab, if any.</summary>
@@ -100,7 +109,14 @@ namespace Dom5Editor.UI.Views
             {
                 var tab = new EntityTypeTab(session, type, title);
                 tab.Selected += OnSelected;
-                tab.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(EntityTypeTab.Page)) OnPropertyChanged(nameof(SelectedPage)); };
+                tab.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName != nameof(EntityTypeTab.Page))
+                        return;
+                    if (tab.Page != null)
+                        tab.Page.IsActive = ReferenceEquals(tab, SelectedTab);
+                    OnPropertyChanged(nameof(SelectedPage));
+                };
                 Tabs.Add(tab);
             }
             SelectedTab = Tabs[1];

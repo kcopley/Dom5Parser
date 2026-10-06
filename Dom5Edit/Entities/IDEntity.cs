@@ -694,6 +694,9 @@ namespace Dom5Edit.Entities
         /// </summary>
         internal bool EditedSinceLoad { get; private set; }
 
+        /// <summary>For diagnostics (Dom5Editor --snapshot --time-refresh).</summary>
+        public bool EditedSinceLoadPublic => EditedSinceLoad;
+
         private void MarkEdited()
         {
             if (ParentMod?.IsLoaded == true)

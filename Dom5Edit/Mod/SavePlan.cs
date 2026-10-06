@@ -15,16 +15,20 @@ namespace Dom5Edit
         /// <summary>One block as saved: its entity, and the properties written in it, in order.</summary>
         public sealed class Block
         {
+            private readonly Func<IReadOnlyList<Property>> _lines;
+            private IReadOnlyList<Property>? _computed;
+
             public IDEntity Entity { get; }
             /// <summary>The parsed block, or null for an entity written whole after the blocks.</summary>
             public SourceBlock? Source { get; }
-            public IReadOnlyList<Property> Lines { get; }
+            /// <summary>The lines written in the block (worked out when first asked for).</summary>
+            public IReadOnlyList<Property> Lines => _computed ??= _lines();
 
-            internal Block(IDEntity entity, SourceBlock? source, IReadOnlyList<Property> lines)
+            internal Block(IDEntity entity, SourceBlock? source, Func<IReadOnlyList<Property>> lines)
             {
                 Entity = entity;
                 Source = source;
-                Lines = lines;
+                _lines = lines;
             }
         }
 
@@ -116,19 +120,47 @@ namespace Dom5Edit
                 {
                     if (!Holds(block.Entity))
                         continue;
-                    var lines = new List<Property>(AddedAtStart(block));
-                    foreach (var p in block.Properties)
-                    {
-                        if (Writes(block, p))
-                            lines.Add(p);
-                        lines.AddRange(ReplacementsAfter(p));
-                    }
-                    lines.AddRange(AddedAtEnd(block));
-                    yield return new Block(block.Entity, block, lines);
+                    var b = block;
+                    yield return new Block(block.Entity, block, () => LinesOf(b));
                 }
             }
             foreach (var entity in WholeEntities())
-                yield return new Block(entity, null, entity.Properties.ToList());
+            {
+                var e = entity;
+                yield return new Block(entity, null, () => e.Properties.ToList());
+            }
+        }
+
+        private List<Property> LinesOf(SourceBlock block)
+        {
+            var lines = new List<Property>(AddedAtStart(block));
+            foreach (var p in block.Properties)
+            {
+                if (Writes(block, p))
+                    lines.Add(p);
+                lines.AddRange(ReplacementsAfter(p));
+            }
+            lines.AddRange(AddedAtEnd(block));
+            return lines;
+        }
+
+        private Dictionary<IDEntity, List<(int, Block)>>? _byEntity;
+
+        /// <summary>An entity's blocks with their positions in the save (0 = first block written).</summary>
+        public IReadOnlyList<(int Position, Block Block)> BlocksOf(IDEntity entity)
+        {
+            if (_byEntity == null)
+            {
+                _byEntity = new Dictionary<IDEntity, List<(int, Block)>>(ReferenceEqualityComparer.Instance);
+                int position = 0;
+                foreach (var b in Blocks())
+                {
+                    if (!_byEntity.TryGetValue(b.Entity, out var list))
+                        _byEntity[b.Entity] = list = new List<(int, Block)>();
+                    list.Add((position++, b));
+                }
+            }
+            return _byEntity.TryGetValue(entity, out var found) ? found : (IReadOnlyList<(int, Block)>)Array.Empty<(int, Block)>();
         }
 
         /// <summary>Entities written whole, after the blocks (all of them for a canonical save), in the order they're written.</summary>

@@ -115,8 +115,9 @@ namespace Dom5Editor.UI
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
                             var c = CommandOf(args[++i]);
                             var a = args[++i];
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
                             if (args[i - 2] == "--set") page.SetValue(c, a); else page.AddValue(c, a);
-                            Log($"{args[i - 2].TrimStart('-')} {args[i - 1]} {a}{(page.Error != null ? " error: " + page.Error : "")}");
+                            Log($"{args[i - 2].TrimStart('-')} {args[i - 1]} {a}{(page.Error != null ? " error: " + page.Error : "")} ({watch.ElapsedMilliseconds} ms)");
                             break;
                         }
                         case "--remove":
@@ -156,6 +157,28 @@ namespace Dom5Editor.UI
                                     break;
                             }
                             Log($"field {label} = {value}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--time-refresh":
+                        {
+                            // how long the selected page takes to rebuild (resolver cached, then a fresh replay)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            page.Refresh();
+                            long cached = watch.ElapsedMilliseconds;
+                            vm.Session!.Editor.Resolver.Invalidate();
+                            watch.Restart();
+                            vm.Session.Resolve(page.Entity);
+                            long replay = watch.ElapsedMilliseconds;
+                            watch.Restart();
+                            page.Refresh();
+                            long after = watch.ElapsedMilliseconds;
+                            watch.Restart();
+                            var plan = new Dom5Edit.SavePlan(vm.Session.Mod);
+                            long planMs = watch.ElapsedMilliseconds;
+                            int lines = plan.Blocks().Sum(b => b.Lines.Count);
+                            int edited = vm.Session.Mod.Database.Values.SelectMany(x => x.GetFullList()).Count(e => e.EditedSinceLoadPublic);
+                            Log($"refresh {cached} ms (resolver cached); replay {replay} ms; refresh after replay {after} ms; plan {planMs} ms + blocks {watch.ElapsedMilliseconds - planMs} ms, {lines} lines, {edited} entities marked edited");
                             break;
                         }
                         case "--dump":

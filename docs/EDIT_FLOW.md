@@ -140,8 +140,12 @@ flowchart LR
 - Vanilla sprites and descriptions loaded for display (`VanillaAssetLoader`) are
   `Property.IsDisplayAsset`: the resolver keeps them apart from values, so they're shown but never
   copied into a mod as lines.
-- Verified with `Dom5Editor --snapshot` (load, select, set/add/remove, new/delete, undo/redo,
-  dump, render, save).
+- Verified with `Dom5Editor --snapshot` (load, select, set/add/remove, field, new/delete,
+  undo/redo, dump, time-refresh, render, save).
+- Speed (DomEnhanced, 140k lines, Release): the resolver is lazy per entity (an entity's blocks,
+  and its copy sources' states just before each copy line), so an edit costs the touched
+  entity's resolution, not a replay of the mod: 50-85 ms from edit to refreshed page. Picker
+  lists are updated in place for the entities an edit touched.
 
 ## Roadmap: a complete editor
 
