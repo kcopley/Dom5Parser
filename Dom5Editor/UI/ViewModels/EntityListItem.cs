@@ -53,6 +53,40 @@ namespace Dom5Editor.UI.ViewModels
 
         public string SourceLabel => IsNew ? "New" : IsModified ? "Changed" : "Vanilla";
 
+        // worked out when a row is first shown (the list is virtualized), again after an edit
+
+        internal Func<EntityListItem, string>? DetailProvider { get; set; }
+        internal Func<EntityListItem, System.Windows.Media.ImageSource?>? SpriteProvider { get; set; }
+        private string? _detail;
+        private System.Windows.Media.ImageSource? _sprite;
+        private bool _spriteDone;
+
+        /// <summary>The second line: ID and key stats (a monster's HP, attack, ...; a weapon's damage).</summary>
+        public string Detail => _detail ??= $"#{ID}" + (DetailProvider?.Invoke(this) is string d && d.Length > 0 ? "   " + d : "");
+
+        /// <summary>A small sprite (monsters, items), or null.</summary>
+        public System.Windows.Media.ImageSource? Sprite
+        {
+            get
+            {
+                if (!_spriteDone)
+                {
+                    _sprite = SpriteProvider?.Invoke(this);
+                    _spriteDone = true;
+                }
+                return _sprite;
+            }
+        }
+
+        /// <summary>After an edit to the entity: work the detail and sprite out again when shown.</summary>
+        internal void Refresh()
+        {
+            _detail = null;
+            _spriteDone = false;
+            OnPropertyChanged(nameof(Detail));
+            OnPropertyChanged(nameof(Sprite));
+        }
+
         private void OnPropertyChanged([CallerMemberName] string? name = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 

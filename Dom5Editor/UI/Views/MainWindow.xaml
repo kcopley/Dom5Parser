@@ -156,6 +156,7 @@
                                                     ShowVanilla="{Binding ShowVanilla}"
                                                     ShowModified="{Binding ShowModified}"
                                                     ShowNew="{Binding ShowNew}"
+                                                    SortBy="{Binding SortBy}"
                                                     NewCommand="{Binding NewCommand}"
                                                     DeleteCommand="{Binding DeleteCommand}"/>
                         <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Center"

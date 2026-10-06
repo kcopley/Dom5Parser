@@ -93,6 +93,26 @@ namespace Dom5Editor.UI.Controls
         public static readonly DependencyProperty ShowModifiedProperty = FilterProperty(nameof(ShowModified), true);
         public static readonly DependencyProperty ShowNewProperty = FilterProperty(nameof(ShowNew), true);
 
+        /// <summary>Sort by "ID" or "DisplayName".</summary>
+        public static readonly DependencyProperty SortByProperty =
+            DependencyProperty.Register(nameof(SortBy), typeof(string), typeof(EntityListControl),
+                new FrameworkPropertyMetadata("ID", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (d, e) => ((EntityListControl)d).ApplySort()));
+
+        public string SortBy
+        {
+            get => (string)GetValue(SortByProperty) ?? "ID";
+            set => SetValue(SortByProperty, value);
+        }
+
+        private void ApplySort()
+        {
+            if (_entitiesView == null)
+                return;
+            _entitiesView.SortDescriptions.Clear();
+            _entitiesView.SortDescriptions.Add(new SortDescription(SortBy == "DisplayName" ? "DisplayName" : "ID", ListSortDirection.Ascending));
+            RefreshFilter();
+        }
+
         private static DependencyProperty FilterProperty(string name, object defaultValue) =>
             DependencyProperty.Register(name, defaultValue.GetType(), typeof(EntityListControl),
                 new FrameworkPropertyMetadata(defaultValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (d, e) =>
@@ -164,8 +184,8 @@ namespace Dom5Editor.UI.Controls
             _entitiesView = CollectionViewSource.GetDefaultView(Entities);
             _entitiesView.Filter = FilterEntity;
 
-            // Sort by ID by default
-            _entitiesView.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+            _entitiesView.SortDescriptions.Clear();
+            _entitiesView.SortDescriptions.Add(new SortDescription(SortBy == "DisplayName" ? "DisplayName" : "ID", ListSortDirection.Ascending));
 
             OnPropertyChanged(nameof(FilteredEntities));
             OnPropertyChanged(nameof(FilteredCount));
