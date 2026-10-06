@@ -39,6 +39,9 @@ namespace Dom5Tests
                 case "events":
                     Events(basePath, args);
                     break;
+                case "texts":
+                    Texts(basePath, args);
+                    break;
                 case "all":
                 default:
                     TestVanilla(basePath, null);
@@ -389,6 +392,72 @@ namespace Dom5Tests
         /// Dumps every mod monster's resolved stats, weapons, armor and magic paths as JSON, to
         /// compare with another parser. Usage: Dom5Tests resolve-dump &lt;mod.dm&gt; &lt;out.json&gt;
         /// </summary>
+        /// <summary>
+        /// Dom5Tests texts [out.dm]: the game's texts as the editor reads them from the player's exe
+        /// (Dom5Edit.GameData.VanillaTexts): how many of each kind, against what tools/dom6exe found
+        /// in the same exe; a few samples; and that they're shown, not saved: a mod that sets a
+        /// vanilla nation's summary and a monster's hp saves just those lines.
+        /// </summary>
+        static void Texts(string basePath, string[] args)
+        {
+            LoadVanillaBase(basePath);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            var vanilla = VanillaLoader.Vanilla;
+            Console.WriteLine($"vanilla loaded in {watch.ElapsedMilliseconds} ms");
+            Console.WriteLine("  texts: " + VanillaLoader.TextsStatus);
+            int failures = 0;
+            void Check(bool ok, string what)
+            {
+                Console.WriteLine((ok ? "  ok    " : "  FAIL  ") + what);
+                if (!ok) failures++;
+            }
+            string? Asset(EntityType type, int id, Command c) =>
+                vanilla.Database[type].TryGetValue(id, out var e) ? e.Properties.OfType<StringProperty>().FirstOrDefault(p => p.IsDisplayAsset && p.Command == c)?.Value : null;
+
+            // per kind, as many as tools/dom6exe found in the exe's own tables
+            var json = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.Combine(basePath, "tools", "dom6exe", "data", "texts-6.37.json")));
+            foreach (var f in json.RootElement.GetProperty("found").EnumerateObject())
+            {
+                var parts = f.Name.Split(' ');
+                var type = vanilla.Database.Keys.First(t => Dom5Edit.GameData.GameCommandCatalog.ContextOf(t) == parts[0]);
+                CommandsMap.TryGetCommand("#" + parts[1], out var command);
+                int n = vanilla.Database[type].GetFullList().Count(e => e.Properties.Any(p => p.IsDisplayAsset && p.Command == command));
+                Check(n == f.Value.GetInt32(), $"{f.Name}: {n} (tools/dom6exe: {f.Value.GetInt32()})");
+            }
+            Check(Asset(EntityType.MONSTER, 20, Command.DESCR)?.Length > 100, "monster 20 has a description");
+            foreach (var c in new[] { Command.DESCR, Command.SUMMARY, Command.BRIEF })
+                Check(Asset(EntityType.NATION, 5, c)?.Length > 20, $"nation 5 has a {c.ToString().ToLowerInvariant()}");
+
+            // shown, never saved
+            string dir = Path.Combine(Path.GetTempPath(), "dom5tests-texts");
+            Directory.CreateDirectory(dir);
+            string modPath = Path.Combine(dir, "texts.dm");
+            File.WriteAllText(modPath, "#modname \"texts check\"\n");
+            var mod = new Mod { FullFilePath = modPath };
+            mod.Parse(modPath);
+            mod.ResolveDependencies();
+            mod.Resolve();
+            var editor = new Dom5Edit.Editing.ModEditor(mod);
+            mod.TryGet(EntityType.NATION, 5, null, out var nation);
+            mod.TryGet(EntityType.MONSTER, 20, null, out var monster);
+            editor.Set(nation, Command.SUMMARY, "\"Summary from a mod\"");
+            editor.Set(monster, Command.HP, "12");
+            var r = editor.Resolve(editor.OwnEntity(nation) ?? nation);
+            Check(r.Get(Command.SUMMARY)?.Property is StringProperty s && s.Value == "Summary from a mod", "the mod's summary replaces the game's");
+            Check(r.Get(Command.DESCR) == null && r.Assets.ContainsKey(Command.DESCR) && r.Assets.ContainsKey(Command.BRIEF),
+                  "the game's description and brief are shown, not values");
+            string outPath = args.Length > 1 ? args[1] : Path.Combine(dir, "texts-out.dm");
+            mod.Export(outPath);
+            var saved = File.ReadAllText(outPath);
+            Console.WriteLine("  saved:\n    " + string.Join("\n    ", saved.Split('\n').Select(l => l.TrimEnd()).Where(l => l.Length > 0)));
+            Check(saved.Contains("#summary \"Summary from a mod\"") && saved.Contains("#hp 12"), "the edits are saved");
+            Check(!saved.Contains("#descr") && !saved.Contains("#brief") && !saved.Contains(Asset(EntityType.MONSTER, 20, Command.DESCR) ?? "#descr"),
+                  "the game's texts aren't");
+            Console.WriteLine(failures == 0 ? "texts: all checks pass" : $"texts: {failures} checks fail");
+            if (failures > 0)
+                Environment.ExitCode = 1;
+        }
+
         /// <summary>
         /// Dom5Tests events MOD.dm [--all]: the mod's events as the editor links them
         /// (Dom5Edit.Events): counts by link kind, every chain with its links, and the problems found.

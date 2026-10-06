@@ -39,11 +39,14 @@ it, and save without losing anything the file had.
 Download a release, unzip, run `Dom5Editor.exe` (Windows, no install). `vanilla.dm` (the
 game's data, written from the game by `tools/dom6exe`) must stay next to the exe.
 
-Vanilla unit, item and site sprites are read from your Dominions 6 install (the usual Steam
-folders, or `DOM6_EXE`); the editor ships only which picture each one is
-(`vanilla-sprites.json`), not the art. A folder with `icons/sprites` next to the exe overrides
-them. Vanilla descriptions are optional: put a folder with `Data/unitdescr` (`itemdescr`,
-`spelldescr`) next to the exe. They aren't distributed (they're the game's).
+The game's own texts (monster, item and spell descriptions, a spell's details, portent and
+cure, a nation's description, summary and brief) and the vanilla events' messages are read
+from your Dominions6.exe (6.37) when the editor starts: it looks in the usual Steam folders, or
+set `DOM6_EXE` to the exe's path. Another game version shows none (the places they're read from
+are checked first). Vanilla unit, item and site sprites are read from the same install's data
+folder; the editor ships only which picture each one is (`vanilla-sprites.json`), not the art.
+A folder with `icons/sprites` next to the exe overrides them. The game's icons (stats, paths,
+gems, abilities) are compiled into the editor.
 
 ## Building
 
