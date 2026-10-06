@@ -29,7 +29,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
 | `catalog` | For Dom5Parser (embedded in Dom5Edit): per entity type, the commands the game reads, and whether that list is complete (the event parser also reads `#2d6units`-style commands by pattern); and per command, what it writes (`effects`: fields and abilities it sets, appends to, ORs into or removes, flag bits it sets or clears, and the argument range of generic-handler commands). Dom5Parser's resolver (Dom5Edit/Resolve) uses the effects to tell whether a line replaces an earlier one. |
 | `vanilla` | Every vanilla type the editor lists, written as the commands that store each value: weapons, armor, monsters, spells, items, sites and nations as `#select*` blocks (`vanilla_dm.py`), then blesses, poptypes and nametypes as `#select*` blocks and the mercenaries as `#newmerc` blocks (`vanilla_other.py`). Values no command can store are `-- ro:` lines (shown read-only). Each table's end marker (a record named "end") is left out. AI templates have no vanilla data: the game reads them only from mods. |
-| `sprites` | Which picture the game draws for each vanilla monster (and its attack frame and unmounted sprite) and item: the sprite numbers it stores, and the archive (`sprites.py`). Numbers only; the editor reads the pictures from the player's install (`Dom5Edit/VanillaSprites.cs`, `Dom5Editor/Sprites/GameArt.cs`). Also the rule for a site's picture. |
+| `sprites` | Which picture the game draws for each vanilla monster (and its attack frame and unmounted sprite) and item: the sprite numbers it stores, and the archive (`sprites.py`). Numbers only; the editor reads the pictures from the player's install (`Dom5Edit/VanillaSprites.cs`, `Dom5Editor/Sprites/GameArt.cs`). Also the rule for a site's picture, and (`"flag"`, `flags.py`) how the game builds a nation's flag from parts of `flag.trs` and the nation's colors. |
 | `texts` | Where the game keeps its texts (`texts.py`): monster, item and spell descriptions, a spell's details, portent and cure, a nation's description, summary and brief. Only locations: the two lists of string pointers, how each kind's key is made, and a checksum of the bytes read. The editor reads the texts from the player's own exe (Dom5Edit/GameData/VanillaTexts.cs). See Texts below. |
 | `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
 
@@ -190,7 +190,9 @@ and GNU `objdump`. The exe is never copied into the repo.
 - The nation's file name (+0x4f, "early_arcoscephale"; found from the code that formats the
   pretender files `newlords/<name>_N.2h`) has no command: `-- ro: file name`. The abbreviation
   isn't written.
-- `#flag` and `#indepflag` load images (the game's own flags are in its data files), and
+- `#flag` and `#indepflag` load images: `#flag` replaces `flag.trs` image nation + 1 (through
+  a table of replaced images the game keeps by archive and index), `#indepflag` images 0-5. The
+  game builds the other nations' flags from parts and the nation's colors (Sprites below).
   `#nametype` is refused for nations ("#nametype cannot be used for nations"). The texts
   (`#descr`, `#summary`, `#brief`) live outside the record (Texts below) and aren't written.
 - The other nation commands store abilities and are written when a nation has them (fort,
@@ -378,6 +380,26 @@ known value on every run.
   water, earth, astral, death, nature, glamour, blood, holy), image look if look is 0-99, else
   image level (clamped to 0-3). Vanilla sites without `#look` have -1; `#newsite` zeroes the
   record (look 0, path 0, level 0; rarity -1, loc 0x303ff).
+- A nation's flag is `flag.trs` (archive 8) image nation + 1 (`flags.py`, `"flag"` in the
+  JSON). Images 1-5 (nations 0-4: Independents and the special monster slots; 0 is the unowned
+  flag) are drawn as they are in the file. Every nation from 5 to 499 gets one built by the
+  function the game's log calls "createflags" (0x140122b10; run at start and again after the
+  mods are read, so a mod's colors count): image 501 (the pole), then image 502 (the cloth)
+  with each channel times `int(c * 255) / 255` of `#color` (+0x94; float multiply, truncated),
+  then image 503 (the cloth's border) times `#secondarycolor` (+0xa0), then for nations up to
+  135 image 500 + nation (the emblem: Arcoscephale's caduceus, Ermor's eagle, T'ien Ch'i's
+  roof, ...), each blended over the last by its alpha, then stored back as RGB565 (a pixel
+  that comes out 0x0000 turns transparent). No record field picks the parts. The flag reads
+  `#secondarycolor` as stored (the animated background, 0x1402b2d46, falls back to `#color`
+  when it is 0 0 0; the flag doesn't), and a new nation's colors start at 0: a mod nation
+  without colors shows a bare pole, one with colors a plain banner (no emblem above 135). The
+  105 vanilla nations from 5 on (the unused slots 114 and 122 too) all get an emblem; the
+  emblem images of unused numbers are mostly placeholders (a test pattern: 535-539, 545-549,
+  583-584, 590-594, 622 for slot 122, 629-634, 636-640). A mod's `#newnation` takes the first
+  unnamed record from 120 (0x1402296c0; 128 with only vanilla loaded), so it gets emblem 628
+  or a placeholder unless it has a `#flag`. `#flag` replaces the built image afterwards. Checked by a contact sheet of all
+  110 vanilla flags (`flags.py sheet`) and against the editor's flags (`flags.py check` and
+  `Dom5Editor --snapshot --flags`, the same pixel checksum).
 - `sprites.py` finds all of this from the code: the archive name list, the functions that
   subtract 1000 * (n / 1000) and the table field and archive each one uses, the single-number
   converter and the ability read before it, the site function by its clamps. Checked by contact

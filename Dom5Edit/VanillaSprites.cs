@@ -38,20 +38,51 @@ namespace Dom5Edit
     }
 
     /// <summary>
+    /// How the game draws a nation's flag (tools/dom6exe/flags.py, the "flag" entry of
+    /// vanilla-sprites.json): image nation + <see cref="ImageOffset"/> of <see cref="Archive"/>.
+    /// Nations below <see cref="FirstComposed"/> (Independents, the special monster slots) have
+    /// theirs in the file. The others get one built at start and again after the mods are read:
+    /// the pole, the cloth times #color, the cloth's border times #secondarycolor, and for nations
+    /// up to <see cref="EmblemLastNation"/> the emblem (image nation + <see cref="EmblemOffset"/>),
+    /// each blended over the last and kept as RGB565. A mod's #flag file replaces it.
+    /// </summary>
+    public sealed record NationFlagRule(string Archive, int ImageOffset, int FirstComposed, int LastComposed,
+                                        int Pole, int Cloth, int Border, int EmblemOffset, int EmblemLastNation)
+    {
+        /// <summary>Whether the game builds this nation's flag (else it is the archive's image, or there is none).</summary>
+        public bool IsComposed(int nation) => nation >= FirstComposed && nation <= LastComposed;
+
+        /// <summary>The emblem image a composed flag has, or -1 (a nation past the last one with an emblem).</summary>
+        public int Emblem(int nation) => nation <= EmblemLastNation ? nation + EmblemOffset : -1;
+
+        /// <summary>
+        /// The tint byte for a #color channel, as the game computes it: clamped to 0-1 (the parser
+        /// does), times 255 in single precision, truncated.
+        /// </summary>
+        public static int Tint(float channel) => (int)(float)(Math.Clamp(channel, 0f, 1f) * 255f);
+    }
+
+    /// <summary>
     /// The game's own pictures for vanilla monsters and items: the sprite numbers the game stores
     /// (tools/dom6exe/data/sprites-6.37.json, shipped as vanilla-sprites.json next to vanilla.dm)
     /// become display assets pointing into the player's install (<see cref="GameSprite"/>): a
     /// monster's #spr1 and #spr2 (and #unmountedspr1/2 for a vanilla rider's), an item's #spr.
     /// Nothing of the game's art is shipped. A picture the editor was given (VanillaAssetLoader's
-    /// icons folder) is kept: only entities without one get these.
+    /// icons folder) is kept: only entities without one get these. A nation's flag isn't an asset:
+    /// the game builds it from the nation's colors, which a mod can change, so the editor builds it
+    /// when shown, by <see cref="Flag"/>.
     /// </summary>
     public static class VanillaSprites
     {
         /// <summary>How many were set (or why none were), for the status bar and the snapshot log.</summary>
         public static string? Status { get; private set; }
 
+        /// <summary>How the game draws a nation's flag, or null (no vanilla-sprites.json, or one without the rule).</summary>
+        public static NationFlagRule? Flag { get; private set; }
+
         public static void Load(Mod vanilla, string dmPath)
         {
+            Flag = null;
             var file = FindFile(dmPath);
             if (file == null)
             {
@@ -90,12 +121,24 @@ namespace Dom5Edit
                         if (sprites.TryGetValue(e.ID, out int n) && Add(e, new List<(Command, GameSprite)> { (Command.SPR, new GameSprite(archive, n)) }).Count > 0)
                             items++;
                 }
-                Status = $"game sprites for {monsters} monsters and {items} items ({watch.ElapsedMilliseconds} ms; the pictures are read from the install when shown)";
+                if (doc.RootElement.TryGetProperty("flag", out var flag))
+                    Flag = FlagRule(flag);
+                Status = $"game sprites for {monsters} monsters and {items} items{(Flag != null ? " and the nations' flags" : "")} ({watch.ElapsedMilliseconds} ms; the pictures are read from the install when shown)";
             }
             catch (Exception ex) when (ex is IOException || ex is JsonException || ex is InvalidOperationException || ex is KeyNotFoundException || ex is FormatException)
             {
                 Status = Path.GetFileName(file) + " unreadable: " + ex.Message;
             }
+        }
+
+        private static NationFlagRule FlagRule(JsonElement f)
+        {
+            var composed = f.GetProperty("composed");
+            var emblem = f.GetProperty("emblem");
+            return new NationFlagRule(f.GetProperty("archive").GetString() ?? "flag.trs", f.GetProperty("image_offset").GetInt32(),
+                composed.GetProperty("first").GetInt32(), composed.GetProperty("last").GetInt32(),
+                f.GetProperty("pole").GetInt32(), f.GetProperty("cloth").GetInt32(), f.GetProperty("border").GetInt32(),
+                emblem.GetProperty("offset").GetInt32(), emblem.GetProperty("last_nation").GetInt32());
         }
 
         /// <summary>An {"id": number} object as a dictionary (looking each ID up in the JSON would scan it).</summary>

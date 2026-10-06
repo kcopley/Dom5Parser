@@ -11,6 +11,7 @@ What the code does (6.37):
   converted the same way when the game draws a dismounted rider.
   A site's picture is sites.trs group (path + 1) (path 0-9; fire, air, ...), image #look when
   #look is 0-99, else image #level (0-3). A new site starts with look 0, path 0, level 0.
+  A nation's flag is built from parts of flag.trs and the nation's colors ("flag", flags.py).
 
 Found from the code, not fixed addresses:
   archive names   the game's list of .trs names (guistuff.trs, mapstuff.trs, item.trs, ...);
@@ -25,6 +26,7 @@ Found from the code, not fixed addresses:
 """
 import bisect, collections, re, struct
 
+import flags
 from dom6exe import TABLES, find_table, monster_table, monsters, num
 
 
@@ -152,10 +154,11 @@ def collect(exe):
                 'A number n below 1000 is image n of the archive; 1000 or more is image start(n / 1000) + n % 1000, '
                 "where start(g) is the first image of the archive's g-th group label (start(0) = 0). "
                 'A unit\'s second (attack) frame is the next image. Sites: image (look 0-99, else level 0-3) of '
-                'sites.trs group path + 1.',
+                'sites.trs group path + 1. Nations: "flag" (tools/dom6exe/flags.py).',
         'monster': {'archive': arch, 'record_offset': off, 'sprites': mon,
                     'unmounted_ability': ability, 'unmounted': unmounted},
         'item': {'archive': iarch, 'record_offset': ioff, 'sprites': items},
         'site': site_rule(exe, names),
+        'flag': flags.collect(exe),
     }
     return res

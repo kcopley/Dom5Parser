@@ -13,7 +13,8 @@ namespace Dom5Editor.Sprites
     /// "path:F", "gem:S", "gold", ability commands like "fireres", ...). <see cref="Icon"/> is null
     /// when the game isn't found or the key isn't mapped, so callers keep their own fallback.
     /// Vanilla units', items' and sites' pictures (<see cref="Sprite"/>, <see cref="SitePicture"/>)
-    /// are only ever read from the install.
+    /// and nations' flags (<see cref="NationFlag"/>, built from parts as the game does) are only
+    /// ever read from the install.
     /// </summary>
     public static class GameArt
     {
@@ -45,6 +46,8 @@ namespace Dom5Editor.Sprites
                 _folder = null;
                 _archives.Clear();
                 _icons.Clear();
+                _flags.Clear();
+                _flagParts = default;
             }
         }
 
@@ -125,6 +128,150 @@ namespace Dom5Editor.Sprites
             if (start < 0)
                 return null;
             return a.Image(start + (look >= 0 && look < 100 ? look : Math.Clamp(level, 0, 3)));
+        }
+
+        // nations' flags built so far, by nation and tint colors, kept while something shows them
+        private static readonly Dictionary<(int Nation, int Color, int Secondary), WeakReference<BitmapSource>?> _flags = new Dictionary<(int, int, int), WeakReference<BitmapSource>?>();
+        // the parts every built flag has (pole, cloth, border) on the flag's canvas, from this archive
+        private static (TrsArchive? Archive, byte[]?[] Parts) _flagParts;
+        private const int FlagSize = 128;
+
+        /// <summary>
+        /// A nation's flag from the install, as the game makes it (6.37, tools/dom6exe/flags.py; the
+        /// numbers are Dom5Edit.VanillaSprites.Flag): flag.trs image nation + 1. Nations 0-4
+        /// (Independents, the special monster slots) have theirs in the file. Nations 5-499 get one
+        /// built at start and after the mods are read: the pole, the cloth times
+        /// <paramref name="color"/> (#color), its border times <paramref name="secondary"/>
+        /// (#secondarycolor; unset it is black, the flag doesn't fall back to #color) and, up to
+        /// nation 135, the nation's emblem, each blended over the last by its alpha and kept as RGB565
+        /// (a black pixel turns transparent: a nation without colors shows a bare pole). Built when
+        /// first asked for and cached per nation and colors; null when the game, the rule (no
+        /// vanilla-sprites.json) or the images aren't there.
+        /// </summary>
+        public static BitmapSource? NationFlag(int nation, (float R, float G, float B) color, (float R, float G, float B) secondary)
+        {
+            var rule = Dom5Edit.VanillaSprites.Flag;
+            if (rule == null || nation < 0 || nation > rule.LastComposed)
+                return null;
+            lock (_lock)
+            {
+                var a = Archive(rule.Archive);
+                if (a == null)
+                    return null;
+                if (!rule.IsComposed(nation))
+                    return a.Image(nation + rule.ImageOffset);
+                var key = (nation, Tint(color), Tint(secondary));
+                if (_flags.TryGetValue(key, out var cached))
+                {
+                    if (cached == null)
+                        return null;
+                    if (cached.TryGetTarget(out var alive))
+                        return alive;
+                }
+                BitmapSource? image;
+                try
+                {
+                    image = BuildFlag(a, rule, nation, key.Item2, key.Item3);
+                }
+                catch (Exception)
+                {
+                    image = null; // a damaged archive: no flag
+                }
+                _flags[key] = image != null ? new WeakReference<BitmapSource>(image) : null;
+                return image;
+            }
+        }
+
+        // the tint bytes of a color as 0xRRGGBB
+        private static int Tint((float R, float G, float B) c) =>
+            Dom5Edit.NationFlagRule.Tint(c.R) << 16 | Dom5Edit.NationFlagRule.Tint(c.G) << 8 | Dom5Edit.NationFlagRule.Tint(c.B);
+
+        private static BitmapSource? BuildFlag(TrsArchive a, Dom5Edit.NationFlagRule rule, int nation, int color, int secondary)
+        {
+            if (_flagParts.Archive != a)
+                _flagParts = (a, new[] { Canvas(a, rule.Pole), Canvas(a, rule.Cloth), Canvas(a, rule.Border) });
+            var parts = _flagParts.Parts;
+            if (parts[0] == null || parts[1] == null || parts[2] == null)
+                return null;
+            var flag = (byte[])parts[0]!.Clone();
+            Over(flag, Tinted(parts[1]!, color));
+            Over(flag, Tinted(parts[2]!, secondary));
+            if (Canvas(a, rule.Emblem(nation)) is byte[] emblem)
+                Over(flag, emblem);
+            AsStored(flag);
+            var image = BitmapSource.Create(FlagSize, FlagSize, 96, 96, PixelFormats.Bgra32, null, flag, FlagSize * 4);
+            image.Freeze();
+            return image;
+        }
+
+        /// <summary>An image on the flag's 128 x 128 canvas, at the top left (how the game loads a part), as straight BGRA; null if it isn't there.</summary>
+        private static byte[]? Canvas(TrsArchive a, int index)
+        {
+            if (index < 0 || index >= a.Count || a.DecodeBgra(index) is not byte[] px)
+                return null;
+            var info = a.Info(index);
+            if (info.Width == FlagSize && info.Height == FlagSize)
+                return px;
+            var canvas = new byte[FlagSize * FlagSize * 4];
+            for (int y = 0; y < Math.Min(info.Height, FlagSize); y++)
+                Buffer.BlockCopy(px, y * info.Width * 4, canvas, y * FlagSize * 4, Math.Min(info.Width, FlagSize) * 4);
+            return canvas;
+        }
+
+        /// <summary>A copy with each channel of the pixels shown times its tint byte / 255, truncated (the tint is 0xRRGGBB).</summary>
+        private static byte[] Tinted(byte[] part, int rgb)
+        {
+            var px = (byte[])part.Clone();
+            int r = rgb >> 16 & 0xFF, g = rgb >> 8 & 0xFF, b = rgb & 0xFF;
+            for (int o = 0; o < px.Length; o += 4)
+                if (px[o + 3] != 0)
+                {
+                    px[o] = (byte)(px[o] * b / 255);
+                    px[o + 1] = (byte)(px[o + 1] * g / 255);
+                    px[o + 2] = (byte)(px[o + 2] * r / 255);
+                }
+            return px;
+        }
+
+        /// <summary>Source over destination by the source's alpha, (s * a + d * (255 - a)) / 255 truncated; what it covers becomes opaque.</summary>
+        private static void Over(byte[] dst, byte[] src)
+        {
+            for (int o = 0; o < dst.Length; o += 4)
+            {
+                int alpha = src[o + 3];
+                if (alpha == 0)
+                    continue;
+                for (int c = 0; c < 3; c++)
+                    dst[o + c] = (byte)((src[o + c] * alpha + dst[o + c] * (255 - alpha)) / 255);
+                dst[o + 3] = 255;
+            }
+        }
+
+        /// <summary>
+        /// The flag as the game keeps it: RGB565 without alpha, then read back as it reads its
+        /// images (0x0000 transparent, magenta 0xF81F a half-transparent black shadow).
+        /// </summary>
+        private static void AsStored(byte[] px)
+        {
+            for (int o = 0; o < px.Length; o += 4)
+            {
+                int b = px[o] & 0xF8, g = px[o + 1] & 0xFC, r = px[o + 2] & 0xF8;
+                int v = px[o + 3] == 0 ? 0 : r << 8 | g << 3 | b >> 3;
+                if (v == 0)
+                    px[o] = px[o + 1] = px[o + 2] = px[o + 3] = 0;
+                else if (v == 0xF81F)
+                {
+                    px[o] = px[o + 1] = px[o + 2] = 0;
+                    px[o + 3] = 0x80;
+                }
+                else
+                {
+                    px[o] = (byte)b;
+                    px[o + 1] = (byte)g;
+                    px[o + 2] = (byte)r;
+                    px[o + 3] = 255;
+                }
+            }
         }
 
         // the icons compiled into the editor (tools/gameart/trs.py pack): key -> (width, height, half size, zlib BGRA)
