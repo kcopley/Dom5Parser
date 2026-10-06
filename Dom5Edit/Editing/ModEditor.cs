@@ -430,6 +430,9 @@ namespace Dom5Edit.Editing
             foreach (var p in lines)
             {
                 var copy = p.Clone();
+                // the same line, moved: saved with its text as read while its value is unchanged
+                copy.RawText = p.RawText;
+                copy.BaselineExport = p.BaselineExport;
                 copy.PlaceKey = Property.NewPlaceKey();
                 copy.PlaceAtStart = previous == 0;
                 copy.PlaceAfterKey = previous;
