@@ -374,7 +374,7 @@ def monster_commands(exe):
 
 def write(exe, path):
     sections = [('weapon', weapon_commands), ('armor', armor_commands), ('monster', monster_commands),
-                ('item', item_commands)]
+                ('spell', spell_commands), ('item', item_commands)]
     text = ['-- Dominions %s vanilla data, written from Dominions6.exe by tools/dom6exe (exe %s).' % (exe.version, exe.sha),
             '-- "-- ro:" lines are stored values no command can set (shown read-only).', '']
     res = {'game_version': exe.version}
@@ -714,5 +714,73 @@ def item_commands(exe):
                 if left:
                     ro.append((generic_label(gen.get(key, []), key) if not more else
                                'ability %d bits no command sets' % key, hex(left) if more else left))
+        out[i] = {'lines': lines, 'readonly': ro}
+    return out
+
+
+# spell record (6.37), defaults from #clear (0x140258af0): school -1, path 0 (fire) level 1, no
+# second path, fatigue 20, effect 2, damage 10, nreff 1. #path n p / #pathlevel n l store at
+# +0x26 + n / +0x28 + n. #flightspr and #explspr also store 1 and 9 frames. Abilities: 15
+# int32 numbers at +0x64, int64 values at +0xa0, through the generic handler; #restricted N
+# appends ability 278 = N.
+S_SCHOOL, S_RESEARCH, S_PATH, S_PATHLEVEL = 0x24, 0x25, 0x26, 0x28
+S_FIELDS = [('fatiguecost', 0x2a, 2), ('aoe', 0x2c, 2), ('effect', 0x2e, 2), ('range', 0x30, 2),
+            ('precision', 0x32, 2), ('damage', 0x38, 8), ('nreff', 0x40, 2)]
+S_FLIGHTSPR, S_EXPLSPR, S_SPEC, S_SPEC2, S_NEXT, S_SOUND = 0x42, 0x46, 0x50, 0x58, 0x60, 0x62
+S_AB_KEYS, S_AB_VALS, S_AB_COUNT = 0x64, 0xa0, 15
+
+
+def spell_commands(exe):
+    model = ContextModel(exe, 'spell')
+    for cmd, off, size in S_FIELDS + [('spec', S_SPEC, 8), ('spec2', S_SPEC2, 8), ('nextspell', S_NEXT, 2),
+                                      ('sound', S_SOUND, 2), ('school', S_SCHOOL, 1), ('researchlevel', S_RESEARCH, 1)]:
+        model.check(cmd, off, size)
+    gen = collections.defaultdict(list)
+    for c in model.p.generic_call_args():
+        if c['context'] == 'spell' and c['key'] is not None:
+            gen[c['key']].append(c)
+    repeatable = {k for k, cs in gen.items() if any(c['repeat'] == 1 for c in cs)} | {RESTRICTED}
+    out = {}
+    for i, r in sorted(records(exe, 'spell').items()):
+        sb = lambda o: struct.unpack_from('<b', r, o)[0]
+        h = lambda o: struct.unpack_from('<h', r, o)[0]
+        lines, ro = ['#name "%s"' % name_of(r).replace('"', "'")], []
+        lines += ['#school %d' % sb(S_SCHOOL), '#researchlevel %d' % sb(S_RESEARCH)]
+        for n in (0, 1):
+            if sb(S_PATH + n) != -1:
+                lines += ['#path %d %d' % (n, sb(S_PATH + n)), '#pathlevel %d %d' % (n, sb(S_PATHLEVEL + n))]
+        for cmd, off, size in S_FIELDS:
+            lines.append('#%s %d' % (cmd, struct.unpack_from('<q' if size == 8 else '<h', r, off)[0]))
+        lines.append('#spec %d' % struct.unpack_from('<Q', r, S_SPEC)[0])
+        for cmd, off in (('spec2', S_SPEC2),):
+            v = struct.unpack_from('<Q', r, off)[0]
+            if v:
+                lines.append('#%s %d' % (cmd, v))
+        if h(S_NEXT):
+            lines.append('#nextspell %d' % h(S_NEXT))
+        if h(S_SOUND):
+            lines.append('#sound %d' % h(S_SOUND))
+        for cmd, off, frames in (('flightspr', S_FLIGHTSPR, 1), ('explspr', S_EXPLSPR, 9)):
+            if h(off) != -1:
+                lines.append('#%s %d' % (cmd, h(off)))
+                if h(off) and h(off + 2) != frames:     # #flightspr stores 1 frame, #explspr 9
+                    ro.append(('%s frames' % cmd, h(off + 2)))
+        seen = set()
+        for k in range(S_AB_COUNT):
+            key = struct.unpack_from('<i', r, S_AB_KEYS + 4 * k)[0]
+            val = struct.unpack_from('<q', r, S_AB_VALS + 8 * k)[0]
+            if not key:
+                break
+            if key in seen and key not in repeatable:
+                ro.append(('ability %d repeated (the game reads the first)' % key, val))
+                continue
+            seen.add(key)
+            if key == RESTRICTED:
+                lines.append('#restricted %d' % val)
+                continue
+            more, left = generic_lines(gen.get(key, []), val)
+            lines += more
+            if left:
+                ro.append((generic_label(gen.get(key, []), key), left))
         out[i] = {'lines': lines, 'readonly': ro}
     return out
