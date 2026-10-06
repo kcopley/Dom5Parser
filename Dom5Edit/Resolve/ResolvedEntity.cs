@@ -37,7 +37,13 @@ namespace Dom5Edit.Resolve
             Source = source;
             CopiedFrom = copiedFrom;
             Via = via;
-            Selector = GameRules.IsKeyedByFirstArgument(property.Command) ? FirstArgument(property) : null;
+            Selector = GameRules.IsKeyedByFirstArgument(KindOf(property.Parent), property.Command) ? FirstArgument(property) : null;
+        }
+
+        private static EntityType? KindOf(IDEntity? e)
+        {
+            try { return e?.Kind; }
+            catch (NotImplementedException) { return null; } // a dependent entity type with no parser context
         }
 
         internal ResolvedValue CopiedBy(IDEntity from) => new ResolvedValue(Property, ValueSource.Copied, from, this);

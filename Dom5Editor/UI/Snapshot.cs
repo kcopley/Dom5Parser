@@ -23,6 +23,7 @@ namespace Dom5Editor.UI
     ///   --remove COMMAND [ARGS]  remove a value (the first, or the one with those arguments)
     ///   --new TYPE               make a new entity (the list's "+ New") and select it
     ///   --delete                 delete the selected entity (the list's "Delete")
+    ///   --field LABEL VALUE      set a panel field (choice by name or number, number, reference by ID)
     ///   --dump                   log the selected entity's values and where each comes from
     ///   --undo / --redo          undo or redo the last edit
     ///   --save FILE.dm           save the mod (the editor's Save)
@@ -128,6 +129,33 @@ namespace Dom5Editor.UI
                                     ?? throw new InvalidOperationException($"no {args[i]} to remove");
                             page.RemoveValue(v);
                             Log($"remove {v.Property.ToExportString()}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--field":
+                        {
+                            // --field LABEL VALUE: set a panel field as picking or typing in it does
+                            // (a choice by its option name or number, a number, a reference by ID)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var label = args[++i];
+                            var value = args[++i];
+                            var field = page.Panels.OfType<FieldsPanel>().SelectMany(p => p.Fields).FirstOrDefault(f => f.Label == label)
+                                        ?? throw new InvalidOperationException("no field " + label);
+                            switch (field)
+                            {
+                                case ChoiceField c:
+                                    c.Selected = c.Options.FirstOrDefault(o => o.Name == value)?.Value ?? int.Parse(value);
+                                    break;
+                                case CommandChoiceField cc:
+                                    cc.Selected = cc.Options.FirstOrDefault(o => o.Name == value)?.Value ?? int.Parse(value);
+                                    break;
+                                case NumberField n:
+                                    n.Text = value;
+                                    break;
+                                case RefField r:
+                                    r.SelectedId = int.Parse(value);
+                                    break;
+                            }
+                            Log($"field {label} = {value}{(page.Error != null ? " error: " + page.Error : "")}");
                             break;
                         }
                         case "--dump":

@@ -74,7 +74,15 @@ namespace Dom5Editor.UI.ViewModels
 
         public string DisplayName => string.IsNullOrEmpty(Name) ? $"#{ID}" : Name;
 
-        public string SourceLabel => Item.IsNew ? "New in this mod" : Item.IsModified ? "Vanilla, changed by this mod" : "Vanilla";
+        public string SourceLabel => Item.IsNew ? "New in this mod"
+            : !Item.IsModified ? "Vanilla"
+            : Resolved.Vanilla == null && Entity.Selected ? "Changed by this mod (the vanilla data has no " + Type.ToString().ToLowerInvariant() + "s to show)"
+            : "Vanilla, changed by this mod";
+
+        /// <summary>Whether the type has a #name (poptypes and nametypes don't).</summary>
+        public bool HasName => Entity.GetPropertyMap().ContainsKey(Command.NAME);
+
+        public string Title => HasName ? DisplayName : Item.DisplayName;
 
         /// <summary>Why the last edit couldn't be made (null if it could).</summary>
         public string? Error
@@ -232,7 +240,7 @@ namespace Dom5Editor.UI.ViewModels
                 // copy and clear lines are shown with the copy source, not as badges
                 var commands = section.Commands
                     .Select(d => (Def: d, Ok: BadgeConfigLoader.TryGetCommand(d, out var c), Command: c))
-                    .Where(x => x.Ok && Entity.GetPropertyMap().ContainsKey(x.Command)
+                    .Where(x => x.Ok && Entity.GetPropertyMap().ContainsKey(x.Command) && !covered.Contains(x.Command)
                                 && !GameRules.IsCopy(x.Command) && !GameRules.IsClear(x.Command))
                     .ToList();
                 if (commands.Count == 0 || skip.Contains(section.Id) || section.HasCustomRenderer && !section.IsGridLayout)
@@ -259,7 +267,7 @@ namespace Dom5Editor.UI.ViewModels
                             vm.AddBadge(null, c, def.Display, kind, def.Description, bg, border, null);
                         continue;
                     }
-                    bool many = refType != null || GameRules.IsRepeatable(Type, c) || GameRules.IsKeyedByFirstArgument(c);
+                    bool many = refType != null || GameRules.IsRepeatable(Type, c) || GameRules.IsKeyedByFirstArgument(Type, c);
                     foreach (var v in many ? values : new List<ResolvedValue> { values[^1] })
                         vm.AddBadge(v, c, def.Display, kind, def.Description, bg, border, refType);
                 }
@@ -269,7 +277,7 @@ namespace Dom5Editor.UI.ViewModels
                         if (GameCommandCatalog.IsRead(Type, c) == false)
                             continue;
                         string kind = KindOf(c, def.Type);
-                        bool many = kind == "ref" || kind == "weaponref" || GameRules.IsRepeatable(Type, c) || GameRules.IsKeyedByFirstArgument(c);
+                        bool many = kind == "ref" || kind == "weaponref" || GameRules.IsRepeatable(Type, c) || GameRules.IsKeyedByFirstArgument(Type, c);
                         if (many || !Resolved.Has(c))
                             vm.Available.Add(new AvailablePropertyItem
                             {
@@ -320,6 +328,10 @@ namespace Dom5Editor.UI.ViewModels
         // ---- edits (all through the session: undoable, and the page refreshes) ----
 
         protected void Edit(Func<ModEditor, IModEdit?> edit) => Error = Session.Edit(edit);
+
+        /// <summary>Several changes as one undo step.</summary>
+        public void EditRun(string description, Action<ModEditor, Transaction> body) =>
+            Edit(ed => ed.Run(description, tx => body(ed, tx)));
 
         public void SetValue(Command c, string args) => Edit(ed => ed.Set(Entity, c, args));
         public void AddValue(Command c, string args) => Edit(ed => ed.Add(Entity, c, args));
@@ -382,6 +394,8 @@ namespace Dom5Editor.UI.ViewModels
             string name = id < 0 && type == EntityType.MONSTER ? $"Montag {-id}" : type is EntityType t ? NameOf(t, id) : "";
             if (string.IsNullOrEmpty(name) && p is StringOrIDRef sr && sr.IsStringRef)
                 name = sr.Name + " (not found)";
+            if (string.IsNullOrEmpty(name))
+                name = $"#{id}";
             return (id, name);
         }
 

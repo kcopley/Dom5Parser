@@ -137,7 +137,8 @@ namespace Dom5Editor.UI.ViewModels
             }
             if (held)
             {
-                var added = new EntityListItem(Type, entity, NameOf(entity), isVanilla: vanilla != null, isModified: vanilla != null);
+                bool game = vanilla != null || entity.Selected && !HasVanillaData(Type);
+                var added = new EntityListItem(Type, entity, NameOf(entity), isVanilla: game, isModified: game);
                 _byKey[key] = added;
                 _items!.Add(added);
             }
@@ -160,13 +161,26 @@ namespace Dom5Editor.UI.ViewModels
                 }
             }
             var listed = new HashSet<int>(list.Select(i => i.ID));
+            // the mod's own; a #select of one the loaded vanilla data lacks (poptypes, events) is
+            // still the game's: listed as vanilla, changed
             foreach (var e in own)
                 if (e.ID <= 0 || !listed.Contains(e.ID))
-                    list.Add(new EntityListItem(Type, e, NameOf(e), isVanilla: false, isModified: false));
+                {
+                    bool game = e.Selected && !HasVanillaData(Type);
+                    list.Add(new EntityListItem(Type, e, NameOf(e), isVanilla: game, isModified: game));
+                }
             foreach (var item in list)
                 _byKey[Key(item.Entity)] = item;
             return new ObservableCollection<EntityListItem>(list);
         }
+
+        /// <summary>
+        /// Whether the vanilla data has this type (vanilla.dm has monsters, weapons, armor, spells,
+        /// items, sites and nations). A mod's #select of an ID it doesn't have makes a new entity; for
+        /// a type it lacks (poptypes, events, ...) the #select changes a game entity we can't show.
+        /// </summary>
+        public static bool HasVanillaData(EntityType type) =>
+            VanillaLoader.Vanilla?.Database.TryGetValue(type, out var set) == true && set.GetFullList().Count > 0;
 
         private IDEntity? VanillaOf(int id) =>
             id > 0 && VanillaLoader.Vanilla?.Database.TryGetValue(Type, out var set) == true && set.TryGetValue(id, out var v) ? v : null;
@@ -177,7 +191,7 @@ namespace Dom5Editor.UI.ViewModels
         private string NameOf(IDEntity entity)
         {
             var name = _session.Resolve(entity).Get(Command.NAME)?.Property is StringProperty s ? s.Value : null;
-            return string.IsNullOrEmpty(name) ? $"#{entity.ID}" : name!;
+            return string.IsNullOrEmpty(name) ? $"{Title.TrimEnd('s')} {entity.ID}" : name!;
         }
 
         private void OnPropertyChanged([CallerMemberName] string? name = null) =>

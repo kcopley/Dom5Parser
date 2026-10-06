@@ -290,7 +290,7 @@ namespace Dom5Edit.Editing
                 // an inherited value: a line of our own overrides it (for a keyed command with a new
                 // first argument, the old entry has to go first)
                 var replaced = new ResolvedValue(line, ValueSource.Own);
-                if (GameRules.IsKeyedByFirstArgument(value.Command) && replaced.Selector != current.Selector)
+                if (GameRules.IsKeyedByFirstArgument(type, value.Command) && replaced.Selector != current.Selector)
                     RemoveInherited(target, current);
                 AddLine(target, line);
                 return;
@@ -422,7 +422,7 @@ namespace Dom5Edit.Editing
         /// <summary>The value a line of this command would replace: the last one (for a keyed command, with the same first argument).</summary>
         private static ResolvedValue? Current(ResolvedEntity r, Property line)
         {
-            if (!GameRules.IsKeyedByFirstArgument(line.Command))
+            if (!GameRules.IsKeyedByFirstArgument(line.Parent?.Kind, line.Command))
                 return r.Get(line.Command);
             var selector = new ResolvedValue(line, ValueSource.Own).Selector;
             return r.GetAll(line.Command).LastOrDefault(v => v.Selector == selector);

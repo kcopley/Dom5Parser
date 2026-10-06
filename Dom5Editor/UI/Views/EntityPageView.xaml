@@ -67,8 +67,11 @@
                            VerticalAlignment="Center" Margin="8,0,0,0"/>
                 <TextBlock DockPanel.Dock="Right" Text="{Binding ID, StringFormat='#{0}'}" Style="{StaticResource SubHeaderText}"
                            VerticalAlignment="Center" Margin="8,0,0,0"/>
+                <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Style="{StaticResource HeaderText}" VerticalAlignment="Center"
+                           Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
                 <TextBox x:Name="NameBox" Text="{Binding Name, UpdateSourceTrigger=LostFocus}" FontSize="16" FontWeight="SemiBold"
-                         Style="{DynamicResource TextBoxBase}" KeyDown="CommitOnEnter" ToolTip="Name (#name). Enter or leave the box to save it."/>
+                         Style="{DynamicResource TextBoxBase}" KeyDown="CommitOnEnter" ToolTip="Name (#name). Enter or leave the box to save it."
+                         Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </DockPanel>
             <TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" Margin="0,0,0,6"
                        Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}"/>
