@@ -17,8 +17,87 @@ namespace Dom5Editor.UI.ViewModels
             EntityType.NATION => new NationPageViewModel(session, item),
             EntityType.NAMETYPE => new NametypePageViewModel(session, item),
             EntityType.EVENT => new EventPageViewModel(session, item),
+            EntityType.WEAPON => new WeaponPageViewModel(session, item),
+            EntityType.MERCENARY or EntityType.POPTYPE or EntityType.BLESS or EntityType.TEMPLATE => new FormPageViewModel(session, item),
             _ => new EntityPageViewModel(session, item),
         };
+    }
+
+    /// <summary>
+    /// A weapon: its stats as a block (damage, attacks, length; attack, defence, resources; range,
+    /// ammunition, area), its damage type and how much strength it adds, and its flags in groups
+    /// (kind of damage, element, what resists it, who it can't harm), each with the manual's hint.
+    /// </summary>
+    public sealed class WeaponPageViewModel : EntityPageViewModel
+    {
+        public WeaponPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
+
+        protected override void BuildPanels(HashSet<Command> covered)
+        {
+            NumberField Stat(string label, Command c, string icon, Func<string, string>? note = null)
+            {
+                covered.Add(c);
+                return new NumberField(this, label, c, note: note) { Icon = icon };
+            }
+            var stats = new StatsPanel();
+            var a = new StatsPanel.Column();
+            a.Cells.Add(Stat("Damage", Command.DMG, "dmg"));
+            a.Cells.Add(Stat("Attacks", Command.NRATT, "nratt", t => int.TryParse(t, out var n) && n < 0 ? $"one every {-n} rounds" : ""));
+            a.Cells.Add(Stat("Length", Command.LEN, "len"));
+            var b = new StatsPanel.Column();
+            b.Cells.Add(Stat("Attack", Command.ATT, "att"));
+            b.Cells.Add(Stat("Defence", Command.DEF, "def"));
+            b.Cells.Add(Stat("Resources", Command.RCOST, "res"));
+            var c = new StatsPanel.Column();
+            c.Cells.Add(Stat("Range", Command.RANGE, "range", t => t.Length == 0 || t == "0" ? "melee" : ""));
+            c.Cells.Add(Stat("Ammunition", Command.AMMO, "ammo"));
+            c.Cells.Add(Stat("Area", Command.AOE, "aoe"));
+            stats.Columns.Add(a);
+            stats.Columns.Add(b);
+            stats.Columns.Add(c);
+            Panels.Add(stats);
+
+            var damage = new FieldsPanel("DAMAGE");
+            var types = new CommandChoiceField(this, "Damage type", new[]
+            {
+                (Command.DT_NORMAL, "Normal"), (Command.DT_STUN, "Fatigue (stun)"), (Command.DT_SIZESTUN, "Fatigue, less on large"),
+                (Command.DT_REALSTUN, "Stun (100 is standard)"), (Command.DT_PARALYZE, "Paralyze"), (Command.DT_POISON, "Poison over rounds"),
+                (Command.DT_CAP, "Capped (max 1 HP)"), (Command.DT_DEMON, "Anti-demon (x2)"), (Command.DT_HOLY, "Holy (x3 undead, demons)"),
+                (Command.DT_MAGIC, "Anti-magic beings (x2)"), (Command.DT_SMALL, "Small targets (x2)"), (Command.DT_LARGE, "Large targets (x3)"),
+                (Command.DT_CONSTRUCTONLY, "Inanimate only"), (Command.DT_RAISE, "Raises the killed"), (Command.DT_INTERRUPT, "Interrupt only"),
+                (Command.DT_WEAKNESS, "Drains strength"), (Command.DT_DRAIN, "Drains life"), (Command.DT_WEAPONDRAIN, "Drains life (max 5)"),
+                (Command.DT_AFF, "Affliction"), (Command.DT_BOUNCEKILL, "Bounces (chain)"),
+            }, defaultIndex: 0);
+            damage.Fields.Add(types);
+            var str = new CommandChoiceField(this, "Strength added", new[]
+            {
+                (Command.FULLSTR, "All of it"), (Command.HALFSTR, "Half (bows)"), (Command.THIRDSTR, "A third (crossbows)"), (Command.NOSTR, "None"),
+            }, defaultIndex: 0);
+            damage.Fields.Add(str);
+            damage.Fields.Add(new RefField(this, "Secondary effect", Command.SECONDARYEFFECT, EntityType.WEAPON,
+                tooltip: "#secondaryeffect: a weapon (effect) that also hits when this one does damage"));
+            damage.Fields.Add(new RefField(this, "Always also", Command.SECONDARYEFFECTALWAYS, EntityType.WEAPON,
+                tooltip: "#secondaryeffectalways: a weapon (effect) that also hits whenever this one hits, damage or not"));
+            Panels.Add(damage);
+            covered.UnionWith(types.Commands);
+            covered.UnionWith(str.Commands);
+            covered.UnionWith(new[] { Command.SECONDARYEFFECT, Command.SECONDARYEFFECTALWAYS });
+
+            var flags = new FlagsPanel("QUALITIES");
+            flags.Add(this, covered, "Kind", (Command.SLASH, "Slash"), (Command.PIERCE, "Pierce"), (Command.BLUNT, "Blunt"),
+                (Command.MAGIC, "Magic"), (Command.ARMORPIERCING, "Armor piercing"), (Command.ARMORNEGATING, "Armor negating"),
+                (Command.TWOHANDED, "Two-handed"), (Command.CHARGE, "Charge"), (Command.FLAIL, "Flail"), (Command.BONUS, "Bonus weapon"));
+            flags.Add(this, covered, "Element", (Command.FIRE, "Fire"), (Command.COLD, "Cold"), (Command.SHOCK, "Shock"), (Command.ACID, "Acid"),
+                (Command.POISON, "Poison (immunity)"));
+            flags.Add(this, covered, "Resisted by", (Command.MRNEGATES, "MR"), (Command.MRNEGATESEASILY, "MR, easily"), (Command.HARDMRNEG, "MR, with a penalty"),
+                (Command.MRHALF, "MR halves it"), (Command.DEFROLL, "Defence roll"), (Command.MORROLL, "Morale roll"), (Command.SIZERESIST, "Size"));
+            flags.Add(this, covered, "Can't harm", (Command.FRIENDLYIMMUNE, "Friends"), (Command.ENEMYIMMUNE, "Enemies"), (Command.UNDEADIMMUNE, "Undead"),
+                (Command.INANIMATEIMMUNE, "Lifeless"), (Command.FLYINGIMMUNE, "Flyers"), (Command.ILLUSIONSIMMUNE, "Illusions"),
+                (Command.SPIRITFORMIMMUNE, "Spirit forms"), (Command.MIND, "The mindless"));
+            flags.Add(this, covered, "Only harms", (Command.SACREDONLY, "Sacred"), (Command.UNDEADONLY, "Undead"), (Command.DEMONONLY, "Demons"),
+                (Command.DEMONUNDEAD, "Demons and undead"), (Command.MAGICONLY, "Magic beings"));
+            Panels.Add(flags);
+        }
     }
 
     /// <summary>A spell: research, paths and cost; its effect, with #damage shown as what the effect reads it as.</summary>
@@ -31,7 +110,7 @@ namespace Dom5Editor.UI.ViewModels
             var spell = new FieldsPanel("SPELL");
             spell.Fields.Add(new ChoiceField(this, "School", Command.SCHOOL, null, Data.GameTables.Schools));
             spell.Fields.Add(new NumberField(this, "Research level", Command.RESEARCHLEVEL));
-            spell.Fields.Add(new ChoiceField(this, "Path", Command.PATH, "0", Data.GameTables.SpellPaths));
+            spell.Fields.Add(new ChoiceField(this, "Path", Command.PATH, "0", Data.GameTables.SpellPaths, -1));
             spell.Fields.Add(new NumberField(this, "Path level", Command.PATHLEVEL, "0"));
             spell.Fields.Add(new ChoiceField(this, "Second path", Command.PATH, "1", Data.GameTables.SpellPaths, -1));
             spell.Fields.Add(new NumberField(this, "Second level", Command.PATHLEVEL, "1"));
@@ -51,7 +130,51 @@ namespace Dom5Editor.UI.ViewModels
             panel.Hint = type == null ? "" : $"{type.Name}: #damage is {Data.GameTables.ArgumentDescription(type.ArgumentType).ToLowerInvariant()}" +
                 (type.Notes != null ? $" ({type.Notes})" : "");
             Panels.Add(panel);
+
+            // range, precision, area and number of effects, with what their encoded values mean
+            NumberField Stat(string label, Command c, string icon, Func<string, string> note)
+            {
+                covered.Add(c);
+                return new NumberField(this, label, c, note: note) { Icon = icon };
+            }
+            var stats = new StatsPanel { Title = "COMBAT" };
+            var left = new StatsPanel.Column();
+            left.Cells.Add(Stat("Range", Command.RANGE, "range", t => int.TryParse(t, out var r) && r >= 5000 ? $"{r - 5000} + 5 per caster level" : ""));
+            left.Cells.Add(Stat("Precision", Command.PRECISION, "prec", _ => ""));
+            var right = new StatsPanel.Column();
+            right.Cells.Add(Stat("Area", Command.AOE, "aoe", AreaNote));
+            right.Cells.Add(Stat("Effects", Command.NREFF, "nratt", EffectsNote));
+            stats.Columns.Add(left);
+            stats.Columns.Add(right);
+            Panels.Add(stats);
             covered.UnionWith(new[] { Command.SCHOOL, Command.RESEARCHLEVEL, Command.PATH, Command.PATHLEVEL, Command.FATIGUECOST, Command.EFFECT, Command.DAMAGE });
+        }
+
+        /// <summary>#aoe: squares; 666 the whole battlefield, 662-665 a share of it; +1000 grows with the caster's level.</summary>
+        private static string AreaNote(string text)
+        {
+            if (!int.TryParse(text, out var a))
+                return "";
+            return a switch
+            {
+                666 => "the whole battlefield",
+                663 => "half the squares",
+                665 => "a quarter of the squares",
+                664 => "10% of the squares",
+                662 => "5% of the squares",
+                >= 1000 => $"{a % 1000} + 1 per caster level",
+                _ => "",
+            };
+        }
+
+        /// <summary>#nreff: +1000 per 1000 gives that many more per caster level; +500, one more per two levels above the requirement.</summary>
+        private static string EffectsNote(string text)
+        {
+            if (!int.TryParse(text, out var n) || n < 500)
+                return "";
+            if (n % 1000 >= 500 && n < 1000)
+                return $"{n - 500} + 1 per 2 levels above the requirement";
+            return $"{n % 1000} + {n / 1000} per caster level";
         }
 
         private static string CostNote(string text)
@@ -135,7 +258,7 @@ namespace Dom5Editor.UI.ViewModels
         }
     }
 
-    /// <summary>Armor: its type (shield, body, helmet, barding); protection and the rest in its stats.</summary>
+    /// <summary>Armor: its type (shield, body, helmet, barding) and its stats as a block.</summary>
     public sealed class ArmorPageViewModel : EntityPageViewModel
     {
         public ArmorPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
@@ -147,6 +270,79 @@ namespace Dom5Editor.UI.ViewModels
                 tooltip: "#type: which slot it's worn in; #prot protects the parts of that type"));
             Panels.Add(armor);
             covered.Add(Command.TYPE);
+            NumberField Stat(string label, Command c, string icon)
+            {
+                covered.Add(c);
+                return new NumberField(this, label, c) { Icon = icon };
+            }
+            var stats = new StatsPanel();
+            var a = new StatsPanel.Column();
+            a.Cells.Add(Stat("Protection", Command.PROT, "prot"));
+            a.Cells.Add(Stat("Defence", Command.DEF, "def"));
+            var b = new StatsPanel.Column();
+            b.Cells.Add(Stat("Encumbrance", Command.ENC, "enc"));
+            b.Cells.Add(Stat("Resources", Command.RCOST, "res"));
+            stats.Columns.Add(a);
+            stats.Columns.Add(b);
+            Panels.Add(stats);
+        }
+    }
+
+    /// <summary>
+    /// A type with few commands (mercenary, poptype, bless, AI template): every command shown as
+    /// a field, set or not, by its badge config's sections, so a new one has its form to fill;
+    /// repeatable unit lists as tables, flags as checkboxes.
+    /// </summary>
+    public sealed class FormPageViewModel : EntityPageViewModel
+    {
+        public FormPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
+
+        protected override void BuildPanels(HashSet<Command> covered)
+        {
+            var config = Data.BadgeConfigLoader.LoadConfig(ConfigName(Type));
+            if (config == null)
+                return;
+            foreach (var section in config.Sections)
+            {
+                var title = (section.DisplayName ?? section.Id).ToUpperInvariant();
+                var fields = new FieldsPanel(title);
+                var flags = new FlagsPanel(title);
+                var lists = new List<object>();
+                foreach (var def in section.Commands)
+                {
+                    if (!Data.BadgeConfigLoader.TryGetCommand(def, out var c) || !Entity.GetPropertyMap().ContainsKey(c) || covered.Contains(c))
+                        continue;
+                    var label = def.Display ?? def.Name;
+                    var kind = (def.Type ?? "flag").ToLowerInvariant();
+                    var refType = Data.BadgeConfigLoader.GetEntityTypeFromRefType(def.RefType ?? "");
+                    if (kind == "flag")
+                    {
+                        flags.Add(this, covered, "", (c, label));
+                        continue;
+                    }
+                    covered.Add(c);
+                    if (kind == "ref" && refType is EntityType rt)
+                    {
+                        if (Dom5Edit.Resolve.GameRules.IsRepeatable(Type, c))
+                            lists.Add(new ReferenceListPanel(this, c switch
+                            {
+                                Command.ADDRECUNIT => "RECRUITS", Command.ADDRECCOM => "RECRUITABLE COMMANDERS", _ => label.ToUpperInvariant(),
+                            }, c, rt, columns: rt == EntityType.MONSTER ? NationPageViewModel.UnitColumns : null));
+                        else
+                            fields.Fields.Add(new RefField(this, label, c, rt));
+                    }
+                    else if (System.Text.RegularExpressions.Regex.IsMatch(def.Name, @"^path\d$"))
+                        fields.Fields.Add(new ChoiceField(this, label, c, null, Data.GameTables.PathsOrNone, -1));
+                    else
+                        fields.Fields.Add(new NumberField(this, label, c));
+                }
+                if (fields.Fields.Count > 0)
+                    Panels.Add(fields);
+                if (flags.Groups.Count > 0)
+                    Panels.Add(fields.Fields.Count > 0 ? flags.Untitled() : flags);
+                foreach (var l in lists)
+                    Panels.Add(l);
+            }
         }
     }
 

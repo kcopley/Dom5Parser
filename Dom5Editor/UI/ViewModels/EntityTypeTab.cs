@@ -28,7 +28,8 @@ namespace Dom5Editor.UI.ViewModels
             _session = session;
             Type = type;
             Title = title;
-            NewCommand = new RelayCommand(CreateNew);
+            // (blesses can only be selected; a template is made for a nation)
+            NewCommand = new RelayCommand(CreateNew, () => type != EntityType.BLESS && type != EntityType.TEMPLATE);
             DeleteCommand = new RelayCommand<object>(o => Delete(o as EntityListItem), o => o is EntityListItem i && (i.IsNew || i.IsModified));
         }
 

@@ -85,7 +85,9 @@ namespace Dom5Editor.Data
                         if (int.TryParse(e.Name, out var n))
                             _effects[n] = new EffectType
                             {
-                                Name = e.Value.GetProperty("name").GetString() ?? $"effect {n}",
+                                // ("Damage {Wpn: #dt_normal}": the weapon damage type it matches is for the data, not the name)
+                                Name = System.Text.RegularExpressions.Regex.Replace(e.Value.GetProperty("name").GetString() ?? $"effect {n}", @"\s*\{[^}]*\}", "")
+                                    .Replace(" | ", " / "),
                                 ArgumentType = e.Value.TryGetProperty("argument_type", out var a) ? a.GetString() ?? "damage" : "damage",
                                 Notes = e.Value.TryGetProperty("notes", out var nt) ? nt.GetString() : null,
                             };

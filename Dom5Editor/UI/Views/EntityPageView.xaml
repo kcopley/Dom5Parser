@@ -164,7 +164,7 @@
             <!-- what refers to this entity -->
             <StackPanel Visibility="{Binding HasUsedBy, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0,0,0,10">
                 <TextBlock Text="{Binding UsedByTitle}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3"/>
-                <ItemsControl ItemsSource="{Binding UsedBy}">
+                <ItemsControl ItemsSource="{Binding UsedByShownRows}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
@@ -183,6 +183,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                <Button Content="{Binding ShowAllUsedByText}" Command="{Binding ShowAllUsedByCommand}" Style="{DynamicResource ButtonSmall}"
+                        HorizontalAlignment="Left" Visibility="{Binding HasMoreUsedBy, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
 
             <!-- the entity's lines as the save writes them -->

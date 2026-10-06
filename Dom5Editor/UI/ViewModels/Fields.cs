@@ -137,7 +137,8 @@ namespace Dom5Editor.UI.ViewModels
             }
         }
 
-        public string Note => _note?.Invoke(Text) ?? "";
+        /// <summary>What the value means: the field's own note, else the manual's value table ("early, middle" for an era mask).</summary>
+        public string Note => _note?.Invoke(Text) ?? Data.CommandHints.ValueNote(Page.Type, Command, Text);
         public bool HasNote => Note.Length > 0;
     }
 
@@ -155,6 +156,11 @@ namespace Dom5Editor.UI.ViewModels
         public EntityType RefType { get; }
         public IReadOnlyList<ReferenceItem> Candidates { get; }
         public ICommand OpenCommand { get; }
+
+        /// <summary>What a value the picker can't show is: a negative monster number is a monster tag.</summary>
+        public string Note => Value != null && int.TryParse(Arguments.Split(' ')[0], out var n) && n < 0 && RefType == EntityType.MONSTER
+            ? $"monster tag {-n}: one of the monsters with #montag {-n}" : "";
+        public bool HasNote => Note.Length > 0;
 
         public int? SelectedId
         {
@@ -260,6 +266,85 @@ namespace Dom5Editor.UI.ViewModels
         public ObservableCollection<Column> Columns { get; } = new ObservableCollection<Column>();
         /// <summary>A row under the columns (cost).</summary>
         public ObservableCollection<PanelField> Footer { get; } = new ObservableCollection<PanelField>();
+    }
+
+    /// <summary>A flag (a command with no value) as a checkbox: on when the entity has it in game.</summary>
+    public sealed class FlagField : INotifyPropertyChanged
+    {
+        private readonly EntityPageViewModel _page;
+
+        public FlagField(EntityPageViewModel page, string label, Command command)
+        {
+            _page = page;
+            Label = label;
+            Command = command;
+            Value = page.Resolved.Get(command);
+            Tooltip = string.Join("\n", new[] { Data.CommandHints.Tooltip(page.Type, command) ?? EntityPageViewModel.CommandName(command),
+                Value != null ? page.SourceText(Value) : "Not set" });
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public string Label { get; }
+        public Command Command { get; }
+        public ResolvedValue? Value { get; }
+        public string Tooltip { get; }
+        public bool IsInherited => Value != null && Value.Source != ValueSource.Own;
+
+        public bool IsOn
+        {
+            get => Value != null;
+            set
+            {
+                if (value != IsOn)
+                    _page.SetFlag(Command, value);
+            }
+        }
+    }
+
+    /// <summary>Flags in groups, each a checkbox (a weapon's damage kinds, what resists it, who's immune).</summary>
+    public sealed class FlagsPanel
+    {
+        public FlagsPanel(string title, string hint = "")
+        {
+            Title = title;
+            Hint = hint;
+        }
+
+        public sealed class Group
+        {
+            public Group(string title) => Title = title;
+            public string Title { get; }
+            public ObservableCollection<FlagField> Flags { get; } = new ObservableCollection<FlagField>();
+        }
+
+        public string Title { get; private set; }
+        public string Hint { get; }
+        public bool HasHint => Hint.Length > 0;
+        public bool HasTitle => Title.Length > 0;
+        public ObservableCollection<Group> Groups { get; } = new ObservableCollection<Group>();
+
+        /// <summary>The same flags without a title (under a fields panel of the same section).</summary>
+        public FlagsPanel Untitled()
+        {
+            Title = "";
+            return this;
+        }
+
+        /// <summary>Adds a group of flags; their commands are added to <paramref name="covered"/>.</summary>
+        public void Add(EntityPageViewModel page, HashSet<Command> covered, string title, params (Command Command, string Label)[] flags)
+        {
+            var g = new Group(title);
+            foreach (var (c, label) in flags)
+            {
+                if (!page.Entity.GetPropertyMap().ContainsKey(c))
+                    continue;
+                g.Flags.Add(new FlagField(page, label, c));
+                covered.Add(c);
+            }
+            if (g.Flags.Count > 0)
+                Groups.Add(g);
+        }
     }
 
     /// <summary>A panel of fields: a spell's paths and cost, an item's slot and paths, a site's path and rarity.</summary>
