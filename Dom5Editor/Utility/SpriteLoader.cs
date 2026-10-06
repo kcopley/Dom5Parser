@@ -61,7 +61,8 @@ namespace Dom5Editor.Sprites
 
         /// <summary>
         /// The picture an entity shows: a monster's #spr1 or an item's #spr (the mod's file; else the
-        /// vanilla one it has, also through #copyspr), a site's from its #path, #level and #look.
+        /// vanilla one it has, also through #copyspr), a site's from its #path, #level and #look, a
+        /// nation's flag (its #flag file, else the one the game makes from its colors).
         /// Null if it has none or the file or the game isn't there.
         /// </summary>
         public static BitmapSource? Of(ResolvedEntity r, EntityType type, string? modFile)
@@ -78,9 +79,25 @@ namespace Dom5Editor.Sprites
                     int Value(Command cmd, int fallback) =>
                         r.Get(cmd) is { } v && int.TryParse(v.Arguments.Split(' ')[0], out int n) ? n : fallback;
                     return GameArt.SitePicture(Value(Command.PATH, 0), Value(Command.LEVEL, 0), Value(Command.LOOK, r.Entity.Selected ? -1 : 0));
+                case EntityType.NATION:
+                    return r.Get(Command.FLAG)?.Property is FilePathProperty flag && !string.IsNullOrWhiteSpace(flag.Value)
+                        ? Load(flag.Value, modFile) : NationFlag(r);
                 default:
                     return null;
             }
+        }
+
+        /// <summary>
+        /// The flag the game makes for a nation that has no #flag file, from its number and its
+        /// #color and #secondarycolor as they are after the mod (GameArt.NationFlag): a mod that
+        /// recolors a vanilla nation recolors its flag, and a mod's new nation gets a plain one.
+        /// A color the nation doesn't have is black, as in the game's empty nation slots.
+        /// </summary>
+        public static BitmapSource? NationFlag(ResolvedEntity r)
+        {
+            (float, float, float) Color(Command c) =>
+                r.Get(c)?.Property is FloatFloatFloatProperty f && f.HasValue ? (f.Value1, f.Value2, f.Value3) : (0f, 0f, 0f);
+            return GameArt.NationFlag(r.Entity.ID, Color(Command.COLOR), Color(Command.SECONDARYCOLOR));
         }
 
         public static BitmapSource? Load(string? spritePath, string? modFile)

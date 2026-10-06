@@ -37,6 +37,7 @@ namespace Dom5Editor.UI
     ///   --png FILE.png           render the window
     ///   --view FILE.png          render the selected entity's view at its full height
     ///   --scroll-list TYPE N     scroll a type's list N screens (0: to the end), timing each (sprites decode as rows show)
+    ///   --flags FILE.png         every nation's flag on one sheet, timed, with a checksum (tools/dom6exe/flags.py check)
     ///   --size W H               window size (default 1400 x 2000)
     /// Messages go to FILE.png.log / FILE.dm.log next to the first output, and to stdout.
     /// Example: Dom5Editor.exe --snapshot --select monster 1 --badge hp 30 --png hp.png --save out.dm
@@ -499,6 +500,58 @@ namespace Dom5Editor.UI
                             // where the game's icons come from: compiled in, and the install found (or not)
                             var hp = Sprites.GameArt.Icon("hp");
                             Log($"icons: {Sprites.GameArt.PackedCount} compiled in; install: {Sprites.GameArt.DataFolder ?? "not found"}; hp icon {(hp == null ? "missing" : $"{hp.Width}x{hp.Height}")}; {Dom5Edit.VanillaSprites.Status}");
+                            break;
+                        }
+                        case "--flags":
+                        {
+                            // --flags FILE.png: every nation's flag as the editor shows it (its #flag file,
+                            // else the one the game makes from its colors) on one sheet, with the time it
+                            // took and a checksum of the pixels in nation order: tools/dom6exe/flags.py
+                            // check prints the one the game's rule gives
+                            var session = vm.Session!;
+                            var tab = vm.Tabs.OfType<EntityTypeTab>().First(t => t.Type == EntityType.NATION);
+                            List<(int ID, BitmapSource? Image)> All() => tab.Items.OrderBy(x => x.ID)
+                                .Select(x => (x.ID, Sprites.SpriteLoader.Of(session.Resolve(x.Entity), EntityType.NATION, session.Mod.FullFilePath)))
+                                .ToList();
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            var flags = All();
+                            long built = watch.ElapsedMilliseconds;
+                            watch.Restart();
+                            All(); // cached now
+                            long again = watch.ElapsedMilliseconds;
+                            using var sha = System.Security.Cryptography.SHA256.Create();
+                            var shown = flags.Where(x => x.Image != null).ToList();
+                            foreach (var (_, image) in shown)
+                            {
+                                var bgra = image!.Format == PixelFormats.Bgra32 ? image : new FormatConvertedBitmap(image, PixelFormats.Bgra32, null, 0);
+                                var px = new byte[bgra.PixelWidth * bgra.PixelHeight * 4];
+                                bgra.CopyPixels(px, bgra.PixelWidth * 4, 0);
+                                sha.TransformBlock(px, 0, px.Length, null, 0);
+                            }
+                            sha.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                            const int cell = 132, cols = 12;
+                            int rows = Math.Max(1, (flags.Count + cols - 1) / cols);
+                            var visual = new DrawingVisual();
+                            using (var dc = visual.RenderOpen())
+                            {
+                                dc.DrawRectangle(new SolidColorBrush(Color.FromRgb(0x40, 0x40, 0x40)), null, new Rect(0, 0, cols * cell, rows * cell));
+                                for (int k = 0; k < flags.Count; k++)
+                                {
+                                    var (nation, image) = flags[k];
+                                    double x = k % cols * cell, y = k / cols * cell;
+                                    if (image != null)
+                                        dc.DrawImage(image, new Rect(x + 2, y + 2, 128, 128));
+                                    dc.DrawText(new FormattedText(nation.ToString(), System.Globalization.CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                                        new Typeface("Segoe UI"), 11, Brushes.Yellow, 1.0), new Point(x + 3, y + 2));
+                                }
+                            }
+                            var bitmap = new RenderTargetBitmap(cols * cell, rows * cell, 96, 96, PixelFormats.Pbgra32);
+                            bitmap.Render(visual);
+                            var encoder = new PngBitmapEncoder();
+                            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+                            using (var stream = File.Create(Path.GetFullPath(args[++i])))
+                                encoder.Save(stream);
+                            Log($"flags: {shown.Count} of {flags.Count} nations ({built} ms, {again} ms again); pixels sha256 {Convert.ToHexString(sha.Hash!).ToLowerInvariant()[..16]}; sheet {args[i]}");
                             break;
                         }
                         case "--pause":

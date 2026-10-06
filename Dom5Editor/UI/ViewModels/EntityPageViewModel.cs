@@ -183,7 +183,8 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>
         /// The images shown in the header, each one clickable (or an image file dropped on it) to set
         /// it: a monster's normal and attack sprites (and its unmounted, mounted and extra ones when
-        /// it has them), an item's picture, a nation's flag.
+        /// it has them), an item's picture, a nation's flag (without a #flag file, the one the game
+        /// makes from its colors).
         /// </summary>
         public IReadOnlyList<SpriteSlot> SpriteSlots
         {
@@ -204,6 +205,13 @@ namespace Dom5Editor.UI.ViewModels
                     if (p == null && !always)
                         continue;
                     var path = (p as Dom5Edit.Props.FilePathProperty)?.Value;
+                    if (c == Command.FLAG && string.IsNullOrWhiteSpace(path))
+                    {
+                        // no #flag file: the flag the game makes from the nation's colors
+                        slots.Add(new SpriteSlot(this, c, label, Sprites.SpriteLoader.NationFlag(Resolved), null,
+                            "the game's own, made from #color and #secondarycolor", slots.Count == 0));
+                        continue;
+                    }
                     slots.Add(new SpriteSlot(this, c, label, Sprites.SpriteLoader.Load(path, Session.Mod.FullFilePath), path,
                         value == null ? "from the game" : value.Source == ValueSource.Own ? "the mod's" : SourceText(value), slots.Count == 0));
                 }
@@ -946,7 +954,7 @@ namespace Dom5Editor.UI.ViewModels
             Image = image;
             IsMain = isMain;
             var name = EntityPageViewModel.CommandName(command);
-            Tooltip = (path == null ? $"{label} image ({name}): none" : $"{label} image ({name}): {(source == "from the game" ? "the game's own" : path)}")
+            Tooltip = (path == null ? $"{label} image ({name}): {(image != null ? source : "none")}" : $"{label} image ({name}): {(source == "from the game" ? "the game's own" : path)}")
                 + "\nClick or drop a .tga/.png to set it (copied into the mod's sprites folder)";
             PickCommand = new RelayCommand(Pick);
         }

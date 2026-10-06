@@ -102,6 +102,14 @@ shipped as `vanilla-sprites.json`): below 1000 an image index, else the first im
 worked out from its `#path`, `#level` and `#look` (sites.trs groups fire, air, ...), so a mod's
 own sites show one too. Details: tools/dom6exe/README.md, "Sprites".
 
+A nation's flag isn't one image in the file: `flag.trs` image nation + 1 is built by the game
+from a pole (501), a cloth (502) tinted with `#color`, its border (503) tinted with
+`#secondarycolor` and, for nations up to 135, an emblem (500 + nation). The editor builds it
+the same way when shown (`GameArt.NationFlag`, from the rule in `vanilla-sprites.json`), from
+the nation's colors after the mod, so a mod's own nations and recolored vanilla ones show the
+flag the game will draw; a `#flag` file wins. `python3 tools/dom6exe/flags.py sheet OUT.png`
+renders the vanilla ones to check by eye (outside the repository).
+
 ## game_icons.json
 
 `{"version": "6.37", "icons": {key: {"archive", "index"}}}`. Each entry was found in the exe and

@@ -344,7 +344,7 @@ namespace Dom5Editor.UI.ViewModels
             if (Type == EntityType.EVENT)
                 item.TextMatcher = (i, text) => Dom5Edit.Events.EventInfo.Message(_session.Events.LinesOf(_session.Editor.OwnEntity(i.Entity) ?? i.Entity)) is string msg
                     && msg.Contains(text, StringComparison.OrdinalIgnoreCase);
-            if (Type == EntityType.MONSTER || Type == EntityType.ITEM || Type == EntityType.SITE)
+            if (Type == EntityType.MONSTER || Type == EntityType.ITEM || Type == EntityType.SITE || Type == EntityType.NATION)
                 item.SpriteProvider = i => Sprites.SpriteLoader.Thumbnail(Sprites.SpriteLoader.Of(_session.Resolve(i.Entity), Type, _session.Mod.FullFilePath));
         }
 
