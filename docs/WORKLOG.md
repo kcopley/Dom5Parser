@@ -16,6 +16,13 @@ Plan agreed with the user:
 5. Give Dom5Parser the command catalog (commands the game doesn't read; read-only abilities).
 6. Then: copy-edit rule C and original-order saving.
 
+### Items from the exe (step 4)
+
+531 items added to `data/vanilla-6.37.dm`. Items use the generic handler and the monster
+ability numbers; the special cases (`#constlevel` halves, `#type 9`/`10`, `#restricted`, OR-ed
+restriction bits) are in tools/dom6exe/README.md. 666 read-only values, 529 of them sprite
+numbers. Earlier sections unchanged.
+
 ### Weapons and armor from the exe (step 4)
 
 `vanilla` now writes weapons, armor and monsters into one file,

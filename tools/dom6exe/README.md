@@ -23,7 +23,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `ability_keys` | For monster and item commands: the numbered ability each one sets (`#xpshape` = 1145). Monsters and items share the numbering. |
 | `monsters` | The vanilla monster table: name, 12 base stats, up to 48 `(ability, value)` pairs. |
 | `not_settable` | Abilities vanilla monsters have that no monster command sets. An editor shows them, read-only. `possibly_set_by` lists commands whose own handler uses that number (e.g. `#blind`, `#assassin`, `#unmountedspr1`); for small numbers that is often noise. |
-| `vanilla` | Vanilla weapons, armor and monsters as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
+| `vanilla` | Vanilla weapons, armor, monsters and items as `#select*` commands (`vanilla_dm.py`): each stored value written as the command the parser stores it with. Values no command can store are `-- ro:` lines (shown read-only). |
 
 ## How it finds things (no hard-coded addresses)
 
@@ -100,6 +100,22 @@ and GNU `objdump`. The exe is never copied into the repo.
   (`#mrhalf`), `#usedinmelee`, `#dismounted`, `#hithead`, `#aironly`, `#demonimmune` (flag bits
   and abilities with no command: read-only).
 
+## Items (6.37)
+
+- Item `#clear` (0x1402290d0): main path 0 level 1, no second path, type 8, no flags.
+- `#constlevel N` stores N / 2 (the manual's levels are 1, 3, 5, ...: written as 2s + 1).
+  `#mainpath` also raises the main level to at least 1. `#type 9` stores type 6 plus ability
+  1423 = 1, `#type 10` stores type 9. `#restricted N` appends ability 278 = N. `#spell` and
+  `#autospell` are names at +0x30 and +0x54. `#magicboost` and `#gemprod` use the monster
+  numbers; abilities go through the same generic handler.
+- The restriction commands (`#nomounted`, `#noundead`, `#nofemale`, `#noinanim`, ...) OR a bit
+  each into ability 1417.
+- The item ability getter has no intrinsic flags. Flag bits no command sets look like battle
+  buffs: 0x1f8 bit 0x8 is what the inspector writes as `#airshield 80`.
+- Compared with the inspector: it lacks `#hp`, `#itemdrawsize`, ~40 more abilities and repeated
+  `#nationrebate`s; it expands `#magicboost 51` and `#elementrange`/`#allrange` into one line
+  per path; it writes `#bers` for `#autoberserk` and `#type 9` where the record has 6 + 1423.
+
 ## Vanilla monsters compared with the inspector's vanilla.dm (6.37)
 
 `vanilla` writes 4,138 monsters (the inspector's vanilla.dm has 4,091). Every flag bit a
@@ -118,6 +134,6 @@ abilities). Where the two files differ, by cause:
 
 ## Next
 
-- `vanilla` for items, spells, sites and nations.
+- `vanilla` for spells, sites and nations.
 - Give Dom5Parser the command catalog: commands the game doesn't read in a context, and stored
   abilities no command sets (read-only in the editor).
