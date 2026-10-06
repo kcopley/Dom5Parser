@@ -211,6 +211,9 @@ namespace Dom5Edit
         /// <summary>Lines with no command after the last block, as read.</summary>
         internal List<string> TrailingTrivia { get; } = new List<string>();
 
+        /// <summary>Whether a line was read from the mod's file (not added in the editor).</summary>
+        public bool IsFromFile(Property p) => PropertiesAfterParse.Contains(p);
+
         /// <summary>The header fields when parsing finished (see HeaderUnchanged).</summary>
         private (string?, string?, string?, string?, string?) _headerAtParse;
 

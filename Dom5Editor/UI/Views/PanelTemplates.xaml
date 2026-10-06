@@ -1,0 +1,118 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
+                    xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels"
+                    xmlns:views="clr-namespace:Dom5Editor.UI.Views">
+    <!--
+        Views for entity pages and their panels (Dom5Editor/UI/ViewModels/Panels.cs). Inherited rows
+        are grey; their tooltip says where they come from.
+    -->
+
+    <DataTemplate DataType="{x:Type vm:EntityPageViewModel}">
+        <views:EntityPageView/>
+    </DataTemplate>
+
+    <Style x:Key="PanelTitle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+        <Setter Property="Margin" Value="0,0,0,3"/>
+    </Style>
+
+    <!-- a small inline value box, like a badge's -->
+    <Style x:Key="InlineBox" TargetType="TextBox">
+        <Setter Property="Background" Value="#1AFFFFFF"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+        <Setter Property="Padding" Value="2,0"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="RowText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsInherited}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- a list of references: weapons, armor, recruits -->
+    <DataTemplate DataType="{x:Type vm:ReferenceListPanel}">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitle}"/>
+            <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:PanelRow}">
+                        <DockPanel Margin="0,1" ToolTip="{Binding Source}">
+                            <Button DockPanel.Dock="Right" Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                    ToolTip="Remove" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                            <Button DockPanel.Dock="Right" Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                                    ToolTip="Open" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding Detail}" Foreground="{DynamicResource TextMutedBrush}"
+                                       FontFamily="{DynamicResource MonospaceFont}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding RefId, StringFormat='#{0}'}" Width="48" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Text}" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <controls:SearchableReferenceComboBox Width="260" Height="22" HorizontalAlignment="Left" Margin="0,3,0,0"
+                                                  ItemsSource="{Binding Candidates}" SelectedId="{Binding AddPick, Mode=TwoWay}"
+                                                  Placeholder="+ Add..."/>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- a monster's magic paths and random paths -->
+    <DataTemplate DataType="{x:Type vm:MagicPanel}">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="MAGIC" Style="{StaticResource PanelTitle}"/>
+            <ItemsControl ItemsSource="{Binding Paths}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:PanelRow}">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
+                            <TextBlock Text="{Binding Text}" Width="70" Style="{StaticResource RowText}" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=LostFocus}" Width="34" Style="{StaticResource InlineBox}"
+                                     ToolTip="Level (0 removes the path)"/>
+                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove"
+                                    Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <controls:SearchableReferenceComboBox Width="160" Height="22" HorizontalAlignment="Left" Margin="0,3,0,6"
+                                                  ItemsSource="{Binding AddablePaths}" SelectedId="{Binding AddPathPick, Mode=TwoWay}"
+                                                  Placeholder="+ Add path..."/>
+            <TextBlock Text="RANDOM PATHS" Style="{StaticResource PanelTitle}"/>
+            <ItemsControl ItemsSource="{Binding Random}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:PanelRow}">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Source}">
+                            <TextBlock Text="{Binding Text}" Width="70" Style="{StaticResource RowText}" VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource MonospaceFont}"/>
+                            <TextBox Text="{Binding EditText, UpdateSourceTrigger=LostFocus}" Width="40" Style="{StaticResource InlineBox}"
+                                     ToolTip="Chance in percent"/>
+                            <TextBlock Text="%" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                            <Button Content="✕" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" ToolTip="Remove"
+                                    Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                <TextBox x:Name="NewRandom" Width="90" Style="{StaticResource InlineBox}" ToolTip="Paths as letters: F A W E S D N G B H (e.g. FAWE)"/>
+                <Button Content="+ Add random" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0"
+                        Command="{Binding AddRandomCommand}" CommandParameter="{Binding Text, ElementName=NewRandom}"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

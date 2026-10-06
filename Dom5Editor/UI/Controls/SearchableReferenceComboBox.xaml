@@ -66,6 +66,16 @@
                          PreviewKeyDown="OnTextBoxPreviewKeyDown"
                          PreviewMouseLeftButtonDown="OnTextBoxMouseDown"/>
 
+                <!-- placeholder ("+ Add...") while nothing is typed or selected -->
+                <TextBlock Grid.Column="0"
+                           Text="{Binding Placeholder, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           Foreground="{DynamicResource TextMutedBrush}"
+                           FontSize="10"
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Center"
+                           IsHitTestVisible="False"
+                           Visibility="{Binding ShowPlaceholder, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
                 <!-- ID display (read-only, shown when item is selected) -->
                 <TextBlock x:Name="IdDisplay"
                            Grid.Column="1"

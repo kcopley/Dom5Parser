@@ -46,7 +46,35 @@ namespace Dom5Editor.UI.Controls
 
         public static readonly DependencyProperty SelectedEntityProperty =
             DependencyProperty.Register(nameof(SelectedEntity), typeof(object), typeof(EntityListControl),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedEntityChanged));
+
+        /// <summary>A selection made elsewhere (navigation) scrolls the list to it.</summary>
+        private static void OnSelectedEntityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is EntityListControl control && e.NewValue != null)
+                control.Dispatcher.BeginInvoke(new Action(() => control.EntityListBox.ScrollIntoView(e.NewValue)),
+                    System.Windows.Threading.DispatcherPriority.Background);
+        }
+
+        /// <summary>The "+ New" button: makes a new entity of the list's type.</summary>
+        public static readonly DependencyProperty NewCommandProperty =
+            DependencyProperty.Register(nameof(NewCommand), typeof(System.Windows.Input.ICommand), typeof(EntityListControl));
+
+        public System.Windows.Input.ICommand NewCommand
+        {
+            get => (System.Windows.Input.ICommand)GetValue(NewCommandProperty);
+            set => SetValue(NewCommandProperty, value);
+        }
+
+        /// <summary>The "Delete" button: deletes the selected mod entity (or the mod's changes to a vanilla one).</summary>
+        public static readonly DependencyProperty DeleteCommandProperty =
+            DependencyProperty.Register(nameof(DeleteCommand), typeof(System.Windows.Input.ICommand), typeof(EntityListControl));
+
+        public System.Windows.Input.ICommand DeleteCommand
+        {
+            get => (System.Windows.Input.ICommand)GetValue(DeleteCommandProperty);
+            set => SetValue(DeleteCommandProperty, value);
+        }
 
         public object SelectedEntity
         {
@@ -203,9 +231,14 @@ namespace Dom5Editor.UI.Controls
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Raise event or command to add new entity
-            MessageBox.Show($"Add new {EntityType} - not yet implemented", "Add Entity",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            if (NewCommand?.CanExecute(null) == true)
+                NewCommand.Execute(null);
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DeleteCommand?.CanExecute(SelectedEntity) == true)
+                DeleteCommand.Execute(SelectedEntity);
         }
 
         protected void OnPropertyChanged(string propertyName)

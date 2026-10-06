@@ -17,9 +17,6 @@ namespace Dom5Editor.UI.Views
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
 
-            // Set up entity navigation
-            EntityViewModel.SetMainViewModel(_viewModel);
-
             // Set up keyboard shortcuts
             SetupKeyboardShortcuts();
         }
@@ -55,7 +52,25 @@ namespace Dom5Editor.UI.Views
             InputBindings.Add(new KeyBinding(
                 new RelayCommand(() => _viewModel.Redo(), () => _viewModel.CanRedo),
                 Key.Y, ModifierKeys.Control));
+
+            // Alt+Left / Alt+Right = back / forward through the entities visited
+            InputBindings.Add(new KeyBinding(
+                new RelayCommand(() => _viewModel.GoBack(), () => _viewModel.CanGoBack),
+                Key.Left, ModifierKeys.Alt));
+            InputBindings.Add(new KeyBinding(
+                new RelayCommand(() => _viewModel.GoForward(), () => _viewModel.CanGoForward),
+                Key.Right, ModifierKeys.Alt));
+            // the mouse's back and forward buttons
+            MouseUp += (s, e) =>
+            {
+                if (e.ChangedButton == MouseButton.XButton1) _viewModel.GoBack();
+                else if (e.ChangedButton == MouseButton.XButton2) _viewModel.GoForward();
+            };
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e) => _viewModel.GoBack();
+
+        private void ForwardButton_Click(object sender, RoutedEventArgs e) => _viewModel.GoForward();
 
         private void NewButton_Click(object sender, RoutedEventArgs e)
         {
@@ -183,9 +198,12 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        /// <summary>Close without asking about unsaved changes (the snapshot mode closes the window itself).</summary>
+        public bool SkipCloseConfirmation { get; set; }
+
         private bool ConfirmDiscardChanges()
         {
-            if (!_viewModel.IsDirty)
+            if (!_viewModel.IsDirty || SkipCloseConfirmation)
                 return true;
 
             var result = MessageBox.Show(

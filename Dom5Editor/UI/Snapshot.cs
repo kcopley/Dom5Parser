@@ -1,4 +1,3 @@
-using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -8,6 +7,7 @@ using System.Windows.Threading;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Editor.UI.Controls;
+using Dom5Editor.UI.ViewModels;
 using Dom5Editor.UI.Views;
 
 namespace Dom5Editor.UI
@@ -19,7 +19,12 @@ namespace Dom5Editor.UI
     ///   --mod FILE.dm            load a mod (otherwise a new, empty mod)
     ///   --select TYPE ID         select an entity (monster, weapon, armor, spell, item, site, nation, ...)
     ///   --badge COMMAND VALUE    set the value of the selected entity's badge for COMMAND, as typing it does
-    ///   --undo                   undo the last edit
+    ///   --set COMMAND ARGS       set a value (as a badge or panel does); --add for one more entry
+    ///   --remove COMMAND [ARGS]  remove a value (the first, or the one with those arguments)
+    ///   --new TYPE               make a new entity (the list's "+ New") and select it
+    ///   --delete                 delete the selected entity (the list's "Delete")
+    ///   --dump                   log the selected entity's values and where each comes from
+    ///   --undo / --redo          undo or redo the last edit
     ///   --save FILE.dm           save the mod (the editor's Save)
     ///   --png FILE.png           render the window
     ///   --view FILE.png          render the selected entity's view at its full height
@@ -48,7 +53,7 @@ namespace Dom5Editor.UI
                 {
                     WindowStartupLocation = WindowStartupLocation.Manual,
                     Left = -30000, Top = -30000, Width = width, Height = height,
-                    ShowInTaskbar = false, ShowActivated = false,
+                    ShowInTaskbar = false, ShowActivated = false, SkipCloseConfirmation = true,
                 };
                 app.MainWindow = window;
                 window.Show();
@@ -73,7 +78,7 @@ namespace Dom5Editor.UI
                             var type = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
                             int id = int.Parse(args[++i]);
                             vm.NavigateToEntity(type, id);
-                            Log($"selected {type} {id}: {(Selected(vm) as EntityViewModel)?.DisplayName ?? "(not found)"}");
+                            Log($"selected {type} {id}: {Selected(vm)?.DisplayName ?? "(not found)"}");
                             break;
                         case "--badge":
                             SetBadge(vm, args[++i], args[++i]);
@@ -82,6 +87,59 @@ namespace Dom5Editor.UI
                             vm.Undo();
                             Log("undo");
                             break;
+                        case "--redo":
+                            vm.Redo();
+                            Log("redo");
+                            break;
+                        case "--new":
+                        {
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            tab.NewCommand.Execute(null);
+                            Log($"new {t}: {tab.SelectedItem?.DisplayName} #{tab.SelectedItem?.ID}{(tab.LastError != null ? " error: " + tab.LastError : "")}");
+                            break;
+                        }
+                        case "--delete":
+                        {
+                            var tab = vm.SelectedTab as EntityTypeTab ?? throw new InvalidOperationException("no entity tab");
+                            var item = tab.SelectedItem;
+                            tab.DeleteCommand.Execute(item);
+                            Log($"delete {item?.DisplayName} #{item?.ID}{(tab.LastError != null ? " error: " + tab.LastError : "")}");
+                            break;
+                        }
+                        case "--set":
+                        case "--add":
+                        {
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var a = args[++i];
+                            if (args[i - 2] == "--set") page.SetValue(c, a); else page.AddValue(c, a);
+                            Log($"{args[i - 2].TrimStart('-')} {args[i - 1]} {a}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--remove":
+                        {
+                            // --remove COMMAND [ARGS]: the first value of the command (with those arguments)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            string? a = i + 1 < args.Length && !args[i + 1].StartsWith("--") ? args[++i] : null;
+                            var v = page.Resolved.GetAll(c).FirstOrDefault(x => a == null || x.Arguments.Trim('"') == a.Trim('"'))
+                                    ?? throw new InvalidOperationException($"no {args[i]} to remove");
+                            page.RemoveValue(v);
+                            Log($"remove {v.Property.ToExportString()}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--dump":
+                        {
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            Log($"== {page.DisplayName} #{page.ID} ({page.SourceLabel})");
+                            foreach (var line in page.Resolved.Structure)
+                                Log($"   structure {line.ToExportString()}");
+                            foreach (var v in page.Resolved.Values)
+                                Log($"   {v.Property.ToExportString(),-40} {page.SourceText(v)}");
+                            break;
+                        }
                         case "--save":
                             logPath ??= args[i + 1] + ".log";
                             vm.SaveMod(Path.GetFullPath(args[++i]));
@@ -132,44 +190,35 @@ namespace Dom5Editor.UI
                 Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.ContextIdle);
         }
 
-        /// <summary>The selected entity's view model on the current tab.</summary>
-        private static object? Selected(MainWindowViewModel vm)
+        private static Command CommandOf(string text)
         {
-            var name = "Selected" + vm.SelectedEntityType switch
-            {
-                EntityType.MONSTER => "Monster", EntityType.WEAPON => "Weapon", EntityType.ARMOR => "Armor",
-                EntityType.SPELL => "Spell", EntityType.ITEM => "Item", EntityType.SITE => "Site",
-                EntityType.NATION => "Nation", EntityType.EVENT => "Event", EntityType.MERCENARY => "Mercenary",
-                EntityType.POPTYPE => "Poptype", EntityType.NAMETYPE => "Nametype", EntityType.BLESS => "Bless",
-                EntityType.TEMPLATE => "Template", _ => "",
-            };
-            return vm.GetType().GetProperty(name)?.GetValue(vm);
+            if (!text.StartsWith("#")) text = "#" + text;
+            return CommandsMap.TryGetCommand(text, out var c) ? c : throw new ArgumentException("unknown command " + text);
         }
 
-        /// <summary>Sets a badge's value as typing into it does (its ValueChanged handler runs).</summary>
+        /// <summary>The selected entity's page on the current tab.</summary>
+        private static EntityPageViewModel? Selected(MainWindowViewModel vm) => vm.SelectedPage;
+
+        /// <summary>Sets a badge's value as typing into it does (the page commits it as an edit).</summary>
         private static void SetBadge(MainWindowViewModel vm, string commandText, string value)
         {
             if (!commandText.StartsWith("#")) commandText = "#" + commandText;
             if (!CommandsMap.TryGetCommand(commandText, out var command))
                 throw new ArgumentException("unknown command " + commandText);
-            var entityVm = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
-            foreach (var prop in entityVm.GetType().GetProperties())
+            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+            foreach (var section in page.Sections.Append(page.Other!))
             {
-                if (prop.GetIndexParameters().Length > 0 || !typeof(IEnumerable).IsAssignableFrom(prop.PropertyType) || prop.PropertyType == typeof(string))
-                    continue;
-                if (prop.GetValue(entityVm) is not IEnumerable items)
-                    continue;
-                foreach (var item in items.OfType<PropertyItem>())
+                var item = section.Badges.FirstOrDefault(b => b.Command == command);
+                if (item != null)
                 {
-                    if (item.Command == command)
-                    {
-                        item.Value = value;
-                        Log($"badge {commandText} = {value} (in {prop.Name})");
-                        return;
-                    }
+                    item.Value = value;
+                    Log($"badge {commandText} = {value} (in {section.Id}){(page.Error != null ? " error: " + page.Error : "")}");
+                    return;
                 }
             }
-            throw new InvalidOperationException($"no badge for {commandText} on the selected entity");
+            // not shown yet: set it as the add box would, then type the value
+            page.SetValue(command, value);
+            Log($"set {commandText} {value} (not shown before){(page.Error != null ? " error: " + page.Error : "")}");
         }
 
         /// <summary>

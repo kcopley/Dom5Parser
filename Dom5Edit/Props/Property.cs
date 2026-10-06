@@ -25,6 +25,13 @@ namespace Dom5Edit.Props
 
         /// <summary>The text to save: the original line if unedited, else the regenerated one.</summary>
         /// <summary>
+        /// Not a line of the data: a vanilla sprite or description the editor loaded from its own
+        /// asset files to show (VanillaAssetLoader). The resolver lists these apart from values,
+        /// so they're never copied into a mod as lines.
+        /// </summary>
+        public bool IsDisplayAsset { get; internal set; }
+
+        /// <summary>
         /// An added copy or clear line (or a line re-added after one) that must take effect before the
         /// entity's own lines: saved before them rather than at the end of a block (SavePlan).
         /// </summary>
