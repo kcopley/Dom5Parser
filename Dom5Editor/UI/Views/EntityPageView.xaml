@@ -179,6 +179,13 @@
                 </ItemsControl>
             </StackPanel>
 
+            <!-- the entity's lines as the save writes them -->
+            <Expander Header="IN THE FILE (as saved)" IsExpanded="{Binding ShowFile}" Margin="0,0,0,10" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="9" FontWeight="Bold">
+                <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{DynamicResource MonospaceFont}" FontSize="11" FontWeight="Normal"
+                         TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" MaxHeight="400" VerticalScrollBarVisibility="Auto"
+                         Style="{DynamicResource TextBoxBase}" Margin="0,4,0,0"/>
+            </Expander>
+
             <!-- values in the game data no command sets -->
             <StackPanel Visibility="{Binding HasGameValues, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock Text="GAME DATA (read-only: no mod command sets these)" FontSize="9" FontWeight="Bold"

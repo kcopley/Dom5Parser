@@ -262,6 +262,15 @@ namespace Dom5Editor.UI
                                     Log($"   {issue}");
                             break;
                         }
+                        case "--file":
+                        {
+                            // the page's "in the file" box
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            page.ShowFile = true;
+                            foreach (var line in page.FileText.Split('\n'))
+                                Log("   | " + line);
+                            break;
+                        }
                         case "--dump":
                         {
                             var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
