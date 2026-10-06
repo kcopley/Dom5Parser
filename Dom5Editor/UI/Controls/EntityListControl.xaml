@@ -110,7 +110,7 @@
                         <Border x:Name="StateIndicator" Grid.Column="0" Width="4" CornerRadius="2" Margin="0,0,6,0"
                                 Background="{DynamicResource VanillaBrush}"/>
 
-                        <!-- sprite (monsters, items) -->
+                        <!-- sprite (monsters, items, sites) -->
                         <Image Grid.Column="1" Source="{Binding Sprite}" Width="28" Height="28" Stretch="Uniform" Margin="0,0,6,0"
                                RenderOptions.BitmapScalingMode="NearestNeighbor"
                                Visibility="{Binding Sprite, Converter={StaticResource NullToVisibilityConverter}}"/>

@@ -326,14 +326,8 @@ namespace Dom5Editor.UI.ViewModels
             if (Type == EntityType.EVENT)
                 item.TextMatcher = (i, text) => Dom5Edit.Events.EventInfo.Message(_session.Events.LinesOf(_session.Editor.OwnEntity(i.Entity) ?? i.Entity)) is string msg
                     && msg.Contains(text, StringComparison.OrdinalIgnoreCase);
-            if (Type == EntityType.MONSTER || Type == EntityType.ITEM)
-                item.SpriteProvider = i =>
-                {
-                    var r = _session.Resolve(i.Entity);
-                    var c = Type == EntityType.MONSTER ? Command.SPR1 : Command.SPR;
-                    var p = r.Get(c)?.Property ?? r.Assets.GetValueOrDefault(c);
-                    return p is FilePathProperty f ? Sprites.SpriteLoader.Load(f.Value, _session.Mod.FullFilePath) : null;
-                };
+            if (Type == EntityType.MONSTER || Type == EntityType.ITEM || Type == EntityType.SITE)
+                item.SpriteProvider = i => Sprites.SpriteLoader.Thumbnail(Sprites.SpriteLoader.Of(_session.Resolve(i.Entity), Type, _session.Mod.FullFilePath));
         }
 
         /// <summary>A row's key stats, by type.</summary>
