@@ -122,6 +122,13 @@ map move, earth protection and path resistances confirmed):
   #color recolors a vanilla flag; #flag wins. Shown on the nation page and list rows.
 - Full fidelity suite 36/36; full sweep 12,747 pages, 0 failures, 260 MB.
 
+Smaller screens and a test build: the toolbar is a grid that shrinks ("go to" 140-400 px, the
+mod name trimmed), the tabs stay in one scrolling row (ae0ee00); checked at 900-1600 px. The
+game is found through Steam's libraries (registry + libraryfolders.vdf) or a folder picked in
+the ▾ menu, and the status bar says when it isn't (880f528). `tools/publish.sh` + a README.txt
+for testers: publish/Dom6ModEditor-0.9.0-2026-10-06.zip (64 MB, self-contained, not in git),
+run from a fresh unzip.
+
 Worktree note: a worktree checks out docs/DomEnhanced2_13.dm with LF endings, which makes
 DomEnhanced stage 3 fail with hundreds of diffs (multi-line descriptions); use main's CRLF copy.
 

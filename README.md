@@ -41,8 +41,8 @@ game's data, written from the game by `tools/dom6exe`) must stay next to the exe
 
 The game's own texts (monster, item and spell descriptions, a spell's details, portent and
 cure, a nation's description, summary and brief) and the vanilla events' messages are read
-from your Dominions6.exe (6.37) when the editor starts: it looks in the usual Steam folders, or
-set `DOM6_EXE` to the exe's path. Another game version shows none (the places they're read from
+from your Dominions6.exe (6.37) when the editor starts: it looks in your Steam libraries (or
+pick the folder: the arrow next to Load, "Dominions 6 folder..."; or set `DOM6_EXE`). Another game version shows none (the places they're read from
 are checked first). Vanilla unit, item and site sprites are read from the same install's data
 folder; the editor ships only which picture each one is (`vanilla-sprites.json`), not the art.
 A folder with `icons/sprites` next to the exe overrides them. The game's icons (stats, paths,
