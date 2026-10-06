@@ -139,6 +139,12 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </WrapPanel>
+            <Expander Header="PREVIEW (as the player reads it, with sample names)" Margin="0,2,0,2" Foreground="{DynamicResource TextSecondaryBrush}"
+                      FontSize="9" FontWeight="Bold">
+                <Border Background="#14FFFFFF" CornerRadius="4" Padding="10,6" Margin="0,4,0,0">
+                    <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" FontSize="12" FontWeight="Normal" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                </Border>
+            </Expander>
             <WrapPanel Orientation="Horizontal" Margin="0,2,0,0">
                 <TextBlock Text="Header" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <ComboBox Width="290" ItemsSource="{Binding HeaderOptions}" DisplayMemberPath="Name" SelectedValuePath="Value"
