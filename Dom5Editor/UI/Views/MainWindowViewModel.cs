@@ -110,6 +110,7 @@ namespace Dom5Editor.UI.Views
             session.History.Changed += OnHistoryChanged;
             session.Changed += OnSessionChanged;
             session.NavigationRequested += NavigateToEntity;
+            session.EntityNavigationRequested += NavigateToEntity;
             Tabs.Clear();
             Tabs.Add(new ModInfoViewModel(session, this));
             foreach (var (type, title) in TabTypes)
@@ -211,6 +212,17 @@ namespace Dom5Editor.UI.Views
             SelectedTab = tab;
             if (!tab.Select(id))
                 StatusMessage = $"{type} #{id} not found";
+        }
+
+        /// <summary>Shows an entity that may have no number (an event).</summary>
+        public void NavigateToEntity(IDEntity entity)
+        {
+            var tab = TabOf(entity.Kind);
+            if (tab == null)
+                return;
+            SelectedTab = tab;
+            if (!tab.Select(entity))
+                StatusMessage = $"{entity.Kind} not found";
         }
 
         private void OnSelected(EntityTypeTab tab, EntityListItem item)

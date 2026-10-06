@@ -37,6 +37,25 @@ namespace Dom5Edit.Props
         /// </summary>
         internal bool PlaceFirst { get; set; }
 
+        /// <summary>
+        /// Lines put in order in the editor (Transaction.MoveLine; order matters in events: #tempunits,
+        /// #assowner, #cleartarg act on the lines after them) form a chain: each has a key, and is
+        /// saved right after the live line with key <see cref="PlaceAfterKey"/>, or first in the
+        /// entity's block (<see cref="PlaceAtStart"/>). A line that replaces one keeps its keys.
+        /// </summary>
+        internal long PlaceKey { get; set; }
+
+        /// <inheritdoc cref="PlaceKey"/>
+        internal long PlaceAfterKey { get; set; }
+
+        /// <inheritdoc cref="PlaceKey"/>
+        internal bool PlaceAtStart { get; set; }
+
+        private static long _placeKeys;
+
+        /// <summary>A new key for a line's place in a chain.</summary>
+        internal static long NewPlaceKey() => System.Threading.Interlocked.Increment(ref _placeKeys);
+
         internal string SaveText()
         {
             var text = ToExportString();

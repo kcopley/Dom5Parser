@@ -121,6 +121,16 @@ namespace Dom5Editor.UI.ViewModels
         }
 
         /// <summary>Selects the entity with this ID (false if the list has none).</summary>
+        /// <summary>Selects an entity's row by the entity itself (or its ID).</summary>
+        public bool Select(IDEntity entity)
+        {
+            var item = Items.FirstOrDefault(i => ReferenceEquals(i.Entity, entity)) ?? (entity.ID > 0 ? Items.FirstOrDefault(i => i.ID == entity.ID) : null);
+            if (item == null)
+                return false;
+            SelectedItem = item;
+            return true;
+        }
+
         public bool Select(int id)
         {
             var item = Items.FirstOrDefault(i => i.ID == id);
@@ -241,10 +251,34 @@ namespace Dom5Editor.UI.ViewModels
                 EntityType.SITE => new[] { (Command.LEVEL, "level") },
                 _ => Array.Empty<(Command, string)>(),
             };
+            if (Type == EntityType.EVENT)
+                return EventDetail(item);
             if (fields.Length == 0)
                 return "";
             var r = _session.Resolve(item.Entity);
             return string.Join("  ", fields.Select(f => r.Get(f.Item1) is { } v ? $"{f.Item2} {v.Arguments}" : null).Where(x => x != null));
+        }
+
+        /// <summary>An event's row: how it's rolled, and what starts it (an enchantment, a code, a spell).</summary>
+        private string EventDetail(EntityListItem item)
+        {
+            var lines = _session.Resolve(item.Entity).Values.Select(v => v.Property).ToList();
+            var parts = new List<string> { Dom5Edit.Events.EventInfo.RarityName(Dom5Edit.Events.EventInfo.Rarity(lines)) };
+            foreach (var p in lines)
+            {
+                var n = Dom5Edit.Events.EventInfo.Number(p);
+                if (Dom5Edit.Events.EventInfo.EnchantmentCheckers.Contains(p.Command) && p.Command != Command.REQ_NOENCH)
+                    parts.Add($"ench {n}");
+                else if (Dom5Edit.Events.EventInfo.CodeCheckers.Contains(p.Command) && n != 0)
+                    parts.Add($"needs code {n}");
+                else if (Dom5Edit.Events.EventInfo.CodeSetters.Contains(p.Command) && n != 0)
+                    parts.Add($"sets code {n}");
+                else if (Dom5Edit.Events.EventInfo.Delays.Contains(p.Command))
+                    parts.Add($"delay {n}");
+                else if (p.Command == Command.ID)
+                    parts.Add($"spell event {n}");
+            }
+            return string.Join(" · ", parts.Distinct().Take(4));
         }
 
         private IDEntity? VanillaOf(int id) =>
@@ -255,6 +289,9 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>The entity's name in game (a copy's may come from its source).</summary>
         private string NameOf(IDEntity entity)
         {
+            // an event has no name: its title comes from its message
+            if (Type == EntityType.EVENT)
+                return Dom5Edit.Events.EventInfo.Title(_session.Resolve(entity).Values.Select(v => v.Property).ToList());
             var name = _session.Resolve(entity).Get(Command.NAME)?.Property is StringProperty s ? s.Value : null;
             if (string.IsNullOrEmpty(name))
                 name = entity.HeaderName;

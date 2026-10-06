@@ -16,6 +16,7 @@ namespace Dom5Editor.UI.ViewModels
             EntityType.ARMOR => new ArmorPageViewModel(session, item),
             EntityType.NATION => new NationPageViewModel(session, item),
             EntityType.NAMETYPE => new NametypePageViewModel(session, item),
+            EntityType.EVENT => new EventPageViewModel(session, item),
             _ => new EntityPageViewModel(session, item),
         };
     }

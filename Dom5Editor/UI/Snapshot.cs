@@ -318,6 +318,84 @@ namespace Dom5Editor.UI
                             Log($"stat {label} = {value}{(page.Error != null ? " error: " + page.Error : "")}");
                             break;
                         }
+                        case "--event-add":
+                        {
+                            // --event-add COMMAND: the event page's add picker (requirement or effect)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var panel = page.Panels.OfType<EventLinesPanel>().First(p => p.Addable.Any(a => a.ID == (int)c));
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            panel.AddPick = (int)c;
+                            Log($"event add {args[i]}{(page.Error != null ? " error: " + page.Error : "")} ({watch.ElapsedMilliseconds} ms)");
+                            break;
+                        }
+                        case "--event-set":
+                        {
+                            // --event-set COMMAND VALUE: a line's value, as its editor sets it (number, choice by name or number, 0/1, entity ID, mask)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var value = args[++i];
+                            var row = EventRows(page).First(r => r.Command == c);
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            switch (row.Kind)
+                            {
+                                case "choice":
+                                case "bool":
+                                    row.Selected = row.Options!.FirstOrDefault(o => o.Name == value)?.Value ?? int.Parse(value);
+                                    break;
+                                case "ref":
+                                    row.RefId = int.Parse(value);
+                                    break;
+                                case "mask":
+                                    foreach (var o in row.MaskOptions!)
+                                        if (((long.Parse(value) & o.Bit) == o.Bit) != o.IsOn)
+                                            o.IsOn = !o.IsOn;
+                                    break;
+                                default:
+                                    row.EditText = value;
+                                    break;
+                            }
+                            Log($"event set {args[i - 1]} = {value}{(page.Error != null ? " error: " + page.Error : "")} ({watch.ElapsedMilliseconds} ms)");
+                            break;
+                        }
+                        case "--event-move":
+                        {
+                            // --event-move COMMAND up|down: an effect's move button
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            var up = args[++i] == "up";
+                            var row = EventRows(page).First(r => r.Command == c);
+                            (up ? row.MoveUpCommand : row.MoveDownCommand).Execute(null);
+                            Log($"event move {args[i - 1]} {args[i]}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--event-chain":
+                        {
+                            // --event-chain followup|delayed|choice: the chain panel's buttons (the new event is selected)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var chain = page.Panels.OfType<EventChainPanel>().Single();
+                            var what = args[++i];
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            (what == "followup" ? chain.FollowUpCommand : what == "delayed" ? chain.DelayedCommand : chain.ChoiceCommand).Execute(null);
+                            Log($"event {what}: {(page.Error != null ? "error: " + page.Error : "now on " + Selected(vm)?.DisplayName)} ({watch.ElapsedMilliseconds} ms)");
+                            break;
+                        }
+                        case "--event-lines":
+                        {
+                            // log the selected event as the page reads it
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            foreach (var panel in page.Panels.OfType<EventLinesPanel>())
+                            {
+                                Log($"   {panel.Title}");
+                                foreach (var g in panel.Groups)
+                                    foreach (var r in g.Rows)
+                                        Log($"     {(g.Title != null ? "[" + g.Title + "] " : "")}{r.Before}{(r.IsText ? r.EditText + r.Suffix : r.IsChoice || r.IsBool ? r.Options!.FirstOrDefault(o => o.Value == r.Selected)?.Name : r.IsRef ? "#" + r.RefId : r.IsMask ? r.MaskWords : "")}{r.After}" +
+                                            (r.Links.Count > 0 ? $"  -> {string.Join("; ", r.Links.Select(l => l.Label + " " + l.Title))}" : "") + (r.HasNote ? $"  ({r.Note})" : ""));
+                            }
+                            var ch = page.Panels.OfType<EventChainPanel>().Single();
+                            Log($"   chain: {ch.ChainText} {ch.Position}; problems: {string.Join("; ", ch.Problems)}");
+                            break;
+                        }
                         case "--tooltip":
                         {
                             // --tooltip COMMAND: log a badge's hover hint and value note
@@ -497,6 +575,9 @@ namespace Dom5Editor.UI
 
         /// <summary>The selected entity's page on the current tab.</summary>
         private static EntityPageViewModel? Selected(MainWindowViewModel vm) => vm.SelectedPage;
+
+        private static IEnumerable<EventLineRow> EventRows(EntityPageViewModel page) =>
+            page.Panels.OfType<EventLinesPanel>().SelectMany(p => p.Groups).SelectMany(g => g.Rows);
 
         /// <summary>Every panel field on the page: fields panels, the stat block (leadership as its class and bonus).</summary>
         private static IEnumerable<PanelField> AllFields(EntityPageViewModel page)

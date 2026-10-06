@@ -70,8 +70,23 @@ namespace Dom5Edit
                 var inBlocks = new HashSet<Property>(blocks.SelectMany(b => b.Properties), ReferenceEqualityComparer.Instance);
                 var removed = blocks.SelectMany(b => b.Properties)
                     .Where(p => mod.PropertiesAfterParse.Contains(p) && !liveNow.Contains(p)).ToList();
+                // lines put in order in the editor: a chain by keys (Property.PlaceKey)
+                var keyed = new Dictionary<long, Property>();
+                foreach (var p in entity.Properties)
+                    if (p.PlaceKey != 0)
+                        keyed[p.PlaceKey] = p;
                 foreach (var p in entity.Properties.Where(p => !inBlocks.Contains(p)))
                 {
+                    if (p.PlaceAtStart)
+                    {
+                        Insert(_atStart, blocks[0], p);
+                        continue;
+                    }
+                    if (p.PlaceAfterKey != 0 && keyed.TryGetValue(p.PlaceAfterKey, out var after) && !ReferenceEquals(after, p))
+                    {
+                        Add(_inSlot, after, p);
+                        continue;
+                    }
                     var gap = removed.FirstOrDefault(r => r.Command == p.Command);
                     if (gap != null)
                         Add(_inSlot, gap, p);
@@ -100,6 +115,69 @@ namespace Dom5Edit
         public IReadOnlyList<Property> ReplacementsAfter(Property p) =>
             _inSlot.TryGetValue(p, out var list) ? list : (IReadOnlyList<Property>)Array.Empty<Property>();
 
+        /// <summary>
+        /// The lines written right after this one, in order: replacements and moved lines placed
+        /// after it, each followed by the lines placed after it in turn.
+        /// </summary>
+        public IEnumerable<Property> Followers(Property p)
+        {
+            if (!_inSlot.TryGetValue(p, out var list))
+                yield break;
+            foreach (var q in list)
+            {
+                yield return q;
+                if (!ReferenceEquals(q, p))
+                    foreach (var r in Followers(q))
+                        yield return r;
+            }
+        }
+
+        /// <summary>Entities made in the editor that are written right after this block (its entity's last), each followed by its own.</summary>
+        public IEnumerable<IDEntity> PlacedAfterBlock(SourceBlock block) =>
+            _blocksOf.TryGetValue(block.Entity, out var blocks) && ReferenceEquals(blocks[^1], block)
+                ? PlacedChain(block.Entity) : Enumerable.Empty<IDEntity>();
+
+        private Dictionary<IDEntity, List<IDEntity>>? _placedAfter;
+
+        /// <summary>The entities placed right after this one (the newest nearest it), each followed by its own.</summary>
+        private IEnumerable<IDEntity> PlacedChain(IDEntity anchor)
+        {
+            if (_placedAfter == null)
+            {
+                _placedAfter = new Dictionary<IDEntity, List<IDEntity>>(ReferenceEqualityComparer.Instance);
+                foreach (var e in _held)
+                    if (e.PlacedAfter is IDEntity a && !HasBlocks(e))
+                    {
+                        if (!_placedAfter.TryGetValue(a, out var l))
+                            _placedAfter[a] = l = new List<IDEntity>();
+                        l.Add(e);
+                    }
+                foreach (var l in _placedAfter.Values)
+                    l.Sort((x, y) => y.PlacedOrder.CompareTo(x.PlacedOrder)); // (placed later: nearer the anchor)
+            }
+            if (!_placedAfter.TryGetValue(anchor, out var placed))
+                yield break;
+            foreach (var e in placed)
+            {
+                yield return e;
+                foreach (var f in PlacedChain(e))
+                    yield return f;
+            }
+        }
+
+        /// <summary>Whether an entity is written inside the blocks (placed after an entity that has blocks), not after them.</summary>
+        private bool IsInline(IDEntity e)
+        {
+            for (var anchor = e.PlacedAfter; anchor != null && !ReferenceEquals(anchor, e); anchor = anchor.PlacedAfter)
+            {
+                if (!Holds(anchor))
+                    return false;
+                if (HasBlocks(anchor))
+                    return true;
+            }
+            return false;
+        }
+
         /// <summary>Properties added in the session that go right after this block's header.</summary>
         public IReadOnlyList<Property> AddedAtStart(SourceBlock block) =>
             _atStart.TryGetValue(block, out var list) ? list : (IReadOnlyList<Property>)Array.Empty<Property>();
@@ -122,6 +200,11 @@ namespace Dom5Edit
                         continue;
                     var b = block;
                     yield return new Block(block.Entity, block, () => LinesOf(b));
+                    foreach (var placed in PlacedAfterBlock(block))
+                    {
+                        var e = placed;
+                        yield return new Block(e, null, () => e.Properties.ToList());
+                    }
                 }
             }
             foreach (var entity in WholeEntities())
@@ -133,14 +216,23 @@ namespace Dom5Edit
 
         private List<Property> LinesOf(SourceBlock block)
         {
-            var lines = new List<Property>(AddedAtStart(block));
+            var lines = new List<Property>();
+            foreach (var p in AddedAtStart(block))
+            {
+                lines.Add(p);
+                lines.AddRange(Followers(p));
+            }
             foreach (var p in block.Properties)
             {
                 if (Writes(block, p))
                     lines.Add(p);
-                lines.AddRange(ReplacementsAfter(p));
+                lines.AddRange(Followers(p));
             }
-            lines.AddRange(AddedAtEnd(block));
+            foreach (var p in AddedAtEnd(block))
+            {
+                lines.Add(p);
+                lines.AddRange(Followers(p));
+            }
             return lines;
         }
 
@@ -168,7 +260,7 @@ namespace Dom5Edit
         {
             foreach (var set in _mod.Database.Values)
                 foreach (var entity in set.ExportOrder())
-                    if (!HasBlocks(entity))
+                    if (!HasBlocks(entity) && !IsInline(entity))
                         yield return entity;
         }
 
@@ -208,6 +300,13 @@ namespace Dom5Edit
                         anchor = q;
                 }
             return anchor;
+        }
+
+        private static void Insert<TKey>(Dictionary<TKey, List<Property>> map, TKey key, Property p) where TKey : notnull
+        {
+            if (!map.TryGetValue(key, out var list))
+                map[key] = list = new List<Property>();
+            list.Insert(0, p);
         }
 
         private static void Add<TKey>(Dictionary<TKey, List<Property>> map, TKey key, Property p) where TKey : notnull

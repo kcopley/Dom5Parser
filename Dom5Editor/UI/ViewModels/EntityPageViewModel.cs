@@ -95,7 +95,7 @@ namespace Dom5Editor.UI.ViewModels
             }
         }
 
-        public string DisplayName => !string.IsNullOrEmpty(Name) ? Name : Entity.HeaderName ?? $"#{ID}";
+        public virtual string DisplayName => !string.IsNullOrEmpty(Name) ? Name : Entity.HeaderName ?? $"#{ID}";
 
         public string SourceLabel => Item.IsNew ? "New in this mod"
             : !Item.IsModified ? "Vanilla"
@@ -304,7 +304,7 @@ namespace Dom5Editor.UI.ViewModels
             var covered = new HashSet<Command> { Command.NAME, Command.DESCR };
             LongTexts.Clear();
             foreach (var (c, label) in LongTextCommands)
-                if (Entity.GetPropertyMap().ContainsKey(c))
+                if (Entity.GetPropertyMap().ContainsKey(c) && ShowsLongText(c))
                 {
                     LongTexts.Add(new LongText(this, c, label));
                     covered.Add(c);
@@ -332,6 +332,15 @@ namespace Dom5Editor.UI.ViewModels
             BuildUsedBy();
             OnPropertyChanged(string.Empty);
         }
+
+        /// <summary>Whether the page has the add box for any command (an event adds lines in its own panels).</summary>
+        public virtual bool ShowsAddBox => true;
+
+        /// <summary>Whether the header shows the ID (events have none).</summary>
+        public bool HasId => ID > 0;
+
+        /// <summary>Whether a long text (#msg, #summary, ...) gets the generic box (an event's message has its own panel).</summary>
+        protected virtual bool ShowsLongText(Command c) => true;
 
         /// <summary>Adds the type's panels; each adds the commands it shows to <paramref name="covered"/>.</summary>
         protected virtual void BuildPanels(HashSet<Command> covered) { }
@@ -471,6 +480,9 @@ namespace Dom5Editor.UI.ViewModels
         public void ChangeValue(ResolvedValue v, string args) => Edit(ed => ed.Change(Entity, v, args));
         public void RemoveValue(ResolvedValue v) => Edit(ed => ed.Remove(Entity, v));
         public void ResetValue(Command c) => Edit(ed => ed.Reset(Entity, c));
+
+        /// <summary>Moves one of the entity's lines to just before (or after) another (order matters in events).</summary>
+        public void MoveLine(Property line, Property target, bool after) => Edit(ed => ed.MoveLine(Entity, line, target, after));
 
         /// <summary>Drops one of the mod's own values, so the entity has what it inherits again (not a removal: an inherited value stays).</summary>
         public void ResetLine(ResolvedValue v) => Edit(ed => ed.Run($"Reset {CommandName(v.Command)}", tx =>

@@ -103,6 +103,14 @@ namespace Dom5Edit.Editing
             return edit;
         }
 
+        /// <summary>Moves one of an entity's own lines up (-1) or down (+1); see Transaction.MoveLine.</summary>
+        public IModEdit? MoveLine(IDEntity entity, Property line, int delta) =>
+            Run($"Move {Name(line.Command)} {(delta < 0 ? "up" : "down")}", tx => tx.MoveLine(entity, line, delta));
+
+        /// <summary>Moves one of an entity's own lines to just before (or after) another.</summary>
+        public IModEdit? MoveLine(IDEntity entity, Property line, Property target, bool after) =>
+            Run($"Move {Name(line.Command)}", tx => tx.MoveLine(entity, line, target, after));
+
         public IModEdit? Delete(IDEntity entity) =>
             Run($"Delete {entity.GetEntityType().ToString().ToLowerInvariant()} {entity.ID}", tx => tx.Delete(entity));
 
@@ -217,6 +225,10 @@ namespace Dom5Edit.Editing
         {
             Touch(entity);
             replacement.PlaceFirst = old.PlaceFirst;
+            // a line in an order chain keeps its place (SavePlan)
+            replacement.PlaceKey = old.PlaceKey;
+            replacement.PlaceAfterKey = old.PlaceAfterKey;
+            replacement.PlaceAtStart = old.PlaceAtStart;
             if (!entity.ReplaceLive(old, replacement))
                 throw new EditException($"{ModEditor.Name(old.Command)} isn't one of the entity's lines");
             Changed();
@@ -333,18 +345,88 @@ namespace Dom5Edit.Editing
                 RemoveLine(own, p);
         }
 
-        /// <summary>Makes a new entity in the mod's ID range.</summary>
-        public IDEntity Create(EntityType type, string? name)
+        /// <summary>Where a line ends up (after taking it out at <paramref name="from"/>) to be just before the target, or after it (after = 1).</summary>
+        private static int TargetIndex(List<Property> lines, int from, Property target, int after)
+        {
+            int t = lines.FindIndex(p => ReferenceEquals(p, target));
+            if (t < 0)
+                throw new EditException($"{ModEditor.Name(target.Command)} isn't one of the entity's lines");
+            if (t > from)
+                t--; // the list is one shorter after taking the line out
+            return t + after;
+        }
+
+        /// <summary>
+        /// Makes a new entity in the mod's ID range (an event gets none: #newevent takes no number).
+        /// With <paramref name="placeAfter"/>, it's saved right after that entity (an event's
+        /// delayed follow-up: the game takes the next event in the file).
+        /// </summary>
+        public IDEntity Create(EntityType type, string? name, IDEntity? placeAfter = null)
         {
             var set = Mod.Database[type];
-            int id = set.NextFreeID();
             var made = (IDEntity)Activator.CreateInstance(Mod.TypeOf(type))!;
-            made.Assign(id.ToString(), "", Mod, selected: false);
+            made.Assign(type == EntityType.EVENT ? "" : set.NextFreeID().ToString(), "", Mod, selected: false);
+            if (placeAfter != null)
+                made.PlacedAfter = _editor.OwnEntity(placeAfter) ?? placeAfter;
             _created.Add(made);
             Changed();
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(name) && made.GetPropertyMap().ContainsKey(Command.NAME))
                 AddLine(made, Line(made, Command.NAME, "\"" + name + "\""));
             return made;
+        }
+
+        /// <summary>
+        /// Moves one of the entity's own lines up (delta -1) or down (+1) among its lines as saved;
+        /// order matters in events (#tempunits, #assowner, #cleartarg act on the lines after them).
+        /// A parsed block's lines are rewritten as a chain in the new order (copies keep their
+        /// text and comments); an entity made in the editor just reorders its list.
+        /// </summary>
+        public void MoveLine(IDEntity entity, Property line, int delta) => MoveLine(entity, line, null, delta);
+
+        /// <summary>Moves one of the entity's own lines to just before (or after) another of its lines.</summary>
+        public void MoveLine(IDEntity entity, Property line, Property target, bool after) => MoveLine(entity, line, target, after ? 1 : 0);
+
+        private void MoveLine(IDEntity entity, Property line, Property? target, int delta)
+        {
+            var own = _editor.OwnEntity(entity) ?? throw new EditException("Not one of the mod's lines");
+            var plan = new SavePlan(Mod);
+            var blocks = plan.BlocksOf(own);
+            if (!plan.HasBlocks(own))
+            {
+                var list = own.Properties.ToList();
+                int at = list.FindIndex(p => ReferenceEquals(p, line));
+                if (at < 0)
+                    throw new EditException($"{ModEditor.Name(line.Command)} isn't one of the entity's lines");
+                int to = Math.Clamp(target == null ? at + delta : TargetIndex(list, at, target, delta), 0, own.Properties.Count - 1);
+                if (to == at)
+                    return;
+                Touch(own);
+                own.MoveLive(line, to);
+                Changed();
+                return;
+            }
+            if (blocks.Count != 1)
+                throw new EditException("This entity is in several blocks of the file; move its lines there");
+            var lines = blocks[0].Block.Lines.Where(p => own.Properties.Any(q => ReferenceEquals(q, p))).ToList();
+            int i = lines.FindIndex(p => ReferenceEquals(p, line));
+            if (i < 0)
+                throw new EditException($"{ModEditor.Name(line.Command)} isn't one of the entity's lines");
+            int j = Math.Clamp(target == null ? i + delta : TargetIndex(lines, i, target, delta), 0, lines.Count - 1);
+            if (j == i)
+                return;
+            lines.RemoveAt(i);
+            lines.Insert(j, line);
+            long previous = 0;
+            foreach (var p in lines)
+            {
+                var copy = p.Clone();
+                copy.PlaceKey = Property.NewPlaceKey();
+                copy.PlaceAtStart = previous == 0;
+                copy.PlaceAfterKey = previous;
+                previous = copy.PlaceKey;
+                RemoveLine(own, p);
+                AddLine(own, copy, p.PlaceFirst);
+            }
         }
 
         /// <summary>Deletes one of the mod's entities (for a #select of a vanilla one: drops the mod's changes to it).</summary>

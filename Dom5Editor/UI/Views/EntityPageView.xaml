@@ -66,7 +66,7 @@
                 <TextBlock DockPanel.Dock="Right" Text="{Binding SourceLabel}" Style="{StaticResource MutedText}"
                            VerticalAlignment="Center" Margin="8,0,0,0"/>
                 <TextBlock DockPanel.Dock="Right" Text="{Binding ID, StringFormat='#{0}'}" Style="{StaticResource SubHeaderText}"
-                           VerticalAlignment="Center" Margin="8,0,0,0"/>
+                           VerticalAlignment="Center" Margin="8,0,0,0" Visibility="{Binding HasId, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Style="{StaticResource HeaderText}" VerticalAlignment="Center"
                            Visibility="{Binding HasName, Converter={StaticResource BoolToVisibilityInverseConverter}}"/>
                 <TextBox x:Name="NameBox" Text="{Binding Name, UpdateSourceTrigger=LostFocus}" FontSize="16" FontWeight="SemiBold"
@@ -137,7 +137,7 @@
             <ItemsControl ItemsSource="{Binding Panels}"/>
 
             <!-- add any command the game reads for this type (it shows in its section) -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8" Visibility="{Binding ShowsAddBox, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock Text="ADD" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
                            VerticalAlignment="Center" Width="60" ToolTip="Any command the game reads for this type; it shows in its section below"/>
                 <controls:BadgeWrapPanel AvailableItems="{Binding AllAvailable}" AddCommand="{Binding AddAnyCommand}" ShowAddButton="True"/>

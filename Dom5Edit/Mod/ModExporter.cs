@@ -112,7 +112,11 @@ namespace Dom5Edit
                     writer.WriteLine(text);
                 writer.WriteLine(keep && block.RawHeader != null && entity.ID == block.IdAtParse ? block.RawHeader : Header(block));
                 foreach (var p in plan.AddedAtStart(block))
+                {
                     writer.WriteLine(Text(p));
+                    foreach (var f in plan.Followers(p))
+                        writer.WriteLine(Text(f));
+                }
                 int t = 0;
                 for (int i = 0; i < block.Properties.Count; i++)
                 {
@@ -124,27 +128,38 @@ namespace Dom5Edit
                     // and the game still reads it here
                     if (plan.Writes(block, p))
                         writer.WriteLine(Text(p));
-                    foreach (var r in plan.ReplacementsAfter(p))
+                    foreach (var r in plan.Followers(p))
                         writer.WriteLine(Text(r));
                 }
                 for (; t < block.Trivia.Count; t++)
                     writer.WriteLine(block.Trivia[t].Text);
                 foreach (var p in plan.AddedAtEnd(block))
+                {
                     writer.WriteLine(Text(p));
+                    foreach (var f in plan.Followers(p))
+                        writer.WriteLine(Text(f));
+                }
                 if (keep && block.RawEnd != null)
                     writer.WriteLine(block.RawEnd);
                 else if (CommandsMap.TryGetString(Command.END, out var end))
                     writer.WriteLine(end);
+                // entities made in the editor to come right after this one (an event's delayed follow-up)
+                foreach (var placed in plan.PlacedAfterBlock(block))
+                {
+                    writer.WriteLine();
+                    placed.Export(writer);
+                }
             }
             foreach (var text in mod.TrailingTrivia)
                 writer.WriteLine(text);
 
             // entities with no block: new in the session, or vanilla entities first edited in it
             bool first = true;
+            var inline = new HashSet<IDEntity>(mod.SourceBlocks.SelectMany(plan.PlacedAfterBlock), ReferenceEqualityComparer.Instance);
             foreach (var set in mod.Database.Values)
                 set.Export(writer, e =>
                 {
-                    if (plan.HasBlocks(e))
+                    if (plan.HasBlocks(e) || inline.Contains(e))
                         return false;
                     if (first)
                         writer.WriteLine();

@@ -1,0 +1,374 @@
+using Dom5Edit.Commands;
+using Dom5Edit.Entities;
+using Dom5Edit.Props;
+using Dom5Edit.Resolve;
+
+namespace Dom5Edit.Events
+{
+    /// <summary>How one event leads to another, or a spell to an event (docs/EVENT_EDITOR.md, "How events chain").</summary>
+    public enum EventLinkKind
+    {
+        /// <summary>L1: the earlier event sets a province code (#code), the later one requires it (#req_code ...).</summary>
+        Code,
+        /// <summary>L1: the later event can't happen while the code is set (#req_notcode, #req_notanycode).</summary>
+        CodeExcludes,
+        /// <summary>L2: #delay N: the next event in the file happens N turns later.</summary>
+        Delay,
+        /// <summary>L2: #delayskip p: p% chance the event after the next is used instead.</summary>
+        DelaySkip,
+        /// <summary>L3: the earlier event changes an event variable (#incvar), the later one checks it (#req_varpos).</summary>
+        Variable,
+        /// <summary>L6: the earlier event offers province orders (#order), the later one answers one (#req_targorder 100-108).</summary>
+        Choice,
+        /// <summary>L4: a spell's enchantment (its #damage), required by the event (#req_ench ...).</summary>
+        Enchantment,
+        /// <summary>L5: a spell that causes the event (effect 42, its #damage is the event's #id).</summary>
+        SpellEvent,
+    }
+
+    /// <summary>One link: from an event (or a spell) to an event, by what, through which lines.</summary>
+    public sealed class EventLink
+    {
+        public EventLink(EventLinkKind kind, IDEntity from, IDEntity to, long key, Property? setter, Property? checker)
+        {
+            Kind = kind;
+            From = from;
+            To = to;
+            Key = key;
+            Setter = setter;
+            Checker = checker;
+        }
+
+        public EventLinkKind Kind { get; }
+        public IDEntity From { get; }
+        public IDEntity To { get; }
+        /// <summary>The code, variable, enchantment, event id, order, or the delay in turns.</summary>
+        public long Key { get; }
+        /// <summary>The line in From that makes the link (#code -509, #delay 2, #incvar 12, #order 12).</summary>
+        public Property? Setter { get; }
+        /// <summary>The line in To that checks it (#req_code -509, #req_varpos 12, #req_targorder 102).</summary>
+        public Property? Checker { get; }
+
+        /// <summary>The link in a few words, as the chain view labels it.</summary>
+        public string Label => Kind switch
+        {
+            EventLinkKind.Code => $"code {Key}",
+            EventLinkKind.CodeExcludes => $"not while code {Key}",
+            EventLinkKind.Delay => Key == 1 ? "1 turn later" : $"{Key} turns later",
+            EventLinkKind.DelaySkip => $"{Key}%: skips to this",
+            EventLinkKind.Variable => $"variable {Key}",
+            EventLinkKind.Choice => EventInfo.OrderName(Key),
+            EventLinkKind.Enchantment => $"enchantment {Key}",
+            EventLinkKind.SpellEvent => $"event id {Key}",
+            _ => Kind.ToString(),
+        };
+
+        /// <summary>Links that chain events (not spells starting them).</summary>
+        public bool IsEventToEvent => Kind != EventLinkKind.Enchantment && Kind != EventLinkKind.SpellEvent;
+    }
+
+    /// <summary>Something about an event that won't work as meant, or likely isn't.</summary>
+    public sealed class EventProblem
+    {
+        public EventProblem(IDEntity e, Property? line, string message, bool isError = false)
+        {
+            Event = e;
+            Line = line;
+            Message = message;
+            IsError = isError;
+        }
+
+        public IDEntity Event { get; }
+        public Property? Line { get; }
+        public string Message { get; }
+        public bool IsError { get; }
+        public override string ToString() => (IsError ? "Error: " : "Warning: ") + Message;
+    }
+
+    /// <summary>Events joined by codes, delays, variables or choices, in file order; and the spells that start them.</summary>
+    public sealed class EventChain
+    {
+        internal EventChain(int number, List<IDEntity> events, List<EventLink> links, List<IDEntity> triggers)
+        {
+            Number = number;
+            Events = events;
+            Links = links;
+            Triggers = triggers;
+        }
+
+        public int Number { get; }
+        public IReadOnlyList<IDEntity> Events { get; }
+        public IReadOnlyList<EventLink> Links { get; }
+        /// <summary>Spells whose enchantment or event id starts events of the chain.</summary>
+        public IReadOnlyList<IDEntity> Triggers { get; }
+    }
+
+    /// <summary>
+    /// A mod's events as the game links them (docs/EVENT_EDITOR.md): every event's lines in file
+    /// order, the links between events and from spells to events, the chains they form, and
+    /// problems. Built from the save plan, so it matches what a save writes.
+    /// </summary>
+    public sealed class EventGraph
+    {
+        private readonly List<IDEntity> _events = new List<IDEntity>();
+        private readonly Dictionary<IDEntity, List<Property>> _lines = new(ReferenceEqualityComparer.Instance);
+        private readonly List<EventLink> _links = new List<EventLink>();
+        private readonly List<EventProblem> _problems = new List<EventProblem>();
+        private readonly List<EventChain> _chains = new List<EventChain>();
+        private readonly Dictionary<IDEntity, EventChain> _chainOf = new(ReferenceEqualityComparer.Instance);
+        /// <summary>The spells that make enchantments or cause events (reusable while no spell changes).</summary>
+        public SpellIndex Spells { get; private set; } = null!;
+        private Dictionary<long, List<IDEntity>> _enchantmentSpells => Spells.Enchantments;
+        private Dictionary<long, List<IDEntity>> _eventSpells => Spells.EventCauses;
+
+        public IReadOnlyList<IDEntity> Events => _events;
+        public IReadOnlyList<EventLink> Links => _links;
+        public IReadOnlyList<EventProblem> Problems => _problems;
+        public IReadOnlyList<EventChain> Chains => _chains;
+
+        /// <summary>An event's lines as saved, in order.</summary>
+        public IReadOnlyList<Property> LinesOf(IDEntity e) => _lines.TryGetValue(e, out var l) ? l : (IReadOnlyList<Property>)Array.Empty<Property>();
+
+        public IEnumerable<EventLink> From(IDEntity e) => _links.Where(l => ReferenceEquals(l.From, e));
+        public IEnumerable<EventLink> To(IDEntity e) => _links.Where(l => ReferenceEquals(l.To, e));
+        public IEnumerable<EventProblem> ProblemsOf(IDEntity e) => _problems.Where(p => ReferenceEquals(p.Event, e));
+        public EventChain? ChainOf(IDEntity e) => _chainOf.TryGetValue(e, out var c) ? c : null;
+
+        /// <summary>The spells that make this enchantment (their #damage), mod's and vanilla's.</summary>
+        public IReadOnlyList<IDEntity> SpellsOfEnchantment(long ench) => _enchantmentSpells.TryGetValue(ench, out var l) ? l : (IReadOnlyList<IDEntity>)Array.Empty<IDEntity>();
+
+        /// <summary>The position of an event in the file (0 first), or -1.</summary>
+        public int IndexOf(IDEntity e) => _events.FindIndex(x => ReferenceEquals(x, e));
+
+        /// <summary>Every province code the mod's events set or check.</summary>
+        public IEnumerable<long> CodesUsed => _events.SelectMany(LinesOf)
+            .Where(p => EventInfo.CodeSetters.Contains(p.Command) || EventInfo.CodeCheckers.Contains(p.Command)
+                        || EventInfo.CodeExcluders.Contains(p.Command) || EventInfo.CodeResetters.Contains(p.Command))
+            .Select(EventInfo.Number).Where(n => n.HasValue).Select(n => n!.Value).Distinct();
+
+        /// <summary>A code no event uses yet, from the manual's range for mods (-300 down to -5000).</summary>
+        public long NextFreeCode()
+        {
+            var used = new HashSet<long>(CodesUsed);
+            for (long c = -300; c >= -5000; c--)
+                if (!used.Contains(c))
+                    return c;
+            return -5001;
+        }
+
+        /// <summary>
+        /// Builds the graph for a mod's events. Spells (the mod's, resolved; vanilla's, as read) are
+        /// looked at for enchantments and event-causing effects; pass <paramref name="spells"/> to
+        /// reuse that from an earlier build when no spell changed.
+        /// </summary>
+        public static EventGraph Build(Mod mod, Func<IDEntity, ResolvedEntity> resolve, Mod? vanilla = null, SpellIndex? spells = null)
+        {
+            var g = new EventGraph();
+            g.Spells = spells ?? SpellIndex.Build(mod, resolve, vanilla);
+            var plan = new SavePlan(mod);
+            foreach (var block in plan.Blocks())
+            {
+                if (block.Entity.GetEntityType() != EntityType.EVENT)
+                    continue;
+                if (!g._lines.TryGetValue(block.Entity, out var lines))
+                {
+                    g._lines[block.Entity] = lines = new List<Property>();
+                    g._events.Add(block.Entity);
+                }
+                lines.AddRange(block.Lines);
+            }
+            g.Link();
+            g.Group();
+            g.Check();
+            return g;
+        }
+
+        private void Link()
+        {
+            // what each event sets, by key
+            var codeSetters = new Dictionary<long, List<(IDEntity, Property)>>();
+            var varSetters = new Dictionary<long, List<(IDEntity, Property)>>();
+            var orders = new List<(IDEntity Event, Property Line, long Mask)>();
+            foreach (var e in _events)
+                foreach (var p in LinesOf(e))
+                {
+                    if (EventInfo.Number(p) is not long n)
+                        continue;
+                    if (EventInfo.CodeSetters.Contains(p.Command) && n != 0)
+                        AddTo(codeSetters, n, (e, p));
+                    else if (EventInfo.VariableSetters.Contains(p.Command))
+                        AddTo(varSetters, n, (e, p));
+                    else if (p.Command == Command.ORDER && n > 0)
+                        orders.Add((e, p, n));
+                }
+
+            for (int i = 0; i < _events.Count; i++)
+            {
+                var e = _events[i];
+                var lines = LinesOf(e);
+                foreach (var p in lines)
+                {
+                    if (EventInfo.Number(p) is not long n)
+                        continue;
+                    if (EventInfo.CodeCheckers.Contains(p.Command) && n != 0 && codeSetters.TryGetValue(n, out var setters))
+                        foreach (var (from, line) in setters.Where(s => !ReferenceEquals(s.Item1, e)))
+                            _links.Add(new EventLink(EventLinkKind.Code, from, e, n, line, p));
+                    else if (EventInfo.CodeExcluders.Contains(p.Command) && n != 0 && codeSetters.TryGetValue(n, out var blockers))
+                        foreach (var (from, line) in blockers.Where(s => !ReferenceEquals(s.Item1, e)))
+                            _links.Add(new EventLink(EventLinkKind.CodeExcludes, from, e, n, line, p));
+                    else if (EventInfo.VariableCheckers.Contains(p.Command) && varSetters.TryGetValue(n, out var vs))
+                        foreach (var (from, line) in vs.Where(s => !ReferenceEquals(s.Item1, e)))
+                            _links.Add(new EventLink(EventLinkKind.Variable, from, e, n, line, p));
+                    else if (EventInfo.EnchantmentCheckers.Contains(p.Command) && _enchantmentSpells.TryGetValue(n, out var spells))
+                        foreach (var s in spells)
+                            _links.Add(new EventLink(EventLinkKind.Enchantment, s, e, n, null, p));
+                    else if (p.Command == Command.ID && _eventSpells.TryGetValue(n, out var causes))
+                        foreach (var s in causes)
+                            _links.Add(new EventLink(EventLinkKind.SpellEvent, s, e, n, null, p));
+                    else if (p.Command == Command.REQ_TARGORDER && n >= 100 && n <= 108)
+                    {
+                        // the event offering the order: one that sets a code this one requires
+                        var codes = lines.Where(q => EventInfo.CodeCheckers.Contains(q.Command)).Select(EventInfo.Number).ToHashSet();
+                        foreach (var (from, line, mask) in orders)
+                        {
+                            if (ReferenceEquals(from, e) || (mask & EventInfo.OrderMaskOf(n)) == 0)
+                                continue;
+                            if (LinesOf(from).Any(q => EventInfo.CodeSetters.Contains(q.Command) && codes.Contains(EventInfo.Number(q))))
+                                _links.Add(new EventLink(EventLinkKind.Choice, from, e, n, line, p));
+                        }
+                    }
+                }
+
+                // #delay: the next event in the file; #delayskip: the one after it
+                var delay = lines.LastOrDefault(p => EventInfo.Delays.Contains(p.Command));
+                if (delay != null && i + 1 < _events.Count)
+                    _links.Add(new EventLink(EventLinkKind.Delay, e, _events[i + 1], EventInfo.Number(delay) ?? 0, delay, null));
+                var skip = lines.LastOrDefault(p => p.Command == Command.DELAYSKIP);
+                if (skip != null && i + 2 < _events.Count)
+                    _links.Add(new EventLink(EventLinkKind.DelaySkip, e, _events[i + 2], EventInfo.Number(skip) ?? 0, skip, null));
+            }
+        }
+
+        private void Group()
+        {
+            // connected events (codes, delays, variables, choices), each group in file order
+            var parent = new Dictionary<IDEntity, IDEntity>(ReferenceEqualityComparer.Instance);
+            IDEntity Find(IDEntity x)
+            {
+                while (parent.TryGetValue(x, out var p) && !ReferenceEquals(p, x))
+                    x = p;
+                return x;
+            }
+            foreach (var e in _events)
+                parent[e] = e;
+            foreach (var l in _links.Where(l => l.IsEventToEvent))
+                parent[Find(l.From)] = Find(l.To);
+            var groups = _events.GroupBy(Find, ReferenceEqualityComparer.Instance).Where(g => g.Count() > 1).ToList();
+            int number = 1;
+            foreach (var group in groups)
+            {
+                var members = group.ToList();
+                var set = new HashSet<IDEntity>(members, ReferenceEqualityComparer.Instance);
+                var links = _links.Where(l => set.Contains(l.To) && (set.Contains(l.From) || !l.IsEventToEvent)).ToList();
+                var triggers = links.Where(l => !l.IsEventToEvent).Select(l => l.From).Distinct(ReferenceEqualityComparer.Instance).Cast<IDEntity>().ToList();
+                var chain = new EventChain(number++, members, links.Where(l => l.IsEventToEvent).ToList(), triggers);
+                _chains.Add(chain);
+                foreach (var e in members)
+                    _chainOf[e] = chain;
+            }
+        }
+
+        private void Check()
+        {
+            var codesSet = new HashSet<long>(_events.SelectMany(LinesOf).Where(p => EventInfo.CodeSetters.Contains(p.Command)).Select(EventInfo.Number).Where(n => n.HasValue).Select(n => n!.Value));
+            var codesChecked = new HashSet<long>(_events.SelectMany(LinesOf)
+                .Where(p => EventInfo.CodeCheckers.Contains(p.Command) || EventInfo.CodeExcluders.Contains(p.Command) || EventInfo.CodeResetters.Contains(p.Command))
+                .Select(EventInfo.Number).Where(n => n.HasValue).Select(n => n!.Value));
+            for (int i = 0; i < _events.Count; i++)
+            {
+                var e = _events[i];
+                var lines = LinesOf(e);
+                var rarity = EventInfo.Rarity(lines);
+                foreach (var p in lines)
+                {
+                    long? n = EventInfo.Number(p);
+                    if (EventInfo.CodeSetters.Contains(p.Command) && n is long set && set != 0)
+                    {
+                        if (!EventInfo.IsModCode(set))
+                            _problems.Add(new EventProblem(e, p, $"Code {set} is outside -300 to -5000: the manual keeps the rest for the game's own events and asks mods to use that range"));
+                        else if (!codesChecked.Contains(set))
+                            _problems.Add(new EventProblem(e, p, $"Sets code {set}, but no event checks it (#req_code {set})"));
+                    }
+                    if (EventInfo.CodeCheckers.Contains(p.Command) && n is long need && need != 0 && EventInfo.IsModCode(need) && !codesSet.Contains(need))
+                        _problems.Add(new EventProblem(e, p, $"Requires code {need}, but no event sets it (#code {need}): this event can't happen", isError: true));
+                    if (p.Command == Command.WORLDRITREBATE && rarity != 11 && rarity != 12)
+                        _problems.Add(new EventProblem(e, p, "#worldritrebate only works in common or uncommon global events (rarity 11 or 12)"));
+                    if (p.Command == Command.REQ_PREGAME && rarity is long r && !EventInfo.IsAlways(r))
+                        _problems.Add(new EventProblem(e, p, "#req_pregame needs an always rarity (0, 5, 10 or 13): no other events happen before the first turn"));
+                }
+                if (lines.Any(p => EventInfo.CodeSetters.Contains(p.Command) && EventInfo.Number(p) is long c && c != 0)
+                    && !lines.Any(p => EventInfo.CodeCheckers.Contains(p.Command)))
+                    _problems.Add(new EventProblem(e, null, "Sets a code without requiring one (#req_code 0): it can break another chain going on in the province (manual)"));
+                if (lines.Any(p => EventInfo.Delays.Contains(p.Command)) && i + 1 >= _events.Count)
+                    _problems.Add(new EventProblem(e, lines.First(p => EventInfo.Delays.Contains(p.Command)), "#delay: there's no next event in the file for it to delay", isError: true));
+                var msg = EventInfo.Message(lines);
+                if (msg != null && msg.Length > 2399)
+                    _problems.Add(new EventProblem(e, null, $"The message is {msg.Length} characters: the game takes at most 2399", isError: true));
+                var needsName = lines.FirstOrDefault(EventInfo.NeedsBracketName);
+                if (needsName != null && EventInfo.BracketName(msg) == null)
+                    _problems.Add(new EventProblem(e, needsName, $"{EventInfo.Name(needsName.Command)} uses the site or item named in brackets at the end of the message ([Name]), and the message has none", isError: true));
+                if (rarity == null && e.Selected == false)
+                    _problems.Add(new EventProblem(e, null, "No #rarity: set how the event is rolled"));
+            }
+        }
+
+        private static void AddTo<T>(Dictionary<long, List<T>> map, long key, T value)
+        {
+            if (!map.TryGetValue(key, out var list))
+                map[key] = list = new List<T>();
+            list.Add(value);
+        }
+    }
+
+    /// <summary>The spells, mod's and vanilla's, that make an enchantment or cause an event, by that number (their #damage).</summary>
+    public sealed class SpellIndex
+    {
+        internal Dictionary<long, List<IDEntity>> Enchantments { get; } = new Dictionary<long, List<IDEntity>>();
+        internal Dictionary<long, List<IDEntity>> EventCauses { get; } = new Dictionary<long, List<IDEntity>>();
+
+        public static SpellIndex Build(Mod mod, Func<IDEntity, ResolvedEntity> resolve, Mod? vanilla)
+        {
+            var index = new SpellIndex();
+            void Note(IDEntity spell, long? effect, long? damage)
+            {
+                if (effect is not long e || damage is not long d)
+                    return;
+                var map = EventInfo.IsEnchantmentEffect(e) ? index.Enchantments : EventInfo.IsCauseEventEffect(e) ? index.EventCauses : null;
+                if (map == null)
+                    return;
+                if (!map.TryGetValue(d, out var list))
+                    map[d] = list = new List<IDEntity>();
+                list.Add(spell);
+            }
+            var own = new HashSet<int>();
+            if (mod.Database.TryGetValue(EntityType.SPELL, out var spells))
+                foreach (var s in spells.GetFullList())
+                {
+                    var r = resolve(s);
+                    Note(s, EventInfo.Number(r.Get(Command.EFFECT)?.Property), EventInfo.Number(r.Get(Command.DAMAGE)?.Property));
+                    if (s.ID > 0)
+                        own.Add(s.ID);
+                }
+            if (vanilla != null && vanilla.Database.TryGetValue(EntityType.SPELL, out var vspells))
+                foreach (var s in vspells.GetFullList())
+                {
+                    if (own.Contains(s.ID))
+                        continue;
+                    var props = s.Properties;
+                    Note(s, EventInfo.Number(props.LastOrDefault(p => p.Command == Command.EFFECT)),
+                        EventInfo.Number(props.LastOrDefault(p => p.Command == Command.DAMAGE)));
+                }
+            return index;
+        }
+    }
+}
