@@ -736,17 +736,81 @@ CATALOG_COMPLETE = {'monster', 'item', 'weapon', 'armor', 'spell', 'site', 'nati
                     'nametype', 'bless', 'template'}
 
 
+def command_effects(p):
+    """What each command does to its entity's record, per context, for Dom5Parser's resolver
+    (what an entity ends up with after a mod's lines). Keys name what a command writes: 'f<off>'
+    a record field, 'a<n>' an ability, '<off>:<mask>' flag bits. Per command:
+      set    keys it replaces (a later command setting all of an earlier one's keys replaces it)
+      add    keys it appends to (repeatable: #batstartsum1, #restricted)
+      or     keys it ORs into (item restrictions)
+      del    abilities it removes (#humanoid removes the item-slot ability)
+      bits / clears   flag bits it sets / clears
+      min / max       the argument's range, for commands read by a generic handler (it clamps
+                      to it); min = max: the command takes no argument
+      optional        the argument may be left out
+    Commands with none of these do something the reader doesn't model (#weapon, #copystats, the
+    nation lists); Dom5Parser has rules for those."""
+    import vanilla_dm
+    setters = {'monster': p.ability_setter(),
+               'weapon': vanilla_dm.setter_of(p, 'weapon', 'fireifhit'),
+               'armor': vanilla_dm.setter_of(p, 'armor', 'ironarmor'),
+               'nation': vanilla_dm.setter_of(p, 'nation', 'startunitnbrs1')}
+    generic = collections.defaultdict(list)
+    for c in p.generic_call_args():
+        if c['key'] is not None:
+            generic[(c['context'], c['command'])].append(c)
+    out = {}
+    for ctx in CATALOG_COMPLETE | {'event'}:
+        p._setter = setters.get(ctx)
+        br = p.branches(ctx)
+        bases = collections.Counter(e[1] for effs in br.values() for e in effs if e[1] is not None)
+        base = bases.most_common(1)[0][0] if bases else None
+        direct = vanilla_dm.nation_direct_keys(p, p._setter) if ctx == 'nation' else {}
+        effects = {}
+        for cmd in sorted(p.context_commands().get(ctx, [])):
+            e = collections.defaultdict(set)
+            arg = {}
+            for c in generic.get((ctx, cmd), []):
+                mode = {0: 'set', 1: 'add', 2: 'or'}.get(c['repeat'])
+                if mode:
+                    e[mode].add('a%d' % c['key'])
+                if not arg and c['min'] is not None and c['max'] is not None:
+                    arg = {'min': c['min'], 'max': c['max']}
+                    if c['kind'] == 5:
+                        arg['optional'] = True
+            for kind, b, off, size, val in br.get(cmd, []):
+                if kind == 'ability':
+                    e['set' if val != 0 else 'del'].add('a%d' % off)
+                elif b != base or base is None:
+                    continue
+                elif kind == 'store':
+                    e['set'].add('f%d' % off)
+                elif kind == 'set_bits' and val:
+                    e['bits'].add('%d:%d' % (off, val & ((1 << 8 * size) - 1)))
+                elif kind == 'clear_bits' and val is not None and ~val & ((1 << 8 * size) - 1):
+                    e['clears'].add('%d:%d' % (off, ~val & ((1 << 8 * size) - 1)))
+            if cmd in direct:
+                e['set'].add('a%d' % direct[cmd])
+            if e or arg:
+                effects[cmd] = dict({k: sorted(v) for k, v in sorted(e.items())}, **arg)
+        out[ctx] = effects
+    return out
+
+
 def cmd_catalog(exe, args):
     """The commands Dominions reads, per entity type, for Dom5Parser (Dom5Edit/GameData)."""
     p = Parser(exe)
     ctx = p.context_commands()
     top = set(ctx.pop('top', []))
+    effects = command_effects(p)
     return {
         'game_version': exe.version, 'exe_sha256_16': exe.sha,
         'note': 'Written by tools/dom6exe (catalog). A command missing from a complete context is '
-                'not read by the game for that entity type.',
+                'not read by the game for that entity type. "effects": what each command writes '
+                '(command_effects in dom6exe.py).',
         'top': sorted(top),
-        'contexts': {c: {'complete': c in CATALOG_COMPLETE, 'commands': sorted(v)} for c, v in sorted(ctx.items())},
+        'contexts': {c: {'complete': c in CATALOG_COMPLETE, 'commands': sorted(v), 'effects': effects.get(c, {})}
+                     for c, v in sorted(ctx.items())},
     }
 
 

@@ -33,22 +33,18 @@ namespace Dom5Edit
         /// <param name="writer">The stream writer to write to.</param>
         public void Export(Mod mod, StreamWriter writer)
         {
-            if (UsesSourceOrder(mod))
+            // in the parsed file's block order (docs/SAVE_FLOW.md): the default for a mod read from
+            // a file; not for one built in the editor, or with disabled entities (merge)
+            var plan = new SavePlan(mod);
+            if (plan.InSourceOrder)
             {
-                WriteInSourceOrder(mod, writer);
+                WriteInSourceOrder(mod, plan, writer);
                 return;
             }
             WriteHeader(mod, writer);
             writer.WriteLine();
             WriteEntities(mod, writer);
         }
-
-        /// <summary>
-        /// Whether to save in the parsed file's block order (docs/SAVE_FLOW.md): the default for a
-        /// mod read from a file. Not for one built in the editor, or with disabled entities (merge).
-        /// </summary>
-        private static bool UsesSourceOrder(Mod mod) =>
-            mod.PreserveSourceOrder && mod.SourceBlocks.Count > 0 && !mod.Database.Values.Any(s => s.HasDisabled);
 
         /// <summary>
         /// Writes the mod header (name, version, description, etc.).
@@ -86,7 +82,7 @@ namespace Dom5Edit
         /// entities that have no block. Unedited lines are written as read. See docs/SAVE_FLOW.md
         /// for the rules and why.
         /// </summary>
-        private void WriteInSourceOrder(Mod mod, StreamWriter writer)
+        private void WriteInSourceOrder(Mod mod, SavePlan plan, StreamWriter writer)
         {
             // a property's line: as read if unedited (unless the mod asks for regenerated text)
             string Text(Property p) => mod.KeepOriginalText ? p.SaveText() : p.ToExportString();
@@ -107,43 +103,10 @@ namespace Dom5Edit
                         writer.WriteLine(text);
             }
 
-            // (by reference: CommandProperty compares by value)
-            var held = new HashSet<IDEntity>(mod.Database.Values.SelectMany(s => s.GetFullList()), ReferenceEqualityComparer.Instance);
-            var blocksOf = new Dictionary<IDEntity, List<SourceBlock>>(ReferenceEqualityComparer.Instance);
-            foreach (var block in mod.SourceBlocks)
-            {
-                if (!blocksOf.TryGetValue(block.Entity, out var list))
-                    blocksOf[block.Entity] = list = new List<SourceBlock>();
-                list.Add(block);
-            }
-
-            // Live properties no block has (added in the session): a replacement goes where the
-            // removed property of the same command was; anything else at the end of a block.
-            var live = new Dictionary<IDEntity, HashSet<Property>>(ReferenceEqualityComparer.Instance);
-            var inSlot = new Dictionary<Property, List<Property>>(ReferenceEqualityComparer.Instance);
-            var atEnd = new Dictionary<SourceBlock, List<Property>>(ReferenceEqualityComparer.Instance);
-            foreach (var (entity, blocks) in blocksOf)
-            {
-                if (!held.Contains(entity))
-                    continue;
-                var liveNow = live[entity] = new HashSet<Property>(entity.Properties, ReferenceEqualityComparer.Instance);
-                var inBlocks = new HashSet<Property>(blocks.SelectMany(b => b.Properties), ReferenceEqualityComparer.Instance);
-                var removed = blocks.SelectMany(b => b.Properties)
-                    .Where(p => mod.PropertiesAfterParse.Contains(p) && !liveNow.Contains(p)).ToList();
-                foreach (var p in entity.Properties.Where(p => !inBlocks.Contains(p)))
-                {
-                    var gap = removed.FirstOrDefault(r => r.Command == p.Command);
-                    if (gap != null)
-                        Add(inSlot, gap, p);
-                    else
-                        Add(atEnd, PlacementBlock(entity, blocks, p), p);
-                }
-            }
-
             foreach (var block in mod.SourceBlocks)
             {
                 var entity = block.Entity;
-                if (!held.Contains(entity))
+                if (!plan.Holds(entity))
                     continue; // deleted in the session (its comments go with it)
                 foreach (var text in block.LeadingTrivia)
                     writer.WriteLine(text);
@@ -157,17 +120,15 @@ namespace Dom5Edit
                     // live now: write it; live after parse but not now: removed by an edit;
                     // not live after parse: a later clear or copy in the file took it out,
                     // and the game still reads it here
-                    if (live[entity].Contains(p) || !mod.PropertiesAfterParse.Contains(p))
+                    if (plan.Writes(block, p))
                         writer.WriteLine(Text(p));
-                    if (inSlot.TryGetValue(p, out var replacements))
-                        foreach (var r in replacements)
-                            writer.WriteLine(Text(r));
+                    foreach (var r in plan.ReplacementsAfter(p))
+                        writer.WriteLine(Text(r));
                 }
                 for (; t < block.Trivia.Count; t++)
                     writer.WriteLine(block.Trivia[t].Text);
-                if (atEnd.TryGetValue(block, out var added))
-                    foreach (var p in added)
-                        writer.WriteLine(Text(p));
+                foreach (var p in plan.AddedAtEnd(block))
+                    writer.WriteLine(Text(p));
                 if (keep && block.RawEnd != null)
                     writer.WriteLine(block.RawEnd);
                 else if (CommandsMap.TryGetString(Command.END, out var end))
@@ -181,31 +142,13 @@ namespace Dom5Edit
             foreach (var set in mod.Database.Values)
                 set.Export(writer, e =>
                 {
-                    if (blocksOf.ContainsKey(e))
+                    if (plan.HasBlocks(e))
                         return false;
                     if (first)
                         writer.WriteLine();
                     first = false;
                     return true;
                 });
-        }
-
-        /// <summary>
-        /// The block an added property goes at the end of: the entity's first block, so copies
-        /// made after it carry the value (rule C), unless a later block of the entity sets the same
-        /// command, clears its group or copies over it; then the last block, so it takes effect.
-        /// </summary>
-        private static SourceBlock PlacementBlock(IDEntity entity, List<SourceBlock> blocks, Property p)
-        {
-            var group = entity.GetPropertyGroup(p.Command);
-            bool overriddenLater = blocks.Skip(1).SelectMany(b => b.Properties).Any(q =>
-                q.Command == p.Command
-                || PropertyGroupMap.GetGroupClearedBy(q.Command) is PropertyGroup cleared
-                    && (cleared == PropertyGroup.All || cleared == group)
-                || PropertyGroupMap.IsFullCopyCommand(q.Command)
-                    && PropertyGroupMap.GetGroupsOverwrittenByCopy(q.Command) is var copied
-                    && (copied.Contains(PropertyGroup.All) || copied.Contains(group)));
-            return overriddenLater ? blocks[^1] : blocks[0];
         }
 
         /// <summary>The block's #new.../#select... line as parsed (a numeric ID as the entity's current ID).</summary>
@@ -220,13 +163,6 @@ namespace Dom5Edit
                 arg = "\"" + arg + "\"";
             string line = arg.Length > 0 ? command + " " + arg : command;
             return block.HeaderComment.Length > 0 ? line + " -- " + block.HeaderComment : line;
-        }
-
-        private static void Add<TKey>(Dictionary<TKey, List<Property>> map, TKey key, Property p) where TKey : notnull
-        {
-            if (!map.TryGetValue(key, out var list))
-                map[key] = list = new List<Property>();
-            list.Add(p);
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 {
  "game_version": "6.37",
  "exe_sha256_16": "d77cd364fe447e85",
- "note": "Written by tools/dom6exe (catalog). A command missing from a complete context is not read by the game for that entity type.",
+ "note": "Written by tools/dom6exe (catalog). A command missing from a complete context is not read by the game for that entity type. \"effects\": what each command writes (command_effects in dom6exe.py).",
  "top": [
   "clearallevents",
   "clearallitems",
@@ -42,7 +42,84 @@
     "rcost",
     "type",
     "woodenarmor"
-   ]
+   ],
+   "effects": {
+    "clear": {
+     "set": [
+      "f36",
+      "f62",
+      "f64",
+      "f68",
+      "f72"
+     ]
+    },
+    "def": {
+     "set": [
+      "f62"
+     ]
+    },
+    "enc": {
+     "set": [
+      "f64"
+     ]
+    },
+    "ironarmor": {
+     "set": [
+      "a267"
+     ]
+    },
+    "magicarmor": {
+     "set": [
+      "a557"
+     ]
+    },
+    "newarmor": {
+     "set": [
+      "f0",
+      "f36",
+      "f62",
+      "f64",
+      "f68",
+      "f72"
+     ]
+    },
+    "prot": {
+     "set": [
+      "f36",
+      "f38",
+      "f40",
+      "f42",
+      "f44",
+      "f46",
+      "f48"
+     ]
+    },
+    "protparts": {
+     "set": [
+      "f36",
+      "f38",
+      "f40",
+      "f42",
+      "f44",
+      "f46"
+     ]
+    },
+    "rcost": {
+     "set": [
+      "f68"
+     ]
+    },
+    "type": {
+     "set": [
+      "f66"
+     ]
+    },
+    "woodenarmor": {
+     "set": [
+      "a269"
+     ]
+    }
+   }
   },
   "bless": {
    "complete": true,
@@ -68,7 +145,41 @@
     "prodscale",
     "selectbless",
     "slothscale"
-   ]
+   ],
+   "effects": {
+    "clearfx": {
+     "set": [
+      "f40",
+      "f48",
+      "f56"
+     ]
+    },
+    "clearscales": {
+     "set": [
+      "f176"
+     ]
+    },
+    "cost0": {
+     "set": [
+      "f34"
+     ]
+    },
+    "cost1": {
+     "set": [
+      "f38"
+     ]
+    },
+    "path0": {
+     "set": [
+      "f32"
+     ]
+    },
+    "path1": {
+     "set": [
+      "f36"
+     ]
+    }
+   }
   },
   "event": {
    "complete": false,
@@ -428,7 +539,1949 @@
     "worldritrebate",
     "worldunrest",
     "xp"
-   ]
+   ],
+   "effects": {
+    "addascension": {
+     "min": -10000,
+     "max": 10000
+    },
+    "addequip": {
+     "add": [
+      "a44"
+     ],
+     "min": 0,
+     "max": 9
+    },
+    "addgeo": {
+     "add": [
+      "a195"
+     ],
+     "min": 0,
+     "max": 9223372036854775807
+    },
+    "addseductions": {
+     "add": [
+      "a209"
+     ],
+     "min": -9999999,
+     "max": 9999999
+    },
+    "addsite": {
+     "add": [
+      "a65"
+     ],
+     "min": -1,
+     "max": 3999
+    },
+    "airboost": {
+     "add": [
+      "a84"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "arena": {
+     "min": 1,
+     "max": 1
+    },
+    "arena1": {
+     "min": 1,
+     "max": 1
+    },
+    "arena2": {
+     "min": 1,
+     "max": 1
+    },
+    "assassin": {
+     "add": [
+      "a2"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "assfollower1": {
+     "add": [
+      "a3"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "assfollower1d3": {
+     "add": [
+      "a6"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "assfollower2": {
+     "add": [
+      "a4"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "assfollower3": {
+     "add": [
+      "a5"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "assowner": {
+     "add": [
+      "a139"
+     ],
+     "min": -9,
+     "max": 499
+    },
+    "assownerench": {
+     "add": [
+      "a214"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "astralboost": {
+     "add": [
+      "a87"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "banished": {
+     "add": [
+      "a109"
+     ],
+     "min": -13,
+     "max": -11
+    },
+    "bloodboost": {
+     "add": [
+      "a91"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "claimthrone": {
+     "add": [
+      "a129"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "cleartarg": {
+     "add": [
+      "a128"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "clearvar": {
+     "add": [
+      "a196"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "code": {
+     "add": [
+      "a93"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "code2": {
+     "add": [
+      "a94"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "codedelay": {
+     "add": [
+      "a141"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "codedelay2": {
+     "add": [
+      "a142"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "com": {
+     "add": [
+      "a150"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "curse": {
+     "add": [
+      "a61"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "deathboost": {
+     "add": [
+      "a88"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "dec10var": {
+     "add": [
+      "a211"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "decscale": {
+     "add": [
+      "a57"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "decscale2": {
+     "add": [
+      "a58"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "decscale3": {
+     "add": [
+      "a59"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "decvar": {
+     "add": [
+      "a198"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "defence": {
+     "add": [
+      "a50"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "delay": {
+     "min": 0,
+     "max": 120
+    },
+    "delay25": {
+     "min": 0,
+     "max": 120
+    },
+    "delay50": {
+     "min": 0,
+     "max": 120
+    },
+    "delayskip": {
+     "min": 0,
+     "max": 100
+    },
+    "disease": {
+     "add": [
+      "a62"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "dispglobals": {
+     "min": 0,
+     "max": 9999
+    },
+    "earthboost": {
+     "add": [
+      "a86"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "emigration": {
+     "add": [
+      "a11"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "exactgold": {
+     "add": [
+      "a124"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "extramsg": {
+     "add": [
+      "a138"
+     ],
+     "min": -9,
+     "max": 499
+    },
+    "fireboost": {
+     "add": [
+      "a83"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "flagland": {
+     "add": [
+      "a107"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "force1d3vis": {
+     "add": [
+      "a25"
+     ],
+     "min": -1,
+     "max": 56
+    },
+    "force1d6vis": {
+     "add": [
+      "a26"
+     ],
+     "min": -1,
+     "max": 56
+    },
+    "force2d4vis": {
+     "add": [
+      "a27"
+     ],
+     "min": -1,
+     "max": 56
+    },
+    "force2d6vis": {
+     "add": [
+      "a28"
+     ],
+     "min": -1,
+     "max": 56
+    },
+    "force3d6vis": {
+     "add": [
+      "a29"
+     ],
+     "min": -1,
+     "max": 56
+    },
+    "force4d6vis": {
+     "add": [
+      "a30"
+     ],
+     "min": -1,
+     "max": 56
+    },
+    "forceexactgold": {
+     "add": [
+      "a206"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "forcegold": {
+     "add": [
+      "a205"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "forcetransform": {
+     "add": [
+      "a123"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "fort": {
+     "add": [
+      "a45"
+     ],
+     "min": 0,
+     "max": 49
+    },
+    "gainaff": {
+     "add": [
+      "a108"
+     ],
+     "min": 0,
+     "max": 9223372036854775807
+    },
+    "gainaffmount": {
+     "add": [
+      "a218"
+     ],
+     "min": 0,
+     "max": 9223372036854775807
+    },
+    "gainmark": {
+     "add": [
+      "a117"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "gemloss": {
+     "add": [
+      "a47"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "gemlosslarge": {
+     "add": [
+      "a48"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "gemlosssmall": {
+     "add": [
+      "a46"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "glamourboost": {
+     "add": [
+      "a90"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "gold": {
+     "add": [
+      "a42"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "header": {
+     "min": 0,
+     "max": 999
+    },
+    "healaff": {
+     "add": [
+      "a208"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "healaffmount": {
+     "add": [
+      "a217"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "hiddensite": {
+     "add": [
+      "a66"
+     ],
+     "min": -1,
+     "max": 3999
+    },
+    "holyboost": {
+     "add": [
+      "a92"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "id": {
+     "add": [
+      "a40"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "inc10var": {
+     "add": [
+      "a212"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "inccorpses": {
+     "add": [
+      "a192"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "incdom": {
+     "add": [
+      "a64"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "incpop": {
+     "add": [
+      "a81"
+     ],
+     "min": -30000,
+     "max": 30000
+    },
+    "incscale": {
+     "add": [
+      "a54"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "incscale2": {
+     "add": [
+      "a55"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "incscale3": {
+     "add": [
+      "a56"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "incvar": {
+     "add": [
+      "a197"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "invvar": {
+     "add": [
+      "a199"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "kill": {
+     "add": [
+      "a10"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "kill2d6mon": {
+     "add": [
+      "a132"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "killcom": {
+     "add": [
+      "a68"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "killmon": {
+     "add": [
+      "a63"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "killpop": {
+     "add": [
+      "a7"
+     ],
+     "min": 0,
+     "max": 100000
+    },
+    "killtarg": {
+     "add": [
+      "a201"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "lab": {
+     "add": [
+      "a13"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "landgold": {
+     "add": [
+      "a8"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "landprod": {
+     "add": [
+      "a9"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "linger": {
+     "add": [
+      "a97"
+     ],
+     "min": 0,
+     "max": 12
+    },
+    "magicitem": {
+     "add": [
+      "a41"
+     ],
+     "min": 0,
+     "max": 9
+    },
+    "maybeaddsite": {
+     "add": [
+      "a202"
+     ],
+     "min": -1,
+     "max": 3999
+    },
+    "maybehiddensite": {
+     "add": [
+      "a215"
+     ],
+     "min": -1,
+     "max": 3999
+    },
+    "minascension": {
+     "min": -10000,
+     "max": 10000
+    },
+    "nation": {
+     "add": [
+      "a1"
+     ],
+     "min": -9,
+     "max": 499
+    },
+    "nationench": {
+     "add": [
+      "a120"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "natureboost": {
+     "add": [
+      "a89"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "newdom": {
+     "add": [
+      "a43"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "newnbor": {
+     "min": 0,
+     "max": 1988
+    },
+    "nolog": {
+     "min": 1,
+     "max": 1
+    },
+    "notext": {
+     "min": 1,
+     "max": 1
+    },
+    "order": {
+     "add": [
+      "a118"
+     ],
+     "min": 0,
+     "max": 2147483647
+    },
+    "pathboost": {
+     "add": [
+      "a106"
+     ],
+     "min": 0,
+     "max": 9
+    },
+    "poison": {
+     "add": [
+      "a130"
+     ],
+     "min": 0,
+     "max": 999
+    },
+    "purgecalendar": {
+     "add": [
+      "a115"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "purgedelayed": {
+     "add": [
+      "a116"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "rarity": {
+     "set": [
+      "f2400"
+     ]
+    },
+    "remgeo": {
+     "add": [
+      "a207"
+     ],
+     "min": 0,
+     "max": 9223372036854775807
+    },
+    "remnbor": {
+     "min": 0,
+     "max": 1988
+    },
+    "remount": {
+     "add": [
+      "a125"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "removesite": {
+     "add": [
+      "a121"
+     ],
+     "min": -1,
+     "max": 3999
+    },
+    "req_2monsters": {
+     "set": [
+      "a98"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_5monsters": {
+     "set": [
+      "a102"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_ai": {
+     "min": 0,
+     "max": 1
+    },
+    "req_anycode": {
+     "add": [
+      "a67"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "req_capital": {
+     "min": 0,
+     "max": 1
+    },
+    "req_cave": {
+     "min": 0,
+     "max": 1
+    },
+    "req_caveforest": {
+     "min": 0,
+     "max": 1
+    },
+    "req_chaos": {
+     "min": -5,
+     "max": 5
+    },
+    "req_claimedthrone": {
+     "min": 1,
+     "max": 1
+    },
+    "req_coast": {
+     "min": 0,
+     "max": 1
+    },
+    "req_code": {
+     "add": [
+      "a59"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "req_cold": {
+     "min": -5,
+     "max": 5
+    },
+    "req_commander": {
+     "min": 0,
+     "max": 1
+    },
+    "req_crystal": {
+     "min": 0,
+     "max": 1
+    },
+    "req_deadmnr": {
+     "add": [
+      "a105"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_death": {
+     "min": -5,
+     "max": 5
+    },
+    "req_deepsea": {
+     "min": 0,
+     "max": 1
+    },
+    "req_domchance": {
+     "min": 0,
+     "max": 100
+    },
+    "req_dominion": {
+     "min": 0,
+     "max": 10
+    },
+    "req_domowner": {
+     "set": [
+      "a107"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_drip": {
+     "min": 0,
+     "max": 1
+    },
+    "req_ench": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_enchdom": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_enchnearby": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_enchtarget": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_era": {
+     "min": 1,
+     "max": 3
+    },
+    "req_farm": {
+     "min": 0,
+     "max": 1
+    },
+    "req_forest": {
+     "min": 0,
+     "max": 1
+    },
+    "req_fornation": {
+     "add": [
+      "a69"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_fort": {
+     "min": 0,
+     "max": 1
+    },
+    "req_fortid": {
+     "min": 0,
+     "max": 49
+    },
+    "req_foundsite": {
+     "min": 0,
+     "max": 1
+    },
+    "req_freesites": {
+     "min": 0,
+     "max": 8
+    },
+    "req_freshwater": {
+     "min": 0,
+     "max": 1
+    },
+    "req_friendlyench": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_fullowner": {
+     "set": [
+      "a21"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_gem": {
+     "min": 0,
+     "max": 9
+    },
+    "req_godawake": {
+     "min": 0,
+     "max": 1
+    },
+    "req_godismnr": {
+     "add": [
+      "a119"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_godisnotmnr": {
+     "add": [
+      "a122"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_gold": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "req_gorge": {
+     "min": 0,
+     "max": 1
+    },
+    "req_growth": {
+     "min": -5,
+     "max": 5
+    },
+    "req_heat": {
+     "min": -5,
+     "max": 5
+    },
+    "req_hiddensite": {
+     "min": 0,
+     "max": 1
+    },
+    "req_hostileench": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_humanoidres": {
+     "min": 1,
+     "max": 1
+    },
+    "req_indepok": {
+     "min": 1,
+     "max": 1
+    },
+    "req_kelp": {
+     "min": 0,
+     "max": 1
+    },
+    "req_lab": {
+     "min": 0,
+     "max": 1
+    },
+    "req_land": {
+     "min": 0,
+     "max": 1
+    },
+    "req_lazy": {
+     "min": -5,
+     "max": 5
+    },
+    "req_luck": {
+     "min": -5,
+     "max": 5
+    },
+    "req_magic": {
+     "min": -5,
+     "max": 5
+    },
+    "req_maxcorpses": {
+     "min": 0,
+     "max": 9999999
+    },
+    "req_maxdef": {
+     "min": 0,
+     "max": 100
+    },
+    "req_maxdominion": {
+     "min": -10,
+     "max": 10
+    },
+    "req_maxglobals": {
+     "min": 0,
+     "max": 9999
+    },
+    "req_maxpop": {
+     "min": 0,
+     "max": 30000
+    },
+    "req_maxtroops": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_maxturn": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_maxunrest": {
+     "min": 0,
+     "max": 1000
+    },
+    "req_mincorpses": {
+     "min": 0,
+     "max": 9999999
+    },
+    "req_mindef": {
+     "min": 0,
+     "max": 100
+    },
+    "req_minglobals": {
+     "min": 0,
+     "max": 9999
+    },
+    "req_minpop": {
+     "min": 0,
+     "max": 30000
+    },
+    "req_minresearch": {
+     "min": 0,
+     "max": 10
+    },
+    "req_mintroops": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_minunrest": {
+     "min": 0,
+     "max": 1000
+    },
+    "req_mnr": {
+     "add": [
+      "a97"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_mnrbs": {
+     "add": [
+      "a186"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_monster": {
+     "set": [
+      "a61"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_monsterbs": {
+     "set": [
+      "a187"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_month": {
+     "min": 0,
+     "max": 11
+    },
+    "req_mountain": {
+     "min": 0,
+     "max": 1
+    },
+    "req_mydominion": {
+     "min": 0,
+     "max": 1
+    },
+    "req_myench": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_nation": {
+     "set": [
+      "a18"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_nativesoil": {
+     "min": 1,
+     "max": 1
+    },
+    "req_nearbycapital": {
+     "min": 0,
+     "max": 1
+    },
+    "req_nearbycode": {
+     "min": -999999,
+     "max": 999999
+    },
+    "req_nearbysite": {
+     "min": 0,
+     "max": 1
+    },
+    "req_nearbythrone": {
+     "min": 0,
+     "max": 1
+    },
+    "req_nearowncode": {
+     "min": -999999,
+     "max": 999999
+    },
+    "req_noench": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_noera": {
+     "min": 1,
+     "max": 3
+    },
+    "req_nomnr": {
+     "add": [
+      "a100"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_nomonster": {
+     "set": [
+      "a60"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_nonation": {
+     "set": [
+      "a24"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_nopathair": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathall": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathastral": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathblood": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathdeath": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathearth": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathfire": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathglamour": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathholy": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathnature": {
+     "min": 0,
+     "max": 10
+    },
+    "req_nopathwater": {
+     "min": 0,
+     "max": 10
+    },
+    "req_norealmnr": {
+     "add": [
+      "a185"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_noseason": {
+     "min": 0,
+     "max": 3
+    },
+    "req_nositenbr": {
+     "min": 0,
+     "max": 3999
+    },
+    "req_notanycode": {
+     "add": [
+      "a104"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "req_notcode": {
+     "add": [
+      "a92"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "req_notforally": {
+     "set": [
+      "a106"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_notfornation": {
+     "set": [
+      "a23"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_notnation": {
+     "set": [
+      "a23"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_notpoptype": {
+     "min": 0,
+     "max": 249
+    },
+    "req_noworlditem": {
+     "set": [
+      "a126"
+     ],
+     "min": 0,
+     "max": 1999
+    },
+    "req_order": {
+     "min": -5,
+     "max": 5
+    },
+    "req_owncapital": {
+     "min": 0,
+     "max": 1
+    },
+    "req_path": {
+     "min": 0,
+     "max": 6
+    },
+    "req_pathair": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathastral": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathblood": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathdeath": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathearth": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathfire": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathgems": {
+     "min": 0,
+     "max": 100000
+    },
+    "req_pathglamour": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathholy": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathnature": {
+     "min": 0,
+     "max": 10
+    },
+    "req_pathwater": {
+     "min": 0,
+     "max": 10
+    },
+    "req_permonth": {
+     "min": 0,
+     "max": 1000
+    },
+    "req_plane": {
+     "min": -10,
+     "max": 9
+    },
+    "req_pop0ok": {
+     "min": 1,
+     "max": 1
+    },
+    "req_poptype": {
+     "min": 0,
+     "max": 249
+    },
+    "req_preach": {
+     "min": 0,
+     "max": 100
+    },
+    "req_pregame": {
+     "min": 1,
+     "max": 1
+    },
+    "req_pretawake": {
+     "min": 0,
+     "max": 1
+    },
+    "req_pretismnr": {
+     "add": [
+      "a167"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_prod": {
+     "min": -5,
+     "max": 5
+    },
+    "req_provnbr": {
+     "min": 0,
+     "max": 1989
+    },
+    "req_rare": {
+     "min": 0,
+     "max": 100
+    },
+    "req_realmnr": {
+     "add": [
+      "a184"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "req_researcher": {
+     "min": 1,
+     "max": 1
+    },
+    "req_school": {
+     "min": 0,
+     "max": 6
+    },
+    "req_season": {
+     "min": 0,
+     "max": 3
+    },
+    "req_site": {
+     "min": 0,
+     "max": 1
+    },
+    "req_story": {
+     "min": 0,
+     "max": 2
+    },
+    "req_swamp": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targaff": {
+     "min": 0,
+     "max": 9223372036854775807
+    },
+    "req_targally": {
+     "set": [
+      "a255"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_targanimal": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targdemon": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targforeignok": {
+     "min": 1,
+     "max": 1
+    },
+    "req_targgod": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targhorrormark": {
+     "min": -10000,
+     "max": 10000
+    },
+    "req_targhumanoid": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targimmobile": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targinanimate": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targinsane": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targitem": {
+     "set": [
+      "a230"
+     ],
+     "min": 0,
+     "max": 1999
+    },
+    "req_targmagicbeing": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targmale": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targmanygems": {
+     "min": 0,
+     "max": 56
+    },
+    "req_targmaxmorale": {
+     "min": 0,
+     "max": 1000
+    },
+    "req_targmaxsize": {
+     "min": 0,
+     "max": 10
+    },
+    "req_targmindless": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targminkills": {
+     "min": 0,
+     "max": 9999999
+    },
+    "req_targminmorale": {
+     "min": 0,
+     "max": 1000
+    },
+    "req_targminsize": {
+     "min": 0,
+     "max": 10
+    },
+    "req_targmnr": {
+     "add": [
+      "a220"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_targnoaff": {
+     "min": 0,
+     "max": 9223372036854775807
+    },
+    "req_targnoitem": {
+     "set": [
+      "a243"
+     ],
+     "min": 0,
+     "max": 1999
+    },
+    "req_targnomnr": {
+     "add": [
+      "a247"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_targnoorder": {
+     "add": [
+      "a250"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "req_targnopath1": {
+     "add": [
+      "a256"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targnopath2": {
+     "add": [
+      "a257"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targnopath3": {
+     "add": [
+      "a258"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targnopath4": {
+     "add": [
+      "a259"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targnorealmnr": {
+     "add": [
+      "a267"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_targnotally": {
+     "set": [
+      "a254"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_targnotowner": {
+     "set": [
+      "a253"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_targorder": {
+     "add": [
+      "a221"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "req_targowner": {
+     "set": [
+      "a241"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "req_targpath1": {
+     "add": [
+      "a222"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targpath2": {
+     "add": [
+      "a223"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targpath3": {
+     "add": [
+      "a224"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targpath4": {
+     "add": [
+      "a225"
+     ],
+     "min": 0,
+     "max": 56
+    },
+    "req_targprophet": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targrealmnr": {
+     "add": [
+      "a266"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "req_targseductions": {
+     "min": 0,
+     "max": 9999999
+    },
+    "req_targsight": {
+     "min": 0,
+     "max": 1
+    },
+    "req_targundead": {
+     "min": 0,
+     "max": 1
+    },
+    "req_temple": {
+     "min": 0,
+     "max": 1
+    },
+    "req_thronesite": {
+     "min": 0,
+     "max": 1
+    },
+    "req_turn": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_turnrare": {
+     "min": -100000,
+     "max": 100000
+    },
+    "req_unclaimedthrone": {
+     "min": 1,
+     "max": 1
+    },
+    "req_unique": {
+     "min": 0,
+     "max": 10000
+    },
+    "req_unluck": {
+     "min": -5,
+     "max": 5
+    },
+    "req_unmagic": {
+     "min": -5,
+     "max": 5
+    },
+    "req_varneg": {
+     "add": [
+      "a164"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "req_varone": {
+     "add": [
+      "a163"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "req_varpos": {
+     "add": [
+      "a161"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "req_varzero": {
+     "add": [
+      "a162"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "req_voidok": {
+     "min": 0,
+     "max": 1
+    },
+    "req_waste": {
+     "min": 0,
+     "max": 1
+    },
+    "req_worlditem": {
+     "set": [
+      "a125"
+     ],
+     "min": 0,
+     "max": 1999
+    },
+    "resetcode": {
+     "add": [
+      "a105"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "resetcodedelay": {
+     "add": [
+      "a143"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "resetcodedelay2": {
+     "add": [
+      "a144"
+     ],
+     "min": -999999,
+     "max": 999999
+    },
+    "resolvearena1": {
+     "min": 1,
+     "max": 1
+    },
+    "resolvearena2": {
+     "min": 1,
+     "max": 1
+    },
+    "revealprov": {
+     "add": [
+      "a96"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "revealsite": {
+     "add": [
+      "a82"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "revolt": {
+     "add": [
+      "a52"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "setpoptype": {
+     "min": 0,
+     "max": 249
+    },
+    "setxp": {
+     "add": [
+      "a146"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "stealthcom": {
+     "add": [
+      "a67"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "strikeunits": {
+     "add": [
+      "a95"
+     ],
+     "min": 0,
+     "max": 999
+    },
+    "taxboost": {
+     "add": [
+      "a78"
+     ],
+     "min": -100,
+     "max": 1000
+    },
+    "temple": {
+     "add": [
+      "a51"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "tempunits": {
+     "add": [
+      "a119"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "togglevar": {
+     "add": [
+      "a200"
+     ],
+     "min": -999,
+     "max": 9999
+    },
+    "transform": {
+     "add": [
+      "a122"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "unrest": {
+     "add": [
+      "a12"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "var0units": {
+     "add": [
+      "a216"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "visitors": {
+     "add": [
+      "a60"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "waterboost": {
+     "add": [
+      "a85"
+     ],
+     "min": -1,
+     "max": 19999
+    },
+    "worldage": {
+     "add": [
+      "a103"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "worldcurse": {
+     "add": [
+      "a99"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "worlddarkness": {
+     "add": [
+      "a98"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "worlddecscale": {
+     "add": [
+      "a74"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "worlddecscale2": {
+     "add": [
+      "a75"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "worlddecscale3": {
+     "add": [
+      "a76"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "worlddisease": {
+     "add": [
+      "a100"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "worldheal": {
+     "add": [
+      "a102"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "worldincdom": {
+     "add": [
+      "a80"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "worldincscale": {
+     "add": [
+      "a71"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "worldincscale2": {
+     "add": [
+      "a72"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "worldincscale3": {
+     "add": [
+      "a73"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "worldmark": {
+     "add": [
+      "a101"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "worldritrebate": {
+     "add": [
+      "a79"
+     ],
+     "min": 0,
+     "max": 7
+    },
+    "worldunrest": {
+     "add": [
+      "a69"
+     ],
+     "min": -200,
+     "max": 200
+    },
+    "xp": {
+     "add": [
+      "a131"
+     ],
+     "min": -10000,
+     "max": 10000
+    }
+   }
   },
   "global": {
    "complete": false,
@@ -456,7 +2509,8 @@
     "turmoilincome",
     "unresthalfinc",
     "unresthalfres"
-   ]
+   ],
+   "effects": {}
   },
   "item": {
    "complete": true,
@@ -860,7 +2914,2632 @@
     "xploss",
     "yearaging",
     "yearturn"
-   ]
+   ],
+   "effects": {
+    "aciddigest": {
+     "set": [
+      "a496"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "acidres": {
+     "set": [
+      "a202"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "acidshield": {
+     "set": [
+      "a497"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "addupkeep": {
+     "set": [
+      "a589"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "adeptsacr": {
+     "set": [
+      "a216"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "airelementals": {
+     "set": [
+      "a1081"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "airrange": {
+     "set": [
+      "a41"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "airshield": {
+     "set": [
+      "a208"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "alchemy": {
+     "set": [
+      "a132"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "allrange": {
+     "set": [
+      "a25"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "allret": {
+     "set": [
+      "a435"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "ambidextrous": {
+     "set": [
+      "a217"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "animalawe": {
+     "set": [
+      "a646"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "armor": {
+     "set": [
+      "f46"
+     ]
+    },
+    "assassin": {
+     "set": [
+      "a213"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "astralrange": {
+     "set": [
+      "a44"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "att": {
+     "set": [
+      "a1057"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "autoberserk": {
+     "set": [
+      "a1129"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "autobless": {
+     "set": [
+      "a1100"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "autocompete": {
+     "set": [
+      "a459"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "autodisgrinder": {
+     "set": [
+      "a356"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "autodishealer": {
+     "set": [
+      "a355"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "autohealer": {
+     "set": [
+      "a354"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "autospellrepeat": {
+     "set": [
+      "a133"
+     ],
+     "min": 0,
+     "max": 25
+    },
+    "awe": {
+     "set": [
+      "a105"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "banefireshield": {
+     "set": [
+      "a222"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "barkskin": {
+     "bits": [
+      "504:16"
+     ]
+    },
+    "batstartsum1": {
+     "set": [
+      "a436"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum1d3": {
+     "set": [
+      "a690"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum1d6": {
+     "set": [
+      "a441"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum2": {
+     "set": [
+      "a437"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum2d6": {
+     "set": [
+      "a442"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum3": {
+     "set": [
+      "a438"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum3d6": {
+     "set": [
+      "a443"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum4": {
+     "set": [
+      "a439"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum4d6": {
+     "set": [
+      "a444"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum5": {
+     "set": [
+      "a440"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum5d6": {
+     "set": [
+      "a445"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum1": {
+     "set": [
+      "a395"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum1d2": {
+     "set": [
+      "a401"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum1d3": {
+     "set": [
+      "a402"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum2": {
+     "set": [
+      "a396"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum3": {
+     "set": [
+      "a397"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum4": {
+     "set": [
+      "a398"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum5": {
+     "set": [
+      "a399"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesumwarm": {
+     "set": [
+      "a394"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "beastmaster": {
+     "set": [
+      "a369"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "beauty": {
+     "set": [
+      "a218"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "beckon": {
+     "set": [
+      "a247"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bers": {
+     "bits": [
+      "504:256"
+     ]
+    },
+    "berserk": {
+     "set": [
+      "a190"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "bestowtomount": {
+     "set": [
+      "a1437"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "bless": {
+     "bits": [
+      "504:1"
+     ]
+    },
+    "blessbers": {
+     "set": [
+      "a525"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "blessfly": {
+     "set": [
+      "a240"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "bloodrange": {
+     "set": [
+      "a48"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bloodvengeance": {
+     "set": [
+      "a414"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bluntres": {
+     "bits": [
+      "504:137438953472"
+     ]
+    },
+    "bodyguard": {
+     "set": [
+      "a432"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bonusspells": {
+     "set": [
+      "a334"
+     ],
+     "min": 0,
+     "max": 4
+    },
+    "bravemount": {
+     "set": [
+      "a1024"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bringeroffortune": {
+     "set": [
+      "a228"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "carcasscollector": {
+     "set": [
+      "a658"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "castledef": {
+     "set": [
+      "a1118"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "champprize": {
+     "set": [
+      "a259"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "chaospower": {
+     "set": [
+      "a416"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "chestwound": {
+     "bits": [
+      "520:8388608"
+     ]
+    },
+    "chorusmaster": {
+     "set": [
+      "a1110"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "chorusslave": {
+     "set": [
+      "a1109"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "clumsy": {
+     "set": [
+      "a1013"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "cold": {
+     "set": [
+      "a220"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "coldpower": {
+     "set": [
+      "a176"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "coldres": {
+     "set": [
+      "a201"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "combatcaster": {
+     "set": [
+      "a581"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "command": {
+     "set": [
+      "a157"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "commaster": {
+     "set": [
+      "a1106"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "comslave": {
+     "set": [
+      "a1105"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "constlevel": {
+     "set": [
+      "f36"
+     ]
+    },
+    "copyspr": {
+     "set": [
+      "f42"
+     ]
+    },
+    "corpsehealer": {
+     "set": [
+      "a1131"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "corpselord": {
+     "set": [
+      "a154"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "corruptor": {
+     "set": [
+      "a224"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "crippled": {
+     "bits": [
+      "520:16777216"
+     ]
+    },
+    "crossbreeder": {
+     "set": [
+      "a431"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "curse": {
+     "bits": [
+      "520:2"
+     ]
+    },
+    "cursed": {
+     "bits": [
+      "520:32768"
+     ]
+    },
+    "curseluckshield": {
+     "set": [
+      "a601"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "damagerev": {
+     "set": [
+      "a1064"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "dancenof": {
+     "set": [
+      "a1043"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "dancenratt": {
+     "set": [
+      "a1041"
+     ],
+     "min": 2,
+     "max": 100
+    },
+    "dancesize": {
+     "set": [
+      "a1044"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "dancespr": {
+     "set": [
+      "a1042"
+     ],
+     "min": 0,
+     "max": 100000
+    },
+    "danceweapon": {
+     "set": [
+      "a1040"
+     ],
+     "min": 0,
+     "max": 3999
+    },
+    "darkpower": {
+     "set": [
+      "a293"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "darkvision": {
+     "set": [
+      "a281"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deadhp": {
+     "set": [
+      "a237"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "deathbanish": {
+     "set": [
+      "a434"
+     ],
+     "min": -13,
+     "max": -11
+    },
+    "deathcurse": {
+     "set": [
+      "a413"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "deathdisease": {
+     "set": [
+      "a1062"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "deathfire": {
+     "set": [
+      "a297"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "deathgrab": {
+     "set": [
+      "a1114"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deathparalyze": {
+     "set": [
+      "a204"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "deathpower": {
+     "set": [
+      "a484"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deathrange": {
+     "set": [
+      "a45"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "deathshock": {
+     "set": [
+      "a1112"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deathslime": {
+     "set": [
+      "a1113"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "decayres": {
+     "set": [
+      "a1139"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "decscale": {
+     "set": [
+      "a473"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "def": {
+     "set": [
+      "a377"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "digest": {
+     "set": [
+      "a374"
+     ],
+     "min": 0,
+     "max": 900
+    },
+    "disease": {
+     "bits": [
+      "520:1"
+     ]
+    },
+    "diseasecloud": {
+     "set": [
+      "a172"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "diseaseres": {
+     "set": [
+      "a513"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "divineins": {
+     "set": [
+      "a450"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "doheal": {
+     "set": [
+      "a614"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "dompower": {
+     "set": [
+      "a694"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "domsummon": {
+     "set": [
+      "a107"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "domsummon2": {
+     "set": [
+      "a241"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "domsummon20": {
+     "set": [
+      "a219"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "douse": {
+     "set": [
+      "a116"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "dragonlord": {
+     "set": [
+      "a270"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "drainimmune": {
+     "set": [
+      "a273"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "dread": {
+     "set": [
+      "a1089"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "earthelementals": {
+     "set": [
+      "a1083"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "earthrange": {
+     "set": [
+      "a43"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "elegist": {
+     "set": [
+      "a411"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "elementgems": {
+     "set": [
+      "a63"
+     ],
+     "min": 0,
+     "max": 40
+    },
+    "elementrange": {
+     "set": [
+      "a23"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "enchantedblood": {
+     "set": [
+      "a1037"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "ethereal": {
+     "bits": [
+      "504:134217728"
+     ]
+    },
+    "extralife": {
+     "set": [
+      "a115"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "eyeloss": {
+     "set": [
+      "a126"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "fallpower": {
+     "set": [
+      "a233"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "falsearmy": {
+     "set": [
+      "a419"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "falseregen": {
+     "set": [
+      "a1120"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "falsesupply": {
+     "set": [
+      "a123"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "farsail": {
+     "set": [
+      "a649"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "farthronekill": {
+     "set": [
+      "a629"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "fastcast": {
+     "set": [
+      "a613"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "faysummon": {
+     "set": [
+      "a1167"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "fear": {
+     "set": [
+      "a183"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fearofflood": {
+     "set": [
+      "a1033"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "feeblemind": {
+     "bits": [
+      "520:33554432"
+     ]
+    },
+    "fireelementals": {
+     "set": [
+      "a1080"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "firepower": {
+     "set": [
+      "a177"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "firerange": {
+     "set": [
+      "a40"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fireres": {
+     "set": [
+      "a198"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fireshield": {
+     "set": [
+      "a652"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fixforgebonus": {
+     "set": [
+      "a453"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "float": {
+     "bits": [
+      "504:4503599627370496"
+     ]
+    },
+    "fly": {
+     "bits": [
+      "504:131072"
+     ]
+    },
+    "foolscouts": {
+     "set": [
+      "a420"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "forestsurv": {
+     "set": [
+      "a422"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "forgebonus": {
+     "set": [
+      "a118"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "formationfighter": {
+     "set": [
+      "a366"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fortkill": {
+     "set": [
+      "a627"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "giftofwater": {
+     "set": [
+      "a111"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "glamourmanip": {
+     "set": [
+      "a1038"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "glamourrange": {
+     "set": [
+      "a47"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "gold": {
+     "set": [
+      "a452"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "grandcom": {
+     "set": [
+      "a1160"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "growthpower": {
+     "set": [
+      "a295"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "guardspiritbonus": {
+     "set": [
+      "a486"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "haltheretic": {
+     "set": [
+      "a327"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "healer": {
+     "set": [
+      "a212"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "heat": {
+     "set": [
+      "a316"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "heavyitem": {
+     "set": [
+      "a1435"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "heretic": {
+     "set": [
+      "a184"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "holyrange": {
+     "set": [
+      "a49"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "homesick": {
+     "set": [
+      "a253"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "hp": {
+     "set": [
+      "a305"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "hpoverflow": {
+     "set": [
+      "a522"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "iceforging": {
+     "set": [
+      "a489"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "icenatprot": {
+     "set": [
+      "a1157"
+     ],
+     "min": -25,
+     "max": 25
+    },
+    "iceprot": {
+     "set": [
+      "a191"
+     ],
+     "min": -25,
+     "max": 25
+    },
+    "incorporate": {
+     "set": [
+      "a375"
+     ],
+     "min": 0,
+     "max": 900
+    },
+    "incprovdef": {
+     "set": [
+      "a353"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "incscale": {
+     "set": [
+      "a472"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "incunrest": {
+     "set": [
+      "a223"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "infernoret": {
+     "set": [
+      "a313"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "inquisitor": {
+     "set": [
+      "a211"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "insanify": {
+     "set": [
+      "a315"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "inspirational": {
+     "set": [
+      "a368"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "inspiringres": {
+     "set": [
+      "a454"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "invisible": {
+     "set": [
+      "a608"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "invulnerable": {
+     "set": [
+      "a382"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "ironskin": {
+     "bits": [
+      "504:268435456"
+     ]
+    },
+    "ironvul": {
+     "set": [
+      "a689"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "islance": {
+     "set": [
+      "a1438"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "itemcost1": {
+     "set": [
+      "a1400"
+     ],
+     "min": -100,
+     "max": 10000
+    },
+    "itemcost2": {
+     "set": [
+      "a1401"
+     ],
+     "min": -100,
+     "max": 10000
+    },
+    "itemdrawsize": {
+     "set": [
+      "a1434"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "ivylord": {
+     "set": [
+      "a101"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "kokytosret": {
+     "set": [
+      "a314"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "lamialord": {
+     "set": [
+      "a169"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "landdamage": {
+     "set": [
+      "a526"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "leper": {
+     "set": [
+      "a124"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "localsun": {
+     "set": [
+      "a685"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "loseeye": {
+     "set": [
+      "a1410"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "luck": {
+     "bits": [
+      "504:2"
+     ]
+    },
+    "magiccommand": {
+     "set": [
+      "a158"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "magicimmune": {
+     "set": [
+      "a451"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "magicpower": {
+     "set": [
+      "a324"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "magicstudy": {
+     "set": [
+      "a618"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "mainlevel": {
+     "set": [
+      "f39"
+     ]
+    },
+    "mainpath": {
+     "set": [
+      "f37"
+     ]
+    },
+    "makemonsters1": {
+     "set": [
+      "a164"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters2": {
+     "set": [
+      "a165"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters3": {
+     "set": [
+      "a166"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters4": {
+     "set": [
+      "a167"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters5": {
+     "set": [
+      "a168"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makepearls": {
+     "set": [
+      "a430"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "mapspeed": {
+     "set": [
+      "a426"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "mason": {
+     "set": [
+      "a594"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "masterrit": {
+     "set": [
+      "a463"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "mastersmith": {
+     "set": [
+      "a363"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "maxdeadhp": {
+     "set": [
+      "a239"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "maxsize": {
+     "set": [
+      "a1413"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "mindcollar": {
+     "set": [
+      "a666"
+     ],
+     "min": -99999,
+     "max": 99999
+    },
+    "mindslime": {
+     "set": [
+      "a403"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "minsize": {
+     "set": [
+      "a1412"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "mobilearcher": {
+     "set": [
+      "a1056"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "morale": {
+     "set": [
+      "a308"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "mountsurv": {
+     "set": [
+      "a421"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "mr": {
+     "set": [
+      "a161"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "mute": {
+     "bits": [
+      "520:4194304"
+     ]
+    },
+    "nationrebate": {
+     "add": [
+      "a574"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "naturerange": {
+     "set": [
+      "a46"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "nhwound": {
+     "bits": [
+      "520:67108864"
+     ]
+    },
+    "nightmareaura": {
+     "set": [
+      "a1123"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "noaging": {
+     "set": [
+      "a479"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "noagingland": {
+     "set": [
+      "a357"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "nobadevents": {
+     "set": [
+      "a235"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "nocoldblood": {
+     "or": [
+      "a1417"
+     ],
+     "min": 536870912,
+     "max": 536870912
+    },
+    "nodemon": {
+     "or": [
+      "a1417"
+     ],
+     "min": 1048576,
+     "max": 1048576
+    },
+    "nofemale": {
+     "or": [
+      "a1417"
+     ],
+     "min": 2147483648,
+     "max": 2147483648
+    },
+    "nofind": {
+     "bits": [
+      "512:512"
+     ]
+    },
+    "noforgebonus": {
+     "set": [
+      "a1402"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "noimmobile": {
+     "or": [
+      "a1417"
+     ],
+     "min": 16384,
+     "max": 16384
+    },
+    "noinanim": {
+     "or": [
+      "a1417"
+     ],
+     "min": 1073741824,
+     "max": 1073741824
+    },
+    "nomounted": {
+     "or": [
+      "a1417"
+     ]
+    },
+    "nomovepen": {
+     "set": [
+      "a583"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "norange": {
+     "set": [
+      "a1090"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "noriverpass": {
+     "set": [
+      "a418"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "notfornation": {
+     "add": [
+      "a279"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "noundead": {
+     "or": [
+      "a1417"
+     ]
+    },
+    "onisummon": {
+     "set": [
+      "a598"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "onlycoldblood": {
+     "or": [
+      "a1418"
+     ],
+     "min": 536870912,
+     "max": 536870912
+    },
+    "onlydemon": {
+     "or": [
+      "a1418"
+     ],
+     "min": 1048576,
+     "max": 1048576
+    },
+    "onlyfemale": {
+     "or": [
+      "a1418"
+     ]
+    },
+    "onlyimmobile": {
+     "or": [
+      "a1418"
+     ],
+     "min": 16384,
+     "max": 16384
+    },
+    "onlyinanim": {
+     "or": [
+      "a1418"
+     ],
+     "min": 1073741824,
+     "max": 1073741824
+    },
+    "onlymounted": {
+     "or": [
+      "a1418"
+     ]
+    },
+    "onlysleepers": {
+     "set": [
+      "a1422"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "onlyundead": {
+     "or": [
+      "a1418"
+     ]
+    },
+    "overcharged": {
+     "set": [
+      "a478"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "patience": {
+     "set": [
+      "a461"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "patrolbonus": {
+     "set": [
+      "a170"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "pen": {
+     "set": [
+      "a162"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "pierceres": {
+     "bits": [
+      "504:274877906944"
+     ]
+    },
+    "pillagebonus": {
+     "set": [
+      "a131"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "plaguedoctor": {
+     "set": [
+      "a695"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "poisonarmor": {
+     "set": [
+      "a188"
+     ],
+     "min": 0,
+     "max": 1000,
+     "optional": true
+    },
+    "poisoncloud": {
+     "set": [
+      "a106"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "poisonres": {
+     "set": [
+      "a200"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "poisonskin": {
+     "set": [
+      "a518"
+     ],
+     "min": 0,
+     "max": 500
+    },
+    "polyimmune": {
+     "set": [
+      "a635"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "popkill": {
+     "set": [
+      "a288"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "powerofdeath": {
+     "set": [
+      "a294"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "praise": {
+     "set": [
+      "a282"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "prec": {
+     "set": [
+      "a181"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "quickness": {
+     "bits": [
+      "504:262144"
+     ]
+    },
+    "raiseonkill": {
+     "set": [
+      "a514"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "raiseshape": {
+     "set": [
+      "a515"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "randomspell": {
+     "set": [
+      "a389"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "raredomsummon": {
+     "set": [
+      "a417"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "reanimpriest": {
+     "set": [
+      "a1079"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "reconst": {
+     "set": [
+      "a1069"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "recuperation": {
+     "set": [
+      "a568"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "reform": {
+     "set": [
+      "a337"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "regainmount": {
+     "set": [
+      "a1025"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "regeneration": {
+     "set": [
+      "a1065"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "reinvigoration": {
+     "set": [
+      "a117"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "researchbonus": {
+     "set": [
+      "a121"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "resources": {
+     "set": [
+      "a407"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "restricted": {
+     "set": [
+      "f120",
+      "f128",
+      "f136"
+     ]
+    },
+    "restricteditem": {
+     "set": [
+      "a487"
+     ],
+     "min": 0,
+     "max": 2147483647
+    },
+    "run": {
+     "bits": [
+      "512:4"
+     ]
+    },
+    "sabbathmaster": {
+     "set": [
+      "a1108"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "sabbathslave": {
+     "set": [
+      "a1107"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "saltvul": {
+     "set": [
+      "a698"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "scalewalls": {
+     "set": [
+      "a483"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "secondarylevel": {
+     "set": [
+      "f40"
+     ]
+    },
+    "seduce": {
+     "set": [
+      "a298"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "shapechance": {
+     "set": [
+      "a192"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "shatteredsoul": {
+     "set": [
+      "a328"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "shockres": {
+     "set": [
+      "a199"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "siegebonus": {
+     "set": [
+      "a125"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "singlebattle": {
+     "set": [
+      "a409"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "skilledrider": {
+     "set": [
+      "a1097"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "skirmisher": {
+     "set": [
+      "a641"
+     ],
+     "min": -25,
+     "max": 25
+    },
+    "slashres": {
+     "bits": [
+      "504:68719476736"
+     ]
+    },
+    "slaver": {
+     "set": [
+      "a642"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "slaverbonus": {
+     "set": [
+      "a643"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "sleepaura": {
+     "set": [
+      "a306"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "sleepres": {
+     "set": [
+      "a1088"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "slimer": {
+     "set": [
+      "a412"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "slothpower": {
+     "set": [
+      "a529"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "slothresearch": {
+     "set": [
+      "a272"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "smartmount": {
+     "set": [
+      "a1020"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "sneakunit": {
+     "set": [
+      "a108"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "sorcerygems": {
+     "set": [
+      "a64"
+     ],
+     "min": 0,
+     "max": 40
+    },
+    "sorceryrange": {
+     "set": [
+      "a24"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "spellsinger": {
+     "set": [
+      "a616"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "spikes": {
+     "set": [
+      "a189"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "spiritsight": {
+     "set": [
+      "a607"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "spr": {
+     "set": [
+      "f42"
+     ]
+    },
+    "spreaddom": {
+     "set": [
+      "a156"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "springpower": {
+     "set": [
+      "a231"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "standard": {
+     "set": [
+      "a103"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "statsiege": {
+     "set": [
+      "a1163"
+     ],
+     "min": -99999,
+     "max": 99999
+    },
+    "statstorm": {
+     "set": [
+      "a1162"
+     ],
+     "min": -99999,
+     "max": 99999
+    },
+    "stealthboost": {
+     "set": [
+      "a390"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "stonebeing": {
+     "set": [
+      "a280"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "stoneskin": {
+     "bits": [
+      "504:65536"
+     ]
+    },
+    "stormimmune": {
+     "set": [
+      "a175"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "stormpower": {
+     "set": [
+      "a174"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "str": {
+     "set": [
+      "a1058"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "succubus": {
+     "set": [
+      "a210"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "summerpower": {
+     "set": [
+      "a232"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "summon1": {
+     "set": [
+      "a139"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon2": {
+     "set": [
+      "a140"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon3": {
+     "set": [
+      "a141"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon4": {
+     "set": [
+      "a142"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon5": {
+     "set": [
+      "a143"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "sunawe": {
+     "set": [
+      "a605"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "supplybonus": {
+     "set": [
+      "a122"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "swampsurv": {
+     "set": [
+      "a424"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "swift": {
+     "set": [
+      "a595"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "swimming": {
+     "set": [
+      "a571"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "tainted": {
+     "set": [
+      "a262"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "taskmaster": {
+     "set": [
+      "a379"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "taxcollector": {
+     "set": [
+      "a455"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "templetrainer": {
+     "set": [
+      "a564"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "thronekill": {
+     "set": [
+      "a628"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "tmpairgems": {
+     "set": [
+      "a345"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpastralgems": {
+     "set": [
+      "a348"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpbloodslaves": {
+     "set": [
+      "a352"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpdeathgems": {
+     "set": [
+      "a349"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpearthgems": {
+     "set": [
+      "a347"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpfiregems": {
+     "set": [
+      "a344"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpglamourgems": {
+     "set": [
+      "a351"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpnaturegems": {
+     "set": [
+      "a350"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpwatergems": {
+     "set": [
+      "a346"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "trample": {
+     "bits": [
+      "512:64"
+     ]
+    },
+    "trampswallow": {
+     "set": [
+      "a373"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "truesight": {
+     "set": [
+      "a1011"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "twistfate": {
+     "set": [
+      "a1117"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "type": {
+     "set": [
+      "f120",
+      "f128",
+      "f136",
+      "f41"
+     ]
+    },
+    "undcommand": {
+     "set": [
+      "a159"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "undisciplined": {
+     "set": [
+      "a367"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "undisleader": {
+     "set": [
+      "a1072"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "undregen": {
+     "set": [
+      "a1068"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "unique": {
+     "set": [
+      "a1403"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "unseen": {
+     "set": [
+      "a688"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "unsurr": {
+     "set": [
+      "a573"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "unteleportable": {
+     "set": [
+      "a376"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "uwdamage": {
+     "set": [
+      "a258"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "uwfireshield": {
+     "set": [
+      "a653"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "uwheat": {
+     "set": [
+      "a527"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "uwregen": {
+     "set": [
+      "a1067"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "voidret": {
+     "set": [
+      "a333"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "voidsanity": {
+     "set": [
+      "a277"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "warning": {
+     "set": [
+      "a1059"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "wastesurv": {
+     "set": [
+      "a423"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "waterbreathing": {
+     "set": [
+      "a110"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "waterelementals": {
+     "set": [
+      "a1082"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "waterrange": {
+     "set": [
+      "a42"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "weapon": {
+     "set": [
+      "f44"
+     ]
+    },
+    "winterpower": {
+     "set": [
+      "a234"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "woundfend": {
+     "set": [
+      "a406"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "xpgain": {
+     "set": [
+      "a1137"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "xploss": {
+     "set": [
+      "a519"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "yearaging": {
+     "set": [
+      "a303"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "yearturn": {
+     "set": [
+      "a626"
+     ],
+     "min": -1000,
+     "max": 1000
+    }
+   }
   },
   "merc": {
    "complete": true,
@@ -880,7 +5559,65 @@
     "recrate",
     "unit",
     "xp"
-   ]
+   ],
+   "effects": {
+    "com": {
+     "set": [
+      "f76"
+     ]
+    },
+    "eramask": {
+     "set": [
+      "f0"
+     ]
+    },
+    "level": {
+     "set": [
+      "f1"
+     ]
+    },
+    "minmen": {
+     "set": [
+      "f88"
+     ]
+    },
+    "minpay": {
+     "set": [
+      "f92"
+     ]
+    },
+    "newmerc": {
+     "set": [
+      "f92"
+     ]
+    },
+    "nrunits": {
+     "set": [
+      "f84"
+     ]
+    },
+    "randequip": {
+     "set": [
+      "f160"
+     ]
+    },
+    "recrate": {
+     "set": [
+      "f308"
+     ]
+    },
+    "unit": {
+     "set": [
+      "f80",
+      "f84"
+     ]
+    },
+    "xp": {
+     "set": [
+      "f96"
+     ]
+    }
+   }
   },
   "monster": {
    "complete": true,
@@ -1456,7 +6193,3695 @@
     "xspr1",
     "xspr2",
     "yearturn"
-   ]
+   ],
+   "effects": {
+    "aciddigest": {
+     "set": [
+      "a496"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "acidres": {
+     "set": [
+      "a202"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "acidshield": {
+     "set": [
+      "a497"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "addrandomage": {
+     "set": [
+      "a317"
+     ],
+     "min": -100000,
+     "max": 100000
+    },
+    "addupkeep": {
+     "set": [
+      "a589"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "adeptsacr": {
+     "set": [
+      "a216"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "ainorec": {
+     "set": [
+      "a1102"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "airattuned": {
+     "set": [
+      "a502"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "airelementals": {
+     "set": [
+      "a1081"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "airrange": {
+     "set": [
+      "a41"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "airshield": {
+     "set": [
+      "a208"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "aisinglerec": {
+     "set": [
+      "a332"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "alchemy": {
+     "set": [
+      "a132"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "allrange": {
+     "set": [
+      "a25"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "allret": {
+     "set": [
+      "a435"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "almostliving": {
+     "clears": [
+      "880:4"
+     ]
+    },
+    "almostundead": {
+     "bits": [
+      "880:4"
+     ]
+    },
+    "ambidextrous": {
+     "set": [
+      "a217"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "amphibian": {
+     "bits": [
+      "872:8"
+     ],
+     "clears": [
+      "872:67110912"
+     ]
+    },
+    "animal": {
+     "bits": [
+      "872:4"
+     ]
+    },
+    "animalawe": {
+     "set": [
+      "a646"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "animated": {
+     "set": [
+      "a1138"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "ap": {
+     "set": [
+      "f40"
+     ]
+    },
+    "appetite": {
+     "set": [
+      "a307"
+     ],
+     "min": -10,
+     "max": 1000
+    },
+    "aquatic": {
+     "bits": [
+      "872:2048"
+     ],
+     "clears": [
+      "872:67108872"
+     ]
+    },
+    "armor": {
+     "set": [
+      "f852"
+     ]
+    },
+    "assassin": {
+     "set": [
+      "a213"
+     ]
+    },
+    "assencloc": {
+     "set": [
+      "a1095"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "astralattuned": {
+     "set": [
+      "a505"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "astralrange": {
+     "set": [
+      "a44"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "att": {
+     "set": [
+      "f56"
+     ]
+    },
+    "autoberserk": {
+     "set": [
+      "a1129"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "autocompete": {
+     "set": [
+      "a459"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "autocorpsehealer": {
+     "set": [
+      "a1131"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "autodisgrinder": {
+     "set": [
+      "a356"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "autodishealer": {
+     "set": [
+      "a355"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "autohealer": {
+     "set": [
+      "a354"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "autumnshape": {
+     "set": [
+      "a592"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "awe": {
+     "set": [
+      "a105"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "banefireshield": {
+     "set": [
+      "a222"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "batstartsum1": {
+     "add": [
+      "a436"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum1d3": {
+     "add": [
+      "a690"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum1d6": {
+     "add": [
+      "a441"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum2": {
+     "add": [
+      "a437"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum2d6": {
+     "add": [
+      "a442"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum3": {
+     "add": [
+      "a438"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum3d6": {
+     "add": [
+      "a443"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum4": {
+     "add": [
+      "a439"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum4d6": {
+     "add": [
+      "a444"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum5": {
+     "add": [
+      "a440"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum5d6": {
+     "add": [
+      "a445"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum6d6": {
+     "add": [
+      "a446"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum7d6": {
+     "add": [
+      "a447"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum8d6": {
+     "add": [
+      "a448"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "batstartsum9d6": {
+     "add": [
+      "a449"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battleshape": {
+     "set": [
+      "a1133"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum1": {
+     "set": [
+      "a395"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum1d2": {
+     "set": [
+      "a401"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum1d3": {
+     "set": [
+      "a402"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum2": {
+     "set": [
+      "a396"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum3": {
+     "set": [
+      "a397"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum4": {
+     "set": [
+      "a398"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesum5": {
+     "set": [
+      "a399"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "battlesumwarm": {
+     "set": [
+      "a394"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "beartattoo": {
+     "set": [
+      "a558"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "beastmaster": {
+     "set": [
+      "a369"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "beauty": {
+     "set": [
+      "a218"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "beckon": {
+     "set": [
+      "a247"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "berserk": {
+     "set": [
+      "a190"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "bird": {
+     "set": [
+      "f884"
+     ]
+    },
+    "blessbers": {
+     "set": [
+      "a525"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "blessfly": {
+     "set": [
+      "a240"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "blind": {
+     "set": [
+      "a171"
+     ]
+    },
+    "blink": {
+     "bits": [
+      "872:274877906944"
+     ]
+    },
+    "bloodattuned": {
+     "set": [
+      "a509"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "bloodrange": {
+     "set": [
+      "a48"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bloodvengeance": {
+     "set": [
+      "a414"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bluntres": {
+     "bits": [
+      "872:4294967296"
+     ]
+    },
+    "boartattoo": {
+     "set": [
+      "a561"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "bodyguard": {
+     "set": [
+      "a432"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bonusspells": {
+     "set": [
+      "a334"
+     ],
+     "min": 0,
+     "max": 4
+    },
+    "bravemount": {
+     "set": [
+      "a1024"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "bringeroffortune": {
+     "set": [
+      "a228"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "bug": {
+     "set": [
+      "a427"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "bugreform": {
+     "set": [
+      "a338"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "bugshape": {
+     "set": [
+      "a340"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "bugswarmshape": {
+     "set": [
+      "a342"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "bugswarmuwshape": {
+     "set": [
+      "a343"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "buguwshape": {
+     "set": [
+      "a341"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "carcasscollector": {
+     "set": [
+      "a658"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "castledef": {
+     "set": [
+      "a1118"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "chaospower": {
+     "set": [
+      "a416"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "chaosrec": {
+     "set": [
+      "a458"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "chaosrecscale": {
+     "set": [
+      "a1155"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "chorusmaster": {
+     "set": [
+      "a1110"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "chorusslave": {
+     "set": [
+      "a1109"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "cleanshape": {
+     "set": [
+      "a465"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "cleararmor": {
+     "set": [
+      "f852"
+     ]
+    },
+    "clearweapons": {
+     "set": [
+      "f832"
+     ]
+    },
+    "clumsy": {
+     "set": [
+      "a1013"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "cold": {
+     "clears": [
+      "872:65536"
+     ],
+     "set": [
+      "a220"
+     ]
+    },
+    "coldblood": {
+     "bits": [
+      "872:536870912"
+     ]
+    },
+    "coldpower": {
+     "set": [
+      "a176"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "coldrec": {
+     "set": [
+      "a491"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "coldrecscale": {
+     "set": [
+      "a491"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "coldres": {
+     "bits": [
+      "872:64"
+     ],
+     "set": [
+      "a201"
+     ]
+    },
+    "combatcaster": {
+     "set": [
+      "a581"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "command": {
+     "set": [
+      "a157"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "commaster": {
+     "set": [
+      "a1106"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "comslave": {
+     "set": [
+      "a1105"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "coridermnr": {
+     "set": [
+      "a1018"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "corpseeater": {
+     "set": [
+      "a236"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "corpselord": {
+     "set": [
+      "a154"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "corruptor": {
+     "set": [
+      "a224"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "crossbreeder": {
+     "set": [
+      "a431"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "curseluckshield": {
+     "set": [
+      "a601"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "damagerev": {
+     "set": [
+      "a1064"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "darkpower": {
+     "set": [
+      "a293"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "darkvision": {
+     "set": [
+      "a281"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deadhp": {
+     "set": [
+      "a237"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "deathattuned": {
+     "set": [
+      "a506"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "deathbanish": {
+     "set": [
+      "a434"
+     ],
+     "min": -13,
+     "max": -11
+    },
+    "deathcurse": {
+     "set": [
+      "a413"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "deathdisease": {
+     "set": [
+      "a1062"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "deathfire": {
+     "set": [
+      "a297"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "deathgrab": {
+     "set": [
+      "a1114"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deathparalyze": {
+     "set": [
+      "a204"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "deathpoison": {
+     "set": [
+      "a1078"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "deathpower": {
+     "set": [
+      "a484"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deathrange": {
+     "set": [
+      "a45"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "deathrec": {
+     "set": [
+      "a485"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "deathrecscale": {
+     "set": [
+      "a1154"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "deathshock": {
+     "set": [
+      "a1112"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "deathslime": {
+     "set": [
+      "a1113"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "decayres": {
+     "set": [
+      "a1139"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "decscale": {
+     "set": [
+      "a473"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "def": {
+     "set": [
+      "f58"
+     ]
+    },
+    "defector": {
+     "set": [
+      "a467"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "demon": {
+     "bits": [
+      "872:1048576",
+      "880:4"
+     ]
+    },
+    "deserter": {
+     "set": [
+      "a264"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "digest": {
+     "set": [
+      "a374"
+     ],
+     "min": 0,
+     "max": 900
+    },
+    "diseasecloud": {
+     "set": [
+      "a172"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "diseaseres": {
+     "set": [
+      "a513"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "divinebeing": {
+     "set": [
+      "a1130"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "divineins": {
+     "set": [
+      "a450"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "djinn": {
+     "set": [
+      "f884"
+     ]
+    },
+    "doheal": {
+     "set": [
+      "a614"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "domimmortal": {
+     "bits": [
+      "872:2199023255552"
+     ]
+    },
+    "dompower": {
+     "set": [
+      "a694"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "domrec": {
+     "set": [
+      "a524"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "domshape": {
+     "set": [
+      "a692"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "domsummon": {
+     "set": [
+      "a107"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "domsummon2": {
+     "set": [
+      "a241"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "domsummon20": {
+     "set": [
+      "a219"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "doomhorror": {
+     "set": [
+      "a391"
+     ],
+     "min": 3,
+     "max": 3
+    },
+    "douse": {
+     "set": [
+      "a116"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "dragonlord": {
+     "set": [
+      "a270"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "drainimmune": {
+     "set": [
+      "a273"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "drake": {
+     "set": [
+      "a498"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "drawsize": {
+     "set": [
+      "a371"
+     ],
+     "min": -90,
+     "max": 100
+    },
+    "dread": {
+     "set": [
+      "a1089"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "dungeon": {
+     "set": [
+      "a481"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "earthattuned": {
+     "set": [
+      "a504"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "earthelementals": {
+     "set": [
+      "a1083"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "earthrange": {
+     "set": [
+      "a43"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "elegist": {
+     "set": [
+      "a411"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "elementgems": {
+     "set": [
+      "a63"
+     ],
+     "min": 0,
+     "max": 40
+    },
+    "elementrange": {
+     "set": [
+      "a23"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "enc": {
+     "set": [
+      "f52"
+     ]
+    },
+    "enchantedblood": {
+     "set": [
+      "a1037"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "enchrebate10": {
+     "set": [
+      "a1000"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "enchrebate100": {
+     "set": [
+      "a1004"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "enchrebate20": {
+     "set": [
+      "a1001"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "enchrebate25p": {
+     "set": [
+      "a677"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "enchrebate50": {
+     "set": [
+      "a1002"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "enchrebate50p": {
+     "set": [
+      "a678"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "enchrebate75": {
+     "set": [
+      "a1003"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "entangle": {
+     "set": [
+      "a128"
+     ]
+    },
+    "ethereal": {
+     "bits": [
+      "872:33554432"
+     ]
+    },
+    "expertleader": {
+     "bits": [
+      "880:134217728"
+     ]
+    },
+    "expertmagicleader": {
+     "bits": [
+      "880:64"
+     ]
+    },
+    "expertundeadleader": {
+     "bits": [
+      "880:2048"
+     ]
+    },
+    "extralives": {
+     "set": [
+      "a1091"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "eyeloss": {
+     "set": [
+      "a126"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "eyes": {
+     "set": [
+      "a178"
+     ]
+    },
+    "fallpower": {
+     "set": [
+      "a233"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "falsearmy": {
+     "set": [
+      "a419"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "falseregen": {
+     "set": [
+      "a1120"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "falsesupply": {
+     "set": [
+      "a123"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "farsail": {
+     "set": [
+      "a649"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "farthronekill": {
+     "set": [
+      "a629"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "fastcast": {
+     "set": [
+      "a613"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "faysummon": {
+     "set": [
+      "a1167"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "fear": {
+     "set": [
+      "a183"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fearofflood": {
+     "set": [
+      "a1033"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "female": {
+     "bits": [
+      "872:2147483648"
+     ]
+    },
+    "fireattuned": {
+     "set": [
+      "a501"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "fireelementals": {
+     "set": [
+      "a1080"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "firepower": {
+     "set": [
+      "a177"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "firerange": {
+     "set": [
+      "a40"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fireres": {
+     "bits": [
+      "872:512"
+     ],
+     "set": [
+      "a198"
+     ]
+    },
+    "fireshield": {
+     "set": [
+      "a652"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "firstshape": {
+     "set": [
+      "a195"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "fixedresearch": {
+     "set": [
+      "a248"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "fixforgebonus": {
+     "set": [
+      "a453"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "float": {
+     "bits": [
+      "872:68719476736"
+     ]
+    },
+    "flying": {
+     "bits": [
+      "872:4096"
+     ]
+    },
+    "foolscouts": {
+     "set": [
+      "a420"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "forcess": {
+     "set": [
+      "a1169"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "foreignshape": {
+     "set": [
+      "a584"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "forestshape": {
+     "set": [
+      "a322"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "forestsurvival": {
+     "bits": [
+      "872:131072"
+     ]
+    },
+    "forgebonus": {
+     "set": [
+      "a118"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "formationfighter": {
+     "set": [
+      "a366"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "fortkill": {
+     "set": [
+      "a627"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "gcost": {
+     "set": [
+      "f862"
+     ]
+    },
+    "giftofwater": {
+     "set": [
+      "a111"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "glamour": {
+     "bits": [
+      "872:8388608"
+     ]
+    },
+    "glamourattuned": {
+     "set": [
+      "a508"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "glamourmanip": {
+     "set": [
+      "a1038"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "glamourrange": {
+     "set": [
+      "a47"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "godsite": {
+     "set": [
+      "a1051"
+     ],
+     "min": 0,
+     "max": 3999
+    },
+    "gold": {
+     "set": [
+      "a452"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "goodleader": {
+     "bits": [
+      "880:67108864"
+     ]
+    },
+    "goodmagicleader": {
+     "bits": [
+      "880:32"
+     ]
+    },
+    "goodundeadleader": {
+     "bits": [
+      "880:1024"
+     ]
+    },
+    "grandcom": {
+     "set": [
+      "a1160"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "greaterhorror": {
+     "set": [
+      "a391"
+     ],
+     "min": 2,
+     "max": 2
+    },
+    "growhp": {
+     "set": [
+      "a335"
+     ],
+     "min": 1,
+     "max": 10000
+    },
+    "growthpower": {
+     "set": [
+      "a295"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "growthrecscale": {
+     "set": [
+      "a1153"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "guardspiritbonus": {
+     "set": [
+      "a486"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "haltheretic": {
+     "set": [
+      "a327"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "heal": {
+     "bits": [
+      "872:1"
+     ]
+    },
+    "healer": {
+     "set": [
+      "a212"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "heat": {
+     "clears": [
+      "872:128"
+     ],
+     "set": [
+      "a316"
+     ]
+    },
+    "heatrec": {
+     "set": [
+      "a490"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "heatrecscale": {
+     "set": [
+      "a490"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "heretic": {
+     "set": [
+      "a184"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "holy": {
+     "bits": [
+      "872:2097152"
+     ]
+    },
+    "holycost": {
+     "set": [
+      "a1031"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "holyrange": {
+     "set": [
+      "a49"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "homerealm": {
+     "set": [
+      "a602"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "homeshape": {
+     "set": [
+      "a585"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "homesick": {
+     "set": [
+      "a253"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "horrordeserter": {
+     "set": [
+      "a274"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "horrormark": {
+     "set": [
+      "a127"
+     ]
+    },
+    "horsetattoo": {
+     "set": [
+      "a559"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "hp": {
+     "set": [
+      "f46"
+     ]
+    },
+    "hpoverflow": {
+     "set": [
+      "a522"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "humanoid": {
+     "del": [
+      "a182"
+     ],
+     "set": [
+      "f884"
+     ]
+    },
+    "iceforging": {
+     "set": [
+      "a489"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "icenatprot": {
+     "set": [
+      "a1157"
+     ],
+     "min": -25,
+     "max": 25
+    },
+    "iceprot": {
+     "set": [
+      "a191"
+     ],
+     "min": -25,
+     "max": 25
+    },
+    "illusion": {
+     "bits": [
+      "872:8796093022208"
+     ]
+    },
+    "immobile": {
+     "bits": [
+      "872:16384"
+     ]
+    },
+    "immortal": {
+     "bits": [
+      "872:32768"
+     ]
+    },
+    "inanimate": {
+     "bits": [
+      "872:1073741824"
+     ]
+    },
+    "incorporate": {
+     "set": [
+      "a375"
+     ],
+     "min": 0,
+     "max": 900
+    },
+    "incprovdef": {
+     "set": [
+      "a353"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "incscale": {
+     "set": [
+      "a472"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "incunrest": {
+     "set": [
+      "a223"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "indepmove": {
+     "set": [
+      "a630"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "indepspells": {
+     "set": [
+      "a480"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "indepstay": {
+     "set": [
+      "a631"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "infernoret": {
+     "set": [
+      "a313"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "inquisitor": {
+     "set": [
+      "a211"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "insane": {
+     "set": [
+      "a309"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "insanify": {
+     "set": [
+      "a315"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "inspirational": {
+     "set": [
+      "a368"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "inspiringres": {
+     "set": [
+      "a454"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "invisible": {
+     "set": [
+      "a608"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "invulnerable": {
+     "set": [
+      "a382"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "ironvul": {
+     "set": [
+      "a689"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "itemslots": {
+     "set": [
+      "a182"
+     ]
+    },
+    "ivylord": {
+     "set": [
+      "a101"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "kokytosret": {
+     "set": [
+      "a314"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "labxpshape": {
+     "set": [
+      "a1146"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "lamialord": {
+     "set": [
+      "a169"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "lanceok": {
+     "set": [
+      "a670"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "landdamage": {
+     "set": [
+      "a526"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "landshape": {
+     "set": [
+      "a245"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "latehero": {
+     "set": [
+      "a534"
+     ],
+     "min": 0,
+     "max": 100000
+    },
+    "leper": {
+     "set": [
+      "a124"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "lesserhorror": {
+     "set": [
+      "a391"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "lich": {
+     "set": [
+      "a1132"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "lizard": {
+     "set": [
+      "a182",
+      "f884"
+     ]
+    },
+    "localsun": {
+     "set": [
+      "a685"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "magicbeing": {
+     "bits": [
+      "880:1"
+     ]
+    },
+    "magicboost": {
+     "set": [
+      "a20",
+      "a21",
+      "a22"
+     ]
+    },
+    "magiccommand": {
+     "set": [
+      "a158"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "magicimmune": {
+     "set": [
+      "a451"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "magicpower": {
+     "set": [
+      "a324"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "magicstudy": {
+     "set": [
+      "a618"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "makemonsters1": {
+     "set": [
+      "a164"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters2": {
+     "set": [
+      "a165"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters3": {
+     "set": [
+      "a166"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters4": {
+     "set": [
+      "a167"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makemonsters5": {
+     "set": [
+      "a168"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "makepearls": {
+     "set": [
+      "a430"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "mapmove": {
+     "set": [
+      "f42"
+     ]
+    },
+    "mapteleport": {
+     "set": [
+      "f42"
+     ]
+    },
+    "mason": {
+     "set": [
+      "a594"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "masterrit": {
+     "set": [
+      "a463"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "mastersmith": {
+     "set": [
+      "a363"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "maxage": {
+     "set": [
+      "a284"
+     ],
+     "min": 1,
+     "max": 30000
+    },
+    "maxdeadhp": {
+     "set": [
+      "a239"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "maxprison": {
+     "set": [
+      "a1012"
+     ],
+     "min": 0,
+     "max": 2
+    },
+    "mindcollar": {
+     "set": [
+      "a666"
+     ],
+     "min": -99999,
+     "max": 99999
+    },
+    "mindslime": {
+     "set": [
+      "a403"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "mindvessel": {
+     "set": [
+      "a531"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "minprison": {
+     "set": [
+      "a600"
+     ],
+     "min": 0,
+     "max": 2
+    },
+    "minsizeleader": {
+     "set": [
+      "a644"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "miscshape": {
+     "set": [
+      "f884"
+     ]
+    },
+    "mobilearcher": {
+     "set": [
+      "a1056"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "monpresentrec": {
+     "set": [
+      "a586"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "montag": {
+     "set": [
+      "a637"
+     ],
+     "min": 1000,
+     "max": 100000
+    },
+    "montagweight": {
+     "set": [
+      "a699"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "mor": {
+     "set": [
+      "f62"
+     ]
+    },
+    "moregrowth": {
+     "set": [
+      "a1008"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "moreheat": {
+     "set": [
+      "a1007"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "moreluck": {
+     "set": [
+      "a1009"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "moremagic": {
+     "set": [
+      "a1010"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "moreorder": {
+     "set": [
+      "a1005"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "moreprod": {
+     "set": [
+      "a1006"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "mountainsurvival": {
+     "bits": [
+      "872:4194304"
+     ]
+    },
+    "mounted": {
+     "bits": [
+      "872:2"
+     ]
+    },
+    "mountedhumanoid": {
+     "set": [
+      "a182",
+      "f884"
+     ]
+    },
+    "mountiscom": {
+     "set": [
+      "a1023"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "mountmnr": {
+     "set": [
+      "a1015"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "mr": {
+     "set": [
+      "f60"
+     ]
+    },
+    "naga": {
+     "set": [
+      "f884"
+     ]
+    },
+    "nametype": {
+     "set": [
+      "a251"
+     ]
+    },
+    "natureattuned": {
+     "set": [
+      "a507"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "naturerange": {
+     "set": [
+      "a46"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "neednoteat": {
+     "bits": [
+      "872:256"
+     ]
+    },
+    "newmonster": {
+     "set": [
+      "f36"
+     ]
+    },
+    "nightmareaura": {
+     "set": [
+      "a1123"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "nobadevents": {
+     "set": [
+      "a235"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "nobarding": {
+     "set": [
+      "a1122"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "nofalldmg": {
+     "set": [
+      "a1085"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "nofmounts": {
+     "set": [
+      "a1016"
+     ],
+     "min": 0,
+     "max": 9
+    },
+    "nofriders": {
+     "set": [
+      "a1019"
+     ],
+     "min": 0,
+     "max": 9
+    },
+    "noheal": {
+     "bits": [
+      "872:16777216"
+     ]
+    },
+    "nohof": {
+     "set": [
+      "a468"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "noitem": {
+     "bits": [
+      "872:268435456"
+     ],
+     "del": [
+      "a182"
+     ]
+    },
+    "noleader": {
+     "bits": [
+      "880:16777216"
+     ]
+    },
+    "nomovepen": {
+     "set": [
+      "a583"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "norange": {
+     "set": [
+      "a1090"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "noremount": {
+     "set": [
+      "a1124"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "noreqlab": {
+     "set": [
+      "a469"
+     ],
+     "min": -1,
+     "max": -1
+    },
+    "noreqtemple": {
+     "set": [
+      "a470"
+     ],
+     "min": -1,
+     "max": -1
+    },
+    "noriverpass": {
+     "set": [
+      "a418"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "noslowrec": {
+     "clears": [
+      "872:34359738368"
+     ]
+    },
+    "nospiritform": {
+     "clears": [
+      "872:17592186044416"
+     ]
+    },
+    "notdomshape": {
+     "set": [
+      "a693"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "nothrowoff": {
+     "set": [
+      "a1121"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "notsacred": {
+     "set": [
+      "a683"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "noweapon": {
+     "set": [
+      "a1136"
+     ],
+     "min": 0,
+     "max": 1
+    },
+    "nowish": {
+     "set": [
+      "a588"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "okmagicleader": {
+     "bits": [
+      "880:16"
+     ]
+    },
+    "okundeadleader": {
+     "bits": [
+      "880:512"
+     ]
+    },
+    "older": {
+     "set": [
+      "a286"
+     ],
+     "min": -30000,
+     "max": 30000
+    },
+    "onebattlespell": {
+     "set": [
+      "a209"
+     ],
+     "min": 0,
+     "max": 7999
+    },
+    "onisummon": {
+     "set": [
+      "a598"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "orderrecscale": {
+     "set": [
+      "a1156"
+     ],
+     "min": -5,
+     "max": 5
+    },
+    "overcharged": {
+     "set": [
+      "a478"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "ownsmonrec": {
+     "set": [
+      "a587"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "pathcost": {
+     "set": [
+      "a243"
+     ]
+    },
+    "patience": {
+     "set": [
+      "a461"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "patrolbonus": {
+     "set": [
+      "a170"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "pierceres": {
+     "bits": [
+      "872:17179869184"
+     ]
+    },
+    "pillagebonus": {
+     "set": [
+      "a131"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "plaguedoctor": {
+     "set": [
+      "a695"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "plainshape": {
+     "set": [
+      "a323"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "plant": {
+     "set": [
+      "a500"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "poisonarmor": {
+     "set": [
+      "a188"
+     ],
+     "min": 0,
+     "max": 1000,
+     "optional": true
+    },
+    "poisoncloud": {
+     "set": [
+      "a106"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "poisonres": {
+     "bits": [
+      "872:1024"
+     ],
+     "set": [
+      "a200"
+     ]
+    },
+    "poisonskin": {
+     "set": [
+      "a518"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "polyimmune": {
+     "set": [
+      "a635"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "pooramphibian": {
+     "bits": [
+      "872:67108864"
+     ],
+     "clears": [
+      "872:2056"
+     ]
+    },
+    "poorleader": {
+     "bits": [
+      "880:33554432"
+     ]
+    },
+    "poormagicleader": {
+     "bits": [
+      "880:8"
+     ]
+    },
+    "poorundeadleader": {
+     "bits": [
+      "880:256"
+     ]
+    },
+    "popkill": {
+     "set": [
+      "a288"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "powerofdeath": {
+     "set": [
+      "a294"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "praise": {
+     "set": [
+      "a282"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "prec": {
+     "set": [
+      "f54"
+     ]
+    },
+    "prophetshape": {
+     "set": [
+      "a516"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "prot": {
+     "set": [
+      "f48"
+     ]
+    },
+    "quadruped": {
+     "set": [
+      "a182",
+      "f884"
+     ]
+    },
+    "raiseonkill": {
+     "set": [
+      "a514"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "raiseshape": {
+     "set": [
+      "a515"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "randomspell": {
+     "set": [
+      "a389"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "raredomsummon": {
+     "set": [
+      "a417"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "rcost": {
+     "set": [
+      "f864"
+     ]
+    },
+    "reanimator": {
+     "set": [
+      "a466"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "reanimpriest": {
+     "set": [
+      "a1079"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "reclimit": {
+     "set": [
+      "a381"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "reconst": {
+     "set": [
+      "a1069"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "reform": {
+     "set": [
+      "a337"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "reformtime": {
+     "set": [
+      "a150"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "regainmount": {
+     "set": [
+      "a1025"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "regeneration": {
+     "set": [
+      "a1065"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "reinvigoration": {
+     "set": [
+      "a117"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "reqlab": {
+     "set": [
+      "a469"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "reqtemple": {
+     "set": [
+      "a470"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "researchbonus": {
+     "set": [
+      "a121"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "resources": {
+     "set": [
+      "a407"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "ressize": {
+     "set": [
+      "a265"
+     ],
+     "min": 1,
+     "max": 100
+    },
+    "rpcost": {
+     "set": [
+      "f868"
+     ]
+    },
+    "sabbathmaster": {
+     "set": [
+      "a1108"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "sabbathslave": {
+     "set": [
+      "a1107"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "sailing": {
+     "set": [
+      "a112",
+      "a410"
+     ]
+    },
+    "sailsize": {
+     "set": [
+      "a535"
+     ],
+     "min": 0,
+     "max": 100000
+    },
+    "saltvul": {
+     "set": [
+      "a698"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "scalewalls": {
+     "set": [
+      "a483"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "secondshape": {
+     "set": [
+      "a194"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "secondtmpshape": {
+     "set": [
+      "a196"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "seduce": {
+     "set": [
+      "a298"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "shapechance": {
+     "set": [
+      "a192"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "shapechange": {
+     "set": [
+      "a193"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "shatteredsoul": {
+     "set": [
+      "a328"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "shockres": {
+     "bits": [
+      "872:262144"
+     ],
+     "set": [
+      "a199"
+     ]
+    },
+    "shrinkhp": {
+     "set": [
+      "a336"
+     ],
+     "min": 1,
+     "max": 10000
+    },
+    "siegebonus": {
+     "set": [
+      "a125"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "singlebattle": {
+     "set": [
+      "a409"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "size": {
+     "set": [
+      "f44"
+     ]
+    },
+    "skilledrider": {
+     "set": [
+      "a1097"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "skirmisher": {
+     "set": [
+      "a641"
+     ],
+     "min": -25,
+     "max": 25
+    },
+    "slashres": {
+     "bits": [
+      "872:8589934592"
+     ]
+    },
+    "slave": {
+     "set": [
+      "a380"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "slaver": {
+     "set": [
+      "a642"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "slaverbonus": {
+     "set": [
+      "a643"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "sleepaura": {
+     "set": [
+      "a306"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "sleepres": {
+     "set": [
+      "a1088"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "slimer": {
+     "set": [
+      "a412"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "slothpower": {
+     "set": [
+      "a529"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "slothresearch": {
+     "set": [
+      "a272"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "slowrec": {
+     "bits": [
+      "872:34359738368"
+     ]
+    },
+    "smartmount": {
+     "set": [
+      "a1020"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "snake": {
+     "set": [
+      "f884"
+     ]
+    },
+    "snaketattoo": {
+     "set": [
+      "a562"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "snow": {
+     "bits": [
+      "872:549755813888"
+     ]
+    },
+    "sorcerygems": {
+     "set": [
+      "a64"
+     ],
+     "min": 0,
+     "max": 40
+    },
+    "sorceryrange": {
+     "set": [
+      "a24"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "speciallook": {
+     "set": [
+      "a330"
+     ],
+     "min": 0,
+     "max": 9999
+    },
+    "spellsinger": {
+     "set": [
+      "a616"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "spikes": {
+     "set": [
+      "a189"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "spiritform": {
+     "bits": [
+      "872:17592186044416"
+     ]
+    },
+    "spiritsight": {
+     "set": [
+      "a607"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "spreaddom": {
+     "set": [
+      "a156"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "springimmortal": {
+     "set": [
+      "a665"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "springpower": {
+     "set": [
+      "a231"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "springshape": {
+     "set": [
+      "a590"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "spy": {
+     "set": [
+      "a214"
+     ]
+    },
+    "standard": {
+     "set": [
+      "a103"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "startaff": {
+     "set": [
+      "a609"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "startage": {
+     "set": [
+      "a285"
+     ],
+     "min": -1,
+     "max": 30000
+    },
+    "startdom": {
+     "set": [
+      "a242"
+     ]
+    },
+    "startheroab": {
+     "set": [
+      "a672"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "startingaff": {
+     "set": [
+      "a226"
+     ],
+     "min": 0,
+     "max": 2147483647
+    },
+    "startitem": {
+     "add": [
+      "a565"
+     ],
+     "min": 0,
+     "max": 1999
+    },
+    "startmajoraff": {
+     "set": [
+      "a610"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "statsiege": {
+     "set": [
+      "a1163"
+     ],
+     "min": -99999,
+     "max": 99999
+    },
+    "statstorm": {
+     "set": [
+      "a1162"
+     ],
+     "min": -99999,
+     "max": 99999
+    },
+    "stealthy": {
+     "bits": [
+      "872:134217728"
+     ],
+     "set": [
+      "a108"
+     ]
+    },
+    "stonebeing": {
+     "set": [
+      "a280"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "stormimmune": {
+     "set": [
+      "a175"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "stormpower": {
+     "set": [
+      "a174"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "str": {
+     "set": [
+      "f50"
+     ]
+    },
+    "succubus": {
+     "set": [
+      "a210"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "summerpower": {
+     "set": [
+      "a232"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "summershape": {
+     "set": [
+      "a591"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon1": {
+     "set": [
+      "a139"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon2": {
+     "set": [
+      "a140"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon3": {
+     "set": [
+      "a141"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon4": {
+     "set": [
+      "a142"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summon5": {
+     "set": [
+      "a143"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "sunawe": {
+     "set": [
+      "a605"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "superiorleader": {
+     "bits": [
+      "880:268435456"
+     ]
+    },
+    "superiormagicleader": {
+     "bits": [
+      "880:128"
+     ]
+    },
+    "superiorundeadleader": {
+     "bits": [
+      "880:4096"
+     ]
+    },
+    "supplybonus": {
+     "set": [
+      "a122"
+     ],
+     "min": -10000,
+     "max": 10000
+    },
+    "swampsurvival": {
+     "bits": [
+      "872:524288"
+     ]
+    },
+    "swimming": {
+     "bits": [
+      "872:1099511627776"
+     ]
+    },
+    "tainted": {
+     "set": [
+      "a262"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "taskmaster": {
+     "set": [
+      "a379"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "taxcollector": {
+     "set": [
+      "a455"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "teleport": {
+     "bits": [
+      "872:274877906944"
+     ],
+     "set": [
+      "f42"
+     ]
+    },
+    "templetrainer": {
+     "set": [
+      "a564"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "thronekill": {
+     "set": [
+      "a628"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "tmpairgems": {
+     "set": [
+      "a345"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpastralgems": {
+     "set": [
+      "a348"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpbloodslaves": {
+     "set": [
+      "a352"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpdeathgems": {
+     "set": [
+      "a349"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpearthgems": {
+     "set": [
+      "a347"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpfiregems": {
+     "set": [
+      "a344"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpglamourgems": {
+     "set": [
+      "a351"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpnaturegems": {
+     "set": [
+      "a350"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tmpwatergems": {
+     "set": [
+      "a346"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "tolerateund": {
+     "set": [
+      "a1166"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "trample": {
+     "bits": [
+      "872:8192"
+     ]
+    },
+    "trampswallow": {
+     "set": [
+      "a373"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "transformation": {
+     "set": [
+      "a1098"
+     ],
+     "min": -1,
+     "max": 1
+    },
+    "triple3mon": {
+     "set": [
+      "a625"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "triplegod": {
+     "set": [
+      "a622"
+     ],
+     "min": 0,
+     "max": 10
+    },
+    "triplegodmag": {
+     "set": [
+      "a623"
+     ],
+     "min": -10,
+     "max": 10
+    },
+    "troglodyte": {
+     "set": [
+      "a182",
+      "f884"
+     ]
+    },
+    "truesight": {
+     "set": [
+      "a1011"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "twiceborn": {
+     "set": [
+      "a656"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "twistfate": {
+     "set": [
+      "a1117"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "undcommand": {
+     "set": [
+      "a159"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "undead": {
+     "bits": [
+      "872:32",
+      "880:4"
+     ]
+    },
+    "undisciplined": {
+     "set": [
+      "a367"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "undisleader": {
+     "set": [
+      "a1072"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "undregen": {
+     "set": [
+      "a1068"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "unify": {
+     "set": [
+      "a624"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "unique": {
+     "set": [
+      "a275"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "unmountedspr1": {
+     "del": [
+      "a1017"
+     ],
+     "set": [
+      "a1135"
+     ]
+    },
+    "unseen": {
+     "set": [
+      "a688"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "unsurr": {
+     "set": [
+      "a573"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "unteleportable": {
+     "set": [
+      "a376"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "userestricteditem": {
+     "set": [
+      "a488"
+     ],
+     "min": 0,
+     "max": 2147483647
+    },
+    "uwbug": {
+     "set": [
+      "a428"
+     ],
+     "min": 1,
+     "max": 1
+    },
+    "uwdamage": {
+     "set": [
+      "a258"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "uwfireshield": {
+     "set": [
+      "a653"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "uwheat": {
+     "set": [
+      "a527"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "uwregen": {
+     "set": [
+      "a1067"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "voidret": {
+     "set": [
+      "a333"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "voidsanity": {
+     "set": [
+      "a277"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "warning": {
+     "set": [
+      "a1059"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "wastesurvival": {
+     "bits": [
+      "872:16"
+     ]
+    },
+    "waterattuned": {
+     "set": [
+      "a503"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "waterelementals": {
+     "set": [
+      "a1082"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "waterrange": {
+     "set": [
+      "a42"
+     ],
+     "min": -100,
+     "max": 100
+    },
+    "watershape": {
+     "set": [
+      "a246"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "weapon": {
+     "set": [
+      "f832"
+     ]
+    },
+    "winterpower": {
+     "set": [
+      "a234"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "wintershape": {
+     "set": [
+      "a593"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "wolftattoo": {
+     "set": [
+      "a560"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "worldshape": {
+     "set": [
+      "a1134"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "woundfend": {
+     "set": [
+      "a406"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "xpgain": {
+     "set": [
+      "a1137"
+     ],
+     "min": -1000,
+     "max": 1000
+    },
+    "xploss": {
+     "set": [
+      "a519"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "xpshape": {
+     "set": [
+      "a1145"
+     ],
+     "min": 0,
+     "max": 10000
+    },
+    "xpshapeloss": {
+     "set": [
+      "a1148"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "xpshapemon": {
+     "set": [
+      "a1147"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "yearturn": {
+     "set": [
+      "a626"
+     ],
+     "min": -1000,
+     "max": 1000
+    }
+   }
   },
   "nametype": {
    "complete": true,
@@ -1465,7 +9890,20 @@
     "clear",
     "end",
     "selectnametype"
-   ]
+   ],
+   "effects": {
+    "addname": {
+     "set": [
+      "f0"
+     ]
+    },
+    "end": {
+     "set": [
+      "f0",
+      "f8"
+     ]
+    }
+   }
   },
   "nation": {
    "complete": true,
@@ -1741,7 +10179,1283 @@
     "wastetemplecost",
     "waterblessbonus",
     "wightreanim"
-   ]
+   ],
+   "effects": {
+    "aiairnation": {
+     "min": 1,
+     "max": 1
+    },
+    "aiastralnation": {
+     "min": 1,
+     "max": 1
+    },
+    "aiawake": {
+     "min": 0,
+     "max": 100
+    },
+    "aibloodnation": {
+     "min": 1,
+     "max": 1
+    },
+    "aicheapholy": {
+     "min": 1,
+     "max": 1
+    },
+    "aideathnation": {
+     "min": 1,
+     "max": 1
+    },
+    "aiearthnation": {
+     "min": 1,
+     "max": 1
+    },
+    "aifirenation": {
+     "min": 1,
+     "max": 1
+    },
+    "aiglamournation": {
+     "min": 1,
+     "max": 1
+    },
+    "aigoodbless": {
+     "min": 0,
+     "max": 100
+    },
+    "aiheavyrec": {
+     "min": 0,
+     "max": 99
+    },
+    "aiholdgod": {
+     "min": 1,
+     "max": 1
+    },
+    "aiholyranged": {
+     "min": 1,
+     "max": 1
+    },
+    "aimagerec": {
+     "min": 0,
+     "max": 99
+    },
+    "aimusthavemag": {
+     "min": 0,
+     "max": 8
+    },
+    "ainaturenation": {
+     "min": 1,
+     "max": 1
+    },
+    "airblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "aiwaternation": {
+     "min": 1,
+     "max": 1
+    },
+    "astralblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "autoundead": {
+     "min": 1,
+     "max": 1
+    },
+    "badindpd": {
+     "min": 0,
+     "max": 1
+    },
+    "blessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "bloodblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "bloodnation": {
+     "min": 1,
+     "max": 1
+    },
+    "buildcoastfort": {
+     "min": 0,
+     "max": 49
+    },
+    "buildfort": {
+     "min": 0,
+     "max": 49
+    },
+    "builduwfort": {
+     "min": 0,
+     "max": 49
+    },
+    "castleprod": {
+     "min": 0,
+     "max": 1000
+    },
+    "cavecom": {
+     "add": [
+      "a303"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "cavefortcom": {
+     "add": [
+      "a721"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "cavefortrec": {
+     "add": [
+      "a720"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "caveinc": {
+     "min": -1000,
+     "max": 1000
+    },
+    "cavelabcost": {
+     "min": 0,
+     "max": 100000
+    },
+    "cavenation": {
+     "min": 0,
+     "max": 9
+    },
+    "caverec": {
+     "add": [
+      "a302"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "caverecpt": {
+     "min": -1000,
+     "max": 1000
+    },
+    "caveres": {
+     "min": -1000,
+     "max": 1000
+    },
+    "cavetemplecost": {
+     "min": 0,
+     "max": 100000
+    },
+    "cheapgod20": {
+     "add": [
+      "a314"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "cheapgod40": {
+     "add": [
+      "a315"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "cleargods": {
+     "set": [
+      "f2744"
+     ]
+    },
+    "clearnation": {
+     "set": [
+      "f176",
+      "f2744"
+     ]
+    },
+    "clearrec": {
+     "set": [
+      "f2576"
+     ]
+    },
+    "coastcom": {
+     "add": [
+      "a737"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastcom1": {
+     "add": [
+      "a737"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastcom2": {
+     "add": [
+      "a737"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastfortcom": {
+     "add": [
+      "a739"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastfortrec": {
+     "add": [
+      "a738"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastnation": {
+     "min": 1,
+     "max": 1
+    },
+    "coastrec": {
+     "add": [
+      "a736"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastunit1": {
+     "add": [
+      "a736"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastunit2": {
+     "add": [
+      "a736"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "coastunit3": {
+     "add": [
+      "a736"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "deathblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "deepcom": {
+     "add": [
+      "a307"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "deeprec": {
+     "add": [
+      "a306"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "defchaos": {
+     "min": -5,
+     "max": 5
+    },
+    "defcom1": {
+     "set": [
+      "a74"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defcom2": {
+     "set": [
+      "a75"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defdeath": {
+     "min": -5,
+     "max": 5
+    },
+    "defdrain": {
+     "min": -5,
+     "max": 5
+    },
+    "defmisfortune": {
+     "min": -5,
+     "max": 5
+    },
+    "defmult1": {
+     "min": 0,
+     "max": 100
+    },
+    "defmult1b": {
+     "min": 0,
+     "max": 100
+    },
+    "defmult1c": {
+     "min": 0,
+     "max": 100
+    },
+    "defmult1d": {
+     "min": 0,
+     "max": 100
+    },
+    "defmult2": {
+     "min": 0,
+     "max": 100
+    },
+    "defmult2b": {
+     "min": 0,
+     "max": 100
+    },
+    "defsloth": {
+     "min": -5,
+     "max": 5
+    },
+    "defunit1": {
+     "set": [
+      "a76"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit1b": {
+     "set": [
+      "a77"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit1c": {
+     "set": [
+      "a84"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit1d": {
+     "set": [
+      "a86"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit2": {
+     "set": [
+      "a78"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit2b": {
+     "set": [
+      "a79"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "disbless": {
+     "add": [
+      "a671"
+     ],
+     "min": 0,
+     "max": 99
+    },
+    "domdeathsense": {
+     "min": 1,
+     "max": 1
+    },
+    "domkill": {
+     "min": 0,
+     "max": 1000
+    },
+    "domsail": {
+     "min": 1,
+     "max": 1
+    },
+    "domunrest": {
+     "min": -1000,
+     "max": 1000
+    },
+    "domwar": {
+     "min": -100,
+     "max": 100
+    },
+    "dripcom": {
+     "add": [
+      "a723"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "dripfortcom": {
+     "add": [
+      "a725"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "dripfortrec": {
+     "add": [
+      "a724"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "driprec": {
+     "add": [
+      "a722"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "dyingdom": {
+     "min": 1,
+     "max": 1
+    },
+    "earthblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "era": {
+     "set": [
+      "f172"
+     ]
+    },
+    "farmcom": {
+     "add": [
+      "a731"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "farmfortcom": {
+     "add": [
+      "a733"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "farmfortrec": {
+     "add": [
+      "a732"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "farmrec": {
+     "add": [
+      "a730"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "fireblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "foreignfortcom": {
+     "add": [
+      "a689"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "foreignfortrec": {
+     "add": [
+      "a688"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "foreignguardcom": {
+     "add": [
+      "a596"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "foreignguardmult": {
+     "add": [
+      "a595"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "foreignguardunit": {
+     "add": [
+      "a594"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "foreignwallcom": {
+     "add": [
+      "a599"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "foreignwallmult": {
+     "add": [
+      "a598"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "foreignwallunit": {
+     "add": [
+      "a597"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "forestcom": {
+     "add": [
+      "a295"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "forestfortcom": {
+     "add": [
+      "a693"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "forestfortrec": {
+     "add": [
+      "a692"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "forestlabcost": {
+     "min": 0,
+     "max": 100000
+    },
+    "forestrec": {
+     "add": [
+      "a294"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "foresttemplecost": {
+     "min": 0,
+     "max": 100000
+    },
+    "fortcost": {
+     "min": -100,
+     "max": 10000
+    },
+    "fortera": {
+     "min": 0,
+     "max": 4
+    },
+    "fortunrest": {
+     "min": 0,
+     "max": 1000
+    },
+    "futuresite": {
+     "add": [
+      "a631"
+     ],
+     "min": 0,
+     "max": 3999
+    },
+    "ghostreanim": {
+     "min": 1,
+     "max": 1
+    },
+    "glamourblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "godrebirth": {
+     "min": 1,
+     "max": 1
+    },
+    "golemhp": {
+     "min": 0,
+     "max": 100
+    },
+    "greekreanim": {
+     "min": 1,
+     "max": 1
+    },
+    "guardcom": {
+     "add": [
+      "a350"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "guardmult": {
+     "add": [
+      "a349"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "guardspirit": {
+     "set": [
+      "a313"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "guardunit": {
+     "add": [
+      "a348"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "halfdeathinc": {
+     "min": 1,
+     "max": 1
+    },
+    "halfdeathpop": {
+     "min": 1,
+     "max": 1
+    },
+    "hatesterr": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "hero1": {
+     "set": [
+      "a139"
+     ]
+    },
+    "hero10": {
+     "set": [
+      "a148"
+     ]
+    },
+    "hero2": {
+     "set": [
+      "a140"
+     ]
+    },
+    "hero3": {
+     "set": [
+      "a141"
+     ]
+    },
+    "hero4": {
+     "set": [
+      "a142"
+     ]
+    },
+    "hero5": {
+     "set": [
+      "a143"
+     ]
+    },
+    "hero6": {
+     "set": [
+      "a144"
+     ]
+    },
+    "hero7": {
+     "set": [
+      "a145"
+     ]
+    },
+    "hero8": {
+     "set": [
+      "a146"
+     ]
+    },
+    "hero9": {
+     "set": [
+      "a147"
+     ]
+    },
+    "hidedom": {
+     "min": 0,
+     "max": 1
+    },
+    "homefort": {
+     "min": 0,
+     "max": 49
+    },
+    "homerealm": {
+     "add": [
+      "a289"
+     ],
+     "min": 1,
+     "max": 10
+    },
+    "horsereanim": {
+     "min": 1,
+     "max": 1
+    },
+    "idealcold": {
+     "set": [
+      "a705"
+     ]
+    },
+    "islandnation": {
+     "min": 1,
+     "max": 1
+    },
+    "islandsite": {
+     "set": [
+      "a385"
+     ]
+    },
+    "kelpcom": {
+     "add": [
+      "a735"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "kelprec": {
+     "add": [
+      "a734"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "killcappop": {
+     "min": -250,
+     "max": 100
+    },
+    "labcost": {
+     "min": 1,
+     "max": 100000
+    },
+    "landcom": {
+     "add": [
+      "a163"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "landrec": {
+     "add": [
+      "a164"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "likespop": {
+     "add": [
+      "a270"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "likesterr": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "manikinreanim": {
+     "min": 1,
+     "max": 1
+    },
+    "merccost": {
+     "min": -90,
+     "max": 10000
+    },
+    "minprison": {
+     "min": 0,
+     "max": 2
+    },
+    "mountaincom": {
+     "add": [
+      "a299"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "mountainfortcom": {
+     "add": [
+      "a691"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "mountainfortrec": {
+     "add": [
+      "a690"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "mountainrec": {
+     "add": [
+      "a298"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "mountlabcost": {
+     "min": 0,
+     "max": 100000
+    },
+    "mounttemplecost": {
+     "min": 0,
+     "max": 100000
+    },
+    "multihero1": {
+     "set": [
+      "a149"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "multihero2": {
+     "set": [
+      "a150"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "multihero3": {
+     "set": [
+      "a151"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "multihero4": {
+     "set": [
+      "a152"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "multihero5": {
+     "set": [
+      "a153"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "multihero6": {
+     "set": [
+      "a154"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "multihero7": {
+     "set": [
+      "a155"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "name": {
+     "set": [
+      "f144",
+      "f172"
+     ]
+    },
+    "nationinc": {
+     "min": -1000,
+     "max": 1000
+    },
+    "natureblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "nodeathsupply": {
+     "min": 1,
+     "max": 1
+    },
+    "noforeignrec": {
+     "min": 1,
+     "max": 1
+    },
+    "nopreach": {
+     "min": 1,
+     "max": 1
+    },
+    "noundeadgods": {
+     "min": 1,
+     "max": 1
+    },
+    "plaincom": {
+     "add": [
+      "a753"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "plainfortcom": {
+     "add": [
+      "a755"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "plainfortrec": {
+     "add": [
+      "a754"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "plainrec": {
+     "add": [
+      "a752"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "priestreanim": {
+     "min": 1,
+     "max": 1
+    },
+    "recallgod": {
+     "min": 0,
+     "max": 100
+    },
+    "riverstart": {
+     "min": 1,
+     "max": 1
+    },
+    "sacrificedom": {
+     "min": 1,
+     "max": 1
+    },
+    "seacom": {
+     "add": [
+      "a305"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "searec": {
+     "add": [
+      "a304"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "seatrace": {
+     "min": 1,
+     "max": 1
+    },
+    "startcom": {
+     "set": [
+      "a90"
+     ]
+    },
+    "startscout": {
+     "set": [
+      "a97"
+     ]
+    },
+    "startsite": {
+     "set": [
+      "a52"
+     ]
+    },
+    "startunitnbrs1": {
+     "set": [
+      "a92"
+     ]
+    },
+    "startunitnbrs2": {
+     "set": [
+      "a94"
+     ]
+    },
+    "startunitnbrs3": {
+     "set": [
+      "a96"
+     ]
+    },
+    "startunittype1": {
+     "set": [
+      "a91"
+     ]
+    },
+    "startunittype2": {
+     "set": [
+      "a93"
+     ]
+    },
+    "startunittype3": {
+     "set": [
+      "a95"
+     ]
+    },
+    "supayareanim": {
+     "min": 1,
+     "max": 1
+    },
+    "swampcom": {
+     "add": [
+      "a297"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "swampfortcom": {
+     "add": [
+      "a727"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "swampfortrec": {
+     "add": [
+      "a726"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "swamplabcost": {
+     "min": 0,
+     "max": 100000
+    },
+    "swamprec": {
+     "add": [
+      "a296"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "swamptemplecost": {
+     "min": 0,
+     "max": 100000
+    },
+    "syncretism": {
+     "min": 0,
+     "max": 1
+    },
+    "templecost": {
+     "min": 1,
+     "max": 100000
+    },
+    "templegems": {
+     "min": 0,
+     "max": 8
+    },
+    "templeholypoints": {
+     "min": -1000,
+     "max": 1000
+    },
+    "templepic": {
+     "min": 0,
+     "max": 300
+    },
+    "tombwyrmreanim": {
+     "min": 1,
+     "max": 1
+    },
+    "tradecoast": {
+     "min": -1000,
+     "max": 1000
+    },
+    "undeadreanim": {
+     "min": 1,
+     "max": 1
+    },
+    "uwbuild": {
+     "min": 0,
+     "max": 1
+    },
+    "uwcom": {
+     "add": [
+      "a186"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "uwdefcom1": {
+     "set": [
+      "a171"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwdefcom2": {
+     "set": [
+      "a172"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwdefmult1": {
+     "min": 0,
+     "max": 100
+    },
+    "uwdefmult1b": {
+     "min": 0,
+     "max": 100
+    },
+    "uwdefmult1c": {
+     "min": 0,
+     "max": 100
+    },
+    "uwdefmult1d": {
+     "min": 0,
+     "max": 100
+    },
+    "uwdefmult2": {
+     "min": 0,
+     "max": 100
+    },
+    "uwdefmult2b": {
+     "min": 0,
+     "max": 100
+    },
+    "uwdefunit1": {
+     "set": [
+      "a173"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwdefunit1b": {
+     "set": [
+      "a174"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwdefunit1c": {
+     "set": [
+      "a181"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwdefunit1d": {
+     "set": [
+      "a183"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwdefunit2": {
+     "set": [
+      "a175"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwdefunit2b": {
+     "set": [
+      "a176"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwnation": {
+     "min": 1,
+     "max": 1
+    },
+    "uwrec": {
+     "add": [
+      "a187"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "uwwallcom": {
+     "add": [
+      "a665"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "uwwallmult": {
+     "add": [
+      "a664"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "uwwallunit": {
+     "add": [
+      "a663"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "wallcom": {
+     "add": [
+      "a347"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "wallmult": {
+     "add": [
+      "a346"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "wallunit": {
+     "add": [
+      "a345"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "wastecom": {
+     "add": [
+      "a301"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "wastefortcom": {
+     "add": [
+      "a729"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "wastefortrec": {
+     "add": [
+      "a728"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "wastelabcost": {
+     "min": 0,
+     "max": 100000
+    },
+    "wasterec": {
+     "add": [
+      "a300"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "wastetemplecost": {
+     "min": 0,
+     "max": 100000
+    },
+    "waterblessbonus": {
+     "min": -9,
+     "max": 9
+    },
+    "wightreanim": {
+     "min": 1,
+     "max": 1
+    }
+   }
   },
   "poptype": {
    "complete": true,
@@ -1759,7 +11473,63 @@
     "defunit1c",
     "end",
     "selectpoptype"
-   ]
+   ],
+   "effects": {
+    "clearrec": {
+     "set": [
+      "f0"
+     ]
+    },
+    "defcom1": {
+     "set": [
+      "a217"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defmult1": {
+     "set": [
+      "a216"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "defmult1b": {
+     "set": [
+      "a219"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "defmult1c": {
+     "set": [
+      "a221"
+     ],
+     "min": 0,
+     "max": 1000
+    },
+    "defunit1": {
+     "set": [
+      "a215"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit1b": {
+     "set": [
+      "a218"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit1c": {
+     "set": [
+      "a220"
+     ],
+     "min": -100000,
+     "max": 19999
+    }
+   }
   },
   "site": {
    "complete": true,
@@ -1864,7 +11634,448 @@
     "waterrange",
     "wild",
     "xp"
-   ]
+   ],
+   "effects": {
+    "adventureruin": {
+     "min": 1,
+     "max": 100
+    },
+    "airrange": {
+     "min": -100,
+     "max": 100
+    },
+    "allrange": {
+     "min": -100,
+     "max": 100
+    },
+    "altcost": {
+     "min": 0,
+     "max": 100
+    },
+    "astralrange": {
+     "min": -100,
+     "max": 100
+    },
+    "blessairshld": {
+     "min": -100,
+     "max": 100
+    },
+    "blessanimawe": {
+     "min": -100,
+     "max": 100
+    },
+    "blessatt": {
+     "min": -100,
+     "max": 100
+    },
+    "blessawe": {
+     "min": -100,
+     "max": 100
+    },
+    "blesscoldres": {
+     "min": -100,
+     "max": 100
+    },
+    "blessdarkvis": {
+     "min": -100,
+     "max": 100
+    },
+    "blessdef": {
+     "min": -100,
+     "max": 100
+    },
+    "blessdtv": {
+     "min": 0,
+     "max": 100
+    },
+    "blessfireres": {
+     "min": -100,
+     "max": 100
+    },
+    "blesshp": {
+     "min": -100,
+     "max": 100
+    },
+    "blessmor": {
+     "min": -100,
+     "max": 100
+    },
+    "blessmr": {
+     "min": -100,
+     "max": 100
+    },
+    "blesspoisres": {
+     "min": -100,
+     "max": 100
+    },
+    "blessprec": {
+     "min": -100,
+     "max": 100
+    },
+    "blessreinvig": {
+     "min": -100,
+     "max": 100
+    },
+    "blessshockres": {
+     "min": -100,
+     "max": 100
+    },
+    "blessstr": {
+     "min": -100,
+     "max": 100
+    },
+    "bloodcost": {
+     "min": 0,
+     "max": 100
+    },
+    "bloodrange": {
+     "min": -100,
+     "max": 100
+    },
+    "claim": {
+     "min": 1,
+     "max": 1
+    },
+    "clear": {
+     "set": [
+      "f48"
+     ]
+    },
+    "cluster": {
+     "min": 0,
+     "max": 1000
+    },
+    "com": {
+     "add": [
+      "a12"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "conjcost": {
+     "min": 0,
+     "max": 100
+    },
+    "constcost": {
+     "min": 0,
+     "max": 100
+    },
+    "curse": {
+     "min": 0,
+     "max": 100
+    },
+    "deathrange": {
+     "min": -100,
+     "max": 100
+    },
+    "decscale": {
+     "add": [
+      "a102"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "decunrest": {
+     "min": -100,
+     "max": 100
+    },
+    "defcom": {
+     "set": [
+      "a231"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defmult": {
+     "set": [
+      "a225"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "defunit": {
+     "set": [
+      "a224"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "disease": {
+     "min": 0,
+     "max": 100
+    },
+    "dominion": {
+     "min": 0,
+     "max": 100
+    },
+    "domwar": {
+     "min": -100,
+     "max": 100
+    },
+    "earthrange": {
+     "min": -100,
+     "max": 100
+    },
+    "elementrange": {
+     "min": -100,
+     "max": 100
+    },
+    "enchcost": {
+     "min": 0,
+     "max": 100
+    },
+    "evil": {
+     "min": 1,
+     "max": 1
+    },
+    "evocost": {
+     "min": 0,
+     "max": 100
+    },
+    "firerange": {
+     "min": -100,
+     "max": 100
+    },
+    "fort": {
+     "min": 0,
+     "max": 49
+    },
+    "glamourrange": {
+     "min": -100,
+     "max": 100
+    },
+    "goddomchaos": {
+     "min": -10,
+     "max": 10
+    },
+    "goddomcold": {
+     "min": -10,
+     "max": 10
+    },
+    "goddomdeath": {
+     "min": -10,
+     "max": 10
+    },
+    "goddomdrain": {
+     "min": -10,
+     "max": 10
+    },
+    "goddomlazy": {
+     "min": -10,
+     "max": 10
+    },
+    "goddommisfortune": {
+     "min": -10,
+     "max": 10
+    },
+    "gold": {
+     "min": -10000,
+     "max": 10000
+    },
+    "heal": {
+     "min": 0,
+     "max": 100
+    },
+    "holyfire": {
+     "min": 0,
+     "max": 100
+    },
+    "holypower": {
+     "min": 0,
+     "max": 100
+    },
+    "homecom": {
+     "add": [
+      "a30"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "homemon": {
+     "add": [
+      "a29"
+     ],
+     "min": 0,
+     "max": 19999
+    },
+    "horrormark": {
+     "min": 0,
+     "max": 100
+    },
+    "incscale": {
+     "add": [
+      "a103"
+     ],
+     "min": 0,
+     "max": 5
+    },
+    "lab": {
+     "min": 1,
+     "max": 1
+    },
+    "level": {
+     "set": [
+      "f44"
+     ]
+    },
+    "loc": {
+     "set": [
+      "f304"
+     ]
+    },
+    "look": {
+     "set": [
+      "f40"
+     ]
+    },
+    "minegold": {
+     "min": -10000,
+     "max": 10000
+    },
+    "mon": {
+     "add": [
+      "a11"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "nat": {
+     "set": [
+      "a373"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "natcom": {
+     "add": [
+      "a375"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "natmon": {
+     "add": [
+      "a374"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "naturerange": {
+     "min": -100,
+     "max": 100
+    },
+    "path": {
+     "set": [
+      "f42"
+     ]
+    },
+    "popgrowth": {
+     "min": -1000,
+     "max": 1000
+    },
+    "rarity": {
+     "set": [
+      "f46"
+     ]
+    },
+    "recallgod": {
+     "min": 0,
+     "max": 100
+    },
+    "res": {
+     "min": -10000,
+     "max": 10000
+    },
+    "scry": {
+     "min": 0,
+     "max": 100
+    },
+    "scryrange": {
+     "min": 0,
+     "max": 100
+    },
+    "sorceryrange": {
+     "min": -100,
+     "max": 100
+    },
+    "summon": {
+     "add": [
+      "a550"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summonlvl2": {
+     "add": [
+      "a341"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summonlvl3": {
+     "add": [
+      "a342"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "summonlvl4": {
+     "add": [
+      "a343"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "supply": {
+     "min": -10000,
+     "max": 10000
+    },
+    "temple": {
+     "min": 1,
+     "max": 1
+    },
+    "thaucost": {
+     "min": 0,
+     "max": 100
+    },
+    "voidgate": {
+     "min": 1,
+     "max": 100
+    },
+    "wallcom": {
+     "add": [
+      "a347"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "wallmult": {
+     "add": [
+      "a346"
+     ],
+     "min": 0,
+     "max": 100
+    },
+    "wallunit": {
+     "add": [
+      "a345"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "waterrange": {
+     "min": -100,
+     "max": 100
+    },
+    "wild": {
+     "min": 1,
+     "max": 1
+    },
+    "xp": {
+     "min": 0,
+     "max": 1000
+    }
+   }
   },
   "sound": {
    "complete": false,
@@ -1874,7 +12085,8 @@
     "sample",
     "selectsound",
     "smpmode"
-   ]
+   ],
+   "effects": {}
   },
   "spell": {
    "complete": true,
@@ -1963,7 +12175,249 @@
     "twiceborncost",
     "walkable",
     "worldvisible"
-   ]
+   ],
+   "effects": {
+    "aibadlvl": {
+     "min": 0,
+     "max": 10
+    },
+    "aoe": {
+     "set": [
+      "f44"
+     ]
+    },
+    "clearallspells": {
+     "set": [
+      "f37"
+     ]
+    },
+    "damage": {
+     "set": [
+      "f56"
+     ]
+    },
+    "damagemon": {
+     "set": [
+      "f56"
+     ]
+    },
+    "dispimmune": {
+     "min": 0,
+     "max": 2
+    },
+    "effect": {
+     "set": [
+      "f46"
+     ]
+    },
+    "explspr": {
+     "set": [
+      "f70",
+      "f72"
+     ]
+    },
+    "farsumcom": {
+     "min": -100000,
+     "max": 19999
+    },
+    "fatiguecost": {
+     "set": [
+      "f42"
+     ]
+    },
+    "flightspr": {
+     "set": [
+      "f66",
+      "f68"
+     ]
+    },
+    "globallook": {
+     "min": 0,
+     "max": 100
+    },
+    "godpathspell": {
+     "min": -1,
+     "max": 8
+    },
+    "homerealm": {
+     "min": 0,
+     "max": 100
+    },
+    "maxbounces": {
+     "min": 0,
+     "max": 100
+    },
+    "napbreakrit": {
+     "min": -10000,
+     "max": 10000
+    },
+    "nextingeo": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "nextspell": {
+     "set": [
+      "f96"
+     ]
+    },
+    "nogeodst": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "nogeosrc": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "notfornation": {
+     "add": [
+      "a279"
+     ],
+     "min": -1,
+     "max": 499
+    },
+    "notmnr": {
+     "add": [
+      "a744"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "nreff": {
+     "set": [
+      "f64"
+     ]
+    },
+    "onlyatsite": {
+     "set": [
+      "a711"
+     ],
+     "min": 0,
+     "max": 3999
+    },
+    "onlyfriendlydst": {
+     "min": 0,
+     "max": 10
+    },
+    "onlygeodst": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "onlygeosrc": {
+     "min": 0,
+     "max": 2147483647
+    },
+    "onlymnr": {
+     "add": [
+      "a731"
+     ],
+     "min": -100000,
+     "max": 19999
+    },
+    "onlyowndst": {
+     "min": 0,
+     "max": 1
+    },
+    "onlysitedst": {
+     "set": [
+      "a1711"
+     ],
+     "min": 0,
+     "max": 3999
+    },
+    "path": {
+     "set": [
+      "f38"
+     ]
+    },
+    "precision": {
+     "set": [
+      "f50"
+     ]
+    },
+    "provrange": {
+     "min": 0,
+     "max": 100
+    },
+    "range": {
+     "set": [
+      "f48"
+     ]
+    },
+    "reqnoplant": {
+     "min": 500,
+     "max": 500
+    },
+    "reqnoseduce": {
+     "min": 298,
+     "max": 298
+    },
+    "reqnospellsinger": {
+     "min": 616,
+     "max": 616
+    },
+    "reqnotaskmaster": {
+     "min": 379,
+     "max": 379
+    },
+    "reqplant": {
+     "min": 500,
+     "max": 500
+    },
+    "reqseduce": {
+     "min": 298,
+     "max": 298
+    },
+    "reqspellsinger": {
+     "min": 616,
+     "max": 616
+    },
+    "reqtaskmaster": {
+     "min": 379,
+     "max": 379
+    },
+    "researchlevel": {
+     "set": [
+      "f37"
+     ]
+    },
+    "sample": {
+     "set": [
+      "f98"
+     ]
+    },
+    "school": {
+     "set": [
+      "f36"
+     ]
+    },
+    "sound": {
+     "set": [
+      "f98"
+     ]
+    },
+    "spec": {
+     "set": [
+      "f80"
+     ]
+    },
+    "spec2": {
+     "set": [
+      "f88"
+     ]
+    },
+    "speedmult": {
+     "min": 0,
+     "max": 3
+    },
+    "strikesound": {
+     "min": 0,
+     "max": 249
+    },
+    "sumhealaffs": {
+     "min": 0,
+     "max": 100
+    }
+   }
   },
   "template": {
    "complete": true,
@@ -1977,7 +12431,51 @@
     "prison",
     "researchgoal",
     "scale"
-   ]
+   ],
+   "effects": {
+    "bless": {
+     "set": [
+      "f24"
+     ]
+    },
+    "domstr": {
+     "set": [
+      "f16"
+     ]
+    },
+    "favrit": {
+     "set": [
+      "f184",
+      "f224",
+      "f244"
+     ]
+    },
+    "form": {
+     "set": [
+      "f2"
+     ]
+    },
+    "magic": {
+     "set": [
+      "f6"
+     ]
+    },
+    "prison": {
+     "set": [
+      "f4"
+     ]
+    },
+    "researchgoal": {
+     "set": [
+      "f144"
+     ]
+    },
+    "scale": {
+     "set": [
+      "f18"
+     ]
+    }
+   }
   },
   "weapon": {
    "complete": true,
@@ -2093,7 +12591,540 @@
     "unrepel",
     "uwok",
     "woodenweapon"
-   ]
+   ],
+   "effects": {
+    "acid": {
+     "bits": [
+      "64:2199023255552"
+     ]
+    },
+    "aftercloud": {
+     "set": [
+      "a916"
+     ]
+    },
+    "aftercloudarea": {
+     "set": [
+      "a923"
+     ]
+    },
+    "ammo": {
+     "set": [
+      "f60"
+     ]
+    },
+    "aoe": {
+     "set": [
+      "f90"
+     ]
+    },
+    "armornegating": {
+     "bits": [
+      "64:128"
+     ]
+    },
+    "armorpiercing": {
+     "bits": [
+      "64:64"
+     ]
+    },
+    "att": {
+     "set": [
+      "f48"
+     ]
+    },
+    "beam": {
+     "set": [
+      "a938"
+     ]
+    },
+    "blunt": {
+     "bits": [
+      "64:549755813888"
+     ]
+    },
+    "bonus": {
+     "bits": [
+      "64:134217728"
+     ]
+    },
+    "bowstr": {
+     "bits": [
+      "64:4611686018427387904"
+     ],
+     "clears": [
+      "64:288230376151711745"
+     ]
+    },
+    "charge": {
+     "bits": [
+      "64:2147483648"
+     ]
+    },
+    "cold": {
+     "bits": [
+      "64:512"
+     ]
+    },
+    "coldifhit": {
+     "set": [
+      "a912"
+     ]
+    },
+    "def": {
+     "set": [
+      "f50"
+     ]
+    },
+    "defroll": {
+     "bits": [
+      "64:1048576"
+     ]
+    },
+    "demononly": {
+     "bits": [
+      "64:524296"
+     ]
+    },
+    "demonundead": {
+     "bits": [
+      "64:8"
+     ]
+    },
+    "dmg": {
+     "set": [
+      "f40"
+     ]
+    },
+    "dt_aff": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_bouncekill": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_cap": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_constructonly": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_demon": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_drain": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_holy": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_interrupt": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_large": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_magic": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_normal": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_paralyze": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_poison": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_raise": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_realstun": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_sizestun": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_small": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_stun": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_weakness": {
+     "set": [
+      "f52"
+     ]
+    },
+    "dt_weapondrain": {
+     "set": [
+      "f52"
+     ]
+    },
+    "enemyimmune": {
+     "bits": [
+      "64:4194304"
+     ]
+    },
+    "explspr": {
+     "set": [
+      "f86",
+      "f88"
+     ]
+    },
+    "false": {
+     "bits": [
+      "64:17179869184"
+     ]
+    },
+    "fire": {
+     "bits": [
+      "64:32"
+     ]
+    },
+    "fireifhit": {
+     "set": [
+      "a911"
+     ]
+    },
+    "flail": {
+     "set": [
+      "a935"
+     ]
+    },
+    "flyingimmune": {
+     "bits": [
+      "64:70368744177664"
+     ]
+    },
+    "flyspr": {
+     "set": [
+      "f82",
+      "f84"
+     ]
+    },
+    "friendlyimmune": {
+     "bits": [
+      "64:262144"
+     ]
+    },
+    "fullstr": {
+     "bits": [
+      "64:1"
+     ],
+     "clears": [
+      "64:4899916394579099648"
+     ]
+    },
+    "halfstr": {
+     "bits": [
+      "64:288230376151711744"
+     ],
+     "clears": [
+      "64:4611686018427387905"
+     ]
+    },
+    "hardmrneg": {
+     "bits": [
+      "64:17592186044416"
+     ]
+    },
+    "holyifhit": {
+     "set": [
+      "a933"
+     ]
+    },
+    "holystunifhit": {
+     "set": [
+      "a940"
+     ]
+    },
+    "iceweapon": {
+     "set": [
+      "a482"
+     ]
+    },
+    "illusionsimmune": {
+     "bits": [
+      "64:4294967296"
+     ]
+    },
+    "inanimateimmune": {
+     "bits": [
+      "64:536870912"
+     ]
+    },
+    "internal": {
+     "bits": [
+      "64:36028797018963968"
+     ]
+    },
+    "ironweapon": {
+     "bits": [
+      "64:67108864"
+     ],
+     "set": [
+      "a266"
+     ]
+    },
+    "killdemonifhit": {
+     "set": [
+      "a939"
+     ]
+    },
+    "killmagicifhit": {
+     "set": [
+      "a934"
+     ]
+    },
+    "len": {
+     "set": [
+      "f54"
+     ]
+    },
+    "magic": {
+     "clears": [
+      "64:2097152"
+     ]
+    },
+    "magiconly": {
+     "bits": [
+      "64:16"
+     ]
+    },
+    "melee50": {
+     "set": [
+      "a931"
+     ]
+    },
+    "mind": {
+     "bits": [
+      "64:131072"
+     ]
+    },
+    "morroll": {
+     "bits": [
+      "64:8796093022208"
+     ]
+    },
+    "mrhalf": {
+     "bits": [
+      "64:2305843009213693952"
+     ]
+    },
+    "mrnegates": {
+     "bits": [
+      "64:4096"
+     ]
+    },
+    "mrnegateseasily": {
+     "bits": [
+      "64:16777216"
+     ]
+    },
+    "natural": {
+     "bits": [
+      "64:9007199254740992"
+     ]
+    },
+    "norepel": {
+     "bits": [
+      "64:137438953472"
+     ]
+    },
+    "nostr": {
+     "clears": [
+      "64:4899916394579099649"
+     ]
+    },
+    "notdismounted": {
+     "set": [
+      "a942"
+     ]
+    },
+    "notmounted": {
+     "set": [
+      "a943"
+     ]
+    },
+    "nouw": {
+     "clears": [
+      "64:8388608"
+     ]
+    },
+    "nratt": {
+     "set": [
+      "f58"
+     ]
+    },
+    "petrifyifhit": {
+     "set": [
+      "a941"
+     ]
+    },
+    "pierce": {
+     "bits": [
+      "64:274877906944"
+     ]
+    },
+    "poison": {
+     "bits": [
+      "64:8192"
+     ]
+    },
+    "poisonifdmg": {
+     "set": [
+      "a910"
+     ]
+    },
+    "range": {
+     "set": [
+      "f54",
+      "f56",
+      "f60"
+     ]
+    },
+    "range0": {
+     "set": [
+      "a930"
+     ]
+    },
+    "range050": {
+     "set": [
+      "a930"
+     ]
+    },
+    "rcost": {
+     "set": [
+      "f94"
+     ]
+    },
+    "sacredonly": {
+     "bits": [
+      "64:32768"
+     ]
+    },
+    "secondaryeffectalways": {
+     "set": [
+      "f80"
+     ]
+    },
+    "shock": {
+     "bits": [
+      "64:2048"
+     ]
+    },
+    "shockifhit": {
+     "set": [
+      "a913"
+     ]
+    },
+    "sizeresist": {
+     "bits": [
+      "64:4398046511104"
+     ]
+    },
+    "skip": {
+     "set": [
+      "a900"
+     ]
+    },
+    "skip2": {
+     "set": [
+      "a900"
+     ]
+    },
+    "slash": {
+     "bits": [
+      "64:1099511627776"
+     ]
+    },
+    "soulslaying": {
+     "bits": [
+      "64:256"
+     ]
+    },
+    "sound": {
+     "set": [
+      "f92"
+     ]
+    },
+    "speedmult": {
+     "set": [
+      "a302"
+     ]
+    },
+    "spiritformimmune": {
+     "bits": [
+      "64:4"
+     ]
+    },
+    "twohanded": {
+     "bits": [
+      "64:2"
+     ]
+    },
+    "undeadimmune": {
+     "bits": [
+      "64:524288"
+     ]
+    },
+    "undeadonly": {
+     "bits": [
+      "64:268435464"
+     ]
+    },
+    "unrepel": {
+     "bits": [
+      "64:35184372088832"
+     ]
+    },
+    "uwok": {
+     "bits": [
+      "64:8388608"
+     ]
+    },
+    "woodenweapon": {
+     "set": [
+      "a268"
+     ]
+    }
+   }
   }
  }
 }
