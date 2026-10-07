@@ -6,7 +6,6 @@ using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
 using Dom5Edit.Resolve;
-using Paloma;
 
 namespace Dom5Editor.Sprites
 {
@@ -106,16 +105,9 @@ namespace Dom5Editor.Sprites
                 return null;
             if (GameSprite.TryParse(spritePath, out var game))
                 return GameArt.Sprite(game.Archive, game.Number, game.Frame);
-            string path;
-            if (Path.IsPathRooted(spritePath))
-                path = spritePath;
-            else
-            {
-                if (string.IsNullOrEmpty(modFile))
-                    return null;
-                var relative = spritePath.Trim().TrimStart('.').TrimStart('/', '\\').Replace('/', Path.DirectorySeparatorChar);
-                path = Path.Combine(Path.GetDirectoryName(modFile) ?? "", relative);
-            }
+            // relative to the mod's file, either slash (Dom5Edit.Imaging.ModFiles)
+            if (Dom5Edit.Imaging.ModFiles.Resolve(spritePath, modFile) is not string path)
+                return null;
             if (_cache.TryGetValue(path, out var cached))
             {
                 if (cached == null)
@@ -139,9 +131,12 @@ namespace Dom5Editor.Sprites
                         bitmap.Freeze();
                         image = bitmap;
                     }
-                    else
+                    else if (Dom5Edit.Imaging.Tga.Decode(File.ReadAllBytes(path)) is { } tga)
                     {
-                        image = TargaImage.LoadTargaImage(path).ConvertToImage();
+                        // a .tga, read by Dom5Edit (no System.Drawing)
+                        var bitmap = BitmapSource.Create(tga.Width, tga.Height, 96, 96, PixelFormats.Bgra32, null, tga.Bgra, tga.Width * 4);
+                        bitmap.Freeze();
+                        image = bitmap;
                     }
                 }
             }

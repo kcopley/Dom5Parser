@@ -7,37 +7,69 @@ namespace Dom5Edit.Events
 {
     /// <summary>
     /// Where the player's Dominions 6 is installed, for what the editor reads from the game itself
-    /// (texts, event messages, sprites): DOM6_EXE, a configured folder, the usual Steam places,
-    /// then every Steam library (Steam's own libraryfolders.vdf, found from the registry).
+    /// (texts, event messages, sprites): DOM6_EXE, a configured folder, the usual Steam places for
+    /// the system (Windows, Linux, macOS), then every Steam library (Steam's libraryfolders.vdf,
+    /// found from the registry on Windows and from Steam's folder elsewhere).
     /// </summary>
     public static class GameInstall
     {
-        /// <summary>The game's folder (the one with Dominions6.exe), when the user set it.</summary>
+        /// <summary>The game's folder (the one with Dominions6.exe or data/*.trs), when the user set it.</summary>
         public static string? Folder { get; set; }
 
-        private static readonly string[] Usual =
-        {
-            @"C:\Games\Steam\steamapps\common\Dominions6",
-            @"C:\Program Files (x86)\Steam\steamapps\common\Dominions6",
-            @"C:\Program Files\Steam\steamapps\common\Dominions6",
-            @"D:\SteamLibrary\steamapps\common\Dominions6",
-            @"D:\Steam\steamapps\common\Dominions6",
-        };
+        private static string Home => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-        /// <summary>The game's exe, or null if it isn't found.</summary>
+        /// <summary>Steam's own folders on this system (where steamapps and libraryfolders.vdf are).</summary>
+        private static IEnumerable<string> SteamRoots()
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                yield return @"C:\Games\Steam";
+                yield return @"C:\Program Files (x86)\Steam";
+                yield return @"C:\Program Files\Steam";
+                yield return @"D:\SteamLibrary";
+                yield return @"D:\Steam";
+            }
+            else if (OperatingSystem.IsMacOS())
+                yield return Path.Combine(Home, "Library", "Application Support", "Steam");
+            else
+            {
+                yield return Path.Combine(Home, ".local", "share", "Steam");
+                yield return Path.Combine(Home, ".steam", "steam");
+                yield return Path.Combine(Home, ".var", "app", "com.valvesoftware.Steam", ".local", "share", "Steam");
+            }
+        }
+
+        /// <summary>The places the game may be, in the order tried.</summary>
+        private static IEnumerable<string> Candidates() =>
+            new[] { Folder }.Concat(SteamRoots().Concat(SteamLibraries()).Select(l => Path.Combine(l, "steamapps", "common", "Dominions6")))
+                .Where(f => !string.IsNullOrEmpty(f)).Select(f => f!).Distinct();
+
+        /// <summary>The game's exe (Dominions6.exe: the texts and event messages are read from it), or null if it isn't found.</summary>
         public static string? Exe()
         {
             var env = Environment.GetEnvironmentVariable("DOM6_EXE");
             if (!string.IsNullOrEmpty(env) && File.Exists(env))
                 return env;
-            foreach (var folder in new[] { Folder }.Concat(Usual).Concat(SteamLibraries().Select(l => Path.Combine(l, "steamapps", "common", "Dominions6"))))
+            foreach (var folder in Candidates())
             {
-                if (string.IsNullOrEmpty(folder))
-                    continue;
                 var path = Path.Combine(folder, "Dominions6.exe");
                 if (File.Exists(path))
                     return path;
             }
+            return null;
+        }
+
+        /// <summary>
+        /// The game's folder: the one with its data/*.trs archives (sprites, icons), whichever
+        /// system's binary it holds (Dominions6.exe, dom6_amd64, dom6_mac); null if not found.
+        /// </summary>
+        public static string? GameFolder()
+        {
+            if (Exe() is string exe && Path.GetDirectoryName(exe) is string dir && Directory.Exists(Path.Combine(dir, "data")))
+                return dir;
+            foreach (var folder in Candidates())
+                if (File.Exists(Path.Combine(folder, "data", "misc.trs")) || File.Exists(Path.Combine(folder, "data", "res.trs")))
+                    return folder;
             return null;
         }
 
@@ -47,23 +79,30 @@ namespace Dom5Edit.Events
             var libraries = new List<string>();
             try
             {
-                if (!OperatingSystem.IsWindows())
-                    return libraries;
-                var steam = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null) as string
-                            ?? Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null) as string;
-                if (string.IsNullOrEmpty(steam))
-                    return libraries;
-                libraries.Add(steam.Replace('/', '\\'));
-                var vdf = Path.Combine(steam, "steamapps", "libraryfolders.vdf");
-                if (File.Exists(vdf))
+                var roots = new List<string>();
+                if (OperatingSystem.IsWindows())
+                {
+                    var steam = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null) as string
+                                ?? Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null) as string;
+                    if (!string.IsNullOrEmpty(steam))
+                        roots.Add(steam.Replace('/', '\\'));
+                }
+                roots.AddRange(SteamRoots());
+                foreach (var root in roots)
+                {
+                    var vdf = Path.Combine(root, "steamapps", "libraryfolders.vdf");
+                    if (!File.Exists(vdf))
+                        continue;
+                    libraries.Add(root);
                     foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(File.ReadAllText(vdf), "\"path\"\\s+\"([^\"]+)\""))
-                        libraries.Add(m.Groups[1].Value.Replace("\\\\", "\\"));
+                        libraries.Add(m.Groups[1].Value.Replace("\\\\", "\\")); // (Windows paths are written with doubled backslashes)
+                }
             }
             catch (Exception)
             {
                 // no registry or an unreadable file: the usual places only
             }
-            return libraries.Distinct(StringComparer.OrdinalIgnoreCase);
+            return libraries.Distinct(OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal);
         }
     }
 
