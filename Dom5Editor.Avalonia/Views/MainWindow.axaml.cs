@@ -438,6 +438,7 @@ namespace Dom5Editor.Ava.Views
         private void Validate_Click(object? sender, RoutedEventArgs e) => OpenReport(rebuild: true);
         private void ReportOpen_Click(object? sender, RoutedEventArgs e) => OpenReport(rebuild: false);
         private void ReportClose_Click(object? sender, RoutedEventArgs e) => _vm.ShowReportBar = false;
+        private void NeededSuggestion_Click(object? sender, RoutedEventArgs e) => _vm.UseNeededSuggestion();
 
         private async void ReportSave_Click(object? sender, RoutedEventArgs e)
         {
