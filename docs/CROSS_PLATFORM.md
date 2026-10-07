@@ -5,6 +5,17 @@ was tried; the rest is from reading the code or general knowledge.
 
 ## Where things stand
 
+**Status (2026-10-07, evening): stages 1-4 done.** `Dom5Editor.Avalonia` has every view the WPF
+editor has (window, lists, page header and parts, all panels and badge chips, the event page and
+chain map, report and issue windows, Mod Info with the mods a mod needs) on the shared
+`Dom5Editor.Core`. Measured: sweeps open every page of DomEnhanced 2.13 (383) with 0 failures in
+both editors and let closed pages go (1 alive, ~268 MB); the linux-x64 package runs natively in
+WSL (Strigos over Sombre, texts from the exe, a 35-page sweep). Not yet: a run on a real Mac or a
+Linux desktop, signing (below), whether Mac/Linux Steam installs have `Dominions6.exe`. Stage 5
+(retire WPF) is the user's call.
+
+The rest of this section is the assessment as written that morning.
+
 - **Dom5Edit (core) and Dom5Tests (CLI) run on Linux** (measured: built with a local .NET 8 SDK
   in WSL, 0 errors, no platform warnings; `Dom5Tests check` on hermit.dm and DomEnhanced 2.13 saves
   byte-identical). The only registry use is guarded by `OperatingSystem.IsWindows()`
