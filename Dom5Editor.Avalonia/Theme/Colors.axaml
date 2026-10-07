@@ -39,5 +39,6 @@
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
     <SolidColorBrush x:Key="InputBackgroundBrush" Color="{StaticResource InputBackgroundColor}"/>
 
-    <FontFamily x:Key="MonospaceFont">Cascadia Mono, Consolas, DejaVu Sans Mono, Menlo, monospace</FontFamily>
+    <!-- (Consolas first, as WPF: Skia draws Cascadia Mono bold) -->
+    <FontFamily x:Key="MonospaceFont">Consolas, Menlo, DejaVu Sans Mono, Cascadia Mono, monospace</FontFamily>
 </ResourceDictionary>

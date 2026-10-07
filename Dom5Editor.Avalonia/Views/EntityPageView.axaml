@@ -84,8 +84,8 @@
         <DataTemplate x:Key="Part.Note">
             <StackPanel Margin="0,0,0,8" IsVisible="{Binding IsReadOnly}">
                 <TextBlock Text="{Binding ReadOnlyNote}" Foreground="{StaticResource WarningBrush}" TextWrapping="Wrap"/>
-                <Button Content="New band from this one" Classes="small" Margin="0,4,0,0" Command="{Binding CopyToNewCommand}"
-                        ToolTip.Tip="Make a new band (#newmerc) with this one's values, and open it to edit"/>
+                <Button Content="{Binding CopyToNewLabel}" Classes="small" Margin="0,4,0,0" Command="{Binding CopyToNewCommand}"
+                        ToolTip.Tip="{Binding CopyToNewTip}"/>
             </StackPanel>
         </DataTemplate>
         <!-- the description (the game's own when nothing sets it) -->

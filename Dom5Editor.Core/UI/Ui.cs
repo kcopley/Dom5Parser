@@ -34,19 +34,47 @@ namespace Dom5Editor.UI
         public static Action<EventHandler>? AddRequery { get; set; }
         public static Action<EventHandler>? RemoveRequery { get; set; }
 
-        private static event EventHandler? Requery;
+        // the listeners without a toolkit's own list, held weakly by their object (as WPF's
+        // CommandManager does): a button that's gone mustn't keep its page alive. (Avalonia's
+        // buttons don't always stop listening when they leave the window: a sweep of 33 pages
+        // kept 730 of them, and every page they showed.)
+        private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, List<EventHandler>> _requery = new();
+        private static readonly List<EventHandler> _requeryStatic = new();
 
         internal static void Subscribe(EventHandler handler)
         {
-            if (AddRequery != null) AddRequery(handler); else Requery += handler;
+            if (AddRequery != null)
+                AddRequery(handler);
+            else if (handler.Target is object target)
+                _requery.GetOrCreateValue(target).Add(handler);
+            else
+                _requeryStatic.Add(handler);
         }
 
         internal static void Unsubscribe(EventHandler handler)
         {
-            if (RemoveRequery != null) RemoveRequery(handler); else Requery -= handler;
+            if (RemoveRequery != null)
+                RemoveRequery(handler);
+            else if (handler.Target is object target)
+            {
+                if (_requery.TryGetValue(target, out var list))
+                    list.Remove(handler);
+            }
+            else
+                _requeryStatic.Remove(handler);
         }
 
+        private static List<EventHandler> RequeryHandlers() =>
+            _requery.SelectMany(kv => kv.Value).Concat(_requeryStatic).ToList();
+
+        /// <summary>How many listen for "check again" without the toolkit (the snapshot sweep checks closed pages let go).</summary>
+        internal static int RequeryListeners => RequeryHandlers().Count;
+
         /// <summary>Tells every command to check again whether it can run (where the toolkit doesn't).</summary>
-        public static void RequeryCommands() => Requery?.Invoke(null, EventArgs.Empty);
+        public static void RequeryCommands()
+        {
+            foreach (var handler in RequeryHandlers())
+                handler(null, EventArgs.Empty);
+        }
     }
 }
