@@ -8,15 +8,37 @@ namespace Dom5Editor.Ava.Views
     {
         private EntityTypeTab? _tab;
 
+        /// <summary>The list's width, the same on every tab: the splitter sets it, the window remembers it between runs.</summary>
+        public static double ListWidth { get; set; } = 300;
+
         public EntityTypeTabView()
         {
             InitializeComponent();
             DataContextChanged += (s, e) => Attach(DataContext as EntityTypeTab);
+            // (another tab's view may have moved it since this one was shown)
+            AttachedToVisualTree += (s, e) => Layout.ColumnDefinitions[0].Width = new GridLength(ListWidth);
+            Splitter.DragCompleted += (s, e) => ListWidth = Layout.ColumnDefinitions[0].ActualWidth;
             Sort.SelectionChanged += (s, e) =>
             {
                 if (_tab != null)
                     _tab.SortBy = Sort.SelectedIndex == 1 ? "DisplayName" : "ID";
             };
+        }
+
+        /// <summary>Ctrl+F: the cursor in the list's search box, its text selected.</summary>
+        public void FocusSearch()
+        {
+            Search.Focus();
+            Search.SelectAll();
+        }
+
+        /// <summary>The cursor in the list, on the selected row (after "Go to").</summary>
+        public void FocusList()
+        {
+            if (List.SelectedItem != null && List.ContainerFromItem(List.SelectedItem) is Control row)
+                row.Focus();
+            else
+                List.Focus();
         }
 
         private void Attach(EntityTypeTab? tab)

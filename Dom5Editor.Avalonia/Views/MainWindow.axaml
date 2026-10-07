@@ -3,10 +3,13 @@
         xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
         xmlns:coreviews="clr-namespace:Dom5Editor.UI.Views;assembly=Dom5Editor.Core"
         xmlns:views="clr-namespace:Dom5Editor.Ava.Views"
+        xmlns:ctl="clr-namespace:Dom5Editor.Ava.Controls"
         x:Class="Dom5Editor.Ava.Views.MainWindow"
-        Title="Dom6 Mod Editor" Width="1400" Height="900" MinWidth="760" MinHeight="480">
-    <!-- The editor's window, as the WPF one (Dom5Editor/UI/Views/MainWindow.xaml): toolbar, the
-         report bar after opening a mod, a tab for the mod's header and each entity type, status -->
+        Title="Dom6 Mod Editor" Width="1400" Height="900" MinWidth="760" MinHeight="480"
+        WindowStartupLocation="CenterScreen">
+    <!-- The editor's window, as the WPF one (Dom5Editor/UI/Views/MainWindow.xaml): toolbar (with the
+         Load menu and the "Go to" box), the report bar after opening a mod, a tab for the mod's
+         header and each entity type, status -->
     <Window.DataTemplates>
         <DataTemplate DataType="coreviews:ModInfoViewModel">
             <views:ModInfoView/>
@@ -17,13 +20,23 @@
     </Window.DataTemplates>
 
     <DockPanel>
-        <!-- TOOLBAR -->
+        <!-- TOOLBAR: file, undo, back/forward; then "go to" (it takes the room left, within limits), validate; right: the mod's name -->
         <Border DockPanel.Dock="Top" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0,0,0,1" Padding="8,6">
-            <DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*" MinWidth="140" MaxWidth="400"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="60"/>
+                </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <Button Content="New" ToolTip.Tip="Start a new, empty mod (Ctrl+N)" Click="New_Click"/>
-                    <Button Content="Load" ToolTip.Tip="Open a .dm mod file (Ctrl+O)" Click="Load_Click"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Load" ToolTip.Tip="Open a .dm mod file (Ctrl+O)" Click="Load_Click" CornerRadius="4,0,0,4"/>
+                        <Button x:Name="LoadMenuButton" Content="▾" Padding="6,5" CornerRadius="0,4,4,0" Margin="1,0,0,0"
+                                ToolTip.Tip="Open a mod you worked on recently; the Dominions 6 folder; this mod's backups" Click="LoadMenu_Click"/>
+                    </StackPanel>
                     <Button Content="Save" ToolTip.Tip="Save the mod (Ctrl+S)" IsEnabled="{Binding HasMod}" Click="Save_Click"/>
                     <Button Content="Save As" ToolTip.Tip="Save the mod to a new file (Ctrl+Shift+S)" IsEnabled="{Binding HasMod}" Click="SaveAs_Click"/>
                     <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
@@ -32,17 +45,26 @@
                     <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
                     <Button Content="◀" ToolTip.Tip="Back to the previous entity (Alt+Left)" IsEnabled="{Binding CanGoBack}" Click="Back_Click"/>
                     <Button Content="▶" ToolTip.Tip="Forward to the next entity (Alt+Right)" IsEnabled="{Binding CanGoForward}" Click="Forward_Click"/>
-                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
-                    <Button Content="Validate" ToolTip.Tip="Check the mod for problems (unread lines, missing references, ID clashes)" IsEnabled="{Binding HasMod}" Click="Validate_Click"/>
                 </StackPanel>
-                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Spacing="6">
-                    <TextBlock Text="*" Foreground="{StaticResource WarningBrush}" FontWeight="Bold" IsVisible="{Binding IsDirty}" ToolTip.Tip="Unsaved changes"/>
-                    <TextBlock Text="{Binding ModName, FallbackValue='No mod loaded'}" Classes="subheader" TextTrimming="CharacterEllipsis" MaxWidth="420"/>
-                </StackPanel>
-            </DockPanel>
+
+                <ctl:RefPicker x:Name="JumpBox" Grid.Column="1" Margin="12,0,8,0" VerticalAlignment="Center"
+                               IsEnabled="{Binding HasMod}" ItemsSource="{Binding JumpTargets}"
+                               Placeholder="Go to any entity... (Ctrl+P)"
+                               ToolTip.Tip="Go to any monster, weapon, spell, nation, event... by name or ID (Ctrl+P)"/>
+                <Button Grid.Column="2" Content="Validate" IsEnabled="{Binding HasMod}" Click="Validate_Click"
+                        ToolTip.Tip="Check the mod for problems (unread lines, missing references, ID clashes)"/>
+
+                <!-- the mod's name: trimmed when the window is narrow (the whole name in its tooltip) -->
+                <DockPanel Grid.Column="3" Margin="12,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock DockPanel.Dock="Left" Text="*" Foreground="{StaticResource WarningBrush}" FontWeight="Bold" Margin="0,0,6,0"
+                               IsVisible="{Binding IsDirty}" ToolTip.Tip="Unsaved changes"/>
+                    <TextBlock Text="{Binding ModName, FallbackValue='No mod loaded'}" ToolTip.Tip="{Binding ModName, FallbackValue='No mod loaded'}"
+                               Classes="subheader" TextTrimming="CharacterEllipsis"/>
+                </DockPanel>
+            </Grid>
         </Border>
 
-        <!-- REPORT BAR: what the check on opening found -->
+        <!-- REPORT BAR: what the check on opening found (MainWindowViewModel.CheckOnOpen) -->
         <Border DockPanel.Dock="Top" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0,0,0,1" Padding="0,5,12,5" IsVisible="{Binding ShowReportBar}">
             <DockPanel>
@@ -50,9 +72,10 @@
                            Fill="{Binding ReportHasWrong, Converter={x:Static views:Brushes.ErrorOrWarning}}"/>
                 <Button DockPanel.Dock="Right" Content="✕" Classes="small" Margin="6,0,0,0" ToolTip.Tip="Hide this bar (Validate shows the report again)" Click="ReportClose_Click"/>
                 <Button DockPanel.Dock="Right" Content="Save for the author..." Classes="small" Margin="6,0,0,0"
-                        ToolTip.Tip="Save the report as a Markdown file to send to the mod's author" Click="ReportSave_Click"/>
+                        ToolTip.Tip="Save the report as a Markdown file to send to the mod's author: every finding with its line in the file and what the game does with it"
+                        Click="ReportSave_Click"/>
                 <Button DockPanel.Dock="Right" Content="Open report" Classes="small" Margin="6,0,0,0"
-                        ToolTip.Tip="See what the check found, section by section" Click="ReportOpen_Click"/>
+                        ToolTip.Tip="See what the check found, section by section, with a Go to for each line" Click="ReportOpen_Click"/>
                 <TextBlock Text="{Binding ReportSummary}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ReportSummary}"/>
             </DockPanel>
         </Border>
@@ -61,12 +84,13 @@
         <Border DockPanel.Dock="Bottom" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0,1,0,0" Padding="12,6">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Right" Classes="muted" Text="{Binding EntityCount, StringFormat='Entities: {0}'}"/>
-                <TextBlock Classes="muted" Text="{Binding StatusMessage}" TextTrimming="CharacterEllipsis"/>
+                <TextBlock DockPanel.Dock="Right" Classes="muted" Margin="12,0,0,0" Text="{Binding EntityCount, StringFormat='Entities: {0}'}"/>
+                <TextBlock Classes="muted" Text="{Binding StatusMessage, FallbackValue='Ready'}" TextTrimming="CharacterEllipsis"
+                           ToolTip.Tip="{Binding StatusMessage}"/>
             </DockPanel>
         </Border>
 
-        <!-- THE TABS -->
+        <!-- THE TABS: the mod header, then a tab per entity type (MainWindowViewModel.Tabs) -->
         <Panel>
             <TabControl x:Name="Tabs" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab, Mode=TwoWay}" IsVisible="{Binding HasMod}"
                         Padding="0" Background="{StaticResource BackgroundDarkBrush}">
@@ -80,8 +104,8 @@
                 <TextBlock Text="No mod loaded" Classes="header" HorizontalAlignment="Center"/>
                 <TextBlock Text="Load an existing mod or create a new one to get started." Classes="muted" HorizontalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
-                    <Button Content="New Mod" Classes="accent" Click="New_Click"/>
-                    <Button Content="Load Mod" Click="Load_Click"/>
+                    <Button Content="New Mod" Classes="accent" ToolTip.Tip="Start a new, empty mod (Ctrl+N)" Click="New_Click"/>
+                    <Button Content="Load Mod" ToolTip.Tip="Open a .dm mod file (Ctrl+O)" Click="Load_Click"/>
                 </StackPanel>
             </StackPanel>
         </Panel>
