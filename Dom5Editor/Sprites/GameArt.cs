@@ -18,13 +18,6 @@ namespace Dom5Editor.Sprites
     /// </summary>
     public static class GameArt
     {
-        /// <summary>The default Steam install folders, tried in order after the configured one.</summary>
-        public static readonly IReadOnlyList<string> DefaultFolders = new[]
-        {
-            @"C:\Games\Steam\steamapps\common\Dominions6\data",
-            @"C:\Program Files (x86)\Steam\steamapps\common\Dominions6\data",
-        };
-
         private static readonly object _lock = new object();
         private static string? _configured;
         private static bool _resolved;
@@ -349,9 +342,8 @@ namespace Dom5Editor.Sprites
                 candidates.Add(_configured);
                 candidates.Add(Path.Combine(_configured, "data"));
             }
-            candidates.AddRange(DefaultFolders);
-            // where the game's exe is (the one the vanilla events' messages are read from)
-            if (Dom5Edit.Events.GameInstall.Exe() is string exe && Path.GetDirectoryName(exe) is string game)
+            // the game's folder on this system (Steam's usual places and libraries; GameInstall)
+            if (Dom5Edit.Events.GameInstall.GameFolder() is string game)
                 candidates.Add(Path.Combine(game, "data"));
             foreach (var c in candidates)
             {

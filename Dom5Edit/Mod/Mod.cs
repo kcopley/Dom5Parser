@@ -800,7 +800,8 @@ namespace Dom5Edit
             if (indexOfDotDM != -1)
             {
                 string logFile = this.FullFilePath.Substring(0, indexOfDotDM) + "-log.txt";
-                if (File.Exists(logFile)) System.Diagnostics.Process.Start(logFile);
+                if (File.Exists(logFile))
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(logFile) { UseShellExecute = true });
             }
         }
 
