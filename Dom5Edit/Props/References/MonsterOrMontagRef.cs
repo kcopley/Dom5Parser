@@ -3,7 +3,7 @@ using Dom5Edit.Entities;
 
 namespace Dom5Edit.Props
 {
-    public class MonsterOrMontagRef : Reference
+    public class MonsterOrMontagRef : Reference, IMultiReference
     {
         public MontagIDRef MontagRef;
         public MonsterRef MonsterRef;
@@ -52,6 +52,9 @@ namespace Dom5Edit.Props
             }
             return false;
         }
+
+        /// <summary>A monster tag's monsters (-11: those with #montag 11); nothing for a monster.</summary>
+        public IEnumerable<IDEntity> Targets() => MontagRef?.Targets() ?? Enumerable.Empty<IDEntity>();
 
         public bool TrySetEntity(IDEntity e)
         {

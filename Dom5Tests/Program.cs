@@ -48,6 +48,9 @@ namespace Dom5Tests
                 case "check":
                     ModCheck.Run(basePath, args);
                     break;
+                case "usage":
+                    UsageSurvey.Run(basePath, args);
+                    break;
                 case "texts":
                     Texts(basePath, args);
                     break;

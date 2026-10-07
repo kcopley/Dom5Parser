@@ -29,6 +29,13 @@ namespace Dom5Edit
         // Effect numbers that use bitmask damage values
         private HashSet<int> _bitmaskEffects = new();
 
+        // effects whose #damage picks from one of the game's unit lists (the uniques a Bind ritual
+        // chooses from, a terrain summon's units, the Tartarian Gate's): effect -> (kind, list name)
+        private readonly Dictionary<int, (string Kind, string? Lookup)> _listEffects = new();
+        // list name ("uniqueSummon", "terrainSummon", "tartarianGate", ...) -> key -> units
+        private readonly Dictionary<string, Dictionary<int, int[]>> _keyedLists = new();
+        private readonly Dictionary<string, int[]> _fixedLists = new();
+
         public static SpellEffectData Instance
         {
             get
@@ -101,6 +108,7 @@ namespace Dom5Edit
             string json = File.ReadAllText(path);
             using var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
+            LoadUnitLists(root);
 
             if (root.TryGetProperty("effect_types", out var effectTypes))
             {
@@ -111,6 +119,15 @@ namespace Dom5Edit
                     if (effect.Value.TryGetProperty("argument_type", out var argType))
                     {
                         string argTypeStr = argType.GetString() ?? "";
+                        // the file says what each effect it lists reads: the built-in (Dom5) guess no
+                        // longer applies to it (#damage 3 of Bind Heliophagus is list 3, not monster 3)
+                        _summonEffects.Remove(effectNum);
+                        _enchantEffects.Remove(effectNum);
+                        _eventEffects.Remove(effectNum);
+                        _bitmaskEffects.Remove(effectNum);
+                        var lookup = effect.Value.TryGetProperty("lookup", out var lk) ? lk.GetString() : null;
+                        if (argTypeStr is "unique_summon_key" or "terrain_summon_key" or "special_summon")
+                            _listEffects[effectNum] = (argTypeStr, lookup);
                         switch (argTypeStr)
                         {
                             case "unit_id":
@@ -129,6 +146,45 @@ namespace Dom5Edit
                     }
                 }
             }
+        }
+
+        /// <summary>The game's unit lists some effects pick from (uniqueSummon, terrainSummon, special_summon_arrays).</summary>
+        private void LoadUnitLists(JsonElement root)
+        {
+            foreach (var name in new[] { "uniqueSummon", "terrainSummon" })
+            {
+                if (!root.TryGetProperty(name, out var table) || table.ValueKind != JsonValueKind.Object)
+                    continue;
+                var keyed = new Dictionary<int, int[]>();
+                foreach (var entry in table.EnumerateObject())
+                    if (int.TryParse(entry.Name, out int key) && entry.Value.TryGetProperty("units", out var units))
+                        keyed[key] = units.EnumerateArray().Select(u => u.GetInt32()).ToArray();
+                _keyedLists[name] = keyed;
+            }
+            if (root.TryGetProperty("special_summon_arrays", out var arrays) && arrays.ValueKind == JsonValueKind.Object)
+                foreach (var entry in arrays.EnumerateObject())
+                    _fixedLists[entry.Name] = entry.Value.EnumerateArray().Select(u => u.GetInt32()).ToArray();
+        }
+
+        /// <summary>
+        /// The units an effect's #damage stands for when it's a key into one of the game's lists
+        /// (Bind Heliophagus: list 3, the four Heliophagi), or a fixed list (Tartarian Gate); empty
+        /// otherwise. "Used by" lists the spell under each.
+        /// </summary>
+        public IReadOnlyList<int> UnitsPicked(int effect, long damage)
+        {
+            if (effect > 10000) effect -= 10000;
+            // Enchant Battlefield with 43 calls the ghost ship armada (the effect table's note)
+            if (effect == 81 && damage == 43 && _fixedLists.TryGetValue("ghostShipArmada", out var ships))
+                return ships;
+            if (!_listEffects.TryGetValue(effect, out var list))
+                return Array.Empty<int>();
+            if (list.Kind == "special_summon")
+                return list.Lookup != null && _fixedLists.TryGetValue(list.Lookup, out var units) ? units : Array.Empty<int>();
+            var table = list.Kind == "unique_summon_key" ? "uniqueSummon" : "terrainSummon";
+            return _keyedLists.TryGetValue(list.Lookup ?? table, out var keyed) || _keyedLists.TryGetValue(table, out keyed)
+                ? keyed.TryGetValue((int)damage, out var picked) ? picked : Array.Empty<int>()
+                : Array.Empty<int>();
         }
 
         private void LoadSpellMapping(string path)
@@ -165,7 +221,9 @@ namespace Dom5Edit
         private void InitializeDefaultEffectTypes()
         {
             // Default summon effects (from Dom5 data as fallback)
-            _summonEffects = new HashSet<int> { 1, 21, 26, 31, 37, 38, 43, 50, 54, 62, 68, 76, 89, 93, 119, 126, 127, 130, 137, 141 };
+            // (not 89/114, whose #damage is a key into a list of uniques, nor 76/120/127, which pick
+            // from fixed lists, nor 68: spell_effect_types.json says so for those it lists)
+            _summonEffects = new HashSet<int> { 1, 21, 26, 31, 37, 38, 43, 50, 54, 62, 93, 119, 126, 130, 137, 141 };
 
             // Default enchant effects
             _enchantEffects = new HashSet<int> { 81, 82, 83, 84, 85, 86 };
