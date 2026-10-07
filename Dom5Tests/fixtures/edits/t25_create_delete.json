@@ -1,0 +1,38 @@
+{
+  "description": "New entities made in the editor and filled in, referring to each other (a unit with a new weapon, a mod armor and a mod mount; a site that recruits the new unit; an existing unit given the new weapon: \"@w\" is the new weapon's number), and deletions: a weapon copy, an unused mod unit, the mod's changes to a vanilla unit (it's the game's again: hp 12), the mod's last event.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "create", "entity": "weapon", "name": "Fresh Blade", "as": "w" },
+    { "op": "set", "entity": "weapon", "ref": "w", "command": "#dmg", "value": "11" },
+    { "op": "add", "entity": "weapon", "ref": "w", "command": "#pierce" },
+    { "op": "create", "entity": "monster", "name": "Fresh Unit", "as": "m" },
+    { "op": "set", "entity": "monster", "ref": "m", "command": "#hp", "value": "15" },
+    { "op": "add", "entity": "monster", "ref": "m", "command": "#weapon", "value": "@w" },
+    { "op": "add", "entity": "monster", "ref": "m", "command": "#armor", "value": "450" },
+    { "op": "set", "entity": "monster", "ref": "m", "command": "#mountmnr", "value": "5100" },
+    { "op": "add", "entity": "monster", "id": 5101, "command": "#weapon", "value": "@w" },
+    { "op": "create", "entity": "armor", "name": "Fresh Shield", "as": "a" },
+    { "op": "set", "entity": "armor", "ref": "a", "command": "#type", "value": "4" },
+    { "op": "set", "entity": "armor", "ref": "a", "command": "#prot", "value": "12" },
+    { "op": "set", "entity": "armor", "ref": "a", "command": "#def", "value": "3" },
+    { "op": "create", "entity": "site", "name": "Fresh Site", "as": "s" },
+    { "op": "set", "entity": "site", "ref": "s", "command": "#path", "value": "3" },
+    { "op": "set", "entity": "site", "ref": "s", "command": "#level", "value": "2" },
+    { "op": "add", "entity": "site", "ref": "s", "command": "#homemon", "value": "@m" },
+    { "op": "delete", "entity": "weapon", "id": 1201 },
+    { "op": "delete", "entity": "monster", "id": 5104 },
+    { "op": "delete", "entity": "monster", "id": 3 },
+    { "op": "delete", "entity": "event", "index": 2 }
+  ],
+  "expect": [
+    { "type": "wpn", "ref": "w", "new": { "name": "Fresh Blade", "dmg": "11", "pierce": "1" } },
+    { "type": "unit", "ref": "m", "new": { "name": "Fresh Unit", "hp": "15", "weapons": ["@w"], "armor": ["450"], "mountmnr": "5100" } },
+    { "type": "unit", "id": "5101", "field": "weapons", "from": ["9"], "to": ["9", "@w"] },
+    { "type": "armor", "ref": "a", "new": { "name": "Fresh Shield", "type": "4", "prot": "12", "def": "3" } },
+    { "type": "site", "ref": "s", "new": { "name": "Fresh Site", "path": "Earth", "level": "2", "hmon": ["@m"] } },
+    { "type": "wpn", "id": "1201", "deleted": true },
+    { "type": "unit", "id": "5104", "deleted": true },
+    { "type": "unit", "id": "3", "field": "hp", "from": "13", "to": "12" },
+    { "type": "event", "id": "3304", "deleted": true }
+  ]
+}

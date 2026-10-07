@@ -1,0 +1,15 @@
+{
+  "description": "A rider's sprites without its mount (#unmountedspr1/#unmountedspr2, image files: the oracle compares the paths), and a new unit made in the editor that copies a vanilla cavalry unit (#copystats 3): it has the Serpent Cataphract's mount, riding skill and lance, and its own name and hp.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 5102, "command": "#unmountedspr1", "value": "\"./test/rider_1.tga\"" },
+    { "op": "set", "entity": "monster", "id": 5102, "command": "#unmountedspr2", "value": "\"./test/rider_2.tga\"" },
+    { "op": "create", "entity": "monster", "name": "Serpent Copy", "as": "u" },
+    { "op": "set", "entity": "monster", "ref": "u", "command": "#hp", "value": "14" },
+    { "op": "set", "entity": "monster", "ref": "u", "command": "#copystats", "value": "3" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5102", "field": "sprite", "from": { "unitid": "5102" }, "to": { "unitid": "5102", "unmountedspr1": "./test/rider_1.tga", "unmountedspr2": "./test/rider_2.tga" } },
+    { "type": "unit", "ref": "u", "new": { "name": "Serpent Copy", "hp": "14", "mountmnr": "3536", "skilledrider": "1", "weapons": ["357"], "armor": ["126", "14", "2"], "att": "12" } }
+  ]
+}

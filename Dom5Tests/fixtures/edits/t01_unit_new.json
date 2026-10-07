@@ -1,0 +1,20 @@
+{
+  "description": "Monster made by the mod (#newmonster, copied by none): set a stat and the name, add a weapon, an armor, a flag and a magic path. Only that unit changes.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 5101, "command": "#hp", "value": "12" },
+    { "op": "add", "entity": "monster", "id": 5101, "command": "#weapon", "value": "1" },
+    { "op": "add", "entity": "monster", "id": 5101, "command": "#armor", "value": "5" },
+    { "op": "add", "entity": "monster", "id": 5101, "command": "#flying" },
+    { "op": "set", "entity": "monster", "id": 5101, "command": "#magicskill", "value": "5 2" },
+    { "op": "set", "entity": "monster", "id": 5101, "command": "#name", "value": "\"Renamed Corider\"" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5101", "field": "hp", "from": "9", "to": "12" },
+    { "type": "unit", "id": "5101", "field": "weapons", "from": ["9"], "to": ["9", "1"] },
+    { "type": "unit", "id": "5101", "field": "armor", "from": null, "to": ["5"] },
+    { "type": "unit", "id": "5101", "field": "flying", "from": null, "to": "1" },
+    { "type": "unit", "id": "5101", "field": "D", "from": null, "to": "2" },
+    { "type": "unit", "id": "5101", "field": "name", "from": "Test Corider", "to": "Renamed Corider" }
+  ]
+}

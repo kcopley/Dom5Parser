@@ -1,0 +1,21 @@
+{
+  "description": "Mounted units (Dom6): a mod rider (Test Rider: #mountmnr Test Mount, #coridermnr Test Corider, #skilledrider 1) changes mount, co-rider and riding skill; its copy (Test Rider Copy, #copystats after it) follows. Editing the mounts' own stats changes only the mounts.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 5102, "command": "#mountmnr", "value": "5104" },
+    { "op": "set", "entity": "monster", "id": 5102, "command": "#coridermnr", "value": "5105" },
+    { "op": "set", "entity": "monster", "id": 5102, "command": "#skilledrider", "value": "2" },
+    { "op": "set", "entity": "monster", "id": 5100, "command": "#hp", "value": "25" },
+    { "op": "set", "entity": "monster", "id": 5104, "command": "#mr", "value": "7" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5102", "field": "mountmnr", "from": "5100", "to": "5104" },
+    { "type": "unit", "id": "5103", "field": "mountmnr", "from": "5100", "to": "5104" },
+    { "type": "unit", "id": "5102", "field": "coridermnr", "from": "5101", "to": "5105" },
+    { "type": "unit", "id": "5103", "field": "coridermnr", "from": "5101", "to": "5105" },
+    { "type": "unit", "id": "5102", "field": "skilledrider", "from": "1", "to": "2" },
+    { "type": "unit", "id": "5103", "field": "skilledrider", "from": "1", "to": "2" },
+    { "type": "unit", "id": "5100", "field": "hp", "from": "20", "to": "25" },
+    { "type": "unit", "id": "5104", "field": "mr", "from": "5", "to": "7" }
+  ]
+}

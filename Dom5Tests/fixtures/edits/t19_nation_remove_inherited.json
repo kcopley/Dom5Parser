@@ -1,0 +1,17 @@
+{
+  "description": "Remove one recruit a vanilla nation has (Mekone, untouched: unit 3120): the game offers only #clearrec, so the editor clears the recruitment lists and adds every other recruit and commander back. The oracle reads the game's lists only after mods (post-processing), so at parse time it sees the lists written out: units and commanders from nothing to Mekone's others (vanilla.dm). Its walls and guards (#wallunit, #guardunit: not recruitment, the oracle ignores them) stay: re-read.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "remove", "entity": "nation", "id": 6, "command": "#addrecunit", "value": "3120" }
+  ],
+  "expect": [
+    { "type": "nation", "id": "6", "field": "units", "from": null, "to": ["3100", "3101", "3103", "3105", "3109", "3110"] },
+    { "type": "nation", "id": "6", "field": "commanders", "from": null, "to": ["3107", "3108", "3111", "3114", "3115", "3116"] }
+  ],
+  "reread": [
+    { "entity": "nation", "id": 6, "command": "#addrecunit", "values": ["3100", "3101", "3103", "3105", "3109", "3110"] },
+    { "entity": "nation", "id": 6, "command": "#addreccom", "values": ["3107", "3108", "3111", "3114", "3115", "3116"] },
+    { "entity": "nation", "id": 6, "command": "#wallunit", "values": ["3120"] },
+    { "entity": "nation", "id": 6, "command": "#guardunit", "values": ["3109"] }
+  ]
+}

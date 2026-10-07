@@ -1,0 +1,20 @@
+{
+  "description": "Mounted units from the game: the selected Serpent Cataphract changes mount (to War Elephant); the untouched Elephant Rider changes co-rider (to a mod unit), riding skill and number of riders; the untouched Heavy Cavalry loses its inherited mount (#mountmnr 0: the ability is removed on 0; the oracle keeps \"0\"); the Destrier (the Knight's mount) gets more hp, and the Knight doesn't change.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 3, "command": "#mountmnr", "value": "3540" },
+    { "op": "set", "entity": "monster", "id": 150, "command": "#coridermnr", "value": "5101" },
+    { "op": "set", "entity": "monster", "id": 150, "command": "#skilledrider", "value": "2" },
+    { "op": "set", "entity": "monster", "id": 150, "command": "#nofriders", "value": "2" },
+    { "op": "remove", "entity": "monster", "id": 19, "command": "#mountmnr" },
+    { "op": "set", "entity": "monster", "id": 3517, "command": "#hp", "value": "25" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "3", "field": "mountmnr", "from": "3536", "to": "3540" },
+    { "type": "unit", "id": "150", "field": "coridermnr", "from": "4013", "to": "5101" },
+    { "type": "unit", "id": "150", "field": "skilledrider", "from": null, "to": "2" },
+    { "type": "unit", "id": "150", "field": "nofriders", "from": "3", "to": "2" },
+    { "type": "unit", "id": "19", "field": "mountmnr", "from": "3516", "to": "0" },
+    { "type": "unit", "id": "3517", "field": "hp", "from": "22", "to": "25" }
+  ]
+}
