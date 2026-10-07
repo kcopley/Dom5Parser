@@ -1,8 +1,378 @@
-<!-- The event page's parts (UI.ViewModels.EventPage: the script, requirements, effects, the chain
-     map, ...), each a DataTemplate keyed "Panel.TypeName", as the WPF editor's EventTemplates.xaml. -->
+<!-- The event page's parts (UI.ViewModels.EventPage: how it's rolled and owned, the message,
+     requirements by group, effects in order, how it chains) and a spell's events (SpellEventsPanel),
+     each a DataTemplate keyed "Panel.TypeName", as the WPF editor's EventTemplates.xaml
+     (docs/EVENT_EDITOR.md E-3). Templates used inside them are keyed "Event.*". -->
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
                     xmlns:local="clr-namespace:Dom5Editor.Ava"
                     xmlns:controls="clr-namespace:Dom5Editor.Ava.Controls">
+
+    <!-- a section's small caps title (WHEN, THEN, MESSAGE, ...) -->
+    <ControlTheme x:Key="EventTitle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+        <Setter Property="Margin" Value="0,0,0,4"/>
+    </ControlTheme>
+
+    <!-- the boxed sections (how it's rolled, the chain) -->
+    <ControlTheme x:Key="EventBox" TargetType="Border">
+        <Setter Property="Background" Value="#10FFFFFF"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="Margin" Value="0,0,0,10"/>
+    </ControlTheme>
+
+    <!-- a light expander, as WPF's: a round chevron and the header, no bar (the preview, the map) -->
+    <ControlTheme x:Key="EventExpanderToggle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Orientation="Horizontal" Spacing="6" Background="{TemplateBinding Background}">
+                    <Panel Width="16" Height="16" VerticalAlignment="Center">
+                        <Ellipse Fill="#E4E4E8"/>
+                        <Path Name="Chevron" Data="M 4.5,6.5 L 8,10 L 11.5,6.5" Stroke="#1A1A1F" StrokeThickness="1.6" RenderTransformOrigin="50%,50%"/>
+                    </Panel>
+                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:checked /template/ Path#Chevron">
+            <Setter Property="RenderTransform" Value="rotate(180deg)"/>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="EventExpander" TargetType="Expander">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DockPanel>
+                    <ToggleButton DockPanel.Dock="Top" HorizontalAlignment="Left" Theme="{StaticResource EventExpanderToggle}"
+                                  IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
+                                  Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      IsVisible="{TemplateBinding IsExpanded}"/>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- a link to an event or spell on the other end of a line -->
+    <DataTemplate x:Key="Event.LinkChip">
+        <Button Command="{Binding OpenCommand}" Margin="6,1,0,1" Padding="5,0" MinHeight="22" Cursor="Hand" ToolTip.Tip="{Binding Tooltip}"
+                Classes="small" VerticalAlignment="Center" VerticalContentAlignment="Center">
+            <TextBlock>
+                <Run Text="{Binding Label, Mode=OneWay}" Foreground="{DynamicResource TextMutedBrush}"/>
+                <Run Text="{Binding Title, Mode=OneWay}" Foreground="{DynamicResource AccentHighlightBrush}"/>
+            </TextBlock>
+        </Button>
+    </DataTemplate>
+
+    <!-- a spell's events (its enchantment's, or the ones it causes) -->
+    <DataTemplate x:Key="Panel.SpellEventsPanel">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Theme="{StaticResource EventTitle}"/>
+            <ItemsControl ItemsSource="{Binding Events}" ItemTemplate="{StaticResource Event.LinkChip}">
+                <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <TextBlock Text="{Binding Hint}" Foreground="{DynamicResource TextMutedBrush}" Margin="0,2,0,2" IsVisible="{Binding HasHint}"/>
+            <Button Content="{Binding NewLabel}" Command="{Binding NewCommand}" Classes="small" HorizontalAlignment="Left" Margin="0,4,0,0"
+                    ToolTip.Tip="Makes an event (always, unlimited) that requires this enchantment, once a month, or that has this spell's event id; opens it"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- how it's rolled and who owns it -->
+    <DataTemplate x:Key="Panel.EventHeaderPanel">
+        <Border Theme="{StaticResource EventBox}">
+            <Grid ColumnDefinitions="90,Auto,*" RowDefinitions="Auto,Auto">
+                <TextBlock Text="ROLLED AS" Theme="{StaticResource EventTitle}" VerticalAlignment="Center" Margin="0"/>
+                <ComboBox Grid.Column="1" Width="230" MinHeight="0" Height="26" Padding="8,0,0,0" VerticalContentAlignment="Center"
+                          Background="{DynamicResource InputBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                          ItemsSource="{Binding Rarities}" DisplayMemberBinding="{Binding Name}" SelectedValueBinding="{Binding Value}"
+                          SelectedValue="{Binding Rarity, Mode=TwoWay}" ToolTip.Tip="{Binding RarityTooltip}"/>
+                <TextBlock Grid.Column="2" Text="{Binding RarityMeaning}" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap"
+                           VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <TextBlock Grid.Row="1" Text="OWNED BY" Theme="{StaticResource EventTitle}" VerticalAlignment="Center" Margin="0,6,0,0"
+                           ToolTip.Tip="The nation that gets the event's units, gold and message"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" Width="230" MinHeight="0" Height="26" Margin="0,6,0,0" Padding="8,0,0,0" VerticalContentAlignment="Center"
+                          Background="{DynamicResource InputBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                          ItemsSource="{x:Static vm:EventHeaderPanel.OwnerOptions}" DisplayMemberBinding="{Binding Name}" SelectedValueBinding="{Binding Value}"
+                          SelectedValue="{Binding Owner, Mode=TwoWay}" ToolTip.Tip="{Binding OwnerTooltip}"/>
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Margin="10,6,0,0">
+                    <controls:RefPicker Width="240" ItemsSource="{Binding Nations}" SelectedId="{Binding OwnerNation, Mode=TwoWay}"
+                                        Placeholder="(pick a nation)" ToolTip.Tip="The nation that owns the event (#nation): gets its units, gold and message"
+                                        IsVisible="{Binding IsNationOwner}"/>
+                    <StackPanel Orientation="Horizontal" IsVisible="{Binding IsEnchantmentOwner}">
+                        <TextBlock Text="enchantment" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBox controls:EventText.Value="{Binding OwnerEnchantment}"
+                                 Width="60" MinWidth="0" MinHeight="0" Padding="2,1" CornerRadius="0" VerticalAlignment="Center"
+                                 Background="#1AFFFFFF" BorderBrush="#40FFFFFF" BorderThickness="0,0,0,1"
+                                 ToolTip.Tip="The enchantment number (#nationench): the event goes to the nation that cast that global enchantment (a spell's #damage when its effect is 81/10081 ...)"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <!-- the message, its tags, header and options, the site or item it names -->
+    <DataTemplate x:Key="Panel.EventMessagePanel">
+        <StackPanel Margin="0,0,0,10">
+            <DockPanel>
+                <Panel DockPanel.Dock="Right">
+                    <TextBlock Text="{Binding LengthText}" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" IsVisible="{Binding !IsTooLong}"/>
+                    <TextBlock Text="{Binding LengthText}" FontSize="10" Foreground="{DynamicResource ErrorBrush}" IsVisible="{Binding IsTooLong}"/>
+                </Panel>
+                <TextBlock Text="MESSAGE" Theme="{StaticResource EventTitle}"/>
+            </DockPanel>
+            <TextBox x:Name="MessageBox" Text="{Binding Text, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True"
+                     MinHeight="70" MaxHeight="220" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="8,6"
+                     Background="{DynamicResource InputBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                     ToolTip.Tip="{Binding Tooltip}"/>
+            <TextBlock Text="The game's own message, read from your Dominions6.exe (not saved in the mod). A change writes the mod's own #msg."
+                       FontSize="10" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap" Margin="0,2,0,0"
+                       IsVisible="{Binding IsGameText}"/>
+            <DockPanel Margin="0,3,0,0">
+                <TextBlock DockPanel.Dock="Left" Text="Insert:" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Top" Margin="0,3,4,0"/>
+                <!-- (the tags go in at the message's cursor: EventText.InsertInto) -->
+                <ItemsControl ItemsSource="{x:Static vm:EventMessagePanel.Tags}" controls:EventText.InsertInto="MessageBox">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Tag}" Tag="{Binding Tag}" ToolTip.Tip="{Binding Meaning}" Focusable="False"
+                                    Classes="small" Margin="0,0,3,3" FontSize="9" Padding="4,0" MinHeight="22" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DockPanel>
+            <Expander Theme="{StaticResource EventExpander}" Margin="0,2,0,2" ToolTip.Tip="The message as players see it, with sample names">
+                <Expander.Header>
+                    <TextBlock Text="PREVIEW (as the player reads it, with sample names)" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                </Expander.Header>
+                <Border Background="#14FFFFFF" CornerRadius="4" Padding="10,6" Margin="0,4,0,0">
+                    <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                </Border>
+            </Expander>
+            <WrapPanel Orientation="Horizontal" Margin="0,2,0,0">
+                <TextBlock Text="Header" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <ComboBox Width="290" MinHeight="0" Height="26" Padding="8,0,0,0" VerticalContentAlignment="Center"
+                          Background="{DynamicResource InputBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                          ItemsSource="{Binding HeaderOptions}" DisplayMemberBinding="{Binding Name}" SelectedValueBinding="{Binding Value}"
+                          SelectedValue="{Binding Header, Mode=TwoWay}"
+                          ToolTip.Tip="The line the game puts above the message (#header): the default names the province"/>
+                <CheckBox Content="No message (#notext)" IsChecked="{Binding NoTextValue}" Margin="14,0,0,0" MinHeight="0" VerticalAlignment="Center"
+                          ToolTip.Tip="The event doesn't send a message"/>
+                <CheckBox Content="Not in the chronicle (#nolog)" IsChecked="{Binding NoLogValue}" Margin="12,0,0,0" MinHeight="0" VerticalAlignment="Center"
+                          ToolTip.Tip="The event doesn't appear in the province's history"/>
+            </WrapPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0" IsVisible="{Binding HasNamed}">
+                <Panel VerticalAlignment="Center"
+                       ToolTip.Tip="The name in brackets at the end of the message: site requirements and effects (#req_site, #revealsite, #addsite -1) and #magicitem 9 use it">
+                    <TextBlock Text="{Binding NamedNote}" Foreground="{DynamicResource TextSecondaryBrush}" IsVisible="{Binding !NamedIsWarning}"/>
+                    <TextBlock Text="{Binding NamedNote}" Foreground="{DynamicResource WarningBrush}" IsVisible="{Binding NamedIsWarning}"/>
+                </Panel>
+                <Button Content="→" Classes="small" Margin="6,0,0,0" Command="{Binding OpenNamedCommand}"
+                        IsVisible="{Binding OpenNamedCommand, Converter={x:Static ObjectConverters.IsNotNull}}"
+                        ToolTip.Tip="{Binding BracketName, StringFormat='Open {0}, the site or item the message names'}"/>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- one line: its sentence, the value editable in place, links -->
+    <DataTemplate x:Key="Event.LineRow">
+        <Border Classes="eventRow" Padding="4,1" CornerRadius="3" ToolTip.Tip="{Binding Tooltip}" ToolTip.ShowDelay="600">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="✕" Classes="small eventIcon" Margin="4,0,0,0" ToolTip.Tip="Remove this line"
+                        Command="{Binding RemoveCommand}" VerticalAlignment="Center" IsVisible="{Binding CanRemove}"/>
+                <!-- (effects only: their order matters; the requirements are by group) -->
+                <Button DockPanel.Dock="Right" Content="↓" Classes="small eventIcon" Margin="4,0,0,0"
+                        ToolTip.Tip="Move down (order matters: some lines act on the ones after them)"
+                        Command="{Binding MoveDownCommand}" IsEnabled="{Binding CanMoveDown}" VerticalAlignment="Center"
+                        IsVisible="{Binding !DataContext.IsRequirements, RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=2}}"/>
+                <Button DockPanel.Dock="Right" Content="↑" Classes="small eventIcon" Margin="4,0,0,0"
+                        ToolTip.Tip="Move up (order matters: some lines act on the ones after them)"
+                        Command="{Binding MoveUpCommand}" IsEnabled="{Binding CanMoveUp}" VerticalAlignment="Center"
+                        IsVisible="{Binding !DataContext.IsRequirements, RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=2}}"/>
+                <controls:GameIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Before}" VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                    <!-- a number -->
+                    <StackPanel Orientation="Horizontal" IsVisible="{Binding IsText}">
+                        <TextBox controls:EventText.Value="{Binding EditText}"
+                                 IsEnabled="{Binding CanEdit}" MinWidth="40" MinHeight="0" TextAlignment="Center" Margin="3,0" Padding="2,1"
+                                 CornerRadius="0" VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}"
+                                 Background="#1AFFFFFF" BorderBrush="#40FFFFFF" BorderThickness="0,0,0,1"/>
+                        <TextBlock Text="{Binding Suffix}" VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                    </StackPanel>
+                    <!-- one of a list -->
+                    <ComboBox ItemsSource="{Binding Options}" SelectedValueBinding="{Binding Value}" SelectedValue="{Binding Selected, Mode=TwoWay}"
+                              IsEnabled="{Binding CanEdit}" Padding="6,0,0,0" Margin="3,0" MinWidth="90" MinHeight="0" Height="24"
+                              VerticalContentAlignment="Center" VerticalAlignment="Center"
+                              Background="{DynamicResource InputBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                              IsVisible="{Binding IsChoice}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <controls:GameIcon Kind="{Binding Icon}" Width="14" Height="14" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <!-- yes or no: the two sentences -->
+                    <ComboBox ItemsSource="{Binding Options}" DisplayMemberBinding="{Binding Name}" SelectedValueBinding="{Binding Value}"
+                              SelectedValue="{Binding Selected, Mode=TwoWay}" IsEnabled="{Binding CanEdit}"
+                              Padding="6,0,0,0" MinHeight="0" Height="24" MinWidth="200" VerticalContentAlignment="Center" VerticalAlignment="Center"
+                              Background="{DynamicResource InputBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                              IsVisible="{Binding IsBool}"/>
+                    <!-- an entity -->
+                    <StackPanel Orientation="Horizontal" Margin="3,0" IsVisible="{Binding IsRef}">
+                        <controls:RefPicker Width="220" ItemsSource="{Binding Candidates}" SelectedId="{Binding RefId, Mode=TwoWay}"
+                                            IsEnabled="{Binding CanEdit}" Placeholder="(pick)" VerticalAlignment="Center"/>
+                        <Button Content="→" Classes="small eventIcon" Margin="3,0,0,0" Command="{Binding OpenCommand}" ToolTip.Tip="{Binding OpenTip}"
+                                VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <!-- flags (orders, afflictions, terrain): the list drops down -->
+                    <Button Margin="3,0" Padding="6,0" MinHeight="0" Height="22" MinWidth="120" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                            VerticalAlignment="Center" IsEnabled="{Binding CanEdit}" CornerRadius="0"
+                            Background="#1AFFFFFF" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="#40FFFFFF" BorderThickness="1"
+                            ToolTip.Tip="Pick which" IsVisible="{Binding IsMask}">
+                        <TextBlock Text="{Binding MaskWords}" TextTrimming="CharacterEllipsis" MaxWidth="360"/>
+                        <Button.Flyout>
+                            <Flyout Placement="BottomEdgeAlignedLeft">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="360">
+                                    <ItemsControl ItemsSource="{Binding MaskOptions}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsOn}" Margin="0,1" MinHeight="0"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <TextBlock Text="{Binding After}" VerticalAlignment="Center" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                    <ItemsControl ItemsSource="{Binding Links}" ItemTemplate="{StaticResource Event.LinkChip}" VerticalAlignment="Center">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <TextBlock Text="{Binding Note}" Foreground="{DynamicResource WarningBrush}" VerticalAlignment="Center" Margin="8,0,0,0"
+                               IsVisible="{Binding HasNote}"/>
+                    <TextBlock Text="{Binding Info}" Foreground="{DynamicResource TextMutedBrush}" VerticalAlignment="Center" Margin="8,0,0,0"
+                               IsVisible="{Binding HasInfo}"/>
+                </WrapPanel>
+            </DockPanel>
+        </Border>
+    </DataTemplate>
+
+    <!-- requirements by group, or effects in order -->
+    <DataTemplate x:Key="Panel.EventLinesPanel">
+        <StackPanel Margin="0,0,0,12">
+            <StackPanel.Styles>
+                <!-- a line lights up under the pointer -->
+                <Style Selector="Border.eventRow">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+                <Style Selector="Border.eventRow:pointerover">
+                    <Setter Property="Background" Value="#12FFFFFF"/>
+                </Style>
+                <Style Selector="Button.eventIcon">
+                    <Setter Property="MinWidth" Value="24"/>
+                    <Setter Property="MinHeight" Value="24"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Styles>
+            <TextBlock Text="{Binding Title}" Theme="{StaticResource EventTitle}"/>
+            <TextBlock Text="{Binding EmptyText}" Foreground="{DynamicResource TextMutedBrush}" Margin="4,0,0,4" IsVisible="{Binding IsEmpty}"/>
+            <ItemsControl ItemsSource="{Binding Groups}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,4">
+                            <TextBlock Text="{Binding Title}" FontSize="10" Foreground="{DynamicResource AccentHighlightBrush}" Margin="4,2,0,1"
+                                       IsVisible="{Binding Title, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                            <ItemsControl ItemsSource="{Binding Rows}" ItemTemplate="{StaticResource Event.LineRow}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <controls:RefPicker Width="460" HorizontalAlignment="Left" Margin="4,3,0,0"
+                                ItemsSource="{Binding Addable}" SelectedId="{Binding AddPick, Mode=TwoWay}"
+                                Placeholder="{Binding AddPlaceholder}" ToolTip.Tip="{Binding AddTip}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- how the event chains, its problems, making follow-ups -->
+    <DataTemplate x:Key="Panel.EventChainPanel">
+        <Border Theme="{StaticResource EventBox}">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Right" Text="{Binding Position}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10"/>
+                    <TextBlock Text="CHAIN" Theme="{StaticResource EventTitle}"/>
+                </DockPanel>
+                <TextBlock Text="{Binding ChainText}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                <DockPanel IsVisible="{Binding HasStartedBy}">
+                    <TextBlock DockPanel.Dock="Left" Text="Started by" Width="80" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                    <ItemsControl ItemsSource="{Binding StartedBy}" ItemTemplate="{StaticResource Event.LinkChip}">
+                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </DockPanel>
+                <DockPanel IsVisible="{Binding HasComesFrom}">
+                    <TextBlock DockPanel.Dock="Left" Text="Comes from" Width="80" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                    <ItemsControl ItemsSource="{Binding ComesFrom}" ItemTemplate="{StaticResource Event.LinkChip}">
+                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </DockPanel>
+                <DockPanel IsVisible="{Binding HasLeadsTo}">
+                    <TextBlock DockPanel.Dock="Left" Text="Leads to" Width="80" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                    <ItemsControl ItemsSource="{Binding LeadsTo}" ItemTemplate="{StaticResource Event.LinkChip}">
+                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </DockPanel>
+                <Expander Theme="{StaticResource EventExpander}" IsExpanded="{Binding MapOpen, Mode=OneTime}" Margin="0,6,0,0"
+                          ToolTip.Tip="The chain as cards and arrows: click a card to open it, hover an arrow to see the link"
+                          IsVisible="{Binding HasMap}">
+                    <Expander.Header>
+                        <TextBlock FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}">
+                            <Run Text="{Binding MapTitle, Mode=OneWay}"/>
+                            <Run Text="  code" Foreground="#E0A040" FontWeight="Normal"/><Run Text="  delay" Foreground="#5BA8F5" FontWeight="Normal"/>
+                            <Run Text="  variable" Foreground="#4CC38A" FontWeight="Normal"/><Run Text="  choice" Foreground="#B07CF7" FontWeight="Normal"/>
+                            <Run Text="  blocks" Foreground="#E5484D" FontWeight="Normal"/><Run Text="  spell" Foreground="#9CA3AF" FontWeight="Normal"/>
+                        </TextBlock>
+                    </Expander.Header>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="520" Margin="0,4,0,0">
+                        <controls:ChainGraph Nodes="{Binding MapNodes}" Edges="{Binding MapEdges}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </ScrollViewer>
+                </Expander>
+                <ItemsControl ItemsSource="{Binding Problems}" Margin="0,4,0,0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Panel Margin="0,1">
+                                <TextBlock Text="{Binding Message, StringFormat='⚠ {0}'}" TextWrapping="Wrap" Foreground="{DynamicResource WarningBrush}"
+                                           IsVisible="{Binding !IsError}"/>
+                                <TextBlock Text="{Binding Message, StringFormat='⛔ {0}'}" TextWrapping="Wrap" Foreground="#E5484D"
+                                           IsVisible="{Binding IsError}"/>
+                            </Panel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <WrapPanel Orientation="Horizontal" Margin="0,6,0,0">
+                    <Button Content="+ Follow-up when this happens" Classes="small" Command="{Binding FollowUpCommand}" Margin="0,0,6,0"
+                            ToolTip.Tip="Sets a province code here (#code, with #req_code 0 if this event requires none) and makes an event that requires it and ends the chain (#code 0)"/>
+                    <Button Content="+ Delayed follow-up" Classes="small" Command="{Binding DelayedCommand}" Margin="0,0,6,0"
+                            ToolTip.Tip="Adds #delay 1 here and makes an event right after this one in the file: the game runs it a turn later. (Not for a game event: its #delay runs the game's next event.)"
+                            ToolTip.ShowOnDisabled="True"/>
+                    <Button Content="+ Player choice (accept / decline)" Classes="small" Command="{Binding ChoiceCommand}"
+                            ToolTip.Tip="Offers Accept and Decline in the province (#order 12) with a code, and makes an event for each answer (#req_targorder 102 / 103)"/>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
 </ResourceDictionary>
