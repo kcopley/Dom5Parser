@@ -861,6 +861,24 @@ def cmd_texts(exe, args):
     return res
 
 
+def cmd_dmread(exe, args):
+    """How the game reads a .dm file (dmread.py): without --mod, the rules read from the exe;
+    with --mod, where the game reads that file differently from a line-by-line reading, or with
+    --lines A-B what each pass reads on those lines."""
+    import dmread
+    rules = dmread.Rules(exe)
+    if not args.mod:
+        return dict({'game_version': exe.version, 'exe_sha256_16': exe.sha}, **rules.summary())
+    data = open(args.mod, 'rb').read()
+    ctxs = args.context.split(',') if args.context else None
+    if args.lines:
+        a, _, b = args.lines.partition('-')
+        for line in dmread.lines(data, rules, int(a), int(b or a), ctxs):
+            print(line)
+        return None
+    return dmread.differences(data, rules, ctxs)
+
+
 def cmd_tables(exe, args):
     out = {'game_version': exe.version, 'exe_sha256_16': exe.sha}
     for typ, spec in TABLES.items():
@@ -923,18 +941,23 @@ def cmd_readonly(exe, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['catalog', 'commands', 'events', 'layout', 'monsters', 'readonly', 'sprites', 'tables', 'texts', 'vanilla'])
+    ap.add_argument('what', choices=['catalog', 'commands', 'dmread', 'events', 'layout', 'monsters', 'readonly', 'sprites', 'tables', 'texts', 'vanilla'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
     ap.add_argument('--out', help='write JSON here (default: stdout)')
     ap.add_argument('--messages', action='store_true',
                     help='events: include the messages (the game\'s text: for local use, not for the repo)')
+    ap.add_argument('--mod', help='dmread: a .dm file to replay the game\'s reading on')
+    ap.add_argument('--lines', help='dmread: A-B, list what each pass reads on these lines')
+    ap.add_argument('--context', help='dmread: only these passes (monster,spell,...)')
     args = ap.parse_args()
     exe = Exe(args.exe)
     res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
            'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog, 'events': cmd_events,
-           'sprites': cmd_sprites, 'texts': cmd_texts}[args.what](exe, args)
+           'sprites': cmd_sprites, 'texts': cmd_texts, 'dmread': cmd_dmread}[args.what](exe, args)
+    if res is None:
+        return
     text = json.dumps(res, indent=1, default=str)
     if args.out:
         open(args.out, 'w').write(text + '\n')

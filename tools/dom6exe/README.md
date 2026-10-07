@@ -13,6 +13,7 @@ python3 tools/dom6exe/dom6exe.py catalog   --out Dom5Edit/GameData/game-commands
 python3 tools/dom6exe/dom6exe.py events    --out tools/dom6exe/data/events-6.37.dm
 python3 tools/dom6exe/dom6exe.py sprites   --out tools/dom6exe/data/sprites-6.37.json
 python3 tools/dom6exe/dom6exe.py texts     --out tools/dom6exe/data/texts-6.37.json
+python3 tools/dom6exe/dom6exe.py dmread    [--mod FILE.dm [--lines A-B] [--context monster,event]]
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
 `/mnt/c/Games/Steam/steamapps/common/Dominions6/Dominions6.exe`), `--inspector DIR` (a
@@ -31,6 +32,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `vanilla` | Every vanilla type the editor lists, written as the commands that store each value: weapons, armor, monsters, spells, items, sites and nations as `#select*` blocks (`vanilla_dm.py`), then blesses, poptypes and nametypes as `#select*` blocks and the mercenaries as `#newmerc` blocks (`vanilla_other.py`). Values no command can store are `-- ro:` lines (shown read-only). Each table's end marker (a record named "end") is left out. AI templates have no vanilla data: the game reads them only from mods. |
 | `sprites` | Which picture the game draws for each vanilla monster (and its attack frame and unmounted sprite) and item: the sprite numbers it stores, and the archive (`sprites.py`). Numbers only; the editor reads the pictures from the player's install (`Dom5Edit/VanillaSprites.cs`, `Dom5Editor/Sprites/GameArt.cs`). Also the rule for a site's picture, and (`"flag"`, `flags.py`) how the game builds a nation's flag from parts of `flag.trs` and the nation's colors. |
 | `texts` | Where the game keeps its texts (`texts.py`): monster, item and spell descriptions, a spell's details, portent and cure, a nation's description, summary and brief. Only locations: the two lists of string pointers, how each kind's key is made, and a checksum of the bytes read. The editor reads the texts from the player's own exe (Dom5Edit/GameData/VanillaTexts.cs). See Texts below. |
+| `dmread` | How the game reads a `.dm` file (`dmread.py`, "Reading .dm files" below). Alone: the rules it reads from the exe (the string commands per type with their length limit and whether reading skips their text, the `#new`/`#select` check, the types that refuse a missing `#end`). With `--mod`: the game's reading replayed on that file, and where it differs from a line-by-line reading (strings running over command lines, `#` read inside quotes, texts cut at their limit, fatal errors, ...); `--lines A-B` lists what each pass reads there. |
 | `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
 
 ## How it finds things (no hard-coded addresses)
@@ -53,6 +55,172 @@ and GNU `objdump`. The exe is never copied into the repo.
   sets one before the `#req_` commands and the other before the effects. Every run checks
   the record size against three consecutive vanilla events that share a message, and that
   the record after the last vanilla event reads "end".
+
+## Reading .dm files (6.37)
+
+How the game turns a mod file into commands, read from the code. `dmread.py` replays it on a
+file (`dom6exe.py dmread --mod FILE`); on Confluence 1.06, ForgottenRealms-095 and Sombre
+Warhammer (the examples below) and the other workshop mods installed here it reports no fatal
+error, as it should for mods that load.
+
+**One pass per entity type, over the whole text.** "Executing all mods" (0x140229c20) reads
+every mod 15 times, one pass per type in this order: sounds (0x1402462d0), weapons
+(0x140253300), armor (0x14022bdc0), monsters (0x140249700), name types (0x14023f570), blesses
+(0x14022cfa0), sites (0x1402330f0), nations (0x14023fb20), spells (0x1402469a0), items
+(0x140236620), general (0x1402350d0), poptypes (0x140245a70), mercenaries (0x14023df70), events
+(0x14022e5f0), AI templates (0x14022afb0). (`#modname`, `#description`, `#icon`, `#version` have
+their own reader, 0x14023f060.) Each pass loads the file (0x140068160), prepares it
+(0x140227150) and walks the text one byte at a time, `cmp BYTE PTR [text+pos],0x23`: at every
+`#`, wherever it is, it tries its commands; every other byte is skipped. There are no lines or
+tokens. So types are read in that order whatever their order in the file (a monster can name a
+weapon defined further down), and within a type in file order.
+
+**Preparing the text** ("preparemodtext", 0x140227150), before every pass:
+1. The file's last byte is overwritten by the terminator (`mov BYTE PTR [rax+rcx-1],0`; the
+   loader allocates exactly the file size). A file that doesn't end with a line break loses its
+   last character: PS Bloodwar Tanar'ri.dm ends with `#end`, which the game reads as `#en`, so
+   its last nation is never closed (harmless for a nation; for a spell, bless or sound block the
+   game stops: "no #end for modded spell").
+2. A CR before an LF is dropped. Tabs become spaces.
+3. `--` and everything after it to the line break is dropped, anywhere on the line: inside
+   quotes too.
+4. Every `$` is dropped (0x1400707b0; it's the marker steps 2-3 write over what they remove), in
+   texts too: `"costs $5"` reads `costs 5`.
+
+**Commands.** At a `#` a pass compares the text after it with its command names byte for byte
+(strncmp, 0x140311130): case matters, `#Name` and `#HP` aren't commands. The matcher
+(0x140258bb0, and the same code inlined in most parsers) also wants the next character not to
+be a letter or digit (0x140070f80, 0x140070fa0). The two generic handlers, which read most simple
+commands (0x1402595f0 for monsters, items and spells, 0x140259050 for sites, nations, poptypes
+and events), compare `"name "` for a command with an argument, so it must be followed by a space
+or tab, and `"name"` for one without (0x1402595f0 then refuses a following lowercase letter,
+0x140259050 checks nothing; no two of the game's own names collide this way). A name that
+matches nothing is ignored, as is everything that isn't after a `#`.
+
+After a command the scan goes on right after its name (the matcher leaves the name's length in
+0x14625e0c0, a branch that reads an argument adds it to the position, the generic handlers
+return it; then the loop adds 1): the argument isn't skipped, so every command on a line is
+read (`#stealthy 999 #inanimate #magicbeing`: all three). One exception, through that `+ 1`: a
+`#` glued to the end of a command name the branch stepped over is skipped (`#slave#amphibian`
+reads only `#slave`; none of the three mods below does this). At an unmatched `#` the scan also
+skips the next byte, so in `##landname##` the tag's name is never compared: message tags are
+never commands.
+
+**Arguments.**
+- Numbers and lookups: the rest of the line (0x1400f42a0: skip spaces, copy up to a CR, LF or
+  the end of the text, at most 2,499 characters, trim trailing spaces), then sscanf `%d`,
+  `%I64d` (generic handlers) or `%f`. So a sign and the digits up to the first non-digit: `+5`
+  is 5, `5.0` is 5, `12 #hp 5` is 12, `0x10` is 0. With no digits sscanf sets nothing: the
+  generic handlers then use 0 (clamped to the command's range), the others whatever their
+  variable held. A name argument (`#weapon "Net"`, `#selectmonster "Heavy Cavalry"`,
+  `#copystats`) is the first quoted string in that copy of the line, so it has to close on its
+  line; the lookup ignores ASCII case (0x140074100) and also takes `"Name (id)"` (0x1402b7720).
+- Texts: the quoted-string reader 0x1400f43e0 reads from the file text itself. The opening
+  quote must come before the line break (else it reads nothing); then it copies everything up
+  to the next `"`, across line breaks and `#`s, or to the end of the text, at most limit - 1
+  characters (table below). There's no escape: the first `"` after the opening one ends the
+  text, and what follows on that line isn't part of it (it's scanned for `#` like anything
+  else). Names, file names and lookups get `%` replaced by `_` (0x14006de70, called when the
+  reader's 4th argument is 1); descriptions and messages keep it.
+- `#descr`, `#name` (mercenaries' excepted), `#details`, `#portent`, `#cure`, `#summary`,
+  `#brief`, `#addname` that read nothing (no opening quote on their line, or `""`) stop the game
+  ("bad descr for new monster", "#name, empty name", "bad #summary for nation", ...). An empty
+  `#msg` or `#epithet` is accepted.
+
+**What the scan does after a text** (`add pos,eax` after the reader's call, or not):
+- Commands that skip their text: `#name` (all types but items), `#msg`, `#addname`, `#epithet`,
+  `#spr1` `#spr2` `#xspr1` `#xspr2` `#unmountedspr1` `#unmountedspr2`, item `#spr`, `#flag`,
+  `#indepflag`, `#sample`, weapon `#sound` (it also takes a number), the mercenary strings, the
+  AI template strings. The scan resumes the text's length after the command name, which is just
+  before the closing quote (one space between name and quote: at the text's last character), so
+  nothing inside the text is read: a text over several lines swallows the `#` lines in it. A
+  text cut at its limit resumes inside the text, at the cut.
+- Texts that don't: `#descr` (monsters, items, spells, nations), `#details`, `#portent`,
+  `#cure`, `#summary`, `#brief`, and item `#name`. The scan goes on right after the command name
+  through the text, so a `#` followed by a command name of that type inside it is a command, an
+  `#end` too.
+- Either way, commands after the closing quote on its line are read (Confluence 1.06 line 2547:
+  `...each month."	#spr1 "./..."`: the `#spr1` is read).
+
+| Text | Characters kept |
+|---|---|
+| `#name`: monster, weapon, armor, spell, nation; `#addname`; item and mercenary names (read up to 2,499, then cut) | 35 |
+| site `#name` / bless `#name` / `#epithet` | 39 / 31 / 37 |
+| `#descr` (monster, item, spell, nation), `#details`, `#portent`, `#cure` | 2,499 read, 1,999 stored (texts are stored in 2,000 bytes, see Texts) |
+| `#summary`, `#brief` | 499 |
+| `#msg` | 2,399 (the event record's 2,400 bytes) |
+| sprite and sound file names, `#flag`, AI template strings | 2,499 |
+| `#modname` / `#icon` / mod `#description` | 49 / 99 / 1,999 (the mod `#description` finds its opening quote anywhere after the command, also lines later, 0x1400f4350, and drops trailing whitespace) |
+
+**Blocks.** Outside a block a pass only knows its own `#new...`/`#select...` (and its
+`#clearall...`; the general pass has no blocks: its commands are read anywhere). Inside one it
+tests `#end` first, then the `#new`/`#select` check, then its own commands. `#end` is the only
+thing that closes a block.
+- The check (0x140258c90) compares the start of the text (no word end) with 20 names: `#select`
+  and `#new` for armor, weapons, monsters, items, nations, spells and sites, `#selectnametype`,
+  `#selectpoptype`, `#newtemplate`, `#clearallitems`, `#clearallspells`, `#clearallevents`.
+  Inside a monster, weapon, armor, item, spell, site, nation, event, bless, sound or AI template
+  block, any of them stops the game: "You must end modding the monster before using a #new... or
+  #select... command" (0x140067cc0 formats it, 0x1401e21d0 prints it, shows it and exits).
+- `#newevent`, `#selectevent`, `#newmerc`, `#selectbless`, `#selectsound` aren't on that list:
+  inside another type's open block, that pass ignores them and the block goes on to the next
+  `#end`, taking any of its own commands on the way (a bless block's `#name` renames the open
+  monster). Inside an open event block, `#newevent` is ignored by the event pass as well: the
+  next event's commands go to the open event.
+- Name type, poptype and mercenary blocks have no check: an open one takes that type's commands
+  from the following blocks until an `#end`.
+- A block still open at the end of the file stops the game for spells, blesses and sounds ("no
+  #end for modded spell"); the others keep it.
+
+**The questions, in short.** (1) Every command on a line is read. (2) A text reads to the next
+`"` across lines; a `#` line inside is text for the skipping commands (`#msg`, `#name`, ...) and
+still a command for the descriptions; with no closing quote the text runs to its limit or the
+end of the file. (3) Yes, text after a closing quote is scanned. (4) `#descr "#descr "Chaos
+Spawn ..."` (Sombre Warhammer line 105688, a spell): the first `#descr` reads `#descr ` (up to the
+second quote), the scan goes on into it, finds the second `#descr`, which reads `Chaos Spawn ...`
+and replaces the first: the description is "Chaos Spawn are horrifying creatures ...". (5)
+`--` is a comment anywhere, inside quotes too; indentation doesn't matter; no line length limit
+except 2,499 characters for a command's rest of line; text limits in the table. (6) No implicit
+close: a `#new`/`#select` in an open block is fatal for most types, ignored for the rest. (7)
+Case-sensitive commands, case-insensitive name lookups, sscanf numbers, no escaped quotes, `$`
+dropped, the last byte of the file dropped.
+
+**Compared with Dom5Parser's ModParser** (2026-10-07), on the three mods it was checked with:
+- A quote not closed on its line, followed by command lines: ModParser assumes a forgotten quote
+  and reads the commands. The game does too for the descriptions (Confluence 1.06 lines 32853,
+  113092, ..., ForgottenRealms-095 65057, Sombre Warhammer 132791: the commands are read; the
+  description's text runs on to the next quote), but not for the skipping commands:
+  ForgottenRealms-095 line 70735, `#msg "- The Darkstalker Wars Conclude - ` with `#removesite
+  2995`, `#decscale1 0`, `#gold 125` on the next lines and the closing quote 6 lines down: one
+  message of 7 lines (comment dropped), and the event has no #removesite, #decscale1 or #gold.
+  (ModParser reads the three as effects, and its single-dash comment rule turns the `#msg`'s
+  first line into a comment, leaving the message empty.)
+  Confluence 1.06 line 89817, `#addname "Sigbert Markus von Schwertfeld` (no closing quote): the
+  name is cut at 35 characters, `Sigbert Markus von Schwertfeld\n#add`, and the scan resumes
+  inside the next line, so `#addname "Luitpold Volmar von Middendorf"` isn't read.
+- A `#` inside a closed pair of quotes: text for the skipping commands, but read as a command in
+  a description (Sombre Warhammer 105688 and Confluence 1.06 109059, `#descr "#descr "...`:
+  the second `#descr` wins). ModParser reads the line as one `#descr` with the value `#descr
+  "Chaos Spawn ... Daemons.`.
+- Text after a closing quote: ModParser keeps it in the value (it trims the quotes at both
+  ends). The game ends the value at the first closing quote: ForgottenRealms-095 line 60146,
+  `#name "Shrine of the Undying Heart" inner sanctum of the cult of karsus and lair of
+  Wulgreth`, is "Shrine of the Undying Heart"; line 47070 `#descr "Some dolphins ... fine
+  scouts." These highly intelligent ...` ends at "scouts."; line 48278 `... very few became
+  "adept in the arts. ..."` ends at "became ".
+- `--` inside quotes: ModParser cuts the value there too, but the game then also loses the
+  closing quote, so the text runs on to the next `"` (ForgottenRealms.dm, an older file in the
+  same workshop item, line 33749: `#brief "'... Night Below.' -- except from Duerran dogma."` reads the brief up to the
+  opening quote of the next line's `#descr`).
+- Limits: Confluence 1.06 line 13958 `#name "Inscribe Greater Sigil of Enervation"` (36
+  characters) is "Inscribe Greater Sigil of Enervatio" in the game; ForgottenRealms-095 has 8
+  `#summary`/`#brief` texts over 499 characters (line 52010, ...).
+- Agrees: several commands on a line, commands after a multi-line text's closing quote
+  (Confluence 1.06 line 2547), message tags as text, case-sensitive command names. ModParser's
+  single `-` comment isn't one for the game, but in these mods it only cuts text the game
+  ignores too (after a number, after a closing quote) or can't read either (`#school - 1`,
+  `#mon SHADAR-KAI`), apart from Confluence 1.06 line 109059 (the `#descr "#descr "` line,
+  where it cuts the description at its first `-`).
 
 ## Game rules read from the code (6.37)
 
