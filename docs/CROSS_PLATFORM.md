@@ -75,3 +75,49 @@ Stages:
   warning: an Apple Developer ID ($99/year) and notarization (`notarytool`, or
   `rcodesign notary-submit`). Unsigned downloads: "Open Anyway" in Privacy & Security, or
   `xattr -dr com.apple.quarantine`. The game's Mac binary is arm64 only, so osx-x64 is optional.
+
+**Now (2026-10-07): `tools/publish-avalonia.sh`** (WSL, the Windows dotnet) builds
+`Dom5Editor.Avalonia` for linux-x64, linux-arm64, osx-arm64 and osx-x64 into `publish/`:
+`Dom6ModEditor-<version>-linux-*.tar.gz` (a folder: the program, the data files the Windows zip
+has, README.txt) and `Dom6ModEditor-<version>-osx-*.zip` (`Dom6 Mod Editor.app` and README.txt).
+`tools/package_avalonia.py` writes the archives so the program keeps its executable bit (files on
+a Windows drive have no real modes). Choices:
+- In the .app everything is in Contents/MacOS, next to the program (Avalonia's documented layout):
+  the editor finds its data next to its executable (`EditorStartup`, `CommandHints`, `GameArt`
+  ... use `AppContext.BaseDirectory`). Info.plist declares .dm files (Finder's Open With; the app
+  takes them through Avalonia's `IActivatableLifetime`).
+- Linux bundles the native libraries (Skia, HarfBuzz) in the one file (unpacked to `~/.net` on
+  first start); macOS keeps them as files next to it, so `codesign --deep` signs them too.
+- **Signing**: no `codesign` or `rcodesign` here, so the .app isn't signed as a bundle (no
+  `_CodeSignature`, Info.plist not bound). But the default SDK here is .NET 10 (10.0.401), whose
+  publish gives the single-file program an ad-hoc signature itself (measured: a valid code
+  directory over the whole file, every page hash matches; the "no signature" above was an SDK 8
+  build), and the three dylibs carry their vendors' signatures. Untested on a Mac. The tester
+  README (`tools/publish-avalonia-readme.txt`) has testers run `xattr -dr com.apple.quarantine`
+  and `codesign --force --deep --sign -` once (codesign ships with macOS). A release without
+  that step needs a Developer ID and notarization (above).
+- Measured: the linux-x64 package, unpacked in WSL, runs its `--snapshot` (headless) on
+  DomEnhanced 2.13 with `DOM6_EXE` set: texts, sprites, an edit, undo/redo, the report, a save
+  that differs from the original only by the edit. The macOS builds are untested (no Mac).
+
+## The Avalonia editor's window and harness
+
+- `Views/MainWindow` has what the WPF window has: the Load ▾ menu (recent mods, "Dominions 6
+  folder..." — a folder with Dominions6.exe, or data/*.trs: on Mac/Linux it says the texts need
+  Dominions6.exe — and "Backups of this mod...", opened with explorer/open/xdg-open), the "Go to"
+  box (Ctrl+P; it goes on Enter or a click, not while arrowing through the list), Ctrl+F, the
+  window's size, place and the list's width remembered (`Settings.ListWidth`, which WPF doesn't
+  use yet), the status note when the game isn't found, a crash handler (errors.log and a
+  recovery copy in `Settings.Folder`), a .dm on the command line. The core's synchronous
+  questions (`EntityTypeTab.Confirm`, `EntityPageViewModel.SaveFirst`) run a nested dispatcher
+  frame. Window shortcuts are taken before the focused control (text boxes would eat Alt+arrows),
+  except Option+arrows in a Mac text box (word moves there); undo/redo after it.
+- `Views/ValidationWindow` is WPF's ValidationReportWindow (the report's "Every issue...");
+  `ValidationIssueItem` moved to Dom5Editor.Core for both.
+- **The snapshot harness's view-model steps are shared**: `Dom5Editor.Core/UI/SnapshotSteps.cs`
+  (--mod, --select, --set/--add/--remove, --undo/--redo, --save, --sweep, --used-by, --dump,
+  --field, --event-*, ...), used by both harnesses, so a command line does and logs the same in
+  both (checked: five scripted sessions give the same logs and byte-identical saves in WPF before
+  and after the move, and in Avalonia). Each harness keeps the steps that look at controls
+  (--png, --view, --report, --tooltips; Avalonia also --validation, --key, --type, --load-menu).
+  The Avalonia harness points `Settings.Folder` and the backups at temp folders.

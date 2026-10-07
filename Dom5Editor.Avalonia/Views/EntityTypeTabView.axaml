@@ -11,7 +11,13 @@
             <views:EntityPageView/>
         </DataTemplate>
     </UserControl.DataTemplates>
-    <Grid ColumnDefinitions="300,4,*">
+    <!-- the list's width: the same on every tab, remembered by the window (ListWidth) -->
+    <Grid x:Name="Layout">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" MinWidth="200"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*" MinWidth="300"/>
+        </Grid.ColumnDefinitions>
         <DockPanel Background="{StaticResource BackgroundMediumBrush}">
             <StackPanel DockPanel.Dock="Top" Margin="8" Spacing="6">
                 <TextBox x:Name="Search" Text="{Binding SearchText, Mode=TwoWay}" Watermark="Search name or ID... (Ctrl+F)"
@@ -32,8 +38,10 @@
                 </Grid>
             </StackPanel>
             <DockPanel DockPanel.Dock="Bottom" Margin="8,4,8,8">
-                <Button DockPanel.Dock="Right" Content="+ New" Classes="small" Margin="6,0,0,0" Command="{Binding NewCommand}"/>
-                <Button DockPanel.Dock="Right" Content="Delete" Classes="small" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
+                <Button DockPanel.Dock="Right" Content="+ New" Classes="small" Margin="6,0,0,0" Command="{Binding NewCommand}"
+                        ToolTip.Tip="{Binding NewTip}" ToolTip.ShowOnDisabled="True"/>
+                <Button DockPanel.Dock="Right" Content="Delete" Classes="small" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"
+                        ToolTip.Tip="{Binding DeleteTip}" ToolTip.ShowOnDisabled="True"/>
                 <TextBlock x:Name="Count" Classes="muted" VerticalAlignment="Center"/>
             </DockPanel>
             <ListBox x:Name="List" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Background="Transparent">
@@ -52,7 +60,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
-        <GridSplitter Grid.Column="1" Background="{StaticResource BorderBrush}" ResizeDirection="Columns"/>
+        <GridSplitter x:Name="Splitter" Grid.Column="1" Background="{StaticResource BorderBrush}" ResizeDirection="Columns"
+                      ToolTip.Tip="Drag to make the list wider or narrower"/>
         <Border Grid.Column="2" Background="{StaticResource BackgroundDarkBrush}" Padding="16,12">
             <ContentControl Content="{Binding Page}"/>
         </Border>
