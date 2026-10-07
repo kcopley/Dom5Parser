@@ -156,17 +156,39 @@ namespace Dom5Editor.UI.Views
         }
 
         /// <summary>Looks for the mod a submod needs (NeededModFinder) when the report has numbers from another mod.</summary>
+        /// <summary>The look for a needed mod after opening, if one is running (the snapshot harness waits for it).</summary>
+        internal Task? Suggesting { get; private set; }
+
+        /// <summary>
+        /// Looks for the mod a submod needs, off the window's thread: it reads the .dm files
+        /// around the mod (Sombre's folder holds 55 MB of them), which takes seconds on a slow disk.
+        /// </summary>
         private void SuggestNeeded(ModReport.Report report, ValidationResult validation)
         {
-            NeededSuggestion = null;
-            NeededSuggestionText = "";
-            var path = _session?.FilePath;
-            if (path != null && report.Count(ModReport.Missing) > 0
-                && Dom5Edit.NeededModFinder.Suggest(path, ModReport.MissingNumbers(validation), _session!.Needed.Select(m => m.FullFilePath)) is { } found)
+            Suggest(null);
+            var session = _session;
+            var path = session?.FilePath;
+            if (session == null || path == null || report.Count(ModReport.Missing) == 0)
+                return;
+            var missing = ModReport.MissingNumbers(validation);
+            var skip = session.Needed.Select(m => m.FullFilePath).ToList();
+            Suggesting = Task.Run(() => Dom5Edit.NeededModFinder.Suggest(path, missing, skip)).ContinueWith(t =>
             {
-                NeededSuggestion = found.File;
-                NeededSuggestionText = $"{System.IO.Path.GetFileName(found.File)} defines {(found.Found == 1 ? "the number" : $"{found.Found} of the numbers")} this mod uses from another mod: read it over that one?";
-            }
+                if (t.Status == TaskStatus.RanToCompletion && t.Result is { } found)
+                    Ui.Later(() =>
+                    {
+                        if (ReferenceEquals(_session, session)) // (still the mod it was found for)
+                            Suggest(found);
+                    });
+            }, TaskScheduler.Default);
+        }
+
+        private void Suggest((string File, int Found)? found)
+        {
+            NeededSuggestion = found?.File;
+            NeededSuggestionText = found is { } f
+                ? $"{System.IO.Path.GetFileName(f.File)} defines {(f.Found == 1 ? "the number" : $"{f.Found} of the numbers")} this mod uses from another mod: read it over that one?"
+                : "";
             OnPropertyChanged(nameof(NeededSuggestion));
             OnPropertyChanged(nameof(HasNeededSuggestion));
             OnPropertyChanged(nameof(NeededSuggestionText));
