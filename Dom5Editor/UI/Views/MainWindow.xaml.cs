@@ -24,6 +24,15 @@ namespace Dom5Editor.UI.Views
             // deleting something others use asks first
             ViewModels.EntityTypeTab.Confirm = message =>
                 MessageBox.Show(this, message, "Delete", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK;
+            // an image set on a mod never saved: it's copied next to the .dm file, so save first
+            ViewModels.EntityPageViewModel.SaveFirst = () =>
+            {
+                if (MessageBox.Show(this, "The image is copied into the mod's folder, next to its .dm file, and this mod hasn't been saved yet.\n\nSave it now?",
+                        "Save the mod first", MessageBoxButton.OKCancel, MessageBoxImage.Information) != MessageBoxResult.OK)
+                    return false;
+                SaveModAs();
+                return !string.IsNullOrEmpty(_viewModel.CurrentFilePath);
+            };
 
             RestoreLayout();
         }

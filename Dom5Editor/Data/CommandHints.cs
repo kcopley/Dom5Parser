@@ -143,11 +143,16 @@ namespace Dom5Editor.Data
             if (hint == null || hint.Values.Count == 0)
                 return "";
             var first = hint.Args.Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? "";
-            if (!ValueWords.Any(w => first.Contains(w, StringComparison.OrdinalIgnoreCase)))
+            // (a mask command's argument can be called just <value>: a band's #eramask)
+            if (!ValueWords.Any(w => first.Contains(w, StringComparison.OrdinalIgnoreCase))
+                && !(Dom5Edit.Commands.CommandsMap.TryGetString(command, out var commandName) && commandName.EndsWith("mask", StringComparison.OrdinalIgnoreCase)))
                 return "";
             var arg = arguments.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
             if (!long.TryParse(arg, out var value))
                 return "";
+            // (a mask table can list the sums too: an era mask's 3 is "Early + middle")
+            if (hint.IsMaskTable && value != 0 && hint.Values.FirstOrDefault(v => v.Value == value).Name is string whole)
+                return whole;
             if (hint.IsBitTable || hint.IsMaskTable)
             {
                 var names = new List<string>();

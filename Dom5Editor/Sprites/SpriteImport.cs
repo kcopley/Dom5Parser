@@ -49,12 +49,14 @@ namespace Dom5Editor.Sprites
             var target = Path.Combine(dir, name + targetExt);
             for (int n = 2; File.Exists(target) && !File.ReadAllBytes(target).AsSpan().SequenceEqual(bytes); n++)
                 target = Path.Combine(dir, $"{name}_{n}{targetExt}");
-            if (!File.Exists(target))
+            // (the same image brought in before, for another unit: the copy there is used, not made again)
+            bool there = File.Exists(target);
+            if (!there)
                 File.WriteAllBytes(target, bytes);
             var result = Check(target);
             if (!usable)
                 result = Join($"converted from {ext} to .png (the game reads .tga and .png)", result);
-            return new Result(Path.GetRelativePath(modDir, target).Replace('\\', '/'), target, result);
+            return new Result(Path.GetRelativePath(modDir, target).Replace('\\', '/'), there ? null : target, result);
         }
 
         private static bool IsSafe(char ch) => ch < 128 && (char.IsLetterOrDigit(ch) || ch == '_' || ch == '-' || ch == '.' || ch == '/' || ch == '\\');
