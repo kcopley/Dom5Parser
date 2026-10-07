@@ -106,6 +106,7 @@ or `"baseline"`. Mark a stage known-failing with
 | 2 | vanilla base values | **pass, only expected differences** (`vanillaExpected`); baseline locked at zero |
 | 3 | copy fixtures, duplicate names, edits-base | pass, except `name_before_copy` (xfail) |
 | 3 | DomEnhanced 2.13 | baseline **900** (shared names now resolve to the lowest id, the game's rule) |
+| 3 | 5 mods made from scratch in the editor (`TestDMs/created`, 2026-10-07), every line regenerated | pass |
 | 4 | e01-e06, e08 | pass |
 | 4 | e07 live template | xfail |
 

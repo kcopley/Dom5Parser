@@ -37,6 +37,66 @@
       "expect": "pass"
     },
     {
+      "name": "created-thornvale",
+      "path": "TestDMs/created/thornvale/thornvale.dm",
+      "expect": "pass",
+      "roundtripArgs": [
+        "regen"
+      ],
+      "stages": [
+        3
+      ],
+      "description": "Made from scratch in the editor: a nation, its units, weapons, armor, capital site and pretenders. Every line regenerated on the round trip."
+    },
+    {
+      "name": "created-ashwolves",
+      "path": "TestDMs/created/ashwolves/ashwolves.dm",
+      "expect": "pass",
+      "roundtripArgs": [
+        "regen"
+      ],
+      "stages": [
+        3
+      ],
+      "description": "Made from scratch in the editor: a summoned monster, the ritual that summons it, a magic item. Every line regenerated on the round trip."
+    },
+    {
+      "name": "created-hermit",
+      "path": "TestDMs/created/hermit/hermit.dm",
+      "expect": "pass",
+      "roundtripArgs": [
+        "regen"
+      ],
+      "stages": [
+        3
+      ],
+      "description": "Made from scratch in the editor: an event chain with a player choice and a delayed follow-up. Every line regenerated on the round trip."
+    },
+    {
+      "name": "created-firespear",
+      "path": "TestDMs/created/firespear/firespear.dm",
+      "expect": "pass",
+      "roundtripArgs": [
+        "regen"
+      ],
+      "stages": [
+        3
+      ],
+      "description": "Made in the editor: a balance tweak of vanilla units, a weapon and a spell (an inherited weapon replaced, an ability and a flag removed). Every line regenerated on the round trip."
+    },
+    {
+      "name": "created-freecompanies",
+      "path": "TestDMs/created/freecompanies/freecompanies.dm",
+      "expect": "pass",
+      "roundtripArgs": [
+        "regen"
+      ],
+      "stages": [
+        3
+      ],
+      "description": "Made from scratch in the editor: two mercenary bands (one from a game band) and a poptype. Every line regenerated on the round trip."
+    },
+    {
       "name": "domenhanced-2.13",
       "path": "docs/DomEnhanced2_13.dm",
       "expect": "baseline"
