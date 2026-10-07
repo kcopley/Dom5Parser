@@ -25,7 +25,8 @@ namespace Dom5Edit.Props
             this.Command = c;
             this.Comment = comment;
             s = s.Trim();
-            var split = s.Split(' ');
+            // the values, however they're spaced (the game reads the numbers it needs; more are kept as text)
+            var split = s.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
             if (split.Length == 1)
             {
                 HasValue = split[0].TryRetrieveNumericFromString(out int val1, out string remainder);

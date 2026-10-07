@@ -21,6 +21,7 @@ namespace Dom5Edit.Props
             set
             {
                 _id = value;
+                _nameWhenResolved = null;
                 // Setting an ID means we have a value
                 if (value != 0)
                 {
@@ -47,6 +48,7 @@ namespace Dom5Edit.Props
             set
             {
                 _name = value;
+                _nameWhenResolved = null;
                 if (Parent?.ParentMod?.IsLoaded == true)
                 {
                     Resolve();
@@ -75,6 +77,7 @@ namespace Dom5Edit.Props
             {
                 Entity = e;
                 Resolved = true;
+                _nameWhenResolved ??= e.Name;
             }
             //move start ID to be in an entitytype set
             //handle non-resolved separately... these are ones in a dependency?
@@ -133,23 +136,47 @@ namespace Dom5Edit.Props
             Command.AUTOSPELL,
         };
 
+        // the target's name when this was first resolved: a different one at saving means it was
+        // renamed in the editor since
+        private string _nameWhenResolved;
+
+        /// <summary>
+        /// The name to write: as the author wrote it, so the game finds what it found before (a
+        /// #copystats after #name gives the monster the copied name, and a reference by the first
+        /// name then finds nothing in game, which a rewrite must not change); the target's new
+        /// name when it was renamed in the editor; in a merge, the target's name.
+        /// </summary>
+        private string ExportName()
+        {
+            if (!Resolved || Entity == null)
+                return _name;
+            if (Parent?.ParentMod?.KeepReferenceForms == false)
+                return Entity.TryGetName(out var merged) ? merged : _name;
+            var now = Entity.Name;
+            if (string.IsNullOrEmpty(_name) || (!string.IsNullOrEmpty(now) && _nameWhenResolved != null && now != _nameWhenResolved))
+                return string.IsNullOrEmpty(now) ? _name : now;
+            return _name;
+        }
+
         public override string ToExportString()
         {
             if (!CommandsMap.TryGetString(Command, out string s)) return "";
 
-            //add certain types to be string refs?
-            if (Entity != null && Entity.ID != -1)
-                IsStringRef = false;
-
-            if (_StringExported.Contains(Command))
+            if (Parent?.ParentMod?.KeepReferenceForms == false)
             {
-                IsStringRef = true;
+                // a merge: by number where there is one
+                if (Entity != null && Entity.ID != -1)
+                    IsStringRef = false;
+
+                if (_StringExported.Contains(Command))
+                {
+                    IsStringRef = true;
+                }
             }
 
             if (IsStringRef)
             {
-                string _exportName = Name;
-                if (Resolved && Entity.TryGetName(out var _name)) _exportName = _name;
+                string _exportName = ExportName();
 
                 if (!String.IsNullOrEmpty(Comment))
                 {

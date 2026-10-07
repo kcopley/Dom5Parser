@@ -251,6 +251,13 @@ namespace Dom5Edit
         /// </summary>
         public bool KeepOriginalText { get; set; } = true;
 
+        /// <summary>
+        /// A reference is written the way it was read (by name in the author's spelling, or by
+        /// number) unless it was edited (the default). Off for a merge, which writes numbers so
+        /// the mods' names can't collide.
+        /// </summary>
+        public bool KeepReferenceForms { get; set; } = true;
+
         public bool LineWasTrimmed { get; set; }
 
         public Mod()
@@ -299,6 +306,8 @@ namespace Dom5Edit
                 if (_currentEntity is IDEntity entity)
                     entity.GameValues.Add(new GameValue(label, value));
             };
+            _parser.OnNote = (line, msg) => AddParseIssue(ParseIssueType.GameReadsDifferently, msg, line);
+            _parser.SkipsText = command => Dom5Edit.GameData.GameReading.SkipsText(_currentEntity, command);
             _parser.OnLog = (line, msg) =>
             {
                 LineNumber = line;
@@ -350,6 +359,44 @@ namespace Dom5Edit
             {
                 read_stream(sr);
             }
+            if (!SourceEndsWithNewLine)
+            {
+                // the game overwrites the file's last byte with its end marker
+                var last = File.ReadLines(dmFile).Select((text, i) => (text, line: i + 1)).LastOrDefault();
+                if (last.line > 0)
+                    AddParseIssue(ParseIssueType.GameReadsDifferently, "The file doesn't end with a line break: the game drops its last character"
+                        + (last.text.TrimEnd().EndsWith("#end") ? " (this \"#end\" reads as \"#en\", so the last block isn't closed: for a spell, bless or sound the game stops)" : ""), last.line);
+            }
+        }
+
+        // the game's rules for a block left open (tools/dom6exe/README.md "Reading .dm files"): in
+        // these types' blocks, these headers stop the game; spells, blesses and sounds must end
+        private static readonly HashSet<string> RefusesHeaders = new() { "armor", "bless", "event", "item", "monster", "nation", "site", "sound", "spell", "template", "weapon" };
+        private static readonly HashSet<string> FatalHeaders = new()
+        {
+            "#selectarmor", "#newarmor", "#selectweapon", "#newweapon", "#selectmonster", "#newmonster", "#selectitem", "#newitem",
+            "#selectnation", "#newnation", "#selectspell", "#newspell", "#selectnametype", "#selectpoptype", "#selectsite", "#newsite",
+            "#newtemplate", "#clearallitems", "#clearallspells", "#clearallevents",
+        };
+        private static readonly HashSet<string> MustEnd = new() { "bless", "sound", "spell" };
+
+        /// <summary>What the game does with a block left without #end when <paramref name="header"/> (null: the end of the file) comes.</summary>
+        private void NoteOpenBlock(SourceBlock open, string? header)
+        {
+            var kind = open.Entity.GetType().Name.ToLowerInvariant();
+            if (header == null)
+            {
+                if (MustEnd.Contains(kind))
+                    AddParseIssue(ParseIssueType.GameReadsDifferently, $"The file ends inside a {kind} block (no #end): the game stops loading the mod (\"no #end for modded {kind}\")",
+                        open.Properties.Select(p => p.LineNumber).DefaultIfEmpty(0).Max());
+                return;
+            }
+            if (RefusesHeaders.Contains(kind) && FatalHeaders.Contains(header))
+                AddParseIssue(ParseIssueType.GameReadsDifferently, $"The {kind} block before this line has no #end: the game stops loading the mod at {header} (\"You must end modding the {kind} before using a #new... or #select... command\")");
+            else if (kind == "event" && (header == "#newevent" || header == "#selectevent"))
+                AddParseIssue(ParseIssueType.GameReadsDifferently, $"The event before this line has no #end: the game ignores this {header}, so the lines after it go to that event (two events become one)");
+            else
+                AddParseIssue(ParseIssueType.Warning, $"The {kind} block before this line has no #end: the game keeps it open to the next #end, so {kind} commands until then go to it");
         }
 
         /// <summary>The file's line break as read ("\r\n" or "\n"), or null for a mod made in the editor.</summary>
@@ -409,7 +456,10 @@ namespace Dom5Edit
             PropertiesAfterParse = new HashSet<Property>(
                 Database.Values.SelectMany(set => set.GetFullList()).SelectMany(e => e.Properties), ReferenceEqualityComparer.Instance);
             if (_currentBlock != null && _currentBlock.RawEnd == null)
+            {
                 _currentBlock.EndsWithoutEnd = true; // the file ends inside it
+                NoteOpenBlock(_currentBlock, null);
+            }
             TrailingTrivia.AddRange(_pendingTrivia);
             _pendingTrivia.Clear();
             _headerAtParse = (ModName, Description, Icon, Version, DomVersion);
@@ -575,9 +625,12 @@ namespace Dom5Edit
             // a #new.../#select... line starts a block of the entity it named
             if (CommandEntityMap.ContainsKey(c) && _currentEntity is IDEntity blockEntity)
             {
-                if (_currentBlock != null && _currentBlock.RawEnd == null)
-                    _currentBlock.EndsWithoutEnd = true; // the author left out its #end
                 bool selected = CommandsMap.TryGetString(c, out var header) && header.StartsWith("#select");
+                if (_currentBlock != null && _currentBlock.RawEnd == null)
+                {
+                    _currentBlock.EndsWithoutEnd = true; // the author left out its #end
+                    NoteOpenBlock(_currentBlock, header);
+                }
                 _currentBlock = new SourceBlock(blockEntity, selected, val, comment)
                 {
                     RawHeader = _currentRawText,

@@ -165,9 +165,10 @@ namespace Dom5Edit
                 }
                 if (keep && block.RawEnd != null)
                     writer.WriteLine(block.RawEnd);
-                else if (keep && block.EndsWithoutEnd)
+                else if (block.EndsWithoutEnd)
                 {
-                    // as read: no #end (the next block's header closes it)
+                    // as read: no #end. Not even when regenerated: the game reads a block left open
+                    // differently (an event takes in the next one's lines), and an #end would change that
                 }
                 else if (CommandsMap.TryGetString(Command.END, out var end))
                     writer.WriteLine(end);

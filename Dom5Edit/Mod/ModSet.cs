@@ -82,6 +82,7 @@ namespace Dom5Edit
 
             foreach (Mod m in this)
             {
+                m.KeepReferenceForms = false; // merged references are written by number
                 foreach (int referenced in m.VanillaMageReferences)
                 {
                     //slow but meh

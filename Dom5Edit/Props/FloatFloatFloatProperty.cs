@@ -19,7 +19,14 @@ namespace Dom5Edit.Props
             this.Command = c;
             this.Comment = comment;
             s = s.Trim();
-            var split = s.Split(' ');
+            // the values, however they're spaced (the game reads the numbers it needs; more are kept as text)
+            var split = s.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            if (split.Length > 3)
+            {
+                comment = (comment + " " + string.Join(" ", split.Skip(3))).Trim();
+                this.Comment = comment;
+                split = split.Take(3).ToArray();
+            }
             if (split.Length == 3)
             {
                 HasValue = split[0].TryRetrieveFloatFromString(out float val1, out string remainder1);

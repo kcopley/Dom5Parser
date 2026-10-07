@@ -67,6 +67,9 @@ namespace Dom5Edit.Validation
         PropertiesClearedBySubsequentClear,
 
         /// <summary>A command the game doesn't read for this entity type (kept, but it changes nothing in game).</summary>
-        NotReadByGame
+        NotReadByGame,
+
+        /// <summary>Lines the game reads differently than they look (a text whose closing quote is missing, "--" in a text, ...).</summary>
+        GameReadsDifferently
     }
 }
