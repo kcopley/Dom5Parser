@@ -60,6 +60,16 @@ flowchart TD
 So every property appears in exactly one block, in file order, and those taken out of the live
 list by a later clear or copy are still in their block.
 
+Texts are read as the game reads them (`tools/dom6exe/README.md` "Reading .dm files",
+`GameData/GameReading.cs`): a text runs from its opening quote to the next quote, across lines.
+After `#msg`, `#name` (not an item's), `#addname`, sprites, `#flag`, ... the game skips the text,
+so with the closing quote missing the command lines up to the next quote are text, not commands;
+a description (`#descr`, `#details`, ...) is read through, so a command inside it is read too. A
+quote missing before more commands on a description is taken as forgotten (the commands are
+read, as in game; only the game's text is longer). Where the game reads lines differently than
+they look, the parser adds a `GameReadsDifferently` note (texts running on, `--` in a text, a
+block without `#end` where the game stops or merges two events, no final line break).
+
 ## Edit (code: `Dom5Edit.Editing.ModEditor` / `Transaction`; docs/EDIT_FLOW.md for what each edit means)
 
 Every editor change goes through `ModEditor`, which changes the entity's live list directly
@@ -138,6 +148,23 @@ to the old merged export if entities were removed in the session.
 `Mod.NormalizeCopies` (re-derive copies, bake divergent values) is for the canonical writer
 only: in file order the copies replay as written.
 
+A regenerated line (an edited one, or every line with `KeepOriginalText = false`) keeps what
+the author wrote where the game reads it the same: references keep their form (a name stays
+the name as spelt, unless its target was renamed in the editor; numbers only in a merge,
+`Mod.KeepReferenceForms`), unresolved references (another mod's) are written, extra values are
+kept as a note, and a block without `#end` stays without one.
+
+### Safeguards (`Mod.SafeSave`, `ModBackups`, `SafeFile`)
+
+- Opening a mod copies its file to `%APPDATA%\Dom5Editor\backups\<name>-<hash>\` ("opened");
+  each save copies the file it replaces first ("before-save"). 30 kept per file; no copy when
+  the newest has the same bytes. The editor's menu opens the folder.
+- A save is written to a temporary file that must read back with the same entities, type by
+  type (`SaveCheck`), before it replaces the mod's file; if not, the file stays as it was and the
+  attempt is kept beside the backups (`*_failed-save.dm.txt`).
+- Saving into Steam's workshop folder asks first (updates overwrite it). A crash with unsaved
+  edits writes a recovery copy (`%APPDATA%\Dom5Editor\recovery`).
+
 ## Known gaps
 
 - Lines kept as text (unknown commands, commands the entity doesn't accept) aren't editable and
@@ -160,10 +187,16 @@ only: in file order the copies replay as written.
 - `Dom5Tests roundtrip in.dm out.dm` then `cmp`: an unedited save is byte-identical (DomEnhanced).
 - Because unedited lines are written as read, that alone doesn't test the export. Stage 3's
   `domenhanced-2.13-regen` saves with every line regenerated (`Mod.KeepOriginalText = false`,
-  `roundtrip ... regen`), still in file order; its baseline is 6, all equivalences the game treats
-  the same (`-0` for `0`, `#immortal 3` written as `#immortal`, names written as the IDs they
-  resolve to or with the spell's own capitalization).
+  `roundtrip ... regen`), still in file order; its baseline is 2, equivalences the game treats
+  the same (`-0` for `0`).
   `Dom5Tests edit ... editorsave` saves through the editor's exporter; on e01-e11 it writes the
   same files as `Mod.Export`.
 - Fixtures in `Dom5Tests/fixtures/copy/` (order-dependent copy, forward reference, clear mid
   entity, copyspr after copystats, name before copy).
+- `Dom5Tests check MOD OUTDIR [--with NEEDED.dm]`: one mod as the editor sees it (parser notes,
+  Validate, every entity resolved, events), the author report (`NAME.report.md`), an unedited
+  save that must be byte-identical and pass `SaveCheck`, and `NAME.regen.dm` with every line
+  regenerated for the inspector to compare (`roundtrip_check.js MOD NAME.regen.dm --at final`).
+  On the 16 installed workshop mod files (2026-10-07): all byte-identical; the regenerated files
+  agree with the inspector except where it reads `#descr` like `#msg` (Confluence; two spells
+  in FR and Sombre) and keeps tabs.
