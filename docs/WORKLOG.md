@@ -26,6 +26,15 @@ number of used by issues"), then "look at implementing cross platform".
   report, lists, page header/sprites/badges/used by/file text, Mod Info; `--snapshot` renders
   headless and runs on Linux (WSL, linux-x64). Panels, the event page, the window's menus and
   packaging are being ported (agents in worktrees).
+- **The game's mod order** (ce66965, from the exe): enabled mods are read in the order they
+  were enabled (enabling appends, nothing sorts), so a submod must be enabled after its parent;
+  Strigos's own description says the same.
+- **Mods a mod needs** (852a8e4): a submod is read over its parent (a chain: vanilla, the
+  needed mods in order, the mod). The parent's lines are base data (edits add lines to the
+  submod; the parent is never changed or saved; its new events and bands are read-only). Mod
+  Info lists them (remembered per mod); the report bar suggests the parent when the mod uses
+  numbers from another mod (NeededModFinder). Strigos over Sombre: 70 missing numbers to 0;
+  all four Sombre submods save byte-identical; `check`/`resolve --with` read over the parent.
 
 ## 2026-10-07: workshop mods, never losing data, reports for authors, new mods from scratch
 
