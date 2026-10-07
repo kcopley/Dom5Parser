@@ -15,6 +15,13 @@ namespace Dom5Editor.Ava.Views
         /// <summary>True: the error colour (something goes wrong in game); false: the warning colour.</summary>
         public static readonly IValueConverter ErrorOrWarning = new FuncValueConverter<bool, IBrush>(wrong => Brush(wrong ? "ErrorBrush" : "WarningBrush"));
 
+        /// <summary>The report bar's mark from (something goes wrong, nothing found): error, accent, else warning (as WPF).</summary>
+        public static readonly IMultiValueConverter ReportMark = new FuncMultiValueConverter<bool, IBrush>(flags =>
+        {
+            var f = flags.ToList();
+            return Brush(f.Count > 0 && f[0] ? "ErrorBrush" : f.Count > 1 && f[1] ? "AccentPrimaryBrush" : "WarningBrush");
+        });
+
         /// <summary>A list row's kind ("Vanilla", "Changed", "New") as its colour.</summary>
         public static readonly IValueConverter Source = new FuncValueConverter<string?, IBrush>(kind => Brush(kind switch
         {

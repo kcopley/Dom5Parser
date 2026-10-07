@@ -68,8 +68,14 @@
         <Border DockPanel.Dock="Top" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0,0,0,1" Padding="0,5,12,5" IsVisible="{Binding ShowReportBar}">
             <DockPanel>
-                <Rectangle Width="4" Margin="0,-5,10,-5" DockPanel.Dock="Left"
-                           Fill="{Binding ReportHasWrong, Converter={x:Static views:Brushes.ErrorOrWarning}}"/>
+                <Rectangle Width="4" Margin="0,-5,10,-5" DockPanel.Dock="Left">
+                    <Rectangle.Fill>
+                        <MultiBinding Converter="{x:Static views:Brushes.ReportMark}">
+                            <Binding Path="ReportHasWrong"/>
+                            <Binding Path="ReportIsClean"/>
+                        </MultiBinding>
+                    </Rectangle.Fill>
+                </Rectangle>
                 <Button DockPanel.Dock="Right" Content="✕" Classes="small" Margin="6,0,0,0" ToolTip.Tip="Hide this bar (Validate shows the report again)" Click="ReportClose_Click"/>
                 <Button DockPanel.Dock="Right" Content="Save for the author..." Classes="small" Margin="6,0,0,0"
                         ToolTip.Tip="Save the report as a Markdown file to send to the mod's author: every finding with its line in the file and what the game does with it"
