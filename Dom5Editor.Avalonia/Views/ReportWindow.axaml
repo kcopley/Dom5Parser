@@ -1,0 +1,73 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Dom5Editor.Ava.Views.ReportWindow"
+        Title="Report" Width="900" Height="700" MinWidth="480" MinHeight="300"
+        WindowStartupLocation="CenterOwner">
+    <!-- What the editor found in the mod (Dom5Edit.Validation.ModReport, as UI.Views.ReportView):
+         sections worst first, alike findings grouped, each line with Go to. Not modal. -->
+    <DockPanel Margin="16">
+        <StackPanel DockPanel.Dock="Top" Spacing="4" Margin="0,0,0,12">
+            <TextBlock Text="{Binding Title}" Classes="header" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding About}" Classes="muted" TextWrapping="Wrap"/>
+            <ItemsControl ItemsSource="{Binding Sections}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource BackgroundLightBrush}" CornerRadius="4" Padding="10,4" Margin="0,4,8,0" ToolTip.Tip="{Binding Intro}">
+                            <TextBlock><Run Text="{Binding Count}" FontWeight="SemiBold"/> <Run Text="{Binding Title}"/></TextBlock>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        <DockPanel DockPanel.Dock="Bottom" Margin="0,12,0,0">
+            <Button DockPanel.Dock="Right" Content="Close" Margin="6,0,0,0" ToolTip.Tip="Close the report" Click="Close_Click"/>
+            <Button DockPanel.Dock="Right" Content="Copy" Margin="6,0,0,0" ToolTip.Tip="Copy the report as text (Markdown)" Click="Copy_Click"/>
+            <Button DockPanel.Dock="Right" Content="Save for the author..." Classes="accent" Margin="6,0,0,0"
+                    ToolTip.Tip="Save the report as a Markdown file to send to the mod's author" Click="Save_Click"/>
+            <Button DockPanel.Dock="Left" Content="Check again" ToolTip.Tip="Check the mod as it is now, with your edits" Click="Recheck_Click"/>
+            <Panel/>
+        </DockPanel>
+        <ScrollViewer>
+            <StackPanel>
+                <TextBlock Text="Nothing found: the game reads the mod as written, and nothing looks off." Classes="subheader" Margin="0,12" IsVisible="{Binding IsEmpty}"/>
+                <ItemsControl ItemsSource="{Binding Shown}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Classes="subheader"><Run Text="{Binding Title}"/> <Run Text="{Binding Count, StringFormat='({0})'}" Foreground="{StaticResource TextMutedBrush}"/></TextBlock>
+                                <TextBlock Text="{Binding Intro}" Classes="muted" TextWrapping="Wrap" Margin="0,2,0,6"/>
+                                <ItemsControl ItemsSource="{Binding Groups}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Expander IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="0,0,0,4" HorizontalAlignment="Stretch">
+                                                <Expander.Header>
+                                                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                                                </Expander.Header>
+                                                <ItemsControl ItemsSource="{Binding Lines}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid ColumnDefinitions="80,*,Auto" Margin="0,1">
+                                                                <TextBlock Text="{Binding Where}" Classes="muted" VerticalAlignment="Center"/>
+                                                                <TextBlock Grid.Column="1" Text="{Binding Text}" FontFamily="{StaticResource MonospaceFont}" FontSize="12"
+                                                                           TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Text}" VerticalAlignment="Center"/>
+                                                                <Button Grid.Column="2" Content="Go to" Classes="small" Margin="8,0,0,0" ToolTip.Tip="{Binding GoTip}"
+                                                                        Tag="{Binding}" Click="GoTo_Click" IsVisible="{Binding CanGo}"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Expander>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

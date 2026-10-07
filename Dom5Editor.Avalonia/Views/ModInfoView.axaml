@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Dom5Editor.Ava.Views.ModInfoView">
+    <!-- The mod's header (UI.Views.ModInfoViewModel): #modname, #description, #version, #domversion, #icon -->
+    <ScrollViewer>
+        <StackPanel Margin="16" Spacing="10" MaxWidth="760" HorizontalAlignment="Left">
+            <TextBlock Text="Mod Info" Classes="header"/>
+            <StackPanel Spacing="2">
+                <TextBlock Text="NAME (#modname)" Classes="label"/>
+                <TextBox Text="{Binding ModName, Mode=TwoWay}" ToolTip.Tip="The mod's name in the game's mod list"/>
+            </StackPanel>
+            <StackPanel Spacing="2">
+                <TextBlock Text="DESCRIPTION (#description)" Classes="label"/>
+                <TextBox Text="{Binding ModDescription, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="80" MaxHeight="220"
+                         ToolTip.Tip="What the game's mod list says about the mod"/>
+            </StackPanel>
+            <Grid ColumnDefinitions="*,12,*">
+                <StackPanel Spacing="2">
+                    <TextBlock Text="VERSION (#version)" Classes="label"/>
+                    <TextBox Text="{Binding ModVersion, Mode=TwoWay}" ToolTip.Tip="The mod's own version"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="2">
+                    <TextBlock Text="GAME VERSION (#domversion)" Classes="label"/>
+                    <TextBox Text="{Binding ModDomVersion, Mode=TwoWay}" ToolTip.Tip="The lowest Dominions version the mod works with"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel Spacing="2">
+                <TextBlock Text="BANNER (#icon)" Classes="label"/>
+                <DockPanel>
+                    <Button DockPanel.Dock="Right" Content="Pick..." Margin="6,0,0,0" Command="{Binding PickIconCommand}"
+                            ToolTip.Tip="Pick a banner image (128x32 or 256x64): copied into the mod's folder"/>
+                    <TextBox Text="{Binding ModIcon, Mode=TwoWay}" ToolTip.Tip="The banner image's path, relative to the mod's file"/>
+                </DockPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

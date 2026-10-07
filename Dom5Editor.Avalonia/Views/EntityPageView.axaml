@@ -1,0 +1,141 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
+             xmlns:local="clr-namespace:Dom5Editor.Ava"
+             xmlns:views="clr-namespace:Dom5Editor.Ava.Views"
+             x:Class="Dom5Editor.Ava.Views.EntityPageView">
+    <!-- An entity's page (UI.ViewModels.EntityPageViewModel), as a list of parts: the page's own
+         (header, description, used by, the file, ...: Part.Kind), badge sections and panels.
+         As the WPF page (Dom5Editor/UI/Views/EntityPageView.xaml, PanelTemplates.xaml). -->
+    <UserControl.Resources>
+        <!-- the page's own parts, by kind (PartSelector) -->
+        <DataTemplate x:Key="Part.Header">
+            <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
+                <ItemsControl ItemsSource="{Binding SpriteSlots}" IsVisible="{Binding HasSpriteSlots}" VerticalAlignment="Top">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="6"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel ToolTip.Tip="{Binding Tooltip}">
+                                <Border Width="{Binding Size}" Height="{Binding Size}" Background="{StaticResource BackgroundMediumBrush}"
+                                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="3">
+                                    <Image Source="{Binding Image, Converter={x:Static local:PictureConverter.Instance}}" Stretch="Uniform"
+                                           RenderOptions.BitmapInterpolationMode="None"/>
+                                </Border>
+                                <TextBlock Text="{Binding Label}" Classes="muted" FontSize="9.5" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Image Source="{Binding Sprite, Converter={x:Static local:PictureConverter.Instance}}" IsVisible="{Binding ShowsSingleSprite}"
+                       Width="64" Height="64" VerticalAlignment="Top"/>
+                <Border Grid.Column="1" Classes="panel" Margin="10,0">
+                    <TextBlock Text="{Binding Title}" Classes="header" TextWrapping="Wrap"/>
+                </Border>
+                <StackPanel Grid.Column="2" VerticalAlignment="Top">
+                    <TextBlock Text="{Binding ID, StringFormat='#{0}'}" Classes="subheader" HorizontalAlignment="Right" IsVisible="{Binding HasId}"/>
+                    <TextBlock Text="{Binding SourceLabel}" Classes="muted" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Part.Error">
+            <TextBlock Text="{Binding Error}" Foreground="{StaticResource ErrorBrush}" TextWrapping="Wrap" Margin="0,0,0,6" IsVisible="{Binding HasError}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Part.Note">
+            <StackPanel Margin="0,0,0,8" IsVisible="{Binding IsReadOnly}">
+                <TextBlock Text="{Binding ReadOnlyNote}" Foreground="{StaticResource WarningBrush}" TextWrapping="Wrap"/>
+                <Button Content="New band from this one" Classes="small" Margin="0,4,0,0" Command="{Binding CopyToNewCommand}"
+                        ToolTip.Tip="Make a new band (#newmerc) with this one's values, and open it to edit"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Part.Description">
+            <StackPanel Margin="0,0,0,8" IsVisible="{Binding HasDescription}" ToolTip.Tip="{Binding DescriptionTooltip}">
+                <TextBlock Text="DESCRIPTION" Classes="label" Margin="0,0,0,2"/>
+                <TextBox Text="{Binding Description}" TextWrapping="Wrap" MinHeight="40" MaxHeight="120"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Part.UsedBy">
+            <StackPanel IsVisible="{Binding HasUsedBy}" Margin="0,0,0,10">
+                <TextBlock Text="{Binding UsedByTitle}" Classes="label" Margin="0,0,0,3"/>
+                <ItemsControl ItemsSource="{Binding UsedByShownRows}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding OpenCommand}" Classes="small" Margin="0,0,4,4" ToolTip.Tip="{Binding Tooltip}">
+                                <TextBlock>
+                                    <Run Text="{Binding TypeLabel}" Foreground="{StaticResource TextMutedBrush}"/>
+                                    <Run Text="{Binding Name}"/>
+                                    <Run Text="{Binding IdText}" Foreground="{StaticResource TextMutedBrush}"/>
+                                </TextBlock>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="{Binding ShowAllUsedByText}" Command="{Binding ShowAllUsedByCommand}" Classes="small" IsVisible="{Binding HasMoreUsedBy}"
+                        ToolTip.Tip="{Binding ShowAllUsedByTip}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Part.File">
+            <Expander Header="IN THE FILE (as saved)" IsExpanded="{Binding ShowFile, Mode=TwoWay}" Margin="0,0,0,10" HorizontalAlignment="Stretch"
+                      ToolTip.Tip="The entity's lines as the save writes them to the .dm file">
+                <StackPanel Spacing="4">
+                    <StackPanel IsVisible="{Binding IsNotEditingFile}" Spacing="4">
+                        <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{StaticResource MonospaceFont}" FontSize="11" MaxHeight="400"/>
+                        <Button Content="Edit as text" Classes="small" Command="{Binding EditFileCommand}" ToolTip.Tip="{Binding EditFileTip}"/>
+                    </StackPanel>
+                    <StackPanel IsVisible="{Binding IsEditingFile}" Spacing="4">
+                        <TextBox Text="{Binding FileDraft, Mode=TwoWay}" AcceptsReturn="True" FontFamily="{StaticResource MonospaceFont}" FontSize="11" MinHeight="80" MaxHeight="500"/>
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Apply" Classes="small" Command="{Binding ApplyFileCommand}" ToolTip.Tip="Change the entity to match the text (one undo step)"/>
+                            <Button Content="Cancel" Classes="small" Command="{Binding CancelFileCommand}" ToolTip.Tip="Stop editing and drop the changes to the text"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock Text="{Binding FileError}" Foreground="{StaticResource ErrorBrush}" TextWrapping="Wrap" IsVisible="{Binding HasFileError}"/>
+                </StackPanel>
+            </Expander>
+        </DataTemplate>
+        <DataTemplate x:Key="Part.GameValues">
+            <StackPanel IsVisible="{Binding HasGameValues}">
+                <TextBlock Text="GAME DATA (read-only: no mod command sets these)" Classes="label" Margin="0,0,0,3"/>
+                <ItemsControl ItemsSource="{Binding GameValues}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="muted"><Run Text="{Binding Label}"/><Run Text=" = "/><Run Text="{Binding Value}"/></TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <UserControl.DataTemplates>
+        <!-- a badge section: its badges as chips (CompactBadge in the WPF editor) -->
+        <DataTemplate DataType="vm:BadgeSectionViewModel">
+            <StackPanel Margin="0,0,0,10" IsVisible="{Binding IsVisible}">
+                <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3"/>
+                <ItemsControl ItemsSource="{Binding Badges}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Background}" BorderBrush="{Binding BorderBrush}" BorderThickness="1" CornerRadius="3"
+                                    Padding="6,2" Margin="0,0,4,4" ToolTip.Tip="{Binding Tooltip}">
+                                <TextBlock Foreground="{Binding Foreground}" FontSize="11.5">
+                                    <Run Text="{Binding DisplayName}"/> <Run Text="{Binding Value}" FontWeight="SemiBold"/>
+                                </TextBlock>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.DataTemplates>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl x:Name="PageParts" ItemsSource="{Binding Parts}" Margin="4,0,8,16"/>
+    </ScrollViewer>
+</UserControl>

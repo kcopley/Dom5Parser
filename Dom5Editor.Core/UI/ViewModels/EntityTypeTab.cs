@@ -198,6 +198,32 @@ namespace Dom5Editor.UI.ViewModels
 
         public ObservableCollection<EntityListItem> Items => _items ??= Build();
 
+        /// <summary>
+        /// Whether a row shows with these filters: its kind (the game's unchanged, changed by the
+        /// mod, new), the type's own filter (a facet: "Commanders", ...), and the search text in its
+        /// name, number or anything the type searches (an event's message). Both editors' lists.
+        /// </summary>
+        public static bool Matches(EntityListItem item, bool showVanilla, bool showModified, bool showNew, string facet, string search)
+        {
+            if (item.IsVanilla && !item.IsModified && !showVanilla) return false;
+            if (item.IsModified && !showModified) return false;
+            if (item.IsNew && !showNew) return false;
+            if (!item.InFacet(facet)) return false;
+            if (!string.IsNullOrEmpty(search)
+                && (item.DisplayName ?? "").IndexOf(search, StringComparison.OrdinalIgnoreCase) < 0
+                && !item.ID.ToString().Contains(search)
+                && !item.MatchesText(search))
+                return false;
+            return true;
+        }
+
+        /// <summary>The rows shown with the tab's own filters, in its order (by name, else by number).</summary>
+        public IEnumerable<EntityListItem> Shown()
+        {
+            var rows = Items.Where(r => Matches(r, ShowVanilla, ShowModified, ShowNew, Facet, SearchText));
+            return SortBy == "DisplayName" ? rows.OrderBy(r => r.DisplayName, StringComparer.OrdinalIgnoreCase) : rows.OrderBy(r => r.SortKey);
+        }
+
         public EntityListItem? SelectedItem
         {
             get => _selected;

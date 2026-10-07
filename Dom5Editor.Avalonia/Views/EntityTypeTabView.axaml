@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
+             xmlns:local="clr-namespace:Dom5Editor.Ava"
+             xmlns:views="clr-namespace:Dom5Editor.Ava.Views"
+             x:Class="Dom5Editor.Ava.Views.EntityTypeTabView">
+    <!-- One entity type's tab (UI.ViewModels.EntityTypeTab): the list, searched and filtered by the
+         core's rules (EntityTypeTab.Matches), and the selected entity's page -->
+    <UserControl.DataTemplates>
+        <DataTemplate DataType="vm:EntityPageViewModel">
+            <views:EntityPageView/>
+        </DataTemplate>
+    </UserControl.DataTemplates>
+    <Grid ColumnDefinitions="300,4,*">
+        <DockPanel Background="{StaticResource BackgroundMediumBrush}">
+            <StackPanel DockPanel.Dock="Top" Margin="8" Spacing="6">
+                <TextBox x:Name="Search" Text="{Binding SearchText, Mode=TwoWay}" Watermark="Search name or ID... (Ctrl+F)"
+                         ToolTip.Tip="Show only the entities whose name or number has this (for events, also the message)"/>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <CheckBox Content="Vanilla" IsChecked="{Binding ShowVanilla, Mode=TwoWay}" ToolTip.Tip="Show the game's entities the mod doesn't change"/>
+                    <CheckBox Content="Changed" IsChecked="{Binding ShowModified, Mode=TwoWay}" ToolTip.Tip="Show the game's entities the mod changes"/>
+                    <CheckBox Content="New" IsChecked="{Binding ShowNew, Mode=TwoWay}" ToolTip.Tip="Show the mod's new entities"/>
+                </StackPanel>
+                <Grid ColumnDefinitions="Auto,*,Auto" >
+                    <TextBlock Text="Show" Classes="muted" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding Facets}" SelectedItem="{Binding Facet, Mode=TwoWay}" HorizontalAlignment="Stretch"
+                              IsVisible="{Binding Facets, Converter={x:Static ObjectConverters.IsNotNull}}" ToolTip.Tip="Show only one kind of this type"/>
+                    <ComboBox Grid.Column="2" x:Name="Sort" Margin="6,0,0,0" SelectedIndex="0" ToolTip.Tip="Order the list by number or by name">
+                        <ComboBoxItem Content="ID"/>
+                        <ComboBoxItem Content="Name"/>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+            <DockPanel DockPanel.Dock="Bottom" Margin="8,4,8,8">
+                <Button DockPanel.Dock="Right" Content="+ New" Classes="small" Margin="6,0,0,0" Command="{Binding NewCommand}"/>
+                <Button DockPanel.Dock="Right" Content="Delete" Classes="small" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
+                <TextBlock x:Name="Count" Classes="muted" VerticalAlignment="Center"/>
+            </DockPanel>
+            <ListBox x:Name="List" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="4,Auto,*" Margin="-6,-2">
+                            <Border Background="{Binding SourceLabel, Converter={x:Static views:Brushes.Source}}" CornerRadius="2" Margin="0,2"/>
+                            <Image Grid.Column="1" Source="{Binding Sprite, Converter={x:Static local:PictureConverter.Instance}}" Width="28" Height="28" Margin="6,0"
+                                   RenderOptions.BitmapInterpolationMode="None"/>
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Detail}" Classes="muted" FontSize="10.5" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+        <GridSplitter Grid.Column="1" Background="{StaticResource BorderBrush}" ResizeDirection="Columns"/>
+        <Border Grid.Column="2" Background="{StaticResource BackgroundDarkBrush}" Padding="16,12">
+            <ContentControl Content="{Binding Page}"/>
+        </Border>
+    </Grid>
+</UserControl>

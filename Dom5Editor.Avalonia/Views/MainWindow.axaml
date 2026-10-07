@@ -1,0 +1,89 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
+        xmlns:coreviews="clr-namespace:Dom5Editor.UI.Views;assembly=Dom5Editor.Core"
+        xmlns:views="clr-namespace:Dom5Editor.Ava.Views"
+        x:Class="Dom5Editor.Ava.Views.MainWindow"
+        Title="Dom6 Mod Editor" Width="1400" Height="900" MinWidth="760" MinHeight="480">
+    <!-- The editor's window, as the WPF one (Dom5Editor/UI/Views/MainWindow.xaml): toolbar, the
+         report bar after opening a mod, a tab for the mod's header and each entity type, status -->
+    <Window.DataTemplates>
+        <DataTemplate DataType="coreviews:ModInfoViewModel">
+            <views:ModInfoView/>
+        </DataTemplate>
+        <DataTemplate DataType="vm:EntityTypeTab">
+            <views:EntityTypeTabView/>
+        </DataTemplate>
+    </Window.DataTemplates>
+
+    <DockPanel>
+        <!-- TOOLBAR -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1" Padding="8,6">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <Button Content="New" ToolTip.Tip="Start a new, empty mod (Ctrl+N)" Click="New_Click"/>
+                    <Button Content="Load" ToolTip.Tip="Open a .dm mod file (Ctrl+O)" Click="Load_Click"/>
+                    <Button Content="Save" ToolTip.Tip="Save the mod (Ctrl+S)" IsEnabled="{Binding HasMod}" Click="Save_Click"/>
+                    <Button Content="Save As" ToolTip.Tip="Save the mod to a new file (Ctrl+Shift+S)" IsEnabled="{Binding HasMod}" Click="SaveAs_Click"/>
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
+                    <Button Content="Undo" ToolTip.Tip="{Binding UndoTip}" IsEnabled="{Binding CanUndo}" Click="Undo_Click"/>
+                    <Button Content="Redo" ToolTip.Tip="{Binding RedoTip}" IsEnabled="{Binding CanRedo}" Click="Redo_Click"/>
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
+                    <Button Content="◀" ToolTip.Tip="Back to the previous entity (Alt+Left)" IsEnabled="{Binding CanGoBack}" Click="Back_Click"/>
+                    <Button Content="▶" ToolTip.Tip="Forward to the next entity (Alt+Right)" IsEnabled="{Binding CanGoForward}" Click="Forward_Click"/>
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
+                    <Button Content="Validate" ToolTip.Tip="Check the mod for problems (unread lines, missing references, ID clashes)" IsEnabled="{Binding HasMod}" Click="Validate_Click"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Spacing="6">
+                    <TextBlock Text="*" Foreground="{StaticResource WarningBrush}" FontWeight="Bold" IsVisible="{Binding IsDirty}" ToolTip.Tip="Unsaved changes"/>
+                    <TextBlock Text="{Binding ModName, FallbackValue='No mod loaded'}" Classes="subheader" TextTrimming="CharacterEllipsis" MaxWidth="420"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- REPORT BAR: what the check on opening found -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1" Padding="0,5,12,5" IsVisible="{Binding ShowReportBar}">
+            <DockPanel>
+                <Rectangle Width="4" Margin="0,-5,10,-5" DockPanel.Dock="Left"
+                           Fill="{Binding ReportHasWrong, Converter={x:Static views:Brushes.ErrorOrWarning}}"/>
+                <Button DockPanel.Dock="Right" Content="✕" Classes="small" Margin="6,0,0,0" ToolTip.Tip="Hide this bar (Validate shows the report again)" Click="ReportClose_Click"/>
+                <Button DockPanel.Dock="Right" Content="Save for the author..." Classes="small" Margin="6,0,0,0"
+                        ToolTip.Tip="Save the report as a Markdown file to send to the mod's author" Click="ReportSave_Click"/>
+                <Button DockPanel.Dock="Right" Content="Open report" Classes="small" Margin="6,0,0,0"
+                        ToolTip.Tip="See what the check found, section by section" Click="ReportOpen_Click"/>
+                <TextBlock Text="{Binding ReportSummary}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ReportSummary}"/>
+            </DockPanel>
+        </Border>
+
+        <!-- STATUS BAR -->
+        <Border DockPanel.Dock="Bottom" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0" Padding="12,6">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Classes="muted" Text="{Binding EntityCount, StringFormat='Entities: {0}'}"/>
+                <TextBlock Classes="muted" Text="{Binding StatusMessage}" TextTrimming="CharacterEllipsis"/>
+            </DockPanel>
+        </Border>
+
+        <!-- THE TABS -->
+        <Panel>
+            <TabControl x:Name="Tabs" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab, Mode=TwoWay}" IsVisible="{Binding HasMod}"
+                        Padding="0" Background="{StaticResource BackgroundDarkBrush}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}" FontSize="12.5"/>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+            </TabControl>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12" IsVisible="{Binding !HasMod}">
+                <TextBlock Text="No mod loaded" Classes="header" HorizontalAlignment="Center"/>
+                <TextBlock Text="Load an existing mod or create a new one to get started." Classes="muted" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                    <Button Content="New Mod" Classes="accent" Click="New_Click"/>
+                    <Button Content="Load Mod" Click="Load_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Panel>
+    </DockPanel>
+</Window>
