@@ -642,6 +642,13 @@ namespace Dom5Editor.UI.ViewModels
                 Parts.RemoveAt(Parts.Count - 1);
         }
 
+        /// <summary>Puts a section on the page that wasn't (it had no badges, and now has one to pick: a reference just added).</summary>
+        internal void ShowSection(BadgeSectionViewModel section)
+        {
+            if (!Parts.Contains(section))
+                BuildParts();
+        }
+
         /// <summary>Whether the page has the add box for any command (an event adds lines in its own panels).</summary>
         public virtual bool ShowsAddBox => !IsReadOnly;
 
