@@ -501,7 +501,8 @@ namespace Dom5Edit
             if (owner == -1)
                 return false;
             string ownerName = FirstWord(s.Substring(owner));
-            if (!Descriptions.Contains(ownerName) || SkipsText?.Invoke(ownerName) == true)
+            // (the mod's own #description has its own reader, and a command there is outside any block)
+            if (!Descriptions.Contains(ownerName) || ownerName == "#description" || SkipsText?.Invoke(ownerName) == true)
                 return false;
             int end = at + 1;
             while (end < s.Length && (char.IsLetterOrDigit(s[end]) || s[end] == '_'))
@@ -537,6 +538,7 @@ namespace Dom5Edit
                     _lineCommands = commandIndexes.Count;
                     _lineText = _wholeLine;
                 }
+                var quoted = commandIndexes.Count > 1 ? QuotedSpans(s) : null;
                 for (int i = 0; i < commandIndexes.Count; i++)
                 {
                     int nextCommand = i + 1;
@@ -544,6 +546,12 @@ namespace Dom5Edit
                     if (nextCommand < commandIndexes.Count)
                     {
                         line = s.Substring(commandIndexes[i], commandIndexes[nextCommand] - commandIndexes[i]);
+                        // a description whose quotes hold a command the game reads too keeps its
+                        // whole text, to its closing quote, as the game does (#descr "#descr "...
+                        // is the text "#descr ", not an empty one, which would stop the game)
+                        var own = quoted!.FirstOrDefault(q => q.Start > commandIndexes[i] && q.Start < commandIndexes[nextCommand] && q.End > commandIndexes[nextCommand], (Start: -1, End: -1));
+                        if (own.Start != -1)
+                            line = s.Substring(commandIndexes[i], own.End + 1 - commandIndexes[i]);
                     }
                     else
                     {
@@ -578,7 +586,8 @@ namespace Dom5Edit
                         // assume if there's a first quote, check for a second quote mark
                         int secondQuoteIndex = s.IndexOf('"', quoteIndex + 1);
                         // only allow a single dash as a comment if it comes after a second quote mark
-                        if (singleDash > secondQuoteIndex)
+                        // (a text without its closing quote is text to the end: "self-inflicted")
+                        if (secondQuoteIndex != -1 && singleDash > secondQuoteIndex)
                         {
                             line = s.Substring(0, singleDash).Trim();
                             comment = s.Substring(singleDash + 1).Trim();

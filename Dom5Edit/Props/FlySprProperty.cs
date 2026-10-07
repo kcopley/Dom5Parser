@@ -54,11 +54,15 @@ namespace Dom5Edit.Props
             {
                 HasValue = false;
             }
+            if (!HasValue && !string.IsNullOrWhiteSpace(s))
+                Unparsed = s.Trim(); // (kept as written: the game reads the numbers that are there)
         }
 
         //Preliminary Example only for now, not optimal
         public override string ToExportString()
         {
+            if (!HasValue && Unparsed != null && CommandsMap.TryGetString(Command, out var asRead))
+                return UnparsedExport(asRead);
             if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))
