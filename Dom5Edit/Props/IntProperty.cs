@@ -29,14 +29,17 @@ namespace Dom5Edit.Props
             }
             else if (!HasValue && !string.IsNullOrWhiteSpace(s))
             {
-                // not a number ("#autospellrepeat "Rage""): the game reads 0; the text is kept as a note
-                Comment = (s.Trim() + " " + Comment).Trim();
+                // not a number this holds ("#req_targaff 8589934592", "#autospellrepeat "Rage""):
+                // kept as written, quotes too, so the game reads what it read
+                Unparsed = (Parent?.ParentMod?.LineWasTrimmed == true ? "\"" + s.Trim() + "\"" : s.Trim());
             }
         }
 
         //Preliminary Example only for now, not optimal
         public override string ToExportString()
         {
+            if (Value == int.MinValue && Unparsed != null && CommandsMap.TryGetString(Command, out var asRead))
+                return UnparsedExport(asRead);
             if (CommandsMap.TryGetString(Command, out string s))
             {
                 if (!String.IsNullOrEmpty(Comment))

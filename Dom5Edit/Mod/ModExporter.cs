@@ -23,8 +23,9 @@ namespace Dom5Edit
             }
 
             // temp file, then swap; the previous file is kept as .bak. A mod read from a file keeps its
-            // form when its text is kept: its line breaks, a last one or not, a byte order mark.
-            bool keepForm = mod.KeepOriginalText && mod.SourceNewLine != null;
+            // form: its line breaks, a last one or not (the game drops a file's last character when
+            // it isn't a line break), a byte order mark.
+            bool keepForm = mod.SourceNewLine != null;
             var encoding = keepForm && mod.SourceHasBom ? new System.Text.UTF8Encoding(true) : null;
             SafeFile.Write(filePath, writer =>
             {
@@ -251,7 +252,10 @@ namespace Dom5Edit
         /// \"Fists Of Iron\""); for one with a number, while the entity's ID is the one read.
         /// </summary>
         private static bool KeepsHeader(SourceBlock block) =>
-            block.RawHeader != null && (block.Entity.ID == block.IdAtParse || !int.TryParse(block.Header, out _));
+            block.RawHeader != null && (block.Entity.ID == block.IdAtParse || !LeadingNumber.IsMatch(block.Header));
+
+        // the number the game reads from a header ("#newmonster 7665 MAIN" is 7665: sscanf %d)
+        private static readonly System.Text.RegularExpressions.Regex LeadingNumber = new(@"^[+-]?\d+");
 
         /// <summary>The block's #new.../#select... line as parsed (a numeric ID as the entity's current ID).</summary>
         private static string Header(SourceBlock block)
@@ -259,8 +263,9 @@ namespace Dom5Edit
             var entity = block.Entity;
             CommandsMap.TryGetString(block.Selected ? entity.GetSelectCommand() : entity.GetNewCommand(), out var command);
             string arg = block.Header;
-            if (int.TryParse(arg, out _))
-                arg = entity.ID != -1 ? entity.ID.ToString() : arg;
+            var number = LeadingNumber.Match(arg);
+            if (number.Success)
+                arg = (entity.ID != -1 ? entity.ID.ToString() : number.Value) + arg.Substring(number.Length); // (what follows, as written)
             else if (arg.Length > 0)
                 arg = "\"" + arg + "\"";
             string line = arg.Length > 0 ? command + " " + arg : command;

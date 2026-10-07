@@ -159,9 +159,9 @@ const MARK = { PASS: 'PASS ', FAIL: 'FAIL ', XFAIL: 'xfail', XPASS: 'XPASS', IMP
 class Check {
 	constructor(stage, name, fn) { Object.assign(this, { stage, name, fn, lines: [], records: [] }); }
 	note(line) { this.lines.push('      ' + line); }
-	record(status, detail) {
-		this.records.push({ stage: this.stage, name: this.name, status, detail });
-		this.lines.push(`  [${MARK[status] || status}] ${this.name}${detail ? '  ' + detail : ''}`);
+	record(status, detail, name = this.name) {
+		this.records.push({ stage: this.stage, name, status, detail });
+		this.lines.push(`  [${MARK[status] || status}] ${name}${detail ? '  ' + detail : ''}`);
 	}
 	async run() {
 		const t0 = Date.now();
@@ -189,6 +189,25 @@ async function runChecks(checks) {
 		}
 	};
 	await Promise.all(Array.from({ length: Math.min(opt.jobs, checks.length) }, worker));
+}
+
+// What the game reads (tools/dom6exe/gameread.py: the game's own passes, rules from the exe):
+// the save must read the same as the original. Texts whose closing quote is missing in the
+// original read on differently once a rewrite closes them, and a text set more times to the same
+// final value: both counted, not failures.
+async function gameRead(check, original, save, knownFailing) {
+	const json = path.join(WORK, check.name + '.game.json');
+	const r = await run(process.env.PYTHON || 'python3', [path.join(ROOT, 'tools/dom6exe/gameread.py'), original, save, '--show', '3', '--json', json]);
+	if (r.code !== 0 && r.code !== 1) throw new Error('gameread failed: ' + lastLines(r.out));
+	const rep = JSON.parse(fs.readFileSync(json, 'utf8'));
+	const extra = [rep.texts_closed ? rep.texts_closed + ' open text(s) closed' : '', rep.same_final_text ? rep.same_final_text + ' text(s) set again to the same' : ''].filter(Boolean).join(', ');
+	const name = check.name + ' (game\'s reading)';
+	const ok = rep.differences === 0;
+	const what = ok ? extra : `${rep.differences} difference(s) (${Object.entries(rep.by_pass).map(([k, n]) => k + ' ' + n).join(', ')})` + (extra ? '; ' + extra : '');
+	if (!ok)
+		for (const l of r.out.trim().split('\n').slice(1, 9)) check.note(l.trim());
+	if (knownFailing) check.record(ok ? 'XPASS' : 'XFAIL', ok ? 'now passes; remove knownFailing' : knownFailing, name);
+	else check.record(ok ? 'PASS' : 'FAIL', what, name);
 }
 
 function summarize(rep) { return rep.dataDiffs + ' data / ' + rep.diagnosticDiffs + ' diagnostic diffs'; }
@@ -346,11 +365,13 @@ if (opt.stages.includes(1)) {
 // from Dominions6.exe (tools/dom6exe), and the inspector is only an independent parser here.
 
 if (opt.stages.includes(3)) {
-	console.log('\nStage 3: Dom5Parser load -> save -> inspector sees the same data (strict, after parsing)');
+	console.log('\nStage 3: Dom5Parser load -> save -> inspector sees the same data (strict, after parsing), and the game reads it the same');
 	await runChecks(mods.filter((m) => !m.stages || m.stages.includes(3)).map((m) => new Check(3, m.name, async (check) => {
-		const rep = await compare(m.abs, await dom5Save(m.abs, m.name, m.roundtripArgs || []), 'parse', m.name + '.stage3');
+		const save = await dom5Save(m.abs, m.name, m.roundtripArgs || []);
+		const rep = await compare(m.abs, save, 'parse', m.name + '.stage3');
 		if (m.expect === 'baseline') judgeBaseline(check, baselineOf(rep));
 		else judgePass(check, rep, m.knownFailing?.['3']);
+		await gameRead(check, m.abs, save, m.knownFailing?.['3game']);
 	})));
 }
 

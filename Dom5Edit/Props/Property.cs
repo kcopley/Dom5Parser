@@ -7,6 +7,16 @@ namespace Dom5Edit.Props
     {
         public IDEntity Parent { get; set; }
         public string Comment { get; set; }
+
+        /// <summary>
+        /// An argument a property couldn't take as its values (fewer numbers than it holds:
+        /// "#path -1", "#custommagic 200"): written back as read, so the game reads what it read.
+        /// </summary>
+        internal string? Unparsed { get; set; }
+
+        /// <summary>The command with its unparsed argument as read (and the comment).</summary>
+        internal string UnparsedExport(string command) =>
+            command + " " + Unparsed + (string.IsNullOrEmpty(Comment) ? "" : " -- " + Comment);
         public int LineNumber { get; set; }
         public abstract void Parse(Command c, string v, string comment);
 

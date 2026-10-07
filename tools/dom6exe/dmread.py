@@ -130,6 +130,7 @@ class Rules:
         self.must_end.discard(None)
         self.eof_end.discard(None)
         self.strings = self._string_commands()
+        self.formats = self._arg_formats(exe)
 
     def chunk_of(self, a):
         i = bisect.bisect_right(self.starts, a) - 1
@@ -201,11 +202,62 @@ class Rules:
             out[ctx][cmd] = {'max_chars': reg.get('r8', 0) - 1 if reg.get('r8') else None, 'skips_text': adv}
         return dict(out)
 
+    def _arg_formats(self, exe):
+        """Per context: how each command reads its rest-of-line argument, as sscanf conversions
+        ("d d" for "%d %d", "d" for the generic handlers' one number, "f f f" ...), from the
+        format string its branch passes (lea rdx,"%d %d" before the call). A command whose branch
+        has none reads at most one number (or none: a flag)."""
+        p = self.p
+        fmt_re = re.compile(r'(%(?:I64d|lld|d|i|u|x|f|s)\s*)+')
+        out = {}
+        for ctx, fs in p.contexts.items():
+            if ctx == 'top':
+                continue
+            order = sorted(k for k, (f, s) in p.refs.items() if f in fs)
+            res = {}
+            for n, i in enumerate(order):
+                cmd = p.refs[i][1]
+                if cmd in res:
+                    continue
+                if any(x[1] == 'call' and x[2].split()[0] in p.generic for x in p.ins[i:i + 6]):
+                    res[cmd] = 'd'
+                    continue
+                later = [j for j in order[n + 1:] if p.refs[j][1] != cmd]
+                nxt = p.ins[later[0]][0] if later else p.ins[min(i + 400, len(p.ins) - 1)][0]
+                for a, op, args, tgt in p.ins[i + 1:i + 400]:
+                    if a >= nxt:
+                        break
+                    if op == 'lea' and tgt is not None:
+                        s = exe.cstr(tgt, 40)
+                        if s and fmt_re.fullmatch(s.strip()):
+                            res[cmd] = ' '.join(c.replace('I64d', 'd').replace('lld', 'd') for c in re.findall(r'%(I64d|lld|d|i|u|x|f|s)', s))
+                            break
+            out[ctx] = res
+        return out
+
     def summary(self):
         return {'matcher': hex(self.matcher), 'quoted_string_reader': hex(self.quoted),
                 'rest_of_line_reader': hex(self.line), 'new_select_check': hex(self.dispatcher),
                 'new_select_names': self.new_select, 'refuse_new_select_in_block': sorted(self.must_end),
-                'refuse_missing_end_at_eof': sorted(self.eof_end), 'string_commands': self.strings}
+                'refuse_missing_end_at_eof': sorted(self.eof_end), 'string_commands': self.strings,
+                'commands': {c: sorted(v) for c, v in sorted(self.commands.items())},
+                'arg_formats': self.formats}
+
+
+class SavedRules:
+    """The rules as written by `dom6exe.py dmread --out` (tools/dom6exe/data/dmread-*.json): the
+    same attributes read_pass uses, without the exe."""
+
+    def __init__(self, path):
+        import json
+        d = json.load(open(path))
+        self.game_version = d.get('game_version')
+        self.commands = {c: set(v) for c, v in d['commands'].items()}
+        self.strings = d['string_commands']
+        self.must_end = set(d['refuse_new_select_in_block'])
+        self.eof_end = set(d['refuse_missing_end_at_eof'])
+        self.new_select = d['new_select_names']
+        self.formats = d.get('arg_formats', {})
 
 
 def chunk_roots(exe):
@@ -258,7 +310,9 @@ def read_pass(t, ctx, rules):
     i, n = 0, len(t)
     while i < n:
         if t[i] != 0x23:
-            i += 1
+            i = t.find(b'#', i)
+            if i < 0:
+                break
             continue
         j = i + 1
         if ctx == 'global':
