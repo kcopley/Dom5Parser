@@ -383,6 +383,11 @@ namespace Dom5Edit.Events
                 var msg = EventInfo.Message(lines);
                 if (msg != null && msg.Length > 2399 && lines.Any(p => p.Command == Command.MSG && _ownLines.Contains(p)))
                     _problems.Add(new EventProblem(e, null, $"The message is {msg.Length} characters: the game takes at most 2399", isError: true));
+                // the target tags name the commander a group of #req_targ* picks (DomEnhanced: 430 events use them, all with one)
+                if (msg != null && lines.Any(p => p.Command == Command.MSG && _ownLines.Contains(p))
+                    && System.Text.RegularExpressions.Regex.IsMatch(msg, "##(full)?targname##|##targhis##", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+                    && !lines.Any(p => CommandsMap.TryGetString(p.Command, out var s) && s.StartsWith("#req_targ", StringComparison.OrdinalIgnoreCase)))
+                    _problems.Add(new EventProblem(e, null, "The message names the target commander (##targname##, ##targhis##), but no requirement picks one (#req_targ...): there's no commander to name"));
                 var needsName = lines.Where(_ownLines.Contains).FirstOrDefault(EventInfo.NeedsBracketName);
                 if (needsName != null && EventInfo.BracketName(msg) == null)
                     _problems.Add(new EventProblem(e, needsName, $"{EventInfo.Name(needsName.Command)} uses the site or item named in brackets at the end of the message ([Name]), and the message has none", isError: true));
