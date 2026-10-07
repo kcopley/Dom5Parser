@@ -36,7 +36,8 @@ it, and save without losing anything the file had.
 
 ## Running it
 
-Download a release, unzip, run `Dom5Editor.exe` (Windows, no install). `vanilla.dm` (the
+Download a release, unzip, run `Dom5Editor.exe` (Windows, no install; macOS and Linux
+packages too, see `tools/publish-avalonia-readme.txt`). `vanilla.dm` (the
 game's data, written from the game by `tools/dom6exe`) must stay next to the exe.
 
 The game's own texts (monster, item and spell descriptions, a spell's details, portent and
@@ -50,13 +51,13 @@ gems, abilities) are compiled into the editor.
 
 ## Building
 
-.NET 8 SDK; Windows for the editor (WPF).
+.NET 8 SDK, on Windows, macOS or Linux (the editor is Avalonia).
 
 ```
 dotnet build Dom5Edit.sln
-dotnet run --project Dom5Editor/Dom5Editor.csproj
-./tools/publish.sh        # one self-contained exe in publish/Dom6ModEditor, and a zip for testers (from WSL)
-./tools/publish-avalonia.sh   # the macOS/Linux editor (Dom5Editor.Avalonia): tar.gz per Linux, .app zip per macOS (from WSL)
+dotnet run --project Dom5Editor.Avalonia/Dom5Editor.Avalonia.csproj
+./tools/publish.sh            # Windows: one self-contained Dom5Editor.exe in publish/Dom6ModEditor, and a zip for testers (from WSL)
+./tools/publish-avalonia.sh   # macOS/Linux: tar.gz per Linux, .app zip per macOS (from WSL)
 ```
 
 ## Project layout
@@ -64,7 +65,9 @@ dotnet run --project Dom5Editor/Dom5Editor.csproj
 - `Dom5Edit`: the core library: parsing, the model, the resolver (`Resolve/`: what an entity is
   in game), edits (`Editing/`: every change as an undoable edit), saving (`Mod/SavePlan`,
   `ModExporter`). Also older merge code, not used by the editor.
-- `Dom5Editor`: the WPF editor.
+- `Dom5Editor.Core`: the editor's session and page view models, without a UI toolkit.
+- `Dom5Editor.Avalonia`: the editor's windows (Avalonia; the program is `Dom5Editor`). The WPF
+  editor it replaced is in the history up to the tag `wpf-final`.
 - `Dom5Tests`: command-line checks (`resolve`, `roundtrip`, `edit`).
 - `tools/dom6exe`: reads the game's data and parser rules from `Dominions6.exe`; writes
   `vanilla.dm` and the command catalog the core uses.

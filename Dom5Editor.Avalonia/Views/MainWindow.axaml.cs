@@ -16,7 +16,7 @@ using Dom5Editor.UI.Views;
 namespace Dom5Editor.Ava.Views
 {
     /// <summary>
-    /// The editor's window (as the WPF one, Dom5Editor/UI/Views/MainWindow.xaml.cs): opening and
+    /// The editor's window: opening and
     /// saving mods (the Load menu: recent mods, the game's folder, backups), the "Go to" box,
     /// keyboard shortcuts, the report, and where the window was last time.
     /// </summary>

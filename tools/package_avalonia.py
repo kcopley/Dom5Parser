@@ -19,7 +19,7 @@ import time
 import zipfile
 
 APP = "Dom6 Mod Editor.app"
-EXE = "Dom5Editor.Avalonia"  # the program's name (the assembly's: its resources are found by it)
+EXE = "Dom5Editor"  # the program's name (the assembly's: its resources are found by it)
 
 INFO_PLIST = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

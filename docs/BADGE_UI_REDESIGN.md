@@ -1,5 +1,8 @@
 # Badge-Based UI Redesign
 
+> 2026-10-07: the WPF editor (`Dom5Editor/`) was removed; this file describes it as it was (tag
+> `wpf-final`). The editor is now `Dom5Editor.Core` + `Dom5Editor.Avalonia` (docs/CROSS_PLATFORM.md).
+
 ## Overview
 
 This document outlines the significant change from manually-defined code sections to a JSON-driven badge system for entity properties in the Dom5Editor.

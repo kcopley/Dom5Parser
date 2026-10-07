@@ -1,5 +1,8 @@
 # Project Notes
 
+> 2026-10-07: the WPF editor (`Dom5Editor/`) was removed; this file describes it as it was (tag
+> `wpf-final`). The editor is now `Dom5Editor.Core` + `Dom5Editor.Avalonia` (docs/CROSS_PLATFORM.md).
+
 Quick reference notes for development context. See related documents for full details:
 - `ENHANCEMENT_PLAN.md` - Roadmap and feature tracking
 - `ISSUES.md` - Known bugs and technical debt

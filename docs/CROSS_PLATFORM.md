@@ -11,8 +11,13 @@ chain map, report and issue windows, Mod Info with the mods a mod needs) on the 
 `Dom5Editor.Core`. Measured: sweeps open every page of DomEnhanced 2.13 (383) with 0 failures in
 both editors and let closed pages go (1 alive, ~268 MB); the linux-x64 package runs natively in
 WSL (Strigos over Sombre, texts from the exe, a 35-page sweep). Not yet: a run on a real Mac or a
-Linux desktop, signing (below), whether Mac/Linux Steam installs have `Dominions6.exe`. Stage 5
-(retire WPF) is the user's call.
+Linux desktop, signing (below), whether Mac/Linux Steam installs have `Dominions6.exe`.
+
+**Stage 5 done (2026-10-07):** the user preferred the Avalonia editor's look and left the call to
+retire WPF to me. Removed after the tag `wpf-final` (48 files, ~8,200 lines): Windows now ships
+the Avalonia editor too (`tools/publish.sh`, 0.12.0); the program is called `Dom5Editor` on every
+system. Before removing, the WPF harness's last own steps were ported (`--flags` gives the same
+pixel checksum, `--type-tab` the same cursor); the 0.11.0 WPF zip stays as a fallback.
 
 The rest of this section is the assessment as written that morning.
 

@@ -10,13 +10,13 @@
                 <ColorPaletteResources x:Key="Dark" Accent="#8b4513"/>
             </FluentTheme.Palettes>
         </FluentTheme>
-        <StyleInclude Source="avares://Dom5Editor.Avalonia/Theme/Styles.axaml"/>
+        <StyleInclude Source="avares://Dom5Editor/Theme/Styles.axaml"/>
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://Dom5Editor.Avalonia/Theme/Colors.axaml"/>
-                <ResourceInclude Source="avares://Dom5Editor.Avalonia/Theme/Controls.axaml"/>
+                <ResourceInclude Source="avares://Dom5Editor/Theme/Colors.axaml"/>
+                <ResourceInclude Source="avares://Dom5Editor/Theme/Controls.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

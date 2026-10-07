@@ -17,10 +17,9 @@ using Dom5Editor.UI.ViewModels;
 namespace Dom5Editor.Ava
 {
     /// <summary>
-    /// Dom5Editor.Avalonia --snapshot STEPS: the editor driven with no one at the screen and
-    /// rendered off-screen (Avalonia's headless platform with Skia: no display needed, so it runs
-    /// in WSL and Linux CI), as the WPF harness (Dom5Editor/UI/Snapshot.cs) does: the same step
-    /// names and log lines, so a command line works with both editors. The steps that need only
+    /// Dom5Editor --snapshot STEPS: the editor driven with no one at the screen and rendered
+    /// off-screen (Avalonia's headless platform with Skia: no display needed, so it runs in WSL
+    /// and Linux CI), with the step names and log lines the WPF harness had. The steps that need only
     /// the view models (--mod, --select, --set, --add, --remove, --undo, --redo, --save, --sweep,
     /// --used-by, --dump, ... ) are shared: Dom5Editor.Core's UI/SnapshotSteps.cs lists them.
     /// This harness's own, which look at the controls:
@@ -377,7 +376,7 @@ namespace Dom5Editor.Ava
 
         /// <summary>
         /// --tooltips: every visible control (button, box, check box, picker) with no tooltip on it
-        /// or on anything around it, and the tooltips the buttons show (as the WPF harness logs them).
+        /// or on anything around it, and the tooltips the buttons show.
         /// </summary>
         private static void Tooltips(Window window)
         {
