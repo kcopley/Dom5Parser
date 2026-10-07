@@ -1,0 +1,85 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Dom5Editor.Ava.Views.ValidationWindow"
+        Title="Validation Report" Width="760" Height="560" MinWidth="420" MinHeight="300"
+        WindowStartupLocation="CenterOwner">
+    <!-- Every issue Validate found, with filters (as the WPF ValidationReportWindow): counts by
+         severity, severity check boxes and a search box, the list (Go To or double-click opens the
+         entity), and the report for the mod's author. Opened by the report window's "Every issue...". -->
+    <DockPanel Margin="16">
+        <!-- the counts -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource BackgroundLightBrush}" CornerRadius="6" Padding="16,12" Margin="0,0,0,12">
+            <StackPanel Orientation="Horizontal" Spacing="24">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Ellipse Width="12" Height="12" Fill="#FF4444" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="ErrorCountText" Text="0 Errors" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Polygon Points="6,0 12,10 0,10" Fill="#FFAA00" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="WarningCountText" Text="0 Warnings" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Ellipse Width="12" Height="12" Fill="#4488FF" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="InfoCountText" Text="0 Info" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- the filters -->
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*" Margin="0,0,0,12">
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <CheckBox x:Name="ShowErrorsCheck" Content="Errors" IsChecked="True" IsCheckedChanged="Filter_Changed"
+                          ToolTip.Tip="Show problems that break the mod in game (a line the game rejects, a reference to nothing)"/>
+                <CheckBox x:Name="ShowWarningsCheck" Content="Warnings" IsChecked="True" IsCheckedChanged="Filter_Changed"
+                          ToolTip.Tip="Show likely mistakes (an ID outside the modding range, the same ID twice, ...)"/>
+                <CheckBox x:Name="ShowInfoCheck" Content="Info" IsChecked="False" IsCheckedChanged="Filter_Changed"
+                          ToolTip.Tip="Show notes that need no action"/>
+            </StackPanel>
+            <TextBox x:Name="SearchBox" Grid.Column="1" Margin="24,0,0,0" Watermark="Search..."
+                     ToolTip.Tip="Show only the problems whose text contains this" TextChanged="SearchBox_TextChanged"/>
+        </Grid>
+
+        <!-- the footer -->
+        <DockPanel DockPanel.Dock="Bottom" Margin="0,12,0,0">
+            <Button DockPanel.Dock="Right" Content="Close" Margin="8,0,0,0" ToolTip.Tip="Close this report (Esc)" Click="Close_Click"/>
+            <Button DockPanel.Dock="Right" Content="Save report for the author"
+                    ToolTip.Tip="Save a report for the mod's author (Markdown): what goes wrong in game, lines the game ignores (with a likely fix), each with its line number"
+                    Click="Export_Click"/>
+            <TextBlock x:Name="FilteredCountText" Text="0 issues" Classes="muted" VerticalAlignment="Center"/>
+        </DockPanel>
+
+        <!-- the issues (virtualized: a big mod has thousands) -->
+        <ListBox x:Name="IssuesList" Background="{StaticResource BackgroundMediumBrush}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 DoubleTapped="IssuesList_DoubleTapped">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="Padding" Value="12,8"/>
+                </Style>
+            </ListBox.Styles>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <!-- the severity's mark -->
+                        <Panel Width="16" Height="16" Margin="0,2,12,0" VerticalAlignment="Top">
+                            <Ellipse Fill="#FF4444" IsVisible="{Binding IsError}"/>
+                            <Polygon Points="8,0 16,14 0,14" Fill="#FFAA00" IsVisible="{Binding IsWarning}"/>
+                            <Ellipse Fill="#4488FF" IsVisible="{Binding IsInfo}"/>
+                        </Panel>
+                        <StackPanel Grid.Column="1" Spacing="4">
+                            <Border Background="{StaticResource SurfaceBrush}" CornerRadius="3" Padding="6,2" HorizontalAlignment="Left"
+                                    IsVisible="{Binding Category, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                <TextBlock Text="{Binding Category}" Classes="muted" FontSize="10"/>
+                            </Border>
+                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding EntityDisplay}" Classes="muted"
+                                       IsVisible="{Binding EntityDisplay, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                        </StackPanel>
+                        <Button Grid.Column="2" Content="Go To" Classes="small" VerticalAlignment="Center" Margin="8,0,0,0"
+                                ToolTip.Tip="Open the entity this problem is about" IsVisible="{Binding CanNavigate}"
+                                Tag="{Binding}" Click="GoTo_Click"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</Window>

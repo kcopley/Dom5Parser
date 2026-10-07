@@ -23,11 +23,12 @@
             </ItemsControl>
         </StackPanel>
         <DockPanel DockPanel.Dock="Bottom" Margin="0,12,0,0">
-            <Button DockPanel.Dock="Right" Content="Close" Margin="6,0,0,0" ToolTip.Tip="Close the report" Click="Close_Click"/>
+            <Button DockPanel.Dock="Right" Content="Close" Margin="6,0,0,0" ToolTip.Tip="Close the report (Esc)" Click="Close_Click"/>
             <Button DockPanel.Dock="Right" Content="Copy" Margin="6,0,0,0" ToolTip.Tip="Copy the report as text (Markdown)" Click="Copy_Click"/>
             <Button DockPanel.Dock="Right" Content="Save for the author..." Classes="accent" Margin="6,0,0,0"
                     ToolTip.Tip="Save the report as a Markdown file to send to the mod's author" Click="Save_Click"/>
             <Button DockPanel.Dock="Left" Content="Check again" ToolTip.Tip="Check the mod as it is now, with your edits" Click="Recheck_Click"/>
+            <Button DockPanel.Dock="Left" Content="Every issue..." Margin="6,0,0,0" ToolTip.Tip="The full list of issues the checks found, with filters" Click="AllIssues_Click"/>
             <Panel/>
         </DockPanel>
         <ScrollViewer>

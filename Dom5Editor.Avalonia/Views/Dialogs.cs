@@ -23,6 +23,27 @@ namespace Dom5Editor.Ava.Views
             return answer;
         }
 
+        /// <summary>
+        /// Asks with several answers (the first is the accent button): the index of the one picked,
+        /// or -1 if the window was closed without one.
+        /// </summary>
+        public static async Task<int> Choose(Window owner, string title, string text, params string[] answers)
+        {
+            int answer = -1;
+            var window = Box(title, text, out var buttons);
+            for (int k = 0; k < answers.Length; k++)
+            {
+                int index = k;
+                var button = new Button { Content = answers[k] };
+                if (k == 0)
+                    button.Classes.Add("accent");
+                button.Click += (s, e) => { answer = index; window.Close(); };
+                buttons.Children.Add(button);
+            }
+            await window.ShowDialog(owner);
+            return answer;
+        }
+
         /// <summary>Tells something, with an OK button.</summary>
         public static async Task Tell(Window owner, string title, string text)
         {
