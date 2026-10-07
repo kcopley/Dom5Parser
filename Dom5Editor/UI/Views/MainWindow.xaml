@@ -16,6 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -136,10 +137,47 @@
         </Border>
 
         <!-- ========================================
+             REPORT BAR: what the check on opening found (MainWindowViewModel.CheckOnOpen)
+             ======================================== -->
+        <Border x:Name="ReportBar" Grid.Row="1"
+                Background="{StaticResource BackgroundMediumBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1"
+                Padding="0,5,12,5"
+                Visibility="{Binding ShowReportBar, Converter={StaticResource BoolToVisibilityConverter}}">
+            <DockPanel>
+                <Rectangle x:Name="ReportMark" Width="4" Margin="0,-5,10,-5" DockPanel.Dock="Left">
+                    <Rectangle.Style>
+                        <Style TargetType="Rectangle">
+                            <Setter Property="Fill" Value="{StaticResource WarningBrush}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ReportHasWrong}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource ErrorBrush}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ReportIsClean}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource AccentPrimaryBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                <Button DockPanel.Dock="Right" Content="✕" Style="{StaticResource ButtonSmall}" Padding="6,0" Margin="6,0,0,0"
+                        ToolTip="Hide this bar (Validate shows the report again)" Click="ReportBarClose_Click"/>
+                <Button DockPanel.Dock="Right" Content="Save for the author..." Style="{StaticResource ButtonSmall}" Margin="6,0,0,0"
+                        ToolTip="Save the report as a Markdown file to send to the mod's author: every finding with its line in the file and what the game does with it"
+                        Click="ReportSave_Click"/>
+                <Button DockPanel.Dock="Right" Content="Open report" Style="{StaticResource ButtonSmall}" Margin="6,0,0,0"
+                        ToolTip="See what the check found, section by section, with a Go to for each line"
+                        Click="ReportOpen_Click"/>
+                <TextBlock Text="{Binding ReportSummary}" ToolTip="{Binding ReportSummary}"
+                           Style="{StaticResource TextBlockBase}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+            </DockPanel>
+        </Border>
+
+        <!-- ========================================
              MAIN CONTENT: the mod header, then a tab per entity type (MainWindowViewModel.Tabs)
              ======================================== -->
         <TabControl x:Name="EntityTabs"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Style="{StaticResource TabControlBase}"
                     IsEnabled="{Binding HasMod}"
                     ItemsSource="{Binding Tabs}"
@@ -235,7 +273,7 @@
         <!-- ========================================
              STATUS BAR
              ======================================== -->
-        <Border Grid.Row="2"
+        <Border Grid.Row="3"
                 Background="{StaticResource BackgroundMediumBrush}"
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0,1,0,0"
@@ -257,7 +295,7 @@
              NO MOD LOADED OVERLAY
              ======================================== -->
         <Border x:Name="NoModOverlay"
-                Grid.Row="1"
+                Grid.Row="2"
                 Background="{StaticResource BackgroundDarkBrush}"
                 Visibility="{Binding HasMod, Converter={StaticResource BoolToVisibilityInverseConverter}}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">

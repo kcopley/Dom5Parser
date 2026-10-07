@@ -195,6 +195,19 @@ namespace Dom5Edit
         /// </summary>
         public List<SourceBlock> SourceBlocks { get; } = new List<SourceBlock>();
 
+        /// <summary>The entity whose block holds a line of the file (the last block starting at or before it), or null.</summary>
+        public IDEntity? EntityAt(int line)
+        {
+            int lo = 0, hi = SourceBlocks.Count - 1, found = -1;
+            while (lo <= hi)
+            {
+                int mid = (lo + hi) / 2;
+                if (SourceBlocks[mid].HeaderLine <= line) { found = mid; lo = mid + 1; }
+                else hi = mid - 1;
+            }
+            return found >= 0 && SourceBlocks[found].HeaderLine > 0 ? SourceBlocks[found].Entity : null;
+        }
+
         /// <summary>
         /// The properties live in entities when parsing finished. A block property that was live
         /// then and isn't any more was removed by an edit; one that wasn't live then was taken out
@@ -638,6 +651,7 @@ namespace Dom5Edit
                 {
                     RawHeader = _currentRawText,
                     IdAtParse = blockEntity.ID,
+                    HeaderLine = LineNumber,
                 };
                 _currentBlock.LeadingTrivia.AddRange(_pendingTrivia);
                 _pendingTrivia.Clear();

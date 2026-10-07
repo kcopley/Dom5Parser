@@ -302,15 +302,33 @@ namespace Dom5Editor.UI.Views
                 tab.BringIntoView();
         }
 
-        private void ValidateButton_Click(object sender, RoutedEventArgs e)
-        {
-            var results = _viewModel.Validate();
-            if (results == null) return;
+        private void ValidateButton_Click(object sender, RoutedEventArgs e) => OpenReport(rebuild: true);
 
-            var dialog = new ValidationReportWindow(results, _viewModel);
-            dialog.Owner = this;
-            dialog.ShowDialog();
+        // ---- the report on the mod (the bar after opening a mod, and Validate) ----
+
+        private ModReportWindow? _reportWindow;
+
+        /// <summary>Shows the report window (one, not modal: Go to keeps it open), checking the mod again first if asked.</summary>
+        private void OpenReport(bool rebuild)
+        {
+            var report = rebuild || _viewModel.Report == null ? _viewModel.BuildReport() : _viewModel.Report;
+            if (report == null)
+                return;
+            _reportWindow?.Close();
+            _reportWindow = new ModReportWindow(_viewModel, report) { Owner = this };
+            _reportWindow.Closed += (s, a) => _reportWindow = null;
+            _reportWindow.Show();
         }
+
+        private void ReportOpen_Click(object sender, RoutedEventArgs e) => OpenReport(rebuild: false);
+
+        private void ReportSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.Report is { } report)
+                ModReportWindow.SaveForAuthor(this, report);
+        }
+
+        private void ReportBarClose_Click(object sender, RoutedEventArgs e) => _viewModel.ShowReportBar = false;
 
         private void NewMod()
         {

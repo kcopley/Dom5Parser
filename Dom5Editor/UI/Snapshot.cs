@@ -43,6 +43,7 @@ namespace Dom5Editor.UI
     ///   --undo / --redo          undo or redo the last edit
     ///   --save FILE.dm           save the mod (the editor's Save)
     ///   --png FILE.png           render the window
+    ///   --report FILE.png        the check made on opening a mod (its bar, timing) and the report window
     ///   --view FILE.png          render the selected entity's view at its full height
     ///   --scroll-list TYPE N     scroll a type's list N screens (0: to the end), timing each (sprites decode as rows show)
     ///   --flags FILE.png         every nation's flag on one sheet, timed, with a checksum (tools/dom6exe/flags.py check)
@@ -816,6 +817,30 @@ namespace Dom5Editor.UI
                             Log($"tooltip {args[i]} (value {badge.Value}, note {badge.ValueNote ?? "-"}):");
                             foreach (var line in (badge.Tooltip ?? "").Split('\n'))
                                 Log("   | " + line);
+                            break;
+                        }
+                        case "--report":
+                        {
+                            // --report FILE.png: the check made on opening (its bar's text, how long it took)
+                            // and the report window, rendered
+                            logPath ??= args[i + 1] + ".log";
+                            Pump();
+                            if (vm.Report == null)
+                                vm.CheckOnOpen();
+                            Log($"report bar: {vm.ReportSummary} ({vm.ReportMilliseconds} ms)");
+                            var report = vm.Report!;
+                            foreach (var s in report.Sections)
+                                Log($"   {s.Title}: {s.Count}" + string.Concat(s.Groups.Take(3).Select(g => $"\n      {g.Text} [{g.Lines.Count} line(s); first goes to {g.Lines.FirstOrDefault()?.Entity?.Kind} {g.Lines.FirstOrDefault()?.Entity?.ID}]")));
+                            var rw = new Views.ModReportWindow(vm, report)
+                            {
+                                WindowStartupLocation = WindowStartupLocation.Manual, Left = -30000, Top = -30000,
+                                Width = 1000, Height = 900, ShowActivated = false,
+                            };
+                            rw.Show();
+                            Pump();
+                            Render(rw, args[++i]);
+                            rw.Close();
+                            Log($"rendered report {args[i]}");
                             break;
                         }
                         case "--validate":
