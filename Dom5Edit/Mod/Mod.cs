@@ -363,9 +363,12 @@ namespace Dom5Edit
             {
                 // the game overwrites the file's last byte with its end marker
                 var last = File.ReadLines(dmFile).Select((text, i) => (text, line: i + 1)).LastOrDefault();
+                var kind = SourceBlocks.LastOrDefault()?.Entity.GetType().Name.ToLowerInvariant();
                 if (last.line > 0)
                     AddParseIssue(ParseIssueType.GameReadsDifferently, "The file doesn't end with a line break: the game drops its last character"
-                        + (last.text.TrimEnd().EndsWith("#end") ? " (this \"#end\" reads as \"#en\", so the last block isn't closed: for a spell, bless or sound the game stops)" : ""), last.line);
+                        + (!last.text.TrimEnd().EndsWith("#end") ? ""
+                            : kind != null && MustEnd.Contains(kind) ? $" (this \"#end\" reads as \"#en\", so the last {kind} isn't closed and the game stops: \"no #end for modded {kind}\")"
+                            : $" (this \"#end\" reads as \"#en\"; harmless for the last block, {(kind != null ? "a " + kind : "")}, but not for a spell, bless or sound)"), last.line);
             }
         }
 
