@@ -28,7 +28,15 @@ namespace Dom5Editor.UI
     ///   --reset LABEL            a field's reset button (back to what it inherits)
     ///   --add-path F             the magic panel's add-path button; --add-random FAWE 50 adds a random path;
     ///   --toggle-random N D      toggles path D on the Nth random path
+    ///   --mod-info FIELD VALUE   a Mod Info box (modname, description, version, domversion, icon)
+    ///   --copy ID / --sprite-from ID   the copy picker (#copystats, ...) / the sprite picker (#copyspr); 0: none
+    ///   --add-clear COMMAND      the clears picker (#clearrec, #clearweapons, ...)
+    ///   --flag LABEL on|off      a flags panel checkbox; --path-level F N a magic path's level box
+    ///   --panel-new TITLE        a list panel's "+ New weapon/armor"; --panel-add TITLE ID its add box;
+    ///   --panel-remove TITLE N   its Nth row's remove button
+    ///   --event-rarity NAME|N, --event-owner N [NATION], --event-msg TEXT   an event's header and message boxes
     ///   --dump                   log the selected entity's values and where each comes from
+    ///   --dump-mod               --dump every entity the mod makes or changes (to compare a mod as made and as reloaded)
     ///   --derived                log what the game makes of its stats (the bracketed values, "in game" notes, table rows)
     ///   --sweep N                open up to N of the mod's entities of every type (0: all); --sweep-vanilla N
     ///                            the same for the game's own entities
@@ -75,6 +83,7 @@ namespace Dom5Editor.UI
                 };
                 app.MainWindow = window;
                 EntityTypeTab.Confirm = null; // no dialogs off-screen: deletes go ahead (and say so in the log)
+                EntityPageViewModel.SaveFirst = null; // (an image on a mod never saved: the error, not the save dialog)
                 window.Show();
                 var vm = (MainWindowViewModel)window.DataContext;
                 if (!args.Contains("--mod"))
@@ -246,6 +255,17 @@ namespace Dom5Editor.UI
                             Log($"copy & edit {title} {row.Text}: now on {Selected(vm)?.DisplayName} #{Selected(vm)?.ID}{(page.Error != null ? " error: " + page.Error : "")}");
                             break;
                         }
+                        case "--add-clear":
+                        {
+                            // --add-clear COMMAND: the CLEARS picker at the top of the page (#clearrec, #clearweapons, ...)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var c = CommandOf(args[++i]);
+                            if (!page.AddableClears.Any(x => x.ID == (int)c))
+                                throw new InvalidOperationException("the clears picker doesn't offer " + args[i]);
+                            page.AddClearPick = (int)c;
+                            Log($"add clear {args[i]}{(page.Error != null ? " error: " + page.Error : "")}: clears {string.Join(", ", Selected(vm)!.Structure.Select(s => s.Text))}");
+                            break;
+                        }
                         case "--mod-info":
                         {
                             // --mod-info FIELD VALUE: a box on the Mod Info tab (modname, description, version, domversion, icon)
@@ -271,6 +291,16 @@ namespace Dom5Editor.UI
                             int source = int.Parse(args[++i]);
                             page.CopySourceId = source == 0 ? null : source;
                             Log($"copy {source}: copies {Selected(vm)?.CopySourceName}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--sprite-from":
+                        {
+                            // --sprite-from ID: the "sprite from" picker next to the copy picker (#copyspr; 0: none)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            int source = int.Parse(args[++i]);
+                            page.SpriteCopyId = source == 0 ? null : source;
+                            var now = Selected(vm)!;
+                            Log($"sprite from {source}{(page.Error != null ? " error: " + page.Error : "")}: slots {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.PixelWidth}x{x.Image.PixelHeight}" : "none")}"))}");
                             break;
                         }
                         case "--flag":
@@ -409,6 +439,33 @@ namespace Dom5Editor.UI
                             else
                                 cells.OfType<NumberField>().First(f => f.Label == label).Text = value;
                             Log($"stat {label} = {value}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--event-rarity":
+                        case "--event-owner":
+                        case "--event-msg":
+                        {
+                            // --event-rarity NAME|N: the "rolled as" box; --event-owner N [NATION]: the "owned by" box (0 independents,
+                            // 1 the province's owner, 2 a random enemy, 3 a nation, picked next); --event-msg TEXT: the message box
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var step = args[i];
+                            var value = args[++i];
+                            switch (step)
+                            {
+                                case "--event-rarity":
+                                    var header = page.Panels.OfType<EventHeaderPanel>().Single();
+                                    header.Rarity = header.Rarities.FirstOrDefault(o => o.Name == value)?.Value ?? int.Parse(value);
+                                    break;
+                                case "--event-owner":
+                                    page.Panels.OfType<EventHeaderPanel>().Single().Owner = int.Parse(value);
+                                    if (value == "3")
+                                        Selected(vm)!.Panels.OfType<EventHeaderPanel>().Single().OwnerNation = int.Parse(args[++i]);
+                                    break;
+                                default:
+                                    page.Panels.OfType<EventMessagePanel>().Single().Text = value;
+                                    break;
+                            }
+                            Log($"{step.Substring(2)} {value}{(Selected(vm)?.Error is string e ? " error: " + e : "")}");
                             break;
                         }
                         case "--event-add":
