@@ -70,6 +70,10 @@ namespace Dom5Editor.UI
                 return false;
             // test runs keep their backups out of the user's (Settings folder\backups)
             Dom5Edit.ModBackups.Folder = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Dom5Editor-snapshot-backups");
+            // (and the mods each mod needs: the user's list stays as it is)
+            Session.NeededMods.FilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Dom5Editor-snapshot-needed-mods.json");
+            if (File.Exists(Session.NeededMods.FilePath))
+                File.Delete(Session.NeededMods.FilePath);
             int exitCode = 0;
             string? logPath = null;
             MainWindow? window = null;
@@ -822,6 +826,24 @@ namespace Dom5Editor.UI
                                 Log("   | " + line);
                             break;
                         }
+                        case "--show-tab":
+                        {
+                            // --show-tab TITLE: shows a tab ("Mod Info", "Monsters", ...)
+                            var title = args[++i];
+                            vm.SelectedTab = vm.Tabs.FirstOrDefault(t => (t as ModInfoViewModel)?.Title == title || (t as EntityTypeTab)?.Title == title)
+                                             ?? throw new ArgumentException("no tab " + title);
+                            Log($"tab {title}");
+                            break;
+                        }
+                        case "--needs":
+                        {
+                            // --needs FILE: the open mod read again over FILE too (after the ones it has)
+                            var files = vm.Session!.Needed.Select(m => m.FullFilePath).Append(Path.GetFullPath(args[++i])).ToList();
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            vm.SetNeeded(files);
+                            Log($"needs {string.Join(", ", vm.Session.Needed.Select(m => Path.GetFileName(m.FullFilePath)))} ({watch.ElapsedMilliseconds} ms): {vm.StatusMessage}");
+                            break;
+                        }
                         case "--used-by":
                         {
                             // the selected page's "used by" list
@@ -840,6 +862,8 @@ namespace Dom5Editor.UI
                             if (vm.Report == null)
                                 vm.CheckOnOpen();
                             Log($"report bar: {vm.ReportSummary} ({vm.ReportMilliseconds} ms)");
+                            if (vm.HasNeededSuggestion)
+                                Log($"   suggestion: {vm.NeededSuggestionText}");
                             var report = vm.Report!;
                             foreach (var s in report.Sections)
                                 Log($"   {s.Title}: {s.Count}" + string.Concat(s.Groups.Take(3).Select(g => $"\n      {g.Text} [{g.Lines.Count} line(s); first goes to {g.Lines.FirstOrDefault()?.Entity?.Kind} {g.Lines.FirstOrDefault()?.Entity?.ID}]")));

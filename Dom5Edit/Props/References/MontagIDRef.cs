@@ -38,7 +38,7 @@ namespace Dom5Edit.Props
         {
             if (Command == Command.MONTAG || ID <= 0 || Parent?.ParentMod is not Mod mod)
                 return Array.Empty<IDEntity>();
-            return new[] { mod }.Concat(mod.Dependencies)
+            return new[] { mod }.Concat(mod.Below())
                 .Select(m => m.Dependents.TryGetValue(EntityType.MONTAG, out var tags) && tags.TryGetValue(ID, out var tag) ? tag : null)
                 .Where(tag => tag != null)
                 .SelectMany(tag => tag!.ReferencedEntities)

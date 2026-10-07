@@ -555,16 +555,20 @@ namespace Dom5Tests
         static void Resolve(string basePath, string[] args)
         {
             LoadVanillaBase(basePath);
+            // --with NEEDED.dm (repeatable): mods read first, the mod over them
+            var needed = new List<string>();
+            for (int i = 2; i + 1 < args.Length; i++)
+                if (args[i] == "--with")
+                {
+                    needed.Add(args[i + 1]);
+                    args = args.Take(i).Concat(args.Skip(i + 2)).ToArray();
+                    i--;
+                }
             Mod mod;
             if (args[1] == "vanilla")
                 mod = VanillaLoader.Vanilla;
             else
-            {
-                mod = new Mod { FullFilePath = args[1] };
-                mod.Parse(args[1]);
-                mod.ResolveDependencies();
-                mod.Resolve();
-            }
+                mod = Mod.Import(args[1], Mod.ImportStack(needed));
             var resolver = Dom5Edit.Resolve.ModResolver.For(mod);
             var watch = System.Diagnostics.Stopwatch.StartNew();
             if (mod.Database[EntityType.MONSTER].GetFullList().FirstOrDefault() is { } any)
@@ -689,11 +693,11 @@ namespace Dom5Tests
             mod.Resolve();
             var resolver = Dom5Edit.Resolve.ModResolver.For(mod);
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            var g = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla);
+            var g = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, mod.Below().ToList());
             Console.WriteLine($"{g.Events.Count} events ({g.ModEvents.Count} the mod's), {g.Links.Count} links, {g.Chains.Count} chains, {g.Problems.Count} problems ({watch.ElapsedMilliseconds} ms)");
             Console.WriteLine("  vanilla event messages: " + VanillaLoader.EventMessagesStatus);
             watch.Restart();
-            Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla, g.Spells);
+            Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, mod.Below().ToList(), g.Spells);
             Console.WriteLine($"  rebuilt after an edit (spells kept): {watch.ElapsedMilliseconds} ms");
             Console.WriteLine("  first events: " + string.Join(", ", g.Events.Take(4).Select(e => $"id {e.ID}{(e.Selected ? " (select)" : "")}")));
             foreach (var k in g.Links.GroupBy(l => l.Kind))

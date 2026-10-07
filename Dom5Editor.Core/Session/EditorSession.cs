@@ -56,6 +56,26 @@ namespace Dom5Editor.Session
         /// <summary>Which entities refer to which ("used by").</summary>
         public UsageIndex Usage { get; }
 
+        /// <summary>The mods this one is read over (a submod's parent), in the order the game reads them; never changed or saved.</summary>
+        public IReadOnlyList<Mod> Needed { get; private init; } = Array.Empty<Mod>();
+
+        /// <summary>Why a needed mod was left out on opening (gone, unreadable), for the status bar; null if none was.</summary>
+        public string? NeededNote { get; private init; }
+
+        private IReadOnlyList<Mod>? _below;
+
+        /// <summary>The mods read before this one, nearest first: the needed mods, then vanilla (Mod.Below).</summary>
+        public IReadOnlyList<Mod> Below => _below ??= Mod.Below().ToList();
+
+        /// <summary>The entity as the mods read before this one have it (the nearest that has the number), or null.</summary>
+        public IDEntity? BaseEntity(EntityType type, int id) => Mod.FindBelow(type, id, null);
+
+        /// <summary>A needed mod's name, for labels ("From Sombre Warhammer"); null for vanilla.</summary>
+        public static string? NameOf(Mod? mod) =>
+            mod == null || mod.Dependencies.Count == 0 ? null
+            : !string.IsNullOrWhiteSpace(mod.ModName) ? mod.ModName
+            : System.IO.Path.GetFileNameWithoutExtension(mod.FullFilePath);
+
         public void Navigate(EntityType type, int id) => NavigationRequested?.Invoke(type, id);
 
         /// <summary>Raised to show an entity by itself (events have no number).</summary>
@@ -78,8 +98,8 @@ namespace Dom5Editor.Session
         /// worked out when first asked for after an edit (the spells only after a spell edit).
         /// </summary>
         public Dom5Edit.Events.EventGraph Events =>
-            _events ??= Dom5Edit.Events.EventGraph.Build(Mod, Resolve, VanillaLoader.Vanilla,
-                _spells ??= Dom5Edit.Events.SpellIndex.Build(Mod, Resolve, VanillaLoader.Vanilla));
+            _events ??= Dom5Edit.Events.EventGraph.Build(Mod, Resolve, Below,
+                _spells ??= Dom5Edit.Events.SpellIndex.Build(Mod, Resolve, Below));
 
         /// <summary>Every entity of a type (vanilla and the mod's), for reference pickers: ID and name in game.</summary>
         public IReadOnlyList<ReferenceItem> References(EntityType type)
@@ -93,9 +113,11 @@ namespace Dom5Editor.Session
                 var item = ReferenceOf(e);
                 if (e.ID > 0) byId[e.ID] = item; else unnumbered.Add(item);
             }
-            if (VanillaLoader.Vanilla?.Database.TryGetValue(type, out var vanilla) == true)
-                foreach (var e in vanilla.GetFullList())
-                    Add(e);
+            // vanilla first, then the mods over it: a later one's entity for a number replaces it
+            foreach (var layer in Below.Reverse())
+                if (layer.Database.TryGetValue(type, out var set))
+                    foreach (var e in set.GetFullList())
+                        Add(e);
             if (Mod.Database.TryGetValue(type, out var own))
                 foreach (var e in own.GetFullList())
                     Add(e);
@@ -115,7 +137,7 @@ namespace Dom5Editor.Session
                 return;
             int i = list.FindIndex(r => entity.ID > 0 ? r.ID == entity.ID : ReferenceEquals(r.Tag, entity));
             bool held = Mod.Database.TryGetValue(entity.Kind, out var set) && set.GetFullList().Contains(entity)
-                        || entity.ID > 0 && VanillaLoader.Vanilla?.Database.TryGetValue(entity.Kind, out var vset) == true && vset.TryGetValue(entity.ID, out _);
+                        || entity.ID > 0 && BaseEntity(entity.Kind, entity.ID) != null;
             if (!held)
             {
                 if (i >= 0)
@@ -145,20 +167,50 @@ namespace Dom5Editor.Session
             return new EditorSession(mod, null);
         }
 
-        /// <summary>Opens a mod; a copy of its file as it is now goes to the backups first (ModBackups).</summary>
-        public static EditorSession Load(string path)
+        /// <summary>
+        /// Opens a mod over the mods it needs (<paramref name="needed"/>: read first, each over the
+        /// one before, as the game reads enabled mods); a copy of its file as it is now goes to the
+        /// backups first (ModBackups). A needed mod that can't be read is left out (NeededNote).
+        /// </summary>
+        public static EditorSession Load(string path, IReadOnlyList<string>? needed = null)
         {
-            string? backup = null;
+            string? backupNote;
             try
             {
-                backup = ModBackups.Backup(path, "opened");
+                backupNote = ModBackups.Backup(path, "opened") != null ? "a backup copy was made" : null;
             }
             catch (Exception ex) when (ex is System.IO.IOException || ex is UnauthorizedAccessException)
             {
                 // opening still works; the status says the copy couldn't be made
-                return new EditorSession(Mod.Import(path), path) { BackupNote = $"no backup copy could be made ({ex.Message})" };
+                backupNote = $"no backup copy could be made ({ex.Message})";
             }
-            return new EditorSession(Mod.Import(path), path) { BackupNote = backup != null ? "a backup copy was made" : null };
+            Mod? below = null;
+            var loaded = new List<Mod>();
+            var problems = new List<string>();
+            foreach (var file in needed ?? Array.Empty<string>())
+            {
+                var name = System.IO.Path.GetFileName(file);
+                if (!System.IO.File.Exists(file))
+                {
+                    problems.Add($"{name} isn't there any more");
+                    continue;
+                }
+                try
+                {
+                    below = Mod.Import(file, below);
+                    loaded.Add(below);
+                }
+                catch (Exception ex)
+                {
+                    problems.Add($"{name} couldn't be read ({ex.Message})");
+                }
+            }
+            return new EditorSession(Mod.Import(path, below), path)
+            {
+                BackupNote = backupNote,
+                Needed = loaded,
+                NeededNote = problems.Count > 0 ? "left out: " + string.Join("; ", problems) : null,
+            };
         }
 
         /// <summary>What happened to the backup on opening, for the status bar (null: the same copy was there already).</summary>

@@ -59,6 +59,25 @@ namespace Dom5Edit.Editing
         }
 
         /// <summary>
+        /// Why the mod can't change an entity it doesn't hold yet, or null if it can (by a #select
+        /// of it): the game's mercenaries have no #select, and a needed mod's new events and bands
+        /// have no number to select them by.
+        /// </summary>
+        public string? CannotChange(IDEntity entity)
+        {
+            if (entity.ParentMod == Mod || OwnEntity(entity) != null)
+                return null;
+            var owner = entity.ParentMod;
+            bool needed = owner != null && owner.Dependencies.Count > 0;
+            string name = !needed ? "" : !string.IsNullOrWhiteSpace(owner!.ModName) ? owner.ModName : Path.GetFileNameWithoutExtension(owner.FullFilePath);
+            if (entity.GetEntityType() == EntityType.MERCENARY)
+                return needed ? $"A band of {name}, a mod this one needs: a mod over it can't change it (there is no #selectmerc)." : VanillaMercenaryNote;
+            if (entity.ID < 0 && needed)
+                return $"Made by {name}, a mod this one needs: a mod over it can't change it (it has no number to #select it by).";
+            return null;
+        }
+
+        /// <summary>
         /// Runs several changes as one edit (one undo step). Returns null if nothing changed. If the
         /// body throws, everything it did is undone and the exception passes on.
         /// </summary>
@@ -207,9 +226,10 @@ namespace Dom5Edit.Editing
             var own = _editor.OwnEntity(entity);
             if (own != null)
                 return own;
-            // the game's mercenaries have no #select: a mod can only remove them all (#clearmercs)
-            if (entity.GetEntityType() == EntityType.MERCENARY)
-                throw new EditException(ModEditor.VanillaMercenaryNote);
+            // the game's mercenaries have no #select: a mod can only remove them all (#clearmercs);
+            // a needed mod's new events and bands have no number to select them by
+            if (_editor.CannotChange(entity) is string why)
+                throw new EditException(why);
             var made = (IDEntity)Activator.CreateInstance(entity.GetType())!;
             made.Assign(entity.ID.ToString(), "", Mod, selected: true);
             made.Resolve();

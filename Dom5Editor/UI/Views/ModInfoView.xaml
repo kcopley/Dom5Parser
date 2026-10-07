@@ -107,6 +107,45 @@
                 </Grid>
             </Border>
 
+            <!-- The mods this one needs (a submod's parent): read first, never changed or saved -->
+            <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="12" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Needs:" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"
+                               VerticalAlignment="Top" Margin="0,4,8,0"/>
+                    <ItemsControl Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Needed}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="0,0,0,4" ToolTip="{Binding File}">
+                                    <Button DockPanel.Dock="Right" Content="Remove" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" Command="{Binding RemoveCommand}"
+                                            ToolTip="Read this mod without it (it is read again)"/>
+                                    <Button DockPanel.Dock="Right" Content="▲" Style="{DynamicResource ButtonSmall}" Margin="6,0,0,0" Command="{Binding MoveUpCommand}"
+                                            ToolTip="Read it before the one above (the game reads mods in the order they were enabled)"/>
+                                    <TextBlock Text="{Binding Order}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" Width="20" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding FileName, StringFormat='  {0}'}" Style="{DynamicResource MutedText}" FontSize="11" VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button Grid.Column="1" Grid.Row="1" Content="Add a mod it needs..." Style="{DynamicResource ButtonSmall}" HorizontalAlignment="Left" Margin="0,2,0,0"
+                            Command="{Binding AddNeededCommand}" IsEnabled="{Binding CanChangeNeeded}" ToolTip="{Binding NeededTip}" ToolTipService.ShowOnDisabled="True"/>
+
+                    <TextBlock Grid.Column="1" Grid.Row="2" Style="{DynamicResource MutedText}" FontSize="10" Margin="0,6,0,0" TextWrapping="Wrap"
+                               Text="Mods the game must read before this one (a submod's parent): enable them first, in this order. Their entities are shown and can be changed by this mod, as vanilla's; they are never changed or saved."/>
+                </Grid>
+            </Border>
+
             <!-- Icon -->
             <Border Background="{DynamicResource BackgroundLightBrush}" CornerRadius="4" Padding="12" Margin="0,0,0,12">
                 <Grid>

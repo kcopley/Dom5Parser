@@ -97,7 +97,9 @@ namespace Dom5Editor.UI.ViewModels
         public virtual string DisplayName => !string.IsNullOrEmpty(Name) ? Name : Entity.HeaderName ?? $"#{ID}";
 
         public string SourceLabel => Item.IsNew ? "New in this mod"
-            : !Item.IsModified ? "Vanilla"
+            : !Item.IsModified ? Item.FromMod == null ? "Vanilla"
+                : Item.FromModChangesGame ? $"Vanilla, changed by {Item.FromMod} (a mod this one needs)" : $"From {Item.FromMod} (a mod this one needs)"
+            : Item.FromMod != null ? Item.FromModChangesGame ? $"Vanilla, changed by {Item.FromMod} and this mod" : $"From {Item.FromMod}, changed by this mod"
             : Resolved.Vanilla == null && Entity.Selected ? $"Changed by this mod (the vanilla data has no {Plural(Type)} to show)"
             : "Vanilla, changed by this mod";
 
@@ -115,15 +117,20 @@ namespace Dom5Editor.UI.ViewModels
 
         public bool HasError => !string.IsNullOrEmpty(_error);
 
-        /// <summary>Why the page can't be edited, or null: the game's own mercenaries, which no command selects.</summary>
-        public string? ReadOnlyNote => Type == EntityType.MERCENARY && Entity.ParentMod != Session.Mod
-            ? ModEditor.VanillaMercenaryNote : null;
+        /// <summary>Why the page can't be edited, or null: the game's own mercenaries, which no command selects; a needed mod's new events and bands.</summary>
+        public string? ReadOnlyNote => Session.Editor.CannotChange(Entity);
 
         public bool IsReadOnly => ReadOnlyNote != null;
 
+        /// <summary>The read-only page's button: "New band from this one", "New event from this one".</summary>
+        public string CopyToNewLabel => $"New {Nouns.Of(Type)} from this one";
+
+        public string CopyToNewTip => Type == EntityType.MERCENARY ? "Make a new band (#newmerc) with this one's values, and open it to edit"
+            : $"Make a new {Nouns.Of(Type)} in this mod with this one's lines, and open it to edit (this one stays as it is)";
+
         /// <summary>
-        /// For a read-only page (the game's own band): a new entity of the type with its values,
-        /// made in the mod and opened (#newmerc with the same lines).
+        /// For a read-only page (the game's own band, a needed mod's event): a new entity of the
+        /// type with its values, made in the mod and opened (#newmerc with the same lines).
         /// </summary>
         public ICommand CopyToNewCommand => new RelayCommand(() =>
         {
@@ -903,7 +910,7 @@ namespace Dom5Editor.UI.ViewModels
         public string SourceText(ResolvedValue v) => v.Source switch
         {
             ValueSource.Own => Session.Mod.IsFromFile(v.Property) ? $"Set by this mod (line {v.Property.LineNumber})" : "Set in this session",
-            ValueSource.Vanilla => "From vanilla",
+            ValueSource.Vanilla => EditorSession.NameOf(v.Property.Parent?.ParentMod) is string from ? $"From {from} (a mod this one needs)" : "From vanilla",
             _ => $"Copied from {NameOf(Type, v.CopiedFrom?.ID ?? 0)} #{v.CopiedFrom?.ID}" +
                  (v.Via != null ? v.Via.Source == ValueSource.Own ? " (its own line)" : v.Via.Source == ValueSource.Vanilla ? " (vanilla)" : " (which copies it)" : ""),
         };

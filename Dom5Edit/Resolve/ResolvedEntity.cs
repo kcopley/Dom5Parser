@@ -9,7 +9,10 @@ namespace Dom5Edit.Resolve
     {
         /// <summary>A line in one of this entity's own blocks.</summary>
         Own,
-        /// <summary>The vanilla entity's data, which the mod doesn't change.</summary>
+        /// <summary>
+        /// The base data, which the mod doesn't change: the vanilla entity's, or a line of a mod
+        /// this one is read over (a submod's parent; Property.Parent.ParentMod says which).
+        /// </summary>
         Vanilla,
         /// <summary>Brought in by one of this entity's copy commands (#copystats, #copyweapon, ...).</summary>
         Copied,
@@ -120,6 +123,14 @@ namespace Dom5Edit.Resolve
 
         /// <summary>The copy command that counts for this entity (#copystats, #copyweapon, ...), or null.</summary>
         public Property? CopyLine => Structure.LastOrDefault(p => GameRules.IsCopy(p.Command) && p.Command != Command.COPYSPR);
+
+        /// <summary>
+        /// This entity as a mod read over it sees it: its own lines are base data there (an edit
+        /// adds a line to that mod), and its copy, clear and removal lines aren't that mod's.
+        /// </summary>
+        internal ResolvedEntity AsBase() =>
+            new ResolvedEntity(Entity, Vanilla, Values.Select(v => v.Source == ValueSource.Own ? new ResolvedValue(v.Property, ValueSource.Vanilla) : v).ToList(),
+                Array.Empty<Property>(), Array.Empty<Property>(), GameValues) { Assets = Assets };
 
         /// <summary>Whether the value is a line this entity holds now, which an edit can change in place.</summary>
         public bool IsEditableInPlace(ResolvedValue v) =>

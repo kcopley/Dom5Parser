@@ -308,7 +308,8 @@ namespace Dom5Editor.UI.ViewModels
             if (held)
             {
                 bool game = vanilla != null || entity.Selected && !HasVanillaData(Type);
-                var added = new EntityListItem(Type, entity, NameOf(entity), isVanilla: game, isModified: game);
+                var added = new EntityListItem(Type, entity, NameOf(entity), isVanilla: game, isModified: game)
+                    { FromMod = EditorSession.NameOf(vanilla?.ParentMod), FromModChangesGame = vanilla != null && ChangesGame(vanilla) };
                 Equip(added);
                 // (an event made next to another is sorted there: its place in the file)
                 added.Order = Type == EntityType.EVENT && _session.Events.IndexOf(entity) is int at && at >= 0 ? at : _items!.Count;
@@ -323,15 +324,22 @@ namespace Dom5Editor.UI.ViewModels
             var mod = _session.Mod;
             var own = mod.Database.TryGetValue(Type, out var set) ? set.GetFullList() : new List<IDEntity>();
             var ownById = own.Where(HasNumber).GroupBy(e => e.ID).ToDictionary(g => g.Key, g => g.First());
-            if (VanillaLoader.Vanilla?.Database.TryGetValue(Type, out var vanillaSet) == true)
+            // the entities of the mods read before this one (vanilla, then the mods it needs): by
+            // number the nearest one's, in vanilla's order; a needed mod's new ones after them
+            var below = new Dictionary<object, IDEntity>();
+            foreach (var layer in _session.Below.Reverse())
+                if (layer.Database.TryGetValue(Type, out var layerSet))
+                    foreach (var v in layerSet.GetFullList())
+                        below[Key(v)] = v;
+            foreach (var v in below.Values)
             {
-                foreach (var v in vanillaSet.GetFullList())
-                {
-                    if (ownById.TryGetValue(v.ID, out var changed))
-                        list.Add(new EntityListItem(Type, changed, NameOf(changed), isVanilla: true, isModified: true));
-                    else
-                        list.Add(new EntityListItem(Type, v, Type == EntityType.EVENT ? NameOf(v) : string.IsNullOrEmpty(v.Name) ? $"#{v.ID}" : v.Name, isVanilla: true, isModified: false));
-                }
+                var from = EditorSession.NameOf(v.ParentMod);
+                bool changesGame = from != null && ChangesGame(v);
+                if (ownById.TryGetValue(v.ID, out var changed))
+                    list.Add(new EntityListItem(Type, changed, NameOf(changed), isVanilla: true, isModified: true) { FromMod = from, FromModChangesGame = changesGame });
+                else
+                    list.Add(new EntityListItem(Type, v, Type == EntityType.EVENT || string.IsNullOrEmpty(v.Name) && from != null ? NameOf(v)
+                        : string.IsNullOrEmpty(v.Name) ? $"#{v.ID}" : v.Name, isVanilla: true, isModified: false) { FromMod = from, FromModChangesGame = changesGame });
             }
             var listed = new HashSet<int>(list.Select(i => i.ID));
             // the mod's own; a #select of a type the loaded vanilla data lacks is still the game's:
@@ -467,13 +475,24 @@ namespace Dom5Editor.UI.ViewModels
             return string.Join(" · ", parts.Distinct().Take(4));
         }
 
+        /// <summary>Whether a needed mod's entity is its #select of one the mods under it (the game) have.</summary>
+        private static bool ChangesGame(IDEntity e) => e.Selected && e.ParentMod.FindBelow(e.Kind, e.ID, null) != null;
+
+        /// <summary>The entity with this number in the mods read before this one (the nearest that has it: a needed mod, vanilla), or null.</summary>
         private IDEntity? VanillaOf(int id)
         {
-            var db = VanillaLoader.Vanilla?.Database;
-            if (id < 0 || id == 0 && !NumberedFromZero(Type) || db == null || !db.TryGetValue(Type, out var set))
+            if (id < 0 || id == 0 && !NumberedFromZero(Type))
                 return null;
-            // (an entity set doesn't keep number 0 by its number)
-            return id > 0 ? set.TryGetValue(id, out var v) ? v : null : set.GetFullList().FirstOrDefault(e => e.ID == 0 && e.Selected);
+            foreach (var layer in _session.Below)
+            {
+                if (!layer.Database.TryGetValue(Type, out var set))
+                    continue;
+                // (an entity set doesn't keep number 0 by its number)
+                var v = id > 0 ? set.TryGetValue(id, out var byId) ? byId : null : set.GetFullList().FirstOrDefault(e => e.ID == 0 && e.Selected);
+                if (v != null)
+                    return v;
+            }
+            return null;
         }
 
         private object Key(IDEntity e) => HasNumber(e) ? e.ID : e;

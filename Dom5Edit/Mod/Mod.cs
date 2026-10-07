@@ -19,7 +19,46 @@ namespace Dom5Edit
         public string DomVersion { get; set; }
 
         private List<string> _dependencies = new List<string>();
+        /// <summary>
+        /// The mod read right before this one: vanilla, or a mod this one needs (a submod's parent),
+        /// which has its own under it. The game reads enabled mods one after another, each seeing
+        /// the ones before it (tools/dom6exe/README.md, "Several mods").
+        /// </summary>
         public List<Mod> Dependencies { get; set; } = new List<Mod>();
+
+        /// <summary>The mods read before this one, nearest first, down to vanilla.</summary>
+        public IEnumerable<Mod> Below()
+        {
+            foreach (var d in Dependencies)
+            {
+                yield return d;
+                foreach (var deeper in d.Below())
+                    yield return deeper;
+            }
+        }
+
+        /// <summary>
+        /// The entity a #select in this mod starts from, as the mods read before it have it: by
+        /// number, the nearest one that has it (its #new, or its own #select of it); by name, the
+        /// number the game takes for that name (the lowest any of them gives it).
+        /// </summary>
+        public IDEntity FindBelow(EntityType t, int id, string name)
+        {
+            if (id > 0)
+            {
+                foreach (var m in Below())
+                    if (m.Database.TryGetValue(t, out var set) && set.TryGetValue(id, out var found))
+                        return found;
+                return null;
+            }
+            if (string.IsNullOrEmpty(name))
+                return null;
+            IDEntity best = null;
+            foreach (var m in Below())
+                if (m.Database.TryGetValue(t, out var set) && set.TryGetValueNamed(name, out var e) && (best == null || EntitySet<IDEntity>.IsLowerID(e.ID, best)))
+                    best = e;
+            return best != null && best.ID > 0 ? FindBelow(t, best.ID, null) ?? best : best;
+        }
         public List<string> DisabledNations = new List<string>();
 
         /// <summary>
@@ -123,28 +162,35 @@ namespace Dom5Edit
         /// <returns>True if the entity exists, or false otherwise.</returns>
         public bool TryGet(EntityType t, int i, string s, out IDEntity entity)
         {
-            var set = Database[t];
-            // By ID: dependencies (vanilla) first, then this mod
-            foreach (var m in Dependencies)
-            {
-                if (m.Database[t].TryGetValue(i, out entity))
-                {
-                    return true;
-                }
-            }
-            if (set.TryGetValue(i, out entity)) return true;
-
+            // By ID: the first mod read that has it (vanilla, then the mods over it), then this mod:
+            // an entity is the one its first #new made, which later #selects change
+            if (TryGetByID(t, i, out entity))
+                return true;
             // By name: when vanilla and mods share a name, the game takes the lowest ID
+            entity = LowestNamed(t, s);
+            return entity != null;
+        }
+
+        private bool TryGetByID(EntityType t, int i, out IDEntity entity)
+        {
+            foreach (var m in Dependencies)
+                if (m.TryGetByID(t, i, out entity))
+                    return true;
+            return Database[t].TryGetValue(i, out entity);
+        }
+
+        private IDEntity LowestNamed(EntityType t, string s)
+        {
             IDEntity best = null;
             foreach (var m in Dependencies)
             {
-                if (m.Database[t].TryGetValueNamed(s, out IDEntity e) && (best == null || EntitySet<IDEntity>.IsLowerID(e.ID, best)))
+                var e = m.LowestNamed(t, s);
+                if (e != null && (best == null || EntitySet<IDEntity>.IsLowerID(e.ID, best)))
                     best = e;
             }
-            if (set.TryGetValueNamed(s, out IDEntity own) && (best == null || EntitySet<IDEntity>.IsLowerID(own.ID, best)))
+            if (Database[t].TryGetValueNamed(s, out IDEntity own) && (best == null || EntitySet<IDEntity>.IsLowerID(own.ID, best)))
                 best = own;
-            entity = best;
-            return best != null;
+            return best;
         }
 
         public Dictionary<EntityType, DependentEntitySet> Dependents { get; } = new Dictionary<EntityType, DependentEntitySet>()
@@ -705,9 +751,10 @@ namespace Dom5Edit
                 kvp.Resolve();
             }
 
+            var below = Below().ToList();
             foreach (var kvp in Dependents)
             {
-                kvp.Value.Resolve(kvp.Key, Dependencies);
+                kvp.Value.Resolve(kvp.Key, below);
             }
             IsLoaded = true;
         }
@@ -779,13 +826,32 @@ namespace Dom5Edit
         #endregion
 
         #region IMPORT
-        public static Mod Import(string fullfile, bool log = false)
+        public static Mod Import(string fullfile, bool log = false) => Import(fullfile, null, log);
+
+        /// <summary>Reads a mod over another (a submod over the mod it needs; null: over vanilla).</summary>
+        public static Mod Import(string fullfile, Mod below, bool log = false)
         {
             Mod m = new Mod(fullfile);
             m.Load(log);
-            m.ResolveDependencies();
+            if (below != null)
+                m.Dependencies.Add(below);
+            else
+                m.ResolveDependencies();
             m.Resolve();
             return m;
+        }
+
+        /// <summary>
+        /// Reads the mods another needs, each over the one before it (vanilla first), as the game
+        /// reads mods in the order they were enabled. Returns the last, to read the mod over; null
+        /// for none.
+        /// </summary>
+        public static Mod ImportStack(IEnumerable<string> files)
+        {
+            Mod below = null;
+            foreach (var file in files)
+                below = Import(file, below);
+            return below;
         }
 
         public void Load(bool log = false)

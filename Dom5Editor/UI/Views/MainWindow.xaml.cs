@@ -322,6 +322,8 @@ namespace Dom5Editor.UI.Views
 
         private void ReportOpen_Click(object sender, RoutedEventArgs e) => OpenReport(rebuild: false);
 
+        private void NeededSuggestion_Click(object sender, RoutedEventArgs e) => _viewModel.UseNeededSuggestion();
+
         private void ReportSave_Click(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Report is { } report)

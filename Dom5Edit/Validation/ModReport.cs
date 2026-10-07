@@ -96,8 +96,8 @@ namespace Dom5Edit.Validation
                 (e.IsError ? wrong : look).Add(new Item(At(line, e.Event), e.Message));
             }
 
-            var with = mod.Dependencies.Where(d => d != VanillaLoader.Vanilla && !string.IsNullOrEmpty(d.FullFilePath))
-                .Select(d => $"`{Path.GetFileName(d.FullFilePath)}`").ToList();
+            var with = mod.Below().Where(d => d != VanillaLoader.Vanilla && !string.IsNullOrEmpty(d.FullFilePath))
+                .Reverse().Select(d => $"`{Path.GetFileName(d.FullFilePath)}`").ToList();
             var about = $"File: `{Path.GetFileName(file)}`" + (string.IsNullOrEmpty(mod.Version) ? "" : $", version {mod.Version}") +
                         (with.Count > 0 ? $", together with {string.Join(", ", with)}" : "") +
                         $". Checked {DateTime.Now:yyyy-MM-dd} against Dominions {GameCommandCatalog.GameVersion ?? "6"} (what the game reads is taken from the game itself).";
@@ -218,6 +218,19 @@ namespace Dom5Edit.Validation
                         d[i, j] = Math.Min(d[i, j], d[i - 2, j - 2] + 1);
                 }
             return d[a.Length, b.Length];
+        }
+
+        /// <summary>The numbers the mod refers to that neither it nor the mods under it define (the "missing" section), each once.</summary>
+        public static IReadOnlyList<(EntityType Type, int Id)> MissingNumbers(ValidationResult validation)
+        {
+            var found = new List<(EntityType, int)>();
+            foreach (var v in validation.Issues)
+            {
+                var m = Regex.Match(v.Message ?? "", @"Unresolved reference to (\w+) ID (\d+)");
+                if (m.Success && Enum.TryParse<EntityType>(m.Groups[1].Value, true, out var type) && !found.Contains((type, int.Parse(m.Groups[2].Value))))
+                    found.Add((type, int.Parse(m.Groups[2].Value)));
+            }
+            return found;
         }
 
         /// <summary>A validation issue said for an author.</summary>
