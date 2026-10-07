@@ -1,7 +1,8 @@
 #!/bin/sh
 # Builds the editor (Dom5Editor.Avalonia: the same program as on macOS and Linux, see
 # tools/publish-avalonia.sh) as one self-contained Windows exe, Dom5Editor.exe, with its data files,
-# in publish/Dom6ModEditor, and zips it for testers (publish/Dom6ModEditor-<version>-<date>.zip,
+# in publish/Dom6ModEditor, and zips it for testers (publish/Dom6ModEditor-<version>-windows.zip,
+# named like the macOS/Linux packages,
 # with tools/publish-readme.txt as README.txt). Run from WSL; uses the Windows dotnet. The game's
 # icons are compiled in; the game's texts, unit/item/site sprites and flags are read from the
 # player's install at run time. (Until wpf-final the Windows build was the WPF editor.)
@@ -19,7 +20,7 @@ rm -rf "$OUT"
   -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=embedded \
   -o "$(wslpath -w "$OUT")" -nologo -v q -clp:ErrorsOnly
 sed -e "s/@VERSION@/$VERSION/" -e "s/@DATE@/$DATE/" -e "s/@COMMIT@/$COMMIT/" tools/publish-readme.txt > "$OUT/README.txt"
-ZIP="publish/Dom6ModEditor-$VERSION-$DATE.zip"
+ZIP="publish/Dom6ModEditor-$VERSION-windows.zip"
 rm -f "$ZIP"
 python3 - "$OUT" "$ZIP" <<'PY'
 import os, sys, zipfile
