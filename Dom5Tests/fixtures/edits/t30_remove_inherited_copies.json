@@ -1,0 +1,14 @@
+{
+  "description": "Remove a value a copy inherits, on the types with only #clear (the editor clears and adds every other value back; the copy's own lines stay): an item copy's weapon, a spell copy's number of effects, a site copy's home commander. The entities they copy don't change.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "remove", "entity": "item", "id": 701, "command": "#weapon" },
+    { "op": "remove", "entity": "spell", "id": 2001, "command": "#nreff" },
+    { "op": "remove", "entity": "site", "id": 1801, "command": "#homecom", "value": "5106" }
+  ],
+  "expect": [
+    { "type": "item", "id": "701", "field": "weapon", "from": "1200", "to": null },
+    { "type": "spell", "id": "2001", "field": "nreff", "from": "2", "to": null },
+    { "type": "site", "id": "1801", "field": "hcom", "from": ["5106"], "to": null }
+  ]
+}

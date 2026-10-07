@@ -1,0 +1,22 @@
+{
+  "description": "Vanilla monsters the mod doesn't touch (copy-on-write: a #select block each): set a stat; remove one inherited weapon and change one inherited armor (the group cleared and the rest added back); add a flag; remove an inherited ability (#fear 0: the oracle keeps 0); change an inherited path level; remove an inherited path (#clearmagic and the other path added back).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 17, "command": "#mr", "value": "12" },
+    { "op": "remove", "entity": "monster", "id": 17, "command": "#weapon", "value": "9" },
+    { "op": "change", "entity": "monster", "id": 17, "command": "#armor", "from": "120", "value": "20" },
+    { "op": "add", "entity": "monster", "id": 17, "command": "#amphibian" },
+    { "op": "remove", "entity": "monster", "id": 120, "command": "#fear" },
+    { "op": "change", "entity": "monster", "id": 120, "command": "#magicskill", "from": "0 2", "value": "0 3" },
+    { "op": "remove", "entity": "monster", "id": 138, "command": "#magicskill", "value": "6 1" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "17", "field": "mr", "from": "10", "to": "12" },
+    { "type": "unit", "id": "17", "field": "weapons", "from": ["9", "23"], "to": ["23"] },
+    { "type": "unit", "id": "17", "field": "armor", "from": ["5", "120"], "to": ["5", "20"] },
+    { "type": "unit", "id": "17", "field": "amphibian", "from": null, "to": "1" },
+    { "type": "unit", "id": "120", "field": "fear", "from": "5", "to": "0" },
+    { "type": "unit", "id": "120", "field": "F", "from": "2", "to": "3" },
+    { "type": "unit", "id": "138", "field": "N", "from": "1", "to": null }
+  ]
+}

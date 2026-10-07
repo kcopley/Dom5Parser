@@ -513,7 +513,9 @@ namespace Dom5Edit.Editing
             var old = plan.HasBlocks(target) && plan.BlocksOf(target).Count == 1
                 ? plan.BlocksOf(target)[0].Block.Lines.Where(p => target.Properties.Any(q => ReferenceEquals(q, p))).ToList()
                 : target.Properties.ToList();
-            string Text(Property p) => (Mod.KeepOriginalText ? p.SaveText() : p.ToExportString()).Trim();
+            // the typed text has "\n" line ends (SplitLines); a line's text as read keeps the file's
+            // ("\r\n" inside a #msg over several lines): the same line either way, kept as read
+            string Text(Property p) => (Mod.KeepOriginalText ? p.SaveText() : p.ToExportString()).Replace("\r\n", "\n").Trim();
 
             // the longest run of unchanged lines (by text), in order
             int n = old.Count, m = body.Count;

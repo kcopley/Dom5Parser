@@ -1,0 +1,24 @@
+{
+  "description": "Armor: a mod armor another copies (Test Plate; Test Plate Copy is #copyarmor of it with its own encumbrance): protection reaches the copy, encumbrance doesn't; the copy's own defence; a selected vanilla armor (Leather Cuirass) in place and added; an untouched one (Leather Cap): #prot replaces its per-part protection (the oracle drops prothead), and it becomes magic armor (the oracle's field: magic).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "armor", "id": 450, "command": "#prot", "value": "15" },
+    { "op": "set", "entity": "armor", "id": 450, "command": "#enc", "value": "4" },
+    { "op": "set", "entity": "armor", "id": 451, "command": "#def", "value": "0" },
+    { "op": "set", "entity": "armor", "id": 5, "command": "#rcost", "value": "7" },
+    { "op": "set", "entity": "armor", "id": 5, "command": "#def", "value": "1" },
+    { "op": "set", "entity": "armor", "id": 120, "command": "#prot", "value": "9" },
+    { "op": "add", "entity": "armor", "id": 120, "command": "#magicarmor" }
+  ],
+  "expect": [
+    { "type": "armor", "id": "450", "field": "prot", "from": "14", "to": "15" },
+    { "type": "armor", "id": "451", "field": "prot", "from": "14", "to": "15" },
+    { "type": "armor", "id": "450", "field": "enc", "from": "3", "to": "4" },
+    { "type": "armor", "id": "451", "field": "def", "from": "-1", "to": "0" },
+    { "type": "armor", "id": "5", "field": "rcost", "from": "6", "to": "7" },
+    { "type": "armor", "id": "5", "field": "def", "from": "0", "to": "1" },
+    { "type": "armor", "id": "120", "field": "prot", "from": null, "to": "9" },
+    { "type": "armor", "id": "120", "field": "prothead", "from": "7", "to": null },
+    { "type": "armor", "id": "120", "field": "magic", "from": null, "to": "1" }
+  ]
+}

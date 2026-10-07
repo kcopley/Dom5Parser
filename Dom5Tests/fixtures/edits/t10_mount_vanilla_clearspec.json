@@ -1,0 +1,16 @@
+{
+  "description": "Remove a flag a vanilla cavalry unit has (Serpent Lord, untouched: swamp survival): #clearspec, then every other ability added back, the mount (Armored Serpent) and riding skill included.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "remove", "entity": "monster", "id": 5, "command": "#swampsurvival" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5", "field": "swampsurvival", "from": "1", "to": null },
+    { "type": "unit", "id": "5", "field": "ressize", "from": "3", "to": null, "note": "oracle representation, not a game change: the oracle keeps the resource size #size implies (or its game data's) in ressize, and its #clearspec drops it; in the game resource size is an ability (a265) this unit doesn't have, so its size (3) counts before and after" }
+  ],
+  "reread": [
+    { "entity": "monster", "id": 5, "command": "#mountmnr", "values": ["3536"] },
+    { "entity": "monster", "id": 5, "command": "#skilledrider", "values": ["2"] }
+  ],
+  "knownFailing": "the rider's sprite without its mount is a game value (ability 1017 = 10020, read-only in vanilla.dm): #clearspec clears it and no command sets it back (#unmountedspr1 takes an image file), so the unit loses it (oracle: unmountedspr 10020 -> none). The editor should warn before removing an inherited ability or flag of a vanilla rider this way"
+}

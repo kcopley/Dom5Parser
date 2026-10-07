@@ -1,0 +1,12 @@
+{
+  "description": "Remove a value a copied weapon and a copied armor inherit (Test Blade Copy's slash, Test Plate Copy's resource cost): weapons and armor have only #clear, so the editor clears and adds every other value back; the copy's own lines (damage, encumbrance) stay.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "remove", "entity": "weapon", "id": 1201, "command": "#slash" },
+    { "op": "remove", "entity": "armor", "id": 451, "command": "#rcost" }
+  ],
+  "expect": [
+    { "type": "wpn", "id": "1201", "field": "slash", "from": "1", "to": null },
+    { "type": "armor", "id": "451", "field": "rcost", "from": "12", "to": null }
+  ]
+}

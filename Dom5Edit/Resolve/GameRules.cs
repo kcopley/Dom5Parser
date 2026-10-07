@@ -162,9 +162,16 @@ namespace Dom5Edit.Resolve
         public static bool IsRepeatable(EntityType type, Command c)
         {
             if (_repeatable.Contains(c))
-                return true;
+                return !IsSingleOn(type, c);
             return GameCommandCatalog.EffectOf(type, c)?.Appends == true;
         }
+
+        /// <summary>
+        /// An item's #weapon and #armor set its one weapon or armor (the game's item parser writes one
+        /// field each, tools/dom6exe): a later line replaces the earlier one, unlike a monster's.
+        /// </summary>
+        private static bool IsSingleOn(EntityType type, Command c) =>
+            type == EntityType.ITEM && (c == Command.WEAPON || c == Command.ARMOR);
 
         // set and bit keys of an effect as sets, for the replace test (built once per effect)
         private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<CommandEffect, Keys> _keys = new();

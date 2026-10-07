@@ -97,6 +97,14 @@
       "description": "Made from scratch in the editor: two mercenary bands (one from a game band) and a poptype. Every line regenerated on the round trip."
     },
     {
+      "name": "edits-base-types",
+      "path": "Dom5Tests/fixtures/edits/base_types.dm",
+      "expect": "pass",
+      "knownFailing": {
+        "1": "oracle limit: the inspector's export (export-mod.js) leaves out the mod's #selectevent of a game event (#selectevent 5 #rarity 2), so the reload has the game's rarity (-2)"
+      }
+    },
+    {
       "name": "domenhanced-2.13",
       "path": "docs/DomEnhanced2_13.dm",
       "expect": "baseline"
@@ -115,6 +123,21 @@
     }
   ],
   "edits": "Dom5Tests/fixtures/edits",
+  "stress": {
+    "description": "Stage 5 (tools/fidelity/stress.mjs): 'size' generated edits per mod in one session, seeded (--seed N for another run): exactly their expected changes, then undo all / redo all byte for byte. A mod whose file doesn't exist is skipped.",
+    "seed": 1,
+    "size": 300,
+    "mods": [
+      {
+        "name": "domenhanced-2.13",
+        "path": "docs/DomEnhanced2_13.dm"
+      },
+      {
+        "name": "edits-base-types",
+        "path": "Dom5Tests/fixtures/edits/base_types.dm"
+      }
+    ]
+  },
   "stage1Expected": {
     "unit.unmountedspr": "numeric rider sprite from the game data; mods can only give an image file (#unmountedspr1). Lost for new units that copied a mounted unit",
     "unit.eyeloss": "game data holds a strength or level; the command takes no argument",

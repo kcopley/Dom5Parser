@@ -1,0 +1,13 @@
+{
+  "description": "The mod's header (#modname, #description, #version): the oracle doesn't compare it, so no data changes; undo all must give back the unedited save byte for byte (the header is written as read again), redo the edited one.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "info", "command": "#modname", "value": "Edit test base, renamed" },
+    { "op": "info", "command": "#description", "value": "A new description." },
+    { "op": "info", "command": "#version", "value": "1.1" },
+    { "op": "set", "entity": "monster", "id": 5101, "command": "#hp", "value": "13" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5101", "field": "hp", "from": "9", "to": "13" }
+  ]
+}

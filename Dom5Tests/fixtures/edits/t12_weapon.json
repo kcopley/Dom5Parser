@@ -1,0 +1,26 @@
+{
+  "description": "Weapons: a mod weapon another copies (Test Blade; Test Blade Copy is #copyweapon of it with its own damage): its damage changes alone, its attack and a new flag reach the copy (rule C); the copy's own length; a vanilla weapon the mod selects (Dagger: in place, and a value vanilla doesn't state); an untouched one (Broad Sword).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "weapon", "id": 1200, "command": "#dmg", "value": "8" },
+    { "op": "set", "entity": "weapon", "id": 1200, "command": "#att", "value": "2" },
+    { "op": "add", "entity": "weapon", "id": 1200, "command": "#armorpiercing" },
+    { "op": "set", "entity": "weapon", "id": 1201, "command": "#len", "value": "2" },
+    { "op": "set", "entity": "weapon", "id": 9, "command": "#att", "value": "3" },
+    { "op": "set", "entity": "weapon", "id": 9, "command": "#dmg", "value": "4" },
+    { "op": "set", "entity": "weapon", "id": 8, "command": "#def", "value": "2" },
+    { "op": "add", "entity": "weapon", "id": 8, "command": "#magic" }
+  ],
+  "expect": [
+    { "type": "wpn", "id": "1200", "field": "dmg", "from": "7", "to": "8" },
+    { "type": "wpn", "id": "1200", "field": "att", "from": "1", "to": "2" },
+    { "type": "wpn", "id": "1201", "field": "att", "from": "1", "to": "2" },
+    { "type": "wpn", "id": "1200", "field": "armorpiercing", "from": null, "to": "1" },
+    { "type": "wpn", "id": "1201", "field": "armorpiercing", "from": null, "to": "1" },
+    { "type": "wpn", "id": "1201", "field": "len", "from": "1", "to": "2" },
+    { "type": "wpn", "id": "9", "field": "att", "from": "2", "to": "3" },
+    { "type": "wpn", "id": "9", "field": "dmg", "from": null, "to": "4" },
+    { "type": "wpn", "id": "8", "field": "def", "from": "1", "to": "2" },
+    { "type": "wpn", "id": "8", "field": "magic", "from": null, "to": "1" }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "description": "Entities and commands the oracle doesn't read: nametypes (#addname), poptypes (recruits, defenders), blesses, a nation's start army and province defence. The oracle must see no change; the values are checked by re-reading the save with Dom5Parser. A mod nametype gains and loses a name, a selected vanilla one and an untouched one gain one; a selected poptype gains a commander and loses an inherited recruit (#clearrec, the rest added back), an untouched one and a new one (the first free number from 150) gain a recruit; a selected bless's cost and an untouched bless's path (a new bless can't be made: refused); a vanilla nation's start commander, start units and defenders.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "add", "entity": "nametype", "id": 170, "command": "#addname", "value": "\"Newname\"" },
+    { "op": "remove", "entity": "nametype", "id": 170, "command": "#addname", "value": "\"Probe\"" },
+    { "op": "add", "entity": "nametype", "id": 100, "command": "#addname", "value": "\"Another\"" },
+    { "op": "add", "entity": "nametype", "id": 101, "command": "#addname", "value": "\"Untouched\"" },
+    { "op": "add", "entity": "poptype", "id": 25, "command": "#addreccom", "value": "5106" },
+    { "op": "remove", "entity": "poptype", "id": 25, "command": "#addrecunit", "value": "139" },
+    { "op": "add", "entity": "poptype", "id": 26, "command": "#addrecunit", "value": "5101" },
+    { "op": "create", "entity": "poptype", "as": "p" },
+    { "op": "add", "entity": "poptype", "ref": "p", "command": "#addrecunit", "value": "5105" },
+    { "op": "create", "entity": "bless", "name": "New Bless", "fails": "can only be changed" },
+    { "op": "set", "entity": "bless", "id": 1, "command": "#cost0", "value": "3" },
+    { "op": "set", "entity": "bless", "id": 2, "command": "#path1", "value": "4" },
+    { "op": "set", "entity": "nation", "id": 5, "command": "#startcom", "value": "1081" },
+    { "op": "set", "entity": "nation", "id": 5, "command": "#startunittype2", "value": "1077" },
+    { "op": "set", "entity": "nation", "id": 5, "command": "#defcom1", "value": "3197" },
+    { "op": "set", "entity": "nation", "id": 5, "command": "#defmult1", "value": "15" }
+  ],
+  "expect": [],
+  "reread": [
+    { "entity": "nametype", "id": 170, "command": "#addname", "values": ["Testor", "Newname"] },
+    { "entity": "nametype", "id": 100, "command": "#addname", "includes": ["Morael", "Extra", "Another"] },
+    { "entity": "nametype", "id": 101, "command": "#addname", "includes": ["Untouched"] },
+    { "entity": "poptype", "id": 25, "command": "#addrecunit", "values": ["140", "5105"] },
+    { "entity": "poptype", "id": 25, "command": "#addreccom", "values": ["141", "5106"] },
+    { "entity": "poptype", "id": 25, "command": "#defunit1", "values": ["139"] },
+    { "entity": "poptype", "id": 26, "command": "#addrecunit", "values": ["137", "5101"] },
+    { "entity": "poptype", "id": 150, "command": "#addrecunit", "values": ["5105"] },
+    { "entity": "bless", "id": 1, "command": "#cost0", "values": ["3"] },
+    { "entity": "bless", "id": 2, "command": "#path1", "values": ["4"] },
+    { "entity": "nation", "id": 5, "command": "#startcom", "values": ["1081"] },
+    { "entity": "nation", "id": 5, "command": "#startunittype2", "values": ["1077"] },
+    { "entity": "nation", "id": 5, "command": "#startunittype1", "values": ["201"] },
+    { "entity": "nation", "id": 5, "command": "#defcom1", "values": ["3197"] },
+    { "entity": "nation", "id": 5, "command": "#defmult1", "values": ["15"] }
+  ]
+}

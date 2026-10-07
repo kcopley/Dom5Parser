@@ -1,0 +1,31 @@
+{
+  "description": "Edit blocks as text (the page's \"in the file\" box) on every type: a weapon (a line changed with a comment, one inserted: its copy gets the inserted one), an event (a requirement removed, one inserted in the middle), a nation, a site copy, a mercenary, an item, a spell copy (a line inserted after its own), an armor left as it is (nothing changes), and an untouched vanilla weapon (its #select block written as text: copy-on-write).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "text", "entity": "weapon", "id": 1200, "replace": [["#dmg 7", "#dmg 8 -- sharper"], ["#len 1\n", "#len 1\n#nratt 2\n"], ["#nratt 1\n", ""]] },
+    { "op": "text", "entity": "event", "index": 2, "replace": [["#req_land 1\n", ""], ["#req_unique 1\n", "#req_unique 1\n#req_maxpop 900\n"]] },
+    { "op": "text", "entity": "nation", "id": 160, "replace": [["#era 2", "#era 1"]] },
+    { "op": "text", "entity": "site", "id": 1801, "replace": [["#rarity 1", "#rarity 3"]] },
+    { "op": "text", "entity": "merc", "index": 0, "replace": [["#xp 10", "#xp 20"]] },
+    { "op": "text", "entity": "item", "id": 702, "replace": [["#constlevel 4", "#constlevel 5"]] },
+    { "op": "text", "entity": "spell", "id": 2001, "replace": [["#damage 5106 -- Test Captain", "#damage 5106 -- Test Captain\n#researchlevel 6"]] },
+    { "op": "text", "entity": "armor", "id": 451 },
+    { "op": "text", "entity": "weapon", "id": 8, "replace": [["#end", "#att 2\n#end"]] }
+  ],
+  "expect": [
+    { "type": "wpn", "id": "1200", "field": "dmg", "from": "7", "to": "8" },
+    { "type": "wpn", "id": "1200", "field": "nratt", "from": "1", "to": "2" },
+    { "type": "wpn", "id": "1201", "field": "nratt", "from": "1", "to": "2" },
+    { "type": "event", "id": "3304", "field": "req_land", "from": "1", "to": null },
+    { "type": "event", "id": "3304", "field": "req_maxpop", "from": null, "to": "900" },
+    { "type": "nation", "id": "160", "field": "era", "from": "2", "to": "1" },
+    { "type": "site", "id": "1801", "field": "rarity", "from": "1", "to": "3" },
+    { "type": "merc", "id": "", "field": "xp", "from": "10", "to": "20" },
+    { "type": "item", "id": "702", "field": "constlevel", "from": "4", "to": "5" },
+    { "type": "spell", "id": "2001", "field": "researchlevel", "from": "3", "to": "6" },
+    { "type": "wpn", "id": "8", "field": "att", "from": "1", "to": "2" }
+  ],
+  "reread": [
+    { "entity": "event", "index": 2, "order": ["#rarity", "#req_unique", "#req_maxpop", "#nation"] }
+  ]
+}
