@@ -28,7 +28,7 @@ namespace Dom5Editor.UI
     ///   --reset LABEL            a field's reset button (back to what it inherits)
     ///   --add-path F             the magic panel's add-path button; --add-random FAWE 50 adds a random path;
     ///   --toggle-random N D      toggles path D on the Nth random path
-    ///   --mod-info FIELD VALUE   a Mod Info box (modname, description, version, domversion, icon)
+    ///   --mod-info FIELD VALUE   a Mod Info box (modname, description, version, domversion, icon; iconfile FILE: its Pick...)
     ///   --copy ID / --sprite-from ID   the copy picker (#copystats, ...) / the sprite picker (#copyspr); 0: none
     ///   --add-clear COMMAND      the clears picker (#clearrec, #clearweapons, ...)
     ///   --flag LABEL on|off      a flags panel checkbox; --path-level F N a magic path's level box
@@ -279,6 +279,7 @@ namespace Dom5Editor.UI
                                 case "version": info.ModVersion = value; break;
                                 case "domversion": info.ModDomVersion = value; break;
                                 case "icon": info.ModIcon = value; break;
+                                case "iconfile": info.SetIcon(Path.GetFullPath(value)); break; // the icon's "Pick..."
                                 default: throw new ArgumentException("no Mod Info field " + field);
                             }
                             Log($"mod info {field} = {value}: {vm.StatusMessage}");

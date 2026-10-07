@@ -1,5 +1,6 @@
 #modname "Thornvale"
 #version 1.0
+#icon "sprites/banner.png"
 #description "Adds Thornvale, Wardens of the Briar: a middle era forest nation. Made with Dom5Editor from scratch as a test."
 
 #newweapon 1000
