@@ -3,6 +3,68 @@
 Running log of the autonomous work sessions: what was done, what was found, what's next.
 Newest entries at the top. Commits are local unless noted; the user pushes.
 
+## 2026-10-07: workshop mods, never losing data, reports for authors, new mods from scratch
+
+The user asked to try the newest workshop mods (Sombre Warhammer and its submods, Forgotten
+Realms, Confluence, PS Bloodwar, FasterForts, DomEnhanced 2.14: 16 files) and see what errors
+their authors made; to make sure saving can never wreck anyone's data (backups like on load?);
+to report errors to the authors; to make focused new mods from scratch in the UI; to test
+edits across every entity type; and asked whether mounted units are easy to edit now.
+
+- **Loading and saving workshop mods** (d9e0017): a parser crash fixed (`##tag##` at a line's
+  end), multi-command lines, missing `#end`, no final newline / LF / BOM kept. `Dom5Tests check`
+  runs one mod through everything (6b785d3, `--with PARENT.dm` for a submod). All 16 files save
+  byte-identical and read back with the same entities.
+- **How the game reads a file** (0f4e879, from the exe): one pass per type over the whole
+  text, every `#` tried; texts run to the next quote across lines; `#msg`/`#name`-like texts
+  are skipped (their command lines are text), descriptions are read through; `--` is cut inside
+  quotes too; a missing last line break loses the last character. The parser now follows
+  this (6379ed3) and notes where the game reads lines differently than they look.
+- **Regenerated lines** (6379ed3): every workshop file saved with every line regenerated and
+  compared in the inspector. Fixed, each a change in what the game would read had the line
+  been rewritten: an unresolved nation (a submod's `#req_fornation 173`) was dropped; a
+  `#copystats`-renamed monster's old name turned into the new one; `#domshape "Mara"` became
+  `-1`; `#damagemon "Name"` became `#damage "Name"`; `#dmg 5 -1` was lost; extra values
+  dropped (`#custommagic 8704 100 WN`, `#dt_aff 22`); a missing `#end` was added. Now the
+  inspector agrees with all of them except where it reads `#descr` like `#msg` and keeps tabs.
+- **Data safety** (7f3957a): backups on open and before each save (`%APPDATA%\Dom5Editor\backups`),
+  a save that must read back with the same entities before it replaces the file, a warning
+  before saving into Steam's workshop folder, a recovery copy on a crash.
+- **Author reports** (6e463b8, 6b785d3): `ModReport` (the Validate window's "Save report for
+  the author"): what goes wrong in game, lines the game ignores (with "did you mean"), numbers
+  from another mod, things worth a look. Reports for the 15 latest files are in
+  `publish/mod-reports/` (not committed).
+- **Mounts** (b38b930): a MOUNT panel on monster pages (mount and co-rider with the mount's
+  stats, riders, skilled rider).
+- **Five mods made in the editor** (merge f7d8de1; agent): a nation, a ritual with an item, an
+  event chain, a balance tweak, mercenaries and a poptype, each made by UI operations,
+  reloaded and compared; now fidelity cases (33 checks). Fixed on the way: a new nation is
+  `#selectnation` (the game ignores `#newnation N`'s number), a nation's name/epithet/era come
+  first, ability badges were added as 0, `#clearrec` saved after the recruits, follow-up events
+  lost their owner, a sprite-from picker, dangling references after a delete.
+- **Edit tests for every type** (merge b1d02ff; agent): `base_types.dm` (every type the
+  inspector compares, own/selected/copied, mounted units) and 31 cases t01-t31 (set, add/remove,
+  references, reset, inherited removals, text edits, create/delete, mounts and their own
+  stats), each also undone and redone byte for byte; stage 5 stress: ~300 generated edits per
+  mod, expectations from the inspector's parse, seeds 1-25 pass. Bugs found and fixed: an
+  item's `#weapon` was treated as a list (a change wrote `#clear` and lost values no command
+  sets), text edits in CRLF files rewrote multi-line messages with LF. Full run: 76 checks, 74
+  pass, 2 known-failing (a vanilla rider's sprite is a game value `#clearspec` removes; an
+  inspector export limit), ~7.5 min with 6 jobs; `--quick` 65 checks in ~1.5 min.
+
+Found in the mods (details in the reports): FR 0.95's 'Darkstalker Wars' message swallows its
+`#removesite 2995` and `#gold 125`; Sombre has 10 events without `#rarity`, typos (`#stealty`,
+`#copywweapon`, `#addrecnunit`, `#neednotneat`) and a doubled `#descr "#descr "`; its boost
+and PD submods use nation 175, which Sombre 1.611 doesn't define; Confluence has events with
+22 effects / 14 requirements and an `#addname` swallowing the next name; PS Bloodwar ends
+without a line break (harmless: the last block is a nation) and refers to "Annointed Bulezau",
+which its own `#copystats` renames to "Bulezau"; FasterForts uses nations 203-207 from other
+mods.
+
+Open: the editor can't load the mod a submod needs (only `check --with`); a loaded mod's
+`#newnation N` is still taken as nation N; the game merges two events when the first has no
+`#end` (reported, not modelled).
+
 ## 2026-10-06: pages like the game's, hints from the manuals, events
 
 The user's review: the editor is "90% there"; streamline the monster page (stats grouped
