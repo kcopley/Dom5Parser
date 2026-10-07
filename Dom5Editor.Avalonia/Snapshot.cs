@@ -3,11 +3,15 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
 using Avalonia.Input;
+using Avalonia.Media;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Dom5Editor.Ava.Controls;
 using Dom5Editor.Ava.Views;
+using Dom5Edit.Commands;
+using Dom5Edit.Entities;
 using Dom5Editor.UI;
+using Dom5Editor.UI.Controls;
 using Dom5Editor.UI.ViewModels;
 
 namespace Dom5Editor.Ava
@@ -152,6 +156,144 @@ namespace Dom5Editor.Ava
                             // --game-folder PATH: what "Dominions 6 folder..." makes of a folder picked (nothing is saved)
                             var (folder, note) = MainWindow.CheckGameFolder(args[++i]);
                             Log($"game folder {args[i]}: {folder ?? "(not the game's)"}; {note.Trim().Replace("\n", " ")}");
+                            break;
+                        }
+                        case "--flags":
+                        {
+                            // --flags FILE.png: every nation's flag as the editor shows it (its #flag file,
+                            // else the one the game makes from its colors) on one sheet, with the time it
+                            // took and a checksum of the pixels in nation order: tools/dom6exe/flags.py
+                            // check prints the one the game's rule gives
+                            var session = vm.Session!;
+                            var tab = vm.TabOf(EntityType.NATION)!;
+                            List<(int ID, Dom5Editor.Imaging.Picture? Image)> All() => tab.Items.OrderBy(x => x.ID)
+                                .Select(x => (x.ID, Sprites.SpriteLoader.Of(session.Resolve(x.Entity), EntityType.NATION, session.Mod.FullFilePath)))
+                                .ToList();
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            var flags = All();
+                            long built = watch.ElapsedMilliseconds;
+                            watch.Restart();
+                            All(); // cached now
+                            long again = watch.ElapsedMilliseconds;
+                            using var sha = System.Security.Cryptography.SHA256.Create();
+                            var shown = flags.Where(x => x.Image != null).ToList();
+                            foreach (var (_, image) in shown)
+                                sha.TransformBlock(image!.Bgra, 0, image.Bgra.Length, null, 0);
+                            sha.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                            const int cell = 132, cols = 12;
+                            int rows = Math.Max(1, (flags.Count + cols - 1) / cols);
+                            var sheet = new Avalonia.Media.Imaging.RenderTargetBitmap(new PixelSize(cols * cell, rows * cell));
+                            using (var dc = sheet.CreateDrawingContext())
+                            {
+                                dc.FillRectangle(new SolidColorBrush(Color.FromRgb(0x40, 0x40, 0x40)), new Rect(0, 0, cols * cell, rows * cell));
+                                for (int k = 0; k < flags.Count; k++)
+                                {
+                                    var (nation, image) = flags[k];
+                                    double x = k % cols * cell, y = k / cols * cell;
+                                    if (Hooks.ToBitmap(image) is { } bitmap)
+                                        dc.DrawImage(bitmap, new Rect(x + 2, y + 2, 128, 128));
+                                    dc.DrawText(new FormattedText(nation.ToString(), System.Globalization.CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                                        Typeface.Default, 11, Avalonia.Media.Brushes.Yellow), new Point(x + 3, y + 2));
+                                }
+                            }
+                            sheet.Save(Path.GetFullPath(args[++i]));
+                            Log($"flags: {shown.Count} of {flags.Count} nations ({built} ms, {again} ms again); pixels sha256 {Convert.ToHexString(sha.Hash!).ToLowerInvariant()[..16]}; sheet {args[i]}");
+                            break;
+                        }
+                        case "--time-view":
+                        {
+                            // --time-view TYPE NAME: how long selecting a page takes until it's laid out; and how many visuals it has
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            var name = args[++i];
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            Pump();
+                            var item = tab.Items.First(x => x.DisplayName.Contains(name, StringComparison.OrdinalIgnoreCase));
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            tab.SelectedItem = item;
+                            long model = watch.ElapsedMilliseconds;
+                            window.UpdateLayout();
+                            long layout = watch.ElapsedMilliseconds;
+                            Pump();
+                            long shown = watch.ElapsedMilliseconds;
+                            Log($"   model {model} ms, layout {layout - model} ms, render {shown - layout} ms");
+                            var visuals = window.GetVisualDescendants().OfType<Control>().ToList();
+                            var counts = visuals.GroupBy(v => v.GetType().Name).OrderByDescending(g => g.Count()).Take(6).Select(g => $"{g.Key} {g.Count()}");
+                            Log($"time-view {item.DisplayName}: page {model} ms, shown {shown} ms; visuals {visuals.Count}: {string.Join(", ", counts)}");
+                            var page = window.GetVisualDescendants().OfType<EntityPageView>().First();
+                            var badges = page.GetVisualDescendants().OfType<CompactBadge>().ToList();
+                            var pickers = page.GetVisualDescendants().OfType<RefPicker>().ToList();
+                            Log($"   {badges.Count} badges, {badges.Sum(b => b.GetVisualDescendants().Count())} visuals in them; page {page.GetVisualDescendants().Count()}");
+                            Log($"   {pickers.Count} pickers ({pickers.Count(p => p.IsEffectivelyVisible)} shown), {pickers.Sum(p => p.GetVisualDescendants().Count())} visuals in them");
+                            break;
+                        }
+                        case "--scroll":
+                        {
+                            // --scroll Y: scroll the page to Y; then logs where it is (after the next steps, --scroll -1 just logs)
+                            var page = window.GetVisualDescendants().OfType<EntityPageView>().First();
+                            var scroller = page.GetVisualDescendants().OfType<ScrollViewer>().First();
+                            double y = double.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture);
+                            if (y >= 0)
+                            {
+                                scroller.Offset = new Vector(scroller.Offset.X, y);
+                                Pump();
+                            }
+                            Log($"page scrolled to {scroller.Offset.Y:0} of {scroller.Extent.Height:0}");
+                            break;
+                        }
+                        case "--scroll-list":
+                        {
+                            // --scroll-list TYPE SCREENS: scroll the type's list a screen at a time (0: to the
+                            // end); logs the slowest screen (rows are worked out, sprites decoded, as they show)
+                            var t = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            int screens = int.Parse(args[++i]);
+                            var tab = vm.TabOf(t) ?? throw new ArgumentException("no tab for " + t);
+                            vm.SelectedTab = tab;
+                            Pump();
+                            var list = window.GetVisualDescendants().OfType<EntityTypeTabView>().First(v => v.IsEffectivelyVisible && v.DataContext == tab);
+                            var scroller = list.GetVisualDescendants().OfType<ScrollViewer>().First(s => s.Extent.Height > s.Viewport.Height);
+                            scroller.ScrollToHome();
+                            Pump();
+                            var total = System.Diagnostics.Stopwatch.StartNew();
+                            long slowest = 0;
+                            int n = 0;
+                            while ((screens == 0 || n < screens) && scroller.Offset.Y + scroller.Viewport.Height < scroller.Extent.Height - 1)
+                            {
+                                var watch = System.Diagnostics.Stopwatch.StartNew();
+                                scroller.PageDown();
+                                Pump();
+                                slowest = Math.Max(slowest, watch.ElapsedMilliseconds);
+                                n++;
+                            }
+                            Log($"scroll-list {t}: {n} screens in {total.ElapsedMilliseconds} ms, slowest {slowest} ms; " +
+                                $"memory {GC.GetTotalMemory(true) / (1 << 20)} MB managed, {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1 << 20)} MB working set");
+                            var all = System.Diagnostics.Stopwatch.StartNew();
+                            int withSprite = tab.Items.Count(x => x.Sprite != null);
+                            Log($"   {withSprite} of {tab.Items.Count} rows have a sprite (the rest worked out in {all.ElapsedMilliseconds} ms)");
+                            break;
+                        }
+                        case "--type-tab":
+                        {
+                            // --type-tab COMMAND VALUE NEXT: type VALUE in COMMAND's box on screen, then Tab to
+                            // NEXT's box: logs where the cursor is after the edit rebuilt the page
+                            var c = SnapshotSteps.CommandOf(args[++i]);
+                            var value = args[++i];
+                            var next = SnapshotSteps.CommandOf(args[++i]);
+                            TextBox BoxOf(Command cmd)
+                            {
+                                var badges = window.GetVisualDescendants().OfType<CompactBadge>().Where(b => b.DataContext is PropertyItem p && p.Command == cmd).ToList();
+                                var boxes = badges.SelectMany(b => b.GetVisualDescendants().OfType<TextBox>()).ToList();
+                                return boxes.FirstOrDefault(b => b.IsEffectivelyVisible)
+                                       ?? throw new InvalidOperationException($"no box for {cmd}: {badges.Count} badges, {boxes.Count} boxes");
+                            }
+                            var box = BoxOf(c);
+                            box.Focus();
+                            box.Text = value;
+                            Pump();
+                            BoxOf(next).Focus(); // what Tab does
+                            Pump();
+                            var badge = (window.FocusManager?.GetFocusedElement() as Visual)?.FindAncestorOfType<CompactBadge>();
+                            Log($"typed {value} in {args[i - 2]}, tabbed: cursor in {(badge?.DataContext as PropertyItem)?.Command.ToString() ?? "(nothing)"}; page has {vm.SelectedPage?.Resolved.Get(c)?.Arguments}");
                             break;
                         }
                         case "--load-menu":
