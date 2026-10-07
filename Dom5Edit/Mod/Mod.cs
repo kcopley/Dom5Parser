@@ -221,6 +221,10 @@ namespace Dom5Edit
         internal bool HeaderUnchanged => _headerAtParse == (ModName, Description, Icon, Version, DomVersion);
 
         private string _currentRawText = "";
+
+        // the line with several commands the current one came from, by the parser's number for it
+        private LineGroup? _currentLineGroup;
+        private readonly Dictionary<int, LineGroup> _lineGroups = new Dictionary<int, LineGroup>();
         private bool _baselineTaken;
         private readonly List<string> _pendingTrivia = new List<string>();
 
@@ -283,6 +287,9 @@ namespace Dom5Edit
             _parser.OnCommand = cmd =>
             {
                 _currentRawText = cmd.RawText ?? "";
+                _currentLineGroup = cmd.LineGroup != 0 && cmd.LineText != null
+                    ? (_lineGroups.TryGetValue(cmd.LineGroup, out var g) ? g : _lineGroups[cmd.LineGroup] = new LineGroup(cmd.LineText, cmd.LineCommands))
+                    : null;
                 LineNumber = cmd.LineNumber;
                 LineWasTrimmed = _parser.LineWasTrimmed;
                 HandleParsedCommand(cmd.Command, cmd.Value, cmd.Comment);
@@ -337,9 +344,43 @@ namespace Dom5Edit
                     File.Delete(logFile); //clear out an old log (only when this run writes one)
             }
 
+            ReadFileForm(dmFile);
+            _parser.NewLine = SourceNewLine ?? Environment.NewLine;
             using (StreamReader sr = File.OpenText(dmFile))
             {
                 read_stream(sr);
+            }
+        }
+
+        /// <summary>The file's line break as read ("\r\n" or "\n"), or null for a mod made in the editor.</summary>
+        public string? SourceNewLine { get; private set; }
+
+        /// <summary>Whether the file as read ends with a line break (a save keeps it so).</summary>
+        public bool SourceEndsWithNewLine { get; private set; } = true;
+
+        /// <summary>Whether the file as read starts with a UTF-8 byte order mark (a save keeps it).</summary>
+        public bool SourceHasBom { get; private set; }
+
+        /// <summary>The file's form: its line breaks, a last one or not, a byte order mark.</summary>
+        private void ReadFileForm(string dmFile)
+        {
+            try
+            {
+                using var fs = File.OpenRead(dmFile);
+                var head = new byte[Math.Min(fs.Length, 1 << 16)];
+                int n = fs.Read(head, 0, head.Length);
+                SourceHasBom = n >= 3 && head[0] == 0xEF && head[1] == 0xBB && head[2] == 0xBF;
+                int lf = Array.IndexOf(head, (byte)'\n', 0, n);
+                SourceNewLine = lf > 0 && head[lf - 1] == '\r' ? "\r\n" : lf >= 0 ? "\n" : null;
+                if (fs.Length > 0)
+                {
+                    fs.Seek(-1, SeekOrigin.End);
+                    SourceEndsWithNewLine = fs.ReadByte() == '\n';
+                }
+            }
+            catch (IOException)
+            {
+                // read below, and reported there
             }
         }
 
@@ -367,6 +408,8 @@ namespace Dom5Edit
             LineNumber = -1;
             PropertiesAfterParse = new HashSet<Property>(
                 Database.Values.SelectMany(set => set.GetFullList()).SelectMany(e => e.Properties), ReferenceEqualityComparer.Instance);
+            if (_currentBlock != null && _currentBlock.RawEnd == null)
+                _currentBlock.EndsWithoutEnd = true; // the file ends inside it
             TrailingTrivia.AddRange(_pendingTrivia);
             _pendingTrivia.Clear();
             _headerAtParse = (ModName, Description, Icon, Version, DomVersion);
@@ -516,6 +559,11 @@ namespace Dom5Edit
                     if (_currentBlock != null && _currentEntity is IDEntity parsedInto && parsedInto.LastParsedProperty != null)
                     {
                         parsedInto.LastParsedProperty.RawText = _currentRawText;
+                        if (_currentLineGroup != null)
+                        {
+                            parsedInto.LastParsedProperty.Line = _currentLineGroup;
+                            _currentLineGroup.Members.Add(parsedInto.LastParsedProperty);
+                        }
                         _currentBlock.Properties.Add(parsedInto.LastParsedProperty);
                     }
                     else
@@ -527,6 +575,8 @@ namespace Dom5Edit
             // a #new.../#select... line starts a block of the entity it named
             if (CommandEntityMap.ContainsKey(c) && _currentEntity is IDEntity blockEntity)
             {
+                if (_currentBlock != null && _currentBlock.RawEnd == null)
+                    _currentBlock.EndsWithoutEnd = true; // the author left out its #end
                 bool selected = CommandsMap.TryGetString(c, out var header) && header.StartsWith("#select");
                 _currentBlock = new SourceBlock(blockEntity, selected, val, comment)
                 {

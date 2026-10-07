@@ -8,6 +8,9 @@ namespace Dom5Edit
     /// </summary>
     public class ModParser
     {
+        /// <summary>The file's line break, used where a multi-line string's lines are joined (the file's own, so a save writes them back the same).</summary>
+        public string NewLine { get; set; } = Environment.NewLine;
+
         private readonly char spaceDelimiter = ' ';
         private readonly string tabDelimiter = "\t";
         private readonly string commentDelimiter = "--";
@@ -29,7 +32,18 @@ namespace Dom5Edit
             public int LineNumber;
             /// <summary>The command's text as read (its line, or its part of a line with several).</summary>
             public string RawText;
+            /// <summary>For a line with several commands: a number shared by them (0 otherwise), the line as read, and how many commands it has.</summary>
+            public int LineGroup;
+            public string LineText;
+            public int LineCommands;
         }
+
+        private int _lineGroups;
+        private int _lineGroup;
+        private int _lineCommands;
+        private string _lineText;
+        // set while a multi-line string's end and the commands after it on its last line are read
+        private (int Group, string Text, int Commands)? _sharedLine;
 
         /// <summary>
         /// Callback invoked for each parsed command.
@@ -107,8 +121,8 @@ namespace Dom5Edit
                     // a blank line inside a multi-line string is a paragraph break, keep it
                     if (isMultiLine)
                     {
-                        prevLine = prevLine + Environment.NewLine;
-                        rawPrev = rawPrev + Environment.NewLine + raw;
+                        prevLine = prevLine + NewLine;
+                        rawPrev = rawPrev + NewLine + raw;
                     }
                     else OnTrivia?.Invoke(raw);
                     continue;
@@ -164,8 +178,8 @@ namespace Dom5Edit
 
                     if (endQuote != -1 && !anotherCommand) //ends on this line
                     {
-                        string endLine = prevLine + Environment.NewLine + raw.TrimEnd();
-                        _wholeLine = rawPrev + Environment.NewLine + raw;
+                        string endLine = prevLine + NewLine + raw.TrimEnd();
+                        _wholeLine = rawPrev + NewLine + raw;
                         ProcessStringToLine(endLine);
                         _wholeLine = null;
                         prevLine = "";
@@ -178,20 +192,33 @@ namespace Dom5Edit
                         int anotherCommandIndex = GetNextCommandIndex(s);
                         string leftsplit = s.Substring(0, anotherCommandIndex);
                         string rightsplit = s.Substring(anotherCommandIndex);
-                        // nothing before the next command: the closing quote was just forgotten
-                        string multiline = string.IsNullOrWhiteSpace(leftsplit)
-                            ? prevLine.TrimEnd('\r', '\n')
-                            : prevLine + Environment.NewLine + leftsplit;
-                        ProcessStringToLine(multiline);
-                        ProcessStringToLine(rightsplit);
+                        if (string.IsNullOrWhiteSpace(leftsplit))
+                        {
+                            // nothing before the next command: the closing quote was just forgotten.
+                            // Both keep their lines as read.
+                            _wholeLine = rawPrev;
+                            ProcessStringToLine(prevLine.TrimEnd('\r', '\n'));
+                            _wholeLine = raw;
+                            ProcessStringToLine(rightsplit);
+                            _wholeLine = null;
+                        }
+                        else
+                        {
+                            // the string ends on this line and more commands follow it: read as one
+                            // line group (saved as read while they're unchanged)
+                            _sharedLine = (++_lineGroups, rawPrev + NewLine + raw, 1 + CommandIndexes(rightsplit).Count);
+                            ProcessStringToLine(prevLine + NewLine + leftsplit);
+                            ProcessStringToLine(rightsplit);
+                            _sharedLine = null;
+                        }
                         prevLine = "";
                         isMultiLine = false;
                     }
                     else
                     {
                         //no command, no end quote... it must continue as part of the string
-                        prevLine = prevLine + Environment.NewLine + raw;
-                        rawPrev = rawPrev + Environment.NewLine + raw;
+                        prevLine = prevLine + NewLine + raw;
+                        rawPrev = rawPrev + NewLine + raw;
                     }
                 }
                 else if (s.StartsWith("--") || GetNextCommandIndex(s) == -1)
@@ -237,47 +264,92 @@ namespace Dom5Edit
         }
 
         /// <summary>
-        /// Gets the index of the next command, skipping ##placeholder## patterns.
+        /// Gets the index of the next command, skipping message tags (##landname##, ##godname##, ...).
         /// </summary>
         public int GetNextCommandIndex(string s)
         {
             int nextIndex = s.IndexOf('#');
             while (nextIndex != -1)
             {
-                if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
-                else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
-                else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
-                else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
-                else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
-                else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
-                else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
-                else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
-                else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
-                else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                else
-                {
+                int tag = TagLength(s, nextIndex);
+                if (tag == 0)
                     return nextIndex;
-                }
-                nextIndex = s.IndexOf('#', nextIndex + 1);
+                nextIndex = NextHash(s, nextIndex + tag);
             }
             return -1;
+        }
+
+        /// <summary>
+        /// The length of a message tag at <paramref name="i"/> ("##" letters "##": ##landname##,
+        /// ##fulltargname##, ... any the game has), or 0 when it isn't one.
+        /// </summary>
+        internal static int TagLength(string s, int i)
+        {
+            if (i + 1 >= s.Length || s[i] != '#' || s[i + 1] != '#')
+                return 0;
+            int j = i + 2;
+            while (j < s.Length && char.IsLetterOrDigit(s[j]))
+                j++;
+            return j > i + 2 && j + 1 < s.Length && s[j] == '#' && s[j + 1] == '#' ? j + 2 - i : 0;
+        }
+
+        /// <summary>The closed quoted spans of a line (pairs of quotes; an unpaired last one isn't a span).</summary>
+        private static List<(int Start, int End)> QuotedSpans(string s)
+        {
+            var spans = new List<(int, int)>();
+            int open = -1;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] != '"')
+                    continue;
+                if (open < 0)
+                    open = i;
+                else
+                {
+                    spans.Add((open, i));
+                    open = -1;
+                }
+            }
+            return spans;
+        }
+
+        /// <summary>The next '#' from <paramref name="from"/>, or -1 (also when it's past the end).</summary>
+        private static int NextHash(string s, int from) => from < s.Length ? s.IndexOf('#', from) : -1;
+
+        /// <summary>Where the commands of a line start ('#' outside comments, message tags and closed quotes).</summary>
+        private List<int> CommandIndexes(string s)
+        {
+            int commentIndex = s.IndexOf(commentDelimiter);
+            //is there another command on the same line?
+            List<int> commandIndexes = new List<int>();
+            int index = s.IndexOf('#');
+            if (index != -1 && (index < commentIndex || commentIndex == -1))
+            {
+                commandIndexes.Add(index);
+                int nextIndex = NextHash(s, index + 1);
+                var quoted = QuotedSpans(s);
+                while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
+                {
+                    // a message tag (##landname##) is text, not a command; so is a # inside a
+                    // closed pair of quotes (#descr "#descr "Chaos Spawn ...": the game reads the
+                    // text up to the next quote)
+                    int tag = TagLength(s, nextIndex);
+                    if (tag > 0)
+                    {
+                        nextIndex = NextHash(s, nextIndex + tag);
+                        continue;
+                    }
+                    if (quoted.Any(q => q.Start < nextIndex && nextIndex < q.End))
+                    {
+                        nextIndex = NextHash(s, nextIndex + 1);
+                        continue;
+                    }
+                    commandIndexes.Add(nextIndex);
+                    nextIndex = NextHash(s, nextIndex + 1);
+                }
+
+            }
+            return commandIndexes;
         }
 
         /// <summary>
@@ -285,54 +357,25 @@ namespace Dom5Edit
         /// </summary>
         public void ProcessStringToLine(string s)
         {
-            // continue on
-            int commentIndex = s.IndexOf(commentDelimiter);
-
-            //is there another command on the same line?
-            List<int> commandIndexes = new List<int>();
-            int index = s.IndexOf('#');
-            if (index != -1 && (index < commentIndex || commentIndex == -1))
+            List<int> commandIndexes = CommandIndexes(s);
+            if (commandIndexes.Count > 0)
             {
-                commandIndexes.Add(index);
-                int nextIndex = s.IndexOf('#', index + 1);
-                while (nextIndex != -1 && (nextIndex < commentIndex || commentIndex == -1))
-                {
-                    if (s.IndexOf("##fullgodname##", nextIndex) == nextIndex) { nextIndex += 15; }
-                    else if (s.IndexOf("##godname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##disname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##fullplayername##", nextIndex) == nextIndex) { nextIndex += 18; }
-                    else if (s.IndexOf("##playername##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##playergodname##", nextIndex) == nextIndex) { nextIndex += 17; }
-                    else if (s.IndexOf("##fullplayergodname##", nextIndex) == nextIndex) { nextIndex += 21; }
-                    else if (s.IndexOf("##godhe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                    else if (s.IndexOf("##dishe##", nextIndex) == nextIndex) { nextIndex += 9; }
-                    else if (s.IndexOf("##godhis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##dishis##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##godhim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##dishim##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##godhimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##dishimself##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##godthrone##", nextIndex) == nextIndex) { nextIndex += 13; }
-                    else if (s.IndexOf("##playerthrone##", nextIndex) == nextIndex) { nextIndex += 16; }
-                    else if (s.IndexOf("##playergodthrone##", nextIndex) == nextIndex) { nextIndex += 19; }
-                    else if (s.IndexOf("##godnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##disnat##", nextIndex) == nextIndex) { nextIndex += 10; }
-                    else if (s.IndexOf("##landname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                    else if (s.IndexOf("##goddisname##", nextIndex) == nextIndex) { nextIndex += 14; }
-                    else if (s.IndexOf("##targname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                    else if (s.IndexOf("##fulltargname##", nextIndex) == nextIndex) { nextIndex += 16; }
-                    else if (s.IndexOf("##targhis##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##natname##", nextIndex) == nextIndex) { nextIndex += 11; }
-                    else if (s.IndexOf("##profname##", nextIndex) == nextIndex) { nextIndex += 12; }
-                    else
-                    {
-                        commandIndexes.Add(nextIndex);
-                    }
-                    nextIndex = s.IndexOf('#', nextIndex + 1);
-                }
-
-                // a line with one command keeps its exact text; parts of a line with several, their own
+                // a line with one command keeps its exact text; parts of a line with several, their own,
+                // and the line as read (saved as it was while they are)
                 _segmentText = commandIndexes.Count == 1 ? _wholeLine : null;
+                if (_sharedLine != null)
+                {
+                    // the end of a multi-line string and more commands on its last line: one line group
+                    _lineGroup = _sharedLine.Value.Group;
+                    _lineCommands = _sharedLine.Value.Commands;
+                    _lineText = _sharedLine.Value.Text;
+                }
+                else
+                {
+                    _lineGroup = commandIndexes.Count > 1 && _wholeLine != null ? ++_lineGroups : 0;
+                    _lineCommands = commandIndexes.Count;
+                    _lineText = _wholeLine;
+                }
                 for (int i = 0; i < commandIndexes.Count; i++)
                 {
                     int nextCommand = i + 1;
@@ -348,6 +391,7 @@ namespace Dom5Edit
                     ProcessLine(line);
                 }
                 _segmentText = null;
+                _lineGroup = 0;
             }
         }
 
@@ -417,7 +461,10 @@ namespace Dom5Edit
                     Value = value,
                     Comment = comment,
                     LineNumber = LineNumber,
-                    RawText = _segmentText ?? s.Trim()
+                    RawText = _segmentText ?? s.Trim(),
+                    LineGroup = _lineGroup,
+                    LineText = _lineGroup != 0 ? _lineText : null,
+                    LineCommands = _lineCommands,
                 });
             }
             else

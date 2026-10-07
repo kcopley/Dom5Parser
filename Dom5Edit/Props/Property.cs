@@ -17,6 +17,12 @@ namespace Dom5Edit.Props
         /// <summary>The line's text as read from the file (null for a property made in the session).</summary>
         internal string? RawText { get; set; }
 
+        /// <summary>When it was read from a line with several commands ("#stealthy 999 #inanimate"): that line.</summary>
+        internal LineGroup? Line { get; set; }
+
+        /// <summary>Whether it's as read: text from the file and its value unchanged since.</summary>
+        internal bool IsAsRead => RawText != null && BaselineExport != null && ToExportString() == BaselineExport;
+
         /// <summary>
         /// ToExportString() when the mod was first resolved. While it still matches, the property
         /// is unedited and saving writes RawText (docs/SAVE_FLOW.md, "Original text").
@@ -83,5 +89,23 @@ namespace Dom5Edit.Props
             clone.BaselineExport = null;
             return clone;
         }
+    }
+
+    /// <summary>
+    /// A line of the file with several commands: its text as read, how many commands it had, and
+    /// the properties read from it, in order. A save writes the line as it was while they are all
+    /// still there, in order and unchanged (ModExporter).
+    /// </summary>
+    internal sealed class LineGroup
+    {
+        public LineGroup(string text, int commands)
+        {
+            Text = text;
+            Commands = commands;
+        }
+
+        public string Text { get; }
+        public int Commands { get; }
+        public List<Property> Members { get; } = new List<Property>();
     }
 }
