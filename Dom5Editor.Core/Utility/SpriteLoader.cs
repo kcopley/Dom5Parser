@@ -1,6 +1,5 @@
 using System.IO;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Dom5Editor.Imaging;
 using Dom5Edit;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
@@ -17,23 +16,21 @@ namespace Dom5Editor.Sprites
     public static class SpriteLoader
     {
         // loaded files, kept while something shows them; null: missing or unreadable
-        private static readonly Dictionary<string, WeakReference<BitmapSource>?> _cache = new Dictionary<string, WeakReference<BitmapSource>?>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, WeakReference<Picture>?> _cache = new Dictionary<string, WeakReference<Picture>?>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// A list row's picture: the sprite cut to its visible pixels (a unit fills the row instead
         /// of a corner of its 64x64 canvas), as a small copy of its own, so a list doesn't keep every
         /// full-size sprite it has shown. Null for null.
         /// </summary>
-        public static BitmapSource? Thumbnail(BitmapSource? image)
+        public static Picture? Thumbnail(Picture? image)
         {
             if (image == null)
                 return null;
             try
             {
-                BitmapSource source = image.Format == PixelFormats.Bgra32 ? image : new FormatConvertedBitmap(image, PixelFormats.Bgra32, null, 0);
-                int w = source.PixelWidth, h = source.PixelHeight;
-                var pixels = new byte[w * h * 4];
-                source.CopyPixels(pixels, w * 4, 0);
+                int w = image.Width, h = image.Height;
+                var pixels = image.Bgra;
                 int x0 = w, y0 = h, x1 = -1, y1 = -1;
                 for (int y = 0; y < h; y++)
                     for (int x = 0; x < w; x++)
@@ -48,9 +45,7 @@ namespace Dom5Editor.Sprites
                 var cut = new byte[cw * ch * 4];
                 for (int y = 0; y < ch; y++)
                     Buffer.BlockCopy(pixels, ((y0 + y) * w + x0) * 4, cut, y * cw * 4, cw * 4);
-                var thumbnail = BitmapSource.Create(cw, ch, image.DpiX, image.DpiY, PixelFormats.Bgra32, null, cut, cw * 4);
-                thumbnail.Freeze();
-                return thumbnail;
+                return new Picture(cw, ch, cut, image.Dpi);
             }
             catch (Exception)
             {
@@ -64,7 +59,7 @@ namespace Dom5Editor.Sprites
         /// nation's flag (its #flag file, else the one the game makes from its colors).
         /// Null if it has none or the file or the game isn't there.
         /// </summary>
-        public static BitmapSource? Of(ResolvedEntity r, EntityType type, string? modFile)
+        public static Picture? Of(ResolvedEntity r, EntityType type, string? modFile)
         {
             switch (type)
             {
@@ -92,14 +87,14 @@ namespace Dom5Editor.Sprites
         /// recolors a vanilla nation recolors its flag, and a mod's new nation gets a plain one.
         /// A color the nation doesn't have is black, as in the game's empty nation slots.
         /// </summary>
-        public static BitmapSource? NationFlag(ResolvedEntity r)
+        public static Picture? NationFlag(ResolvedEntity r)
         {
             (float, float, float) Color(Command c) =>
                 r.Get(c)?.Property is FloatFloatFloatProperty f && f.HasValue ? (f.Value1, f.Value2, f.Value3) : (0f, 0f, 0f);
             return GameArt.NationFlag(r.Entity.ID, Color(Command.COLOR), Color(Command.SECONDARYCOLOR));
         }
 
-        public static BitmapSource? Load(string? spritePath, string? modFile)
+        public static Picture? Load(string? spritePath, string? modFile)
         {
             if (string.IsNullOrWhiteSpace(spritePath))
                 return null;
@@ -115,36 +110,9 @@ namespace Dom5Editor.Sprites
                 if (cached.TryGetTarget(out var alive))
                     return alive;
             }
-            BitmapSource? image = null;
-            try
-            {
-                if (File.Exists(path))
-                {
-                    var ext = Path.GetExtension(path).ToLowerInvariant();
-                    if (ext == ".png" || ext == ".jpg" || ext == ".jpeg" || ext == ".bmp")
-                    {
-                        var bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.UriSource = new Uri(path, UriKind.Absolute);
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.EndInit();
-                        bitmap.Freeze();
-                        image = bitmap;
-                    }
-                    else if (Dom5Edit.Imaging.Tga.Decode(File.ReadAllBytes(path)) is { } tga)
-                    {
-                        // a .tga, read by Dom5Edit (no System.Drawing)
-                        var bitmap = BitmapSource.Create(tga.Width, tga.Height, 96, 96, PixelFormats.Bgra32, null, tga.Bgra, tga.Width * 4);
-                        bitmap.Freeze();
-                        image = bitmap;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                image = null;
-            }
-            _cache[path] = image != null ? new WeakReference<BitmapSource>(image) : null;
+            // TGA read here, PNG and the rest by the editor's toolkit (Picture.Load)
+            var image = File.Exists(path) ? Picture.Load(path) : null;
+            _cache[path] = image != null ? new WeakReference<Picture>(image) : null;
             return image;
         }
     }

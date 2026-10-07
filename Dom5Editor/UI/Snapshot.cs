@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -305,7 +305,7 @@ namespace Dom5Editor.UI
                             int source = int.Parse(args[++i]);
                             page.SpriteCopyId = source == 0 ? null : source;
                             var now = Selected(vm)!;
-                            Log($"sprite from {source}{(page.Error != null ? " error: " + page.Error : "")}: slots {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.PixelWidth}x{x.Image.PixelHeight}" : "none")}"))}");
+                            Log($"sprite from {source}{(page.Error != null ? " error: " + page.Error : "")}: slots {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.Width}x{x.Image.Height}" : "none")}"))}");
                             break;
                         }
                         case "--flag":
@@ -633,7 +633,7 @@ namespace Dom5Editor.UI
                             page.SetImage(c, Path.GetFullPath(file));
                             var now = Selected(vm)!;
                             Log($"sprite {args[i - 1]}: {(now.Error != null ? "error: " + now.Error : now.Notice)}");
-                            Log($"   slots: {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.PixelWidth}x{x.Image.PixelHeight}" : "none")}"))}");
+                            Log($"   slots: {string.Join(", ", now.SpriteSlots.Select(x => $"{x.Label} {(x.HasImage ? $"{x.Image!.Width}x{x.Image.Height}" : "none")}"))}");
                             break;
                         }
                         case "--page-command":
@@ -664,7 +664,7 @@ namespace Dom5Editor.UI
                             var session = vm.Session!;
                             var tab = vm.Tabs.OfType<EntityTypeTab>().First(t => t.Type == EntityType.NATION);
                             List<(int ID, BitmapSource? Image)> All() => tab.Items.OrderBy(x => x.ID)
-                                .Select(x => (x.ID, Sprites.SpriteLoader.Of(session.Resolve(x.Entity), EntityType.NATION, session.Mod.FullFilePath)))
+                                .Select(x => (x.ID, Converters.Pictures.ToImage(Sprites.SpriteLoader.Of(session.Resolve(x.Entity), EntityType.NATION, session.Mod.FullFilePath))))
                                 .ToList();
                             var watch = System.Diagnostics.Stopwatch.StartNew();
                             var flags = All();

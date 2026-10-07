@@ -73,16 +73,16 @@ namespace Dom5Editor.UI.ViewModels
 
         /// <summary>Whether the row is in one of its type's own filters ("Rituals", "In a chain"); "All" always.</summary>
         public bool InFacet(string facet) => facet == "All" || FacetMatcher?.Invoke(this, facet) != false;
-        internal Func<EntityListItem, System.Windows.Media.ImageSource?>? SpriteProvider { get; set; }
+        internal Func<EntityListItem, Imaging.Picture?>? SpriteProvider { get; set; }
         private string? _detail;
-        private System.Windows.Media.ImageSource? _sprite;
+        private Imaging.Picture? _sprite;
         private bool _spriteDone;
 
         /// <summary>The second line: ID and key stats (a monster's HP, attack, ...; a weapon's damage).</summary>
         public string Detail => _detail ??= (HasNumber ? $"#{ID}" : "") + (DetailProvider?.Invoke(this) is string d && d.Length > 0 ? (HasNumber ? "   " : "") + d : "");
 
         /// <summary>A small sprite (monsters, items, sites; a nation's flag), or null.</summary>
-        public System.Windows.Media.ImageSource? Sprite
+        public Imaging.Picture? Sprite
         {
             get
             {

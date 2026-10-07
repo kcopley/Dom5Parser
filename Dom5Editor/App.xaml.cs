@@ -12,6 +12,8 @@ namespace Dom5Editor
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            // the shared core's hooks (pictures, dialogs, the dispatcher) set to WPF
+            UI.Converters.Pictures.Install(this);
 
             // Configure VanillaLoader before any UI loads
             ConfigureVanillaLoader();

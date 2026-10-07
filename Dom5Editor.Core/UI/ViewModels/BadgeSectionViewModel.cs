@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Windows.Media;
 using Dom5Edit.Commands;
 using Dom5Edit.Editing;
 using Dom5Edit.Entities;
@@ -59,7 +58,7 @@ namespace Dom5Editor.UI.ViewModels
         public ICommand ReferenceChangedCommand { get; }
 
         /// <summary>A badge for one value, wired to edit it.</summary>
-        internal PropertyItem AddBadge(ResolvedValue? value, Command command, string label, string kind, string? tooltip, Brush? background, Brush? border, string? refType, string? defaultText = null, string? icon = null)
+        internal PropertyItem AddBadge(ResolvedValue? value, Command command, string label, string kind, string? tooltip, string? background, string? border, string? refType, string? defaultText = null, string? icon = null)
         {
             var r = _page.Resolved;
             // the badge config's icon (a game icon key: "path:F", "gem:S") when there's no ability icon

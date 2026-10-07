@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using System.Windows.Media;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Editor.UI.Controls;
@@ -242,15 +241,15 @@ namespace Dom5Editor.Data
             }
             else if (cmdDef.HasColors)
             {
-                var bgColor = ParseColor(cmdDef.Color, Color.FromRgb(60, 60, 60));
-                var borderColor = ParseColor(cmdDef.BorderColor, Color.FromRgb(80, 80, 80));
+                var bgColor = ParseColor(cmdDef.Color, "#3C3C3C");
+                var borderColor = ParseColor(cmdDef.BorderColor, "#505050");
                 property = PropertyItem.CreateColoredValue(
                     command,
                     cmdDef.Display,
                     value ?? cmdDef.Default ?? 0,
                     bgColor,
                     borderColor,
-                    Colors.White,
+                    "#FFFFFF",
                     isModified,
                     isSessionEdit);
             }
@@ -278,8 +277,8 @@ namespace Dom5Editor.Data
             PropertyItem property;
             if (cmdDef.HasColors)
             {
-                var bgColor = ParseColor(cmdDef.Color, Color.FromRgb(60, 60, 60));
-                var borderColor = ParseColor(cmdDef.BorderColor, Color.FromRgb(80, 80, 80));
+                var bgColor = ParseColor(cmdDef.Color, "#3C3C3C");
+                var borderColor = ParseColor(cmdDef.BorderColor, "#505050");
                 property = PropertyItem.CreateColoredIntIntValue(
                     command,
                     cmdDef.Display,
@@ -287,7 +286,7 @@ namespace Dom5Editor.Data
                     value2,
                     bgColor,
                     borderColor,
-                    Colors.White,
+                    "#FFFFFF",
                     isModified,
                     isSessionEdit);
             }
@@ -402,8 +401,8 @@ namespace Dom5Editor.Data
             PropertyItem property;
             if (cmdDef.HasColors)
             {
-                var bgColor = ParseColor(cmdDef.Color, Color.FromRgb(60, 60, 60));
-                var borderColor = ParseColor(cmdDef.BorderColor, Color.FromRgb(80, 80, 80));
+                var bgColor = ParseColor(cmdDef.Color, "#3C3C3C");
+                var borderColor = ParseColor(cmdDef.BorderColor, "#505050");
                 property = PropertyItem.CreateColoredReference(
                     command,
                     cmdDef.Display,
@@ -412,7 +411,7 @@ namespace Dom5Editor.Data
                     cmdDef.RefType,
                     bgColor,
                     borderColor,
-                    Colors.White,
+                    "#FFFFFF",
                     isModified,
                     isSessionEdit);
             }
@@ -475,9 +474,9 @@ namespace Dom5Editor.Data
         }
 
         /// <summary>
-        /// Parses a hex color string to a Color.
+        /// A hex color ("#RRGGBB" or "RRGGBB") as "#RRGGBB", else the default.
         /// </summary>
-        public static Color ParseColor(string hexColor, Color defaultColor)
+        public static string ParseColor(string hexColor, string defaultColor)
         {
             if (string.IsNullOrEmpty(hexColor))
                 return defaultColor;
@@ -489,10 +488,8 @@ namespace Dom5Editor.Data
 
                 if (hexColor.Length == 6)
                 {
-                    var r = Convert.ToByte(hexColor.Substring(0, 2), 16);
-                    var g = Convert.ToByte(hexColor.Substring(2, 2), 16);
-                    var b = Convert.ToByte(hexColor.Substring(4, 2), 16);
-                    return Color.FromRgb(r, g, b);
+                    Convert.ToInt32(hexColor, 16); // (a hex number, or it throws)
+                    return "#" + hexColor.ToUpperInvariant();
                 }
             }
             catch
@@ -506,29 +503,29 @@ namespace Dom5Editor.Data
         /// <summary>
         /// Gets the path color for magic path rendering.
         /// </summary>
-        public static Color GetPathColor(BadgeConfig config, string path)
+        public static string GetPathColor(BadgeConfig config, string path)
         {
             if (config?.Renderers != null &&
                 config.Renderers.TryGetValue("magicPathEditor", out var renderer) &&
                 renderer.PathColors != null &&
                 renderer.PathColors.TryGetValue(path, out var colorStr))
             {
-                return ParseColor(colorStr, Colors.Gray);
+                return ParseColor(colorStr, "#808080");
             }
 
             // Default path colors if not in config
             return path switch
             {
-                "F" => Color.FromRgb(255, 69, 0),   // Fire - OrangeRed
-                "A" => Color.FromRgb(135, 206, 235), // Air - SkyBlue
-                "W" => Color.FromRgb(65, 105, 225),  // Water - RoyalBlue
-                "E" => Color.FromRgb(139, 69, 19),   // Earth - SaddleBrown
-                "S" => Color.FromRgb(255, 215, 0),   // Astral - Gold
-                "D" => Color.FromRgb(47, 79, 79),    // Death - DarkSlateGray
-                "N" => Color.FromRgb(34, 139, 34),   // Nature - ForestGreen
-                "B" => Color.FromRgb(139, 0, 0),     // Blood - DarkRed
-                "H" => Colors.White,                  // Holy - White
-                _ => Colors.Gray
+                "F" => "#FF4500",   // Fire - OrangeRed
+                "A" => "#87CEEB", // Air - SkyBlue
+                "W" => "#4169E1",  // Water - RoyalBlue
+                "E" => "#8B4513",   // Earth - SaddleBrown
+                "S" => "#FFD700",   // Astral - Gold
+                "D" => "#2F4F4F",    // Death - DarkSlateGray
+                "N" => "#228B22",   // Nature - ForestGreen
+                "B" => "#8B0000",     // Blood - DarkRed
+                "H" => "#FFFFFF",                  // Holy - White
+                _ => "#808080"
             };
         }
     }
