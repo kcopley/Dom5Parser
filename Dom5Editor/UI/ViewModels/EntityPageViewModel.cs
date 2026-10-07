@@ -211,15 +211,8 @@ namespace Dom5Editor.UI.ViewModels
         {
             get
             {
-                var images = Type switch
-                {
-                    EntityType.MONSTER => MonsterImages,
-                    EntityType.ITEM => new[] { (Command.SPR, "Picture", true) },
-                    EntityType.NATION => new[] { (Command.FLAG, "Flag", true) },
-                    _ => Array.Empty<(Command, string, bool)>(),
-                };
                 var slots = new List<SpriteSlot>();
-                foreach (var (c, label, always) in images)
+                foreach (var (c, label, always) in Images)
                 {
                     var value = Resolved.Get(c);
                     var p = value?.Property ?? Resolved.Assets.GetValueOrDefault(c);
@@ -234,11 +227,25 @@ namespace Dom5Editor.UI.ViewModels
                         continue;
                     }
                     slots.Add(new SpriteSlot(this, c, label, Sprites.SpriteLoader.Load(path, Session.Mod.FullFilePath), path,
-                        value == null ? "from the game" : value.Source == ValueSource.Own ? "the mod's" : SourceText(value), slots.Count == 0));
+                        value == null ? "from the game" : value.Source == ValueSource.Own ? "the mod's" : SourceText(value), slots.Count == 0,
+                        value != null && value.Source == ValueSource.Own ? value : null));
                 }
                 return slots;
             }
         }
+
+        /// <summary>The images the type's header shows (Always: a slot even when nothing sets it).</summary>
+        private IReadOnlyList<(Command Command, string Label, bool Always)> Images => Type switch
+        {
+            EntityType.MONSTER => MonsterImages,
+            EntityType.ITEM => new[] { (Command.SPR, "Picture", true) },
+            EntityType.NATION => new[] { (Command.FLAG, "Flag", true) },
+            _ => Array.Empty<(Command, string, bool)>(),
+        };
+
+        /// <summary>The image commands the header has a slot for now (not shown again as badges).</summary>
+        private IEnumerable<Command> ImageCommandsShown => Images
+            .Where(x => x.Always || Resolved.Get(x.Command) != null || Resolved.Assets.ContainsKey(x.Command)).Select(x => x.Command);
 
         public bool HasSpriteSlots => Type == EntityType.MONSTER || Type == EntityType.ITEM || Type == EntityType.NATION;
         public bool ShowsSingleSprite => HasSprite && !HasSpriteSlots;
@@ -510,6 +517,8 @@ namespace Dom5Editor.UI.ViewModels
             _stale = false;
             Resolved = Session.Resolve(Entity);
             var covered = new HashSet<Command> { Command.NAME, Command.DESCR };
+            // (an image with a slot in the header isn't a badge too)
+            covered.UnionWith(ImageCommandsShown);
             LongTexts.Clear();
             foreach (var (c, label, optional) in LongTextCommands)
                 if (Entity.GetPropertyMap().ContainsKey(c) && ShowsLongText(c)
@@ -781,17 +790,19 @@ namespace Dom5Editor.UI.ViewModels
             tx.RemoveLine(own, line);
         }));
 
-        /// <summary>Adds a command with a starting value: a flag as is, a number as its default (1 if none: 0 would remove an ability).</summary>
+        /// <summary>Adds a command with a starting value: a flag as is, a number as its default (1 if none, or if 0 would remove the ability).</summary>
         public void AddDefault(Command c, int? defaultValue)
         {
             var map = Entity.GetPropertyMap();
             var sample = map.TryGetValue(c, out var create) ? create() : null;
+            // (an ability added as 0 is a line that removes it: #regeneration 0 gives none)
+            int number = defaultValue is int d && !(d == 0 && GameRules.RemovesWithZero(Type, c)) ? d : 1;
             string args = sample switch
             {
                 CommandProperty => "",
                 StringProperty => "\"\"",
                 IntIntProperty => "0 1",
-                _ => (defaultValue ?? 1).ToString(),
+                _ => number.ToString(),
             };
             AddValue(c, args);
         }
@@ -967,8 +978,12 @@ namespace Dom5Editor.UI.ViewModels
     {
         private readonly EntityPageViewModel _page;
 
-        public SpriteSlot(EntityPageViewModel page, Command command, string label, System.Windows.Media.Imaging.BitmapSource? image, string? path, string source, bool isMain)
+        public SpriteSlot(EntityPageViewModel page, Command command, string label, System.Windows.Media.Imaging.BitmapSource? image, string? path, string source, bool isMain,
+            ResolvedValue? own = null)
         {
+            RemoveCommand = new RelayCommand(() => { if (own != null) page.ResetLine(own); });
+            CanRemove = own != null;
+            RemoveText = $"Remove {EntityPageViewModel.CommandName(command)} (the mod's line; the image file stays in the mod's folder)";
             _page = page;
             Command = command;
             Label = label;
@@ -976,9 +991,15 @@ namespace Dom5Editor.UI.ViewModels
             IsMain = isMain;
             var name = EntityPageViewModel.CommandName(command);
             Tooltip = (path == null ? $"{label} image ({name}): {(image != null ? source : "none")}" : $"{label} image ({name}): {(source == "from the game" ? "the game's own" : path)}")
-                + "\nClick or drop a .tga/.png to set it (copied into the mod's sprites folder)";
+                + "\nClick or drop a .tga/.png to set it (copied into the mod's sprites folder)"
+                + (own != null ? "; right-click to remove it" : "");
             PickCommand = new RelayCommand(Pick);
         }
+
+        /// <summary>Drops the mod's own line for the image (the slot's right-click menu; it's no badge).</summary>
+        public ICommand RemoveCommand { get; }
+        public bool CanRemove { get; }
+        public string RemoveText { get; }
 
         public Command Command { get; }
         public string Label { get; }

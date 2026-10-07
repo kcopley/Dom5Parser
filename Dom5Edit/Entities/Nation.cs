@@ -310,6 +310,17 @@ namespace Dom5Edit.Entities
             return Command.NEWNATION;
         }
 
+        /// <summary>
+        /// The epithet and era right after the name: the manual says #era "must be set right after
+        /// #name and #epithet" (descriptions and other texts don't work if it comes too late).
+        /// </summary>
+        protected override int LiveRank(Property p) => p.Command switch
+        {
+            Command.EPITHET => 41,
+            Command.ERA => 42,
+            _ => base.LiveRank(p),
+        };
+
         internal override Command GetSelectCommand()
         {
             return Command.SELECTNATION;

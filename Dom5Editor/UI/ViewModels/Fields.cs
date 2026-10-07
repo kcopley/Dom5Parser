@@ -149,9 +149,12 @@ namespace Dom5Editor.UI.ViewModels
             set
             {
                 if (value != Text && !string.IsNullOrWhiteSpace(value))
-                    Commit(value.Trim());
+                    Commit(Page.CommitArguments(Command, value.Trim()));
             }
         }
+
+        /// <summary>The box's width (wider for a text: an epithet, a color's three numbers).</summary>
+        public double BoxWidth { get; init; } = 80;
 
         /// <summary>What the value means: the field's own note, else the manual's value table ("early, middle" for an era mask).</summary>
         public string Note => _note?.Invoke(Text) ?? Data.CommandHints.ValueNote(Page.Type, Command, Text);
