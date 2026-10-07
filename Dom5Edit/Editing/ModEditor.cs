@@ -407,8 +407,11 @@ namespace Dom5Edit.Editing
             // have no #new: a new one is a #select of a number the game doesn't use (the manual:
             // poptypes 1-249, the game's go to 106; nametypes 170-399 are free for mods). A nation
             // too: #newnation takes no number (the game gives it the first free one from 120), so
-            // the mod's references to it couldn't name it; the manual's way is #selectnation 150+
-            bool selectOnly = type == EntityType.POPTYPE || type == EntityType.NAMETYPE || type == EntityType.NATION;
+            // the mod's references to it couldn't name it; the manual's way is #selectnation 150+.
+            // Spells and items the same (#newspell and #newitem take no number): the save writes them
+            // as #selectspell / #selectitem (Spell.Export, Item.Export), so the page's "in the file" box should too
+            bool selectOnly = type == EntityType.POPTYPE || type == EntityType.NAMETYPE || type == EntityType.NATION
+                              || type == EntityType.SPELL || type == EntityType.ITEM;
             if (type == EntityType.BLESS || type == EntityType.TEMPLATE)
                 throw new EditException(type == EntityType.BLESS ? "Blesses can only be changed (#selectbless), not made"
                     : "A template is made for a nation (#newtemplate <nation>): add it in the file");
