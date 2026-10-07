@@ -29,7 +29,7 @@ for RID in $RIDS; do
   esac
   "$DOTNET" publish "$(wslpath -w "$PROJECT")" -c Release -r "$RID" --self-contained true \
     -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=$NATIVE_INSIDE \
-    -p:DebugType=embedded -o "$(wslpath -w "$OUT")" -nologo -v q
+    -p:DebugType=embedded -o "$(wslpath -w "$OUT")" -nologo -v q -clp:ErrorsOnly
   sed -e "s/@VERSION@/$VERSION/g" -e "s/@DATE@/$DATE/g" -e "s/@COMMIT@/$COMMIT/g" -e "s/@RID@/$RID/g" \
     tools/publish-avalonia-readme.txt > "publish/avalonia/README-$RID.txt"
   python3 tools/package_avalonia.py "$OUT" "$RID" "$VERSION" "publish/avalonia/README-$RID.txt" publish
