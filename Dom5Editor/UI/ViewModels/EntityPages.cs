@@ -709,6 +709,18 @@ namespace Dom5Editor.UI.ViewModels
             return UnitTotals.Compute(stats, id => Find(EntityType.MONSTER, id) is ResolvedEntity m ? UnitStats.Of(m, Find) : null);
         }
 
+        /// <summary>A monster's key stats in a line ("hp 30, prot 10, att 12, def 8, size 6, map move 18"), for a mount or co-rider.</summary>
+        private string MonsterSummary(int id)
+        {
+            if (!Session.Mod.TryGet(EntityType.MONSTER, id, null, out var m))
+                return "";
+            var r = Session.Resolve(m);
+            string? V(Command c) => r.Get(c)?.Arguments.Split(' ')[0];
+            var parts = new[] { ("hp", Command.HP), ("prot", Command.PROT), ("att", Command.ATT), ("def", Command.DEF), ("size", Command.SIZE), ("map move", Command.MAPMOVE) }
+                .Select(x => V(x.Item2) is string v ? $"{x.Item1} {v}" : null).Where(x => x != null);
+            return string.Join(", ", parts);
+        }
+
         protected override void BuildPanels(HashSet<Command> covered)
         {
             Totals = WorkOutTotals();
@@ -726,6 +738,16 @@ namespace Dom5Editor.UI.ViewModels
             Panels.Add(body);
             Panels.Add(new ItemSlotsPanel(this));
             covered.Add(Command.ITEMSLOTS);
+
+            // a mounted unit (Dominions 6): a rider on a mount, each a monster of its own; a co-rider
+            // may ride along. Empty for a unit on foot.
+            var mount = new FieldsPanel("MOUNT", "A mounted unit is a rider (this monster) on a mount: another monster with its own stats, which fights on when the rider falls. Pick none for a unit on foot.");
+            mount.Fields.Add(new RefField(this, "Mount", Command.MOUNTMNR, EntityType.MONSTER, describe: MonsterSummary));
+            mount.Fields.Add(new RefField(this, "Co-rider", Command.CORIDERMNR, EntityType.MONSTER, describe: MonsterSummary));
+            mount.Fields.Add(new NumberField(this, "Riders", Command.NOFRIDERS, defaultValue: "1"));
+            mount.Fields.Add(new NumberField(this, "Skilled rider", Command.SKILLEDRIDER));
+            Panels.Add(mount);
+            covered.UnionWith(new[] { Command.MOUNTMNR, Command.CORIDERMNR, Command.NOFRIDERS, Command.SKILLEDRIDER });
             covered.UnionWith(new[] { Command.WEAPON, Command.ARMOR, Command.MAGICSKILL, Command.CUSTOMMAGIC });
             foreach (var f in body.Fields.OfType<CommandChoiceField>())
                 covered.UnionWith(f.Commands);
