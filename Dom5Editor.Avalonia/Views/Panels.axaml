@@ -1,9 +1,487 @@
 <!-- The page's panels (UI.ViewModels: FieldsPanel, StatsPanel, MagicPanel, the tables, ...), each a
      DataTemplate keyed "Panel.TypeName" (EntityPageView's PartSelector finds it by the panel's type),
-     as the WPF editor's PanelTemplates.xaml. -->
+     as the WPF editor's PanelTemplates.xaml. Inherited values are grey (class "inherited"); their
+     tooltip says where they come from. Value boxes save when left or on Enter (controls:Commit);
+     the styles they use are in Controls/PageStyles.axaml. -->
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                     xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
                     xmlns:local="clr-namespace:Dom5Editor.Ava"
                     xmlns:controls="clr-namespace:Dom5Editor.Ava.Controls">
+
+    <!-- a list of references: weapons, armor, recruits; with columns, a small table -->
+    <DataTemplate x:Key="Panel.ReferenceListPanel" DataType="vm:ReferenceListPanel">
+        <!-- (the rows' buttons are in a column of the same width as the header's empty one, so the headers line up with the cells) -->
+        <StackPanel Margin="0,0,0,10" Grid.IsSharedSizeScope="True">
+            <!-- the title, and the column headers laid out like a row -->
+            <Grid Margin="2,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="RowButtons"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding Columns}" VerticalAlignment="Bottom" IsVisible="{Binding IsTable}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Width="{Binding Width}" Background="Transparent"
+                                            ToolTip.Tip="{Binding Tooltip, Converter={x:Static controls:Converters.NullIfEmpty}}">
+                                    <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
+                                        <controls:GameIcon Kind="{Binding Icon}" Width="12" Height="12" Margin="0,0,3,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Header}" FontSize="10.5" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="{Binding Title}" Classes="label" VerticalAlignment="Bottom" Margin="0,0,0,3"/>
+                </DockPanel>
+            </Grid>
+            <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:PanelRow">
+                        <Border Classes="row" Padding="2,1" CornerRadius="3" Background="Transparent" ToolTip.Tip="{Binding Source}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="RowButtons"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Content="Copy &amp; edit" Classes="small" Margin="4,0,0,0"
+                                            ToolTip.Tip="{Binding CopyTip}" Command="{Binding $parent[ItemsControl].DataContext.CopyEditCommand}"
+                                            CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].DataContext.CanCopyEdit}"/>
+                                    <Button Content="→" Classes="small" Margin="4,0,0,0"
+                                            ToolTip.Tip="{Binding OpenTip}" Command="{Binding $parent[ItemsControl].DataContext.OpenCommand}"
+                                            CommandParameter="{Binding}"/>
+                                    <Button Content="✕" Classes="small" Margin="4,0,0,0"
+                                            IsVisible="{Binding $parent[ItemsControl].DataContext.CanEdit}"
+                                            ToolTip.Tip="{Binding RemoveTip}" Command="{Binding $parent[ItemsControl].DataContext.RemoveCommand}"
+                                            CommandParameter="{Binding}"/>
+                                </StackPanel>
+                                <DockPanel>
+                                    <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding Cells}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="vm:TableCell">
+                                                <TextBlock Text="{Binding Text}" Width="{Binding Width}" Padding="8,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                                           FontFamily="{StaticResource MonospaceFont}" FontSize="12" Foreground="{StaticResource TextPrimaryBrush}"
+                                                           Background="Transparent" ToolTip.Tip="{Binding Tooltip}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding Detail}" Foreground="{StaticResource TextMutedBrush}"
+                                               FontFamily="{StaticResource MonospaceFont}" FontSize="12" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding RefId, StringFormat='#{0}'}" Width="48" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Text}" Classes="row" Classes.inherited="{Binding IsInherited}" TextTrimming="CharacterEllipsis"/>
+                                </DockPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" Margin="0,3,0,0" IsVisible="{Binding CanEdit}">
+                <controls:RefPicker Width="260" Height="22" HorizontalAlignment="Left"
+                                    ItemsSource="{Binding Candidates}" SelectedId="{Binding AddPick, Mode=TwoWay}"
+                                    Placeholder="+ Add..." ToolTip.Tip="{Binding AddTip}"/>
+                <Button Content="{Binding NewLabel}" Classes="small" Margin="6,0,0,0" Command="{Binding NewCommand}"
+                        ToolTip.Tip="{Binding NewTip}" IsVisible="{Binding CanMakeNew}"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Hint}" Classes="hint" IsVisible="{Binding Hint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- the ten path toggles of one random path -->
+    <DataTemplate x:Key="PathToggles">
+        <ItemsControl ItemsSource="{Binding Toggles}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="vm:PathToggle">
+                    <ToggleButton Classes="path" IsChecked="{Binding IsOn, Mode=TwoWay}"
+                                  ToolTip.Tip="{Binding Name, Converter={x:Static controls:Converters.Format}, ConverterParameter='{}{0}: lit means this random path can be {0}'}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DataTemplate>
+
+    <!-- a monster's magic: paths as icon chips, paths to add, random paths as toggle rows -->
+    <DataTemplate x:Key="Panel.MagicPanel" DataType="vm:MagicPanel">
+        <StackPanel Margin="0,0,0,10" x:Name="MagicRoot">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="MAGIC" Classes="label" Margin="0,0,0,3"/>
+                <TextBlock Text="{Binding Summary}" Foreground="{StaticResource TextMutedBrush}" FontSize="11" Margin="10,0,0,3"
+                           FontFamily="{StaticResource MonospaceFont}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <ItemsControl ItemsSource="{Binding Paths}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:PanelRow">
+                        <Border Background="#18FFFFFF" CornerRadius="4" Padding="4,2" Margin="0,0,6,4" ToolTip.Tip="{Binding Source}">
+                            <StackPanel Orientation="Horizontal">
+                                <controls:GameIcon Kind="{Binding Icon}" Width="20" Height="20" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Text}" Classes="row" Classes.inherited="{Binding IsInherited}" Margin="0,0,6,0"/>
+                                <TextBox Classes="inline" Text="{Binding EditText, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                                         Width="26" TextAlignment="Center"
+                                         ToolTip.Tip="{Binding Text, Converter={x:Static controls:Converters.Format}, ConverterParameter='{}{0} level (0 removes the path)'}"/>
+                                <Button Content="✕" Classes="small" Margin="4,0,0,0"
+                                        ToolTip.Tip="{Binding Text, Converter={x:Static controls:Converters.Format}, ConverterParameter='Remove {0} magic'}"
+                                        Command="{Binding $parent[ItemsControl].DataContext.RemoveCommand}" CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" Margin="0,2,0,6">
+                <TextBlock Text="Add a path:" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <ItemsControl ItemsSource="{Binding AddablePaths}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="vm:PathToggle">
+                            <Button Classes="pathAdd"
+                                    ToolTip.Tip="{Binding Name, Converter={x:Static controls:Converters.Format}, ConverterParameter='Add {0} magic (level 1)'}"
+                                    Command="{Binding $parent[ItemsControl].DataContext.AddPathCommand}" CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <TextBlock Text="RANDOM PATHS (each line: a level in one of the lit paths, at that chance; over 100%: more levels)" Classes="label" Margin="0,0,0,3"/>
+            <ItemsControl ItemsSource="{Binding Random}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:RandomPathRow">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip.Tip="{Binding Source}">
+                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource PathToggles}"/>
+                            <TextBox Classes="inline" Text="{Binding Chance, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                                     Width="34" TextAlignment="Right" Margin="8,0,0,0"
+                                     ToolTip.Tip="Chance in percent: 100 is certain; over 100 is a linked random (200: +2 levels in the same path)"/>
+                            <TextBlock Text="%" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                            <Button Content="✕" Classes="small" Margin="8,0,0,0" ToolTip.Tip="Remove this random path"
+                                    Command="{Binding $parent[ItemsControl].DataContext.RemoveCommand}" CommandParameter="{Binding}"/>
+                            <TextBlock Text="{Binding Warning}" Foreground="{StaticResource WarningBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,4,0,0" Padding="0,4,0,0" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" DataContext="{Binding NewRandom}">
+                    <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource PathToggles}" ToolTip.Tip="Light the paths it can roll among"/>
+                    <TextBox Classes="inline" Text="{Binding Chance}" Width="34" TextAlignment="Right" Margin="8,0,0,0"
+                             ToolTip.Tip="Chance in percent: 100 is certain; over 100 is a linked random (200: +2 levels in the same path)"/>
+                    <TextBlock Text="%" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                    <Button Content="+ Add random path" Classes="small" Margin="8,0,0,0"
+                            Command="{Binding #MagicRoot.DataContext.AddRandomCommand}"
+                            ToolTip.Tip="Adds #custommagic with the lit paths and the chance"/>
+                </StackPanel>
+            </Border>
+            <TextBlock Text="{Binding Hint}" Classes="hint" IsVisible="{Binding Hint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- a field's label, with its icon (none: just the label); grey while the value is inherited -->
+    <DataTemplate x:Key="FieldLabel">
+        <StackPanel Orientation="Horizontal" Width="130" VerticalAlignment="Center">
+            <controls:GameIcon Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Label}" Classes="field" Classes.inherited="{Binding IsInherited}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- fields of one part of an entity (a spell's paths, an item's slot): a choice, a number or text, a reference -->
+    <DataTemplate x:Key="Panel.FieldsPanel" DataType="vm:FieldsPanel">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3"/>
+            <ItemsControl ItemsSource="{Binding Fields}">
+                <ItemsControl.DataTemplates>
+                    <DataTemplate DataType="vm:ChoiceField">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip.Tip="{Binding Tooltip}">
+                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabel}"/>
+                            <ComboBox Classes="small" Width="220" Height="26" FontSize="13" ItemsSource="{Binding Options}" IsEnabled="{Binding IsEditable}"
+                                      SelectedValueBinding="{Binding Value}" SelectedValue="{Binding Selected, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate DataType="vm:ChoiceOption">
+                                        <StackPanel Orientation="Horizontal">
+                                            <controls:GameIcon Kind="{Binding Icon}" Width="14" Height="14" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Classes="reset" Classes.hidden="{Binding !CanReset}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:CommandChoiceField">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip.Tip="{Binding Tooltip}">
+                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabel}"/>
+                            <ComboBox Classes="small" Width="220" Height="26" FontSize="13" ItemsSource="{Binding Options}" IsEnabled="{Binding IsEditable}"
+                                      DisplayMemberBinding="{Binding Name}" SelectedValueBinding="{Binding Value}" SelectedValue="{Binding Selected, Mode=TwoWay}"/>
+                            <Button Classes="reset" Classes.hidden="{Binding !CanReset}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:NumberField">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip.Tip="{Binding Tooltip}">
+                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabel}"/>
+                            <TextBox Classes="inline" Text="{Binding Text, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                                     Width="{Binding BoxWidth}" IsReadOnly="{Binding IsReadOnly}"/>
+                            <TextBlock Text="{Binding Derived}" Classes="derived" IsVisible="{Binding HasDerived}" ToolTip.Tip="{Binding DerivedTip}"/>
+                            <Button Classes="reset" Classes.hidden="{Binding !CanReset}"/>
+                            <TextBlock Text="{Binding Note}" Foreground="{StaticResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:RefField">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip.Tip="{Binding Tooltip}">
+                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabel}"/>
+                            <controls:RefPicker Width="260" Height="22" ItemsSource="{Binding Candidates}"
+                                                SelectedId="{Binding SelectedId, Mode=TwoWay}" Placeholder="(none)" IsReadOnly="{Binding IsReadOnly}"/>
+                            <Button Content="→" Classes="small" Margin="4,0,0,0" Command="{Binding OpenCommand}" ToolTip.Tip="{Binding OpenTip}"/>
+                            <Button Classes="reset" Classes.hidden="{Binding !CanReset}"/>
+                            <TextBlock Text="{Binding Note}" Foreground="{StaticResource TextMutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"
+                                       IsVisible="{Binding HasNote}"/>
+                            <TextBlock Text="{Binding Derived}" Classes="derived" Margin="8,0,0,0" IsVisible="{Binding HasDerived}" ToolTip.Tip="{Binding DerivedTip}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.DataTemplates>
+            </ItemsControl>
+            <TextBlock Text="{Binding Hint}" Classes="hint" IsVisible="{Binding HasHint}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- a nation's army in rows: role, unit, how many; with headings -->
+    <DataTemplate x:Key="Panel.ArmyPanel" DataType="vm:ArmyPanel">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3"/>
+            <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.DataTemplates>
+                    <DataTemplate DataType="sys:String">
+                        <TextBlock Text="{Binding}" FontSize="11" Foreground="{StaticResource AccentHighlightBrush}" Margin="0,6,0,2"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:UnitRowField">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip.Tip="{Binding Unit.Tooltip}">
+                            <TextBlock Text="{Binding Label}" Classes="field" Classes.inherited="{Binding IsInherited}" Width="130"/>
+                            <controls:RefPicker Width="260" Height="22" ItemsSource="{Binding Unit.Candidates}"
+                                                SelectedId="{Binding Unit.SelectedId, Mode=TwoWay}" Placeholder="(none)"/>
+                            <Button Content="→" Classes="small" Margin="4,0,0,0" Command="{Binding Unit.OpenCommand}" ToolTip.Tip="{Binding Unit.OpenTip}"/>
+                            <Button Classes="reset" DataContext="{Binding Unit}" Classes.hidden="{Binding !CanReset}"/>
+                            <StackPanel Orientation="Horizontal" IsVisible="{Binding HasCount}" ToolTip.Tip="{Binding Count.Tooltip}">
+                                <TextBlock Text="{Binding CountLabel}" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="10,0,4,0"/>
+                                <TextBox Classes="inline" Text="{Binding Count.Text, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                                         Width="44" TextAlignment="Right"/>
+                                <Button Classes="reset" DataContext="{Binding Count}" Classes.hidden="{Binding !CanReset}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.DataTemplates>
+            </ItemsControl>
+            <TextBlock Text="{Binding Hint}" Classes="hint" IsVisible="{Binding HasHint}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- flags in groups, each a checkbox (a weapon's qualities) -->
+    <DataTemplate x:Key="Panel.FlagsPanel" DataType="vm:FlagsPanel">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3" IsVisible="{Binding HasTitle}"/>
+            <ItemsControl ItemsSource="{Binding Groups}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="0,1">
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding Title}" Width="110" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Top" Margin="0,3,0,0"/>
+                            <ItemsControl ItemsSource="{Binding Flags}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="vm:FlagField">
+                                        <CheckBox Classes="small" IsChecked="{Binding IsOn, Mode=TwoWay}" Margin="0,1,14,1" ToolTip.Tip="{Binding Tooltip}">
+                                            <TextBlock Text="{Binding Label}" Classes="row" Classes.inherited="{Binding IsInherited}"/>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- one stat of the unit window: icon, label, value (right-aligned), what the game makes of it, reset -->
+    <DataTemplate x:Key="StatCell" DataType="vm:NumberField">
+        <DockPanel Height="26" ToolTip.Tip="{Binding Tooltip}" Background="Transparent">
+            <controls:GameIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right" Classes="reset" Classes.hidden="{Binding !CanReset}"/>
+            <TextBlock DockPanel.Dock="Right" Text="{Binding Derived}" Width="{Binding DerivedWidth}" Classes="derived" IsVisible="{Binding HasDerivedSlot}"
+                       ToolTip.Tip="{Binding DerivedTip, Converter={x:Static controls:Converters.NullIfEmpty}}"/>
+            <TextBox DockPanel.Dock="Right" Classes="inline" Text="{Binding Text, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                     Width="56" TextAlignment="Right" FontSize="12" IsReadOnly="{Binding IsReadOnly}"/>
+            <TextBlock DockPanel.Dock="Right" Text="{Binding Note}" Foreground="{StaticResource TextMutedBrush}" FontSize="10.5" Margin="6,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Label}" Classes="field" Classes.inherited="{Binding IsInherited}" FontSize="12" TextTrimming="CharacterEllipsis"/>
+        </DockPanel>
+    </DataTemplate>
+
+    <!-- one leadership of the unit window: class and bonus (the total as the game shows it in the hint) -->
+    <DataTemplate x:Key="LeaderCell" DataType="vm:LeaderField">
+        <DockPanel Height="26" Background="Transparent" ToolTip.Tip="{Binding Hint}">
+            <controls:GameIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right" Classes="reset" DataContext="{Binding Bonus}" Classes.hidden="{Binding !CanReset}"/>
+            <TextBox DockPanel.Dock="Right" Classes="inline" Text="{Binding Bonus.Text, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                     Width="30" TextAlignment="Right" FontSize="12" ToolTip.Tip="{Binding Bonus.Tooltip}"/>
+            <TextBlock DockPanel.Dock="Right" Text="+" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" Margin="3,0"/>
+            <Button DockPanel.Dock="Right" Classes="reset" DataContext="{Binding Class}" Classes.hidden="{Binding !CanReset}"/>
+            <ComboBox DockPanel.Dock="Right" Classes="small" Width="104" ItemsSource="{Binding Class.Options}" DisplayMemberBinding="{Binding Name}"
+                      SelectedValueBinding="{Binding Value}" SelectedValue="{Binding Class.Selected, Mode=TwoWay}" Padding="6,1,0,1" FontSize="11.5"/>
+            <TextBlock Text="{Binding Label}" Classes="field" Classes.inherited="{Binding IsInherited}" FontSize="12" TextTrimming="CharacterEllipsis"/>
+        </DockPanel>
+    </DataTemplate>
+
+    <!-- a monster's stats as the game's unit window: three columns, values the game works out, then cost -->
+    <DataTemplate x:Key="Panel.StatsPanel" DataType="vm:StatsPanel">
+        <StackPanel>
+            <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3"/>
+            <Border Background="#10FFFFFF" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="5" Padding="10,6,6,6" Margin="0,0,0,12">
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding Columns}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding Cells}" Width="318" Margin="0,0,14,0">
+                                    <ItemsControl.DataTemplates>
+                                        <DataTemplate DataType="vm:NumberField">
+                                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource StatCell}"/>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:LeaderField">
+                                            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LeaderCell}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.DataTemplates>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <!-- values the game works out that have no box: leadership with paths, resistances, casting encumbrance -->
+                    <DockPanel Margin="0,2,0,0" IsVisible="{Binding HasNotes}">
+                        <TextBlock DockPanel.Dock="Left" Text="IN GAME" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextMutedBrush}"
+                                   VerticalAlignment="Top" Margin="0,3,10,0"
+                                   ToolTip.Tip="What the game makes of the values above with its gear, paths and age (the dom6inspector's formulas)"/>
+                        <ItemsControl ItemsSource="{Binding Notes}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="vm:DerivedNote">
+                                    <Border Background="#14FFFFFF" CornerRadius="3" Padding="6,1" Margin="0,1,6,1" ToolTip.Tip="{Binding Tooltip}">
+                                        <TextBlock Text="{Binding Text}" FontSize="11.5" Foreground="{StaticResource AccentHighlightBrush}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DockPanel>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,4,0,0" Padding="0,4,0,0">
+                        <ItemsControl ItemsSource="{Binding Footer}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="vm:NumberField">
+                                    <StackPanel Orientation="Horizontal" Height="26" Margin="0,0,28,0" ToolTip.Tip="{Binding Tooltip}" Background="Transparent">
+                                        <controls:GameIcon Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,7,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Label}" Classes="field" Classes.inherited="{Binding IsInherited}" FontSize="12" Margin="0,0,8,0"/>
+                                        <TextBox Classes="inline" Text="{Binding Text, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                                                 Width="56" TextAlignment="Right" FontSize="12" IsReadOnly="{Binding IsReadOnly}"/>
+                                        <TextBlock Text="{Binding Derived}" Classes="derived" IsVisible="{Binding HasDerived}" ToolTip.Tip="{Binding DerivedTip}"/>
+                                        <Button Classes="reset" Classes.hidden="{Binding !CanReset}"/>
+                                        <TextBlock Text="{Binding Note}" Foreground="{StaticResource TextMutedBrush}" FontSize="10.5" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- a nametype's names, one per line (saved when the box is left) -->
+    <DataTemplate x:Key="Panel.NamesPanel" DataType="vm:NamesPanel">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3"/>
+            <TextBox Classes="input" Text="{Binding Text, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True" AcceptsReturn="True" TextWrapping="NoWrap"
+                     MinHeight="120" MaxHeight="500" FontFamily="{StaticResource MonospaceFont}" FontSize="12"
+                     ToolTip.Tip="One name per line. Names added at the end become #addname lines; other changes rewrite the list (#clear and every name)."/>
+            <TextBlock Text="{Binding Hint}" Foreground="{StaticResource WarningBrush}" FontSize="10.5" Margin="0,2,0,0" TextWrapping="Wrap" IsVisible="{Binding HasHint}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- a monster's item slots as counts -->
+    <DataTemplate x:Key="Panel.ItemSlotsPanel" DataType="vm:ItemSlotsPanel">
+        <StackPanel Margin="0,0,0,10" ToolTip.Tip="{Binding Source}">
+            <TextBlock Classes="label" Margin="0,0,0,3">
+                <Run Text="ITEM SLOTS"/><Run Text="{Binding Mask, StringFormat='  (#itemslots {0})'}" Foreground="{StaticResource TextMutedBrush}"/>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Hands" Width="42" Classes="field" Classes.inherited="{Binding IsInherited}"/>
+                <TextBox Classes="inline" Tag="Hands" Text="{Binding Hands, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True" Width="28"
+                         ToolTip.Tip="Hand slots (0-6): weapons and shields"/>
+                <TextBlock Text="Heads" Width="42" Margin="12,0,0,0" Classes="field" Classes.inherited="{Binding IsInherited}"/>
+                <TextBox Classes="inline" Tag="Heads" Text="{Binding Heads, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True" Width="28"
+                         ToolTip.Tip="Head slots (0-3): helmets and crowns"/>
+                <TextBlock Text="Misc" Width="34" Margin="12,0,0,0" Classes="field" Classes.inherited="{Binding IsInherited}"/>
+                <TextBox Classes="inline" Tag="Misc" Text="{Binding Misc, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True" Width="28"
+                         ToolTip.Tip="Miscellaneous item slots (0-4)"/>
+                <CheckBox Classes="small" Content="Body" IsChecked="{Binding HasBody, Mode=TwoWay}" ToolTip.Tip="A body armor slot" Margin="12,0,0,0"/>
+                <CheckBox Classes="small" Content="Feet" IsChecked="{Binding HasFeet, Mode=TwoWay}" ToolTip.Tip="A boots slot" Margin="8,0,0,0"/>
+                <CheckBox Classes="small" Content="Bow" IsChecked="{Binding HasBow, Mode=TwoWay}" ToolTip.Tip="Can use a bow (a two-handed missile weapon) in its hands" Margin="8,0,0,0"/>
+                <CheckBox Classes="small" Content="Crowns only" IsChecked="{Binding CrownsOnly, Mode=TwoWay}" Margin="8,0,0,0" ToolTip.Tip="Head slots can only have crowns"/>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- one row per first argument of a keyed command (a site's gems by path) -->
+    <DataTemplate x:Key="Panel.KeyedListPanel" DataType="vm:KeyedListPanel">
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3"/>
+            <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:PanelRow">
+                        <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip.Tip="{Binding Source}">
+                            <controls:GameIcon Kind="{Binding Icon}" Width="16" Height="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Text}" Width="90" Classes="row" Classes.inherited="{Binding IsInherited}"/>
+                            <TextBox Classes="inline" Text="{Binding EditText, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True" Width="50"/>
+                            <TextBlock Text="{Binding $parent[ItemsControl].DataContext.ValueLabel}"
+                                       Foreground="{StaticResource TextMutedBrush}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            <Button Content="✕" Classes="small" Margin="6,0,0,0"
+                                    ToolTip.Tip="{Binding Text, Converter={x:Static controls:Converters.Format}, ConverterParameter='Remove {0}'}"
+                                    Command="{Binding $parent[ItemsControl].DataContext.RemoveCommand}" CommandParameter="{Binding}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                <ItemsControl ItemsSource="{Binding AddableKeys}" IsVisible="{Binding HasIconKeys}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="vm:ChoiceOption">
+                            <Button Classes="pathAdd" ToolTip.Tip="{Binding Name, Converter={x:Static controls:Converters.Format}, ConverterParameter='Add {0}'}"
+                                    Command="{Binding $parent[ItemsControl].DataContext.AddKeyCommand}" CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <controls:RefPicker Width="160" Height="22" HorizontalAlignment="Left"
+                                    ItemsSource="{Binding Addable}" SelectedId="{Binding AddPick, Mode=TwoWay}" Placeholder="+ Add..."
+                                    ToolTip.Tip="{Binding Title, Converter={x:Static controls:Converters.Format}, ConverterParameter='Add a row to {0}: type to search'}"
+                                    IsVisible="{Binding !HasIconKeys}"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Hint}" Classes="hint" IsVisible="{Binding HasHint}"/>
+        </StackPanel>
+    </DataTemplate>
 </ResourceDictionary>

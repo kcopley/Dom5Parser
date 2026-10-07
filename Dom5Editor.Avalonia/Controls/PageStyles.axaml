@@ -1,0 +1,233 @@
+<!-- The entity page's styles (EntityPageView includes them, so its panels and the event templates
+     have them too), after the WPF editor's PanelTemplates.xaml and AppTheme.xaml: small value boxes,
+     reset and path buttons, inherited values in grey. Fluent draws hover and focus on a control's
+     template parts, so those are styled here too. -->
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Dom5Editor.Ava.Controls">
+
+    <!-- a small value box, like a badge's (WPF InlineBox): a faint fill and an underline -->
+    <Style Selector="TextBox.inline">
+        <Setter Property="Background" Value="#1AFFFFFF"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="Padding" Value="3,1"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="TextBox.inline:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="#33FFFFFF"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
+    </Style>
+    <Style Selector="TextBox.inline:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="#44FFFFFF"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+    </Style>
+    <Style Selector="TextBox.inline:pointerover, TextBox.inline:focus">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+    </Style>
+    <!-- a value that can't be changed here (a read-only page): no box, muted -->
+    <Style Selector="TextBox.inline[IsReadOnly=True]">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+    </Style>
+    <Style Selector="TextBox.inline[IsReadOnly=True]:pointerover /template/ Border#PART_BorderElement, TextBox.inline[IsReadOnly=True]:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <!-- a bigger text box (the name, the description, long texts: WPF TextBoxBase) -->
+    <Style Selector="TextBox.input">
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Padding" Value="8,5"/>
+    </Style>
+    <Style Selector="TextBox.input:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+    </Style>
+    <Style Selector="TextBox.input:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    <Style Selector="TextBox.input:pointerover, TextBox.input:focus">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+    </Style>
+
+    <!-- a value's text: grey while inherited (from vanilla, a copy, the default) -->
+    <Style Selector="TextBlock.row, TextBlock.field">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="TextBlock.inherited">
+        <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+    </Style>
+
+    <!-- what the game makes of a value (a unit's defence with its gear), after the box -->
+    <Style Selector="TextBlock.derived">
+        <Setter Property="Foreground" Value="{DynamicResource AccentHighlightBrush}"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <!-- a panel's hint under it -->
+    <Style Selector="TextBlock.hint">
+        <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+        <Setter Property="FontSize" Value="10.5"/>
+        <Setter Property="Margin" Value="0,2,0,0"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <!-- a list row, lit when pointed at -->
+    <Style Selector="Border.row:pointerover">
+        <Setter Property="Background" Value="#14FFFFFF"/>
+    </Style>
+
+    <!-- back to what it inherits (shown only while the mod sets the value itself: else hidden, keeping its room) -->
+    <Style Selector="Button.reset">
+        <Setter Property="Content" Value="↺"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="3,0,0,0"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Command" Value="{Binding ResetCommand}"/>
+        <Setter Property="ToolTip.Tip" Value="{Binding ResetTip}"/>
+    </Style>
+    <Style Selector="Button.reset:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button.reset:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#22FFFFFF"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+    </Style>
+    <Style Selector="Button.reset.hidden">
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+    </Style>
+
+    <!-- a magic path as an icon toggle (lit: a random path can be it) -->
+    <Style Selector="ToggleButton.path">
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="ToggleButton">
+                <Border Name="B" CornerRadius="4" BorderThickness="1" BorderBrush="Transparent" Background="Transparent" Padding="2">
+                    <controls:GameIcon Name="I" Kind="{Binding Icon}" Width="18" Height="18" Opacity="0.25"/>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="ToggleButton.path:checked /template/ controls|GameIcon#I">
+        <Setter Property="Opacity" Value="1"/>
+    </Style>
+    <Style Selector="ToggleButton.path:checked /template/ Border#B">
+        <Setter Property="Background" Value="#22FFFFFF"/>
+        <Setter Property="BorderBrush" Value="#55FFFFFF"/>
+    </Style>
+    <Style Selector="ToggleButton.path:pointerover /template/ Border#B">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+    </Style>
+
+    <!-- a path (or gem) to add: its icon, faint until pointed at -->
+    <Style Selector="Button.pathAdd">
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="Button">
+                <Border Name="B" CornerRadius="4" BorderThickness="1" BorderBrush="Transparent" Background="Transparent" Padding="2">
+                    <controls:GameIcon Name="I" Kind="{Binding Icon}" Width="18" Height="18" Opacity="0.45"/>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="Button.pathAdd:pointerover /template/ controls|GameIcon#I">
+        <Setter Property="Opacity" Value="1"/>
+    </Style>
+    <Style Selector="Button.pathAdd:pointerover /template/ Border#B">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+    </Style>
+
+    <!-- compact choices and checkboxes (Fluent's are made for touch) -->
+    <Style Selector="ComboBox.small">
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Padding" Value="8,1,0,1"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+    </Style>
+    <!-- a small square with a tick, as the WPF editor's CheckBoxBase -->
+    <Style Selector="CheckBox.small">
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="Padding" Value="6,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        <Setter Property="Template">
+            <ControlTemplate TargetType="CheckBox">
+                <StackPanel Orientation="Horizontal" Background="Transparent">
+                    <Border Name="Box" Width="14" Height="14" CornerRadius="2" VerticalAlignment="Center" BorderThickness="1"
+                            Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <Path Name="Mark" Data="M 2,7 L 5.5,10.5 L 12,3" Stroke="{DynamicResource AccentPrimaryBrush}" StrokeThickness="2"
+                              IsVisible="False" Margin="-1,-1,0,0"/>
+                    </Border>
+                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="CheckBox.small:checked /template/ Path#Mark">
+        <Setter Property="IsVisible" Value="True"/>
+    </Style>
+    <Style Selector="CheckBox.small:checked /template/ Border#Box">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
+    </Style>
+    <Style Selector="CheckBox.small:pointerover /template/ Border#Box">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+    </Style>
+    <Style Selector="CheckBox.small:disabled">
+        <Setter Property="Opacity" Value="0.5"/>
+    </Style>
+
+    <!-- an image slot of the header: click to pick a file, or drop one -->
+    <Style Selector="Button.slot">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Background" Value="#10FFFFFF"/>
+        <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+    </Style>
+    <Style Selector="Button.slot:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button.slot:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#10FFFFFF"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentHighlightBrush}"/>
+    </Style>
+</Styles>
