@@ -159,6 +159,8 @@ namespace Dom5Editor.UI.ViewModels
                 };
                 pending.ReferenceSelectionChanged += (s, e) => _page.AddValue(item.Command, e.NewId.ToString());
                 Badges.Add(pending);
+                // (a section without badges isn't on the page yet: put it there, so the picker shows)
+                _page.ShowSection(this);
                 return;
             }
             _page.AddDefault(item.Command, item.DefaultValue);

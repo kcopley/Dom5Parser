@@ -3,50 +3,84 @@
              xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
              xmlns:local="clr-namespace:Dom5Editor.Ava"
              xmlns:views="clr-namespace:Dom5Editor.Ava.Views"
+             xmlns:controls="clr-namespace:Dom5Editor.Ava.Controls"
              x:Class="Dom5Editor.Ava.Views.EntityPageView">
     <!-- An entity's page (UI.ViewModels.EntityPageViewModel), as a list of parts: the page's own
-         (header, description, used by, the file, ...: Part.Kind), badge sections and panels.
-         As the WPF page (Dom5Editor/UI/Views/EntityPageView.xaml, PanelTemplates.xaml). -->
+         (header, description, copies, used by, the file, ...: Part.Kind), panels (Panels.axaml,
+         EventTemplates.axaml) and badge sections. Values from this mod are bright; inherited ones
+         (vanilla, copied, defaults) grey; "n/r" marks commands the game doesn't read. As the WPF
+         page (Dom5Editor/UI/Views/EntityPageView.xaml, PanelTemplates.xaml). -->
+    <UserControl.Styles>
+        <StyleInclude Source="avares://Dom5Editor.Avalonia/Controls/PageStyles.axaml"/>
+    </UserControl.Styles>
     <UserControl.Resources>
       <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
             <ResourceInclude Source="avares://Dom5Editor.Avalonia/Views/Panels.axaml"/>
             <ResourceInclude Source="avares://Dom5Editor.Avalonia/Views/EventTemplates.axaml"/>
         </ResourceDictionary.MergedDictionaries>
+        <!-- buttons on the page light up as the WPF editor's do (Fluent's template reads these) -->
+        <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentSecondaryBrush"/>
+        <StaticResource x:Key="ButtonBorderBrushPointerOver" ResourceKey="AccentPrimaryBrush"/>
+        <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="TextPrimaryBrush"/>
+        <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentPrimaryBrush"/>
+        <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="TextPrimaryBrush"/>
+
         <!-- the page's own parts, by kind (PartSelector) -->
+
+        <!-- header: the images it takes (click to pick a file, or drop one), the name (editable), the ID, where it comes from -->
         <DataTemplate x:Key="Part.Header">
-            <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
-                <ItemsControl ItemsSource="{Binding SpriteSlots}" IsVisible="{Binding HasSpriteSlots}" VerticalAlignment="Top">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="6"/></ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel ToolTip.Tip="{Binding Tooltip}">
-                                <Border Width="{Binding Size}" Height="{Binding Size}" Background="{StaticResource BackgroundMediumBrush}"
-                                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="3">
-                                    <Image Source="{Binding Image, Converter={x:Static local:PictureConverter.Instance}}" Stretch="Uniform"
-                                           RenderOptions.BitmapInterpolationMode="None"/>
-                                </Border>
-                                <TextBlock Text="{Binding Label}" Classes="muted" FontSize="9.5" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <Image Source="{Binding Sprite, Converter={x:Static local:PictureConverter.Instance}}" IsVisible="{Binding ShowsSingleSprite}"
-                       Width="64" Height="64" VerticalAlignment="Top"/>
-                <Border Grid.Column="1" Classes="panel" Margin="10,0">
-                    <TextBlock Text="{Binding Title}" Classes="header" TextWrapping="Wrap"/>
-                </Border>
-                <StackPanel Grid.Column="2" VerticalAlignment="Top">
-                    <TextBlock Text="{Binding ID, StringFormat='#{0}'}" Classes="subheader" HorizontalAlignment="Right" IsVisible="{Binding HasId}"/>
-                    <TextBlock Text="{Binding SourceLabel}" Classes="muted" HorizontalAlignment="Right"/>
-                </StackPanel>
-            </Grid>
+            <StackPanel>
+                <DockPanel Margin="0,0,0,6">
+                    <Image DockPanel.Dock="Left" Source="{Binding Sprite, Converter={x:Static local:PictureConverter.Instance}}"
+                           MaxHeight="64" MaxWidth="64" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Top"
+                           RenderOptions.BitmapInterpolationMode="None" IsVisible="{Binding ShowsSingleSprite}"/>
+                    <ItemsControl DockPanel.Dock="Left" ItemsSource="{Binding SpriteSlots}" Margin="0,0,8,0" VerticalAlignment="Top"
+                                  IsVisible="{Binding HasSpriteSlots}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="vm:SpriteSlot">
+                                <StackPanel Margin="0,0,6,0" VerticalAlignment="Bottom">
+                                    <Button Classes="slot" Command="{Binding PickCommand}" ToolTip.Tip="{Binding Tooltip}" DragDrop.AllowDrop="True"
+                                            Width="{Binding Size}" Height="{Binding Size}">
+                                        <Button.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="{Binding RemoveText}" Command="{Binding RemoveCommand}" IsEnabled="{Binding CanRemove}"/>
+                                            </ContextMenu>
+                                        </Button.ContextMenu>
+                                        <Grid>
+                                            <!-- pixel art stays crisp; a big picture shown smaller (a 128 px flag) is smoothed -->
+                                            <Image Source="{Binding Image, Converter={x:Static local:PictureConverter.Instance}}" Stretch="Uniform"
+                                                   IsVisible="{Binding HasImage}"
+                                                   RenderOptions.BitmapInterpolationMode="None" controls:Smoothing.IsSmooth="{Binding IsSmooth}"/>
+                                            <TextBlock Text="+" FontSize="16" Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       IsVisible="{Binding !HasImage}"/>
+                                        </Grid>
+                                    </Button>
+                                    <TextBlock Text="{Binding Label}" FontSize="9.5" Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock DockPanel.Dock="Right" Text="{Binding SourceLabel}" Classes="muted" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    <TextBlock DockPanel.Dock="Right" Text="{Binding ID, StringFormat='#{0}'}" Classes="subheader" VerticalAlignment="Center" Margin="8,0,0,0"
+                               IsVisible="{Binding HasId}"/>
+                    <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap"
+                               IsVisible="{Binding !HasName}"/>
+                    <TextBox Classes="input" Tag="name" Text="{Binding Name, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                             FontSize="16" FontWeight="SemiBold" VerticalContentAlignment="Top" Padding="16,10" IsReadOnly="{Binding IsReadOnly}"
+                             ToolTip.Tip="Name (#name). Enter or leave the box to save it." IsVisible="{Binding HasName}"/>
+                </DockPanel>
+                <TextBlock Text="{Binding Notice}" Foreground="{StaticResource AccentHighlightBrush}" TextWrapping="Wrap" Margin="0,0,0,6" FontSize="11.5"
+                           IsVisible="{Binding HasNotice}"/>
+            </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="Part.Error">
             <TextBlock Text="{Binding Error}" Foreground="{StaticResource ErrorBrush}" TextWrapping="Wrap" Margin="0,0,0,6" IsVisible="{Binding HasError}"/>
         </DataTemplate>
+        <!-- why the page can't be edited (the game's own mercenaries) -->
         <DataTemplate x:Key="Part.Note">
             <StackPanel Margin="0,0,0,8" IsVisible="{Binding IsReadOnly}">
                 <TextBlock Text="{Binding ReadOnlyNote}" Foreground="{StaticResource WarningBrush}" TextWrapping="Wrap"/>
@@ -54,12 +88,93 @@
                         ToolTip.Tip="Make a new band (#newmerc) with this one's values, and open it to edit"/>
             </StackPanel>
         </DataTemplate>
+        <!-- the description (the game's own when nothing sets it) -->
         <DataTemplate x:Key="Part.Description">
             <StackPanel Margin="0,0,0,8" IsVisible="{Binding HasDescription}" ToolTip.Tip="{Binding DescriptionTooltip}">
                 <TextBlock Text="DESCRIPTION" Classes="label" Margin="0,0,0,2"/>
-                <TextBox Text="{Binding Description}" TextWrapping="Wrap" MinHeight="40" MaxHeight="120"/>
+                <TextBox Classes="input" Tag="description" Text="{Binding Description, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                         TextWrapping="Wrap" MinHeight="40" MaxHeight="120"/>
             </StackPanel>
         </DataTemplate>
+        <!-- other long texts (an event's message, a nation's summary and brief, ...), saved when left -->
+        <DataTemplate x:Key="Part.LongTexts">
+            <ItemsControl ItemsSource="{Binding LongTexts}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:LongText">
+                        <StackPanel Margin="0,0,0,8" ToolTip.Tip="{Binding Tooltip}">
+                            <TextBlock Text="{Binding Label}" Classes="label" Margin="0,0,0,2"/>
+                            <TextBox Classes="input" Text="{Binding Text, UpdateSourceTrigger=Explicit}" controls:Commit.OnLeave="True"
+                                     TextWrapping="Wrap" AcceptsReturn="True" MinHeight="40" MaxHeight="160"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </DataTemplate>
+        <!-- the copy source, the sprite source, and the entity's own copy/clear lines, in one row -->
+        <DataTemplate x:Key="Part.Copies">
+            <WrapPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,4" IsVisible="{Binding HasCopy}">
+                    <TextBlock Text="COPIES" Classes="label" VerticalAlignment="Center" Margin="0,0,8,0"
+                               ToolTip.Tip="Copy command (#copystats, #copyweapon, ...): this entity starts as a copy of another, then its own lines apply."/>
+                    <controls:RefPicker Width="260" Height="22" ItemsSource="{Binding CopyCandidates}"
+                                        SelectedId="{Binding CopySourceId, Mode=TwoWay}" Placeholder="(no copy)" ToolTip.Tip="{Binding CopyPickTip}"/>
+                    <Button Content="→" Classes="small" Margin="4,0,0,0" Command="{Binding NavigateToCopyCommand}" ToolTip.Tip="{Binding CopyOpenTip}"/>
+                </StackPanel>
+                <!-- a monster's or item's sprite from another (#copyspr: #copystats doesn't copy it) -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,4" IsVisible="{Binding HasSpriteCopy}">
+                    <TextBlock Text="SPRITE FROM" Classes="label" VerticalAlignment="Center" Margin="0,0,8,0" ToolTip.Tip="{Binding SpriteCopyPickTip}"/>
+                    <controls:RefPicker Width="220" Height="22" ItemsSource="{Binding CopyCandidates}"
+                                        SelectedId="{Binding SpriteCopyId, Mode=TwoWay}" Placeholder="(its own)" ToolTip.Tip="{Binding SpriteCopyPickTip}"/>
+                    <Button Content="→" Classes="small" Margin="4,0,0,0" Command="{Binding NavigateToSpriteCopyCommand}" ToolTip.Tip="{Binding SpriteCopyOpenTip}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4" IsVisible="{Binding HasClears}">
+                    <TextBlock Text="CLEARS" Classes="label" VerticalAlignment="Center" Margin="0,0,8,0"
+                               ToolTip.Tip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
+                    <ItemsControl ItemsSource="{Binding Structure}" VerticalAlignment="Center">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="vm:StructureLine">
+                                <Border Background="#18FFFFFF" CornerRadius="3" Padding="6,1,2,1" Margin="0,0,6,0"
+                                        ToolTip.Tip="{Binding Target, Converter={x:Static controls:Converters.NullIfEmpty}}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Text}" FontFamily="{StaticResource MonospaceFont}" FontSize="12" VerticalAlignment="Center"/>
+                                        <Button Content="✕" Classes="small" Margin="4,0,0,0" ToolTip.Tip="Remove this line"
+                                                Command="{Binding $parent[views:EntityPageView].DataContext.RemoveStructureCommand}" CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <controls:RefPicker Width="150" Height="22" ItemsSource="{Binding AddableClears}"
+                                        SelectedId="{Binding AddClearPick, Mode=TwoWay}" Placeholder="+ Clear..."
+                                        ToolTip.Tip="Clear commands remove what the entity inherits in a group (weapons, armor, magic, abilities); its own lines after them stay."/>
+                </StackPanel>
+            </WrapPanel>
+        </DataTemplate>
+        <!-- add any command the game reads for this type (it shows in its section) -->
+        <DataTemplate x:Key="Part.AddBox">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8" IsVisible="{Binding ShowsAddBox}">
+                <TextBlock Text="ADD" Classes="label" VerticalAlignment="Center" Width="60"
+                           ToolTip.Tip="Any command the game reads for this type; it shows in its section below"/>
+                <controls:BadgePanel AvailableItems="{Binding AllAvailable}" AddCommand="{Binding AddAnyCommand}" ShowAddButton="True"/>
+            </StackPanel>
+        </DataTemplate>
+        <!-- inherited abilities this entity removes (#x 0) -->
+        <DataTemplate x:Key="Part.Removals">
+            <StackPanel IsVisible="{Binding HasRemovals}" Margin="0,0,0,10">
+                <TextBlock Text="REMOVED" Classes="label" Margin="0,0,0,3"/>
+                <ItemsControl ItemsSource="{Binding Removals}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource TextMutedBrush}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+        <!-- what refers to this entity -->
         <DataTemplate x:Key="Part.UsedBy">
             <StackPanel IsVisible="{Binding HasUsedBy}" Margin="0,0,0,10">
                 <TextBlock Text="{Binding UsedByTitle}" Classes="label" Margin="0,0,0,3"/>
@@ -83,16 +198,33 @@
                         ToolTip.Tip="{Binding ShowAllUsedByTip}"/>
             </StackPanel>
         </DataTemplate>
+        <!-- the entity's lines as the save writes them -->
         <DataTemplate x:Key="Part.File">
-            <Expander Header="IN THE FILE (as saved)" IsExpanded="{Binding ShowFile, Mode=TwoWay}" Margin="0,0,0,10" HorizontalAlignment="Stretch"
+            <Expander IsExpanded="{Binding ShowFile, Mode=TwoWay}" Margin="0,0,0,10" HorizontalAlignment="Stretch"
                       ToolTip.Tip="The entity's lines as the save writes them to the .dm file">
+                <!-- a small header, as the page's other titles (Fluent's is a tall bar) -->
+                <Expander.Resources>
+                    <SolidColorBrush x:Key="ExpanderHeaderBackground" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ExpanderHeaderBackgroundPointerOver" Color="#14FFFFFF"/>
+                    <SolidColorBrush x:Key="ExpanderHeaderBackgroundPressed" Color="#14FFFFFF"/>
+                    <SolidColorBrush x:Key="ExpanderHeaderBorderBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ExpanderHeaderBorderBrushPointerOver" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ExpanderHeaderBorderBrushPressed" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ExpanderContentBackground" Color="Transparent"/>
+                    <x:Double x:Key="ExpanderMinHeight">28</x:Double>
+                </Expander.Resources>
+                <Expander.Header>
+                    <TextBlock Text="IN THE FILE (as saved)" Classes="label"/>
+                </Expander.Header>
                 <StackPanel Spacing="4">
                     <StackPanel IsVisible="{Binding IsNotEditingFile}" Spacing="4">
-                        <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{StaticResource MonospaceFont}" FontSize="11" MaxHeight="400"/>
+                        <TextBox Text="{Binding FileText, Mode=OneWay}" IsReadOnly="True" FontFamily="{StaticResource MonospaceFont}" FontSize="11" MaxHeight="400"
+                                 ToolTip.Tip="Read-only here: Edit as text to change it"/>
                         <Button Content="Edit as text" Classes="small" Command="{Binding EditFileCommand}" ToolTip.Tip="{Binding EditFileTip}"/>
                     </StackPanel>
                     <StackPanel IsVisible="{Binding IsEditingFile}" Spacing="4">
-                        <TextBox Text="{Binding FileDraft, Mode=TwoWay}" AcceptsReturn="True" FontFamily="{StaticResource MonospaceFont}" FontSize="11" MinHeight="80" MaxHeight="500"/>
+                        <TextBox Text="{Binding FileDraft, Mode=TwoWay}" AcceptsReturn="True" FontFamily="{StaticResource MonospaceFont}" FontSize="11" MinHeight="80" MaxHeight="500"
+                                 ToolTip.Tip="One command per line (#hp 20 -- a comment); keep the first line and #end"/>
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Button Content="Apply" Classes="small" Command="{Binding ApplyFileCommand}" ToolTip.Tip="Change the entity to match the text (one undo step)"/>
                             <Button Content="Cancel" Classes="small" Command="{Binding CancelFileCommand}" ToolTip.Tip="Stop editing and drop the changes to the text"/>
@@ -102,6 +234,7 @@
                 </StackPanel>
             </Expander>
         </DataTemplate>
+        <!-- values in the game data no command sets -->
         <DataTemplate x:Key="Part.GameValues">
             <StackPanel IsVisible="{Binding HasGameValues}">
                 <TextBlock Text="GAME DATA (read-only: no mod command sets these)" Classes="label" Margin="0,0,0,3"/>
@@ -118,25 +251,14 @@
     </UserControl.Resources>
 
     <UserControl.DataTemplates>
-        <!-- a badge section: its badges as chips (CompactBadge in the WPF editor) -->
+        <!-- a badge section: its badges as chips (a grid or wrapping), with its add box -->
         <DataTemplate DataType="vm:BadgeSectionViewModel">
             <StackPanel Margin="0,0,0,10" IsVisible="{Binding IsVisible}">
                 <TextBlock Text="{Binding Title}" Classes="label" Margin="0,0,0,3"/>
-                <ItemsControl ItemsSource="{Binding Badges}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="{Binding Background}" BorderBrush="{Binding BorderBrush}" BorderThickness="1" CornerRadius="3"
-                                    Padding="6,2" Margin="0,0,4,4" ToolTip.Tip="{Binding Tooltip}">
-                                <TextBlock Foreground="{Binding Foreground}" FontSize="11.5">
-                                    <Run Text="{Binding DisplayName}"/> <Run Text="{Binding Value}" FontWeight="SemiBold"/>
-                                </TextBlock>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <controls:BadgePanel ItemsSource="{Binding Badges}" AvailableItems="{Binding Available}" ShowAddButton="{Binding CanAdd}"
+                                     IsGrid="{Binding IsGrid}" Columns="{Binding Columns}"
+                                     AddCommand="{Binding AddCommand}" RemoveCommand="{Binding RemoveCommand}"
+                                     NavigateCommand="{Binding NavigateCommand}" ReferenceChangedCommand="{Binding ReferenceChangedCommand}"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.DataTemplates>
