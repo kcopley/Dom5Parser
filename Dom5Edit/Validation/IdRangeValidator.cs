@@ -58,10 +58,15 @@ namespace Dom5Edit.Validation
                             && mod.FindBelow(entityType, idEntity.ID, null) is IDEntity theirs && theirs.ParentMod?.Dependencies.Count > 0)
                         {
                             var kind = entityType.ToString().ToLowerInvariant();
+                            // (made again line for line, as Strigos does with Sombre's placeholder: harmless)
+                            static string Lines(IDEntity e) => string.Join("\n", e.Properties.Select(p => Resolve.ResolvedValue.ArgumentsOf(p) + " " + p.Command));
+                            bool same = Lines(idEntity) == Lines(theirs);
                             issues.Add(new ValidationIssue
                             {
-                                Severity = ValidationSeverity.Error,
-                                Message = $"#new{kind} {idEntity.ID} takes the number of {theirs.ParentMod.DisplayName}'s {kind} {theirs.Name} #{idEntity.ID} (a mod this one needs): it replaces that {kind}. #select{kind} {idEntity.ID} changes it instead.",
+                                Severity = same ? ValidationSeverity.Warning : ValidationSeverity.Error,
+                                Message = same
+                                    ? $"#new{kind} {idEntity.ID} makes {theirs.ParentMod.DisplayName}'s {kind} {theirs.Name} #{idEntity.ID} (a mod this one needs) again, with the same lines: harmless now, but if that mod changes its {kind}, this copy still replaces it."
+                                    : $"#new{kind} {idEntity.ID} takes the number of {theirs.ParentMod.DisplayName}'s {kind} {theirs.Name} #{idEntity.ID} (a mod this one needs): it replaces that {kind}. #select{kind} {idEntity.ID} changes it instead.",
                                 Entity = entity,
                                 Category = "ID Range"
                             });
