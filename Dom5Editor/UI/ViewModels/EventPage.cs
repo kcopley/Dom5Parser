@@ -852,16 +852,23 @@ namespace Dom5Editor.UI.ViewModels
             foreach (var e in events)
                 Node(e);
             var edges = new List<ChainEdge>();
-            foreach (var group in _graph.Links.Where(l => set.Contains(l.To) && (set.Contains(l.From) || !l.IsEventToEvent))
-                         .GroupBy(l => (l.From, l.To, l.Kind)))
+            // one arrow per pair of cards (a choice's answer is linked by its code too: two arrows drew
+            // their labels over each other), colored as the most telling of its links
+            static int Rank(EventLinkKind k) => k switch
             {
-                var l = group.First();
+                EventLinkKind.Choice => 0, EventLinkKind.Delay => 1, EventLinkKind.DelaySkip => 2, EventLinkKind.Variable => 3,
+                EventLinkKind.Code => 4, EventLinkKind.CodeExcludes => 5, _ => 6,
+            };
+            foreach (var group in _graph.Links.Where(l => set.Contains(l.To) && (set.Contains(l.From) || !l.IsEventToEvent))
+                         .GroupBy(l => (l.From, l.To)))
+            {
+                var l = group.OrderBy(x => Rank(x.Kind)).First();
                 string kind = l.Kind switch
                 {
                     EventLinkKind.Code => "code", EventLinkKind.CodeExcludes => "excludes", EventLinkKind.Delay => "delay",
                     EventLinkKind.DelaySkip => "skip", EventLinkKind.Variable => "variable", EventLinkKind.Choice => "choice", _ => "spell",
                 };
-                edges.Add(new ChainEdge(Node(l.From), Node(l.To), string.Join(", ", group.Select(x => x.Label).Distinct()), kind));
+                edges.Add(new ChainEdge(Node(l.From), Node(l.To), string.Join(", ", group.OrderBy(x => Rank(x.Kind)).Select(x => x.Label).Distinct()), kind));
             }
             MapNodes = nodes.Values.ToList();
             MapEdges = edges;
@@ -895,6 +902,17 @@ namespace Dom5Editor.UI.ViewModels
             return code;
         }
 
+        /// <summary>
+        /// Gives a new event of the chain this event's owner (#nation, #nationench): the default owner
+        /// is the independents, so a follow-up without it would give its gold, units and the like to
+        /// them rather than to the nation the chain is for.
+        /// </summary>
+        private void CopyOwner(Dom5Edit.Editing.Transaction tx, IDEntity to)
+        {
+            foreach (var p in Lines.Where(p => p.Command == Command.NATION || p.Command == Command.NATIONENCH))
+                tx.Add(to, p.Command, ResolvedValue.ArgumentsOf(p));
+        }
+
         /// <summary>A new event that happens when this one has set its code: #req_code, and #code 0 to end the chain.</summary>
         private void MakeFollowUp()
         {
@@ -906,6 +924,7 @@ namespace Dom5Editor.UI.ViewModels
                 // (at the end of the file: placed next to this event it could become a #delay's next event)
                 made = tx.Create(EntityType.EVENT, null);
                 tx.Add(made, Command.RARITY, "0");
+                CopyOwner(tx, made);
                 tx.Add(made, Command.REQ_CODE, code.ToString());
                 tx.Add(made, Command.MSG, "\"What happens next.\"");
                 tx.Add(made, Command.CODE, "0");
@@ -930,6 +949,7 @@ namespace Dom5Editor.UI.ViewModels
                 tx.Add(entity, Command.DELAY, "1");
                 made = tx.Create(EntityType.EVENT, null, placeAfter: entity);
                 tx.Add(made, Command.RARITY, "5");
+                CopyOwner(tx, made);
                 tx.Add(made, Command.MSG, "\"A turn later...\"");
             });
             if (made != null && _page.Error == null)
@@ -949,6 +969,7 @@ namespace Dom5Editor.UI.ViewModels
                 {
                     var e = tx.Create(EntityType.EVENT, null);
                     tx.Add(e, Command.RARITY, "0");
+                    CopyOwner(tx, e);
                     tx.Add(e, Command.REQ_CODE, code.ToString());
                     tx.Add(e, Command.REQ_TARGORDER, order.ToString());
                     tx.Add(e, Command.MSG, $"\"{text}\"");

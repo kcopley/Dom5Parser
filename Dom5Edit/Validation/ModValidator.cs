@@ -19,7 +19,8 @@ namespace Dom5Edit.Validation
                 new ParseIssueValidator(),
                 new ReferenceValidator(),
                 new IdRangeValidator(),
-                new DuplicateIdValidator()
+                new DuplicateIdValidator(),
+                new NewEntityValidator()
             };
         }
 

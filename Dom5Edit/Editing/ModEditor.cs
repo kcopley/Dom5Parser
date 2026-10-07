@@ -405,8 +405,13 @@ namespace Dom5Edit.Editing
             var made = (IDEntity)Activator.CreateInstance(Mod.TypeOf(type))!;
             // events and mercenaries take no number (#newevent, #newmerc); poptypes and nametypes
             // have no #new: a new one is a #select of a number the game doesn't use (the manual:
-            // poptypes 1-249, the game's go to 106; nametypes 170-399 are free for mods)
-            bool selectOnly = type == EntityType.POPTYPE || type == EntityType.NAMETYPE;
+            // poptypes 1-249, the game's go to 106; nametypes 170-399 are free for mods). A nation
+            // too: #newnation takes no number (the game gives it the first free one from 120), so
+            // the mod's references to it couldn't name it; the manual's way is #selectnation 150+.
+            // Spells and items the same (#newspell and #newitem take no number): the save writes them
+            // as #selectspell / #selectitem (Spell.Export, Item.Export), so the page's "in the file" box should too
+            bool selectOnly = type == EntityType.POPTYPE || type == EntityType.NAMETYPE || type == EntityType.NATION
+                              || type == EntityType.SPELL || type == EntityType.ITEM;
             if (type == EntityType.BLESS || type == EntityType.TEMPLATE)
                 throw new EditException(type == EntityType.BLESS ? "Blesses can only be changed (#selectbless), not made"
                     : "A template is made for a nation (#newtemplate <nation>): add it in the file");
@@ -702,6 +707,17 @@ namespace Dom5Edit.Editing
                 if (!r.IsEditableInPlace(v))
                     AddLine(target, Line(target, v.Command, v.Arguments), placeFirst: true);
             }
+            // a line added back can also set a flag bit outside the group that an inherited line
+            // cleared (#undead sets the almost-undead bit, vanilla's #almostliving after it clears
+            // it, and #clearspec doesn't touch it): that line goes back in after it
+            var setAgain = new HashSet<string>(members.Where(v => !ReferenceEquals(v.Property, value.Property) && !r.IsEditableInPlace(v))
+                .SelectMany(v => GameCommandCatalog.EffectOf(type, v.Command)?.Bits ?? Enumerable.Empty<string>()));
+            if (replacement != null)
+                setAgain.UnionWith(GameCommandCatalog.EffectOf(type, replacement.Command)?.Bits ?? Enumerable.Empty<string>());
+            foreach (var v in r.Values)
+                if (v.Source != ValueSource.Own && !GameRules.Clears(type, clear, v.Command)
+                    && GameCommandCatalog.EffectOf(type, v.Command)?.Clears is { Count: > 0 } clears && clears.Any(setAgain.Contains))
+                    AddLine(target, Line(target, v.Command, v.Arguments), placeFirst: true);
         }
 
         // ---- helpers ----

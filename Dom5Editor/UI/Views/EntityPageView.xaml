@@ -76,6 +76,11 @@
                                         <Button Command="{Binding PickCommand}" ToolTip="{Binding Tooltip}" AllowDrop="True" Drop="OnSpriteDrop" DragOver="OnSpriteDragOver"
                                                 Width="{Binding Size}" Height="{Binding Size}" Cursor="Hand" Padding="0" Background="#10FFFFFF"
                                                 BorderBrush="#40FFFFFF" BorderThickness="1">
+                                            <Button.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="{Binding RemoveText}" Command="{Binding RemoveCommand}" IsEnabled="{Binding CanRemove}"/>
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border x:Name="B" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
@@ -183,6 +188,15 @@
                                                                   SelectedId="{Binding CopySourceId, Mode=TwoWay}" Placeholder="(no copy)" ToolTip="{Binding CopyPickTip}"/>
                             <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding NavigateToCopyCommand}"
                                     ToolTip="{Binding CopyOpenTip}"/>
+                        </StackPanel>
+                        <!-- a monster's or item's sprite from another (#copyspr: #copystats doesn't copy it) -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,16,4" Visibility="{Binding HasSpriteCopy, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="SPRITE FROM" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0" ToolTip="{Binding SpriteCopyPickTip}"/>
+                            <controls:SearchableReferenceComboBox Width="220" Height="22" ItemsSource="{Binding CopyCandidates}"
+                                                                  SelectedId="{Binding SpriteCopyId, Mode=TwoWay}" Placeholder="(its own)" ToolTip="{Binding SpriteCopyPickTip}"/>
+                            <Button Content="→" Style="{DynamicResource ButtonSmall}" Margin="4,0,0,0" Command="{Binding NavigateToSpriteCopyCommand}"
+                                    ToolTip="{Binding SpriteCopyOpenTip}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,4" Visibility="{Binding HasClears, Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock Text="CLEARS" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"

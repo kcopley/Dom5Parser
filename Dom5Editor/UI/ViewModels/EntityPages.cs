@@ -279,6 +279,22 @@ namespace Dom5Editor.UI.ViewModels
     {
         public ItemPageViewModel(EditorSession session, EntityListItem item) : base(session, item) { }
 
+        /// <summary>
+        /// The construction levels the manual lists (#constlevel "can be 1,3,5,7,9 or 11,13,15 for items
+        /// that cannot be forged"; vanilla's items use only these), and the item's own if it's another.
+        /// </summary>
+        private static IReadOnlyList<ChoiceOption> ConstLevels(int? current)
+        {
+            var list = new List<ChoiceOption>
+            {
+                new(1, "1"), new(3, "3"), new(5, "5"), new(7, "7"), new(9, "9"),
+                new(11, "11: can't be forged"), new(13, "13: can't be forged, a unique artifact"), new(15, "15: can't be forged, unique per nation"),
+            };
+            if (current is int c && !list.Any(o => o.Value == c))
+                list.Insert(0, new ChoiceOption(c, $"{c} (not a level the manual lists)"));
+            return list;
+        }
+
         protected override void BuildPanels(HashSet<Command> covered)
         {
             // what it costs to forge (gems by path level) and what its weapon and armor are (the inspector's notes)
@@ -302,8 +318,9 @@ namespace Dom5Editor.UI.ViewModels
 
             var item = new FieldsPanel("ITEM");
             item.Fields.Add(new ChoiceField(this, "Type", Command.TYPE, null, Data.GameTables.ItemTypes));
-            item.Fields.Add(new NumberField(this, "Construction", Command.CONSTLEVEL,
-                tooltip: "#constlevel: the Construction research level needed to forge it"));
+            int? constLevel = Int(Command.CONSTLEVEL);
+            item.Fields.Add(new ChoiceField(this, "Construction", Command.CONSTLEVEL, null, ConstLevels(constLevel),
+                tooltip: "#constlevel: the Construction research level needed to forge it: 1, 3, 5, 7 or 9 (11, 13, 15: it can't be forged)"));
             item.Fields.Add(new ChoiceField(this, "Main path", Command.MAINPATH, null, Data.GameTables.Paths));
             item.Fields.Add(new NumberField(this, "Main level", Command.MAINLEVEL, defaultValue: "1",
                 tooltip: "#mainlevel: the main path level needed (the game uses at least 1)") { Derived = main.Text, DerivedTip = main.Tip });
@@ -350,8 +367,25 @@ namespace Dom5Editor.UI.ViewModels
 
         private static string Gold(string? v) => int.TryParse(v, out var g) && g >= 5000 ? $"auto{(g - 10000 >= 0 ? "+" : "")}{g - 10000}" : v ?? "";
 
+        private static readonly IReadOnlyList<ChoiceOption> Eras = new[]
+        {
+            new ChoiceOption(1, "Early"), new ChoiceOption(2, "Middle"), new ChoiceOption(3, "Late"), new ChoiceOption(0, "Disabled (0: not playable)"),
+        };
+
         protected override void BuildPanels(HashSet<Command> covered)
         {
+            // what a new nation needs first: its epithet and era (written right after the name), its colors
+            var nation = new FieldsPanel("NATION");
+            nation.Fields.Add(new NumberField(this, "Epithet", Command.EPITHET, tooltip: "#epithet: shown after the name (\"Enigma of Steel\")") { BoxWidth = 300 });
+            nation.Fields.Add(new ChoiceField(this, "Era", Command.ERA, null, Eras,
+                tooltip: "#era: the era the nation is played in (not set: middle). Saved right after the name and epithet, as the manual asks"));
+            nation.Fields.Add(new NumberField(this, "Color", Command.COLOR, note: t => t.Length == 0 ? "not set: black" : "red green blue, each 0 to 1",
+                tooltip: "#color: the nation's color in the score graphs, its background and flag (red green blue, each 0 to 1)") { BoxWidth = 140 });
+            nation.Fields.Add(new NumberField(this, "Second color", Command.SECONDARYCOLOR, note: t => t.Length == 0 ? "not set: the background uses the color" : "red green blue, each 0 to 1",
+                tooltip: "#secondarycolor: the background's second color and the flag's border (red green blue, each 0 to 1)") { BoxWidth = 140 });
+            Panels.Add(nation);
+            covered.UnionWith(new[] { Command.EPITHET, Command.ERA, Command.COLOR, Command.SECONDARYCOLOR });
+
             Panels.Add(new ReferenceListPanel(this, "RECRUITS", Command.ADDRECUNIT, EntityType.MONSTER, columns: UnitColumns));
             Panels.Add(new ReferenceListPanel(this, "COMMANDERS", Command.ADDRECCOM, EntityType.MONSTER, columns: UnitColumns));
             Panels.Add(new ReferenceListPanel(this, "FOREIGN RECRUITS", Command.ADDFOREIGNUNIT, EntityType.MONSTER, columns: UnitColumns));
@@ -490,7 +524,10 @@ namespace Dom5Editor.UI.ViewModels
                 var lists = new List<object>();
                 foreach (var def in section.Commands)
                 {
-                    if (!Data.BadgeConfigLoader.TryGetCommand(def, out var c) || !Entity.GetPropertyMap().ContainsKey(c) || covered.Contains(c))
+                    // (a clear, #clearrec, is a line of the CLEARS picker at the top, saved before the lists;
+                    // as a checkbox here it showed off while set, the resolver keeping it with the copies)
+                    if (!Data.BadgeConfigLoader.TryGetCommand(def, out var c) || !Entity.GetPropertyMap().ContainsKey(c) || covered.Contains(c)
+                        || Dom5Edit.Resolve.GameRules.IsClear(c))
                         continue;
                     var label = def.Display ?? def.Name;
                     var kind = (def.Type ?? "flag").ToLowerInvariant();

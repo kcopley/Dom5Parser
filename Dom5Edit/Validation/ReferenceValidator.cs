@@ -58,6 +58,30 @@ namespace Dom5Edit.Validation
             }
         }
 
+        /// <summary>
+        /// A reference resolved to an entity the mod no longer has (deleted in the editor; the line
+        /// still holds it): saved, it points at a number nothing has. Null if the entity is there.
+        /// </summary>
+        private static ValidationIssue Gone(IDEntity target, IDEntity entity, Mod mod, Property prop)
+        {
+            if (target == null || target.ID <= 0)
+                return null;
+            EntityType kind;
+            try { kind = target.Kind; }
+            catch (NotImplementedException) { return null; }
+            if (DependentEntityTypes.Contains(kind) || !mod.Database.ContainsKey(kind) || mod.TryGet(kind, target.ID, null, out _))
+                return null;
+            return new ValidationIssue
+            {
+                Severity = ValidationSeverity.Warning,
+                Message = $"Refers to {kind} ID {target.ID}, which is no longer in the mod",
+                Entity = entity,
+                Property = prop,
+                LineNumber = prop.LineNumber,
+                Category = "Reference"
+            };
+        }
+
         private IEnumerable<ValidationIssue> ValidateSingleReference(Reference reference, IDEntity entity, Mod mod, Property prop)
         {
             var entityType = reference.GetEntityType();
@@ -86,6 +110,11 @@ namespace Dom5Edit.Validation
             // Handle SpellDamage wrapper (contains MonsterOrMontagRef for summons)
             if (reference is SpellDamage spellDamage)
             {
+                if (spellDamage.TryGetEntity(out var summoned) && Gone(summoned, entity, mod, prop) is ValidationIssue noSummon)
+                {
+                    yield return noSummon;
+                    yield break;
+                }
                 var unresolvedId = spellDamage.GetUnresolvedId();
                 if (unresolvedId > 0)
                 {
@@ -108,7 +137,13 @@ namespace Dom5Edit.Validation
             }
 
             // Try to get the referenced entity
-            if (!reference.TryGetEntity(out var referencedEntity))
+            bool resolved = reference.TryGetEntity(out var referencedEntity);
+            if (resolved && Gone(referencedEntity, entity, mod, prop) is ValidationIssue gone)
+            {
+                yield return gone;
+                yield break;
+            }
+            if (!resolved)
             {
                 // Reference is unresolved - could be vanilla or missing
                 // Only report if it's not a vanilla reference
