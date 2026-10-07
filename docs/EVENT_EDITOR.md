@@ -87,7 +87,9 @@ What can go wrong (and the editor checks):
 - a site/item requirement or effect with no `[Name]` at the end of the message, or a name that
   isn't a site/item;
 - a `#req_targ*` effect (`#transform`) with no target requirement (it picks any commander);
-- `#worldritrebate` outside rarity 11/12; `#req_pregame` without an always rarity.
+- `#worldritrebate` outside rarity 11/12; `#req_pregame` without an always rarity;
+- a message naming the target commander (`##targname##`, `##targhis##`) with no `#req_targ*`
+  requirement to pick one (DomEnhanced: 430 events use the tags, all with one).
 
 ## The editor
 
@@ -144,8 +146,10 @@ From an event's Chain section:
   with `#req_code X` and `#req_targorder`.
 - **Event for a spell**: from a spell page with an enchantment or cause-event effect, make an
   event that checks it.
-New events go through `ModEditor` like every edit (one undo step); a delayed follow-up is
-placed after its event in the file (`SavePlan` order).
+Each new event gets this event's owner (`#nation`, `#nationench`): the default owner is the
+independents, who would otherwise get the follow-up's gold and units. New events go through
+`ModEditor` like every edit (one undo step); a delayed follow-up is placed after its event in
+the file (`SavePlan` order).
 
 ### E-6. The game's own events (read-only) **(now)**
 The exe stores vanilla events in a table: per event the message, the rarity, up to 12
