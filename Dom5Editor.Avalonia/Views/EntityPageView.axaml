@@ -8,6 +8,11 @@
          (header, description, used by, the file, ...: Part.Kind), badge sections and panels.
          As the WPF page (Dom5Editor/UI/Views/EntityPageView.xaml, PanelTemplates.xaml). -->
     <UserControl.Resources>
+      <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceInclude Source="avares://Dom5Editor.Avalonia/Views/Panels.axaml"/>
+            <ResourceInclude Source="avares://Dom5Editor.Avalonia/Views/EventTemplates.axaml"/>
+        </ResourceDictionary.MergedDictionaries>
         <!-- the page's own parts, by kind (PartSelector) -->
         <DataTemplate x:Key="Part.Header">
             <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
@@ -109,6 +114,7 @@
                 </ItemsControl>
             </StackPanel>
         </DataTemplate>
+      </ResourceDictionary>
     </UserControl.Resources>
 
     <UserControl.DataTemplates>

@@ -39,6 +39,11 @@ namespace Dom5Editor.Ava.Views
                     }
                     return null; // a part this view doesn't show yet
                 }
+                // a panel: its template by type name ("Panel.StatsPanel", in Panels.axaml or
+                // EventTemplates.axaml), else its base type's
+                for (var t = data?.GetType(); t != null && t != typeof(object); t = t.BaseType)
+                    if (_view.TryFindResource("Panel." + t.Name, out var byType) && byType is IDataTemplate panel)
+                        return panel.Build(data);
                 foreach (var template in _view.DataTemplates)
                     if (template.Match(data))
                         return template.Build(data);

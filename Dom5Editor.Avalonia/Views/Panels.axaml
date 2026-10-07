@@ -1,0 +1,9 @@
+<!-- The page's panels (UI.ViewModels: FieldsPanel, StatsPanel, MagicPanel, the tables, ...), each a
+     DataTemplate keyed "Panel.TypeName" (EntityPageView's PartSelector finds it by the panel's type),
+     as the WPF editor's PanelTemplates.xaml. -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
+                    xmlns:local="clr-namespace:Dom5Editor.Ava"
+                    xmlns:controls="clr-namespace:Dom5Editor.Ava.Controls">
+</ResourceDictionary>
