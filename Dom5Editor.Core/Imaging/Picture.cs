@@ -30,13 +30,16 @@ namespace Dom5Editor.Imaging
         /// <summary>An image file (BMP, JPEG, GIF, ...) as PNG bytes, for a sprite converted when added to a mod; set by the editor. Null: not converted.</summary>
         public static Func<string, byte[]?>? ConvertToPng { get; set; }
 
-        /// <summary>An image file: TGA read here, the rest by <see cref="Decoder"/>; null if it can't be read.</summary>
+        /// <summary>An image file: TGA and PNG read here (Dom5Edit.Imaging), the rest by <see cref="Decoder"/>; null if it can't be read.</summary>
         public static Picture? Load(string path)
         {
             try
             {
-                if (Path.GetExtension(path).Equals(".tga", StringComparison.OrdinalIgnoreCase))
+                var ext = Path.GetExtension(path);
+                if (ext.Equals(".tga", StringComparison.OrdinalIgnoreCase))
                     return Dom5Edit.Imaging.Tga.Decode(File.ReadAllBytes(path)) is { } tga ? new Picture(tga.Width, tga.Height, tga.Bgra) : null;
+                if (ext.Equals(".png", StringComparison.OrdinalIgnoreCase) && Dom5Edit.Imaging.Png.Decode(File.ReadAllBytes(path)) is { } png)
+                    return new Picture(png.Width, png.Height, png.Bgra);
                 return Decoder?.Invoke(path);
             }
             catch (Exception)

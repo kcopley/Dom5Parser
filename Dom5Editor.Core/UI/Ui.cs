@@ -8,8 +8,12 @@ namespace Dom5Editor.UI
     /// </summary>
     public static class Ui
     {
-        /// <summary>Asks for a file to open: a title and a filter ("Images (*.tga;*.png)|*.tga;*.png|All files|*.*"); null if cancelled.</summary>
-        public static Func<string, string, string?>? PickFile { get; set; }
+        /// <summary>
+        /// Asks for a file to open: a title, a filter ("Images (*.tga;*.png)|*.tga;*.png|All files|*.*")
+        /// and what to do with the file chosen (not called if cancelled; called later where dialogs
+        /// don't block, as on Mac and Linux).
+        /// </summary>
+        public static Action<string, string, Action<string>>? PickFile { get; set; }
 
         /// <summary>Runs work on the UI thread once what's pending (drawing) is done.</summary>
         public static Action<Action>? Post { get; set; }
