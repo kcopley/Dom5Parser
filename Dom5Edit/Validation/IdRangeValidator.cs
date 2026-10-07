@@ -53,6 +53,20 @@ namespace Dom5Edit.Validation
                             });
                         }
 
+                        // a new entity numbered like one a mod this one needs defines replaces it in game
+                        if (idEntity.ID >= startId && !idEntity.Selected
+                            && mod.FindBelow(entityType, idEntity.ID, null) is IDEntity theirs && theirs.ParentMod?.Dependencies.Count > 0)
+                        {
+                            var kind = entityType.ToString().ToLowerInvariant();
+                            issues.Add(new ValidationIssue
+                            {
+                                Severity = ValidationSeverity.Error,
+                                Message = $"#new{kind} {idEntity.ID} takes the number of {theirs.ParentMod.DisplayName}'s {kind} {theirs.Name} #{idEntity.ID} (a mod this one needs): it replaces that {kind}. #select{kind} {idEntity.ID} changes it instead.",
+                                Entity = entity,
+                                Category = "ID Range"
+                            });
+                        }
+
                         // Check if ID exceeds the end range
                         if (endId > 0 && idEntity.ID > endId)
                         {

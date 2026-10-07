@@ -26,6 +26,9 @@ namespace Dom5Edit
         /// </summary>
         public List<Mod> Dependencies { get; set; } = new List<Mod>();
 
+        /// <summary>The name to show for the mod: its #modname, else its file's name.</summary>
+        public string DisplayName => !string.IsNullOrWhiteSpace(ModName) ? ModName : Path.GetFileNameWithoutExtension(FullFilePath ?? "");
+
         /// <summary>The mods read before this one, nearest first, down to vanilla.</summary>
         public IEnumerable<Mod> Below()
         {

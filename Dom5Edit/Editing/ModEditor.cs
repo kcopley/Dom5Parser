@@ -69,7 +69,7 @@ namespace Dom5Edit.Editing
                 return null;
             var owner = entity.ParentMod;
             bool needed = owner != null && owner.Dependencies.Count > 0;
-            string name = !needed ? "" : !string.IsNullOrWhiteSpace(owner!.ModName) ? owner.ModName : Path.GetFileNameWithoutExtension(owner.FullFilePath);
+            string name = needed ? owner!.DisplayName : "";
             if (entity.GetEntityType() == EntityType.MERCENARY)
                 return needed ? $"A band of {name}, a mod this one needs: a mod over it can't change it (there is no #selectmerc)." : VanillaMercenaryNote;
             if (entity.ID < 0 && needed)

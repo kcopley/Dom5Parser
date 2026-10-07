@@ -71,10 +71,7 @@ namespace Dom5Editor.Session
         public IDEntity? BaseEntity(EntityType type, int id) => Mod.FindBelow(type, id, null);
 
         /// <summary>A needed mod's name, for labels ("From Sombre Warhammer"); null for vanilla.</summary>
-        public static string? NameOf(Mod? mod) =>
-            mod == null || mod.Dependencies.Count == 0 ? null
-            : !string.IsNullOrWhiteSpace(mod.ModName) ? mod.ModName
-            : System.IO.Path.GetFileNameWithoutExtension(mod.FullFilePath);
+        public static string? NameOf(Mod? mod) => mod == null || mod.Dependencies.Count == 0 ? null : mod.DisplayName;
 
         public void Navigate(EntityType type, int id) => NavigationRequested?.Invoke(type, id);
 
