@@ -246,6 +246,85 @@ namespace Dom5Editor.UI
                             Log($"copy & edit {title} {row.Text}: now on {Selected(vm)?.DisplayName} #{Selected(vm)?.ID}{(page.Error != null ? " error: " + page.Error : "")}");
                             break;
                         }
+                        case "--mod-info":
+                        {
+                            // --mod-info FIELD VALUE: a box on the Mod Info tab (modname, description, version, domversion, icon)
+                            var info = vm.Tabs.OfType<ModInfoViewModel>().Single();
+                            var field = args[++i];
+                            var value = args[++i];
+                            switch (field)
+                            {
+                                case "modname": info.ModName = value; break;
+                                case "description": info.ModDescription = value; break;
+                                case "version": info.ModVersion = value; break;
+                                case "domversion": info.ModDomVersion = value; break;
+                                case "icon": info.ModIcon = value; break;
+                                default: throw new ArgumentException("no Mod Info field " + field);
+                            }
+                            Log($"mod info {field} = {value}: {vm.StatusMessage}");
+                            break;
+                        }
+                        case "--copy":
+                        {
+                            // --copy ID: the copy picker at the top of the page (#copystats, #copyweapon, ...; 0: none)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            int source = int.Parse(args[++i]);
+                            page.CopySourceId = source == 0 ? null : source;
+                            Log($"copy {source}: copies {Selected(vm)?.CopySourceName}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--flag":
+                        {
+                            // --flag LABEL on|off: a checkbox in a flags panel (a weapon's qualities, a form's flags)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var label = args[++i];
+                            bool on = args[++i] == "on";
+                            var flag = page.Panels.OfType<FlagsPanel>().SelectMany(p => p.Groups).SelectMany(g => g.Flags).FirstOrDefault(f => f.Label == label)
+                                       ?? throw new InvalidOperationException("no flag " + label);
+                            flag.IsOn = on;
+                            Log($"flag {label} ({EntityPageViewModel.CommandName(flag.Command)}) {(on ? "on" : "off")}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--path-level":
+                        {
+                            // --path-level F N: type a level in a magic path's box (0 removes the path)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var letter = args[++i];
+                            var row = page.Panels.OfType<MagicPanel>().Single().Paths.First(r => r.Icon == "path:" + letter);
+                            row.EditText = args[++i];
+                            Log($"path {row.Text} level {args[i]}{(page.Error != null ? " error: " + page.Error : "")}: {Selected(vm)?.Panels.OfType<MagicPanel>().Single().Summary}");
+                            break;
+                        }
+                        case "--panel-new":
+                        {
+                            // --panel-new TITLE: a list panel's "+ New weapon" / "+ New armor" (the new one is opened)
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            var title = args[++i];
+                            var panel = page.Panels.OfType<ReferenceListPanel>().FirstOrDefault(p => p.Title == title && p.CanMakeNew)
+                                        ?? throw new InvalidOperationException("no list panel with a New button titled " + title);
+                            panel.NewCommand.Execute(null);
+                            Log($"{panel.NewLabel} in {title}: now on {Selected(vm)?.DisplayName} #{Selected(vm)?.ID}{(page.Error != null ? " error: " + page.Error : "")}");
+                            break;
+                        }
+                        case "--panel-add":
+                        case "--panel-remove":
+                        {
+                            // --panel-add TITLE ID: pick an entity in a list panel's add box; --panel-remove TITLE N: its Nth row's remove button
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            bool add = args[i] == "--panel-add";
+                            var title = args[++i];
+                            int n = int.Parse(args[++i]);
+                            var panel = page.Panels.OfType<ReferenceListPanel>().FirstOrDefault(p => p.Title == title)
+                                        ?? throw new InvalidOperationException("no list panel titled " + title);
+                            if (add)
+                                panel.AddPick = n;
+                            else
+                                panel.RemoveCommand.Execute(panel.Rows[n - 1]);
+                            var now = Selected(vm)!;
+                            var rows = now.Panels.OfType<ReferenceListPanel>().FirstOrDefault(p => p.Title == title)?.Rows;
+                            Log($"{(add ? "add" : "remove")} {title} {n}{(now.Error != null ? " error: " + now.Error : "")}: {string.Join(", ", rows?.Select(r => $"{r.Text} #{r.RefId}") ?? Array.Empty<string>())}");
+                            break;
+                        }
                         case "--add-badge":
                         {
                             // --add-badge COMMAND: pick the command in a section's add box (a reference
@@ -686,7 +765,7 @@ namespace Dom5Editor.UI
                             var result = vm.Validate();
                             Log($"validate: {vm.StatusMessage}");
                             if (result != null)
-                                foreach (var issue in result.Issues.OrderBy(x => x.ToString().StartsWith("Error") ? 0 : 1).Take(8))
+                                foreach (var issue in result.Issues.OrderBy(x => x.ToString().StartsWith("Error") ? 0 : 1).Take(60))
                                     Log($"   {issue}");
                             break;
                         }
@@ -817,15 +896,27 @@ namespace Dom5Editor.UI
                             break;
                         }
                         case "--dump":
+                            Dump(vm, Selected(vm) ?? throw new InvalidOperationException("nothing selected"));
+                            break;
+                        case "--dump-mod":
                         {
-                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
-                            Log($"== {page.DisplayName} #{page.ID} ({page.SourceLabel}; {(page.Entity.ParentMod == vm.Session!.Mod ? "the mod's entity" : "vanilla's entity")})");
-                            foreach (var line in page.Resolved.Structure)
-                                Log($"   structure {line.ToExportString()}");
-                            foreach (var v in page.Resolved.Values)
-                                Log($"   {v.Property.ToExportString(),-40} {page.SourceText(v)}");
-                            foreach (var (c, a) in page.Resolved.Assets)
-                                Log($"   asset {c}: {(a.ToExportString() ?? "").Substring(0, Math.Min(60, (a.ToExportString() ?? "").Length))}");
+                            // --dump-mod: --dump of every entity the mod makes or changes, type by type in list
+                            // order (to compare a mod as made with the same mod saved and loaded again)
+                            foreach (var tab in vm.Tabs.OfType<EntityTypeTab>())
+                            {
+                                var items = tab.Items.Where(x => !x.IsVanilla || x.IsModified).ToList();
+                                if (items.Count == 0)
+                                    continue;
+                                vm.SelectedTab = tab;
+                                foreach (var item in items)
+                                {
+                                    tab.SelectedItem = item;
+                                    Pump();
+                                    Dump(vm, tab.Page!);
+                                    if (tab.Page!.Panels.OfType<EventChainPanel>().SingleOrDefault() is EventChainPanel ch)
+                                        Log($"   chain: {ch.ChainText} {ch.Position}; problems: {string.Join("; ", ch.Problems)}");
+                                }
+                            }
                             break;
                         }
                         case "--save":
@@ -863,6 +954,18 @@ namespace Dom5Editor.UI
                 app.Shutdown(exitCode);
             }
             return true;
+        }
+
+        /// <summary>Logs an entity's values and where each comes from (--dump).</summary>
+        private static void Dump(MainWindowViewModel vm, EntityPageViewModel page)
+        {
+            Log($"== {page.Type} {page.DisplayName} #{page.ID} ({page.SourceLabel}; {(page.Entity.ParentMod == vm.Session!.Mod ? "the mod's entity" : "vanilla's entity")})");
+            foreach (var line in page.Resolved.Structure)
+                Log($"   structure {line.ToExportString()}");
+            foreach (var v in page.Resolved.Values)
+                Log($"   {v.Property.ToExportString(),-40} {page.SourceText(v)}");
+            foreach (var (c, a) in page.Resolved.Assets)
+                Log($"   asset {c}: {(a.ToExportString() ?? "").Substring(0, Math.Min(60, (a.ToExportString() ?? "").Length))}");
         }
 
         private static void Log(string message)
