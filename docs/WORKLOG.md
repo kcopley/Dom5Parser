@@ -65,6 +65,24 @@ Open: the editor can't load the mod a submod needs (only `check --with`); a load
 `#newnation N` is still taken as nation N; the game merges two events when the first has no
 `#end` (reported, not modelled).
 
+Later the same day (the user: "what the game reads is actually what's important"):
+- **The game's reading as the referee** (61c59a3): `tools/dom6exe/gameread.py` replays the
+  game's passes (rules from the exe in `tools/dom6exe/data/dmread-6.37.json`, with each command's
+  sscanf format) on two files and compares what the game reads; fidelity stage 3 requires it for
+  every save (80 checks). It found what the inspector couldn't: `#newmonster 7665 MAIN` taken as
+  a name, `#custommagic 200`/`#path -1`/64-bit numbers dropped, a single dash cutting an open
+  text, an empty `#descr ""` (fatal in game) from a doubled `#descr`. All fixed; all 16 workshop
+  files, every line rewritten, read the same in game.
+- **A report on every mod opened** (364cb51): a bar under the toolbar with what the check
+  found, a report window grouped like the author report with Go to on every line, Save for the
+  author, Copy. 0.4 s for Forgotten Realms.
+- **Test build 0.10.0** (fdefb83): `publish/Dom6ModEditor-0.10.0-2026-10-07.zip`.
+- **Mac/Linux** (agent, assessment only): `docs/CROSS_PLATFORM.md`. The core and CLI already run
+  on Linux; the editor needs a UI port (Avalonia recommended) and a few core fixes.
+- **Several mods at once, from the exe:** the game reads every enabled mod in turn, all 15
+  passes for one mod before the next (0x140229c20), so a submod sees its parent only when the
+  parent comes first in the list of enabled mods.
+
 ## 2026-10-06: pages like the game's, hints from the manuals, events
 
 The user's review: the editor is "90% there"; streamline the monster page (stats grouped
