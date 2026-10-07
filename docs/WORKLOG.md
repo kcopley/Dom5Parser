@@ -36,6 +36,13 @@ number of used by issues"), then "look at implementing cross platform".
 - **Mac/Linux packages** (2430d80, `tools/publish-avalonia.sh`): linux-x64/arm64 tar.gz,
   osx-arm64/x64 .app zips (40-44 MB each) in `publish/`; the linux-x64 one runs natively in WSL.
   Not signed as a bundle (no codesign here; the README has testers sign ad hoc); untested on a Mac.
+- **Avalonia only** (c8984d4; the user liked its look and left the call to me): side-by-side
+  renders of 14 pages showed the same layout and content (differences: Inter vs Segoe UI, a
+  page margin, tighter rows, Fluent check boxes and scroll bars); the broken expander and the
+  report's missing cards/dots were fixed first (3830085). The WPF harness's last own steps were
+  ported (daa03f6; same flags checksum), then the WPF project removed (tag `wpf-final`). The
+  program is `Dom5Editor` on every system; test build 0.12.0 for Windows (42 MB, was 67 MB),
+  macOS and Linux; the 0.11.0 WPF zip kept as `-wpf.zip`.
 - **The game's mod order** (ce66965, from the exe): enabled mods are read in the order they
   were enabled (enabling appends, nothing sorts), so a submod must be enabled after its parent;
   Strigos's own description says the same.
