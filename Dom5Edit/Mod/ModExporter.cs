@@ -22,8 +22,25 @@ namespace Dom5Edit
                 return;
             }
 
-            // temp file, then swap; the previous file is kept as .bak
-            SafeFile.Write(filePath, writer => Export(mod, writer));
+            // temp file, then swap; the previous file is kept as .bak. A mod read from a file keeps its
+            // form when its text is kept: its line breaks, a last one or not, a byte order mark.
+            bool keepForm = mod.KeepOriginalText && mod.SourceNewLine != null;
+            var encoding = keepForm && mod.SourceHasBom ? new System.Text.UTF8Encoding(true) : null;
+            SafeFile.Write(filePath, writer =>
+            {
+                if (keepForm)
+                    writer.NewLine = mod.SourceNewLine!;
+                Export(mod, writer);
+                if (keepForm && !mod.SourceEndsWithNewLine)
+                {
+                    // the file had no line break after its last line: take the written one off
+                    writer.Flush();
+                    var stream = writer.BaseStream;
+                    int nl = System.Text.Encoding.UTF8.GetByteCount(writer.NewLine);
+                    if (stream.Length >= nl)
+                        stream.SetLength(stream.Length - nl);
+                }
+            }, encoding);
         }
 
         /// <summary>
@@ -110,7 +127,7 @@ namespace Dom5Edit
                     continue; // deleted in the session (its comments go with it)
                 foreach (var text in block.LeadingTrivia)
                     writer.WriteLine(text);
-                writer.WriteLine(keep && block.RawHeader != null && entity.ID == block.IdAtParse ? block.RawHeader : Header(block));
+                writer.WriteLine(keep && KeepsHeader(block) ? block.RawHeader : Header(block));
                 foreach (var p in plan.AddedAtStart(block))
                 {
                     writer.WriteLine(Text(p));
@@ -123,6 +140,13 @@ namespace Dom5Edit
                     for (; t < block.Trivia.Count && block.Trivia[t].Before <= i; t++)
                         writer.WriteLine(block.Trivia[t].Text);
                     var p = block.Properties[i];
+                    // a line with several commands, all there and unchanged: as it was
+                    if (keep && p.Line is LineGroup line && WholeLine(block, i, line, plan))
+                    {
+                        writer.WriteLine(line.Text);
+                        i += line.Members.Count - 1;
+                        continue;
+                    }
                     // live now: write it; live after parse but not now: removed by an edit;
                     // not live after parse: a later clear or copy in the file took it out,
                     // and the game still reads it here
@@ -141,6 +165,10 @@ namespace Dom5Edit
                 }
                 if (keep && block.RawEnd != null)
                     writer.WriteLine(block.RawEnd);
+                else if (keep && block.EndsWithoutEnd)
+                {
+                    // as read: no #end (the next block's header closes it)
+                }
                 else if (CommandsMap.TryGetString(Command.END, out var end))
                     writer.WriteLine(end);
                 // entities made in the editor to come right after this one (an event's delayed follow-up)
@@ -185,7 +213,7 @@ namespace Dom5Edit
                 if (lines.Count > 0)
                     lines.Add("");
                 if (block.Source != null)
-                    lines.Add(mod.KeepOriginalText && block.Source.RawHeader != null && entity.ID == block.Source.IdAtParse ? block.Source.RawHeader : Header(block.Source));
+                    lines.Add(mod.KeepOriginalText && KeepsHeader(block.Source) ? block.Source.RawHeader! : Header(block.Source));
                 else
                 {
                     using var sw = new StringWriter();
@@ -198,6 +226,31 @@ namespace Dom5Edit
             }
             return lines;
         }
+
+        /// <summary>
+        /// Whether a line with several commands can be written as read from <paramref name="i"/>:
+        /// every command of it read into this block (none was a header or an unknown command), in
+        /// order there, still written, unchanged, and nothing placed after one of them.
+        /// </summary>
+        private static bool WholeLine(SourceBlock block, int i, LineGroup line, SavePlan plan)
+        {
+            if (line.Members.Count != line.Commands || i + line.Members.Count > block.Properties.Count)
+                return false;
+            for (int k = 0; k < line.Members.Count; k++)
+            {
+                var p = block.Properties[i + k];
+                if (!ReferenceEquals(p, line.Members[k]) || !plan.Writes(block, p) || !p.IsAsRead || plan.Followers(p).Any())
+                    return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Whether the header is written as read: always for one naming the entity ("#selectspell
+        /// \"Fists Of Iron\""); for one with a number, while the entity's ID is the one read.
+        /// </summary>
+        private static bool KeepsHeader(SourceBlock block) =>
+            block.RawHeader != null && (block.Entity.ID == block.IdAtParse || !int.TryParse(block.Header, out _));
 
         /// <summary>The block's #new.../#select... line as parsed (a numeric ID as the entity's current ID).</summary>
         private static string Header(SourceBlock block)

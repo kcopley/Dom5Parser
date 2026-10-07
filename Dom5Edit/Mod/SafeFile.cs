@@ -7,13 +7,13 @@ namespace Dom5Edit
     /// </summary>
     public static class SafeFile
     {
-        public static void Write(string path, Action<StreamWriter> write)
+        public static void Write(string path, Action<StreamWriter> write, System.Text.Encoding? encoding = null)
         {
             var full = Path.GetFullPath(path);
             var tmp = full + ".tmp";
             try
             {
-                using (var writer = new StreamWriter(tmp))
+                using (var writer = encoding != null ? new StreamWriter(tmp, false, encoding) : new StreamWriter(tmp))
                 {
                     write(writer);
                 }

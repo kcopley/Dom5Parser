@@ -45,6 +45,9 @@ namespace Dom5Tests
                 case "derived":
                     DerivedCheck.Print(basePath, args);
                     break;
+                case "check":
+                    ModCheck.Run(basePath, args);
+                    break;
                 case "texts":
                     Texts(basePath, args);
                     break;

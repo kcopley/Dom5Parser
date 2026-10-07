@@ -28,6 +28,12 @@ namespace Dom5Edit
         /// <summary>The #end line as read.</summary>
         public string? RawEnd { get; set; }
 
+        /// <summary>
+        /// The block had no #end: the next #new/#select (or the end of the file) closed it, which
+        /// the game accepts. A save that keeps the text as read leaves it without one too.
+        /// </summary>
+        public bool EndsWithoutEnd { get; set; }
+
         /// <summary>Lines with no command before the header (comments, blank lines), as read.</summary>
         public List<string> LeadingTrivia { get; } = new List<string>();
 
