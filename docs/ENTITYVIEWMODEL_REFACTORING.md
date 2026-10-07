@@ -286,10 +286,10 @@ If the `IsPropertyModifiedFromVanilla` methods are genericized, this enum and me
 
 ## Related Files
 
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Target file
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs` - Target file
 - `Dom5Edit/Props/Property.cs` - Base property class (may need interface)
 - `Dom5Edit/Props/IntProperty.cs`, `StringProperty.cs`, `CommandProperty.cs` - Property types
-- `Dom5Editor/Data/BadgeConfigLoader.cs` - Badge JSON parsing
+- `Dom5Editor.Core/Data/BadgeConfigLoader.cs` - Badge JSON parsing
 
 ---
 

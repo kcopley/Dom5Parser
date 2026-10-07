@@ -168,7 +168,7 @@ Quick reference notes for development context. See related documents for full de
   - String mode: StringValue binding with debounced updates
   - SecondaryDisplayText: Optional text line below editor (e.g., "Summons: MonsterName")
   - **Applied to WeaponView damage field**: Shows integer input for normal weapons, monster selector for summon weapons, read-only text for cloud weapons
-  - Files: `Dom5Editor/UI/Controls/DynamicPropertyEditor.xaml(.cs)`, `Dom5Editor/UI/ViewModels/WeaponViewModel.cs`, `Dom5Editor/UI/Views/WeaponView.xaml`
+  - Files: `Dom5Editor/UI/Controls/DynamicPropertyEditor.xaml(.cs)`, `Dom5Editor.Core/UI/ViewModels/WeaponViewModel.cs`, `Dom5Editor/UI/Views/WeaponView.xaml`
 
 ### Previously Completed (2026-01-08)
 - **Vanilla Asset Loading & Sprite Display** - Full sprite and description support:
@@ -184,7 +184,7 @@ Quick reference notes for development context. See related documents for full de
     - PNG, JPG, JPEG, BMP loaded via `BitmapImage`
     - TGA loaded via `TargaImage` (for mod-provided sprites)
     - Absolute paths (vanilla) and relative paths (mods) both supported
-  - Files: `Dom5Edit/VanillaAssetLoader.cs`, `Dom5Edit/VanillaLoader.cs`, `Dom5Editor/App.xaml.cs`, `Dom5Editor/UI/ViewModels/MonsterViewModel.cs`
+  - Files: `Dom5Edit/VanillaAssetLoader.cs`, `Dom5Edit/VanillaLoader.cs`, `Dom5Editor/App.xaml.cs`, `Dom5Editor.Core/UI/ViewModels/MonsterViewModel.cs`
 
 ### Recently Completed (2026-01-07)
 - **Equipment Add Bug Fix** - Fixed critical bug where adding equipment via UI wasn't working:
@@ -368,7 +368,7 @@ Quick reference notes for development context. See related documents for full de
 
 ### ViewModel System
 
-All ViewModels are in `Dom5Editor/UI/ViewModels/` (extracted to individual files 2026-01-07):
+All ViewModels are in `Dom5Editor.Core/UI/ViewModels/` (extracted to individual files 2026-01-07):
 
 | File | Lines | Description |
 |------|-------|-------------|
@@ -463,7 +463,7 @@ Dom5Editor/UI/
     MagicPathEditor.xaml      - Magic path level editor (multi-path, for commanders)
     PathSelector.xaml(.cs)    - Single path + level selector (for item/spell requirements)
 
-Dom5Editor/Data/
+Dom5Editor.Core/Data/
   monster_badges.json         - Monster property definitions (572 commands)
   weapon_badges.json          - Weapon property definitions
   armor_badges.json           - Armor property definitions
@@ -481,12 +481,12 @@ Dom5Editor/Data/
 
 ### Adding a New Entity View (Step-by-Step)
 
-1. **Create JSON config** (`Dom5Editor/Data/{entity}_badges.json`):
+1. **Create JSON config** (`Dom5Editor.Core/Data/{entity}_badges.json`):
    - Copy structure from `monster_badges.json`
    - Define sections with commands relevant to the entity type
    - See "Quick Reference: Badge JSON Format" below for schema
 
-2. **Update ViewModel** (`Dom5Editor/UI/ViewModels/EntityViewModels.cs`):
+2. **Update ViewModel** (`Dom5Editor.Core/UI/ViewModels/EntityViewModels.cs`):
    - Add `protected override string EntityTypeName => "{entity}";` to the ViewModel
    - Add badge collection properties (TypeBadges, GeneralBadges, etc.)
    - Use base class helpers: `BuildBadgesFromSection()`, `CreateBadgeValueChangedHandler()`, etc.

@@ -103,7 +103,7 @@ What can go wrong (and the editor checks):
 - Checked by `Dom5Tests events <mod.dm>` (chains, links and problems listed; DomEnhanced as the
   fixture).
 
-### E-2. One description per command: `Dom5Editor/Data/event_commands.json` **(now)**
+### E-2. One description per command: `Dom5Editor.Core/Data/event_commands.json` **(now)**
 Every event command the game reads: its group (the manual's sections), whether it's a
 requirement or an effect, a sentence ("The province has code {v}"), its argument kind
 (number, percent, 0/1 yes-no, nation, monster, site, item, code, variable, enchantment, path,

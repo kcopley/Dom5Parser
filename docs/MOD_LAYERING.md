@@ -311,8 +311,8 @@ The UI should distinguish between property sources:
 
 ## Files Reference
 
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Base class with `GetVanillaEntity()`
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - MonsterViewModel with:
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs` - Base class with `GetVanillaEntity()`
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModels.cs` - MonsterViewModel with:
   - `RefreshMagicPaths()` - Magic path layering
   - `RefreshWeaponsList()` / `RefreshArmorList()` - Equipment layering with copystats inheritance
   - `RefreshCustomMagic()` - CUSTOMMAGIC vanilla+mod merge
@@ -322,7 +322,7 @@ The UI should distinguish between property sources:
 - `Dom5Editor/UI/Views/MonsterView.xaml` - Equipment and Random Magic sections
 - `Dom5Editor/UI/Controls/CustomMagicEditor.xaml(.cs)` - Multi-entry editor for CUSTOMMAGIC
 - `Dom5Editor/UI/Controls/PathToggleButton.xaml(.cs)` - Toggle buttons for magic path selection
-- `Dom5Editor/Data/monster_badges.json` - 572 commands with descriptions and tooltips
+- `Dom5Editor.Core/Data/monster_badges.json` - 572 commands with descriptions and tooltips
 - `Dom5Edit/VanillaLoader.cs` - Vanilla data loading
 - `Dom5Edit/Mod/ChangesMod.cs` - Session change tracking
 - `Dom5Editor/App.xaml.cs` - VanillaLoader initialization at startup
