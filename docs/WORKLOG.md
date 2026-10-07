@@ -3,6 +3,30 @@
 Running log of the autonomous work sessions: what was done, what was found, what's next.
 Newest entries at the top. Commits are local unless noted; the user pushes.
 
+## 2026-10-07 (evening): "used by" fixed, the editor on Mac and Linux
+
+The user: monster 3's "used by" listed Bind Heliophagus ("definitely not correct! There's a
+number of used by issues"), then "look at implementing cross platform".
+
+- **"Used by"** (37e7770): spell effect numbers from `spell_effect_types.json` now replace the
+  old Dom5 guesses instead of adding to them (effects 89, 114, 76, 120, 127, 68 took `#damage`
+  for a monster number: Bind's 3 is the third list of uniques). A spell that picks from one of
+  the game's unit lists (unique/terrain summons, Tartarian Gate, ...) is listed under each unit;
+  a monster tag use under each tagged monster; an event's path boost names its monster only
+  without target requirements or a commander it makes (monster 1: 85 users to 1); lines the
+  game doesn't read link to nothing. `Dom5Tests usage [MOD]` counts every kind of link.
+- **Portable core** (07a5759, adcd60a): the game found per OS (Steam roots, libraryfolders.vdf
+  without the registry, a folder with `data/*.trs` is enough for sprites), TGA and PNG decoders
+  of our own (System.Drawing and 2,574 lines of TargaImage gone; checked against the old
+  decoders on 9,499 TGAs and 2,243 PNGs), mod file names in any case off Windows.
+- **Dom5Editor.Core** (2f5fd0e): session, view models, game art and data files in a net8.0
+  library without WPF; images as `Picture`, colours as `#RRGGBB`, dialogs/dispatcher through
+  `UI.Ui`. The WPF editor renders pixel-identical before and after (17 pages).
+- **Dom5Editor.Avalonia** (bdefae8, 211395a): Avalonia 11.3 editor on the shared core: toolbar,
+  report, lists, page header/sprites/badges/used by/file text, Mod Info; `--snapshot` renders
+  headless and runs on Linux (WSL, linux-x64). Panels, the event page, the window's menus and
+  packaging are being ported (agents in worktrees).
+
 ## 2026-10-07: workshop mods, never losing data, reports for authors, new mods from scratch
 
 The user asked to try the newest workshop mods (Sombre Warhammer and its submods, Forgotten
