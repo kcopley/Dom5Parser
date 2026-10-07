@@ -44,6 +44,7 @@ namespace Dom5Editor.UI
     ///   --save FILE.dm           save the mod (the editor's Save)
     ///   --png FILE.png           render the window
     ///   --report FILE.png        the check made on opening a mod (its bar, timing) and the report window
+    ///   --used-by                log the selected page's "used by" list
     ///   --view FILE.png          render the selected entity's view at its full height
     ///   --scroll-list TYPE N     scroll a type's list N screens (0: to the end), timing each (sprites decode as rows show)
     ///   --flags FILE.png         every nation's flag on one sheet, timed, with a checksum (tools/dom6exe/flags.py check)
@@ -819,6 +820,15 @@ namespace Dom5Editor.UI
                             Log($"tooltip {args[i]} (value {badge.Value}, note {badge.ValueNote ?? "-"}):");
                             foreach (var line in (badge.Tooltip ?? "").Split('\n'))
                                 Log("   | " + line);
+                            break;
+                        }
+                        case "--used-by":
+                        {
+                            // the selected page's "used by" list
+                            var page = Selected(vm) ?? throw new InvalidOperationException("nothing selected");
+                            Log($"{page.UsedByTitle}");
+                            foreach (var row in page.UsedBy)
+                                Log($"   {row.TypeLabel} {row.Name} {row.IdText}  ({row.Via})");
                             break;
                         }
                         case "--report":

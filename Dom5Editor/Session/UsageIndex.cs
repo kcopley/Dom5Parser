@@ -33,6 +33,8 @@ namespace Dom5Editor.Session
         private readonly EditorSession _session;
         private Dictionary<(EntityType, int), List<Use>>? _byTarget;
         private readonly Dictionary<(EntityType, int), List<(EntityType, int)>> _targetsOf = new();
+        // the same for entities without a number (events, mercenary bands), by the entity itself
+        private readonly Dictionary<IDEntity, List<(EntityType, int)>> _targetsOfUnnumbered = new(ReferenceEqualityComparer.Instance);
 
         public UsageIndex(EditorSession session)
         {
@@ -54,7 +56,13 @@ namespace Dom5Editor.Session
             foreach (var e in edit.Entities)
             {
                 if (e.ID <= 0)
+                {
+                    // an event or a band: its own entries, again unless it was deleted
+                    Remove(e);
+                    if (_session.Mod.Database.TryGetValue(e.Kind, out var set) && set.GetFullList().Contains(e))
+                        Add(e);
                     continue;
+                }
                 Remove((e.Kind, e.ID));
                 var current = Current(e.Kind, e.ID);
                 if (current != null)
@@ -93,21 +101,47 @@ namespace Dom5Editor.Session
             catch (NotImplementedException) { return; }
             var from = (kind, entity.ID);
             var targets = new List<(EntityType, int)>();
-            foreach (var v in _session.Resolve(entity).Values)
+            var resolved = _session.Resolve(entity);
+            foreach (var v in resolved.Values)
             {
-                if (v.Property is not Reference r || !r.TryGetEntity(out var target) || target == null || target.ID <= 0)
+                if (v.Property is not Reference r)
                     continue;
-                EntityType targetKind;
-                try { targetKind = target.Kind; }
-                catch (NotImplementedException) { continue; }
-                var key = (targetKind, target.ID);
-                if (!_byTarget!.TryGetValue(key, out var list))
-                    _byTarget[key] = list = new List<Use>();
-                list.Add(new Use(kind, entity.ID, entity, v.Command));
-                targets.Add(key);
+                // only what the game reads: a line it skips for this type links to nothing; nor a
+                // number the game ignores (an event's path boost aimed by target requirements)
+                if (Dom5Edit.GameData.GameCommandCatalog.IsRead(kind, v.Command) == false
+                    || !Dom5Edit.Resolve.ReferenceRules.NamesEntity(entity, resolved, v.Command))
+                    continue;
+                var pointed = new List<IDEntity>();
+                if (r.TryGetEntity(out var one) && one != null)
+                    pointed.Add(one);
+                if (r is IMultiReference multi)
+                    pointed.AddRange(multi.Targets()); // (a key into one of the game's lists: each unit in it)
+                foreach (var target in pointed.Where(t => t.ID > 0).Distinct())
+                {
+                    EntityType targetKind;
+                    try { targetKind = target.Kind; }
+                    catch (NotImplementedException) { continue; }
+                    var key = (targetKind, target.ID);
+                    if (!_byTarget!.TryGetValue(key, out var list))
+                        _byTarget[key] = list = new List<Use>();
+                    list.Add(new Use(kind, entity.ID, entity, v.Command));
+                    targets.Add(key);
+                }
             }
             if (entity.ID > 0)
                 _targetsOf[from] = targets;
+            else
+                _targetsOfUnnumbered[entity] = targets;
+        }
+
+        private void Remove(IDEntity unnumbered)
+        {
+            if (!_targetsOfUnnumbered.TryGetValue(unnumbered, out var targets))
+                return;
+            foreach (var t in targets.Distinct())
+                if (_byTarget!.TryGetValue(t, out var list))
+                    list.RemoveAll(u => ReferenceEquals(u.From, unnumbered));
+            _targetsOfUnnumbered.Remove(unnumbered);
         }
 
         private void Remove((EntityType, int) from)

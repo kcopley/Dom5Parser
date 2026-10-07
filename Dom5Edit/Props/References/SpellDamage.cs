@@ -3,7 +3,7 @@ using Dom5Edit.Entities;
 
 namespace Dom5Edit.Props
 {
-    public class SpellDamage : Reference
+    public class SpellDamage : Reference, IMultiReference
     {
         private string _val;
 
@@ -63,6 +63,20 @@ namespace Dom5Edit.Props
             // Check if it's a power of 2 (single bit set) - common bitmask pattern
             // Also check for combined bitmasks (multiple bits set but still large)
             return (damage & (damage - 1)) == 0 || damage > 100000;
+        }
+
+        /// <summary>The units the spell picks from when its #damage is a key into one of the game's lists (Bind Heliophagus: the four Heliophagi).</summary>
+        public IEnumerable<IDEntity> Targets()
+        {
+            // a summon of a monster tag: the tagged monsters
+            if (_monRef != null)
+                foreach (var tagged in _monRef.Targets())
+                    yield return tagged;
+            if (Parent is not Spell spell || !spell.TryGetSpellEffect(out int effect) || !long.TryParse((_val ?? "").Trim(), out long damage))
+                yield break;
+            foreach (var id in SpellEffectData.Instance.UnitsPicked(effect, damage))
+                if (Parent.ParentMod.TryGet(EntityType.MONSTER, id, null, out IDEntity unit))
+                    yield return unit;
         }
 
         public override bool TryGetEntity(out IDEntity e)
