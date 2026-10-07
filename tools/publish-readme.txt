@@ -6,6 +6,17 @@ entity with real panels, build event chains, and save back without disturbing li
 didn't change.
 
 New in this build
+- Submods: a mod can be read over the mods it needs (Sombre Warhammer's submods over Sombre),
+  as the game reads mods: in the order they were enabled. Mod Info, "Needs": add, remove and
+  order them (remembered for the mod). The parent's units, items and events show and link like
+  the game's; changing one adds a line to your mod, and the parent's file is never changed.
+  Opening a submod alone, the bar suggests the mod it probably needs ("Read it over that mod").
+- "Used by" lists what really uses an entity (it listed spells that pick from the game's unit
+  lists under the wrong monster, and every event that boosts a path under monster 1).
+- The report also says when a submod's new unit takes a number its parent already uses.
+- The editor also runs on macOS and Linux (separate test packages, ask for them).
+
+Earlier (0.10.0)
 - Opening a mod checks it: a bar says what goes wrong in game, which lines the game ignores
   (with "did you mean" for typos) and what's worth a look. "Open report" lists every finding
   with its line and a Go to; "Save for the author..." writes it as a file to send to the mod's
