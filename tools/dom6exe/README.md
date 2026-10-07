@@ -75,6 +75,15 @@ their own reader, 0x14023f060.) Each pass loads the file (0x140068160), prepares
 tokens. So types are read in that order whatever their order in the file (a monster can name a
 weapon defined further down), and within a type in file order.
 
+**Several mods: one after another, in the order they were enabled.** The loop runs all 15
+passes on one mod before the next, so a mod sees only the mods before it. The list it walks
+(names at 0x183d07fc0, 100 bytes each; the last index at 0x1432c957c, -1 for none; at most 500)
+isn't sorted anywhere: enabling a mod on the Mod Preferences screen appends it (0x140225e60),
+disabling one removes it and moves the rest up (0x140225ae1), `--enablemod X/Y` appends in
+command-line order, and the list is saved in that order in `dom6config` (0x1401e2fc0) and
+copied in that order into a new game's settings (0x140226754). So a submod has to be enabled
+after the mod it needs; to change the order, disable and re-enable.
+
 **Preparing the text** ("preparemodtext", 0x140227150), before every pass:
 1. The file's last byte is overwritten by the terminator (`mov BYTE PTR [rax+rcx-1],0`; the
    loader allocates exactly the file size). A file that doesn't end with a line break loses its
