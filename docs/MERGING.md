@@ -46,21 +46,46 @@ alongside another without a merge.
    is dead code now: nothing calls it, and it predates the resolver, the save plan
    (original-order saving) and the reference rules ("used by").
 
-## Plan (if wanted)
+## Design (decided with the user, 2026-10-07)
 
-1. `Dom5Tests merge A.dm B.dm ... --out M.dm`: renumber the later mods' new entities into
-   free numbers (`EntitySet.NextFreeID` per type, after every input's numbers), rewrite every
-   reference (`Reference`, `IMultiReference`: the same coverage "used by" now has), write M as
-   the mods' blocks in order (the save plan), with references by number wherever a name could
-   resolve differently.
-2. The referee: `gameread.py` replays the game's reading of several files in turn and compares
-   that with the merged file, entity by entity, after mapping the renumbered ones. That is the
-   same rule as for saving: what the game reads must not change.
-3. Try it on the pairs above (FR + DomEnhanced is the hardest: 1,087 collisions), then on a
-   nation mod plus its submods.
-4. Editor: "Merge with..." makes a new mod (it never changes the inputs), with a report of
-   what moved (old number -> new) for players' saved games and other submods.
+The user's original idea, kept: connections are object pointers, so numbers can change freely and
+the export writes whatever numbers are current. The core already works so: a resolved reference
+holds its target (`StringOrIDRef.Entity`, `IDRef.Entity`) and writes `Entity.ID`; codes, variables,
+enchantments and monster tags are shared `DependentEntity` objects written by `GetID()`; a block's
+header is rewritten when its entity's number changed (`ModExporter.KeepsHeader`).
 
-Open questions for the user: whether merging independent mods is still wanted now that
-submods load properly, and whether the result should keep each mod's comments and order (one
-block per mod, with headers) or be regenerated.
+- **Inputs, in order.** Each is read over what it needs (the Needs chain): a submod over its
+  parent, whether the parent is in the merge or not; an independent mod over vanilla, as its
+  author tested it. A needed mod that isn't in the merge stays a separate mod, enabled before the
+  merged one; its numbers are taken.
+- **Collisions: the later mod moves**, only what collides, into the first free numbers of the
+  type's range (no bands). Collisions count only between mods that don't depend on each other: a
+  submod's `#select` of its parent's entity is the parent's entity, and its `#new` on its parent's
+  number is a deliberate replacement that keeps it. Owned numbers: a `#new N`, or a `#select N` of
+  a number nothing under the mod has (new nations, poptypes, nametypes).
+- **Not only entities:** event codes, event variables, enchantments, monster tags and the other
+  `DependentEntity` numbers move the same way, so independent mods' events don't trigger each
+  other; a submod's codes are its parent's objects (`DependentEntity.Dependent`) and follow them.
+  Game numbers (vanilla enchantments, codes above -300) never move.
+- **References by number wherever the game takes a number** (`Mod.KeepReferenceForms = false`), a
+  name kept as a comment. Which commands take only names comes from the exe's reading rules
+  (`dmread-6.37.json`: no numeric format). Selects by name become selects by number where there is
+  one. Only a name-only reference whose name would find another entity in the merged file gets
+  its target renamed with a suffix, as a last resort, and the report says so.
+- **One file**: a merged header (`#modname`, a description listing the parts and their versions),
+  then each part in its own order with its comments, behind a banner line; unchanged lines as
+  written, lines rewritten only where numbers or names changed. Sprites and other files a part
+  names are copied next to the merged file (in a folder per part) and their paths rewritten.
+- **A report**: every number moved (old -> new, per mod), every rename, references a part leaves
+  unresolved that now find another part's entity, and things that act across mods (clearing
+  commands, both mods changing the same game entity: the later wins, as in game).
+- **The referee**: the merged file read back must give every entity the same values as its part
+  did (references compared by target); then `gameread.py` replays the game's reading of the parts
+  one after another and of the merged file, numbers mapped, and they must agree.
+- Not carried over: the Dom5 merge's mage disabling (Dom5 had a fixed number of magic-path slots;
+  the user: leave it out for Dom6).
+
+Steps: (1) renumbering in the core (an entity or a dependent number moves, its references follow,
+the save shows it); (2) `Dom5Tests merge OUTDIR NAME A.dm B.dm ... [--needs B.dm=A.dm]` with the
+report and the read-back check; (3) the game-reading referee on mod pairs (Forgotten Realms +
+DomEnhanced: 1,087 collisions) and on Sombre with its submods; (4) "Merge mods..." in the editor.
