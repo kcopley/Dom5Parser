@@ -166,12 +166,14 @@ namespace Dom5Edit
                     continue; //skip these lines, grabbed above
                 }
 
-                if (!isMultiLine && s[0] == '#' && s.IndexOf('"') != -1)
+                if (!isMultiLine && s[0] == '#' && CodeOf(s).IndexOf('"') != -1)
                 {
                     //could be a multi-line string (#descr, #details, #msg, #description, ...)
                     //check if has both quotes
-                    int firstQuote = s.IndexOf('"');
-                    int secondQuote = s.IndexOf('"', firstQuote + 1);
+                    // (a quote in a comment isn't one: "#req_targitem 872 -- Convergence Sphere\"")
+                    string code = CodeOf(s);
+                    int firstQuote = code.IndexOf('"');
+                    int secondQuote = code.IndexOf('"', firstQuote + 1);
                     string command = FirstWord(s);
                     int dashes = s.IndexOf(commentDelimiter, firstQuote + 1);
                     if (dashes != -1 && (secondQuote == -1 || dashes < secondQuote))
@@ -198,7 +200,9 @@ namespace Dom5Edit
                             rawPrev = raw;
                             continue;
                         } //if it has another command on that line, the quote was just forgotten
-                        OnNote?.Invoke(LineNumber, ForgottenQuote(command, LineNumber));
+                        string after = s.Substring(firstQuote + 1);
+                        int next = GetNextCommandIndex(after);
+                        NoteForgottenQuote(command, LineNumber, next == -1 ? after : after.Substring(0, next));
                     }
                     _wholeLine = raw;
                     ProcessStringToLine(s);
@@ -270,7 +274,7 @@ namespace Dom5Edit
                         {
                             // nothing before the next command: the closing quote was just forgotten.
                             // Both keep their lines as read.
-                            OnNote?.Invoke(textStart, ForgottenQuote(textCommand, textStart));
+                            NoteForgottenQuote(textCommand, textStart, prevLine.Substring(prevLine.IndexOf('"') + 1));
                             _wholeLine = rawPrev;
                             ProcessStringToLine(prevLine.TrimEnd('\r', '\n'));
                             _wholeLine = raw;
@@ -338,9 +342,20 @@ namespace Dom5Edit
         /// runs on to the next quote (the commands after it are still read); a name to look up
         /// (#weapon "Net") must close on its line, so it reads nothing.
         /// </summary>
-        private static string ForgottenQuote(string command, int line) => Descriptions.Contains(command)
-            ? $"{command} has no closing quote on its line: the game's text runs on to the next quote in the file, so it also shows the lines after line {line} (their commands are still read)"
-            : $"{command} has no closing quote on its line: the game reads nothing for it (a quoted name must close on its line)";
+        private void NoteForgottenQuote(string command, int line, string textAfterQuote)
+        {
+            if (Descriptions.Contains(command))
+                OnNote?.Invoke(line, $"{command} has no closing quote on its line: the game's text runs on to the next quote in the file, so it also shows the lines after line {line} (their commands are still read)");
+            else if (textAfterQuote.Trim().Length > 0) // (a lone stray quote changes nothing)
+                OnNote?.Invoke(line, $"{command} has no closing quote on its line: the game reads nothing for it (a quoted name must close on its line)");
+        }
+
+        /// <summary>A line without its comment (the game drops "--" to the end of the line; one inside closed quotes is kept here as text).</summary>
+        private string CodeOf(string s)
+        {
+            int comment = CommentIndex(s);
+            return comment == -1 ? s : s.Substring(0, comment);
+        }
 
         /// <summary>
         /// Checks if a line contains a valid command.

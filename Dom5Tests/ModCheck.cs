@@ -18,6 +18,8 @@ namespace Dom5Tests
     /// monster's game values compute; and whether a save without edits gives back the file byte
     /// for byte (OUTDIR/NAME.save.dm), plus a save with every line regenerated (NAME.regen.dm) for
     /// the independent parser to compare (tools/fidelity, docs/ROUND_TRIP_TESTING.md).
+    /// --with OTHER.dm (repeatable) loads a mod this one needs (a submod's parent) alongside, so
+    /// references to it resolve.
     /// </summary>
     static class ModCheck
     {
@@ -25,7 +27,7 @@ namespace Dom5Tests
         {
             if (args.Length < 3)
             {
-                Console.WriteLine("Usage: Dom5Tests check <mod.dm> <outdir>");
+                Console.WriteLine("Usage: Dom5Tests check <mod.dm> <outdir> [--with <needed.dm>]...");
                 Environment.ExitCode = 2;
                 return;
             }
@@ -33,12 +35,24 @@ namespace Dom5Tests
             Directory.CreateDirectory(outDir);
             var name = Path.GetFileNameWithoutExtension(path);
             Program.LoadVanillaBase(basePath);
+            // mods this one needs, loaded alongside
+            var needed = new List<Mod>();
+            for (int i = 3; i + 1 < args.Length; i++)
+                if (args[i] == "--with")
+                {
+                    var other = new Mod { FullFilePath = args[++i] };
+                    other.Parse(other.FullFilePath);
+                    other.ResolveDependencies();
+                    other.Resolve();
+                    needed.Add(other);
+                }
 
             var watch = Stopwatch.StartNew();
             var mod = new Mod { FullFilePath = path };
             mod.Parse(path);
             long parsed = watch.ElapsedMilliseconds;
             mod.ResolveDependencies();
+            mod.Dependencies.AddRange(needed);
             mod.Resolve();
             long resolved = watch.ElapsedMilliseconds;
             Console.WriteLine($"== {name}  ({new FileInfo(path).Length / 1024} KB; parse {parsed} ms, resolve {resolved - parsed} ms)");
@@ -143,6 +157,7 @@ namespace Dom5Tests
             var regen = new Mod { FullFilePath = path, KeepOriginalText = false };
             regen.Parse(path);
             regen.ResolveDependencies();
+            regen.Dependencies.AddRange(needed);
             regen.Resolve();
             regen.Export(Path.Combine(outDir, name + ".regen.dm"));
         }

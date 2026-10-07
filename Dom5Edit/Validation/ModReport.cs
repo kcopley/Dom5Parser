@@ -32,6 +32,7 @@ namespace Dom5Edit.Validation
 
             var wrong = new List<Item>();
             var ignored = new List<Item>();
+            var missing = new List<Item>();
             var look = new List<Item>();
 
             // lines the game doesn't read, from the parser
@@ -52,7 +53,8 @@ namespace Dom5Edit.Validation
                     continue; // (the parser's notes above say it better)
                 var line = v.LineNumber ?? v.Property?.LineNumber;
                 var item = new Item(line, Quote(line), v.Category ?? "", Explain(v));
-                (v.Severity == ValidationSeverity.Error || v.Category == "Reference" ? wrong : look).Add(item);
+                (v.Category == "Reference" && (v.Message ?? "").StartsWith("Unresolved reference") ? missing
+                    : v.Severity == ValidationSeverity.Error || v.Category == "Reference" ? wrong : look).Add(item);
             }
 
             // events
@@ -67,16 +69,22 @@ namespace Dom5Edit.Validation
             var sb = new StringBuilder();
             sb.AppendLine($"# {mod.ModName ?? Path.GetFileNameWithoutExtension(file)}: what the mod editor found");
             sb.AppendLine();
+            var with = mod.Dependencies.Where(d => d != VanillaLoader.Vanilla && !string.IsNullOrEmpty(d.FullFilePath))
+                .Select(d => $"`{Path.GetFileName(d.FullFilePath)}`").ToList();
             sb.AppendLine($"File: `{Path.GetFileName(file)}`" + (string.IsNullOrEmpty(mod.Version) ? "" : $", version {mod.Version}") +
+                          (with.Count > 0 ? $", together with {string.Join(", ", with)}" : "") +
                           $". Checked {DateTime.Now:yyyy-MM-dd} against Dominions {GameCommandCatalog.GameVersion ?? "6"} (what the game reads is taken from the game itself).");
             sb.AppendLine();
             sb.AppendLine($"- **Goes wrong in game:** {wrong.Count}");
             sb.AppendLine($"- **Lines the game ignores:** {ignored.Count}");
+            if (missing.Count > 0)
+                sb.AppendLine($"- **Numbers not in this mod or the game:** {missing.Count}");
             sb.AppendLine($"- **Worth a look:** {look.Count}");
             Section(sb, "Goes wrong in game", "These change what happens in game, or keep something from happening.", wrong);
             Section(sb, "Lines the game ignores", "The game skips these lines: they change nothing.", ignored);
+            MissingSection(sb, missing);
             Section(sb, "Worth a look", "Not wrong as such, but probably not what was meant.", look);
-            if (wrong.Count + ignored.Count + look.Count == 0)
+            if (wrong.Count + ignored.Count + missing.Count + look.Count == 0)
                 sb.AppendLine("\nNothing found.");
             return sb.ToString();
         }
@@ -101,6 +109,27 @@ namespace Dom5Edit.Validation
                     sb.AppendLine(i.Line is int n ? $"  - line {n}: `{Trim(i.Text)}`" : $"  - {Trim(i.Text)}");
                 if (g.Count() > 12)
                     sb.AppendLine($"  - and {g.Count() - 12} more");
+            }
+        }
+
+        /// <summary>References to numbers nothing has, by kind: the numbers, then a few of the lines.</summary>
+        private static void MissingSection(StringBuilder sb, List<Item> items)
+        {
+            if (items.Count == 0)
+                return;
+            sb.AppendLine();
+            sb.AppendLine($"## Numbers not in this mod or the game ({items.Count})");
+            sb.AppendLine();
+            sb.AppendLine("Fine if they come from another mod this one needs, loaded with it; if not, these lines fail in game.");
+            sb.AppendLine();
+            foreach (var g in items.GroupBy(i => i.Why.Split(' ')[0]).OrderByDescending(g => g.Count()))
+            {
+                var numbers = g.Select(i => i.Why.Split(' ').Last()).Distinct().ToList();
+                sb.AppendLine($"- {g.Key} {string.Join(", ", numbers.Take(30))}{(numbers.Count > 30 ? $" and {numbers.Count - 30} more" : "")} ({g.Count()} lines)");
+                foreach (var i in g.OrderBy(i => i.Line ?? 0).Take(5))
+                    sb.AppendLine(i.Line is int n ? $"  - line {n}: `{Trim(i.Text)}`" : $"  - {Trim(i.Text)}");
+                if (g.Count() > 5)
+                    sb.AppendLine($"  - and {g.Count() - 5} more");
             }
         }
 
@@ -169,7 +198,7 @@ namespace Dom5Edit.Validation
             if (m.Success)
             {
                 var kind = m.Groups[1].Value.ToLowerInvariant();
-                return $"refers to {kind} {m.Groups[2].Value}, which neither this mod nor the game has (if it's in another mod this one needs, it's fine when both are loaded)";
+                return $"{kind} {m.Groups[2].Value}";
             }
             return v.Message ?? "";
         }
