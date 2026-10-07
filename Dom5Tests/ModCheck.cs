@@ -35,24 +35,25 @@ namespace Dom5Tests
             Directory.CreateDirectory(outDir);
             var name = Path.GetFileNameWithoutExtension(path);
             Program.LoadVanillaBase(basePath);
-            // mods this one needs, loaded alongside
-            var needed = new List<Mod>();
+            // mods this one needs, read first, each over the one before (the game's order of enabled mods)
+            var neededFiles = new List<string>();
             for (int i = 3; i + 1 < args.Length; i++)
                 if (args[i] == "--with")
-                {
-                    var other = new Mod { FullFilePath = args[++i] };
-                    other.Parse(other.FullFilePath);
-                    other.ResolveDependencies();
-                    other.Resolve();
-                    needed.Add(other);
-                }
+                    neededFiles.Add(args[++i]);
+            var below = Mod.ImportStack(neededFiles);
+            void ReadOver(Mod m)
+            {
+                if (below != null)
+                    m.Dependencies.Add(below);
+                else
+                    m.ResolveDependencies();
+            }
 
             var watch = Stopwatch.StartNew();
             var mod = new Mod { FullFilePath = path };
             mod.Parse(path);
             long parsed = watch.ElapsedMilliseconds;
-            mod.ResolveDependencies();
-            mod.Dependencies.AddRange(needed);
+            ReadOver(mod);
             mod.Resolve();
             long resolved = watch.ElapsedMilliseconds;
             Console.WriteLine($"== {name}  ({new FileInfo(path).Length / 1024} KB; parse {parsed} ms, resolve {resolved - parsed} ms)");
@@ -109,7 +110,7 @@ namespace Dom5Tests
             Dom5Edit.Events.EventGraph? graph = null;
             try
             {
-                graph = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla);
+                graph = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, mod.Below().ToList());
                 Console.WriteLine($"   events: {graph.ModEvents.Count} in the mod, {graph.Chains.Count} chains, {graph.Problems.Count} problems "
                                   + $"({graph.Problems.Count(p => p.IsError)} errors)");
                 foreach (var g in graph.Problems.GroupBy(p => (p.IsError, Key: Shape(p.Message))).OrderByDescending(g => g.Key.IsError).ThenByDescending(g => g.Count()).Take(8))
@@ -156,8 +157,7 @@ namespace Dom5Tests
             // every line regenerated, for the independent parser
             var regen = new Mod { FullFilePath = path, KeepOriginalText = false };
             regen.Parse(path);
-            regen.ResolveDependencies();
-            regen.Dependencies.AddRange(needed);
+            ReadOver(regen);
             regen.Resolve();
             regen.Export(Path.Combine(outDir, name + ".regen.dm"));
         }

@@ -169,8 +169,18 @@
                 <Button DockPanel.Dock="Right" Content="Open report" Style="{StaticResource ButtonSmall}" Margin="6,0,0,0"
                         ToolTip="See what the check found, section by section, with a Go to for each line"
                         Click="ReportOpen_Click"/>
-                <TextBlock Text="{Binding ReportSummary}" ToolTip="{Binding ReportSummary}"
-                           Style="{StaticResource TextBlockBase}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ReportSummary}" ToolTip="{Binding ReportSummary}"
+                               Style="{StaticResource TextBlockBase}" TextTrimming="CharacterEllipsis"/>
+                    <!-- a submod opened alone: the mod it probably needs (NeededModFinder) -->
+                    <DockPanel Margin="0,4,0,0" Visibility="{Binding HasNeededSuggestion, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Button DockPanel.Dock="Right" Content="Read it over that mod" Style="{StaticResource ButtonSmall}" Margin="6,0,0,0"
+                                ToolTip="Read the mod again over the other one, as the game does when that one is enabled first (remembered for this mod; change it on Mod Info)"
+                                Click="NeededSuggestion_Click"/>
+                        <TextBlock Text="{Binding NeededSuggestionText}" ToolTip="{Binding NeededSuggestion}"
+                                   Style="{StaticResource MutedText}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    </DockPanel>
+                </StackPanel>
             </DockPanel>
         </Border>
 

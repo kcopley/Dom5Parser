@@ -4,6 +4,29 @@
 
 The Dom5Editor uses a layered approach to display and edit entity properties. Properties can come from multiple sources, and the UI must correctly display the combined/merged result.
 
+## Mods a mod needs (2026-10-07)
+
+A submod is read over the mod it needs, as the game does: it reads enabled mods one after
+another, in the order they were enabled, all passes of one before the next
+(`tools/dom6exe/README.md`, "Several mods"). In the core, `Mod.Dependencies` holds the mod read
+right before this one: vanilla, or a needed mod, which has its own under it (a chain;
+`Mod.Below()` walks it, nearest first). `Mod.Import(file, below)` / `Mod.ImportStack(files)`
+build it; `Dom5Tests check|resolve MOD --with PARENT.dm` and the editor (Mod Info, "Needs";
+remembered per mod in `%APPDATA%\Dom5Editor\needed-mods.json`) use it.
+
+- Lookups (`Mod.TryGet`, `FindBelow`, a #select's base entity) go through every mod below.
+- `ModResolver`'s base is the needed mod's resolver, whose base is vanilla's. What a needed
+  mod's lines set is base data in the mod over it (`ValueSource.Vanilla`, see
+  `ResolvedEntity.AsBase`): an edit adds a line to the edited mod; a needed mod is never
+  changed or saved. Its new events and bands can't be changed at all (no number to #select).
+- The editor lists a needed mod's entities as "From <mod>" (or "Vanilla, changed by <mod>"),
+  and links to them (used by, event chains, references) as to vanilla's.
+- `NeededModFinder` suggests the mod a submod needs when the report finds numbers from
+  another mod: the .dm next to it (then in the folders next to its folder) that defines most.
+
+The rest of this file predates the resolver (2026-10-05): the layers are now the resolver's
+sources (Own, Vanilla, Copied), see `docs/EDIT_FLOW.md`.
+
 ## Property Layers (in order of precedence)
 
 1. **Session Changes (ChangesMod)** - Edits made in the current editing session

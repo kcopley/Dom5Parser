@@ -79,19 +79,26 @@ namespace Dom5Editor.Session
             foreach (var (type, set) in mod.Database)
                 foreach (var e in set.GetFullList())
                     Add(e);
-            if (VanillaLoader.Vanilla != null)
-                foreach (var (type, set) in VanillaLoader.Vanilla.Database)
+            // the mods read before it, nearest first (a needed mod, then vanilla): an entity the mod
+            // (or a nearer one) has by that number replaces theirs
+            var seen = new HashSet<(EntityType, int)>();
+            foreach (var (type, set) in mod.Database)
+                foreach (var e in set.GetFullList())
+                    if (e.ID > 0)
+                        seen.Add((type, e.ID));
+            foreach (var layer in _session.Below)
+                foreach (var (type, set) in layer.Database)
                     foreach (var e in set.GetFullList())
-                        if (e.ID <= 0 || !mod.Database.TryGetValue(type, out var own) || !own.TryGetValue(e.ID, out _))
+                        if (e.ID <= 0 || seen.Add((type, e.ID)))
                             Add(e);
         }
 
-        /// <summary>The entity for a key as the game has it: the mod's, else vanilla's.</summary>
+        /// <summary>The entity for a key as the game has it: the mod's, else the nearest mod's under it (vanilla last).</summary>
         private IDEntity? Current(EntityType type, int id)
         {
             if (_session.Mod.Database.TryGetValue(type, out var set) && set.TryGetValue(id, out var own))
                 return own;
-            return VanillaLoader.Vanilla?.Database.TryGetValue(type, out var vset) == true && vset.TryGetValue(id, out var v) ? v : null;
+            return _session.BaseEntity(type, id);
         }
 
         private void Add(IDEntity entity)

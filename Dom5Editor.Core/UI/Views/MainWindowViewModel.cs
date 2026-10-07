@@ -90,15 +90,86 @@ namespace Dom5Editor.UI.Views
 
         public void LoadMod(string filePath)
         {
-            var session = EditorSession.Load(filePath);
+            // over the mods it needs, as remembered for it (Mod Info: "Mods this one needs")
+            var session = EditorSession.Load(filePath, NeededMods.For(filePath));
+            var notes = new[] { session.BackupNote, session.NeededNote }.Where(n => n != null).ToList();
             Open(session, $"Loaded {System.IO.Path.GetFileName(filePath)}" +
-                (session.BackupNote != null ? $" ({session.BackupNote})" : ""));
+                (session.Needed.Count > 0 ? " over " + string.Join(", ", session.Needed.Select(EditorSession.NameOf)) : "") +
+                (notes.Count > 0 ? $" ({string.Join("; ", notes)})" : ""));
             // the report on what was opened, once the window has drawn the mod
             Ui.Later(() =>
             {
                 if (ReferenceEquals(_session, session))
                     CheckOnOpen();
             });
+        }
+
+        /// <summary>
+        /// Reads the mod again over these mods (in this order: the order to enable them in game),
+        /// remembered for it. Only for a saved mod without unsaved edits: they would be lost.
+        /// </summary>
+        public void SetNeeded(IReadOnlyList<string> files)
+        {
+            var path = _session?.FilePath;
+            if (_session == null || path == null)
+            {
+                StatusMessage = "Save the mod first: the mods it needs are remembered for its file";
+                return;
+            }
+            if (_session.History.IsDirty)
+            {
+                StatusMessage = "Save first: the mod is read again over the mods it needs, and unsaved edits would be lost";
+                return;
+            }
+            if (files.Any(f => string.Equals(System.IO.Path.GetFullPath(f), System.IO.Path.GetFullPath(path), StringComparison.OrdinalIgnoreCase)))
+            {
+                StatusMessage = "A mod can't need itself";
+                return;
+            }
+            NeededMods.Set(path, files.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
+            var tab = (SelectedTab as EntityTypeTab)?.Type;
+            try
+            {
+                LoadMod(path);
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"The mod couldn't be read again: {ex.Message}";
+                return;
+            }
+            SelectedTab = tab is EntityType t ? TabOf(t) : Tabs[0]; // (the tab it was changed on)
+        }
+
+        /// <summary>A mod the open one probably needs (it defines most of the numbers the mod refers to that nothing loaded has), or null.</summary>
+        public string? NeededSuggestion { get; private set; }
+
+        public bool HasNeededSuggestion => NeededSuggestion != null;
+
+        /// <summary>"It refers to 70 numbers Sombre_Warhammer_dom6.dm defines: a mod it needs?"</summary>
+        public string NeededSuggestionText { get; private set; } = "";
+
+        /// <summary>Reads the mod over the suggested one.</summary>
+        public void UseNeededSuggestion()
+        {
+            if (NeededSuggestion is string file && _session != null)
+                SetNeeded(_session.Needed.Select(m => m.FullFilePath).Append(file).ToList());
+        }
+
+        /// <summary>Looks for the mod a submod needs (NeededModFinder) when the report has numbers from another mod.</summary>
+        private void SuggestNeeded(ModReport.Report report, ValidationResult validation)
+        {
+            NeededSuggestion = null;
+            NeededSuggestionText = "";
+            var path = _session?.FilePath;
+            if (path != null && report.Count(ModReport.Missing) > 0
+                && Dom5Edit.NeededModFinder.Suggest(path, ModReport.MissingNumbers(validation), _session!.Needed.Select(m => m.FullFilePath)) is { } found)
+            {
+                NeededSuggestion = found.File;
+                NeededSuggestionText = $"{System.IO.Path.GetFileName(found.File)} defines {(found.Found == 1 ? "the number" : $"{found.Found} of the numbers")} this mod uses from another mod: read it over that one?";
+            }
+            OnPropertyChanged(nameof(NeededSuggestion));
+            OnPropertyChanged(nameof(HasNeededSuggestion));
+            OnPropertyChanged(nameof(NeededSuggestionText));
         }
 
         public void SaveMod(string filePath)
@@ -114,6 +185,8 @@ namespace Dom5Editor.UI.Views
         {
             _session = session;
             _report = null;
+            NeededSuggestion = null;
+            NeededSuggestionText = "";
             ShowReportBar = false;
             _back.Clear();
             _forward.Clear();
@@ -211,11 +284,14 @@ namespace Dom5Editor.UI.Views
                 return null;
             var validation = new ModValidator().ValidateWithSummary(_session.Mod);
             _report = ModReport.Build(_session.Mod, validation, _session.Events.Problems);
+            _validation = validation;
             OnPropertyChanged(nameof(Report));
             OnPropertyChanged(nameof(ReportHasWrong));
             OnPropertyChanged(nameof(ReportIsClean));
             return _report;
         }
+
+        private ValidationResult? _validation;
 
         /// <summary>The check run when a mod is opened: its counts in the bar.</summary>
         public void CheckOnOpen()
@@ -233,6 +309,8 @@ namespace Dom5Editor.UI.Views
             ReportSummary = parts.Count == 0 ? "Checked on opening: nothing found, the game reads the mod as written"
                 : "Checked on opening: " + string.Join(" · ", parts);
             OnPropertyChanged(nameof(ReportSummary));
+            if (_validation != null)
+                SuggestNeeded(report, _validation);
             ShowReportBar = true;
             ReportMilliseconds = watch.ElapsedMilliseconds;
         }
@@ -355,6 +433,8 @@ namespace Dom5Editor.UI.Views
             _session = session;
             _main = main;
             session.Changed += _ => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
+            // (saving or undoing to the saved state lets the needed mods change)
+            session.History.Changed += () => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -401,6 +481,40 @@ namespace Dom5Editor.UI.Views
             }
         }
 
+        // ---- the mods this one needs (a submod's parent) ----
+
+        /// <summary>The mods this one is read over, in the order the game must read them (enabled before it, in this order).</summary>
+        public IReadOnlyList<NeededModRow> Needed => _session.Needed.Select((m, i) => new NeededModRow(this, i, m)).ToList();
+
+        public bool HasNeeded => _session.Needed.Count > 0;
+
+        /// <summary>Whether the list can change now: the mod is read again, so it must be saved, without unsaved edits.</summary>
+        public bool CanChangeNeeded => _session.FilePath != null && !_session.History.IsDirty;
+
+        public string NeededTip => _session.FilePath == null ? "Save the mod first: the mods it needs are remembered for its file"
+            : _session.History.IsDirty ? "Save first: the mod is read again over the mods it needs, and unsaved edits would be lost"
+            : "Add a mod this one needs (a submod's parent): its entities are read first, as the game reads them, and are never changed";
+
+        public System.Windows.Input.ICommand AddNeededCommand => new RelayCommand(() =>
+            Ui.PickFile?.Invoke("A mod this one needs", "Dominions mods (*.dm)|*.dm|All files|*.*",
+                file => _main.SetNeeded(Files().Append(file).ToList())));
+
+        private List<string> Files() => _session.Needed.Select(m => m.FullFilePath).ToList();
+
+        internal void RemoveNeeded(int index)
+        {
+            var files = Files();
+            files.RemoveAt(index);
+            _main.SetNeeded(files);
+        }
+
+        internal void MoveNeededUp(int index)
+        {
+            var files = Files();
+            (files[index - 1], files[index]) = (files[index], files[index - 1]);
+            _main.SetNeeded(files);
+        }
+
         private void Set(Command field, string? value)
         {
             var error = _session.Edit(ed => ed.SetModInfo(field, value));
@@ -408,5 +522,29 @@ namespace Dom5Editor.UI.Views
                 _main.StatusMessage = error;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
         }
+    }
+
+    /// <summary>One of the mods the open one needs, on Mod Info: its name and file, removable, movable up.</summary>
+    public sealed class NeededModRow
+    {
+        private readonly ModInfoViewModel _info;
+        private readonly int _index;
+
+        internal NeededModRow(ModInfoViewModel info, int index, Dom5Edit.Mod mod)
+        {
+            _info = info;
+            _index = index;
+            Name = EditorSession.NameOf(mod) ?? "";
+            File = mod.FullFilePath;
+        }
+
+        public string Name { get; }
+        public string File { get; }
+        public string FileName => System.IO.Path.GetFileName(File);
+        public string Order => $"{_index + 1}.";
+        public bool CanMoveUp => _index > 0 && _info.CanChangeNeeded;
+
+        public System.Windows.Input.ICommand RemoveCommand => new RelayCommand(() => _info.RemoveNeeded(_index), () => _info.CanChangeNeeded);
+        public System.Windows.Input.ICommand MoveUpCommand => new RelayCommand(() => _info.MoveNeededUp(_index), () => CanMoveUp);
     }
 }

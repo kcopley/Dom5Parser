@@ -192,12 +192,15 @@ namespace Dom5Edit.Events
         /// <summary>
         /// Builds the graph for a mod's events. Spells (the mod's, resolved; vanilla's, as read) are
         /// looked at for enchantments and event-causing effects; pass <paramref name="spells"/> to
-        /// reuse that from an earlier build when no spell changed.
+        /// reuse that from an earlier build when no spell changed. <paramref name="below"/>: the
+        /// mods read before this one (Mod.Below: a mod it needs, vanilla), whose events and spells
+        /// it links to; none for the mod's alone.
         /// </summary>
-        public static EventGraph Build(Mod mod, Func<IDEntity, ResolvedEntity> resolve, Mod? vanilla = null, SpellIndex? spells = null)
+        public static EventGraph Build(Mod mod, Func<IDEntity, ResolvedEntity> resolve, IReadOnlyList<Mod>? below = null, SpellIndex? spells = null)
         {
             var g = new EventGraph();
-            g.Spells = spells ?? SpellIndex.Build(mod, resolve, vanilla);
+            below ??= Array.Empty<Mod>();
+            g.Spells = spells ?? SpellIndex.Build(mod, resolve, below);
             var plan = new SavePlan(mod);
             // the mod's events in the order the game reads them (its #newevents get records 3500,
             // 3501, ... in this order)
@@ -214,25 +217,36 @@ namespace Dom5Edit.Events
                 g._ownLines.UnionWith(block.Lines);
             }
             // a #selectevent of a game event: what it is in game (the game's lines and the mod's)
-            foreach (var e in g._modEvents.Where(e => e.Selected))
+            List<Property> Resolved(IDEntity e)
             {
                 var r = resolve(e);
                 var lines = r.Values.Select(v => v.Property).ToList();
                 if (!lines.Any(p => p.Command == Command.MSG) && r.Assets.TryGetValue(Command.MSG, out var msg))
                     lines.Add(msg);
-                g._lines[e] = lines;
+                return lines;
+            }
+            foreach (var e in g._modEvents.Where(e => e.Selected))
+            {
+                g._lines[e] = Resolved(e);
                 if (e.ID >= 0)
                     g._byNumber[e.ID] = e;
             }
-            // the game's own events the mod doesn't change (their messages are display assets)
-            if (vanilla != null && vanilla.Database.TryGetValue(EntityType.EVENT, out var gameEvents))
-                foreach (var v in gameEvents.GetFullList().OrderBy(v => v.ID))
+            // the events of the mods read before this one, which it doesn't change: a mod it needs
+            // (its new events and its changes to the game's, as resolved), then the game's own
+            // (their messages are display assets)
+            foreach (var layer in below)
+                if (layer.Database.TryGetValue(EntityType.EVENT, out var gameEvents))
                 {
-                    if (v.ID < 0 || g._byNumber.ContainsKey(v.ID))
-                        continue;
-                    g._byNumber[v.ID] = v;
-                    g._lines[v] = v.Properties.ToList();
-                    g._gameEvents.Add(v);
+                    bool vanilla = layer.Dependencies.Count == 0;
+                    foreach (var v in gameEvents.GetFullList().OrderBy(v => v.ID))
+                    {
+                        if (v.ID < 0 && vanilla || v.ID >= 0 && g._byNumber.ContainsKey(v.ID))
+                            continue;
+                        if (v.ID >= 0)
+                            g._byNumber[v.ID] = v;
+                        g._lines[v] = vanilla ? v.Properties.ToList() : Resolved(v);
+                        g._gameEvents.Add(v);
+                    }
                 }
             g._events.AddRange(g._modEvents);
             g._events.AddRange(g._gameEvents);
@@ -410,7 +424,7 @@ namespace Dom5Edit.Events
         internal Dictionary<long, List<IDEntity>> Enchantments { get; } = new Dictionary<long, List<IDEntity>>();
         internal Dictionary<long, List<IDEntity>> EventCauses { get; } = new Dictionary<long, List<IDEntity>>();
 
-        public static SpellIndex Build(Mod mod, Func<IDEntity, ResolvedEntity> resolve, Mod? vanilla)
+        public static SpellIndex Build(Mod mod, Func<IDEntity, ResolvedEntity> resolve, IReadOnlyList<Mod> below)
         {
             var index = new SpellIndex();
             void Note(IDEntity spell, long? effect, long? damage)
@@ -433,15 +447,24 @@ namespace Dom5Edit.Events
                     if (s.ID > 0)
                         own.Add(s.ID);
                 }
-            if (vanilla != null && vanilla.Database.TryGetValue(EntityType.SPELL, out var vspells))
-                foreach (var s in vspells.GetFullList())
-                {
-                    if (own.Contains(s.ID))
-                        continue;
-                    var props = s.Properties;
-                    Note(s, EventInfo.Number(props.LastOrDefault(p => p.Command == Command.EFFECT)),
-                        EventInfo.Number(props.LastOrDefault(p => p.Command == Command.DAMAGE)));
-                }
+            // the spells of the mods read before this one (nearest first): a mod it needs, resolved;
+            // the game's, as read
+            foreach (var layer in below)
+                if (layer.Database.TryGetValue(EntityType.SPELL, out var vspells))
+                    foreach (var s in vspells.GetFullList())
+                    {
+                        if (s.ID > 0 && !own.Add(s.ID))
+                            continue;
+                        if (layer.Dependencies.Count > 0)
+                        {
+                            var r = resolve(s);
+                            Note(s, EventInfo.Number(r.Get(Command.EFFECT)?.Property), EventInfo.Number(r.Get(Command.DAMAGE)?.Property));
+                            continue;
+                        }
+                        var props = s.Properties;
+                        Note(s, EventInfo.Number(props.LastOrDefault(p => p.Command == Command.EFFECT)),
+                            EventInfo.Number(props.LastOrDefault(p => p.Command == Command.DAMAGE)));
+                    }
             return index;
         }
     }

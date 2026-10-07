@@ -17,6 +17,10 @@ namespace Dom5Edit.Resolve
     ///   repeatable commands (GameRules).
     /// Every value keeps where it came from (ValueSource), which decides what an edit does.
     ///
+    /// A mod read over another one it needs (a submod over its parent; Mod.Dependencies) has that
+    /// mod's resolver as its base, which has vanilla's: what the parent's lines set is base data
+    /// here, as vanilla's is (an edit adds a line to this mod; the parent is never changed).
+    ///
     /// Lazy, per entity: an entity's state is worked out from its own blocks, and for a copy line
     /// from the source's state just before that line's place in the save (recursively), so
     /// resolving one entity costs its blocks and its copy chain, not the whole mod. Results are
@@ -73,6 +77,13 @@ namespace Dom5Edit.Resolve
 
         private ModResolver? Base => _mod.Dependencies.Count > 0 ? For(_mod.Dependencies[0]) : null;
 
+        /// <summary>An entity as the base has it, its lines base data here (they belong to a mod under this one).</summary>
+        private ResolvedEntity FromBase(IDEntity entity)
+        {
+            var r = Base!.Resolve(entity);
+            return Base._lineSource == ValueSource.Own ? r.AsBase() : r;
+        }
+
         private SavePlan Plan => _plan ??= new SavePlan(_mod);
 
         /// <summary>Forget what was worked out; the next Resolve uses the mod as it is now. Call after every edit.</summary>
@@ -99,16 +110,16 @@ namespace Dom5Edit.Resolve
                 result = new ResolvedEntity(state.Entity, state.Vanilla, state.Values.ToList(), state.Structure.ToList(), state.Removals.ToList(), state.GameValues)
                     { Assets = new Dictionary<Command, Property>(state.Assets) };
             else if (entity.ParentMod != _mod && Base != null)
-                result = Base.Resolve(entity);
+                result = FromBase(entity);
             else if (Base != null && entity.ID > 0 && FindInBase(entity) is IDEntity inBase)
-                result = Base.Resolve(inBase); // a mod entity no longer in the mod (an undone first edit): vanilla again
+                result = FromBase(inBase); // a mod entity no longer in the mod (an undone first edit): vanilla again
             else
                 result = new ResolvedEntity(entity, null, Array.Empty<ResolvedValue>(), Array.Empty<Property>(), Array.Empty<Property>(), entity.GameValues);
             _resolved[key] = result;
             return result;
         }
 
-        /// <summary>The entity a mod's #select changes in this mod's base (vanilla), or null.</summary>
+        /// <summary>The entity a mod's #select changes in this mod's base (vanilla, or a mod this one needs), or null.</summary>
         public IDEntity? BaseEntityOf(IDEntity entity)
         {
             if (entity.DependentEntity != null)
@@ -213,7 +224,7 @@ namespace Dom5Edit.Resolve
             var vanilla = Base != null ? BaseEntityOf(entity) : null;
             if (vanilla != null)
             {
-                var start = Base!.Resolve(vanilla);
+                var start = FromBase(vanilla);
                 state.Vanilla = vanilla;
                 state.Values.AddRange(start.Values);
                 state.GameValues = start.GameValues;
@@ -234,7 +245,7 @@ namespace Dom5Edit.Resolve
                 var inBase = source.ParentMod == _mod ? FindInBase(source) : source;
                 if (inBase != null)
                 {
-                    var r = Base.Resolve(inBase);
+                    var r = FromBase(inBase);
                     return (r.Entity, r.Values, r.GameValues, r.Assets);
                 }
             }
@@ -244,7 +255,7 @@ namespace Dom5Edit.Resolve
         private IDEntity? FindInBase(IDEntity entity)
         {
             var type = entity.GetEntityType();
-            foreach (var dep in _mod.Dependencies)
+            foreach (var dep in _mod.Below())
                 if (dep.Database.TryGetValue(type, out var set))
                 {
                     if (set.TryGet(entity.ID, null, out var found))

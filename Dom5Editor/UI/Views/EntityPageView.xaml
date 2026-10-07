@@ -141,11 +141,11 @@
         </DataTemplate>
         <DataTemplate x:Key="NotePart">
             <Grid>
-                    <!-- why the page can't be edited (the game's own mercenaries) -->
+                    <!-- why the page can't be edited (the game's own mercenaries, a needed mod's events and bands) -->
                     <StackPanel Margin="0,0,0,8">
                         <TextBlock Text="{Binding ReadOnlyNote}" Foreground="{DynamicResource WarningBrush}" TextWrapping="Wrap"/>
-                        <Button Content="New band from this one" Style="{DynamicResource ButtonSmall}" HorizontalAlignment="Left" Margin="0,4,0,0"
-                                Command="{Binding CopyToNewCommand}" ToolTip="Make a new band (#newmerc) with this one's values, and open it to edit"/>
+                        <Button Content="{Binding CopyToNewLabel}" Style="{DynamicResource ButtonSmall}" HorizontalAlignment="Left" Margin="0,4,0,0"
+                                Command="{Binding CopyToNewCommand}" ToolTip="{Binding CopyToNewTip}"/>
                     </StackPanel>
             </Grid>
         </DataTemplate>

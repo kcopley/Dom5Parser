@@ -60,7 +60,14 @@ namespace Dom5Editor.UI.ViewModels
         /// <summary>An entity the mod adds.</summary>
         public bool IsNew => !IsVanilla;
 
-        public string SourceLabel => IsNew ? "New" : IsModified ? "Changed" : "Vanilla";
+        /// <summary>For an entity a mod this one needs defines or changes (a submod's parent): that mod's name; null for vanilla's.</summary>
+        public string? FromMod { get; init; }
+
+        /// <summary>With <see cref="FromMod"/>: the entity is the game's, and that mod changes it (a #select of it).</summary>
+        public bool FromModChangesGame { get; init; }
+
+        public string SourceLabel => IsNew ? "New" : IsModified ? "Changed"
+            : FromMod == null ? "Vanilla" : FromModChangesGame ? $"Vanilla, changed by {FromMod}" : "From " + FromMod;
 
         // worked out when a row is first shown (the list is virtualized), again after an edit
 
