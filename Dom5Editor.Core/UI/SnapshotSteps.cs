@@ -728,7 +728,7 @@ namespace Dom5Editor.UI
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                     GC.Collect();
-                    Log($"sweep: {opened} pages, {failed} failed; slowest {slowest} ms ({slowestName}); memory {GC.GetTotalMemory(true) / (1 << 20)} MB managed, {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1 << 20)} MB working set; {pages.Count(w => w.IsAlive)} of {pages.Count} pages still alive; {vm.Session!.ChangedListeners} session listeners");
+                    Log($"sweep: {opened} pages, {failed} failed; slowest {slowest} ms ({slowestName}); memory {GC.GetTotalMemory(true) / (1 << 20)} MB managed, {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1 << 20)} MB working set; {pages.Count(w => w.IsAlive)} of {pages.Count} pages still alive; {vm.Session!.ChangedListeners} session listeners; {Ui.RequeryListeners} command listeners");
                     break;
                 }
                 case "--derived":
