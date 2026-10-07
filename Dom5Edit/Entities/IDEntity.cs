@@ -722,8 +722,15 @@ namespace Dom5Edit.Entities
             MarkEdited();
             p.Parent = this;
             _properties.Add(p);
-            _properties = _properties.OrderBy(sort_properties).ToList();
+            _properties = _properties.OrderBy(LiveRank).ToList();
         }
+
+        /// <summary>
+        /// Where a line added in the editor goes among the entity's lines (an entity with no parsed
+        /// block is saved in this order): <see cref="sort_properties"/>, and lines a type needs
+        /// early right after the name (a nation's epithet and era).
+        /// </summary>
+        protected virtual int LiveRank(Property p) => sort_properties(p) * 10;
 
         /// <summary>Moves one of the lines to a place in the list (an entity with no parsed block is saved in list order).</summary>
         internal bool MoveLive(Property p, int index)

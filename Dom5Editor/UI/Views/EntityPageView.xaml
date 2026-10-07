@@ -76,6 +76,11 @@
                                         <Button Command="{Binding PickCommand}" ToolTip="{Binding Tooltip}" AllowDrop="True" Drop="OnSpriteDrop" DragOver="OnSpriteDragOver"
                                                 Width="{Binding Size}" Height="{Binding Size}" Cursor="Hand" Padding="0" Background="#10FFFFFF"
                                                 BorderBrush="#40FFFFFF" BorderThickness="1">
+                                            <Button.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="{Binding RemoveText}" Command="{Binding RemoveCommand}" IsEnabled="{Binding CanRemove}"/>
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border x:Name="B" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"

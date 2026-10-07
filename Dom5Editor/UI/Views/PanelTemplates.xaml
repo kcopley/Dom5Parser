@@ -382,7 +382,7 @@
     <DataTemplate DataType="{x:Type vm:NumberField}">
         <StackPanel Orientation="Horizontal" Margin="0,1" ToolTip="{Binding Tooltip}">
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource FieldLabelTemplate}"/>
-            <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="80" Style="{StaticResource InlineBox}"
+            <TextBox Text="{Binding Text, UpdateSourceTrigger=Explicit}" behaviors:DebouncedTextBoxBehavior.IsEnabled="True" Width="{Binding BoxWidth}" Style="{StaticResource InlineBox}"
                      IsReadOnly="{Binding IsReadOnly, Mode=OneWay}"/>
             <TextBlock Text="{Binding Derived}" Style="{StaticResource DerivedText}"
                        Visibility="{Binding HasDerived, Converter={StaticResource BoolToVisibilityConverter}}"/>
