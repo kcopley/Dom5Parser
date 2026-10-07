@@ -38,6 +38,14 @@ namespace Dom5Edit.Validation
             // lines the game doesn't read, from the parser
             foreach (var p in mod.ParseIssues)
             {
+                // a #copystats after lines that set what it copies (name, stats, abilities: the exe)
+                var copy = Regex.Match(p.Message ?? "", @"^#copystats at line \d+ overwrites \d+ previously defined property\(s\): (.*)$");
+                if (p.IssueType == ParseIssueType.PropertiesClearedBySubsequentClear && copy.Success)
+                {
+                    look.Add(new Item(p.LineNumber, Quote(p.LineNumber), "copystats",
+                        $"#copystats replaces what the lines before it in the block set ({copy.Groups[1].Value}): lines meant to change the copy go after it"));
+                    continue;
+                }
                 if (p.IssueType != ParseIssueType.InvalidCommand && p.IssueType != ParseIssueType.NotReadByGame)
                     continue;
                 var command = Regex.Match(p.Message ?? "", @"#[A-Za-z_][A-Za-z0-9_]*").Value;
