@@ -4,8 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Dom5Editor.Imaging;
 using Dom5Edit.Commands;
 
 namespace Dom5Editor.UI.Controls
@@ -311,19 +310,19 @@ namespace Dom5Editor.UI.Controls
         }
 
         /// <summary>
-        /// Background brush for the badge.
+        /// Background colour for the badge (#RRGGBB).
         /// </summary>
-        public Brush Background { get; set; } = new SolidColorBrush(Color.FromRgb(60, 60, 60));
+        public string Background { get; set; } = "#3C3C3C";
 
         /// <summary>
-        /// Border brush for the badge.
+        /// Border colour for the badge (#RRGGBB).
         /// </summary>
-        public Brush BorderBrush { get; set; } = new SolidColorBrush(Color.FromRgb(80, 80, 80));
+        public string BorderBrush { get; set; } = "#505050";
 
         /// <summary>
-        /// Foreground brush for text.
+        /// Text colour (#RRGGBB).
         /// </summary>
-        public Brush Foreground { get; set; } = Brushes.White;
+        public string Foreground { get; set; } = "#FFFFFF";
 
         /// <summary>
         /// Tooltip text.
@@ -362,11 +361,11 @@ namespace Dom5Editor.UI.Controls
         /// </summary>
         public bool HasIcon => !string.IsNullOrEmpty(IconPath);
 
-        private ImageSource _iconSource;
+        private Picture _iconSource;
         /// <summary>
         /// Gets the icon image source, loading it lazily from IconPath.
         /// </summary>
-        public ImageSource IconSource
+        public Picture IconSource
         {
             get
             {
@@ -378,7 +377,7 @@ namespace Dom5Editor.UI.Controls
             }
         }
 
-        private static ImageSource LoadIcon(string relativePath)
+        private static Picture LoadIcon(string relativePath)
         {
             if (string.IsNullOrEmpty(relativePath))
                 return null;
@@ -402,13 +401,7 @@ namespace Dom5Editor.UI.Controls
                     var fullPath = Path.Combine(basePath, "icons", relativePath);
                     if (File.Exists(fullPath))
                     {
-                        var bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.EndInit();
-                        bitmap.Freeze();
-                        return bitmap;
+                        return Picture.Load(fullPath);
                     }
                 }
             }
@@ -467,7 +460,7 @@ namespace Dom5Editor.UI.Controls
         /// Creates a colored value property (e.g., for resistances).
         /// </summary>
         public static PropertyItem CreateColoredValue(Command command, string displayName, int value,
-            Color backgroundColor, Color borderColor, Color foregroundColor,
+            string backgroundColor, string borderColor, string foregroundColor,
             bool isModified = false, bool isSessionEdit = false)
         {
             return new PropertyItem
@@ -476,9 +469,9 @@ namespace Dom5Editor.UI.Controls
                 DisplayName = displayName,
                 Value = value.ToString(),
                 HasValue = true,
-                Background = new SolidColorBrush(backgroundColor),
-                BorderBrush = new SolidColorBrush(borderColor),
-                Foreground = new SolidColorBrush(foregroundColor),
+                Background = backgroundColor,
+                BorderBrush = borderColor,
+                Foreground = foregroundColor,
                 IsModified = isModified,
                 IsSessionEdit = isSessionEdit
             };
@@ -507,7 +500,7 @@ namespace Dom5Editor.UI.Controls
         /// Creates a colored two-value property.
         /// </summary>
         public static PropertyItem CreateColoredIntIntValue(Command command, string displayName, int value1, int value2,
-            Color backgroundColor, Color borderColor, Color foregroundColor,
+            string backgroundColor, string borderColor, string foregroundColor,
             bool isModified = false, bool isSessionEdit = false)
         {
             return new PropertyItem
@@ -518,9 +511,9 @@ namespace Dom5Editor.UI.Controls
                 Value2 = value2.ToString(),
                 HasValue = true,
                 HasSecondValue = true,
-                Background = new SolidColorBrush(backgroundColor),
-                BorderBrush = new SolidColorBrush(borderColor),
-                Foreground = new SolidColorBrush(foregroundColor),
+                Background = backgroundColor,
+                BorderBrush = borderColor,
+                Foreground = foregroundColor,
                 IsModified = isModified,
                 IsSessionEdit = isSessionEdit
             };
@@ -587,7 +580,7 @@ namespace Dom5Editor.UI.Controls
         /// </summary>
         public static PropertyItem CreateColoredReference(Command command, string displayName, int referenceId,
             string referenceName, string referenceType,
-            Color backgroundColor, Color borderColor, Color foregroundColor,
+            string backgroundColor, string borderColor, string foregroundColor,
             bool isModified = false, bool isSessionEdit = false)
         {
             return new PropertyItem
@@ -599,9 +592,9 @@ namespace Dom5Editor.UI.Controls
                 ReferenceId = referenceId,
                 ReferenceName = referenceName,
                 ReferenceType = referenceType,
-                Background = new SolidColorBrush(backgroundColor),
-                BorderBrush = new SolidColorBrush(borderColor),
-                Foreground = new SolidColorBrush(foregroundColor),
+                Background = backgroundColor,
+                BorderBrush = borderColor,
+                Foreground = foregroundColor,
                 IsModified = isModified,
                 IsSessionEdit = isSessionEdit
             };

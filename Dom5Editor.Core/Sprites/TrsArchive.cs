@@ -1,6 +1,5 @@
 using System.IO;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Dom5Editor.Imaging;
 
 namespace Dom5Editor.Sprites
 {
@@ -29,7 +28,7 @@ namespace Dom5Editor.Sprites
         private readonly int[] _groups;
         // decoded images, kept while something shows them (a unit list scrolled to the end would
         // otherwise hold every sprite at full size); null: the image can't be decoded
-        private readonly Dictionary<int, WeakReference<BitmapSource>?> _cache = new Dictionary<int, WeakReference<BitmapSource>?>();
+        private readonly Dictionary<int, WeakReference<Picture>?> _cache = new Dictionary<int, WeakReference<Picture>?>();
         private readonly object _lock = new object();
 
         public string Path { get; }
@@ -138,7 +137,7 @@ namespace Dom5Editor.Sprites
         /// can't be decoded. A half-size image gets 192 dpi, so WPF shows it at the size the game does.
         /// Decoded again only if nothing kept it since.
         /// </summary>
-        public BitmapSource? Image(int index)
+        public Picture? Image(int index)
         {
             if (index < 0 || index >= _images.Length)
                 return null;
@@ -151,7 +150,7 @@ namespace Dom5Editor.Sprites
                     if (cached.TryGetTarget(out var alive))
                         return alive;
                 }
-                BitmapSource? image = null;
+                Picture? image = null;
                 try
                 {
                     var info = _images[index];
@@ -159,15 +158,14 @@ namespace Dom5Editor.Sprites
                     if (pixels != null)
                     {
                         double dpi = info.HalfSize ? 192 : 96;
-                        image = BitmapSource.Create(info.Width, info.Height, dpi, dpi, PixelFormats.Bgra32, null, pixels, info.Width * 4);
-                        image.Freeze();
+                        image = new Picture(info.Width, info.Height, pixels, dpi);
                     }
                 }
                 catch (Exception)
                 {
                     image = null; // a damaged or unexpected image: no icon
                 }
-                _cache[index] = image != null ? new WeakReference<BitmapSource>(image) : null;
+                _cache[index] = image != null ? new WeakReference<Picture>(image) : null;
                 return image;
             }
         }

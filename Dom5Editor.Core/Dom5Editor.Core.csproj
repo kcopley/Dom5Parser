@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- The editor without its windows: the session (a mod open for editing), the pages' view models,
+         the game's art and tables. No WPF: the Windows editor (Dom5Editor, WPF) and the Mac/Linux one
+         (Avalonia) both build their views on it (docs/CROSS_PLATFORM.md). -->
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Dom5Editor</RootNamespace>
+        <Version>0.10.0</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <InternalsVisibleTo Include="Dom5Editor" />
+      <InternalsVisibleTo Include="Dom5Editor.Avalonia" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Dom5Edit\Dom5Edit.csproj" />
+    </ItemGroup>
+
+    <!-- The game data the editor needs, next to the exe (vanilla.dm is written from the game by tools/dom6exe) -->
+    <ItemGroup>
+      <Content Include="..\vanilla.dm" Link="vanilla.dm">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Include="..\spell_effects_mapping.json" Link="spell_effects_mapping.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\spell_effect_types.json" Link="spell_effect_types.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <!-- the vanilla events (tools/dom6exe events): their messages are read from the player's exe -->
+      <Content Include="..\tools\dom6exe\data\events-6.37.dm" Link="vanilla-events.dm">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <!-- the vanilla sprite numbers (tools/dom6exe sprites): the pictures are read from the player's install -->
+      <Content Include="..\tools\dom6exe\data\sprites-6.37.json" Link="vanilla-sprites.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <!-- badge definitions, hover hints from the manuals (tools/command_hints.py), event commands,
+           and which of the game's icons each key is (tools/gameart) -->
+      <Content Include="Data\*.json" Link="Data\%(Filename)%(Extension)">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <!-- The game's icons the editor shows, packed (tools/gameart/trs.py pack) and compiled in -->
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\game-icons.pack" LogicalName="game-icons.pack" />
+    </ItemGroup>
+
+</Project>

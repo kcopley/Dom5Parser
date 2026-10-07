@@ -1,7 +1,6 @@
 using System.IO;
 using System.Text.Json;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Dom5Editor.Imaging;
 
 namespace Dom5Editor.Sprites
 {
@@ -24,7 +23,7 @@ namespace Dom5Editor.Sprites
         private static string? _folder;
         private static Dictionary<string, (string Archive, int Index)>? _map;
         private static readonly Dictionary<string, TrsArchive?> _archives = new Dictionary<string, TrsArchive?>(StringComparer.OrdinalIgnoreCase);
-        private static readonly Dictionary<string, ImageSource?> _icons = new Dictionary<string, ImageSource?>();
+        private static readonly Dictionary<string, Picture?> _icons = new Dictionary<string, Picture?>();
 
         /// <summary>
         /// Uses this folder first: the game's data folder, or the game folder that contains it.
@@ -68,7 +67,7 @@ namespace Dom5Editor.Sprites
         }
 
         /// <summary>The game's icon for a key, frozen; null if the game or the icon isn't there.</summary>
-        public static ImageSource? Icon(string? key)
+        public static Picture? Icon(string? key)
         {
             if (string.IsNullOrEmpty(key))
                 return null;
@@ -76,7 +75,7 @@ namespace Dom5Editor.Sprites
             {
                 if (_icons.TryGetValue(key, out var cached))
                     return cached;
-                ImageSource? image = Packed(key);
+                Picture? image = Packed(key);
                 if (image == null && Map().TryGetValue(key, out var where))
                 {
                     var archive = Archive(where.Archive);
@@ -93,7 +92,7 @@ namespace Dom5Editor.Sprites
         /// attack frame, the next image). Null when the game or the image isn't there. Decoded on
         /// first use and cached; nothing of it is shipped with the editor.
         /// </summary>
-        public static BitmapSource? Sprite(string archive, int number, int frame = 0)
+        public static Picture? Sprite(string archive, int number, int frame = 0)
         {
             TrsArchive? a;
             lock (_lock)
@@ -110,7 +109,7 @@ namespace Dom5Editor.Sprites
         /// glamour, blood, holy), image <paramref name="look"/> when it is 0-99, else image
         /// <paramref name="level"/> (0-3). A vanilla site without #look has look -1; a new site 0.
         /// </summary>
-        public static BitmapSource? SitePicture(int path, int level, int look)
+        public static Picture? SitePicture(int path, int level, int look)
         {
             TrsArchive? a;
             lock (_lock)
@@ -124,7 +123,7 @@ namespace Dom5Editor.Sprites
         }
 
         // nations' flags built so far, by nation and tint colors, kept while something shows them
-        private static readonly Dictionary<(int Nation, int Color, int Secondary), WeakReference<BitmapSource>?> _flags = new Dictionary<(int, int, int), WeakReference<BitmapSource>?>();
+        private static readonly Dictionary<(int Nation, int Color, int Secondary), WeakReference<Picture>?> _flags = new Dictionary<(int, int, int), WeakReference<Picture>?>();
         // the parts every built flag has (pole, cloth, border) on the flag's canvas, from this archive
         private static (TrsArchive? Archive, byte[]?[] Parts) _flagParts;
         private const int FlagSize = 128;
@@ -141,7 +140,7 @@ namespace Dom5Editor.Sprites
         /// first asked for and cached per nation and colors; null when the game, the rule (no
         /// vanilla-sprites.json) or the images aren't there.
         /// </summary>
-        public static BitmapSource? NationFlag(int nation, (float R, float G, float B) color, (float R, float G, float B) secondary)
+        public static Picture? NationFlag(int nation, (float R, float G, float B) color, (float R, float G, float B) secondary)
         {
             var rule = Dom5Edit.VanillaSprites.Flag;
             if (rule == null || nation < 0 || nation > rule.LastComposed)
@@ -161,7 +160,7 @@ namespace Dom5Editor.Sprites
                     if (cached.TryGetTarget(out var alive))
                         return alive;
                 }
-                BitmapSource? image;
+                Picture? image;
                 try
                 {
                     image = BuildFlag(a, rule, nation, key.Item2, key.Item3);
@@ -170,7 +169,7 @@ namespace Dom5Editor.Sprites
                 {
                     image = null; // a damaged archive: no flag
                 }
-                _flags[key] = image != null ? new WeakReference<BitmapSource>(image) : null;
+                _flags[key] = image != null ? new WeakReference<Picture>(image) : null;
                 return image;
             }
         }
@@ -179,7 +178,7 @@ namespace Dom5Editor.Sprites
         private static int Tint((float R, float G, float B) c) =>
             Dom5Edit.NationFlagRule.Tint(c.R) << 16 | Dom5Edit.NationFlagRule.Tint(c.G) << 8 | Dom5Edit.NationFlagRule.Tint(c.B);
 
-        private static BitmapSource? BuildFlag(TrsArchive a, Dom5Edit.NationFlagRule rule, int nation, int color, int secondary)
+        private static Picture? BuildFlag(TrsArchive a, Dom5Edit.NationFlagRule rule, int nation, int color, int secondary)
         {
             if (_flagParts.Archive != a)
                 _flagParts = (a, new[] { Canvas(a, rule.Pole), Canvas(a, rule.Cloth), Canvas(a, rule.Border) });
@@ -192,9 +191,7 @@ namespace Dom5Editor.Sprites
             if (Canvas(a, rule.Emblem(nation)) is byte[] emblem)
                 Over(flag, emblem);
             AsStored(flag);
-            var image = BitmapSource.Create(FlagSize, FlagSize, 96, 96, PixelFormats.Bgra32, null, flag, FlagSize * 4);
-            image.Freeze();
-            return image;
+            return new Picture(FlagSize, FlagSize, flag);
         }
 
         /// <summary>An image on the flag's 128 x 128 canvas, at the top left (how the game loads a part), as straight BGRA; null if it isn't there.</summary>
@@ -281,7 +278,7 @@ namespace Dom5Editor.Sprites
         }
 
         /// <summary>The icon from the pack compiled into the editor, or null (not in it, or no pack).</summary>
-        private static ImageSource? Packed(string key)
+        private static Picture? Packed(string key)
         {
             _pack ??= ReadPack();
             if (!_pack.TryGetValue(key, out var icon))
@@ -294,9 +291,7 @@ namespace Dom5Editor.Sprites
                 while (read < pixels.Length && (n = z.Read(pixels, read, pixels.Length - read)) > 0)
                     read += n;
                 double dpi = icon.Half ? 192 : 96;
-                var image = System.Windows.Media.Imaging.BitmapSource.Create(icon.Width, icon.Height, dpi, dpi, PixelFormats.Bgra32, null, pixels, icon.Width * 4);
-                image.Freeze();
-                return image;
+                return new Picture(icon.Width, icon.Height, pixels, dpi);
             }
             catch (Exception)
             {

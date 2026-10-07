@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 using System.Windows.Input;
 
@@ -25,8 +26,8 @@ namespace Dom5Editor.UI
 
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add { Ui.Subscribe(value); }
+            remove { Ui.Unsubscribe(value); }
         }
 
         public bool CanExecute(object parameter)
@@ -56,8 +57,8 @@ namespace Dom5Editor.UI
 
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add { Ui.Subscribe(value); }
+            remove { Ui.Unsubscribe(value); }
         }
 
         public bool CanExecute(object parameter)

@@ -94,11 +94,11 @@ namespace Dom5Editor.UI.Views
             Open(session, $"Loaded {System.IO.Path.GetFileName(filePath)}" +
                 (session.BackupNote != null ? $" ({session.BackupNote})" : ""));
             // the report on what was opened, once the window has drawn the mod
-            System.Windows.Application.Current?.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+            Ui.Later(() =>
             {
                 if (ReferenceEquals(_session, session))
                     CheckOnOpen();
-            }));
+            });
         }
 
         public void SaveMod(string filePath)
@@ -371,13 +371,9 @@ namespace Dom5Editor.UI.Views
         /// <summary>The icon box's "Pick...": a banner image, copied into the mod's folder like a sprite.</summary>
         public System.Windows.Input.ICommand PickIconCommand => new RelayCommand(() =>
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Title = "Mod banner (#icon): 128x32 or 256x64",
-                Filter = "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*",
-            };
-            if (dialog.ShowDialog() == true)
-                SetIcon(dialog.FileName);
+            if (Ui.PickFile?.Invoke("Mod banner (#icon): 128x32 or 256x64",
+                    "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*") is string file)
+                SetIcon(file);
         });
 
         /// <summary>Sets #icon from an image file, copied into the mod's sprites folder (a mod with no file is saved first).</summary>

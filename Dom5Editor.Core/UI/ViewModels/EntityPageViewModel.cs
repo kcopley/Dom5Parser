@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Windows.Media;
 using Dom5Edit.Commands;
 using Dom5Edit.Editing;
 using Dom5Edit.Entities;
@@ -187,7 +186,7 @@ namespace Dom5Editor.UI.ViewModels
              : "Not set");
 
         /// <summary>The entity's picture (#spr1, an item's #spr, a site's from #path, #level and #look): the mod's file, else the vanilla one (supplied, or the game's from the install); null if none.</summary>
-        public System.Windows.Media.Imaging.BitmapSource? Sprite => Sprites.SpriteLoader.Of(Resolved, Type, Session.Mod.FullFilePath);
+        public Imaging.Picture? Sprite => Sprites.SpriteLoader.Of(Resolved, Type, Session.Mod.FullFilePath);
 
         public bool HasSprite => Sprite != null;
 
@@ -704,8 +703,8 @@ namespace Dom5Editor.UI.ViewModels
                         continue;
                     string kind = KindOf(c, def.Type);
                     string? refType = kind == "ref" ? def.RefType : kind == "weaponref" ? "weapon" : null;
-                    Brush? bg = def.HasColors ? new SolidColorBrush(BadgeConfigLoader.ParseColor(def.Color, Color.FromRgb(60, 60, 60))) : null;
-                    Brush? border = def.HasColors ? new SolidColorBrush(BadgeConfigLoader.ParseColor(def.BorderColor, Color.FromRgb(80, 80, 80))) : null;
+                    string? bg = def.HasColors ? BadgeConfigLoader.ParseColor(def.Color, "#3C3C3C") : null;
+                    string? border = def.HasColors ? BadgeConfigLoader.ParseColor(def.BorderColor, "#505050") : null;
                     var values = Resolved.GetAll(c).ToList();
                     if (values.Count == 0)
                     {
@@ -1026,7 +1025,7 @@ namespace Dom5Editor.UI.ViewModels
     {
         private readonly EntityPageViewModel _page;
 
-        public SpriteSlot(EntityPageViewModel page, Command command, string label, System.Windows.Media.Imaging.BitmapSource? image, string? path, string source, bool isMain,
+        public SpriteSlot(EntityPageViewModel page, Command command, string label, Imaging.Picture? image, string? path, string source, bool isMain,
             ResolvedValue? own = null)
         {
             RemoveCommand = new RelayCommand(() => { if (own != null) page.ResetLine(own); });
@@ -1051,25 +1050,21 @@ namespace Dom5Editor.UI.ViewModels
 
         public Command Command { get; }
         public string Label { get; }
-        public System.Windows.Media.Imaging.BitmapSource? Image { get; }
+        public Imaging.Picture? Image { get; }
         public bool HasImage => Image != null;
         public bool IsMain { get; }
         public double Size => IsMain ? 64 : 40;
 
         /// <summary>Smoothed when shown smaller than it is (a 128 px flag in a 64 px slot); pixel art stays crisp.</summary>
-        public bool IsSmooth => Image != null && Math.Max(Image.PixelWidth, Image.PixelHeight) > Size;
+        public bool IsSmooth => Image != null && Math.Max(Image.Width, Image.Height) > Size;
         public string Tooltip { get; }
         public ICommand PickCommand { get; }
 
         private void Pick()
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Title = $"{Label} image ({EntityPageViewModel.CommandName(Command)})",
-                Filter = "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*",
-            };
-            if (dialog.ShowDialog() == true)
-                SetFromFile(dialog.FileName);
+            if (Ui.PickFile?.Invoke($"{Label} image ({EntityPageViewModel.CommandName(Command)})",
+                    "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*") is string file)
+                SetFromFile(file);
         }
 
         public void SetFromFile(string file) => _page.SetImage(Command, file);

@@ -25,7 +25,7 @@ namespace Dom5Editor.UI.Controls
             Visibility = Visibility.Collapsed; // (until it has a kind it can draw: no gap where there's no icon)
         }
 
-        private static bool Known(string? kind) => GameIcons.Get(kind) != null || GameIcons.Bitmap(kind) != null;
+        private static bool Known(string? kind) => GameIconDrawings.Get(kind) != null || GameIconDrawings.Bitmap(kind) != null;
 
         public string? Kind
         {
@@ -39,7 +39,7 @@ namespace Dom5Editor.UI.Controls
         protected override void OnRender(DrawingContext dc)
         {
             double w = ActualWidth, h = ActualHeight;
-            if (GameIcons.Bitmap(Kind) is ImageSource image)
+            if (GameIconDrawings.Bitmap(Kind) is ImageSource image)
             {
                 // the game's own icon, fitted in the box
                 double scale = Math.Min(w / image.Width, h / image.Height);
@@ -47,7 +47,7 @@ namespace Dom5Editor.UI.Controls
                 dc.DrawImage(image, new Rect((w - iw) / 2, (h - ih) / 2, iw, ih));
                 return;
             }
-            var drawing = GameIcons.Get(Kind);
+            var drawing = GameIconDrawings.Get(Kind);
             if (drawing == null)
                 return;
             dc.PushTransform(new ScaleTransform(w / 16.0, h / 16.0));
@@ -62,13 +62,9 @@ namespace Dom5Editor.UI.Controls
     /// glamour crystals, blood a bowl, holy candles), used where the game has no icon for a kind; gems as cut stones in the path colors; and stats (HP a heart, protection a
     /// helmet, MR a sparkle, ...) after the game's unit window.
     /// </summary>
-    public static class GameIcons
+    public static class GameIconDrawings
     {
-        public static readonly IReadOnlyDictionary<string, string> PathColors = new Dictionary<string, string>
-        {
-            ["F"] = "#F06A2A", ["A"] = "#8FD3FF", ["W"] = "#3B82F6", ["E"] = "#B98446", ["S"] = "#C9A8FF",
-            ["D"] = "#C98AA6", ["N"] = "#4CAF50", ["G"] = "#E37AD8", ["B"] = "#C2182E", ["H"] = "#F5C842", ["R"] = "#9E9E9E",
-        };
+        private static IReadOnlyDictionary<string, string> PathColors => GameIcons.PathColors;
 
         private static readonly Dictionary<string, Drawing?> _cache = new Dictionary<string, Drawing?>();
         private static readonly Dictionary<string, ImageSource?> _bitmaps = new Dictionary<string, ImageSource?>();
@@ -84,7 +80,7 @@ namespace Dom5Editor.UI.Controls
                 return null;
             if (_bitmaps.TryGetValue(kind, out var cached))
                 return cached;
-            return _bitmaps[kind] = Sprites.GameArt.Icon(kind.Length == 1 ? "path:" + kind : kind);
+            return _bitmaps[kind] = Converters.Pictures.ToImage(Sprites.GameArt.Icon(kind.Length == 1 ? "path:" + kind : kind));
         }
 
         public static Drawing? Get(string? kind)
@@ -100,7 +96,6 @@ namespace Dom5Editor.UI.Controls
         }
 
         /// <summary>The path letter for a path number (0 fire ... 8 blood, 9 holy), or null.</summary>
-        public static string? PathLetter(int path) => path >= 0 && path <= 9 ? "FAWESDNGBH"[path].ToString() : null;
 
         private static Drawing? Build(string kind)
         {

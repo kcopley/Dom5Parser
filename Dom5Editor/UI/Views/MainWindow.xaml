@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Dom5Editor.UI.Controls"
         xmlns:views="clr-namespace:Dom5Editor.UI.Views"
-        xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels"
+        xmlns:coreviews="clr-namespace:Dom5Editor.UI.Views;assembly=Dom5Editor.Core"
+        xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
         mc:Ignorable="d"
         Title="Dom6 Mod Editor"
         Height="900" Width="1400"
@@ -235,7 +236,7 @@
                 </Style>
             </TabControl.ItemContainerStyle>
             <TabControl.Resources>
-                <DataTemplate DataType="{x:Type views:ModInfoViewModel}">
+                <DataTemplate DataType="{x:Type coreviews:ModInfoViewModel}">
                     <Border Background="{StaticResource BackgroundDarkBrush}" Padding="16">
                         <views:ModInfoView/>
                     </Border>

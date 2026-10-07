@@ -1,5 +1,5 @@
 using System.IO;
-using System.Windows.Media.Imaging;
+using Dom5Editor.Imaging;
 
 namespace Dom5Editor.Sprites
 {
@@ -67,20 +67,14 @@ namespace Dom5Editor.Sprites
             var image = SpriteLoader.Load(path, null);
             if (image == null)
                 return "the editor can't read this image: check it's a 24- or 32-bit .tga, or a .png";
-            int w = image.PixelWidth, h = image.PixelHeight;
+            int w = image.Width, h = image.Height;
             return Sizes.Contains(w) || Sizes.Contains(h) ? null
                 : $"it's {w}x{h} pixels; the manual asks for 8, 16, 32, 64 or 128 pixels wide or high";
         }
 
-        private static byte[] ToPng(string path)
-        {
-            var decoder = BitmapDecoder.Create(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-            var encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(decoder.Frames[0]));
-            using var stream = new MemoryStream();
-            encoder.Save(stream);
-            return stream.ToArray();
-        }
+        // (the editor's toolkit converts: Picture.ConvertToPng)
+        private static byte[] ToPng(string path) =>
+            Picture.ConvertToPng?.Invoke(path) ?? throw new InvalidDataException("the editor can't convert this image to .png");
 
         private static string? Join(string? a, string? b) => a == null ? b : b == null ? a : a + "; " + b;
     }

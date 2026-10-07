@@ -11,62 +11,11 @@
         <Description>Editor for Dominions 6 mod files (.dm)</Description>
     </PropertyGroup>
 
-    <!-- The game data the editor needs, next to the exe (vanilla.dm is written from the game by tools/dom6exe) -->
-    <ItemGroup>
-      <Content Include="..\vanilla.dm" Link="vanilla.dm">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </Content>
-      <Content Include="..\spell_effects_mapping.json" Link="spell_effects_mapping.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\spell_effect_types.json" Link="spell_effect_types.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <!-- the vanilla events (tools/dom6exe events): their messages are read from the player's exe -->
-      <Content Include="..\tools\dom6exe\data\events-6.37.dm" Link="vanilla-events.dm">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </Content>
-      <!-- the vanilla sprite numbers (tools/dom6exe sprites): the pictures are read from the player's install -->
-      <Content Include="..\tools\dom6exe\data\sprites-6.37.json" Link="vanilla-sprites.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </Content>
-    </ItemGroup>
-
+    <!-- The session, view models, game art and data files are in Dom5Editor.Core (no WPF), shared with
+         the Mac/Linux editor; its data files (vanilla.dm, badge definitions, ...) come with it -->
     <ItemGroup>
       <ProjectReference Include="..\Dom5Edit\Dom5Edit.csproj" />
+      <ProjectReference Include="..\Dom5Editor.Core\Dom5Editor.Core.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-    </ItemGroup>
-
-    <!-- Badge configuration JSON files - copied to output for easy editing -->
-    <ItemGroup>
-      <Content Include="Data\*_badges.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <!-- hover hints from the manuals (tools/command_hints.py) -->
-      <Content Include="Data\event_commands.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Data\command_hints.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <!-- which of the game's own icons (read from the user's install) each key is (tools/gameart) -->
-      <Content Include="Data\game_icons.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
-
-    <!-- The game's icons the editor shows, packed (tools/gameart/trs.py pack) and compiled in -->
-    <ItemGroup>
-      <EmbeddedResource Include="Resources\game-icons.pack" LogicalName="game-icons.pack" />
-    </ItemGroup>
-
 
 </Project>
