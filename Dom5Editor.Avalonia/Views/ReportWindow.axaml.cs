@@ -18,6 +18,11 @@ namespace Dom5Editor.Ava.Views
             _main = main;
             _report = report;
             Show(report);
+            KeyDown += (s, e) =>
+            {
+                if (e.Key == Avalonia.Input.Key.Escape)
+                    Close();
+            };
         }
 
         private void Show(ModReport.Report report)
@@ -37,6 +42,13 @@ namespace Dom5Editor.Ava.Views
         {
             if (_main.BuildReport() is { } report)
                 Show(report);
+        }
+
+        /// <summary>"Every issue...": Validate's full list, with filters (modal: Go To closes it and shows the entity).</summary>
+        private async void AllIssues_Click(object? sender, RoutedEventArgs e)
+        {
+            if (_main.Validate() is { } results)
+                await new ValidationWindow(results, _main).ShowDialog(this);
         }
 
         private async void Save_Click(object? sender, RoutedEventArgs e) => await ReportFiles.SaveForAuthor(this, _report);
