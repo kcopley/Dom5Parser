@@ -1,0 +1,83 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Every expander light, as WPF's: a round chevron left of the header, no bar (the page's
+         "In the file", the event preview and map, the report's groups). Fluent's own drew a
+         broken chevron and a tall bar. -->
+    <ControlTheme x:Key="LightExpanderToggle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Orientation="Horizontal" Spacing="6" Background="{TemplateBinding Background}">
+                    <Panel Width="16" Height="16" VerticalAlignment="Center">
+                        <Ellipse Fill="#E4E4E8"/>
+                        <Path Name="Chevron" Data="M 4.5,6.5 L 8,10 L 11.5,6.5" Stroke="#1A1A1F" StrokeThickness="1.6" RenderTransformOrigin="50%,50%"/>
+                    </Panel>
+                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:checked /template/ Path#Chevron">
+            <Setter Property="RenderTransform" Value="rotate(180deg)"/>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type Expander}" TargetType="Expander">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DockPanel>
+                    <ToggleButton DockPanel.Dock="Top" HorizontalAlignment="Left" Theme="{StaticResource LightExpanderToggle}"
+                                  IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
+                                  Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Margin="0,4,0,0" IsVisible="{TemplateBinding IsExpanded}"/>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- a group as a card, as WPF's ExpanderBase (the report's findings): a bordered panel with
+         a small triangle; the lines inside -->
+    <ControlTheme x:Key="CardExpanderToggle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Padding" Value="12,9"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="6,6,0,0">
+                    <DockPanel>
+                        <TextBlock Name="Arrow" Text="&#x25BC;" FontSize="9" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,8,0" RenderTransformOrigin="50%,50%" RenderTransform="rotate(-90deg)"/>
+                        <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border">
+            <Setter Property="Background" Value="#0CFFFFFF"/>
+        </Style>
+        <Style Selector="^:checked /template/ TextBlock#Arrow">
+            <Setter Property="RenderTransform" Value="rotate(0deg)"/>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="CardExpander" TargetType="Expander">
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6">
+                    <DockPanel>
+                        <ToggleButton DockPanel.Dock="Top" Theme="{StaticResource CardExpanderToggle}"
+                                      IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"
+                                      Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="30,0,12,10" IsVisible="{TemplateBinding IsExpanded}"/>
+                    </DockPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

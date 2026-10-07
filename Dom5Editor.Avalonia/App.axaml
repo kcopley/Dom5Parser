@@ -16,6 +16,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://Dom5Editor.Avalonia/Theme/Colors.axaml"/>
+                <ResourceInclude Source="avares://Dom5Editor.Avalonia/Theme/Controls.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

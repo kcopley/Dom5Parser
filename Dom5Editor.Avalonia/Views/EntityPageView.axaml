@@ -202,17 +202,6 @@
         <DataTemplate x:Key="Part.File">
             <Expander IsExpanded="{Binding ShowFile, Mode=TwoWay}" Margin="0,0,0,10" HorizontalAlignment="Stretch"
                       ToolTip.Tip="The entity's lines as the save writes them to the .dm file">
-                <!-- a small header, as the page's other titles (Fluent's is a tall bar) -->
-                <Expander.Resources>
-                    <SolidColorBrush x:Key="ExpanderHeaderBackground" Color="Transparent"/>
-                    <SolidColorBrush x:Key="ExpanderHeaderBackgroundPointerOver" Color="#14FFFFFF"/>
-                    <SolidColorBrush x:Key="ExpanderHeaderBackgroundPressed" Color="#14FFFFFF"/>
-                    <SolidColorBrush x:Key="ExpanderHeaderBorderBrush" Color="Transparent"/>
-                    <SolidColorBrush x:Key="ExpanderHeaderBorderBrushPointerOver" Color="Transparent"/>
-                    <SolidColorBrush x:Key="ExpanderHeaderBorderBrushPressed" Color="Transparent"/>
-                    <SolidColorBrush x:Key="ExpanderContentBackground" Color="Transparent"/>
-                    <x:Double x:Key="ExpanderMinHeight">28</x:Double>
-                </Expander.Resources>
                 <Expander.Header>
                     <TextBlock Text="IN THE FILE (as saved)" Classes="label"/>
                 </Expander.Header>
