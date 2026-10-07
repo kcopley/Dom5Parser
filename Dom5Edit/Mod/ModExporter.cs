@@ -15,7 +15,7 @@ namespace Dom5Edit
         /// <param name="mod">The mod to export.</param>
         /// <param name="filePath">The file path to write to.</param>
         /// <param name="overwrite">Whether to overwrite an existing file.</param>
-        public void Export(Mod mod, string filePath, bool overwrite = true)
+        public void Export(Mod mod, string filePath, bool overwrite = true, Action<string>? verify = null)
         {
             if (File.Exists(filePath) && !overwrite)
             {
@@ -40,7 +40,7 @@ namespace Dom5Edit
                     if (stream.Length >= nl)
                         stream.SetLength(stream.Length - nl);
                 }
-            }, encoding);
+            }, encoding, verify);
         }
 
         /// <summary>
