@@ -310,6 +310,20 @@ namespace Dom5Edit.Entities
             return Command.NEWNATION;
         }
 
+        /// <summary>
+        /// The name first, then the epithet and era: the manual says a changed #name "must be the
+        /// first command when modifying the nation", and #era "must be set right after #name and
+        /// #epithet" (descriptions and other texts don't work if it comes too late). #clearnation
+        /// leaves the three alone, so they can come before it.
+        /// </summary>
+        protected override int LiveRank(Property p) => p.Command switch
+        {
+            Command.NAME => 15,
+            Command.EPITHET => 16,
+            Command.ERA => 17,
+            _ => base.LiveRank(p),
+        };
+
         internal override Command GetSelectCommand()
         {
             return Command.SELECTNATION;

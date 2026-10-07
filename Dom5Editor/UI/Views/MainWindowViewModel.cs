@@ -302,6 +302,44 @@ namespace Dom5Editor.UI.Views
         public string? ModIcon { get => _session.Mod.Icon; set => Set(Command.ICON, value); }
         public string? CurrentFilePath => _session.FilePath;
 
+        /// <summary>The icon box's "Pick...": a banner image, copied into the mod's folder like a sprite.</summary>
+        public System.Windows.Input.ICommand PickIconCommand => new RelayCommand(() =>
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = "Mod banner (#icon): 128x32 or 256x64",
+                Filter = "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*",
+            };
+            if (dialog.ShowDialog() == true)
+                SetIcon(dialog.FileName);
+        });
+
+        /// <summary>Sets #icon from an image file, copied into the mod's sprites folder (a mod with no file is saved first).</summary>
+        public void SetIcon(string file)
+        {
+            if (string.IsNullOrEmpty(_session.Mod.FullFilePath))
+                EntityPageViewModel.SaveFirst?.Invoke();
+            var modFile = _session.Mod.FullFilePath;
+            if (string.IsNullOrEmpty(modFile))
+            {
+                _main.StatusMessage = "Save the mod first: the image is copied into the mod's folder, next to the .dm file";
+                return;
+            }
+            try
+            {
+                var result = Sprites.SpriteImport.Import(file, modFile);
+                ModIcon = result.RelativePath;
+                _main.StatusMessage = (result.CopiedTo != null
+                        ? $"Copied {System.IO.Path.GetFileName(file)} into the mod's folder and set #icon \"{result.RelativePath}\""
+                        : $"Set #icon \"{result.RelativePath}\"")
+                    + (result.Note != null ? $". Note: {result.Note}" : "");
+            }
+            catch (Exception ex) when (ex is System.IO.IOException || ex is UnauthorizedAccessException || ex is NotSupportedException || ex is ArgumentException)
+            {
+                _main.StatusMessage = $"The image couldn't be brought into the mod: {ex.Message}";
+            }
+        }
+
         private void Set(Command field, string? value)
         {
             var error = _session.Edit(ed => ed.SetModInfo(field, value));

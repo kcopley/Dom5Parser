@@ -211,15 +211,8 @@ namespace Dom5Editor.UI.ViewModels
         {
             get
             {
-                var images = Type switch
-                {
-                    EntityType.MONSTER => MonsterImages,
-                    EntityType.ITEM => new[] { (Command.SPR, "Picture", true) },
-                    EntityType.NATION => new[] { (Command.FLAG, "Flag", true) },
-                    _ => Array.Empty<(Command, string, bool)>(),
-                };
                 var slots = new List<SpriteSlot>();
-                foreach (var (c, label, always) in images)
+                foreach (var (c, label, always) in Images)
                 {
                     var value = Resolved.Get(c);
                     var p = value?.Property ?? Resolved.Assets.GetValueOrDefault(c);
@@ -234,11 +227,25 @@ namespace Dom5Editor.UI.ViewModels
                         continue;
                     }
                     slots.Add(new SpriteSlot(this, c, label, Sprites.SpriteLoader.Load(path, Session.Mod.FullFilePath), path,
-                        value == null ? "from the game" : value.Source == ValueSource.Own ? "the mod's" : SourceText(value), slots.Count == 0));
+                        value == null ? "from the game" : value.Source == ValueSource.Own ? "the mod's" : SourceText(value), slots.Count == 0,
+                        value != null && value.Source == ValueSource.Own ? value : null));
                 }
                 return slots;
             }
         }
+
+        /// <summary>The images the type's header shows (Always: a slot even when nothing sets it).</summary>
+        private IReadOnlyList<(Command Command, string Label, bool Always)> Images => Type switch
+        {
+            EntityType.MONSTER => MonsterImages,
+            EntityType.ITEM => new[] { (Command.SPR, "Picture", true) },
+            EntityType.NATION => new[] { (Command.FLAG, "Flag", true) },
+            _ => Array.Empty<(Command, string, bool)>(),
+        };
+
+        /// <summary>The image commands the header has a slot for now (not shown again as badges).</summary>
+        private IEnumerable<Command> ImageCommandsShown => Images
+            .Where(x => x.Always || Resolved.Get(x.Command) != null || Resolved.Assets.ContainsKey(x.Command)).Select(x => x.Command);
 
         public bool HasSpriteSlots => Type == EntityType.MONSTER || Type == EntityType.ITEM || Type == EntityType.NATION;
         public bool ShowsSingleSprite => HasSprite && !HasSpriteSlots;
@@ -255,12 +262,21 @@ namespace Dom5Editor.UI.ViewModels
         public bool HasNotice => !string.IsNullOrEmpty(_notice);
 
         /// <summary>
+        /// Saves a mod that has no file yet, asking where (set by the window; true if it was saved):
+        /// an image set on a new mod is copied next to the .dm file, so the mod needs one first.
+        /// </summary>
+        public static Func<bool>? SaveFirst { get; set; }
+
+        /// <summary>
         /// Sets an image command from a file: copied into the mod's sprites folder unless it's in
         /// the mod's folder already (the game reads a mod's images from there), then the line set.
         /// </summary>
         public void SetImage(Command c, string file)
         {
             var modFile = Session.Mod.FullFilePath;
+            // a new mod has no folder yet: offer to save it first (the window asks where)
+            if (string.IsNullOrEmpty(modFile) && SaveFirst?.Invoke() == true)
+                modFile = Session.Mod.FullFilePath;
             if (string.IsNullOrEmpty(modFile))
             {
                 Notice = null;
@@ -326,6 +342,36 @@ namespace Dom5Editor.UI.ViewModels
         }
 
         public string CopySourceName => CopySourceId is int id ? $"{NameOf(Type, id)} #{id}" : "(none)";
+
+        /// <summary>Whether the type copies a sprite on its own (#copyspr: a monster's from a monster, an item's from an item).</summary>
+        public bool HasSpriteCopy => Type == EntityType.MONSTER || Type == EntityType.ITEM;
+
+        /// <summary>
+        /// The entity whose sprite this one takes (its own #copyspr line), or null: the usual way to
+        /// give a new unit a picture, since #copystats doesn't copy it.
+        /// </summary>
+        public int? SpriteCopyId
+        {
+            get
+            {
+                var line = HasSpriteCopy ? Resolved.Structure.LastOrDefault(p => p.Command == Command.COPYSPR) : null;
+                return line == null ? null : ReferenceOf(line, RefTypeName(Type)).Id;
+            }
+            set
+            {
+                if (!HasSpriteCopy || value == SpriteCopyId)
+                    return;
+                var line = Resolved.Structure.LastOrDefault(p => p.Command == Command.COPYSPR);
+                if (value is int id && id > 0)
+                    SetValue(Command.COPYSPR, id.ToString());
+                else if (line != null)
+                    RemoveLine(line);
+            }
+        }
+
+        public string SpriteCopyPickTip => $"The {Nouns.Of(Type)} whose sprite this one takes (#copyspr); its own image lines apply on top";
+        public string SpriteCopyOpenTip => SpriteCopyId is int id ? $"Open {NameOf(Type, id)} #{id}, the {Nouns.Of(Type)} whose sprite it takes" : "It copies no sprite";
+        public ICommand NavigateToSpriteCopyCommand => new RelayCommand(() => { if (SpriteCopyId is int id) Session.Navigate(Type, id); });
 
         /// <summary>The copy picker's and its open button's tooltips.</summary>
         public string CopyPickTip => $"The {Nouns.Of(Type)} this one starts as a copy of ({(CopyCommand is Command c ? CommandName(c) : "")}); its own lines apply on top";
@@ -515,6 +561,8 @@ namespace Dom5Editor.UI.ViewModels
             _stale = false;
             Resolved = Session.Resolve(Entity);
             var covered = new HashSet<Command> { Command.NAME, Command.DESCR };
+            // (an image with a slot in the header isn't a badge too)
+            covered.UnionWith(ImageCommandsShown);
             LongTexts.Clear();
             foreach (var (c, label, optional) in LongTextCommands)
                 if (Entity.GetPropertyMap().ContainsKey(c) && ShowsLongText(c)
@@ -526,7 +574,9 @@ namespace Dom5Editor.UI.ViewModels
             Structure.Clear();
             // (the last copy line is the copy picker's)
             var copyLine = CopyCommand is Command cc ? Resolved.Structure.LastOrDefault(p => p.Command == cc) : null;
-            foreach (var p in Resolved.Structure.Where(p => !ReferenceEquals(p, copyLine)))
+            // (and the last #copyspr is the sprite picker's)
+            var spriteLine = HasSpriteCopy ? Resolved.Structure.LastOrDefault(p => p.Command == Command.COPYSPR) : null;
+            foreach (var p in Resolved.Structure.Where(p => !ReferenceEquals(p, copyLine) && !ReferenceEquals(p, spriteLine)))
                 Structure.Add(new StructureLine(p, $"{CommandName(p.Command)} {DisplayArguments(p)}".Trim(),
                     GameRules.IsCopy(p.Command) && ReferenceOf(p, RefTypeName(Type)) is var (id, _) && id > 0 ? $"{NameOf(Type, id)} #{id}" : ""));
             Panels.Clear();
@@ -786,17 +836,19 @@ namespace Dom5Editor.UI.ViewModels
             tx.RemoveLine(own, line);
         }));
 
-        /// <summary>Adds a command with a starting value: a flag as is, a number as its default (1 if none: 0 would remove an ability).</summary>
+        /// <summary>Adds a command with a starting value: a flag as is, a number as its default (1 if none, or if 0 would remove the ability).</summary>
         public void AddDefault(Command c, int? defaultValue)
         {
             var map = Entity.GetPropertyMap();
             var sample = map.TryGetValue(c, out var create) ? create() : null;
+            // (an ability added as 0 is a line that removes it: #regeneration 0 gives none)
+            int number = defaultValue is int d && !(d == 0 && GameRules.RemovesWithZero(Type, c)) ? d : 1;
             string args = sample switch
             {
                 CommandProperty => "",
                 StringProperty => "\"\"",
                 IntIntProperty => "0 1",
-                _ => (defaultValue ?? 1).ToString(),
+                _ => number.ToString(),
             };
             AddValue(c, args);
         }
@@ -952,7 +1004,7 @@ namespace Dom5Editor.UI.ViewModels
         public string Name { get; }
         public string Via { get; }
         public ICommand OpenCommand { get; }
-        public string Tooltip => $"The {Nouns.Of(Type)} {Nouns.Named(Name, Id)} refers to it ({Via}). Click to open it.";
+        public string Tooltip => $"The {Nouns.Of(Type)} {(Id > 0 ? Nouns.Named(Name, Id) : Name)} refers to it ({Via}). Click to open it.";
     }
 
     /// <summary>One of an entity's own copy or clear lines, as the page lists them.</summary>
@@ -974,8 +1026,12 @@ namespace Dom5Editor.UI.ViewModels
     {
         private readonly EntityPageViewModel _page;
 
-        public SpriteSlot(EntityPageViewModel page, Command command, string label, System.Windows.Media.Imaging.BitmapSource? image, string? path, string source, bool isMain)
+        public SpriteSlot(EntityPageViewModel page, Command command, string label, System.Windows.Media.Imaging.BitmapSource? image, string? path, string source, bool isMain,
+            ResolvedValue? own = null)
         {
+            RemoveCommand = new RelayCommand(() => { if (own != null) page.ResetLine(own); });
+            CanRemove = own != null;
+            RemoveText = $"Remove {EntityPageViewModel.CommandName(command)} (the mod's line; the image file stays in the mod's folder)";
             _page = page;
             Command = command;
             Label = label;
@@ -983,9 +1039,15 @@ namespace Dom5Editor.UI.ViewModels
             IsMain = isMain;
             var name = EntityPageViewModel.CommandName(command);
             Tooltip = (path == null ? $"{label} image ({name}): {(image != null ? source : "none")}" : $"{label} image ({name}): {(source == "from the game" ? "the game's own" : path)}")
-                + "\nClick or drop a .tga/.png to set it (copied into the mod's sprites folder)";
+                + "\nClick or drop a .tga/.png to set it (copied into the mod's sprites folder)"
+                + (own != null ? "; right-click to remove it" : "");
             PickCommand = new RelayCommand(Pick);
         }
+
+        /// <summary>Drops the mod's own line for the image (the slot's right-click menu; it's no badge).</summary>
+        public ICommand RemoveCommand { get; }
+        public bool CanRemove { get; }
+        public string RemoveText { get; }
 
         public Command Command { get; }
         public string Label { get; }
