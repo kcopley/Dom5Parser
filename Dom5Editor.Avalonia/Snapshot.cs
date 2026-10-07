@@ -295,6 +295,83 @@ namespace Dom5Editor.Ava
                             Log($"typed {value} in {args[i - 2]}, tabbed: cursor in {(badge?.DataContext as PropertyItem)?.Command.ToString() ?? "(nothing)"}; page has {vm.SelectedPage?.Resolved.Get(c)?.Arguments}");
                             break;
                         }
+                        case "--map":
+                        {
+                            // --map click TEXT | dblclick TEXT | hover TEXT | drag DX DY | fit | zoom Z | png FILE:
+                            // the event page's chain map driven with the mouse (a card by part of its title)
+                            var graph = window.GetVisualDescendants().OfType<ChainGraph>().FirstOrDefault(g => g.IsEffectivelyVisible)
+                                        ?? throw new InvalidOperationException("no chain map on screen");
+                            var scroller = graph.FindAncestorOfType<ScrollViewer>()!;
+                            scroller.BringIntoView(); // (the page scrolled to the map, as a user would)
+                            Pump();
+                            Point CardAt(string text)
+                            {
+                                var node = graph.Nodes!.FirstOrDefault(n => n.Title.Contains(text, StringComparison.OrdinalIgnoreCase))
+                                           ?? throw new ArgumentException("no card " + text);
+                                var center = new Point((node.Bounds.Left + node.Bounds.Width / 2) * graph.Zoom, (node.Bounds.Top + node.Bounds.Height / 2) * graph.Zoom);
+                                // (scrolled into view first, as a user would)
+                                scroller.Offset = new Vector(Math.Max(0, center.X - scroller.Viewport.Width / 2), Math.Max(0, center.Y - scroller.Viewport.Height / 2));
+                                Pump();
+                                return graph.TranslatePoint(center, window) ?? throw new InvalidOperationException("the map isn't in the window");
+                            }
+                            var what = args[++i];
+                            switch (what)
+                            {
+                                case "click":
+                                case "dblclick":
+                                {
+                                    var at = CardAt(args[++i]);
+                                    window.MouseMove(at);
+                                    window.MouseDown(at, MouseButton.Left);
+                                    window.MouseUp(at, MouseButton.Left);
+                                    if (what == "dblclick")
+                                    {
+                                        window.MouseDown(at, MouseButton.Left);
+                                        window.MouseUp(at, MouseButton.Left);
+                                    }
+                                    break;
+                                }
+                                case "hover":
+                                    window.MouseMove(CardAt(args[++i]));
+                                    break;
+                                case "drag":
+                                {
+                                    double dx = double.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture), dy = double.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture);
+                                    var from = scroller.TranslatePoint(new Point(scroller.Viewport.Width / 2, scroller.Viewport.Height / 2), window)!.Value;
+                                    window.MouseMove(from);
+                                    window.MouseDown(from, MouseButton.Middle);
+                                    for (int k = 1; k <= 5; k++)
+                                        window.MouseMove(new Point(from.X + dx * k / 5, from.Y + dy * k / 5));
+                                    window.MouseUp(new Point(from.X + dx, from.Y + dy), MouseButton.Middle);
+                                    break;
+                                }
+                                case "fit":
+                                    graph.FitCommand.Execute(null);
+                                    break;
+                                case "zoom":
+                                    graph.Zoom = double.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture);
+                                    break;
+                                case "png":
+                                {
+                                    // the map's part of the window, as it's shown (on the page's background)
+                                    Pump();
+                                    var frame = window.CaptureRenderedFrame() ?? throw new InvalidOperationException("nothing rendered");
+                                    var origin = scroller.TranslatePoint(default, window)!.Value;
+                                    var area = new Rect(origin, scroller.Bounds.Size);
+                                    using var bitmap = new Avalonia.Media.Imaging.RenderTargetBitmap(new PixelSize((int)Math.Ceiling(area.Width), (int)Math.Ceiling(area.Height)));
+                                    using (var dc = bitmap.CreateDrawingContext())
+                                        dc.DrawImage(frame, area, new Rect(area.Size));
+                                    bitmap.Save(Path.GetFullPath(args[++i]));
+                                    break;
+                                }
+                                default:
+                                    throw new ArgumentException("--map " + what);
+                            }
+                            Pump();
+                            Log($"map {what}: zoom {graph.Zoom:0.00}, scrolled to {scroller.Offset.X:0},{scroller.Offset.Y:0} of {scroller.Extent.Width:0}x{scroller.Extent.Height:0}; " +
+                                $"card clicked: {graph.SelectedCard?.Title ?? "none"}; on {vm.SelectedPage?.DisplayName}");
+                            break;
+                        }
                         case "--load-menu":
                             // the Load ▾ menu: its entries and their tooltips
                             foreach (var item in window.LoadMenu())

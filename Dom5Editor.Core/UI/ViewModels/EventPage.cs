@@ -812,12 +812,41 @@ namespace Dom5Editor.UI.ViewModels
         public bool MapOpen { get; private set; }
         public string MapTitle { get; private set; } = "MAP";
 
+        /// <summary>What the map's colours mean: each code and variable number on it, then the kinds of link it has.</summary>
+        public IReadOnlyList<ChainLegendItem> MapLegend { get; private set; } = Array.Empty<ChainLegendItem>();
+
+        // a colour per code or variable number (so the arrows of one variable can be told from the
+        // next one's), none of them the fixed kinds' blue, purple, red or grey, and none two alike
+        // (green, amber, teal, pink, lime, cream, salmon); an eighth number takes the first again
+        private static readonly string[] KeyColors =
+            { "#4CC38A", "#E0A040", "#3FC1C9", "#F28AB2", "#C7D35B", "#EDE6D6", "#FF7F66" };
+
+        private static readonly (string Kind, string Text, string Color, bool Dashed, string Tip)[] FixedKinds =
+        {
+            ("delay", "delay", "#5BA8F5", false, "A delayed follow-up: the next event in the file, some turns later"),
+            ("skip", "skip", "#5BA8F5", true, "A delayed follow-up's chance to skip ahead"),
+            ("choice", "choice", "#B07CF7", false, "A player's answer to a choice"),
+            ("excludes", "blocks", "#E5484D", true, "Can't happen while the other event's code is set"),
+            ("spell", "spell", "#9CA3AF", true, "A spell that starts the event or makes its enchantment"),
+        };
+
         /// <summary>
         /// The chain as cards and arrows; for a big chain, the events within two links of this one.
         /// Spells that start its events are cards too.
         /// </summary>
+        private readonly Dictionary<(string Kind, long Number), string> _keyColors = new();
+
+        /// <summary>The colour of a code's or a variable's arrows on this map (by first use; seven, then again).</summary>
+        private string KeyColor(string kind, long number)
+        {
+            if (!_keyColors.TryGetValue((kind, number), out var color))
+                _keyColors[(kind, number)] = color = KeyColors[_keyColors.Count % KeyColors.Length];
+            return color;
+        }
+
         private void BuildMap(EventChain? chain, Func<IDEntity, string> title)
         {
+            _keyColors.Clear();
             var events = chain?.Events.ToList() ?? new List<IDEntity> { _event };
             const int max = 40;
             if (events.Count > max)
@@ -859,6 +888,7 @@ namespace Dom5Editor.UI.ViewModels
                 EventLinkKind.Choice => 0, EventLinkKind.Delay => 1, EventLinkKind.DelaySkip => 2, EventLinkKind.Variable => 3,
                 EventLinkKind.Code => 4, EventLinkKind.CodeExcludes => 5, _ => 6,
             };
+            var arrows = new List<(EventLink Link, string Kind, string Label)>();
             foreach (var group in _graph.Links.Where(l => set.Contains(l.To) && (set.Contains(l.From) || !l.IsEventToEvent))
                          .GroupBy(l => (l.From, l.To)))
             {
@@ -868,10 +898,30 @@ namespace Dom5Editor.UI.ViewModels
                     EventLinkKind.Code => "code", EventLinkKind.CodeExcludes => "excludes", EventLinkKind.Delay => "delay",
                     EventLinkKind.DelaySkip => "skip", EventLinkKind.Variable => "variable", EventLinkKind.Choice => "choice", _ => "spell",
                 };
-                edges.Add(new ChainEdge(Node(l.From), Node(l.To), string.Join(", ", group.OrderBy(x => Rank(x.Kind)).Select(x => x.Label).Distinct()), kind));
+                arrows.Add((l, kind, string.Join(", ", group.OrderBy(x => Rank(x.Kind)).Select(x => x.Label).Distinct())));
+            }
+            // colours to the numbers with the most arrows first: the biggest bundle gets the calmest
+            // colour, the loud ones go to numbers with few arrows
+            foreach (var key in arrows.Where(a => a.Kind is "code" or "variable").GroupBy(a => (a.Kind, a.Link.Key))
+                         .OrderByDescending(g => g.Count()).Select(g => g.Key))
+                KeyColor(key.Kind, key.Key);
+            foreach (var (l, kind, label) in arrows)
+            {
+                var fixedKind = FixedKinds.FirstOrDefault(f => f.Kind == kind);
+                edges.Add(new ChainEdge(Node(l.From), Node(l.To), label, kind)
+                {
+                    Color = fixedKind.Kind != null ? fixedKind.Color : KeyColor(kind, l.Key),
+                    Dashed = fixedKind.Dashed,
+                });
             }
             MapNodes = nodes.Values.ToList();
             MapEdges = edges;
+            // the legend: the numbers by their number, then the kinds there are
+            var legend = _keyColors.OrderBy(k => k.Key.Kind).ThenBy(k => k.Key.Number).Select(k => new ChainLegendItem($"{k.Key.Kind} {k.Key.Number}", k.Value, false,
+                k.Key.Kind == "code" ? $"Code {k.Key.Number}: set by one event (#code), required by the next (#req_code)"
+                                     : $"Variable {k.Key.Number}: changed by one event, tested by the next")).ToList();
+            legend.AddRange(FixedKinds.Where(f => edges.Any(e => e.Kind == f.Kind)).Select(f => new ChainLegendItem(f.Text, f.Color, f.Dashed, f.Tip)));
+            MapLegend = legend;
             MapOpen = events.Count <= 25;
         }
         public ObservableCollection<LinkChip> ComesFrom { get; } = new ObservableCollection<LinkChip>();

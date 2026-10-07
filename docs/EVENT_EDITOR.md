@@ -130,9 +130,21 @@ own text (`command_hints.json`, `tools/command_hints.py`).
 - The event list shows titles and kinds, with filters: kind (good/bad/always/global), chains
   only, by enchantment or spell, by nation; search covers message text.
 - **Chain map** (on the event page): the chain as a flow graph (events as cards, links as
-  labelled arrows: code, delay, variable, choice, blocks), laid out left to right; clicking a
-  card opens the event. Spells that start it are cards on the left. A chain over 40 events
-  shows the events within two links of this one.
+  labelled arrows: code, delay, variable, choice, blocks), laid out left to right: a card is
+  one column after the furthest card leading to it, near the rows of what leads to it. Spells
+  that start it are cards on the left. A chain over 40 events shows the events within two
+  links of this one.
+  - Colours (2026-10-07, the user: connections of one colour "blend together"): each code
+    and variable number on the map has its own colour (the number with the most arrows the
+    calmest), delay/choice/blocks/spell theirs; the legend lists the map's numbers. Arrows
+    leave and enter cards spread along the side, in the order of the other ends.
+  - Pointing at a card, or clicking it (it stays; a click on empty space or Esc lets go),
+    shows its arrows bold and labelled, the chain before and after it plain, the rest faded;
+    a double-click opens the event; pointing at an arrow names it.
+  - Moving around: drag with the middle button (or the left one on empty space); Ctrl+wheel
+    zooms at the pointer; −, +, the zoom (click: 100%) and Fit (the whole chain) above the map.
+  - Snapshot: `--map click|dblclick|hover TEXT`, `--map drag DX DY`, `--map fit`, `--map zoom Z`,
+    `--map png FILE` drive it with the mouse.
 
 ### E-5. Making chains **(now)**
 From an event's Chain section:

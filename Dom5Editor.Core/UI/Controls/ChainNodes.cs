@@ -50,5 +50,12 @@ namespace Dom5Editor.UI.Controls
         public string Label { get; }
         /// <summary>code, excludes, delay, variable, choice, spell.</summary>
         public string Kind { get; }
+        /// <summary>Its colour (#RRGGBB): one per code or variable number on the map, else its kind's.</summary>
+        public string Color { get; init; } = "#9CA3AF";
+        /// <summary>Drawn dashed: a link that blocks (not while code N), a skip, a spell.</summary>
+        public bool Dashed { get; init; }
     }
+
+    /// <summary>One entry of the chain map's legend: "variable 6001" in its colour, "delay", ...</summary>
+    public sealed record ChainLegendItem(string Text, string Color, bool Dashed, string Tip);
 }

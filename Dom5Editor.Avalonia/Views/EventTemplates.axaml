@@ -303,19 +303,40 @@
                     </ItemsControl>
                 </DockPanel>
                 <Expander IsExpanded="{Binding MapOpen, Mode=OneTime}" Margin="0,6,0,0"
-                          ToolTip.Tip="The chain as cards and arrows: click a card to open it, hover an arrow to see the link"
+                          ToolTip.Tip="The chain as cards and arrows: point at a card or click it to follow its links, double-click to open it"
                           IsVisible="{Binding HasMap}">
                     <Expander.Header>
-                        <TextBlock FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}">
-                            <Run Text="{Binding MapTitle, Mode=OneWay}"/>
-                            <Run Text="  code" Foreground="#E0A040" FontWeight="Normal"/><Run Text="  delay" Foreground="#5BA8F5" FontWeight="Normal"/>
-                            <Run Text="  variable" Foreground="#4CC38A" FontWeight="Normal"/><Run Text="  choice" Foreground="#B07CF7" FontWeight="Normal"/>
-                            <Run Text="  blocks" Foreground="#E5484D" FontWeight="Normal"/><Run Text="  spell" Foreground="#9CA3AF" FontWeight="Normal"/>
-                        </TextBlock>
+                        <TextBlock Text="{Binding MapTitle}" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </Expander.Header>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="520" Margin="0,4,0,0">
-                        <controls:ChainGraph Nodes="{Binding MapNodes}" Edges="{Binding MapEdges}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    </ScrollViewer>
+                    <StackPanel Spacing="4" Margin="0,2,0,0">
+                        <!-- what the colours mean: each code and variable on this map, then the kinds of link -->
+                        <ItemsControl ItemsSource="{Binding MapLegend}">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,0,12,2" ToolTip.Tip="{Binding Tip}">
+                                        <Line StartPoint="0,0" EndPoint="18,0" Stroke="{Binding Color}" StrokeThickness="2" VerticalAlignment="Center" IsVisible="{Binding !Dashed}"/>
+                                        <Line StartPoint="0,0" EndPoint="18,0" Stroke="{Binding Color}" StrokeThickness="2" StrokeDashArray="3,2" VerticalAlignment="Center" IsVisible="{Binding Dashed}"/>
+                                        <TextBlock Text="{Binding Text}" Foreground="{Binding Color}" FontSize="10" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="4">
+                                <Button Content="−" Classes="small" Command="{Binding #Map.ZoomOutCommand}" ToolTip.Tip="Zoom out (Ctrl+wheel on the map)"/>
+                                <Button Content="{Binding #Map.Zoom, StringFormat='{}{0:P0}'}" Classes="small" MinWidth="48" Command="{Binding #Map.ActualSizeCommand}"
+                                        ToolTip.Tip="The zoom: click for 100%"/>
+                                <Button Content="+" Classes="small" Command="{Binding #Map.ZoomInCommand}" ToolTip.Tip="Zoom in (Ctrl+wheel on the map)"/>
+                                <Button Content="Fit" Classes="small" Command="{Binding #Map.FitCommand}" ToolTip.Tip="The whole chain in view"/>
+                            </StackPanel>
+                            <TextBlock Classes="muted" FontSize="10" VerticalAlignment="Center" Margin="10,0,0,0" TextTrimming="CharacterEllipsis"
+                                       Text="Drag with the middle button (or on empty space) to move · click a card to follow its links, double-click to open it"/>
+                        </DockPanel>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="520">
+                            <controls:ChainGraph x:Name="Map" Nodes="{Binding MapNodes}" Edges="{Binding MapEdges}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </ScrollViewer>
+                    </StackPanel>
                 </Expander>
                 <ItemsControl ItemsSource="{Binding Problems}" Margin="0,4,0,0">
                     <ItemsControl.ItemTemplate>
