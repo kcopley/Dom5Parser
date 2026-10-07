@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- The editor for macOS and Linux (and Windows): Avalonia views on the same core as the WPF editor
+         (Dom5Editor.Core: session, page view models, game art). docs/CROSS_PLATFORM.md -->
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Dom5Editor.Ava</RootNamespace>
+        <Version>0.10.0</Version>
+        <Product>Dom6 Mod Editor</Product>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <!-- bindings by name (as the WPF views), so the views need no DataType for each template -->
+        <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia" Version="11.3.22" />
+      <PackageReference Include="Avalonia.Desktop" Version="11.3.22" />
+      <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.22" />
+      <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.22" />
+      <!-- the snapshot harness renders off-screen (no display needed: Linux CI, WSL) -->
+      <PackageReference Include="Avalonia.Headless" Version="11.3.22" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Dom5Edit\Dom5Edit.csproj" />
+      <ProjectReference Include="..\Dom5Editor.Core\Dom5Editor.Core.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -210,49 +210,9 @@ namespace Dom5Editor.UI.Controls
             OnPropertyChanged(nameof(FilteredCount));
         }
 
-        private bool FilterEntity(object item)
-        {
-            if (item == null) return false;
-
-            // Get properties via reflection (ViewModels should have these)
-            var type = item.GetType();
-            var displayNameProp = type.GetProperty("DisplayName");
-            var idProp = type.GetProperty("ID");
-            var isVanillaProp = type.GetProperty("IsVanilla");
-            var isModifiedProp = type.GetProperty("IsModified");
-            var isNewProp = type.GetProperty("IsNew");
-
-            // Filter by state
-            bool isVanilla = isVanillaProp?.GetValue(item) as bool? ?? false;
-            bool isModified = isModifiedProp?.GetValue(item) as bool? ?? false;
-            bool isNew = isNewProp?.GetValue(item) as bool? ?? false;
-
-            // If it's vanilla and not modified, check ShowVanilla
-            if (isVanilla && !isModified && !ShowVanilla) return false;
-
-            // If it's modified, check ShowModified
-            if (isModified && !ShowModified) return false;
-
-            // If it's new, check ShowNew
-            if (isNew && !ShowNew) return false;
-
-            // the type's own filter
-            if (item is UI.ViewModels.EntityListItem row && !row.InFacet(Facet)) return false;
-
-            // Filter by search text
-            if (!string.IsNullOrEmpty(SearchText))
-            {
-                string displayName = displayNameProp?.GetValue(item) as string ?? "";
-                int? id = idProp?.GetValue(item) as int?;
-
-                bool matchesName = displayName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
-                bool matchesId = id?.ToString().Contains(SearchText) ?? false;
-
-                if (!matchesName && !matchesId && !(item is UI.ViewModels.EntityListItem r && r.MatchesText(SearchText))) return false;
-            }
-
-            return true;
-        }
+        // the core's rules (EntityTypeTab.Matches), shared with the Mac/Linux editor
+        private bool FilterEntity(object item) =>
+            item is UI.ViewModels.EntityListItem row && UI.ViewModels.EntityTypeTab.Matches(row, ShowVanilla, ShowModified, ShowNew, Facet, SearchText);
 
         private void RefreshFilter()
         {

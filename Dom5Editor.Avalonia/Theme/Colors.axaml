@@ -1,0 +1,43 @@
+<!-- The editor's colours, as the WPF editor's theme (Dom5Editor/UI/Theme/AppTheme.xaml) -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="BackgroundDarkColor">#1a1a1f</Color>
+    <Color x:Key="BackgroundMediumColor">#252530</Color>
+    <Color x:Key="BackgroundLightColor">#2f2f3a</Color>
+    <Color x:Key="SurfaceColor">#383845</Color>
+    <Color x:Key="AccentPrimaryColor">#8b4513</Color>
+    <Color x:Key="AccentSecondaryColor">#a0522d</Color>
+    <Color x:Key="AccentHighlightColor">#cd853f</Color>
+    <Color x:Key="TextPrimaryColor">#e8e8e8</Color>
+    <Color x:Key="TextSecondaryColor">#a0a0a0</Color>
+    <Color x:Key="TextMutedColor">#707080</Color>
+    <Color x:Key="VanillaColor">#505060</Color>
+    <Color x:Key="ModifiedColor">#b8860b</Color>
+    <Color x:Key="NewColor">#2e8b57</Color>
+    <Color x:Key="SessionEditColor">#20b2aa</Color>
+    <Color x:Key="ErrorColor">#b22222</Color>
+    <Color x:Key="WarningColor">#daa520</Color>
+    <Color x:Key="BorderColor">#404050</Color>
+    <Color x:Key="InputBackgroundColor">#1e1e24</Color>
+
+    <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDarkColor}"/>
+    <SolidColorBrush x:Key="BackgroundMediumBrush" Color="{StaticResource BackgroundMediumColor}"/>
+    <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLightColor}"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}"/>
+    <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource AccentPrimaryColor}"/>
+    <SolidColorBrush x:Key="AccentSecondaryBrush" Color="{StaticResource AccentSecondaryColor}"/>
+    <SolidColorBrush x:Key="AccentHighlightBrush" Color="{StaticResource AccentHighlightColor}"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMutedColor}"/>
+    <SolidColorBrush x:Key="VanillaBrush" Color="{StaticResource VanillaColor}"/>
+    <SolidColorBrush x:Key="ModifiedBrush" Color="{StaticResource ModifiedColor}"/>
+    <SolidColorBrush x:Key="NewBrush" Color="{StaticResource NewColor}"/>
+    <SolidColorBrush x:Key="SessionEditBrush" Color="{StaticResource SessionEditColor}"/>
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="{StaticResource InputBackgroundColor}"/>
+
+    <FontFamily x:Key="MonospaceFont">Cascadia Mono, Consolas, DejaVu Sans Mono, Menlo, monospace</FontFamily>
+</ResourceDictionary>
