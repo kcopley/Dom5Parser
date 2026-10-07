@@ -289,25 +289,41 @@ namespace Dom5Tests
         /// <summary>
         /// Imports a mod, applies scripted edits, and re-exports it, so the fidelity suite can
         /// check that the saved data differs from an unedited save by exactly those edits.
-        /// Usage: Dom5Tests edit &lt;input.dm&gt; &lt;edits.json&gt; &lt;output.dm&gt;
+        /// Usage: Dom5Tests edit &lt;input.dm&gt; &lt;edits.json&gt; &lt;output.dm&gt; [undo]
         ///
-        /// edits.json: { "edits": [ { "op": "set"|"add"|"remove"|"change"|"reset", "entity": "monster",
-        ///                            "id": 7000, "command": "#hp", "value": "25", "from": "..." }, ... ] }
+        /// edits.json: { "edits": [ { "op": "set"|"add"|"remove"|"change"|"reset"|"text"|"create"|"delete"|"move"|"info",
+        ///                            "entity": "monster", "id": 7000, "command": "#hp", "value": "25", "from": "..." }, ... ],
+        ///               "reread": [ ... ] }
         /// Edits are the editor's operations (Dom5Edit.Editing.ModEditor): set, add, change (the value
         /// whose arguments are "from" to "value"), reset (drop the entity's own lines), remove (every
         /// value of the command, or those whose arguments are "value", until the entity has none in
-        /// game: inherited ones by "#x 0" or a group rewrite). Vanilla entities are selected into the
-        /// mod on the first edit (copy-on-write).
+        /// game: inherited ones by "#x 0" or a group rewrite), text (the block edited as text, with
+        /// "replace" pairs), create (a new entity, "as" names it for later edits), delete, move (one
+        /// of the entity's own lines, by "delta" or to just "before" another command's line), info
+        /// (a header field: #modname, #description, ...). "fails": "text" on an edit: the editor must
+        /// refuse it with that in its message. "@label" in a value: a created entity's number.
+        /// Vanilla entities are selected into the mod on the first edit (copy-on-write).
+        /// Entities: by "id"; an entity with no number (#newevent, #newmerc) by "index" (the mod's
+        /// Nth one in file order, 0 first) or "match" (the one event whose #msg contains the text;
+        /// another entity by name, as a #select by name finds it); a created one by "ref". The
+        /// numbers created entities got are written to &lt;output&gt;.created.json.
+        ///
+        /// "undo": after saving, every edit is undone (newest first) and the mod saved to
+        /// &lt;output&gt;.undo.dm, then redone and saved to &lt;output&gt;.redo.dm: the suite checks they
+        /// equal the unedited and the edited save byte for byte.
+        /// "reread" (Reread): values checked by re-reading the saved file with Dom5Parser, for
+        /// commands the oracle doesn't read; exit code 3 if one differs.
         /// </summary>
         static void Edit(string basePath, string[] args)
         {
             if (args.Length < 4)
             {
-                Console.WriteLine("Usage: Dom5Tests edit <input.dm> <edits.json> <output.dm>");
+                Console.WriteLine("Usage: Dom5Tests edit <input.dm> <edits.json> <output.dm> [undo]");
                 Environment.ExitCode = 2;
                 return;
             }
             string inputPath = args[1], editsPath = args[2], outputPath = args[3];
+            bool undoCheck = args.Skip(4).Any(a => a.Equals("undo", StringComparison.OrdinalIgnoreCase));
             LoadVanillaBase(basePath);
             try
             {
@@ -320,16 +336,46 @@ namespace Dom5Tests
                 using var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(editsPath));
                 int applied = 0;
                 var editor = new Dom5Edit.Editing.ModEditor(mod);
+                var history = new List<Dom5Edit.Editing.IModEdit>();
+                var created = new Dictionary<string, IDEntity>();
                 foreach (var edit in doc.RootElement.GetProperty("edits").EnumerateArray())
                 {
-                    ApplyEdit(editor, edit);
+                    // "fails": the editor must refuse the edit (EditException with this text) and change nothing
+                    string? fails = edit.TryGetProperty("fails", out var fl) ? fl.GetString() : null;
+                    try
+                    {
+                        if (ApplyEdit(editor, edit, created) is { } done)
+                            history.Add(done);
+                        if (fails != null)
+                            throw new InvalidOperationException($"the editor made it; expected it refused (\"{fails}\")");
+                    }
+                    catch (Dom5Edit.Editing.EditException ex) when (fails != null && ex.Message.Contains(fails, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine($"  refused as expected: {ex.Message}");
+                    }
+                    catch (Exception ex) when (ex is Dom5Edit.Editing.EditException || ex is InvalidOperationException || ex is ArgumentException || ex is KeyNotFoundException)
+                    {
+                        throw new InvalidOperationException($"edit {applied + 1} {edit.GetRawText()}: {ex.Message}", ex);
+                    }
                     applied++;
                 }
-                mod.Resolve(); // resolve references introduced by the edits
-                if (!mod.PreserveSourceOrder)
-                    mod.NormalizeCopies(); // the canonical writer re-derives copies; in file order they replay
-                mod.Export(outputPath); // the editor's Save is the same call (EditorSession.Save)
-                Console.WriteLine($"Edited ({applied} edits): {Path.GetFullPath(inputPath)} -> {Path.GetFullPath(outputPath)}");
+                Save(mod, outputPath); // the editor's Save is the same call (EditorSession.Save)
+                Console.WriteLine($"Edited ({applied} edits, {history.Count} undo steps): {Path.GetFullPath(inputPath)} -> {Path.GetFullPath(outputPath)}");
+                // the numbers created entities got, for expectations that name them by "ref"
+                File.WriteAllText(Path.ChangeExtension(outputPath, ".created.json"), System.Text.Json.JsonSerializer.Serialize(
+                    created.ToDictionary(x => x.Key, x => x.Value.ID)));
+                if (undoCheck)
+                {
+                    for (int i = history.Count - 1; i >= 0; i--)
+                        history[i].Undo();
+                    Save(mod, SideFile(outputPath, "undo"));
+                    foreach (var e in history)
+                        e.Redo();
+                    Save(mod, SideFile(outputPath, "redo"));
+                    Console.WriteLine($"Undone and redone: {SideFile(outputPath, "undo")}, {SideFile(outputPath, "redo")}");
+                }
+                if (doc.RootElement.TryGetProperty("reread", out var reread) && !Reread(outputPath, reread))
+                    Environment.ExitCode = 3;
             }
             catch (Exception ex)
             {
@@ -338,6 +384,166 @@ namespace Dom5Tests
                 Environment.ExitCode = 1;
             }
         }
+
+        static void Save(Mod mod, string path)
+        {
+            mod.Resolve(); // resolve references introduced by the edits
+            if (!mod.PreserveSourceOrder)
+                mod.NormalizeCopies(); // the canonical writer re-derives copies; in file order they replay
+            mod.Export(path);
+        }
+
+        /// <summary>out.dm -> out.undo.dm</summary>
+        static string SideFile(string path, string tag) =>
+            Path.Combine(Path.GetDirectoryName(path) ?? "", Path.GetFileNameWithoutExtension(path) + "." + tag + Path.GetExtension(path));
+
+        /// <summary>
+        /// Re-reads a saved mod with Dom5Parser (parse, resolve) and checks values the oracle doesn't
+        /// read (a nation's start army and defenders, nametypes, poptypes, blesses) or can't see
+        /// (the order of an event's lines). Each check addresses an entity like an edit does and has
+        /// "command" with "values" (every value the entity has for it in game, in order: arguments as
+        /// written, a reference as its ID) and/or "includes"/"excludes" (values that must or mustn't
+        /// be among them), or "order" (the commands of the entity's own lines as
+        /// saved, in order; a subsequence check: other lines may come between). Not independent of
+        /// Dom5Parser: it shows the edit reached the file and reads back as made.
+        /// </summary>
+        static bool Reread(string path, System.Text.Json.JsonElement checks)
+        {
+            var mod = new Mod { FullFilePath = path };
+            mod.Parse(path);
+            mod.ResolveDependencies();
+            mod.Resolve();
+            var editor = new Dom5Edit.Editing.ModEditor(mod);
+            bool ok = true;
+            foreach (var check in checks.EnumerateArray())
+            {
+                string what = check.GetRawText();
+                string? problem = null;
+                try
+                {
+                    var entity = FindEntity(editor, check, null);
+                    if (check.TryGetProperty("command", out var ct))
+                    {
+                        var command = CommandOf(ct.GetString()!);
+                        var actual = editor.Resolve(entity).GetAll(command).Select(v => v.Property).ToList();
+                        string Shown() => string.Join(", ", actual.Select(p => ResolvedArguments(p)));
+                        if (check.TryGetProperty("values", out var values) && values.ValueKind == System.Text.Json.JsonValueKind.Array)
+                        {
+                            var expected = values.EnumerateArray().Select(x => x.GetString() ?? "").ToList();
+                            if (actual.Count != expected.Count || !actual.Zip(expected).All(x => SameValue(x.First, x.Second)))
+                                problem = $"values [{Shown()}], expected [{string.Join(", ", expected)}]";
+                        }
+                        // "includes": values that must be among them (a list the game or the mod has more of)
+                        if (check.TryGetProperty("includes", out var includes))
+                        {
+                            var wanted = includes.ValueKind == System.Text.Json.JsonValueKind.Array
+                                ? includes.EnumerateArray().Select(x => x.GetString() ?? "").ToList()
+                                : new List<string> { includes.GetString() ?? "" };
+                            var absent = wanted.Where(w => !actual.Any(p => SameValue(p, w))).ToList();
+                            if (absent.Count > 0)
+                                problem = $"no {string.Join(", ", absent)} among [{Shown()}]";
+                        }
+                        // "excludes": values that must not be among them
+                        if (check.TryGetProperty("excludes", out var excludes))
+                        {
+                            var present = excludes.EnumerateArray().Select(x => x.GetString() ?? "").Where(w => actual.Any(p => SameValue(p, w))).ToList();
+                            if (present.Count > 0)
+                                problem = $"{string.Join(", ", present)} still among [{Shown()}]";
+                        }
+                    }
+                    if (check.TryGetProperty("order", out var order))
+                    {
+                        var text = editor.BlockText(entity) ?? "";
+                        var commands = text.Split('\n').Select(l => l.Trim()).Where(l => l.StartsWith("#"))
+                            .Select(l => l.Split(' ', '\t')[0].ToLowerInvariant()).ToList();
+                        int at = 0;
+                        foreach (var want in order.EnumerateArray().Select(x => x.GetString()!.ToLowerInvariant()))
+                        {
+                            at = commands.IndexOf(want.StartsWith("#") ? want : "#" + want, at);
+                            if (at < 0)
+                            {
+                                problem = $"lines in order {string.Join(" ", commands)}, expected {string.Join(" ", order.EnumerateArray().Select(x => x.GetString()))} among them";
+                                break;
+                            }
+                            at++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    problem = ex.Message;
+                }
+                Console.WriteLine(problem == null ? $"  reread ok    {what}" : $"  reread FAIL  {what}: {problem}");
+                ok &= problem == null;
+            }
+            return ok;
+        }
+
+        /// <summary>A value's arguments as the game reads them; a reference also as the ID it resolves to.</summary>
+        static bool SameValue(Property p, string expected) =>
+            SameArguments(Dom5Edit.Resolve.ResolvedValue.ArgumentsOf(p), expected)
+            || p is Reference r && r.TryGetEntity(out var target) && target != null && target.ID.ToString() == expected.Trim();
+
+        static string ResolvedArguments(Property p) =>
+            Dom5Edit.Resolve.ResolvedValue.ArgumentsOf(p) + (p is Reference r && r.TryGetEntity(out var t) && t != null ? $" (= {t.ID})" : "");
+
+        static Command CommandOf(string text)
+        {
+            if (!text.StartsWith("#")) text = "#" + text;
+            if (!CommandsMap.TryGetCommand(text, out Command command))
+                throw new ArgumentException($"Unknown command {text}");
+            return command;
+        }
+
+        static readonly Dictionary<string, EntityType> Kinds = new Dictionary<string, EntityType>
+        {
+            { "monster", EntityType.MONSTER }, { "weapon", EntityType.WEAPON }, { "armor", EntityType.ARMOR },
+            { "item", EntityType.ITEM }, { "spell", EntityType.SPELL }, { "site", EntityType.SITE },
+            { "nation", EntityType.NATION }, { "merc", EntityType.MERCENARY }, { "mercenary", EntityType.MERCENARY },
+            { "nametype", EntityType.NAMETYPE }, { "event", EntityType.EVENT }, { "poptype", EntityType.POPTYPE },
+            { "bless", EntityType.BLESS }, { "template", EntityType.TEMPLATE },
+        };
+
+        static EntityType KindOf(System.Text.Json.JsonElement spec)
+        {
+            string kind = spec.GetProperty("entity").GetString()!;
+            return Kinds.TryGetValue(kind, out var type) ? type : throw new ArgumentException($"Unknown entity kind {kind}");
+        }
+
+        /// <summary>The entity an edit or check is about (see Edit: id, index, match, ref).</summary>
+        static IDEntity FindEntity(Dom5Edit.Editing.ModEditor editor, System.Text.Json.JsonElement spec, Dictionary<string, IDEntity>? created)
+        {
+            var mod = editor.Mod;
+            var type = KindOf(spec);
+            string kind = spec.GetProperty("entity").GetString()!;
+            if (spec.TryGetProperty("ref", out var r))
+                return created != null && created.TryGetValue(r.GetString()!, out var made) ? made
+                    : throw new InvalidOperationException($"no created {kind} \"{r.GetString()}\"");
+            if (spec.TryGetProperty("index", out var ix))
+            {
+                // the mod's entities without a number (#newevent, #newmerc), in file order
+                var own = mod.Database[type].GetFullList().Where(e => e.ParentMod == mod && e.ID <= 0 && !e.Selected).ToList();
+                int i = ix.GetInt32();
+                return i >= 0 && i < own.Count ? own[i] : throw new InvalidOperationException($"no {kind} at index {i} (the mod has {own.Count})");
+            }
+            if (spec.TryGetProperty("match", out var m))
+            {
+                string text = m.GetString()!;
+                // another entity by name, as a #select by name finds it (the lowest ID with the name)
+                if (type != EntityType.EVENT)
+                    return mod.TryGet(type, -1, text, out var named) ? named : throw new InvalidOperationException($"no {kind} named \"{text}\"");
+                var found = mod.Database[type].GetFullList().Where(e => e.ParentMod == mod && Matches(editor, e, type, text)).ToList();
+                return found.Count == 1 ? found[0] : throw new InvalidOperationException($"{found.Count} {kind}s match \"{text}\"");
+            }
+            int id = spec.GetProperty("id").GetInt32();
+            if (!mod.TryGet(type, id, null, out var entity))
+                throw new InvalidOperationException($"no {kind} {id}");
+            return entity;
+        }
+
+        /// <summary>An event whose #msg contains the text.</summary>
+        static bool Matches(Dom5Edit.Editing.ModEditor editor, IDEntity e, EntityType type, string text) =>
+            editor.Resolve(e).Get(Command.MSG)?.Property is StringProperty msg && msg.Value != null && msg.Value.Contains(text, StringComparison.Ordinal);
 
         /// <summary>
         /// Prints what entities are in game after a mod (Dom5Edit.Resolve), each value with where it
@@ -544,73 +750,85 @@ namespace Dom5Tests
             Console.WriteLine($"monsters {all.Count}");
         }
 
-        static void ApplyEdit(Dom5Edit.Editing.ModEditor editor, System.Text.Json.JsonElement edit)
+        /// <summary>One scripted edit (see Edit); returns the editor's undo step, or null if nothing changed.</summary>
+        static Dom5Edit.Editing.IModEdit? ApplyEdit(Dom5Edit.Editing.ModEditor editor, System.Text.Json.JsonElement edit, Dictionary<string, IDEntity> created)
         {
-            var mod = editor.Mod;
-            string op = edit.GetProperty("op").GetString();
-            string kind = edit.GetProperty("entity").GetString();
-            int id = edit.GetProperty("id").GetInt32();
-            // (the "text" op edits the entity's block as text: no command)
-            string commandText = edit.TryGetProperty("command", out var ct) ? ct.GetString() : "#end";
-            if (!commandText.StartsWith("#")) commandText = "#" + commandText;
-            if (!CommandsMap.TryGetCommand(commandText, out Command command))
-                throw new ArgumentException($"Unknown command {commandText}");
-            string value = edit.TryGetProperty("value", out var v) ? v.GetString() : null;
-            string from = edit.TryGetProperty("from", out var f) ? f.GetString() : null;
-
-            var type = kind switch
+            string op = edit.GetProperty("op").GetString()!;
+            // the mod's header (#modname, #description, #icon, #version, #domversion)
+            if (op == "info")
+                return editor.SetModInfo(CommandOf(edit.GetProperty("command").GetString()!), edit.TryGetProperty("value", out var info) ? info.GetString() : null);
+            string kind = edit.GetProperty("entity").GetString()!;
+            // "@label" in a value: the number of the entity a "create" edit named so
+            string? Arg(string name) => edit.TryGetProperty(name, out var a) && a.GetString() is string s
+                ? System.Text.RegularExpressions.Regex.Replace(s, @"@(\w+)", x => created.TryGetValue(x.Groups[1].Value, out var c) ? c.ID.ToString() : x.Value)
+                : null;
+            string? value = Arg("value");
+            string? from = Arg("from");
+            if (op == "create")
             {
-                "monster" => EntityType.MONSTER, "weapon" => EntityType.WEAPON, "armor" => EntityType.ARMOR,
-                "item" => EntityType.ITEM, "spell" => EntityType.SPELL, "site" => EntityType.SITE,
-                "nation" => EntityType.NATION,
-                _ => throw new ArgumentException($"Unknown entity kind {kind}"),
-            };
-            if (!mod.TryGet(type, id, null, out var entity))
-                throw new InvalidOperationException($"no {kind} {id}");
+                var edit0 = editor.Create(KindOf(edit), edit.TryGetProperty("name", out var n) ? n.GetString() : null, out var made);
+                if (edit.TryGetProperty("as", out var label))
+                    created[label.GetString()!] = made;
+                return edit0;
+            }
+            var entity = FindEntity(editor, edit, created);
+            string where = $"{kind} {(entity.ID > 0 ? entity.ID.ToString() : edit.GetRawText())}";
+            // (the "text" and "delete" ops have no command)
+            string commandText = edit.TryGetProperty("command", out var ct) ? ct.GetString()! : "#end";
+            var command = CommandOf(commandText);
 
             // the editor's operations (Dom5Edit.Editing), as the GUI makes them
             switch (op)
             {
                 case "set":
-                    editor.Set(entity, command, value ?? "");
-                    break;
+                    return editor.Set(entity, command, value ?? "");
                 case "add":
-                    editor.Add(entity, command, value ?? "");
-                    break;
+                    return editor.Add(entity, command, value ?? "");
                 case "remove":
                     // every value of the command (or those with this argument), so the entity no longer has it
-                    var removed = editor.Run($"Remove {commandText}", tx =>
+                    return editor.Run($"Remove {commandText}", tx =>
                     {
-                        int n = 0;
-                        while (tx.Resolve(entity).GetAll(command).FirstOrDefault(x => value == null || SameArguments(x.Arguments, value)) is { } match)
+                        int count = 0;
+                        while (tx.Resolve(entity).GetAll(command).FirstOrDefault(x => value == null || SameValue(x.Property, value)) is { } match)
                         {
                             tx.Remove(entity, match);
-                            if (++n > 100) throw new InvalidOperationException("remove doesn't converge");
+                            if (++count > 100) throw new InvalidOperationException("remove doesn't converge");
                         }
-                        if (n == 0) throw new InvalidOperationException($"remove: {kind} {id} has no {commandText} {value}");
+                        if (count == 0) throw new InvalidOperationException($"remove: {where} has no {commandText} {value}");
                     });
-                    break;
                 case "change":
-                    var target = editor.Resolve(entity).GetAll(command).FirstOrDefault(x => SameArguments(x.Arguments, from))
-                                 ?? throw new InvalidOperationException($"change: {kind} {id} has no {commandText} {from}");
-                    editor.Change(entity, target, value ?? "");
-                    break;
+                    var target = editor.Resolve(entity).GetAll(command).FirstOrDefault(x => SameValue(x.Property, from!))
+                                 ?? throw new InvalidOperationException($"change: {where} has no {commandText} {from}");
+                    return editor.Change(entity, target, value ?? "");
                 case "reset":
-                    editor.Reset(entity, command);
-                    break;
+                    return editor.Reset(entity, command);
                 case "text":
                     // the page's "in the file" box: the block as text, with "replace" pairs applied
-                    string block = editor.BlockText(entity) ?? throw new InvalidOperationException($"text: {kind} {id} has no single block");
+                    string block = editor.BlockText(entity) ?? throw new InvalidOperationException($"text: {where} has no single block");
                     if (edit.TryGetProperty("replace", out var pairs))
                         foreach (var pair in pairs.EnumerateArray())
                         {
-                            var find = pair[0].GetString();
+                            var find = pair[0].GetString()!;
                             if (!block.Contains(find))
                                 throw new InvalidOperationException($"text: no \"{find}\" in\n{block}");
                             block = block.Replace(find, pair[1].GetString());
                         }
-                    editor.ReplaceText(entity, block);
-                    break;
+                    return editor.ReplaceText(entity, block);
+                case "delete":
+                    return editor.Delete(entity);
+                case "move":
+                    // one of the entity's own lines (the command's, or the one with this argument)
+                    var own = editor.OwnEntity(entity) ?? throw new InvalidOperationException($"move: {where} has no lines in the mod");
+                    var line = own.Properties.SingleOrDefault(p => p.Command == command && (value == null || SameValue(p, value)))
+                               ?? throw new InvalidOperationException($"move: {where} has no single {commandText} {value}");
+                    if (edit.TryGetProperty("before", out var before))
+                    {
+                        var to = CommandOf(before.GetString()!);
+                        var targetLine = own.Properties.FirstOrDefault(p => p.Command == to)
+                                         ?? throw new InvalidOperationException($"move: {where} has no {before.GetString()}");
+                        return editor.MoveLine(entity, line, targetLine, after: false);
+                    }
+                    return editor.MoveLine(entity, line, edit.GetProperty("delta").GetInt32());
                 default:
                     throw new ArgumentException($"Unknown op {op}");
             }

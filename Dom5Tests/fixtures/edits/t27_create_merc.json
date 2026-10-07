@@ -1,0 +1,21 @@
+{
+  "description": "A mercenary band made in the editor on a mod that has none (the oracle numbers a band without a number \"\" and takes only one): its name, commander, units and terms.",
+  "base": "base_edits.dm",
+  "edits": [
+    { "op": "create", "entity": "merc", "name": "Fresh Band", "as": "b" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#bossname", "value": "\"Boss Fresh\"" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#com", "value": "7400" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#unit", "value": "7410" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#nrunits", "value": "15" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#level", "value": "1" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#minmen", "value": "5" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#minpay", "value": "90" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#xp", "value": "0" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#randequip", "value": "1" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#recrate", "value": "100" },
+    { "op": "set", "entity": "merc", "ref": "b", "command": "#eramask", "value": "7" }
+  ],
+  "expect": [
+    { "type": "merc", "id": "", "new": { "name": "Fresh Band", "bossname": "Boss Fresh", "com": "7400", "unit": "7410", "nrunits": "15", "level": "1", "minmen": "5", "minpay": "90", "xp": "0", "randequip": "1", "recrate": "100", "eramask": "7" } }
+  ]
+}

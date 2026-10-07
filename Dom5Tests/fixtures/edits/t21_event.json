@@ -1,0 +1,41 @@
+{
+  "description": "Events (#newevent has no number: by index in the file, or by a unique piece of the message; the oracle numbers the mod's events after the game's, 3302-3304): rarity, a requirement and an effect changed in place, the message (the oracle's name is its first 25 characters); references changed (the commander made, the target monster, the units made), a code changed; requirements added; a line moved (#nation after #2d6units: effects run in line order, which the oracle doesn't keep: re-read); a requirement added to a game event the mod selects (#selectevent 5); a new event made in the editor (saved after the others, so the oracle numbers it 3305).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "event", "index": 0, "command": "#rarity", "value": "1" },
+    { "op": "change", "entity": "event", "index": 0, "command": "#req_minpop", "from": "10", "value": "20" },
+    { "op": "change", "entity": "event", "index": 0, "command": "#gold", "from": "50", "value": "75" },
+    { "op": "set", "entity": "event", "index": 0, "command": "#msg", "value": "\"Test event one: a larger gift.\"" },
+    { "op": "change", "entity": "event", "match": "soldiers arrive", "command": "#com", "from": "5106", "value": "5101" },
+    { "op": "change", "entity": "event", "match": "soldiers arrive", "command": "#req_targmnr", "from": "5102", "value": "5103" },
+    { "op": "change", "entity": "event", "match": "soldiers arrive", "command": "#code", "from": "0", "value": "-302" },
+    { "op": "change", "entity": "event", "match": "soldiers arrive", "command": "#1d6units", "from": "5105", "value": "5100" },
+    { "op": "add", "entity": "event", "index": 2, "command": "#req_maxpop", "value": "500" },
+    { "op": "add", "entity": "event", "index": 2, "command": "#req_code", "value": "-301" },
+    { "op": "move", "entity": "event", "index": 2, "command": "#nation", "before": "#code" },
+    { "op": "set", "entity": "event", "id": 5, "command": "#req_minpop", "value": "100" },
+    { "op": "create", "entity": "event", "as": "e" },
+    { "op": "set", "entity": "event", "ref": "e", "command": "#rarity", "value": "5" },
+    { "op": "set", "entity": "event", "ref": "e", "command": "#msg", "value": "\"A created event.\"" },
+    { "op": "add", "entity": "event", "ref": "e", "command": "#gold", "value": "10" }
+  ],
+  "expect": [
+    { "type": "event", "id": "3302", "field": "rarity", "from": "2", "to": "1" },
+    { "type": "event", "id": "3302", "field": "req_minpop", "from": "10", "to": "20" },
+    { "type": "event", "id": "3302", "field": "gold", "from": "50", "to": "75" },
+    { "type": "event", "id": "3302", "field": "description", "from": "Test event one: a gift of gold.", "to": "Test event one: a larger gift." },
+    { "type": "event", "id": "3302", "field": "name", "from": "Test event one: a gift of", "to": "Test event one: a larger " },
+    { "type": "event", "id": "3303", "field": "com", "from": "5106", "to": "5101" },
+    { "type": "event", "id": "3303", "field": "req_targmnr", "from": "5102", "to": "5103" },
+    { "type": "event", "id": "3303", "field": "code", "from": "0", "to": "-302" },
+    { "type": "event", "id": "3303", "field": "1d6units", "from": "5105", "to": "5100" },
+    { "type": "event", "id": "3304", "field": "req_maxpop", "from": null, "to": "500" },
+    { "type": "event", "id": "3304", "field": "req_code", "from": null, "to": "-301" },
+    { "type": "event", "id": "5", "field": "req_minpop", "from": "50", "to": "100" },
+    { "type": "event", "id": "3305", "new": { "rarity": "5", "description": "A created event.", "name": "A created event.", "gold": "10" } }
+  ],
+  "reread": [
+    { "entity": "event", "index": 2, "order": ["#rarity", "#tempunits", "#2d6units", "#nation", "#code", "#msg"] },
+    { "entity": "event", "index": 2, "command": "#req_code", "values": ["-301"] }
+  ]
+}

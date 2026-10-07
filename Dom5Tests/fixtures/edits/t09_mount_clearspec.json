@@ -1,0 +1,16 @@
+{
+  "description": "Remove a flag a mounted copy inherits (Test Rider Copy: swamp survival from Test Rider): #clearspec, then every other ability added back. The mount, co-rider and riding skill are abilities too (#clearspec clears them in the game): they must be added back, so only the flag goes.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "remove", "entity": "monster", "id": 5103, "command": "#swampsurvival" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5103", "field": "swampsurvival", "from": "1", "to": null },
+    { "type": "unit", "id": "5103", "field": "ressize", "from": "3", "to": null, "note": "oracle representation, not a game change: the oracle keeps the resource size #size implies (or its game data's) in ressize, and its #clearspec drops it; in the game resource size is an ability (a265) this unit doesn't have, so its size (3) counts before and after" }
+  ],
+  "reread": [
+    { "entity": "monster", "id": 5103, "command": "#mountmnr", "values": ["5100"] },
+    { "entity": "monster", "id": 5103, "command": "#coridermnr", "values": ["5101"] },
+    { "entity": "monster", "id": 5103, "command": "#skilledrider", "values": ["1"] }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Reset (drop the mod's own lines for a command, so the entity has what it inherits again) on every type: selected vanilla entities go back to the game's value (unit hp, weapon attack, armor resource cost, item level, spell research level, site gold: the game's site states none, a nation's added recruit, a game event's rarity); copies go back to the copied value (a unit's morale, a weapon's damage); a mod band's xp goes (nothing to inherit).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "reset", "entity": "monster", "id": 3, "command": "#hp" },
+    { "op": "reset", "entity": "weapon", "id": 9, "command": "#att" },
+    { "op": "reset", "entity": "armor", "id": 5, "command": "#rcost" },
+    { "op": "reset", "entity": "item", "id": 1, "command": "#constlevel" },
+    { "op": "reset", "entity": "spell", "id": 12, "command": "#researchlevel" },
+    { "op": "reset", "entity": "site", "id": 1, "command": "#gold" },
+    { "op": "reset", "entity": "nation", "id": 5, "command": "#addrecunit" },
+    { "op": "reset", "entity": "event", "id": 5, "command": "#rarity" },
+    { "op": "reset", "entity": "merc", "index": 0, "command": "#xp" },
+    { "op": "reset", "entity": "monster", "id": 5103, "command": "#mor" },
+    { "op": "reset", "entity": "weapon", "id": 1201, "command": "#dmg" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "3", "field": "hp", "from": "13", "to": "12" },
+    { "type": "wpn", "id": "9", "field": "att", "from": "2", "to": "1" },
+    { "type": "armor", "id": "5", "field": "rcost", "from": "6", "to": "1" },
+    { "type": "item", "id": "1", "field": "constlevel", "from": "2", "to": "1" },
+    { "type": "spell", "id": "12", "field": "researchlevel", "from": "2", "to": "1" },
+    { "type": "site", "id": "1", "field": "gold", "from": "25", "to": null },
+    { "type": "nation", "id": "5", "field": "units", "from": ["5105"], "to": null },
+    { "type": "event", "id": "5", "field": "rarity", "from": "2", "to": "-2" },
+    { "type": "merc", "id": "", "field": "xp", "from": "10", "to": null },
+    { "type": "unit", "id": "5103", "field": "mor", "from": "14", "to": "12" },
+    { "type": "wpn", "id": "1201", "field": "dmg", "from": "9", "to": "7" }
+  ]
+}

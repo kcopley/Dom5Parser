@@ -236,6 +236,8 @@ exe for browsing (read-only; `#selectevent` changes shown on top).
 ## How this is verified
 
 - Core: `Dom5Tests edit` scripted edits through the same entity calls as the editor (fidelity
-  stage 4), saves compared by data and by file.
+  stage 4: every operation on every entity type, `docs/FIDELITY_SUITE.md` has the coverage
+  table; stage 5: ~300 generated edits at once on DomEnhanced), saves compared by data and by
+  file, and every edit run undone and redone (byte for byte).
 - UI: **(now)** `Dom5Editor --snapshot`: load a mod, open an entity's view off-screen, apply
   edits through its view model, render to PNG for review.

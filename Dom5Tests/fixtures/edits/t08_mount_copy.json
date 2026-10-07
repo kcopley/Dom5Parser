@@ -1,0 +1,14 @@
+{
+  "description": "A copy of a mounted unit (Test Rider Copy, #copystats Test Rider): its own riding skill, its inherited co-rider changed, its inherited mount removed (#mountmnr 0). The rider it copies doesn't change.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 5103, "command": "#skilledrider", "value": "3" },
+    { "op": "change", "entity": "monster", "id": 5103, "command": "#coridermnr", "from": "5101", "value": "5106" },
+    { "op": "remove", "entity": "monster", "id": 5103, "command": "#mountmnr" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5103", "field": "skilledrider", "from": "1", "to": "3" },
+    { "type": "unit", "id": "5103", "field": "coridermnr", "from": "5101", "to": "5106" },
+    { "type": "unit", "id": "5103", "field": "mountmnr", "from": "5100", "to": "0" }
+  ]
+}

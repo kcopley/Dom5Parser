@@ -1,0 +1,31 @@
+{
+  "description": "Items: a mod item another copies (Test Sword; Test Sword Copy is #copyitem of it with its own path level): construction level, weapon (to another mod weapon) and a nation restriction reach the copy; the armor of an armor item; a selected vanilla item's inherited weapon changed (Fire Sword: an item has one weapon, #weapon replaces it); an untouched item's level and weapon (Ice Sword, to a mod weapon); an untouched item with a game value no command sets (Bow of the Titans: strength required 18), whose weapon change must not #clear the item (it did: the item's #weapon was treated as a list, found by the stress run).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "item", "id": 700, "command": "#constlevel", "value": "3" },
+    { "op": "change", "entity": "item", "id": 700, "command": "#weapon", "from": "1200", "value": "1201" },
+    { "op": "add", "entity": "item", "id": 700, "command": "#restricted", "value": "160" },
+    { "op": "change", "entity": "item", "id": 702, "command": "#armor", "from": "450", "value": "451" },
+    { "op": "change", "entity": "item", "id": 1, "command": "#weapon", "from": "76", "value": "8" },
+    { "op": "set", "entity": "item", "id": 2, "command": "#mainlevel", "value": "2" },
+    { "op": "change", "entity": "item", "id": 2, "command": "#weapon", "from": "77", "value": "1200" },
+    { "op": "change", "entity": "item", "id": 159, "command": "#weapon", "from": "678", "value": "8" }
+  ],
+  "expect": [
+    { "type": "item", "id": "700", "field": "constlevel", "from": "2", "to": "3" },
+    { "type": "item", "id": "701", "field": "constlevel", "from": "2", "to": "3" },
+    { "type": "item", "id": "700", "field": "weapon", "from": "1200", "to": "1201" },
+    { "type": "item", "id": "701", "field": "weapon", "from": "1200", "to": "1201" },
+    { "type": "item", "id": "700", "field": "restricted", "from": null, "to": ["160"] },
+    { "type": "item", "id": "701", "field": "restricted", "from": null, "to": ["160"] },
+    { "type": "item", "id": "702", "field": "armor", "from": "450", "to": "451" },
+    { "type": "item", "id": "1", "field": "weapon", "from": "76", "to": "8" },
+    { "type": "item", "id": "2", "field": "mainlevel", "from": "1", "to": "2" },
+    { "type": "item", "id": "2", "field": "weapon", "from": "77", "to": "1200" },
+    { "type": "item", "id": "159", "field": "weapon", "from": "678", "to": "8" }
+  ],
+  "reread": [
+    { "entity": "item", "id": 1, "command": "#weapon", "values": ["8"] },
+    { "entity": "item", "id": 701, "command": "#weapon", "values": ["1201"] }
+  ]
+}

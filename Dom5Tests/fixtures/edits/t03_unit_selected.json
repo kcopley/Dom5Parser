@@ -1,0 +1,23 @@
+{
+  "description": "A vanilla monster the mod #selects (Serpent Cataphract, the mod sets hp 13): change the mod's own value in place, override vanilla values, add a weapon (a mod weapon), a flag and a path, remove one inherited armor (#cleararmor and the others added back).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 3, "command": "#hp", "value": "15" },
+    { "op": "set", "entity": "monster", "id": 3, "command": "#att", "value": "13" },
+    { "op": "add", "entity": "monster", "id": 3, "command": "#weapon", "value": "1201" },
+    { "op": "remove", "entity": "monster", "id": 3, "command": "#armor", "value": "14" },
+    { "op": "add", "entity": "monster", "id": 3, "command": "#flying" },
+    { "op": "set", "entity": "monster", "id": 3, "command": "#magicskill", "value": "6 1" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "3", "field": "hp", "from": "13", "to": "15" },
+    { "type": "unit", "id": "3", "field": "att", "from": "12", "to": "13" },
+    { "type": "unit", "id": "3", "field": "weapons", "from": ["357"], "to": ["357", "1201"] },
+    { "type": "unit", "id": "3", "field": "armor", "from": ["126", "14", "2"], "to": ["126", "2"] },
+    { "type": "unit", "id": "3", "field": "flying", "from": null, "to": "1" },
+    { "type": "unit", "id": "3", "field": "N", "from": null, "to": "1" }
+  ],
+  "reread": [
+    { "entity": "monster", "id": 3, "command": "#armor", "values": ["126", "2"] }
+  ]
+}

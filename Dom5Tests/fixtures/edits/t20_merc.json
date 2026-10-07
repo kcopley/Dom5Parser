@@ -1,0 +1,23 @@
+{
+  "description": "Mercenaries (#newmerc has no number: the edits name the mod's first band by index 0; the oracle numbers it \"\"): size, pay, name, commander changed to another mod unit, a second item added (the game keeps up to 4; the oracle keeps only the last as item, so the list is re-read). A game band can't be changed (there is no #selectmerc): the editor refuses.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "merc", "index": 0, "command": "#nrunits", "value": "25" },
+    { "op": "set", "entity": "merc", "index": 0, "command": "#minpay", "value": "150" },
+    { "op": "set", "entity": "merc", "index": 0, "command": "#name", "value": "\"Renamed Band\"" },
+    { "op": "change", "entity": "merc", "index": 0, "command": "#com", "from": "5106", "value": "5101" },
+    { "op": "add", "entity": "merc", "index": 0, "command": "#item", "value": "10" },
+    { "op": "set", "entity": "merc", "match": "Dante's Stingers", "command": "#xp", "value": "5", "fails": "can't change" }
+  ],
+  "expect": [
+    { "type": "merc", "id": "", "field": "nrunits", "from": "20", "to": "25" },
+    { "type": "merc", "id": "", "field": "minpay", "from": "100", "to": "150" },
+    { "type": "merc", "id": "", "field": "name", "from": "Test Band", "to": "Renamed Band" },
+    { "type": "merc", "id": "", "field": "com", "from": "5106", "to": "5101" },
+    { "type": "merc", "id": "", "field": "item", "from": "1", "to": "10" }
+  ],
+  "reread": [
+    { "entity": "merc", "index": 0, "command": "#item", "values": ["1", "10"] },
+    { "entity": "merc", "match": "Renamed Band", "command": "#com", "values": ["5101"] }
+  ]
+}

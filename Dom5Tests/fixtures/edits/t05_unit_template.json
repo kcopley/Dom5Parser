@@ -1,0 +1,20 @@
+{
+  "description": "Edit a mod monster another one copies (Test Soldier; Test Captain is #copystats of it, with its own morale and a second weapon): stats, weapons and armor reach the copy (rule C), the copy's own morale stays. Then edit the copy only: its own value, an inherited weapon removed (#clearweapons, the rest and its own weapon kept).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "monster", "id": 5105, "command": "#hp", "value": "11" },
+    { "op": "set", "entity": "monster", "id": 5105, "command": "#mor", "value": "9" },
+    { "op": "add", "entity": "monster", "id": 5105, "command": "#armor", "value": "120" },
+    { "op": "set", "entity": "monster", "id": 5106, "command": "#att", "value": "12" },
+    { "op": "remove", "entity": "monster", "id": 5106, "command": "#weapon", "value": "1" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5105", "field": "hp", "from": "10", "to": "11" },
+    { "type": "unit", "id": "5106", "field": "hp", "from": "10", "to": "11" },
+    { "type": "unit", "id": "5105", "field": "mor", "from": "10", "to": "9" },
+    { "type": "unit", "id": "5105", "field": "armor", "from": ["5"], "to": ["5", "120"] },
+    { "type": "unit", "id": "5106", "field": "armor", "from": ["5"], "to": ["5", "120"] },
+    { "type": "unit", "id": "5106", "field": "att", "from": "10", "to": "12" },
+    { "type": "unit", "id": "5106", "field": "weapons", "from": ["1", "8"], "to": ["8"] }
+  ]
+}
