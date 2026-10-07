@@ -145,7 +145,24 @@ namespace Dom5Editor.Session
             return new EditorSession(mod, null);
         }
 
-        public static EditorSession Load(string path) => new EditorSession(Mod.Import(path), path);
+        /// <summary>Opens a mod; a copy of its file as it is now goes to the backups first (ModBackups).</summary>
+        public static EditorSession Load(string path)
+        {
+            string? backup = null;
+            try
+            {
+                backup = ModBackups.Backup(path, "opened");
+            }
+            catch (Exception ex) when (ex is System.IO.IOException || ex is UnauthorizedAccessException)
+            {
+                // opening still works; the status says the copy couldn't be made
+                return new EditorSession(Mod.Import(path), path) { BackupNote = $"no backup copy could be made ({ex.Message})" };
+            }
+            return new EditorSession(Mod.Import(path), path) { BackupNote = backup != null ? "a backup copy was made" : null };
+        }
+
+        /// <summary>What happened to the backup on opening, for the status bar (null: the same copy was there already).</summary>
+        public string? BackupNote { get; private init; }
 
         public ResolvedEntity Resolve(IDEntity entity) => Editor.Resolve(entity);
 
@@ -175,10 +192,14 @@ namespace Dom5Editor.Session
 
         public IModEdit? Redo() => History.Redo();
 
-        /// <summary>Saves the mod (in its file's order, unedited lines as read; the previous file kept as .bak).</summary>
+        /// <summary>
+        /// Saves the mod (in its file's order, unedited lines as read): the file it replaces is
+        /// backed up first, and the new file must read back with the same entities before it takes
+        /// the old one's place (Mod.SafeSave); else nothing changes and an IOException says why.
+        /// </summary>
         public void Save(string path)
         {
-            Mod.Export(path);
+            Mod.SafeSave(path);
             FilePath = path;
             History.MarkSaved();
         }

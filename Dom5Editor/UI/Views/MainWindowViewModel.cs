@@ -93,6 +93,7 @@ namespace Dom5Editor.UI.Views
             var session = EditorSession.Load(filePath);
             int issues = session.Mod.ParseIssues.Count;
             Open(session, $"Loaded {System.IO.Path.GetFileName(filePath)}" +
+                (session.BackupNote != null ? $" ({session.BackupNote})" : "") +
                 (issues > 0 ? $": {issues} notes from reading it (commands the game ignores, duplicates, ...): Validate lists them" : ""));
         }
 
@@ -101,7 +102,7 @@ namespace Dom5Editor.UI.Views
             if (_session == null)
                 return;
             _session.Save(filePath);
-            StatusMessage = $"Saved {System.IO.Path.GetFileName(filePath)}";
+            StatusMessage = $"Saved {System.IO.Path.GetFileName(filePath)} (checked: it reads back the same; the previous version is in the backups)";
             OnPropertyChanged(nameof(CurrentFilePath));
         }
 

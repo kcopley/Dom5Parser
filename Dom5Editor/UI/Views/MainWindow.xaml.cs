@@ -110,8 +110,44 @@ namespace Dom5Editor.UI.Views
             };
             gameItem.Click += (s, a) => PickGameFolder();
             menu.Items.Add(gameItem);
+            var backupsItem = new System.Windows.Controls.MenuItem
+            {
+                Header = "Backups of this mod...",
+                ToolTip = $"Copies of the mod's file, made when it's opened and before each save (the last {Dom5Edit.ModBackups.Keep} kept), in {Dom5Edit.ModBackups.Folder}",
+            };
+            backupsItem.Click += (s, a) => OpenBackups();
+            menu.Items.Add(backupsItem);
             menu.PlacementTarget = (UIElement)sender;
             menu.IsOpen = true;
+        }
+
+        /// <summary>
+        /// Steam replaces the files in its workshop folder when a mod updates (and checks them):
+        /// saving there would lose the changes. Asks first; false: don't save there.
+        /// </summary>
+        private bool ConfirmSaveLocation(string path)
+        {
+            var full = System.IO.Path.GetFullPath(path).Replace('/', '\\');
+            if (full.IndexOf(@"\steamapps\workshop\content\", System.StringComparison.OrdinalIgnoreCase) < 0)
+                return true;
+            return MessageBox.Show(this,
+                $"{System.IO.Path.GetFileName(path)} is in Steam's workshop folder. Steam replaces these files when the mod updates, so changes saved here can be lost.\n\n" +
+                "Save here anyway? (No: choose another place, e.g. your Dominions 6 mods folder.)",
+                "Save into the workshop folder?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+        }
+
+        /// <summary>Opens the folder with the copies of the current mod's file (made on opening it and before each save).</summary>
+        private void OpenBackups()
+        {
+            var file = _viewModel.CurrentFilePath;
+            var folder = string.IsNullOrEmpty(file) ? Dom5Edit.ModBackups.Folder : Dom5Edit.ModBackups.FolderOf(file);
+            if (!System.IO.Directory.Exists(folder))
+            {
+                MessageBox.Show(this, "No backups of this mod yet: a copy is made when a mod is opened and before each save.", "Backups",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("explorer.exe", $"\"{folder}\"") { UseShellExecute = true });
         }
 
         /// <summary>Asks for Dominions6.exe and remembers its folder (read at the next start).</summary>
@@ -299,6 +335,11 @@ namespace Dom5Editor.UI.Views
                 return;
             }
 
+            if (!ConfirmSaveLocation(_viewModel.CurrentFilePath))
+            {
+                SaveModAs();
+                return;
+            }
             try
             {
                 _viewModel.SaveMod(_viewModel.CurrentFilePath);
@@ -306,7 +347,7 @@ namespace Dom5Editor.UI.Views
             catch (System.Exception ex)
             {
                 MessageBox.Show(
-                    $"Failed to save mod:\n\n{ex.Message}",
+                    $"The mod wasn't saved:\n\n{ex.Message}",
                     "Save Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
@@ -325,6 +366,8 @@ namespace Dom5Editor.UI.Views
 
             if (dialog.ShowDialog() == true)
             {
+                if (!ConfirmSaveLocation(dialog.FileName))
+                    return;
                 try
                 {
                     _viewModel.SaveMod(dialog.FileName);
@@ -332,7 +375,7 @@ namespace Dom5Editor.UI.Views
                 catch (System.Exception ex)
                 {
                     MessageBox.Show(
-                        $"Failed to save mod:\n\n{ex.Message}",
+                        $"The mod wasn't saved:\n\n{ex.Message}",
                         "Save Error",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);

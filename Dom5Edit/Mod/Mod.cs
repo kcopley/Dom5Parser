@@ -686,6 +686,21 @@ namespace Dom5Edit
             _exporter.Export(this, file, overwrite);
         }
 
+        /// <summary>Writes the mod to another file (a recovery copy) without making it the mod's file.</summary>
+        public void ExportCopy(string file) => _exporter.Export(this, file, true);
+
+        /// <summary>
+        /// Saves with the editor's safeguards: the file being replaced is backed up first
+        /// (ModBackups), and the new file must read back with the same entities before it takes
+        /// the old one's place (SaveCheck); if not, nothing changes and the error says why.
+        /// </summary>
+        public void SafeSave(string file)
+        {
+            ModBackups.Backup(file, "before-save");
+            _exporter.Export(this, file, true, tmp => SaveCheck.Verify(this, tmp));
+            FullFilePath = file;
+        }
+
         public void Export(StreamWriter writer)
         {
             _exporter.Export(this, writer);
