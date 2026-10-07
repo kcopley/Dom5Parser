@@ -819,6 +819,9 @@ namespace Dom5Editor.UI
             if (vm.Report == null)
                 vm.CheckOnOpen();
             Log($"report bar: {vm.ReportSummary} ({vm.ReportMilliseconds} ms)");
+            // (the look for a needed mod runs in the background: its answer, once it's on the bar)
+            vm.Suggesting?.Wait();
+            Pump();
             if (vm.HasNeededSuggestion)
                 Log($"   suggestion: {vm.NeededSuggestionText}");
             var report = vm.Report!;
