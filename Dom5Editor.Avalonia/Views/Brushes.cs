@@ -22,6 +22,15 @@ namespace Dom5Editor.Ava.Views
             return Brush(f.Count > 0 && f[0] ? "ErrorBrush" : f.Count > 1 && f[1] ? "AccentPrimaryBrush" : "WarningBrush");
         });
 
+        /// <summary>A report section's key as its dot's colour (as WPF's report).</summary>
+        public static readonly IValueConverter ReportSection = new FuncValueConverter<string?, IBrush>(key => Brush(key switch
+        {
+            "wrong" => "ErrorBrush",
+            "ignored" => "WarningBrush",
+            "missing" => "AccentPrimaryBrush",
+            _ => "TextMutedBrush",
+        }));
+
         /// <summary>A list row's kind ("Vanilla", "Changed", "New") as its colour.</summary>
         public static readonly IValueConverter Source = new FuncValueConverter<string?, IBrush>(kind => Brush(kind switch
         {
