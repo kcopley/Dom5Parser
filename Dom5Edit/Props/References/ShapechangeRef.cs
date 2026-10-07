@@ -12,7 +12,8 @@ namespace Dom5Edit.Props
         public override void Resolve()
         {
             base.Resolve();
-            if (MonsterRef != null)
+            // a merge writes the shape's number (an unnumbered new monster has none: kept by name)
+            if (MonsterRef != null && Parent?.ParentMod?.KeepReferenceForms == false && MonsterRef.Entity?.ID > 0)
             {
                 MonsterRef.IsStringRef = false;
             }

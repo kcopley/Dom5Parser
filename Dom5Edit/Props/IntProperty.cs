@@ -27,6 +27,11 @@ namespace Dom5Edit.Props
             {
                 Comment += remainder;
             }
+            else if (!HasValue && !string.IsNullOrWhiteSpace(s))
+            {
+                // not a number ("#autospellrepeat "Rage""): the game reads 0; the text is kept as a note
+                Comment = (s.Trim() + " " + Comment).Trim();
+            }
         }
 
         //Preliminary Example only for now, not optimal

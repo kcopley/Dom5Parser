@@ -16,8 +16,8 @@ namespace Dom5Edit.Props
 
         public override string ToExportString()
         {
-            if (Entity != null && Entity.ID != -1)
-                IsStringRef = false;
+            if (Entity != null && Entity.ID != -1 && Parent?.ParentMod?.KeepReferenceForms == false)
+                IsStringRef = false; // a merge writes numbers
             return base.ToExportString();
         }
     }

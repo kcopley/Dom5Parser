@@ -22,6 +22,18 @@ namespace Dom5Edit.Props
             return new WeaponDamage();
         }
 
+        public override void Parse(Command c, string s, string comment)
+        {
+            base.Parse(c, s, comment);
+            // the game reads the number at the start ("#dmg 5 -1" is 5); more is kept as text
+            var parts = (s ?? "").Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length > 1 && long.TryParse(parts[0], out _))
+            {
+                Value = parts[0];
+                Comment = (comment + " " + string.Join(" ", parts.Skip(1))).Trim();
+            }
+        }
+
         /// <summary>
         /// Returns true if the value is a special effect type string (not numeric).
         /// </summary>

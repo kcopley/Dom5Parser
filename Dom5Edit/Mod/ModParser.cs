@@ -68,6 +68,19 @@ namespace Dom5Edit
         public Action<int, string> OnLog { get; set; }
 
         /// <summary>
+        /// Callback invoked, with a line number, where the game reads the file differently than its
+        /// lines suggest (a text whose closing quote is missing, "--" inside a text).
+        /// </summary>
+        public Action<int, string> OnNote { get; set; }
+
+        /// <summary>
+        /// Whether the game skips the text of a command ("#msg") in the block being read: its text,
+        /// when the closing quote is missing, takes in the command lines up to the next quote
+        /// (GameData.GameReading).
+        /// </summary>
+        public Func<string, bool> SkipsText { get; set; }
+
+        /// <summary>
         /// Current line number being parsed.
         /// </summary>
         public int LineNumber { get; private set; }
@@ -108,6 +121,12 @@ namespace Dom5Edit
             bool isMultiLine = false;
             string prevLine = "";
             string rawPrev = ""; // the multi-line string's lines as read
+            // the multi-line text's command, whether the game skips its text, its first line, and
+            // the command lines the game reads as part of it
+            string textCommand = "";
+            bool textSkips = false;
+            int textStart = 0;
+            var swallowed = new List<string>();
             LineNumber = 0;
 
             while ((s = sr.ReadLine()) != null)
@@ -115,13 +134,13 @@ namespace Dom5Edit
                 LineNumber++;
                 string raw = s; // as in the file
                 s = s.Trim(); //remove whitespaces
-                s = s.Replace('\t', ' ');
+                s = s.Replace('\t', ' '); // (the game reads every tab as a space, in texts too)
                 if (s.Length < 1)
                 {
                     // a blank line inside a multi-line string is a paragraph break, keep it
                     if (isMultiLine)
                     {
-                        prevLine = prevLine + NewLine;
+                        prevLine = prevLine + NewLine + raw; // (as written: a line of only spaces or tabs keeps them)
                         rawPrev = rawPrev + NewLine + raw;
                     }
                     else OnTrivia?.Invoke(raw);
@@ -153,22 +172,77 @@ namespace Dom5Edit
                     //check if has both quotes
                     int firstQuote = s.IndexOf('"');
                     int secondQuote = s.IndexOf('"', firstQuote + 1);
+                    string command = FirstWord(s);
+                    int dashes = s.IndexOf(commentDelimiter, firstQuote + 1);
+                    if (dashes != -1 && (secondQuote == -1 || dashes < secondQuote))
+                        OnNote?.Invoke(LineNumber, $"{command}'s text has \"--\" in it: the game drops the rest of the line from the text"
+                            + (secondQuote != -1 ? ", its closing quote too, so the text runs on to the next quote in the file" : ""));
                     //first quote mark exists, second does not
                     //either is multi-line, or quote mark forgotten on the end
                     if (firstQuote != -1 && secondQuote == -1)
                     {
                         bool hasAnotherCommand = HasCommandOnLine(s.Substring(firstQuote)); //only check after the first quote
-                        if (!hasAnotherCommand)
+                        // the game reads a text to the next quote, across lines; after a command
+                        // that skips its text (#msg, #name, ...) the commands in it are text too
+                        bool skips = SkipsText?.Invoke(command) == true;
+                        if (!hasAnotherCommand || skips)
                         {
                             isMultiLine = true;
+                            textCommand = command;
+                            textSkips = skips;
+                            textStart = LineNumber;
+                            swallowed.Clear();
+                            if (hasAnotherCommand)
+                                swallowed.Add(s.Substring(firstQuote + GetNextCommandIndex(s.Substring(firstQuote))));
                             prevLine = raw.TrimStart(); // keep trailing spaces: they're part of the text
                             rawPrev = raw;
                             continue;
                         } //if it has another command on that line, the quote was just forgotten
+                        OnNote?.Invoke(LineNumber, ForgottenQuote(command, LineNumber));
                     }
                     _wholeLine = raw;
                     ProcessStringToLine(s);
                     _wholeLine = null;
+                }
+                else if (isMultiLine && !string.IsNullOrEmpty(prevLine) && textSkips)
+                {
+                    // a text the game skips: everything up to the next quote is text, command lines too
+                    int quote = raw.IndexOf('"');
+                    if (quote == -1)
+                    {
+                        if (HasCommandOnLine(s) && GetNextCommandIndex(s) == 0)
+                            swallowed.Add(s);
+                        prevLine = prevLine + NewLine + raw;
+                        rawPrev = rawPrev + NewLine + raw;
+                        continue;
+                    }
+                    string before = s.Substring(0, s.IndexOf('"')).Trim();
+                    if (before.Length > 0 && HasCommandOnLine(before) && GetNextCommandIndex(before) == 0)
+                        swallowed.Add(before + " \"");
+                    string text = prevLine + NewLine + raw.Substring(0, quote + 1);
+                    // what follows the closing quote on its line is read as usual
+                    string rest = raw.Substring(quote + 1).Replace('\t', ' ').Trim();
+                    if (rest.Length > 0 && CommandIndexes(rest).Count > 0 && HasCommandOnLine(rest.Substring(GetNextCommandIndex(rest))))
+                    {
+                        _sharedLine = (++_lineGroups, rawPrev + NewLine + raw, 1 + CommandIndexes(rest).Count);
+                        ProcessStringToLine(text);
+                        ProcessStringToLine(rest);
+                        _sharedLine = null;
+                    }
+                    else
+                    {
+                        // (anything else after the quote isn't read: kept in the line as written)
+                        _wholeLine = rawPrev + NewLine + raw;
+                        ProcessStringToLine(rest.StartsWith(commentDelimiter) ? text + " " + rest : text);
+                        _wholeLine = null;
+                    }
+                    if (swallowed.Count > 0)
+                        OnNote?.Invoke(textStart, $"{textCommand} has no closing quote on its line: the game reads lines {textStart}-{LineNumber} as its text, "
+                            + $"so {(swallowed.Count == 1 ? "this command in them isn't" : "these commands in them aren't")} read: {string.Join("; ", swallowed.Take(6).Select(c => Shorten(c)))}"
+                            + (swallowed.Count > 6 ? $" and {swallowed.Count - 6} more" : ""));
+                    prevLine = "";
+                    isMultiLine = false;
+                    textSkips = false;
                 }
                 else if (isMultiLine && !string.IsNullOrEmpty(prevLine))
                 {
@@ -196,6 +270,7 @@ namespace Dom5Edit
                         {
                             // nothing before the next command: the closing quote was just forgotten.
                             // Both keep their lines as read.
+                            OnNote?.Invoke(textStart, ForgottenQuote(textCommand, textStart));
                             _wholeLine = rawPrev;
                             ProcessStringToLine(prevLine.TrimEnd('\r', '\n'));
                             _wholeLine = raw;
@@ -232,9 +307,40 @@ namespace Dom5Edit
                     _wholeLine = null;
                 }
             }
+            if (isMultiLine && !string.IsNullOrEmpty(prevLine))
+            {
+                // a text whose closing quote never comes: the game reads it to the end of the file
+                OnNote?.Invoke(textStart, $"{textCommand} has no closing quote: the game reads the rest of the file, from line {textStart}, as its text");
+                _wholeLine = rawPrev;
+                ProcessStringToLine(prevLine + "\""); // (closed here only to read it as one text; saved as read)
+                _wholeLine = null;
+            }
             LineWasTrimmed = false;
             LineNumber = -1;
         }
+
+        /// <summary>A line's first word ("#msg" of "#msg "text...").</summary>
+        private static string FirstWord(string s)
+        {
+            int end = 0;
+            while (end < s.Length && s[end] != ' ' && s[end] != '"')
+                end++;
+            return s.Substring(0, end);
+        }
+
+        private static string Shorten(string s) => s.Length > 50 ? s.Substring(0, 50) + "…" : s;
+
+        // texts the game reads through (the commands in them are read too); an item's #name is one
+        private static readonly HashSet<string> Descriptions = new() { "#descr", "#details", "#portent", "#cure", "#summary", "#brief", "#name", "#description" };
+
+        /// <summary>
+        /// The note for a quote missing at the end of its line, before more commands: a description
+        /// runs on to the next quote (the commands after it are still read); a name to look up
+        /// (#weapon "Net") must close on its line, so it reads nothing.
+        /// </summary>
+        private static string ForgottenQuote(string command, int line) => Descriptions.Contains(command)
+            ? $"{command} has no closing quote on its line: the game's text runs on to the next quote in the file, so it also shows the lines after line {line} (their commands are still read)"
+            : $"{command} has no closing quote on its line: the game reads nothing for it (a quoted name must close on its line)";
 
         /// <summary>
         /// Checks if a line contains a valid command.
@@ -313,13 +419,28 @@ namespace Dom5Edit
             return spans;
         }
 
+        /// <summary>
+        /// Where a line's comment starts: the first "--" outside closed quotes ("#descr "Hathrans --
+        /// an elite class..."" is all text), or -1.
+        /// </summary>
+        private int CommentIndex(string s)
+        {
+            int i = s.IndexOf(commentDelimiter);
+            if (i == -1 || s.IndexOf('"') == -1)
+                return i;
+            var quoted = QuotedSpans(s);
+            while (i != -1 && quoted.Any(q => q.Start < i && i < q.End))
+                i = s.IndexOf(commentDelimiter, i + 1);
+            return i;
+        }
+
         /// <summary>The next '#' from <paramref name="from"/>, or -1 (also when it's past the end).</summary>
         private static int NextHash(string s, int from) => from < s.Length ? s.IndexOf('#', from) : -1;
 
         /// <summary>Where the commands of a line start ('#' outside comments, message tags and closed quotes).</summary>
         private List<int> CommandIndexes(string s)
         {
-            int commentIndex = s.IndexOf(commentDelimiter);
+            int commentIndex = CommentIndex(s);
             //is there another command on the same line?
             List<int> commandIndexes = new List<int>();
             int index = s.IndexOf('#');
@@ -339,7 +460,8 @@ namespace Dom5Edit
                         nextIndex = NextHash(s, nextIndex + tag);
                         continue;
                     }
-                    if (quoted.Any(q => q.Start < nextIndex && nextIndex < q.End))
+                    var span = quoted.FirstOrDefault(q => q.Start < nextIndex && nextIndex < q.End, (Start: -1, End: -1));
+                    if (span.Start != -1 && !ReadThrough(s, commandIndexes, span.Start, nextIndex))
                     {
                         nextIndex = NextHash(s, nextIndex + 1);
                         continue;
@@ -350,6 +472,30 @@ namespace Dom5Edit
 
             }
             return commandIndexes;
+        }
+
+        /// <summary>
+        /// Whether the '#' at <paramref name="at"/>, inside quotes opened at <paramref name="quote"/>,
+        /// starts a command the game reads: the game reads on through a description's text (#descr,
+        /// #details, ...), so a command name there is a command (and the text, which runs to its
+        /// closing quote, shows it too); a #msg's or #name's text is skipped.
+        /// </summary>
+        private bool ReadThrough(string s, List<int> commandIndexes, int quote, int at)
+        {
+            int owner = commandIndexes.LastOrDefault(i => i < quote, -1);
+            if (owner == -1)
+                return false;
+            string ownerName = FirstWord(s.Substring(owner));
+            if (!Descriptions.Contains(ownerName) || SkipsText?.Invoke(ownerName) == true)
+                return false;
+            int end = at + 1;
+            while (end < s.Length && (char.IsLetterOrDigit(s[end]) || s[end] == '_'))
+                end++;
+            string name = s.Substring(at, end - at);
+            if (!CommandsMap.TryGetCommand(name, out _))
+                return false;
+            OnNote?.Invoke(LineNumber, $"{ownerName}'s text has {name} in it: the game reads it as a command too (and shows it in the text)");
+            return true;
         }
 
         /// <summary>
@@ -401,7 +547,7 @@ namespace Dom5Edit
         public void ProcessLine(string s)
         {
             string line = s;
-            int commentIndex = s.IndexOf(commentDelimiter);
+            int commentIndex = CommentIndex(s);
             string comment = ""; //set to empty string, not null
 
             if (commentIndex == -1) //check for single dash

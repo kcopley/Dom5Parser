@@ -27,10 +27,14 @@ namespace Dom5Edit.Props
 
             if (this.Command == Command.DAMAGEMON)
             {
-                if (MonsterRef.Entity != null && MonsterRef.Entity.ID != -1)
+                if (MonsterRef?.Entity != null && MonsterRef.Entity.ID != -1)
                 {
+                    // the spell's #damage (the monster it summons), for the pages and game values.
+                    // Written as read (#damagemon "Name"; #damage takes only a number), except
+                    // in a merge, which writes #damage and the number
                     this.Command = Command.DAMAGE;
-                    MonsterRef.Command = Command.DAMAGE;
+                    if (Parent?.ParentMod?.KeepReferenceForms == false)
+                        MonsterRef.Command = Command.DAMAGE;
                 }
             }
         }

@@ -17,7 +17,7 @@ namespace Dom5Edit.Props
 
         public override string ToExportString()
         {
-            if ((Command == Command.NEXTSPELL) && Entity != null && Entity.ID != -1)
+            if ((Command == Command.NEXTSPELL) && Entity != null && Entity.ID != -1 && Parent?.ParentMod?.KeepReferenceForms == false)
                 IsStringRef = false;
             return base.ToExportString();
         }

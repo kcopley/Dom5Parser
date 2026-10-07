@@ -31,6 +31,7 @@ namespace Dom5Edit.Validation
                 ParseIssueType.IdRangeExceeded => ValidationSeverity.Warning,
                 ParseIssueType.Error => ValidationSeverity.Error,
                 ParseIssueType.Warning => ValidationSeverity.Warning,
+                ParseIssueType.GameReadsDifferently => ValidationSeverity.Error,
                 _ => ValidationSeverity.Info
             };
         }
@@ -43,6 +44,7 @@ namespace Dom5Edit.Validation
                 ParseIssueType.DuplicateId => "Duplicate ID",
                 ParseIssueType.DuplicateName => "Duplicate Name",
                 ParseIssueType.IdRangeExceeded => "ID Range",
+                ParseIssueType.GameReadsDifferently => "Read by the game",
                 _ => "Parse Issue"
             };
         }

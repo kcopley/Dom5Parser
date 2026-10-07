@@ -19,7 +19,14 @@ namespace Dom5Edit.Props
             this.Command = c;
             this.Comment = comment;
             s = s.Trim();
-            var split = s.Split(' ');
+            // the values, however they're spaced (the game reads the numbers it needs; more are kept as text)
+            var split = s.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            if (split.Length > 2)
+            {
+                comment = (comment + " " + string.Join(" ", split.Skip(2))).Trim();
+                this.Comment = comment;
+                split = split.Take(2).ToArray();
+            }
             if (split.Length == 2)
             {
                 HasValue = split[0].TryRetrieveUlongFromString(out ulong val, out string remainder);

@@ -20,10 +20,14 @@ namespace Dom5Edit.Props
             return new CommandProperty() { Command = c, Comment = "", Parent = parent };
         }
 
+        /// <summary>A value written after a command that takes none ("#dt_aff 22"): kept as written.</summary>
+        public string Extra { get; private set; } = "";
+
         public override void Parse(Command c, string s, string comment)
         {
             this.Command = c;
             this.Comment = comment;
+            this.Extra = s?.Trim() ?? "";
         }
 
         //Preliminary Example only for now, not optimal
@@ -31,6 +35,8 @@ namespace Dom5Edit.Props
         {
             if (CommandsMap.TryGetString(Command, out string s))
             {
+                if (Extra.Length > 0)
+                    s += " " + Extra;
                 if (!String.IsNullOrEmpty(Comment))
                 {
                     return s + " -- " + Comment;
