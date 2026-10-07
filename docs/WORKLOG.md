@@ -22,10 +22,20 @@ number of used by issues"), then "look at implementing cross platform".
 - **Dom5Editor.Core** (2f5fd0e): session, view models, game art and data files in a net8.0
   library without WPF; images as `Picture`, colours as `#RRGGBB`, dialogs/dispatcher through
   `UI.Ui`. The WPF editor renders pixel-identical before and after (17 pages).
-- **Dom5Editor.Avalonia** (bdefae8, 211395a): Avalonia 11.3 editor on the shared core: toolbar,
-  report, lists, page header/sprites/badges/used by/file text, Mod Info; `--snapshot` renders
-  headless and runs on Linux (WSL, linux-x64). Panels, the event page, the window's menus and
-  packaging are being ported (agents in worktrees).
+- **Dom5Editor.Avalonia** (bdefae8, 211395a; three agents in worktrees, merged 573b6ae, 38708ef,
+  e19ff76): every view of the WPF editor on the shared core. The event page and chain map; all
+  panels, badge chips (one control for wrap and grid), copies/add box/long texts/removals,
+  sprite slots (click, right-click, drop); the Load menu, Go to, layout, crash handler, the full
+  issue list. The snapshot harness's view-model steps are one file for both editors
+  (`Dom5Editor.Core/UI/SnapshotSteps.cs`). `RefPicker` picks only on Enter, a click, or Tab
+  after typing (AutoCompleteBox picked on every arrow key: an edit per key).
+- **Fixed after merging** (4afe5ad, 8ad38d1, d0f893c): every button's "can it run" listener sat
+  in a static event without WPF's CommandManager, so closed pages stayed alive (383-page sweep:
+  324 alive, 1.5 GB; now 1, 268 MB, as WPF); Fluent's blue accent made brown; the parent-finder
+  runs in the background (it read 55 MB around Strigos: 3 s on a slow disk).
+- **Mac/Linux packages** (2430d80, `tools/publish-avalonia.sh`): linux-x64/arm64 tar.gz,
+  osx-arm64/x64 .app zips (40-44 MB each) in `publish/`; the linux-x64 one runs natively in WSL.
+  Not signed as a bundle (no codesign here; the README has testers sign ad hoc); untested on a Mac.
 - **The game's mod order** (ce66965, from the exe): enabled mods are read in the order they
   were enabled (enabling appends, nothing sorts), so a submod must be enabled after its parent;
   Strigos's own description says the same.
