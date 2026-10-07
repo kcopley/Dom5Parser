@@ -3,7 +3,13 @@
              x:Class="Dom5Editor.Ava.App"
              RequestedThemeVariant="Dark">
     <Application.Styles>
-        <FluentTheme />
+        <!-- Fluent's accent (accent buttons, check boxes, the selected tab's line) in the editor's
+             brown, as the Windows editor has it (Theme/Colors.axaml AccentPrimaryColor) -->
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Dark" Accent="#8b4513"/>
+            </FluentTheme.Palettes>
+        </FluentTheme>
         <StyleInclude Source="avares://Dom5Editor.Avalonia/Theme/Styles.axaml"/>
     </Application.Styles>
     <Application.Resources>
