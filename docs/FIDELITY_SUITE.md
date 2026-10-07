@@ -188,19 +188,19 @@ Not compared (the oracle doesn't read them; re-read instead): a nation's start a
 nametype names, poptypes, blesses, templates, an event's line order. `#mountedspr1/2` isn't read
 by the game (not in Dominions6.exe's parser): only `#unmountedspr1/2` is tested.
 
-## Current state (2026-10-05, oracle d0b67d1, game 6.37)
+## Current state (2026-10-07, oracle ff69107, game 6.37)
 
 | Stage | Case | Result |
 |---|---|---|
 | 1 | 5 copy fixtures, duplicate names, edits-base | pass |
+| 1 | edits-base-types | xfail: the oracle's export leaves out a mod's `#selectevent` of a game event |
 | 1 | DomEnhanced 2.13 | baseline **6** unexpected differences (8,945 at first, 6,269 on 2026-10-04), plus 152 fields listed in `stage1Expected` (game attributes with no mod command). Every touched entity is now re-exported in full after `#clear`, so the export has to carry every value itself. |
-| 2 | exporter round trip | pass |
-| 2 | vanilla.dm current | pass |
-| 2 | vanilla base values | **pass, only expected differences** (`vanillaExpected`); baseline locked at zero |
-| 3 | copy fixtures, duplicate names, edits-base | pass, except `name_before_copy` (xfail) |
-| 3 | DomEnhanced 2.13 | baseline **900** (shared names now resolve to the lowest id, the game's rule) |
-| 4 | e01-e06, e08 | pass |
-| 4 | e07 live template | xfail |
+| 3 | copy fixtures, duplicate names, edits-base, edits-base-types | pass |
+| 3 | DomEnhanced 2.13 | baseline **0** (the save is byte-identical); regenerated: 2 (baseline 6) |
+| 4 | e01-e19, t01-t31 (50 cases) | pass, except t10 (xfail: a vanilla rider loses its rider sprite when an inherited flag is removed) |
+| 5 | DomEnhanced 2.13 and base_types, ~300 edits each, seed 1 | pass (seeds 1-25 pass); ~40 s |
+
+Timing (12 cores, 6 jobs): `--quick` ~1.5 min (60 checks), `--stress` ~40 s, full run ~9 min.
 
 What changed in the oracle to get stage 1 there is in the fork's `docs/EXPORT_RULES.md`. In
 short, the inspector held the same data in two forms: the game data's, and the parser's for
