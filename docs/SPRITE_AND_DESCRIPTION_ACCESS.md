@@ -19,7 +19,7 @@ This document outlines how to resolve sprites and description files for each ent
 - **Path handling:**
   - Absolute paths (vanilla assets from VanillaAssetLoader)
   - Relative paths (mod sprites, resolved against mod directory)
-- See `Dom5Editor/UI/ViewModels/MonsterViewModel.cs`
+- See `Dom5Editor.Core/UI/ViewModels/MonsterViewModel.cs`
 
 ---
 

@@ -21,7 +21,7 @@ unit (below).
 | `Dom5Edit/Derived/UnitTotals.cs` | The values (`UnitTotals.Compute`): each a `DerivedValue` (start, parts, notes); per-weapon `WeaponTotals`. Pure; about 0.2 ms a page. |
 | `Dom5Edit/Derived/GoldCost.cs` | The recruitment price (`#gcost` 10000 and up worked out by the game). |
 | `Dom5Edit/Derived/ItemCost.cs` | A magic item's gem cost to forge. |
-| `Dom5Editor/UI/ViewModels/EntityPages.cs` | Monster page (`MonsterPageViewModel`: brackets, IN GAME notes, weapon and armor table cells); the weapon, armor and item pages' notes. |
+| `Dom5Editor.Core/UI/ViewModels/EntityPages.cs` | Monster page (`MonsterPageViewModel`: brackets, IN GAME notes, weapon and armor table cells); the weapon, armor and item pages' notes. |
 | `tools/derived/inspector_totals.js` | Runs the inspector headless and dumps its values with the inputs it used. |
 | `Dom5Tests/DerivedCheck.cs` | `derived-check` (the comparison) and `derived` (one monster's values and parts). |
 

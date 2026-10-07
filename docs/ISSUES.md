@@ -32,7 +32,7 @@ Investigate alongside the copy/inheritance work.
 `MetadataExtensions`) is **referenced nowhere outside itself** — no `using
 Dom5Edit.Metadata` exists in the editor or core. It was the Phase-1
 "generate UI from C# metadata" approach, fully superseded by the JSON badge
-system (`Dom5Editor/Data/*_badges.json` + `BadgeConfigLoader`). It also duplicates
+system (`Dom5Editor.Core/Data/*_badges.json` + `BadgeConfigLoader`). It also duplicates
 the `docs/pdf_extracted/commands*.json` loading that the badge system already does.
 **Recommendation: delete the subsystem** (and reconcile to one command-metadata
 source) to remove confusion.
@@ -89,7 +89,7 @@ public override void Resolve()
 **Files Modified:**
 - `Dom5Edit/Props/References/StringOrIDRef.cs` - Fixed `Resolve()` to use `_id`/`_name`
 - `Dom5Edit/Props/References/IDRef.cs` - Fixed `Resolve()` to clear state first
-- `Dom5Editor/UI/ViewModels/*ViewModel.cs` - Added `RefreshAllCopyDependentProperties()`
+- `Dom5Editor.Core/UI/ViewModels/*ViewModel.cs` - Added `RefreshAllCopyDependentProperties()`
 
 **Note:** This fix enables the copy reference UI to work correctly, but does not yet implement the "clear" semantics where properties before a copy command are reset. See Issue #1 for that work.
 
@@ -147,7 +147,7 @@ else
 ```
 
 **Files Modified:**
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added vanilla-based + copystats detection in `BuildBadgesFromSection()`
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs` - Added vanilla-based + copystats detection in `BuildBadgesFromSection()`
 
 **Priority Rules (now working correctly):**
 1. Session-edited properties take highest priority (user explicitly set a value)
@@ -204,7 +204,7 @@ public RelayCommand<PropertyItem> RemoveStatsBadgeCommand =>
 ```
 
 **Files Modified:**
-- `Dom5Editor/UI/ViewModels/MonsterViewModel.cs` - Added `RemoveStatsBadgeCommand`
+- `Dom5Editor.Core/UI/ViewModels/MonsterViewModel.cs` - Added `RemoveStatsBadgeCommand`
 - `Dom5Editor/UI/Views/MonsterView.xaml` - Added `RemoveCommand` binding
 
 **Behavior After Fix:**
@@ -288,7 +288,7 @@ Details on clear commands and their exact scope will be documented during featur
 4. Changed `GetPropertyMap()` from `internal` to `public` in `IDEntity.cs` and all entity subclasses
 
 **Files Modified:**
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added `AddPropertyFromMap()`, updated `RemoveIntPropertyByValue()`
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs` - Added `AddPropertyFromMap()`, updated `RemoveIntPropertyByValue()`
 - `Dom5Edit/Entities/IDEntity.cs` - Changed `GetPropertyMap()` to `public virtual`
 - `Dom5Edit/Entities/*.cs` (11 files) - Changed `GetPropertyMap()` overrides to `public override`
 
@@ -307,8 +307,8 @@ Details on clear commands and their exact scope will be documented during featur
 The weapon/armor lists now use `GetLayeredReferenceList<WeaponRef>()` and `GetLayeredReferenceList<ArmorRef>()`, reducing ~200 lines of duplicated code to ~50 lines.
 
 **Files Changed:**
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added generic resolution methods
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Simplified to use base class methods
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs` - Added generic resolution methods
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModels.cs` - Simplified to use base class methods
 
 ### ~~1. Two Parallel ViewModel Systems~~ COMPLETE (2026-01-07)
 
@@ -409,15 +409,15 @@ The Spell entity has so many property mappings that it exceeds reasonable file s
 **Files Modified:**
 - `Dom5Edit/Props/References/StringOrIDRef.cs` - ID setter now sets HasValue
 - `Dom5Edit/Props/References/IDRef.cs` - ID setter now sets HasValue
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Added `RecordPropertyChangeInSession()` helper
-- `Dom5Editor/UI/ViewModels/MonsterViewModel.cs` - All add methods now call session tracking
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs` - Added `RecordPropertyChangeInSession()` helper
+- `Dom5Editor.Core/UI/ViewModels/MonsterViewModel.cs` - All add methods now call session tracking
 - `Dom5Editor/UI/RelayCommand.cs` - Pattern matching in Execute()
 
 ---
 
 ### ~~Undo Support Not Implemented~~ FIXED (2026-01)
 
-**Files:** `Dom5Editor/UI/ViewModels/EntityViewModel.cs`
+**Files:** `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs`
 
 The new UI ViewModels now properly use CommandHistory for edits:
 - `SetStringProperty()` uses `_history.Execute(new SetStringPropertyCommand(...))`
@@ -459,8 +459,8 @@ Removed `DataContext = this` from constructor. Changed command bindings to `Elem
 
 **Files Fixed:**
 - `Dom5Editor/UI/Views/MainWindowViewModel.cs` - Reordered operations: `ClearHistory()` now runs BEFORE `InitializeCollections()`
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Badge value change handlers now update `IsSessionEdit` on the badge after edits
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - `CanRemove` logic now checks `EntitySource` to prevent removing properties from pure vanilla entities
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModels.cs` - Badge value change handlers now update `IsSessionEdit` on the badge after edits
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModels.cs` - `CanRemove` logic now checks `EntitySource` to prevent removing properties from pure vanilla entities
 
 ---
 
@@ -523,8 +523,8 @@ Removed `DataContext = this` from constructor. Changed command bindings to `Elem
 
 **Files Changed:**
 - `Dom5Editor/UI/Views/MainWindowViewModel.cs` - Cache fields, BuildEntityCaches(), BuildEntityCache<T>()
-- `Dom5Editor/UI/ViewModels/EntityViewModel.cs` - Protected cache accessor properties
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Updated AvailableWeapons/Armor/Monsters/Items/Nations to use caches
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs` - Protected cache accessor properties
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModels.cs` - Updated AvailableWeapons/Armor/Monsters/Items/Nations to use caches
 
 ---
 

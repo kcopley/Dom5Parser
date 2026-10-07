@@ -258,7 +258,7 @@ private void RemovePropertyByValue(Command command, int value)
 
 ## Files to Modify
 
-1. `Dom5Editor/UI/ViewModels/EntityViewModel.cs`
+1. `Dom5Editor.Core/UI/ViewModels/EntityViewModel.cs`
    - Add `AddPropertyFromMap()` method
    - Update `AddBadgeProperty()` to use new method
    - Update `RemovePropertyByValue()` to handle Reference types

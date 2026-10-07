@@ -218,7 +218,7 @@ See `BADGE_UI_REDESIGN.md` for full details.
 | System | Location | Status |
 |--------|----------|--------|
 | Legacy VMs | `Dom5Editor/VMs/` | DEPRECATED |
-| New UI VMs | `Dom5Editor/UI/ViewModels/` | ACTIVE |
+| New UI VMs | `Dom5Editor.Core/UI/ViewModels/` | ACTIVE |
 
 **Keep:** `ModViewModel.cs`, `RelayCommand.cs`, `ViewModelBase.cs`
 **Remove after migration:** All other legacy VMs and views
@@ -367,7 +367,7 @@ protected RelayCommand<AvailablePropertyItem> CreateAddBadgeCommand(Action refre
 ```
 
 **Impact:** New entity views can now add badge support by:
-1. Creating `{entity}_badges.json` in `Dom5Editor/Data/`
+1. Creating `{entity}_badges.json` in `Dom5Editor.Core/Data/`
 2. Adding `protected override string EntityTypeName => "{entity}";`
 3. Defining badge collections using `BuildBadgesFromSection()`
 
@@ -753,7 +753,7 @@ Dom5Editor/UI/
     AppTheme.xaml
     AppResources.xaml
 
-Dom5Editor/Data/
+Dom5Editor.Core/Data/
   monster_badges.json     - Monster property definitions (572 commands)
   weapon_badges.json      - Weapon property definitions
   armor_badges.json       - Armor property definitions

@@ -105,7 +105,7 @@ via #clearweapons and re-adds 2 weapons") before applying it.
 
 ## Panels
 
-Simple commands are badges (flag, number, reference) defined in `Dom5Editor/Data/*_badges.json`.
+Simple commands are badges (flag, number, reference) defined in `Dom5Editor.Core/Data/*_badges.json`.
 Structured parts get panels: monster weapons/armor/magic/shapes/summons, nation recruitment and
 start units, spell effects and requirements, item and site specifics. **(now)** every
 command the game reads for an entity type is editable in a badge or a panel; measured against
@@ -125,7 +125,7 @@ flowchart LR
     S -->|Save| X[Mod.Export<br/>SavePlan, SafeFile]
 ```
 
-- `Dom5Editor/Session/EditorSession`: the open mod, its `ModEditor`, `EditHistory`, saving,
+- `Dom5Editor.Core/Session/EditorSession`: the open mod, its `ModEditor`, `EditHistory`, saving,
   reference lists for pickers, navigation requests.
 - `EntityTypeTab`: one per type; light list rows (vanilla, changed, new); the selected
   entity's page is built on selection, not for every entity up front.

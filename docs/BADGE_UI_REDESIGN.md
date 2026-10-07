@@ -15,7 +15,7 @@ This document outlines the significant change from manually-defined code section
 
 ### JSON Files
 
-Located in `Dom5Editor/Data/`:
+Located in `Dom5Editor.Core/Data/`:
 
 - `monster_badges.json` - Badge categories for monsters
 - `weapon_badges.json` - Badge properties for weapons
@@ -239,13 +239,13 @@ Colored value badges for protections:
 - `Dom5Editor/UI/Controls/BadgeWrapPanel.xaml(.cs)` - Container with add dropdown
 - `Dom5Editor/UI/Controls/BadgeItem.cs` - Data model for properties (`PropertyItem`, `AvailablePropertyItem`, `ReferenceChangedEventArgs`)
 - `Dom5Editor/UI/Controls/SearchableReferenceComboBox.xaml(.cs)` - Searchable dropdown for entity references (`ReferenceItem`, `ReferenceSelectionChangedEventArgs`)
-- `Dom5Editor/Data/monster_badges.json` - Monster category definitions with renderer config
-- `Dom5Editor/Data/BadgeConfig.cs` - Model classes for JSON deserialization
-- `Dom5Editor/Data/BadgeConfigLoader.cs` - Loads property config from JSON, provides command descriptions for tooltips
+- `Dom5Editor.Core/Data/monster_badges.json` - Monster category definitions with renderer config
+- `Dom5Editor.Core/Data/BadgeConfig.cs` - Model classes for JSON deserialization
+- `Dom5Editor.Core/Data/BadgeConfigLoader.cs` - Loads property config from JSON, provides command descriptions for tooltips
 
 ### Modified Files
 - `Dom5Editor/UI/Views/MonsterView.xaml` - Simplified to 4 property sections (Types, General, Combat, Resistances)
-- `Dom5Editor/UI/ViewModels/EntityViewModels.cs` - Property collections, refresh methods, JSON-only integration
+- `Dom5Editor.Core/UI/ViewModels/EntityViewModels.cs` - Property collections, refresh methods, JSON-only integration
 - `Dom5Editor/Dom5Editor.csproj` - Added Content item for `*_badges.json` files (copied to output directory)
 
 ## Technical Notes
@@ -254,7 +254,7 @@ Colored value badges for protections:
 The `CommandsMap` in `Dom5Edit/Commands/Command.cs` uses `#` prefixed command names (e.g., `#flying`, `#aquatic`). The JSON configuration files omit this prefix for readability. The `BadgeConfigLoader.TryGetCommand()` method automatically adds the `#` prefix when looking up commands.
 
 ### JSON File Location
-The JSON configuration files are stored in `Dom5Editor/Data/` and copied to the output directory at build time. The `BadgeConfigLoader` searches multiple paths to find the files:
+The JSON configuration files are stored in `Dom5Editor.Core/Data/` and copied to the output directory at build time. The `BadgeConfigLoader` searches multiple paths to find the files:
 1. Assembly location + `/Data/`
 2. AppDomain.BaseDirectory + `/Data/`
 3. Current working directory + `/Data/`
