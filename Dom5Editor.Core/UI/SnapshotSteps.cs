@@ -6,10 +6,10 @@ using Dom5Editor.UI.Views;
 namespace Dom5Editor.UI
 {
     /// <summary>
-    /// The snapshot harness's steps that work on the view models alone, shared by the WPF harness
-    /// (Dom5Editor/UI/Snapshot.cs) and the Avalonia one (Dom5Editor.Avalonia/Snapshot.cs): the same
-    /// command line does the same and logs the same in both. Steps that look at the controls on
-    /// screen (--png, --view, --report, --tooltips, ...) stay in each harness; their list is there.
+    /// The snapshot harness's steps that work on the view models alone (Dom5Editor.Avalonia/Snapshot.cs
+    /// runs them; they were shared with the WPF harness until it was removed, tag wpf-final). Steps
+    /// that look at the controls on screen (--png, --view, --report, --tooltips, ...) are in the
+    /// harness; their list is there.
     ///   --mod FILE.dm            load a mod (otherwise a new, empty mod)
     ///   --select TYPE ID         select an entity (monster, weapon, armor, spell, item, site, nation, ...)
     ///   --select-name TYPE NAME  the first entity of the type whose list name contains NAME

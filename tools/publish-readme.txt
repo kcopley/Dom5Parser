@@ -6,6 +6,12 @@ entity with real panels, build event chains, and save back without disturbing li
 didn't change.
 
 New in this build
+- A new look: the editor is now the same program on Windows, macOS and Linux (built with
+  Avalonia instead of WPF). Everything works as before; pages, lists and windows look a little
+  different (another font, slightly tighter rows). Your settings and backups are where they
+  were. If something works worse than in 0.11.0, please say what: that build stays available.
+
+Also in 0.11.0
 - Submods: a mod can be read over the mods it needs (Sombre Warhammer's submods over Sombre),
   as the game reads mods: in the order they were enabled. Mod Info, "Needs": add, remove and
   order them (remembered for the mod). The parent's units, items and events show and link like
@@ -36,8 +42,8 @@ Dominions 6
 - The game's own texts (unit, item, spell and nation descriptions, event messages) and its
   unit, item and site pictures and nation flags are read from your Dominions 6 install when
   the editor starts. It looks in your Steam libraries. If it doesn't find the game, the status
-  bar says so: use the small arrow next to Load, "Dominions 6 folder...", and pick
-  Dominions6.exe (read at the next start).
+  bar says so: use the small arrow next to Load, "Dominions 6 folder...", and pick the
+  folder Dominions6.exe is in (read at the next start).
 - These are read from Dominions 6 version 6.37. With another version they aren't shown; the
   rest works.
 

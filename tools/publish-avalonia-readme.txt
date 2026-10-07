@@ -12,14 +12,14 @@ report what looks wrong or doesn't work, with a screenshot if you can.
 Linux (linux-x64: most PCs; linux-arm64: ARM boards and laptops)
 - Unpack and run:
       tar xzf Dom6ModEditor-@VERSION@-@RID@.tar.gz
-      ./Dom6ModEditor/Dom5Editor.Avalonia            (or: ./Dom6ModEditor/Dom5Editor.Avalonia my.dm)
+      ./Dom6ModEditor/Dom5Editor            (or: ./Dom6ModEditor/Dom5Editor my.dm)
   Keep the other files next to the program (vanilla.dm and the rest are the game's data the
   editor builds on). The first start takes a few seconds longer: it unpacks its graphics
   libraries to ~/.net.
 - Needs an X11 or Wayland desktop (Wayland through XWayland), fontconfig and ICU (libicu),
   which desktop installs have. If it says "Couldn't find a valid ICU package", install libicu
   (Debian/Ubuntu: apt install libicu-dev; Fedora: dnf install libicu), or start it with
-      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 ./Dom6ModEditor/Dom5Editor.Avalonia
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 ./Dom6ModEditor/Dom5Editor
 
 macOS (osx-arm64: Apple Silicon, M1 and later; osx-x64: Intel Macs)
 - Unzip and move "Dom6 Mod Editor.app" to Applications (or anywhere).
@@ -52,8 +52,8 @@ Dominions 6
   messages are read from Dominions6.exe, the game's Windows program, version 6.37. A macOS or
   Linux install may not have that file; then those texts aren't shown (the rest works). If
   you have it (the same game version), point the editor at it: start it with
-      DOM6_EXE=/path/to/Dominions6.exe ./Dom6ModEditor/Dom5Editor.Avalonia
-  (macOS: DOM6_EXE=/path/to/Dominions6.exe "/Applications/Dom6 Mod Editor.app/Contents/MacOS/Dom5Editor.Avalonia").
+      DOM6_EXE=/path/to/Dominions6.exe ./Dom6ModEditor/Dom5Editor
+  (macOS: DOM6_EXE=/path/to/Dominions6.exe "/Applications/Dom6 Mod Editor.app/Contents/MacOS/Dom5Editor").
 
 Using it
 - Load (Ctrl+O) opens a .dm file; Save (Ctrl+S) writes it back. Lines you didn't touch are

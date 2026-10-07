@@ -11,13 +11,13 @@
          (vanilla, copied, defaults) grey; "n/r" marks commands the game doesn't read. As the WPF
          page (Dom5Editor/UI/Views/EntityPageView.xaml, PanelTemplates.xaml). -->
     <UserControl.Styles>
-        <StyleInclude Source="avares://Dom5Editor.Avalonia/Controls/PageStyles.axaml"/>
+        <StyleInclude Source="avares://Dom5Editor/Controls/PageStyles.axaml"/>
     </UserControl.Styles>
     <UserControl.Resources>
       <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
-            <ResourceInclude Source="avares://Dom5Editor.Avalonia/Views/Panels.axaml"/>
-            <ResourceInclude Source="avares://Dom5Editor.Avalonia/Views/EventTemplates.axaml"/>
+            <ResourceInclude Source="avares://Dom5Editor/Views/Panels.axaml"/>
+            <ResourceInclude Source="avares://Dom5Editor/Views/EventTemplates.axaml"/>
         </ResourceDictionary.MergedDictionaries>
         <!-- buttons on the page light up as the WPF editor's do (Fluent's template reads these) -->
         <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentSecondaryBrush"/>

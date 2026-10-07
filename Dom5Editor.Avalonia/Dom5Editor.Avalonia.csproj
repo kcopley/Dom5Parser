@@ -8,7 +8,10 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Dom5Editor.Ava</RootNamespace>
-        <Version>0.11.0</Version>
+        <!-- the program testers run: Dom5Editor.exe on Windows (as the WPF editor was), Dom5Editor
+             on Linux and in the Mac app; its resources are avares://Dom5Editor/... -->
+        <AssemblyName>Dom5Editor</AssemblyName>
+        <Version>0.12.0</Version>
         <Product>Dom6 Mod Editor</Product>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <!-- bindings by name (as the WPF views), so the views need no DataType for each template -->
