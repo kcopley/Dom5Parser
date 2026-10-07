@@ -8,7 +8,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Dom5Editor</RootNamespace>
-        <Version>0.10.0</Version>
+        <Version>0.11.0</Version>
     </PropertyGroup>
 
     <ItemGroup>

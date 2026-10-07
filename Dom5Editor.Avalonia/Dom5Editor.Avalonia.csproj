@@ -8,7 +8,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Dom5Editor.Ava</RootNamespace>
-        <Version>0.10.0</Version>
+        <Version>0.11.0</Version>
         <Product>Dom6 Mod Editor</Product>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <!-- bindings by name (as the WPF views), so the views need no DataType for each template -->
