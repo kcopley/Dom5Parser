@@ -255,7 +255,7 @@
                                         <TextBlock>
                                             <Run Text="{Binding TypeLabel, Mode=OneWay}" Foreground="{DynamicResource TextMutedBrush}"/>
                                             <Run Text="{Binding Name, Mode=OneWay}"/>
-                                            <Run Text="{Binding Id, Mode=OneWay, StringFormat='#{0}'}" Foreground="{DynamicResource TextMutedBrush}"/>
+                                            <Run Text="{Binding IdText, Mode=OneWay}" Foreground="{DynamicResource TextMutedBrush}"/>
                                         </TextBlock>
                                     </Button>
                                 </DataTemplate>

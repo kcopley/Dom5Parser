@@ -32,6 +32,6 @@ namespace Dom5Editor.UI.ViewModels
 
         /// <summary>"Axe #17", or "#17" when it has no name.</summary>
         public static string Named(string? name, int id) =>
-            string.IsNullOrEmpty(name) || name == $"#{id}" ? $"#{id}" : id != 0 ? $"{name} #{id}" : name!;
+            string.IsNullOrEmpty(name) || name == $"#{id}" ? (id > 0 ? $"#{id}" : "(unnamed)") : id > 0 ? $"{name} #{id}" : name!;
     }
 }

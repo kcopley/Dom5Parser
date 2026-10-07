@@ -161,9 +161,14 @@ namespace Dom5Editor.UI.ViewModels
     /// <summary>A reference to another entity, picked from a searchable list, with a button to open it.</summary>
     public sealed class RefField : PanelField
     {
-        public RefField(EntityPageViewModel page, string label, Command command, EntityType refType, string? key = null, string? tooltip = null)
+        private readonly Func<int, string>? _describe;
+
+        /// <param name="describe">What to show after the picker about the entity picked (a mount's key stats), or null.</param>
+        public RefField(EntityPageViewModel page, string label, Command command, EntityType refType, string? key = null, string? tooltip = null,
+            Func<int, string>? describe = null)
             : base(page, label, command, key, tooltip)
         {
+            _describe = describe;
             RefType = refType;
             Candidates = page.Session.References(refType);
             OpenCommand = new RelayCommand(() => { if (SelectedId is int id && id != 0) Page.Session.Navigate(RefType, id); });
@@ -180,7 +185,8 @@ public ICommand OpenCommand { get; }
 
         /// <summary>What a value the picker can't show is: a negative monster number is a monster tag.</summary>
         public string Note => Value != null && int.TryParse(Arguments.Split(' ')[0], out var n) && n < 0 && RefType == EntityType.MONSTER
-            ? $"monster tag {-n}: one of the monsters with #montag {-n}" : "";
+            ? $"monster tag {-n}: one of the monsters with #montag {-n}"
+            : _describe != null && SelectedId is int id && id > 0 ? _describe(id) : "";
         public bool HasNote => Note.Length > 0;
 
         public int? SelectedId

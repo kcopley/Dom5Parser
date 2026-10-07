@@ -489,17 +489,22 @@ namespace Dom5Editor.UI.ViewModels
             UsedBy.Clear();
             if (ID <= 0)
                 return;
-            // one link per entity, with the commands it refers with
+            // one link per entity, with the commands it refers with (an entity without a number, a
+            // mercenary band or an event, by itself)
             var users = Session.Usage.UsedBy(Type, ID)
-                .GroupBy(u => (u.Type, u.Id))
-                .OrderBy(g => g.Key.Type).ThenBy(g => g.Key.Id)
+                .GroupBy(u => u.Id > 0 ? (object)(u.Type, u.Id) : u.From)
+                .OrderBy(g => g.First().Type).ThenBy(g => g.First().Id)
                 .ToList();
             const int shown = 200;
             foreach (var g in users.Take(shown))
             {
-                var (type, id) = g.Key;
+                var first = g.First();
+                var (type, id, from) = (first.Type, first.Id, first.From);
                 var via = string.Join(", ", g.Select(u => CommandName(u.Via)).Distinct());
-                UsedBy.Add(new UsageRow(type, id, NameOf(type, id), via, () => Session.Navigate(type, id)));
+                var name = type == EntityType.EVENT ? EventPageViewModel.TitleOf(from, EventPageViewModel.LinesOf(Session.Resolve(from)))
+                    : id > 0 ? NameOf(type, id)
+                    : Session.Resolve(from).Get(Command.NAME)?.Property is StringProperty s ? s.Value ?? "" : "";
+                UsedBy.Add(new UsageRow(type, id, name, via, id > 0 ? () => Session.Navigate(type, id) : () => Session.Navigate(from)));
             }
             UsedByTitle = users.Count > shown ? $"USED BY ({users.Count}, first {shown} shown)" : $"USED BY ({users.Count})";
         }
@@ -934,7 +939,7 @@ namespace Dom5Editor.UI.ViewModels
         {
             Type = type;
             Id = id;
-            Name = string.IsNullOrEmpty(name) ? $"#{id}" : name;
+            Name = string.IsNullOrEmpty(name) ? (id > 0 ? $"#{id}" : $"(unnamed {Nouns.Of(type)})") : name;
             Via = via;
             OpenCommand = new RelayCommand(open);
         }
@@ -942,6 +947,8 @@ namespace Dom5Editor.UI.ViewModels
         public EntityType Type { get; }
         public string TypeLabel => Type.ToString().ToLowerInvariant();
         public int Id { get; }
+        /// <summary>"#5", or nothing for an entity without a number (a mercenary band, an event).</summary>
+        public string IdText => Id > 0 ? $"#{Id}" : "";
         public string Name { get; }
         public string Via { get; }
         public ICommand OpenCommand { get; }
