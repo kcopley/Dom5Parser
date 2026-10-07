@@ -1,0 +1,31 @@
+{
+  "description": "Spells: a mod summoning another copies (Test Summoning; the copy has its own #damage): research level, school, path and a nation restriction reach the copy, the summoned unit (#damage) doesn't; the copy's own path level (#pathlevel 0 3 replaces the copied one); a selected vanilla summoning (Court of Flame Childs) summons a mod unit; an untouched one's cost (#fatiguecost 250: the oracle keeps 50 fatigue and 2 gems).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "spell", "id": 2000, "command": "#researchlevel", "value": "4" },
+    { "op": "change", "entity": "spell", "id": 2000, "command": "#damage", "from": "5105", "value": "5101" },
+    { "op": "change", "entity": "spell", "id": 2000, "command": "#path", "from": "0 6", "value": "0 5" },
+    { "op": "add", "entity": "spell", "id": 2000, "command": "#restricted", "value": "160" },
+    { "op": "set", "entity": "spell", "id": 2000, "command": "#school", "value": "1" },
+    { "op": "set", "entity": "spell", "id": 2001, "command": "#pathlevel", "value": "0 3" },
+    { "op": "set", "entity": "spell", "id": 12, "command": "#researchlevel", "value": "3" },
+    { "op": "change", "entity": "spell", "id": 12, "command": "#damage", "from": "640", "value": "5105" },
+    { "op": "set", "entity": "spell", "id": 17, "command": "#fatiguecost", "value": "250" }
+  ],
+  "expect": [
+    { "type": "spell", "id": "2000", "field": "researchlevel", "from": "3", "to": "4" },
+    { "type": "spell", "id": "2001", "field": "researchlevel", "from": "3", "to": "4" },
+    { "type": "spell", "id": "2000", "field": "damage", "from": "5105", "to": "5101" },
+    { "type": "spell", "id": "2000", "field": "path1", "from": "N", "to": "D" },
+    { "type": "spell", "id": "2001", "field": "path1", "from": "N", "to": "D" },
+    { "type": "spell", "id": "2000", "field": "nations", "from": null, "to": ["160"] },
+    { "type": "spell", "id": "2001", "field": "nations", "from": null, "to": ["160"] },
+    { "type": "spell", "id": "2000", "field": "school", "from": "0", "to": "1" },
+    { "type": "spell", "id": "2001", "field": "school", "from": "0", "to": "1" },
+    { "type": "spell", "id": "2001", "field": "pathlevel1", "from": "2", "to": "3" },
+    { "type": "spell", "id": "12", "field": "researchlevel", "from": "2", "to": "3" },
+    { "type": "spell", "id": "12", "field": "damage", "from": "640", "to": "5105" },
+    { "type": "spell", "id": "17", "field": "fatiguecost", "from": "0", "to": "50" },
+    { "type": "spell", "id": "17", "field": "gemcost", "from": "0", "to": "2" }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Sites: a mod site another copies (Test Site; Test Site Copy is #copysite of it with its own rarity): gold, recruitable and summonable units reach the copy; the copy's own level; a selected vanilla site (The Smouldercone) in place and a mod commander added to its home recruits; an untouched site (Cathedral of the Spheres): its rarity, and its inherited home recruit changed (sites have only #clear: the editor clears and adds the rest back).",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "set", "entity": "site", "id": 1800, "command": "#gold", "value": "60" },
+    { "op": "add", "entity": "site", "id": 1800, "command": "#homemon", "value": "5101" },
+    { "op": "remove", "entity": "site", "id": 1800, "command": "#mon", "value": "5105" },
+    { "op": "add", "entity": "site", "id": 1800, "command": "#summon", "value": "5100" },
+    { "op": "set", "entity": "site", "id": 1801, "command": "#level", "value": "2" },
+    { "op": "set", "entity": "site", "id": 1, "command": "#gold", "value": "30" },
+    { "op": "add", "entity": "site", "id": 1, "command": "#homecom", "value": "5106" },
+    { "op": "set", "entity": "site", "id": 3, "command": "#rarity", "value": "2" },
+    { "op": "change", "entity": "site", "id": 3, "command": "#homemon", "from": "51", "value": "5105" }
+  ],
+  "expect": [
+    { "type": "site", "id": "1800", "field": "gold", "from": "50", "to": "60" },
+    { "type": "site", "id": "1801", "field": "gold", "from": "50", "to": "60" },
+    { "type": "site", "id": "1800", "field": "hmon", "from": ["5105"], "to": ["5105", "5101"] },
+    { "type": "site", "id": "1801", "field": "hmon", "from": ["5105"], "to": ["5105", "5101"] },
+    { "type": "site", "id": "1800", "field": "mon", "from": ["5105"], "to": null },
+    { "type": "site", "id": "1801", "field": "mon", "from": ["5105"], "to": null },
+    { "type": "site", "id": "1800", "field": "sum", "from": null, "to": ["5100"] },
+    { "type": "site", "id": "1801", "field": "sum", "from": null, "to": ["5100"] },
+    { "type": "site", "id": "1801", "field": "level", "from": "1", "to": "2" },
+    { "type": "site", "id": "1", "field": "gold", "from": "25", "to": "30" },
+    { "type": "site", "id": "1", "field": "hcom", "from": ["923", "89", "87"], "to": ["923", "89", "87", "5106"] },
+    { "type": "site", "id": "3", "field": "rarity", "from": "5", "to": "2" },
+    { "type": "site", "id": "3", "field": "hmon", "from": ["51"], "to": ["5105"] }
+  ]
+}

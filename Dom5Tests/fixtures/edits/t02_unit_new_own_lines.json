@@ -1,0 +1,16 @@
+{
+  "description": "A mod monster's own lines (the Test Mount, which two riders use): remove its weapon and a flag, change its armor in place, reset a stat it sets (it inherits nothing, so the stat goes). The riders don't change.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "remove", "entity": "monster", "id": 5100, "command": "#weapon", "value": "20" },
+    { "op": "change", "entity": "monster", "id": 5100, "command": "#armor", "from": "253", "value": "14" },
+    { "op": "remove", "entity": "monster", "id": 5100, "command": "#animal" },
+    { "op": "reset", "entity": "monster", "id": 5100, "command": "#mapmove" }
+  ],
+  "expect": [
+    { "type": "unit", "id": "5100", "field": "weapons", "from": ["20"], "to": null },
+    { "type": "unit", "id": "5100", "field": "armor", "from": ["253"], "to": ["14"] },
+    { "type": "unit", "id": "5100", "field": "animal", "from": "1", "to": null },
+    { "type": "unit", "id": "5100", "field": "mapmove", "from": "20", "to": null }
+  ]
+}

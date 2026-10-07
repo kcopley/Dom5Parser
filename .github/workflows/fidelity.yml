@@ -1,7 +1,7 @@
 # Data-fidelity suite (tools/fidelity/run.mjs): checks, through the dom6inspector oracle,
 # that Dom5Parser saves preserve mod data and that edits change exactly what they should.
-# quick = stages 3-4 on every push/PR; full = all stages (incl. oracle self-checks) weekly,
-# on demand, and when the oracle pin or vanilla.dm changes.
+# quick = stages 3-4 on every push/PR; full = all stages (incl. oracle self-checks and the
+# stress run of generated edits) weekly, on demand, and when the oracle pin or vanilla.dm changes.
 name: fidelity
 
 on:

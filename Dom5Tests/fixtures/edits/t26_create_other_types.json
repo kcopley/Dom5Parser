@@ -1,0 +1,26 @@
+{
+  "description": "New entities of the types with no #new that takes a number (Dom6: a new spell, item or nation is a #select of a free number; an event takes none): each made in the editor and filled in must be one new entity with those values. The oracle numbers an event after the mod's (3305). (A new band: t27, on a mod without one.)",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "create", "entity": "spell", "name": "Fresh Spell", "as": "sp" },
+    { "op": "set", "entity": "spell", "ref": "sp", "command": "#school", "value": "1" },
+    { "op": "set", "entity": "spell", "ref": "sp", "command": "#researchlevel", "value": "2" },
+    { "op": "set", "entity": "spell", "ref": "sp", "command": "#effect", "value": "10001" },
+    { "op": "set", "entity": "spell", "ref": "sp", "command": "#damage", "value": "5105" },
+    { "op": "create", "entity": "item", "name": "Fresh Item", "as": "it" },
+    { "op": "set", "entity": "item", "ref": "it", "command": "#constlevel", "value": "4" },
+    { "op": "set", "entity": "item", "ref": "it", "command": "#weapon", "value": "1200" },
+    { "op": "create", "entity": "nation", "name": "Freshland", "as": "n" },
+    { "op": "set", "entity": "nation", "ref": "n", "command": "#era", "value": "1" },
+    { "op": "add", "entity": "nation", "ref": "n", "command": "#addrecunit", "value": "5105" },
+    { "op": "create", "entity": "event", "as": "e" },
+    { "op": "set", "entity": "event", "ref": "e", "command": "#rarity", "value": "0" },
+    { "op": "set", "entity": "event", "ref": "e", "command": "#msg", "value": "\"Fresh event.\"" }
+  ],
+  "expect": [
+    { "type": "spell", "ref": "sp", "new": { "name": "Fresh Spell", "school": "1", "researchlevel": "2", "effect": "10001", "damage": "5105" } },
+    { "type": "item", "ref": "it", "new": { "name": "Fresh Item", "constlevel": "4", "weapon": "1200" } },
+    { "type": "nation", "ref": "n", "new": { "name": "Freshland", "era": "1", "units": ["5105"] } },
+    { "type": "event", "id": "3305", "new": { "rarity": "0", "description": "Fresh event." } }
+  ]
+}

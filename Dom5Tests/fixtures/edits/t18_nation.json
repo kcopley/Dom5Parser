@@ -1,0 +1,36 @@
+{
+  "description": "Nations (the oracle compares their lists as sets): a mod nation (Testland, #selectnation 160): a recruit added (a mod unit), its commander removed, its hero changed, a pretender added, its era; its start army (#startcom, #startunittype1: the oracle ignores them, so they're re-read). A selected vanilla nation (Arcoscephale): a commander added, the mod's own recruit removed. An untouched one (Mekone): a recruit, a start site by name (the oracle resolves it to the site's id), a start commander.",
+  "base": "base_types.dm",
+  "edits": [
+    { "op": "add", "entity": "nation", "id": 160, "command": "#addrecunit", "value": "5101" },
+    { "op": "remove", "entity": "nation", "id": 160, "command": "#addreccom", "value": "5106" },
+    { "op": "change", "entity": "nation", "id": 160, "command": "#hero1", "from": "5106", "value": "5101" },
+    { "op": "add", "entity": "nation", "id": 160, "command": "#addgod", "value": "606" },
+    { "op": "set", "entity": "nation", "id": 160, "command": "#era", "value": "3" },
+    { "op": "set", "entity": "nation", "id": 160, "command": "#startcom", "value": "5101" },
+    { "op": "change", "entity": "nation", "id": 160, "command": "#startunittype1", "from": "5105", "value": "5102" },
+    { "op": "add", "entity": "nation", "id": 5, "command": "#addreccom", "value": "5106" },
+    { "op": "remove", "entity": "nation", "id": 5, "command": "#addrecunit", "value": "5105" },
+    { "op": "add", "entity": "nation", "id": 6, "command": "#addrecunit", "value": "5105" },
+    { "op": "add", "entity": "nation", "id": 6, "command": "#startsite", "value": "\"Test Site Copy\"" },
+    { "op": "set", "entity": "nation", "id": 6, "command": "#startcom", "value": "5106" }
+  ],
+  "expect": [
+    { "type": "nation", "id": "160", "field": "units", "from": ["5102", "5105"], "to": ["5101", "5102", "5105"] },
+    { "type": "nation", "id": "160", "field": "commanders", "from": ["5106"], "to": null },
+    { "type": "nation", "id": "160", "field": "heroes", "from": ["5106"], "to": ["5101"] },
+    { "type": "nation", "id": "160", "field": "addgod", "from": ["250"], "to": ["250", "606"] },
+    { "type": "nation", "id": "160", "field": "era", "from": "2", "to": "3" },
+    { "type": "nation", "id": "5", "field": "commanders", "from": null, "to": ["5106"] },
+    { "type": "nation", "id": "5", "field": "units", "from": ["5105"], "to": null },
+    { "type": "nation", "id": "6", "field": "units", "from": null, "to": ["5105"] },
+    { "type": "nation", "id": "6", "field": "sites", "from": null, "to": ["1801"] }
+  ],
+  "reread": [
+    { "entity": "nation", "id": 160, "command": "#startcom", "values": ["5101"] },
+    { "entity": "nation", "id": 160, "command": "#startunittype1", "values": ["5102"] },
+    { "entity": "nation", "id": 160, "command": "#startunitnbrs1", "values": ["10"] },
+    { "entity": "nation", "id": 6, "command": "#startcom", "values": ["5106"] },
+    { "entity": "nation", "id": 5, "command": "#addrecunit", "includes": ["50", "201"], "excludes": ["5105"] }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "description": "Edit as text an event of a real mod whose message runs over several lines (DomEnhanced's 11th event, a site search hint; the file has CRLF line ends): only the changed line changes; the message, unchanged, is kept as read (it was rewritten with the text box's LF ends, which the oracle sees as another message). Found by the stress run.",
+  "base": "../../../docs/DomEnhanced2_13.dm",
+  "edits": [
+    { "op": "text", "entity": "event", "index": 10, "replace": [["\n#rarity 5\n", "\n#rarity 10\n"]] }
+  ],
+  "expect": [
+    { "type": "event", "id": "3312", "field": "rarity", "from": "5", "to": "10" }
+  ]
+}
