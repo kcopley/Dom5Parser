@@ -6,16 +6,38 @@ using Dom5Edit.GameData;
 namespace Dom5Edit.Validation
 {
     /// <summary>
-    /// A report for a mod's author (Markdown): what the editor found, worst first, each with its
-    /// line in the file and what the game does with it. Three parts: what goes wrong in game
-    /// (events that can't happen or lose lines, references to nothing, numbers taken from the
-    /// game), lines the game ignores (with "did you mean" for a misspelt command, or the type
-    /// whose blocks read it), and things worth a look. What it says about the game comes from
-    /// Dominions6.exe (tools/dom6exe) and the modding manuals.
+    /// A report for a mod's author, or for anyone who opens the mod: what the editor found, worst
+    /// first, each with its line in the file and what the game does with it. Four parts: what goes
+    /// wrong in game (events that can't happen or lose lines, lines the game reads differently than
+    /// they look, numbers taken from the game), lines the game ignores (with "did you mean" for a
+    /// misspelt command, or the type whose blocks read it), numbers that neither this mod nor the
+    /// game has (fine when they come from a mod this one needs), and things worth a look. What it
+    /// says about the game comes from Dominions6.exe (tools/dom6exe) and the modding manuals.
+    /// <see cref="Build"/> gives it as data (the editor's report window), <see cref="Write"/> as
+    /// Markdown (to send to the author).
     /// </summary>
     public static class ModReport
     {
-        public static string Write(Mod mod, ValidationResult validation, IEnumerable<Events.EventProblem>? eventProblems = null)
+        /// <summary>One line of the file the report points at: its number, its text, and the entity whose block holds it.</summary>
+        public sealed record Line(int? Number, string Text, IDEntity? Entity);
+
+        /// <summary>Alike findings (the same message), with their lines.</summary>
+        public sealed record Group(string Text, IReadOnlyList<Line> Lines);
+
+        public sealed record Section(string Key, string Title, string Intro, int Count, IReadOnlyList<Group> Groups);
+
+        public sealed record Report(string Name, string About, IReadOnlyList<Section> Sections)
+        {
+            public int Count(string key) => Sections.FirstOrDefault(s => s.Key == key)?.Count ?? 0;
+            public int Total => Sections.Sum(s => s.Count);
+        }
+
+        public const string Wrong = "wrong", Ignored = "ignored", Missing = "missing", Look = "look";
+
+        public static string Write(Mod mod, ValidationResult validation, IEnumerable<Events.EventProblem>? eventProblems = null) =>
+            Markdown(Build(mod, validation, eventProblems));
+
+        public static Report Build(Mod mod, ValidationResult validation, IEnumerable<Events.EventProblem>? eventProblems = null)
         {
             var file = mod.FullFilePath;
             string[] lines = Array.Empty<string>();
@@ -28,7 +50,9 @@ namespace Dom5Edit.Validation
             {
                 // quoted lines are left out
             }
-            string Quote(int? line) => line is int n && n >= 1 && n <= lines.Length ? lines[n - 1].Trim() : "";
+            Line At(int? line, IDEntity? entity = null) => new Line(line is int n && n > 0 ? n : null,
+                line is int k && k >= 1 && k <= lines.Length ? lines[k - 1].Trim() : "",
+                entity ?? (line is int m && m > 0 ? mod.EntityAt(m) : null));
 
             var wrong = new List<Item>();
             var ignored = new List<Item>();
@@ -42,8 +66,8 @@ namespace Dom5Edit.Validation
                 var copy = Regex.Match(p.Message ?? "", @"^#copystats at line \d+ overwrites \d+ previously defined property\(s\): (.*)$");
                 if (p.IssueType == ParseIssueType.PropertiesClearedBySubsequentClear && copy.Success)
                 {
-                    look.Add(new Item(p.LineNumber, Quote(p.LineNumber), "copystats",
-                        $"#copystats replaces what the lines before it in the block set ({copy.Groups[1].Value}): lines meant to change the copy go after it"));
+                    var replaced = string.Join(", ", copy.Groups[1].Value.Split(", ").Distinct());
+                    look.Add(new Item(At(p.LineNumber), $"#copystats replaces what the lines before it in the block set ({replaced}): lines meant to change the copy go after it"));
                     continue;
                 }
                 if (p.IssueType != ParseIssueType.InvalidCommand && p.IssueType != ParseIssueType.NotReadByGame)
@@ -51,16 +75,15 @@ namespace Dom5Edit.Validation
                 var command = Regex.Match(p.Message ?? "", @"#[A-Za-z_][A-Za-z0-9_]*").Value;
                 var typeName = Regex.Match(p.Message ?? "", @"for:? ([A-Z][a-z]+)").Groups[1].Value;
                 Enum.TryParse<EntityType>(typeName, true, out var type);
-                ignored.Add(new Item(p.LineNumber, Quote(p.LineNumber), command, IgnoredWhy(command, type, typeName)));
+                ignored.Add(new Item(At(p.LineNumber), IgnoredWhy(command, type, typeName)));
             }
 
-            // references, numbers, names, from Validate
+            // references, numbers, names, lines read differently, from Validate
             foreach (var v in validation.Issues)
             {
                 if (v.Category == "Invalid Command" || v.Severity == ValidationSeverity.Info)
                     continue; // (the parser's notes above say it better)
-                var line = v.LineNumber ?? v.Property?.LineNumber;
-                var item = new Item(line, Quote(line), v.Category ?? "", Explain(v));
+                var item = new Item(At(v.LineNumber ?? v.Property?.LineNumber, v.Entity as IDEntity), Explain(v));
                 (v.Category == "Reference" && (v.Message ?? "").StartsWith("Unresolved reference") ? missing
                     : v.Severity == ValidationSeverity.Error || v.Category == "Reference" ? wrong : look).Add(item);
             }
@@ -70,75 +93,73 @@ namespace Dom5Edit.Validation
             {
                 var line = e.Line?.LineNumber is int n && n > 0 ? n
                     : e.Event.Properties.Select(p => p.LineNumber).Where(n2 => n2 > 0).DefaultIfEmpty(0).Min();
-                var item = new Item(line > 0 ? line : null, Quote(line), "event", e.Message);
-                (e.IsError ? wrong : look).Add(item);
+                (e.IsError ? wrong : look).Add(new Item(At(line, e.Event), e.Message));
             }
 
-            var sb = new StringBuilder();
-            sb.AppendLine($"# {mod.ModName ?? Path.GetFileNameWithoutExtension(file)}: what the mod editor found");
-            sb.AppendLine();
             var with = mod.Dependencies.Where(d => d != VanillaLoader.Vanilla && !string.IsNullOrEmpty(d.FullFilePath))
                 .Select(d => $"`{Path.GetFileName(d.FullFilePath)}`").ToList();
-            sb.AppendLine($"File: `{Path.GetFileName(file)}`" + (string.IsNullOrEmpty(mod.Version) ? "" : $", version {mod.Version}") +
-                          (with.Count > 0 ? $", together with {string.Join(", ", with)}" : "") +
-                          $". Checked {DateTime.Now:yyyy-MM-dd} against Dominions {GameCommandCatalog.GameVersion ?? "6"} (what the game reads is taken from the game itself).");
+            var about = $"File: `{Path.GetFileName(file)}`" + (string.IsNullOrEmpty(mod.Version) ? "" : $", version {mod.Version}") +
+                        (with.Count > 0 ? $", together with {string.Join(", ", with)}" : "") +
+                        $". Checked {DateTime.Now:yyyy-MM-dd} against Dominions {GameCommandCatalog.GameVersion ?? "6"} (what the game reads is taken from the game itself).";
+            return new Report(mod.ModName ?? Path.GetFileNameWithoutExtension(file) ?? "mod", about, new[]
+            {
+                new Section(Wrong, "Goes wrong in game", "These change what happens in game, or keep something from happening.", wrong.Count, Grouped(wrong)),
+                new Section(Ignored, "Lines the game ignores", "The game skips these lines: they change nothing.", ignored.Count, Grouped(ignored)),
+                new Section(Missing, "Numbers not in this mod or the game", "Fine if they come from another mod this one needs, loaded with it; if not, these lines fail in game.", missing.Count, ByKind(missing)),
+                new Section(Look, "Worth a look", "Not wrong as such, but probably not what was meant.", look.Count, Grouped(look)),
+            });
+        }
+
+        private sealed record Item(Line Line, string Why);
+
+        /// <summary>Alike ones together (the same message but for its numbers), most first, each group's lines in file order.</summary>
+        private static List<Group> Grouped(List<Item> items) =>
+            items.GroupBy(i => Regex.Replace(i.Why, @"-?\d+", "N")).OrderByDescending(g => g.Count())
+                .Select(g => new Group(g.First().Why + (g.Count() > 1 ? $" ({g.Count()} lines)" : ""), g.Select(i => i.Line).OrderBy(l => l.Number ?? 0).ToList()))
+                .ToList();
+
+        /// <summary>References to numbers nothing has, by kind ("monster 15992"): the numbers, then the lines.</summary>
+        private static List<Group> ByKind(List<Item> items) =>
+            items.GroupBy(i => i.Why.Split(' ')[0]).OrderByDescending(g => g.Count())
+                .Select(g =>
+                {
+                    var numbers = g.Select(i => i.Why.Split(' ').Last()).Distinct().ToList();
+                    return new Group($"{g.Key} {string.Join(", ", numbers.Take(30))}{(numbers.Count > 30 ? $" and {numbers.Count - 30} more" : "")} ({g.Count()} lines)",
+                        g.Select(i => i.Line).OrderBy(l => l.Number ?? 0).ToList());
+                })
+                .ToList();
+
+        /// <summary>The report as Markdown, for the author.</summary>
+        public static string Markdown(Report report)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"# {report.Name}: what the mod editor found");
             sb.AppendLine();
-            sb.AppendLine($"- **Goes wrong in game:** {wrong.Count}");
-            sb.AppendLine($"- **Lines the game ignores:** {ignored.Count}");
-            if (missing.Count > 0)
-                sb.AppendLine($"- **Numbers not in this mod or the game:** {missing.Count}");
-            sb.AppendLine($"- **Worth a look:** {look.Count}");
-            Section(sb, "Goes wrong in game", "These change what happens in game, or keep something from happening.", wrong);
-            Section(sb, "Lines the game ignores", "The game skips these lines: they change nothing.", ignored);
-            MissingSection(sb, missing);
-            Section(sb, "Worth a look", "Not wrong as such, but probably not what was meant.", look);
-            if (wrong.Count + ignored.Count + missing.Count + look.Count == 0)
+            sb.AppendLine(report.About);
+            sb.AppendLine();
+            foreach (var s in report.Sections)
+                if (s.Count > 0 || s.Key != Missing)
+                    sb.AppendLine($"- **{s.Title}:** {s.Count}");
+            foreach (var s in report.Sections.Where(s => s.Count > 0))
+            {
+                int shown = s.Key == Missing ? 5 : 12;
+                sb.AppendLine();
+                sb.AppendLine($"## {s.Title} ({s.Count})");
+                sb.AppendLine();
+                sb.AppendLine(s.Intro);
+                sb.AppendLine();
+                foreach (var g in s.Groups)
+                {
+                    sb.AppendLine($"- {g.Text}");
+                    foreach (var l in g.Lines.Take(shown))
+                        sb.AppendLine(l.Number is int n ? $"  - line {n}: `{Trim(l.Text)}`" : $"  - {Trim(l.Text)}");
+                    if (g.Lines.Count > shown)
+                        sb.AppendLine($"  - and {g.Lines.Count - shown} more");
+                }
+            }
+            if (report.Total == 0)
                 sb.AppendLine("\nNothing found.");
             return sb.ToString();
-        }
-
-        private sealed record Item(int? Line, string Text, string Key, string Why);
-
-        private static void Section(StringBuilder sb, string title, string intro, List<Item> items)
-        {
-            if (items.Count == 0)
-                return;
-            sb.AppendLine();
-            sb.AppendLine($"## {title} ({items.Count})");
-            sb.AppendLine();
-            sb.AppendLine(intro);
-            sb.AppendLine();
-            // alike ones together (the same message), each with its lines
-            foreach (var g in items.GroupBy(i => Regex.Replace(i.Why, @"-?\d+", "N")).OrderByDescending(g => g.Count()))
-            {
-                var first = g.First();
-                sb.AppendLine($"- {first.Why}" + (g.Count() > 1 ? $" ({g.Count()} lines)" : ""));
-                foreach (var i in g.OrderBy(i => i.Line ?? 0).Take(12))
-                    sb.AppendLine(i.Line is int n ? $"  - line {n}: `{Trim(i.Text)}`" : $"  - {Trim(i.Text)}");
-                if (g.Count() > 12)
-                    sb.AppendLine($"  - and {g.Count() - 12} more");
-            }
-        }
-
-        /// <summary>References to numbers nothing has, by kind: the numbers, then a few of the lines.</summary>
-        private static void MissingSection(StringBuilder sb, List<Item> items)
-        {
-            if (items.Count == 0)
-                return;
-            sb.AppendLine();
-            sb.AppendLine($"## Numbers not in this mod or the game ({items.Count})");
-            sb.AppendLine();
-            sb.AppendLine("Fine if they come from another mod this one needs, loaded with it; if not, these lines fail in game.");
-            sb.AppendLine();
-            foreach (var g in items.GroupBy(i => i.Why.Split(' ')[0]).OrderByDescending(g => g.Count()))
-            {
-                var numbers = g.Select(i => i.Why.Split(' ').Last()).Distinct().ToList();
-                sb.AppendLine($"- {g.Key} {string.Join(", ", numbers.Take(30))}{(numbers.Count > 30 ? $" and {numbers.Count - 30} more" : "")} ({g.Count()} lines)");
-                foreach (var i in g.OrderBy(i => i.Line ?? 0).Take(5))
-                    sb.AppendLine(i.Line is int n ? $"  - line {n}: `{Trim(i.Text)}`" : $"  - {Trim(i.Text)}");
-                if (g.Count() > 5)
-                    sb.AppendLine($"  - and {g.Count() - 5} more");
-            }
         }
 
         private static string Trim(string s) => (s.Length > 110 ? s.Substring(0, 110) + "…" : s).Replace("`", "'");

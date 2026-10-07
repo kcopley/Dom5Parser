@@ -91,10 +91,14 @@ namespace Dom5Editor.UI.Views
         public void LoadMod(string filePath)
         {
             var session = EditorSession.Load(filePath);
-            int issues = session.Mod.ParseIssues.Count;
             Open(session, $"Loaded {System.IO.Path.GetFileName(filePath)}" +
-                (session.BackupNote != null ? $" ({session.BackupNote})" : "") +
-                (issues > 0 ? $": {issues} notes from reading it (commands the game ignores, duplicates, ...): Validate lists them" : ""));
+                (session.BackupNote != null ? $" ({session.BackupNote})" : ""));
+            // the report on what was opened, once the window has drawn the mod
+            System.Windows.Application.Current?.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+            {
+                if (ReferenceEquals(_session, session))
+                    CheckOnOpen();
+            }));
         }
 
         public void SaveMod(string filePath)
@@ -109,6 +113,8 @@ namespace Dom5Editor.UI.Views
         private void Open(EditorSession session, string status)
         {
             _session = session;
+            _report = null;
+            ShowReportBar = false;
             _back.Clear();
             _forward.Clear();
             _current = null;
@@ -173,6 +179,66 @@ namespace Dom5Editor.UI.Views
             if (edit != null)
                 StatusMessage = "Redone: " + edit.Description;
         }
+
+        // ---- the report on the mod (Dom5Edit.Validation.ModReport) ----
+
+        private ModReport.Report? _report;
+        private bool _showReportBar;
+
+        /// <summary>The report made when the mod was opened (or last checked).</summary>
+        public ModReport.Report? Report => _report;
+
+        /// <summary>The bar under the toolbar after opening a mod: what the check found.</summary>
+        public bool ShowReportBar
+        {
+            get => _showReportBar;
+            set { _showReportBar = value; OnPropertyChanged(); }
+        }
+
+        /// <summary>"Checked on opening: 4 go wrong in game · 281 lines the game ignores · ..."</summary>
+        public string ReportSummary { get; private set; } = "";
+
+        /// <summary>Whether the report found something that goes wrong in game (the bar is marked).</summary>
+        public bool ReportHasWrong => (_report?.Count(ModReport.Wrong) ?? 0) > 0;
+
+        /// <summary>Whether the report found nothing at all.</summary>
+        public bool ReportIsClean => _report != null && _report.Total == 0;
+
+        /// <summary>Checks the mod as it is now: the parser's notes, Validate, the event chains.</summary>
+        public ModReport.Report? BuildReport()
+        {
+            if (_session == null)
+                return null;
+            var validation = new ModValidator().ValidateWithSummary(_session.Mod);
+            _report = ModReport.Build(_session.Mod, validation, _session.Events.Problems);
+            OnPropertyChanged(nameof(Report));
+            OnPropertyChanged(nameof(ReportHasWrong));
+            OnPropertyChanged(nameof(ReportIsClean));
+            return _report;
+        }
+
+        /// <summary>The check run when a mod is opened: its counts in the bar.</summary>
+        public void CheckOnOpen()
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            var report = BuildReport();
+            if (report == null)
+                return;
+            static string N(int n, string one, string many) => n == 1 ? $"1 {one}" : $"{n} {many}";
+            var parts = new List<string>();
+            if (report.Count(ModReport.Wrong) is int w and > 0) parts.Add(N(w, "thing goes wrong in game", "things go wrong in game"));
+            if (report.Count(ModReport.Ignored) is int g and > 0) parts.Add(N(g, "line the game ignores", "lines the game ignores"));
+            if (report.Count(ModReport.Missing) is int m and > 0) parts.Add(N(m, "number from another mod", "numbers from another mod"));
+            if (report.Count(ModReport.Look) is int l and > 0) parts.Add(N(l, "thing worth a look", "things worth a look"));
+            ReportSummary = parts.Count == 0 ? "Checked on opening: nothing found, the game reads the mod as written"
+                : "Checked on opening: " + string.Join(" · ", parts);
+            OnPropertyChanged(nameof(ReportSummary));
+            ShowReportBar = true;
+            ReportMilliseconds = watch.ElapsedMilliseconds;
+        }
+
+        /// <summary>How long the check on opening took (the snapshot harness logs it).</summary>
+        public long ReportMilliseconds { get; private set; }
 
         public ValidationResult? Validate()
         {

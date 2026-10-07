@@ -25,6 +25,9 @@ namespace Dom5Edit
         public string? RawHeader { get; set; }
         public int IdAtParse { get; set; }
 
+        /// <summary>The header's line number in the file (0 for a block not read from one).</summary>
+        public int HeaderLine { get; set; }
+
         /// <summary>The #end line as read.</summary>
         public string? RawEnd { get; set; }
 
