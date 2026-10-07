@@ -405,8 +405,11 @@ namespace Dom5Edit.Editing
             var made = (IDEntity)Activator.CreateInstance(Mod.TypeOf(type))!;
             // events and mercenaries take no number (#newevent, #newmerc); poptypes and nametypes
             // have no #new: a new one is a #select of a number the game doesn't use (the manual:
-            // poptypes 1-249, the game's go to 106; nametypes 170-399 are free for mods)
-            bool selectOnly = type == EntityType.POPTYPE || type == EntityType.NAMETYPE;
+            // poptypes 1-249, the game's go to 106; nametypes 170-399 are free for mods). Nor does
+            // #newnation take a number (the game uses the first free one from 120, the manual):
+            // "#newnation 150" would be another nation than the mod's references to 150 mean, so a
+            // new nation is "#selectnation 150", as for spells and items (their Export).
+            bool selectOnly = type == EntityType.POPTYPE || type == EntityType.NAMETYPE || type == EntityType.NATION;
             if (type == EntityType.BLESS || type == EntityType.TEMPLATE)
                 throw new EditException(type == EntityType.BLESS ? "Blesses can only be changed (#selectbless), not made"
                     : "A template is made for a nation (#newtemplate <nation>): add it in the file");
@@ -508,7 +511,9 @@ namespace Dom5Edit.Editing
             var old = plan.HasBlocks(target) && plan.BlocksOf(target).Count == 1
                 ? plan.BlocksOf(target)[0].Block.Lines.Where(p => target.Properties.Any(q => ReferenceEquals(q, p))).ToList()
                 : target.Properties.ToList();
-            string Text(Property p) => (Mod.KeepOriginalText ? p.SaveText() : p.ToExportString()).Trim();
+            // the typed text has "\n" line ends (SplitLines); a line's text as read keeps the file's
+            // ("\r\n" inside a #msg over several lines): the same line either way, kept as read
+            string Text(Property p) => (Mod.KeepOriginalText ? p.SaveText() : p.ToExportString()).Replace("\r\n", "\n").Trim();
 
             // the longest run of unchanged lines (by text), in order
             int n = old.Count, m = body.Count;
