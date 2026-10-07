@@ -10,6 +10,9 @@ New in this build
   Avalonia instead of WPF). Everything works as before; pages, lists and windows look a little
   different (another font, slightly tighter rows). Your settings and backups are where they
   were. If something works worse than in 0.11.0, please say what: that build stays available.
+- Event chain map: drag with the middle mouse button to move around, Ctrl+wheel or Fit to
+  zoom; click a card to follow its links (double-click opens it); each code and variable has
+  its own colour.
 
 Also in 0.11.0
 - Submods: a mod can be read over the mods it needs (Sombre Warhammer's submods over Sombre),
