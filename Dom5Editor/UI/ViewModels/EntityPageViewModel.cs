@@ -262,12 +262,21 @@ namespace Dom5Editor.UI.ViewModels
         public bool HasNotice => !string.IsNullOrEmpty(_notice);
 
         /// <summary>
+        /// Saves a mod that has no file yet, asking where (set by the window; true if it was saved):
+        /// an image set on a new mod is copied next to the .dm file, so the mod needs one first.
+        /// </summary>
+        public static Func<bool>? SaveFirst { get; set; }
+
+        /// <summary>
         /// Sets an image command from a file: copied into the mod's sprites folder unless it's in
         /// the mod's folder already (the game reads a mod's images from there), then the line set.
         /// </summary>
         public void SetImage(Command c, string file)
         {
             var modFile = Session.Mod.FullFilePath;
+            // a new mod has no folder yet: offer to save it first (the window asks where)
+            if (string.IsNullOrEmpty(modFile) && SaveFirst?.Invoke() == true)
+                modFile = Session.Mod.FullFilePath;
             if (string.IsNullOrEmpty(modFile))
             {
                 Notice = null;
@@ -333,6 +342,36 @@ namespace Dom5Editor.UI.ViewModels
         }
 
         public string CopySourceName => CopySourceId is int id ? $"{NameOf(Type, id)} #{id}" : "(none)";
+
+        /// <summary>Whether the type copies a sprite on its own (#copyspr: a monster's from a monster, an item's from an item).</summary>
+        public bool HasSpriteCopy => Type == EntityType.MONSTER || Type == EntityType.ITEM;
+
+        /// <summary>
+        /// The entity whose sprite this one takes (its own #copyspr line), or null: the usual way to
+        /// give a new unit a picture, since #copystats doesn't copy it.
+        /// </summary>
+        public int? SpriteCopyId
+        {
+            get
+            {
+                var line = HasSpriteCopy ? Resolved.Structure.LastOrDefault(p => p.Command == Command.COPYSPR) : null;
+                return line == null ? null : ReferenceOf(line, RefTypeName(Type)).Id;
+            }
+            set
+            {
+                if (!HasSpriteCopy || value == SpriteCopyId)
+                    return;
+                var line = Resolved.Structure.LastOrDefault(p => p.Command == Command.COPYSPR);
+                if (value is int id && id > 0)
+                    SetValue(Command.COPYSPR, id.ToString());
+                else if (line != null)
+                    RemoveLine(line);
+            }
+        }
+
+        public string SpriteCopyPickTip => $"The {Nouns.Of(Type)} whose sprite this one takes (#copyspr); its own image lines apply on top";
+        public string SpriteCopyOpenTip => SpriteCopyId is int id ? $"Open {NameOf(Type, id)} #{id}, the {Nouns.Of(Type)} whose sprite it takes" : "It copies no sprite";
+        public ICommand NavigateToSpriteCopyCommand => new RelayCommand(() => { if (SpriteCopyId is int id) Session.Navigate(Type, id); });
 
         /// <summary>The copy picker's and its open button's tooltips.</summary>
         public string CopyPickTip => $"The {Nouns.Of(Type)} this one starts as a copy of ({(CopyCommand is Command c ? CommandName(c) : "")}); its own lines apply on top";
@@ -496,17 +535,26 @@ namespace Dom5Editor.UI.ViewModels
             UsedBy.Clear();
             if (ID <= 0)
                 return;
-            // one link per entity, with the commands it refers with
+            // one link per entity, with the commands it refers with (the game's mercenary bands and
+            // the events have no number: each is its own link, named and opened by itself)
             var users = Session.Usage.UsedBy(Type, ID)
-                .GroupBy(u => (u.Type, u.Id))
-                .OrderBy(g => g.Key.Type).ThenBy(g => g.Key.Id)
+                .GroupBy(u => u.Id > 0 ? (object)(u.Type, u.Id) : u.From)
+                .OrderBy(g => g.First().Type).ThenBy(g => g.First().Id)
                 .ToList();
             const int shown = 200;
             foreach (var g in users.Take(shown))
             {
-                var (type, id) = g.Key;
-                var via = string.Join(", ", g.Select(u => CommandName(u.Via)).Distinct());
-                UsedBy.Add(new UsageRow(type, id, NameOf(type, id), via, () => Session.Navigate(type, id)));
+                var u = g.First();
+                var via = string.Join(", ", g.Select(x => CommandName(x.Via)).Distinct());
+                if (u.Id > 0)
+                    UsedBy.Add(new UsageRow(u.Type, u.Id, NameOf(u.Type, u.Id), via, () => Session.Navigate(u.Type, u.Id)));
+                else
+                {
+                    var from = u.From;
+                    var name = from.Kind == EntityType.EVENT ? EventPageViewModel.TitleOf(from, EventPageViewModel.LinesOf(Session.Resolve(from)))
+                        : Session.Resolve(from).Get(Command.NAME)?.Property is StringProperty s ? s.Value ?? "" : "";
+                    UsedBy.Add(new UsageRow(u.Type, u.Id, name, via, () => Session.Navigate(from)));
+                }
             }
             UsedByTitle = users.Count > shown ? $"USED BY ({users.Count}, first {shown} shown)" : $"USED BY ({users.Count})";
         }
@@ -530,7 +578,9 @@ namespace Dom5Editor.UI.ViewModels
             Structure.Clear();
             // (the last copy line is the copy picker's)
             var copyLine = CopyCommand is Command cc ? Resolved.Structure.LastOrDefault(p => p.Command == cc) : null;
-            foreach (var p in Resolved.Structure.Where(p => !ReferenceEquals(p, copyLine)))
+            // (and the last #copyspr is the sprite picker's)
+            var spriteLine = HasSpriteCopy ? Resolved.Structure.LastOrDefault(p => p.Command == Command.COPYSPR) : null;
+            foreach (var p in Resolved.Structure.Where(p => !ReferenceEquals(p, copyLine) && !ReferenceEquals(p, spriteLine)))
                 Structure.Add(new StructureLine(p, $"{CommandName(p.Command)} {DisplayArguments(p)}".Trim(),
                     GameRules.IsCopy(p.Command) && ReferenceOf(p, RefTypeName(Type)) is var (id, _) && id > 0 ? $"{NameOf(Type, id)} #{id}" : ""));
             Panels.Clear();
@@ -945,7 +995,7 @@ namespace Dom5Editor.UI.ViewModels
         {
             Type = type;
             Id = id;
-            Name = string.IsNullOrEmpty(name) ? $"#{id}" : name;
+            Name = string.IsNullOrEmpty(name) ? id > 0 ? $"#{id}" : "(unnamed)" : name;
             Via = via;
             OpenCommand = new RelayCommand(open);
         }
@@ -953,10 +1003,12 @@ namespace Dom5Editor.UI.ViewModels
         public EntityType Type { get; }
         public string TypeLabel => Type.ToString().ToLowerInvariant();
         public int Id { get; }
+        /// <summary>"#17", or nothing for one with no number (an event, the game's mercenary bands).</summary>
+        public string IdText => Id > 0 ? $"#{Id}" : "";
         public string Name { get; }
         public string Via { get; }
         public ICommand OpenCommand { get; }
-        public string Tooltip => $"The {Nouns.Of(Type)} {Nouns.Named(Name, Id)} refers to it ({Via}). Click to open it.";
+        public string Tooltip => $"The {Nouns.Of(Type)} {(Id > 0 ? Nouns.Named(Name, Id) : Name)} refers to it ({Via}). Click to open it.";
     }
 
     /// <summary>One of an entity's own copy or clear lines, as the page lists them.</summary>

@@ -524,7 +524,10 @@ namespace Dom5Editor.UI.ViewModels
                 var lists = new List<object>();
                 foreach (var def in section.Commands)
                 {
-                    if (!Data.BadgeConfigLoader.TryGetCommand(def, out var c) || !Entity.GetPropertyMap().ContainsKey(c) || covered.Contains(c))
+                    // (a clear, #clearrec, is a line of the CLEARS picker at the top, saved before the lists;
+                    // as a checkbox here it showed off while set, the resolver keeping it with the copies)
+                    if (!Data.BadgeConfigLoader.TryGetCommand(def, out var c) || !Entity.GetPropertyMap().ContainsKey(c) || covered.Contains(c)
+                        || Dom5Edit.Resolve.GameRules.IsClear(c))
                         continue;
                     var label = def.Display ?? def.Name;
                     var kind = (def.Type ?? "flag").ToLowerInvariant();
