@@ -64,10 +64,11 @@ namespace Dom5Editor.UI.Converters
                 encoder.Save(stream);
                 return stream.ToArray();
             };
-            Ui.PickFile = (title, filter) =>
+            Ui.PickFile = (title, filter, then) =>
             {
                 var dialog = new Microsoft.Win32.OpenFileDialog { Title = title, Filter = filter };
-                return dialog.ShowDialog() == true ? dialog.FileName : null;
+                if (dialog.ShowDialog() == true)
+                    then(dialog.FileName);
             };
             Ui.Post = work => app.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, work);
             Ui.AddRequery = handler => CommandManager.RequerySuggested += handler;

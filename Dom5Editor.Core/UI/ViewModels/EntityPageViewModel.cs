@@ -1062,9 +1062,8 @@ namespace Dom5Editor.UI.ViewModels
 
         private void Pick()
         {
-            if (Ui.PickFile?.Invoke($"{Label} image ({EntityPageViewModel.CommandName(Command)})",
-                    "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*") is string file)
-                SetFromFile(file);
+            Ui.PickFile?.Invoke($"{Label} image ({EntityPageViewModel.CommandName(Command)})",
+                "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*", SetFromFile);
         }
 
         public void SetFromFile(string file) => _page.SetImage(Command, file);

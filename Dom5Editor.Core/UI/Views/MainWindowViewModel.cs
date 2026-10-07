@@ -371,9 +371,8 @@ namespace Dom5Editor.UI.Views
         /// <summary>The icon box's "Pick...": a banner image, copied into the mod's folder like a sprite.</summary>
         public System.Windows.Input.ICommand PickIconCommand => new RelayCommand(() =>
         {
-            if (Ui.PickFile?.Invoke("Mod banner (#icon): 128x32 or 256x64",
-                    "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*") is string file)
-                SetIcon(file);
+            Ui.PickFile?.Invoke("Mod banner (#icon): 128x32 or 256x64",
+                "Images the game reads (*.tga;*.png)|*.tga;*.png|Other images, converted to .png (*.bmp;*.jpg;*.jpeg;*.gif)|*.bmp;*.jpg;*.jpeg;*.gif|All files|*.*", SetIcon);
         });
 
         /// <summary>Sets #icon from an image file, copied into the mod's sprites folder (a mod with no file is saved first).</summary>
