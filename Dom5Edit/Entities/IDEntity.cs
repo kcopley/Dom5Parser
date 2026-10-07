@@ -727,10 +727,11 @@ namespace Dom5Edit.Entities
 
         /// <summary>
         /// Where a line added in the editor goes among the entity's lines (an entity with no parsed
-        /// block is saved in this order): <see cref="sort_properties"/>, and lines a type needs
-        /// early right after the name (a nation's epithet and era).
+        /// block is saved in this order): <see cref="sort_properties"/>, with every clear among the
+        /// copies and clears at the top (#clearrec after a poptype's recruits would remove them),
+        /// and lines a type needs early (a nation's name, epithet and era) where it needs them.
         /// </summary>
-        protected virtual int LiveRank(Property p) => sort_properties(p) * 10;
+        protected virtual int LiveRank(Property p) => Dom5Edit.Resolve.GameRules.IsClear(p.Command) ? 20 : sort_properties(p) * 10;
 
         /// <summary>Moves one of the lines to a place in the list (an entity with no parsed block is saved in list order).</summary>
         internal bool MoveLive(Property p, int index)

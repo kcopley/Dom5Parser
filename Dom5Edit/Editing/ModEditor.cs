@@ -704,6 +704,17 @@ namespace Dom5Edit.Editing
                 if (!r.IsEditableInPlace(v))
                     AddLine(target, Line(target, v.Command, v.Arguments), placeFirst: true);
             }
+            // a line added back can also set a flag bit outside the group that an inherited line
+            // cleared (#undead sets the almost-undead bit, vanilla's #almostliving after it clears
+            // it, and #clearspec doesn't touch it): that line goes back in after it
+            var setAgain = new HashSet<string>(members.Where(v => !ReferenceEquals(v.Property, value.Property) && !r.IsEditableInPlace(v))
+                .SelectMany(v => GameCommandCatalog.EffectOf(type, v.Command)?.Bits ?? Enumerable.Empty<string>()));
+            if (replacement != null)
+                setAgain.UnionWith(GameCommandCatalog.EffectOf(type, replacement.Command)?.Bits ?? Enumerable.Empty<string>());
+            foreach (var v in r.Values)
+                if (v.Source != ValueSource.Own && !GameRules.Clears(type, clear, v.Command)
+                    && GameCommandCatalog.EffectOf(type, v.Command)?.Clears is { Count: > 0 } clears && clears.Any(setAgain.Contains))
+                    AddLine(target, Line(target, v.Command, v.Arguments), placeFirst: true);
         }
 
         // ---- helpers ----
