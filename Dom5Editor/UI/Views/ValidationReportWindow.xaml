@@ -206,7 +206,7 @@
                         HorizontalAlignment="Right"
                         Click="CloseButton_Click"
                         IsCancel="True"/>
-                <Button Content="Export" ToolTip="Save the report as a text file"
+                <Button Content="Save report for the author" ToolTip="Save a report for the mod's author (Markdown): what goes wrong in game, lines the game ignores (with a likely fix), each with its line number"
                         Style="{DynamicResource ButtonBase}"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
