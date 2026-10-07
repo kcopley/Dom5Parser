@@ -5,6 +5,15 @@ An editor for Dominions 6 mod files (.dm): browse the game's own data and a mod'
 entity with real panels, build event chains, and save back without disturbing lines you
 didn't change.
 
+New in this build
+- Opening a mod checks it: a bar says what goes wrong in game, which lines the game ignores
+  (with "did you mean" for typos) and what's worth a look. "Open report" lists every finding
+  with its line and a Go to; "Save for the author..." writes it as a file to send to the mod's
+  author. What the game reads is taken from the game itself.
+- Your files are safe: a copy of the mod is made when you open it and before every save, and a
+  save must read back the same before it replaces the file (see "Backups" below).
+- Mounted units: a Mount panel on unit pages (mount, co-rider, riders, skilled rider).
+
 Running it
 - Windows 10 or 11, 64-bit. Nothing to install: unzip the folder anywhere and run
   Dom5Editor.exe. Keep the other files next to it (vanilla.dm and the rest are the game's data
@@ -22,11 +31,20 @@ Dominions 6
   rest works.
 
 Using it
-- Load (Ctrl+O) opens a .dm file; Save (Ctrl+S) writes it back (the previous file is kept as a
-  .bak). Lines you didn't touch are saved exactly as they were. Undo/Redo: Ctrl+Z / Ctrl+Y.
+- Load (Ctrl+O) opens a .dm file; Save (Ctrl+S) writes it back. Lines you didn't touch are
+  saved exactly as they were. Undo/Redo: Ctrl+Z / Ctrl+Y.
 - Ctrl+P: go to anything by name or ID. Ctrl+F: search the list (for events, also the message
   text). Hover anything for what it does.
-- Validate lists problems (lines the game won't read, missing references, ID clashes).
+- Validate checks the mod as it is now and opens the report.
+- Mods from the Steam workshop: Steam replaces those files when the mod updates, so the editor
+  asks before saving there. Save a copy in your Dominions 6 mods folder instead.
+
+Backups
+- A copy of the mod's file is made when you open it and before each save, in
+  %APPDATA%\Dom5Editor\backups (the last 30 per mod). The small arrow next to Load has
+  "Backups of this mod...". If a save doesn't read back the same, the file isn't replaced and
+  the editor says why. If the editor fails with unsaved edits, a copy of the mod with them goes
+  to %APPDATA%\Dom5Editor\recovery.
 
 If something goes wrong
 - The editor keeps running and writes the details to %APPDATA%\Dom5Editor\errors.log. Please

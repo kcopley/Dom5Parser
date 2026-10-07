@@ -67,6 +67,8 @@ namespace Dom5Editor.UI
         {
             if (args.Length == 0 || args[0] != "--snapshot")
                 return false;
+            // test runs keep their backups out of the user's (Settings folder\backups)
+            Dom5Edit.ModBackups.Folder = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Dom5Editor-snapshot-backups");
             int exitCode = 0;
             string? logPath = null;
             MainWindow? window = null;

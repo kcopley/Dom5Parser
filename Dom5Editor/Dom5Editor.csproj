@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
-        <Version>0.9.0</Version>
+        <Version>0.10.0</Version>
         <Product>Dom6 Mod Editor</Product>
         <Description>Editor for Dominions 6 mod files (.dm)</Description>
     </PropertyGroup>
