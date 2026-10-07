@@ -131,19 +131,26 @@ namespace Dom5Editor.UI.Views
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
+            // a report for the mod's author: what goes wrong in game, lines the game ignores (with
+            // "did you mean"), what's worth a look; each with its line (Dom5Edit.Validation.ModReport)
+            var session = _mainViewModel.Session;
+            var name = session?.Mod.ModName ?? "mod";
             var dialog = new Microsoft.Win32.SaveFileDialog
             {
-                Filter = "Text Files (*.txt)|*.txt|Markdown Files (*.md)|*.md|All Files (*.*)|*.*",
-                DefaultExt = ".txt",
-                FileName = "validation_report.txt"
+                Filter = "Markdown (*.md)|*.md|Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+                DefaultExt = ".md",
+                FileName = string.Concat((name + " - editor report").Split(System.IO.Path.GetInvalidFileNameChars())) + ".md",
             };
 
             if (dialog.ShowDialog() == true)
             {
                 try
                 {
-                    _validationResult.ExportToFile(dialog.FileName);
-                    MessageBox.Show($"Validation report exported to:\n{dialog.FileName}", "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (session != null)
+                        System.IO.File.WriteAllText(dialog.FileName, Dom5Edit.Validation.ModReport.Write(session.Mod, _validationResult, session.Events.Problems));
+                    else
+                        _validationResult.ExportToFile(dialog.FileName);
+                    MessageBox.Show($"The report for the mod's author is saved:\n{dialog.FileName}", "Report saved", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {

@@ -36,10 +36,18 @@ namespace Dom5Edit.Validation
                         // on vanilla IDs create new entities with Selected=true. We skip those.
                         if (idEntity.ID > 0 && idEntity.ID < startId && !idEntity.Selected)
                         {
+                            // a game entity with that number is replaced by the new one; else it's free
+                            // today, but the game's own numbers grow into that range with updates
+                            var kind = entityType.ToString().ToLowerInvariant();
+                            IDEntity? game = null;
+                            bool clashes = VanillaLoader.Vanilla?.Database.TryGetValue(entityType, out var vanillaSet) == true
+                                           && vanillaSet.TryGetValue(idEntity.ID, out game);
                             issues.Add(new ValidationIssue
                             {
-                                Severity = ValidationSeverity.Warning,
-                                Message = $"{entityType} ID {idEntity.ID} is below modding range (starts at {startId}). This appears to be a #new command (not #select) which may conflict with vanilla.",
+                                Severity = clashes ? ValidationSeverity.Error : ValidationSeverity.Warning,
+                                Message = clashes
+                                    ? $"#new{kind} {idEntity.ID} takes the number of the game's own {kind} {game!.Name} #{idEntity.ID}: it replaces that {kind}. New {kind}s are numbered from {startId}."
+                                    : $"#new{kind} {idEntity.ID} is below the modding range (from {startId}, the manual). No game {kind} uses {idEntity.ID} today, but the game's own numbers grow into that range with updates.",
                                 Entity = entity,
                                 Category = "ID Range"
                             });

@@ -92,9 +92,10 @@ namespace Dom5Tests
             Console.WriteLine($"   resolve + game values: {entities} entities, {failed} failed ({watchResolve.ElapsedMilliseconds} ms)" + (firstFailure != null ? $"; first: {firstFailure}" : ""));
 
             // the event chains
+            Dom5Edit.Events.EventGraph? graph = null;
             try
             {
-                var graph = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla);
+                graph = Dom5Edit.Events.EventGraph.Build(mod, resolver.Resolve, VanillaLoader.Vanilla);
                 Console.WriteLine($"   events: {graph.ModEvents.Count} in the mod, {graph.Chains.Count} chains, {graph.Problems.Count} problems "
                                   + $"({graph.Problems.Count(p => p.IsError)} errors)");
                 foreach (var g in graph.Problems.GroupBy(p => (p.IsError, Key: Shape(p.Message))).OrderByDescending(g => g.Key.IsError).ThenByDescending(g => g.Count()).Take(8))
@@ -105,9 +106,23 @@ namespace Dom5Tests
                 Console.WriteLine($"   events: FAILED {ex.GetType().Name}: {ex.Message}");
             }
 
+            // the report for the mod's author (as the editor's Validate window saves it)
+            var report = Path.Combine(outDir, name + ".report.md");
+            File.WriteAllText(report, ModReport.Write(mod, result, graph?.Problems));
+            Console.WriteLine($"   report: {report}");
+
             // a save without edits gives back the file
             var save = Path.Combine(outDir, name + ".save.dm");
             mod.Export(save);
+            try
+            {
+                SaveCheck.Verify(mod, save);
+                Console.WriteLine("   save check (reads back with the same entities): ok");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"   save check: FAILED {ex.Message}");
+            }
             var original = File.ReadAllBytes(path);
             var saved = File.ReadAllBytes(save);
             if (original.AsSpan().SequenceEqual(saved))

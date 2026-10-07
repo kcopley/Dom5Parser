@@ -56,6 +56,14 @@ namespace Dom5Edit.GameData
             }
         }
 
+        /// <summary>The commands (without '#') the game reads in a block of this type, or none if the catalog has no such context.</summary>
+        public static IReadOnlyCollection<string> CommandsOf(EntityType type) =>
+            ContextOf(type) is string c && _contexts.TryGetValue(c, out var context) ? context.Commands : (IReadOnlyCollection<string>)Array.Empty<string>();
+
+        /// <summary>The game parser contexts ("monster", "item", ...) that read this command (without '#').</summary>
+        public static IEnumerable<string> ContextsReading(string name) =>
+            _contexts.Where(kv => kv.Key != "top" && kv.Value.Commands.Contains(name)).Select(kv => kv.Key);
+
         /// <summary>The game parser's name for an entity type, or null if the catalog has none.</summary>
         public static string? ContextOf(EntityType type)
         {

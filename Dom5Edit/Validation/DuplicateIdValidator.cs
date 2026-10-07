@@ -3,7 +3,9 @@ using Dom5Edit.Entities;
 namespace Dom5Edit.Validation
 {
     /// <summary>
-    /// Validates that there are no duplicate entity IDs within the same entity type.
+    /// Validates that no two #new... blocks make an entity with the same ID (the second takes the
+    /// first's place). Selecting an entity again (#select... by ID or by name, or after its #new)
+    /// is how a mod changes it in several places, not a conflict.
     /// </summary>
     public class DuplicateIdValidator : IValidator
     {
@@ -22,7 +24,7 @@ namespace Dom5Edit.Validation
 
                 foreach (var entity in entitySet.GetFullList())
                 {
-                    if (entity is IDEntity idEntity && idEntity.ID > 0)
+                    if (entity is IDEntity idEntity && idEntity.ID > 0 && !idEntity.Selected)
                     {
                         if (seenIds.TryGetValue(idEntity.ID, out var existingEntity))
                         {
