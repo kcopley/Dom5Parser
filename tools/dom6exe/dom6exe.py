@@ -12,6 +12,9 @@ maintained. This reads the exe directly instead:
              them read-only
   events     the vanilla events as #selectevent blocks (events.py)
   texts      where the game's texts are (descriptions, nation summaries; texts.py)
+  snapshot   everything the change log compares, from one exe, into a folder (changelog.py)
+  changelog  what changed between two versions: OLD NEW, each a snapshot folder, an exe or
+             a vanilla .dm (changelog.py; docs/GAME_UPDATES.md)
 
 Usage:
   python3 tools/dom6exe/dom6exe.py [--exe PATH] [--inspector DIR] commands|monsters|readonly [--out FILE]
@@ -94,7 +97,9 @@ class Exe:
         return sorted(out)
 
     def disassembly(self):
-        """Parsed objdump output, cached per exe (it takes a few seconds)."""
+        """Parsed objdump output, cached per exe (it takes a few seconds), and kept once parsed."""
+        if getattr(self, '_ins', None) is not None:
+            return self._ins
         cache = os.path.join(tempfile.gettempdir(), 'dom6exe-%s.asm' % self.sha)
         if not os.path.exists(cache):
             with open(cache + '.tmp', 'w') as f:
@@ -106,6 +111,7 @@ class Exe:
             m = pat.match(line)
             if m:
                 ins.append((int(m.group(1), 16), m.group(2), m.group(3), int(m.group(4), 16) if m.group(4) else None))
+        self._ins = ins
         return ins
 
 
@@ -945,9 +951,42 @@ def cmd_readonly(exe, args):
             'settable_by_monster_commands': len(set(used) & settable), 'not_settable': ro, 'flag_bits_not_settable': flag_ro}
 
 
+def cmd_snapshot(exe, args):
+    """Everything the change log compares, from this exe, into the folder --out (changelog.py)."""
+    import changelog
+    if not args.out:
+        raise SystemExit('snapshot: --out FOLDER (keep it outside the repository)')
+    meta = changelog.snapshot(exe, args.out, texts=args.texts)
+    print('wrote a snapshot of Dominions %s (exe %s) to %s%s' % (meta['game_version'], meta['exe_sha256_16'], args.out,
+          ': it holds the game\'s texts (texts.json), keep it to yourself' if args.texts else ''), file=sys.stderr)
+    args.out = None
+    return None
+
+
+def cmd_changelog(args):
+    """What changed between two versions (changelog.py): OLD NEW, each a snapshot folder, an exe or a vanilla .dm."""
+    import changelog
+    if len(args.paths) != 2:
+        raise SystemExit('changelog OLD NEW: two snapshot folders, Dominions6.exe files or vanilla .dm files')
+    old, new = changelog.Version(args.paths[0], Exe), changelog.Version(args.paths[1], Exe)
+    try:
+        text = changelog.changelog(old, new, show_texts=args.texts)
+    finally:
+        old.close()
+        new.close()
+    if args.out:
+        open(args.out, 'w', encoding='utf-8').write(text)
+        print('wrote', args.out, file=sys.stderr)
+    else:
+        sys.stdout.write(text)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['catalog', 'commands', 'dmread', 'events', 'layout', 'monsters', 'readonly', 'spelleffects', 'sprites', 'tables', 'texts', 'vanilla'])
+    ap.add_argument('what', choices=['catalog', 'changelog', 'commands', 'dmread', 'events', 'layout', 'monsters', 'readonly', 'snapshot', 'spelleffects', 'sprites', 'tables', 'texts', 'vanilla'])
+    ap.add_argument('paths', nargs='*', help='changelog: OLD NEW (snapshot folders, Dominions6.exe files or vanilla .dm files)')
+    ap.add_argument('--texts', action='store_true',
+                    help='snapshot: keep the game\'s texts too (texts.json, local use only); changelog: show old and new texts')
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
@@ -958,10 +997,13 @@ def main():
     ap.add_argument('--lines', help='dmread: A-B, list what each pass reads on these lines')
     ap.add_argument('--context', help='dmread: only these passes (monster,spell,...)')
     args = ap.parse_args()
+    if args.what == 'changelog':
+        return cmd_changelog(args)
     exe = Exe(args.exe)
     res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
            'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog, 'events': cmd_events,
-           'sprites': cmd_sprites, 'texts': cmd_texts, 'dmread': cmd_dmread, 'spelleffects': cmd_spelleffects}[args.what](exe, args)
+           'sprites': cmd_sprites, 'texts': cmd_texts, 'dmread': cmd_dmread, 'spelleffects': cmd_spelleffects,
+           'snapshot': cmd_snapshot}[args.what](exe, args)
     if res is None:
         return
     text = json.dumps(res, indent=1, default=str)
