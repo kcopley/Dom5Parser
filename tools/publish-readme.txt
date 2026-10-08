@@ -12,8 +12,9 @@ New in this build
   enchantments and monster tags too). A submod is read over its parent. A mod's copy of a game
   unit another mod changes stays as the game has it. The mods themselves aren't changed; the
   merged mod comes with a report of everything that moved and what to look at.
-- Several entities side by side: "New window" on a page (or right-click a row in the list,
-  Ctrl+click or middle-click a row, Ctrl+click a link) opens the entity in a window of its own.
+- Several entities side by side: "New window" on a page opens the entity in a window of its own;
+  so does a middle click on any link or row (as in a browser), its right click menu ("Open in a
+  new window"), or Ctrl+click.
   Edits show in every window at once; undo and save are the mod's. Each window has its own
   back and forward, and opens where the last one was.
 - Spells: what a spell's #damage is for each #effect is now read from the game itself (summons
@@ -21,6 +22,8 @@ New in this build
   The report says when a spell can't work: a combat effect from 1000 to 9999 (the game has no
   such effect: an older way of writing a lasting cloud, it seems), a ritual effect the game
   doesn't know, or a spell nothing can cast.
+- Submods: Load ▾, "Load as submod..." opens a submod over its parent in one go. The editor no
+  longer guesses a parent when a mod is opened alone.
 - A quoted name followed by more text on its line (#copyspell "Stellar Strike" (note)) is read
   as the game reads it: up to the closing quote.
 
@@ -38,7 +41,7 @@ Also in 0.11.0
   as the game reads mods: in the order they were enabled. Mod Info, "Needs": add, remove and
   order them (remembered for the mod). The parent's units, items and events show and link like
   the game's; changing one adds a line to your mod, and the parent's file is never changed.
-  Load ▾, "Load as submod..." opens a submod over its parent in one go (0.13.0).
+  (0.13.0: Load ▾, "Load as submod..." does it in one go.)
 - "Used by" lists what really uses an entity (it listed spells that pick from the game's unit
   lists under the wrong monster, and every event that boosts a path under monster 1).
 - The report also says when a submod's new unit takes a number its parent already uses.
