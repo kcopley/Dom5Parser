@@ -6,10 +6,29 @@ entity with real panels, build event chains, and save back without disturbing li
 didn't change.
 
 New in this build
+- Merge mods: "Merge mods..." on the toolbar puts several mods into one new file, in the order
+  the game would read them. Where two mods use the same number, the later one's entity moves
+  to a free number and everything that refers to it follows (event codes, variables,
+  enchantments and monster tags too). A submod is read over its parent. A mod's copy of a game
+  unit another mod changes stays as the game has it. The mods themselves aren't changed; the
+  merged mod comes with a report of everything that moved and what to look at.
+- Several entities side by side: "New window" on a page (or right-click a row in the list,
+  Ctrl+click or middle-click a row, Ctrl+click a link) opens the entity in a window of its own.
+  Edits show in every window at once; undo and save are the mod's. Each window has its own
+  back and forward, and opens where the last one was.
+- Spells: what a spell's #damage is for each #effect is now read from the game itself (summons
+  of a mod's own units by effects 10089/10114, enchantments of effects 133 and 10085, sites).
+  The report says when a spell can't work: a combat effect from 1000 to 9999 (the game has no
+  such effect: an older way of writing a lasting cloud, it seems), a ritual effect the game
+  doesn't know, or a spell nothing can cast.
+- A quoted name followed by more text on its line (#copyspell "Stellar Strike" (note)) is read
+  as the game reads it: up to the closing quote.
+
+In 0.12.0
 - A new look: the editor is now the same program on Windows, macOS and Linux (built with
   Avalonia instead of WPF). Everything works as before; pages, lists and windows look a little
   different (another font, slightly tighter rows). Your settings and backups are where they
-  were. If something works worse than in 0.11.0, please say what: that build stays available.
+  were.
 - Event chain map: drag with the middle mouse button to move around, Ctrl+wheel or Fit to
   zoom; click a card to follow its links (double-click opens it); each code and variable has
   its own colour.

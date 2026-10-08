@@ -4,10 +4,11 @@ Dom6 Mod Editor @VERSION@ for macOS and Linux (test build, @DATE@, @COMMIT@, @RI
 An editor for Dominions 6 mod files (.dm): browse the game's own data and a mod's, edit every
 entity, build event chains, and save back without disturbing lines you didn't change.
 
-This is the first macOS/Linux build: the same editor as the Windows one, on a new window
-toolkit. Some parts of the pages may still show only a panel's name instead of the panel;
-everything else (opening, editing, undo, saving, the report) works as on Windows. Please
-report what looks wrong or doesn't work, with a screenshot if you can.
+The same editor as the Windows one (one program on all three). New in this build: "Merge
+mods..." (several mods into one new file, colliding numbers moved and every reference
+following), entities in windows of their own ("New window", Ctrl+click), spells' #damage read
+from the game itself, and the report saying when a spell can't work. It hasn't been tried on a
+Mac yet: please report what looks wrong or doesn't work, with a screenshot if you can.
 
 Linux (linux-x64: most PCs; linux-arm64: ARM boards and laptops)
 - Unpack and run:
