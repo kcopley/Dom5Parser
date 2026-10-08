@@ -52,6 +52,24 @@
 #name "Changed One"
 #end
 
+-- a ritual summoning its unit and the next number (effect 10141): 5030-5031 move as a pair
+#newmonster 5030
+#copystats 5
+#name "Bird One"
+#end
+
+#newmonster 5031
+#copystats 5
+#name "Bird Two"
+#end
+
+#newspell
+#name "Call Two Birds"
+#effect 10141
+#damage 5030
+#nreff 1
+#end
+
 #selectnation 150
 #name "Nation B"
 #era 2

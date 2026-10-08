@@ -433,7 +433,7 @@ namespace Dom5Edit.Merge
                         continue;
                     int first = FreeRun(run.Count);
                     if (run.Count > 1)
-                        report.Notes.Add($"{part.DisplayName}: monsters {run[0].ID}-{run[^1].ID} turn into each other by number (#shrinkhp, #growhp, #xpshape): moved together to {first}-{first + run.Count - 1}");
+                        report.Notes.Add($"{part.DisplayName}: monsters {run[0].ID}-{run[^1].ID} go by each other's numbers (#shrinkhp, #growhp, #xpshape, a ritual summoning the next): moved together to {first}-{first + run.Count - 1}");
                     for (int k = 0; k < run.Count; k++)
                         Move(part, run[k], first + k);
                 }
@@ -523,7 +523,8 @@ namespace Dom5Edit.Merge
 
         /// <summary>
         /// The part's entities in runs that must keep their numbers in a row (monsters that turn
-        /// into the next or previous number); one entity per run otherwise. A unit whose next
+        /// into the next or previous number, a unit a ritual summons with the next one); one
+        /// entity per run otherwise. A unit whose next
         /// number isn't in the part is noted: moving it changes which unit that is.
         /// </summary>
         private static List<List<IDEntity>> Runs(Mod part, EntityType type, List<IDEntity> mine, MergeReport report)
@@ -545,6 +546,18 @@ namespace Dom5Edit.Merge
                 if (previous && !byId.ContainsKey(e.ID - 1))
                     report.Notes.Add($"{part.DisplayName}: monster {e.ID} {e.Name} grows into the previous number ({e.ID - 1}), which the part doesn't make: if it moves, that's another unit");
             }
+            // a ritual that summons its unit and the next number (effect 10141, the exe: Call the
+            // Birds of Splendor's two Yllerion): the pair keeps its order
+            foreach (var spell in part.Database[EntityType.SPELL].GetFullList().OfType<Spell>())
+                if (spell.TryGetEffectNumber(out int effect) && effect == 10141)
+                    foreach (var d in spell.Properties.OfType<SpellDamage>())
+                        if (d.TryGetEntity(out var m) && m != null && byId.ContainsKey(m.ID))
+                        {
+                            if (byId.ContainsKey(m.ID + 1))
+                                linkNext.Add(m.ID);
+                            else
+                                report.Notes.Add($"{part.DisplayName}: spell {spell.Name} summons monster {m.ID} and the next number ({m.ID + 1}), which the part doesn't make: if it moves, that's another unit");
+                        }
             var runs = new List<List<IDEntity>>();
             foreach (var e in mine)
             {

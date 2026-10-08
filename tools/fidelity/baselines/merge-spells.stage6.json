@@ -1,8 +1,10 @@
 {
- "moved": 10,
+ "moved": 5,
  "movedByKind": {
-  "monster": 9,
-  "nation": 1
+  "monster": 2,
+  "site": 1,
+  "enchantment": 1,
+  "spell event id (#id)": 1
  },
  "renamed": 0,
  "copiesKeptApart": 0,

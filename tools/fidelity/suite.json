@@ -305,7 +305,7 @@
     "Dom5Tests/fixtures/merge/seq_a.dm",
     "Dom5Tests/fixtures/merge/seq_b.dm"
    ],
-   "about": "a hydra (#shrinkhp/#growhp) and an #xpshape line colliding in the middle move as blocks; #xpshapemon; a template follows its nation and #form"
+   "about": "a hydra (#shrinkhp/#growhp), an #xpshape line and a ritual summoning its unit and the next (effect 10141) colliding in the middle move as blocks; #xpshapemon; a template follows its nation and #form"
   },
   {
    "name": "merge-copies",
@@ -324,6 +324,15 @@
     "Dom5Tests/fixtures/merge/slots_b.dm"
    ],
    "about": "#newspell/#newitem take no number (the first free one from 1500/700, #newitem 800 too): a later part's numbered spell and items on those move; its own unnumbered item, pushed up by the earlier part's, would land on its numbered 704, which moves too; its 800 stays (A's #newitem 800 isn't 800)"
+  },
+  {
+   "name": "merge-spells",
+   "title": "Merge test: spell damage",
+   "parts": [
+    "Dom5Tests/fixtures/merge/sp_a.dm",
+    "Dom5Tests/fixtures/merge/sp_b.dm"
+   ],
+   "about": "a spell's #damage moves with its target only where the game reads a monster, tag, enchantment, event #id or site (the exe's table: tools/dom6exe spelleffects); 10089/10114 keys 1-99, bitmasks (web, false fetters), ability numbers stay"
   },
   {
    "name": "merge-confluence-bloodwar",

@@ -41,8 +41,8 @@ alongside another without a merge.
    file instead of several.
 2. **Side by side** (independent nation mods, the project's original purpose): one mod's new
    entities move to free numbers, and every reference to them is rewritten: by number, by
-   name when the name is unambiguous, and in events, spells (`#damage` summons, monster tags),
-   sites, nations and mercenaries. The old `ModSet.MergeAll` did a first version of this. It
+   name when the name is unambiguous, and in events, spells (`#damage` where the game reads it as
+   a monster, monster tag, enchantment, event `#id` or site: below), sites, nations and mercenaries. The old `ModSet.MergeAll` did a first version of this. It
    is dead code now: nothing calls it, and it predates the resolver, the save plan
    (original-order saving) and the reference rules ("used by").
 
@@ -127,8 +127,28 @@ header is rewritten when its entity's number changed (`ModExporter.KeepsHeader`)
   reads them there.
 
 Checked by stage 6 of the fidelity suite (docs/FIDELITY_SUITE.md): fixtures for events, sequences,
-copies and the numbers the game gives, and the installed workshop mods (Confluence + Bloodwar, the Sombre pack with its
-submod, Forgotten Realms + DomEnhanced), with baselines of what moved.
+copies, the numbers the game gives and spells' #damage, and the installed workshop mods
+(Confluence + Bloodwar, the Sombre pack with its submod, Forgotten Realms + DomEnhanced), with
+baselines of what moved.
+
+### A spell's #damage (checked against the exe, 2026-10-07)
+
+What `#damage` is depends on `#effect`, and it is read from the game's own effect code
+(`tools/dom6exe/dom6exe.py spelleffects` -> `data/spell-effects-6.37.json`, README "Spell effects
+and #damage"; embedded in Dom5Edit, SpellEffectData), not from the inspector's tables. It moves
+with its target only for: monsters and monster tags (1, 21, 31, 43, 54, 126, 165; 10001, 10021,
+10026, 10037, 10038, 10050, 10062, 10093, 10119, 10130, 10137, 10141), 10089/10114 from 100 up
+(1-99 is a key into the game's lists of uniques and stays), enchantments (81, 133, 10081-10085),
+event `#id`s (10042) and sites (10154). Everything else stays as written: affliction and buff
+bitmasks (web, false fetters: effect 11), monster ability numbers (500-699, 10500-10599), counts,
+damage, codes. A spell with no `#effect` of its own uses its `#copyspell`'s or the game spell's
+(from vanilla.dm). Combat effects 1000-9999 count as effect % 1000 (the game's AI reads them so;
+its battle code has no case for them). The referee (`gameread.py --merge`) reads the same exe
+table, so it checks the merger's spells instead of trusting its word: on Forgotten Realms 0.95 +
+DomEnhanced 2.13 the old classification left 62 of DomEnhanced's 10089 spells summoning
+Forgotten Realms' monsters. Open: 10141 summons its monster and the next number; a merge doesn't
+keep such a pair in a row yet (only vanilla uses 10141). `Dom5Tests/fixtures/merge/sp_a.dm` +
+`sp_b.dm` is the check (stage 6, merge-spells).
 
 Steps: (1) renumbering in the core (an entity or a dependent number moves, its references follow,
 the save shows it); (2) `Dom5Tests merge OUTDIR NAME A.dm B.dm ... [--needs B.dm=A.dm]` with the

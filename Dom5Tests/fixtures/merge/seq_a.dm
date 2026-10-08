@@ -21,6 +21,11 @@
 #name "A Twenty"
 #end
 
+#newmonster 5031
+#copystats 1
+#name "A Thirty-One"
+#end
+
 #selectnation 150
 #name "Nation A"
 #era 2

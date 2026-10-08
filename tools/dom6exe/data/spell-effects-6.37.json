@@ -1,0 +1,1106 @@
+{
+ "game_version": "6.37",
+ "exe_sha256_16": "d77cd364fe447e85",
+ "about": "What #damage means per #effect (tools/dom6exe/spelleffects.py). argument: monster (a monster number), monster_or_tag (a monster number; -1000 and below the monster tag -N; -28..-2 special picks, -1 nothing), unique_or_monster_or_tag (1-99 a key into the game's lists of uniques, keys 1-14, 16-20 used, the others summon nothing; 100 and up a monster number; negative as monster_or_tag), enchantment, event (an event's #id), site, ability (a monster ability number), bitmask, count, damage (a number, level-scaled at 1000+ in battle), other (a code or index), unused. Combat effects 1000-9999 read as effect % 1000.",
+ "functions": {
+  "addfeatnr": "0x1402ac0b0",
+  "addunitfx": "0x1401a9290",
+  "age": "0x1401a8af0",
+  "blastsquare": "0x1401b5ba0",
+  "castlabspell": "0x1401985c0",
+  "evalspell": "0x1401c2fd0",
+  "hitunit": "0x1401c5ec0",
+  "hitunit_wrapper": "0x1401cad90",
+  "newcom": "0x1400a5280",
+  "newench": "0x1401a7fc0",
+  "newtempunit": "0x1400ac370",
+  "resolve_summon": "0x1401cd6c0",
+  "setunitfx": "0x1401a97e0",
+  "spell_event": "0x1401c1e70",
+  "spellblastsquare": "0x1401caf10",
+  "transform": "0x1401d22b0",
+  "unique_pick": "0x1401cea80"
+ },
+ "summon_special_codes": "-28..-1",
+ "monster_tag_at_or_below": -1000,
+ "unique_list_keys": "1-14, 16-20",
+ "unique_monster_from": 100,
+ "ritual_scaled_damage_slot": [
+  "rbp-0x58"
+ ],
+ "battle_arguments": {
+  "effect_arg": 7,
+  "damage_arg": 5,
+  "hitunit_damage_slots": [
+   "rsp+0x68",
+   "rsp+0x78"
+  ]
+ },
+ "battle_not_level_scaled": "1, 10-11, 21, 23, 31, 43, 54, 126, 130, 144-150, 165-166, 500-699",
+ "battle_thousands": {
+  "ai_reads_effect_mod_1000_at": "0x1401c3b08",
+  "battle_code_reduces_them": null
+ },
+ "effects": {
+  "0": {
+   "argument": "unused",
+   "context": "battle",
+   "branch": null,
+   "note": "no effect",
+   "level_scaled": true
+  },
+  "1": {
+   "argument": "monster_or_tag",
+   "context": "battle",
+   "branch": "0x1401b72a5",
+   "evidence": "1401b7494: resolve_summon 0x1401cd6c0",
+   "level_scaled": false
+  },
+  "2": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b6789",
+   "evidence": "1401b67c5: sub",
+   "note": "damage (#dt_normal)",
+   "level_scaled": true
+  },
+  "3": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b7953",
+   "evidence": "1401b7a34: hitunit(effect None) 0x1401c5ec0",
+   "note": "fatigue damage",
+   "level_scaled": true
+  },
+  "4": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c9982",
+   "evidence": "1401c9a0a: sub",
+   "note": "fear: morale penalty",
+   "level_scaled": true
+  },
+  "7": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c8e23",
+   "note": "poison damage",
+   "level_scaled": true
+  },
+  "8": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca5f7",
+   "note": "removes this much fatigue (negated into the fatigue change)",
+   "level_scaled": true
+  },
+  "10": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401c9aae",
+   "evidence": "1401c9b04: or into memory",
+   "note": "battle buffs: ORed into the unit's first buff word (eff_ben)",
+   "level_scaled": false
+  },
+  "11": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401c9bed",
+   "evidence": "1401c9e64: or into memory",
+   "note": "afflictions (web, false fetters, slime, sleep, disease, ...): the affliction bits",
+   "level_scaled": false
+  },
+  "13": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": null,
+   "note": "healing",
+   "level_scaled": true
+  },
+  "15": {
+   "argument": "unused",
+   "context": "battle",
+   "branch": "0x1401ca481",
+   "note": "return home (any value above 0)",
+   "level_scaled": true
+  },
+  "17": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca2c8",
+   "evidence": "1401ca2e2: add",
+   "note": "morale change, added to the unit's morale",
+   "level_scaled": true
+  },
+  "20": {
+   "argument": "unused",
+   "context": "battle",
+   "branch": "0x1401ca464",
+   "note": "blink (any value above 0)",
+   "level_scaled": true
+  },
+  "21": {
+   "argument": "monster_or_tag",
+   "context": "battle",
+   "branch": "0x1401b75f4",
+   "evidence": "1401b761f: resolve_summon 0x1401cd6c0",
+   "level_scaled": false
+  },
+  "23": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401c9b9e",
+   "evidence": "1401c9bb8: or into memory",
+   "note": "battle buffs: ORed into the unit's second buff word",
+   "level_scaled": false
+  },
+  "24": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b6789",
+   "evidence": "1401b67c5: sub",
+   "note": "holy damage",
+   "level_scaled": true
+  },
+  "25": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b6789",
+   "evidence": "1401b67c5: sub",
+   "note": "holy damage",
+   "level_scaled": true
+  },
+  "27": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c9592",
+   "note": "magic duel strength (999)",
+   "level_scaled": true
+  },
+  "28": {
+   "argument": "other",
+   "context": "battle",
+   "branch": "0x1401ca342",
+   "note": "enslave (999 by convention)",
+   "level_scaled": true
+  },
+  "29": {
+   "argument": "other",
+   "context": "battle",
+   "branch": "0x1401ca3d3",
+   "note": "charm (999 by convention)",
+   "level_scaled": true
+  },
+  "31": {
+   "argument": "monster_or_tag",
+   "context": "battle",
+   "branch": "0x1401b751e",
+   "evidence": "1401b7552: resolve_summon 0x1401cd6c0",
+   "level_scaled": false
+  },
+  "32": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b6789",
+   "evidence": "1401b67c5: sub",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "33": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b6789",
+   "evidence": "1401b67c5: sub",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "36": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b6789",
+   "evidence": "1401b67c5: sub",
+   "note": "disintegrate (999)",
+   "level_scaled": true
+  },
+  "43": {
+   "argument": "monster_or_tag",
+   "context": "battle",
+   "branch": "0x1401b750c",
+   "evidence": "1401b7ea6: newtempunit 0x1400ac370",
+   "level_scaled": false
+  },
+  "46": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c8cae",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "54": {
+   "argument": "monster_or_tag",
+   "context": "battle",
+   "branch": "0x1401ca647",
+   "evidence": "1401ca674: resolve_summon 0x1401cd6c0",
+   "level_scaled": false
+  },
+  "56": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca7ce",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "66": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca94f",
+   "note": "paralysis",
+   "level_scaled": true
+  },
+  "67": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca8b8",
+   "evidence": "1401ca8f4: addunitfx value 0x1401a9290",
+   "note": "weakness: subtracted from ability 1058",
+   "level_scaled": true
+  },
+  "72": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c97b2",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "73": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b679e",
+   "evidence": "1401b67c5: sub",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "74": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c93fd",
+   "note": "unlife damage (the risen form is the victim's #raiseshape, not the damage)",
+   "level_scaled": true
+  },
+  "75": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c93fd",
+   "note": "unlife damage",
+   "level_scaled": true
+  },
+  "81": {
+   "argument": "enchantment",
+   "context": "battle",
+   "branch": "0x1401ca32d",
+   "evidence": "1401cad16: newench 0x1401a7fc0",
+   "level_scaled": true
+  },
+  "96": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b679e",
+   "evidence": "1401b67c5: sub",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "97": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c98af",
+   "evidence": "1401c9924: sub",
+   "note": "fear",
+   "level_scaled": true
+  },
+  "99": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401caa10",
+   "note": "petrify (999)",
+   "level_scaled": true
+  },
+  "101": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca92b",
+   "evidence": "1401ca943: age 0x1401a8af0",
+   "note": "years of age",
+   "level_scaled": true
+  },
+  "103": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b679e",
+   "evidence": "1401b67c5: sub",
+   "note": "drain life",
+   "level_scaled": true
+  },
+  "104": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b679e",
+   "evidence": "1401b67c5: sub",
+   "note": "partial drain",
+   "level_scaled": true
+  },
+  "105": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": null,
+   "note": "disbelieve (999)",
+   "level_scaled": true
+  },
+  "107": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b679e",
+   "evidence": "1401b67c5: sub",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "108": {
+   "argument": "other",
+   "context": "battle",
+   "branch": "0x1401ca53d",
+   "evidence": "1401ca57d: passed to 0x14000de80 (arg3)",
+   "note": "where the victim is banished: a location code (-12 Inferno, -13 Kokytos) stored as the unit's location",
+   "level_scaled": true
+  },
+  "109": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b679e",
+   "evidence": "1401b67c5: sub",
+   "note": "capped damage",
+   "level_scaled": true
+  },
+  "116": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": null,
+   "note": "damage",
+   "level_scaled": true
+  },
+  "120": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca501",
+   "level_scaled": true
+  },
+  "121": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca501",
+   "level_scaled": true
+  },
+  "123": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": null,
+   "note": "damage",
+   "level_scaled": true
+  },
+  "124": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b679e",
+   "evidence": "1401b67c5: sub",
+   "level_scaled": true
+  },
+  "126": {
+   "argument": "monster_or_tag",
+   "context": "battle",
+   "branch": "0x1401b7515",
+   "evidence": "1401b7ea6: newtempunit 0x1400ac370",
+   "level_scaled": false
+  },
+  "128": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401caa6f",
+   "note": "stun",
+   "level_scaled": true
+  },
+  "129": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c8de3",
+   "note": "damage",
+   "level_scaled": true
+  },
+  "130": {
+   "argument": "unused",
+   "context": "battle",
+   "branch": null,
+   "level_scaled": false
+  },
+  "133": {
+   "argument": "enchantment",
+   "context": "battle",
+   "branch": "0x1401ca336",
+   "evidence": "1401cad16: newench 0x1401a7fc0",
+   "level_scaled": true
+  },
+  "134": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401b7657",
+   "evidence": "1401b7821: stored",
+   "note": "bouncing damage",
+   "level_scaled": true
+  },
+  "138": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca07d",
+   "note": "armor damage",
+   "level_scaled": true
+  },
+  "139": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c8e28",
+   "note": "capped poison",
+   "level_scaled": true
+  },
+  "142": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401c8bb2",
+   "note": "salt damage",
+   "level_scaled": true
+  },
+  "143": {
+   "argument": "damage",
+   "context": "battle",
+   "branch": "0x1401ca509",
+   "level_scaled": true
+  },
+  "144": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401b786c",
+   "evidence": "1401b789f: passed to 0x1400c9920 (arg3)",
+   "note": "cloud types (3 bits each) laid on the squares",
+   "level_scaled": false
+  },
+  "145": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401b786c",
+   "evidence": "1401b789f: passed to 0x1400c9920 (arg3)",
+   "note": "cloud types",
+   "level_scaled": false
+  },
+  "146": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401b786c",
+   "evidence": "1401b789f: passed to 0x1400c9920 (arg3)",
+   "note": "cloud types",
+   "level_scaled": false
+  },
+  "147": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401b786c",
+   "evidence": "1401b789f: passed to 0x1400c9920 (arg3)",
+   "note": "cloud types",
+   "level_scaled": false
+  },
+  "148": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401b786c",
+   "evidence": "1401b789f: passed to 0x1400c9920 (arg3)",
+   "note": "cloud types",
+   "level_scaled": false
+  },
+  "149": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401b786c",
+   "evidence": "1401b789f: passed to 0x1400c9920 (arg3)",
+   "note": "cloud types",
+   "level_scaled": false
+  },
+  "150": {
+   "argument": "bitmask",
+   "context": "battle",
+   "branch": "0x1401b786c",
+   "evidence": "1401b789f: passed to 0x1400c9920 (arg3)",
+   "note": "cloud types",
+   "level_scaled": false
+  },
+  "159": {
+   "argument": "other",
+   "context": "battle",
+   "branch": "0x1401c9ec0",
+   "note": "a mode (-1, 1, 2, 3, ...)",
+   "level_scaled": true
+  },
+  "162": {
+   "argument": "count",
+   "context": "battle",
+   "branch": "0x1401ca61d",
+   "evidence": "1401ca63b: setunitfx value 0x1401a97e0",
+   "note": "images: stored as the value of ability 1096",
+   "level_scaled": true
+  },
+  "165": {
+   "argument": "monster_or_tag",
+   "context": "battle",
+   "branch": "0x1401ca6a5",
+   "evidence": "1401ca6d5: resolve_summon 0x1401cd6c0",
+   "level_scaled": false
+  },
+  "166": {
+   "argument": "unused",
+   "context": "battle",
+   "branch": "0x1401ca721",
+   "note": "animate: the new form is the target's #animated, not the damage",
+   "level_scaled": false
+  },
+  "10001": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140199141",
+   "evidence": "14019931a: resolve_summon 0x1401cd6c0"
+  },
+  "10010": {
+   "argument": "bitmask",
+   "context": "ritual",
+   "branch": "0x14019ed51",
+   "evidence": "14019eda8: or into memory",
+   "note": "ORed into the caster's first buff word"
+  },
+  "10019": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019afa0",
+   "note": "teleport"
+  },
+  "10021": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140199007",
+   "evidence": "1401990a0: resolve_summon 0x1401cd6c0"
+  },
+  "10022": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019f3da"
+  },
+  "10023": {
+   "argument": "bitmask",
+   "context": "ritual",
+   "branch": "0x14019edb5",
+   "evidence": "14019ee0c: or into memory",
+   "note": "ORed into the caster's second buff word"
+  },
+  "10026": {
+   "argument": "monster",
+   "context": "ritual",
+   "branch": "0x14019f074",
+   "evidence": "14019f318: transform 0x1401d22b0"
+  },
+  "10030": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019ddb6",
+   "note": "dispel"
+  },
+  "10034": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019ed2c",
+   "note": "wish"
+  },
+  "10035": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019d6a8",
+   "note": "cross breeding"
+  },
+  "10037": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140199868",
+   "evidence": "140199ad9: resolve_summon 0x1401cd6c0"
+  },
+  "10038": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140199da9",
+   "evidence": "140199e27: resolve_summon 0x1401cd6c0"
+  },
+  "10039": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019ceff",
+   "note": "gift of reason"
+  },
+  "10040": {
+   "argument": "damage",
+   "context": "ritual",
+   "branch": "0x14019b595",
+   "evidence": "14019b705: hitunit(effect 2) 0x1401cad90",
+   "note": "seeking arrow: damage (level-scaled)"
+  },
+  "10041": {
+   "argument": "damage",
+   "context": "ritual",
+   "branch": "0x14019c8d2",
+   "evidence": "14019cb3e: hitunit(effect 2) 0x1401cad90",
+   "note": "damage (level-scaled, then by temperature)"
+  },
+  "10042": {
+   "argument": "event",
+   "context": "ritual",
+   "branch": "0x14019af55",
+   "evidence": "14019af8c: spell event queue 0x1401c1e70"
+  },
+  "10044": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019f4b8",
+   "note": "transformation"
+  },
+  "10045": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019f4c2",
+   "note": "force transformation (a random monster with an ability)"
+  },
+  "10048": {
+   "argument": "other",
+   "context": "ritual",
+   "branch": "0x14019f7f4",
+   "evidence": "14019f82f: passed to 0x14000dcf0 (arg3)",
+   "note": "which gems the site search looks for: a path 0-9, 51 (elements), 55 (all), or a mask"
+  },
+  "10049": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019b817",
+   "note": "wind ride"
+  },
+  "10050": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x14019a6b8",
+   "evidence": "14019a73b: resolve_summon 0x1401cd6c0"
+  },
+  "10052": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019ffac"
+  },
+  "10053": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x1401a0791",
+   "note": "vengeance of the dead"
+  },
+  "10057": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x1401a02ff",
+   "note": "mind hunt"
+  },
+  "10062": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x14019a334",
+   "evidence": "14019a3a2: resolve_summon 0x1401cd6c0"
+  },
+  "10063": {
+   "argument": "other",
+   "context": "ritual",
+   "branch": "0x14019fdf5",
+   "evidence": "14019ff1f: stored",
+   "note": "the fort built: a fort type (level-scaled)"
+  },
+  "10064": {
+   "argument": "bitmask",
+   "context": "ritual",
+   "branch": "0x14019ccf9",
+   "evidence": "14019cdae: test into memory",
+   "note": "afflictions given to the army (only the low 32 bits)"
+  },
+  "10068": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019da2a",
+   "note": "summon animals: the animals depend on the terrain"
+  },
+  "10070": {
+   "argument": "damage",
+   "context": "ritual",
+   "branch": "0x14019c083",
+   "evidence": "14019c106: add",
+   "note": "wall damage (level-scaled; negative)"
+  },
+  "10076": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x140199765",
+   "note": "Tartarian gate: hard-coded units"
+  },
+  "10077": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019b0fe",
+   "note": "gateway"
+  },
+  "10079": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019b02f",
+   "note": "faery trod"
+  },
+  "10081": {
+   "argument": "enchantment",
+   "context": "ritual",
+   "branch": "0x14019e4df",
+   "evidence": "14019e7c7: newench 0x1401a7fc0"
+  },
+  "10082": {
+   "argument": "enchantment",
+   "context": "ritual",
+   "branch": "0x14019e9ef",
+   "evidence": "14019eb46: newench 0x1401a7fc0"
+  },
+  "10083": {
+   "argument": "enchantment",
+   "context": "ritual",
+   "branch": "0x14019ec3c",
+   "evidence": "14019ecba: newench 0x1401a7fc0"
+  },
+  "10084": {
+   "argument": "enchantment",
+   "context": "ritual",
+   "branch": "0x14019ed1f",
+   "evidence": "1401a135c: newench 0x1401a7fc0"
+  },
+  "10085": {
+   "argument": "enchantment",
+   "context": "ritual",
+   "branch": "0x14019ed1f",
+   "evidence": "1401a135c: newench 0x1401a7fc0"
+  },
+  "10086": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": null,
+   "note": "no branch in castlabspell: nothing happens (Dom5 had a remote single-turn enchantment)"
+  },
+  "10089": {
+   "argument": "unique_or_monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140198cab",
+   "evidence": "140198ce9: unique_pick 0x1401cea80"
+  },
+  "10090": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019b1be",
+   "note": "stygian paths"
+  },
+  "10091": {
+   "argument": "damage",
+   "context": "ritual",
+   "branch": "0x14019c80d",
+   "note": "damage of the remote battle effect"
+  },
+  "10092": {
+   "argument": "count",
+   "context": "ritual",
+   "branch": "0x14019a09e",
+   "evidence": "14019a130: cmp",
+   "note": "souls imprinted (level-scaled)"
+  },
+  "10093": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140199372",
+   "evidence": "1401993a2: resolve_summon 0x1401cd6c0"
+  },
+  "10094": {
+   "argument": "damage",
+   "context": "ritual",
+   "branch": "0x14019c264",
+   "evidence": "14019c449: hitunit(effect 2) 0x1401cad90",
+   "note": "damage"
+  },
+  "10095": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019afaa",
+   "note": "cloud trapeze"
+  },
+  "10098": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019ac85",
+   "note": "winged monkeys"
+  },
+  "10100": {
+   "argument": "other",
+   "context": "ritual",
+   "branch": "0x14019948a",
+   "evidence": "1401994a4: compared with 0x1",
+   "note": "a terrain list key 1-3: the units are hard-coded"
+  },
+  "10101": {
+   "argument": "count",
+   "context": "ritual",
+   "branch": "0x14019ee19",
+   "evidence": "14019ee66: age 0x1401a8af0",
+   "note": "years of age"
+  },
+  "10102": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x1401a065c",
+   "note": "horror seed"
+  },
+  "10110": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019a9a4",
+   "note": "dreams of R'lyeh"
+  },
+  "10111": {
+   "argument": "count",
+   "context": "ritual",
+   "branch": "0x14019f005",
+   "evidence": "14019f042: age 0x1401a8af0",
+   "note": "years of age, subtracted"
+  },
+  "10112": {
+   "argument": "damage",
+   "context": "ritual",
+   "branch": "0x14019ee89",
+   "evidence": "14019eedb: hitunit(effect None) 0x1401cad90",
+   "note": "damage to the caster"
+  },
+  "10113": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019bd3b",
+   "note": "astral harpoon"
+  },
+  "10114": {
+   "argument": "unique_or_monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140198eb6",
+   "evidence": "140198f38: unique_pick 0x1401cea80"
+  },
+  "10115": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019fc0d",
+   "note": "acashic record"
+  },
+  "10116": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x1401a0b16",
+   "note": "unleash imprisoned ones: hard-coded units"
+  },
+  "10117": {
+   "argument": "count",
+   "context": "ritual",
+   "branch": "0x14019e3d0",
+   "evidence": "14019e3fa: imul",
+   "note": "gold per gem (level-scaled)"
+  },
+  "10118": {
+   "argument": "count",
+   "context": "ritual",
+   "branch": "0x14019f64d",
+   "evidence": "14019f683: imul",
+   "note": "blood feast"
+  },
+  "10119": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x140199c89",
+   "evidence": "140199d0f: resolve_summon 0x1401cd6c0"
+  },
+  "10125": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019d24e",
+   "note": "mind vessel"
+  },
+  "10127": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019d7cb",
+   "note": "infernal breeding"
+  },
+  "10130": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x14019ef47",
+   "evidence": "14019ef9a: resolve_summon 0x1401cd6c0"
+  },
+  "10131": {
+   "argument": "bitmask",
+   "context": "ritual",
+   "branch": "0x14019d23e",
+   "evidence": "1401a1775: and not into memory",
+   "note": "afflictions cured (cleared from the affliction word)"
+  },
+  "10132": {
+   "argument": "bitmask",
+   "context": "ritual",
+   "branch": "0x14019d23e",
+   "evidence": "1401a1775: and not into memory",
+   "note": "afflictions cured (cleared from the affliction word)"
+  },
+  "10135": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019fcd7",
+   "note": "raven feast"
+  },
+  "10136": {
+   "argument": "bitmask",
+   "context": "ritual",
+   "branch": "0x14019c54b",
+   "evidence": "14019c612: test into memory",
+   "note": "the curse (affliction bits, level-scaled)"
+  },
+  "10137": {
+   "argument": "monster_or_tag",
+   "context": "ritual",
+   "branch": "0x1401993ed",
+   "evidence": "140199424: resolve_summon 0x1401cd6c0"
+  },
+  "10141": {
+   "argument": "monster",
+   "context": "ritual",
+   "branch": "0x140198da5",
+   "evidence": "140198e25: newcom 0x1400a5280"
+  },
+  "10152": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019ddc0",
+   "note": "disenchantment"
+  },
+  "10153": {
+   "argument": "other",
+   "context": "ritual",
+   "branch": "0x14019ded3",
+   "evidence": "14019df6f: cmp",
+   "note": "an element compared with the target"
+  },
+  "10154": {
+   "argument": "site",
+   "context": "ritual",
+   "branch": "0x1401a0d6b",
+   "evidence": "1401a0db0: addfeatnr 0x1402ac0b0"
+  },
+  "10155": {
+   "argument": "other",
+   "context": "ritual",
+   "branch": "0x14019afb4",
+   "evidence": "14019afd5: cmp",
+   "note": "a region index (table of 564-byte records)"
+  },
+  "10156": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019ddcd",
+   "note": "arcane analysis"
+  },
+  "10157": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019e087",
+   "note": "astral disruption"
+  },
+  "10160": {
+   "argument": "count",
+   "context": "ritual",
+   "branch": "0x14019cf9b",
+   "evidence": "14019d07d: passed to 0x140138e30 (arg3)",
+   "note": "gems transported (level-scaled)"
+  },
+  "10161": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019d0dc",
+   "note": "transport item"
+  },
+  "10163": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x1401a0dbf",
+   "note": "nexus gate"
+  },
+  "10164": {
+   "argument": "count",
+   "context": "ritual",
+   "branch": "0x14019e45f",
+   "evidence": "14019e48d: imul",
+   "note": "gold"
+  },
+  "10167": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019f4cc",
+   "note": "lichcraft"
+  },
+  "10168": {
+   "argument": "other",
+   "context": "ritual",
+   "branch": "0x140199eb6",
+   "evidence": "140199f3b: passed to 0x1402bf180 (arg2)",
+   "note": "project self: passed to the province search"
+  },
+  "10169": {
+   "argument": "unused",
+   "context": "ritual",
+   "branch": "0x14019b158",
+   "note": "army teleport"
+  }
+ },
+ "ranges": [
+  {
+   "argument": "ability",
+   "context": "battle",
+   "evidence": "1401caad7: addunitfx 0x1401a9290",
+   "note": "a monster ability number, set to (effect - 499) unless higher",
+   "level_scaled": false,
+   "from": 500,
+   "to": 599
+  },
+  {
+   "argument": "ability",
+   "context": "battle",
+   "evidence": "1401caad7: addunitfx 0x1401a9290",
+   "note": "a monster ability number, increased by (effect - 599)",
+   "level_scaled": false,
+   "from": 600,
+   "to": 699
+  },
+  {
+   "argument": "ability",
+   "context": "ritual",
+   "evidence": "1401a0d18: addunitfx 0x1401a9290",
+   "note": "a monster ability number on the caster, set to (effect - 10499) unless higher",
+   "from": 10500,
+   "to": 10599
+  }
+ ]
+}

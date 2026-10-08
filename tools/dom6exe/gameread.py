@@ -360,12 +360,46 @@ def local(path):
     return path
 
 
+# what a spell's #damage is per #effect, as the game's code uses it (dom6exe.py spelleffects):
+# the referee's own reading, not the merger's word in the map
+SPELL_DAMAGE_KIND = {'monster': 'monster or tag', 'monster_or_tag': 'monster or tag',
+                     'unique_or_monster_or_tag': 'monster or tag', 'enchantment': 'enchantment',
+                     'event': 'spell event id (#id)', 'site': 'site'}
+
+
+class GameSpellEffects(dict):
+    """effect -> the kind of number its #damage is (in the map's words), from the newest
+    data/spell-effects-*.json; the merge map's word only for an effect that file doesn't list.
+    A plain value (damage, a bitmask, a count) is no kind: its number never moves. Combat effects
+    1000-9999 read as effect % 1000, as the game's AI reads them."""
+    def __init__(self, mapped):
+        super().__init__(mapped)
+        files = sorted(glob.glob(os.path.join(HERE, 'data', 'spell-effects-*.json')))
+        d = json.load(open(files[-1])) if files else {'effects': {}, 'ranges': []}
+        self.args = {int(k): v['argument'] for k, v in d['effects'].items()}
+        self.ranges = [(r['from'], r['to'], r['argument']) for r in d.get('ranges', [])]
+
+    def argument(self, effect):
+        if 1000 <= effect < 10000:
+            effect %= 1000
+        return self.args.get(effect) or next((a for lo, hi, a in self.ranges if lo <= effect <= hi), None)
+
+    def get(self, key, default=None):
+        try:
+            arg = self.argument(int(key))
+        except (TypeError, ValueError):
+            arg = None
+        if arg is None:
+            return super().get(key, default)
+        return SPELL_DAMAGE_KIND.get(arg, default)
+
+
 def merge_check(merged_path, map_path, rules, vanilla_path, limit, json_out=None):
     m = json.load(open(map_path))
     for p in m['parts']:
         p['file'] = local(p['file'])
     m['separate'] = [local(f) for f in m.get('separate', [])]
-    kinds, effects = m['commands'], m['spell_effects']
+    kinds, effects = m['commands'], GameSpellEffects(m['spell_effects'])
     vanilla = Reading(vanilla_path, rules) if vanilla_path and os.path.exists(vanilla_path) else None
     separate = [Reading(f, rules) for f in m.get('separate', [])]
     # a part's dangling numbers the merge moved to free ones count as moves (they're nothing else in the part)
@@ -483,6 +517,13 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit, json_out=None
             for step, has in ((1, bool(cmds & {'shrinkhp', 'xpshape', 'labxpshape'}) and 'xpshapemon' not in cmds), (-1, 'growhp' in cmds)):
                 if has and at(n + step) != at(n) + step:
                     chain.append('%s: monster %d -> %d turns into %d, now %d (should be %d)' % (os.path.basename(r.path), n, at(n), n + step, at(n + step), at(n) + step))
+        # a ritual summoning its unit and the next number (effect 10141: newcom of both)
+        for blk in r.passes.get('spell', []):
+            vals = {it[0]: it[1][0] for it, _ in blk['items'] if len(it) > 1 and isinstance(it[1], tuple) and it[1] and isinstance(it[1][0], int)}
+            n = vals.get('damage')
+            if vals.get('effect') == 10141 and n and n > 0 and at(n + 1) != at(n) + 1:
+                chain.append('%s: spell at line %s summons monster %d -> %d and the next, %d now %d (should be %d)' % (
+                    os.path.basename(r.path), blk['line'], n, at(n), n + 1, at(n + 1), at(n) + 1))
     print('%s: the game reads it %s; %d chained unit(s) out of order%s' % (
         os.path.basename(merged_path), 'as its %d parts one after another' % len(parts) if not diffs else 'differently from its parts: %d difference(s)' % len(diffs), len(chain),
         ''.join('; %d %s' % (n, k) for k, n in sorted({k[0]: sum(1 for x in known if x[0] == k[0]) for k in known}.items()))))
