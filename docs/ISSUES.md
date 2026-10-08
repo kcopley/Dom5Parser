@@ -25,17 +25,24 @@ game with DomEnhanced, a commander casting Gjallarhorn in a test battle: do Husk
 how many turns, or does it hit something for damage? Also keep in mind (the user) that a number
 can be packed, decimal (`#nreff`/`#aoe` +1000s, `#range` +5000) or as bits (`#damage` afflictions).
 
-### A number on `#newspell` / `#newitem` / `#newnation` is taken as the entity's (open, 2026-10-07)
+### `#newspell` / `#newitem` / `#newnation` blocks have no number in the editor (narrowed, 2026-10-07)
 
 The game reads no number on these: each takes the first free one (spells from 1500, items from
-700, nations from 120; the exe, `tools/dom6exe/README.md`). The parser gives `#newitem 800` the
-number 800, so the editor shows the item as 800, links a reference to 800 to it, and treats a
-`#selectitem 800` in the same mod as the same item (in game: two items). An unnumbered `#new`
-gets no number in the editor (the game's comes from the file order and what's read before).
-Installed mods: one such line (Forgotten Realms' `#newitem 800 -- Stormsplitter`), no spells or
-nations. The merge already goes by the game (`ModMerger.FirstFree`, `GameSlots`), and the
-referee numbers blocks as the game does; the parser and the oracle don't yet. Fix: read the
-number as a comment (keep the line as written), number unnumbered ones as the game does.
+700, nations from 120; the exe, `tools/dom6exe/README.md`). Fixed: a number written on one isn't
+the entity's any more (`Mod.Parse`: the entity is unnumbered, the line keeps what's written and
+is saved as read), so Forgotten Realms' `#newitem 800 -- Stormsplitter` is a new item without a
+number, a reference to 800 finds what the game finds, and a `#selectitem 800` is another item.
+
+Open: the editor still shows these blocks without the number the game gives them, so a
+`#copyspell 1500` meaning a mod's first `#newspell` finds nothing in the editor. Giving them that
+number (in reading order, after the mods read before: `Mod.Below()`) would need: (1) the save
+never writing it into the `#new` line (`ModExporter.Header` writes an entity's ID for a header
+with a number); (2) references to them still written by name (picking one in the editor sets its
+number, and a number shifts when an earlier block is deleted or moved: the game renumbers);
+(3) the numbers worked out again after every edit that adds, deletes or moves such a block;
+(4) the merge's read-back (`Dom5Tests merge`) mapping a part's numbers to the merged file's
+(later parts' blocks get other numbers there: `ModMerger.GameSlots`). The merge and the
+referee already number them as the game does.
 
 ### Round-trip divergences (open, 2026-05-31)
 
