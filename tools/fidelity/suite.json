@@ -308,6 +308,24 @@
    "about": "a hydra (#shrinkhp/#growhp) and an #xpshape line colliding in the middle move as blocks; #xpshapemon; a template follows its nation and #form"
   },
   {
+   "name": "merge-copies",
+   "title": "Merge test: copies",
+   "parts": [
+    "Dom5Tests/fixtures/merge/copy_a.dm",
+    "Dom5Tests/fixtures/merge/copy_b.dm"
+   ],
+   "about": "copies of a game unit, spell (by number, by name, a copy taken out by a later one) and site an earlier part changes copy the game's (snapshots; a spell's school and a site's rarity put back after the copy); a copied summon's #damage follows its unit's move"
+  },
+  {
+   "name": "merge-slots",
+   "title": "Merge test: numbers the game gives",
+   "parts": [
+    "Dom5Tests/fixtures/merge/slots_a.dm",
+    "Dom5Tests/fixtures/merge/slots_b.dm"
+   ],
+   "about": "#newspell/#newitem take no number (the first free one from 1500/700, #newitem 800 too): a later part's numbered spell and items on those move; its own unnumbered item, pushed up by the earlier part's, would land on its numbered 704, which moves too; its 800 stays (A's #newitem 800 isn't 800)"
+  },
+  {
    "name": "merge-confluence-bloodwar",
    "title": "Confluence + Bloodwar",
    "slow": true,

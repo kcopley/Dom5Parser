@@ -164,15 +164,18 @@ namespace Dom5Edit.Merge
             // 3. numbers
             foreach (var part in parts)
                 moved[part] = new Dictionary<(string Kind, int Old), int>();
+            // the numbers the game gives #new blocks that take none (FirstFree), by whose they are
+            var slots = new Dictionary<EntityType, Dictionary<int, (Mod Owner, IDEntity Entity)>>();
             foreach (var type in Numbered)
-                MoveEntities(type, parts, separate, report, moved);
+                MoveEntities(type, parts, separate, report, moved, slots);
             foreach (var type in Shared)
                 MoveShared(type, parts, separate, report, moved);
             TemplateForms(parts, moved, report);
+            var spellKinds = SpellKinds(parts, moved);
             var snapshots = new List<Snapshot>();
-            KeepCopiesApart(parts, separate, report, snapshots);
+            KeepCopiesApart(parts, separate, report, snapshots, slots);
             var strays = new Dictionary<Mod, Dictionary<(string Kind, int Old), int>>();
-            Strays(parts, separate, snapshots, report, strays);
+            Strays(parts, separate, snapshots, report, strays, slots);
             Overlaps(parts, report);
             // 4. name-only references whose names would find another part's
             RenameClashes(parts, separate, report);
@@ -183,7 +186,7 @@ namespace Dom5Edit.Merge
             // 6. one file: the merged header, then each part in its own order
             Write(parts, outputFile, modName, report, snapshots);
             File.WriteAllText(Path.ChangeExtension(outputFile, ".report.md"), report.Markdown(modName));
-            WriteMap(Path.ChangeExtension(outputFile, ".map.json"), parts, separate, moved, snapshots, strays);
+            WriteMap(Path.ChangeExtension(outputFile, ".map.json"), parts, separate, moved, snapshots, strays, spellKinds);
             return new MergeResult
             {
                 OutputFile = outputFile, Report = report, Parts = parts, Separate = separate, Moved = moved,
@@ -201,14 +204,25 @@ namespace Dom5Edit.Merge
             public required int Number { get; init; }
             public required IDEntity Entity { get; init; }
             public Dictionary<Mod, int> Copies { get; } = new();
+            /// <summary>The game's value of the line that hides the snapshot, put back after each copy of it (none: the same).</summary>
+            public int? Restore { get; init; }
         }
 
-        // what a snapshot is written with: its header, the copy commands that make it the game's entity
-        private static readonly Dictionary<EntityType, (Command Header, Command[] Copy)> SnapshotForm = new()
+        // what a snapshot is written with: its header, the copy commands that make it the game's
+        // entity, and a line that keeps it out of the game where a copy alone would show (a spell
+        // to research, a site on the map)
+        private static readonly Dictionary<EntityType, (Command Header, Command[] Copy, (Command Line, int Value)? Hide)> SnapshotForm = new()
         {
-            [EntityType.MONSTER] = (Command.NEWMONSTER, new[] { Command.COPYSTATS, Command.COPYSPR }),
-            [EntityType.WEAPON] = (Command.NEWWEAPON, new[] { Command.COPYWEAPON }),
-            [EntityType.ARMOR] = (Command.NEWARMOR, new[] { Command.COPYARMOR }),
+            [EntityType.MONSTER] = (Command.NEWMONSTER, new[] { Command.COPYSTATS, Command.COPYSPR }, null),
+            [EntityType.WEAPON] = (Command.NEWWEAPON, new[] { Command.COPYWEAPON }, null),
+            [EntityType.ARMOR] = (Command.NEWARMOR, new[] { Command.COPYARMOR }, null),
+            // #selectspell: the game's #newspell takes no number (the first free one from 1500,
+            // 0x1401ad830), #selectspell takes any below 8000. School -1: nobody can research it
+            // (the game's own monster-only spells; a new spell's default). #copyspell copies the
+            // whole spell, name and school too (0x140246f29)
+            [EntityType.SPELL] = (Command.SELECTSPELL, new[] { Command.COPYSPELL }, (Command.SCHOOL, -1)),
+            // rarity 5: never a random site (the manual)
+            [EntityType.SITE] = (Command.NEWSITE, new[] { Command.COPYSITE }, (Command.RARITY, 5)),
         };
 
         /// <summary>
@@ -217,11 +231,14 @@ namespace Dom5Edit.Merge
         /// Archer), as it doesn't when the part is alone. Read one after another, it would; so the
         /// merged file starts with a copy of each such game entity as it is before any part
         /// changes it, and the part's copy commands copy that. Not for a part's own changes to it,
-        /// nor a submod's copy of what its parent changed (both meant). Units, weapons and armor
-        /// (a copy changes nothing in game until something uses it); a spell's, item's or site's
-        /// copy would show (a spell to research twice, an item to forge, a site on the map): noted.
+        /// nor a submod's copy of what its parent changed (both meant). A copy of a unit, weapon or
+        /// armor changes nothing in game until something uses it; one of a spell or site would
+        /// show (a spell to research twice, a site on the map), so the snapshot has a line that
+        /// hides it (<see cref="SnapshotForm"/>) and each copy of it gets the game's value back on
+        /// the line after the copy. An item's would be one more to forge or find: noted.
         /// </summary>
-        private static void KeepCopiesApart(List<Mod> parts, List<Mod> separate, MergeReport report, List<Snapshot> snapshots)
+        private static void KeepCopiesApart(List<Mod> parts, List<Mod> separate, MergeReport report, List<Snapshot> snapshots,
+                                            Dictionary<EntityType, Dictionary<int, (Mod Owner, IDEntity Entity)>> slots)
         {
             var vanilla = VanillaLoader.Vanilla;
             if (vanilla == null)
@@ -236,7 +253,8 @@ namespace Dom5Edit.Merge
             var taken = new Dictionary<EntityType, HashSet<int>>();
             HashSet<int> Taken(EntityType type) =>
                 taken.TryGetValue(type, out var t) ? t
-                : taken[type] = new HashSet<int>(parts.Concat(separate).Append(vanilla).SelectMany(m => Numbers(m, type)));
+                : taken[type] = new HashSet<int>(parts.Concat(separate).Append(vanilla).SelectMany(m => Numbers(m, type))
+                    .Concat(slots.TryGetValue(type, out var given) ? given.Keys : Enumerable.Empty<int>()));
             var unhandled = new Dictionary<(Mod, EntityType), int>();
             for (int b = 1; b < parts.Count; b++)
             {
@@ -264,17 +282,24 @@ namespace Dom5Edit.Merge
                     if (snap == null)
                     {
                         var range = part.Database[type];
-                        int number = range.START_ID;
                         var t = Taken(type);
+                        // spells from the top: below, the game gives the parts' unnumbered #newspell theirs
+                        bool down = type == EntityType.SPELL && range.END_ID > 0;
+                        int number = down ? range.END_ID : range.START_ID;
                         while (t.Contains(number))
-                            number++;
+                            number += down ? -1 : 1;
                         t.Add(number);
                         var entity = (IDEntity)Activator.CreateInstance(vanilla.TypeOf(type))!;
                         entity.ID = number;
-                        snap = new Snapshot { Type = type, Of = of, Number = number, Entity = entity };
+                        int? restore = null;
+                        if (form.Hide is { } hide && target.TryGet<IntProperty>(hide.Line, out var own) == ReturnType.TRUE && own.Value != hide.Value)
+                            restore = own.Value;
+                        snap = new Snapshot { Type = type, Of = of, Number = number, Entity = entity, Restore = restore };
                         snapshots.Add(snap);
                     }
                     r.Retarget(snap.Entity);
+                    if (form.Hide is { } h && snap.Restore is int value)
+                        RestoreAfter(r, h.Line, value);
                     snap.Copies[part] = snap.Copies.TryGetValue(part, out var c) ? c + 1 : 1;
                 }
             }
@@ -286,26 +311,94 @@ namespace Dom5Edit.Merge
         }
 
         /// <summary>
+        /// The game's value of the line that hides a snapshot, on the line right after a copy of
+        /// it (the part's own lines after the copy still override it, as before). A copy line a
+        /// later copy or clear takes out gets one too: the game reads both.
+        /// </summary>
+        private static void RestoreAfter(StringOrIDRef copy, Command line, int value)
+        {
+            var owner = copy.Parent;
+            if (!owner.GetPropertyMap().TryGetValue(line, out var create))
+                return;
+            var p = create();
+            p.Parent = owner;
+            p.Parse(line, value.ToString(System.Globalization.CultureInfo.InvariantCulture), "the game's, as the copy above had it before the merge");
+            if (copy.PlaceKey == 0)
+                copy.PlaceKey = Property.NewPlaceKey();
+            p.PlaceAfterKey = copy.PlaceKey;
+            owner.InsertLive(p);
+            // (in the list too, where the file has it)
+            int at = owner.Properties.ToList().FindIndex(q => ReferenceEquals(q, copy));
+            if (at >= 0)
+                owner.MoveLive(p, at + 1);
+        }
+
+        /// <summary>
         /// The entities of a type the mod numbers itself: a #new N, or a #select N of a number
         /// nothing under it has (a new nation, poptype, nametype). Never a game entity's number: a
-        /// #new on it replaces the game's entity, on purpose.
+        /// #new on it replaces the game's entity, on purpose. Not a #new that takes no number
+        /// (<see cref="FirstFree"/>: the game gives it one, <see cref="GameSlots"/>).
         /// </summary>
         private static List<IDEntity> Owned(Mod mod, EntityType type)
         {
             var set = mod.Database[type];
             var vanilla = VanillaLoader.Vanilla?.Database[type];
             bool vanillaHasType = vanilla != null && vanilla.GetFullList().Count > 0;
+            bool firstFree = FirstFree.ContainsKey(type);
             return set.GetFullList()
                 .Where(e => e.ID > 0 && set.TryGetValue(e.ID, out var held) && ReferenceEquals(held, e) && vanilla?.Has(e.ID) != true
-                            && (!e.Selected || vanillaHasType && mod.FindBelow(type, e.ID, null) == null))
+                            && (!e.Selected ? !firstFree : vanillaHasType && mod.FindBelow(type, e.ID, null) == null))
                 .OrderBy(e => e.ID).ToList();
+        }
+
+        /// <summary>
+        /// The #new commands that take no number: the game gives each the first free one from
+        /// here, whatever the line says (the exe: #newspell 0x1401ad830 from 1500, #newitem
+        /// 0x140229150 from 700, #newnation from 120). A mod makes numbered ones with #select N.
+        /// </summary>
+        private static readonly Dictionary<EntityType, int> FirstFree = new()
+        {
+            [EntityType.SPELL] = 1500,
+            [EntityType.ITEM] = 700,
+            [EntityType.NATION] = 120,
+        };
+
+        /// <summary>
+        /// The numbers the game gives a mod's #new blocks that take none (<see cref="FirstFree"/>),
+        /// read in file order: each the first free one, skipping every number used so far (the
+        /// game's, the mods read before, the mod's own numbered blocks before it). Adds what it
+        /// reads to <paramref name="used"/>.
+        /// </summary>
+        private static List<(IDEntity Entity, int Slot)> GameSlots(Mod mod, EntityType type, HashSet<int> used)
+        {
+            var given = new List<(IDEntity, int)>();
+            var seen = new HashSet<IDEntity>(ReferenceEqualityComparer.Instance);
+            int from = FirstFree[type];
+            foreach (var b in mod.SourceBlocks)
+            {
+                if (b.Entity == null || b.Entity.GetEntityType() != type)
+                    continue;
+                if (!b.Selected)
+                {
+                    int n = from;
+                    while (used.Contains(n))
+                        n++;
+                    used.Add(n);
+                    seen.Add(b.Entity);
+                    given.Add((b.Entity, n));
+                }
+                else if (!seen.Contains(b.Entity) && b.Entity.ID > 0)
+                    used.Add(b.Entity.ID);
+            }
+            return given;
         }
 
         private static IEnumerable<int> Numbers(Mod mod, EntityType type) =>
             mod.Database[type].GetFullList().Select(e => e.ID).Where(id => id > 0);
 
         private static void MoveEntities(EntityType type, List<Mod> parts, List<Mod> separate, MergeReport report,
-                                         Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved)
+                                         Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved,
+                                         Dictionary<EntityType, Dictionary<int, (Mod Owner, IDEntity Entity)>> slots)
         {
             var range = parts[0].Database[type];
             // every number anyone uses is taken: a moved entity mustn't land on another
@@ -315,6 +408,20 @@ namespace Dom5Edit.Merge
             var claimed = new List<(Mod Owner, int Id)>();
             foreach (var s in separate)
                 claimed.AddRange(Owned(s, type).Select(e => (s, e.ID)));
+            // the numbers the game gives #new blocks that take none, as it reads the separate mods,
+            // then the merged file: an earlier part's are its own (a later part's numbered entity
+            // on one would be the same entity in game: it moves), and nothing moves onto one
+            bool firstFree = FirstFree.ContainsKey(type);
+            var given = slots[type] = new Dictionary<int, (Mod Owner, IDEntity Entity)>();
+            var used = new HashSet<int>(VanillaLoader.Vanilla != null ? Numbers(VanillaLoader.Vanilla, type) : Enumerable.Empty<int>());
+            if (firstFree)
+                foreach (var s in separate)
+                    foreach (var (e, n) in GameSlots(s, type, used))
+                    {
+                        given[n] = (s, e);
+                        claimed.Add((s, n));
+                        taken.Add(n);
+                    }
             // (poptypes have no range in the tables: mods make theirs from 150 to 249, as the editor does)
             int next = type == EntityType.POPTYPE ? 150 : range.START_ID, end = type == EntityType.POPTYPE ? 249 : range.END_ID;
             foreach (var part in parts)
@@ -324,43 +431,93 @@ namespace Dom5Edit.Merge
                 {
                     if (!run.Any(e => claimed.Any(c => c.Id == e.ID && !DependsOn(part, c.Owner))))
                         continue;
-                    // a block of free numbers in a row for the whole run (one, for most)
-                    while (Enumerable.Range(next, run.Count).Any(taken.Contains))
-                        next++;
-                    if (end > 0 && next + run.Count - 1 > end)
-                        throw new InvalidOperationException($"no free {type.ToString().ToLowerInvariant()} number left up to {end}");
-                    int first = next;
-                    for (int k = 0; k < run.Count; k++)
-                        taken.Add(first + k);
+                    int first = FreeRun(run.Count);
                     if (run.Count > 1)
                         report.Notes.Add($"{part.DisplayName}: monsters {run[0].ID}-{run[^1].ID} turn into each other by number (#shrinkhp, #growhp, #xpshape): moved together to {first}-{first + run.Count - 1}");
                     for (int k = 0; k < run.Count; k++)
+                        Move(part, run[k], first + k);
+                }
+                if (firstFree)
+                    PlaceUnnumbered(part, mine);
+                claimed.AddRange(mine.Select(e => (part, e.ID)));
+            }
+
+            // a block of free numbers in a row (one, for most)
+            int FreeRun(int count)
+            {
+                while (Enumerable.Range(next, count).Any(taken.Contains))
+                    next++;
+                if (end > 0 && next + count - 1 > end)
+                    throw new InvalidOperationException($"no free {type.ToString().ToLowerInvariant()} number left up to {end}");
+                for (int k = 0; k < count; k++)
+                    taken.Add(next + k);
+                return next;
+            }
+
+            // the part's #new blocks that take no number get theirs after everything read before
+            // them; one of the part's numbered entities read later on such a number would be the
+            // same entity in game (the parts before pushed its #new blocks up): it moves, and the
+            // numbers are worked out again
+            void PlaceUnnumbered(Mod part, List<IDEntity> mine)
+            {
+                for (int round = 0; ; round++)
+                {
+                    var trial = new HashSet<int>(used);
+                    var got = GameSlots(part, type, trial);
+                    var clash = mine.Where(e => got.Any(g => g.Slot == e.ID)).ToList();
+                    if (clash.Count == 0)
                     {
-                    var e = run[k];
-                    int old = e.ID, now = first + k;
-                    var over = parts.Where(p => ReferenceEquals(p, part) || DependsOn(p, part)).ToList();
-                    Renumbering.Move(e, now, over);
-                    moved[part][(type.ToString().ToLowerInvariant(), old)] = now;
-                    report.Moves.Add(new MergeMove(part.DisplayName, type.ToString().ToLowerInvariant(), old, now, e.Name ?? ""));
-                    // a nation's AI pretender designs are numbered by it (#newtemplate 176): they move with it
-                    if (type == EntityType.NATION)
-                        foreach (var x in over)
-                            foreach (var t in x.Database[EntityType.TEMPLATE].GetFullList().Where(t => t.ID == old).ToList())
-                            {
-                                Renumbering.Move(t, now, parts.Where(p => ReferenceEquals(p, x) || DependsOn(p, x)));
-                                report.Notes.Add($"{x.DisplayName}: #newtemplate {old} (an AI pretender for nation {old}) follows it to {now}");
-                            }
-                    // a submod's #new on this number replaced this entity on purpose: it moves with it
-                    foreach (var sub in over.Where(p => !ReferenceEquals(p, part)))
-                        if (sub.Database[type].TryGetValue(old, out var again) && ReferenceEquals(again.ParentMod, sub) && !again.Selected)
+                        used = trial;
+                        foreach (var (e, n) in got)
                         {
-                            Renumbering.Move(again, now, parts.Where(p => ReferenceEquals(p, sub) || DependsOn(p, sub)));
-                            moved[sub][(type.ToString().ToLowerInvariant(), old)] = now;
-                            report.Notes.Add($"{sub.DisplayName}'s #new{type.ToString().ToLowerInvariant()} {old} replaces {part.DisplayName}'s: moved with it to {now}");
+                            given[n] = (part, e);
+                            claimed.Add((part, n));
+                            taken.Add(n);
                         }
+                        if (got.Count > 0 && !ReferenceEquals(part, parts[0]))
+                        {
+                            var kind = type.ToString().ToLowerInvariant();
+                            int lo = got.Min(g => g.Slot), hi = got.Max(g => g.Slot);
+                            report.Notes.Add(got.Count == 1
+                                ? $"{part.DisplayName}: its #new{kind} without a number gets {kind} {lo} in game (the first free one, after the parts before it)"
+                                : $"{part.DisplayName}: its {got.Count} #new{kind} without a number get {kind}s {lo}-{hi} in game (the first free ones, after the parts before it)");
+                        }
+                        return;
+                    }
+                    if (round == 20)
+                        throw new InvalidOperationException($"{part.DisplayName}: its {type.ToString().ToLowerInvariant()}s without a number keep landing on its numbered ones");
+                    taken.UnionWith(got.Select(g => g.Slot));
+                    foreach (var e in clash)
+                    {
+                        report.Notes.Add($"{part.DisplayName}: {type.ToString().ToLowerInvariant()} {e.ID} {e.Name} is a number the game gives one of the part's #new{type.ToString().ToLowerInvariant()} blocks in the merged file (the parts before it take the first free ones): moved");
+                        Move(part, e, FreeRun(1));
                     }
                 }
-                claimed.AddRange(mine.Select(e => (part, e.ID)));
+            }
+
+            void Move(Mod part, IDEntity e, int now)
+            {
+                int old = e.ID;
+                var over = parts.Where(p => ReferenceEquals(p, part) || DependsOn(p, part)).ToList();
+                Renumbering.Move(e, now, over);
+                moved[part][(type.ToString().ToLowerInvariant(), old)] = now;
+                report.Moves.Add(new MergeMove(part.DisplayName, type.ToString().ToLowerInvariant(), old, now, e.Name ?? ""));
+                // a nation's AI pretender designs are numbered by it (#newtemplate 176): they move with it
+                if (type == EntityType.NATION)
+                    foreach (var x in over)
+                        foreach (var t in x.Database[EntityType.TEMPLATE].GetFullList().Where(t => t.ID == old).ToList())
+                        {
+                            Renumbering.Move(t, now, parts.Where(p => ReferenceEquals(p, x) || DependsOn(p, x)));
+                            report.Notes.Add($"{x.DisplayName}: #newtemplate {old} (an AI pretender for nation {old}) follows it to {now}");
+                        }
+                // a submod's #new on this number replaced this entity on purpose: it moves with it
+                foreach (var sub in over.Where(p => !ReferenceEquals(p, part)))
+                    if (sub.Database[type].TryGetValue(old, out var again) && ReferenceEquals(again.ParentMod, sub) && !again.Selected)
+                    {
+                        Renumbering.Move(again, now, parts.Where(p => ReferenceEquals(p, sub) || DependsOn(p, sub)));
+                        moved[sub][(type.ToString().ToLowerInvariant(), old)] = now;
+                        report.Notes.Add($"{sub.DisplayName}'s #new{type.ToString().ToLowerInvariant()} {old} replaces {part.DisplayName}'s: moved with it to {now}");
+                    }
             }
         }
 
@@ -407,7 +564,8 @@ namespace Dom5Edit.Merge
         /// the old number in its comment. Run after every other number is placed.
         /// </summary>
         private static void Strays(List<Mod> parts, List<Mod> separate, List<Snapshot> snapshots, MergeReport report,
-                                   Dictionary<Mod, Dictionary<(string Kind, int Old), int>> strays)
+                                   Dictionary<Mod, Dictionary<(string Kind, int Old), int>> strays,
+                                   Dictionary<EntityType, Dictionary<int, (Mod Owner, IDEntity Entity)>> slots)
         {
             var vanilla = VanillaLoader.Vanilla;
             var taken = new Dictionary<EntityType, HashSet<int>>();
@@ -419,6 +577,8 @@ namespace Dom5Edit.Merge
                 if (vanilla != null)
                     t.UnionWith(Numbers(vanilla, type));
                 t.UnionWith(snapshots.Where(sn => sn.Type == type).Select(sn => sn.Number));
+                if (slots.TryGetValue(type, out var given))
+                    t.UnionWith(given.Keys);
                 return taken[type] = t;
             }
             foreach (var part in parts)
@@ -438,8 +598,12 @@ namespace Dom5Edit.Merge
                     var kind = type.ToString().ToLowerInvariant();
                     if (!strays[part].TryGetValue((kind, old), out var now))
                     {
-                        // what it would find in the merged file: another part's entity, or a snapshot
-                        var owner = parts.FirstOrDefault(p => !ReferenceEquals(p, part) && p.Database[type].TryGetValue(old, out var e) && ReferenceEquals(e.ParentMod, p));
+                        // what it would find in the merged file: another part's entity (numbered, or
+                        // a #new the game gives that number), or a snapshot
+                        var owner = parts.FirstOrDefault(p => !ReferenceEquals(p, part) && p.Database[type].TryGetValue(old, out var e) && ReferenceEquals(e.ParentMod, p) && !FirstFreeNew(e));
+                        IDEntity? slotted = null;
+                        if (owner == null && slots.TryGetValue(type, out var given) && given.TryGetValue(old, out var g) && !ReferenceEquals(g.Owner, part) && parts.Contains(g.Owner))
+                            (owner, slotted) = (g.Owner, g.Entity);
                         var snap = snapshots.FirstOrDefault(sn => sn.Type == type && sn.Number == old);
                         if (owner == null && snap == null)
                             continue;
@@ -449,13 +613,17 @@ namespace Dom5Edit.Merge
                             now++;
                         t.Add(now);
                         strays[part][(kind, old)] = now;
-                        var what = owner != null && owner.Database[type].TryGetValue(old, out var hit) ? $"{owner.DisplayName}'s {hit.Name} #{old}" : $"the merge's copy of a game {kind} #{old}";
+                        var what = slotted != null ? $"{owner!.DisplayName}'s {slotted.Name} (a #new{kind} the game numbers {old})"
+                            : owner != null && owner.Database[type].TryGetValue(old, out var hit) ? $"{owner.DisplayName}'s {hit.Name} #{old}" : $"the merge's copy of a game {kind} #{old}";
                         report.Conflicts.Add($"{part.DisplayName} refers to {kind} {old} (first at line {line}), which it doesn't define: it would have found {what}; now {now}, which finds nothing, as when it's alone");
                     }
                     r.Redirect(now, $"(was {old}: not in this part)");
                 }
             }
         }
+
+        /// <summary>A #new the game numbers itself (whatever number the line has).</summary>
+        private static bool FirstFreeNew(IDEntity e) => !e.Selected && FirstFree.ContainsKey(e.GetEntityType());
 
         private static EntityType RefType(Reference r)
         {
@@ -665,8 +833,30 @@ namespace Dom5Edit.Merge
         /// and what moved in each, which kind of number each command's argument is (per pass, from
         /// the core's references) and how a spell's #damage reads by its effect.
         /// </summary>
+        /// <summary>
+        /// Per spell of a part, what its #damage is when its effect comes from elsewhere (a
+        /// #copyspell, an earlier block): by its number (as the part writes it, before moves) or
+        /// its name. Worked out before copies are turned to snapshots (whose effect only the game
+        /// data has).
+        /// </summary>
+        private static Dictionary<Mod, Dictionary<string, string>> SpellKinds(List<Mod> parts, Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved)
+        {
+            string? DamageKind(Spell spell) => spell.IsEnchant() ? Kind(EntityType.ENCHANTMENT) : spell.IsEventEffect() ? Kind(EntityType.EVENT_CODE_EFFECT)
+                : spell.IsSummon() ? "monster or tag" : null;
+            var all = new Dictionary<Mod, Dictionary<string, string>>();
+            foreach (var p in parts)
+            {
+                var back = moved[p].Where(m => m.Key.Kind == "spell").ToDictionary(m => m.Value, m => m.Key.Old);
+                var kinds = all[p] = new Dictionary<string, string>();
+                foreach (var spell in p.Database[EntityType.SPELL].GetFullList().OfType<Spell>())
+                    if (DamageKind(spell) is string k)
+                        kinds[spell.ID > 0 ? (back.TryGetValue(spell.ID, out var old) ? old : spell.ID).ToString() : (spell.Name ?? "").ToLowerInvariant()] = k;
+            }
+            return all;
+        }
+
         private static void WriteMap(string path, List<Mod> parts, List<Mod> separate, Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved, List<Snapshot> snapshots,
-                                     Dictionary<Mod, Dictionary<(string Kind, int Old), int>> strays)
+                                     Dictionary<Mod, Dictionary<(string Kind, int Old), int>> strays, Dictionary<Mod, Dictionary<string, string>> spellKinds)
         {
             var passes = new Dictionary<string, Dictionary<string, string>>();
             var probe = new Mod();
@@ -716,19 +906,6 @@ namespace Dom5Edit.Merge
                     if (kind != null)
                         effects[effect] = kind;
                 }
-            // per spell, what its #damage is when its effect comes from elsewhere (a #copyspell, an
-            // earlier block): by its number (as the part writes it, before moves) or its name
-            string? DamageKind(Spell spell) => spell.IsEnchant() ? Kind(EntityType.ENCHANTMENT) : spell.IsEventEffect() ? Kind(EntityType.EVENT_CODE_EFFECT)
-                : spell.IsSummon() ? "monster or tag" : null;
-            Dictionary<string, string> Spells(Mod p)
-            {
-                var back = moved[p].Where(m => m.Key.Kind == "spell").ToDictionary(m => m.Value, m => m.Key.Old);
-                var kinds = new Dictionary<string, string>();
-                foreach (var spell in p.Database[EntityType.SPELL].GetFullList().OfType<Spell>())
-                    if (DamageKind(spell) is string k)
-                        kinds[spell.ID > 0 ? (back.TryGetValue(spell.ID, out var old) ? old : spell.ID).ToString() : (spell.Name ?? "").ToLowerInvariant()] = k;
-                return kinds;
-            }
             var json = new
             {
                 parts = parts.Select(p => new
@@ -736,7 +913,7 @@ namespace Dom5Edit.Merge
                     file = p.FullFilePath,
                     needs = p.Dependencies.FirstOrDefault(d => d != VanillaLoader.Vanilla)?.FullFilePath,
                     moves = moved[p].GroupBy(m => m.Key.Kind).ToDictionary(g => g.Key, g => g.ToDictionary(m => m.Key.Old.ToString(), m => m.Value)),
-                    spells = Spells(p),
+                    spells = spellKinds[p],
                     strays = strays[p].GroupBy(m => m.Key.Kind).ToDictionary(g => g.Key, g => g.ToDictionary(m => m.Key.Old.ToString(), m => m.Value)),
                     copies = snapshots.Where(s => s.Copies.ContainsKey(p)).GroupBy(s => Kind(s.Type))
                         .ToDictionary(g => g.Key, g => g.ToDictionary(s => s.Of.ToString(), s => s.Number)),
@@ -746,6 +923,9 @@ namespace Dom5Edit.Merge
                     kind = Kind(s.Type), of = s.Of, number = s.Number,
                     header = CommandsMap.TryGetString(SnapshotForm[s.Type].Header, out var h) ? h.TrimStart('#') : "",
                     copies = SnapshotForm[s.Type].Copy.Select(c => CommandsMap.TryGetString(c, out var cs) ? cs.TrimStart('#') : ""),
+                    // the line that hides it, and the game's value each copy of it gets back after the copy
+                    hide = SnapshotForm[s.Type].Hide is { } hide && CommandsMap.TryGetString(hide.Line, out var hs) ? new object[] { hs.TrimStart('#'), hide.Value } : null,
+                    restore = s.Restore,
                 }),
                 separate = separate.Select(s => s.FullFilePath),
                 commands = passes,
@@ -779,11 +959,13 @@ namespace Dom5Edit.Merge
                 writer.WriteLine("-- ======== Game entities as they are before the parts change them (later parts copy these: see the report) ========");
                 foreach (var s in snapshots)
                 {
-                    var (header, copies) = SnapshotForm[s.Type];
+                    var (header, copies, hide) = SnapshotForm[s.Type];
                     var name = VanillaLoader.Vanilla?.Database[s.Type].TryGetValue(s.Of, out var v) == true ? v.Name : "";
                     writer.WriteLine($"{(CommandsMap.TryGetString(header, out var h) ? h : "")} {s.Number} -- the game's {name} #{s.Of}");
                     foreach (var c in copies)
                         writer.WriteLine($"{(CommandsMap.TryGetString(c, out var cs) ? cs : "")} {s.Of}");
+                    if (hide is { } hd && CommandsMap.TryGetString(hd.Line, out var hs))
+                        writer.WriteLine($"{hs} {hd.Value} -- kept out of the game: only the copies of it are used (they get the game's value back)");
                     writer.WriteLine("#end");
                 }
             }

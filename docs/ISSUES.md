@@ -8,6 +8,18 @@ Potential bugs and critical problems identified during code review.
 
 ## Current Priority Issues
 
+### A number on `#newspell` / `#newitem` / `#newnation` is taken as the entity's (open, 2026-10-07)
+
+The game reads no number on these: each takes the first free one (spells from 1500, items from
+700, nations from 120; the exe, `tools/dom6exe/README.md`). The parser gives `#newitem 800` the
+number 800, so the editor shows the item as 800, links a reference to 800 to it, and treats a
+`#selectitem 800` in the same mod as the same item (in game: two items). An unnumbered `#new`
+gets no number in the editor (the game's comes from the file order and what's read before).
+Installed mods: one such line (Forgotten Realms' `#newitem 800 -- Stormsplitter`), no spells or
+nations. The merge already goes by the game (`ModMerger.FirstFree`, `GameSlots`), and the
+referee numbers blocks as the game does; the parser and the oracle don't yet. Fix: read the
+number as a comment (keep the line as written), number unnumbered ones as the game does.
+
 ### Round-trip divergences (open, 2026-05-31)
 
 The new round-trip harness (`docs/ROUND_TRIP_TESTING.md`) compares the inspector's

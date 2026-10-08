@@ -70,9 +70,10 @@ namespace Dom5Edit
                 var inBlocks = new HashSet<Property>(blocks.SelectMany(b => b.Properties), ReferenceEqualityComparer.Instance);
                 var removed = blocks.SelectMany(b => b.Properties)
                     .Where(p => mod.PropertiesAfterParse.Contains(p) && !liveNow.Contains(p)).ToList();
-                // lines put in order in the editor: a chain by keys (Property.PlaceKey)
+                // lines put in order in the editor: a chain by keys (Property.PlaceKey); a parsed
+                // line can be the first (a merge puts a line after a copy, live or taken out later)
                 var keyed = new Dictionary<long, Property>();
-                foreach (var p in entity.Properties)
+                foreach (var p in blocks.SelectMany(b => b.Properties).Concat(entity.Properties))
                     if (p.PlaceKey != 0)
                         keyed[p.PlaceKey] = p;
                 foreach (var p in entity.Properties.Where(p => !inBlocks.Contains(p)))

@@ -3,6 +3,57 @@
 Running log of the autonomous work sessions: what was done, what was found, what's next.
 Newest entries at the top. Commits are local unless noted; the user pushes.
 
+## 2026-10-07 (night): merging mods for Dominions 6
+
+The user: "start on the merging": connections as pointers so numbers change freely and the
+export writes the current ones; event codes and the like shift too; a submod resolves to its
+parent instead of being merged; test the things that go by the next number; copies of a unit
+stay independent ("the copy of Archer #1 that Dom6 uses shouldn't be affected by any changes
+made to archer #1 in the forgotten realms mod"); dangling references mustn't catch anything;
+two mods changing the same game unit: "we merge the best we can"; spell damages checked in the
+exe. Decisions: the later mod moves into the first free numbers (no bands), references by
+number wherever the game takes one, a rename only as the last resort, no Dom5 mage disabling.
+Design and rules: docs/MERGING.md. Plan for game updates and a data change log:
+docs/GAME_UPDATES.md (not built).
+
+- **Renumbering** (ca3cf61): an entity or a dependent number (event code, variable,
+  enchantment, monster tag) moves and every reference follows; lines a later copy or clear
+  takes out too (917e035); `Dom5Tests renumber`.
+- **`Dom5Tests merge OUT NAME A.dm B.dm ... [--needs B=A]`** (6ef16dc): parts read over what
+  they need, collisions only between independent parts, references by number with the name as
+  a comment, files copied per part, a report and a map; the merged file read back must give
+  every entity its part's values.
+- **Sequences** (7f76510): units that turn into the next/previous number move as one block;
+  AI templates follow their nation and `#form "Name (N)"` its unit.
+- **Copies kept apart** (a396fe7, then tonight): a later part's copy of a game entity an earlier
+  part changes copies a snapshot of the game's, at the top of the merged file. Units, weapons,
+  armor; spells (`#selectspell N` from 7999 down, `#school -1`, the game's school put back after
+  each copy) and sites (`#rarity 5`, the rarity put back). From the exe: `#copyspell` copies the
+  whole record (name too); `#newspell` takes no number.
+- **Dangling references** (a396fe7): a number a part doesn't define moves to one nobody uses.
+- **Numbers the game gives** (tonight): `#newspell`, `#newitem`, `#newnation` take no number
+  (first free from 1500, 700, 120; the exe). The merge works them out as the game will: in
+  Forgotten Realms + DomEnhanced, Forgotten Realms' 32 `#newitem` get items 700-731, where
+  DomEnhanced has 28 numbered items: the merge had left those (and moved one more onto 714),
+  so in game they'd have been one item each. Now they move; the referee numbers blocks as the
+  game does and catches it (29 on the earlier merge, 0 now).
+- **The referee** (7f76510, 0c88292): `gameread.py --merge` replays the game's reading of the
+  parts one after another (numbers through the moves, names to the lowest number, files by
+  content, blesses, spells whose effect comes from a copy) against the merged file.
+- **Stage 6 of the fidelity suite** (17cc833): fixtures (events, sequences, copies, numbers the
+  game gives) in `--quick`, the workshop pairs in the full run, counts as baselines. Results:
+  Forgotten Realms + DomEnhanced 1,114 moved, 61 copies kept apart, 12,169 entities as in their
+  parts, the game reads it as the two one after another; Confluence + Bloodwar 53 moved; the
+  Sombre pack (Strigos over Sombre, Bloodwar) 75 moved.
+
+A disclosure: the fidelity runs quoted in commits between about 13:30 and 17cc833 ran a stale
+Debug build (the suite runs `bin/Debug`; I'd built Release). Rebuilt and rerun: the quick suite
+and then the full suite (96 checks: 94 pass, 2 known) pass on 17cc833.
+
+Open: `#newitem 800`'s number is taken by the parser (docs/ISSUES.md); item copies not kept
+apart (no line known to hide an item); "Merge mods..." in the editor; the game-update change
+log tool.
+
 ## 2026-10-07 (evening): "used by" fixed, the editor on Mac and Linux
 
 The user: monster 3's "used by" listed Bind Heliophagus ("definitely not correct! There's a

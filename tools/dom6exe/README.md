@@ -323,6 +323,11 @@ dropped, the last byte of the file dropped.
 
 ## Spells (6.37)
 
+- `#newspell` reads no number: it takes the first free spell from 1500 (0x1401ad830: the first
+  record from 1500 whose name starts with the empty marker 0xfe), whatever follows it on the
+  line. `#selectspell N` takes any number from 1 to 7999, a free one too (a mod makes its
+  numbered spells so). `#copyspell` (0x140246f29) copies the whole 0x118-byte record: name,
+  school, everything.
 - Spell `#clear` (0x140258af0): school -1, path 0 (fire) level 1, no second path, fatigue
   20, effect 2, range 5025, damage 10, nreff 1. `#path n p` / `#pathlevel n l` store at
   +0x26 + n / +0x28 + n. `#flightspr`/`#explspr` also store 1 / 9 frames. Abilities: 15 int32
@@ -339,6 +344,7 @@ dropped, the last byte of the file dropped.
 
 ## Sites (6.37)
 
+- `#newsite N` keeps its number when it's 750-3999 (0x1402333bc).
 - Site record: look +0x28, path +0x2a, level +0x2c, rarity +0x2e, 16 (ability, value) pairs
   from +0x30, terrain mask +0x130. `#gems p n` stores ability p + 1 = n.
 - Vanilla sites use abilities no site command writes: 551/552/554/555 (the inspector writes

@@ -1,18 +1,18 @@
 {
- "moved": 1087,
+ "moved": 1114,
  "movedByKind": {
   "monster": 1001,
   "weapon": 62,
-  "item": 1,
+  "item": 28,
   "site": 15,
   "nation": 8
  },
  "renamed": 0,
- "copiesKeptApart": 5,
+ "copiesKeptApart": 61,
  "dangling": 8,
  "acrossParts": 552,
  "notCompared": {
-  "shared": 254,
+  "shared": 255,
   "across": 1059
  },
  "referee": {

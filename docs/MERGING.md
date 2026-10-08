@@ -85,6 +85,51 @@ header is rewritten when its entity's number changed (`ModExporter.KeepsHeader`)
 - Not carried over: the Dom5 merge's mage disabling (Dom5 had a fixed number of magic-path slots;
   the user: leave it out for Dom6).
 
+## What else a merge keeps as it was (built 2026-10-07)
+
+- **Units chained by number** (`#shrinkhp`, `#xpshape`, `#labxpshape` turn into the next number,
+  `#growhp` the previous; not with `#xpshapemon`) move as one block into free numbers in a row.
+  AI pretender templates move with their nation; a template's `#form "Name (N)"` follows unit N.
+- **Copies of game entities stay apart** (the user: DomEnhanced's copy of the game's Archer
+  mustn't take Forgotten Realms' changes to the Archer). Read one after another, a later part's
+  `#copystats 20` would copy what an earlier part made of unit 20; so the merged file starts with
+  a snapshot of each such game entity, as the game has it before any part changes it, and the
+  later part's copy lines copy that. Not for a part's copy of what it changes itself, nor a
+  submod's copy of what its parent changed (both meant). A copy of a unit, weapon or armor shows
+  nowhere until something uses it. A spell's or site's would (one more spell to research, one
+  more site on the map), so the snapshot has a line that hides it, and each copy of it gets the
+  game's value back on the line right after the copy (the part's own lines after it still win):
+  - spells: `#selectspell N` from the top of the table (7999 down), `#copyspell`, `#school -1`
+    (nobody can research it); each copy gets `#school <the game's>` after it. Not `#newspell`:
+    the game's `#newspell` takes no number, it gets the first free one from 1500 (the exe,
+    0x1401ad830); `#copyspell` copies the whole spell record, name and school too.
+  - sites: `#newsite N` (the game keeps a number from 750 to 3999), `#copysite`, `#rarity 5`
+    (never a random site); each copy gets `#rarity <the game's>`.
+  - items: not done (`#constlevel 11` makes one unforgeable, but whether the game can still
+    hand it out as a random item isn't known yet); the report notes such copies.
+  Forgotten Realms + DomEnhanced: 61 snapshots (5 units/weapons, 56 spells for 219 copy lines).
+- **Numbers the game gives.** `#newspell`, `#newitem` and `#newnation` take no number (the exe):
+  each gets the first free one, spells from 1500, items from 700, nations from 120, in the order
+  the game reads them, whatever the line says. In the merged file a part's unnumbered ones come
+  after every earlier part's, so the merge works out their numbers as the game will
+  (`GameSlots`): a later part's numbered entity on one of them moves (it would be the same entity
+  in game), as does one of a part's own numbered entities that its unnumbered ones, pushed up by
+  the earlier parts, would land on; nothing moves onto them, nor do dangling references or
+  snapshots. Forgotten Realms' 32 `#newitem` get items 700-731, where DomEnhanced has 28 of its
+  own: those move. (Before this the merge put them, and one moved item, on Forgotten Realms'
+  items; the referee now numbers blocks as the game does and catches it.)
+- **Dangling references don't catch anything** (the user): a number a part refers to that nothing
+  in it defines would find another part's entity in the merged file; it moves to a free number
+  that finds nothing, as alone, and the report says so.
+- **Both parts change the same game entity**: merged as the game reads them (the later wins per
+  line), and reported (the user: "we merge the best we can on it").
+- **Lines a later copy or clear takes out** are still written and still follow moves: the game
+  reads them there.
+
+Checked by stage 6 of the fidelity suite (docs/FIDELITY_SUITE.md): fixtures for events, sequences,
+copies and the numbers the game gives, and the installed workshop mods (Confluence + Bloodwar, the Sombre pack with its
+submod, Forgotten Realms + DomEnhanced), with baselines of what moved.
+
 Steps: (1) renumbering in the core (an entity or a dependent number moves, its references follow,
 the save shows it); (2) `Dom5Tests merge OUTDIR NAME A.dm B.dm ... [--needs B.dm=A.dm]` with the
 report and the read-back check; (3) the game-reading referee on mod pairs (Forgotten Realms +

@@ -1,0 +1,16 @@
+{
+ "moved": 3,
+ "movedByKind": {
+  "spell": 1,
+  "item": 2
+ },
+ "renamed": 0,
+ "copiesKeptApart": 0,
+ "dangling": 0,
+ "acrossParts": 0,
+ "notCompared": {
+  "shared": 1,
+  "across": 0
+ },
+ "referee": {}
+}

@@ -246,9 +246,11 @@ def file_of(reading, text):
 COPIES = {'copystats', 'copyspr', 'copyweapon', 'copyarmor', 'copyspell', 'copyitem', 'copysite'}
 
 
-def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells=None, copies=None):
+def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells=None, copies=None, restores=None):
     """A pass's blocks with numbers mapped (moves: kind -> old -> new) and names as numbers (the
-    number the name finds, mapped by the moves of the reading it's in: reading_moves)."""
+    number the name finds, mapped by the moves of the reading it's in: reading_moves). A copy
+    turned into a copy of a snapshot is followed by the line the merge puts back after it
+    (restores: (kind, snapshot number) -> item)."""
     def named(kind, name):
         num, i = table[NAMED[kind]][name]
         return int(reading_moves[i].get(kind, {}).get(str(num), num))
@@ -276,6 +278,7 @@ def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells
         for it, line in blk['items']:
             c = it[0]
             kind = kinds.get(ctx, {}).get(c)
+            extra = None
             if kind == 'spell damage':
                 kind = effects.get(str(effect)) if effect is not None else spell_kind
             if kind and len(it) > 1 and isinstance(it[1], tuple) and it[1]:
@@ -287,6 +290,7 @@ def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells
                         a = (named(k, a[1]),)
                         if copies and c in COPIES and str(a[0]) in copies.get(k, {}):
                             a = (int(copies[k][str(a[0])]),)
+                            extra = (restores or {}).get((k, a[0]))
                 elif isinstance(a[0], int):
                     v = a[0]
                     if kind == 'monster or tag':
@@ -295,6 +299,7 @@ def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells
                     # a copy of a game entity an earlier part changes: the merge's snapshot of it
                     if copies and c in COPIES and str(a[0]) in copies.get(k, {}):
                         new = copies[k][str(a[0])]
+                        extra = (restores or {}).get((k, int(new)))
                     if new is not None:
                         new = int(new)
                         a = ((-new if kind == 'monster or tag' and a[0] < 0 else new),) + tuple(a[1:])
@@ -311,7 +316,34 @@ def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells
                     t = t[:f.start(1)] + str(int(moves.get('monster', {}).get(f.group(1), f.group(1)))) + t[f.end(1):]
                     it = (c, ('text', t) + tuple(it[1][2:]))
             items.append(it)
+            if extra:
+                items.append(extra)
         out.append({'head': head, 'line': blk['line'], 'items': items})
+    return out
+
+
+# the #new commands that take no number: the game gives each the first free one from here (the exe:
+# #newspell 0x1401ad830, #newitem 0x140229150, #newnation; README "Spells", "Items", "Nations")
+FIRST_FREE = {'spell': 1500, 'item': 700, 'nation': 120}
+
+
+def game_numbers(blocks, used, start):
+    """The number the game gives each block of a pass, in file order: a #new... the first free one
+    from start (whatever its line says), a #select... the one it names (None: by a name)."""
+    out = []
+    for b in blocks:
+        h = b['head']
+        if h[0].startswith('new'):
+            n = start
+            while n in used:
+                n += 1
+            used.add(n)
+            out.append(n)
+        elif len(h) > 1 and h[1] and isinstance(h[1][0], int):
+            used.add(h[1][0])
+            out.append(h[1][0])
+        else:
+            out.append(None)
     return out
 
 
@@ -341,8 +373,19 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit, json_out=None
         for kind, mv in p.get('strays', {}).items():
             p.setdefault('moves', {}).setdefault(kind, {}).update(mv)
     parts = [(Reading(p['file'], rules), p.get('moves', {})) for p in m['parts']]
+    # what each part is read over, among the parts (a submod's blocks may be its parent's entities)
+    needs = {p['file']: local(p.get('needs')) for p in m['parts']}
+    def below(path):
+        out, seen = set(), path
+        while needs.get(seen) and needs[seen] not in out:
+            seen = needs[seen]
+            out.add(seen)
+        return out
     part_spells = [p.get('spells', {}) for p in m['parts']]
     part_copies = [p.get('copies', {}) for p in m['parts']]
+    # a snapshot of a spell or site has a line that hides it; each copy of it gets the game's value back
+    restores = {(s['kind'], int(s['number'])): (s['hide'][0], (int(s['restore']),))
+                for s in m.get('snapshots', []) if s.get('hide') and s.get('restore') is not None}
     merged = Reading(merged_path, rules)
     base = ([vanilla] if vanilla else []) + separate
     diffs, known = [], []
@@ -363,13 +406,13 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit, json_out=None
     for ctx in dmread.STARTS:
         # the merged file's snapshots of game entities first (a copy each, as the game has it)
         expected = [{'head': (s['header'], (s['number'],)), 'line': 0, 'path': None,
-                     'items': [(c, (s['of'],)) for c in s['copies']] + [('end',)]}
+                     'items': [(c, (s['of'],)) for c in s['copies']] + ([(s['hide'][0], (int(s['hide'][1]),))] if s.get('hide') else []) + [('end',)]}
                     for s in m.get('snapshots', []) if NAMED.get(s['kind']) == ctx]
         for i, (r, moves) in enumerate(parts):
             # names as the game finds them while reading this part: the game's, the separate mods',
             # the parts before it and its own
             table = names(base + [x for x, _ in parts[:i + 1]])
-            blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]], part_spells[i], part_copies[i])
+            blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]], part_spells[i], part_copies[i], restores)
             for b in blocks:
                 b['path'] = r.path
             if ctx == 'global' and expected and blocks:
@@ -378,6 +421,35 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit, json_out=None
             expected.extend(blocks)
         got = normalized(merged, ctx, kinds, effects, {}, names(base + [merged]), [{}] * (len(base) + 1))
         heads = difflib.SequenceMatcher(None, [x['head'] for x in expected], [x['head'] for x in got], autojunk=False)
+        if ctx in FIRST_FREE:
+            # the numbers the game gives the merged file's blocks (#new... takes the first free one):
+            # blocks of two parts on one number are one entity in game, unless one part is read
+            # over the other (a submod's #select of its parent's), or it's the game's (or a
+            # separate mod's) entity, which several parts may change
+            used = set()
+            for b in base:
+                game_numbers(normalized(b, ctx, kinds, effects, {}, names([b]), [{}]), used, FIRST_FREE[ctx])
+            theirs = set(used)
+            numbers = game_numbers(got, used, FIRST_FREE[ctx])
+            whose = {}
+            for op, i1, i2, j1, j2 in heads.get_opcodes():
+                if op == 'equal':
+                    for k in range(i2 - i1):
+                        whose[j1 + k] = expected[i1 + k].get('path')
+            first = {}
+            for j, n in enumerate(numbers):
+                if n is None or n in theirs or j not in whose:
+                    continue
+                if n not in first:
+                    first[n] = j
+                    continue
+                a, b = whose[first[n]], whose[j]
+                if a == b or (a and b and (a in below(b) or b in below(a))):
+                    continue
+                diffs.append((ctx, show_head(got[j]['head']), got[j]['line'],
+                              ['(its own %s in %s)' % (ctx, os.path.basename(b) if b else 'the merge\'s snapshots')],
+                              ['(the game numbers it %d, as %s at merged line %s from %s: one %s in game)' % (
+                                  n, show_head(got[first[n]]['head']), got[first[n]]['line'], os.path.basename(a) if a else 'the merge\'s snapshots', ctx)]))
         for op, i1, i2, j1, j2 in heads.get_opcodes():
             if op == 'equal':
                 for x, y in zip(expected[i1:i2], got[j1:j2]):
