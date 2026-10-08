@@ -11,6 +11,8 @@
         <EmbeddedResource Include="GameData\game-commands-6.37.json" LogicalName="Dom5Edit.GameData.game-commands.json" />
         <!-- Where the game's texts are in Dominions6.exe (tools/dom6exe texts): read from the player's exe -->
         <EmbeddedResource Include="..\tools\dom6exe\data\texts-6.37.json" LogicalName="Dom5Edit.GameData.game-texts.json" />
+        <!-- What a spell's #damage is per #effect, read from Dominions6.exe (tools/dom6exe spelleffects) -->
+        <EmbeddedResource Include="..\tools\dom6exe\data\spell-effects-6.37.json" LogicalName="Dom5Edit.GameData.spell-effects.json" />
     </ItemGroup>
 
 </Project>

@@ -10,9 +10,10 @@ namespace Dom5Edit.Props
         private MonsterOrMontagRef _monRef;
         private EnchIDRef _enchRef;
         private EventEffectCodeRef _eventEffectRef;
+        private SiteRef _siteRef;
 
         internal override IEnumerable<Reference> Parts() =>
-            new Reference?[] { _monRef, _enchRef, _eventEffectRef }.Where(r => r != null).SelectMany(r => r!.Parts());
+            new Reference?[] { _monRef, _enchRef, _eventEffectRef, _siteRef }.Where(r => r != null).SelectMany(r => r!.Parts());
 
 
         public static Property Create()
@@ -31,26 +32,39 @@ namespace Dom5Edit.Props
         public override void Resolve()
         {
             Spell parent = (Spell)Parent;
+            var effects = SpellEffectData.Instance;
+            // the effect the game uses (the spell's own, its #copyspell's, the game spell's)
+            bool hasEffect = parent.TryGetEffectNumber(out int effect);
 
             // First check if the spell's effect type uses bitmask damage
-            if (parent.TryGetSpellEffect(out int effect) && VanillaSpellMap.IsBitmaskEffect(effect))
+            if (hasEffect && VanillaSpellMap.IsBitmaskEffect(effect))
             {
                 // Leave as raw string for export
                 return;
             }
 
             // Fallback: check if damage value looks like a bitmask (power of 2 > 8192)
-            // These encode special damage effects, not monster IDs
-            if (IsBitmaskDamage(_val))
+            // These encode special damage effects, not monster IDs. Only for an effect the exe
+            // table doesn't know: where it says monster, 16384 is monster 16384.
+            if (!(hasEffect && effects.KnowsEffect(effect)) && IsBitmaskDamage(_val))
             {
                 // Leave as raw string for export
                 return;
             }
 
             //is this a summon?
-            if (parent.IsSummon()) ResolveAsSummon();
+            if (parent.IsSummon())
+            {
+                // 10089/10114: 1-99 picks from one of the game's lists of uniques (0x1401cea80),
+                // only 100 and up (or a negative tag) is a monster
+                if (hasEffect && long.TryParse((_val ?? "").Trim(), out long d) && effects.IsUniqueListKey(effect, d))
+                    return;
+                ResolveAsSummon();
+            }
             else if (parent.IsEnchant()) ResolveAsEnchant();
             else if (parent.IsEventEffect()) ResolveAsEventEffect();
+            // 10154: a site added to the province (addfeatnr 0x1402ac0b0)
+            else if (hasEffect && effects.IsSiteEffect(effect)) ResolveAsSite();
 
             //currently string
             //resolve to an ID
@@ -89,6 +103,10 @@ namespace Dom5Edit.Props
             {
                 return _monRef.TryGetEntity(out e);
             }
+            if (_siteRef != null)
+            {
+                return _siteRef.TryGetEntity(out e);
+            }
             return false;
         }
 
@@ -121,6 +139,14 @@ namespace Dom5Edit.Props
             _enchRef.Resolve();
         }
 
+        void ResolveAsSite()
+        {
+            _siteRef = new SiteRef();
+            _siteRef.Parent = this.Parent;
+            _siteRef.Parse(this.Command, _val, Comment);
+            _siteRef.Resolve();
+        }
+
         void ResolveAsEventEffect()
         {
             _eventEffectRef = new EventEffectCodeRef();
@@ -144,6 +170,11 @@ namespace Dom5Edit.Props
             if (_eventEffectRef != null)
             {
                 return _eventEffectRef.ToExportString();
+            }
+
+            if (_siteRef != null)
+            {
+                return _siteRef.ToExportString();
             }
 
             if (CommandsMap.TryGetString(Command, out string s))
@@ -174,6 +205,10 @@ namespace Dom5Edit.Props
             if (_eventEffectRef != null)
             {
                 return _eventEffectRef.GetEntityType();
+            }
+            if (_siteRef != null)
+            {
+                return _siteRef.GetEntityType();
             }
             // Unresolved (bitmask value) - return SPELL as a fallback since it's spell damage
             return EntityType.SPELL;

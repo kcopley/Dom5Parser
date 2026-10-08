@@ -7,8 +7,9 @@ change to stats, events, any data in the exe). Not built yet.
 
 Everything `tools/dom6exe` writes from `Dominions6.exe` (6.37 today): `vanilla.dm` (every entity's
 stats, the read-only values), `vanilla-events.dm`, `vanilla-sprites.json`, the command catalog and
-reading rules (`data/dmread-6.37.json`: commands per type, argument formats, text limits), the game
-tables, the compiled-in icon pack. The editor reads the game's texts and event messages from the
+reading rules (`data/dmread-6.37.json`: commands per type, argument formats, text limits), what a
+spell's `#damage` is per `#effect` (`data/spell-effects-6.37.json`, `dom6exe.py spelleffects`:
+which numbers a merge renumbers; embedded in Dom5Edit), the game tables, the compiled-in icon pack. The editor reads the game's texts and event messages from the
 player's exe at run time, and only from a version it knows (the places are checksum-checked):
 with another version it shows none, and says so; the rest works.
 

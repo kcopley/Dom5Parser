@@ -13,6 +13,7 @@ python3 tools/dom6exe/dom6exe.py catalog   --out Dom5Edit/GameData/game-commands
 python3 tools/dom6exe/dom6exe.py events    --out tools/dom6exe/data/events-6.37.dm
 python3 tools/dom6exe/dom6exe.py sprites   --out tools/dom6exe/data/sprites-6.37.json
 python3 tools/dom6exe/dom6exe.py texts     --out tools/dom6exe/data/texts-6.37.json
+python3 tools/dom6exe/dom6exe.py spelleffects --out tools/dom6exe/data/spell-effects-6.37.json
 python3 tools/dom6exe/dom6exe.py dmread    [--mod FILE.dm [--lines A-B] [--context monster,event]]
 ```
 Options: `--exe PATH` (or env `DOM6_EXE`; default
@@ -33,6 +34,7 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `sprites` | Which picture the game draws for each vanilla monster (and its attack frame and unmounted sprite) and item: the sprite numbers it stores, and the archive (`sprites.py`). Numbers only; the editor reads the pictures from the player's install (`Dom5Edit/VanillaSprites.cs`, `Dom5Editor/Sprites/GameArt.cs`). Also the rule for a site's picture, and (`"flag"`, `flags.py`) how the game builds a nation's flag from parts of `flag.trs` and the nation's colors. |
 | `texts` | Where the game keeps its texts (`texts.py`): monster, item and spell descriptions, a spell's details, portent and cure, a nation's description, summary and brief. Only locations: the two lists of string pointers, how each kind's key is made, and a checksum of the bytes read. The editor reads the texts from the player's own exe (Dom5Edit/GameData/VanillaTexts.cs). See Texts below. |
 | `dmread` | How the game reads a `.dm` file (`dmread.py`, "Reading .dm files" below). Alone: the rules it reads from the exe (the string commands per type with their length limit and whether reading skips their text, the `#new`/`#select` check, the types that refuse a missing `#end`). With `--mod`: the game's reading replayed on that file, and where it differs from a line-by-line reading (strings running over command lines, `#` read inside quotes, texts cut at their limit, fatal errors, ...); `--lines A-B` lists what each pass reads there. |
+| `spelleffects` | What a spell's `#damage` is for each `#effect` (`spelleffects.py`): a monster, a monster or tag, an enchantment, an event `#id`, a site, an ability number, a bitmask or a plain value, with the code address it was read from. Embedded in Dom5Edit (SpellEffectData), used by the merger and its referee (`gameread.py --merge`). See "Spell effects and #damage" below. |
 | `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
 
 ## How it finds things (no hard-coded addresses)
@@ -485,6 +487,72 @@ known value on every run.
   list's address, capacity, count and end key, each kind's keys, and the span of the file the
   editor reads (both lists and every string they point to, 2.5 MB) with its sha256. The editor
   uses the texts only if that checksum matches, so any other exe reads nothing.
+
+## Spell effects and #damage (6.37)
+
+A spell's `#damage` is a number the effect code interprets: a monster for a summoning, an
+enchantment for a global, an event `#id` for 10042, bits for buffs and afflictions, and a plain
+value (damage, years, gems) for the rest. A merge renumbers monsters, enchantments, event ids and
+sites, so it has to know which; `spelleffects.py` reads it from the code that carries the effects
+out (`data/spell-effects-6.37.json`, embedded in Dom5Edit as `Dom5Edit.GameData.spell-effects.json`).
+
+**Where.** Each function is found by a string it prints (no addresses are hard-coded):
+- Rituals (`#effect` 10000 and up): `castlabspell` (0x1401985c0, "castlabspell: bad spellnr"):
+  the effect minus 10000 is compared one value at a time (`cmp r13d,N`; ranges as `lea eax,[r13-N];
+  cmp eax,M`), each branch reading the record's `#damage` (+0x38) itself, or a level-scaled copy
+  (`[rbp-0x58]`: 1000 and up is +1 per caster level).
+- Combat spells land in `spellblastsquare` (0x1401caf10), which scales `#damage` by the caster's
+  level except for the effects whose damage is an identifier (1, 10, 11, 21, 23, 31, 43, 54, 126,
+  130, 144-150, 165, 166, 500-699), then calls `blastsquare` (0x1401b5ba0: the summons and clouds)
+  with the effect and damage as stack arguments 7 and 5; per unit hit, `hitunit` (0x1401c5ec0;
+  effect in r9d, damage in r8) does the rest.
+- The sinks a `#damage` can reach: `resolve_summon` 0x1401cd6c0 ("*** Bad summondmg %d"),
+  `unique_pick` 0x1401cea80, `newtempunit` 0x1400ac370, new units 0x1400a5a00 (both hand their
+  first argument to resolve_summon), `newcom` 0x1400a5280, the polymorph 0x1401d22b0, `newench`
+  0x1401a7fc0 ("newench %d by %s"), the spell event queue 0x1401c1e70 (read back by 0x14010ad50,
+  "unknown spell event id %d", which looks for effect code 40, `#id`, in every event), `addfeatnr`
+  0x1402ac0b0 (sites), `addunitfx`/`setunitfx` 0x1401a9290/0x1401a97e0, age 0x1401a8af0.
+- A branch's `#damage` is followed back from each call (and each OR/AND/TEST into memory) along
+  the branch's own instructions to the record's +0x38 or the damage argument; what the code alone
+  can't name (years, a fort type, a gem path) is a note in `spelleffects.py`, checked against it.
+
+**resolve_summon** (monster numbers): positive is the monster; -1 nothing; -2 .. -28 special picks
+(random longdead, horrors, monsters with some ability; -26 becomes -27 or -28 by the province); -1000 and below
+the monster tag -N (a random monster with `#montag N`, ability 637); -29 .. -999 nothing ("Bad
+summondmg"). **unique_pick** (10089, 10114): 1-99 a key into hard-coded lists of uniques (1-14,
+16-20 used: Bind Ice Devil 1, Heliophagus 3, ...; 15 and 21-99 summon nothing); 100 and up the
+monster itself; negative through resolve_summon.
+
+| `#damage` is | Effects |
+|---|---|
+| monster or tag | 1, 21, 31 (blastsquare), 43, 126 (border summons, newtempunit), 54, 165 (polymorph the target, hitunit); 10001, 10021, 10037, 10038, 10050, 10062, 10093, 10119, 10130, 10137 |
+| monster (no tags) | 10026 (the mummy form; giants and some heroes get other hard-coded forms), 10141 (newcom of the monster **and the next number**: Call the Birds of Splendor summons the two Yllerion, 3382 and 3383; a merge has to keep such a pair in a row) |
+| key 1-99, else monster or tag | 10089, 10114 |
+| enchantment | 81, 133 (battlefield: the same numbers as the globals', `#req_ench` sees both), 10081, 10082, 10083, 10084, 10085 |
+| event `#id` | 10042 |
+| site | 10154 (added to the target province) |
+| monster ability number | 500-599 (set to effect-499), 600-699 (add effect-599), 10500-10599 (on the caster) |
+| bitmask | 10, 23 (buff words), 11 (afflictions: Web 536870912, False Fetters 131072, Slime 134217728, ...), 144-150 (cloud types), 10010, 10023 (caster's buff words), 10064, 10136 (afflictions), 10131, 10132 (afflictions cured) |
+| a number | the damage effects (2, 3, 7, 24, 25, ...), 17 (morale), 67 (weakness), 101, 10101, 10111 (years), 162 (images), 10040, 10041, 10070, 10091, 10094, 10112 (damage), 10092, 10117, 10118, 10160, 10164 (counts, gold) |
+| a code or index | 108 (where the target goes: -12 Inferno, -13 Kokytos), 10048 (gem path), 10063 (fort type), 10100 (terrain list 1-3), 10153, 10155, 10168 |
+| not used | 0, 15, 20, 130 (no combat case), 166 (the new form is the target's `#animated`), 10019, 10022, 10030, 10034, 10035, 10039, 10044, 10045, 10049, 10052, 10053, 10057, 10068, 10076, 10077, 10079, 10090, 10095, 10098, 10102, 10110, 10113, 10115, 10116, 10125, 10127, 10135, 10152, 10156, 10157, 10161, 10163, 10167, 10169; 10086 has no branch at all (the spell does nothing) |
+
+**Combat effects 1000-9999** (DomEnhanced's 6043 "6 turns border summoning", 4011 Slime Cloud, PS
+Bloodwar's 2003): the AI's spell scoring reads them as effect % 1000 (evalspell 0x1401c3b08), and
+the function that would set up a lasting effect (0x140124810, which fills the battle-sprite table
+the round loop replays) is never called; blastsquare and hitunit have no case for them. So in 6.37
+such a spell does nothing in battle beyond what the AI expects; the table reads them as effect %
+1000 (6043 as 43: a monster), which keeps a merge pointing at the unit the author meant.
+
+**Compared with the inspector's tables** (`spell_effect_types.json`, which Dom5Edit used, and its
+`spell_effects_mapping.json`, which writes ritual effects without their 10000: 1 for 10001, 85 for
+10085): 10089/10114 were list keys only (DomEnhanced's 10089 spells name its own uniques, 7296
+etc., and Confluence's 6894: in a merge they kept the old numbers); 10085 and 133 weren't
+enchantments (DomEnhanced's 286 and 350-359, Confluence's 858); 165 and 6043 weren't monsters;
+10154 wasn't a site; 120 and 10076 were lists of units and 10100 a list key (their units are
+hard-coded, `#damage` unused or a key); 130 was a monster (no combat case; 10130 is);
+10010/10023/10064/10131/10132/10136 and the clouds 144-150 weren't bitmasks (no harm: nothing
+renumbered them).
 
 ## Events (6.37)
 

@@ -861,6 +861,12 @@ def cmd_texts(exe, args):
     return res
 
 
+def cmd_spelleffects(exe, args):
+    """What a spell's #damage means for each #effect (spelleffects.py)."""
+    import spelleffects
+    return spelleffects.collect(exe)
+
+
 def cmd_dmread(exe, args):
     """How the game reads a .dm file (dmread.py): without --mod, the rules read from the exe;
     with --mod, where the game reads that file differently from a line-by-line reading, or with
@@ -941,7 +947,7 @@ def cmd_readonly(exe, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['catalog', 'commands', 'dmread', 'events', 'layout', 'monsters', 'readonly', 'sprites', 'tables', 'texts', 'vanilla'])
+    ap.add_argument('what', choices=['catalog', 'commands', 'dmread', 'events', 'layout', 'monsters', 'readonly', 'spelleffects', 'sprites', 'tables', 'texts', 'vanilla'])
     ap.add_argument('--exe', default=os.environ.get('DOM6_EXE', DEFAULT_EXE))
     ap.add_argument('--inspector', default=os.environ.get('DOM6INSPECTOR', '/mnt/c/Projects/dom6inspector'),
                     help='dom6inspector checkout, for naming ability numbers (hints only)')
@@ -955,7 +961,7 @@ def main():
     exe = Exe(args.exe)
     res = {'commands': cmd_commands, 'layout': cmd_layout, 'monsters': cmd_monsters, 'readonly': cmd_readonly,
            'tables': cmd_tables, 'vanilla': cmd_vanilla, 'catalog': cmd_catalog, 'events': cmd_events,
-           'sprites': cmd_sprites, 'texts': cmd_texts, 'dmread': cmd_dmread}[args.what](exe, args)
+           'sprites': cmd_sprites, 'texts': cmd_texts, 'dmread': cmd_dmread, 'spelleffects': cmd_spelleffects}[args.what](exe, args)
     if res is None:
         return
     text = json.dumps(res, indent=1, default=str)

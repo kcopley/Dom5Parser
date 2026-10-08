@@ -74,6 +74,9 @@ namespace Dom5Edit
             set => _spellEffectTypesPath = value;
         }
 
+        /// <summary>The vanilla mod if it is loaded (or being resolved), without loading it.</summary>
+        internal static Mod LoadedVanilla => _vanilla;
+
         public static Mod Vanilla
         {
             get

@@ -199,7 +199,9 @@ namespace Dom5Edit.Entities
             //if no effect, back to copyspell check
             //if copyspell is not in the mod, check the vanilla list
             //return the effect
-            if (TryGetSpellEffect(out int effect) && VanillaSpellMap.IsEnchantEffect(effect)) return true;
+            // the spell's own #effect decides (as IsSummon): a game global given another effect
+            // isn't an enchantment any more
+            if (TryGetSpellEffect(out int effect)) return VanillaSpellMap.IsEnchantEffect(effect);
             else if (this.IsVanillaID())
             {
                 return this.IsVanillaEnchant();
@@ -233,7 +235,7 @@ namespace Dom5Edit.Entities
             //if no effect, back to copyspell check
             //if copyspell is not in the mod, check the vanilla list
             //return the effect
-            if (TryGetSpellEffect(out int effect) && VanillaSpellMap.IsEventEffect(effect)) return true;
+            if (TryGetSpellEffect(out int effect)) return VanillaSpellMap.IsEventEffect(effect);
             else if (this.IsVanillaID())
             {
                 return this.IsVanillaEventEffect();
@@ -254,6 +256,30 @@ namespace Dom5Edit.Entities
                     return spell.IsEventEffect(visited);
                 }
             }
+            return false;
+        }
+
+        /// <summary>
+        /// The #effect the game uses for this spell: its own, else its #copyspell's (a spell of the
+        /// mod or the game's), else the game's own for a #selectspell of a game spell.
+        /// </summary>
+        internal bool TryGetEffectNumber(out int effect) => TryGetEffectNumber(out effect, null);
+
+        private bool TryGetEffectNumber(out int effect, HashSet<Spell>? visited)
+        {
+            if (TryGetSpellEffect(out effect))
+                return true;
+            if (TryGetCopySpellRef(out var copy))
+            {
+                if (copy.TryGetSpell(out var spell) && spell != this && (visited ??= new HashSet<Spell>()).Add(this))
+                    return spell.TryGetEffectNumber(out effect, visited);
+                if (copy.HasValue && (VanillaSpellMap.TryGetEffect(copy.ID, out effect)
+                                      || copy.IsStringRef && VanillaSpellMap.TryGetEffect(copy.Name, out effect)))
+                    return true;
+            }
+            if (this.ID != -1 && VanillaSpellMap.TryGetEffect(this.ID, out effect))
+                return true;
+            effect = -1;
             return false;
         }
 
@@ -2668,42 +2694,52 @@ namespace Dom5Edit.Entities
             return SpellNameEffectMap.ContainsKey(id);
         }
 
+        // A game spell's #effect: vanilla.dm's (written from the exe) once it is loaded. The
+        // inspector's spell_effects_mapping.json writes ritual effects without their 10000 (1 for
+        // 10001, 85 for 10085), which the exe table (by exact number) reads as combat effects.
         public static bool TryGetEffect(int ID, out int effect)
         {
+            if (VanillaLoader.LoadedVanilla is Mod vanilla && vanilla.Database[EntityType.SPELL].TryGetValue(ID, out var e)
+                && e is Spell s && s.TryGetSpellEffect(out effect))
+                return true;
             if (UseDynamicData) return SpellEffectData.Instance.TryGetEffect(ID, out effect);
             return SpellIDEffectMap.TryGetValue(ID, out effect);
         }
 
         public static bool TryGetEffect(string ID, out int effect)
         {
+            if (ID != null && VanillaLoader.LoadedVanilla is Mod vanilla && vanilla.Database[EntityType.SPELL].TryGetValueNamed(ID, out var e)
+                && e is Spell s && s.TryGetSpellEffect(out effect))
+                return true;
             if (UseDynamicData) return SpellEffectData.Instance.TryGetEffect(ID, out effect);
             return SpellNameEffectMap.TryGetValue(ID, out effect);
         }
 
+        // (an effect the exe table knows is decided by it, loaded or not: SpellEffectData.ExeArgument)
         public static bool IsSummonEffect(int effect)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsSummonEffect(effect);
+            if (UseDynamicData || SpellEffectData.Instance.KnowsEffect(effect)) return SpellEffectData.Instance.IsSummonEffect(effect);
             if (effect > 10000) effect -= 10000;
             return _summonEffects.Contains(effect);
         }
 
         public static bool IsEnchantEffect(int effect)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsEnchantEffect(effect);
+            if (UseDynamicData || SpellEffectData.Instance.KnowsEffect(effect)) return SpellEffectData.Instance.IsEnchantEffect(effect);
             if (effect > 10000) effect -= 10000;
             return _enchantEffects.Contains(effect);
         }
 
         public static bool IsEventEffect(int effect)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsEventEffect(effect);
+            if (UseDynamicData || SpellEffectData.Instance.KnowsEffect(effect)) return SpellEffectData.Instance.IsEventEffect(effect);
             if (effect > 10000) effect -= 10000;
             return _eventEffects.Contains(effect);
         }
 
         public static bool IsBitmaskEffect(int effect)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsBitmaskEffect(effect);
+            if (UseDynamicData || SpellEffectData.Instance.KnowsEffect(effect)) return SpellEffectData.Instance.IsBitmaskEffect(effect);
             // Default bitmask effects: 10, 11, 23
             if (effect > 10000) effect -= 10000;
             return effect == 10 || effect == 11 || effect == 23;
@@ -2711,37 +2747,31 @@ namespace Dom5Edit.Entities
 
         public static bool IsSummonSpell(int spellID)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsSummonSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsSummonEffect(effect);
         }
 
         public static bool IsSummonSpell(string spellID)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsSummonSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsSummonEffect(effect);
         }
 
         public static bool IsEnchantSpell(int spellID)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsEnchantSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEnchantEffect(effect);
         }
 
         public static bool IsEnchantSpell(string spellID)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsEnchantSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEnchantEffect(effect);
         }
 
         public static bool IsEventEffectSpell(int spellID)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsEventEffectSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEventEffect(effect);
         }
 
         public static bool IsEventEffectSpell(string spellID)
         {
-            if (UseDynamicData) return SpellEffectData.Instance.IsEventEffectSpell(spellID);
             return TryGetEffect(spellID, out int effect) && IsEventEffect(effect);
         }
     }

@@ -58,7 +58,74 @@ namespace Dom5Edit
         {
             // Initialize with default effect types (fallback if JSON not loaded)
             InitializeDefaultEffectTypes();
+            LoadExeEffects();
         }
+
+        // What #damage is for each #effect, read from the game's own effect code (embedded
+        // tools/dom6exe/data/spell-effects-6.37.json, "dom6exe.py spelleffects"; README "Spell
+        // effects and #damage"). For every effect it lists it decides over spell_effect_types.json
+        // (the inspector's tables, which had 10089/10114, 10085 and 133 wrong): monster,
+        // monster_or_tag, unique_or_monster_or_tag, enchantment, event, site, or a plain value.
+        private readonly Dictionary<int, string> _exeArgument = new();
+        private readonly List<(int From, int To, string Argument)> _exeRanges = new();
+        // 10089/10114 (unique_pick 0x1401cea80): 1-99 is a key into the game's lists of uniques,
+        // this and up the monster itself
+        private int _uniqueMonsterFrom = 100;
+        private const string ExeResource = "Dom5Edit.GameData.spell-effects.json";
+
+        private void LoadExeEffects()
+        {
+            try
+            {
+                using var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(ExeResource);
+                if (stream == null)
+                    return;
+                using var doc = JsonDocument.Parse(stream);
+                var root = doc.RootElement;
+                if (root.TryGetProperty("effects", out var effects))
+                    foreach (var e in effects.EnumerateObject())
+                        if (int.TryParse(e.Name, out int n) && e.Value.TryGetProperty("argument", out var a))
+                            _exeArgument[n] = a.GetString() ?? "";
+                if (root.TryGetProperty("ranges", out var ranges))
+                    foreach (var r in ranges.EnumerateArray())
+                        _exeRanges.Add((r.GetProperty("from").GetInt32(), r.GetProperty("to").GetInt32(), r.GetProperty("argument").GetString() ?? ""));
+                if (root.TryGetProperty("unique_monster_from", out var u) && u.TryGetInt32(out int from))
+                    _uniqueMonsterFrom = from;
+            }
+            catch (Exception)
+            {
+                // without the table the inspector-derived classification below applies
+            }
+        }
+
+        /// <summary>
+        /// What the game does with #damage for this effect (null: not in the exe table). Combat
+        /// effects 1000-9999 are read as effect % 1000, as the game's AI reads them (evalspell
+        /// 0x1401c3b08); the battle code itself has no case for them in 6.37.
+        /// </summary>
+        public string? ExeArgument(int effect)
+        {
+            if (VanillaLoader.GameVersion != GameVersion.Dom6)
+                return null;            // read from Dominions6.exe: not Dom5's effects
+            if (effect >= 1000 && effect < 10000)
+                effect %= 1000;
+            if (_exeArgument.TryGetValue(effect, out var a))
+                return a;
+            foreach (var (from, to, arg) in _exeRanges)
+                if (effect >= from && effect <= to)
+                    return arg;
+            return null;
+        }
+
+        /// <summary>For 10089/10114: #damage 1-99 is a key into the game's lists of uniques, not a monster.</summary>
+        public bool IsUniqueListKey(int effect, long damage) =>
+            ExeArgument(effect) == "unique_or_monster_or_tag" && damage >= 1 && damage < _uniqueMonsterFrom;
+
+        /// <summary>The exe table knows this effect (its reading decides).</summary>
+        public bool KnowsEffect(int effect) => ExeArgument(effect) != null;
+
+        /// <summary>#damage is a site number (10154: addfeatnr 0x1402ac0b0).</summary>
+        public bool IsSiteEffect(int effect) => ExeArgument(effect) == "site";
 
         /// <summary>
         /// Load spell effect data from JSON files.
@@ -245,26 +312,37 @@ namespace Dom5Edit
 
         public bool TryGetEffect(string spellName, out int effect) => _spellNameToEffect.TryGetValue(spellName, out effect);
 
+        // the exe table first (by the exact effect number: a combat effect and its ritual + 10000
+        // differ, e.g. 133 is a battlefield enchantment and 10085 a global one); the inspector's
+        // classification (by effect % 10000) only for effects the table doesn't know
         public bool IsSummonEffect(int effect)
         {
+            if (ExeArgument(effect) is string a)
+                return a is "monster" or "monster_or_tag" or "unique_or_monster_or_tag";
             if (effect > 10000) effect -= 10000;
             return _summonEffects.Contains(effect);
         }
 
         public bool IsEnchantEffect(int effect)
         {
+            if (ExeArgument(effect) is string a)
+                return a == "enchantment";
             if (effect > 10000) effect -= 10000;
             return _enchantEffects.Contains(effect);
         }
 
         public bool IsEventEffect(int effect)
         {
+            if (ExeArgument(effect) is string a)
+                return a == "event";
             if (effect > 10000) effect -= 10000;
             return _eventEffects.Contains(effect);
         }
 
         public bool IsBitmaskEffect(int effect)
         {
+            if (ExeArgument(effect) is string a)
+                return a == "bitmask";
             if (effect > 10000) effect -= 10000;
             return _bitmaskEffects.Contains(effect);
         }
