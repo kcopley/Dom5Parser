@@ -86,16 +86,7 @@
                         Click="ReportSave_Click"/>
                 <Button DockPanel.Dock="Right" Content="Open report" Classes="small" Margin="6,0,0,0"
                         ToolTip.Tip="See what the check found, section by section, with a Go to for each line" Click="ReportOpen_Click"/>
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="{Binding ReportSummary}" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ReportSummary}"/>
-                    <!-- a submod opened alone: the mod it probably needs (NeededModFinder) -->
-                    <DockPanel Margin="0,4,0,0" IsVisible="{Binding HasNeededSuggestion}">
-                        <Button DockPanel.Dock="Right" Content="Read it over that mod" Classes="small" Margin="6,0,0,0" Click="NeededSuggestion_Click"
-                                ToolTip.Tip="Read the mod again over the other one, as the game does when that one is enabled first (remembered for this mod; change it on Mod Info)"/>
-                        <TextBlock Text="{Binding NeededSuggestionText}" Classes="muted" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                                   ToolTip.Tip="{Binding NeededSuggestion}"/>
-                    </DockPanel>
-                </StackPanel>
+                <TextBlock Text="{Binding ReportSummary}" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ReportSummary}" VerticalAlignment="Center"/>
             </DockPanel>
         </Border>
 

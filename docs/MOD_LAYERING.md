@@ -21,8 +21,10 @@ remembered per mod in `%APPDATA%\Dom5Editor\needed-mods.json`) use it.
   changed or saved. Its new events and bands can't be changed at all (no number to #select).
 - The editor lists a needed mod's entities as "From <mod>" (or "Vanilla, changed by <mod>"),
   and links to them (used by, event chains, references) as to vanilla's.
-- `NeededModFinder` suggests the mod a submod needs when the report finds numbers from
-  another mod: the .dm next to it (then in the folders next to its folder) that defines most.
+- The user picks a submod's parent: the Load menu's "Load as submod..." or Mod Info's "Needs"
+  (remembered per mod). The editor doesn't guess (2026-10-07: a guess from the numbers a mod
+  uses that nothing loaded has, NeededModFinder, matched a few stray numbers in any big mod;
+  the user: "an explicit parent reference, or a 'load as submod' option would be much better").
 
 The rest of this file predates the resolver (2026-10-05): the layers are now the resolver's
 sources (Own, Vanilla, Copied), see `docs/EDIT_FLOW.md`.

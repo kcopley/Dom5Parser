@@ -141,58 +141,20 @@ namespace Dom5Editor.UI.Views
             SelectedTab = tab is EntityType t ? TabOf(t) : Tabs[0]; // (the tab it was changed on)
         }
 
-        /// <summary>A mod the open one probably needs (it defines most of the numbers the mod refers to that nothing loaded has), or null.</summary>
-        public string? NeededSuggestion { get; private set; }
-
-        public bool HasNeededSuggestion => NeededSuggestion != null;
-
-        /// <summary>"It refers to 70 numbers Sombre_Warhammer_dom6.dm defines: a mod it needs?"</summary>
-        public string NeededSuggestionText { get; private set; } = "";
-
-        /// <summary>Reads the mod over the suggested one.</summary>
-        public void UseNeededSuggestion()
-        {
-            if (NeededSuggestion is string file && _session != null)
-                SetNeeded(_session.Needed.Select(m => m.FullFilePath).Append(file).ToList());
-        }
-
-        /// <summary>Looks for the mod a submod needs (NeededModFinder) when the report has numbers from another mod.</summary>
-        /// <summary>The look for a needed mod after opening, if one is running (the snapshot harness waits for it).</summary>
-        internal Task? Suggesting { get; private set; }
-
         /// <summary>
-        /// Looks for the mod a submod needs, off the window's thread: it reads the .dm files
-        /// around the mod (Sombre's folder holds 55 MB of them), which takes seconds on a slow disk.
+        /// Opens a submod over the mod it's read over (the Load menu's "Load as submod..."): the
+        /// parent remembered for it, as Mod Info's "Needs" does. The user picks it: the editor
+        /// doesn't guess (stray numbers are found in any big mod by chance).
         /// </summary>
-        private void SuggestNeeded(ModReport.Report report, ValidationResult validation)
+        public void LoadAsSubmod(string submod, string parent)
         {
-            Suggest(null);
-            var session = _session;
-            var path = session?.FilePath;
-            if (session == null || path == null || report.Count(ModReport.Missing) == 0)
-                return;
-            var missing = ModReport.MissingNumbers(validation);
-            var skip = session.Needed.Select(m => m.FullFilePath).ToList();
-            Suggesting = Task.Run(() => Dom5Edit.NeededModFinder.Suggest(path, missing, skip)).ContinueWith(t =>
+            if (string.Equals(System.IO.Path.GetFullPath(submod), System.IO.Path.GetFullPath(parent), StringComparison.OrdinalIgnoreCase))
             {
-                if (t.Status == TaskStatus.RanToCompletion && t.Result is { } found)
-                    Ui.Later(() =>
-                    {
-                        if (ReferenceEquals(_session, session)) // (still the mod it was found for)
-                            Suggest(found);
-                    });
-            }, TaskScheduler.Default);
-        }
-
-        private void Suggest((string File, int Found)? found)
-        {
-            NeededSuggestion = found?.File;
-            NeededSuggestionText = found is { } f
-                ? $"{System.IO.Path.GetFileName(f.File)} defines {(f.Found == 1 ? "the number" : $"{f.Found} of the numbers")} this mod uses from another mod: read it over that one?"
-                : "";
-            OnPropertyChanged(nameof(NeededSuggestion));
-            OnPropertyChanged(nameof(HasNeededSuggestion));
-            OnPropertyChanged(nameof(NeededSuggestionText));
+                StatusMessage = "A mod can't be read over itself";
+                return;
+            }
+            NeededMods.Set(submod, new[] { parent });
+            LoadMod(submod);
         }
 
         public void SaveMod(string filePath)
@@ -211,8 +173,6 @@ namespace Dom5Editor.UI.Views
                 w.Close();
             _session = session;
             _report = null;
-            NeededSuggestion = null;
-            NeededSuggestionText = "";
             ShowReportBar = false;
             _back.Clear();
             _forward.Clear();
@@ -334,13 +294,11 @@ namespace Dom5Editor.UI.Views
             var parts = new List<string>();
             if (report.Count(ModReport.Wrong) is int w and > 0) parts.Add(N(w, "thing goes wrong in game", "things go wrong in game"));
             if (report.Count(ModReport.Ignored) is int g and > 0) parts.Add(N(g, "line the game ignores", "lines the game ignores"));
-            if (report.Count(ModReport.Missing) is int m and > 0) parts.Add(N(m, "number from another mod", "numbers from another mod"));
+            if (report.Count(ModReport.Missing) is int m and > 0) parts.Add(N(m, "number not in this mod or the game", "numbers not in this mod or the game"));
             if (report.Count(ModReport.Look) is int l and > 0) parts.Add(N(l, "thing worth a look", "things worth a look"));
             ReportSummary = parts.Count == 0 ? "Checked on opening: nothing found, the game reads the mod as written"
                 : "Checked on opening: " + string.Join(" · ", parts);
             OnPropertyChanged(nameof(ReportSummary));
-            if (_validation != null)
-                SuggestNeeded(report, _validation);
             ShowReportBar = true;
             ReportMilliseconds = watch.ElapsedMilliseconds;
         }

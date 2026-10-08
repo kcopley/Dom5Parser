@@ -232,6 +232,13 @@ namespace Dom5Editor.Ava.Views
                 items.Add(new MenuItem { Header = "(no recent mods)", IsEnabled = false });
             items.Add(new Separator());
 
+            // a submod over its parent, both picked (Mod Info's "Needs" changes it later)
+            var submod = new MenuItem { Header = "Load as submod..." };
+            ToolTip.SetTip(submod, "Open a submod over the mod it needs (its parent): pick the submod, then the parent. The parent is read first, " +
+                                   "as the game reads it when it's enabled first, and never changed; remembered for the submod (Mod Info, \"Needs\")");
+            submod.Click += async (s, a) => await LoadAsSubmod();
+            items.Add(submod);
+
             var exe = GameInstall.Exe();
             var game = exe != null ? Path.GetDirectoryName(exe) : GameInstall.GameFolder();
             var gameItem = new MenuItem { Header = "Dominions 6 folder..." };
@@ -247,6 +254,37 @@ namespace Dom5Editor.Ava.Views
             backups.Click += async (s, a) => await OpenBackups();
             items.Add(backups);
             return items;
+        }
+
+        /// <summary>"Load as submod...": the submod, then the mod it's read over.</summary>
+        private async Task LoadAsSubmod()
+        {
+            if (!await ConfirmDiscard())
+                return;
+            var filter = Hooks.Filters("Dominions mods (*.dm)|*.dm|All files|*.*");
+            var subs = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions { Title = "The submod to open", AllowMultiple = false, FileTypeFilter = filter });
+            if (subs.Count == 0 || subs[0].TryGetLocalPath() is not string sub)
+                return;
+            var start = Path.GetDirectoryName(sub) is string dir ? await StorageProvider.TryGetFolderFromPathAsync(dir) : null;
+            var parents = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = $"The mod {Path.GetFileName(sub)} needs (its parent, enabled before it in game)",
+                AllowMultiple = false,
+                FileTypeFilter = filter,
+                SuggestedStartLocation = start,
+            });
+            if (parents.Count == 0 || parents[0].TryGetLocalPath() is not string parent)
+                return;
+            try
+            {
+                _vm.LoadAsSubmod(sub, parent);
+                _settings.AddRecent(sub);
+                _settings.Save();
+            }
+            catch (Exception ex)
+            {
+                await Dialogs.Tell(this, "Load Error", $"The mod couldn't be opened:\n\n{ex.Message}");
+            }
         }
 
         /// <summary>Opens the folder with the copies of the current mod's file (made on opening it and before each save).</summary>
@@ -509,7 +547,6 @@ namespace Dom5Editor.Ava.Views
         }
         private void ReportOpen_Click(object? sender, RoutedEventArgs e) => OpenReport(rebuild: false);
         private void ReportClose_Click(object? sender, RoutedEventArgs e) => _vm.ShowReportBar = false;
-        private void NeededSuggestion_Click(object? sender, RoutedEventArgs e) => _vm.UseNeededSuggestion();
 
         private async void ReportSave_Click(object? sender, RoutedEventArgs e)
         {

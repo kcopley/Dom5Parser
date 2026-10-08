@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Dom5Editor.Ava.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
@@ -24,6 +25,8 @@ namespace Dom5Editor.Ava.Views
             InitializeComponent();
             _main = main;
             _result = result;
+            // Go To: a middle click or the right click menu opens the entity in a window of its own (this list stays)
+            Link.Install(this, c => c is Button { Tag: ValidationIssueItem { Entity: { } entity } } ? () => _main.Open(entity) : null);
             _all = result.Issues.Select(i => new ValidationIssueItem(i)).ToList();
             ErrorCountText.Text = $"{result.ErrorCount} Error{(result.ErrorCount == 1 ? "" : "s")}";
             WarningCountText.Text = $"{result.WarningCount} Warning{(result.WarningCount == 1 ? "" : "s")}";

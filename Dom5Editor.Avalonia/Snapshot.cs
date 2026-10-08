@@ -40,6 +40,8 @@ namespace Dom5Editor.Ava
     ///   --popout-back            back in the newest page window
     ///   --popout-png FILE.png    render the newest page window
     ///   --popout-close           close the newest page window: logs what still listens to the mod
+    ///   --middle-click-link N    middle-click the Nth link on the main window's page (a mouse click on it):
+    ///                            logs the links there (buttons with a LinkCommand or a Link.Open) and the windows
     ///   --merge-window FILE.png OUT.dm A.dm B.dm[=A.dm] ...   "Merge mods...": the mods listed (B over A), merged into
     ///                            OUT.dm; renders FILE-before.png and FILE.png (after), logs the summary
     /// Messages go to FILE.png.log / FILE.dm.log next to the first output, and to stdout.
@@ -409,6 +411,30 @@ namespace Dom5Editor.Ava
                             finally { Hooks.ForceNewWindow = false; }
                             Pump();
                             Log($"{step} {type} {id}: main window on {vm.SelectedPage?.DisplayName ?? "(nothing)"}");
+                            LogPopOuts(window);
+                            break;
+                        }
+                        case "--middle-click-link":
+                        {
+                            int n = int.Parse(args[++i]);
+                            Pump();
+                            var view = window.GetVisualDescendants().OfType<EntityPageView>().FirstOrDefault(v => v.IsEffectivelyVisible)
+                                       ?? throw new InvalidOperationException("no page on screen");
+                            var links = view.GetVisualDescendants().OfType<Button>()
+                                .Where(b => b.IsEffectivelyVisible && (b.Command is ILinkCommand || Link.GetOpen(b) != null)).ToList();
+                            var nonLinks = view.GetVisualDescendants().OfType<Button>().Count(b => b.IsEffectivelyVisible) - links.Count;
+                            Log($"links on the page: {links.Count} ({string.Join(", ", links.Take(12).Select(b => ToolTip.GetTip(b) as string ?? (b.Content as string) ?? "?").Select(t => t.Length > 40 ? t[..40] : t))}); other buttons {nonLinks}");
+                            if (n >= links.Count)
+                                throw new InvalidOperationException($"no link {n}");
+                            var target = links[n];
+                            target.BringIntoView();
+                            Pump();
+                            var at = target.TranslatePoint(new Point(target.Bounds.Width / 2, target.Bounds.Height / 2), window) ?? throw new InvalidOperationException("link not on screen");
+                            window.MouseMove(at);
+                            window.MouseDown(at, MouseButton.Middle);
+                            window.MouseUp(at, MouseButton.Middle);
+                            Pump();
+                            Log($"middle-clicked link {n} ({ToolTip.GetTip(target)}): main window on {vm.SelectedPage?.DisplayName}");
                             LogPopOuts(window);
                             break;
                         }

@@ -26,6 +26,8 @@ namespace Dom5Editor.Ava.Views
         {
             InitializeComponent();
             PageParts.ItemTemplate = new PartSelector(this);
+            // links to entities: a middle click or the right click menu opens one in a window of its own
+            Link.Install(this);
             AddHandler(GotFocusEvent, OnGotFocus, RoutingStrategies.Bubble, handledEventsToo: true);
             // a value box is about to save (and the page to rebuild): where the cursor is now going
             AddHandler(Commit.LeavingEvent, (s, e) => _focus = KeyOf(TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() as TextBox));

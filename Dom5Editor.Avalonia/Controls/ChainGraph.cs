@@ -86,6 +86,15 @@ namespace Dom5Editor.Ava.Controls
         {
             ToolTip.SetShowDelay(this, 300);
             Focusable = true;
+            // a card's right click menu: open it here or in a window of its own (Link)
+            ContextRequested += (s, e) =>
+            {
+                if (e.TryGetPosition(this, out var p) && At(OnMap(p)) is { IsCurrent: false } card)
+                {
+                    Link.Menu(card.Open).Open(this);
+                    e.Handled = true;
+                }
+            };
             ZoomInCommand = new RelayCommand(() => ZoomAt(Zoom * 1.25, null));
             ZoomOutCommand = new RelayCommand(() => ZoomAt(Zoom / 1.25, null));
             ActualSizeCommand = new RelayCommand(() => ZoomAt(1, null));
@@ -474,6 +483,9 @@ namespace Dom5Editor.Ava.Controls
                     _selected = null;
                     InvalidateVisual();
                 }
+                // a middle click on a card (not a drag) opens it in a window of its own, as a browser's link
+                if (!_panned && e.InitialPressMouseButton == MouseButton.Middle && At(OnMap(e.GetPosition(this))) is { IsCurrent: false } card)
+                    Link.InNewWindow(card.Open);
                 return;
             }
             if (e.InitialPressMouseButton == MouseButton.Left && _pressed != null && ReferenceEquals(At(OnMap(e.GetPosition(this))), _pressed))

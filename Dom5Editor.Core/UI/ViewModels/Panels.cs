@@ -110,7 +110,7 @@ namespace Dom5Editor.UI.ViewModels
             }
             Candidates = page.Session.References(refType);
             RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
-            OpenCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.Go(RefType, r.RefId); });
+            OpenCommand = new LinkCommand<PanelRow>(r => { if (r != null) _page.Go(RefType, r.RefId); });
             CopyEditCommand = new RelayCommand<PanelRow>(CopyAndEdit);
             NewCommand = new RelayCommand(MakeNew);
         }

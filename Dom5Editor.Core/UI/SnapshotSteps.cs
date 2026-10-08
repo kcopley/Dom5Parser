@@ -819,11 +819,6 @@ namespace Dom5Editor.UI
             if (vm.Report == null)
                 vm.CheckOnOpen();
             Log($"report bar: {vm.ReportSummary} ({vm.ReportMilliseconds} ms)");
-            // (the look for a needed mod runs in the background: its answer, once it's on the bar)
-            vm.Suggesting?.Wait();
-            Pump();
-            if (vm.HasNeededSuggestion)
-                Log($"   suggestion: {vm.NeededSuggestionText}");
             var report = vm.Report!;
             foreach (var s in report.Sections)
                 Log($"   {s.Title}: {s.Count}" + string.Concat(s.Groups.Take(3).Select(g => $"\n      {g.Text} [{g.Lines.Count} line(s); first goes to {g.Lines.FirstOrDefault()?.Entity?.Kind} {g.Lines.FirstOrDefault()?.Entity?.ID}]")));

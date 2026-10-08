@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Dom5Editor.Ava.Controls;
 using Avalonia.Interactivity;
 using Dom5Edit.Validation;
 using Dom5Editor.UI.Views;
@@ -17,6 +18,8 @@ namespace Dom5Editor.Ava.Views
             InitializeComponent();
             _main = main;
             _report = report;
+            // Go to: a middle click or the right click menu opens the entity in a window of its own
+            Link.Install(this, c => c is Button { Tag: LineView { Entity: { } entity } } ? () => _main.Open(entity) : null);
             Show(report);
             KeyDown += (s, e) =>
             {
@@ -35,7 +38,7 @@ namespace Dom5Editor.Ava.Views
         private void GoTo_Click(object? sender, RoutedEventArgs e)
         {
             if ((sender as Control)?.Tag is LineView { Entity: { } entity })
-                _main.Session?.Navigate(entity);
+                _main.Open(entity); // (with Ctrl: a window of its own)
         }
 
         private void Recheck_Click(object? sender, RoutedEventArgs e)

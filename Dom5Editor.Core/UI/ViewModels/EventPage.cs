@@ -215,12 +215,12 @@ namespace Dom5Editor.UI.ViewModels
                 if (site != null)
                 {
                     NamedNote = $"Names the site {site.DisplayName} #{site.ID}";
-                    OpenNamedCommand = new RelayCommand(() => page.Go(EntityType.SITE, site.ID));
+                    OpenNamedCommand = new LinkCommand(() => page.Go(EntityType.SITE, site.ID));
                 }
                 else if (item != null)
                 {
                     NamedNote = $"Names the item {item.DisplayName} #{item.ID}";
-                    OpenNamedCommand = new RelayCommand(() => page.Go(EntityType.ITEM, item.ID));
+                    OpenNamedCommand = new LinkCommand(() => page.Go(EntityType.ITEM, item.ID));
                 }
                 else
                 {
@@ -394,7 +394,7 @@ namespace Dom5Editor.UI.ViewModels
         {
             Label = label;
             Title = title;
-            OpenCommand = new RelayCommand(open);
+            OpenCommand = new LinkCommand(open);
             Tooltip = tooltip.Length > 0 ? tooltip : $"{label}: {title}. Click to open it.";
         }
 
@@ -457,7 +457,7 @@ namespace Dom5Editor.UI.ViewModels
                     var (id, _) = page.ReferenceOf(value.Property, EntityPageViewModel.RefTypeName(rt));
                     _refId = id;
                     Candidates = page.Session.References(rt);
-                    OpenCommand = new RelayCommand(() => { if (_refId is int i && i > 0) page.Go(rt, i); });
+                    OpenCommand = new LinkCommand(() => { if (_refId is int i && i > 0) page.Go(rt, i); });
                     if (id > 0 && !Candidates.Any(c => c.ID == id))
                         _missing = $"there's no {rt.ToString().ToLowerInvariant()} #{id} in the mod or the game's data";
                 }

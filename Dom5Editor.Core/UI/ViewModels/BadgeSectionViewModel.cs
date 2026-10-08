@@ -31,7 +31,7 @@ namespace Dom5Editor.UI.ViewModels
             ReadOnly = readOnly;
             RemoveCommand = new RelayCommand<PropertyItem>(b => { if (b?.Tag is ResolvedValue v) _page.RemoveValue(v); });
             AddCommand = new RelayCommand<AvailablePropertyItem>(Add);
-            NavigateCommand = new RelayCommand<object>(Navigate);
+            NavigateCommand = new LinkCommand<object>(Navigate);
             ReferenceChangedCommand = new RelayCommand<object>(ReferenceChanged);
         }
 

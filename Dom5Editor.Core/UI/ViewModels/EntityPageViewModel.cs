@@ -30,11 +30,11 @@ namespace Dom5Editor.UI.ViewModels
             Session = session;
             Item = item;
             Session.Changed += OnSessionChanged;
-            NavigateCommand = new RelayCommand<object>(p =>
+            NavigateCommand = new LinkCommand<object>(p =>
             {
                 if (p is ValueTuple<string, int> t) Navigate(t.Item1, t.Item2);
             });
-            NavigateToCopyCommand = new RelayCommand(() =>
+            NavigateToCopyCommand = new LinkCommand(() =>
             {
                 if (CopySourceId is int id) Go(Type, id);
             });
@@ -377,7 +377,7 @@ namespace Dom5Editor.UI.ViewModels
 
         public string SpriteCopyPickTip => $"The {Nouns.Of(Type)} whose sprite this one takes (#copyspr); its own image lines apply on top";
         public string SpriteCopyOpenTip => SpriteCopyId is int id ? $"Open {NameOf(Type, id)} #{id}, the {Nouns.Of(Type)} whose sprite it takes" : "It copies no sprite";
-        public ICommand NavigateToSpriteCopyCommand => new RelayCommand(() => { if (SpriteCopyId is int id) Go(Type, id); });
+        public ICommand NavigateToSpriteCopyCommand => new LinkCommand(() => { if (SpriteCopyId is int id) Go(Type, id); });
 
         /// <summary>The copy picker's and its open button's tooltips.</summary>
         public string CopyPickTip => $"The {Nouns.Of(Type)} this one starts as a copy of ({(CopyCommand is Command c ? CommandName(c) : "")}); its own lines apply on top";
@@ -1039,7 +1039,7 @@ namespace Dom5Editor.UI.ViewModels
             Id = id;
             Name = string.IsNullOrEmpty(name) ? (id > 0 ? $"#{id}" : $"(unnamed {Nouns.Of(type)})") : name;
             Via = via;
-            OpenCommand = new RelayCommand(open);
+            OpenCommand = new LinkCommand(open);
         }
 
         public EntityType Type { get; }

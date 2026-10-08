@@ -97,3 +97,27 @@ namespace Dom5Editor.UI
         }
     }
 }
+
+namespace Dom5Editor.UI
+{
+    /// <summary>
+    /// A command that only opens an entity (a link: the copy's →, a "used by" row, a reference's
+    /// open button). The window offers what a browser does on a link: a middle click or the right
+    /// click menu opens it in a window of its own. Not for commands that make something first.
+    /// </summary>
+    public interface ILinkCommand : System.Windows.Input.ICommand
+    {
+    }
+
+    /// <inheritdoc cref="ILinkCommand"/>
+    public sealed class LinkCommand : RelayCommand, ILinkCommand
+    {
+        public LinkCommand(Action execute, Func<bool> canExecute = null) : base(execute, canExecute) { }
+    }
+
+    /// <inheritdoc cref="ILinkCommand"/>
+    public sealed class LinkCommand<T> : RelayCommand<T>, ILinkCommand
+    {
+        public LinkCommand(Action<T> execute, Func<T, bool> canExecute = null) : base(execute, canExecute) { }
+    }
+}

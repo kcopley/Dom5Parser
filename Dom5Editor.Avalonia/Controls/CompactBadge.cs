@@ -224,14 +224,19 @@ namespace Dom5Editor.Ava.Controls
                 HorizontalContentAlignment = HorizontalAlignment.Center,
             };
             Look.FlatButton(button, Look.Brush("BackgroundLightBrush"), Look.Brush("AccentHighlightBrush"), Look.Brush("BackgroundMediumBrush"), Look.Brush("TextPrimaryBrush"), Look.Brush("BorderBrush"));
-            ToolTip.SetTip(button, $"Open {item.ReferenceDisplay}");
-            button.Click += (s, e) =>
+            ToolTip.SetTip(button, $"Open {item.ReferenceDisplay} (middle click or right click: in a new window)");
+            void Open()
             {
-                e.Handled = true;
                 var command = Panel?.NavigateCommand;
                 var args = (item.ReferenceType, item.ReferenceId);
                 if (command?.CanExecute(args) == true)
                     command.Execute(args);
+            }
+            Link.SetOpen(button, Open);
+            button.Click += (s, e) =>
+            {
+                e.Handled = true;
+                Open();
             };
             return button;
         }

@@ -247,6 +247,9 @@ namespace Dom5Edit.Validation
             return sb.ToString();
         }
 
+        // "an item", "an armor", "a monster"
+        private static string A(string word) => word.Length > 0 && "aeiou".Contains(char.ToLowerInvariant(word[0])) ? "an" : "a";
+
         private static string Trim(string s) => (s.Length > 110 ? s.Substring(0, 110) + "…" : s).Replace("`", "'");
 
         /// <summary>Why the game skips a command: misspelt (with the likeliest meant one), another type's command, or not in Dominions 6.</summary>
@@ -259,11 +262,11 @@ namespace Dom5Edit.Validation
             if (others.Count > 0)
             {
                 var where = string.Join("/", others.Take(3));
-                return $"`{command}` isn't read in a {kind} block (it's {("aeiou".Contains(where[0]) ? "an" : "a")} {where} command)";
+                return $"`{command}` isn't read in {A(kind)} {kind} block (it's {A(where)} {where} command)";
             }
             var meant = Suggest(name, read);
             return meant.Length > 0 ? $"`{command}` isn't a Dominions 6 command" + meant
-                : $"`{command}` isn't a Dominions 6 command for a {kind} (maybe one from an older version)";
+                : $"`{command}` isn't a Dominions 6 command for {A(kind)} {kind} (maybe one from an older version)";
         }
 
         /// <summary>"; did you mean #x?" for the closest command the game reads here (one or two typos away), or "".</summary>

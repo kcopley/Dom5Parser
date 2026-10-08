@@ -38,7 +38,7 @@ Also in 0.11.0
   as the game reads mods: in the order they were enabled. Mod Info, "Needs": add, remove and
   order them (remembered for the mod). The parent's units, items and events show and link like
   the game's; changing one adds a line to your mod, and the parent's file is never changed.
-  Opening a submod alone, the bar suggests the mod it probably needs ("Read it over that mod").
+  Load ▾, "Load as submod..." opens a submod over its parent in one go (0.13.0).
 - "Used by" lists what really uses an entity (it listed spells that pick from the game's unit
   lists under the wrong monster, and every event that boosts a path under monster 1).
 - The report also says when a submod's new unit takes a number its parent already uses.
