@@ -21,6 +21,7 @@ differ only in ways we've explicitly listed as expected.
 | **3. Save fidelity** | Does saving in Dom5Parser change any data? | `Dom5Tests roundtrip` (load → save) → oracle compares original vs saved | **parse**: strict, right after parsing (catches even a dropped command that only restated a default) |
 | **4. Edits** | Does an edit change exactly what it should, and nothing else? And does undo put it all back? | `Dom5Tests edit` applies scripted edits → oracle compares an unedited save vs the edited save → must match the case's `expect` list exactly; then every edit undone (save = the unedited save, byte for byte) and redone (= the edited save) | parse |
 | **5. Stress** | Do a few hundred edits of every type at once change exactly what each one should? | `tools/fidelity/stress.mjs` generates them from the oracle's view of a big mod (seeded), each with the change it implies → one `Dom5Tests edit` session → the oracle's differences must be exactly their union; undo all / redo all byte for byte | parse |
+| **6. Merges** | Does a merged mod read in game as its parts one after another (each as when it's alone where they'd interfere)? | `Dom5Tests merge` (suite.json `merges`; docs/MERGING.md) reads the merged file back: nothing defined twice that wasn't, every entity one part alone has with its part's values, every event; then `gameread.py --merge` replays the game's reading of the parts against the merged file, numbers mapped through the moves, and checks units chained by number (#shrinkhp, #growhp, #xpshape) keep their neighbours. The counts (numbers moved by kind, copies kept apart, dangling references kept, things across parts) are a baseline in `baselines/<case>.stage6.json`: a change shows as CHNG, not a failure | the game's reading |
 
 Stages 4 and 5 compare against an *unedited Dom5Parser save*, not against the original mod.
 That isolates the edit from any existing save losses, which stage 3 tracks separately.
@@ -34,10 +35,10 @@ for CI by `tools/fidelity/oracle-ref.txt`.
 ## Running it
 
 ```bash
-# prerequisites: build Dom5Tests; a checkout of kcopley/dom6inspector (branch export-test)
+# prerequisites: build Dom5Tests (Debug: the suite runs bin/Debug); a checkout of kcopley/dom6inspector (branch export-test)
 "/mnt/c/Program Files/dotnet/dotnet.exe" build "D:\\Projects\\Dom5Parser\\Dom5Tests\\Dom5Tests.csproj"
 
-node tools/fidelity/run.mjs --quick          # stages 3-4, ~2 min: the everyday loop
+node tools/fidelity/run.mjs --quick          # stages 3, 4 and 6's fixture merges, ~2 min: the everyday loop
 node tools/fidelity/run.mjs                  # all stages (stage 1 is slow, see below)
 node tools/fidelity/run.mjs --stress         # stage 5 alone (~1 min); --seed N for another set of edits
 node tools/fidelity/run.mjs --only e04       # a single case (substring match)

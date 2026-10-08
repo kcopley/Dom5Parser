@@ -16,7 +16,7 @@
 //      (tools/fidelity/stress.mjs), in one session: exactly their expected changes, then
 //      undo all / redo all byte for byte.
 //
-// Usage: node tools/fidelity/run.mjs [--oracle DIR] [--stages 1,3,4,5] [--only TEXT] [--quick]
+// Usage: node tools/fidelity/run.mjs [--oracle DIR] [--stages 1,3,4,5,6] [--only TEXT] [--quick]
 //                                    [--stress] [--seed N] [--stress-size N] [--jobs N]
 //                                    [--update-baselines] [--json summary.json]
 // --quick = stages 3-4 (about 1-2 min); the default runs all stages (~15 min); --stress = stage 5
@@ -57,7 +57,7 @@ for (let i = 2; i < process.argv.length; i++) {
 }
 // --quick: the everyday loop. Skips the oracle self-check (stage 1 needs the inspector's full
 // post-processing, ~50s per load; run it in CI or after oracle changes) and the stress run.
-if (!opt.stages) opt.stages = opt.stress ? [5] : opt.quick ? [3, 4] : [1, 3, 4, 5];
+if (!opt.stages) opt.stages = opt.stress ? [5] : opt.quick ? [3, 4, 6] : [1, 3, 4, 5, 6];
 const ORACLE = [opt.oracle, path.join(ROOT, '..', 'dom6inspector'), '/mnt/c/Projects/dom6inspector', 'C:\\Projects\\dom6inspector']
 	.filter(Boolean).map((p) => path.resolve(ROOT, p)).find((p) => fs.existsSync(path.join(p, 'scripts/headless/roundtrip_check.js')));
 if (!ORACLE) { console.error('dom6inspector oracle not found; pass --oracle DIR or set DOM6INSPECTOR'); process.exit(2); }
@@ -155,7 +155,7 @@ function diffSnapshots(A, B) {
 // --- judging ------------------------------------------------------------------
 // Checks run concurrently; each collects its results, and they're printed in the checks' order.
 const results = [];
-const MARK = { PASS: 'PASS ', FAIL: 'FAIL ', XFAIL: 'xfail', XPASS: 'XPASS', IMPROVED: 'PASS+', NEW: 'NEW  ' };
+const MARK = { PASS: 'PASS ', FAIL: 'FAIL ', XFAIL: 'xfail', XPASS: 'XPASS', IMPROVED: 'PASS+', NEW: 'NEW  ', SKIP: 'skip ', CHANGED: 'CHNG ' };
 class Check {
 	constructor(stage, name, fn) { Object.assign(this, { stage, name, fn, lines: [], records: [] }); }
 	note(line) { this.lines.push('      ' + line); }
@@ -419,9 +419,67 @@ if (opt.stages.includes(5)) {
 	})));
 }
 
+// Stage 6: merges (docs/MERGING.md). A case's parts merge with Dom5Tests merge (it reads the merged
+// file back: nothing defined twice that wasn't before, every entity one part alone has the values
+// it had in its part, every event the same), then gameread.py --merge replays the game's reading of
+// the parts one after another against the merged file (numbers mapped through the moves). Those
+// must hold. The counts (numbers moved by kind, copies kept apart, dangling references kept, things
+// across parts, the referee's known kinds) are a baseline: a change is shown (CHNG), not a failure;
+// --update-baselines keeps the new ones. Cases marked slow run only in the full suite; parts that
+// aren't installed (workshop mods) skip the case.
+if (opt.stages.includes(6)) {
+	console.log('\nStage 6: merges -> nothing defined twice, every entity as in its part, the game reads the merged file as its parts one after another; counts as baselines');
+	const cases = (SUITE.merges || []).filter((c) => (!opt.quick || !c.slow) && (!opt.only || c.name.includes(opt.only)));
+	const resolve = (p) => (path.isAbsolute(p) ? p : path.resolve(ROOT, p));
+	const forTests = (p) => (IS_WSL && p.startsWith('/') ? winPath(p) : p);
+	await runChecks(cases.map((c) => new Check(6, c.name, async (check) => {
+		const files = c.parts.map(resolve);
+		const missing = files.filter((f) => !fs.existsSync(f));
+		if (missing.length) return check.record('SKIP', 'not installed here: ' + missing.map((f) => path.basename(f)).join(', '));
+		const dir = path.join(WORK, 'merge-' + c.name);
+		fs.mkdirSync(dir, { recursive: true });
+		const out = path.join(dir, c.name + '.dm');
+		const json = path.join(dir, c.name + '.check.json');
+		const args = ['merge', out, c.title || c.name, ...files];
+		for (const [sub, parent] of Object.entries(c.needs || {}))
+			args.push('--needs', forTests(resolve(sub)) + '=' + forTests(resolve(parent)));
+		args.push('--json', json);
+		const r = await dom5tests(args);
+		if (r.code !== 0 || !fs.existsSync(json)) throw new Error('Dom5Tests merge failed: ' + lastLines(r.out, 3));
+		const m = JSON.parse(fs.readFileSync(json, 'utf8'));
+		const gjson = path.join(dir, c.name + '.game.json');
+		const g = await run(process.env.PYTHON || 'python3', [path.join(ROOT, 'tools/dom6exe/gameread.py'), '--merge', out, '--show', '3', '--json', gjson]);
+		if (g.code !== 0 && g.code !== 1) throw new Error('gameread --merge failed: ' + lastLines(g.out, 3));
+		const gr = JSON.parse(fs.readFileSync(gjson, 'utf8'));
+		const problems = [];
+		if (m.definedTwice > m.definedTwiceBefore) problems.push(`${m.definedTwice - m.definedTwiceBefore} number(s) defined twice`);
+		if (m.differ) problems.push(`${m.differ} entit${m.differ === 1 ? 'y differs' : 'ies differ'} from their part`);
+		if (m.eventsDiffer || m.events !== m.eventsExpected) problems.push(`events ${m.events} of ${m.eventsExpected}, ${m.eventsDiffer} differ`);
+		if (gr.differences) problems.push(`the game reads it differently from its parts: ${gr.differences}`);
+		if (gr.chain) problems.push(`${gr.chain} chained unit(s) out of order`);
+		if (problems.length)
+			for (const l of g.out.trim().split('\n').slice(1, 7)) check.note(l.trim());
+		const kinds = Object.entries(m.movedByKind).map(([k, n]) => `${n} ${k}`).join(', ');
+		check.record(problems.length ? 'FAIL' : 'PASS', problems.join('; ') ||
+			`${m.moved} moved${kinds ? ' (' + kinds + ')' : ''}, ${m.copiesKeptApart} copies kept apart, ${m.dangling} dangling kept, ${m.acrossParts} across parts; ${m.compared} entities as in their parts`);
+		// the counts, against the baseline
+		const counts = { moved: m.moved, movedByKind: m.movedByKind, renamed: m.renamed, copiesKeptApart: m.copiesKeptApart, dangling: m.dangling,
+			acrossParts: m.acrossParts, notCompared: { shared: m.shared, across: m.across }, referee: gr.known };
+		const file = path.join(BASELINES, `${c.name}.stage6.json`);
+		if (opt.update) fs.writeFileSync(file, JSON.stringify(counts, null, 1) + '\n');
+		else if (!fs.existsSync(file)) check.record('NEW', 'no baseline yet; run with --update-baselines', c.name + ' (counts)');
+		else {
+			const base = JSON.parse(fs.readFileSync(file, 'utf8'));
+			const changed = Object.keys(counts).filter((k) => JSON.stringify(counts[k]) !== JSON.stringify(base[k]));
+			if (changed.length) check.record('CHANGED', changed.map((k) => `${k} ${JSON.stringify(base[k])} -> ${JSON.stringify(counts[k])}`).join('; '), c.name + ' (counts)');
+		}
+	})));
+}
+
 // --- summary ------------------------------------------------------------------
 const count = (s) => results.filter((r) => r.status === s).length;
 const failed = results.filter((r) => r.status === 'FAIL' || r.status === 'NEW');
-console.log(`\n${results.length} checks: ${count('PASS') + count('IMPROVED')} pass, ${count('XFAIL')} known-failing, ${failed.length} failing` + (count('XPASS') ? `, ${count('XPASS')} unexpectedly passing` : '') + ` (${Math.round((Date.now() - started) / 1000)} s)`);
+console.log(`\n${results.length} checks: ${count('PASS') + count('IMPROVED')} pass, ${count('XFAIL')} known-failing, ${failed.length} failing` + (count('XPASS') ? `, ${count('XPASS')} unexpectedly passing` : '')
+	+ (count('SKIP') ? `, ${count('SKIP')} skipped` : '') + (count('CHANGED') ? `, ${count('CHANGED')} with changed counts` : '') + ` (${Math.round((Date.now() - started) / 1000)} s)`);
 if (opt.json) fs.writeFileSync(opt.json, JSON.stringify({ oracle: ORACLE, results }, null, 1));
 process.exit(failed.length ? 1 : 0);

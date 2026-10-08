@@ -21,12 +21,15 @@ namespace Dom5Tests
             var name = args[2];
             var needs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             var files = new List<string>();
+            string? json = null;
             for (int i = 3; i < args.Length; i++)
                 if (args[i] == "--needs" && i + 1 < args.Length)
                 {
                     var pair = args[++i].Split('=', 2);
                     needs[Path.GetFullPath(pair[0])] = pair[1];
                 }
+                else if (args[i] == "--json" && i + 1 < args.Length)
+                    json = args[++i];
                 else
                     files.Add(args[i]);
             var inputs = files.Select(f => new MergeInput(f, needs.TryGetValue(Path.GetFullPath(f), out var n) ? n : null)).ToList();
@@ -127,6 +130,23 @@ namespace Dom5Tests
                     Console.WriteLine($"   event {k + 1}: {string.Join(" | ", Lines(partEvents[k]).Except(Lines(backEvents[k])).Take(3))}  vs  {string.Join(" | ", Lines(backEvents[k]).Except(Lines(partEvents[k])).Take(3))}");
             Console.WriteLine($"read back: {compared} entities compared, {differ} differ; {shared} changed by several parts, {across} copy a game entity another part changes (not compared); " +
                               $"events {backEvents.Count} of {partEvents.Count}, {eventsDiffer} differ");
+            // for the fidelity suite's merge stage (tools/fidelity/run.mjs, stage 6): what must be 0, and the counts it keeps as a baseline
+            if (json != null)
+                File.WriteAllText(json, System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    parts = result.Parts.Count,
+                    moved = result.Report.Moves.Count,
+                    movedByKind = result.Report.Moves.GroupBy(m => m.Kind).ToDictionary(g => g.Key, g => g.Count()),
+                    renamed = result.Report.Renames.Count,
+                    copiesKeptApart = result.Snapshots.Count,
+                    dangling = result.Report.Conflicts.Count(c => c.Contains("which finds nothing")),
+                    acrossParts = result.Report.Conflicts.Count,
+                    notes = result.Report.Notes.Count,
+                    definedTwice = dup.Count,
+                    definedTwiceBefore = before,
+                    compared, differ, shared, across,
+                    events = backEvents.Count, eventsExpected = partEvents.Count, eventsDiffer,
+                }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
         }
 
         private static List<string> Values(ResolvedEntity r) =>

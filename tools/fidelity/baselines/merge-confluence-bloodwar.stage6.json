@@ -1,0 +1,19 @@
+{
+ "moved": 53,
+ "movedByKind": {
+  "monster": 10,
+  "weapon": 43
+ },
+ "renamed": 0,
+ "copiesKeptApart": 0,
+ "dangling": 0,
+ "acrossParts": 1,
+ "notCompared": {
+  "shared": 1,
+  "across": 0
+ },
+ "referee": {
+  "#end restored (the part ends without a line break)": 1,
+  "a text without its closing quote runs over a rewritten line": 1
+ }
+}

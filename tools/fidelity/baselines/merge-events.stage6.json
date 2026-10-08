@@ -1,0 +1,19 @@
+{
+ "moved": 5,
+ "movedByKind": {
+  "monster": 1,
+  "event code": 1,
+  "event variable": 1,
+  "enchantment": 1,
+  "monster tag": 1
+ },
+ "renamed": 0,
+ "copiesKeptApart": 0,
+ "dangling": 0,
+ "acrossParts": 0,
+ "notCompared": {
+  "shared": 0,
+  "across": 0
+ },
+ "referee": {}
+}

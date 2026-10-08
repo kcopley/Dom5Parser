@@ -1,0 +1,19 @@
+{
+ "moved": 75,
+ "movedByKind": {
+  "weapon": 71,
+  "armor": 3,
+  "monster tag": 1
+ },
+ "renamed": 0,
+ "copiesKeptApart": 0,
+ "dangling": 0,
+ "acrossParts": 27,
+ "notCompared": {
+  "shared": 28,
+  "across": 1
+ },
+ "referee": {
+  "#end restored (the part ends without a line break)": 1
+ }
+}

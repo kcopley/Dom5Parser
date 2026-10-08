@@ -328,7 +328,7 @@ def local(path):
     return path
 
 
-def merge_check(merged_path, map_path, rules, vanilla_path, limit):
+def merge_check(merged_path, map_path, rules, vanilla_path, limit, json_out=None):
     m = json.load(open(map_path))
     for p in m['parts']:
         p['file'] = local(p['file'])
@@ -422,6 +422,13 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
             print('      merged: %s' % s)
     for c in chain[:limit]:
         print('  ' + c)
+    if json_out:
+        kinds = {}
+        for k in known:
+            kinds[k[0]] = kinds.get(k[0], 0) + 1
+        json.dump({'merged': merged_path, 'parts': len(parts), 'differences': len(diffs), 'chain': len(chain), 'known': kinds,
+                   'items': [{'pass': d[0], 'block': d[1], 'line': d[2], 'parts': d[3], 'merged': d[4]} for d in diffs[:200]] + [{'chain': c} for c in chain[:50]]},
+                  open(json_out, 'w'), indent=1)
     return 1 if diffs or chain else 0
 
 
@@ -444,7 +451,7 @@ def main():
     rules = dmread.SavedRules(args.rules or default_rules())
     if args.merge:
         vanilla = args.vanilla or os.path.join(HERE, '..', '..', 'vanilla.dm')
-        return merge_check(args.merge, args.map or os.path.splitext(args.merge)[0] + '.map.json', rules, vanilla, args.show)
+        return merge_check(args.merge, args.map or os.path.splitext(args.merge)[0] + '.map.json', rules, vanilla, args.show, args.json)
     a = Reading(args.a, rules)
     if args.dump or not args.b:
         for ctx, blocks in a.passes.items():

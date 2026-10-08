@@ -1,0 +1,21 @@
+{
+ "moved": 1087,
+ "movedByKind": {
+  "monster": 1001,
+  "weapon": 62,
+  "item": 1,
+  "site": 15,
+  "nation": 8
+ },
+ "renamed": 0,
+ "copiesKeptApart": 5,
+ "dangling": 8,
+ "acrossParts": 552,
+ "notCompared": {
+  "shared": 254,
+  "across": 1059
+ },
+ "referee": {
+  "a text without its closing quote runs over a rewritten line": 1
+ }
+}
