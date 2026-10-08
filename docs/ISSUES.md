@@ -8,6 +8,23 @@ Potential bugs and critical problems identified during code review.
 
 ## Current Priority Issues
 
+### Combat spell effects 1000-9999 (open, needs an in-game test, 2026-10-07)
+
+DomEnhanced's Gjallarhorn (spell 3703) has `#effect 6043 -- 6turns border summoning`, `#damage
+2531` (Huskarl). No game spell uses an effect from 1000 to 9999 and the manual doesn't mention
+them. What the exe shows (6.37): the parser stores the number as is (a 16-bit value at +0x2e,
+no split into turns and effect); casting (`spellblastsquare` 0x1401caf10) has 6043 in none of
+its sets of effects whose #damage is a number of something, so it scales #damage as plain
+damage (2531 becomes 531 + 2 x caster level); `hitunit` 0x1401c5ec0 compares the effect only
+with numbers up to 166; nothing divides a combat effect by 1000 but the AI's estimate
+(0x1401c3b08, effect % 1000); 0x140124810 (it touches the battlefield's lasting effects) is
+never called (its only references are unwind data). So it's probably not "6 turns of 43", and
+may do nothing. The editor and merge read it as 43 (a border summon: its #damage a unit), which
+links Gjallarhorn to Huskarl; harmless for merges (a game unit never moves). To settle it: in
+game with DomEnhanced, a commander casting Gjallarhorn in a test battle: do Huskarls come, for
+how many turns, or does it hit something for damage? Also keep in mind (the user) that a number
+can be packed, decimal (`#nreff`/`#aoe` +1000s, `#range` +5000) or as bits (`#damage` afflictions).
+
 ### A number on `#newspell` / `#newitem` / `#newnation` is taken as the entity's (open, 2026-10-07)
 
 The game reads no number on these: each takes the first free one (spells from 1500, items from
