@@ -944,7 +944,8 @@ def collect(exe):
                  'keys %s used, the others summon nothing; %d and up a monster number; negative as '
                  'monster_or_tag), enchantment, event (an event\'s #id), site, ability (a monster ability '
                  'number), bitmask, count, damage (a number, level-scaled at 1000+ in battle), other (a code or '
-                 'index), unused. Combat effects 1000-9999 read as effect %% 1000.'
+                 'index), unused. Combat effects 1000-9999: the game has no case for them (passed on as written; '
+                 'clouds are 144-150; only the AI reads effect %% 1000): their #damage is a plain number.'
                  % (tag, span_text([c for c in codes if c != -1]), passthrough - 1, span_text(keys), passthrough),
         'functions': {k: hex(v) for k, v in sorted(f.items())},
         'summon_special_codes': span_text(codes), 'monster_tag_at_or_below': tag,

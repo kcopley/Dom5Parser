@@ -371,7 +371,7 @@ class GameSpellEffects(dict):
     """effect -> the kind of number its #damage is (in the map's words), from the newest
     data/spell-effects-*.json; the merge map's word only for an effect that file doesn't list.
     A plain value (damage, a bitmask, a count) is no kind: its number never moves. Combat effects
-    1000-9999 read as effect % 1000, as the game's AI reads them."""
+    1000-9999: the game has no case for them, so their #damage is a plain number too."""
     def __init__(self, mapped):
         super().__init__(mapped)
         files = sorted(glob.glob(os.path.join(HERE, 'data', 'spell-effects-*.json')))
@@ -381,7 +381,7 @@ class GameSpellEffects(dict):
 
     def argument(self, effect):
         if 1000 <= effect < 10000:
-            effect %= 1000
+            return 'unhandled'          # the game has no case for them: #damage is a plain number
         return self.args.get(effect) or next((a for lo, hi, a in self.ranges if lo <= effect <= hi), None)
 
     def get(self, key, default=None):

@@ -1,7 +1,7 @@
 {
  "game_version": "6.37",
  "exe_sha256_16": "d77cd364fe447e85",
- "about": "What #damage means per #effect (tools/dom6exe/spelleffects.py). argument: monster (a monster number), monster_or_tag (a monster number; -1000 and below the monster tag -N; -28..-2 special picks, -1 nothing), unique_or_monster_or_tag (1-99 a key into the game's lists of uniques, keys 1-14, 16-20 used, the others summon nothing; 100 and up a monster number; negative as monster_or_tag), enchantment, event (an event's #id), site, ability (a monster ability number), bitmask, count, damage (a number, level-scaled at 1000+ in battle), other (a code or index), unused. Combat effects 1000-9999 read as effect % 1000.",
+ "about": "What #damage means per #effect (tools/dom6exe/spelleffects.py). argument: monster (a monster number), monster_or_tag (a monster number; -1000 and below the monster tag -N; -28..-2 special picks, -1 nothing), unique_or_monster_or_tag (1-99 a key into the game's lists of uniques, keys 1-14, 16-20 used, the others summon nothing; 100 and up a monster number; negative as monster_or_tag), enchantment, event (an event's #id), site, ability (a monster ability number), bitmask, count, damage (a number, level-scaled at 1000+ in battle), other (a code or index), unused. Combat effects 1000-9999: the game has no case for them (passed on as written; clouds are 144-150; only the AI reads effect % 1000): their #damage is a plain number.",
  "functions": {
   "addfeatnr": "0x1402ac0b0",
   "addunitfx": "0x1401a9290",

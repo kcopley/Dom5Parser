@@ -96,6 +96,9 @@ namespace Dom5Edit.Validation
                 (e.IsError ? wrong : look).Add(new Item(At(line, e.Event), e.Message));
             }
 
+            // spells: effects the game has no case for, spells nothing can cast
+            Spells(mod, At, wrong, look);
+
             var with = mod.Below().Where(d => d != VanillaLoader.Vanilla && !string.IsNullOrEmpty(d.FullFilePath))
                 .Reverse().Select(d => $"`{Path.GetFileName(d.FullFilePath)}`").ToList();
             var about = $"File: `{Path.GetFileName(file)}`" + (string.IsNullOrEmpty(mod.Version) ? "" : $", version {mod.Version}") +
@@ -111,6 +114,75 @@ namespace Dom5Edit.Validation
         }
 
         private sealed record Item(Line Line, string Why);
+
+        /// <summary>
+        /// The mod's spells: an #effect the game has no case for (combat effects 1000-9999, a
+        /// ritual effect the ritual code doesn't know: SpellEffectData.NotHandledWhy, read from
+        /// Dominions6.exe), and a spell of its own that nothing can cast: no #school line at all
+        /// (nobody can research it) and nothing names it (DomEnhanced's Gjallarhorn spell; Bloodwar's
+        /// "Contact Lamyros", paths but no school or effect). A #school -1 is left alone: the
+        /// usual way to switch a spell off (DomEnhanced One Age's 83).
+        /// </summary>
+        private static void Spells(Mod mod, Func<int?, IDEntity?, Line> at, List<Item> wrong, List<Item> look)
+        {
+            if (!mod.Database.TryGetValue(EntityType.SPELL, out var set))
+                return;
+            var own = set.GetFullList().OfType<Spell>().Where(s => ReferenceEquals(s.ParentMod, mod)).ToList();
+            if (own.Count == 0)
+                return;
+            int? HeaderLine(IDEntity e) => mod.SourceBlocks.FirstOrDefault(b => ReferenceEquals(b.Entity, e))?.HeaderLine;
+            foreach (var spell in own)
+                foreach (var p in spell.Properties.OfType<Props.IntProperty>().Where(p => p.Command == Commands.Command.EFFECT))
+                    if (SpellEffectData.Instance.NotHandledWhy(p.Value) is string why)
+                        wrong.Add(new Item(at(p.LineNumber > 0 ? p.LineNumber : HeaderLine(spell), spell), why));
+
+            // what names a spell: every reference to one in the mod and the mods it's read over
+            // (#spell, #autospell, #nextspell, #onebattlespell, ...), by the spell, its number or its name
+            var named = new HashSet<IDEntity>(ReferenceEqualityComparer.Instance);
+            var numbers = new HashSet<int>();
+            var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var layer in new[] { mod }.Concat(mod.Below()))
+                foreach (var s in layer.Database.Values)
+                    foreach (var e in s.GetFullList())
+                        foreach (var r in e.Properties.OfType<Props.Reference>())
+                        {
+                            if (r is Props.SpellDamage)
+                                continue; // (its number is a unit, an enchantment, ...: never a spell)
+                            if (r.TryGetEntity(out var target) && target is Spell)
+                            {
+                                named.Add(target);
+                                if (target.ID > 0) numbers.Add(target.ID);
+                                if (!string.IsNullOrEmpty(target.Name)) names.Add(target.Name);
+                                continue;
+                            }
+                            bool spellRef;
+                            try { spellRef = r.GetEntityType() == EntityType.SPELL; }
+                            catch (NotImplementedException) { spellRef = false; }
+                            if (spellRef && r is Props.StringOrIDRef sr)
+                            {
+                                if (sr.ID > 0) numbers.Add(sr.ID);
+                                if (!string.IsNullOrEmpty(sr.Name)) names.Add(sr.Name);
+                            }
+                        }
+            var vanilla = VanillaLoader.Vanilla?.Database[EntityType.SPELL];
+            var resolver = Resolve.ModResolver.For(mod);
+            foreach (var spell in own)
+            {
+                // the mod's own spells (not its changes to the game's or a needed mod's, by number or name)
+                if (spell.ID > 0 && (vanilla?.Has(spell.ID) == true || mod.FindBelow(EntityType.SPELL, spell.ID, null) != null)
+                    || spell.Selected && spell.ID <= 0)
+                    continue;
+                if (named.Contains(spell) || spell.ID > 0 && numbers.Contains(spell.ID) || !string.IsNullOrEmpty(spell.Name) && names.Contains(spell.Name))
+                    continue;
+                // (any #school, -1 too, is the author's choice; a #copyspell brings the copied one's)
+                if (spell.Properties.Any(p => p.Command == Commands.Command.SCHOOL || p.Command == Commands.Command.COPYSPELL)
+                    || resolver.Resolve(spell).Get(Commands.Command.SCHOOL) != null)
+                    continue;
+                look.Add(new Item(at(HeaderLine(spell), spell),
+                    "nothing casts this spell: it has no #school, so nobody can research it, and no unit, item, event or other spell " +
+                    "names it (#spell, #autospell, #nextspell, ...): left over, or unfinished?"));
+            }
+        }
 
         /// <summary>Alike ones together (the same message but for its numbers), most first, each group's lines in file order.</summary>
         private static List<Group> Grouped(List<Item> items) =>

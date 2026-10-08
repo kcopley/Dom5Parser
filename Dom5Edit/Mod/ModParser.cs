@@ -93,12 +93,24 @@ namespace Dom5Edit
         /// <summary>
         /// A quoted argument without its quotes (LineWasTrimmed set). Only an argument that starts
         /// with a quote is a string: in #weapon 474 "Golden Sword" the game reads the number, and
-        /// the name after it is a note.
+        /// the name after it is a note. The game reads the string up to its closing quote and
+        /// ignores the rest of the line (Confluence: #copyspell "Stellar Strike" (Works as long as
+        /// you don't change name)): that rest becomes part of the comment.
         /// </summary>
-        private string Unquote(string value)
+        private string Unquote(string value, ref string comment)
         {
             LineWasTrimmed = value.StartsWith("\"");
-            return LineWasTrimmed ? value.Trim('\"') : value;
+            if (!LineWasTrimmed)
+                return value;
+            int close = value.IndexOf('"', 1);
+            if (close > 0 && close < value.Length - 1)
+            {
+                var after = value.Substring(close + 1).Trim();
+                if (after.Length > 0)
+                    comment = string.IsNullOrEmpty(comment) ? after : after + " -- " + comment;
+                return value.Substring(1, close - 1);
+            }
+            return value.Trim('\"');
         }
 
         /// <summary>
@@ -615,12 +627,12 @@ namespace Dom5Edit
             if (spaceIndex != -1) //has a value (but could be spaces before a comment? should be handled by trim above)
             {
                 command = line.Substring(0, spaceIndex).Trim();
-                value = Unquote(line.Substring(spaceIndex + 1).Trim());
+                value = Unquote(line.Substring(spaceIndex + 1).Trim(), ref comment);
             }
             else if (tabIndex != -1)
             {
                 command = line.Substring(0, tabIndex).Trim();
-                value = Unquote(line.Substring(tabIndex + 1).Trim());
+                value = Unquote(line.Substring(tabIndex + 1).Trim(), ref comment);
             }
 
             if (CommandsMap.TryGetCommand(command, out Command c))

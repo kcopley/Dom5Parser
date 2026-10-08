@@ -71,6 +71,8 @@ namespace Dom5Edit
         // 10089/10114 (unique_pick 0x1401cea80): 1-99 is a key into the game's lists of uniques,
         // this and up the monster itself
         private int _uniqueMonsterFrom = 100;
+        // effects the game reads but has no case for (10086: castlabspell has no branch)
+        private readonly HashSet<int> _exeNothingHappens = new();
         private const string ExeResource = "Dom5Edit.GameData.spell-effects.json";
 
         private void LoadExeEffects()
@@ -85,7 +87,11 @@ namespace Dom5Edit
                 if (root.TryGetProperty("effects", out var effects))
                     foreach (var e in effects.EnumerateObject())
                         if (int.TryParse(e.Name, out int n) && e.Value.TryGetProperty("argument", out var a))
+                        {
                             _exeArgument[n] = a.GetString() ?? "";
+                            if (e.Value.TryGetProperty("note", out var note) && (note.GetString() ?? "").Contains("nothing happens"))
+                                _exeNothingHappens.Add(n);
+                        }
                 if (root.TryGetProperty("ranges", out var ranges))
                     foreach (var r in ranges.EnumerateArray())
                         _exeRanges.Add((r.GetProperty("from").GetInt32(), r.GetProperty("to").GetInt32(), r.GetProperty("argument").GetString() ?? ""));
@@ -99,21 +105,45 @@ namespace Dom5Edit
         }
 
         /// <summary>
-        /// What the game does with #damage for this effect (null: not in the exe table). Combat
-        /// effects 1000-9999 are read as effect % 1000, as the game's AI reads them (evalspell
-        /// 0x1401c3b08); the battle code itself has no case for them in 6.37.
+        /// What the game does with #damage for this effect (null: not in the exe table).
+        /// "unhandled" for combat effects 1000-9999: the game has no case for them (below).
         /// </summary>
         public string? ExeArgument(int effect)
         {
             if (VanillaLoader.GameVersion != GameVersion.Dom6)
                 return null;            // read from Dominions6.exe: not Dom5's effects
             if (effect >= 1000 && effect < 10000)
-                effect %= 1000;
+                return "unhandled";
             if (_exeArgument.TryGetValue(effect, out var a))
                 return a;
             foreach (var (from, to, arg) in _exeRanges)
                 if (effect >= from && effect <= to)
                     return arg;
+            return null;
+        }
+
+        /// <summary>
+        /// Why the game does nothing with this #effect, for the report (null: it has a case for
+        /// it). Read from Dominions6.exe 6.37: a combat effect 1000-9999 is passed on as written
+        /// (spellblastsquare 0x1401cb5cf), clouds are only 144-150 (blastsquare 0x1401b786c),
+        /// hitunit compares the effect only with numbers up to 166, and nothing in the battle code
+        /// divides it by 1000 (the AI's estimate reads effect % 1000: evalspell 0x1401c3b08). Its
+        /// #damage is then plain damage, not a unit. A ritual effect castlabspell has no branch for
+        /// (it compares one number at a time: the table has every one it handles).
+        /// </summary>
+        public string? NotHandledWhy(int effect)
+        {
+            if (VanillaLoader.GameVersion != GameVersion.Dom6 || _exeArgument.Count == 0)
+                return null;
+            if (effect >= 1000 && effect < 10000)
+                return $"#effect {effect}: the game has no such combat effect. It passes the number on as written, and its battle code " +
+                       "only acts on combat effects up to 166 (and 500-699); clouds are effects 144-150. So the spell does nothing in battle, " +
+                       $"and its #damage is a plain number. (Perhaps an older way of writing {effect / 1000} rounds of effect {effect % 1000}; " +
+                       "Dom6's clouds use effects 144-150 with #aoe.)";
+            if (_exeNothingHappens.Contains(effect))
+                return $"#effect {effect}: the game reads it but has no case for it (no branch in the ritual code): the spell does nothing";
+            if (effect >= 10000 && ExeArgument(effect) == null)
+                return $"#effect {effect}: the game has no such ritual effect (the ritual code has no case for it): the spell does nothing";
             return null;
         }
 

@@ -547,8 +547,14 @@ monster itself; negative through resolve_summon.
 Bloodwar's 2003): the AI's spell scoring reads them as effect % 1000 (evalspell 0x1401c3b08), and
 the function that would set up a lasting effect (0x140124810, which fills the battle-sprite table
 the round loop replays) is never called; blastsquare and hitunit have no case for them. So in 6.37
-such a spell does nothing in battle beyond what the AI expects; the table reads them as effect %
-1000 (6043 as 43: a monster), which keeps a merge pointing at the unit the author meant.
+such a spell does nothing in battle beyond what the AI expects. Checked again 2026-10-07: casting
+passes the effect on as written (spellblastsquare 0x1401cb5cf loads the 16-bit +0x2e into
+blastsquare's eff argument), blastsquare makes a cloud only for effects 144-150 (0x1401b786c:
+effect - 144 <= 6), hitunit compares the effect only with numbers up to 166 (and its damage path
+takes only its sets and poison 7/139), and spellblastsquare treats #damage of any effect outside its
+identifier sets as plain damage (level-scaled at 1000+). So Dom5Edit and the referee read them as
+the game does: no case ("unhandled"), #damage a plain number (Gjallarhorn's 2531 isn't a unit);
+the editor's report says so (SpellEffectData.NotHandledWhy). Dom6's clouds are 144-150 with #aoe.
 
 **Compared with the inspector's tables** (`spell_effect_types.json`, which Dom5Edit used, and its
 `spell_effects_mapping.json`, which writes ritual effects without their 10000: 1 for 10001, 85 for

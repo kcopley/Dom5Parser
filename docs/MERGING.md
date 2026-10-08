@@ -142,8 +142,8 @@ with its target only for: monsters and monster tags (1, 21, 31, 43, 54, 126, 165
 event `#id`s (10042) and sites (10154). Everything else stays as written: affliction and buff
 bitmasks (web, false fetters: effect 11), monster ability numbers (500-699, 10500-10599), counts,
 damage, codes. A spell with no `#effect` of its own uses its `#copyspell`'s or the game spell's
-(from vanilla.dm). Combat effects 1000-9999 count as effect % 1000 (the game's AI reads them so;
-its battle code has no case for them). The referee (`gameread.py --merge`) reads the same exe
+(from vanilla.dm). Combat effects 1000-9999 have no case in the game (only its AI reads effect %
+1000): their #damage is a plain number, and the editor's report says the spell does nothing. The referee (`gameread.py --merge`) reads the same exe
 table, so it checks the merger's spells instead of trusting its word: on Forgotten Realms 0.95 +
 DomEnhanced 2.13 the old classification left 62 of DomEnhanced's 10089 spells summoning
 Forgotten Realms' monsters. Open: 10141 summons its monster and the next number; a merge doesn't
