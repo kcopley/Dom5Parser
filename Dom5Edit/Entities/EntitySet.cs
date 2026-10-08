@@ -243,6 +243,17 @@ namespace Dom5Edit.Entities
         /// <summary>The next ID free in the mod's range for this type.</summary>
         internal int NextFreeID() => GetNextID();
 
+        /// <summary>Moves an entity to another number in the set (Renumbering); its names stay.</summary>
+        internal void Rekey(T entity, int oldId, int newId)
+        {
+            if (Entities.TryGetValue(oldId, out var held) && ReferenceEquals(held, entity))
+                Entities.Remove(oldId);
+            Entities[newId] = entity;
+        }
+
+        /// <summary>Whether a number is taken in the set.</summary>
+        internal bool Has(int id) => Entities.ContainsKey(id);
+
         /// <summary>The entities in the order Export writes them.</summary>
         internal IEnumerable<T> ExportOrder()
         {

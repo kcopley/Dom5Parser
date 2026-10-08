@@ -11,6 +11,9 @@ namespace Dom5Edit.Props
         private EnchIDRef _enchRef;
         private EventEffectCodeRef _eventEffectRef;
 
+        internal override IEnumerable<Reference> Parts() =>
+            new Reference?[] { _monRef, _enchRef, _eventEffectRef }.Where(r => r != null).SelectMany(r => r!.Parts());
+
 
         public static Property Create()
         {

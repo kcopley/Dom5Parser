@@ -87,6 +87,12 @@ namespace Dom5Edit.Props
             }
         }
 
+        internal override void FollowTarget(IDEntity moved)
+        {
+            if (ReferenceEquals(Entity, moved) && !IsStringRef)
+                _id = moved.ID;
+        }
+
         public void SetEntity(string value)
         {
             Parse(this.Command, value, "");

@@ -56,6 +56,9 @@ namespace Dom5Edit.Props
         /// <summary>A monster tag's monsters (-11: those with #montag 11); nothing for a monster.</summary>
         public IEnumerable<IDEntity> Targets() => MontagRef?.Targets() ?? Enumerable.Empty<IDEntity>();
 
+        internal override IEnumerable<Reference> Parts() =>
+            new Reference?[] { MontagRef, MonsterRef }.Where(r => r != null).SelectMany(r => r!.Parts());
+
         public bool TrySetEntity(IDEntity e)
         {
             MontagRef = null;
