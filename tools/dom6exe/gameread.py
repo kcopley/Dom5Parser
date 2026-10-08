@@ -17,6 +17,13 @@ and copies act on what's above them).
   python3 tools/dom6exe/gameread.py A.dm B.dm            differences, by pass, with lines
   python3 tools/dom6exe/gameread.py A.dm B.dm --json OUT  all of them as JSON
   python3 tools/dom6exe/gameread.py A.dm --dump           what the game reads, pass by pass
+  python3 tools/dom6exe/gameread.py --merge M.dm --map M.map.json
+      a merged mod (Dom5Tests merge, docs/MERGING.md) against its parts read one after another, as
+      the game reads enabled mods: per pass, the parts' blocks in order must be the merged file's,
+      numbers mapped through what moved and names taken as the game finds them (the lowest number
+      with that name, among the game's, the separate needed mods' and the parts read so far); and
+      units that turn into the next or previous number (#shrinkhp, #growhp, #xpshape) keep that
+      neighbour.
 
 Exit status 0 when the game reads both the same, 1 when not. The rules come from
 tools/dom6exe/data/dmread-<version>.json (written by `dom6exe.py dmread --out ...` from the exe),
@@ -184,16 +191,186 @@ def compare(a, b):
     return out
 
 
+# what the merge map calls each kind of number that has names, and its pass
+NAMED = {'monster': 'monster', 'weapon': 'weapon', 'armor': 'armor', 'spell': 'spell', 'item': 'item',
+         'site': 'site', 'nation': 'nation', 'poptype': 'poptype', 'nametype': 'nametype'}
+
+
+# what a block's header number is, per pass (a template is numbered by its nation)
+HEAD_KIND = dict(NAMED, template='nation')
+
+
+def names(readings):
+    """Per pass: name -> (the lowest number a #new/#select block of that number gives it with
+    #name, the reading it's in: its moves map it)."""
+    out = {}
+    for i, r in enumerate(readings):
+        for ctx in NAMED.values():
+            table = out.setdefault(ctx, {})
+            for blk in r.passes.get(ctx, []):
+                head = blk['head']
+                if len(head) < 2 or not head[1] or not isinstance(head[1][0], int):
+                    continue
+                for it, _ in blk['items']:
+                    if it[0] == 'name' and len(it) > 1 and isinstance(it[1], tuple) and it[1][:1] == ('text',) and it[1][1]:
+                        n = it[1][1].lower().replace('%', '_')
+                        if n not in table or head[1][0] < table[n][0]:
+                            table[n] = (head[1][0], i)
+    return out
+
+
+FORM_NUMBER = re.compile(r'\((\d+)\)\s*$')
+
+
+def normalized(reading, ctx, kinds, effects, moves, table, reading_moves):
+    """A pass's blocks with numbers mapped (moves: kind -> old -> new) and names as numbers (the
+    number the name finds, mapped by the moves of the reading it's in: reading_moves)."""
+    def named(kind, name):
+        num, i = table[NAMED[kind]][name]
+        return int(reading_moves[i].get(kind, {}).get(str(num), num))
+    out = []
+    for blk in reading.passes.get(ctx, []):
+        head = blk['head']
+        own = HEAD_KIND.get(ctx)
+        if len(head) > 1 and head[1]:
+            a = head[1]
+            if a[0] == 'name' and own in NAMED and a[1] in table.get(NAMED[own], {}):
+                a = (named(own, a[1]),)
+            elif isinstance(a[0], int) and own:
+                a = (int(moves.get(own, {}).get(str(a[0]), a[0])),) + tuple(a[1:])
+            head = (head[0], a)
+        effect = next((it[1][0] for it, _ in blk['items'] if it[0] == 'effect' and len(it) > 1 and it[1] and isinstance(it[1][0], int)), None)
+        items = []
+        for it, line in blk['items']:
+            c = it[0]
+            kind = kinds.get(ctx, {}).get(c)
+            if kind == 'spell damage':
+                kind = effects.get(str(effect))
+            if kind and len(it) > 1 and isinstance(it[1], tuple) and it[1]:
+                a = it[1]
+                k = kind
+                if a[0] == 'name':
+                    k = 'monster' if kind == 'monster or tag' else kind
+                    if k in NAMED and a[1] in table.get(NAMED[k], {}):
+                        a = (named(k, a[1]),)
+                elif isinstance(a[0], int):
+                    v = a[0]
+                    if kind == 'monster or tag':
+                        k, v = ('monster tag', -v) if v < 0 else ('monster', v)
+                    new = moves.get(k, {}).get(str(v))
+                    if new is not None:
+                        new = int(new)
+                        a = ((-new if kind == 'monster or tag' and a[0] < 0 else new),) + tuple(a[1:])
+                it = (c, a)
+            elif ctx == 'template' and c == 'form' and len(it) > 1 and isinstance(it[1], tuple) and it[1][:1] == ('text',) and it[1][1]:
+                # "Dragon (265)": the monster's number in the name (the manual)
+                t = it[1][1]
+                f = FORM_NUMBER.search(t)
+                if f:
+                    t = t[:f.start(1)] + str(int(moves.get('monster', {}).get(f.group(1), f.group(1)))) + t[f.end(1):]
+                    it = (c, ('text', t) + tuple(it[1][2:]))
+            items.append(it)
+        out.append({'head': head, 'line': blk['line'], 'items': items})
+    return out
+
+
+def local(path):
+    """A path the map wrote on Windows (D:\\..., \\\\wsl.localhost\\Ubuntu\\...) as this system sees it."""
+    if os.name == 'nt' or not path:
+        return path
+    w = re.match(r'^\\\\wsl(?:\.localhost|\$)\\[^\\]+(\\.*)$', path)
+    if w:
+        return w.group(1).replace('\\', '/')
+    d = re.match(r'^([A-Za-z]):\\(.*)$', path)
+    if d:
+        return '/mnt/%s/%s' % (d.group(1).lower(), d.group(2).replace('\\', '/'))
+    return path
+
+
+def merge_check(merged_path, map_path, rules, vanilla_path, limit):
+    m = json.load(open(map_path))
+    for p in m['parts']:
+        p['file'] = local(p['file'])
+    m['separate'] = [local(f) for f in m.get('separate', [])]
+    kinds, effects = m['commands'], m['spell_effects']
+    vanilla = Reading(vanilla_path, rules) if vanilla_path and os.path.exists(vanilla_path) else None
+    separate = [Reading(f, rules) for f in m.get('separate', [])]
+    parts = [(Reading(p['file'], rules), p.get('moves', {})) for p in m['parts']]
+    merged = Reading(merged_path, rules)
+    base = ([vanilla] if vanilla else []) + separate
+    diffs = []
+    for ctx in dmread.STARTS:
+        expected = []
+        for i, (r, moves) in enumerate(parts):
+            # names as the game finds them while reading this part: the game's, the separate mods',
+            # the parts before it and its own
+            table = names(base + [x for x, _ in parts[:i + 1]])
+            blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]])
+            if ctx == 'global' and expected and blocks:
+                expected[0]['items'].extend(blocks[0]['items'])
+                blocks = blocks[1:]
+            expected.extend(blocks)
+        got = normalized(merged, ctx, kinds, effects, {}, names(base + [merged]), [{}] * (len(base) + 1))
+        heads = difflib.SequenceMatcher(None, [x['head'] for x in expected], [x['head'] for x in got], autojunk=False)
+        for op, i1, i2, j1, j2 in heads.get_opcodes():
+            if op == 'equal':
+                for x, y in zip(expected[i1:i2], got[j1:j2]):
+                    if x['items'] != y['items']:
+                        sm = difflib.SequenceMatcher(None, x['items'], y['items'], autojunk=False)
+                        for o, k1, k2, l1, l2 in sm.get_opcodes():
+                            if o != 'equal':
+                                diffs.append((ctx, show_head(x['head']), y['line'], [show(t) for t in x['items'][k1:k2]], [show(t) for t in y['items'][l1:l2]]))
+            else:
+                for x in expected[i1:i2]:
+                    diffs.append((ctx, show_head(x['head']), None, ['(block only in the parts)'], []))
+                for y in got[j1:j2]:
+                    diffs.append((ctx, show_head(y['head']), y['line'], [], ['(block only in the merged file)']))
+    # units that turn into the next or previous number keep it
+    chain = []
+    for r, moves in parts:
+        mon = {str(k): int(v) for k, v in moves.get('monster', {}).items()}
+        at = lambda n: mon.get(str(n), n)
+        for blk in r.passes.get('monster', []):
+            head = blk['head']
+            if len(head) < 2 or not head[1] or not isinstance(head[1][0], int):
+                continue
+            n, cmds = head[1][0], {it[0] for it, _ in blk['items']}
+            for step, has in ((1, bool(cmds & {'shrinkhp', 'xpshape', 'labxpshape'}) and 'xpshapemon' not in cmds), (-1, 'growhp' in cmds)):
+                if has and at(n + step) != at(n) + step:
+                    chain.append('%s: monster %d -> %d turns into %d, now %d (should be %d)' % (os.path.basename(r.path), n, at(n), n + step, at(n + step), at(n) + step))
+    print('%s: the game reads it %s; %d chained unit(s) out of order' % (
+        os.path.basename(merged_path), 'as its %d parts one after another' % len(parts) if not diffs else 'differently from its parts: %d difference(s)' % len(diffs), len(chain)))
+    for ctx, head, line, a, b in diffs[:limit]:
+        print('  [%s] %s (merged line %s)' % (ctx, head, line))
+        for s in a[:3]:
+            print('      parts : %s' % s)
+        for s in b[:3]:
+            print('      merged: %s' % s)
+    for c in chain[:limit]:
+        print('  ' + c)
+    return 1 if diffs or chain else 0
+
+
+def show_head(head):
+    return show(head + ((),) if len(head) == 1 else head)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('a')
+    ap.add_argument('a', nargs='?')
     ap.add_argument('b', nargs='?')
+    ap.add_argument('--merge', help='a merged mod to check against its parts (with --map)')
+    ap.add_argument('--map', help='the merge map (Dom5Tests merge writes MERGED.map.json)')
+    ap.add_argument('--vanilla', help='the game data the names are found in too (default: vanilla.dm at the repo root)')
     ap.add_argument('--rules', help='the rules JSON (default: the newest tools/dom6exe/data/dmread-*.json)')
     ap.add_argument('--json', help='write the differences here')
     ap.add_argument('--show', type=int, default=12, help='differences to print (default 12)')
     ap.add_argument('--dump', action='store_true', help='print what the game reads from A')
     args = ap.parse_args()
     rules = dmread.SavedRules(args.rules or default_rules())
+    if args.merge:
+        vanilla = args.vanilla or os.path.join(HERE, '..', '..', 'vanilla.dm')
+        return merge_check(args.merge, args.map or os.path.splitext(args.merge)[0] + '.map.json', rules, vanilla, args.show)
     a = Reading(args.a, rules)
     if args.dump or not args.b:
         for ctx, blocks in a.passes.items():

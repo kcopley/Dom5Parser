@@ -74,6 +74,8 @@ namespace Dom5Edit.Merge
         public required IReadOnlyList<Mod> Parts { get; init; }
         /// <summary>The needed mods that stay separate, in reading order (the merged mod is read over the last).</summary>
         public required IReadOnlyList<Mod> Separate { get; init; }
+        /// <summary>Every number moved, by part: (what, old) -> new ("monster", "event code", ...).</summary>
+        public required IReadOnlyDictionary<Mod, Dictionary<(string Kind, int Old), int>> Moved { get; init; }
     }
 
     /// <summary>
@@ -100,6 +102,11 @@ namespace Dom5Edit.Merge
             EntityType.RESTRICTED_ITEM, EntityType.EVENT_CODE_EFFECT,
         };
 
+        // the game reads these in number order (the manuals): #shrinkhp turns the unit into the next
+        // monster number, #growhp into the previous, #xpshape and #labxpshape into the next unless
+        // #xpshapemon names one; so such a chain moves as one block, in order
+        private static readonly Command[] NextShape = { Command.SHRINKHP, Command.XPSHAPE, Command.LABXPSHAPE };
+
         private static readonly Command[] PathCommands =
         {
             Command.SPR1, Command.SPR2, Command.XSPR1, Command.XSPR2, Command.SPR, Command.FLAG, Command.INDEPFLAG,
@@ -111,6 +118,7 @@ namespace Dom5Edit.Merge
             if (inputs.Count < 2)
                 throw new ArgumentException("a merge needs two mods or more");
             var report = new MergeReport();
+            var moved = new Dictionary<Mod, Dictionary<(string Kind, int Old), int>>();
             var byFile = new Dictionary<string, Mod>(StringComparer.OrdinalIgnoreCase);
             var parts = new List<Mod>();
             var separate = new List<Mod>();
@@ -142,10 +150,13 @@ namespace Dom5Edit.Merge
             foreach (var m in parts)
                 m.KeepReferenceForms = false;
             // 3. numbers
+            foreach (var part in parts)
+                moved[part] = new Dictionary<(string Kind, int Old), int>();
             foreach (var type in Numbered)
-                MoveEntities(type, parts, separate, report);
+                MoveEntities(type, parts, separate, report, moved);
             foreach (var type in Shared)
-                MoveShared(type, parts, separate, report);
+                MoveShared(type, parts, separate, report, moved);
+            TemplateForms(parts, moved, report);
             Overlaps(parts, report);
             // 4. name-only references whose names would find another part's
             RenameClashes(parts, separate, report);
@@ -156,7 +167,8 @@ namespace Dom5Edit.Merge
             // 6. one file: the merged header, then each part in its own order
             Write(parts, outputFile, modName, report);
             File.WriteAllText(Path.ChangeExtension(outputFile, ".report.md"), report.Markdown(modName));
-            return new MergeResult { OutputFile = outputFile, Report = report, Parts = parts, Separate = separate };
+            WriteMap(Path.ChangeExtension(outputFile, ".map.json"), parts, separate, moved);
+            return new MergeResult { OutputFile = outputFile, Report = report, Parts = parts, Separate = separate, Moved = moved };
         }
 
         private static bool DependsOn(Mod x, Mod y) => x.Below().Contains(y);
@@ -180,7 +192,8 @@ namespace Dom5Edit.Merge
         private static IEnumerable<int> Numbers(Mod mod, EntityType type) =>
             mod.Database[type].GetFullList().Select(e => e.ID).Where(id => id > 0);
 
-        private static void MoveEntities(EntityType type, List<Mod> parts, List<Mod> separate, MergeReport report)
+        private static void MoveEntities(EntityType type, List<Mod> parts, List<Mod> separate, MergeReport report,
+                                         Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved)
         {
             var range = parts[0].Database[type];
             // every number anyone uses is taken: a moved entity mustn't land on another
@@ -195,30 +208,108 @@ namespace Dom5Edit.Merge
             foreach (var part in parts)
             {
                 var mine = Owned(part, type);
-                foreach (var e in mine)
+                foreach (var run in Runs(part, type, mine, report))
                 {
-                    int old = e.ID;
-                    if (!claimed.Any(c => c.Id == old && !DependsOn(part, c.Owner)))
+                    if (!run.Any(e => claimed.Any(c => c.Id == e.ID && !DependsOn(part, c.Owner))))
                         continue;
-                    while (taken.Contains(next))
+                    // a block of free numbers in a row for the whole run (one, for most)
+                    while (Enumerable.Range(next, run.Count).Any(taken.Contains))
                         next++;
-                    if (end > 0 && next > end)
+                    if (end > 0 && next + run.Count - 1 > end)
                         throw new InvalidOperationException($"no free {type.ToString().ToLowerInvariant()} number left up to {end}");
-                    int now = next;
-                    taken.Add(now);
+                    int first = next;
+                    for (int k = 0; k < run.Count; k++)
+                        taken.Add(first + k);
+                    if (run.Count > 1)
+                        report.Notes.Add($"{part.DisplayName}: monsters {run[0].ID}-{run[^1].ID} turn into each other by number (#shrinkhp, #growhp, #xpshape): moved together to {first}-{first + run.Count - 1}");
+                    for (int k = 0; k < run.Count; k++)
+                    {
+                    var e = run[k];
+                    int old = e.ID, now = first + k;
                     var over = parts.Where(p => ReferenceEquals(p, part) || DependsOn(p, part)).ToList();
                     Renumbering.Move(e, now, over);
+                    moved[part][(type.ToString().ToLowerInvariant(), old)] = now;
                     report.Moves.Add(new MergeMove(part.DisplayName, type.ToString().ToLowerInvariant(), old, now, e.Name ?? ""));
+                    // a nation's AI pretender designs are numbered by it (#newtemplate 176): they move with it
+                    if (type == EntityType.NATION)
+                        foreach (var x in over)
+                            foreach (var t in x.Database[EntityType.TEMPLATE].GetFullList().Where(t => t.ID == old).ToList())
+                            {
+                                Renumbering.Move(t, now, parts.Where(p => ReferenceEquals(p, x) || DependsOn(p, x)));
+                                report.Notes.Add($"{x.DisplayName}: #newtemplate {old} (an AI pretender for nation {old}) follows it to {now}");
+                            }
                     // a submod's #new on this number replaced this entity on purpose: it moves with it
                     foreach (var sub in over.Where(p => !ReferenceEquals(p, part)))
                         if (sub.Database[type].TryGetValue(old, out var again) && ReferenceEquals(again.ParentMod, sub) && !again.Selected)
                         {
                             Renumbering.Move(again, now, parts.Where(p => ReferenceEquals(p, sub) || DependsOn(p, sub)));
+                            moved[sub][(type.ToString().ToLowerInvariant(), old)] = now;
                             report.Notes.Add($"{sub.DisplayName}'s #new{type.ToString().ToLowerInvariant()} {old} replaces {part.DisplayName}'s: moved with it to {now}");
                         }
+                    }
                 }
                 claimed.AddRange(mine.Select(e => (part, e.ID)));
             }
+        }
+
+        /// <summary>
+        /// The part's entities in runs that must keep their numbers in a row (monsters that turn
+        /// into the next or previous number); one entity per run otherwise. A unit whose next
+        /// number isn't in the part is noted: moving it changes which unit that is.
+        /// </summary>
+        private static List<List<IDEntity>> Runs(Mod part, EntityType type, List<IDEntity> mine, MergeReport report)
+        {
+            if (type != EntityType.MONSTER)
+                return mine.Select(e => new List<IDEntity> { e }).ToList();
+            var byId = mine.ToDictionary(e => e.ID);
+            var resolver = Resolve.ModResolver.For(part);
+            var linkNext = new HashSet<int>();
+            foreach (var e in mine)
+            {
+                var r = resolver.Resolve(e);
+                bool next = r.Has(Command.SHRINKHP) || (r.Has(Command.XPSHAPE) || r.Has(Command.LABXPSHAPE)) && !r.Has(Command.XPSHAPEMON);
+                bool previous = r.Has(Command.GROWHP);
+                if (next && byId.ContainsKey(e.ID + 1)) linkNext.Add(e.ID);
+                if (previous && byId.ContainsKey(e.ID - 1)) linkNext.Add(e.ID - 1);
+                if (next && !byId.ContainsKey(e.ID + 1))
+                    report.Notes.Add($"{part.DisplayName}: monster {e.ID} {e.Name} turns into the next number ({e.ID + 1}), which the part doesn't make: if it moves, that's another unit");
+                if (previous && !byId.ContainsKey(e.ID - 1))
+                    report.Notes.Add($"{part.DisplayName}: monster {e.ID} {e.Name} grows into the previous number ({e.ID - 1}), which the part doesn't make: if it moves, that's another unit");
+            }
+            var runs = new List<List<IDEntity>>();
+            foreach (var e in mine)
+            {
+                if (runs.Count > 0 && linkNext.Contains(e.ID - 1) && runs[^1][^1].ID == e.ID - 1)
+                    runs[^1].Add(e);
+                else
+                    runs.Add(new List<IDEntity> { e });
+            }
+            return runs;
+        }
+
+        /// <summary>
+        /// A template's #form names its monster, optionally with its number ("Dragon (265)", the
+        /// manual): the number follows a move of that monster.
+        /// </summary>
+        private static void TemplateForms(List<Mod> parts, Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved, MergeReport report)
+        {
+            var number = new System.Text.RegularExpressions.Regex(@"\((\d+)\)\s*$");
+            foreach (var part in parts)
+                foreach (var e in part.Database[EntityType.TEMPLATE].GetFullList())
+                    foreach (var p in e.Properties.OfType<StringProperty>().Where(p => p.Command == Command.FORM))
+                    {
+                        var m = number.Match(p.Value ?? "");
+                        if (!m.Success)
+                            continue;
+                        int old = int.Parse(m.Groups[1].Value);
+                        // its own part's monster, or a part it's read over
+                        var mover = new[] { part }.Concat(part.Below()).FirstOrDefault(x => moved.TryGetValue(x, out var mv) && mv.ContainsKey(("monster", old)));
+                        if (mover == null)
+                            continue;
+                        int now = moved[mover][("monster", old)];
+                        p.Value = p.Value!.Substring(0, m.Groups[1].Index) + now + p.Value.Substring(m.Groups[1].Index + m.Groups[1].Length);
+                        report.Notes.Add($"{part.DisplayName}: template #form \"{p.Value}\" follows monster {old} -> {now}");
+                    }
         }
 
         /// <summary>A shared number the mod brings in itself (not a game one, not its parent's): in the mods' range.</summary>
@@ -230,7 +321,8 @@ namespace Dom5Edit.Merge
                 .OrderBy(d => Math.Abs(d.ID)).ToList();
         }
 
-        private static void MoveShared(EntityType type, List<Mod> parts, List<Mod> separate, MergeReport report)
+        private static void MoveShared(EntityType type, List<Mod> parts, List<Mod> separate, MergeReport report,
+                                       Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved)
         {
             var range = parts[0].Dependents[type];
             var taken = new HashSet<int>(parts.Concat(separate).SelectMany(m => m.Dependents[type].Keys));
@@ -253,6 +345,7 @@ namespace Dom5Edit.Merge
                     int now = next;
                     taken.Add(now);
                     Renumbering.Move(part, type, d, now);
+                    moved[part][(Kind(type), old)] = now;
                     report.Moves.Add(new MergeMove(part.DisplayName, Kind(type), old, now, ""));
                 }
                 claimed.AddRange(mine.Select(d => (part, d.ID)));
@@ -393,6 +486,82 @@ namespace Dom5Edit.Merge
                 if (copied > 0 || missing > 0)
                     report.Notes.Add($"{part.DisplayName}: {copied} image/sound files copied into {folder}/" + (missing > 0 ? $"; {missing} named files weren't found (their lines are kept as written)" : ""));
             }
+        }
+
+        /// <summary>
+        /// OUT.map.json, for the game-reading referee (tools/dom6exe/gameread.py --merge): the parts
+        /// and what moved in each, which kind of number each command's argument is (per pass, from
+        /// the core's references) and how a spell's #damage reads by its effect.
+        /// </summary>
+        private static void WriteMap(string path, List<Mod> parts, List<Mod> separate, Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved)
+        {
+            var passes = new Dictionary<string, Dictionary<string, string>>();
+            var probe = new Mod();
+            foreach (EntityType type in Enum.GetValues<EntityType>())
+            {
+                Type? cls;
+                try { cls = probe.TypeOf(type); }
+                catch (Exception) { continue; }
+                if (cls == null || !typeof(IDEntity).IsAssignableFrom(cls) || cls.IsAbstract)
+                    continue;
+                Dictionary<Command, Func<Property>> map;
+                try { map = ((IDEntity)Activator.CreateInstance(cls)!).GetPropertyMap(); }
+                catch (Exception) { continue; }
+                var kinds = new Dictionary<string, string>();
+                foreach (var (command, create) in map)
+                {
+                    if (!CommandsMap.TryGetString(command, out var text))
+                        continue;
+                    Property made;
+                    try { made = create(); }
+                    catch (Exception) { continue; }
+                    var kind = made switch
+                    {
+                        SpellDamage => "spell damage",
+                        MonsterOrMontagRef => "monster or tag",
+                        MontagIDRef => Kind(EntityType.MONTAG),
+                        EventCodeRef => Kind(EntityType.EVENT_CODE),
+                        EventVarRef => Kind(EntityType.EVENT_VAR),
+                        EnchIDRef => Kind(EntityType.ENCHANTMENT),
+                        RestrictedItemIDRef => Kind(EntityType.RESTRICTED_ITEM),
+                        EventEffectCodeRef => Kind(EntityType.EVENT_CODE_EFFECT),
+                        Reference r => SafeKind(r),
+                        _ => null,
+                    };
+                    if (kind != null)
+                        kinds[text.TrimStart('#')] = kind;
+                }
+                passes[type == EntityType.MERCENARY ? "merc" : type.ToString().ToLowerInvariant()] = kinds;
+            }
+            // a spell's #damage: what it is depends on the spell's effect
+            var effects = new SortedDictionary<int, string>();
+            foreach (var spell in parts.SelectMany(p => p.Database[EntityType.SPELL].GetFullList()).OfType<Spell>())
+                if (spell.TryGetSpellEffect(out int effect) && !effects.ContainsKey(effect))
+                {
+                    var kind = spell.IsEnchant() ? Kind(EntityType.ENCHANTMENT) : spell.IsEventEffect() ? Kind(EntityType.EVENT_CODE_EFFECT)
+                        : spell.IsSummon() ? "monster or tag" : null;
+                    if (kind != null)
+                        effects[effect] = kind;
+                }
+            var json = new
+            {
+                parts = parts.Select(p => new
+                {
+                    file = p.FullFilePath,
+                    needs = p.Dependencies.FirstOrDefault(d => d != VanillaLoader.Vanilla)?.FullFilePath,
+                    moves = moved[p].GroupBy(m => m.Key.Kind).ToDictionary(g => g.Key, g => g.ToDictionary(m => m.Key.Old.ToString(), m => m.Value)),
+                }),
+                separate = separate.Select(s => s.FullFilePath),
+                commands = passes,
+                spell_effects = effects.ToDictionary(kv => kv.Key.ToString(), kv => kv.Value),
+            };
+            File.WriteAllText(path, System.Text.Json.JsonSerializer.Serialize(json, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+        }
+
+        private static string? SafeKind(Reference r)
+        {
+            try { return Kind(r.GetEntityType()); }
+            catch (Exception) { return null; }
         }
 
         private static void Write(List<Mod> parts, string outputFile, string modName, MergeReport report)
