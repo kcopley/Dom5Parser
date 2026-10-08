@@ -17,16 +17,17 @@ with another version it shows none, and says so; the rest works.
 ## When a new version comes out
 
 1. Before Steam updates (or with Steam's `download_depot` for an older build): keep the old
-   version's data, outside the repository:
-   `python3 tools/dom6exe/dom6exe.py snapshot --out ~/dom6-snapshots/6.37` (35 s, 3.6 MB). The
-   repo's data files are the 6.37 data too (the change log reads them: see below), but a
-   snapshot also keeps a checksum of every description and event message, so text changes show.
+   version's data. **6.37's is in the repo** (2026-10-07, the user: "take a 6.37 snapshot and
+   store it in the repo"): `tools/dom6exe/data/snapshots/6.37/` (exe d77cd364fe447e85; no game
+   text, only checksums of the descriptions and event messages, so text changes show). For the
+   next version, once it's been processed: `python3 tools/dom6exe/dom6exe.py snapshot --out
+   tools/dom6exe/data/snapshots/6.38` (35 s, 3.6 MB).
 2. Run `dom6exe.py` on the new exe. Its checks (record sizes against known vanilla records, the
    anchors each parser function is found by, the end markers) say whether the layouts moved; fix
    the offsets that did.
 3. Write the new data files, the text locations for the new exe, the catalog and reading rules.
-4. **The change log** (below): `python3 tools/dom6exe/dom6exe.py changelog ~/dom6-snapshots/6.37
-   /path/to/new/Dominions6.exe --out changes-6.38.md`.
+4. **The change log** (below): `python3 tools/dom6exe/dom6exe.py changelog
+   tools/dom6exe/data/snapshots/6.37 /path/to/new/Dominions6.exe --out changes-6.38.md`.
 5. Run the fidelity suite and the editor's sweep; the workshop mods must still read the same.
 6. Release the editor with the new version's data (and keep the old version's for old exes?
    one data set per version, picked by the exe's checksum, if players lag behind).
