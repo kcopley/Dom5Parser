@@ -65,6 +65,19 @@ namespace Dom5Edit
         }
 
         /// <summary>
+        /// Writes the mod's blocks without its #modname/#description/#version/#domversion/#icon (a
+        /// part of a merged file, Merge.ModMerger): the file's order, unedited lines as read.
+        /// </summary>
+        public void ExportBody(Mod mod, StreamWriter writer)
+        {
+            var plan = new SavePlan(mod);
+            if (plan.InSourceOrder)
+                WriteInSourceOrder(mod, plan, writer, header: false);
+            else
+                WriteEntities(mod, writer);
+        }
+
+        /// <summary>
         /// Writes the mod header (name, version, description, etc.).
         /// </summary>
         protected virtual void WriteHeader(Mod mod, StreamWriter writer)
@@ -100,7 +113,7 @@ namespace Dom5Edit
         /// entities that have no block. Unedited lines are written as read. See docs/SAVE_FLOW.md
         /// for the rules and why.
         /// </summary>
-        private void WriteInSourceOrder(Mod mod, SavePlan plan, StreamWriter writer)
+        private void WriteInSourceOrder(Mod mod, SavePlan plan, StreamWriter writer, bool header = true)
         {
             // a property's line: as read if unedited (unless the mod asks for regenerated text)
             string Text(Property p) => mod.KeepOriginalText ? p.SaveText() : p.ToExportString();
@@ -108,7 +121,14 @@ namespace Dom5Edit
 
             // preamble: as read while the header fields are unchanged, else a regenerated header
             // and the preamble's other lines
-            if (keep && mod.HeaderUnchanged)
+            if (!header)
+            {
+                // (a merged file's part: its comments, not its header lines)
+                foreach (var (text, isHeader) in mod.Preamble)
+                    if (!isHeader)
+                        writer.WriteLine(text);
+            }
+            else if (keep && mod.HeaderUnchanged)
             {
                 foreach (var (text, _) in mod.Preamble)
                     writer.WriteLine(text);
@@ -252,7 +272,14 @@ namespace Dom5Edit
         /// \"Fists Of Iron\""); for one with a number, while the entity's ID is the one read.
         /// </summary>
         private static bool KeepsHeader(SourceBlock block) =>
-            block.RawHeader != null && (block.Entity.ID == block.IdAtParse || !LeadingNumber.IsMatch(block.Header));
+            block.RawHeader != null && (block.Entity.ID == block.IdAtParse || !LeadingNumber.IsMatch(block.Header))
+            && !ByNumberInMerge(block);
+
+        // a merge writes a #select by name by its number where there is one (the user: numbers
+        // wherever the game takes them; a name could find another part's entity)
+        private static bool ByNumberInMerge(SourceBlock block) =>
+            block.Entity.ParentMod?.KeepReferenceForms == false && block.Selected && block.Entity.ID > 0
+            && block.Header.Length > 0 && !LeadingNumber.IsMatch(block.Header);
 
         // the number the game reads from a header ("#newmonster 7665 MAIN" is 7665: sscanf %d)
         private static readonly System.Text.RegularExpressions.Regex LeadingNumber = new(@"^[+-]?\d+");
@@ -264,7 +291,9 @@ namespace Dom5Edit
             CommandsMap.TryGetString(block.Selected ? entity.GetSelectCommand() : entity.GetNewCommand(), out var command);
             string arg = block.Header;
             var number = LeadingNumber.Match(arg);
-            if (number.Success)
+            if (ByNumberInMerge(block))
+                arg = entity.ID + (entity.TryGetName(out var name) && !string.IsNullOrEmpty(name) ? " -- " + name : "");
+            else if (number.Success)
                 arg = (entity.ID != -1 ? entity.ID.ToString() : number.Value) + arg.Substring(number.Length); // (what follows, as written)
             else if (arg.Length > 0)
                 arg = "\"" + arg + "\"";

@@ -826,6 +826,12 @@ namespace Dom5Edit
             _exporter.Export(this, writer);
         }
 
+        /// <summary>Writes the mod's blocks without its header lines (a part of a merged file).</summary>
+        public void ExportBody(StreamWriter writer)
+        {
+            _exporter.ExportBody(this, writer);
+        }
+
         #endregion
 
         #region IMPORT

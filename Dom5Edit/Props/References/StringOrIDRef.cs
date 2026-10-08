@@ -131,6 +131,7 @@ namespace Dom5Edit.Props
                 {
                     Name = s;
                     IsStringRef = true;
+                    _writtenAsName = true;
                 }
             }
         }
@@ -141,6 +142,9 @@ namespace Dom5Edit.Props
             Command.SPELL,
             Command.AUTOSPELL,
         };
+
+        // the author wrote a name (a merge writes the number, and the name as its comment)
+        private bool _writtenAsName;
 
         // the target's name when this was first resolved: a different one at saving means it was
         // renamed in the editor since
@@ -168,8 +172,12 @@ namespace Dom5Edit.Props
         {
             if (!CommandsMap.TryGetString(Command, out string s)) return "";
 
+            // (a name the merge writes as a number stays as its comment, for whoever reads the file)
+            string? nameNote = null;
             if (Parent?.ParentMod?.KeepReferenceForms == false)
             {
+                if (_writtenAsName && Entity != null && Entity.ID != -1 && !_StringExported.Contains(Command) && string.IsNullOrEmpty(Comment))
+                    nameNote = ExportName();
                 // a merge: by number where there is one
                 if (Entity != null && Entity.ID != -1)
                     IsStringRef = false;
@@ -217,6 +225,10 @@ namespace Dom5Edit.Props
                     {
                         return s + " -- " + Comment;
                     }
+                }
+                else if (!string.IsNullOrEmpty(nameNote) && HasValue)
+                {
+                    return s + " " + _exportID + " -- " + nameNote;
                 }
                 else
                 {

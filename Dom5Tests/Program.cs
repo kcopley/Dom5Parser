@@ -51,6 +51,9 @@ namespace Dom5Tests
                 case "usage":
                     UsageSurvey.Run(basePath, args);
                     break;
+                case "merge":
+                    MergeCheck.Run(basePath, args);
+                    break;
                 case "renumber":
                     RenumberCheck.Run(basePath, args);
                     break;
