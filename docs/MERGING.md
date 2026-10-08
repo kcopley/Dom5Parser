@@ -105,8 +105,14 @@ header is rewritten when its entity's number changed (`ModExporter.KeepsHeader`)
     0x1401ad830); `#copyspell` copies the whole spell record, name and school too.
   - sites: `#newsite N` (the game keeps a number from 750 to 3999), `#copysite`, `#rarity 5`
     (never a random site); each copy gets `#rarity <the game's>`.
-  - items: not done (`#constlevel 11` makes one unforgeable, but whether the game can still
-    hand it out as a random item isn't known yet); the report notes such copies.
+  - items: `#selectitem N` from the top of the range (1999 down; `#newitem` takes no number),
+    `#copyitem`, `#constlevel 11`; each copy gets `#constlevel <the game's>` after it. From the
+    exe (tools/dom6exe/README.md "Items"): the forge needs construction research of the level
+    (11 is out of reach), and every random pick asks for a level from 0 to 4, except two that
+    take any level: an arena prize (items with `#champprize`) and a new commander's gear by tag
+    (ability 567, no command sets it). Copies of those 16 game items (the 7 Champion's items,
+    the Dragon Pearls, the Crown of Ohya, ...) aren't kept apart, as a hidden copy could still
+    be handed out: the report notes them.
   Forgotten Realms + DomEnhanced: 61 snapshots (5 units/weapons, 56 spells for 219 copy lines).
 - **Numbers the game gives.** `#newspell`, `#newitem` and `#newnation` take no number (the exe):
   each gets the first free one, spells from 1500, items from 700, nations from 120, in the order

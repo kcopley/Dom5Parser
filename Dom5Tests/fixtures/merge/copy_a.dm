@@ -18,3 +18,11 @@
 #copystats 1
 #name "A's Unit"
 #end
+
+#selectitem 5 -- Enchanted Sword
+#constlevel 5
+#end
+
+#selectitem 508 -- Dragon Pearl
+#constlevel 13
+#end

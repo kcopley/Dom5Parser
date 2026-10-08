@@ -317,6 +317,29 @@ dropped, the last byte of the file dropped.
   numbers; abilities go through the same generic handler.
 - The restriction commands (`#nomounted`, `#noundead`, `#nofemale`, `#noinanim`, ...) OR a bit
   each into ability 1417.
+- Record (0x210 bytes, table at 0x14318e910, "No Item" is item 0): name +0, construction
+  level / 2 +0x24, main path +0x25, second path +0x26, main level +0x27, type +0x29. At start
+  (0x140229190) every record after the game's items, up to 1999, is "an item" with level byte
+  100 (free; 99 marks the end of the built-in list). `#newitem` takes the first free one from
+  700 (0x140229150) and reads no number; `#selectitem N` takes any number (a free one becomes
+  the mod's item once something is written to it); `#copyitem` copies the whole record
+  (0x14023730e).
+- Forging (0x1401ed910, used by the forge screen 0x1401fa290): -4 restricted to another nation
+  (`#restricted`, ability 278) or `#notfornation` (279); -6 when the level (byte * 2 + 1) is
+  above the nation's construction research, so `#constlevel 11` and up can't be forged; the
+  screen lists one level per tab.
+- Random items: 0x1402bd340 (a level, or -1 for any) and 0x1402bd420 (level, type, and an
+  ability within a range) both skip free records and every item with `#restricted`. Callers:
+  events' `#magicitem` (0x1401112f0: levels 0-3, re-rolled while the main level is 6+),
+  "found a magic item" (0x1401846c0: levels 0-4), treasure texts "item"/"anything"
+  (0x1401de386: levels 0-2 / 0-4), new commanders' misc items (0x1400c13ce: levels 0-3, type 8),
+  0x1402b32c9 (level 3 only); at any level: a new commander's gear by tag (0x1400c0bc9: items
+  with ability 567 equal to the unit's ability 566; no command sets 567: 9 game items such as
+  the Dragon Pearls, the Crown of Ohya, the Slave Collar) and the arena's prize
+  (0x140116667, "won the death match": items with `#champprize`, ability 259; the 7
+  Champion's items). So an item with `#constlevel 11` is never forged nor picked at random,
+  unless it has `#champprize` or ability 567. There's no command that removes a restriction
+  (only `#clear`), so `#restricted` can't hide a copy that must be undone.
 - The item ability getter has no intrinsic flags. Flag bits no command sets look like battle
   buffs: 0x1f8 bit 0x8 is what the inspector writes as `#airshield 80`.
 - Compared with the inspector: it lacks `#hp`, `#itemdrawsize`, ~40 more abilities and repeated
