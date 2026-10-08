@@ -243,7 +243,10 @@ def file_of(reading, text):
     return _files[full]
 
 
-def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells=None):
+COPIES = {'copystats', 'copyspr', 'copyweapon', 'copyarmor', 'copyspell', 'copyitem', 'copysite'}
+
+
+def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells=None, copies=None):
     """A pass's blocks with numbers mapped (moves: kind -> old -> new) and names as numbers (the
     number the name finds, mapped by the moves of the reading it's in: reading_moves)."""
     def named(kind, name):
@@ -282,11 +285,16 @@ def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells
                     k = 'monster' if kind == 'monster or tag' else kind
                     if k in NAMED and a[1] in table.get(NAMED[k], {}):
                         a = (named(k, a[1]),)
+                        if copies and c in COPIES and str(a[0]) in copies.get(k, {}):
+                            a = (int(copies[k][str(a[0])]),)
                 elif isinstance(a[0], int):
                     v = a[0]
                     if kind == 'monster or tag':
                         k, v = ('monster tag', -v) if v < 0 else ('monster', v)
                     new = moves.get(k, {}).get(str(v))
+                    # a copy of a game entity an earlier part changes: the merge's snapshot of it
+                    if copies and c in COPIES and str(a[0]) in copies.get(k, {}):
+                        new = copies[k][str(a[0])]
                     if new is not None:
                         new = int(new)
                         a = ((-new if kind == 'monster or tag' and a[0] < 0 else new),) + tuple(a[1:])
@@ -328,8 +336,13 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
     kinds, effects = m['commands'], m['spell_effects']
     vanilla = Reading(vanilla_path, rules) if vanilla_path and os.path.exists(vanilla_path) else None
     separate = [Reading(f, rules) for f in m.get('separate', [])]
+    # a part's dangling numbers the merge moved to free ones count as moves (they're nothing else in the part)
+    for p in m['parts']:
+        for kind, mv in p.get('strays', {}).items():
+            p.setdefault('moves', {}).setdefault(kind, {}).update(mv)
     parts = [(Reading(p['file'], rules), p.get('moves', {})) for p in m['parts']]
     part_spells = [p.get('spells', {}) for p in m['parts']]
+    part_copies = [p.get('copies', {}) for p in m['parts']]
     merged = Reading(merged_path, rules)
     base = ([vanilla] if vanilla else []) + separate
     diffs, known = [], []
@@ -348,12 +361,15 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
         merge may have rewritten (a path, a reference): its text changes with them."""
         return items and all(len(t) > 1 and isinstance(t[1], tuple) and t[1][:1] == ('text',) and t[1][1] and '\n' in t[1][1] for t in items)
     for ctx in dmread.STARTS:
-        expected = []
+        # the merged file's snapshots of game entities first (a copy each, as the game has it)
+        expected = [{'head': (s['header'], (s['number'],)), 'line': 0, 'path': None,
+                     'items': [(c, (s['of'],)) for c in s['copies']] + [('end',)]}
+                    for s in m.get('snapshots', []) if NAMED.get(s['kind']) == ctx]
         for i, (r, moves) in enumerate(parts):
             # names as the game finds them while reading this part: the game's, the separate mods',
             # the parts before it and its own
             table = names(base + [x for x, _ in parts[:i + 1]])
-            blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]], part_spells[i])
+            blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]], part_spells[i], part_copies[i])
             for b in blocks:
                 b['path'] = r.path
             if ctx == 'global' and expected and blocks:

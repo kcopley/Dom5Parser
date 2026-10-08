@@ -2,6 +2,7 @@ using System.Text;
 using Dom5Edit.Commands;
 using Dom5Edit.Entities;
 using Dom5Edit.Props;
+using Dom5Edit.Resolve;
 
 namespace Dom5Edit.Merge
 {
@@ -28,6 +29,7 @@ namespace Dom5Edit.Merge
         public List<string> Renames { get; } = new();
         public List<string> Conflicts { get; } = new();
         public List<string> Notes { get; } = new();
+        public List<string> Kept { get; } = new();
         public List<string> Separate { get; } = new();
         public List<string> Parts { get; } = new();
 
@@ -60,6 +62,7 @@ namespace Dom5Edit.Merge
                 sb.AppendLine();
             }
             Section("Renamed (a name-only reference would have found another part's)", Renames);
+            Section("Copies kept apart (a part copies a game entity an earlier part changes: it copies the game's own, as when it's alone)", Kept);
             Section("Across parts (works as in game: the later part wins)", Conflicts);
             Section("Notes", Notes);
             return sb.ToString();
@@ -76,6 +79,8 @@ namespace Dom5Edit.Merge
         public required IReadOnlyList<Mod> Separate { get; init; }
         /// <summary>Every number moved, by part: (what, old) -> new ("monster", "event code", ...).</summary>
         public required IReadOnlyDictionary<Mod, Dictionary<(string Kind, int Old), int>> Moved { get; init; }
+        /// <summary>The game entities copied as they are before any part changes them: (kind, the game's number, the copy's number).</summary>
+        public required IReadOnlyList<(string Kind, int Of, int Number)> Snapshots { get; init; }
     }
 
     /// <summary>
@@ -164,6 +169,10 @@ namespace Dom5Edit.Merge
             foreach (var type in Shared)
                 MoveShared(type, parts, separate, report, moved);
             TemplateForms(parts, moved, report);
+            var snapshots = new List<Snapshot>();
+            KeepCopiesApart(parts, separate, report, snapshots);
+            var strays = new Dictionary<Mod, Dictionary<(string Kind, int Old), int>>();
+            Strays(parts, separate, snapshots, report, strays);
             Overlaps(parts, report);
             // 4. name-only references whose names would find another part's
             RenameClashes(parts, separate, report);
@@ -172,13 +181,109 @@ namespace Dom5Edit.Merge
             Directory.CreateDirectory(outDir);
             CopyFiles(parts, outDir, report);
             // 6. one file: the merged header, then each part in its own order
-            Write(parts, outputFile, modName, report);
+            Write(parts, outputFile, modName, report, snapshots);
             File.WriteAllText(Path.ChangeExtension(outputFile, ".report.md"), report.Markdown(modName));
-            WriteMap(Path.ChangeExtension(outputFile, ".map.json"), parts, separate, moved);
-            return new MergeResult { OutputFile = outputFile, Report = report, Parts = parts, Separate = separate, Moved = moved };
+            WriteMap(Path.ChangeExtension(outputFile, ".map.json"), parts, separate, moved, snapshots, strays);
+            return new MergeResult
+            {
+                OutputFile = outputFile, Report = report, Parts = parts, Separate = separate, Moved = moved,
+                Snapshots = snapshots.Select(s => (Kind(s.Type), s.Of, s.Number)).ToList(),
+            };
         }
 
         private static bool DependsOn(Mod x, Mod y) => x.Below().Contains(y);
+
+        /// <summary>A game entity copied, at the top of the merged file, as it is before any part changes it.</summary>
+        private sealed class Snapshot
+        {
+            public required EntityType Type { get; init; }
+            public required int Of { get; init; }
+            public required int Number { get; init; }
+            public required IDEntity Entity { get; init; }
+            public Dictionary<Mod, int> Copies { get; } = new();
+        }
+
+        // what a snapshot is written with: its header, the copy commands that make it the game's entity
+        private static readonly Dictionary<EntityType, (Command Header, Command[] Copy)> SnapshotForm = new()
+        {
+            [EntityType.MONSTER] = (Command.NEWMONSTER, new[] { Command.COPYSTATS, Command.COPYSPR }),
+            [EntityType.WEAPON] = (Command.NEWWEAPON, new[] { Command.COPYWEAPON }),
+            [EntityType.ARMOR] = (Command.NEWARMOR, new[] { Command.COPYARMOR }),
+        };
+
+        /// <summary>
+        /// The user: a part's copy of a game entity (DomEnhanced's #copystats of the game's Archer)
+        /// mustn't take on what an earlier part changes in it (Forgotten Realms' changes to the
+        /// Archer), as it doesn't when the part is alone. Read one after another, it would; so the
+        /// merged file starts with a copy of each such game entity as it is before any part
+        /// changes it, and the part's copy commands copy that. Not for a part's own changes to it,
+        /// nor a submod's copy of what its parent changed (both meant). Units, weapons and armor
+        /// (a copy changes nothing in game until something uses it); a spell's, item's or site's
+        /// copy would show (a spell to research twice, an item to forge, a site on the map): noted.
+        /// </summary>
+        private static void KeepCopiesApart(List<Mod> parts, List<Mod> separate, MergeReport report, List<Snapshot> snapshots)
+        {
+            var vanilla = VanillaLoader.Vanilla;
+            if (vanilla == null)
+                return;
+            // the game entities each part changes (a #select of the game's), by type
+            var changed = parts.ToDictionary(p => p, p => new HashSet<(EntityType, int)>());
+            foreach (var part in parts)
+                foreach (var type in Numbered)
+                    foreach (var e in part.Database[type].GetFullList())
+                        if (e.Selected && e.ID > 0 && vanilla.Database[type].Has(e.ID))
+                            changed[part].Add((type, e.ID));
+            var taken = new Dictionary<EntityType, HashSet<int>>();
+            HashSet<int> Taken(EntityType type) =>
+                taken.TryGetValue(type, out var t) ? t
+                : taken[type] = new HashSet<int>(parts.Concat(separate).Append(vanilla).SelectMany(m => Numbers(m, type)));
+            var unhandled = new Dictionary<(Mod, EntityType), int>();
+            for (int b = 1; b < parts.Count; b++)
+            {
+                var part = parts[b];
+                foreach (var r in Renumbering.Lines(part).OfType<StringOrIDRef>().Where(r => GameRules.IsCopy(r.Command)).ToList())
+                {
+                    if (!r.TryGetEntity(out var target) || target == null || !ReferenceEquals(target.ParentMod, vanilla))
+                        continue;
+                    var type = target.GetEntityType();
+                    int of = target.ID;
+                    var earlier = parts.Take(b).Where(a => !DependsOn(part, a) && changed[a].Contains((type, of))).ToList();
+                    if (earlier.Count == 0)
+                        continue;
+                    if (changed[part].Contains((type, of)))
+                    {
+                        report.Conflicts.Add($"{part.DisplayName} copies game {type.ToString().ToLowerInvariant()} {of} {target.Name} (line {r.LineNumber}), which it changes too, as does {earlier[0].DisplayName}: it copies what both make of it");
+                        continue;
+                    }
+                    if (!SnapshotForm.TryGetValue(type, out var form))
+                    {
+                        unhandled[(part, type)] = unhandled.TryGetValue((part, type), out var n) ? n + 1 : 1;
+                        continue;
+                    }
+                    var snap = snapshots.FirstOrDefault(s => s.Type == type && s.Of == of);
+                    if (snap == null)
+                    {
+                        var range = part.Database[type];
+                        int number = range.START_ID;
+                        var t = Taken(type);
+                        while (t.Contains(number))
+                            number++;
+                        t.Add(number);
+                        var entity = (IDEntity)Activator.CreateInstance(vanilla.TypeOf(type))!;
+                        entity.ID = number;
+                        snap = new Snapshot { Type = type, Of = of, Number = number, Entity = entity };
+                        snapshots.Add(snap);
+                    }
+                    r.Retarget(snap.Entity);
+                    snap.Copies[part] = snap.Copies.TryGetValue(part, out var c) ? c + 1 : 1;
+                }
+            }
+            foreach (var s in snapshots)
+                foreach (var (part, count) in s.Copies)
+                    report.Kept.Add($"{part.DisplayName}: {count} copy line{(count == 1 ? "" : "s")} of game {s.Type.ToString().ToLowerInvariant()} {s.Of} {(vanilla.Database[s.Type].TryGetValue(s.Of, out var v) ? v.Name : "")} now copy {s.Number}, the game's as it is before {string.Join(", ", parts.Where(a => changed[a].Contains((s.Type, s.Of)) && !ReferenceEquals(a, part)).Select(a => a.DisplayName))} change{(parts.Count(a => changed[a].Contains((s.Type, s.Of)) && !ReferenceEquals(a, part)) == 1 ? "s" : "")} it");
+            foreach (var ((part, type), count) in unhandled)
+                report.Notes.Add($"{part.DisplayName}: {count} copy line{(count == 1 ? "" : "s")} of game {type.ToString().ToLowerInvariant()}s an earlier part changes: they copy the changed ones (a copy of a {type.ToString().ToLowerInvariant()} to keep them apart would show in game)");
+        }
 
         /// <summary>
         /// The entities of a type the mod numbers itself: a #new N, or a #select N of a number
@@ -292,6 +397,70 @@ namespace Dom5Edit.Merge
                     runs.Add(new List<IDEntity> { e });
             }
             return runs;
+        }
+
+        /// <summary>
+        /// The user: a dangling reference mustn't catch something in a merge. A number a part
+        /// refers to that nothing it's read over has (it finds nothing when the part is alone)
+        /// would find another part's entity (or a snapshot) in the merged file, as it would with
+        /// both enabled in game; so it's moved to a number nobody uses, which finds nothing too,
+        /// the old number in its comment. Run after every other number is placed.
+        /// </summary>
+        private static void Strays(List<Mod> parts, List<Mod> separate, List<Snapshot> snapshots, MergeReport report,
+                                   Dictionary<Mod, Dictionary<(string Kind, int Old), int>> strays)
+        {
+            var vanilla = VanillaLoader.Vanilla;
+            var taken = new Dictionary<EntityType, HashSet<int>>();
+            HashSet<int> Taken(EntityType type)
+            {
+                if (taken.TryGetValue(type, out var t))
+                    return t;
+                t = new HashSet<int>(parts.Concat(separate).SelectMany(m => Numbers(m, type)));
+                if (vanilla != null)
+                    t.UnionWith(Numbers(vanilla, type));
+                t.UnionWith(snapshots.Where(sn => sn.Type == type).Select(sn => sn.Number));
+                return taken[type] = t;
+            }
+            foreach (var part in parts)
+            {
+                strays[part] = new Dictionary<(string Kind, int Old), int>();
+                foreach (var (line, r) in Renumbering.Lines(part).OfType<Reference>()
+                             .SelectMany(x => x.Parts().OfType<StringOrIDRef>().Select(p => (x.LineNumber, p))).ToList())
+                {
+                    if (r.IsStringRef || r.ID <= 0 || r.TryGetEntity(out _) || r.Parent?.ParentMod == null)
+                        continue;
+                    EntityType type;
+                    try { type = RefType(r); }
+                    catch (Exception) { continue; }
+                    if (!Numbered.Contains(type))
+                        continue;
+                    int old = r.ID;
+                    var kind = type.ToString().ToLowerInvariant();
+                    if (!strays[part].TryGetValue((kind, old), out var now))
+                    {
+                        // what it would find in the merged file: another part's entity, or a snapshot
+                        var owner = parts.FirstOrDefault(p => !ReferenceEquals(p, part) && p.Database[type].TryGetValue(old, out var e) && ReferenceEquals(e.ParentMod, p));
+                        var snap = snapshots.FirstOrDefault(sn => sn.Type == type && sn.Number == old);
+                        if (owner == null && snap == null)
+                            continue;
+                        var t = Taken(type);
+                        now = part.Database[type].START_ID;
+                        while (t.Contains(now) || part.Database[type].Has(now))
+                            now++;
+                        t.Add(now);
+                        strays[part][(kind, old)] = now;
+                        var what = owner != null && owner.Database[type].TryGetValue(old, out var hit) ? $"{owner.DisplayName}'s {hit.Name} #{old}" : $"the merge's copy of a game {kind} #{old}";
+                        report.Conflicts.Add($"{part.DisplayName} refers to {kind} {old} (first at line {line}), which it doesn't define: it would have found {what}; now {now}, which finds nothing, as when it's alone");
+                    }
+                    r.Redirect(now, $"(was {old}: not in this part)");
+                }
+            }
+        }
+
+        private static EntityType RefType(Reference r)
+        {
+            var m = typeof(Reference).GetMethod("GetEntityType", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+            return (EntityType)m.Invoke(r, null)!;
         }
 
         /// <summary>
@@ -496,7 +665,8 @@ namespace Dom5Edit.Merge
         /// and what moved in each, which kind of number each command's argument is (per pass, from
         /// the core's references) and how a spell's #damage reads by its effect.
         /// </summary>
-        private static void WriteMap(string path, List<Mod> parts, List<Mod> separate, Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved)
+        private static void WriteMap(string path, List<Mod> parts, List<Mod> separate, Dictionary<Mod, Dictionary<(string Kind, int Old), int>> moved, List<Snapshot> snapshots,
+                                     Dictionary<Mod, Dictionary<(string Kind, int Old), int>> strays)
         {
             var passes = new Dictionary<string, Dictionary<string, string>>();
             var probe = new Mod();
@@ -567,6 +737,15 @@ namespace Dom5Edit.Merge
                     needs = p.Dependencies.FirstOrDefault(d => d != VanillaLoader.Vanilla)?.FullFilePath,
                     moves = moved[p].GroupBy(m => m.Key.Kind).ToDictionary(g => g.Key, g => g.ToDictionary(m => m.Key.Old.ToString(), m => m.Value)),
                     spells = Spells(p),
+                    strays = strays[p].GroupBy(m => m.Key.Kind).ToDictionary(g => g.Key, g => g.ToDictionary(m => m.Key.Old.ToString(), m => m.Value)),
+                    copies = snapshots.Where(s => s.Copies.ContainsKey(p)).GroupBy(s => Kind(s.Type))
+                        .ToDictionary(g => g.Key, g => g.ToDictionary(s => s.Of.ToString(), s => s.Number)),
+                }),
+                snapshots = snapshots.Select(s => new
+                {
+                    kind = Kind(s.Type), of = s.Of, number = s.Number,
+                    header = CommandsMap.TryGetString(SnapshotForm[s.Type].Header, out var h) ? h.TrimStart('#') : "",
+                    copies = SnapshotForm[s.Type].Copy.Select(c => CommandsMap.TryGetString(c, out var cs) ? cs.TrimStart('#') : ""),
                 }),
                 separate = separate.Select(s => s.FullFilePath),
                 commands = passes,
@@ -581,7 +760,7 @@ namespace Dom5Edit.Merge
             catch (Exception) { return null; }
         }
 
-        private static void Write(List<Mod> parts, string outputFile, string modName, MergeReport report)
+        private static void Write(List<Mod> parts, string outputFile, string modName, MergeReport report, List<Snapshot> snapshots)
         {
             var newLine = parts[0].SourceNewLine ?? "\n";
             using var writer = new StreamWriter(outputFile, false, new UTF8Encoding(false)) { NewLine = newLine };
@@ -594,6 +773,20 @@ namespace Dom5Edit.Merge
                 .OrderByDescending(v => decimal.TryParse(v, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var d) ? d : 0).FirstOrDefault();
             if (domVersion != null)
                 writer.WriteLine(CommandsMap.Format(Command.DOMVERSION, domVersion));
+            if (snapshots.Count > 0)
+            {
+                writer.WriteLine();
+                writer.WriteLine("-- ======== Game entities as they are before the parts change them (later parts copy these: see the report) ========");
+                foreach (var s in snapshots)
+                {
+                    var (header, copies) = SnapshotForm[s.Type];
+                    var name = VanillaLoader.Vanilla?.Database[s.Type].TryGetValue(s.Of, out var v) == true ? v.Name : "";
+                    writer.WriteLine($"{(CommandsMap.TryGetString(header, out var h) ? h : "")} {s.Number} -- the game's {name} #{s.Of}");
+                    foreach (var c in copies)
+                        writer.WriteLine($"{(CommandsMap.TryGetString(c, out var cs) ? cs : "")} {s.Of}");
+                    writer.WriteLine("#end");
+                }
+            }
             foreach (var part in parts)
             {
                 writer.WriteLine();

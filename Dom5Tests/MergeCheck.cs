@@ -49,16 +49,50 @@ namespace Dom5Tests
             foreach (var d in dup.Take(5))
                 Console.WriteLine($"   {d.Message} (line {d.LineNumber})");
             // every entity one part alone defines or changes: the same values as in its part
+            // (a game entity a part selects by name counts under its number too)
             var touched = new Dictionary<(EntityType, int), List<(Mod, IDEntity)>>();
             foreach (var part in result.Parts)
                 foreach (var (type, set) in part.Database)
-                    foreach (var e in set.GetFullList().Where(x => x.ID > 0 && set.TryGetValue(x.ID, out var held) && ReferenceEquals(held, x)))
+                    foreach (var e in set.GetFullList().Where(x => x.ID > 0 && (set.TryGetValue(x.ID, out var held) && ReferenceEquals(held, x) || x.Selected)))
                     {
                         if (!touched.TryGetValue((type, e.ID), out var list))
                             touched[(type, e.ID)] = list = new();
                         list.Add((part, e));
                     }
-            int compared = 0, differ = 0, shared = 0;
+            // the game entities each part changes: a part's entity that copies one another part
+            // changes takes those changes (or the merge's snapshot of the game's): not compared
+            var changedBy = new Dictionary<(EntityType, int), List<Mod>>();
+            foreach (var part in result.Parts)
+                foreach (var (type, set) in part.Database)
+                    foreach (var e in set.GetFullList().Where(x => x.Selected && x.ID > 0 && VanillaLoader.Vanilla?.Database[type].TryGetValue(x.ID, out _) == true))
+                    {
+                        if (!changedBy.TryGetValue((type, e.ID), out var l))
+                            changedBy[(type, e.ID)] = l = new();
+                        l.Add(part);
+                    }
+            // (through a copy of the part's own entity that copies one, too)
+            bool CopiesAcross(Mod part, IDEntity e, HashSet<IDEntity>? seen = null)
+            {
+                seen ??= new HashSet<IDEntity>();
+                if (!seen.Add(e))
+                    return false;
+                foreach (var r in ModResolver.For(part).Resolve(e).Structure.OfType<Dom5Edit.Props.Reference>())
+                {
+                    // a copy of something its part doesn't have finds another part's in the merged file
+                    if (!r.TryGetEntity(out var src) || src == null)
+                    {
+                        if (r is Dom5Edit.Props.StringOrIDRef s && s.ID > 0)
+                            return true;
+                        continue;
+                    }
+                    if (src.ParentMod == null || changedBy.TryGetValue((src.Kind, src.ID), out var by) && by.Any(m => !ReferenceEquals(m, part)))
+                        return true;
+                    if (ReferenceEquals(src.ParentMod, part) && CopiesAcross(part, src, seen))
+                        return true;
+                }
+                return false;
+            }
+            int compared = 0, differ = 0, shared = 0, across = 0;
             foreach (var ((type, id), list) in touched)
             {
                 if (list.Count > 1)
@@ -67,6 +101,11 @@ namespace Dom5Tests
                     continue;
                 }
                 var (part, e) = list[0];
+                if (CopiesAcross(part, e))
+                {
+                    across++;
+                    continue;
+                }
                 if (!back.Database[type].TryGetValue(id, out var b))
                 {
                     differ++;
@@ -86,7 +125,7 @@ namespace Dom5Tests
             for (int k = 0; k < Math.Min(partEvents.Count, backEvents.Count); k++)
                 if (!Lines(partEvents[k]).SequenceEqual(Lines(backEvents[k])) && eventsDiffer++ < 5)
                     Console.WriteLine($"   event {k + 1}: {string.Join(" | ", Lines(partEvents[k]).Except(Lines(backEvents[k])).Take(3))}  vs  {string.Join(" | ", Lines(backEvents[k]).Except(Lines(partEvents[k])).Take(3))}");
-            Console.WriteLine($"read back: {compared} entities compared, {differ} differ; {shared} changed by several parts (not compared); " +
+            Console.WriteLine($"read back: {compared} entities compared, {differ} differ; {shared} changed by several parts, {across} copy a game entity another part changes (not compared); " +
                               $"events {backEvents.Count} of {partEvents.Count}, {eventsDiffer} differ");
         }
 

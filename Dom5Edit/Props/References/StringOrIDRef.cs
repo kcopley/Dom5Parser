@@ -87,6 +87,30 @@ namespace Dom5Edit.Props
             }
         }
 
+        /// <summary>Points at another entity (a merge's snapshot of a game entity): written by its number.</summary>
+        internal void Retarget(IDEntity target)
+        {
+            Entity = target;
+            Resolved = true;
+            _id = target.ID;
+            IsStringRef = false;
+            HasValue = true;
+        }
+
+        /// <summary>
+        /// A number that finds nothing in its mod, moved to another that finds nothing (a merge:
+        /// another part defines the first); the note says what it was.
+        /// </summary>
+        internal void Redirect(int id, string note)
+        {
+            _id = id;
+            HasValue = true;
+            IsStringRef = false;
+            Entity = null;
+            Resolved = false;
+            Comment = string.IsNullOrEmpty(Comment) ? note : Comment + " " + note;
+        }
+
         internal override void FollowTarget(IDEntity moved)
         {
             if (ReferenceEquals(Entity, moved) && !IsStringRef)
