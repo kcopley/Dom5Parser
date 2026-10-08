@@ -99,6 +99,19 @@ namespace Dom5Edit.Validation
             // spells: effects the game has no case for, spells nothing can cast
             Spells(mod, At, wrong, look);
 
+            // a number on #newspell/#newitem/#newnation: the game reads none (the exe: each takes the
+            // first free one); a #select of that number would be another entity
+            foreach (var block in mod.SourceBlocks.Where(b => !b.Selected))
+            {
+                var m = Regex.Match(block.RawHeader ?? block.Header ?? "", @"^\s*#new(spell|item|nation)\s+(\d+)");
+                if (!m.Success)
+                    continue;
+                string kind = m.Groups[1].Value, from = kind == "spell" ? "1500" : kind == "item" ? "700" : "120";
+                look.Add(new Item(At(block.HeaderLine, block.Entity),
+                    $"#new{kind} takes no number: the game gives the new {kind} the first free one (from {from}), so {m.Groups[2].Value} isn't its number " +
+                    $"(a #select{kind} {m.Groups[2].Value} elsewhere is another {kind}); #select{kind} {m.Groups[2].Value} makes one with that number"));
+            }
+
             var with = mod.Below().Where(d => d != VanillaLoader.Vanilla && !string.IsNullOrEmpty(d.FullFilePath))
                 .Reverse().Select(d => $"`{Path.GetFileName(d.FullFilePath)}`").ToList();
             var about = $"File: `{Path.GetFileName(file)}`" + (string.IsNullOrEmpty(mod.Version) ? "" : $", version {mod.Version}") +
