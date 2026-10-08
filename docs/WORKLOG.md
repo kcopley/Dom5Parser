@@ -39,7 +39,21 @@ etc etc, get the rest of the task list sorted out."
   `changelog OLD NEW` writes patch notes (units by nation, every type, texts by checksum only,
   modding commands, spell effects); tested against itself and eight deliberate changes.
 - **Pop-out windows** open where the last one was (dc57442).
-- **Test build 0.13.0** (Windows, macOS, Linux).
+- **Links like a browser's** (b1dd665; the user: "any entity hyperlink ... right click -> open in
+  new window option (or middle click, like a browser!)"): navigation commands are LinkCommands;
+  Controls/Link gives them, the badge reference buttons, the report's and issue list's Go to and
+  the chain map's cards a middle click and an "Open in a new window" menu.
+- **No guessed parent** (b1dd665; the user: "shouldn't loading a mod be independent?", "an
+  explicit parent reference, or a 'load as submod' option would be much better"):
+  NeededModFinder and its bar removed (it matched 2 stray numbers in Confluence); Load ▾ "Load as
+  submod..."; the bar says "numbers not in this mod or the game".
+- **#onebattlespell on items** (the user asked): the exe's only reference to the command is the
+  monster parser (0x14024fc65); the item parser reads #spell, #autospell, #autospellrepeat,
+  #bonusspells, #randomspell, #spellsinger. The report already lists it as a line the game
+  ignores ("isn't read in an item block (it's a monster command)").
+- **Test build 0.13.0** (e390427): Windows, macOS (arm64, x64), Linux (x64, arm64) in publish/.
+  Full suite on the merged code before the last UI changes: 99 checks, 97 pass + 2 known; quick
+  suite after them 84 + 1 known.
 
 ## 2026-10-07 (late): entities in windows of their own
 
