@@ -314,7 +314,7 @@
     "Dom5Tests/fixtures/merge/copy_a.dm",
     "Dom5Tests/fixtures/merge/copy_b.dm"
    ],
-   "about": "copies of a game unit, spell (by number, by name, a copy taken out by a later one) and site an earlier part changes copy the game's (snapshots; a spell's school and a site's rarity put back after the copy); a copied summon's #damage follows its unit's move"
+   "about": "copies of a game unit, spell (by number, by name, a copy taken out by a later one), site and item an earlier part changes copy the game's (snapshots; a spell's school, a site's rarity and an item's construction level put back after the copy); a copy of a tagged item (Dragon Pearl: the game hands it out at any level) isn't kept apart, noted; a copied summon's #damage follows its unit's move"
   },
   {
    "name": "merge-slots",

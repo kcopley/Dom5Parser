@@ -223,7 +223,33 @@ namespace Dom5Edit.Merge
             [EntityType.SPELL] = (Command.SELECTSPELL, new[] { Command.COPYSPELL }, (Command.SCHOOL, -1)),
             // rarity 5: never a random site (the manual)
             [EntityType.SITE] = (Command.NEWSITE, new[] { Command.COPYSITE }, (Command.RARITY, 5)),
+            // #selectitem: #newitem takes no number (the first free from 700, 0x140229150).
+            // Construction level 11 (stored 5): the forge needs research of 11 (0x1401ed910, level
+            // * 2 + 1 against the nation's research: -6 "too low"), and the random picks
+            // (0x1402bd340, 0x1402bd420) ask for levels 0-4, or for any level by tag or arena
+            // prize, which game items with those get no snapshot for (NoSnapshot). #copyitem
+            // copies the whole record (0x14023730e)
+            [EntityType.ITEM] = (Command.SELECTITEM, new[] { Command.COPYITEM }, (Command.CONSTLEVEL, 11)),
         };
+
+        /// <summary>
+        /// Why a game entity gets no snapshot though its type has one: a game item the game hands
+        /// out at any construction level (the random pick 0x1402bd420 asked for level -1): an
+        /// arena prize (#champprize, ability 259: "won the death match", 0x140116667) or a unit's
+        /// starting gear by tag (ability 567, which no command sets: equipnewcom 0x1400c0bc9; the
+        /// Dragon Pearls, the Crown of Ohya, ...). A copy of one, hidden by its level, could still
+        /// be given out; so a copy of one copies the changed item, noted.
+        /// </summary>
+        private static string? NoSnapshot(IDEntity target)
+        {
+            if (target.GetEntityType() != EntityType.ITEM)
+                return null;
+            if (target.Properties.Any(p => p.Command == Command.CHAMPPRIZE))
+                return "an arena prize (#champprize)";
+            if (target.GameValues.Any(g => g.Label == "ability 567"))
+                return "a unit's starting gear by tag";
+            return null;
+        }
 
         /// <summary>
         /// The user: a part's copy of a game entity (DomEnhanced's #copystats of the game's Archer)
@@ -235,7 +261,8 @@ namespace Dom5Edit.Merge
         /// armor changes nothing in game until something uses it; one of a spell or site would
         /// show (a spell to research twice, a site on the map), so the snapshot has a line that
         /// hides it (<see cref="SnapshotForm"/>) and each copy of it gets the game's value back on
-        /// the line after the copy. An item's would be one more to forge or find: noted.
+        /// the line after the copy. An item's is hidden by its construction level, unless the game
+        /// hands it out at any level (<see cref="NoSnapshot"/>): noted.
         /// </summary>
         private static void KeepCopiesApart(List<Mod> parts, List<Mod> separate, MergeReport report, List<Snapshot> snapshots,
                                             Dictionary<EntityType, Dictionary<int, (Mod Owner, IDEntity Entity)>> slots)
@@ -256,6 +283,7 @@ namespace Dom5Edit.Merge
                 : taken[type] = new HashSet<int>(parts.Concat(separate).Append(vanilla).SelectMany(m => Numbers(m, type))
                     .Concat(slots.TryGetValue(type, out var given) ? given.Keys : Enumerable.Empty<int>()));
             var unhandled = new Dictionary<(Mod, EntityType), int>();
+            var exposed = new Dictionary<(Mod Part, string What, string Why), int>();
             for (int b = 1; b < parts.Count; b++)
             {
                 var part = parts[b];
@@ -278,13 +306,20 @@ namespace Dom5Edit.Merge
                         unhandled[(part, type)] = unhandled.TryGetValue((part, type), out var n) ? n + 1 : 1;
                         continue;
                     }
-                    var snap = snapshots.FirstOrDefault(s => s.Type == type && s.Of == of);
+                    if (NoSnapshot(target) is string why)
+                    {
+                        var key = (part, $"game {type.ToString().ToLowerInvariant()} {of} {target.Name}", why);
+                        exposed[key] = exposed.TryGetValue(key, out var x) ? x + 1 : 1;
+                        continue;
+                    }
+                    var snap =snapshots.FirstOrDefault(s => s.Type == type && s.Of == of);
                     if (snap == null)
                     {
                         var range = part.Database[type];
                         var t = Taken(type);
-                        // spells from the top: below, the game gives the parts' unnumbered #newspell theirs
-                        bool down = type == EntityType.SPELL && range.END_ID > 0;
+                        // spells and items from the top: below, the game gives the parts' unnumbered
+                        // #newspell and #newitem theirs
+                        bool down = (type == EntityType.SPELL || type == EntityType.ITEM) && range.END_ID > 0;
                         int number = down ? range.END_ID : range.START_ID;
                         while (t.Contains(number))
                             number += down ? -1 : 1;
@@ -308,6 +343,8 @@ namespace Dom5Edit.Merge
                     report.Kept.Add($"{part.DisplayName}: {count} copy line{(count == 1 ? "" : "s")} of game {s.Type.ToString().ToLowerInvariant()} {s.Of} {(vanilla.Database[s.Type].TryGetValue(s.Of, out var v) ? v.Name : "")} now copy {s.Number}, the game's as it is before {string.Join(", ", parts.Where(a => changed[a].Contains((s.Type, s.Of)) && !ReferenceEquals(a, part)).Select(a => a.DisplayName))} change{(parts.Count(a => changed[a].Contains((s.Type, s.Of)) && !ReferenceEquals(a, part)) == 1 ? "s" : "")} it");
             foreach (var ((part, type), count) in unhandled)
                 report.Notes.Add($"{part.DisplayName}: {count} copy line{(count == 1 ? "" : "s")} of game {type.ToString().ToLowerInvariant()}s an earlier part changes: they copy the changed ones (a copy of a {type.ToString().ToLowerInvariant()} to keep them apart would show in game)");
+            foreach (var ((part, what, why), count) in exposed)
+                report.Notes.Add($"{part.DisplayName}: {count} copy line{(count == 1 ? "" : "s")} of {what}, which an earlier part changes: {(count == 1 ? "it copies" : "they copy")} the changed one ({why}: the game hands such items out at any level, so a copy kept apart could turn up in game)");
         }
 
         /// <summary>

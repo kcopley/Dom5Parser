@@ -29,3 +29,13 @@
 #copysite 400
 #name "B's Lava Lake"
 #end
+
+#selectitem 1200
+#copyitem 5
+#name "B's Sword"
+#end
+
+#selectitem 1201
+#copyitem 508
+#name "B's Pearl"
+#end
