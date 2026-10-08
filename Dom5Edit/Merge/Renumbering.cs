@@ -33,11 +33,10 @@ namespace Dom5Edit.Merge
                 // a mod over it that selects it: its entity for it moves too (its number is this one's)
                 if (!ReferenceEquals(mod, entity.ParentMod) && mod.Database[type].TryGetValue(old, out var over) && ReferenceEquals(over.DependentEntity, entity))
                     mod.Database[type].Rekey(over, old, newId);
-                foreach (var e in Entities(mod))
-                    foreach (var p in e.Properties)
-                        if (p is Reference r)
-                            foreach (var part in r.Parts())
-                                part.FollowTarget(entity);
+                foreach (var p in Lines(mod))
+                    if (p is Reference r)
+                        foreach (var part in r.Parts())
+                            part.FollowTarget(entity);
                 ModResolver.For(mod).Invalidate();
             }
         }
@@ -60,6 +59,14 @@ namespace Dom5Edit.Merge
             set[newId] = dependent;
             ModResolver.For(mod).Invalidate();
         }
+
+        /// <summary>
+        /// Every line the mod's save writes: its blocks' lines as read, live or not (a line a later
+        /// #copy... or #clear... in the file took out is still read by the game, and written),
+        /// and lines added since.
+        /// </summary>
+        internal static IEnumerable<Property> Lines(Mod mod) =>
+            mod.SourceBlocks.SelectMany(b => b.Properties).Concat(Entities(mod).SelectMany(e => e.Properties)).Distinct();
 
         /// <summary>Every entity the mod holds (numbered, unnumbered, events).</summary>
         internal static IEnumerable<IDEntity> Entities(Mod mod) =>

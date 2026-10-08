@@ -221,6 +221,27 @@ def names(readings):
 
 FORM_NUMBER = re.compile(r'\((\d+)\)\s*$')
 
+# commands that name a file (relative to the .dm): a merge copies it and rewrites the path, so the
+# file is compared, not the path
+PATHS = {'spr1', 'spr2', 'xspr1', 'xspr2', 'spr', 'flag', 'indepflag', 'mountedspr1', 'mountedspr2',
+         'unmountedspr1', 'unmountedspr2', 'sample', 'icon'}
+_files = {}
+
+
+def file_of(reading, text):
+    """The file a path names, from the reading's .dm: its bytes' hash, or None if it isn't there."""
+    rel = text.split('"')[0].strip().replace('\\', '/')
+    while rel.startswith('./'):
+        rel = rel[2:]
+    full = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(reading.path)), rel.lstrip('/')))
+    if full not in _files:
+        try:
+            import hashlib
+            _files[full] = hashlib.sha1(open(full, 'rb').read()).hexdigest()
+        except OSError:
+            _files[full] = None
+    return _files[full]
+
 
 def normalized(reading, ctx, kinds, effects, moves, table, reading_moves):
     """A pass's blocks with numbers mapped (moves: kind -> old -> new) and names as numbers (the
@@ -262,6 +283,10 @@ def normalized(reading, ctx, kinds, effects, moves, table, reading_moves):
                         new = int(new)
                         a = ((-new if kind == 'monster or tag' and a[0] < 0 else new),) + tuple(a[1:])
                 it = (c, a)
+            elif c in PATHS and len(it) > 1 and isinstance(it[1], tuple) and it[1][:1] == ('text',) and it[1][1]:
+                h = file_of(reading, it[1][1])
+                if h:
+                    it = (c, ('file', h))
             elif ctx == 'template' and c == 'form' and len(it) > 1 and isinstance(it[1], tuple) and it[1][:1] == ('text',) and it[1][1]:
                 # "Dragon (265)": the monster's number in the name (the manual)
                 t = it[1][1]
@@ -298,7 +323,21 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
     parts = [(Reading(p['file'], rules), p.get('moves', {})) for p in m['parts']]
     merged = Reading(merged_path, rules)
     base = ([vanilla] if vanilla else []) + separate
-    diffs = []
+    diffs, known = [], []
+    # a part whose file doesn't end with a line break: read alone, the game drops its last byte
+    # (its last #end is #en); inside the merged file it doesn't: an #end more there
+    unended = {id(r) for r, _ in parts if not open(r.path, 'rb').read().endswith(b'\n')}
+    last_blocks = set()
+    for r, _ in parts:
+        if id(r) in unended:
+            for ctx in dmread.STARTS:
+                if r.passes.get(ctx):
+                    last_blocks.add((ctx, r.passes[ctx][-1]['line'], r.path))
+
+    def run_on(items):
+        """A text without its closing quote on its line: it runs on over the next lines, which a
+        merge may have rewritten (a path, a reference): its text changes with them."""
+        return items and all(len(t) > 1 and isinstance(t[1], tuple) and t[1][:1] == ('text',) and t[1][1] and '\n' in t[1][1] for t in items)
     for ctx in dmread.STARTS:
         expected = []
         for i, (r, moves) in enumerate(parts):
@@ -306,6 +345,8 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
             # the parts before it and its own
             table = names(base + [x for x, _ in parts[:i + 1]])
             blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]])
+            for b in blocks:
+                b['path'] = r.path
             if ctx == 'global' and expected and blocks:
                 expected[0]['items'].extend(blocks[0]['items'])
                 blocks = blocks[1:]
@@ -318,8 +359,15 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
                     if x['items'] != y['items']:
                         sm = difflib.SequenceMatcher(None, x['items'], y['items'], autojunk=False)
                         for o, k1, k2, l1, l2 in sm.get_opcodes():
-                            if o != 'equal':
-                                diffs.append((ctx, show_head(x['head']), y['line'], [show(t) for t in x['items'][k1:k2]], [show(t) for t in y['items'][l1:l2]]))
+                            if o == 'equal':
+                                continue
+                            d = (ctx, show_head(x['head']), y['line'], [show(t) for t in x['items'][k1:k2]], [show(t) for t in y['items'][l1:l2]])
+                            if o == 'insert' and y['items'][l1:l2] == [('end',)] and (ctx, x['line'], x.get('path')) in last_blocks:
+                                known.append(('#end restored (the part ends without a line break)',) + d)
+                            elif o == 'replace' and run_on(x['items'][k1:k2]) and run_on(y['items'][l1:l2]):
+                                known.append(('a text without its closing quote runs over a rewritten line',) + d)
+                            else:
+                                diffs.append(d)
             else:
                 for x in expected[i1:i2]:
                     diffs.append((ctx, show_head(x['head']), None, ['(block only in the parts)'], []))
@@ -338,8 +386,9 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
             for step, has in ((1, bool(cmds & {'shrinkhp', 'xpshape', 'labxpshape'}) and 'xpshapemon' not in cmds), (-1, 'growhp' in cmds)):
                 if has and at(n + step) != at(n) + step:
                     chain.append('%s: monster %d -> %d turns into %d, now %d (should be %d)' % (os.path.basename(r.path), n, at(n), n + step, at(n + step), at(n) + step))
-    print('%s: the game reads it %s; %d chained unit(s) out of order' % (
-        os.path.basename(merged_path), 'as its %d parts one after another' % len(parts) if not diffs else 'differently from its parts: %d difference(s)' % len(diffs), len(chain)))
+    print('%s: the game reads it %s; %d chained unit(s) out of order%s' % (
+        os.path.basename(merged_path), 'as its %d parts one after another' % len(parts) if not diffs else 'differently from its parts: %d difference(s)' % len(diffs), len(chain),
+        ''.join('; %d %s' % (n, k) for k, n in sorted({k[0]: sum(1 for x in known if x[0] == k[0]) for k in known}.items()))))
     for ctx, head, line, a, b in diffs[:limit]:
         print('  [%s] %s (merged line %s)' % (ctx, head, line))
         for s in a[:3]:

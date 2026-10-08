@@ -146,9 +146,16 @@ namespace Dom5Edit.Merge
                 report.Parts.Add($"{mod.DisplayName} ({Path.GetFileName(input.File)}{(string.IsNullOrEmpty(mod.Version) ? "" : ", version " + mod.Version)})"
                                  + (below != null ? $", read over {below.DisplayName}" : ""));
             }
-            // 2. merge mode: references by number where the game takes one (StringOrIDRef, the headers)
+            // 2. merge mode: references by number where the game takes one (StringOrIDRef, the headers);
+            // a line a later copy or clear in the file took out is still read and written: its
+            // reference finds its target too (loading resolves the live lines only)
             foreach (var m in parts)
+            {
                 m.KeepReferenceForms = false;
+                foreach (var r in Renumbering.Lines(m).OfType<Reference>())
+                    if (!r.TryGetEntity(out _))
+                        r.Resolve();
+            }
             // 3. numbers
             foreach (var part in parts)
                 moved[part] = new Dictionary<(string Kind, int Old), int>();
@@ -295,8 +302,7 @@ namespace Dom5Edit.Merge
         {
             var number = new System.Text.RegularExpressions.Regex(@"\((\d+)\)\s*$");
             foreach (var part in parts)
-                foreach (var e in part.Database[EntityType.TEMPLATE].GetFullList())
-                    foreach (var p in e.Properties.OfType<StringProperty>().Where(p => p.Command == Command.FORM))
+                    foreach (var p in Renumbering.Lines(part).OfType<StringProperty>().Where(p => p.Command == Command.FORM && p.Parent?.GetEntityType() == EntityType.TEMPLATE))
                     {
                         var m = number.Match(p.Value ?? "");
                         if (!m.Success)
@@ -390,8 +396,7 @@ namespace Dom5Edit.Merge
             }
             var clearing = new[] { Command.CLEARALLEVENTS, Command.CLEARMERCS };
             foreach (var part in parts.Skip(1))
-                foreach (var e in Renumbering.Entities(part))
-                    foreach (var p in e.Properties.Where(p => clearing.Contains(p.Command)))
+                foreach (var p in Renumbering.Lines(part).Where(p => clearing.Contains(p.Command)))
                         report.Conflicts.Add($"{part.DisplayName} has {(CommandsMap.TryGetString(p.Command, out var c) ? c : p.Command.ToString())} (line {p.LineNumber}): it clears what the parts before it added");
         }
 
@@ -410,8 +415,7 @@ namespace Dom5Edit.Merge
             everyone.AddRange(separate);
             everyone.AddRange(parts);
             foreach (var part in parts)
-                foreach (var e in Renumbering.Entities(part).ToList())
-                    foreach (var r in e.Properties.OfType<StringOrIDRef>().Where(r => nameOnly.Contains(r.Command)))
+                foreach (var r in Renumbering.Lines(part).OfType<StringOrIDRef>().Where(r => nameOnly.Contains(r.Command)).ToList())
                     {
                         if (!r.TryGetEntity(out var target) || target == null || !target.TryGetName(out var name) || string.IsNullOrEmpty(name))
                             continue;
@@ -458,8 +462,7 @@ namespace Dom5Edit.Merge
                     folder += "_";
                 var partDir = Path.GetDirectoryName(part.FullFilePath)!;
                 int copied = 0, missing = 0;
-                foreach (var e in Renumbering.Entities(part))
-                    foreach (var p in e.Properties.OfType<FilePathProperty>().Where(p => PathCommands.Contains(p.Command)))
+                foreach (var p in Renumbering.Lines(part).OfType<FilePathProperty>().Where(p => PathCommands.Contains(p.Command)))
                     {
                         // the path the game reads: up to the closing quote (Confluence has text after it)
                         var named = (p.Value ?? "").Split('"')[0].Trim();
