@@ -20,6 +20,12 @@ namespace Dom5Editor.Session
         /// <summary>The entity list's width (the splitter between the list and the page), if it was moved.</summary>
         public double? ListWidth { get; set; }
 
+        /// <summary>Where the last page in a window of its own was, and its size (the next one opens there).</summary>
+        public double? PopOutLeft { get; set; }
+        public double? PopOutTop { get; set; }
+        public double? PopOutWidth { get; set; }
+        public double? PopOutHeight { get; set; }
+
         public List<string> RecentFiles { get; set; } = new List<string>();
 
         /// <summary>The Dominions 6 folder the user picked (when the editor doesn't find it in Steam's).</summary>

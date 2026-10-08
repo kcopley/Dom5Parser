@@ -102,21 +102,39 @@ namespace Dom5Editor.Ava.Views
         /// <summary>The pages open in windows of their own.</summary>
         public IReadOnlyList<PageWindow> PopOuts => _popOuts;
 
-        /// <summary>The size the last page window had: the next opens as big.</summary>
-        private static Size _popOutSize = new(920, 900);
-
+        /// <summary>
+        /// A page in a window of its own: where the last one was and as big (remembered between
+        /// runs, if that place is still on a screen), else over the main window's page side;
+        /// each one more a little lower and to the right.
+        /// </summary>
         private void ShowPopOut(PageWindowViewModel vm)
         {
+            int k = _popOuts.Count % 8;
+            var at = new PixelPoint(Position.X + 360, Position.Y + 60);
+            if (_settings.PopOutLeft is double l && _settings.PopOutTop is double t)
+            {
+                var saved = new PixelPoint((int)Math.Round(l * DesktopScaling), (int)Math.Round(t * DesktopScaling));
+                if (Screens.All.Any(s => s.WorkingArea.Contains(saved + new PixelVector(100, 10))))
+                    at = saved;
+            }
             var window = new PageWindow(vm, this)
             {
-                Width = _popOutSize.Width,
-                Height = Math.Min(_popOutSize.Height, Math.Max(400, Bounds.Height)),
+                Width = _settings.PopOutWidth is double w && w >= 480 ? w : 920,
+                Height = _settings.PopOutHeight is double h && h >= 300 ? h : Math.Min(900, Math.Max(400, Bounds.Height)),
                 WindowStartupLocation = WindowStartupLocation.Manual,
-                // over the main window's page side, each a little lower and to the right of the last
-                Position = new PixelPoint(Position.X + 360 + 32 * (_popOuts.Count % 8), Position.Y + 60 + 32 * (_popOuts.Count % 8)),
+                Position = at + new PixelVector(32 * k, 32 * k),
             };
             _popOuts.Add(window);
-            window.Closing += (s, e) => _popOutSize = window.Bounds.Size;
+            window.Closing += (s, e) =>
+            {
+                if (!KeepLayout || window.WindowState != WindowState.Normal)
+                    return;
+                _settings.PopOutLeft = window.Position.X / window.DesktopScaling;
+                _settings.PopOutTop = window.Position.Y / window.DesktopScaling;
+                _settings.PopOutWidth = window.ClientSize.Width;
+                _settings.PopOutHeight = window.ClientSize.Height;
+                _settings.Save();
+            };
             window.Closed += (s, e) => _popOuts.Remove(window);
             window.Show();
         }
