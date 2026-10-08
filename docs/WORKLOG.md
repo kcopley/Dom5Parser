@@ -3,6 +3,44 @@
 Running log of the autonomous work sessions: what was done, what was found, what's next.
 Newest entries at the top. Commits are local unless noted; the user pushes.
 
+## 2026-10-07 (last): spells the game doesn't handle, Merge mods..., the change log, 0.13.0
+
+The user asked whether combat effects 1000-9999 really do nothing ("are you sure?"), whether the
+inspector's damage readings are all handled, to put such things in the report ("then if it's in
+the report, it can be reported to us"; "make sure that the report describes that they are not
+handled in the exe (and confirm it one last time)"), then: "get the button, package, update,
+etc etc, get the rest of the task list sorted out."
+
+- **Spell effects** (75c7502): confirmed in the exe for the cloud spells (Bloodwar's Cloud of
+  Salt 2003, DomEnhanced's Slime Cloud 4011) and Gjallarhorn (6043): casting passes the effect on
+  as written, clouds are only 144-150, hitunit has no case, only the AI reads effect % 1000. The
+  editor and referee read them as unhandled (their #damage a plain number). Dom6's own clouds use
+  effects 144-150 with #aoe; the thousands look like an older way of writing a lasting effect.
+  Compared with the inspector's readings over all 164 effects the game and the installed mods
+  use: where they differ (54 Polymorph, 126, 10062, 10130 take a unit; 76/100 lists) the exe
+  backs ours. The report says what the game doesn't handle (combat 1000-9999; ritual 10086 in
+  Confluence and Sombre) and which spells nothing can cast (no #school, no #copyspell, nothing
+  names it: DomEnhanced's Gjallarhorn and Starvation, Bloodwar's two Lamia contacts; a #school -1,
+  DomEnhanced One Age's 83, is a deliberate switch-off and isn't flagged).
+- **Quoted names** (75c7502): `#copyspell "Stellar Strike" (note)` was read with the note, so
+  Confluence's copy found nothing; now up to the closing quote, the rest a comment.
+- **Merge mods...** (9d13ebd): the editor's merge window (mods in order, each submod's parent,
+  name, file; never over a mod or into the workshop folder, an existing file backed up; read back
+  after). Checked on the copy fixtures and Sombre + Strigos + Bloodwar (75 moved, as stage 6).
+- **Item copies kept apart** (agent, 0258832): the exe's forge needs the item's level in
+  construction research (11 never) and every random pick asks for levels 0-4, except a
+  commander's gear by tag (ability 567) and arena prizes (#champprize): snapshots with
+  `#constlevel 11`, the level put back after each copy; those 16 game items are noted instead.
+- **#newitem 800** (agent, 74711e0): the parser makes such a block unnumbered, as the game does
+  (the line still written as read); the report says the game ignores the number. Showing the
+  number the game gives unnumbered `#new` blocks is left (docs/ISSUES.md: it would change what the
+  editor writes).
+- **Change log for game updates** (agent, 7d7cb1c): `dom6exe.py snapshot` keeps a version's data,
+  `changelog OLD NEW` writes patch notes (units by nation, every type, texts by checksum only,
+  modding commands, spell effects); tested against itself and eight deliberate changes.
+- **Pop-out windows** open where the last one was (dc57442).
+- **Test build 0.13.0** (Windows, macOS, Linux).
+
 ## 2026-10-07 (late): entities in windows of their own
 
 The user asked for entities opened in separate windows, "so multiple can be edited
