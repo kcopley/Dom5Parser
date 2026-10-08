@@ -33,6 +33,8 @@ and GNU `objdump`. The exe is never copied into the repo.
 | `vanilla` | Every vanilla type the editor lists, written as the commands that store each value: weapons, armor, monsters, spells, items, sites and nations as `#select*` blocks (`vanilla_dm.py`), then blesses, poptypes and nametypes as `#select*` blocks and the mercenaries as `#newmerc` blocks (`vanilla_other.py`). Values no command can store are `-- ro:` lines (shown read-only). Each table's end marker (a record named "end") is left out. AI templates have no vanilla data: the game reads them only from mods. |
 | `sprites` | Which picture the game draws for each vanilla monster (and its attack frame and unmounted sprite) and item: the sprite numbers it stores, and the archive (`sprites.py`). Numbers only; the editor reads the pictures from the player's install (`Dom5Edit/VanillaSprites.cs`, `Dom5Editor/Sprites/GameArt.cs`). Also the rule for a site's picture, and (`"flag"`, `flags.py`) how the game builds a nation's flag from parts of `flag.trs` and the nation's colors. |
 | `texts` | Where the game keeps its texts (`texts.py`): monster, item and spell descriptions, a spell's details, portent and cure, a nation's description, summary and brief. Only locations: the two lists of string pointers, how each kind's key is made, and a checksum of the bytes read. The editor reads the texts from the player's own exe (Dom5Edit/GameData/VanillaTexts.cs). See Texts below. |
+| `snapshot` | Everything `changelog` compares, from one exe, into a folder (`--out DIR`; `--texts` keeps the game's texts too, local use only). |
+| `changelog` | What changed between two versions: `changelog OLD NEW [--out F.md]`, each a snapshot folder, an exe or a vanilla .dm ("Game updates" below). |
 | `dmread` | How the game reads a `.dm` file (`dmread.py`, "Reading .dm files" below). Alone: the rules it reads from the exe (the string commands per type with their length limit and whether reading skips their text, the `#new`/`#select` check, the types that refuse a missing `#end`). With `--mod`: the game's reading replayed on that file, and where it differs from a line-by-line reading (strings running over command lines, `#` read inside quotes, texts cut at their limit, fatal errors, ...); `--lines A-B` lists what each pass reads there. |
 | `spelleffects` | What a spell's `#damage` is for each `#effect` (`spelleffects.py`): a monster, a monster or tag, an enchantment, an event `#id`, a site, an ability number, a bitmask or a plain value, with the code address it was read from. Embedded in Dom5Edit (SpellEffectData), used by the merger and its referee (`gameread.py --merge`). See "Spell effects and #damage" below. |
 | `events` | The 3,302 vanilla events as `#selectevent N` blocks (`events.py`): rarity, requirements and effects in stored order. The messages (the game's text) are left out unless `--messages`; the header line `-- messages: exe <checksum> offset <file offset> record <size> size <message size> count <n>` says where an editor reads them from the player's own exe. Each stored (code, value) pair is written as the command that stores that code; codes no command writes are `-- ro: requirement N = v` / `-- ro: effect N = v` lines, with the game's own name for the code when it has one. A JSON summary goes to stdout. |
@@ -676,6 +678,17 @@ abilities). Where the two files differ, by cause:
 | The inspector's value differs from the stored one | `#startage` (459: the inspector's is ~10% higher), `#fireres` +10 from a heat aura without the intrinsic flag (24), `#coldrec` (offset), `#itemslots` (10), `#templetrainer` (3) |
 | Stored values no command reproduces (read-only here, written by the inspector) | `#heat 3`/`#cold 3` from the aura flags (153), `#horrormark` (3; stores 5), `#blessbers`, `#entangle` (stored 3, the commands store 1), `#stealthy -15` without the flag (4), `#sailing 5 0` (13) |
 | Not found in the exe | `#startitem` (18), `#siegebonus` (1), `#eyeloss` (9) |
+
+## Game updates: snapshot and changelog
+
+`dom6exe.py snapshot --out DIR` keeps everything below from one exe in a folder (vanilla.dm,
+events.dm without messages, the catalog, the reading rules, the spell effects table, a checksum
+of each game text; `--texts` keeps the texts too, for local use only). `dom6exe.py changelog OLD
+NEW [--out F.md]` compares two versions (snapshot folders, exes or vanilla .dm files) entity by
+entity and writes patch notes: units by nation, every changed line with its command and the names
+of what it refers to, events, which texts changed (never their words unless `--texts`), and the
+modding side (commands, argument formats, text limits, spell effects). `changelog.py`;
+`changelog_test.py` checks it; docs/GAME_UPDATES.md has the routine for a new version.
 
 ## Next
 
