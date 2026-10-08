@@ -38,7 +38,8 @@ namespace Dom5Edit.Props
             }
         }
 
-        public override string ToString()
+        // (the save's text: the shared variable's number, which a merge may have moved)
+        public override string ToExportString()
         {
             if (CommandsMap.TryGetString(Command, out string s))
             {
