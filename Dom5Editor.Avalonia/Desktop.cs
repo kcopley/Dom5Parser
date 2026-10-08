@@ -26,5 +26,23 @@ namespace Dom5Editor.Ava
                 return false;
             }
         }
+
+        /// <summary>Opens a file in the program the system gives its kind (a .md report in a text editor or viewer). False if that couldn't be started.</summary>
+        public static bool OpenFile(string file)
+        {
+            try
+            {
+                var start = OperatingSystem.IsWindows() ? new ProcessStartInfo(file) { UseShellExecute = true }
+                    : new ProcessStartInfo(OperatingSystem.IsMacOS() ? "open" : "xdg-open") { UseShellExecute = false };
+                if (!OperatingSystem.IsWindows())
+                    start.ArgumentList.Add(file);
+                using var process = Process.Start(start);
+                return process != null || OperatingSystem.IsWindows(); // (Windows may hand it to a program already running)
+            }
+            catch (Exception ex) when (ex is System.ComponentModel.Win32Exception || ex is InvalidOperationException)
+            {
+                return false;
+            }
+        }
     }
 }

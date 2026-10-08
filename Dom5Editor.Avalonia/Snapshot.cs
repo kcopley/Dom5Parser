@@ -40,6 +40,8 @@ namespace Dom5Editor.Ava
     ///   --popout-back            back in the newest page window
     ///   --popout-png FILE.png    render the newest page window
     ///   --popout-close           close the newest page window: logs what still listens to the mod
+    ///   --merge-window FILE.png OUT.dm A.dm B.dm[=A.dm] ...   "Merge mods...": the mods listed (B over A), merged into
+    ///                            OUT.dm; renders FILE-before.png and FILE.png (after), logs the summary
     /// Messages go to FILE.png.log / FILE.dm.log next to the first output, and to stdout.
     /// Settings, backups, errors.log and recovery copies go to temp folders, never the user's.
     /// Example: Dom5Editor.Avalonia --snapshot --mod my.dm --select monster 3 --set hp 30 --png hp.png --save out.dm
@@ -440,6 +442,39 @@ namespace Dom5Editor.Ava
                             Newest(window).Close();
                             Pump();
                             Log($"closed a page window: {window.PopOuts.Count} left; the mod's listeners {before} -> {session.ChangedListeners}");
+                            break;
+                        }
+                        case "--merge-window":
+                        {
+                            var png = args[++i];
+                            _logPath ??= png + ".log";
+                            var output = Path.GetFullPath(args[++i]);
+                            var merge = new MergeWindow { Width = 860, Height = 720 };
+                            // (SUB.dm=PARENT.dm: a submod read over its parent, as its row's "Parent..." sets)
+                            while (i + 1 < args.Length && !args[i + 1].StartsWith("--"))
+                            {
+                                var a = args[++i];
+                                int eq = a.IndexOf(".dm=", StringComparison.OrdinalIgnoreCase);
+                                merge.ViewModel.Add(Path.GetFullPath(eq > 0 ? a[..(eq + 3)] : a));
+                                if (eq > 0)
+                                    merge.ViewModel.SetNeeds(merge.ViewModel.Rows[^1], a[(eq + 4)..]);
+                            }
+                            merge.ViewModel.OutputFile = output;
+                            merge.Show();
+                            Pump();
+                            Render(merge, Path.ChangeExtension(png, null) + "-before.png");
+                            Log($"merge window: {merge.ViewModel.Rows.Count} mods ({string.Join(", ", merge.ViewModel.Rows.Select(r => $"{r.Order}. {r.Name}{(r.HasNeeds ? " " + r.NeedsText : "")}"))}); problem: {merge.ViewModel.Problem ?? "none"}");
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            var task = merge.ViewModel.MergeAsync();
+                            while (!task.IsCompleted)
+                            {
+                                Pump();
+                                Thread.Sleep(50);
+                            }
+                            Pump();
+                            Render(merge, png);
+                            Log($"merged in {watch.ElapsedMilliseconds} ms: {merge.ViewModel.Status}\n{merge.ViewModel.Summary}");
+                            merge.Close();
                             break;
                         }
                         case "--load-menu":

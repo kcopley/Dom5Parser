@@ -33,6 +33,12 @@ it, and save without losing anything the file had.
   entity (Ctrl+P), list search (Ctrl+F), lists filtered to vanilla / changed / new and by kind
   (mages, rituals, events in a chain, ...), sprites and key stats in the lists. "Copy & edit"
   gives a unit its own changed copy of a weapon or armor; "+ New weapon" makes one for it.
+- **Merging mods:** "Merge mods..." puts several mods into one new file, in the order the game
+  would read them. Where two use the same number the later one's entity moves and every
+  reference follows (events' codes, variables, enchantments and monster tags too); a submod is
+  read over its parent; a mod's copy of a game unit another mod changes stays as the game has it;
+  numbers the game hands out itself (`#newspell`, `#newitem`) are worked out as it will. The mods
+  aren't changed; a report lists everything that moved (docs/MERGING.md).
 - **Several entities side by side:** "New window" on a page (or a row's right-click menu,
   Ctrl+click or a middle click on a row, Ctrl+click on a link) opens the entity in a window of
   its own, to arrange beside the main window or on another screen. Edits show in every window

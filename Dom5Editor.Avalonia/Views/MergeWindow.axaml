@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:coreviews="clr-namespace:Dom5Editor.UI.Views;assembly=Dom5Editor.Core"
+        x:Class="Dom5Editor.Ava.Views.MergeWindow"
+        Title="Merge mods" Width="860" Height="720" MinWidth="560" MinHeight="460"
+        WindowStartupLocation="CenterOwner">
+    <!-- "Merge mods..." (UI.Views.MergeViewModel, Dom5Edit.Merge.ModMerger, docs/MERGING.md): the
+         mods in the order the game would read them, a submod over its parent, the merged mod's
+         name and file; the merge, then what it did and its report. The mods aren't changed. -->
+    <DockPanel Margin="16">
+        <StackPanel DockPanel.Dock="Top" Spacing="4" Margin="0,0,0,12">
+            <TextBlock Text="Merge mods into one" Classes="header"/>
+            <TextBlock Classes="muted" TextWrapping="Wrap"
+                       Text="The mods are merged in this order, as the game reads mods enabled in this order. Where two use the same number, the later one's entity moves to a free number and every reference to it follows; a mod's copy of a game unit another one changes stays as the game has it; a submod is read over its parent. The mods themselves aren't changed: the merged mod is a new file, with a report of everything that moved."/>
+        </StackPanel>
+
+        <!-- the merged mod: name, file, merge -->
+        <StackPanel DockPanel.Dock="Bottom" Spacing="8" Margin="0,12,0,0">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" >
+                <TextBlock Text="Name" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBox Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ModName, Mode=TwoWay}" IsEnabled="{Binding CanEdit}"
+                         ToolTip.Tip="The merged mod's #modname, as the game lists it"/>
+                <TextBlock Grid.Row="1" Text="Save as" VerticalAlignment="Center" Margin="0,8,10,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding OutputText}" VerticalAlignment="Center" Margin="0,8,0,0"
+                           TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding OutputText}"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="Choose..." Margin="8,8,0,0" Click="Output_Click" IsEnabled="{Binding CanEdit}"
+                        ToolTip.Tip="Where to save the merged mod (a new .dm file; its report and the mods' images go next to it). Your Dominions 6 mods folder is where the game finds it"/>
+            </Grid>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Merge" Classes="accent" Click="Merge_Click" IsEnabled="{Binding CanMerge}" Margin="8,0,0,0"
+                        ToolTip.Tip="Merge the mods into the file chosen (big mods take a minute or two)"/>
+                <ProgressBar DockPanel.Dock="Right" IsIndeterminate="True" Width="120" IsVisible="{Binding IsMerging}" VerticalAlignment="Center"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Problem}" Foreground="{StaticResource WarningBrush}" TextWrapping="Wrap"
+                               IsVisible="{Binding Problem, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                    <TextBlock Text="{Binding Status}" Classes="muted" TextWrapping="Wrap"/>
+                </StackPanel>
+            </DockPanel>
+            <!-- what the merge did -->
+            <Border Background="{StaticResource BackgroundLightBrush}" CornerRadius="4" Padding="12,10" IsVisible="{Binding IsDone}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding Summary}" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Open the merged mod" Classes="accent" Click="OpenMerged_Click"
+                                ToolTip.Tip="Open the merged mod in the editor (this window closes)"/>
+                        <Button Content="Open the report" Click="OpenReport_Click"
+                                ToolTip.Tip="The merge's report: every number moved (old to new, per mod), copies kept apart, what acts across mods"/>
+                        <Button Content="Show the folder" Click="ShowFolder_Click" ToolTip.Tip="The folder with the merged mod, its report and the mods' images"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- the mods, in order -->
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                <Button Content="Add mods..." Click="Add_Click" IsEnabled="{Binding CanEdit}"
+                        ToolTip.Tip="Add .dm files to merge, at the end of the list (a mod that needs another is read over it: set on its row)"/>
+            </StackPanel>
+            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="4">
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding Rows}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="coreviews:MergeRow">
+                                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="10,6">
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Left" Text="{Binding Order, StringFormat='{}{0}.'}" Classes="subheader" Width="28" VerticalAlignment="Center"/>
+                                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                                            <Button Content="Parent..." Classes="small" Tag="{Binding}" Click="Needs_Click"
+                                                    IsEnabled="{Binding $parent[Window].DataContext.CanEdit}"
+                                                    ToolTip.Tip="The mod this one is read over, if it's a submod (the game needs that one enabled first): pick its .dm file"/>
+                                            <Button Content="No parent" Classes="small" Tag="{Binding}" Click="NoNeeds_Click" IsVisible="{Binding HasNeeds}"
+                                                    IsEnabled="{Binding $parent[Window].DataContext.CanEdit}"
+                                                    ToolTip.Tip="Read this mod by itself, over the game only"/>
+                                            <Button Content="▲" Classes="small" Tag="{Binding}" Click="Up_Click" IsEnabled="{Binding CanMoveUp}"
+                                                    ToolTip.Tip="Earlier in the order (its numbers stay; the later mods' move)"/>
+                                            <Button Content="▼" Classes="small" Tag="{Binding}" Click="Down_Click" IsEnabled="{Binding CanMoveDown}"
+                                                    ToolTip.Tip="Later in the order"/>
+                                            <Button Content="✕" Classes="small" Tag="{Binding}" Click="Remove_Click"
+                                                    IsEnabled="{Binding $parent[Window].DataContext.CanEdit}"
+                                                    ToolTip.Tip="Take this mod out of the merge"/>
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding File}" Classes="muted" FontSize="11" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding File}"/>
+                                            <TextBlock Text="{Binding NeedsText}" Foreground="{StaticResource AccentHighlightBrush}" FontSize="11"
+                                                       IsVisible="{Binding HasNeeds}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </DockPanel>
+    </DockPanel>
+</Window>

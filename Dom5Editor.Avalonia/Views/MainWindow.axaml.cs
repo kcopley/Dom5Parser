@@ -478,6 +478,17 @@ namespace Dom5Editor.Ava.Views
         private ReportWindow? _reportWindow;
 
         private void Validate_Click(object? sender, RoutedEventArgs e) => OpenReport(rebuild: true);
+
+        /// <summary>"Merge mods...": the open mod first in the list if it's saved; then, if asked, the merged mod opened.</summary>
+        private async void Merge_Click(object? sender, RoutedEventArgs e)
+        {
+            var merge = new MergeWindow();
+            if (_vm.CurrentFilePath is string current && File.Exists(current))
+                merge.ViewModel.Add(current);
+            await merge.ShowDialog(this);
+            if (merge.OpenAfter is string merged && await ConfirmDiscard())
+                Open(merged);
+        }
         private void ReportOpen_Click(object? sender, RoutedEventArgs e) => OpenReport(rebuild: false);
         private void ReportClose_Click(object? sender, RoutedEventArgs e) => _vm.ShowReportBar = false;
         private void NeededSuggestion_Click(object? sender, RoutedEventArgs e) => _vm.UseNeededSuggestion();

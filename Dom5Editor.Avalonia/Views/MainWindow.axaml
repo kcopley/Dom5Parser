@@ -51,8 +51,12 @@
                                IsEnabled="{Binding HasMod}" ItemsSource="{Binding JumpTargets}"
                                Placeholder="Go to any entity... (Ctrl+P)"
                                ToolTip.Tip="Go to any monster, weapon, spell, nation, event... by name or ID (Ctrl+P)"/>
-                <Button Grid.Column="2" Content="Validate" IsEnabled="{Binding HasMod}" Click="Validate_Click"
-                        ToolTip.Tip="Check the mod for problems (unread lines, missing references, ID clashes)"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
+                    <Button Content="Validate" IsEnabled="{Binding HasMod}" Click="Validate_Click"
+                            ToolTip.Tip="Check the mod for problems (unread lines, missing references, ID clashes)"/>
+                    <Button Content="Merge mods..." Click="Merge_Click"
+                            ToolTip.Tip="Merge several mods into one new file: where two use the same number, the later one's moves and its references follow (the mods aren't changed)"/>
+                </StackPanel>
 
                 <!-- the mod's name: trimmed when the window is narrow (the whole name in its tooltip) -->
                 <DockPanel Grid.Column="3" Margin="12,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right">

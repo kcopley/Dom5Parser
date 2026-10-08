@@ -150,7 +150,14 @@ Forgotten Realms' monsters. Open: 10141 summons its monster and the next number;
 keep such a pair in a row yet (only vanilla uses 10141). `Dom5Tests/fixtures/merge/sp_a.dm` +
 `sp_b.dm` is the check (stage 6, merge-spells).
 
+In the editor: "Merge mods..." (toolbar; `MergeViewModel`, `MergeWindow`): the mods in order, a
+submod's parent per row (remembered from Mod Info's "Mods this one needs"), the merged mod's name
+and file (never over one of the mods, nor in Steam's workshop folder; an existing file backed up
+first); the merge runs off the window's thread, then the merged file is read back (no number
+defined twice that the mods didn't) and the summary links the report and opens the merged mod.
+
 Steps: (1) renumbering in the core (an entity or a dependent number moves, its references follow,
 the save shows it); (2) `Dom5Tests merge OUTDIR NAME A.dm B.dm ... [--needs B.dm=A.dm]` with the
 report and the read-back check; (3) the game-reading referee on mod pairs (Forgotten Realms +
-DomEnhanced: 1,087 collisions) and on Sombre with its submods; (4) "Merge mods..." in the editor.
+DomEnhanced: 1,087 collisions) and on Sombre with its submods; (4) "Merge mods..." in the editor
+(done 2026-10-07).
