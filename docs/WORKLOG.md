@@ -51,6 +51,14 @@ etc etc, get the rest of the task list sorted out."
   monster parser (0x14024fc65); the item parser reads #spell, #autospell, #autospellrepeat,
   #bonusspells, #randomspell, #spellsinger. The report already lists it as a line the game
   ignores ("isn't read in an item block (it's a monster command)").
+- **6.37 data snapshot in the repo** (8deddf7, the user asked): tools/dom6exe/data/snapshots/6.37,
+  no game text (checksums only); the next version's change log compares with it.
+- **Sprites without alpha shown as the game shows them** (after 0.13.0, for the next build; the
+  user: some images "loaded with a black background and the pink shadow"): a 24-bit TGA or a PNG
+  without alpha keys black to transparent and magenta to a 50% black shadow (the manual), compared
+  in 16-bit colour as the game keeps images: Bloodwar's shadow is (248, 0, 248), magenta saved
+  from 16 bits (Dom5Edit.Imaging.ColorKey, in Picture.Load). Most mod sprites are 24-bit TGAs
+  (Sombre 4,088, Forgotten Realms 2,106, Confluence 1,317).
 - **Test build 0.13.0** (e390427): Windows, macOS (arm64, x64), Linux (x64, arm64) in publish/.
   Full suite on the merged code before the last UI changes: 99 checks, 97 pass + 2 known; quick
   suite after them 84 + 1 known.

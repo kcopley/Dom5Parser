@@ -30,16 +30,27 @@ namespace Dom5Editor.Imaging
         /// <summary>An image file (BMP, JPEG, GIF, ...) as PNG bytes, for a sprite converted when added to a mod; set by the editor. Null: not converted.</summary>
         public static Func<string, byte[]?>? ConvertToPng { get; set; }
 
-        /// <summary>An image file: TGA and PNG read here (Dom5Edit.Imaging), the rest by <see cref="Decoder"/>; null if it can't be read.</summary>
+        /// <summary>
+        /// An image file: TGA and PNG read here (Dom5Edit.Imaging), the rest by <see cref="Decoder"/>;
+        /// null if it can't be read. One without an alpha channel is shown as the game shows it:
+        /// black transparent, magenta a half-transparent shadow (Dom5Edit.Imaging.ColorKey).
+        /// </summary>
         public static Picture? Load(string path)
         {
             try
             {
                 var ext = Path.GetExtension(path);
-                if (ext.Equals(".tga", StringComparison.OrdinalIgnoreCase))
-                    return Dom5Edit.Imaging.Tga.Decode(File.ReadAllBytes(path)) is { } tga ? new Picture(tga.Width, tga.Height, tga.Bgra) : null;
-                if (ext.Equals(".png", StringComparison.OrdinalIgnoreCase) && Dom5Edit.Imaging.Png.Decode(File.ReadAllBytes(path)) is { } png)
-                    return new Picture(png.Width, png.Height, png.Bgra);
+                bool tgaFile = ext.Equals(".tga", StringComparison.OrdinalIgnoreCase), pngFile = ext.Equals(".png", StringComparison.OrdinalIgnoreCase);
+                if (tgaFile || pngFile)
+                {
+                    var data = File.ReadAllBytes(path);
+                    var image = tgaFile ? Dom5Edit.Imaging.Tga.Decode(data) : Dom5Edit.Imaging.Png.Decode(data);
+                    if (image is not { } decoded)
+                        return tgaFile ? null : Decoder?.Invoke(path);
+                    if (!Dom5Edit.Imaging.ColorKey.HasAlpha(data))
+                        Dom5Edit.Imaging.ColorKey.Apply(decoded.Bgra);
+                    return new Picture(decoded.Width, decoded.Height, decoded.Bgra);
+                }
                 return Decoder?.Invoke(path);
             }
             catch (Exception)
