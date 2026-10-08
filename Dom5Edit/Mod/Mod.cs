@@ -609,14 +609,18 @@ namespace Dom5Edit
                 case Command.NEWSITE:
                     _currentEntity = NewEntity<Site>(val, comment);
                     break;
+                // the game reads no argument on these: each takes the first free number (nations
+                // from 120, items from 700, spells from 1500: the exe), so "#newitem 800" isn't
+                // item 800. The entity has no number; the line keeps what's written (its block's
+                // header, saved as read)
                 case Command.NEWNATION:
-                    _currentEntity = NewEntity<Nation>(val, comment);
+                    _currentEntity = NewEntity<Nation>("", comment);
                     break;
                 case Command.NEWITEM:
-                    _currentEntity = NewEntity<Item>(val, comment);
+                    _currentEntity = NewEntity<Item>("", comment);
                     break;
                 case Command.NEWSPELL:
-                    _currentEntity = NewEntity<Spell>(val, comment);
+                    _currentEntity = NewEntity<Spell>("", comment);
                     break;
                 case Command.NEWMERC:
                     _currentEntity = NewEntity<Mercenary>(val, comment);
