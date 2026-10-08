@@ -110,7 +110,7 @@ namespace Dom5Editor.UI.ViewModels
             }
             Candidates = page.Session.References(refType);
             RemoveCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.RemoveValue(r.Value); });
-            OpenCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.Session.Navigate(RefType, r.RefId); });
+            OpenCommand = new RelayCommand<PanelRow>(r => { if (r != null) _page.Go(RefType, r.RefId); });
             CopyEditCommand = new RelayCommand<PanelRow>(CopyAndEdit);
             NewCommand = new RelayCommand(MakeNew);
         }
@@ -144,7 +144,7 @@ namespace Dom5Editor.UI.ViewModels
                 tx.Add(owner, Command, made.ID.ToString());
             });
             if (made != null && _page.Error == null)
-                _page.Session.Navigate(RefType, made.ID);
+                _page.Go(RefType, made.ID);
         }
 
         /// <summary>The copy command of the referenced type, if it has one (#copyweapon, #copyarmor).</summary>
@@ -180,7 +180,7 @@ namespace Dom5Editor.UI.ViewModels
                 tx.Change(owner, row.Value, made.ID.ToString());
             });
             if (made != null && _page.Error == null)
-                _page.Session.Navigate(RefType, made.ID);
+                _page.Go(RefType, made.ID);
         }
 
         public string Title { get; }

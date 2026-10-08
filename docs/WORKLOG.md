@@ -3,6 +3,25 @@
 Running log of the autonomous work sessions: what was done, what was found, what's next.
 Newest entries at the top. Commits are local unless noted; the user pushes.
 
+## 2026-10-07 (late): entities in windows of their own
+
+The user asked for entities opened in separate windows, "so multiple can be edited
+simultaneously, and viewed altogether, side by side"; pop-out windows, links opening in the
+same window and Ctrl+click in another ("Yes, exactly").
+
+- A page has a host (`IPageHost`: the main window, or `PageWindowViewModel`); every link on a
+  page goes through it (`EntityPageViewModel.Go`, was `Session.Navigate`). The main window
+  shows a link's entity in its tab; a page window in itself, with back and forward of its own.
+  Ctrl (Cmd) on the click opens a new window (`Ui.WantsNewWindow`, from the last input).
+- `PageWindow` (Avalonia): the same page view, a small toolbar (back/forward, the mod's undo and
+  redo, "Show in main window", the unsaved mark), the main window's shortcuts (Ctrl+S saves the
+  mod, Ctrl+W closes). Opened from "New window" in the page's header, a row's menu, Ctrl+click
+  or a middle click on a row (the list's selection stays), Ctrl+click on a link. They close with
+  the main window, and when another mod is opened; an entity deleted shows a note until undone.
+- Checked headless (`--popout`, `--popout-go`, `--popout-ctrl`, `--link-ctrl`, `--popout-row`,
+  `--popout-back`, `--popout-close`): an edit in the main window shows in the page window,
+  closing one lets go of the mod (2 listeners each), the 210-page sweep as before.
+
 ## 2026-10-07 (night): merging mods for Dominions 6
 
 The user: "start on the merging": connections as pointers so numbers change freely and the

@@ -36,7 +36,7 @@ namespace Dom5Editor.UI.ViewModels
             });
             NavigateToCopyCommand = new RelayCommand(() =>
             {
-                if (CopySourceId is int id) Session.Navigate(Type, id);
+                if (CopySourceId is int id) Go(Type, id);
             });
             RemoveStructureCommand = new RelayCommand<StructureLine>(l => { if (l != null) RemoveLine(l.Property); });
             Resolved = Session.Resolve(Entity);
@@ -144,7 +144,7 @@ namespace Dom5Editor.UI.ViewModels
                     tx.Add(made, c, args);
             });
             if (made != null && Error == null)
-                Session.Navigate(made);
+                Go(made);
         });
 
         private static string DisplayArgumentsForCopy(Property p) => ResolvedValue.ArgumentsOf(p);
@@ -377,7 +377,7 @@ namespace Dom5Editor.UI.ViewModels
 
         public string SpriteCopyPickTip => $"The {Nouns.Of(Type)} whose sprite this one takes (#copyspr); its own image lines apply on top";
         public string SpriteCopyOpenTip => SpriteCopyId is int id ? $"Open {NameOf(Type, id)} #{id}, the {Nouns.Of(Type)} whose sprite it takes" : "It copies no sprite";
-        public ICommand NavigateToSpriteCopyCommand => new RelayCommand(() => { if (SpriteCopyId is int id) Session.Navigate(Type, id); });
+        public ICommand NavigateToSpriteCopyCommand => new RelayCommand(() => { if (SpriteCopyId is int id) Go(Type, id); });
 
         /// <summary>The copy picker's and its open button's tooltips.</summary>
         public string CopyPickTip => $"The {Nouns.Of(Type)} this one starts as a copy of ({(CopyCommand is Command c ? CommandName(c) : "")}); its own lines apply on top";
@@ -556,7 +556,7 @@ namespace Dom5Editor.UI.ViewModels
                 var name = type == EntityType.EVENT ? EventPageViewModel.TitleOf(from, EventPageViewModel.LinesOf(Session.Resolve(from)))
                     : id > 0 ? NameOf(type, id)
                     : Session.Resolve(from).Get(Command.NAME)?.Property is StringProperty s ? s.Value ?? "" : "";
-                UsedBy.Add(new UsageRow(type, id, name, via, id > 0 ? () => Session.Navigate(type, id) : () => Session.Navigate(from)));
+                UsedBy.Add(new UsageRow(type, id, name, via, id > 0 ? () => Go(type, id) : () => Go(from)));
             }
             UsedByTitle = users.Count > shown ? $"USED BY ({users.Count}, first {shown} shown)" : $"USED BY ({users.Count})";
         }
@@ -925,8 +925,41 @@ namespace Dom5Editor.UI.ViewModels
         public void Navigate(string refType, int id)
         {
             if (BadgeConfigLoader.GetEntityTypeFromRefType(refType) is EntityType t)
-                Session.Navigate(t, id);
+                Go(t, id);
         }
+
+        private IPageHost? _host;
+
+        /// <summary>The window the page is in (none: its links go to the main window, through the session).</summary>
+        public IPageHost? Host
+        {
+            get => _host;
+            set { _host = value; OnPropertyChanged(nameof(CanPopOut)); }
+        }
+
+        /// <summary>Opens an entity from a link on the page, in the page's window (Ctrl+click: a new one).</summary>
+        public void Go(EntityType type, int id)
+        {
+            if (_host != null)
+                _host.Open(type, id);
+            else
+                Session.Navigate(type, id);
+        }
+
+        /// <summary>Opens an entity that may have no number (an event), in the page's window.</summary>
+        public void Go(IDEntity entity)
+        {
+            if (_host != null)
+                _host.Open(entity);
+            else
+                Session.Navigate(entity);
+        }
+
+        /// <summary>Whether the header offers to open the page in a window of its own (not in one already).</summary>
+        public bool CanPopOut => _host != null && !_host.IsOwnWindow;
+
+        /// <summary>The header's ⧉: this entity in a window of its own, next to the main window.</summary>
+        public ICommand PopOutCommand => new RelayCommand(() => _host?.OpenInNewWindow(Item));
 
         public static string CommandName(Command c) => CommandsMap.TryGetString(c, out var s) ? s : c.ToString();
 

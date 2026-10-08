@@ -12,9 +12,10 @@ namespace Dom5Editor.UI.Views
 {
     /// <summary>
     /// The main window: the open mod (EditorSession), a tab per entity type plus the mod's header,
-    /// undo/redo, saving, and back/forward through the entities visited.
+    /// undo/redo, saving, and back/forward through the entities visited; pages opened in windows
+    /// of their own (PageWindowViewModel).
     /// </summary>
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged, IPageHost
     {
         private static readonly (EntityType Type, string Title)[] TabTypes =
         {
@@ -205,6 +206,9 @@ namespace Dom5Editor.UI.Views
 
         private void Open(EditorSession session, string status)
         {
+            // the pages in windows of their own were the other mod's
+            foreach (var w in _popOuts.ToList())
+                w.Close();
             _session = session;
             _report = null;
             NeededSuggestion = null;
@@ -224,13 +228,17 @@ namespace Dom5Editor.UI.Views
             {
                 var tab = new EntityTypeTab(session, type, title);
                 tab.Selected += OnSelected;
+                tab.PopOutRequested += item => PopOut(item);
                 tab.Status += message => StatusMessage = message;
                 tab.PropertyChanged += (s, e) =>
                 {
                     if (e.PropertyName != nameof(EntityTypeTab.Page))
                         return;
                     if (tab.Page != null)
+                    {
                         tab.Page.IsActive = ReferenceEquals(tab, SelectedTab);
+                        tab.Page.Host = this;
+                    }
                     OnPropertyChanged(nameof(SelectedPage));
                 };
                 Tabs.Add(tab);
@@ -398,6 +406,71 @@ namespace Dom5Editor.UI.Views
             if (!tab.Select(entity))
                 StatusMessage = $"{entity.Kind} not found";
         }
+
+        // ---- the page's window (IPageHost): links, and pages in windows of their own ----
+
+        /// <summary>A link on a page in the main window: shown here, or with Ctrl in a window of its own.</summary>
+        public void Open(EntityType type, int id)
+        {
+            if (Ui.WantsNewWindow?.Invoke() == true)
+                PopOut(type, id);
+            else
+                NavigateToEntity(type, id);
+        }
+
+        public void Open(IDEntity entity)
+        {
+            if (Ui.WantsNewWindow?.Invoke() == true)
+                PopOut(entity);
+            else
+                NavigateToEntity(entity);
+        }
+
+        public void OpenInNewWindow(EntityListItem item) => PopOut(item);
+
+        public bool IsOwnWindow => false;
+
+        private readonly List<PageWindowViewModel> _popOuts = new();
+
+        /// <summary>The pages open in windows of their own.</summary>
+        public IReadOnlyList<PageWindowViewModel> PopOuts => _popOuts;
+
+        /// <summary>Raised for a page to show in a window of its own (the view makes the window).</summary>
+        public event Action<PageWindowViewModel>? PopOutRequested;
+
+        /// <summary>Opens an entity's page in a window of its own (several can be open, side by side; edits show in all).</summary>
+        public PageWindowViewModel? PopOut(EntityListItem item)
+        {
+            if (_session == null)
+                return null;
+            var window = new PageWindowViewModel(this, _session, item);
+            _popOuts.Add(window);
+            window.Closed += () => _popOuts.Remove(window);
+            PopOutRequested?.Invoke(window);
+            StatusMessage = $"Opened {item.DisplayName} in a window of its own";
+            return window;
+        }
+
+        public PageWindowViewModel? PopOut(EntityType type, int id)
+        {
+            if (FindItem(type, id) is { } item)
+                return PopOut(item);
+            StatusMessage = $"{type} #{id} not found";
+            return null;
+        }
+
+        public PageWindowViewModel? PopOut(IDEntity entity)
+        {
+            if (FindItem(entity) is { } item)
+                return PopOut(item);
+            StatusMessage = $"{entity.Kind} not found";
+            return null;
+        }
+
+        /// <summary>An entity's row in its type's list (the lists are the main window's), or null.</summary>
+        public EntityListItem? FindItem(EntityType type, int id) => TabOf(type)?.Find(id);
+
+        public EntityListItem? FindItem(IDEntity entity) => TabOf(entity.Kind)?.Find(entity);
 
         private void OnSelected(EntityTypeTab tab, EntityListItem item)
         {

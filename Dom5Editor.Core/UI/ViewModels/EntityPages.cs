@@ -239,7 +239,7 @@ namespace Dom5Editor.UI.ViewModels
             {
                 var e = (IDEntity)g.Key!;
                 Events.Add(new LinkChip(string.Join(", ", g.Select(l => EventPageViewModel.Name(l.Checker?.Command ?? Command.ID)).Distinct()),
-                    Dom5Edit.Events.EventInfo.Title(graph.LinesOf(e)), () => page.Session.Navigate(e)));
+                    Dom5Edit.Events.EventInfo.Title(graph.LinesOf(e)), () => page.Go(e)));
             }
             NewCommand = new RelayCommand(MakeEvent);
         }
@@ -270,7 +270,7 @@ namespace Dom5Editor.UI.ViewModels
                 tx.Add(made, Command.MSG, $"\"{_page.DisplayName.Replace("\"", "'")}: what happens.\"");
             });
             if (made != null && _page.Error == null)
-                _page.Session.Navigate(made);
+                _page.Go(made);
         }
     }
 

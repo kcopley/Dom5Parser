@@ -33,6 +33,13 @@ namespace Dom5Editor.Ava
     ///   --type TEXT              type into what has the cursor (with --key: the "Go to" box, a search box)
     ///   --load-menu              log the Load ▾ menu (recent mods, the game's folder, backups)
     ///   --game-folder PATH       log what "Dominions 6 folder..." would make of PATH (nothing saved)
+    ///   --popout FILE.png        the selected page in a window of its own (its "New window"), rendered
+    ///   --popout-go TYPE ID      in the newest page window, a link to TYPE ID clicked (opens there)
+    ///   --popout-ctrl TYPE ID    the same with Ctrl held (another window); --link-ctrl TYPE ID from the main window's page
+    ///   --popout-row TYPE ID     the list's row Ctrl+clicked (or middle-clicked): a window, the list's selection kept
+    ///   --popout-back            back in the newest page window
+    ///   --popout-png FILE.png    render the newest page window
+    ///   --popout-close           close the newest page window: logs what still listens to the mod
     /// Messages go to FILE.png.log / FILE.dm.log next to the first output, and to stdout.
     /// Settings, backups, errors.log and recovery copies go to temp folders, never the user's.
     /// Example: Dom5Editor.Avalonia --snapshot --mod my.dm --select monster 3 --set hp 30 --png hp.png --save out.dm
@@ -372,6 +379,69 @@ namespace Dom5Editor.Ava
                                 $"card clicked: {graph.SelectedCard?.Title ?? "none"}; on {vm.SelectedPage?.DisplayName}");
                             break;
                         }
+                        case "--popout":
+                        {
+                            // the page's "New window" button
+                            _logPath ??= args[i + 1] + ".log";
+                            var page = vm.SelectedPage ?? throw new InvalidOperationException("nothing selected");
+                            Log($"popout: the page offers it: {page.CanPopOut}");
+                            page.PopOutCommand.Execute(null);
+                            Pump();
+                            LogPopOuts(window);
+                            Render(Newest(window), args[++i]);
+                            Log($"rendered page window {args[i]}");
+                            break;
+                        }
+                        case "--popout-go":
+                        case "--popout-ctrl":
+                        case "--link-ctrl":
+                        {
+                            var step = args[i];
+                            var type = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            int id = int.Parse(args[++i]);
+                            var page = step == "--link-ctrl" ? vm.SelectedPage : Newest(window).ViewModel?.Page;
+                            if (page == null)
+                                throw new InvalidOperationException("no page to click a link on");
+                            Hooks.ForceNewWindow = step != "--popout-go";
+                            try { page.Go(type, id); }
+                            finally { Hooks.ForceNewWindow = false; }
+                            Pump();
+                            Log($"{step} {type} {id}: main window on {vm.SelectedPage?.DisplayName ?? "(nothing)"}");
+                            LogPopOuts(window);
+                            break;
+                        }
+                        case "--popout-row":
+                        {
+                            var type = Enum.Parse<EntityType>(args[++i], ignoreCase: true);
+                            int id = int.Parse(args[++i]);
+                            var tab = vm.TabOf(type) ?? throw new ArgumentException("no tab for " + type);
+                            var item = tab.Find(id) ?? throw new InvalidOperationException($"no {type} {id}");
+                            tab.PopOut(item);
+                            Pump();
+                            Log($"--popout-row {type} {id}: the list's selection {tab.SelectedItem?.DisplayName ?? "(none)"}");
+                            LogPopOuts(window);
+                            break;
+                        }
+                        case "--popout-back":
+                            Newest(window).ViewModel?.GoBack();
+                            Pump();
+                            LogPopOuts(window);
+                            break;
+                        case "--popout-png":
+                            _logPath ??= args[i + 1] + ".log";
+                            Pump();
+                            Render(Newest(window), args[++i]);
+                            Log($"rendered page window {args[i]}");
+                            break;
+                        case "--popout-close":
+                        {
+                            var session = vm.Session!;
+                            int before = session.ChangedListeners;
+                            Newest(window).Close();
+                            Pump();
+                            Log($"closed a page window: {window.PopOuts.Count} left; the mod's listeners {before} -> {session.ChangedListeners}");
+                            break;
+                        }
                         case "--load-menu":
                             // the Load ▾ menu: its entries and their tooltips
                             foreach (var item in window.LoadMenu())
@@ -398,6 +468,21 @@ namespace Dom5Editor.Ava
                     File.WriteAllLines(_logPath, _log);
             }
             return code;
+        }
+
+        private static PageWindow Newest(MainWindow window) =>
+            window.PopOuts.Count > 0 ? window.PopOuts[^1] : throw new InvalidOperationException("no page window open");
+
+        /// <summary>The page windows open: their titles, what each shows, back/forward.</summary>
+        private static void LogPopOuts(MainWindow window)
+        {
+            Log($"page windows: {window.PopOuts.Count}");
+            foreach (var w in window.PopOuts)
+            {
+                var pw = w.ViewModel!;
+                Log($"   '{w.Title}': {(pw.IsGone ? pw.GoneNote : pw.Page?.DisplayName)}; back {pw.CanGoBack}, forward {pw.CanGoForward}; " +
+                    $"page host is its window: {ReferenceEquals(pw.Page?.Host, pw)}");
+            }
         }
 
         private static void Log(string message)

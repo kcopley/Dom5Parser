@@ -33,6 +33,10 @@ it, and save without losing anything the file had.
   entity (Ctrl+P), list search (Ctrl+F), lists filtered to vanilla / changed / new and by kind
   (mages, rituals, events in a chain, ...), sprites and key stats in the lists. "Copy & edit"
   gives a unit its own changed copy of a weapon or armor; "+ New weapon" makes one for it.
+- **Several entities side by side:** "New window" on a page (or a row's right-click menu,
+  Ctrl+click or a middle click on a row, Ctrl+click on a link) opens the entity in a window of
+  its own, to arrange beside the main window or on another screen. Edits show in every window
+  at once and undo is the mod's; a window's links open in it, with its own back and forward.
 
 ## Running it
 

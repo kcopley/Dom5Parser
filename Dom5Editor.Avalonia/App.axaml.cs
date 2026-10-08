@@ -22,6 +22,8 @@ namespace Dom5Editor.Ava
                 Hooks.Install();
                 window = new Views.MainWindow();
                 desktop.MainWindow = window;
+                // (a page's own window doesn't keep the editor running: they close with the main one)
+                desktop.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 Hooks.Owner = window;
                 if (problem != null)
                     window.Status(problem + " The editor may not work correctly.");

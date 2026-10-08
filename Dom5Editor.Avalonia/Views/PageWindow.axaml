@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Dom5Editor.UI.ViewModels;assembly=Dom5Editor.Core"
+        xmlns:views="clr-namespace:Dom5Editor.Ava.Views"
+        x:Class="Dom5Editor.Ava.Views.PageWindow"
+        Title="{Binding Title}" Width="920" Height="900" MinWidth="480" MinHeight="300">
+    <!-- An entity's page in a window of its own (UI.Views.PageWindowViewModel): the main window's
+         page, on the same mod. Back and forward of its own (its links open here; Ctrl+click opens
+         another window), the mod's undo, and the way back to the main window. -->
+    <Window.DataTemplates>
+        <DataTemplate DataType="vm:EntityPageViewModel">
+            <views:EntityPageView/>
+        </DataTemplate>
+    </Window.DataTemplates>
+
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Background="{StaticResource BackgroundMediumBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1" Padding="8,6">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <Button Content="◀" ToolTip.Tip="{Binding BackTip}" IsEnabled="{Binding CanGoBack}" Click="Back_Click"/>
+                    <Button Content="▶" ToolTip.Tip="{Binding ForwardTip}" IsEnabled="{Binding CanGoForward}" Click="Forward_Click"/>
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
+                    <Button Content="Undo" ToolTip.Tip="{Binding UndoTip}" IsEnabled="{Binding CanUndo}" Click="Undo_Click"/>
+                    <Button Content="Redo" ToolTip.Tip="{Binding RedoTip}" IsEnabled="{Binding CanRedo}" Click="Redo_Click"/>
+                    <Border Width="1" Background="{StaticResource BorderBrush}" Margin="6,2"/>
+                    <Button Content="Show in main window" Click="ShowInMain_Click" IsEnabled="{Binding !IsGone}"
+                            ToolTip.Tip="Show this entity in the main window too: its tab, selected in the list"/>
+                </StackPanel>
+                <!-- the mod: unsaved changes are the mod's (Ctrl+S here saves it) -->
+                <DockPanel Margin="12,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock DockPanel.Dock="Left" Text="*" Foreground="{StaticResource WarningBrush}" FontWeight="Bold" Margin="0,0,6,0"
+                               IsVisible="{Binding IsDirty}" ToolTip.Tip="Unsaved changes (Ctrl+S saves the mod)"/>
+                    <TextBlock Text="{Binding ModName}" ToolTip.Tip="The mod this window edits, with the main window: an edit shows in every window"
+                               Classes="muted" TextTrimming="CharacterEllipsis"/>
+                </DockPanel>
+            </DockPanel>
+        </Border>
+
+        <Border Background="{StaticResource BackgroundDarkBrush}" Padding="16,12">
+            <Panel>
+                <ContentControl Content="{Binding Page}"/>
+                <TextBlock Text="{Binding GoneNote}" IsVisible="{Binding IsGone}" Classes="muted" TextWrapping="Wrap"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24"/>
+            </Panel>
+        </Border>
+    </DockPanel>
+</Window>

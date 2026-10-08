@@ -60,6 +60,15 @@ namespace Dom5Editor.Ava.Views
                 jumpList.DropDownClosed += (s, e) => JumpToPick(jumpList);
             }
 
+            // an entity's page in a window of its own (the list's menu, the page's ⧉, Ctrl+click on a
+            // link); they close with this one
+            _vm.PopOutRequested += ShowPopOut;
+            Closed += (s, e) =>
+            {
+                foreach (var w in _popOuts.ToList())
+                    w.Close();
+            };
+
             // deleting something others use asks first
             EntityTypeTab.Confirm = message => WaitFor(Dialogs.Ask(this, "Delete", message, "Delete", "Cancel"), true);
             // an image set on a mod never saved: it's copied next to the .dm file, so save first
@@ -85,6 +94,39 @@ namespace Dom5Editor.Ava.Views
         }
 
         public MainWindowViewModel ViewModel => _vm;
+
+        // ---- pages in windows of their own ----
+
+        private readonly List<PageWindow> _popOuts = new();
+
+        /// <summary>The pages open in windows of their own.</summary>
+        public IReadOnlyList<PageWindow> PopOuts => _popOuts;
+
+        /// <summary>The size the last page window had: the next opens as big.</summary>
+        private static Size _popOutSize = new(920, 900);
+
+        private void ShowPopOut(PageWindowViewModel vm)
+        {
+            var window = new PageWindow(vm, this)
+            {
+                Width = _popOutSize.Width,
+                Height = Math.Min(_popOutSize.Height, Math.Max(400, Bounds.Height)),
+                WindowStartupLocation = WindowStartupLocation.Manual,
+                // over the main window's page side, each a little lower and to the right of the last
+                Position = new PixelPoint(Position.X + 360 + 32 * (_popOuts.Count % 8), Position.Y + 60 + 32 * (_popOuts.Count % 8)),
+            };
+            _popOuts.Add(window);
+            window.Closing += (s, e) => _popOutSize = window.Bounds.Size;
+            window.Closed += (s, e) => _popOuts.Remove(window);
+            window.Show();
+        }
+
+        /// <summary>Ctrl+S in a page's own window: the mod saved, as from here.</summary>
+        public async Task SaveShortcut()
+        {
+            if (_vm.HasMod)
+                await SaveAsync();
+        }
 
         public void Status(string message) => _vm.StatusMessage = message;
 

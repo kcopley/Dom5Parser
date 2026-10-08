@@ -15,6 +15,12 @@ namespace Dom5Editor.UI
         /// </summary>
         public static Action<string, string, Action<string>>? PickFile { get; set; }
 
+        /// <summary>
+        /// Whether the click (or key) that's being handled asks for a new window: Ctrl (Cmd on a
+        /// Mac) held. A link clicked so opens its entity in a window of its own.
+        /// </summary>
+        public static Func<bool>? WantsNewWindow { get; set; }
+
         /// <summary>Runs work on the UI thread once what's pending (drawing) is done.</summary>
         public static Action<Action>? Post { get; set; }
 

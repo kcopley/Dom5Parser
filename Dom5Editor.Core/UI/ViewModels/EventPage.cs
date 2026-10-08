@@ -215,12 +215,12 @@ namespace Dom5Editor.UI.ViewModels
                 if (site != null)
                 {
                     NamedNote = $"Names the site {site.DisplayName} #{site.ID}";
-                    OpenNamedCommand = new RelayCommand(() => page.Session.Navigate(EntityType.SITE, site.ID));
+                    OpenNamedCommand = new RelayCommand(() => page.Go(EntityType.SITE, site.ID));
                 }
                 else if (item != null)
                 {
                     NamedNote = $"Names the item {item.DisplayName} #{item.ID}";
-                    OpenNamedCommand = new RelayCommand(() => page.Session.Navigate(EntityType.ITEM, item.ID));
+                    OpenNamedCommand = new RelayCommand(() => page.Go(EntityType.ITEM, item.ID));
                 }
                 else
                 {
@@ -457,7 +457,7 @@ namespace Dom5Editor.UI.ViewModels
                     var (id, _) = page.ReferenceOf(value.Property, EntityPageViewModel.RefTypeName(rt));
                     _refId = id;
                     Candidates = page.Session.References(rt);
-                    OpenCommand = new RelayCommand(() => { if (_refId is int i && i > 0) page.Session.Navigate(rt, i); });
+                    OpenCommand = new RelayCommand(() => { if (_refId is int i && i > 0) page.Go(rt, i); });
                     if (id > 0 && !Candidates.Any(c => c.ID == id))
                         _missing = $"there's no {rt.ToString().ToLowerInvariant()} #{id} in the mod or the game's data";
                 }
@@ -609,7 +609,7 @@ namespace Dom5Editor.UI.ViewModels
                     EventLinkKind.Variable => "changed by",
                     EventLinkKind.Choice => "offered by",
                     _ => "set by",
-                }, Title(l.From), () => _page.Session.Navigate(l.From), l.Label));
+                }, Title(l.From), () => _page.Go(l.From), l.Label));
             foreach (var l in graph.From(own).Where(l => ReferenceEquals(l.Setter, Line)))
                 Links.Add(new LinkChip(l.Kind switch
                 {
@@ -618,7 +618,7 @@ namespace Dom5Editor.UI.ViewModels
                     EventLinkKind.CodeExcludes => "blocks",
                     EventLinkKind.Choice => "answered by",
                     _ => "checked by",
-                }, Title(l.To), () => _page.Session.Navigate(l.To), l.Label));
+                }, Title(l.To), () => _page.Go(l.To), l.Label));
             if (EventInfo.CodeCheckers.Contains(Command) && _number is long need && need != 0 && Links.Count == 0)
                 Note = EventInfo.IsModCode(need) ? "no event sets this code" : "";
             if (EventInfo.CodeSetters.Contains(Command) && _number == 0)
@@ -779,14 +779,14 @@ namespace Dom5Editor.UI.ViewModels
                 : page.NameOf(EntityType.SPELL, x.ID) is { Length: > 0 } s ? $"{s} (spell #{x.ID})" : $"spell #{x.ID}";
             foreach (var l in graph.To(_event))
             {
-                var chip = new LinkChip(l.Label, Title(l.From), () => page.Session.Navigate(l.From));
+                var chip = new LinkChip(l.Label, Title(l.From), () => page.Go(l.From));
                 if (l.IsEventToEvent)
                     ComesFrom.Add(chip);
                 else
                     StartedBy.Add(chip);
             }
             foreach (var l in graph.From(_event))
-                LeadsTo.Add(new LinkChip(l.Label, Title(l.To), () => page.Session.Navigate(l.To)));
+                LeadsTo.Add(new LinkChip(l.Label, Title(l.To), () => page.Go(l.To)));
             foreach (var p in graph.ProblemsOf(_event))
                 Problems.Add(p);
             var chain = graph.ChainOf(_event);
@@ -875,7 +875,7 @@ namespace Dom5Editor.UI.ViewModels
                 // the mod's events by their place in the file, the game's by number (after the mod's)
                 var where = e.Selected ? $"game event {e.ID}" : $"event {at + 1}";
                 var sub = spell ? $"spell #{e.ID}" : $"{EventInfo.RarityName(EventInfo.Rarity(_graph.LinesOf(e)))} · {where}";
-                return nodes[e] = new ChainNode(e, title(e), sub, ReferenceEquals(e, _event), spell, () => _page.Session.Navigate(e))
+                return nodes[e] = new ChainNode(e, title(e), sub, ReferenceEquals(e, _event), spell, () => _page.Go(e))
                     { Order = at >= 0 || spell ? at : _graph.ModEvents.Count + e.ID };
             }
             foreach (var e in events)
@@ -980,7 +980,7 @@ namespace Dom5Editor.UI.ViewModels
                 tx.Add(made, Command.CODE, "0");
             });
             if (made != null && _page.Error == null)
-                _page.Session.Navigate(made);
+                _page.Go(made);
         }
 
         /// <summary>A new event placed right after this one, which #delay makes happen a turn later.</summary>
@@ -1003,7 +1003,7 @@ namespace Dom5Editor.UI.ViewModels
                 tx.Add(made, Command.MSG, "\"A turn later...\"");
             });
             if (made != null && _page.Error == null)
-                _page.Session.Navigate(made);
+                _page.Go(made);
         }
 
         /// <summary>Offers Accept and Decline (#order) with a code; one new event for each answer.</summary>
@@ -1030,7 +1030,7 @@ namespace Dom5Editor.UI.ViewModels
                 accept = Answer(102, "You accepted.");
             });
             if (accept != null && _page.Error == null)
-                _page.Session.Navigate(accept);
+                _page.Go(accept);
         }
     }
 }

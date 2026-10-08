@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Platform.Storage;
@@ -22,9 +24,23 @@ namespace Dom5Editor.Ava
         /// <summary>The window dialogs belong to.</summary>
         public static TopLevel? Owner { get; set; }
 
+        private static (KeyModifiers Modifiers, DateTime At) _lastInput;
+
+        private static void NoteInput(KeyModifiers modifiers) => _lastInput = (modifiers, DateTime.UtcNow);
+
+        /// <summary>Set by the snapshot harness: links open in a new window, as with Ctrl held.</summary>
+        public static bool ForceNewWindow { get; set; }
+
         public static void Install()
         {
             Ui.Post = work => Dispatcher.UIThread.Post(work, DispatcherPriority.Background);
+            // Ctrl (Cmd on a Mac) held on the click or key being handled: a link opens its entity
+            // in a window of its own. The last press, release or key, in any window, and recent
+            InputElement.PointerPressedEvent.AddClassHandler<TopLevel>((s, e) => NoteInput(e.KeyModifiers), RoutingStrategies.Tunnel, handledEventsToo: true);
+            InputElement.PointerReleasedEvent.AddClassHandler<TopLevel>((s, e) => NoteInput(e.KeyModifiers), RoutingStrategies.Tunnel, handledEventsToo: true);
+            InputElement.KeyDownEvent.AddClassHandler<TopLevel>((s, e) => NoteInput(e.KeyModifiers), RoutingStrategies.Tunnel, handledEventsToo: true);
+            Ui.WantsNewWindow = () => ForceNewWindow
+                || (_lastInput.Modifiers & (KeyModifiers.Control | KeyModifiers.Meta)) != 0 && DateTime.UtcNow - _lastInput.At < TimeSpan.FromSeconds(2);
             Ui.PickFile = (title, filter, then) => _ = PickAsync(title, filter, then);
             Picture.ConvertToPng = path =>
             {

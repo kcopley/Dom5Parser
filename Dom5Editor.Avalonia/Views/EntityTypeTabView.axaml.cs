@@ -1,5 +1,9 @@
 using System.ComponentModel;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using Dom5Editor.UI.ViewModels;
 
 namespace Dom5Editor.Ava.Views
@@ -23,6 +27,34 @@ namespace Dom5Editor.Ava.Views
                 if (_tab != null)
                     _tab.SortBy = Sort.SelectedIndex == 1 ? "DisplayName" : "ID";
             };
+            // a row in a window of its own: Ctrl+click or a middle click (the selection stays), or its menu
+            List.AddHandler(PointerPressedEvent, OnRowPressed, RoutingStrategies.Tunnel);
+            List.ContextRequested += OnRowMenu;
+        }
+
+        private static EntityListItem? RowOf(object? source) =>
+            (source as Visual)?.FindAncestorOfType<ListBoxItem>(includeSelf: true)?.DataContext as EntityListItem;
+
+        private void OnRowPressed(object? sender, PointerPressedEventArgs e)
+        {
+            var button = e.GetCurrentPoint(List).Properties;
+            bool ctrl = e.KeyModifiers.HasFlag(KeyModifiers.Control) || e.KeyModifiers.HasFlag(KeyModifiers.Meta);
+            if (!(button.IsMiddleButtonPressed || button.IsLeftButtonPressed && ctrl) || _tab == null || RowOf(e.Source) is not { } item)
+                return;
+            _tab.PopOut(item);
+            e.Handled = true;
+        }
+
+        private void OnRowMenu(object? sender, ContextRequestedEventArgs e)
+        {
+            if (_tab == null || RowOf(e.Source) is not { } item)
+                return;
+            var tab = _tab;
+            var open = new MenuItem { Header = "Open in a new window" };
+            ToolTip.SetTip(open, $"{item.DisplayName} in a window of its own, to see or edit it beside others (Ctrl+click or a middle click on a row does the same)");
+            open.Click += (s, a) => tab.PopOut(item);
+            new ContextMenu { ItemsSource = new[] { open } }.Open(e.Source as Control ?? List);
+            e.Handled = true;
         }
 
         /// <summary>Ctrl+F: the cursor in the list's search box, its text selected.</summary>

@@ -252,25 +252,41 @@ namespace Dom5Editor.UI.ViewModels
             }
         }
 
-        /// <summary>Selects the entity with this ID (false if the list has none).</summary>
+        /// <summary>An entity's row, by the entity itself (or its ID), or null.</summary>
+        public EntityListItem? Find(IDEntity entity) =>
+            Items.FirstOrDefault(i => ReferenceEquals(i.Entity, entity)) ?? (HasNumber(entity) ? Items.FirstOrDefault(i => i.ID == entity.ID) : null);
+
+        /// <summary>The row of the entity with this ID, or null.</summary>
+        public EntityListItem? Find(int id) => Items.FirstOrDefault(i => i.ID == id);
+
+        /// <summary>Whether the row is still in the list (not deleted since).</summary>
+        public bool Lists(EntityListItem item) => _byKey.TryGetValue(Key(item.Entity), out var held) && ReferenceEquals(held, item);
+
         /// <summary>Selects an entity's row by the entity itself (or its ID).</summary>
         public bool Select(IDEntity entity)
         {
-            var item = Items.FirstOrDefault(i => ReferenceEquals(i.Entity, entity)) ?? (HasNumber(entity) ? Items.FirstOrDefault(i => i.ID == entity.ID) : null);
+            var item = Find(entity);
             if (item == null)
                 return false;
             SelectedItem = item;
             return true;
         }
 
+        /// <summary>Selects the entity with this ID (false if the list has none).</summary>
         public bool Select(int id)
         {
-            var item = Items.FirstOrDefault(i => i.ID == id);
+            var item = Find(id);
             if (item == null)
                 return false;
             SelectedItem = item;
             return true;
         }
+
+        /// <summary>Raised to open a row in a window of its own (the list's menu, Ctrl+click, a middle click).</summary>
+        public event Action<EntityListItem>? PopOutRequested;
+
+        /// <summary>Opens a row in a window of its own; the list's selection stays.</summary>
+        public void PopOut(EntityListItem item) => PopOutRequested?.Invoke(item);
 
         /// <summary>Keeps the list in step with an edit (and an undo or redo of one).</summary>
         public void OnChanged(IModEdit edit)

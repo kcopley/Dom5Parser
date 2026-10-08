@@ -64,6 +64,9 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <Button DockPanel.Dock="Right" Content="New window" Classes="small" Command="{Binding PopOutCommand}" IsVisible="{Binding CanPopOut}"
+                            VerticalAlignment="Center" Margin="10,0,0,0"
+                            ToolTip.Tip="Open this entity in a window of its own, to see or edit it beside others (Ctrl+click on a link or a row in the list does the same)"/>
                     <TextBlock DockPanel.Dock="Right" Text="{Binding SourceLabel}" Classes="muted" VerticalAlignment="Center" Margin="8,0,0,0"/>
                     <TextBlock DockPanel.Dock="Right" Text="{Binding ID, StringFormat='#{0}'}" Classes="subheader" VerticalAlignment="Center" Margin="8,0,0,0"
                                IsVisible="{Binding HasId}"/>

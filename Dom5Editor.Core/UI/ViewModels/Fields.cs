@@ -174,7 +174,7 @@ namespace Dom5Editor.UI.ViewModels
             _describe = describe;
             RefType = refType;
             Candidates = page.Session.References(refType);
-            OpenCommand = new RelayCommand(() => { if (SelectedId is int id && id != 0) Page.Session.Navigate(RefType, id); });
+            OpenCommand = new RelayCommand(() => { if (SelectedId is int id && id != 0) Page.Go(RefType, id); });
         }
 
         public EntityType RefType { get; }
