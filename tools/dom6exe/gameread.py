@@ -193,7 +193,7 @@ def compare(a, b):
 
 # what the merge map calls each kind of number that has names, and its pass
 NAMED = {'monster': 'monster', 'weapon': 'weapon', 'armor': 'armor', 'spell': 'spell', 'item': 'item',
-         'site': 'site', 'nation': 'nation', 'poptype': 'poptype', 'nametype': 'nametype'}
+         'site': 'site', 'nation': 'nation', 'poptype': 'poptype', 'nametype': 'nametype', 'bless': 'bless'}
 
 
 # what a block's header number is, per pass (a template is numbered by its nation)
@@ -243,7 +243,7 @@ def file_of(reading, text):
     return _files[full]
 
 
-def normalized(reading, ctx, kinds, effects, moves, table, reading_moves):
+def normalized(reading, ctx, kinds, effects, moves, table, reading_moves, spells=None):
     """A pass's blocks with numbers mapped (moves: kind -> old -> new) and names as numbers (the
     number the name finds, mapped by the moves of the reading it's in: reading_moves)."""
     def named(kind, name):
@@ -261,12 +261,20 @@ def normalized(reading, ctx, kinds, effects, moves, table, reading_moves):
                 a = (int(moves.get(own, {}).get(str(a[0]), a[0])),) + tuple(a[1:])
             head = (head[0], a)
         effect = next((it[1][0] for it, _ in blk['items'] if it[0] == 'effect' and len(it) > 1 and it[1] and isinstance(it[1][0], int)), None)
+        # a spell whose effect comes from elsewhere (a #copyspell, another block): the part's own
+        # word for what its #damage is (the merge map's spells, by number or name)
+        spell_kind = None
+        if ctx == 'spell' and effect is None and spells:
+            key = str(blk['head'][1][0]) if len(blk['head']) > 1 and blk['head'][1] and isinstance(blk['head'][1][0], int) else None
+            if key is None:
+                key = next((it[1][1].lower() for it, _ in blk['items'] if it[0] == 'name' and len(it) > 1 and isinstance(it[1], tuple) and it[1][:1] == ('text',) and it[1][1]), None)
+            spell_kind = spells.get(key) if key else None
         items = []
         for it, line in blk['items']:
             c = it[0]
             kind = kinds.get(ctx, {}).get(c)
             if kind == 'spell damage':
-                kind = effects.get(str(effect))
+                kind = effects.get(str(effect)) if effect is not None else spell_kind
             if kind and len(it) > 1 and isinstance(it[1], tuple) and it[1]:
                 a = it[1]
                 k = kind
@@ -321,6 +329,7 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
     vanilla = Reading(vanilla_path, rules) if vanilla_path and os.path.exists(vanilla_path) else None
     separate = [Reading(f, rules) for f in m.get('separate', [])]
     parts = [(Reading(p['file'], rules), p.get('moves', {})) for p in m['parts']]
+    part_spells = [p.get('spells', {}) for p in m['parts']]
     merged = Reading(merged_path, rules)
     base = ([vanilla] if vanilla else []) + separate
     diffs, known = [], []
@@ -344,7 +353,7 @@ def merge_check(merged_path, map_path, rules, vanilla_path, limit):
             # names as the game finds them while reading this part: the game's, the separate mods',
             # the parts before it and its own
             table = names(base + [x for x, _ in parts[:i + 1]])
-            blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]])
+            blocks = normalized(r, ctx, kinds, effects, moves, table, [{}] * len(base) + [mv for _, mv in parts[:i + 1]], part_spells[i])
             for b in blocks:
                 b['path'] = r.path
             if ctx == 'global' and expected and blocks:

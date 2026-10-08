@@ -546,6 +546,19 @@ namespace Dom5Edit.Merge
                     if (kind != null)
                         effects[effect] = kind;
                 }
+            // per spell, what its #damage is when its effect comes from elsewhere (a #copyspell, an
+            // earlier block): by its number (as the part writes it, before moves) or its name
+            string? DamageKind(Spell spell) => spell.IsEnchant() ? Kind(EntityType.ENCHANTMENT) : spell.IsEventEffect() ? Kind(EntityType.EVENT_CODE_EFFECT)
+                : spell.IsSummon() ? "monster or tag" : null;
+            Dictionary<string, string> Spells(Mod p)
+            {
+                var back = moved[p].Where(m => m.Key.Kind == "spell").ToDictionary(m => m.Value, m => m.Key.Old);
+                var kinds = new Dictionary<string, string>();
+                foreach (var spell in p.Database[EntityType.SPELL].GetFullList().OfType<Spell>())
+                    if (DamageKind(spell) is string k)
+                        kinds[spell.ID > 0 ? (back.TryGetValue(spell.ID, out var old) ? old : spell.ID).ToString() : (spell.Name ?? "").ToLowerInvariant()] = k;
+                return kinds;
+            }
             var json = new
             {
                 parts = parts.Select(p => new
@@ -553,6 +566,7 @@ namespace Dom5Edit.Merge
                     file = p.FullFilePath,
                     needs = p.Dependencies.FirstOrDefault(d => d != VanillaLoader.Vanilla)?.FullFilePath,
                     moves = moved[p].GroupBy(m => m.Key.Kind).ToDictionary(g => g.Key, g => g.ToDictionary(m => m.Key.Old.ToString(), m => m.Value)),
+                    spells = Spells(p),
                 }),
                 separate = separate.Select(s => s.FullFilePath),
                 commands = passes,
