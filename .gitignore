@@ -290,3 +290,6 @@ docs/testing_data.txt
 docs/*-log.txt
 *.roundtrip.dm
 TestDMs/
+
+# Claude Code's local folder (settings, agent worktrees): personal, never in git
+.claude/
